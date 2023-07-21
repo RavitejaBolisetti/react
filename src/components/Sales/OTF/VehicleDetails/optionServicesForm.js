@@ -15,14 +15,16 @@ const OptionServicesFormMain = (props) => {
     const [serviceOptions, setserviceOptions] = useState(typeData['OPT_SRV']);
     const [includedOption, setincludedOption] = useState([]);
     useEffect(() => {
-        const arr = [];
         if (serviceOptions && serviceOptions?.length) {
+            const arr = [];
             optionsServiceModified?.map((element) => {
                 arr.push(element?.serviceName);
             });
+            setincludedOption(arr);
+
             setserviceOptions(
                 serviceOptions?.map((element) => {
-                    if (arr?.includes(element?.value)) {
+                    if (includedOption?.includes(element?.value)) {
                         return { ...element, disabled: true };
                     } else {
                         return element;
@@ -31,7 +33,7 @@ const OptionServicesFormMain = (props) => {
             );
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [optionsServiceModified]);
+    }, [serviceOptions, optionsServiceModified]);
     const isServiceNamePresent = (serviceName) => {
         let found = false;
         optionsServiceModified?.find((element, index) => {

@@ -17,7 +17,7 @@ import styles from 'components/common/Common.module.css';
 const { Panel } = Collapse;
 
 const AddEditFormBase = (props) => {
-    const { form, sameAsBookingCustomer, formData, setSameAsBookingCustomer, fnSetData } = props;
+    const { form, sameAsBookingCustomer, formData, setSameAsBookingCustomer } = props;
     const { typeData, activeKey, handleCollapse, searchForm } = props;
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -25,8 +25,8 @@ const AddEditFormBase = (props) => {
         if (formData) {
             form.setFieldsValue({
                 ...formData,
-                ownerCustomer: { ...formData?.ownerCustomer },
-                billingCustomer: { ...formData?.billingCustomer },
+                ownerCustomerResponse: { ...formData?.ownerCustomerResponse },
+                billingCustomerResponse: { ...formData?.billingCustomerResponse },
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -38,8 +38,8 @@ const AddEditFormBase = (props) => {
     const handleOnChange = (e) => {
         if (e.target.checked) {
             setSameAsBookingCustomer(true);
-            let ownerCustomer = formData?.ownerCustomer;
-            form?.setFieldsValue({ billingCustomer: { ...ownerCustomer } });
+            let ownerCustomerResponse = formData?.ownerCustomerResponse;
+            form?.setFieldsValue({ billingCustomerResponse: { ...ownerCustomerResponse } });
         } else {
             setSameAsBookingCustomer(false);
             form?.resetFields();
@@ -50,11 +50,10 @@ const AddEditFormBase = (props) => {
         ...props,
         AutoComplete,
         typeData,
-        formData: formData?.ownerCustomer,
-        formType: 'ownerCustomer',
+        formData: formData?.ownerCustomerResponse,
+        formType: 'ownerCustomerResponse',
         onSearch,
         searchForm,
-        fnSetData: (data) => fnSetData(data, 'ownerCustomer'),
     };
 
     const bilingCustomerProps = {
@@ -62,28 +61,27 @@ const AddEditFormBase = (props) => {
         AutoComplete,
         typeData,
 
-        formData: formData?.billingCustomer,
-        formType: 'billingCustomer',
+        formData: formData?.billingCustomerResponse,
+        formType: 'billingCustomerResponse',
         searchForm,
         disabledProps: { disabled: sameAsBookingCustomer },
         handleOnChange,
-        fnSetData: (data) => fnSetData(data, 'billingCustomer'),
     };
 
     const keyAccountDetailsProps = {
         ...props,
         AutoComplete,
         typeData,
-        formData: formData?.vehicleKeyAccountDetails,
-        formType: 'vehicleKeyAccountDetails',
+        formData: formData?.keyaccount,
+        formType: 'keyaccount',
     };
 
     const loyaltyProps = {
         ...props,
         AutoComplete,
         typeData,
-        formData: formData?.vehicleCustomerLoyaltyDetails,
-        formType: 'vehicleCustomerLoyaltyDetails',
+        formData: formData?.loyalty,
+        formType: 'loyalty',
     };
 
     const handleCancel = () => {
@@ -100,16 +98,16 @@ const AddEditFormBase = (props) => {
     // const handleOnChange = (vall) => {
     //     if (vall.target.checked) {
     //         setSameAsOwner(true);
-    //         let ownerCustomer = form.getFieldsValue()?.ownerCustomer;
-    //         let billingCustomer = form.getFieldsValue()?.billingCustomer;
-    //         billingCustomer = { ...ownerCustomer };
-    //         form?.setFieldsValue({ billingCustomer: { ...ownerCustomer } });
+    //         let ownerCustomer = form.getFieldsValue()?.ownerCustomerResponse;
+    //         let billingCustomerResponse = form.getFieldsValue()?.billingCustomerResponse;
+    //         billingCustomerResponse = { ...ownerCustomer };
+    //         form?.setFieldsValue({ billingCustomerResponse: { ...ownerCustomer } });
     //     } else setSameAsOwner(false);
     // };
 
     // const handleDataSet = () => {
     //     form.setFieldsValue(data.ownerCustomer);
-    //     billCstmForm.setFieldsValue(data.billingCustomer);
+    //     billCstmForm.setFieldsValue(data.billingCustomerResponse);
     // };
 
     return (

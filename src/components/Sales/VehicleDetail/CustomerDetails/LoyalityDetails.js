@@ -11,11 +11,12 @@ import { preparePlaceholderText } from 'utils/preparePlaceholder';
 export const LoyalityDetails = (props) => {
     const { formType, formData } = props;
 
+
     return (
         <>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name={[formType, 'loyalityCardNumber']} label="Loyality Card Number" initialValue={formData?.loyalityCardNumber}>
+                    <Form.Item name={[formType, 'loyalityCardNumber']} label="Loyality Card Number" initialValue={formData?.loyalityCardNumber} >
                         <Input maxLength={6} placeholder={preparePlaceholderText('Loyality Card Number')} disabled={true} />
                     </Form.Item>
                 </Col>
@@ -30,6 +31,7 @@ export const LoyalityDetails = (props) => {
                     </Form.Item>
                 </Col>
             </Row>
+           
         </>
     );
 };

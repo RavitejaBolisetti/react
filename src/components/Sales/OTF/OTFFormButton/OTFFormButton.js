@@ -34,25 +34,17 @@ export const OTFFormButton = ({ record, handleChangeHistory, onCloseAction, butt
                     </Button>
                 )}
 
-                {buttonData?.transferBtn && (
-                    <Popover content={content} trigger="hover">
-                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.TRANSFER, record })} type="primary">
-                            Transfer
-                        </Button>
-                    </Popover>
-                )}
-
                 {buttonData?.allotBtn && (
                     <Popover content={content} trigger="hover">
-                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.ALLOT, record })} type="primary">
+                        <Button onClick={() => {}} type="primary">
                             Allot
                         </Button>
                     </Popover>
                 )}
 
-                {buttonData?.unAllot && (
+                {buttonData?.unAllotBtn && (
                     <Popover content={content} trigger="hover">
-                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.UNALLOT, record })} type="primary">
+                        <Button onClick={() => {}} type="primary">
                             Un-Allot
                         </Button>
                     </Popover>
@@ -60,7 +52,7 @@ export const OTFFormButton = ({ record, handleChangeHistory, onCloseAction, butt
 
                 {buttonData?.invoiceBtn && (
                     <Popover content={content} trigger="hover">
-                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.INVOICE, record })} type="primary">
+                        <Button onClick={() => {}} type="primary">
                             Invoice
                         </Button>
                     </Popover>
@@ -68,23 +60,21 @@ export const OTFFormButton = ({ record, handleChangeHistory, onCloseAction, butt
 
                 {buttonData?.deliveryNoteBtn && (
                     <Popover content={content} trigger="hover">
-                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.DELIVERY_NOTE, record })} type="primary">
+                        <Button onClick={() => {}} type="primary">
                             Delivery Note
                         </Button>
                     </Popover>
                 )}
 
-                {buttonData?.cancelOtfBtn && (
-                    <Popover content={content} trigger="hover">
-                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.CANCEL_OTF, record })} type="primary">
-                            Cancel OTF
-                        </Button>
-                    </Popover>
-                )}
-
-                {buttonData?.transferOtfBtn && (
+                {buttonData?.transferOTFBtn && (
                     <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.TRANSFER_OTF, record })} type="primary">
                         Transfer OTF
+                    </Button>
+                )}
+
+                {buttonData?.cancelOTFBtn && (
+                    <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.CANCEL_OTF, record })} type="primary">
+                        Cancel OTF
                     </Button>
                 )}
 

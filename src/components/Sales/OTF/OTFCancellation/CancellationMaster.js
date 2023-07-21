@@ -19,7 +19,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId, accessToken, token },
         data: {
-            ProductHierarchy: { isLoading: isProductHierarchyLoading = false, data: productHierarchyData = [] },
+            ProductHierarchy: { isLoading: isProductHierarchyLoading = false, isLoaded: isProductHierarchyLoaded = false, data: productHierarchyData = [], attributeData: productHierarchyAttributeData = [] },
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             SupportingDocument: { isLoaded: isDataLoaded = false, isLoading, data: supportingData },
             OTF: {
@@ -64,24 +64,22 @@ const mapDispatchToProps = (dispatch) => ({
 const CancellationMasterBase = (props) => {
     const { otfData, selectedOrder } = props;
     const { userId, listShowLoading, uploadDocumentFile } = props;
-    const { moduleTitle, setUploadedFile } = props;
+    const { moduleTitle, setUploadedFile, uploadedFile } = props;
     const { fetchProductHierarchyList, productHierarchyData, onFinishOTFCancellation, fetchDealerList, dealerDataList } = props;
 
-    const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: true, cancelOtfBtn: true };
+    const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn:true, cancelOTFBtn: true };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
-
+    const [emptyList, setEmptyList] = useState(true);
     const [searchDealerValue, setSearchDealerValue] = useState('');
-    const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState([]);
 
-    const fieldNames = { title: 'prodctShrtName', key: 'id', children: 'subProdct' };
+    const [uploadedFileName, setUploadedFileName] = useState('');
+    const [parentAppCode, setparentAppCode] = useState();
+
+    const fieldNames = { title: 'prodctShrtName', key: 'prodctCode', children: 'subProdct' };
     const handleButtonClick = ({ record = null, buttonAction }) => {};
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
-    };
-
-    const handleSelectTreeClick = (value) => {
-        setSelectedTreeSelectKey(value);
     };
 
     useEffect(() => {
@@ -125,8 +123,13 @@ const CancellationMasterBase = (props) => {
         searchDealerValue,
         setSearchDealerValue,
         dealerDataList,
-        handleSelectTreeClick,
-        setSelectedTreeSelectKey,
+        emptyList,
+        setEmptyList,
+        uploadedFileName,
+        setUploadedFileName,
+        uploadedFile,
+        parentAppCode,
+        setparentAppCode,
     };
 
     return <AddEditForm {...formProps} />;

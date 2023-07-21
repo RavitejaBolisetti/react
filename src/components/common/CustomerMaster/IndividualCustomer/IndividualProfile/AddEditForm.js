@@ -24,7 +24,7 @@ const { Option } = Select;
 const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
-    const { isWhoKnowsWhom, formData, appCategoryData, form, viewDocument, downloadFileFromButton } = props;
+    const { formData, appCategoryData, form, viewDocument, downloadFileFromButton } = props;
     const { isReadOnly = false } = props;
     const { uploadedFile, setUploadedFile, emptyList, setEmptyList, fileList, setFileList, setUploadedFileName, uploadedFileName } = props;
     const { fileConsentList, setFileConsentList, uploadedConsentFile, setUploadedConsentFile, emptyConsentList, setEmptyConsentList, uploadedConsentFileName, setUploadedConsentFileName } = props;
@@ -142,7 +142,6 @@ const AddEditFormMain = (props) => {
     };
 
     const disabledProps = { disabled: isReadOnly };
-
     return (
         <>
             <Row gutter={20}>
@@ -292,7 +291,7 @@ const AddEditFormMain = (props) => {
                                         </Col>
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                             <Form.Item label="Usage/Application Sub-Category" initialValue={formData?.applicationSubCategory} name="applicationSubCategory">
-                                                <Select placeholder={preparePlaceholderSelect('usage/application sub-category')} {...disabledProps}>
+                                                <Select placeholder={preparePlaceholderSelect('annual income')} {...disabledProps}>
                                                     {appCategoryData?.APP_SUB_CAT?.map((item) => (
                                                         <Option key={'ct' + item.key} value={item.key}>
                                                             {item.value}
@@ -303,7 +302,7 @@ const AddEditFormMain = (props) => {
                                         </Col>
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                             <Form.Item label="Customer Category" initialValue={formData?.customerCategory} name="customerCategory">
-                                                <Select placeholder={preparePlaceholderSelect('customer category')} {...disabledProps} onChange={onCustomerCategoryChange}>
+                                                <Select placeholder={preparePlaceholderSelect('annual income')} {...disabledProps} onChange={onCustomerCategoryChange}>
                                                     {appCategoryData?.CUS_CAT?.map((item) => (
                                                         <Option key={'ct' + item.key} value={item.key}>
                                                             {item.value}
@@ -432,7 +431,7 @@ const AddEditFormMain = (props) => {
                                 <Divider />
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Name of Person" initialValue={formData?.authorityDetails?.personName} name="personName" rules={isWhoKnowsWhom ? [validateRequiredInputField('Name of Person')] : null}>
+                                        <Form.Item label="Name of Person" initialValue={formData?.authorityDetails?.personName} name="personName" rules={[validateRequiredInputField('Name of Person')]}>
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Enter name of person')} />
                                         </Form.Item>
                                     </Col>
@@ -444,7 +443,7 @@ const AddEditFormMain = (props) => {
                                     </Col>
 
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Company Name" initialValue={formData?.authorityDetails?.companyName} name="companyName" rules={isWhoKnowsWhom ? [validateRequiredInputField('Company Name')] : null}>
+                                        <Form.Item label="Company Name" initialValue={formData?.authorityDetails?.companyName} name="companyName" rules={[validateRequiredInputField('Company Name')]}>
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Enter company name')} />
                                         </Form.Item>
                                     </Col>

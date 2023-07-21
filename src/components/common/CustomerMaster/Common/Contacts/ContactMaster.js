@@ -122,10 +122,10 @@ const ContactMain = (props) => {
     useEffect(() => {
         if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id && selectedCustomer?.customerId && customerIndData?.customerContact) {
             setContactData(customerIndData?.customerContact || []);
-            // setUploadImgDocId(customerIndData?.customerContact[0].docId);
+            setUploadImgDocId(customerIndData?.customerContact[0].docId);
         } else if (customerData?.customerContact && selectedCustomer?.customerId) {
             setContactData(customerData?.customerContact || []);
-            // setUploadImgDocId(customerData?.customerContact[0]['docId']);
+            setUploadImgDocId(customerData?.customerContact[0]['docId']);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [customerData, customerIndData]);
@@ -151,7 +151,7 @@ const ContactMain = (props) => {
                 if (isEditing) {
                     setContactData((prev) => {
                         let formData = prev?.length ? [...prev] : [];
-                        const index = formData?.findIndex((el) => el?.purposeOfContact === editingData?.purposeOfContact && el?.mobileNumber === editingData?.mobileNumber && el?.firstName === editingData?.firstName);
+                        const index = formData?.findIndex((el) => el?.purposeOfContact === editingData?.purposeOfContact && el?.mobileNumber === editingData?.mobileNumber && el?.FirstName === editingData?.FirstName);
                         formData.splice(index, 1, { relationCode: '', ...value, docId: uploadImgDocId });
                         return [...formData];
                     });
@@ -161,7 +161,7 @@ const ContactMain = (props) => {
                         if (value?.defaultaddress && formData?.length >= 1) {
                             return [...formData, { relationCode: '', ...value, docId: uploadImgDocId }];
                         } else {
-                            const updVal = prev?.length ? [...prev, { relationCode: '', ...value, docId: uploadImgDocId }] : [{ relationCode: '', ...value, docId: uploadImgDocId }];
+                            const updVal = prev?.length ? [...prev, { relationCode: '', ...value, docId: uploadImgDocId }] : [{ relationCode: '', ...value }];
                             return updVal;
                         }
                     });
@@ -226,7 +226,7 @@ const ContactMain = (props) => {
     };
 
     const onFinish = () => {
-        let data = { customerId: selectedCustomer?.customerId, customerContact: contactData };
+        let data = { customerId: selectedCustomer?.customerId, customerContact: contactData?.map((el) => ({ ...el, docId: uploadImgDocId || el?.docId })) };
 
         const onSuccess = (res) => {
             contactform.resetFields();
