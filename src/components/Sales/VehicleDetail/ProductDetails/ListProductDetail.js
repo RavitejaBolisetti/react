@@ -83,6 +83,15 @@ const ProductDetailMasterMain = (props) => {
 
     const [tooltTipText, settooltTipText] = useState();
     const [isReadOnly, setIsReadOnly] = useState(false);
+<<<<<<< HEAD
+=======
+    const [itemOptions, setitemOptions] = useState();
+    const [makeOptions, setmakeOptions] = useState();
+    const MakefieldNames = { label: 'value', value: 'key' };
+    const ItemFieldNames = { label: 'value', value: 'key' };
+    const collapseProps = { collapsible: 'icon' };
+    const disabledProps = { disabled: true };
+>>>>>>> feature
 
     const [ProductHierarchyDataOptions, setProductHierarchyDataOptions] = useState();
     const [modelData, setmodelData] = useState();
@@ -106,6 +115,81 @@ const ProductDetailMasterMain = (props) => {
         fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
         fetchProductLov({ setIsLoading: ProductLovLoading, userId, onErrorAction });
     };
+    const bindCodeValue = (value, item) => {
+        switch (item) {
+            case 'item': {
+                const codeVal = itemOptions?.find((element, index) => {
+                    if (element?.value === value || element?.key === value) {
+                        return element;
+                    }
+                });
+                if (codeVal) return codeVal?.value;
+                return 'NA';
+            }
+            case 'make': {
+                const codeVal = makeOptions?.find((element, index) => {
+                    if (element?.value === value || element?.key === value) {
+                        return element;
+                    }
+                });
+
+                if (codeVal) return codeVal?.value;
+                return 'NA';
+            }
+            default: {
+                return;
+            }
+        }
+    };
+
+    useEffect(() => {
+        if (userId && selectedRecordId) {
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams: makeExtraParams({ key: 'vin', title: 'vin', value: selectedRecordId, name: 'vin Number' }), onErrorAction, onSuccessAction });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, selectedRecordId]);
+
+    useEffect(() => {
+        if (isDataLoaded && ProductDetailsData) {
+            setformData(ProductDetailsData);
+            setoptionsServiceModified(ProductDetailsData?.aggregates);
+            settooltTipText(
+                <div>
+                    <p>
+                        Color - <span>{ProductDetailsData?.productAttributeDetail?.color ?? 'Na'}</span>
+                    </p>
+                    <p>
+                        Trim Level - <span>{ProductDetailsData?.productAttributeDetail?.trimLevel ?? 'Na'}</span>
+                    </p>
+                    <p>
+                        Engine Type - <span>{ProductDetailsData?.productAttributeDetail?.engineType ?? 'Na'}</span>
+                    </p>
+                    <p>
+                        Drive Train - <span>{ProductDetailsData?.productAttributeDetail?.driveTrain ?? 'Na'}</span>
+                    </p>
+                    <p>
+                        Transmission - <span>{ProductDetailsData?.productAttributeDetail?.transmission ?? 'Na'}</span>
+                    </p>
+                    <p>
+                        Wheel Size - <span>{ProductDetailsData?.productAttributeDetail?.wheelSize ?? 'Na'}</span>
+                    </p>
+                    <p>
+                        Interior Uphoistery - <span>{ProductDetailsData?.productAttributeDetail?.interiorUpholstery ?? 'Na'}</span>
+                    </p>
+                </div>
+            );
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isDataLoaded, ProductDetailsData]);
+    useEffect(() => {
+        if (typeData) {
+            if (typeData[PARAM_MASTER?.VEH_MAKE?.id]) {
+                setmakeOptions(typeData[PARAM_MASTER?.VEH_MAKE?.id]);
+            }
+            if (typeData[PARAM_MASTER?.VEH_ITEM?.id]) setitemOptions(typeData[PARAM_MASTER?.VEH_ITEM?.id]);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [typeData]);
 
     const handleCollapse = (key) => {
         if (key !== 3 && isReadOnly) {
@@ -217,7 +301,7 @@ const ProductDetailMasterMain = (props) => {
 
         const requestData = {
             data: data,
-            method: 'put',
+            method: 'post',
             setIsLoading: listShowLoading,
             userId,
             onError,
@@ -255,14 +339,15 @@ const ProductDetailMasterMain = (props) => {
         setOpenAccordian,
         isReadOnly,
         setIsReadOnly,
-        optionsServiceModified,
-        setoptionsServiceModified,
-        optionsServicesMapping,
-        setoptionsServicesMapping,
-        handleFormValueChange,
-        onHandleSelect,
-        tooltTipText,
-        isVehicleLovDataLoading,
+        itemOptions,
+        setitemOptions,
+        makeOptions,
+        setmakeOptions,
+        MakefieldNames,
+        ItemFieldNames,
+        bindCodeValue,
+        collapseProps,
+        disabledProps,
     };
 
     const viewProps = {
@@ -279,6 +364,11 @@ const ProductDetailMasterMain = (props) => {
         openAccordian,
         setOpenAccordian,
         optionsServiceModified,
+        formActionType,
+        typeData,
+        bindCodeValue,
+        collapseProps,
+        disabledProps,
     };
 
     return (

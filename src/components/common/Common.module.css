@@ -2292,6 +2292,12 @@
     color: #858585;
 }
 
+.drawerBodyRight :global .ant-typography.ant-typography-secondary {
+    font-size: 14px;
+    font-weight: 400;
+    color: #858585;
+}
+
 .drawerBodyRight :global .ant-space {
     gap: 0 !important;
     /* align-items: normal; */
@@ -2999,6 +3005,10 @@ li.ant-timeline-item.active .ant-timeline-item-content p {
 .contactDays :global .ant-form-item .ant-form-item-control-input .ant-select-multiple .ant-select-arrow,
 .contactDays :global .ant-form-item .ant-form-item-control-input .ant-select-multiple .ant-select-clear {
     top: 18px;
+}
+
+.contactDays :global .ant-select-multiple .ant-select-selection-placeholder {
+    padding-right: 18px;
 }
 
 .inputWrapper :global .ant-input-affix-wrapper .ant-input-suffix {

@@ -24,7 +24,7 @@ const { Option } = Select;
 const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
-    const { formData, appCategoryData, form, viewDocument, downloadFileFromButton } = props;
+    const { isWhoKnowsWhom, formData, appCategoryData, form, viewDocument, downloadFileFromButton } = props;
     const { isReadOnly = false } = props;
     const { uploadedFile, setUploadedFile, emptyList, setEmptyList, fileList, setFileList, setUploadedFileName, uploadedFileName } = props;
     const { fileConsentList, setFileConsentList, uploadedConsentFile, setUploadedConsentFile, emptyConsentList, setEmptyConsentList, uploadedConsentFileName, setUploadedConsentFileName } = props;
