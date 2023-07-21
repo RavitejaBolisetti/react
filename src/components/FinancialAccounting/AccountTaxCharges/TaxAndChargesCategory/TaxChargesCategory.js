@@ -8,10 +8,10 @@ import { connect } from 'react-redux';
 import { Col, Form, Row } from 'antd';
 import { bindActionCreators } from 'redux';
 
-import { dealerManpowerBayTypeMasterDataActions } from 'store/actions/data/dealerManpower/bayMasterType';
 import { geoStateDataActions } from 'store/actions/data/geo/states';
 import { taxChargeCategoryTypeDataActions } from 'store/actions/data/financialAccounting/taxChargeType';
 import { taxChargeCategoryDataActions } from 'store/actions/data/financialAccounting/taxChargesCategory';
+import { financialAccTaxChargeActions } from 'store/actions/data/financialAccounting/taxCharges'
 import { tableColumn } from './tableColumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
@@ -35,7 +35,7 @@ const mapStateToProps = (state) => {
             FinancialAccounting: {
                 TaxChargeCategoryType: { isLoaded: isTaxChargeCategoryTypeLoaded = false, isLoading: isTaxChargeCategoryTypeLoading = false, data: taxChargeCategoryTypeData = [] },
                 TaxChargesCategory: { isLoaded: isTaxChargeCategoryLoaded = false, isLoading: isTaxChargeCategoryLoading = false, data: taxChargeCategoryData = [] },
-                TaxCharges: {isLoaded: isTaxCategoryCodeLoaded=false, isLoading:isTaxCategoryCodeLoading ,data:taxChargeCategoryCodeData=[]}
+                TaxCharges: { isLoaded: isTaxCategoryCodeLoaded = false, isLoading: isTaxCategoryCodeLoading, data: taxChargeCategoryCodeData = [] }
             },
         },
     } = state;
@@ -53,9 +53,12 @@ const mapStateToProps = (state) => {
         isTaxChargeCategoryTypeLoaded,
         taxChargeCategoryTypeData,
         isTaxChargeCategoryTypeLoading,
+        isTaxCategoryCodeLoading,
         isTaxChargeCategoryLoaded,
+        isTaxCategoryCodeLoaded,
         isTaxChargeCategoryLoading,
         taxChargeCategoryData,
+        taxChargeCategoryCodeData,
     };
     return returnValue;
 };
@@ -71,6 +74,9 @@ const mapDispatchToProps = (dispatch) => ({
             fetchTaxChargeCategoryType: taxChargeCategoryTypeDataActions.fetchList,
             listShowLoadingTaxChargeCategoryType: taxChargeCategoryTypeDataActions.listShowLoading,
 
+            fetchTaxCodeList: financialAccTaxChargeActions.fetchList,
+            listTaxCodeLoading: financialAccTaxChargeActions.listShowLoading,
+
             fetchTaxChargeCategory: taxChargeCategoryDataActions.fetchList,
             listShowLoadingTaxChargeCategory: taxChargeCategoryDataActions.listShowLoading,
             saveData: taxChargeCategoryDataActions.saveData,
@@ -83,7 +89,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const TaxChargesCategoryMain = (props) => {
-    const { data, saveData, userId, isDataLoaded, showGlobalNotification, isStateDataLoaded, fetchStateList, listStateShowLoading, stateData, saleData, isTaxChargeCategoryTypeLoaded, fetchTaxChargeCategoryType, taxChargeCategoryTypeData, listShowLoadingTaxChargeCategoryType, isTaxChargeCategoryLoaded, fetchTaxChargeCategory, listShowLoadingTaxChargeCategory, taxChargeCategoryData } = props;
+    const { data, saveData, userId, isDataLoaded, showGlobalNotification, taxChargeCategoryCodeData, isStateDataLoaded, fetchStateList, listStateShowLoading, stateData, saleData, isTaxChargeCategoryTypeLoaded, fetchTaxCodeList, isTaxCategoryCodeLoaded, listTaxCodeLoading, fetchTaxChargeCategoryType, taxChargeCategoryTypeData, listShowLoadingTaxChargeCategoryType, isTaxChargeCategoryLoaded, fetchTaxChargeCategory, listShowLoadingTaxChargeCategory, taxChargeCategoryData } = props;
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
     console.log(taxChargeCategoryData, 'taxChargeCategoryDatataxChargeCategoryDatataxChargeCategoryDatataxChargeCategoryData');
@@ -164,6 +170,22 @@ export const TaxChargesCategoryMain = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isTaxChargeCategoryTypeLoaded]);
+
+
+useEffect(() => {
+    const extraParams = [
+        {
+            key: 'taxChargeType',
+            title: 'taxChargeType',
+            value: taxChargeCategoryCodeData?.taxType,
+            name: 'taxChargeType',
+        },
+    ];
+    if (userId && !taxChargeCategoryCodeData) {
+        fetchTaxCodeList({ setIsLoading: listShowLoadingTaxChargeCategory, userId, extraParams, onSuccessAction });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+}, [userId, taxChargeCategoryCodeData]);
 
     useEffect(() => {
         if (userId && !isTaxChargeCategoryLoaded) {
@@ -269,7 +291,7 @@ export const TaxChargesCategoryMain = (props) => {
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        form.validateFields().then((values) => { });
     };
 
     const onCloseAction = () => {
@@ -311,6 +333,7 @@ export const TaxChargesCategoryMain = (props) => {
         stateData,
         saleData,
         taxChargeCategoryTypeData,
+        taxChargeCategoryCodeData,
     };
 
     const tableProps = {
