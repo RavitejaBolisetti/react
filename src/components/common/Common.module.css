@@ -2069,11 +2069,11 @@
     border-bottom: #E6E6E6 1px solid;
 }
 
-.drawerBodyRight :global .ant-card .ant-card-body .ant-divider-horizontal {
+/* .drawerBodyRight :global .ant-card .ant-card-body .ant-divider-horizontal {
     margin-top: 0;
     margin-bottom: 20px;
     border-block-start: 1px solid #E6E6E6;
-}
+} */
 
 .drawerBodyRight .cardInsideBox :global .ant-divider-horizontal {
     margin-top: 20px !important;
@@ -2396,35 +2396,35 @@
      border: 1px solid #0B0B0C;
  } */
 
-.drawerBodyRight :global .ant-checkbox+span {
+/* .drawerBodyRight :global .ant-checkbox+span {
     padding-inline-start: 10px;
     color: #0B0B0C;
     font-size: 14px;
     font-weight: 500;
     line-height: 23px;
-}
+} */
 
-.drawerBodyRight :global .ant-checkbox-wrapper:hover span {
+/* .drawerBodyRight :global .ant-checkbox-wrapper:hover span {
     color: #FF3E5B;
-}
+} */
 
 .drawerBodyRight :global .ant-checkbox-checked:checked {
     background-color: transparent !important;
 }
 
-.drawerBodyRight :global .ant-checkbox .ant-checkbox-inner {
+/* .drawerBodyRight :global .ant-checkbox .ant-checkbox-inner {
     width: 22px;
     height: 22px;
     background-color: #fff;
     border: 1px solid #0B0B0C;
-}
+} */
 
 .drawerBodyRight :global .ant-checkbox-wrapper-checked:not(.ant-checkbox-wrapper-disabled):hover .ant-checkbox-inner,
 .drawerBodyRight :global .ant-checkbox-checked:not(.ant-checkbox-disabled):hover .ant-checkbox-inner {
     background-color: transparent !important;
 }
 
-.drawerBodyRight :global .ant-checkbox .ant-checkbox-inner:after {
+/* .drawerBodyRight :global .ant-checkbox .ant-checkbox-inner:after {
     top: 48%;
     inset-inline-start: 35%;
     width: 4px;
@@ -2432,7 +2432,7 @@
     border: 1px solid red;
     border-top: 0;
     border-inline-start: 0;
-}
+} */
 
 .drawerBodyRight :global .ant-checkbox-checked:after {
     border: 1px solid #FF3E5B !important;
@@ -2745,7 +2745,7 @@
     padding-bottom: 20px;
 }
 
-.viewDrawerContainer :global .ant-card .ant-card-body .ant-descriptions .ant-descriptions-item-content .anticon-check-square {
+/* .viewDrawerContainer :global .ant-card .ant-card-body .ant-descriptions .ant-descriptions-item-content .anticon-check-square {
     vertical-align: bottom;
     color: #B5B5B6;
     margin-right: 10px;
@@ -2754,7 +2754,7 @@
 .viewDrawerContainer :global .ant-card .ant-card-body .ant-descriptions .ant-descriptions-item-content .anticon-check-square svg {
     width: 22px;
     height: 22px;
-}
+} */
 
 /* .viewDrawerContainer :global .ant-card-bordered {
     margin-bottom: 0px;

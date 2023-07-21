@@ -131,8 +131,58 @@
 /* AntD Switch Checkbox Design End*/
 
 /* AntD Checkbox Design Start*/
+:global .ant-checkbox .ant-checkbox-inner {
+    width: 20px;
+    height: 20px;
+    background-color: #FFFFFF;
+    border: 1px solid #0B0B0C;
+}
+
+:global .ant-checkbox .ant-checkbox-inner:after {
+    top: 48%;
+    inset-inline-start: 35%;
+    width: 4px;
+    height: 7px;
+    border: 1px solid red;
+    border-top: 0;
+    border-inline-start: 0;
+}
+
+:global .ant-checkbox-disabled .ant-checkbox-inner:after {
+    border-color: #B5B5B6;
+}
+
+:global .ant-checkbox+span {
+    padding-inline-start: 10px;
+    padding-inline-end: 0;
+    color: #0B0B0C;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 23px;
+}
+
+:global .ant-checkbox-disabled .ant-checkbox-inner {
+    background: #F2F2F2;
+    border-color: #B5B5B6;
+}
 
 /* AntD Checkbox Design End*/
+
+/* AntD Divider Design Start*/
+:global .ant-divider-vertical {
+    height: 18px;
+    top: -1px;
+    margin: 0 6px;
+    border-inline-start: 1px solid #858585;
+}
+
+:global .ant-divider-horizontal {
+    margin-top: 0;
+    margin-bottom: 20px;
+    border-block-start: 1px solid #E6E6E6;
+}
+
+/* AntD Divider Design End*/
 
 /* AntD Tags Design Start*/
 :global .ant-tag-success {
@@ -189,9 +239,9 @@
     border-start-start-radius: 4px;
 }
 
-/* :global .ant-table-wrapper .ant-table-container table>thead>tr:first-child>*:last-child {
+:global .ant-table-wrapper .ant-table-container table>thead>tr:first-child>*:last-child {
     border-start-end-radius: 4px;
-} */
+}
 
 :global .ant-table-wrapper .ant-table-tbody>tr:last-child>td:first-child,
 :global .ant-table-wrapper .ant-table-tbody>tr.ant-table-row:last-child:hover>td:first-child {

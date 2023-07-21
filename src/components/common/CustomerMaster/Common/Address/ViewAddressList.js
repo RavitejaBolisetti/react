@@ -78,7 +78,7 @@ const ViewAddressList = (props) => {
                                         </Col>
                                         <Col xs={10} sm={10} md={10} lg={10} xl={10}>
                                             {!(isEditing || isAdding) && (
-                                                <div style={{ float: 'right' }} className={styles.padT5}>
+                                                <div className={styles.floatRight}>
                                                     <Checkbox valuePropName="checked" checked={data?.deafultAddressIndicator} defaultChecked={data?.deafultAddressIndicator} onClick={(e) => onCheckdefaultAddClick(e, data)} {...disableProp}>
                                                         Mark As Default
                                                     </Checkbox>
