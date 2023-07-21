@@ -3024,6 +3024,10 @@ li.ant-timeline-item.active .ant-timeline-item-content p {
     background: #f2f2f2;
 }
 
+.tokenField :global .ant-input-affix-wrapper{
+    height: 34px;
+}
+
 @media (max-width: 768px) {
     /* For mobile phones: */
     .headerSearchField {
