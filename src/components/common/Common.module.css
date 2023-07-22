@@ -1155,7 +1155,7 @@
 .subTitleSec {
     font-size: 16px;
     line-height: 24px;
-    font-weight: 500;
+    font-weight: 700;
     margin-bottom: 20px;
 }
 .subTitleSec .mandatory {
@@ -3062,12 +3062,17 @@ li.ant-timeline-item.active .ant-timeline-item-content p {
 .roleMangementSearch :global .ant-form-item {
     margin-bottom: 0px;
 }
+.rolemanagmentContaner :global .ant-collapse,
+.rolemanagmentContaner :global .ant-collapse:last-child {
+    margin-bottom: 0px;
+}
 .rolemanagmentContaner :global .ant-collapse .ant-collapse-content > .ant-collapse-content-box {
     padding-top: 0px;
 }
 .rolemanagmentContaner :global .ant-space-vertical {
     border-top: 1px solid #e6e6e6;
 }
+
 .rollTree {
     height: calc(100vh - 280px);
     overflow-y: scroll;
