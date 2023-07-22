@@ -112,7 +112,6 @@ export const TaxChargesCategoryMain = (props) => {
     const [taxChargeCalList, setTaxChargeCalList] = useState([]);
     const [taxMasterId, setTaxMasterId] = useState([]);
 
-
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
@@ -269,9 +268,8 @@ export const TaxChargesCategoryMain = (props) => {
     };
 
     const onFinish = (values) => {
-
         let data = { ...values, id: formData?.id, taxCategoryDetail: [{ id: formData?.id, taxMasterId: taxMasterId }] };
-        console.log(data, 'values')
+        console.log(data, 'values');
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
@@ -360,7 +358,7 @@ export const TaxChargesCategoryMain = (props) => {
         taxChargeCalList,
         setTaxChargeCalList,
         taxMasterId,
-        setTaxMasterId
+        setTaxMasterId,
     };
 
     const tableProps = {
@@ -384,6 +382,8 @@ export const TaxChargesCategoryMain = (props) => {
         handleButtonClick,
         title,
     };
+
+    console.log(taxChargeCalList, 'taxChargeCalList');
 
     return (
         <>

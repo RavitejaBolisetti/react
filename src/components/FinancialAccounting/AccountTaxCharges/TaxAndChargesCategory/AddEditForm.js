@@ -53,7 +53,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const AddEditFormMain = (props) => {
     const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined, isVisible, fetchTaxChargeCategoryDetail, setDisabledEdit, disabledEdit, userId, handleCodeFunction, taxChargeCategoryCodeData, onFinish, onFinishFailed, stateData, saleData, taxChargeCategoryTypeData, editForm, taxChargeCalForm } = props;
-    const { buttonData, setButtonData, handleButtonClick, formEdit, setFormEdit, taxChargeCalList, setTaxChargeCalList, taxMasterId, setTaxMasterId, } = props;
+    const { buttonData, setButtonData, handleButtonClick, formEdit, setFormEdit, taxChargeCalList, setTaxChargeCalList, taxMasterId, setTaxMasterId } = props;
 
     const [openAccordian, setOpenAccordian] = useState(1);
     const [taxCategory, setTaxCategory] = useState();
@@ -73,7 +73,7 @@ const AddEditFormMain = (props) => {
     useEffect(() => {
         if (formData?.id) {
             fetchTaxChargeCategoryDetail({
-                setIsLoading: () => { },
+                setIsLoading: () => {},
                 userId,
                 extraParams: [
                     {
@@ -82,7 +82,10 @@ const AddEditFormMain = (props) => {
                     },
                 ],
                 onSuccessAction: (res) => {
-                    setTaxCategory(res.data);
+                    setTaxCategory(res?.data);
+                    console.log(saleData, 'NILESH');
+                    let stateName = stateData?.find((e) => e?.code === res?.data?.stateCode)?.name;
+                    //let saleTypeName = //saleType
                 },
             });
         }
@@ -132,8 +135,7 @@ const AddEditFormMain = (props) => {
         taxChargeCalList,
         setTaxChargeCalList,
         taxMasterId,
-        setTaxMasterId
-
+        setTaxMasterId,
     };
 
     return (
