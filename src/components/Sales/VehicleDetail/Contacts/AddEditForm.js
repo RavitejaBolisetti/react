@@ -24,7 +24,7 @@ const AddEditForm = (props) => {
             <Form form={contactform} autoComplete="off" onFinish={onSaveFormData} onFieldsChange={handleFormValueChange} layout="vertical">
                 <Space direction="vertical">
                     <Row gutter={[20, 0]}>
-                        <Col xs={24} sm={12} md={8} lg={8} xl={8} className={styles.selectPlaceholderLineHeight}>
+                        <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                             <Form.Item label="Contact Type" name="contactType" rules={[validateRequiredSelectField('contact type')]}>
                                 <Select placeholder={preparePlaceholderSelect('contact type')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} allowClear options={typeData['VH_CONTACT_TYPE']}></Select>
                             </Form.Item>
@@ -34,7 +34,7 @@ const AddEditForm = (props) => {
                                 <Select mode="multiple" placeholder={preparePlaceholderSelect('preferred days for contact')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} allowClear options={typeData['VH_CONTACT_DAYS']}></Select>
                             </Form.Item>
                         </Col>
-                        <Col xs={24} sm={12} md={8} lg={8} xl={8} className={styles.inputWrapper}>
+                        <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                             <Form.Item label="Mobile Number" name="mobileNumber" rules={[validateRequiredInputField('mobile number'), validateMobileNoField('mobile number')]}>
                                 <Input maxLength={10} placeholder={preparePlaceholderText('mobile number')} allowClear size="small" />
                             </Form.Item>
