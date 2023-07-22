@@ -210,7 +210,7 @@ const LeftSideBarMain = (props) => {
 
     return (
         <>
-            <Sider onBreakpoint={onBreakPoint} breakpoint="lg" collapsedWidth={isMobile ? '0px' : '60px'} width={isMobile ? '100vw' : '240px'} collapsible className={`${styles.leftMenuBox} ${menuParentClass}`} collapsed={collapsed} onCollapse={(value, type) => onSubmit(value, type)}>
+            <Sider onBreakpoint={onBreakPoint} breakpoint="lg" collapsedWidth={isMobile ? '0px' : '78px'} width={isMobile ? '100vw' : '282px'} collapsible className={`${styles.leftMenuBox} ${menuParentClass}`} collapsed={collapsed} onCollapse={(value, type) => onSubmit(value, type)}>
                 <div className={collapsed ? styles.logoContainerCollapsed : styles.logoContainer}>
                     <Row gutter={20}>
                         <Col xs={22} sm={22} md={24} lg={24} xl={24}>
@@ -273,7 +273,6 @@ const LeftSideBarMain = (props) => {
                     className={styles.changeTheme}
                     onClick={handleThemeChange}
                     style={{
-                        padding: collapsed ? '10px' : '10px 14px',
                         position: isMobile ? (collapsed ? 'relative' : 'absolute') : 'absolute',
                     }}
                 >
