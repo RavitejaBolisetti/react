@@ -71,13 +71,15 @@ export const TaxAndChargesCalculationMaster = (props) => {
         ...cardAttributeProps,
     };
 
+    console.log(taxChargeCalList, 'taxChargeCalListtaxChargeCalListtaxChargeCalListtaxChargeCalList');
+
     return (
         <>
             <FormProductAttribute {...formProductAttributeProps} />
 
             {taxChargeCalList?.length > 0 &&
                 taxChargeCalList?.map((action) => {
-                    return <CardProductAttribute {...cardAttributeProps} taxChargeTypeCode={action?.taxChargeTypeCode} taxChargeCode={action?.taxChargeCode} chargeDesc={action?.chargeDesc} internalId={action?.internalId} />;
+                    return <CardProductAttribute {...cardAttributeProps} taxChargeTypeCode={action?.taxChargeTypeCode} taxChargeCode={action?.taxChargeCode} taxDescription={action?.taxDescription} internalId={action?.internalId} />;
                 })}
         </>
     );

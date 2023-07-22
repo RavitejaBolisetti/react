@@ -19,10 +19,12 @@ const CardProductAttribute = (props) => {
     const taxChargeCalEdit = (props) => {
         setuniqueCardEdit(props?.internalId);
         setFormEdit(true);
+        console.log(props, 'taxChargeCalEdit');
+        console.log(editForm.getFieldsValue(), 'EDIT');
         editForm.setFieldsValue({
             taxChargeTypeCode: props?.taxChargeTypeCode,
             taxChargeCode: props?.taxChargeCode,
-            chargeDesc: props?.chargeDesc,
+            taxDescription: props?.taxDescription,
             internalId: props?.internalId,
         });
 
@@ -81,7 +83,6 @@ const CardProductAttribute = (props) => {
     };
 
     useEffect(() => {
-        console.log(formEdit,'hshshshhsshsh')
         if (formEdit) {
             setDisabledEdit(true);
         } else {
