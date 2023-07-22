@@ -243,7 +243,7 @@ const ContactMasterMain = (props) => {
                                             </Button>
                                         )}
                                     </Row>
-                                    <Divider className={styles.marT20} />
+                                    <Divider />
                                     <Space direction="vertical" style={{ width: '100%' }} className={styles.accordianContainer}>
                                         <div className={styles.headerBox}>
                                             {!formActionType?.viewMode && showAddEditForm && <AddEditForm {...formProps} />}

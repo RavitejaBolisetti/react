@@ -14,7 +14,7 @@ export default function AdvanceOTFFilter(props) {
     const {
         extraParams,
         removeFilter,
-        // handleResetFilter,
+        handleResetFilter,
         advanceFilter = false,
         otfFilter = false,
         title,
@@ -41,9 +41,9 @@ export default function AdvanceOTFFilter(props) {
         // handleChange,
     };
 
-    const handleResetFilter = (e) => {
-        setFieldsValue({ searchParam: undefined, searchType: undefined });
-    };
+    // const handleResetFilter = (e) => {
+    //     setFieldsValue({ searchParam: undefined, searchType: undefined });
+    // };
 
     return (
         <div className={styles.contentHeaderBackground}>
@@ -73,7 +73,7 @@ export default function AdvanceOTFFilter(props) {
                     </Row>
                 </Col>
             </Row>
-            {advanceFilter && filterString?.advanceFilter && extraParams.find((i) => i.name) && (
+            {filterString?.advanceFilter && extraParams.find((i) => i.name) && (
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.advanceFilterTop}>
                         <Row gutter={20}>
@@ -85,11 +85,11 @@ export default function AdvanceOTFFilter(props) {
                                         filter?.filter && (
                                             <div className={styles.advanceFilterItem} key={filter?.key}>
                                                 {filter?.name}
-                                                {filter?.canRemove && (
+                                                {/* {filter?.canRemove && (
                                                     <span>
                                                         <RxCross2 onClick={() => removeFilter(filter?.key)} />
                                                     </span>
-                                                )}
+                                                )} */}
                                             </div>
                                         )
                                     );

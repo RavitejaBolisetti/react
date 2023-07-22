@@ -18,9 +18,10 @@ import { expandIcon } from 'utils/accordianExpandIcon';
 import { AggregateAddEditForm } from './AggregateAddEditForm';
 import { tableColumn } from './tableCoulmn';
 
-import styles from 'components/common/Common.module.css';
-import { convertDateToCalender } from 'utils/formatDateTime';
+import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
 import { NoDataFound } from 'utils/noDataFound';
+
+import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
@@ -44,8 +45,8 @@ const AddEditFormMain = (props) => {
         if (formData?.productAttributeDetail) {
             form.setFieldsValue({
                 ...formData?.productAttributeDetail,
-                manufacturerInvoiceDate: convertDateToCalender(formData?.productAttributeDetail?.manufacturerInvoiceDate),
-                manufacturerWarrantyStartDate: convertDateToCalender(formData?.productAttributeDetail?.manufacturerWarrantyStartDate),
+                manufacturerInvoiceDate: formattedCalendarDate(formData?.productAttributeDetail?.manufacturerInvoiceDate),
+                manufacturerWarrantyStartDate: formattedCalendarDate(formData?.productAttributeDetail?.manufacturerWarrantyStartDate),
             });
         }
         if (formData?.connectedVehicle?.length) {
@@ -177,12 +178,12 @@ const AddEditFormMain = (props) => {
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item label="Manufacturer Invoice Date" name="manufacturerInvoiceDate">
-                                            <DatePicker format="DD-MM-YYYY" style={{ display: 'auto', width: '100%' }} {...disabledProps} />
+                                            <DatePicker format={dateFormat} style={{ display: 'auto', width: '100%' }} {...disabledProps} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item label="Manufacturer Warranty Start Date" name="manufacturerWarrantyStartDate">
-                                            <DatePicker format="DD-MM-YYYY" style={{ display: 'auto', width: '100%' }} {...disabledProps} />
+                                            <DatePicker format={dateFormat} style={{ display: 'auto', width: '100%' }} {...disabledProps} />
                                         </Form.Item>
                                     </Col>
                                 </Row>

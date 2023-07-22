@@ -4,16 +4,18 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Space, Collapse, Descriptions, Card, Divider } from 'antd';
+import { Collapse, Descriptions, Card, Divider } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { FiDownload } from 'react-icons/fi';
 import { getCodeValue } from 'utils/getCodeValue';
 import { expandIcon } from 'utils/accordianExpandIcon';
+import { DATA_TYPE } from 'constants/dataType';
+
 import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
 const ViewDetailMain = (props) => {
-    const { downloadFileFromButton, setActiveKey, activeKey, styles, formData, viewDocument, handleOnClickCustomerForm, isLoading, appCategoryData } = props;
+    const { downloadFileFromButton, setActiveKey, activeKey, formData, viewDocument, isLoading, appCategoryData } = props;
 
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
@@ -50,7 +52,7 @@ const ViewDetailMain = (props) => {
                     <br />
                     <Divider />
                     <Descriptions {...viewProps}>
-                        <Descriptions.Item label="Date of Birth">{checkAndSetDefaultValue(formData?.dateOfBirth, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Date of Birth">{checkAndSetDefaultValue(formData?.dateOfBirth, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                         <Descriptions.Item label="Gender">{checkAndSetDefaultValue(getCodeValue(appCategoryData?.GENDER_CD, formData?.gender), isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Maritial Status">{checkAndSetDefaultValue(getCodeValue(appCategoryData?.MARITAL_STATUS, formData?.martialStatus), isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Wedding Anniversary Date">{checkAndSetDefaultValue(formData?.weddingAnniversary, isLoading)}</Descriptions.Item>

@@ -103,6 +103,7 @@ const mapDispatchToProps = (dispatch) => ({
         },
         dispatch
     ),
+
 });
 export const AdvancedSearchFrom = (props) => {
     const { productHierarchyList, filteredStateData, filteredCityData, handleFilterChange } = props;
@@ -176,7 +177,7 @@ export const AdvancedSearchFrom = (props) => {
                         </Select>
                     </Form.Item>
                 </Col>
-                {/* <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item label="City" initialValue={filterString?.cityCode} name="cityCode" rules={[validateRequiredSelectField('city')]}>
                         <Select placeholder="Select" {...selectProps} onChange={handleFilterChange('cityCode')}>
                             {filteredCityData?.map((item) => (
@@ -184,7 +185,7 @@ export const AdvancedSearchFrom = (props) => {
                             ))}
                         </Select>
                     </Form.Item>
-                </Col> */}
+                </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item initialValue={formatDateToCalenderDate(filterString?.priceAsOnDate)} label="Price As On Date" name="priceAsOnDate" rules={[validateRequiredSelectField('Price As On Date')]} className={styles?.datePicker}>
                         <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} />

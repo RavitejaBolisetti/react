@@ -7,9 +7,13 @@
 import moment from 'moment';
 import dayjs from 'dayjs';
 
-export const dateFormat = 'YYYY-MM-DD';
+export const dateFormat = 'DD/MM/YYYY';
 
-export const convertCalenderDate = (dateToConvert = '', defaultFormat = 'DD-MM-YYYY', currentDate = false) => {
+export const formattedCalendarDate = (dateToConvert = '', dateFormat = 'DD/MM/YYYY') => {
+    return (dateToConvert && moment(moment(dateToConvert).format(dateFormat), dateFormat)) || null;
+};
+
+export const convertCalenderDate = (dateToConvert = '', defaultFormat = 'DD/MM/YYYY', currentDate = false) => {
     return dateToConvert || currentDate ? dayjs(moment(dateToConvert || moment()).format('YYYY/MM/DD'), defaultFormat) : null;
 };
 export const convertDate = (dateToConvert = moment(), defaultFormat = 'YYYY-MM-DD') => moment(dateToConvert).format(defaultFormat);

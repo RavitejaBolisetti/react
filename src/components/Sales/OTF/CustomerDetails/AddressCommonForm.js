@@ -8,6 +8,7 @@ import { Col, Input, Form, Row, DatePicker, Checkbox } from 'antd';
 
 import { disableFutureDate } from 'utils/disableDate';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
+import { dateFormat } from 'utils/formatDateTime';
 
 import { validateRequiredInputField, validateRequiredSelectField, validateEmailField, validatePincodeField, validateMobileNoField, validatePanField, validateAadhar, validateDrivingLicenseNoWithSpace, validateGSTIN } from 'utils/validation';
 
@@ -120,7 +121,7 @@ export const AddressCommonForm = (props) => {
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name={[formType, 'birthDate']} label="Birth Date">
-                        <DatePicker disabledDate={disableFutureDate} format="YYYY-MM-DD" style={{ display: 'auto', width: '100%' }} {...disabledProps} />
+                        <DatePicker disabledDate={disableFutureDate} format={dateFormat} style={{ display: 'auto', width: '100%' }} {...disabledProps} />
                     </Form.Item>
                 </Col>
             </Row>

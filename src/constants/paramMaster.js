@@ -180,14 +180,6 @@ export const PARAM_MASTER = {
         id: 'REFERRAL_SEARCH',
         title: 'REFERRAL_SEARCH',
     },
-    FILE_DOWNLOAD_TMPLT: {
-        id: 'FILE_DOWNLOAD_TMPLT',
-        title: 'Template download',
-    },
-    LSRCUSTTMPLT: {
-        id: 'LSRCUSTTMPLT',
-        title: 'Lessor creation template download',
-    },
     VCLPRCMSTTMPLT: {
         id: 'VCLPRCMSTTMPLT',
         title: 'Vehicle Price Master template download',
@@ -219,5 +211,17 @@ export const PARAM_MASTER = {
     VH_PRC_SRCH: {
         id: 'VH_PRC_SRCH',
         title: 'Vehicle Price Search',
+    },
+    LTC: {
+        id: 'LTC',
+        title: 'Lost to Competition',
+    },
+    PROCAN: {
+        id: 'PROCAN',
+        title: 'Product Change',
+    },
+    LOMMD: {
+        id: 'LOMMD',
+        title: 'Lost other M&M Dealer',
     },
 };

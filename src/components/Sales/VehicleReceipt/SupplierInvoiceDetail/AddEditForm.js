@@ -4,16 +4,14 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Row, Col, Input, Form, Select, DatePicker, Card } from 'antd';
+import { Row, Col, Input, Form, DatePicker, Card } from 'antd';
 
-import { convertCalenderDate } from 'utils/formatDateTime';
+import { formattedCalendarDate } from 'utils/formatDateTime';
 
 import { validateRequiredSelectField, validateRequiredInputField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import styles from 'components/common/Common.module.css';
-
-const { Option } = Select;
 
 const AddEditFormMain = (props) => {
     const { formData } = props;
@@ -22,12 +20,12 @@ const AddEditFormMain = (props) => {
         <Card className={styles.drawerCardView}>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={convertCalenderDate(formData?.initialPromiseDeliveryDate, 'YYYY/MM/DD')} label="Supplier Type" name="initialPromiseDeliveryDate" rules={[validateRequiredInputField('Initial Promise Delivery Date')]}>
+                    <Form.Item initialValue={formattedCalendarDate(formData?.initialPromiseDeliveryDate)} label="Supplier Type" name="initialPromiseDeliveryDate" rules={[validateRequiredInputField('Initial Promise Delivery Date')]}>
                         <Input maxLength={10} placeholder={preparePlaceholderText('Supplier Type')} disabled={true} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={convertCalenderDate(formData?.custExpectedDeliveryDate, 'YYYY/MM/DD')} label="Supplier Name" name="custExpectedDeliveryDate">
+                    <Form.Item initialValue={formattedCalendarDate(formData?.custExpectedDeliveryDate)} label="Supplier Name" name="custExpectedDeliveryDate">
                         <Input maxLength={10} placeholder={preparePlaceholderText('Supplier Name')} disabled={true} />
                     </Form.Item>
                 </Col>

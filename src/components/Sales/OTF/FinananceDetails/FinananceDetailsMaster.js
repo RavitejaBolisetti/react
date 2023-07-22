@@ -11,6 +11,7 @@ import { bindActionCreators } from 'redux';
 import { otfFinanceDetailDataActions } from 'store/actions/data/otf/financeDetail';
 import { financeLovDataActions } from 'store/actions/data/otf/financeLov';
 import { showGlobalNotification } from 'store/actions/notification';
+import { formattedCalendarDate } from 'utils/formatDateTime';
 
 import { OTFFormButton } from '../OTFFormButton';
 import { OTFStatusBar } from '../utils/OTFStatusBar';
@@ -129,7 +130,7 @@ export const FinananceDetailsMasterBase = (props) => {
     };
 
     const onFinish = (values) => {
-        const data = { ...values, id: financeData?.id, otfNumber: selectedOrderId, doDate: values?.doDate?.format('YYYY-MM-DD') };
+        const data = { ...values, id: financeData?.id, otfNumber: selectedOrderId, doDate: formattedCalendarDate(values?.doDate) };
 
         const onSuccess = (res) => {
             form.resetFields();

@@ -10,7 +10,7 @@ import { withModal } from 'components/withModal';
 import { validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
-import { dateFormat, formatDate, formatDateToCalenderDate } from 'utils/formatDateTime';
+import { dateFormat, formattedCalendarDate, formatDateToCalenderDate } from 'utils/formatDateTime';
 import { disableFutureDate } from 'utils/disableDate';
 
 import styles from 'components/common/Common.module.css';
@@ -34,8 +34,8 @@ export const AdvancedSearchFrom = (props) => {
         setFilterString({
             ...filterString,
             ...values,
-            fromDate: formatDate(values?.fromDate),
-            toDate: formatDate(values?.toDate),
+            fromDate: formattedCalendarDate(values?.fromDate),
+            toDate: formattedCalendarDate(values?.toDate),
             otfStatus: values?.otfStatus,
             advanceFilter: true,
         });

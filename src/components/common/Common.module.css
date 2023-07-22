@@ -52,11 +52,24 @@
 .padT5 {
     padding-top: 5px;
 }
-
 .invertIcon {
     transform: scaleX(-1);
 }
+.fullyCentered {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
+.verticallyCentered {
+    display: flex;
+    align-items: center;
+}
+
+.horizontallyCentered {
+    display: flex;
+    justify-content: center;
+}
 .lineHeight33 {
     line-height: 33px;
     padding-right: 0 !important;
@@ -1629,6 +1642,7 @@
 .drawerBodyLeft :global .ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-collapse-header-text .ant-space {
     gap: 10px !important;
     margin-bottom: 16px;
+    width: 100%;
 }
 
 .drawerBodyLeft :global .ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-collapse-header-text .ant-space .ant-space-item h5.ant-typography {
@@ -1742,6 +1756,7 @@
     font-weight: 500;
     line-height: 24px;
     float: left;
+    width: 100%;
 }
 
 .drawerBodyLeft :global .ant-timeline {
@@ -2065,9 +2080,9 @@
     font-weight: 400;
     color: #0B0B0C;
 } */
-.selectPlaceholderLineHeight :global .ant-select-single .ant-select-selector .ant-select-selection-placeholder {
+/* .selectPlaceholderLineHeight :global .ant-select-single .ant-select-selector .ant-select-selection-placeholder {
     line-height: 34px !important;
-}
+} */
 
 .drawerBodyRight :global .ant-card .ant-card-body .ant-form-item .ant-select .ant-select-selector .ant-select-selection-placeholder {
     color: #b5b5b6;
@@ -3085,6 +3100,10 @@ li.ant-timeline-item.active .ant-timeline-item-content p {
 .rollTree::-webkit-scrollbar {
     background-color: #f4f4f4;
     width: 8px;
+}
+
+.tokenField :global .ant-input-affix-wrapper {
+    height: 34px !important;
 }
 
 @media (max-width: 768px) {
