@@ -85,6 +85,7 @@ const CardProductAttribute = (props) => {
     };
 
     useEffect(() => {
+        console.log(formEdit,'hshshshhsshsh')
         if (formEdit) {
             setDisabledEdit(true);
         } else {

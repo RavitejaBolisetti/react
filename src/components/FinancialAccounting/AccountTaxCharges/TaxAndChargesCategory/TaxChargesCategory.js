@@ -14,6 +14,8 @@ import { taxChargeCategoryDataActions } from 'store/actions/data/financialAccoun
 import { financialAccTaxChargeCategoryDataActions } from 'store/actions/data/financialAccounting/taxChargesCode'
 import { tableColumn } from './tableColumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
+import { BASE_URL_FINANCIAL_ACC_TAX_CHARGE_CATEGORY_SEARCH as customURL } from 'constants/routingApi';
+
 
 import { showGlobalNotification } from 'store/actions/notification';
 
@@ -39,7 +41,6 @@ const mapStateToProps = (state) => {
             },
         },
     } = state;
-    console.log(state,'sjgasdhgkshgdhg')
 
     const moduleTitle = 'Tax & Charges Category'
 
@@ -101,6 +102,8 @@ export const TaxChargesCategoryMain = (props) => {
     const [formData, setFormData] = useState([]);
     const [filterString, setFilterString] = useState();
     const [isFormVisible, setIsFormVisible] = useState(false);
+    const [disabledEdit, setDisabledEdit] = useState(false);
+
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -172,23 +175,23 @@ export const TaxChargesCategoryMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isTaxChargeCategoryTypeLoaded]);
 
-const handleCodeFunction =(value)=>{
-    const extraParams = [
-        {
-            key: 'taxChargeType',
-            title: 'taxChargeType',
-            value: value,
-            name: 'taxChargeType',
-        },
-    ];
+    const handleCodeFunction = (value) => {
+        const extraParams = [
+            {
+                key: 'taxChargeType',
+                title: 'taxChargeType',
+                value: value,
+                name: 'taxChargeType',
+            },
+        ];
         fetchTaxCodeList({ setIsLoading: listShowLoadingTaxChargeCategory, userId, extraParams, onSuccessAction });
-}
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
 
 
     useEffect(() => {
         if (userId && !isTaxChargeCategoryLoaded) {
-            fetchTaxChargeCategory({ setIsLoading: listShowLoadingTaxChargeCategory, userId, extraParams, onSuccessAction });
+            fetchTaxChargeCategory({ setIsLoading: listShowLoadingTaxChargeCategory, userId, customURL, extraParams, onSuccessAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isTaxChargeCategoryTypeLoaded]);
@@ -334,6 +337,8 @@ const handleCodeFunction =(value)=>{
         taxChargeCategoryTypeData,
         taxChargeCategoryCodeData,
         handleCodeFunction,
+        setDisabledEdit,
+        disabledEdit,
     };
 
     const tableProps = {
@@ -355,7 +360,7 @@ const handleCodeFunction =(value)=>{
         handleClearInSearch,
         handleReferesh,
         handleButtonClick,
-        title,
+        title,        
     };
 
     return (
