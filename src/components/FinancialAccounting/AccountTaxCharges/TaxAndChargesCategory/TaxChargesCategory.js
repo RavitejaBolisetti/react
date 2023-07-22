@@ -94,7 +94,6 @@ export const TaxChargesCategoryMain = (props) => {
     const { data, saveData, userId, isDataLoaded, showGlobalNotification, taxChargeCategoryCodeData, isStateDataLoaded, fetchStateList, listStateShowLoading, stateData, saleData, isTaxChargeCategoryTypeLoaded, fetchTaxCodeList, isTaxCategoryCodeLoaded, listTaxCodeLoading, fetchTaxChargeCategoryType, taxChargeCategoryTypeData, listShowLoadingTaxChargeCategoryType, isTaxChargeCategoryLoaded, fetchTaxChargeCategory, listShowLoadingTaxChargeCategory, taxChargeCategoryData } = props;
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
-    console.log(taxChargeCategoryData, 'taxChargeCategoryDatataxChargeCategoryDatataxChargeCategoryDatataxChargeCategoryData');
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [searchData, setSearchdata] = useState('');
     const [refershData, setRefershData] = useState(false);
