@@ -8,7 +8,6 @@ import { Menu } from './menu';
 import { ProductHierarchy } from './productHierarchy';
 import { HierarchyAttributeMaster } from './hierarchyAttributeMaster';
 import { CriticalityGroup } from './criticalityGroup';
-import { RoleManagement } from './roleManagement';
 import { ManufacturerAdminHierarchy } from './manufacturerAdminHierarchy';
 import { ManufacturerOrgHierarchy } from './manufacturerOrgHierarchy';
 import { ForgotPassword } from './forgotPassword';
@@ -33,6 +32,7 @@ import { CustomerMaster } from './customerMaster';
 import { SupportingDocument } from './supportingDocument';
 import { FinancialAccounting } from './financialAccounting';
 import { VehiclePriceMaster } from './vehiclePriceMaster';
+import { RoleManagementData } from './roleManagementData';
 import { ManufacturerAdmin } from './ManufacturerAdmin';
 import { ManufacturerOrg } from './ManufacturerOrg';
 
@@ -41,7 +41,6 @@ export const data = combineReducers({
     ProductHierarchy,
     HierarchyAttributeMaster,
     CriticalityGroup,
-    RoleManagement,
     ManufacturerAdminHierarchy,
     ManufacturerOrgHierarchy,
     ForgotPassword,
@@ -65,6 +64,7 @@ export const data = combineReducers({
     SupportingDocument,
     Vehicle,
     FinancialAccounting,
+    RoleManagementData,
     ManufacturerAdmin,
     ManufacturerOrg,
     VehiclePriceMaster,
