@@ -268,7 +268,7 @@ export const TaxChargesCategoryMain = (props) => {
     };
 
     const onFinish = (values) => {
-        let data = { ...values, id: formData?.id, taxCategoryDetail: [{ id: formData?.id, taxMasterId: taxMasterId }] };
+        let data = { ...values, id: formData?.id || '', taxCategoryDetail: [{ id: formData?.id || '', taxMasterId: taxMasterId }] };
 
         const onSuccess = (res) => {
             form.resetFields();
