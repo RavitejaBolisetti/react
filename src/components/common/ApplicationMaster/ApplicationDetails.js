@@ -16,7 +16,7 @@ const sameParentAndChildWarning = LANGUAGE_EN.GENERAL.HIERARCHY_SAME_PARENT_AND_
 
 const ApplicationDetails = ({ setCanFormSave, form, onFinishFailed = () => {}, parentAppCode, isReadOnly, isFieldDisable, onFinish, setIsRestrictedLocation, setparentAppCode, setIsDocumentToGenerate, finalFormdata, criticalityGroupData, configurableParamData, menuData, setSelectedTreeKey, selectedTreeKey, showGlobalNotification }) => {
     useEffect(() => {
-        form.setFieldsValue({ ...finalFormdata?.applicationDetails });
+        form?.setFieldsValue({ ...finalFormdata?.applicationDetails });
         setparentAppCode(finalFormdata?.applicationDetails.parentApplicationId);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [form, finalFormdata?.applicationDetails, finalFormdata?.applicationDetails?.parentApplicationId, setSelectedTreeKey]);
@@ -54,7 +54,7 @@ const ApplicationDetails = ({ setCanFormSave, form, onFinishFailed = () => {}, p
 
     return (
         <Fragment>
-            <Form form={form} id="myForm" onFieldsChange={onFieldsChange} autoComplete="off" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+            <Form form={form} id="myForm" onFieldsChange={onFieldsChange} autoComplete="off" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed} data-testid="myForm">
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item label="Application ID" name="applicationId" rules={[validateRequiredInputField('application ID')]}>
