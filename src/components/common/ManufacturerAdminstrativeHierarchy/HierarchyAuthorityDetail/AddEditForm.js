@@ -112,10 +112,10 @@ const AuthorityFormMin = (props) => {
             <Row gutter={20}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item label="Authority Type" name="authorityTypeCode" rules={[validateRequiredInputField('Authority Type')]}>
-                        <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} placeholder="Select Authority Type" fieldNames={fieldNames} options={authTypeDropdownData} disabled={isBtnDisabled} onChange={(value, valueObject) => setselectedValueOnUpdate(valueObject)} />
+                        <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} placeholder="Select Authority Type" fieldNames={fieldNames} options={authTypeDropdownData} disabled={isBtnDisabled} onChange={(value, valueObject) => setselectedValueOnUpdate(valueObject)} allowClear />
                     </Form.Item>
                 </Col>
-                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className={style.tokenField}>
+                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item label="Token" name={'authorityEmployeeTokenNo'} rules={[validateRequiredInputField('Token Required')]}>
                         <Search loading={searchLoading} disabled={isBtnDisabled} allowClear onChange={onChangeHandle(recordId)} onSearch={onSearchHandle(recordId)} placeholder={preparePlaceholderText('Token')} />
                     </Form.Item>
@@ -156,7 +156,7 @@ const AuthorityFormMin = (props) => {
             )}
 
             {!isEditing && authorityVisible && (
-                <Button {...disableAddBtn} icon={<PlusOutlined />} type="primary" htmlType="submit" onClick={() => cardBtnDisableAction(true)}>
+                <Button {...disableAddBtn} icon={<PlusOutlined />} type="primary" danger htmlType="submit" onClick={() => cardBtnDisableAction(true)}>
                     Add
                 </Button>
             )}
