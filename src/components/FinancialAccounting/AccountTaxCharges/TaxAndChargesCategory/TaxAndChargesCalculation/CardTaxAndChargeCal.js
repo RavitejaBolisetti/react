@@ -12,9 +12,9 @@ import FormProductAttribute from './FormTaxAndChargeCal';
 const { Text } = Typography;
 
 const CardProductAttribute = (props) => {
-    const { isVisible, finalFormdata, taxChargeCalForm, forceUpdate, productHierarchyAttributeData, taxChargeCategoryCodeData, setDisabledEdit, taxChargeCalList, setTaxChargeCalList, objTaxCharge, objTaxCode, setOpenAccordian, changeValue, setChangeValue, handleCodeFunction, editForm, formEdit, setFormEdit, uniqueCardEdit, setuniqueCardEdit } = props;
-    const taxChargeDesc = objTaxCharge?.taxCategoryDetail?.find((e) => e?.chargeCode === props?.chargeCode)?.chargeDescription;
-
+    const { isVisible, finalFormdata, taxChargeCalForm, forceUpdate, taxCharges, productHierarchyAttributeData, taxChargeCategoryCodeData, setDisabledEdit, taxChargeCalList, setTaxChargeCalList, objTaxCharge, objTaxCode, setOpenAccordian, changeValue, setChangeValue, handleCodeFunction, editForm, formEdit, setFormEdit, uniqueCardEdit, setuniqueCardEdit } = props;
+    const taxChargeDesc = taxCharges?.find((e) => e?.taxType === props?.chargeType)?.taxDescription;
+    console.log(props?.chargeType,taxCharges,'ppphgsdgsgdgggg')
     const taxChargeCalEdit = (props) => {
         setuniqueCardEdit(props?.internalId);
         setFormEdit(true);
@@ -69,6 +69,7 @@ const CardProductAttribute = (props) => {
         finalFormdata,
         formEdit,
         taxChargeCalList,
+        taxCharges,
         taxCharge: objTaxCharge,
         taxCode: objTaxCode,
         taxChargeCategoryCodeData,
@@ -99,7 +100,7 @@ const CardProductAttribute = (props) => {
                 <Row align="center">
                     <div>
                         {/* <Text>{taxChargeDesc}</Text> */}
-                        <Text>{props?.chargeType}</Text>
+                        <Text>{taxChargeDesc}</Text>
                     </div>
                     <Divider type="vertical" />
                     <div>

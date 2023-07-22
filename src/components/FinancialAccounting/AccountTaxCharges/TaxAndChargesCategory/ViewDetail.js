@@ -10,7 +10,7 @@ import { PlusBorderedIcon, MinusBorderedIcon } from 'Icons';
 const { Panel } = Collapse;
 
 const expandIcon = ({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />);
-const ViewDetailBase = ({ formData, styles, parameterType, taxCategory, setDisabledEdit }) => {
+const ViewDetailBase = ({ formData, styles, parameterType, taxCharges, taxCategory, setDisabledEdit }) => {
     const viewProps = {
         bordered: false,
         colon: false,
@@ -32,7 +32,7 @@ const ViewDetailBase = ({ formData, styles, parameterType, taxCategory, setDisab
                                     <Collapse expandIcon={expandIcon}>
                                         <Panel header="Tax & Charges Calculation" key="2">
                                             {taxCategory?.taxCategoryDetail?.map((item, index) => (
-                                                <CardProductAttribute key={'tax' + item?.taxChargeTypeCode} chargeCode={item?.chargeCode} chargeDescription={item?.chargeDescription} chargeType={item?.chargeType} id={item?.id} setDisabledEdit={setDisabledEdit} />
+                                                <CardProductAttribute key={'tax' + item?.taxChargeTypeCode} chargeCode={item?.chargeCode} chargeDescription={item?.chargeDescription} chargeType={item?.chargeType} id={item?.id} setDisabledEdit={setDisabledEdit} taxCharges={taxCharges} />
                                             ))}
                                         </Panel>
                                     </Collapse>

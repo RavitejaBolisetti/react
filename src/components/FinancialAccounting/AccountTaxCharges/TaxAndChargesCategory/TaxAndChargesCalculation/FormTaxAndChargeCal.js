@@ -12,7 +12,7 @@ import { customSelectBox } from 'utils/customSelectBox';
 import styles from 'components/common/Common.module.css';
 
 function FormProductAttribute(props) {
-    const { taxChargeCalForm, isVisible, taxCharge, addTaxChargeCal, formEdit, editForm, taxChargeCategoryCodeData, handleCodeFunction, setChangeValue } = props;
+    const { taxChargeCalForm, isVisible, taxCharges, addTaxChargeCal, formEdit, editForm, taxChargeCategoryCodeData, handleCodeFunction, setChangeValue } = props;
 
     const handleDescriptionChange = (taxCode) => {
         setChangeValue(taxChargeCategoryCodeData?.find((i) => i?.taxCode === taxCode)?.taxDescription);
@@ -24,7 +24,7 @@ function FormProductAttribute(props) {
             <Row gutter={20}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item label="Tax/Charge Type" name="chargeType" rules={[validateRequiredSelectField('Tax Charge')]}>
-                        {customSelectBox({ data: taxCharge, fieldNames: { key: 'taxType', value: 'taxDescription' }, placeholder: preparePlaceholderSelect('Tax Charge'), onChange: handleCodeFunction })}
+                        {customSelectBox({ data: taxCharges, fieldNames: { key: 'taxType', value: 'taxDescription' }, placeholder: preparePlaceholderSelect('Tax Charge'), onChange: handleCodeFunction })}
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>

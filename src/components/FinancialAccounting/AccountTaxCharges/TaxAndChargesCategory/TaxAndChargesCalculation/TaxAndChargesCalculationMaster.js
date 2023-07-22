@@ -41,7 +41,7 @@ export const TaxAndChargesCalculationMaster = (props) => {
         forceUpdate,
         isVisible,
         selectedTreeData,
-        taxCharge: taxChargeCategoryTypeData,
+        taxCharges: taxChargeCategoryTypeData,
         taxCode,
         objTaxCharge: taxCategory,
         objTaxCode: taxCode,
