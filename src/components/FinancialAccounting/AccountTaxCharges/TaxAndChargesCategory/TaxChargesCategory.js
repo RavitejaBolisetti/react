@@ -269,7 +269,7 @@ export const TaxChargesCategoryMain = (props) => {
 
     const onFinish = (values) => {
         let data = { ...values, id: formData?.id, taxCategoryDetail: [{ id: formData?.id, taxMasterId: taxMasterId }] };
-        console.log(data, 'values');
+
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
@@ -311,6 +311,7 @@ export const TaxChargesCategoryMain = (props) => {
         form.resetFields();
         setIsFormVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
+        setTaxChargeCalList(() => []);
     };
 
     const drawerTitle = useMemo(() => {
@@ -382,8 +383,6 @@ export const TaxChargesCategoryMain = (props) => {
         handleButtonClick,
         title,
     };
-
-    console.log(taxChargeCalList, 'taxChargeCalList');
 
     return (
         <>

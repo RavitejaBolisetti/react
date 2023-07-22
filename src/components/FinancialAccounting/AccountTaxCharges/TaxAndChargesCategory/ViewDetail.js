@@ -23,7 +23,7 @@ const ViewDetailBase = ({ formData, styles, parameterType, taxCharges, taxCatego
                 <Descriptions {...viewProps}>
                     <Descriptions.Item label="Code">{taxCategory?.taxCategoryCode}</Descriptions.Item>
                     <Descriptions.Item label="Description">{taxCategory?.taxCategoryDescription}</Descriptions.Item>
-                    <Descriptions.Item label="State">{taxCategory?.stateCode}</Descriptions.Item>
+                    <Descriptions.Item label="State">{taxCategory?.stateName}</Descriptions.Item>
                     <Descriptions.Item label="Sale Type">{taxCategory?.saleType}</Descriptions.Item>
                     <Space direction="vertical" size="small" className={styles.accordianContainer}>
                         <Row>
@@ -40,7 +40,6 @@ const ViewDetailBase = ({ formData, styles, parameterType, taxCharges, taxCatego
                             </Col>
                         </Row>
                     </Space>
-
                 </Descriptions>
             </>
         </div>
