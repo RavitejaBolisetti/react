@@ -23,20 +23,21 @@ export default function AdvanceVehiclePriceMasterFilter(props) {
     return (
         <div className={styles.contentHeaderBackground}>
             <Row gutter={20}>
-                <span className={styles.headerText}>{title}</span>
-                <Col xs={24} sm={21} md={21} lg={21} xl={21} className={styles.subheading}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.subheading}>
                     <Row gutter={20}>
+                        <Col xs={24} sm={24} md={4} lg={4} xl={4}>
+                            <span className={styles.headerText}>{title}</span>
+                        </Col>
                         {otfFilter && (
-                            <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                            <Col xs={24} sm={24} md={11} lg={11} xl={11}>
                                 <SearchBox {...serachBoxProps} />
                             </Col>
                         )}
                         {advanceFilter && (
-                            <Col xs={24} sm={24} md={6} lg={6} xl={6}>
+                            <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.verticallyCentered}>
                                 <Button
-                                    icon={<FilterIcon />}
+                                    icon={<FilterIcon className={styles.verticallyCentered} />}
                                     type="link"
-                                    className={styles.filterBtn}
                                     onClick={() => {
                                         setAdvanceSearchVisible(true);
                                     }}
@@ -46,7 +47,7 @@ export default function AdvanceVehiclePriceMasterFilter(props) {
                             </Col>
                         )}
 
-                        <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.alignRight}>
+                        <Col xs={24} sm={24} md={3} lg={3} xl={3} className={styles.alignRight}>
                             <Button type="primary" onClick={handleOnClick}>
                                 Upload
                             </Button>
