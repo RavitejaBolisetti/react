@@ -14,7 +14,6 @@ const { Text } = Typography;
 const CardProductAttribute = (props) => {
     const { isVisible, finalFormdata, taxChargeCalForm, forceUpdate, taxCharges, productHierarchyAttributeData, taxChargeCategoryCodeData, setDisabledEdit, taxChargeCalList, setTaxChargeCalList, objTaxCharge, objTaxCode, setOpenAccordian, changeValue, setChangeValue, handleCodeFunction, editForm, formEdit, setFormEdit, uniqueCardEdit, setuniqueCardEdit } = props;
     const taxChargeDesc = taxCharges?.find((e) => e?.taxType === props?.chargeType)?.taxDescription;
-    console.log(props?.chargeType,taxCharges,'ppphgsdgsgdgggg')
     const taxChargeCalEdit = (props) => {
         setuniqueCardEdit(props?.internalId);
         setFormEdit(true);
