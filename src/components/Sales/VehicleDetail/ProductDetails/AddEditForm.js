@@ -10,6 +10,7 @@ import { Button, Collapse, Form, Typography, Row, Col, Space, Input, Divider, Da
 import { PlusOutlined } from '@ant-design/icons';
 import { DataTable } from 'utils/dataTable';
 import { addToolTip } from 'utils/customMenuLink';
+
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
