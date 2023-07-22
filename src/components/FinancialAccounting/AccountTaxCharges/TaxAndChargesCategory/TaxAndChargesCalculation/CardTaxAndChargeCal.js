@@ -12,7 +12,7 @@ import FormProductAttribute from './FormTaxAndChargeCal';
 const { Text } = Typography;
 
 const CardProductAttribute = (props) => {
-    const { isVisible, finalFormdata, taxChargeCalForm, forceUpdate, taxCharges, productHierarchyAttributeData, taxChargeCategoryCodeData, setDisabledEdit, taxChargeCalList, setTaxChargeCalList, objTaxCharge, objTaxCode, setOpenAccordian, changeValue, setChangeValue, handleCodeFunction, editForm, formEdit, setFormEdit, uniqueCardEdit, setuniqueCardEdit } = props;
+    const { isVisible, finalFormdata, taxChargeCalForm, forceUpdate, taxCharges, productHierarchyAttributeData, taxChargeCategoryCodeData, setDisabledEdit, taxChargeCalList, setTaxChargeCalList, objTaxCharge, objTaxCode, setOpenAccordian, changeValue, setChangeValue, handleCodeFunction, editForm, formEdit, setFormEdit, uniqueCardEdit, setuniqueCardEdit, setTaxMasterId } = props;
     const taxChargeDesc = taxCharges?.find((e) => e?.taxType === props?.chargeType)?.taxDescription;
     const taxChargeCalEdit = (props) => {
         setuniqueCardEdit(props?.internalId);
@@ -77,6 +77,7 @@ const CardProductAttribute = (props) => {
         setChangeValue,
         handleCodeFunction,
         taxChargeCalForm,
+        setTaxMasterId,
     };
 
     useEffect(() => {
@@ -135,11 +136,9 @@ const CardProductAttribute = (props) => {
                                 </div>
                             )
                         )}
-
                     </Row>
                 )}
             </Row>
-
 
             {formEdit && props?.internalId === uniqueCardEdit && (
                 <>

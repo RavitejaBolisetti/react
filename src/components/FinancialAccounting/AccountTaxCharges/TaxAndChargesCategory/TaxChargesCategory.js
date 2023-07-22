@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useReducer } from 'react';
 import { connect } from 'react-redux';
 import { Col, Form, Row } from 'antd';
 import { bindActionCreators } from 'redux';
@@ -50,7 +50,7 @@ const mapStateToProps = (state) => {
         isStateDataLoaded,
         isStateLoading,
         stateData,
-        saleData: saleData && saleData[PARAM_MASTER.SALE_TYP.id],
+        saleData: saleData && saleData[PARAM_MASTER.SALE_TYPE.id],
         isTaxChargeCategoryTypeLoaded,
         taxChargeCategoryTypeData,
         isTaxChargeCategoryTypeLoading,
@@ -88,12 +88,13 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const TaxChargesCategoryMain = (props) => {
-    const { data, saveData, userId, isDataLoaded, showGlobalNotification, taxChargeCategoryCodeData, isStateDataLoaded, fetchStateList, listStateShowLoading, stateData, saleData, isTaxChargeCategoryTypeLoaded, fetchTaxCodeList, isTaxCategoryCodeLoaded, listTaxCodeLoading, fetchTaxChargeCategoryType, taxChargeCategoryTypeData, listShowLoadingTaxChargeCategoryType, isTaxChargeCategoryLoaded, fetchTaxChargeCategory, listShowLoadingTaxChargeCategory, taxChargeCategoryData } = props;
+    const { data, saveData, userId, isDataLoaded, showGlobalNotification, taxChargeCategoryCodeData, isStateDataLoaded, fetchStateList, listStateShowLoading, stateData, saleData, isTaxChargeCategoryTypeLoaded, fetchTaxCodeList, fetchTaxChargeCategoryType, taxChargeCategoryTypeData, listShowLoadingTaxChargeCategoryType, isTaxChargeCategoryLoaded, fetchTaxChargeCategory, listShowLoadingTaxChargeCategory, taxChargeCategoryData } = props;
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [searchData, setSearchdata] = useState('');
     const [refershData, setRefershData] = useState(false);
+    const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
     const [formData, setFormData] = useState([]);
     const [filterString, setFilterString] = useState();
@@ -176,16 +177,16 @@ export const TaxChargesCategoryMain = (props) => {
     }, [userId, isTaxChargeCategoryTypeLoaded]);
 
     const handleCodeFunction = (value) => {
-        console.log(value, 'VALUWWW');
         let obj = {
-            taxCharges: null,
-            taxChargeCategoryCodeData: null,
+            chargeCode: null,
+            chargeDescription: null,
         };
 
         if (formEdit) {
             editForm?.setFieldsValue(obj);
         } else {
             taxChargeCalForm?.setFieldsValue(obj);
+            forceUpdate();
         }
 
         const extraParams = [
@@ -267,10 +268,13 @@ export const TaxChargesCategoryMain = (props) => {
         }
     };
 
-    //taxChargeCalList
     const onFinish = (values) => {
-        let data = { ...values, id: formData?.id || '', taxCategoryDetail: [{ id: formData?.id || '', taxMasterId: taxMasterId }] };
-
+        let taxChargeMaster = [];
+        let len = taxMasterId?.length;
+        for (let i = 0; i < len; i++) {
+            taxChargeMaster?.push({ id: formData?.id || '', taxMasterId: taxMasterId[i] });
+        }
+        let data = { ...values, id: formData?.id || '', taxCategoryDetail: taxChargeMaster };
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);

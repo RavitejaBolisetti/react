@@ -90,15 +90,17 @@ const AddEditFormMain = (props) => {
     }, [formData]);
 
     useEffect(() => {
-        let obj = {
-            taxCategoryCode: taxCategory?.taxCategoryCode,
-            taxCategoryDescription: taxCategory?.taxCategoryDescription,
-            stateCode: taxCategory?.stateCode,
-            saleType: taxCategory?.saleType,
-            status: taxCategory?.status,
-        };
-        form.setFieldsValue({ obj });
-    });
+        if (!viewMode) {
+            form.setFieldsValue({
+                taxCategoryCode: taxCategory?.taxCategoryCode,
+                taxCategoryDescription: taxCategory?.taxCategoryDescription,
+                stateCode: taxCategory?.stateCode,
+                saleType: taxCategory?.saleType,
+                status: taxCategory?.status,
+            });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [taxCategory]);
 
     const viewProps = {
         isVisible: viewMode,
@@ -132,12 +134,8 @@ const AddEditFormMain = (props) => {
         taxChargeCalList,
         setTaxChargeCalList,
         taxMasterId,
-        setTaxMasterId
-
+        setTaxMasterId,
     };
-
-    console.log(viewMode, 'viewMode');
-
     return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             {viewMode ? (

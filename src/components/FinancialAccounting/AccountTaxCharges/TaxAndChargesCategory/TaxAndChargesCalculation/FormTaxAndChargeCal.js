@@ -17,7 +17,7 @@ function FormProductAttribute(props) {
     const handleDescriptionChange = (taxCode) => {
         setChangeValue(taxChargeCategoryCodeData?.find((i) => i?.taxCode === taxCode)?.taxDescription);
         formEdit ? editForm.setFieldValue('chargeDescription', taxChargeCategoryCodeData?.find((i) => i?.taxCode === taxCode)?.taxDescription) : taxChargeCalForm.setFieldValue('chargeDescription', taxChargeCategoryCodeData?.find((i) => i?.taxCode === taxCode)?.taxDescription);
-        setTaxMasterId(taxChargeCategoryCodeData?.find((i) => i?.taxCode === taxCode)?.id)
+        setTaxMasterId((item) => [...item, taxChargeCategoryCodeData?.find((i) => i?.taxCode === taxCode)?.id]);
     };
 
     return (
