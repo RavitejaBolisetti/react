@@ -7,35 +7,25 @@ import React from 'react';
 import { Col, Input, Form, Row, Checkbox } from 'antd';
 
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
-import { SearchBox } from 'components/utils/SearchBox';
+import { CustomerListMaster } from 'components/utils/CustomerListModal';
 
 import styles from 'components/common/Common.module.css';
 
 export const AddressCommonForm = (props) => {
-    const { formType, onSearch, formData, searchForm, optionType, filterString, setFilterString, handleOnChange } = props;
-    const { isModalOpen, setIsModalOpen, disabledProps } = props;
-
-    const searchBoxProps = {
-        searchForm,
-        filterString,
-        optionType: optionType,
-        setFilterString,
-        handleChange: onSearch,
-        isModalOpen,
-        setIsModalOpen,
-        disabledProps: disabledProps,
-    };
-
+    const { formType, formData, handleOnChange, fnSetData, data } = props;
+    const canUpdate = (formType === 'ownerCustomer' && !data?.ownerCustomer?.customerId) || formType === 'billingCustomer';
     return (
         <>
-            <Row gutter={20} className={styles.marB20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.referralSearch}>
-                    <SearchBox {...searchBoxProps} />
-                </Col>
-            </Row>
+            {canUpdate && (
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <CustomerListMaster fnSetData={fnSetData} />
+                    </Col>
+                </Row>
+            )}
 
-            <Row gutter={20}>
-                {formType === 'billingCustomerResponse' && (
+            <Row gutter={20} className={styles.marT20}>
+                {formType === 'billingCustomer' && (
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Form.Item name={[formType, 'sameAsOwner']} label="" initialValue={formData?.sameAsOwner} valuePropName="checked">
                             <Checkbox onClick={handleOnChange}>Same As Owner</Checkbox>

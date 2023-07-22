@@ -216,7 +216,7 @@ const Login = (props) => {
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} class="textfieldWithPrefix">
                                                         <Form.Item name="userId" class="textfieldWithPrefix__input" data-testid="userIdInput" rules={[validateRequiredInputField('user id')]} className={styles.inputBox}>
-                                                            {<Input ref={userIdRef} prefix={<BiUser size={18} />} type="text" maxLength={25} onChange={handleFormChange('userId')} />}
+                                                            {<Input ref={userIdRef} prefix={<BiUser size={16} />} type="text" maxLength={25} onChange={handleFormChange('userId')} />}
                                                         </Form.Item>
                                                         {!fieldData?.userId && (
                                                             <label class="textfieldWithPrefix__label" onClick={handleFieldFocus(userIdRef)}>
@@ -228,7 +228,7 @@ const Login = (props) => {
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} class="textfieldWithPrefix">
                                                         <Form.Item name="password" class="textfieldWithPrefix__input" data-testid="password" rules={[validateRequiredInputField('password')]} className={styles.inputBox}>
-                                                            <Input ref={passwordInputRef} type={showPassword ? 'text' : 'password'} prefix={<FiLock size={18} />} suffix={passowrdSuffix} onChange={handleFormChange('password')} />
+                                                            <Input ref={passwordInputRef} type={showPassword ? 'text' : 'password'} prefix={<FiLock size={16} />} suffix={passowrdSuffix} onChange={handleFormChange('password')} />
                                                         </Form.Item>
                                                         {!fieldData?.password && (
                                                             <label class="textfieldWithPrefix__label" onClick={handleFieldFocus(passwordInputRef)}>

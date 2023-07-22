@@ -143,59 +143,57 @@ const AddEditFormMain = (props) => {
                         )}
                     </Row>
                     <Divider className={styles.marT20} />
-                    <Space direction="vertical" style={{ width: '100%' }} className={styles.accordianContainer}>
-                        {showForm && !editedMode && <FormContainer {...formProps} />}
-                        {familyDetailList?.length > 0 ? (
-                            familyDetailList?.map((item, index) => (
-                                <Collapse collapsible='icon' expandIcon={expandIcon} activeKey={activeKey} onChange={() => onCollapseChange(index)} expandIconPosition="end">
-                                    <Panel
-                                        header={
-                                            <Row type="flex" justify="space-between" align="middle" size="large">
-                                                <Row type="flex" justify="space-around" align="middle">
-                                                    <Typography>
-                                                        {item?.customerName} | {item?.relationship}
-                                                    </Typography>
+                    {showForm && !editedMode && <FormContainer {...formProps} />}
+                    {familyDetailList?.length > 0 ? (
+                        familyDetailList?.map((item, index) => (
+                            <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={activeKey} onChange={() => onCollapseChange(index)} expandIconPosition="end">
+                                <Panel
+                                    header={
+                                        <Row type="flex" justify="space-between" align="middle" size="large">
+                                            <Row type="flex" justify="space-around" align="middle">
+                                                <Typography>
+                                                    {item?.customerName} | {item?.relationship}
+                                                </Typography>
 
-                                                    {!VIEW_ACTION && !showForm && (
-                                                        <Button
-                                                            type="secondary"
-                                                            icon={<FiEdit />}
-                                                            onClick={() => {
-                                                                onEdit(item, index);
-                                                            }}
-                                                            disabled={disabled}
-                                                            style={{ color: disabled ? 'grey' : 'red' }}
-                                                        >
-                                                            Edit
-                                                        </Button>
-                                                    )}
-                                                </Row>
-                                                {
-                                                    <Text type="secondary" style={{ fontWeight: '400', fontSize: '14px' }}>
-                                                        {item?.mnmCustomer === 'Yes' ? 'M&M user' : item?.mnmCustomer === 'No' ? 'Non-M&M user' : ''}
-                                                    </Text>
-                                                }
+                                                {!VIEW_ACTION && !showForm && (
+                                                    <Button
+                                                        type="link"
+                                                        icon={<FiEdit />}
+                                                        onClick={() => {
+                                                            onEdit(item, index);
+                                                        }}
+                                                        disabled={disabled}
+                                                        style={{ color: disabled ? 'grey' : 'red' }}
+                                                    >
+                                                        Edit
+                                                    </Button>
+                                                )}
                                             </Row>
-                                        }
-                                        key={index}
-                                    >
-                                        <Divider />
-                                        {editedMode && !showForm ? <FormContainer {...formProps} item /> : <ViewDetail {...viewProps} mnmCustomer={item?.mnmCustomer} customerId={item?.customerId} customerName={item?.customerName} relationship={item?.relationship} relationCode={item?.relationCode} dateOfBirth={item?.dateOfBirth} relationAge={item?.relationAge} remarks={item?.remarks} relationCustomerId={item?.relationCustomerId} />}
-                                    </Panel>
-                                </Collapse>
-                            ))
-                        ) : !showForm && !editedMode ? (
-                            <>
-                                <Empty
-                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                    imageStyle={{
-                                        height: 60,
-                                    }}
-                                    description={<span>{noDataTitle}</span>}
-                                ></Empty>
-                            </>
-                        ) : null}
-                    </Space>
+                                            {
+                                                <Text type="secondary" style={{ fontWeight: '400', fontSize: '14px' }}>
+                                                    {item?.mnmCustomer === 'Yes' ? 'M&M user' : item?.mnmCustomer === 'No' ? 'Non-M&M user' : ''}
+                                                </Text>
+                                            }
+                                        </Row>
+                                    }
+                                    key={index}
+                                >
+                                    <Divider />
+                                    {editedMode && !showForm ? <FormContainer {...formProps} item /> : <ViewDetail {...viewProps} mnmCustomer={item?.mnmCustomer} customerId={item?.customerId} customerName={item?.customerName} relationship={item?.relationship} relationCode={item?.relationCode} dateOfBirth={item?.dateOfBirth} relationAge={item?.relationAge} remarks={item?.remarks} relationCustomerId={item?.relationCustomerId} />}
+                                </Panel>
+                            </Collapse>
+                        ))
+                    ) : !showForm && !editedMode ? (
+                        <>
+                            <Empty
+                                image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                imageStyle={{
+                                    height: 60,
+                                }}
+                                description={<span>{noDataTitle}</span>}
+                            ></Empty>
+                        </>
+                    ) : null}
                 </Card>
             ) : (
                 <ViewDetail {...viewProps} />

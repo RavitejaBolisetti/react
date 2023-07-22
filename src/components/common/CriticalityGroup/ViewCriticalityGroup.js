@@ -13,11 +13,11 @@ const ViewCriticalityGroupMain = (props) => {
         bordered: false,
         colon: false,
         layout: 'vertical',
-        column: { xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 },
+        column: { xxl: 2, xl: 2, lg: 2, md: 1, sm: 1, xs: 1 },
     };
 
     return (
-        <div className={`${style.viewContainer} ${style.drwaerDetailsView}`}>
+        <div className={style.viewContainer}>
             <>
                 <Descriptions {...viewProps}>
                     <Descriptions.Item label="Criticality Group Id">{formData?.criticalityGroupCode}</Descriptions.Item>

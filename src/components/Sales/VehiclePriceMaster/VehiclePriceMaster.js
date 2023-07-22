@@ -94,6 +94,7 @@ const mapStateToProps = (state) => {
         isVehiclePriceLoading,
         isVehiclePriceDataLoaded,
         vehiclePriceData: vehiclePriceData?.vehicleSearch,
+        totalRecords: vehiclePriceData?.totalRecords,
     };
     return returnValue;
 };
@@ -124,7 +125,7 @@ export const VehiclePriceMasterBase = (props) => {
     const { filterString, setFilterString, saveData, userId, showGlobalNotification } = props;
     const { accessToken, token, viewDocument, isViewDataLoaded, viewListShowLoading, resetViewData, fetchViewDocument } = props;
     const { isDataCountryLoaded, isCountryLoading, countryData, defaultCountry, isDistrictDataLoaded, districtData, typeData, fetchVehiclePriceList, listVehiclePriceShowLoading } = props;
-    const { isStateDataLoaded, stateData, moduleTitle, vehiclePriceData, isCityDataLoaded, cityData, isProductHierarchyDataLoaded, productHierarchyList, isProductHierarchyLoading, isTehsilDataLoaded, tehsilData } = props;
+    const { isStateDataLoaded, stateData, moduleTitle, vehiclePriceData, totalRecords, isCityDataLoaded, cityData, isProductHierarchyDataLoaded, productHierarchyList, isProductHierarchyLoading, isTehsilDataLoaded, tehsilData } = props;
     const { isSupportingDataLoaded, isSupportingDataLoading, supportingData, downloadFile, listShowLoading } = props;
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
@@ -151,6 +152,8 @@ export const VehiclePriceMasterBase = (props) => {
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: true, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
+    const [page, setPage] = useState({ pageSize: 10, current: 1 });
+    const dynamicPagination = true;
 
     const onSuccessAction = (res) => {
         refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -210,24 +213,37 @@ export const VehiclePriceMasterBase = (props) => {
                 canRemove: true,
                 filter: true,
             },
-
             {
                 key: 'pageSize',
                 title: 'Value',
-                value: 10,
+                value: page?.pageSize,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'pageNumber',
                 title: 'Value',
-                value: 1,
+                value: page?.current,
+                canRemove: true,
+                filter: false,
+            },
+            {
+                key: 'sortBy',
+                title: 'Sort By',
+                value: page?.sortBy,
+                canRemove: true,
+                filter: false,
+            },
+            {
+                key: 'sortIn',
+                title: 'Sort Type',
+                value: page?.sortType,
                 canRemove: true,
                 filter: false,
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString]);
+    }, [filterString, page]);
 
     useEffect(() => {
         if (userId) {
@@ -357,6 +373,9 @@ export const VehiclePriceMasterBase = (props) => {
     };
 
     const tableProps = {
+        dynamicPagination,
+        totalRecords,
+        setPage,
         isLoading: showDataLoading,
         tableColumn: tableColumn(handleButtonClick),
         tableData: vehiclePriceData,

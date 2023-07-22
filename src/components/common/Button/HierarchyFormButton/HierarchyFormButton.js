@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -27,13 +27,13 @@ export const HierarchyFormButton = ({ buttonData, handleButtonClick }) => {
 
             <div className={styles.btnRight}>
                 {buttonData?.childBtn && (
-                    <Button danger  type="primary" onClick={() => handleButtonClick(FROM_ACTION_TYPE.CHILD)}>
+                    <Button type="primary" onClick={() => handleButtonClick(FROM_ACTION_TYPE.CHILD)}>
                         Add Child
                     </Button>
                 )}
 
                 {buttonData?.siblingBtn && (
-                    <Button danger type="primary" onClick={() => handleButtonClick(FROM_ACTION_TYPE.SIBLING)}>
+                    <Button type="primary" onClick={() => handleButtonClick(FROM_ACTION_TYPE.SIBLING)}>
                         Add Sibling
                     </Button>
                 )}

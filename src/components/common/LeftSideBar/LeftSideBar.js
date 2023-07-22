@@ -210,7 +210,7 @@ const LeftSideBarMain = (props) => {
 
     return (
         <>
-            <Sider onBreakpoint={onBreakPoint} breakpoint="lg" collapsedWidth={isMobile ? '0px' : '60px'} width={isMobile ? '100vw' : '240px'} collapsible className={`${styles.leftMenuBox} ${menuParentClass}`} collapsed={collapsed} onCollapse={(value, type) => onSubmit(value, type)}>
+            <Sider onBreakpoint={onBreakPoint} breakpoint="lg" collapsedWidth={isMobile ? '0px' : '78px'} width={isMobile ? '100vw' : '282px'} collapsible className={`${styles.leftMenuBox} ${menuParentClass}`} collapsed={collapsed} onCollapse={(value, type) => onSubmit(value, type)}>
                 <div className={collapsed ? styles.logoContainerCollapsed : styles.logoContainer}>
                     <Row gutter={20}>
                         <Col xs={22} sm={22} md={24} lg={24} xl={24}>
@@ -228,10 +228,10 @@ const LeftSideBarMain = (props) => {
                             <div className={styles.searchContainer}>
                                 <Form autoComplete="off" layout="vertical" form={menuForm}>
                                     {collapsed ? (
-                                        <BsSearch size={18} onClick={onMenuCollapsed} />
+                                        <BsSearch size={20} onClick={onMenuCollapsed} />
                                     ) : (
                                         <Form.Item name="searchKeyword">
-                                            <AutoComplete className={styles.searchField} options={options} onSelect={onSelect} onChange={handleSearch}>
+                                            <AutoComplete options={options} onSelect={onSelect} onChange={handleSearch}>
                                                 <Input.Search placeholder="Search" style={{ width: '100%' }} allowClear type="text" />
                                             </AutoComplete>
                                         </Form.Item>
@@ -252,7 +252,7 @@ const LeftSideBarMain = (props) => {
                             onOpenChange={onOpenChange}
                             collapsed={collapsed.toString()}
                             style={{
-                                paddingLeft: collapsed ? '18px' : '14px',
+                                paddingLeft: collapsed ? '18px' : '24px',
                             }}
                         >
                             {prepareMenuItem(menuData)}
@@ -265,25 +265,24 @@ const LeftSideBarMain = (props) => {
                     className={styles.changeTheme}
                     onClick={handleThemeChange}
                     style={{
-                        padding: collapsed ? '10px' : '10px 14px',
                         position: isMobile ? (collapsed ? 'relative' : 'absolute') : 'absolute',
                     }}
                 >
-                    <div className={styles.changeThemeBorder}>
+                    <div className={styles.changeThemeBorder} style={{ padding: collapsed ? '9px 10px' : '5px' }}>
                         {collapsed ? (
                             theme === 'light' ? (
-                                <BsSun size={30} className={styles.sun} />
+                                <BsSun size={20} className={styles.sun} />
                             ) : (
-                                <BsMoon size={30} className={styles.moon} />
+                                <BsMoon size={20} className={styles.moon} />
                             )
                         ) : (
                             <>
                                 <Button className={theme === 'light' ? styles.lightThemeActive : styles.lightTheme} danger onClick={() => handleThemeChange()}>
-                                    <BsSun size={30} /> Light Mode
+                                    <BsSun size={20} /> Light Mode
                                 </Button>
 
                                 <Button className={theme === 'dark' ? styles.darkThemeActive : styles.darkTheme} danger onClick={() => handleThemeChange()}>
-                                    <BsMoon size={30} /> Dark Mode
+                                    <BsMoon size={20} /> Dark Mode
                                 </Button>
                             </>
                         )}

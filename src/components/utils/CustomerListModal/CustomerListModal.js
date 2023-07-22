@@ -23,8 +23,9 @@ export const CustomerListBase = (props) => {
         setSelectedRows([]);
         setFormBtnActive(true);
     };
+
     const rowSelection = {
-        selectedRowKeys: selectedRows.map((row) => row.key),
+        selectedRowKeys: selectedRows.map((row) => row?.['registrationNumber']),
         onChange: (selectedRowKeys, selectedRows) => {
             setSelectedRows(selectedRows);
             setFormBtnActive(true);
@@ -34,6 +35,7 @@ export const CustomerListBase = (props) => {
 
     const tableProps = {
         srl: false,
+        rowKey: 'registrationNumber',
         rowSelection: {
             type: 'radio',
             ...rowSelection,

@@ -14,11 +14,13 @@ import { VehicleDetailFormButton } from '../VehicleDetailFormButton';
 
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
+import { BASE_URL_VEHICLE_CUSTOMER_COMMON_DETAIL as customURL } from 'constants/routingApi';
 
 import styles from 'components/common/Common.module.css';
 import { vehicleCustomerDetailsDataAction } from 'store/actions/data/vehicle/customerDetails';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { customerDetailDataActions } from 'store/actions/customer/customerDetail';
+import { customerDetailsIndividualDataActions } from 'store/actions/data/customerMaster/customerDetailsIndividual';
 
 const mapStateToProps = (state) => {
     const {
@@ -72,6 +74,9 @@ const mapDispatchToProps = (dispatch) => ({
             saveData: vehicleCustomerDetailsDataAction.saveData,
             resetData: vehicleCustomerDetailsDataAction.reset,
 
+            fetchCustomerDetailData: customerDetailsIndividualDataActions.fetchData,
+            listShowLoading: customerDetailsIndividualDataActions.listShowLoading,
+
             fetchCustomerList: customerDetailDataActions.fetchList,
             listCustomerShowLoading: customerDetailDataActions.listShowLoading,
             showGlobalNotification,
@@ -81,7 +86,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const CustomerDetailsMain = (props) => {
-    const { resetData, saveData, isLoading, userId, isDataLoaded, fetchList, listShowLoading, showGlobalNotification, data, onFinishFailed } = props;
+    const { resetData, saveData, isLoading, userId, isDataLoaded, fetchList, listShowLoading, fetchCustomerDetailData, showGlobalNotification, data, onFinishFailed } = props;
     const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, pincodeData, formActionType, NEXT_ACTION, handleButtonClick, section } = props;
     const { setButtonData, buttonData, typeData, selectedRecordId, filterString, isReferralDataLoaded, referralData, fetchOtfReferralList, setFilterString, listOtfReferralShowLoading, fetchCustomerList, listCustomerShowLoading, isCustomerCommonDetailsLoaded, isCustomerCommonDetailsLoading, customerCommonDetails } = props;
     const [form] = Form.useForm();
@@ -151,7 +156,7 @@ export const CustomerDetailsMain = (props) => {
                 extraParams: searchParams,
                 onSuccessAction: (res) => {
                     // res?.data?.referralData && setFormData(res?.data?.referralData?.[0]);
-                    res?.data?.ownerCustomerResponse && setFormData(res?.data?.ownerCustomerResponse?.[0]);
+                    res?.data?.ownerCustomer && setFormData(res?.data?.ownerCustomer?.[0]);
 
                     // res?.data?.referralData?.referralDetails.length === 1 ? setFormData(res?.data?.referralData?.referralDetails[0]);
                 },
@@ -227,7 +232,7 @@ export const CustomerDetailsMain = (props) => {
             extraParams: defaultExtraParam,
             userId,
             onSuccessAction: (res) => {
-                setFormData(res?.data?.ownerCustomerResponse[0]);
+                setFormData(res?.data?.ownerCustomer[0]);
             },
             onErrorAction,
         });
@@ -252,10 +257,10 @@ export const CustomerDetailsMain = (props) => {
         const recordId = data?.id || '';
         form.getFieldsValue();
         const finaldata = {
-            ownerCustomerResponse: { ...values?.ownerCustomerResponse, vin: selectedRecordId, id: data?.ownerCustomerResponse?.id },
-            billingCustomerResponse: { ...values?.billingCustomerResponse, vin: selectedRecordId, id: data?.billingCustomerResponse?.id },
-            vehicleKeyAccountDetailsResponse: { ...values?.vehicleKeyAccountDetailsResponse, vin: selectedRecordId, id: data?.vehicleKeyAccountDetailsResponse?.id },
-            vehicleCustomerLoyaltyDetailsResponse: { ...values?.vehicleCustomerLoyaltyDetailsResponse, vin: selectedRecordId, id: data?.vehicleCustomerLoyaltyDetailsResponse?.id },
+            ownerCustomer: { ...values?.ownerCustomer, vin: selectedRecordId, id: data?.ownerCustomer?.id || '' },
+            billingCustomer: { ...values?.billingCustomer, vin: selectedRecordId, id: data?.billingCustomer?.id || '' },
+            vehicleKeyAccountDetails: { ...values?.vehicleKeyAccountDetails, vin: selectedRecordId, id: data?.vehicleKeyAccountDetails?.id },
+            vehicleCustomerLoyaltyDetails: { ...values?.vehicleCustomerLoyaltyDetails, vin: selectedRecordId, id: data?.vehicleCustomerLoyaltyDetails?.id },
             id: recordId,
         };
         const onSuccess = (res) => {
@@ -270,7 +275,8 @@ export const CustomerDetailsMain = (props) => {
 
         const requestData = {
             data: finaldata,
-            method: data?.ownerCustomerResponse || data?.billingCustomerResponse ? 'put' : 'post',
+            // method: data?.ownerCustomer || data?.billingCustomer ? 'put' : 'post',
+            method: 'put',
             setIsLoading: listShowLoading,
             userId,
             onError,
@@ -279,8 +285,31 @@ export const CustomerDetailsMain = (props) => {
         saveData(requestData);
     };
 
+    const fnSetData = (data, type) => {
+        if (data?.customerId) {
+            const extraParams = [
+                {
+                    key: 'customerId',
+                    title: 'customerId',
+                    value: data?.customerId,
+                    name: 'Customer ID',
+                },
+            ];
+            fetchCustomerDetailData({
+                customURL,
+                setIsLoading: () => {},
+                extraParams,
+                userId,
+                onSuccessAction: (response) => {
+                    setFormData({ ...formData, [type]: { ...response?.data } });
+                },
+                onErrorAction,
+            });
+        }
+    };
     const formProps = {
         ...props,
+        fnSetData,
         form,
         billCstmForm,
         data,
@@ -328,8 +357,8 @@ export const CustomerDetailsMain = (props) => {
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
         if (sameAsBookingCustomer) {
-            let ownerCustomerResponse = form.getFieldsValue()?.ownerCustomerResponse;
-            form?.setFieldsValue({ billingCustomerResponse: { ...ownerCustomerResponse } });
+            let ownerCustomer = form.getFieldsValue()?.ownerCustomer;
+            form?.setFieldsValue({ billingCustomer: { ...ownerCustomer } });
         }
     };
 

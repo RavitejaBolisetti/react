@@ -189,10 +189,14 @@
     border: 1px solid #0b0b0c;
 }
 
-.headerRight :global .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover {
+.headerRight :global .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled) {
+    border: none;
+}
+
+/* .headerRight :global .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover {
     border-color: transparent;
     border-inline-end-width: 0px;
-}
+} */
 
 .headerRight :global .ant-input-affix-wrapper:focus,
 .headerRight :global .ant-input-affix-wrapper-focused {
