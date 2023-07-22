@@ -28,7 +28,7 @@ const mapStateToProps = (state) => {
         data: {
             FinancialAccounting: {
                 TaxChargesCategory: { detailData },
-            }
+            },
         },
     } = state;
 
@@ -58,10 +58,8 @@ const AddEditFormMain = (props) => {
     const [openAccordian, setOpenAccordian] = useState(1);
     const [taxCategory, setTaxCategory] = useState();
 
-
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
-
     };
 
     const handleFormFieldChange = () => {
@@ -72,12 +70,10 @@ const AddEditFormMain = (props) => {
         setOpenAccordian((prev) => (prev === key ? '' : key));
     };
 
-
-
     useEffect(() => {
         if (formData?.id) {
             fetchTaxChargeCategoryDetail({
-                setIsLoading: () => { },
+                setIsLoading: () => {},
                 userId,
                 extraParams: [
                     {
@@ -93,7 +89,6 @@ const AddEditFormMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
 
-
     useEffect(() => {
         let obj = {
             taxCategoryCode: taxCategory?.taxCategoryCode,
@@ -101,11 +96,9 @@ const AddEditFormMain = (props) => {
             stateCode: taxCategory?.stateCode,
             saleType: taxCategory?.saleType,
             status: taxCategory?.status,
-
-        }
-        console.log(taxCategory, 'sssshgdgd')
+        };
         form.setFieldsValue({ obj });
-    })
+    });
 
     const viewProps = {
         isVisible: viewMode,
@@ -134,9 +127,9 @@ const AddEditFormMain = (props) => {
         formEdit,
         setFormEdit,
         taxCategory,
-        taxChargeCalList, setTaxChargeCalList
+        taxChargeCalList,
+        setTaxChargeCalList,
     };
-
 
     return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>

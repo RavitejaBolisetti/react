@@ -70,12 +70,16 @@ export const TaxAndChargesCalculationMaster = (props) => {
     };
 
     useEffect(() => {
-        setTaxChargeCalList(() => []);
-        let updateData = { ...taxCategory?.taxCategoryDetail, internalId: Math.floor(Math.random() * 100000000 + 1) };
-        setTaxChargeCalList((item) => [updateData, ...item]);
-    }, [taxCategory])
-
-    console.log(taxCategory, 'taxCategoryGUGU')
+        if (taxCategory?.taxCategoryDetail?.length > 0) {
+            setTaxChargeCalList(() => []);
+            let len = taxCategory?.taxCategoryDetail?.length;
+            for (let i = 0; i < len; i++) {
+                let internalId = Math.floor(Math.random() * 100000000 + 1);
+                setTaxChargeCalList((item) => [...item, { ...taxCategory?.taxCategoryDetail[i], internalId: internalId }]);
+            }
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [taxCategory]);
 
     return (
         <>
