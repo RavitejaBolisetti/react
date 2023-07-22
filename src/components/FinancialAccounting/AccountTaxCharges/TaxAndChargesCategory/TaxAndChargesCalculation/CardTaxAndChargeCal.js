@@ -13,7 +13,6 @@ const { Text } = Typography;
 
 const CardProductAttribute = (props) => {
     const { isVisible, finalFormdata, taxChargeCalForm, forceUpdate, productHierarchyAttributeData, taxChargeCategoryCodeData, setDisabledEdit, taxChargeCalList, setTaxChargeCalList, objTaxCharge, objTaxCode, setOpenAccordian, changeValue, setChangeValue, handleCodeFunction, editForm, formEdit, setFormEdit, uniqueCardEdit, setuniqueCardEdit } = props;
-    console.log(objTaxCharge,'vivek')
     const taxChargeDesc = objTaxCharge?.taxCategoryDetail?.find((e) => e?.chargeCode === props?.chargeCode)?.chargeDescription;
 
     const taxChargeCalEdit = (props) => {
@@ -99,7 +98,8 @@ const CardProductAttribute = (props) => {
             <Row align="middle" justify="space-between">
                 <Row align="center">
                     <div>
-                        <Text>{taxChargeDesc}</Text>
+                        {/* <Text>{taxChargeDesc}</Text> */}
+                        <Text>{props?.chargeType}</Text>
                     </div>
                     <Divider type="vertical" />
                     <div>
@@ -107,36 +107,39 @@ const CardProductAttribute = (props) => {
                     </div>
                 </Row>
 
-                {/* {isVisible && ( */}
-                <Row>
-                    {!formEdit ? (
-                        <div className={styles.cardItemBtn}>
-                            <>
-                                <Button
-                                    type="link"
-                                    icon={<FiEdit />}
-                                    onClick={() => {
-                                        taxChargeCalEdit(props);
-                                    }}
-                                    disabled={props?.disabledEdit}
-                                />
-                                <Button onClick={() => onAttributeDelete(props)} type="link" icon={<FiTrash />} disabled={props?.disabledEdit || (props?.id ? true : false)} />
-                            </>
-                        </div>
-                    ) : (
-                        props?.internalId === uniqueCardEdit && (
+                {isVisible && (
+                    <Row>
+                        {!formEdit ? (
                             <div className={styles.cardItemBtn}>
-                                <Button type="link" onClick={onAttributeCancel}>
-                                    Cancel
-                                </Button>
-                                <Button type="link" onClick={taxChargeCalSave}>
-                                    Save
-                                </Button>
+                                <>
+                                    <Button
+                                        type="link"
+                                        icon={<FiEdit />}
+                                        onClick={() => {
+                                            taxChargeCalEdit(props);
+                                        }}
+                                        disabled={props?.disabledEdit}
+                                    />
+                                    <Button onClick={() => onAttributeDelete(props)} type="link" icon={<FiTrash />} disabled={props?.disabledEdit || (props?.id ? true : false)} />
+                                </>
                             </div>
-                        )
-                    )}
-                </Row>
+                        ) : (
+                            props?.internalId === uniqueCardEdit && (
+                                <div className={styles.cardItemBtn}>
+                                    <Button type="link" onClick={onAttributeCancel}>
+                                        Cancel
+                                    </Button>
+                                    <Button type="link" onClick={taxChargeCalSave}>
+                                        Save
+                                    </Button>
+                                </div>
+                            )
+                        )}
+
+                    </Row>
+                )}
             </Row>
+
 
             {formEdit && props?.internalId === uniqueCardEdit && (
                 <>

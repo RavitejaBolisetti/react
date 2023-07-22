@@ -32,7 +32,7 @@ const ViewDetailBase = ({ formData, styles, parameterType, taxCategory, setDisab
                                     <Collapse expandIcon={expandIcon}>
                                         <Panel header="Tax & Charges Calculation" key="2">
                                             {taxCategory?.taxCategoryDetail?.map((item, index) => (
-                                                <CardProductAttribute key={'tax' + item?.taxChargeTypeCode} taxChargeTypeCode={item?.taxChargeTypeCode} chargeDescription={item?.chargeDescription} chargeType={item?.chargeType} id={item?.id} setDisabledEdit={setDisabledEdit} />
+                                                <CardProductAttribute key={'tax' + item?.taxChargeTypeCode} chargeCode={item?.chargeCode} chargeDescription={item?.chargeDescription} chargeType={item?.chargeType} id={item?.id} setDisabledEdit={setDisabledEdit} />
                                             ))}
                                         </Panel>
                                     </Collapse>

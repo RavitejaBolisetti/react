@@ -111,6 +111,7 @@ export const TaxChargesCategoryMain = (props) => {
     const [editForm] = Form.useForm();
     const [taxChargeCalForm] = Form.useForm();
     const [formEdit, setFormEdit] = useState(false);
+    const [taxChargeCalList, setTaxChargeCalList] = useState([]);
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
@@ -303,7 +304,7 @@ export const TaxChargesCategoryMain = (props) => {
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        form.validateFields().then((values) => { });
     };
 
     const onCloseAction = () => {
@@ -354,6 +355,8 @@ export const TaxChargesCategoryMain = (props) => {
         taxChargeCalForm,
         formEdit,
         setFormEdit,
+        taxChargeCalList,
+        setTaxChargeCalList
     };
 
     const tableProps = {
@@ -375,7 +378,7 @@ export const TaxChargesCategoryMain = (props) => {
         handleClearInSearch,
         handleReferesh,
         handleButtonClick,
-        title,        
+        title,
     };
 
     return (
