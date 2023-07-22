@@ -11,7 +11,7 @@ import { bindActionCreators } from 'redux';
 import { geoStateDataActions } from 'store/actions/data/geo/states';
 import { taxChargeCategoryTypeDataActions } from 'store/actions/data/financialAccounting/taxChargeType';
 import { taxChargeCategoryDataActions } from 'store/actions/data/financialAccounting/taxChargesCategory';
-import { financialAccTaxChargeCategoryDataActions } from 'store/actions/data/financialAccounting/taxChargesCode'
+import { financialAccTaxChargeCategoryDataActions } from 'store/actions/data/financialAccounting/taxChargesCode';
 import { tableColumn } from './tableColumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { BASE_URL_FINANCIAL_ACC_TAX_CHARGE_CATEGORY_SEARCH as customURL } from 'constants/routingApi';
@@ -37,12 +37,12 @@ const mapStateToProps = (state) => {
             FinancialAccounting: {
                 TaxChargeCategoryType: { isLoaded: isTaxChargeCategoryTypeLoaded = false, isLoading: isTaxChargeCategoryTypeLoading = false, data: taxChargeCategoryTypeData = [] },
                 TaxChargesCategory: { isLoaded: isTaxChargeCategoryLoaded = false, isLoading: isTaxChargeCategoryLoading = false, data: taxChargeCategoryData = [] },
-                TaxChargesCode: { isLoaded: isTaxCategoryCodeLoaded = false, isLoading: isTaxCategoryCodeLoading, data: taxChargeCategoryCodeData = [] }
+                TaxChargesCode: { isLoaded: isTaxCategoryCodeLoaded = false, isLoading: isTaxCategoryCodeLoading, data: taxChargeCategoryCodeData = [] },
             },
         },
     } = state;
 
-    const moduleTitle = 'Tax & Charges Category'
+    const moduleTitle = 'Tax & Charges Category';
 
     let returnValue = {
         userId,
@@ -69,7 +69,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-
             fetchStateList: geoStateDataActions.fetchList,
             listStateShowLoading: geoStateDataActions.listShowLoading,
 
@@ -82,7 +81,6 @@ const mapDispatchToProps = (dispatch) => ({
             fetchTaxChargeCategory: taxChargeCategoryDataActions.fetchList,
             listShowLoadingTaxChargeCategory: taxChargeCategoryDataActions.listShowLoading,
             saveData: taxChargeCategoryDataActions.saveData,
-
 
             showGlobalNotification,
         },
@@ -109,6 +107,10 @@ export const TaxChargesCategoryMain = (props) => {
 
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
+
+    const [editForm] = Form.useForm();
+    const [taxChargeCalForm] = Form.useForm();
+    const [formEdit, setFormEdit] = useState(false);
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
@@ -159,7 +161,6 @@ export const TaxChargesCategoryMain = (props) => {
         },
     ];
 
-
     useEffect(() => {
         if (userId && !isStateDataLoaded) {
             fetchStateList({ setIsLoading: listStateShowLoading, userId, onSuccessAction });
@@ -175,6 +176,17 @@ export const TaxChargesCategoryMain = (props) => {
     }, [userId, isTaxChargeCategoryTypeLoaded]);
 
     const handleCodeFunction = (value) => {
+        let obj = {
+            taxChargeCode: null,
+            taxDescription: null,
+        };
+
+        if (formEdit) {
+            editForm?.setFieldsValue(obj);
+        } else {
+            taxChargeCalForm?.setFieldsValue(obj);
+        }
+
         const extraParams = [
             {
                 key: 'taxChargeType',
@@ -184,9 +196,8 @@ export const TaxChargesCategoryMain = (props) => {
             },
         ];
         fetchTaxCodeList({ setIsLoading: listShowLoadingTaxChargeCategory, userId, extraParams, onSuccessAction });
-    }
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-
 
     useEffect(() => {
         if (userId && !isTaxChargeCategoryLoaded) {
@@ -292,7 +303,7 @@ export const TaxChargesCategoryMain = (props) => {
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => { });
+        form.validateFields().then((values) => {});
     };
 
     const onCloseAction = () => {
@@ -338,6 +349,11 @@ export const TaxChargesCategoryMain = (props) => {
         handleCodeFunction,
         setDisabledEdit,
         disabledEdit,
+
+        editForm,
+        taxChargeCalForm,
+        formEdit,
+        setFormEdit,
     };
 
     const tableProps = {

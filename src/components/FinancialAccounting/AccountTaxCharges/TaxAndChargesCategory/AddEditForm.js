@@ -18,7 +18,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { showGlobalNotification } from 'store/actions/notification';
 
-
 import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
@@ -54,8 +53,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const AddEditFormMain = (props) => {
-    const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined, fetchTaxChargeCategoryDetail, setDisabledEdit, disabledEdit, userId, handleCodeFunction, taxChargeCategoryCodeData, onFinish, onFinishFailed, stateData, saleData, taxChargeCategoryTypeData } = props;
-    const { buttonData, setButtonData, handleButtonClick } = props;
+    const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined, fetchTaxChargeCategoryDetail, setDisabledEdit, disabledEdit, userId, handleCodeFunction, taxChargeCategoryCodeData, onFinish, onFinishFailed, stateData, saleData, taxChargeCategoryTypeData, editForm, taxChargeCalForm } = props;
+    const { buttonData, setButtonData, handleButtonClick, formEdit, setFormEdit } = props;
 
     const [openAccordian, setOpenAccordian] = useState(1);
     const [taxCategory, setTaxCategory] = useState();
@@ -131,6 +130,10 @@ const AddEditFormMain = (props) => {
         taxChargeCategoryCodeData,
         handleCodeFunction,
         form,
+        editForm,
+        taxChargeCalForm,
+        formEdit,
+        setFormEdit,
     };
 
 

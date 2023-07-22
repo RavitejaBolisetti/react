@@ -3,8 +3,8 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, Fragment, useEffect } from 'react';
-import { Card, Row, Button, Form, Divider, Typography } from 'antd';
+import React, { Fragment, useEffect } from 'react';
+import { Card, Row, Button, Divider, Typography } from 'antd';
 import { FiEdit, FiTrash } from 'react-icons/fi';
 import styles from 'components/common/Common.module.css';
 import FormProductAttribute from './FormTaxAndChargeCal';
@@ -12,14 +12,12 @@ import FormProductAttribute from './FormTaxAndChargeCal';
 const { Text } = Typography;
 
 const CardProductAttribute = (props) => {
-    const { isVisible, finalFormdata, taxChargeCalForm, forceUpdate, productHierarchyAttributeData, taxChargeCategoryCodeData, setDisabledEdit, taxChargeCalList, setTaxChargeCalList, objTaxCharge, objTaxCode, setOpenAccordian,changeValue, setChangeValue } = props;
+    const { isVisible, finalFormdata, taxChargeCalForm, forceUpdate, productHierarchyAttributeData, taxChargeCategoryCodeData, setDisabledEdit, taxChargeCalList, setTaxChargeCalList, objTaxCharge, objTaxCode, setOpenAccordian, changeValue, setChangeValue, handleCodeFunction, editForm, formEdit, setFormEdit, uniqueCardEdit, setuniqueCardEdit } = props;
 
-    console.log(props, 'taxChargeCodetaxChargeCodetaxChargeCodetaxChargeCodetaxChargeCodetaxChargeCodetaxChargeCodetaxChargeCodetaxChargeCode');
-
-    const [editForm] = Form.useForm();
-    const [formEdit, setFormEdit] = useState(false);
+    const taxChargeDesc = objTaxCharge?.find((e) => e?.taxType === props?.taxChargeTypeCode)?.taxDescription;
 
     const taxChargeCalEdit = (props) => {
+        setuniqueCardEdit(props?.internalId);
         setFormEdit(true);
         editForm.setFieldsValue({
             taxChargeTypeCode: props?.taxChargeTypeCode,
@@ -33,10 +31,6 @@ const CardProductAttribute = (props) => {
 
     const taxChargeCalSave = () => {
         let newFormData = editForm?.getFieldsValue();
-        //let status = editForm?.getFieldError('attributeName')?.length > 0 ? true : false;
-        // if (status) {
-        //     return showGlobalNotification({ notificationType: 'error', title: 'Duplicate', message: 'Can not Save having same Attribute Name', placement: 'bottomRight' });
-        // }
 
         const upd_obj = taxChargeCalList?.map((obj) => {
             if (obj?.internalId === newFormData?.internalId) {
@@ -82,6 +76,8 @@ const CardProductAttribute = (props) => {
         setOpenAccordian,
         changeValue,
         setChangeValue,
+        handleCodeFunction,
+        taxChargeCalForm,
     };
 
     useEffect(() => {
@@ -104,7 +100,7 @@ const CardProductAttribute = (props) => {
             <Row align="middle" justify="space-between">
                 <Row align="center">
                     <div>
-                        <Text>{props?.taxChargeTypeCode}</Text>
+                        <Text>{taxChargeDesc}</Text>
                     </div>
                     <Divider type="vertical" />
                     <div>
@@ -129,20 +125,21 @@ const CardProductAttribute = (props) => {
                             </>
                         </div>
                     ) : (
-                        <div className={styles.cardItemBtn}>
-                            <Button type="link" onClick={onAttributeCancel}>
-                                Cancel
-                            </Button>
-                            <Button type="link" onClick={taxChargeCalSave}>
-                                Save
-                            </Button>
-                        </div>
+                        props?.internalId === uniqueCardEdit && (
+                            <div className={styles.cardItemBtn}>
+                                <Button type="link" onClick={onAttributeCancel}>
+                                    Cancel
+                                </Button>
+                                <Button type="link" onClick={taxChargeCalSave}>
+                                    Save
+                                </Button>
+                            </div>
+                        )
                     )}
                 </Row>
-                {/* )} */}
             </Row>
 
-            {formEdit && (
+            {formEdit && props?.internalId === uniqueCardEdit && (
                 <>
                     <Divider />
                     <FormProductAttribute {...FormProductAttributeProp} />
