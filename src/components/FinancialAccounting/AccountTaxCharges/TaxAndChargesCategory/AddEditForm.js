@@ -14,16 +14,14 @@ import { accordianExpandIcon } from 'utils/accordianExpandIcon';
 import { TaxAndChargesCalculationMaster } from './TaxAndChargesCalculation';
 import { customSelectBox } from 'utils/customSelectBox';
 
-
 import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
 const { Option } = Select;
 
-
 const AddEditFormMain = (props) => {
-    const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined,handleCodeFunction, taxChargeCategoryCodeData,onFinish, onFinishFailed, stateData, saleData, taxChargeCategoryTypeData } = props;
-    const { buttonData, setButtonData, handleButtonClick } = props;
+    const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined, handleCodeFunction, taxChargeCategoryCodeData, onFinish, onFinishFailed, stateData, saleData, taxChargeCategoryTypeData, editForm, taxChargeCalForm } = props;
+    const { buttonData, setButtonData, handleButtonClick, formEdit, setFormEdit } = props;
 
     const [openAccordian, setOpenAccordian] = useState(1);
 
@@ -38,9 +36,6 @@ const AddEditFormMain = (props) => {
     const handleCollapse = (key) => {
         setOpenAccordian((prev) => (prev === key ? '' : key));
     };
-
-    const fieldNames = { label: 'name', value: 'code' };
-    const fieldSaleNames = { label: 'value', value: 'key' };
 
     const viewProps = {
         isVisible: viewMode,
@@ -61,6 +56,10 @@ const AddEditFormMain = (props) => {
         taxChargeCategoryCodeData,
         handleCodeFunction,
         form,
+        editForm,
+        taxChargeCalForm,
+        formEdit,
+        setFormEdit,
     };
 
     return (
@@ -82,12 +81,12 @@ const AddEditFormMain = (props) => {
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item label="State" initialValue={formData?.stateCode} name="stateCode" rules={[validateRequiredSelectField('State')]}>
-                                {customSelectBox({ data: stateData, fieldNames: { key: 'code', value: 'name' } ,placeholder: preparePlaceholderSelect('State') })}
+                                {customSelectBox({ data: stateData, fieldNames: { key: 'code', value: 'name' }, placeholder: preparePlaceholderSelect('State') })}
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item label="Sale Type" name="saleTypeCode" rules={[validateRequiredSelectField('Sale Type')]}>
-                                {customSelectBox({ data: saleData,placeholder: preparePlaceholderSelect('State') })}
+                                {customSelectBox({ data: saleData, placeholder: preparePlaceholderSelect('State') })}
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>

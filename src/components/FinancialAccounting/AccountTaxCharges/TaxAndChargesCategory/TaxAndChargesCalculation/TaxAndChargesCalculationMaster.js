@@ -9,21 +9,21 @@ import CardProductAttribute from './CardTaxAndChargeCal';
 import FormProductAttribute from './FormTaxAndChargeCal';
 
 export const TaxAndChargesCalculationMaster = (props) => {
-    const { isVisible, selectedTreeData, showGlobalNotification, taxChargeCategoryTypeData ,taxChargeCategoryCodeData ,handleCodeFunction,form} = props;
+    const { isVisible, selectedTreeData, showGlobalNotification, taxChargeCategoryTypeData, taxChargeCategoryCodeData, handleCodeFunction, form, editForm, taxChargeCalForm, formEdit, setFormEdit } = props;
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
-    const [taxChargeCalForm] = Form.useForm();
     const [disableSaveButton, setDisableSaveButton] = useState(false);
     const [taxChargeCalList, setTaxChargeCalList] = useState([]);
     const [disabledEdit, setDisabledEdit] = useState(false);
     const [changeValue, setChangeValue] = useState(null);
+    const [uniqueCardEdit, setuniqueCardEdit] = useState(null);
 
     const addTaxChargeCal = (val) => {
         taxChargeCalForm
             .validateFields()
             .then(() => {
                 let data = taxChargeCalForm.getFieldsValue();
-                //internalId: Math.floor(Math.random() * 100000000 + 1)
-                setTaxChargeCalList((item) => [data, ...item]);
+                let updateData = { ...data, internalId: Math.floor(Math.random() * 100000000 + 1) };
+                setTaxChargeCalList((item) => [updateData, ...item]);
                 taxChargeCalForm.resetFields();
                 forceUpdate();
                 // setFormBtnActive(true);
@@ -60,12 +60,16 @@ export const TaxAndChargesCalculationMaster = (props) => {
         form,
         changeValue,
         setChangeValue,
+        editForm,
+        formEdit,
+        setFormEdit,
+        uniqueCardEdit,
+        setuniqueCardEdit,
     };
 
     const formProductAttributeProps = {
         ...cardAttributeProps,
     };
-
 
     return (
         <>

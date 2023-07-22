@@ -14,45 +14,31 @@ import styles from 'components/common/Common.module.css';
 function FormProductAttribute(props) {
     const { taxChargeCalForm, isVisible, taxCharge, taxCode, addTaxChargeCal, formEdit, editForm, form, taxChargeCalList, taxChargeCategoryCodeData, handleCodeFunction, changeValue, setChangeValue } = props;
 
-
     const handleDescriptionChange = (taxCode) => {
-        setChangeValue(taxChargeCategoryCodeData?.find((i) => i?.taxCode === taxCode)?.taxDescription)
+        setChangeValue(taxChargeCategoryCodeData?.find((i) => i?.taxCode === taxCode)?.taxDescription);
         formEdit ? editForm.setFieldValue('taxDescription', taxChargeCategoryCodeData?.find((i) => i?.taxCode === taxCode)?.taxDescription) : taxChargeCalForm.setFieldValue('taxDescription', taxChargeCategoryCodeData?.find((i) => i?.taxCode === taxCode)?.taxDescription);
-    }
+    };
 
     useEffect(() => {
-        if (formEdit) editForm.setFieldValue('taxDescription', changeValue);
+        if (formEdit) {
+            let formValue = editForm.getFieldsValue();
+            let taxDesc = taxChargeCategoryCodeData?.find((e) => e?.taxCode === formValue?.taxChargeCode)?.taxDescription;
+            editForm.setFieldValue('taxDescription', taxDesc);
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, [formEdit]);
 
     return (
         <Form form={formEdit ? editForm : taxChargeCalForm} id="myForm" autoComplete="off" layout="vertical">
             <Row gutter={20}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item
-                        label="Tax/Charge Type"
-                        name="taxChargeTypeCode"
-                        rules={[
-                            validateRequiredSelectField('Tax Charge'),
-                            //{ validator: () => duplicateProductValidator(changeValue, taxChargeCalList) }
-                        ]}
-                    >
+                    <Form.Item label="Tax/Charge Type" name="taxChargeTypeCode" rules={[validateRequiredSelectField('Tax Charge')]}>
                         {customSelectBox({ data: taxCharge, fieldNames: { key: 'taxType', value: 'taxDescription' }, placeholder: preparePlaceholderSelect('Tax Charge'), onChange: handleCodeFunction })}
-
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item
-                        label="Tax/Charge Code"
-                        name="taxChargeCode"
-                        initialValue={props?.code}
-                        rules={[
-                            validateRequiredSelectField('Tax Code'),
-                            // { validator: () => duplicateProductValidator(changeValue, taxChargeCalList) }
-                        ]}
-                    >
+                    <Form.Item label="Tax/Charge Code" name="taxChargeCode" initialValue={props?.code} rules={[validateRequiredSelectField('Tax Code')]}>
                         {customSelectBox({ data: taxChargeCategoryCodeData, fieldNames: { key: 'taxCode', value: 'taxCode' }, placeholder: preparePlaceholderSelect('Tax Code'), onChange: handleDescriptionChange })}
-
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
