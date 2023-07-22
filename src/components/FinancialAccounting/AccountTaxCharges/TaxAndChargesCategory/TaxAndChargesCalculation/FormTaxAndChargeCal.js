@@ -12,7 +12,7 @@ import { customSelectBox } from 'utils/customSelectBox';
 import styles from 'components/common/Common.module.css';
 
 function FormProductAttribute(props) {
-    const { taxChargeCalForm, isVisible, taxCharge, addTaxChargeCal, formEdit, editForm, taxChargeCategoryCodeData, handleCodeFunction, changeValue, setChangeValue } = props;
+    const { taxChargeCalForm, isVisible, taxCharge, addTaxChargeCal, formEdit, editForm, taxChargeCategoryCodeData, handleCodeFunction, setChangeValue } = props;
 
     const handleDescriptionChange = (taxCode) => {
         setChangeValue(taxChargeCategoryCodeData?.find((i) => i?.taxCode === taxCode)?.taxDescription);

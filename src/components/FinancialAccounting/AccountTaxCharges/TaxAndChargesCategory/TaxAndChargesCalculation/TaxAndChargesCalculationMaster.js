@@ -4,7 +4,6 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useReducer, useState } from 'react';
-import { Form } from 'antd';
 import CardProductAttribute from './CardTaxAndChargeCal';
 import FormProductAttribute from './FormTaxAndChargeCal';
 
@@ -70,8 +69,6 @@ export const TaxAndChargesCalculationMaster = (props) => {
     const formProductAttributeProps = {
         ...cardAttributeProps,
     };
-
-    console.log(taxChargeCalList, 'taxChargeCalListtaxChargeCalListtaxChargeCalListtaxChargeCalList');
 
     return (
         <>
