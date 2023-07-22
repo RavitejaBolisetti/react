@@ -72,12 +72,12 @@ const AddEditFormMain = (props) => {
                                     <Row gutter={20}>
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                             <Form.Item initialValue={convertCalenderDate(schemeForm?.validFrom, 'YYYY-MM-DD')} label="Valid From" name="validFrom">
-                                                <DatePicker className={styles.inputBox} placeholder={preparePlaceholderText('Valid From')} onChange={onChange} style={{ width: '100%' }} disabled={true} />
+                                                <DatePicker className={styles.inputBox} placeholder={preparePlaceholderText('Valid From')} onChange={onChange} disabled={true} />
                                             </Form.Item>
                                         </Col>
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                             <Form.Item initialValue={convertCalenderDate(schemeForm?.validTo, 'YYYY-MM-DD')} label="Valid To" name="validTo">
-                                                <DatePicker className={styles.inputBox} placeholder={preparePlaceholderText('Valid To')} onChange={onChange} style={{ width: '100%' }} disabled={true} />
+                                                <DatePicker className={styles.inputBox} placeholder={preparePlaceholderText('Valid To')} onChange={onChange} disabled={true} />
                                             </Form.Item>
                                         </Col>
                                     </Row>

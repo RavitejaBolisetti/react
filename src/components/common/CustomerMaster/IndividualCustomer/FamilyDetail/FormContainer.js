@@ -84,13 +84,13 @@ const FormBase = (props) => {
                 {customer ? (
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.noLeftPadding}>
                         <Form.Item initialValue={props?.relationCustomerId ? props?.relationCustomerId : ''} label="Customer Id" name="relationCustomerId">
-                            <Search placeholder={preparePlaceholderText('Customer Id')} allowClear loading={isSearchLoading} onSearch={onSearch} style={{ width: '100%' }} />
+                            <Search placeholder={preparePlaceholderText('Customer Id')} allowClear loading={isSearchLoading} onSearch={onSearch} />
                         </Form.Item>
                     </Col>
                 ) : (
                     <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0} className={styles.noLeftPadding}>
                         <Form.Item initialValue={props?.relationCustomerId ? props?.relationCustomerId : ''} label="Customer Id" name="relationCustomerId">
-                            <Search placeholder={preparePlaceholderText('Customer Id')} allowClear loading={isSearchLoading} onSearch={onSearch} style={{ width: '100%' }} />
+                            <Search placeholder={preparePlaceholderText('Customer Id')} allowClear loading={isSearchLoading} onSearch={onSearch} />
                         </Form.Item>
                     </Col>
                 )}

@@ -232,7 +232,7 @@ const LeftSideBarMain = (props) => {
                                     ) : (
                                         <Form.Item name="searchKeyword">
                                             <AutoComplete options={options} onSelect={onSelect} onChange={handleSearch}>
-                                                <Input.Search placeholder="Search" style={{ width: '100%' }} allowClear type="text" />
+                                                <Input.Search placeholder="Search" allowClear type="text" />
                                             </AutoComplete>
                                         </Form.Item>
                                     )}

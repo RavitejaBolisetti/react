@@ -45,11 +45,10 @@ export default function AppliedAdvanceFilter(props) {
                                 </Form>
                             </Col>
                             {advanceFilter && (
-                                <Col xs={24} sm={24} md={4} lg={4} xl={4}>
+                                <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.verticallyCentered}>
                                     <Button
                                         icon={<FilterIcon />}
                                         type="link"
-                                        className={styles.filterBtn}
                                         onClick={() => {
                                             setAdvanceSearchVisible(true);
                                         }}

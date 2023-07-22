@@ -6,9 +6,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
 import { Row, Col, Button, Typography, Upload, Image, Space, Avatar, Empty } from 'antd';
-
 import { FiDownload, FiTrash } from 'react-icons/fi';
 
 import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
@@ -16,10 +14,11 @@ import { documentViewDataActions } from 'store/actions/data/customerMaster/docum
 import { showGlobalNotification } from 'store/actions/notification';
 
 import { HiCheck } from 'react-icons/hi';
-import styles from 'components/common/Common.module.css';
+import { UploadBoxIcon } from 'Icons';
+import styles from './UploadUtil.module.css';
 
 const { Dragger } = Upload;
-const { Title } = Typography;
+const { Text, Title } = Typography;
 
 const mapStateToProps = (state) => {
     const {
@@ -233,55 +232,47 @@ const UploadBase = (props) => {
     };
 
     return (
-        <Row gutter={16}>
-            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                <div className={styles.uploadContainer} style={{ opacity: '100' }}>
-                    {(!isReplacing && base64Img && isReplaceEnabled) || formActionType?.viewMode ? (
-                        <>
-                            <Space direction="vertical" className={styles.viewDragger}>
-                                <Space>
-                                    <Avatar size={24} icon={<HiCheck />} />
-                                    <Title level={5}>{uploadedFileName || 'Contact Picture'}</Title>
-                                </Space>
-                                <Space>
-                                    <Image
-                                        style={{ borderRadius: '6px' }}
-                                        width={80}
-                                        preview={{
-                                            visible,
-                                            scaleStep: 0.5,
-                                            src: `data:image/png;base64,${viewDocument?.base64}`,
-                                            onVisibleChange: (value) => {
-                                                setVisible(value);
-                                            },
-                                        }}
-                                        placeholder={<Image preview={false} src={`data:image/png;base64,${viewDocument?.base64}`} width={80} />}
-                                        src={`data:image/png;base64,${viewDocument?.base64}`}
-                                    />
-                                    {!formActionType?.viewMode && (
-                                        <Button onClick={onReplaceClick} type="link">
-                                            Replace Image
-                                        </Button>
-                                    )}
-                                </Space>
+        <>
+            <div className={styles.uploadDragger}>
+                {(!isReplacing && base64Img && isReplaceEnabled) || formActionType?.viewMode ? (
+                    <>
+                        <Space direction="vertical" className={styles.viewDragger}>
+                            <Space>
+                                <Avatar size={24} icon={<HiCheck />} />
+                                <Title level={5}>{uploadedFileName || 'Contact Picture'}</Title>
                             </Space>
-                        </>
-                    ) : (
-                        <>
-                            <Dragger fileList={fileList} customRequest={handleUpload} {...uploadProps}>
-                                <Empty
-                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                    description={
-                                        <>
-                                            <span>{messageText}</span>
-                                            <span>
-                                                <br />
-                                                {validationText}
-                                            </span>
-                                        </>
-                                    }
+                            <Space>
+                                <Image
+                                    style={{ borderRadius: '6px' }}
+                                    width={80}
+                                    preview={{
+                                        visible,
+                                        scaleStep: 0.5,
+                                        src: `data:image/png;base64,${viewDocument?.base64}`,
+                                        onVisibleChange: (value) => {
+                                            setVisible(value);
+                                        },
+                                    }}
+                                    placeholder={<Image preview={false} src={`data:image/png;base64,${viewDocument?.base64}`} width={80} />}
+                                    src={`data:image/png;base64,${viewDocument?.base64}`}
                                 />
-
+                                {!formActionType?.viewMode && (
+                                    <Button onClick={onReplaceClick} type="link">
+                                        Replace Image
+                                    </Button>
+                                )}
+                            </Space>
+                        </Space>
+                    </>
+                ) : (
+                    <>
+                        <Dragger fileList={fileList} customRequest={handleUpload} {...uploadProps}>
+                            <Space direction="vertical">
+                                <UploadBoxIcon />
+                                <div>
+                                    <Title level={5}>{messageText}</Title>
+                                    <Text>{validationText}</Text>
+                                </div>
                                 <Space>
                                     <Button type="primary">{uploadButtonName}</Button>
                                     {isReplacing && (
@@ -290,12 +281,12 @@ const UploadBase = (props) => {
                                         </Button>
                                     )}
                                 </Space>
-                            </Dragger>
-                        </>
-                    )}
-                </div>
-            </Col>
-        </Row>
+                            </Space>
+                        </Dragger>
+                    </>
+                )}
+            </div>
+        </>
     );
 };
 

@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -154,7 +154,7 @@ export const OtfReportsMasterBase = (props) => {
                         </Col>
                         <Col xs={24} sm={24} md={11} lg={11} xl={11}>
                             <Form.Item label="Column" name="column" initialValue={selectedColumn}>
-                                <Select optionLabelProp="label" onChange={handleOtfReportChange} mode="multiple" style={{ width: '100%' }} placeholder="Select Column">
+                                <Select optionLabelProp="label" onChange={handleOtfReportChange} mode="multiple" placeholder="Select Column">
                                     {reportOption?.map((element, index) => (
                                         <Option value={element?.id} label={element?.reportDisplayName}>
                                             <Space>

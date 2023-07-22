@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -107,12 +107,12 @@ const AddEditFormMain = (props) => {
                     <Row gutter={20}>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item {...fromDateInitialValue} label="Effective From" name="effectivefrom" rules={[validateRequiredInputField('date')]}>
-                                <DatePicker format="YYYY-MM-DD" disabled={formActionType?.viewMode} style={{ width: '100%' }} onChange={handleFromDateChange} disabledDate={disableFromDate} />
+                                <DatePicker format="YYYY-MM-DD" disabled={formActionType?.viewMode} onChange={handleFromDateChange} disabledDate={disableFromDate} />
                             </Form.Item>
                         </Col>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item {...toDateInitialValue} label="Effective To" name="effectiveto">
-                                <DatePicker format="YYYY-MM-DD" disabled style={{ width: '100%' }} disabledDate={disableToDate} />
+                                <DatePicker format="YYYY-MM-DD" disabled disabledDate={disableToDate} />
                             </Form.Item>
                         </Col>
                     </Row>

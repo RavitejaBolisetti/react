@@ -11,34 +11,34 @@ export const OTFStatusTag = (status) => {
     let tag = '';
     switch (status) {
         case OTF_STATUS.BOOKED.key:
-            tag = <Tag className={styles.success}>{OTF_STATUS.BOOKED.desc}</Tag>;
+            tag = <Tag color="success">{OTF_STATUS.BOOKED.desc}</Tag>;
             break;
         case OTF_STATUS.ALLOTED.key:
-            tag = <Tag className={styles.success}>{OTF_STATUS.ALLOTED.desc}</Tag>;
+            tag = <Tag color="success">{OTF_STATUS.ALLOTED.desc}</Tag>;
             break;
         case OTF_STATUS.CANCELLED.key:
-            tag = <Tag className={styles.error}>{OTF_STATUS.CANCELLED.desc}</Tag>;
+            tag = <Tag color="error">{OTF_STATUS.CANCELLED.desc}</Tag>;
             break;
         case OTF_STATUS.INVOICED.key:
-            tag = <Tag className={styles.violet}>{OTF_STATUS.INVOICED.desc}</Tag>;
+            tag = <Tag color="purple">{OTF_STATUS.INVOICED.desc}</Tag>;
             break;
         case OTF_STATUS.DELIVERED.key:
-            tag = <Tag className={styles.success}>{OTF_STATUS.DELIVERED.desc}</Tag>;
+            tag = <Tag color="success">{OTF_STATUS.DELIVERED.desc}</Tag>;
             break;
         case OTF_STATUS.TRANSFERRED.key:
-            tag = <Tag className={styles.info}>{OTF_STATUS.TRANSFERRED.desc}</Tag>;
+            tag = <Tag color="processing">{OTF_STATUS.TRANSFERRED.desc}</Tag>;
             break;
         case OTF_STATUS.PENDING_FOR_CANCELLATION.key:
-            tag = <Tag className={styles.warning}>{OTF_STATUS.PENDING_FOR_CANCELLATION.desc}</Tag>;
+            tag = <Tag color="warning">{OTF_STATUS.PENDING_FOR_CANCELLATION.desc}</Tag>;
             break;
         case OTF_STATUS.CANCELLATION_REQUESTED.key:
-            tag = <Tag className={styles.warning}>{OTF_STATUS.CANCELLATION_REQUESTED.desc}</Tag>;
+            tag = <Tag color="warning">{OTF_STATUS.CANCELLATION_REQUESTED.desc}</Tag>;
             break;
         case OTF_STATUS.REJECTED.key:
-            tag = <Tag className={styles.error}>{OTF_STATUS.REJECTED.desc}</Tag>;
+            tag = <Tag color="error">{OTF_STATUS.REJECTED.desc}</Tag>;
             break;
         case OTF_STATUS.DELIVERY_NOTE.key:
-            tag = <Tag className={styles.error}>{OTF_STATUS.DELIVERY_NOTE.desc}</Tag>;
+            tag = <Tag color="error">{OTF_STATUS.DELIVERY_NOTE.desc}</Tag>;
             break;
         default:
     }

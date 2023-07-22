@@ -223,7 +223,7 @@ const AddEditFormMain = (props) => {
                                 <>
                                     <div className={styles.uploadDragger}>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                            <Space direction="vertical" style={{ width: '100%' }}>
+                                            <Space direction="vertical">
                                                 <div className={styles.uploadContainer} style={{ opacity: '100' }}>
                                                     <Dragger customRequest={handleUpload} {...uploadProps} fileList={fileList}>
                                                         <Empty

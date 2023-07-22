@@ -62,9 +62,9 @@ p {
     visibility: visible;
 }
 
-.button:hover {
+/* .button:hover {
     background: #FF3E5B;
-}
+} */
 
 .loginSection {
     background: url(assets/images/mainbg.png) no-repeat center center fixed;
@@ -88,10 +88,6 @@ p {
 
 .loginSection .logOutFooter {
     padding: 20px 10px 10px;
-    /* position: absolute;
-    bottom: 0;
-    width: 98%;
-    */
 }
 
 .loginSection .loginMainFooter div>a,
@@ -297,20 +293,16 @@ p {
     border-color: #ff4d4f !important;
 }
 
-/* .loginSection .loginWrap .loginHtml .loginForm .inputBox :global .ant-input-affix-wrapper .ant-input-suffix {
-    line-height: 12px;
-    transform: scaleX(-1) !important;
-    color: #FF3E5B;
-} */
-
 .loginForm :global .ant-btn-primary:disabled {
+    border: 1px solid #858585;
+    background: #545454;
     color: #858585;
 }
 
-.loginForm :global .ant-btn-primary:disabled:hover {
+/* .loginForm :global .ant-btn-primary:disabled:hover {
     color: #858585;
     background: transparent;
-}
+} */
 
 .ant-input-affix-wrapper-status-error:not(.ant-input-affix-wrapper-disabled):not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper:focus,
 .ant-input-affix-wrapper-status-error:not(.ant-input-affix-wrapper-disabled):not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper-focused {
@@ -417,6 +409,10 @@ p {
     color: #858585 !important;
 }
 
+.fielderror .registered span {
+    color: #FF3E5B;
+}
+
 .fielderror .registered p {
     padding-left: 0px !important;
     color: #FF3E5B;
@@ -427,14 +423,14 @@ p {
 }
 
 .registered :global .ant-checkbox .ant-checkbox-inner {
-    width: 18px;
-    height: 18px;
+    width: 22px;
+    height: 22px;
     background-color: transparent;
-    border: 1px solid #838383;
+    border: 1px solid #545454;
 }
 
-.registered :global .ant-checkbox-checked .ant-checkbox-inner {
-    border-color: #838383 !important;
+.registered :global .ant-checkbox.ant-checkbox-checked .ant-checkbox-inner {
+    border: 1px solid #FFFFFF;
 }
 
 .registered :global .ant-checkbox-wrapper-checked:not(.ant-checkbox-wrapper-disabled):hover .ant-checkbox-inner,
@@ -442,23 +438,12 @@ p {
     background-color: transparent !important;
 }
 
-.registered :global .ant-checkbox .ant-checkbox-inner:after {
-    top: 48%;
-    inset-inline-start: 35%;
-    width: 4px;
-    height: 7px;
-    border: 1px solid red;
-    border-top: 0;
-    border-inline-start: 0;
-}
-
 .registered :global .ant-checkbox-checked:after {
-    border: 1px solid #ff3e5b !important;
-    background-color: transparent !important;
+    border-width: 1px;
 }
 
 :global .ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled):hover .ant-checkbox-checked:not(.ant-checkbox-disabled) .ant-checkbox-inner {
-    background-color: transparent !important;
+    background-color: transparent;
 }
 
 .loginSection .loginWrap .loginHtml .loginForm .input-group .input-group-prepend .input-group-text {

@@ -351,11 +351,7 @@ const ForgotPasswordBase = (props) => {
                                                             ]}
                                                             initialValue={['sentOnMobile', 'sentOnEmail']}
                                                         >
-                                                            <Checkbox.Group
-                                                                style={{
-                                                                    width: '100%',
-                                                                }}
-                                                            >
+                                                            <Checkbox.Group>
                                                                 <Row>
                                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.fielderror}>
                                                                         <Checkbox className={styles.registered} value="sentOnMobile">

@@ -155,7 +155,7 @@ const AddEditFormMain = (props) => {
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item label="Date of Birth" name="dateOfBirth">
-                                            <DatePicker format="DD-MM-YYYY" disabledDate={disableFutureDate} disabled={isReadOnly} className={styles.datepicker} placeholder={prepareDatePickerText('DD-MM-YYYY')} />
+                                            <DatePicker format="DD-MM-YYYY" disabledDate={disableFutureDate} disabled={isReadOnly} placeholder={prepareDatePickerText('DD-MM-YYYY')} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -184,7 +184,7 @@ const AddEditFormMain = (props) => {
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item label=" Wedding Anniversary Date" name="weddingAnniversary">
-                                            <DatePicker format="DD-MM-YYYY" disabledDate={disableFutureDate} className={styles.datepicker} disabled={isRead} placeholder={prepareDatePickerText('DD-MM-YYYY')} />
+                                            <DatePicker format="DD-MM-YYYY" disabledDate={disableFutureDate} disabled={isRead} placeholder={prepareDatePickerText('DD-MM-YYYY')} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>

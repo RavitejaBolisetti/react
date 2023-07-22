@@ -33,7 +33,7 @@
     margin-top: -26px;
 }
 
-.selectSearchBg :global .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) {
+.selectSearchBg :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) {
     margin-top: -4px;
     background-color: #ffffff;
 }
@@ -143,7 +143,7 @@
     color: #0b0b0c;
     font-size: 12px;
     font-weight: 500;
-    line-height: 24px;
+    line-height: 20px;
 }
 
 .selectSearchBg .headerSearchFieldWide {
@@ -218,8 +218,4 @@
 
 .selectSearchBg :global .ant-card .ant-card-body .ant-form-item .ant-select .ant-select-selector .ant-select-selection-placeholder {
     line-height: 23px !important;
-}
-
-.drawerBodyRight .selectSearchBg :global .ant-select-single .ant-select-selector .ant-select-selection-item {
-    line-height: 26px !important;
 }
