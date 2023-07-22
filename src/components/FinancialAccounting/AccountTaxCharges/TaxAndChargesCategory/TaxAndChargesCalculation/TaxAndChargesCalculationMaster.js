@@ -8,7 +8,7 @@ import CardProductAttribute from './CardTaxAndChargeCal';
 import FormProductAttribute from './FormTaxAndChargeCal';
 
 export const TaxAndChargesCalculationMaster = (props) => {
-    const { isVisible, selectedTreeData, showGlobalNotification, taxChargeCategoryTypeData, taxCategory, taxChargeCategoryCodeData, handleCodeFunction, form, editForm, taxChargeCalForm, formEdit, setFormEdit, taxChargeCalList, setTaxChargeCalList } = props;
+    const { isVisible, selectedTreeData, showGlobalNotification, taxChargeCategoryTypeData, taxMasterId, setTaxMasterId, taxCategory, taxChargeCategoryCodeData, handleCodeFunction, form, editForm, taxChargeCalForm, formEdit, setFormEdit, taxChargeCalList, setTaxChargeCalList } = props;
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [disableSaveButton, setDisableSaveButton] = useState(false);
 
@@ -63,6 +63,8 @@ export const TaxAndChargesCalculationMaster = (props) => {
         setFormEdit,
         uniqueCardEdit,
         setuniqueCardEdit,
+        taxMasterId,
+        setTaxMasterId,
     };
 
     const formProductAttributeProps = {
@@ -80,6 +82,8 @@ export const TaxAndChargesCalculationMaster = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [taxCategory]);
+
+    console.log(taxChargeCalList,'nhi')
 
     return (
         <>

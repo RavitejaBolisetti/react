@@ -53,7 +53,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const AddEditFormMain = (props) => {
     const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined, isVisible, fetchTaxChargeCategoryDetail, setDisabledEdit, disabledEdit, userId, handleCodeFunction, taxChargeCategoryCodeData, onFinish, onFinishFailed, stateData, saleData, taxChargeCategoryTypeData, editForm, taxChargeCalForm } = props;
-    const { buttonData, setButtonData, handleButtonClick, formEdit, setFormEdit, taxChargeCalList, setTaxChargeCalList } = props;
+    const { buttonData, setButtonData, handleButtonClick, formEdit, setFormEdit, taxChargeCalList, setTaxChargeCalList, taxMasterId, setTaxMasterId, } = props;
 
     const [openAccordian, setOpenAccordian] = useState(1);
     const [taxCategory, setTaxCategory] = useState();
@@ -73,7 +73,7 @@ const AddEditFormMain = (props) => {
     useEffect(() => {
         if (formData?.id) {
             fetchTaxChargeCategoryDetail({
-                setIsLoading: () => {},
+                setIsLoading: () => { },
                 userId,
                 extraParams: [
                     {
@@ -131,6 +131,8 @@ const AddEditFormMain = (props) => {
         taxCategory,
         taxChargeCalList,
         setTaxChargeCalList,
+        taxMasterId,
+        setTaxMasterId
 
     };
 
@@ -152,17 +154,17 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Form.Item label="State" initialValue={formData?.stateCode} name="stateCode" rules={[validateRequiredSelectField('State')]}>
+                            <Form.Item label="State" initialValue={taxCategory?.stateCode} name="stateCode" rules={[validateRequiredSelectField('State')]}>
                                 {customSelectBox({ data: stateData, fieldNames: { key: 'code', value: 'name' }, placeholder: preparePlaceholderSelect('State') })}
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Form.Item label="Sale Type" initialValue={formData?.saleType} name="saleType" rules={[validateRequiredSelectField('Sale Type')]}>
+                            <Form.Item label="Sale Type" initialValue={taxCategory?.saleType} name="saleType" rules={[validateRequiredSelectField('Sale Type')]}>
                                 {customSelectBox({ data: saleData, placeholder: preparePlaceholderSelect('Sale Type') })}
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Form.Item initialValue={editMode ? formData.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label="Status">
+                            <Form.Item initialValue={editMode ? taxCategory?.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label="Status">
                                 <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} />
                             </Form.Item>
                         </Col>
