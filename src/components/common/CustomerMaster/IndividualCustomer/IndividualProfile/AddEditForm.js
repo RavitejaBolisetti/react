@@ -13,7 +13,7 @@ import { preparePlaceholderSelect, preparePlaceholderText, prepareDatePickerText
 import { disableFutureDate } from 'utils/disableDate';
 import { expandIcon } from 'utils/accordianExpandIcon';
 
-import { formatDateToCalenderDate } from 'utils/formatDateTime';
+import { dateFormat, formatDateToCalenderDate, formattedCalendarDate } from 'utils/formatDateTime';
 
 import { UploadUtil } from 'utils/Upload';
 
@@ -24,7 +24,7 @@ const { Option } = Select;
 const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
-    const { isWhoKnowsWhom, formData, appCategoryData, form, viewDocument, downloadFileFromButton } = props;
+    const { formData, appCategoryData, form, viewDocument, downloadFileFromButton } = props;
     const { isReadOnly = false } = props;
     const { uploadedFile, setUploadedFile, emptyList, setEmptyList, fileList, setFileList, setUploadedFileName, uploadedFileName } = props;
     const { fileConsentList, setFileConsentList, uploadedConsentFile, setUploadedConsentFile, emptyConsentList, setEmptyConsentList, uploadedConsentFileName, setUploadedConsentFileName } = props;
@@ -47,10 +47,11 @@ const AddEditFormMain = (props) => {
             personName: formData?.authorityDetails?.personName,
             remarks: formData?.authorityDetails?.remarks,
             vehicleDeploymentDetails: formData?.vehicleDeploymentDetails,
-            dateOfBirth: formData?.dateOfBirth ? formatDateToCalenderDate(formData?.dateOfBirth) : null,
-            weddingAnniversary: formData?.weddingAnniversary ? formatDateToCalenderDate(formData?.weddingAnniversary) : null,
+            dateOfBirth: formData?.dateOfBirth && formattedCalendarDate(formData?.dateOfBirth),
+            weddingAnniversary: formData?.weddingAnniversary ? formattedCalendarDate(formData?.weddingAnniversary) : null,
             customerConsent: formData?.customerConsent === 'true' ? true : false,
         });
+
         if (formData?.martialStatus === 'S') {
             setIsRead(true);
         } else {
@@ -155,7 +156,7 @@ const AddEditFormMain = (props) => {
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item label="Date of Birth" name="dateOfBirth">
-                                            <DatePicker format="DD-MM-YYYY" disabledDate={disableFutureDate} disabled={isReadOnly} className={styles.datepicker} placeholder={prepareDatePickerText('DD-MM-YYYY')} />
+                                            <DatePicker format={dateFormat} disabledDate={disableFutureDate} disabled={isReadOnly} className={styles.datepicker} placeholder={prepareDatePickerText(dateFormat)} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -184,7 +185,7 @@ const AddEditFormMain = (props) => {
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item label=" Wedding Anniversary Date" name="weddingAnniversary">
-                                            <DatePicker format="DD-MM-YYYY" disabledDate={disableFutureDate} className={styles.datepicker} disabled={isRead} placeholder={prepareDatePickerText('DD-MM-YYYY')} />
+                                            <DatePicker format={dateFormat} disabledDate={disableFutureDate} className={styles.datepicker} disabled={isRead} placeholder={prepareDatePickerText(dateFormat)} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>

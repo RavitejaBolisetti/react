@@ -8,12 +8,12 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Table } from 'antd';
 import { InputSkeleton } from 'components/common/Skeleton';
 import { tblSerialNumberColumn } from 'utils/tableCloumn';
 
-export default function DataTable({ isLoading, rowSelection = undefined, pagination = true, removePagination = false, srl = true, srlTitle = '#', tableColumn, scroll = 'auto', tableData, rowKey = 'index', setPage = () => {} }) {
+export default function DataTable({ isLoading, rowSelection = undefined, dynamicPagination = false, totalRecords = '10', pagination = true, removePagination = false, srl = true, srlTitle = '#', tableColumn, scroll = 'auto', tableData, rowKey = 'index', setPage = () => {} }) {
     const showTotal = (total) =>
         total && (
             <>
@@ -21,10 +21,31 @@ export default function DataTable({ isLoading, rowSelection = undefined, paginat
             </>
         );
 
-    const [tablePagination, setPagination] = useState({ pageSize: 10, current: 1, position: ['bottomRight'], showSizeChanger: true, hideOnSinglePage: false, showTotal });
+    const [tablePagination, setPagination] = useState({
+        total: totalRecords,
+        pageSize: 10,
+        current: 1,
+        position: ['bottomRight'],
+        showSizeChanger: true,
+        hideOnSinglePage: false,
+        showTotal,
+    });
+
+    useEffect(() => {
+        if (dynamicPagination) {
+            setPagination({ ...tablePagination, total: totalRecords });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [dynamicPagination, totalRecords]);
 
     const handleTableChange = (pagination, filters, sorter) => {
-        setPage({ ...pagination });
+        if (dynamicPagination) {
+            const sortBy = sorter?.column?.dataIndex || undefined;
+            const sortType = sorter && sorter.order ? (sorter.order === 'descend' ? 'DESC' : 'ASC') : undefined;
+            setPage({ ...pagination, sortBy, sortType });
+        } else {
+            setPage({ ...pagination });
+        }
         setPagination({ ...pagination, showTotal });
     };
 

@@ -16,16 +16,21 @@ import { tableColumn } from './tableCoulmn';
 
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { convertDateToCalender } from 'utils/formatDateTime';
+import { NoDataFound } from 'utils/noDataFound';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
-    const { styles, bindCodeValue, formData, collapseProps, disabledProps, tooltTipText, isLoading, optionsServiceModified, formActionType } = props;
+    const { styles, bindCodeValue, bindStatus, formData, collapseProps, disabledProps, tooltTipText, isLoading, optionsServiceModified, formActionType } = props;
     const [openAccordian, setOpenAccordian] = useState([]);
+    const [InnerCollapse, setInnerCollapse] = useState([]);
 
     const handleCollapse = (key) => {
         setOpenAccordian((prev) => (prev === key ? '' : key));
+    };
+    const handleInnerCollapse = (key) => {
+        setInnerCollapse((prev) => (prev === key ? '' : key));
     };
     const { productAttributeDetail, aggregates, connectedVehicle } = formData;
     const viewProps = {
@@ -62,21 +67,36 @@ const ViewDetailMain = (props) => {
                     </Panel>
                 </Collapse>
 
-                <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse(2)} expandIconPosition="end" {...collapseProps}>
+                <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse(2)} expandIconPosition="end" style={{ paddinBottom: '20px' }} {...collapseProps}>
                     <Panel header="Connected Vehicle" key="2">
-                        <Descriptions {...viewProps}>
-                            <Descriptions.Item label="TCU ID">{checkAndSetDefaultValue(connectedVehicle && connectedVehicle[0]?.tcuId, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="E-SIM No">{checkAndSetDefaultValue(connectedVehicle && connectedVehicle[0]?.esimNo, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="E-SIM Status">{checkAndSetDefaultValue(connectedVehicle && connectedVehicle[0]?.esimStatus, isLoading, 'bool')}</Descriptions.Item>
-                            <Descriptions.Item label="Prefered Mobile No 1">{checkAndSetDefaultValue(connectedVehicle && connectedVehicle[0]?.preferredMobileNo1, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Prefered Mobile No 2">{checkAndSetDefaultValue(connectedVehicle && connectedVehicle[0]?.preferredMobileNo2, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="KYC Status">{checkAndSetDefaultValue(connectedVehicle && connectedVehicle[0]?.kycStatus, isLoading, 'bool')}</Descriptions.Item>
-                        </Descriptions>
+                        <Divider />
+
+                        <Space style={{ display: 'flex' }} direction="vertical" size="middle">
+                            {formData?.connectedVehicle?.map((element, index) => {
+                                return (
+                                    <Collapse expandIcon={expandIcon} activeKey={InnerCollapse} onChange={() => handleInnerCollapse(index)} expandIconPosition="end" {...collapseProps}>
+                                        <Panel header={`${element?.tcuId} | ${element?.esimNo}`} key={index}>
+                                            <Divider />
+
+                                            <Descriptions {...viewProps}>
+                                                <Descriptions.Item label="TCU ID">{checkAndSetDefaultValue(connectedVehicle && element?.tcuId, isLoading)}</Descriptions.Item>
+                                                <Descriptions.Item label="E-SIM No">{checkAndSetDefaultValue(connectedVehicle && element?.esimNo, isLoading)}</Descriptions.Item>
+                                                <Descriptions.Item label="E-SIM Status">{checkAndSetDefaultValue(bindStatus(element, 'esimStatus', { active: 'Active', inactive: 'Inctive' }), isLoading)}</Descriptions.Item>
+                                                <Descriptions.Item label="Prefered Mobile No 1">{checkAndSetDefaultValue(connectedVehicle && element?.preferredMobileNo1, isLoading)}</Descriptions.Item>
+                                                <Descriptions.Item label="Prefered Mobile No 2">{checkAndSetDefaultValue(connectedVehicle && element?.preferredMobileNo2, isLoading)}</Descriptions.Item>
+                                                <Descriptions.Item label="KYC Status">{checkAndSetDefaultValue(bindStatus(element, 'kycStatus', { active: 'Recieved', inactive: 'Not Recieved' }), isLoading)}</Descriptions.Item>
+                                            </Descriptions>
+                                        </Panel>
+                                    </Collapse>
+                                );
+                            })}
+                            {!formData?.connectedVehicle?.length && <NoDataFound informtion={'No connected Vehicle Data'} />}
+                        </Space>
                     </Panel>
                 </Collapse>
                 <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse(3)} expandIconPosition="end" {...collapseProps}>
                     <Panel header="Aggregates" key="3">
-                        <DataTable tableColumn={tableColumn({ formActionType, bindCodeValue })} tableData={optionsServiceModified} removePagination={true} />
+                        <DataTable tableColumn={tableColumn({ formActionType, bindCodeValue })} tableData={optionsServiceModified} pagination={false} />
                     </Panel>
                 </Collapse>
             </Space>

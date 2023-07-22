@@ -1149,7 +1149,7 @@
 }
 
 .allowedTimingAlignment {
-    padding: 20px 0 !important;
+    padding: 20px 0 20px 5px !important;
     font-size: 16px;
     line-height: 24px;
     font-weight: 700;
@@ -1501,6 +1501,9 @@
     border: 1px solid #e6e6e6;
     border-radius: 4px;
     padding: 12px 16px;
+    -webkit-box-shadow: 0px 1px 0.15px 0px rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: 0px 1px 0.15px 0px rgba(0, 0, 0, 0.15);
+    box-shadow: 0px 1px 0.15px 0px rgba(0, 0, 0, 0.15);
 }
 
 .timingCardItem .timeSlot {
@@ -1612,6 +1615,7 @@
 .drawerBodyLeft :global .ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-collapse-header-text .ant-space {
     gap: 10px !important;
     margin-bottom: 16px;
+    width:100%;
 }
 
 .drawerBodyLeft :global .ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-collapse-header-text .ant-space .ant-space-item h5.ant-typography {
@@ -1725,6 +1729,7 @@
     font-weight: 500;
     line-height: 24px;
     float: left;
+    width: 100%;
 }
 
 .drawerBodyLeft :global .ant-timeline {
@@ -2048,9 +2053,9 @@
     font-weight: 400;
     color: #0B0B0C;
 } */
-.selectPlaceholderLineHeight :global .ant-select-single .ant-select-selector .ant-select-selection-placeholder {
+/* .selectPlaceholderLineHeight :global .ant-select-single .ant-select-selector .ant-select-selection-placeholder {
     line-height: 34px !important;
-}
+} */
 
 .drawerBodyRight :global .ant-card .ant-card-body .ant-form-item .ant-select .ant-select-selector .ant-select-selection-placeholder {
     color: #B5B5B6;
@@ -2285,13 +2290,6 @@
     line-height: 22px;
     /* margin-bottom: 20px; */
 }
-
-.drawerBodyRight :global .ant-typography.ant-typography-secondary {
-    font-size: 14px;
-    font-weight: 400;
-    color: #858585;
-}
-
 .drawerBodyRight :global .ant-typography.ant-typography-secondary {
     font-size: 14px;
     font-weight: 400;
@@ -3039,6 +3037,10 @@ li.ant-timeline-item.active .ant-timeline-item-content p {
 
 .customerChooseContainer :global .ant-table .ant-table-content .ant-table-thead .ant-table-selection-column {
     background: #F2F2F2;
+}
+
+.tokenField :global .ant-input-affix-wrapper{
+    height: 34px;
 }
 
 @media (max-width: 768px) {

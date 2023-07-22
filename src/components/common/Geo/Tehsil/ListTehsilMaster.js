@@ -18,6 +18,8 @@ import { geoStateDataActions } from 'store/actions/data/geo/states';
 import { geoDistrictDataActions } from 'store/actions/data/geo/districts';
 import { tehsilDataActions } from 'store/actions/data/geo/tehsils';
 
+import { formattedCalendarDate } from 'utils/formatDateTime';
+
 import { showGlobalNotification } from 'store/actions/notification';
 import { AddEditForm } from './AddEditForm';
 import { FilterIcon } from 'Icons';
@@ -251,7 +253,7 @@ export const ListTehsilBase = (props) => {
         };
 
     const onFinish = (values) => {
-        let data = { ...values, includedOn: values?.includedOn?.format('YYYY-MM-DD') };
+        let data = { ...values, includedOn: formattedCalendarDate(values?.includedOn) };
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -393,14 +395,12 @@ export const ListTehsilBase = (props) => {
     const handleClearInSearch = (e) => {
         if (e.target.value.length > 2) {
             listFilterForm.validateFields(['code']);
-        }
-        else if (e?.target?.value === '') {
+        } else if (e?.target?.value === '') {
             setFilterString();
             listFilterForm.resetFields();
             setShowDataLoading(false);
         }
     };
-
 
     const removeFilter = (key) => {
         if (key === 'countryCode') {

@@ -90,17 +90,15 @@ const AddEditFormMain = (props) => {
     }, [formData]);
 
     useEffect(() => {
-        if (!viewMode) {
-            form.setFieldsValue({
-                taxCategoryCode: taxCategory?.taxCategoryCode,
-                taxCategoryDescription: taxCategory?.taxCategoryDescription,
-                stateCode: taxCategory?.stateCode,
-                saleType: taxCategory?.saleType,
-                status: taxCategory?.status,
-            });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [taxCategory]);
+        let obj = {
+            taxCategoryCode: taxCategory?.taxCategoryCode,
+            taxCategoryDescription: taxCategory?.taxCategoryDescription,
+            stateCode: taxCategory?.stateCode,
+            saleType: taxCategory?.saleType,
+            status: taxCategory?.status,
+        };
+        form.setFieldsValue({ obj });
+    });
 
     const viewProps = {
         isVisible: viewMode,
@@ -134,7 +132,8 @@ const AddEditFormMain = (props) => {
         taxChargeCalList,
         setTaxChargeCalList,
         taxMasterId,
-        setTaxMasterId,
+        setTaxMasterId
+
     };
 
     console.log(viewMode, 'viewMode');

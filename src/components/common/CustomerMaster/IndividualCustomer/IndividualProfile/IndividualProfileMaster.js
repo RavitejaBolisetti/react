@@ -7,7 +7,8 @@ import React, { useState, useEffect } from 'react';
 import { Row, Col, Form } from 'antd';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import dayjs from 'dayjs';
+
+import { formattedCalendarDate } from 'utils/formatDateTime';
 
 import { showGlobalNotification } from 'store/actions/notification';
 import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
@@ -78,7 +79,7 @@ const IndividualProfileBase = (props) => {
     const { userId, isIndiviualProfileLoaded, fetchViewDocument, viewDocument, appCategoryData, listIndiviualShowLoading, fetchList, indiviualData, saveData, showGlobalNotification, handleButtonClick } = props;
     const { section, buttonData, setButtonData, formActionType, setFormActionType, defaultBtnVisiblity, downloadFile } = props;
     const { saveDocumentData, uploadDocumentFile, uploadConsentDocumentFile, listDocumentShowLoading, isLoading, isViewDocumentLoading, selectedCustomerId, NEXT_ACTION } = props;
-    const { isViewDataLoaded, resetViewData, resetData, viewListShowLoading } = props;
+    const { resetViewData, resetData, viewListShowLoading } = props;
     const [form] = Form.useForm();
 
     const [activeKey, setActiveKey] = useState([1]);
@@ -150,7 +151,7 @@ const IndividualProfileBase = (props) => {
             });
         } else {
             form.setFieldsValue({
-                dateOfBirth: dayjs(indiviualData?.dateOfBirth),
+                dateOfBirth: formattedCalendarDate(indiviualData?.dateOfBirth),
             });
         }
         if (indiviualData?.weddingAnniversary === null || indiviualData?.weddingAnniversary === undefined || indiviualData?.weddingAnniversary === '') {
@@ -159,7 +160,7 @@ const IndividualProfileBase = (props) => {
             });
         } else {
             form.setFieldsValue({
-                weddingAnniversary: dayjs(indiviualData?.weddingAnniversary),
+                weddingAnniversary: formattedCalendarDate(indiviualData?.weddingAnniversary),
             });
         }
 
@@ -191,8 +192,8 @@ const IndividualProfileBase = (props) => {
         const data = {
             ...rest,
             customerId: selectedCustomerId,
-            dateOfBirth: values?.dateOfBirth?.format('YYYY-MM-DD'),
-            weddingAnniversary: values?.weddingAnniversary?.format('YYYY-MM-DD'),
+            dateOfBirth: formattedCalendarDate(values?.dateOfBirth),
+            weddingAnniversary: formattedCalendarDate(values?.weddingAnniversary),
             keyAccountDetails: { customerId: selectedCustomerId, accountCode: values?.accountCode || '', accountName: values?.accountName || '', accountSegment: values?.accountSegment || '', accountClientName: values?.accountClientName || '', accountMappingDate: values?.accountMappingDate || '' },
             authorityRequest: { customerId: selectedCustomerId, personName: values.personName || '', postion: values.postion || '', companyName: values.companyName || '', remarks: values.remarks || '', id: recordId },
             id: recordId,

@@ -57,8 +57,11 @@ const mapStateToProps = (state) => {
     const finalCountryData = countryData?.map((item, index) => {
         return { ...item, default: index <= 0 || false };
     });
+    const finalDistrictData = districtData?.map((item,index) =>{
+        return {...item, default: index <= 0 || false};
+    })
     const defaultCountry = finalCountryData && finalCountryData?.find((i) => i.default)?.countryCode;
-
+    const findDistrictCode = finalDistrictData && finalDistrictData?.find((i)=> i.default)?.districtCode;
     let returnValue = {
         userId,
         accessToken,
@@ -73,6 +76,7 @@ const mapStateToProps = (state) => {
         countryData: finalCountryData,
         isDataCountryLoaded,
         defaultCountry,
+        findDistrictCode,
         isStateDataLoaded,
         isStateLoading,
         stateData,
@@ -84,7 +88,7 @@ const mapStateToProps = (state) => {
         tehsilData,
         typeData,
         isDistrictDataLoaded,
-        districtData,
+        districtData:finalDistrictData,
         isProductHierarchyDataLoaded,
         productHierarchyList,
         isProductHierarchyLoading,
@@ -94,6 +98,7 @@ const mapStateToProps = (state) => {
         isVehiclePriceLoading,
         isVehiclePriceDataLoaded,
         vehiclePriceData: vehiclePriceData?.vehicleSearch,
+        totalRecords: vehiclePriceData?.totalRecords,
     };
     return returnValue;
 };
@@ -123,8 +128,8 @@ const mapDispatchToProps = (dispatch) => ({
 export const VehiclePriceMasterBase = (props) => {
     const { filterString, setFilterString, saveData, userId, showGlobalNotification } = props;
     const { accessToken, token, viewDocument, isViewDataLoaded, viewListShowLoading, resetViewData, fetchViewDocument } = props;
-    const { isDataCountryLoaded, isCountryLoading, countryData, defaultCountry, isDistrictDataLoaded, districtData, typeData, fetchVehiclePriceList, listVehiclePriceShowLoading } = props;
-    const { isStateDataLoaded, stateData, moduleTitle, vehiclePriceData, isCityDataLoaded, cityData, isProductHierarchyDataLoaded, productHierarchyList, isProductHierarchyLoading, isTehsilDataLoaded, tehsilData } = props;
+    const { isDataCountryLoaded, isCountryLoading, countryData, findDistrictCode,defaultCountry, isDistrictDataLoaded, districtData, typeData, fetchVehiclePriceList, listVehiclePriceShowLoading } = props;
+    const { isStateDataLoaded, stateData, moduleTitle, vehiclePriceData, totalRecords, isCityDataLoaded, cityData, isProductHierarchyDataLoaded, productHierarchyList, isProductHierarchyLoading, isTehsilDataLoaded, tehsilData } = props;
     const { isSupportingDataLoaded, isSupportingDataLoading, supportingData, downloadFile, listShowLoading } = props;
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
@@ -151,6 +156,8 @@ export const VehiclePriceMasterBase = (props) => {
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: true, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
+    const [page, setPage] = useState({ pageSize: 10, current: 1 });
+    const dynamicPagination = true;
 
     const onSuccessAction = (res) => {
         refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -159,6 +166,7 @@ export const VehiclePriceMasterBase = (props) => {
         setRefershData(false);
         setShowDataLoading(false);
     };
+    console.log(cityData,'city')
 
     const extraParams = useMemo(() => {
         return [
@@ -195,13 +203,22 @@ export const VehiclePriceMasterBase = (props) => {
                 filter: true,
             },
             {
+                key: 'districtCode',
+                title: 'District',
+                value: filterString?.districtCode,
+                name: filteredDistrictData?.find((i) => i?.key === filterString?.districtCode)?.value,
+                canRemove: false,
+                filter: false,
+            },
+            {
                 key: 'cityCode',
                 title: 'City',
                 value: filterString?.cityCode,
                 name: filteredCityData?.find((i) => i?.key === filterString?.cityCode)?.value,
-                canRemove: false,
+                canRemove: true,
                 filter: true,
             },
+            
             {
                 key: 'priceAsOnDate',
                 title: 'End Date',
@@ -210,24 +227,38 @@ export const VehiclePriceMasterBase = (props) => {
                 canRemove: true,
                 filter: true,
             },
-
             {
                 key: 'pageSize',
                 title: 'Value',
-                value: 10,
+                value: page?.pageSize,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'pageNumber',
                 title: 'Value',
-                value: 1,
+                value: page?.current,
+                canRemove: true,
+                filter: false,
+            },
+            {
+                key: 'sortBy',
+                title: 'Sort By',
+                value: page?.sortBy,
+                canRemove: true,
+                filter: false,
+            },
+            {
+                key: 'sortIn',
+                title: 'Sort Type',
+                value: page?.sortType,
                 canRemove: true,
                 filter: false,
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString]);
+    }, [filterString, page]);
+    {console.log(filteredCityData,'filteredCityData')}
 
     useEffect(() => {
         if (userId) {
@@ -235,25 +266,28 @@ export const VehiclePriceMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, extraParams]);
-    // }, [userId, isDataCountryLoaded, isStateDataLoaded, isDataLoaded, isProductHierarchyDataLoaded, isVehiclePriceDataLoaded, defaultExtraParams]);
 
     useEffect(() => {
-        if (isDataCountryLoaded && defaultCountry && isStateDataLoaded && isCityDataLoaded) {
+        if (isDataCountryLoaded && defaultCountry && isStateDataLoaded ) {
             setFilterString({ countryCode: defaultCountry });
             defaultCountry ? setFilteredStateData(stateData?.filter((i) => i?.parentKey === defaultCountry)) : setFilteredStateData();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataCountryLoaded, isStateDataLoaded]);
 
+    useEffect(() => {
+        if (isDistrictDataLoaded && findDistrictCode && isCityDataLoaded) {
+            setFilterString({ districtCode: findDistrictCode });
+            findDistrictCode ? setFilteredCityData(cityData?.filter((i) => i?.parentKey === findDistrictCode)) : setFilteredCityData();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isDistrictDataLoaded, isCityDataLoaded]);
+
     const handleButtonClick = ({ record = null, buttonAction }) => {
         setFormData(record);
         setIsFormVisible(true);
     };
 
-    const handleReferesh = () => {
-        setShowDataLoading(true);
-        setRefershData(!refershData);
-    };
 
     const handleFilterChange =
         (name, type = 'value') =>
@@ -303,7 +337,7 @@ export const VehiclePriceMasterBase = (props) => {
             }
 
             if (name === 'stateCode') {
-                setFilteredCityData(cityData?.filter((i) => i?.parentKey === filterValue));
+                setFilteredCityData(districtData?.filter((i) => i?.parentKey === filterValue));
                 advanceFilterForm.setFieldsValue({ districtCode: undefined });
                 advanceFilterForm.setFieldsValue({ cityCode: undefined });
             }
@@ -357,6 +391,9 @@ export const VehiclePriceMasterBase = (props) => {
     };
 
     const tableProps = {
+        dynamicPagination,
+        totalRecords,
+        setPage,
         isLoading: showDataLoading,
         tableColumn: tableColumn(handleButtonClick),
         tableData: vehiclePriceData,
@@ -399,7 +436,7 @@ export const VehiclePriceMasterBase = (props) => {
         isCountryLoading,
         countryData,
         defaultCountry,
-        districtData,
+        districtData: findDistrictCode,
         stateData,
         isDistrictDataLoaded,
 

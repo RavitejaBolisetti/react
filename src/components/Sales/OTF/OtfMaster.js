@@ -52,6 +52,7 @@ const mapStateToProps = (state) => {
         userId,
         typeData,
         data: data?.otfDetails,
+        totalRecords: data?.totalRecords || [],
         otfStatusList: Object.values(OTF_STATUS),
 
         isDetailLoaded,
@@ -90,7 +91,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const OtfMasterBase = (props) => {
-    const { showGlobalNotification, fetchOTFDetail, saveData, listShowLoading, userId, fetchOTFSearchedList, data, otfData, resetData } = props;
+    const { showGlobalNotification, fetchOTFDetail, saveData, listShowLoading, userId, fetchOTFSearchedList, data, totalRecords, otfData, resetData } = props;
     const { ChangeHistoryTitle } = props;
 
     const { typeData, moduleTitle, transferOTF } = props;
@@ -142,6 +143,9 @@ export const OtfMasterBase = (props) => {
 
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
+
+    const [page, setPage] = useState({ pageSize: 10, current: 1 });
+    const dynamicPagination = true;
 
     const [formData, setFormData] = useState([]);
     const [ChangeHistoryVisible, setChangeHistoryVisible] = useState(false);
@@ -203,20 +207,34 @@ export const OtfMasterBase = (props) => {
             {
                 key: 'pageSize',
                 title: 'Value',
-                value: 100,
+                value: page?.pageSize,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'pageNumber',
                 title: 'Value',
-                value: 1,
+                value: page?.current,
+                canRemove: true,
+                filter: false,
+            },
+            {
+                key: 'sortBy',
+                title: 'Sort By',
+                value: page?.sortBy,
+                canRemove: true,
+                filter: false,
+            },
+            {
+                key: 'sortIn',
+                title: 'Sort Type',
+                value: page?.sortType,
                 canRemove: true,
                 filter: false,
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString]);
+    }, [filterString, page]);
 
     useEffect(() => {
         return () => {
@@ -229,6 +247,7 @@ export const OtfMasterBase = (props) => {
 
     useEffect(() => {
         if (userId) {
+            setShowDataLoading(true);
             fetchOTFSearchedList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -372,6 +391,10 @@ export const OtfMasterBase = (props) => {
     };
 
     const tableProps = {
+        dynamicPagination,
+        totalRecords,
+        setPage,
+        isLoading: showDataLoading,
         tableColumn: tableColumn(handleButtonClick),
         tableData: data,
         showAddButton: false,
@@ -593,7 +616,7 @@ export const OtfMasterBase = (props) => {
             <AdvanceOtfFilter {...advanceFilterResultProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.tableProduct}>
-                    <ListDataTable handleAdd={handleButtonClick} isLoading={showDataLoading} {...tableProps} showAddButton={false} />
+                    <ListDataTable handleAdd={handleButtonClick} {...tableProps} showAddButton={false} />
                 </Col>
             </Row>
             <AdvancedSearch {...advanceFilterProps} />
