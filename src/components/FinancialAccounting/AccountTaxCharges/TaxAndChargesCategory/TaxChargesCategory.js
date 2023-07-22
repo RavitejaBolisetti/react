@@ -16,7 +16,6 @@ import { tableColumn } from './tableColumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { BASE_URL_FINANCIAL_ACC_TAX_CHARGE_CATEGORY_SEARCH as customURL } from 'constants/routingApi';
 
-
 import { showGlobalNotification } from 'store/actions/notification';
 
 import { ListDataTable } from 'utils/ListDataTable';
@@ -101,7 +100,6 @@ export const TaxChargesCategoryMain = (props) => {
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [disabledEdit, setDisabledEdit] = useState(false);
 
-
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
@@ -177,9 +175,10 @@ export const TaxChargesCategoryMain = (props) => {
     }, [userId, isTaxChargeCategoryTypeLoaded]);
 
     const handleCodeFunction = (value) => {
+        console.log(value, 'VALUWWW');
         let obj = {
-            taxChargeCode: null,
-            taxDescription: null,
+            taxCharges: null,
+            taxChargeCategoryCodeData: null,
         };
 
         if (formEdit) {
@@ -304,7 +303,7 @@ export const TaxChargesCategoryMain = (props) => {
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => { });
+        form.validateFields().then((values) => {});
     };
 
     const onCloseAction = () => {
@@ -356,7 +355,7 @@ export const TaxChargesCategoryMain = (props) => {
         formEdit,
         setFormEdit,
         taxChargeCalList,
-        setTaxChargeCalList
+        setTaxChargeCalList,
     };
 
     const tableProps = {
