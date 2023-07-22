@@ -75,7 +75,7 @@
 }
 
 .leftMenuBox .searchContainer :global .ant-form-vertical:hover {
-    color: #FF3E5B;
+    color: #ff3e5b;
 }
 
 .leftMenuBox .searchContainer :global .ant-form .ant-form-item {
@@ -86,7 +86,7 @@
     padding: 3px 12px;
 }
 
-.leftMenuBox .searchContainer :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child {
+.leftMenuBox .searchContainer :global .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child {
     padding: 3px 12px;
     padding-left: 0;
 }
@@ -113,8 +113,8 @@
     line-height: 23px;
 }
 
-.leftMenuBox .subMenuParent :global .ant-menu-submenu-title>svg,
-.leftMenuBox .subMenuItem :global .ant-menu-submenu-title>svg {
+.leftMenuBox .subMenuParent :global .ant-menu-submenu-title > svg,
+.leftMenuBox .subMenuItem :global .ant-menu-submenu-title > svg {
     width: 20px;
     height: 20px;
 }
@@ -136,12 +136,12 @@
     display: flex;
     justify-content: center;
     width: 100%;
-    border: 1px solid #E6E6E6;
+    border: 1px solid #e6e6e6;
     border-radius: 4px;
     padding: 4px;
 }
 
-.leftMenuBox .changeTheme button>span {
+.leftMenuBox .changeTheme button > span {
     font-size: 12px;
     font-weight: 500;
     line-height: 20px;
@@ -175,14 +175,14 @@
 .leftMenuBox .changeTheme .changeThemeBorder .lightTheme,
 .leftMenuBox .changeTheme .changeThemeBorder .darkTheme {
     border: 1px solid transparent !important;
-    color: #0B0B0C !important;
+    color: #0b0b0c !important;
 }
 
 .leftMenuBox .changeTheme :global .ant-btn-default.ant-btn-dangerous:not(:disabled):hover,
 .leftMenuBox .changeTheme :global .ant-btn-default.ant-btn-dangerous:not(:disabled):active {
     background-color: transparent;
-    border: 1px solid #FF3E5B !important;
-    color: #FF3E5B !important;
+    border: 1px solid #ff3e5b !important;
+    color: #ff3e5b !important;
 }
 
 .leftMenuBox .changeTheme .sun,
@@ -191,7 +191,7 @@
 }
 
 .leftMenuBox li.subMenuItemNew:hover {
-    color: #FF3E5B !important;
+    color: #ff3e5b !important;
     background: transparent !important;
 }
 

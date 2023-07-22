@@ -13,7 +13,7 @@ import { preparePlaceholderSelect, preparePlaceholderText, prepareDatePickerText
 import { disableFutureDate } from 'utils/disableDate';
 import { expandIcon } from 'utils/accordianExpandIcon';
 
-import { dateFormat, formatDateToCalenderDate, formattedCalendarDate } from 'utils/formatDateTime';
+import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
 
 import { UploadUtil } from 'utils/Upload';
 
