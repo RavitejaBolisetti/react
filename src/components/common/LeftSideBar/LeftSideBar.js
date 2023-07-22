@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Input, Menu, Layout, Row, Col, Form, AutoComplete, Button } from 'antd';
-import { BsMoon, BsSun, BsSearch } from 'react-icons/bs';
+import { BsChevronUp, BsChevronDown, BsMoon, BsSun, BsSearch } from 'react-icons/bs';
 import { RxCross2 } from 'react-icons/rx';
 import IMG_ICON from 'assets/img/icon.png';
 import IMG_LOGO from 'assets/images/RobinLightTheme.svg';
@@ -210,7 +210,7 @@ const LeftSideBarMain = (props) => {
 
     return (
         <>
-            <Sider onBreakpoint={onBreakPoint} breakpoint="lg" collapsedWidth={isMobile ? '0px' : '78px'} width={isMobile ? '100vw' : '282px'} collapsible className={`${styles.leftMenuBox} ${menuParentClass}`} collapsed={collapsed} onCollapse={(value, type) => onSubmit(value, type)}>
+            <Sider onBreakpoint={onBreakPoint} breakpoint="lg" collapsedWidth={isMobile ? '0px' : '60px'} width={isMobile ? '100vw' : '240px'} collapsible className={`${styles.leftMenuBox} ${menuParentClass}`} collapsed={collapsed} onCollapse={(value, type) => onSubmit(value, type)}>
                 <div className={collapsed ? styles.logoContainerCollapsed : styles.logoContainer}>
                     <Row gutter={20}>
                         <Col xs={22} sm={22} md={24} lg={24} xl={24}>
@@ -251,8 +251,16 @@ const LeftSideBarMain = (props) => {
                             selectedKeys={selectedKeys}
                             onOpenChange={onOpenChange}
                             collapsed={collapsed.toString()}
+                            expandIcon={({ isOpen }) => {
+                                if (isOpen) {
+                                    return <BsChevronUp />;
+                                } else {
+                                    return <BsChevronDown />;
+                                }
+                            }}
                             style={{
-                                paddingLeft: collapsed ? '18px' : '24px',
+                                // paddingLeft: collapsed ? '18px' : '24px',
+                                paddingLeft: collapsed ? '18px' : '14px',
                             }}
                         >
                             {prepareMenuItem(menuData)}
@@ -265,10 +273,12 @@ const LeftSideBarMain = (props) => {
                     className={styles.changeTheme}
                     onClick={handleThemeChange}
                     style={{
+                        padding: collapsed ? '10px' : '10px 14px',
                         position: isMobile ? (collapsed ? 'relative' : 'absolute') : 'absolute',
                     }}
                 >
-                    <div className={styles.changeThemeBorder} style={{ padding: collapsed ? '9px 10px' : '5px' }}>
+                    {/* <div className={styles.changeThemeBorder} style={{ padding: collapsed ? '9px 10px' : '5px' }}> */}
+                    <div className={styles.changeThemeBorder}>
                         {collapsed ? (
                             theme === 'light' ? (
                                 <BsSun size={20} className={styles.sun} />
