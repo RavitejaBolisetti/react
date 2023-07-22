@@ -142,7 +142,6 @@ const ContactMain = (props) => {
         contactform
             .validateFields()
             .then((value) => {
-                
                 const defaultAdddress = contactData.find((i) => i?.defaultContactIndicator && i?.purposeOfContact !== value?.purposeOfContact) && value?.defaultContactIndicator;
                 if (defaultAdddress) {
                     return showGlobalNotification({ message: 'Only one contact can be default' });
@@ -296,7 +295,7 @@ const ContactMain = (props) => {
                                             </Button>
                                         )}
                                     </Row>
-                                    <Divider className={styles.marT20} />
+                                    <Divider />
                                     <Space direction="vertical" style={{ width: '100%' }} className={styles.accordianContainer}>
                                         <div className={styles.headerBox}>
                                             {!formActionType?.viewMode && showAddEditForm && <AddEditForm {...formProps} />}

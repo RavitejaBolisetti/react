@@ -20,6 +20,9 @@ import { PlusOutlined } from '@ant-design/icons';
 import { TfiReload } from 'react-icons/tfi';
 import { FiEdit } from 'react-icons/fi';
 import { FaRegEye } from 'react-icons/fa';
+
+import { formattedCalendarDate } from 'utils/formatDateTime';
+
 import styles from 'components/common/Common.module.css';
 
 const { Search } = Input;
@@ -259,7 +262,7 @@ export const ConfigurableParameterEditingBase = ({ saveFormShowLoading, isLoadin
 
     const onFinish = (values) => {
         const recordId = formData?.id || '';
-        let data = { ...values, id: recordId, isActive: true, configurableParameterType: parameterType, fromDate: values?.fromDate?.format('YYYY-MM-DD'), toDate: values?.toDate?.format('YYYY-MM-DD') };
+        let data = { ...values, id: recordId, isActive: true, configurableParameterType: parameterType, fromDate: formattedCalendarDate(values?.fromDate), toDate: formattedCalendarDate(values?.toDate) };
         const onSuccess = (res) => {
             form.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });

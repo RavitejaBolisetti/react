@@ -21,7 +21,7 @@ import { CustomerListMaster } from 'components/utils/CustomerListModal';
 
 import { OTFFormButton } from '../OTFFormButton';
 import { OTFStatusBar } from '../utils/OTFStatusBar';
-import { convertCalenderDate } from 'utils/formatDateTime';
+import { formattedCalendarDate } from 'utils/formatDateTime';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
 const mapStateToProps = (state) => {
@@ -165,7 +165,7 @@ const ReferralsMasterBase = (props) => {
     }, [filterString]);
 
     const onFinish = (values) => {
-        const data = { ...values, otfNumber: selectedOrderId, dob: convertCalenderDate(values?.dob, 'YYYY-MM-DD'), id: referralData?.id };
+        const data = { ...values, otfNumber: selectedOrderId, dob: formattedCalendarDate(values?.dob), id: referralData?.id };
 
         const onSuccess = (res) => {
             form.resetFields();

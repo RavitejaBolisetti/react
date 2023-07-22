@@ -208,6 +208,13 @@ export const VehicleDetailMasterBase = (props) => {
     }, [userId, extraParams]);
 
     useEffect(() => {
+        return () => {
+            setFilterString();
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {
         const defaultSection = VEHICLE_DETAIL_SECTION.VEHICLE_DETAILS.id;
         setDefaultSection(defaultSection);
         setSetionName(VEHICLE_DETAIL_SECTION);
@@ -227,6 +234,15 @@ export const VehicleDetailMasterBase = (props) => {
         form.setFieldsValue(undefined);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentSection, sectionName]);
+
+    const handleResetFilter = (e) => {
+        if (filterString) {
+            setShowDataLoading(true);
+        }
+        setFilterString();
+        // advanceFilterForm.resetFields();
+        // setAdvanceSearchVisible(false);
+    };
 
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
         form.resetFields();
@@ -357,6 +373,7 @@ export const VehicleDetailMasterBase = (props) => {
         setOtfSearchRules,
         searchForm,
         onFinishSearch,
+        handleResetFilter,
     };
 
     const drawerTitle = useMemo(() => {

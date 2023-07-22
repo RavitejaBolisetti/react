@@ -17,6 +17,7 @@ import { otfDataActions } from 'store/actions/data/otf/otf';
 import { showGlobalNotification } from 'store/actions/notification';
 import { salesConsultantActions } from 'store/actions/data/otf/salesConsultant';
 import { BASE_URL_OTF_DETAILS as customURL } from 'constants/routingApi';
+import { formattedCalendarDate } from 'utils/formatDateTime';
 
 import { OTFStatusBar } from '../utils/OTFStatusBar';
 
@@ -124,7 +125,7 @@ const OtfDetailsMasterBase = (props) => {
         const recordId = otfData?.id || '';
         const otfNum = otfData?.otfNumber || '';
         const exchange = values?.exchange === true ? 1 : 0;
-        const data = { ...values, id: recordId, otfNumber: otfNum, loyaltyScheme: values?.loyaltyScheme === true ? 1 : 0, exchange: exchange, initialPromiseDeliveryDate: values?.initialPromiseDeliveryDate?.format('YYYY-MM-DD'), custExpectedDeliveryDate: values?.custExpectedDeliveryDate?.format('YYYY-MM-DD') };
+        const data = { ...values, id: recordId, otfNumber: otfNum, loyaltyScheme: values?.loyaltyScheme === true ? 1 : 0, exchange: exchange, initialPromiseDeliveryDate: formattedCalendarDate(values?.initialPromiseDeliveryDate), custExpectedDeliveryDate: formattedCalendarDate(values?.custExpectedDeliveryDate) };
         delete data?.mitraName;
         delete data?.mitraType;
         delete data?.modeOfPAyment;

@@ -7,7 +7,8 @@ import React, { useState, useEffect } from 'react';
 import { Col, Input, Form, Row, Select, Switch, DatePicker } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
-import { convertCalenderDate } from 'utils/formatDateTime';
+import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
+
 import { ViewDetail } from './ViewDetail';
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
@@ -76,7 +77,7 @@ const AddEditFormMain = (props) => {
         handleButtonClick,
     };
 
-    const dateInitialValue = { initialValue: convertCalenderDate(formData?.includedOn, 'YYYY/MM/DD') };
+    const dateInitialValue = { initialValue: formattedCalendarDate(formData?.includedOn) };
 
     const selectProps = {
         optionFilterProp: 'children',
@@ -156,7 +157,7 @@ const AddEditFormMain = (props) => {
                     <Row gutter={20}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item label="Included On" name="includedOn" {...dateInitialValue} rules={[validateRequiredInputField('Included On')]}>
-                                <DatePicker disabled format="YYYY-MM-DD" style={{ display: 'auto', width: '100%' }} placeholder={preparePlaceholderSelect('Included On Date')} className={styles.inputBox} />
+                                <DatePicker disabled format={dateFormat} style={{ display: 'auto', width: '100%' }} placeholder={preparePlaceholderSelect('Included On Date')} className={styles.inputBox} />
                             </Form.Item>
                         </Col>
 
