@@ -465,7 +465,7 @@ export const UserManagementManufacturerMain = ({ moduleTitle, saveData, userId, 
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={5} lg={5} xl={5}>
                                 <div className={`${styles.userManagement} ${styles.headingToggle}`}>
-                                    <Button className={styles.marR5} type="primary" danger>
+                                    <Button className={styles.marR5} type="primary">
                                         Manufacturer
                                     </Button>
                                     <Button type="link" ghost onClick={() => navigate(ROUTING_USER_MANAGEMENT_DEALER)}>
@@ -509,7 +509,7 @@ export const UserManagementManufacturerMain = ({ moduleTitle, saveData, userId, 
                                                 </Row>
                                             </Col>
                                             <Col xs={24} sm={24} md={4} lg={4} xl={4}>
-                                                <Button icon={<PlusOutlined />} className={styles.floatRight} type="primary" danger onClick={handleAdd}>
+                                                <Button icon={<PlusOutlined />} className={styles.floatRight} type="primary" onClick={handleAdd}>
                                                     Manage Access
                                                 </Button>
                                             </Col>
@@ -578,7 +578,7 @@ export const UserManagementManufacturerMain = ({ moduleTitle, saveData, userId, 
                                 {/* {!qualificationData?.length ? (
                                     <Row>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                            <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" danger onClick={handleAdd}>
+                                            <Button icon={<PlusOutlined />} className={style.actionbtn} type="primary" onClick={handleAdd}>
                                                 Add Qualification
                                             </Button>
                                         </Col>

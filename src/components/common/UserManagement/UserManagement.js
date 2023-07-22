@@ -563,7 +563,7 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={5} lg={5} xl={5}>
                                 <div className={`${styles.userManagement} ${styles.headingToggle}`}>
-                                    <Button className={styles.marR5} type="primary" danger onClick={() => navigate(ROUTING_USER_MANAGEMENT_MANUFACTURER)}>
+                                    <Button className={styles.marR5} type="primary" onClick={() => navigate(ROUTING_USER_MANAGEMENT_MANUFACTURER)}>
                                         Manufacturer
                                     </Button>
                                     <Button type="link" ghost>
@@ -617,7 +617,7 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
                                                 </Row>
                                             </Col>
                                             <Col xs={24} sm={24} md={4} lg={4} xl={4}>
-                                                <Button icon={<PlusOutlined />} className={styles.floatRight} type="primary" danger onClick={handleAdd}>
+                                                <Button icon={<PlusOutlined />} className={styles.floatRight} type="primary" onClick={handleAdd}>
                                                     Manage Access
                                                 </Button>
                                             </Col>

@@ -4,14 +4,13 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Descriptions, Card } from 'antd';
+import { Descriptions, Card, Checkbox } from 'antd';
 import { CheckSquareOutlined } from '@ant-design/icons';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 
 const ViewDetailBase = (props) => {
-    const { styles, formData, isLoading } = props;
-    // console.log('🚀 ~ file: ViewDetail.js:12 ~ ViewDetailBase ~ Kuldeep:', formData);
-
+    const { styles, formData, isLoading, formActionType } = props;
+    const disableProp = { disabled: formActionType?.viewMode };
     const viewProps = {
         bordered: false,
         colon: false,
@@ -23,8 +22,11 @@ const ViewDetailBase = (props) => {
         if (value) {
             return (
                 <>
-                    <CheckSquareOutlined />
-                    VIP Dealer
+                    <Descriptions.Item>
+                        <Checkbox valuePropName="checked" checked={formData?.vipDealerInd} defaultChecked={formData?.vipDealerInd} disabled>
+                            VIP Dealer
+                        </Checkbox>
+                    </Descriptions.Item>
                 </>
             );
         } else {
@@ -41,8 +43,7 @@ const ViewDetailBase = (props) => {
                     <Descriptions.Item label="Parts Discount">{checkAndSetDefaultValue(formData?.partsDiscount, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="Labour Discount">{checkAndSetDefaultValue(formData?.labourDiscount, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="Remarks">{checkAndSetDefaultValue(formData?.remarks, isLoading)}</Descriptions.Item>
-                    {/* <Descriptions.Item label="VIP Dealer">{checkAndSetDefaultValue(renderCheckbox(formData?.vipDealerInd), isLoading)}</Descriptions.Item> */}
-                    <div> {renderCheckbox(formData?.vipDealerInd)}</div>
+                    {renderCheckbox(formData?.vipDealerInd)}
                 </Descriptions>
             </Card>
         </div>

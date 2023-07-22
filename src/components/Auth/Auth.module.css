@@ -249,13 +249,9 @@ p {
 
 .loginSection :global .ant-input-affix-wrapper {
     background: #0B0B0C;
-    height: 36px !important;
-    /* border-style: none none solid none; */
     border-color: #545454;
     color: #ffffff;
-    font-size: 16px;
-    border-radius: 4px;
-    padding: 0;
+    /* font-size: 16px; */
 }
 
 .loginSection :global .ant-input-affix-wrapper:hover {
@@ -276,8 +272,8 @@ p {
 }
 
 .loginSection :global .ant-input-affix-wrapper .ant-input-prefix {
-    margin-inline-start: 12px;
-    margin-inline-end: 12px;
+    /* margin-inline-start: 12px;
+    margin-inline-end: 12px; */
     color: #858585;
 }
 
@@ -301,12 +297,11 @@ p {
     border-color: #ff4d4f !important;
 }
 
-.loginSection .loginWrap .loginHtml .loginForm .inputBox :global .ant-input-affix-wrapper .ant-input-suffix {
-    margin-inline-end: 8px;
-    line-height: 16px;
+/* .loginSection .loginWrap .loginHtml .loginForm .inputBox :global .ant-input-affix-wrapper .ant-input-suffix {
+    line-height: 12px;
     transform: scaleX(-1) !important;
     color: #FF3E5B;
-}
+} */
 
 .loginForm :global .ant-btn-primary:disabled {
     color: #858585;
