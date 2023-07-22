@@ -67,8 +67,12 @@ export const AddressCommonForm = (props) => {
                     </Form.Item>
                 </Col>
             </Row>
-
             <Row gutter={20}>
+                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                    <Form.Item name={[formType, 'mobileNumber']} label="Mobile Number" initialValue={formData?.mobileNumber}>
+                        <Input disabled={true} placeholder={preparePlaceholderText('mobile number')} />
+                    </Form.Item>
+                </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name={[formType, 'pincode']} label="PIN Code" initialValue={formData?.pincode}>
                         <Input disabled={true} placeholder={preparePlaceholderText('pincode')} />
@@ -79,6 +83,9 @@ export const AddressCommonForm = (props) => {
                         <Input disabled={true} placeholder={preparePlaceholderText('email')} />
                     </Form.Item>
                 </Col>
+            </Row>
+
+            <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name={[formType, 'gstin']} label="GSTIN" initialValue={formData?.gstin}>
                         <Input disabled={true} placeholder={preparePlaceholderText('gstin')} />
