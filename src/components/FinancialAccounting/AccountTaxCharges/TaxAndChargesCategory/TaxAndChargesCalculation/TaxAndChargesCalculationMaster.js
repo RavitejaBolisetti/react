@@ -26,6 +26,7 @@ export const TaxAndChargesCalculationMaster = (props) => {
                 taxChargeCalForm.resetFields();
                 forceUpdate();
                 // setFormBtnActive(true);
+                handleCodeFunction();
             })
             .catch((error) => console.log(error));
     };

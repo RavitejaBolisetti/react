@@ -189,17 +189,20 @@ export const TaxChargesCategoryMain = (props) => {
             forceUpdate();
         }
 
-        const extraParams = [
-            {
-                key: 'taxChargeType',
-                title: 'taxChargeType',
-                value: value,
-                name: 'taxChargeType',
-            },
-        ];
-        fetchTaxCodeList({ setIsLoading: listShowLoadingTaxChargeCategory, userId, extraParams, onSuccessAction });
+        if (value) {
+            const extraParams = [
+                {
+                    key: 'taxChargeType',
+                    title: 'taxChargeType',
+                    value: value,
+                    name: 'taxChargeType',
+                },
+            ];
+            fetchTaxCodeList({ setIsLoading: listShowLoadingTaxChargeCategory, userId, extraParams, onSuccessAction });
+        } else {
+            fetchTaxCodeList({ setIsLoading: listShowLoadingTaxChargeCategory, userId, extraParams: [{ key: 'taxChargeType', title: 'taxChargeType', value: null, name: 'taxChargeType' }], onSuccessAction });
+        }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         if (userId && !isTaxChargeCategoryLoaded) {

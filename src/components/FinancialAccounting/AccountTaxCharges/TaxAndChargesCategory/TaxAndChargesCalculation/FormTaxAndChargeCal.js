@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Input, Form, Col, Row, Button } from 'antd';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
@@ -43,7 +43,14 @@ function FormProductAttribute(props) {
                 </Col>
                 {!formEdit && (
                     <Row xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Button type="primary" danger style={{ margin: '0 0 0 12px' }} onClick={() => addTaxChargeCal()}>
+                        <Button
+                            type="primary"
+                            danger
+                            style={{ margin: '0 0 0 12px' }}
+                            onClick={() => {
+                                addTaxChargeCal();
+                            }}
+                        >
                             Add
                         </Button>
                     </Row>

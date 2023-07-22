@@ -45,7 +45,7 @@ const CardProductAttribute = (props) => {
         forceUpdate();
     };
 
-    const onAttributeDelete = (val) => {
+    const onTaxChargeCalculationDelete = (val) => {
         setTaxChargeCalList((prev) => {
             const indx = prev.findIndex((el) => el.internalId === val?.internalId);
             let updatedValue = prev;
@@ -58,7 +58,7 @@ const CardProductAttribute = (props) => {
         forceUpdate();
     };
 
-    const onAttributeCancel = () => {
+    const onTaxChargeCalculationCancel = () => {
         setFormEdit(false);
     };
 
@@ -121,13 +121,13 @@ const CardProductAttribute = (props) => {
                                         }}
                                         disabled={props?.disabledEdit}
                                     />
-                                    <Button onClick={() => onAttributeDelete(props)} type="link" icon={<FiTrash />} disabled={props?.disabledEdit || (props?.id ? true : false)} />
+                                    <Button onClick={() => onTaxChargeCalculationDelete(props)} type="link" icon={<FiTrash />} disabled={props?.disabledEdit || (props?.id ? true : false)} />
                                 </>
                             </div>
                         ) : (
                             props?.internalId === uniqueCardEdit && (
                                 <div className={styles.cardItemBtn}>
-                                    <Button type="link" onClick={onAttributeCancel}>
+                                    <Button type="link" onClick={onTaxChargeCalculationCancel}>
                                         Cancel
                                     </Button>
                                     <Button type="link" onClick={taxChargeCalSave}>
