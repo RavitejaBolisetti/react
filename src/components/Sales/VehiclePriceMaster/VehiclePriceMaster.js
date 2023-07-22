@@ -166,15 +166,14 @@ export const VehiclePriceMasterBase = (props) => {
         setRefershData(false);
         setShowDataLoading(false);
     };
-    console.log(cityData, 'city');
-
+    const paramMasterId = 'VH_PRC_SRCH';
     const extraParams = useMemo(() => {
         return [
             {
                 key: 'searchType',
                 title: 'Type',
                 value: filterString?.searchType,
-                name: typeData?.find((i) => i?.key === filterString?.searchType)?.value,
+                name: typeData[paramMasterId]?.find((i) => i?.key === filterString?.searchType)?.value,
                 canRemove: false,
                 filter: true,
             },

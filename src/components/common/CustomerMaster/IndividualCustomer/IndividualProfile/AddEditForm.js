@@ -115,7 +115,7 @@ const AddEditFormMain = (props) => {
                 size to be 8Mb
             </>
         ),
-        supportedFileTypes: ['image/png', 'image/jpg'],
+        supportedFileTypes: ['image/png', 'image/jpeg', 'image/jpg'],
         maxSize: 8,
     };
 
