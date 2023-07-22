@@ -13,16 +13,16 @@ const { Text } = Typography;
 
 const CardProductAttribute = (props) => {
     const { isVisible, finalFormdata, taxChargeCalForm, forceUpdate, productHierarchyAttributeData, taxChargeCategoryCodeData, setDisabledEdit, taxChargeCalList, setTaxChargeCalList, objTaxCharge, objTaxCode, setOpenAccordian, changeValue, setChangeValue, handleCodeFunction, editForm, formEdit, setFormEdit, uniqueCardEdit, setuniqueCardEdit } = props;
-
-    const taxChargeDesc = objTaxCharge?.find((e) => e?.taxType === props?.taxChargeTypeCode)?.taxDescription;
+    console.log(objTaxCharge,'vivek')
+    const taxChargeDesc = objTaxCharge?.taxCategoryDetail?.find((e) => e?.chargeCode === props?.chargeCode)?.chargeDescription;
 
     const taxChargeCalEdit = (props) => {
         setuniqueCardEdit(props?.internalId);
         setFormEdit(true);
         editForm.setFieldsValue({
-            taxChargeTypeCode: props?.taxChargeTypeCode,
-            taxChargeCode: props?.taxChargeCode,
-            taxDescription: props?.taxDescription,
+            chargeCode: props?.chargeCode,
+            chargeType: props?.chargeType,
+            chargeDescription: props?.chargeDescription,
             internalId: props?.internalId,
         });
 
@@ -34,9 +34,9 @@ const CardProductAttribute = (props) => {
 
         const upd_obj = taxChargeCalList?.map((obj) => {
             if (obj?.internalId === newFormData?.internalId) {
-                obj.taxChargeTypeCode = typeof newFormData?.taxChargeTypeCode === 'object' ? newFormData?.taxChargeTypeCode?.title : newFormData?.taxChargeTypeCode;
-                obj.taxChargeCode = typeof newFormData?.taxChargeCode === 'object' ? newFormData?.taxChargeCode?.title : newFormData?.taxChargeCode;
-                obj.chargeDesc = newFormData?.chargeDesc;
+                obj.chargeCode = typeof newFormData?.chargeCode === 'object' ? newFormData?.chargeCode?.title : newFormData?.chargeCode;
+                obj.chargeType = typeof newFormData?.chargeType === 'object' ? newFormData?.chargeType?.title : newFormData?.chargeType;
+                obj.chargeDescription = newFormData?.chargeDescription;
                 obj.internalId = newFormData?.internalId;
             }
             return obj;
@@ -103,7 +103,7 @@ const CardProductAttribute = (props) => {
                     </div>
                     <Divider type="vertical" />
                     <div>
-                        <Text>{props?.taxChargeCode}</Text>
+                        <Text>{props?.chargeCode}</Text>
                     </div>
                 </Row>
 

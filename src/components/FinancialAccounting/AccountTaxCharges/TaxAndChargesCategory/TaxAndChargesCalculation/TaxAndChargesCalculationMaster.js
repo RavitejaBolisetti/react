@@ -8,7 +8,7 @@ import CardProductAttribute from './CardTaxAndChargeCal';
 import FormProductAttribute from './FormTaxAndChargeCal';
 
 export const TaxAndChargesCalculationMaster = (props) => {
-    const { isVisible, selectedTreeData, showGlobalNotification, taxChargeCategoryTypeData, taxChargeCategoryCodeData, handleCodeFunction, form, editForm, taxChargeCalForm, formEdit, setFormEdit } = props;
+    const { isVisible, selectedTreeData, showGlobalNotification, taxChargeCategoryTypeData,taxCategory, taxChargeCategoryCodeData, handleCodeFunction, form, editForm, taxChargeCalForm, formEdit, setFormEdit } = props;
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [disableSaveButton, setDisableSaveButton] = useState(false);
     const [taxChargeCalList, setTaxChargeCalList] = useState([]);
@@ -44,7 +44,7 @@ export const TaxAndChargesCalculationMaster = (props) => {
         selectedTreeData,
         taxCharge: taxChargeCategoryTypeData,
         taxCode,
-        objTaxCharge: taxChargeCategoryTypeData,
+        objTaxCharge: taxCategory,
         objTaxCode: taxCode,
         //setFormBtnActive,
         disableSaveButton,
@@ -76,7 +76,7 @@ export const TaxAndChargesCalculationMaster = (props) => {
 
             {taxChargeCalList?.length > 0 &&
                 taxChargeCalList?.map((action) => {
-                    return <CardProductAttribute {...cardAttributeProps} taxChargeTypeCode={action?.taxChargeTypeCode} taxChargeCode={action?.taxChargeCode} taxDescription={action?.taxDescription} internalId={action?.internalId} />;
+                    return <CardProductAttribute {...cardAttributeProps} chargeType={action?.chargeType} chargeCode={action?.chargeCode} chargeDescription={action?.chargeDescription} internalId={action?.internalId} />;
                 })}
         </>
     );

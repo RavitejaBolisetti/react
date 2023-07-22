@@ -133,6 +133,7 @@ const AddEditFormMain = (props) => {
         taxChargeCalForm,
         formEdit,
         setFormEdit,
+        taxCategory,
     };
 
 
