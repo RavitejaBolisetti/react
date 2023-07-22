@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Col, Input, Form, Row, Collapse, Select, Switch } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
@@ -12,20 +12,56 @@ import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
 import { accordianExpandIcon } from 'utils/accordianExpandIcon';
 import { TaxAndChargesCalculationMaster } from './TaxAndChargesCalculation';
+import { taxChargeCategoryDataActions } from 'store/actions/data/financialAccounting/taxChargesCategory';
 import { customSelectBox } from 'utils/customSelectBox';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { showGlobalNotification } from 'store/actions/notification';
 
 import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
 
+const mapStateToProps = (state) => {
+    const {
+        auth: { userId },
+        data: {
+            FinancialAccounting: {
+                TaxChargesCategory: { detailData },
+            }
+        },
+    } = state;
+
+    let returnValue = {
+        userId,
+        detailData,
+    };
+    return returnValue;
+};
+
+const mapDispatchToProps = (dispatch) => ({
+    dispatch,
+    ...bindActionCreators(
+        {
+            fetchTaxChargeCategoryDetail: taxChargeCategoryDataActions.fetchDetail,
+            listShowLoadingTaxChargeCategory: taxChargeCategoryDataActions.listShowLoading,
+            showGlobalNotification,
+        },
+        dispatch
+    ),
+});
+
 const AddEditFormMain = (props) => {
-    const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined, handleCodeFunction, taxChargeCategoryCodeData, onFinish, onFinishFailed, stateData, saleData, taxChargeCategoryTypeData, editForm, taxChargeCalForm } = props;
+    const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined, fetchTaxChargeCategoryDetail, setDisabledEdit, disabledEdit, userId, handleCodeFunction, taxChargeCategoryCodeData, onFinish, onFinishFailed, stateData, saleData, taxChargeCategoryTypeData, editForm, taxChargeCalForm } = props;
     const { buttonData, setButtonData, handleButtonClick, formEdit, setFormEdit } = props;
 
     const [openAccordian, setOpenAccordian] = useState(1);
+    const [taxCategory, setTaxCategory] = useState();
+
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
+
     };
 
     const handleFormFieldChange = () => {
@@ -36,10 +72,48 @@ const AddEditFormMain = (props) => {
         setOpenAccordian((prev) => (prev === key ? '' : key));
     };
 
+
+
+    useEffect(() => {
+        if (formData?.id) {
+            fetchTaxChargeCategoryDetail({
+                setIsLoading: () => { },
+                userId,
+                extraParams: [
+                    {
+                        key: 'id',
+                        value: formData?.id,
+                    },
+                ],
+                onSuccessAction: (res) => {
+                    setTaxCategory(res.data);
+                },
+            });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formData]);
+
+
+    useEffect(() => {
+        let obj = {
+            taxCategoryCode: taxCategory?.taxCategoryCode,
+            taxCategoryDescription: taxCategory?.taxCategoryDescription,
+            stateCode: taxCategory?.stateCode,
+            saleType: taxCategory?.saleType,
+            status: taxCategory?.status,
+
+        }
+        console.log(taxCategory, 'sssshgdgd')
+        form.setFieldsValue({ obj });
+    })
+
     const viewProps = {
         isVisible: viewMode,
         formData,
         styles,
+        taxCategory,
+        setDisabledEdit,
+        disabledEdit,
     };
 
     const buttonProps = {
@@ -61,6 +135,7 @@ const AddEditFormMain = (props) => {
         setFormEdit,
     };
 
+
     return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             {viewMode ? (
@@ -69,23 +144,23 @@ const AddEditFormMain = (props) => {
                 <>
                     <Row gutter={16}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Form.Item initialValue={formData?.taxCategoryCode} label="Code" name="taxCategoryCode" rules={[validateRequiredInputField('Code')]}>
+                            <Form.Item label="Code" name="taxCategoryCode" rules={[validateRequiredInputField('Code')]}>
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('Code')} maxLength={6} disabled={editMode ? true : false} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Form.Item label="Description" initialValue={formData?.taxCategoryDescription} rules={[validateRequiredInputField('Description')]} name="taxCategoryDesc">
+                            <Form.Item label="Description" initialValue={taxCategory?.taxCategoryDescription} rules={[validateRequiredInputField('Description')]} name="taxCategoryDescription">
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('Description')} maxLength={50} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Form.Item label="State" initialValue={formData?.stateCode} name="stateCode" rules={[validateRequiredSelectField('State')]}>
+                            <Form.Item label="State" initialValue={taxCategory?.stateCode} name="stateCode" rules={[validateRequiredSelectField('State')]}>
                                 {customSelectBox({ data: stateData, fieldNames: { key: 'code', value: 'name' }, placeholder: preparePlaceholderSelect('State') })}
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Form.Item label="Sale Type" name="saleTypeCode" rules={[validateRequiredSelectField('Sale Type')]}>
-                                {customSelectBox({ data: saleData, placeholder: preparePlaceholderSelect('State') })}
+                            <Form.Item label="Sale Type" initialValue={taxCategory?.saleType} name="saleType" rules={[validateRequiredSelectField('Sale Type')]}>
+                                {customSelectBox({ data: saleData, placeholder: preparePlaceholderSelect('Sale Type') })}
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -106,5 +181,4 @@ const AddEditFormMain = (props) => {
         </Form>
     );
 };
-
-export const AddEditForm = withDrawer(AddEditFormMain, {});
+export const AddEditForm = withDrawer(connect(mapStateToProps, mapDispatchToProps)(AddEditFormMain), {});

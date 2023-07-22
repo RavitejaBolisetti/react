@@ -14,6 +14,8 @@ import { taxChargeCategoryDataActions } from 'store/actions/data/financialAccoun
 import { financialAccTaxChargeCategoryDataActions } from 'store/actions/data/financialAccounting/taxChargesCode';
 import { tableColumn } from './tableColumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
+import { BASE_URL_FINANCIAL_ACC_TAX_CHARGE_CATEGORY_SEARCH as customURL } from 'constants/routingApi';
+
 
 import { showGlobalNotification } from 'store/actions/notification';
 
@@ -97,6 +99,8 @@ export const TaxChargesCategoryMain = (props) => {
     const [formData, setFormData] = useState([]);
     const [filterString, setFilterString] = useState();
     const [isFormVisible, setIsFormVisible] = useState(false);
+    const [disabledEdit, setDisabledEdit] = useState(false);
+
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -197,7 +201,7 @@ export const TaxChargesCategoryMain = (props) => {
 
     useEffect(() => {
         if (userId && !isTaxChargeCategoryLoaded) {
-            fetchTaxChargeCategory({ setIsLoading: listShowLoadingTaxChargeCategory, userId, extraParams, onSuccessAction });
+            fetchTaxChargeCategory({ setIsLoading: listShowLoadingTaxChargeCategory, userId, customURL, extraParams, onSuccessAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isTaxChargeCategoryTypeLoaded]);
@@ -343,6 +347,8 @@ export const TaxChargesCategoryMain = (props) => {
         taxChargeCategoryTypeData,
         taxChargeCategoryCodeData,
         handleCodeFunction,
+        setDisabledEdit,
+        disabledEdit,
 
         editForm,
         taxChargeCalForm,
@@ -369,7 +375,7 @@ export const TaxChargesCategoryMain = (props) => {
         handleClearInSearch,
         handleReferesh,
         handleButtonClick,
-        title,
+        title,        
     };
 
     return (
