@@ -83,8 +83,6 @@ export const TaxAndChargesCalculationMaster = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [taxCategory]);
 
-    console.log(taxChargeCalList,'nhi')
-
     return (
         <>
             <FormProductAttribute {...formProductAttributeProps} />
