@@ -9,6 +9,7 @@ import { bindActionCreators } from 'redux';
 import { Input, Form, Col, Row, Button, Select, DatePicker, Typography } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
+import { dateFormat } from 'utils/formatDateTime';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { manufacturerAdminHierarchyDataActions } from 'store/actions/data/manufacturerAdminHierarchy';
@@ -23,7 +24,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ManufacturerAdminHierarchy: { isLoaded: isDataLoaded = false, data: manufacturerAdminHierarchyData = [],  recordId: formRecordId, tokenNumber = [], errorMessage, isUpdating, changeHistoryVisible, historyData = [], authTypeDropdown:authTypeDropdownData = [], authorityVisible },
+            ManufacturerAdminHierarchy: { isLoaded: isDataLoaded = false, data: manufacturerAdminHierarchyData = [], recordId: formRecordId, tokenNumber = [], errorMessage, isUpdating, changeHistoryVisible, historyData = [], authTypeDropdown: authTypeDropdownData = [], authorityVisible },
             HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, isLoading: searchLoading, data: attributeData = [] },
         },
         common: {
@@ -111,12 +112,12 @@ const AuthorityFormMin = (props) => {
             <Row gutter={20}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item label="Authority Type" name="authorityTypeCode" rules={[validateRequiredInputField('Authority Type')]}>
-                        <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} placeholder="Select Authority Type" fieldNames={fieldNames} options={authTypeDropdownData} disabled={isBtnDisabled} onChange={(value, valueObject) => setselectedValueOnUpdate(valueObject)} />
+                        <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} placeholder="Select Authority Type" fieldNames={fieldNames} options={authTypeDropdownData} disabled={isBtnDisabled} onChange={(value, valueObject) => setselectedValueOnUpdate(valueObject)} allowClear />
                     </Form.Item>
                 </Col>
-                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className={style.tokenField}>
+                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item label="Token" name={'authorityEmployeeTokenNo'} rules={[validateRequiredInputField('Token Required')]}>
-                        <Search loading={searchLoading} disabled={isBtnDisabled} allowClear onChange={onChangeHandle(recordId)} onSearch={onSearchHandle(recordId)} placeholder={preparePlaceholderText('Token')} />
+                        <Search loading={searchLoading}  className={style.tokenField} disabled={isBtnDisabled} allowClear onChange={onChangeHandle(recordId)} onSearch={onSearchHandle(recordId)} placeholder={preparePlaceholderText('Token')} />
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
@@ -143,19 +144,19 @@ const AuthorityFormMin = (props) => {
 
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item label="Effective From" name="effectiveFrom" rules={[validateRequiredSelectField('Date Required')]} initialValue={dayjs()}>
-                            <DatePicker disabledDate={(date) => date < dayjs().format('YYYY-MM-DD')} format="YYYY-MM-DD" className={style.datepicker} />
+                            <DatePicker disabledDate={(date) => date < dayjs().format('YYYY-MM-DD')} format={dateFormat} className={style.datepicker} />
                         </Form.Item>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item label="Effective To" name="effectiveTo" rules={[validateRequiredSelectField('Date Required')]} initialValue={dayjs()}>
-                            <DatePicker disabledDate={(date) => date < dayjs().format('YYYY-MM-DD')} format="YYYY-MM-DD" className={style.datepicker} />
+                            <DatePicker disabledDate={(date) => date < dayjs().format('YYYY-MM-DD')} format={dateFormat} className={style.datepicker} />
                         </Form.Item>
                     </Col>
                 </Row>
             )}
 
             {!isEditing && authorityVisible && (
-                <Button {...disableAddBtn} icon={<PlusOutlined />} type="primary" htmlType="submit" onClick={() => cardBtnDisableAction(true)}>
+                <Button {...disableAddBtn} icon={<PlusOutlined />} type="primary" danger htmlType="submit" onClick={() => cardBtnDisableAction(true)}>
                     Add
                 </Button>
             )}

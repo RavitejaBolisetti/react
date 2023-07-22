@@ -142,7 +142,7 @@ const AddEditFormMain = (props) => {
                             </Button>
                         )}
                     </Row>
-                    <Divider className={styles.marT20} />
+                    <Divider />
                     {showForm && !editedMode && <FormContainer {...formProps} />}
                     {familyDetailList?.length > 0 ? (
                         familyDetailList?.map((item, index) => (

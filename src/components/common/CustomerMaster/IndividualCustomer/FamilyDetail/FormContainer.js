@@ -11,8 +11,7 @@ import { validateRequiredInputField, validateRequiredSelectField } from 'utils/v
 
 import { GetAge } from 'utils/getAge';
 import { disableFutureDate } from 'utils/disableDate';
-import dayjs from 'dayjs';
-
+import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
 import styles from 'components/common/Common.module.css';
 
 const { Option } = Select;
@@ -29,7 +28,8 @@ const FormBase = (props) => {
     const [customer, setCustomer] = useState(null);
 
     const onDateChange = (prop) => {
-        let dateString = dayjs(prop).format('YYYY-MM-DD');
+        let dateString = formattedCalendarDate(prop);
+
         let calAge1 = GetAge(dateString);
         form.setFieldsValue({
             relationAge: calAge1,
@@ -134,7 +134,7 @@ const FormBase = (props) => {
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item label="Date of Birth" name="dateOfBirth" rules={[validateRequiredInputField('Date of Birth')]}>
-                        <DatePicker format="DD-MM-YYYY" onChange={onDateChange} disabledDate={disableFutureDate} style={{ display: 'auto', width: '100%' }} disabled={customer} placeholder={preparePlaceholderSelect('Date of Birth')} className={styles.inputBox} getPopupContainer={(triggerNode) => triggerNode.parentElement} />
+                        <DatePicker format={dateFormat} onChange={onDateChange} disabledDate={disableFutureDate} style={{ display: 'auto', width: '100%' }} disabled={customer} placeholder={preparePlaceholderSelect('Date of Birth')} className={styles.inputBox} getPopupContainer={(triggerNode) => triggerNode.parentElement} />
                     </Form.Item>
                 </Col>
 

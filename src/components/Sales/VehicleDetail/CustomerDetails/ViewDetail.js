@@ -90,9 +90,9 @@ const ViewDetailMain = (props) => {
                             </Panel>
                         </Collapse>
                         <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(4)} expandIconPosition="end" className={styles.collapseContainer}>
-                            <Panel header="Key Account Details" key="4">
+                            <Panel header="Loyalty Details" key="4">
                                 <Descriptions {...viewProps}>
-                                    <Descriptions.Item label="Loyality Card Number">{checkAndSetDefaultValue(vehicleCustomerLoyaltyDetails?.loyalityCardNumber, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Loyalty Card Number">{checkAndSetDefaultValue(vehicleCustomerLoyaltyDetails?.loyalityCardNumber, isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label="Assured Buy Back">{checkAndSetDefaultValue(vehicleCustomerLoyaltyDetails?.assuredBuyBack, isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label="Status Of Vehicle">{checkAndSetDefaultValue(vehicleCustomerLoyaltyDetails?.statusOfVehicle, isLoading)}</Descriptions.Item>
                                 </Descriptions>

@@ -8,7 +8,7 @@ import { Col, Input, Form, Row, DatePicker, Card, Select } from 'antd';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
 import { validateRequiredInputField, validateMobileNoField } from 'utils/validation';
-import { formatDateToCalenderDate } from 'utils/formatDateTime';
+import { formattedCalendarDate, dateFormat } from 'utils/formatDateTime';
 
 import { CustomerListMaster } from 'components/utils/CustomerListModal';
 import styles from 'components/common/Common.module.css';
@@ -20,7 +20,7 @@ const AddEditFormMain = (props) => {
         if (formData) {
             form.setFieldsValue({
                 ...formData,
-                dob: formatDateToCalenderDate(formData?.dob || formData?.dateOfBirth),
+                dob: formattedCalendarDate(formData?.dob || formData?.dateOfBirth),
                 chasisNumber: formData?.chasisNumber || formData?.chassisNumber,
             });
         }
@@ -82,7 +82,7 @@ const AddEditFormMain = (props) => {
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name="dob" label="Date of Birth">
-                        <DatePicker disabled={true} format="YYYY-MM-DD" placeholder={preparePlaceholderText('Date of Birth')} style={{ width: '250px' }} />
+                        <DatePicker disabled={true} format={dateFormat} placeholder={preparePlaceholderText('Date of Birth')} style={{ width: '250px' }} />
                     </Form.Item>
                 </Col>
             </Row>

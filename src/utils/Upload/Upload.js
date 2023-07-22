@@ -6,7 +6,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Row, Col, Button, Typography, Upload, Image, Space, Avatar, Empty } from 'antd';
+import { Button, Typography, Upload, Image, Space, Avatar } from 'antd';
 import { FiDownload, FiTrash } from 'react-icons/fi';
 
 import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';

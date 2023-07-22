@@ -4,14 +4,13 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { Col, Input, Form, Row, Select, DatePicker, Space, Collapse, Card, Typography } from 'antd';
+import { Col, Input, Form, Row, Select, DatePicker, Space, Collapse, Card } from 'antd';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
-import { convertCalenderDate } from 'utils/formatDateTime';
+import { formattedCalendarDate } from 'utils/formatDateTime';
 
 import { expandIcon } from 'utils/accordianExpandIcon';
 import styles from 'components/common/Common.module.css';
 
-const { Text } = Typography;
 const { TextArea } = Input;
 const { Panel } = Collapse;
 
@@ -71,12 +70,12 @@ const AddEditFormMain = (props) => {
 
                                     <Row gutter={20}>
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                            <Form.Item initialValue={convertCalenderDate(schemeForm?.validFrom, 'YYYY-MM-DD')} label="Valid From" name="validFrom">
+                                            <Form.Item initialValue={formattedCalendarDate(schemeForm?.validFrom)} label="Valid From" name="validFrom">
                                                 <DatePicker className={styles.inputBox} placeholder={preparePlaceholderText('Valid From')} onChange={onChange} disabled={true} />
                                             </Form.Item>
                                         </Col>
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                            <Form.Item initialValue={convertCalenderDate(schemeForm?.validTo, 'YYYY-MM-DD')} label="Valid To" name="validTo">
+                                            <Form.Item initialValue={formattedCalendarDate(schemeForm?.validTo)} label="Valid To" name="validTo">
                                                 <DatePicker className={styles.inputBox} placeholder={preparePlaceholderText('Valid To')} onChange={onChange} disabled={true} />
                                             </Form.Item>
                                         </Col>

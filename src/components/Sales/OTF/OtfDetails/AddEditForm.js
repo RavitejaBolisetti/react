@@ -6,7 +6,7 @@
 import React from 'react';
 import { Row, Col, Input, Form, DatePicker, Switch, Card } from 'antd';
 
-import { convertCalenderDate } from 'utils/formatDateTime';
+import { convertCalenderDate, convertDateToCalender, covertCalenderDateToDate, formatDate, formatDateToCalenderDate, dateFormat } from 'utils/formatDateTime';
 
 import { validateRequiredSelectField, validateRequiredInputField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
@@ -21,13 +21,14 @@ const AddEditFormMain = (props) => {
         <Card className={styles.drawerCardView}>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={convertCalenderDate(formData?.initialPromiseDeliveryDate, 'YYYY/MM/DD')} label="Initial Promise Delivery Date" name="initialPromiseDeliveryDate" rules={[validateRequiredInputField('Initial Promise Delivery Date')]}>
-                        <DatePicker disabledDate={disablePastDate} format="YYYY-MM-DD" style={{ display: 'auto', width: '100%' }} />
+                    {/* 44{convertCalenderDate(formData?.initialPromiseDeliveryDate, 'dateFormat')} */}
+                    <Form.Item initialValue={convertCalenderDate(formData?.initialPromiseDeliveryDate, dateFormat)} label="Initial Promise Delivery Date" name="initialPromiseDeliveryDate" rules={[validateRequiredInputField('Initial Promise Delivery Date')]}>
+                        <DatePicker disabledDate={disablePastDate} format={dateFormat} style={{ display: 'auto', width: '100%' }} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={convertCalenderDate(formData?.custExpectedDeliveryDate, 'YYYY/MM/DD')} label="Cust. Expected Delivery Date" name="custExpectedDeliveryDate">
-                        <DatePicker disabledDate={disablePastDate} format="YYYY-MM-DD" style={{ display: 'auto', width: '100%' }} />
+                    <Form.Item initialValue={convertCalenderDate(formData?.custExpectedDeliveryDate, dateFormat)} label="Cust. Expected Delivery Date" name="custExpectedDeliveryDate">
+                        <DatePicker disabledDate={disablePastDate} format={dateFormat} style={{ display: 'auto', width: '100%' }} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>

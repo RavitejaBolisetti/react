@@ -69,6 +69,10 @@ const TransferMasterBase = (props) => {
 
     const handleButtonClick = ({ record = null, buttonAction }) => {};
 
+    const onErrorAction = (message) => {
+        showGlobalNotification({ message });
+    };
+
     useEffect(() => {
         if (userId) {
             reset();
@@ -84,7 +88,7 @@ const TransferMasterBase = (props) => {
                 value: value,
             },
         ];
-        fetchSalesConsultant({ setIsLoading: listConsultantShowLoading, extraParams, userId });
+        fetchSalesConsultant({ setIsLoading: listConsultantShowLoading, extraParams, userId, onErrorAction });
     };
 
     const formProps = {

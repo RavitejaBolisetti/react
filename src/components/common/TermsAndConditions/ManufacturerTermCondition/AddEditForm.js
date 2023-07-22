@@ -10,9 +10,10 @@ import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { ViewTermConditionList } from './ViewTermConditionList';
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
-import styles from 'components/common/Common.module.css';
 import { CustomEditor } from 'components/common/CustomEditor';
-import { convertCalenderDate } from 'utils/formatDateTime';
+import { formattedCalendarDate, dateFormat } from 'utils/formatDateTime';
+
+import styles from 'components/common/Common.module.css';
 
 const { Option } = Select;
 
@@ -52,8 +53,8 @@ const AddEditFormMain = (props) => {
         return value < startDate;
     };
 
-    const fromDateInitialValue = { initialValue: convertCalenderDate(formData?.effectivefrom, 'YYYY/MM/DD') };
-    const toDateInitialValue = { initialValue: convertCalenderDate(formData?.effectiveto ? formData?.effectiveto : new Date('December 31, 9999'), 'YYYY/MM/DD') };
+    const fromDateInitialValue = { initialValue: formattedCalendarDate(formData?.effectivefrom) };
+    const toDateInitialValue = { initialValue: formattedCalendarDate(formData?.effectiveto ? formData?.effectiveto : new Date('December 31, 9999')) };
 
     return (
         <Form autoComplete="off" form={form} id="myForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed} onFieldsChange={handleFormFieldChange}>

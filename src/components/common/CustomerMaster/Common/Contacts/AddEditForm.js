@@ -82,7 +82,7 @@ const AddEditForm = (props) => {
                                 <Select {...disabledProps} placeholder={preparePlaceholderSelect('purpose of contact')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} options={typeData['PURPOSE']} allowClear></Select>
                             </Form.Item>
                         </Col>
-                        <Col xs={24} sm={12} md={8} lg={8} xl={8} className={style.inputWrapper}>
+                        <Col xs={24} sm={12} md={8} lg={8} xl={8} >
                             <Form.Item label="Mobile Number" name="mobileNumber" rules={[validateRequiredInputField('mobile number'), validateMobileNoField('mobile number')]}>
                                 <Input
                                     maxLength={10}

@@ -13,7 +13,7 @@ import { preparePlaceholderSelect, preparePlaceholderText, prepareDatePickerText
 import { disableFutureDate } from 'utils/disableDate';
 import { expandIcon } from 'utils/accordianExpandIcon';
 
-import { formatDateToCalenderDate } from 'utils/formatDateTime';
+import { dateFormat, formatDateToCalenderDate, formattedCalendarDate } from 'utils/formatDateTime';
 
 import { UploadUtil } from 'utils/Upload';
 
@@ -24,7 +24,7 @@ const { Option } = Select;
 const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
-    const { isWhoKnowsWhom, formData, appCategoryData, form, viewDocument, downloadFileFromButton } = props;
+    const { formData, appCategoryData, form, viewDocument, downloadFileFromButton } = props;
     const { isReadOnly = false } = props;
     const { uploadedFile, setUploadedFile, emptyList, setEmptyList, fileList, setFileList, setUploadedFileName, uploadedFileName } = props;
     const { fileConsentList, setFileConsentList, uploadedConsentFile, setUploadedConsentFile, emptyConsentList, setEmptyConsentList, uploadedConsentFileName, setUploadedConsentFileName } = props;
@@ -47,10 +47,11 @@ const AddEditFormMain = (props) => {
             personName: formData?.authorityDetails?.personName,
             remarks: formData?.authorityDetails?.remarks,
             vehicleDeploymentDetails: formData?.vehicleDeploymentDetails,
-            dateOfBirth: formData?.dateOfBirth ? formatDateToCalenderDate(formData?.dateOfBirth) : null,
-            weddingAnniversary: formData?.weddingAnniversary ? formatDateToCalenderDate(formData?.weddingAnniversary) : null,
+            dateOfBirth: formData?.dateOfBirth && formattedCalendarDate(formData?.dateOfBirth),
+            weddingAnniversary: formData?.weddingAnniversary ? formattedCalendarDate(formData?.weddingAnniversary) : null,
             customerConsent: formData?.customerConsent === 'true' ? true : false,
         });
+
         if (formData?.martialStatus === 'S') {
             setIsRead(true);
         } else {

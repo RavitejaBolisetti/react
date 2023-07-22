@@ -18,6 +18,7 @@ import TreeSelectField from 'components/common/TreeSelectField';
 import { debounce } from 'utils/debounce';
 import { productHierarchyData } from './ProductHierarchyJSON';
 import { UploadUtil } from 'utils/Upload';
+import { PARAM_MASTER } from 'constants/paramMaster';
 
 import { FiEye, FiTrash } from 'react-icons/fi';
 
@@ -80,7 +81,9 @@ const AddEditFormMain = (props) => {
 
     const handleCancellationReasonTypeChange = (value) => {
         setReasonTypeChange(value);
-        otfCancellationForm.setFieldsValue({ dealerCode: '', dealerName: '', oemCode: '', productCode: '' });
+        otfCancellationForm.setFieldsValue({dealerCode:'', oemCode:'', productCode:'', dealerName:'', reasonForCancellation:'', cancellationRemark:''});
+        setUploadedFile('');
+        setFileList([]);
     };
 
     const onSearchDealer = debounce(function (text) {
@@ -174,7 +177,7 @@ const AddEditFormMain = (props) => {
         <>
             <Card className={styles.ExchangeCard}>
                 <Descriptions {...viewProps}>
-                    <Descriptions.Item label="OTF No.">{checkAndSetDefaultValue(otfData?.otfNumber, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="OTF No.">{checkAndSetDefaultValue(selectedOrder?.otfNumber, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="OTF Date">{checkAndSetDefaultValue(convertDateTime(selectedOrder?.otfDate, 'DD MMM YYYY'), isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="Customer Name">{checkAndSetDefaultValue(selectedOrder?.customerName, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="Mobile No.">{checkAndSetDefaultValue(selectedOrder?.mobileNumber, isLoading)}</Descriptions.Item>
@@ -193,7 +196,7 @@ const AddEditFormMain = (props) => {
                         </Form.Item>
                     </Col>
                 </Row>
-                {reasonTypeChange === 'LTC' && (
+                {reasonTypeChange === PARAM_MASTER.LTC.id && (
                     <Row>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item name="oemCode" label="OEM Name" rules={[validateRequiredSelectField('OEM Name')]}>
@@ -211,7 +214,7 @@ const AddEditFormMain = (props) => {
                     </Row>
                 )}
 
-                {reasonTypeChange === 'PROCAN' && (
+                {reasonTypeChange === PARAM_MASTER.PROCAN.id && (
                     <Row>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item name="productCode" label="Product" rules={[validateRequiredSelectField('product')]}>
@@ -221,7 +224,7 @@ const AddEditFormMain = (props) => {
                     </Row>
                 )}
 
-                {reasonTypeChange === 'LOMMD' && (
+                {reasonTypeChange === PARAM_MASTER.LOMMD.id && (
                     <Row>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.inputAutFillWrapper}>
                             <Form.Item name="dealerName" label="Find Dealer Name" rules={[validateRequiredSelectField('Dealer Name')]}>
@@ -242,7 +245,7 @@ const AddEditFormMain = (props) => {
                                     width: '100%',
                                 }}
                                 fieldNames={{ label: 'value', value: 'key' }}
-                                options={typeData['DLR_OTF_CANC_RSN']}
+                                options={typeData[reasonTypeChange]}
                                 placeholder={preparePlaceholderSelect('Reason For Cancellation')}
                             />
                         </Form.Item>
