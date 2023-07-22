@@ -220,4 +220,16 @@ export const PARAM_MASTER = {
         id: 'VH_PRC_SRCH',
         title: 'Vehicle Price Search',
     },
+    LTC: {
+        id: 'LTC',
+        title: 'Lost to Competition',
+    },
+    PROCAN: {
+        id: 'PROCAN',
+        title: 'Product Change',
+    },
+    LOMMD: {
+        id: 'LOMMD',
+        title: 'Lost other M&M Dealer',
+    },
 };
