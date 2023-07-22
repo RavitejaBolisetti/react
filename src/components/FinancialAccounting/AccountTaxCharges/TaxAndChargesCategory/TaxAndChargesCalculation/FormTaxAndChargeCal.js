@@ -12,21 +12,12 @@ import { customSelectBox } from 'utils/customSelectBox';
 import styles from 'components/common/Common.module.css';
 
 function FormProductAttribute(props) {
-    const { taxChargeCalForm, isVisible, taxCharge, taxCode, addTaxChargeCal, formEdit, editForm, form, taxChargeCalList, taxChargeCategoryCodeData, handleCodeFunction, changeValue, setChangeValue } = props;
+    const { taxChargeCalForm, isVisible, taxCharge, addTaxChargeCal, formEdit, editForm, taxChargeCategoryCodeData, handleCodeFunction, changeValue, setChangeValue } = props;
 
     const handleDescriptionChange = (taxCode) => {
         setChangeValue(taxChargeCategoryCodeData?.find((i) => i?.taxCode === taxCode)?.taxDescription);
         formEdit ? editForm.setFieldValue('taxDescription', taxChargeCategoryCodeData?.find((i) => i?.taxCode === taxCode)?.taxDescription) : taxChargeCalForm.setFieldValue('taxDescription', taxChargeCategoryCodeData?.find((i) => i?.taxCode === taxCode)?.taxDescription);
     };
-
-    // useEffect(() => {
-    //     if (formEdit) {
-    //         let formValue = editForm.getFieldsValue();
-    //         let taxDesc = taxChargeCategoryCodeData?.find((e) => e?.taxCode === formValue?.taxChargeCode)?.taxDescription;
-    //         editForm.setFieldValue('taxDescription', taxDesc);
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [formEdit]);
 
     return (
         <Form form={formEdit ? editForm : taxChargeCalForm} id="myForm" autoComplete="off" layout="vertical">
