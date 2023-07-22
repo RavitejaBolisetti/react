@@ -52,7 +52,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const AddEditFormMain = (props) => {
-    const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined, fetchTaxChargeCategoryDetail, setDisabledEdit, disabledEdit, userId, handleCodeFunction, taxChargeCategoryCodeData, onFinish, onFinishFailed, stateData, saleData, taxChargeCategoryTypeData, editForm, taxChargeCalForm } = props;
+    const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined, isVisible, fetchTaxChargeCategoryDetail, setDisabledEdit, disabledEdit, userId, handleCodeFunction, taxChargeCategoryCodeData, onFinish, onFinishFailed, stateData, saleData, taxChargeCategoryTypeData, editForm, taxChargeCalForm } = props;
     const { buttonData, setButtonData, handleButtonClick, formEdit, setFormEdit, taxChargeCalList, setTaxChargeCalList } = props;
 
     const [openAccordian, setOpenAccordian] = useState(1);
@@ -112,6 +112,7 @@ const AddEditFormMain = (props) => {
         formData,
         styles,
         taxCategory,
+        taxCharges: taxChargeCategoryTypeData,
         setDisabledEdit,
         disabledEdit,
     };
@@ -130,11 +131,14 @@ const AddEditFormMain = (props) => {
         handleCodeFunction,
         form,
         editForm,
+        isVisible,
         taxChargeCalForm,
         formEdit,
         setFormEdit,
         taxCategory,
-        taxChargeCalList, setTaxChargeCalList
+        taxChargeCalList,
+        setTaxChargeCalList,
+
     };
 
 
@@ -146,22 +150,22 @@ const AddEditFormMain = (props) => {
                 <>
                     <Row gutter={16}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Form.Item label="Code" name="taxCategoryCode" rules={[validateRequiredInputField('Code')]}>
+                            <Form.Item label="Code" initialValue={formData?.taxCategoryCode} name="taxCategoryCode" rules={[validateRequiredInputField('Code')]}>
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('Code')} maxLength={6} disabled={editMode ? true : false} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Form.Item label="Description" initialValue={taxCategory?.taxCategoryDescription} rules={[validateRequiredInputField('Description')]} name="taxCategoryDescription">
+                            <Form.Item label="Description" initialValue={formData?.taxCategoryDescription} rules={[validateRequiredInputField('Description')]} name="taxCategoryDescription">
                                 <Input className={styles.inputBox} placeholder={preparePlaceholderText('Description')} maxLength={50} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Form.Item label="State" initialValue={taxCategory?.stateCode} name="stateCode" rules={[validateRequiredSelectField('State')]}>
+                            <Form.Item label="State" initialValue={formData?.stateCode} name="stateCode" rules={[validateRequiredSelectField('State')]}>
                                 {customSelectBox({ data: stateData, fieldNames: { key: 'code', value: 'name' }, placeholder: preparePlaceholderSelect('State') })}
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Form.Item label="Sale Type" initialValue={taxCategory?.saleType} name="saleType" rules={[validateRequiredSelectField('Sale Type')]}>
+                            <Form.Item label="Sale Type" initialValue={formData?.saleType} name="saleType" rules={[validateRequiredSelectField('Sale Type')]}>
                                 {customSelectBox({ data: saleData, placeholder: preparePlaceholderSelect('Sale Type') })}
                             </Form.Item>
                         </Col>
