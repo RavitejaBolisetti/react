@@ -8,12 +8,13 @@ import { connect } from 'react-redux';
 import { Col, Form, Row } from 'antd';
 import { bindActionCreators } from 'redux';
 
-import { dealerManpowerBayTypeMasterDataActions } from 'store/actions/data/dealerManpower/bayMasterType';
 import { geoStateDataActions } from 'store/actions/data/geo/states';
 import { taxChargeCategoryTypeDataActions } from 'store/actions/data/financialAccounting/taxChargeType';
 import { taxChargeCategoryDataActions } from 'store/actions/data/financialAccounting/taxChargesCategory';
+import { financialAccTaxChargeCategoryDataActions } from 'store/actions/data/financialAccounting/taxChargesCode';
 import { tableColumn } from './tableColumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
+import { BASE_URL_FINANCIAL_ACC_TAX_CHARGE_CATEGORY_SEARCH as customURL } from 'constants/routingApi';
 
 import { showGlobalNotification } from 'store/actions/notification';
 
@@ -29,15 +30,13 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             ConfigurableParameterEditing: { filteredListData: saleData = [] },
-            DealerManpower: {
-                BayTypeMaster: { isLoaded: isDataLoaded = false, isLoading, data },
-            },
             Geo: {
                 State: { isLoaded: isStateDataLoaded = false, isLoading: isStateLoading = false, data: stateData = [] },
             },
             FinancialAccounting: {
                 TaxChargeCategoryType: { isLoaded: isTaxChargeCategoryTypeLoaded = false, isLoading: isTaxChargeCategoryTypeLoading = false, data: taxChargeCategoryTypeData = [] },
                 TaxChargesCategory: { isLoaded: isTaxChargeCategoryLoaded = false, isLoading: isTaxChargeCategoryLoading = false, data: taxChargeCategoryData = [] },
+                TaxChargesCode: { isLoaded: isTaxCategoryCodeLoaded = false, isLoading: isTaxCategoryCodeLoading, data: taxChargeCategoryCodeData = [] },
             },
         },
     } = state;
@@ -46,9 +45,7 @@ const mapStateToProps = (state) => {
 
     let returnValue = {
         userId,
-        isDataLoaded,
-        data,
-        isLoading,
+
         moduleTitle,
         isStateDataLoaded,
         isStateLoading,
@@ -57,9 +54,12 @@ const mapStateToProps = (state) => {
         isTaxChargeCategoryTypeLoaded,
         taxChargeCategoryTypeData,
         isTaxChargeCategoryTypeLoading,
+        isTaxCategoryCodeLoading,
         isTaxChargeCategoryLoaded,
+        isTaxCategoryCodeLoaded,
         isTaxChargeCategoryLoading,
         taxChargeCategoryData,
+        taxChargeCategoryCodeData,
     };
     return returnValue;
 };
@@ -68,18 +68,18 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchList: dealerManpowerBayTypeMasterDataActions.fetchList,
-            saveData: dealerManpowerBayTypeMasterDataActions.saveData,
-            listShowLoading: dealerManpowerBayTypeMasterDataActions.listShowLoading,
-
             fetchStateList: geoStateDataActions.fetchList,
             listStateShowLoading: geoStateDataActions.listShowLoading,
 
             fetchTaxChargeCategoryType: taxChargeCategoryTypeDataActions.fetchList,
             listShowLoadingTaxChargeCategoryType: taxChargeCategoryTypeDataActions.listShowLoading,
 
+            fetchTaxCodeList: financialAccTaxChargeCategoryDataActions.fetchList,
+            listTaxCodeLoading: financialAccTaxChargeCategoryDataActions.listShowLoading,
+
             fetchTaxChargeCategory: taxChargeCategoryDataActions.fetchList,
             listShowLoadingTaxChargeCategory: taxChargeCategoryDataActions.listShowLoading,
+            saveData: taxChargeCategoryDataActions.saveData,
 
             showGlobalNotification,
         },
@@ -88,10 +88,9 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const TaxChargesCategoryMain = (props) => {
-    const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, isStateDataLoaded, fetchStateList, listStateShowLoading, stateData, saleData, isTaxChargeCategoryTypeLoaded, fetchTaxChargeCategoryType, taxChargeCategoryTypeData, listShowLoadingTaxChargeCategoryType, isTaxChargeCategoryLoaded, fetchTaxChargeCategory, listShowLoadingTaxChargeCategory, taxChargeCategoryData } = props;
+    const { data, saveData, userId, isDataLoaded, showGlobalNotification, taxChargeCategoryCodeData, isStateDataLoaded, fetchStateList, listStateShowLoading, stateData, saleData, isTaxChargeCategoryTypeLoaded, fetchTaxCodeList, isTaxCategoryCodeLoaded, listTaxCodeLoading, fetchTaxChargeCategoryType, taxChargeCategoryTypeData, listShowLoadingTaxChargeCategoryType, isTaxChargeCategoryLoaded, fetchTaxChargeCategory, listShowLoadingTaxChargeCategory, taxChargeCategoryData } = props;
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
-    console.log(taxChargeCategoryData, 'taxChargeCategoryDatataxChargeCategoryDatataxChargeCategoryDatataxChargeCategoryData');
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [searchData, setSearchdata] = useState('');
     const [refershData, setRefershData] = useState(false);
@@ -99,12 +98,20 @@ export const TaxChargesCategoryMain = (props) => {
     const [formData, setFormData] = useState([]);
     const [filterString, setFilterString] = useState();
     const [isFormVisible, setIsFormVisible] = useState(false);
+    const [disabledEdit, setDisabledEdit] = useState(false);
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
+
+    const [editForm] = Form.useForm();
+    const [taxChargeCalForm] = Form.useForm();
+    const [formEdit, setFormEdit] = useState(false);
+    const [taxChargeCalList, setTaxChargeCalList] = useState([]);
+    const [taxMasterId, setTaxMasterId] = useState([]);
+
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
@@ -156,13 +163,6 @@ export const TaxChargesCategoryMain = (props) => {
     ];
 
     useEffect(() => {
-        if (userId && !isDataLoaded) {
-            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isDataLoaded]);
-
-    useEffect(() => {
         if (userId && !isStateDataLoaded) {
             fetchStateList({ setIsLoading: listStateShowLoading, userId, onSuccessAction });
         }
@@ -176,16 +176,41 @@ export const TaxChargesCategoryMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isTaxChargeCategoryTypeLoaded]);
 
+    const handleCodeFunction = (value) => {
+        console.log(value, 'VALUWWW');
+        let obj = {
+            taxCharges: null,
+            taxChargeCategoryCodeData: null,
+        };
+
+        if (formEdit) {
+            editForm?.setFieldsValue(obj);
+        } else {
+            taxChargeCalForm?.setFieldsValue(obj);
+        }
+
+        const extraParams = [
+            {
+                key: 'taxChargeType',
+                title: 'taxChargeType',
+                value: value,
+                name: 'taxChargeType',
+            },
+        ];
+        fetchTaxCodeList({ setIsLoading: listShowLoadingTaxChargeCategory, userId, extraParams, onSuccessAction });
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+
     useEffect(() => {
         if (userId && !isTaxChargeCategoryLoaded) {
-            fetchTaxChargeCategory({ setIsLoading: listShowLoadingTaxChargeCategory, userId, extraParams, onSuccessAction });
+            fetchTaxChargeCategory({ setIsLoading: listShowLoadingTaxChargeCategory, userId, customURL, extraParams, onSuccessAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isTaxChargeCategoryTypeLoaded]);
 
     useEffect(() => {
         if (userId && refershData) {
-            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+            fetchTaxChargeCategory({ setIsLoading: listShowLoadingTaxChargeCategory, userId, onSuccessAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, refershData]);
@@ -244,14 +269,15 @@ export const TaxChargesCategoryMain = (props) => {
     };
 
     const onFinish = (values) => {
-        let data = { ...values };
 
+        let data = { ...values, id: formData?.id, taxCategoryDetail: [{ id: formData?.id, taxMasterId: taxMasterId }] };
+        console.log(data, 'values')
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
 
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+            fetchTaxChargeCategory({ setIsLoading: listShowLoadingTaxChargeCategory, userId, onSuccessAction });
 
             setButtonData({ ...buttonData, formBtnActive: false });
             if (buttonData?.saveAndNewBtnClicked) {
@@ -270,7 +296,7 @@ export const TaxChargesCategoryMain = (props) => {
         const requestData = {
             data: data,
             method: formActionType?.editMode ? 'put' : 'post',
-            setIsLoading: listShowLoading,
+            setIsLoading: listShowLoadingTaxChargeCategory,
             userId,
             onError,
             onSuccess,
@@ -322,6 +348,19 @@ export const TaxChargesCategoryMain = (props) => {
         stateData,
         saleData,
         taxChargeCategoryTypeData,
+        taxChargeCategoryCodeData,
+        handleCodeFunction,
+        setDisabledEdit,
+        disabledEdit,
+
+        editForm,
+        taxChargeCalForm,
+        formEdit,
+        setFormEdit,
+        taxChargeCalList,
+        setTaxChargeCalList,
+        taxMasterId,
+        setTaxMasterId
     };
 
     const tableProps = {
