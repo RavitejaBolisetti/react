@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Row, Col, Space, Form, Select, Button } from 'antd';
 
 import { withDrawer } from 'components/withDrawer';
@@ -49,6 +49,7 @@ const AddEditFormMain = (props) => {
         const onErrorAction = (res) => {
             showGlobalNotification({ notificationType: 'error', title: 'Error', message: res, placement: 'bottomRight' });
         };
+
         const filteredTypeData = typeData[PARAM_MASTER.FILE_DOWNLOAD_TMPLT.id].filter((value) => value.key === PARAM_MASTER.LSRCUSTTMPLT.id);
         let templateID = null;
         if (filteredTypeData.length === 1) {
@@ -128,25 +129,7 @@ const AddEditFormMain = (props) => {
                             </Space>
                         </Space>
                     </div>
-                    {/* <Divider className={`${styles.marT20} ${styles.marB20}`} /> */}
-                    {/* <Space direction="vertical" >
-                        <div className={styles.uploadContainer} style={{ opacity: '100' }}>
-                            <Dragger customRequest={handleUpload} {...uploadProps} showUploadList={emptyList}>
-                                <Empty
-                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                    description={
-                                        <>
-                                            <Title level={5}>Click or drop your file here to upload</Title>
-                                            <Text>File type should be .xlsx and max file size to be 8Mb</Text>
-                                        </>
-                                    }
-                                />
-                                <Button className={styles.marB20} type="primary">
-                                    Upload Lessor Form
-                                </Button>
-                            </Dragger>
-                        </div>
-                    </Space> */}
+
                     <UploadUtil {...uploadProps} handleFormValueChange={handleFormValueChange} />
                 </>
             )}

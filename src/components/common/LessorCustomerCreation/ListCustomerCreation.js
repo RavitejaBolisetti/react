@@ -90,7 +90,7 @@ export const ListCustomerCreationBase = (props) => {
     const { listLessorShowLoading, isSupportingDataLoaded, isSupportingDataLoading, supportingData, accessToken, token } = props;
 
     const { typeData, saveData, fetchList, lessorData } = props;
-    const { downloadFile,isViewDataLoaded, isLoading, viewListShowLoading, fetchViewDocument, viewDocument } = props;
+    const { downloadFile, isViewDataLoaded, isLoading, viewListShowLoading, fetchViewDocument, viewDocument } = props;
 
     const [form] = Form.useForm();
 
@@ -121,8 +121,6 @@ export const ListCustomerCreationBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isStateDataLoaded]);
 
-    
-
     const onFinish = () => {
         const data = { docId: uploadedFile };
 
@@ -134,7 +132,8 @@ export const ListCustomerCreationBase = (props) => {
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         };
 
-        const onError = (res) => {
+        const onError = (res, data) => {
+            console.log('🚀 ~ file: ListCustomerCreation.js:136 ~ onError ~ data:', data);
             showGlobalNotification({ notificationType: 'error', title: 'Error', message: res });
         };
 
@@ -158,8 +157,6 @@ export const ListCustomerCreationBase = (props) => {
         setFileList();
     };
     const drawerTitle = downloadForm ? 'Download ' : 'Upload ';
-
-   
 
     const formProps = {
         ...props,
