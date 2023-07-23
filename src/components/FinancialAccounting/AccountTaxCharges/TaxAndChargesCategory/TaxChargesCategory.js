@@ -307,6 +307,7 @@ export const TaxChargesCategoryMain = (props) => {
 
     const onCloseAction = () => {
         form.resetFields();
+        taxChargeCalForm.resetFields();
         setIsFormVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
         setTaxChargeCalList(() => []);

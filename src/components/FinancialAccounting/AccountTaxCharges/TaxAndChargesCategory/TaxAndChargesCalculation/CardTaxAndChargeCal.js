@@ -90,6 +90,9 @@ const CardProductAttribute = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formEdit]);
 
+    console.log(isVisible, 'isVisible');
+    console.log(formEdit, 'formEdit');
+
     return (
         <Card
             style={{
