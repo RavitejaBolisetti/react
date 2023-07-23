@@ -21,7 +21,7 @@ import { ListDataTable } from 'utils/ListDataTable';
 import { btnVisiblity } from 'utils/btnVisiblity';
 import { CustomEditor } from 'components/common/CustomEditor';
 
-import { formattedCalendarDate } from 'utils/formatDateTime';
+import { formatDate } from 'utils/formatDateTime';
 
 import { tableColumn } from './tableColumn';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
@@ -191,7 +191,7 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
         const recordId = formData?.id || '';
         const newVersion = (values.version ? Number(values?.version) : 1.0).toFixed(1);
         const termConditionText = typeof values.termsconditiondescription === 'string' ? values.termsconditiondescription : values.termsconditiondescription.editor.getData();
-        const data = { ...values, version: String(newVersion), id: recordId, termsconditiondescription: termConditionText, effectivefrom: formattedCalendarDate(values?.effectivefrom), effectiveto: formattedCalendarDate(values?.effectiveto) };
+        const data = { ...values, version: String(newVersion), id: recordId, termsconditiondescription: termConditionText, effectivefrom: formatDate(values?.effectivefrom), effectiveto: formatDate(values?.effectiveto) };
 
         const onSuccess = (res) => {
             listShowLoading(false);

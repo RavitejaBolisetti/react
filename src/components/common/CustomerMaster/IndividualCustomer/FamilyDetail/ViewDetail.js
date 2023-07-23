@@ -5,6 +5,7 @@
  */
 import React from 'react';
 import { Descriptions } from 'antd';
+import { DATA_TYPE } from 'constants/dataType';
 import dayjs from 'dayjs';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 
@@ -27,7 +28,7 @@ const ViewDetailBase = (props) => {
                 {props?.mnmCustomer === 'Yes' ? <Descriptions.Item label="Customer ID">{checkAndSetDefaultValue(props?.relationCustomerId, isLoading)}</Descriptions.Item> : null}
                 <Descriptions.Item label="Customer Name">{checkAndSetDefaultValue(props?.customerName, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Relationship">{checkAndSetDefaultValue(props?.relationship, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Date of Birth">{checkAndSetDefaultValue(typeof props?.dateOfBirth === 'object' ? dayjs(props?.dateOfBirth).format('DD-MM-YYYY') : props?.dateOfBirth.split("-").reverse().join("-"), isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Date of Birth">{checkAndSetDefaultValue(props?.dateOfBirth, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                 <Descriptions.Item label="Age">{checkAndSetDefaultValue(props?.relationAge, isLoading)}</Descriptions.Item>
                 {props?.mnmCustomer === 'No' ? <Descriptions.Item label="" /> : null}
                 <Descriptions.Item label="Remark">{checkAndSetDefaultValue(props?.remarks, isLoading)}</Descriptions.Item>

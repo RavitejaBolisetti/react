@@ -180,14 +180,6 @@ export const PARAM_MASTER = {
         id: 'REFERRAL_SEARCH',
         title: 'REFERRAL_SEARCH',
     },
-    FILE_DOWNLOAD_TMPLT: {
-        id: 'FILE_DOWNLOAD_TMPLT',
-        title: 'Template download',
-    },
-    LSRCUSTTMPLT: {
-        id: 'LSRCUSTTMPLT',
-        title: 'Lessor creation template download',
-    },
     VCLPRCMSTTMPLT: {
         id: 'VCLPRCMSTTMPLT',
         title: 'Vehicle Price Master template download',

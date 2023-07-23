@@ -47,15 +47,16 @@ const AddEditFormMain = (props) => {
     let treeCodeReadOnly = false;
     let attributeCode = '';
 
+    const taxChargeTypeList = Object.values(TAX_CHARGES_TYPE);
+
     if (formActionType === FROM_ACTION_TYPE.EDIT || formActionType === FROM_ACTION_TYPE.VIEW) {
         treeCodeId = formData?.parentCode;
         attributeCode = formData?.attributeTypeCode;
+        setAttributeType(attributeCode);
     } else if (formActionType === FROM_ACTION_TYPE.CHILD) {
         treeCodeId = selectedTreeKey && selectedTreeKey[0];
         treeCodeReadOnly = true;
         attributeCode = formData?.attributeTypeCode;
-
-        const taxChargeTypeList = Object.values(TAX_CHARGES_TYPE);
         const treeCodeData = flatternData.find((i) => i.key === treeCodeId);
         const currentAttributeOrder = taxChargeTypeList?.find((i) => i.KEY === treeCodeData?.data?.attributeTypeCode)?.ORDER;
         const childAttribute = taxChargeTypeList?.find((i) => i?.ORDER > currentAttributeOrder);
@@ -65,9 +66,11 @@ const AddEditFormMain = (props) => {
         treeCodeReadOnly = true;
         const treeCodeData = flatternData.find((i) => i.key === selectedTreeKey[0]);
         treeCodeId = treeCodeData && treeCodeData?.data?.parentCode;
-
-        const taxChargeTypeList = Object.values(TAX_CHARGES_TYPE);
         const currentAttribute = taxChargeTypeList?.find((i) => i.KEY === treeCodeData?.data?.attributeTypeCode);
+        attributeCode = currentAttribute?.KEY;
+        setAttributeType(attributeCode);
+    } else {
+        const currentAttribute = taxChargeTypeList?.find((i) => i.ORDER);
         attributeCode = currentAttribute?.KEY;
         setAttributeType(attributeCode);
     }
@@ -183,8 +186,8 @@ const AddEditFormMain = (props) => {
 
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padLeft10}>
-                        <Form.Item initialValue={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.status ? true : false} label="Status" name="status">
-                            <Switch value={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.status ? true : false} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.status === true || null || undefined ? true : false} {...disabledProps} />
+                        <Form.Item initialValue={formActionType === FROM_ACTION_TYPE.CHILD || formActionType === FROM_ACTION_TYPE.SIBLING ? true : formData?.status ? true : false} label="Status" name="status">
+                            <Switch value={formActionType === FROM_ACTION_TYPE.CHILD || formActionType === FROM_ACTION_TYPE.SIBLING ? true : formData?.status ? true : false} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={formActionType === FROM_ACTION_TYPE.CHILD || formActionType === FROM_ACTION_TYPE.SIBLING ? true : formData?.status === true || null || undefined ? true : false} {...disabledProps} />
                         </Form.Item>
                     </Col>
                 </Row>

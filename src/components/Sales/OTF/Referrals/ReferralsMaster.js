@@ -13,16 +13,17 @@ import { BASE_URL_CUSTOMER_MASTER_VEHICLE_LIST as customURL } from 'constants/ro
 import { otfReferralsDataActions } from 'store/actions/data/otf/referrals';
 import { showGlobalNotification } from 'store/actions/notification';
 
-import styles from 'components/common/Common.module.css';
+import { formattedCalendarDate } from 'utils/formatDateTime';
 
 import { AddEditForm } from './AddEditForm';
 import { ViewDetail } from './ViewDetail';
-import { CustomerListMaster } from 'components/utils/CustomerListModal';
 
 import { OTFFormButton } from '../OTFFormButton';
 import { OTFStatusBar } from '../utils/OTFStatusBar';
-import { formattedCalendarDate } from 'utils/formatDateTime';
+import { formatDate } from 'utils/formatDateTime';
 import { PARAM_MASTER } from 'constants/paramMaster';
+
+import styles from 'components/common/Common.module.css';
 
 const mapStateToProps = (state) => {
     const {
@@ -69,14 +70,13 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ReferralsMasterBase = (props) => {
-    const { formActionType, fetchList, showGlobalNotification, saveData, listShowLoading, userId, referralData, resetData, isLoading } = props;
-    const { form, selectedOrderId, section, handleFormValueChange, onFinishFailed, fetchCustomerList, listCustomerShowLoading, typeData, handleButtonClick, NEXT_ACTION } = props;
+    const { formActionType, fetchList, showGlobalNotification, saveData, listShowLoading, userId, referralData, isLoading } = props;
+    const { form, selectedOrderId, section, handleFormValueChange, onFinishFailed, fetchCustomerList, typeData, handleButtonClick, NEXT_ACTION } = props;
 
     const [searchForm] = Form.useForm();
     const [formData, setFormData] = useState();
     const [viewFormData, setViewFormData] = useState();
     const [resetField, setResetField] = useState(false);
-    const [selectedRowData, setSelectedRowData] = useState();
     const { filterString, setFilterString } = props;
 
     const [isCusomerSearchVisible, setCusomerSearchVisible] = useState(false);
@@ -84,7 +84,9 @@ const ReferralsMasterBase = (props) => {
 
     useEffect(() => {
         setFilterString();
-        setFormData(referralData);
+        if (referralData) {
+            setFormData({ ...referralData });
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [referralData]);
 
@@ -165,7 +167,7 @@ const ReferralsMasterBase = (props) => {
     }, [filterString]);
 
     const onFinish = (values) => {
-        const data = { ...values, otfNumber: selectedOrderId, dob: formattedCalendarDate(values?.dob), id: referralData?.id };
+        const data = { ...values, otfNumber: selectedOrderId, dob: formatDate(values?.dob), id: referralData?.id };
 
         const onSuccess = (res) => {
             form.resetFields();

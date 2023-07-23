@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState, useEffect } from 'react';
-import { Space, Form, Select, Button } from 'antd';
+import { Row, Col, Space, Form, Select, Button } from 'antd';
 
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
@@ -21,7 +21,7 @@ const AddEditFormMain = (props) => {
 
     const { buttonData, setButtonData, handleButtonClick } = props;
     const { lessorData, fetchList, typeData, userId, showGlobalNotification } = props;
-    const { downloadFile,listShowLoading,downloadForm, isDataLoaded, listLessorShowLoading, stateData, viewListShowLoading, fetchViewDocument } = props;
+    const { downloadFile, listShowLoading, downloadForm, isDataLoaded, listLessorShowLoading, stateData, viewListShowLoading, fetchViewDocument } = props;
 
     const { uploadProps } = props;
 
@@ -77,7 +77,6 @@ const AddEditFormMain = (props) => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
 
-
     const handleDownload = () => {
         const onSuccessAction = (res) => {
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
@@ -130,7 +129,7 @@ const AddEditFormMain = (props) => {
                         </Space>
                     </div>
                     {/* <Divider className={`${styles.marT20} ${styles.marB20}`} /> */}
-                    {/* <Space direction="vertical" style={{ width: '100%' }}>
+                    {/* <Space direction="vertical" >
                         <div className={styles.uploadContainer} style={{ opacity: '100' }}>
                             <Dragger customRequest={handleUpload} {...uploadProps} showUploadList={emptyList}>
                                 <Empty
@@ -153,18 +152,21 @@ const AddEditFormMain = (props) => {
             )}
             {downloadForm && (
                 <>
-                    <Space direction="vertical" style={{ width: '100%' }}>
-                        <Form.Item label="State Name" name="stateCode">
-                            <Select placeholder={preparePlaceholderSelect('State Name')} {...selectProps}>
-                                {stateData?.map((item) => (
-                                    <Option value={item?.key}>{item?.value}</Option>
-                                ))}
-                            </Select>
-                        </Form.Item>
+                    <Row>
+                        <Col xs={24} sm={24} md={24} lg={24}>
+                            <Form.Item label="State Name" name="stateCode">
+                                <Select placeholder={preparePlaceholderSelect('State Name')} {...selectProps}>
+                                    {stateData?.map((item) => (
+                                        <Option value={item?.key}>{item?.value}</Option>
+                                    ))}
+                                </Select>
+                            </Form.Item>
+                        </Col>
+
                         <Button type="primary" onClick={handleDownload}>
                             Download
                         </Button>
-                    </Space>
+                    </Row>
                 </>
             )}
             <DrawerFormButton {...buttonProps} />

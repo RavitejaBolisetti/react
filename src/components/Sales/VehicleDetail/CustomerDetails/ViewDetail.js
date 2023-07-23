@@ -6,6 +6,7 @@
 import React, { useState } from 'react';
 import { Col, Row, Space, Collapse, Descriptions } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
+import { DATA_TYPE } from 'constants/dataType';
 
 import styles from 'components/common/Common.module.css';
 import { expandIcon } from 'utils/accordianExpandIcon';
@@ -85,7 +86,7 @@ const ViewDetailMain = (props) => {
                                     <Descriptions.Item label="key Account Name">{checkAndSetDefaultValue(vehicleKeyAccountDetails?.keyAccountName, isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label="Account Segement">{checkAndSetDefaultValue(vehicleKeyAccountDetails?.accountSegement, isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label="Key Account Client Name">{checkAndSetDefaultValue(vehicleKeyAccountDetails?.keyAccountClientName, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Key Account Mapping Date">{checkAndSetDefaultValue(vehicleKeyAccountDetails?.keyAccountMappingDate, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Key Account Mapping Date">{checkAndSetDefaultValue(vehicleKeyAccountDetails?.keyAccountMappingDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                                 </Descriptions>
                             </Panel>
                         </Collapse>

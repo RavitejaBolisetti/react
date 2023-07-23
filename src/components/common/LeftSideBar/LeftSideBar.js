@@ -232,7 +232,7 @@ const LeftSideBarMain = (props) => {
                                     ) : (
                                         <Form.Item name="searchKeyword">
                                             <AutoComplete options={options} onSelect={onSelect} onChange={handleSearch}>
-                                                <Input.Search placeholder="Search" style={{ width: '100%' }} allowClear type="text" />
+                                                <Input.Search placeholder="Search" allowClear type="text" />
                                             </AutoComplete>
                                         </Form.Item>
                                     )}
@@ -274,7 +274,6 @@ const LeftSideBarMain = (props) => {
                     onClick={handleThemeChange}
                     style={{
                         padding: collapsed ? '10px' : '10px 14px',
-                        position: isMobile ? (collapsed ? 'relative' : 'absolute') : 'absolute',
                     }}
                 >
                     {/* <div className={styles.changeThemeBorder} style={{ padding: collapsed ? '9px 10px' : '5px' }}> */}

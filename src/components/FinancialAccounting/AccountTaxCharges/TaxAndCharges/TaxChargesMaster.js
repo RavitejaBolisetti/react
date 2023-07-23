@@ -127,7 +127,6 @@ export const TaxChargesMain = ({
 
     const [formData, setFormData] = useState([]);
     const [selectedTreeData, setSelectedTreeData] = useState([]);
-    console.log('🚀 ~ file: TaxChargesMaster.js:98 ~ TaxChargesMain ~ selectedTreeData:', selectedTreeData);
 
     const [isFormBtnActive, setFormBtnActive] = useState(false);
     const [searchValue, setSearchValue] = useState('');
@@ -244,8 +243,8 @@ export const TaxChargesMain = ({
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
 
             if (res?.data) {
-                setAttributeType(formData?.data?.attributeTypeCode);
-                setCalculationType(formData?.data?.calculationType);
+                setAttributeType(res?.data?.attributeTypeCode);
+                setCalculationType(res?.data?.calculationType);
 
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
 
@@ -371,28 +370,28 @@ export const TaxChargesMain = ({
     const noDataMessage = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', moduleTitle);
     const sameParentAndChildWarning = LANGUAGE_EN.GENERAL.HIERARCHY_SAME_PARENT_AND_CHILD_WARNING;
 
-    const leftCol = taxChargeData?.length > 0 ? 16 : 24;
-    const rightCol = taxChargeData?.length > 0 ? 8 : 24;
+    const leftCol = taxChargeData?.length > 0 ? 14 : 24;
+    const rightCol = taxChargeData?.length > 0 ? 10 : 24;
     const title = 'Tax & Charges';
     return (
         <>
+            <div className={styles.contentHeaderBackground}>
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <Form onKeyPress={onKeyPressHandler} autoComplete="off" colon={false} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                            <Form.Item label={title} name="code" validateTrigger={['onSearch']}>
+                                <Row gutter={20}>
+                                    <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                                        <Search placeholder="Search" allowClear onChange={onChange} className={styles.headerSearchField} />
+                                    </Col>
+                                </Row>
+                            </Form.Item>
+                        </Form>
+                    </Col>
+                </Row>
+            </div>
             <Row gutter={20} span={24}>
-                <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol} className={styles.borderBottomCorner}>
-                    <div className={styles.contentHeaderBackground}>
-                        <Row gutter={20}>
-                            <Col xs={24} sm={24} md={18} lg={18} xl={18}>
-                                <Form onKeyPress={onKeyPressHandler} autoComplete="off" colon={false} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                                    <Form.Item label={title} name="code" validateTrigger={['onSearch']}>
-                                        <Row gutter={20}>
-                                            <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                                <Search placeholder="Search" allowClear onChange={onChange} className={styles.headerSearchField} />
-                                            </Col>
-                                        </Row>
-                                    </Form.Item>
-                                </Form>
-                            </Col>
-                        </Row>
-                    </div>
+                <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol} className={styles.marT20}>
                     <div className={styles.content}>
                         {taxChargeData?.length <= 0 ? (
                             <div className={styles.emptyContainer}>

@@ -57,11 +57,11 @@ const mapStateToProps = (state) => {
     const finalCountryData = countryData?.map((item, index) => {
         return { ...item, default: index <= 0 || false };
     });
-    const finalDistrictData = districtData?.map((item,index) =>{
-        return {...item, default: index <= 0 || false};
-    })
+    const finalDistrictData = districtData?.map((item, index) => {
+        return { ...item, default: index <= 0 || false };
+    });
     const defaultCountry = finalCountryData && finalCountryData?.find((i) => i.default)?.countryCode;
-    const findDistrictCode = finalDistrictData && finalDistrictData?.find((i)=> i.default)?.districtCode;
+    const findDistrictCode = finalDistrictData && finalDistrictData?.find((i) => i.default)?.districtCode;
     let returnValue = {
         userId,
         accessToken,
@@ -88,7 +88,7 @@ const mapStateToProps = (state) => {
         tehsilData,
         typeData,
         isDistrictDataLoaded,
-        districtData:finalDistrictData,
+        districtData: finalDistrictData,
         isProductHierarchyDataLoaded,
         productHierarchyList,
         isProductHierarchyLoading,
@@ -128,7 +128,7 @@ const mapDispatchToProps = (dispatch) => ({
 export const VehiclePriceMasterBase = (props) => {
     const { filterString, setFilterString, saveData, userId, showGlobalNotification } = props;
     const { accessToken, token, viewDocument, isViewDataLoaded, viewListShowLoading, resetViewData, fetchViewDocument } = props;
-    const { isDataCountryLoaded, isCountryLoading, countryData, findDistrictCode,defaultCountry, isDistrictDataLoaded, districtData, typeData, fetchVehiclePriceList, listVehiclePriceShowLoading } = props;
+    const { isDataCountryLoaded, isCountryLoading, countryData, findDistrictCode, defaultCountry, isDistrictDataLoaded, districtData, typeData, fetchVehiclePriceList, listVehiclePriceShowLoading } = props;
     const { isStateDataLoaded, stateData, moduleTitle, vehiclePriceData, totalRecords, isCityDataLoaded, cityData, isProductHierarchyDataLoaded, productHierarchyList, isProductHierarchyLoading, isTehsilDataLoaded, tehsilData } = props;
     const { isSupportingDataLoaded, isSupportingDataLoading, supportingData, downloadFile, listShowLoading } = props;
     const [form] = Form.useForm();
@@ -166,15 +166,14 @@ export const VehiclePriceMasterBase = (props) => {
         setRefershData(false);
         setShowDataLoading(false);
     };
-    console.log(cityData,'city')
-
+    const paramMasterId = 'VH_PRC_SRCH';
     const extraParams = useMemo(() => {
         return [
             {
                 key: 'searchType',
                 title: 'Type',
                 value: filterString?.searchType,
-                name: typeData?.find((i) => i?.key === filterString?.searchType)?.value,
+                name: typeData[paramMasterId]?.find((i) => i?.key === filterString?.searchType)?.value,
                 canRemove: false,
                 filter: true,
             },
@@ -218,7 +217,7 @@ export const VehiclePriceMasterBase = (props) => {
                 canRemove: true,
                 filter: true,
             },
-            
+
             {
                 key: 'priceAsOnDate',
                 title: 'End Date',
@@ -258,7 +257,6 @@ export const VehiclePriceMasterBase = (props) => {
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, page]);
-    {console.log(filteredCityData,'filteredCityData')}
 
     useEffect(() => {
         if (userId) {
@@ -268,7 +266,7 @@ export const VehiclePriceMasterBase = (props) => {
     }, [userId, extraParams]);
 
     useEffect(() => {
-        if (isDataCountryLoaded && defaultCountry && isStateDataLoaded ) {
+        if (isDataCountryLoaded && defaultCountry && isStateDataLoaded) {
             setFilterString({ countryCode: defaultCountry });
             defaultCountry ? setFilteredStateData(stateData?.filter((i) => i?.parentKey === defaultCountry)) : setFilteredStateData();
         }
@@ -287,7 +285,6 @@ export const VehiclePriceMasterBase = (props) => {
         setFormData(record);
         setIsFormVisible(true);
     };
-
 
     const handleFilterChange =
         (name, type = 'value') =>

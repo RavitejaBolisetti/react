@@ -156,7 +156,7 @@ const AuthorityFormMin = (props) => {
             )}
 
             {!isEditing && authorityVisible && (
-                <Button {...disableAddBtn} icon={<PlusOutlined />} type="primary" danger htmlType="submit" onClick={() => cardBtnDisableAction(true)}>
+                <Button {...disableAddBtn} icon={<PlusOutlined />} type="primary" htmlType="submit" onClick={() => cardBtnDisableAction(true)}>
                     Add
                 </Button>
             )}
