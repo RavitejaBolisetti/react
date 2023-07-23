@@ -8,22 +8,24 @@ import { Form, Divider } from 'antd';
 import AuthorityDetailCardItem from './AuthorityDetailCardItem';
 import { AddEditForm } from './AddEditForm';
 
-import { formattedCalendarDate } from 'utils/formatDateTime';
-
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { manufacturerAdminHierarchyDataActions } from 'store/actions/data/manufacturerAdminHierarchy';
+import { ManufactureAdminValidateToken } from 'store/actions/data/manufacturerAdminHierarchy/manufactureAdminValidateToken';
 
 const mapStateToProps = (state) => {
     const {
         data: {
-            ManufacturerAdminHierarchy: { authorityVisible, tokenNumber = [], errorMessage, isUpdating },
+            ManufacturerAdminHierarchy: { authorityVisible, errorMessage, isUpdating },
+            ManufacturerAdmin: {
+                ManufactureAdminValidateToken: { data: tokenValidationData },
+            },
         },
     } = state;
 
     let returnValue = {
         authorityVisible,
-        tokenNumber,
+        tokenValidationData,
         errorMessage,
         isUpdating,
     };
@@ -34,32 +36,38 @@ const mapDispatchToProps = (dispatch) => ({
     ...bindActionCreators(
         {
             errorTokenValidate: manufacturerAdminHierarchyDataActions.errorTokenValidate,
+            resetData: ManufactureAdminValidateToken.reset,
         },
         dispatch
     ),
 });
 
-const AuthorityDetailMain = ({ tokenNumber, handleFormValueChange, errorTokenValidate, viewMode, documentTypesList, setDocumentTypesList, formActionType, tokenValidate, setTokenValidate, forceUpdate }) => {
+const AuthorityDetailMain = ({ tokenValidationData, handleFormValueChange, viewMode, documentTypesList, setDocumentTypesList, formActionType, tokenValidate, setTokenValidate, forceUpdate, resetData }) => {
+    const [actionForm] = Form.useForm();
     const [isBtnDisabled, setIsBtnDisabled] = useState(false);
     const [selectedValueOnUpdate, setselectedValueOnUpdate] = useState();
-    const [actionForm] = Form.useForm();
+    const [errorMessage, setErrorMessage] = useState('');
+    const [formType, setFormType] = useState('');
 
-    const onActionFormFinish = (val) => {
-        // const { authorityTypeCode, ...rest } = val;
-        // const { label, value } = authorityTypeCode;
-        setDocumentTypesList((prev) => [...prev, { ...val, effectiveFrom: formattedCalendarDate(val?.effectiveFrom), effectiveTo: formattedCalendarDate(val?.effectiveTo), isModified: val?.isModified ?? false, employeeName: tokenNumber?.employeeName }]);
-        actionForm.resetFields();
-        errorTokenValidate('');
-        // forceUpdate();
+
+    const onActionFormFinish = () => {
+        actionForm
+            .validateFields()
+            .then((val) => {
+                setDocumentTypesList((prev) => [...prev, { ...val, effectiveFrom: val?.effectiveFrom, effectiveTo: val?.effectiveTo, isModified: val?.isModified ?? false, employeeName: tokenValidationData?.employeeName }]);
+                actionForm.resetFields();
+                resetData();
+            })
+            .catch((err) => console.error(err));
     };
 
     return (
         <>
             <Divider />
-            {!viewMode && <AddEditForm isMainForm={true} handleFormValueChange={handleFormValueChange} onFinish={onActionFormFinish} tokenValidate={tokenValidate} setTokenValidate={setTokenValidate} form={actionForm} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} setDocumentTypesList={setDocumentTypesList} documentTypesList={documentTypesList} selectedValueOnUpdate={selectedValueOnUpdate} setselectedValueOnUpdate={setselectedValueOnUpdate} />}
+            {!viewMode && <AddEditForm isMainForm={true} handleFormValueChange={handleFormValueChange} onFinish={onActionFormFinish} tokenValidate={tokenValidate} setTokenValidate={setTokenValidate} form={actionForm} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} setDocumentTypesList={setDocumentTypesList} documentTypesList={documentTypesList} selectedValueOnUpdate={selectedValueOnUpdate} setselectedValueOnUpdate={setselectedValueOnUpdate} errorMessage={errorMessage} setErrorMessage={setErrorMessage} formType={formType} setFormType={setFormType}/>}
             {documentTypesList?.length > 0 &&
                 documentTypesList?.map((record, i) => {
-                    return <AuthorityDetailCardItem key={i} handleFormValueChange={handleFormValueChange} record={record} formActionType={formActionType} setTokenValidate={setTokenValidate} viewMode={viewMode} form={actionForm} onFinish={onActionFormFinish} setDocumentTypesList={setDocumentTypesList} documentTypesList={documentTypesList} forceUpdate={forceUpdate} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} selectedValueOnUpdate={selectedValueOnUpdate} setselectedValueOnUpdate={setselectedValueOnUpdate} />;
+                    return <AuthorityDetailCardItem key={i} handleFormValueChange={handleFormValueChange} record={record} formActionType={formActionType} setTokenValidate={setTokenValidate} viewMode={viewMode} form={actionForm} onFinish={onActionFormFinish} setDocumentTypesList={setDocumentTypesList} documentTypesList={documentTypesList} forceUpdate={forceUpdate} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} selectedValueOnUpdate={selectedValueOnUpdate} setselectedValueOnUpdate={setselectedValueOnUpdate} errorMessage={errorMessage} setErrorMessage={setErrorMessage} formType={formType} setFormType={setFormType} resetData={resetData} isMainForm={false} />;
                 })}
         </>
     );

@@ -8,9 +8,11 @@ import { combineReducers } from 'redux';
 import { ManufacturerAdminHierarchy } from './manufacturerAdminHierarchy';
 import { ManufacturerAdminUpload } from './manufacturerAdminUpload';
 import { ManufacturerAdminHierarchyChangeHistory } from './manufacturerAdminHierarchyChangeHistory';
+import { ManufactureAdminValidateToken } from './manufactureAdminValidateToken';
 
 export const ManufacturerAdmin = combineReducers({
     ManufacturerAdminHierarchy,
     ManufacturerAdminUpload,
     ManufacturerAdminHierarchyChangeHistory,
+    ManufactureAdminValidateToken,
 });

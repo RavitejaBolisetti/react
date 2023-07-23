@@ -33,7 +33,6 @@ export const HierarchyViewMain = ({ viewMode, isLoading, viewTitle, buttonData, 
         column: { xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 },
     };
     const manufacturerAdminHierarchyDataFlat = generateList(manufacturerAdminHierarchyData, { children: 'subManufactureAdmin' });
-    console.log('manufacturerAdminHierarchyDataFlat', manufacturerAdminHierarchyDataFlat, selectedTreeData?.manufactureAdminParntId);
 
     const status = selectedTreeData?.status ? 'Active' : 'InActive';
     return (
