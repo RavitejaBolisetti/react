@@ -58,7 +58,7 @@ const AddEditFormMain = (props) => {
                     <Divider />
                     <Row gutter={20}>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item label="Manufacturer Warranty End Date" name="mnfcWarrEndDate">
+                            <Form.Item initialValue={formattedCalendarDate(formData?.mnfcWarrEndDate)} label="Manufacturer Warranty End Date" name="mnfcWarrEndDate">
                                 <DatePicker disabledDate={disablePastDate} format={dateFormat} {...disabledProps} style={{ display: 'auto', width: '100%' }} />
                             </Form.Item>
                         </Col>

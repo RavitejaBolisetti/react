@@ -15,7 +15,7 @@ import { GetAge } from 'utils/getAge';
 import { AddEditForm } from './AddEditForm';
 import { CustomerFormButton } from '../../CustomerFormButton';
 
-import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
+import { formatDate } from 'utils/formatDateTime';
 
 import styles from 'components/common/Common.module.css';
 
@@ -139,7 +139,7 @@ const FamilyDetailMasterBase = (props) => {
         form.validateFields()
             .then(() => {
                 let values = form.getFieldsValue();
-                setFamilyDetailsList((items) => [{ ...values, customerId: selectedCustomerId, dateOfBirth: typeof values?.dateOfBirth === 'object' ? formattedCalendarDate(values?.dateOfBirth) : values?.dateOfBirth.split('-').reverse().join('-'), editedId: values?.editedId === '' ? Math.floor(Math.random() * 100000000 + 1) : values?.editedId }, ...items]);
+                setFamilyDetailsList((items) => [{ ...values, customerId: selectedCustomerId, dateOfBirth: typeof values?.dateOfBirth === 'object' ? formatDate(values?.dateOfBirth) : values?.dateOfBirth.split('-').reverse().join('-'), editedId: values?.editedId === '' ? Math.floor(Math.random() * 100000000 + 1) : values?.editedId }, ...items]);
 
                 if (editedMode) {
                     const upd_obj = familyDetailList?.map((obj) => {
@@ -151,7 +151,7 @@ const FamilyDetailMasterBase = (props) => {
                             obj.relationship = values?.relationship;
                             obj.relationCode = values?.relationCode;
                             obj.relationCustomerId = values?.relationCustomerId;
-                            obj.dateOfBirth = typeof values?.dateOfBirth === 'object' ? formattedCalendarDate(values?.dateOfBirth) : values?.dateOfBirth;
+                            obj.dateOfBirth = typeof values?.dateOfBirth === 'object' ? formatDate(values?.dateOfBirth) : values?.dateOfBirth;
                             obj.remarks = values?.remarks;
                         }
                         return obj;

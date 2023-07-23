@@ -62,7 +62,7 @@ const SearchBox = (props) => {
                 </Form.Item>
 
                 <Form.Item {...searchParamRule} name="searchParam" rules={[validateRequiredInputField('search parameter')]} validateTrigger={['onChange', 'onSearch']}>
-                    <Search placeholder="Search" value={filterString?.searchParam} allowClear onChange={handleChange} onSearch={handleSearchParamSearch} className={selectWide ? styles.headerSearchFieldWide : styles.headerSearchField} />
+                    <Search placeholder="Search" maxLength={25} value={filterString?.searchParam} allowClear onChange={handleChange} onSearch={handleSearchParamSearch} className={selectWide ? styles.headerSearchFieldWide : styles.headerSearchField} />
                 </Form.Item>
             </Form>
         </div>
