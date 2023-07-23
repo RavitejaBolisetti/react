@@ -21,7 +21,9 @@ export const TaxAndChargesCalculationMaster = (props) => {
             .validateFields()
             .then(() => {
                 let data = taxChargeCalForm.getFieldsValue();
-                let updateData = { ...data, internalId: Math.floor(Math.random() * 100000000 + 1) };
+
+                let updateData = { ...data, internalId: Math.floor(Math.random() * 100000000 + 1), id: '' };
+                console.log(updateData, '_DATA');
                 setTaxChargeCalList((item) => [updateData, ...item]);
                 taxChargeCalForm.resetFields();
                 forceUpdate();
@@ -31,11 +33,21 @@ export const TaxAndChargesCalculationMaster = (props) => {
             .catch((error) => console.log(error));
     };
 
-    const taxCode = [
-        { key: 1, title: 'AOP' },
-        { key: 2, title: 'BOB' },
-        { key: 3, title: 'C_C' },
-    ];
+    const handleDescriptionChange = (taxCode) => {
+        setChangeValue(taxChargeCategoryCodeData?.find((i) => i?.taxCode === taxCode)?.taxDescription);
+        formEdit ? editForm.setFieldValue('chargeDescription', taxChargeCategoryCodeData?.find((i) => i?.taxCode === taxCode)?.taxDescription) : taxChargeCalForm.setFieldValue('chargeDescription', taxChargeCategoryCodeData?.find((i) => i?.taxCode === taxCode)?.taxDescription);
+        setTaxMasterId((item) => [...item, { id: '', taxMasterId: taxChargeCategoryCodeData?.find((i) => i?.taxCode === taxCode)?.id }]);
+
+        let codeFind = {
+            taxMasterId: taxChargeCategoryCodeData?.find((i) => i?.taxCode === taxCode)?.id,
+        };
+        if (formEdit) {
+            editForm.setFieldsValue(codeFind);
+        } else {
+            taxChargeCalForm.setFieldsValue(codeFind);
+        }
+    };
+
     const cardAttributeProps = {
         taxChargeCalForm,
         addTaxChargeCal,
@@ -43,9 +55,7 @@ export const TaxAndChargesCalculationMaster = (props) => {
         isVisible,
         selectedTreeData,
         taxCharges: taxChargeCategoryTypeData,
-        taxCode,
         objTaxCharge: taxCategory,
-        objTaxCode: taxCode,
         //setFormBtnActive,
         disableSaveButton,
         setDisableSaveButton,
@@ -66,11 +76,16 @@ export const TaxAndChargesCalculationMaster = (props) => {
         setuniqueCardEdit,
         taxMasterId,
         setTaxMasterId,
+        handleDescriptionChange,
     };
 
     const formProductAttributeProps = {
         ...cardAttributeProps,
     };
+
+    useEffect(() => {
+        console.log(taxMasterId, 'taxMasterId');
+    }, [taxMasterId]);
 
     useEffect(() => {
         if (taxCategory?.taxCategoryDetail?.length > 0) {

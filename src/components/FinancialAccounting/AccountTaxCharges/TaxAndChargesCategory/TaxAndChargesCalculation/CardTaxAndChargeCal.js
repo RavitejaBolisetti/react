@@ -12,7 +12,7 @@ import FormProductAttribute from './FormTaxAndChargeCal';
 const { Text } = Typography;
 
 const CardProductAttribute = (props) => {
-    const { isVisible, finalFormdata, taxChargeCalForm, forceUpdate, taxCharges, productHierarchyAttributeData, taxChargeCategoryCodeData, setDisabledEdit, taxChargeCalList, setTaxChargeCalList, objTaxCharge, objTaxCode, setOpenAccordian, changeValue, setChangeValue, handleCodeFunction, editForm, formEdit, setFormEdit, uniqueCardEdit, setuniqueCardEdit, setTaxMasterId } = props;
+    const { isVisible, finalFormdata, taxChargeCalForm, forceUpdate, taxCharges, productHierarchyAttributeData, taxChargeCategoryCodeData, setDisabledEdit, taxChargeCalList, setTaxChargeCalList, objTaxCharge, setOpenAccordian, changeValue, setChangeValue, handleCodeFunction, editForm, formEdit, setFormEdit, uniqueCardEdit, setuniqueCardEdit, setTaxMasterId,handleDescriptionChange } = props;
     const taxChargeDesc = taxCharges?.find((e) => e?.taxType === props?.chargeType)?.taxDescription;
     const taxChargeCalEdit = (props) => {
         setuniqueCardEdit(props?.internalId);
@@ -46,7 +46,15 @@ const CardProductAttribute = (props) => {
     };
 
     const onTaxChargeCalculationDelete = (val) => {
+        console.log(val, 'VAL____');
         setTaxChargeCalList((prev) => {
+            const indx = prev.findIndex((el) => el.internalId === val?.internalId);
+            let updatedValue = prev;
+            updatedValue?.splice(indx, 1);
+            return updatedValue;
+        });
+
+        setTaxMasterId((prev) => {
             const indx = prev.findIndex((el) => el.internalId === val?.internalId);
             let updatedValue = prev;
             updatedValue?.splice(indx, 1);
@@ -70,7 +78,6 @@ const CardProductAttribute = (props) => {
         taxChargeCalList,
         taxCharges,
         taxCharge: objTaxCharge,
-        taxCode: objTaxCode,
         taxChargeCategoryCodeData,
         setOpenAccordian,
         changeValue,
@@ -78,6 +85,7 @@ const CardProductAttribute = (props) => {
         handleCodeFunction,
         taxChargeCalForm,
         setTaxMasterId,
+        handleDescriptionChange,
     };
 
     useEffect(() => {

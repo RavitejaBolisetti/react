@@ -271,13 +271,16 @@ export const TaxChargesCategoryMain = (props) => {
         }
     };
 
+    useEffect(() => {
+        console.log(taxMasterId, 'taxMasterId');
+    }, [taxMasterId]);
+
+    useEffect(() => {
+        console.log(taxChargeCalList, 'taxMasterId');
+    }, [taxChargeCalList]);
+
     const onFinish = (values) => {
-        let taxChargeMaster = [];
-        let len = taxMasterId?.length;
-        for (let i = 0; i < len; i++) {
-            taxChargeMaster?.push({ id: formData?.id || '', taxMasterId: taxMasterId[i] });
-        }
-        let data = { ...values, id: formData?.id || '', taxCategoryDetail: taxChargeMaster };
+        let data = { ...values, id: formData?.id || '', taxCategoryDetail: taxChargeCalList };
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);

@@ -12,13 +12,7 @@ import { customSelectBox } from 'utils/customSelectBox';
 import styles from 'components/common/Common.module.css';
 
 function FormProductAttribute(props) {
-    const { taxChargeCalForm, isVisible, taxCharges, addTaxChargeCal, formEdit, editForm, taxChargeCategoryCodeData, handleCodeFunction, setChangeValue, taxMasterId, setTaxMasterId } = props;
-
-    const handleDescriptionChange = (taxCode) => {
-        setChangeValue(taxChargeCategoryCodeData?.find((i) => i?.taxCode === taxCode)?.taxDescription);
-        formEdit ? editForm.setFieldValue('chargeDescription', taxChargeCategoryCodeData?.find((i) => i?.taxCode === taxCode)?.taxDescription) : taxChargeCalForm.setFieldValue('chargeDescription', taxChargeCategoryCodeData?.find((i) => i?.taxCode === taxCode)?.taxDescription);
-        setTaxMasterId((item) => [...item, taxChargeCategoryCodeData?.find((i) => i?.taxCode === taxCode)?.id]);
-    };
+    const { taxChargeCalForm, isVisible, taxCharges, addTaxChargeCal, formEdit, editForm, taxChargeCategoryCodeData, handleCodeFunction, setChangeValue, taxMasterId, setTaxMasterId, handleDescriptionChange } = props;
 
     return (
         <Form form={formEdit ? editForm : taxChargeCalForm} id="myForm" autoComplete="off" layout="vertical">
@@ -40,6 +34,12 @@ function FormProductAttribute(props) {
                 </Col>
                 <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
                     <Form.Item name="internalId" label="Internal Id" />
+                </Col>
+                <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
+                    <Form.Item name="taxMasterId" label="taxMasterId" />
+                </Col>
+                <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
+                    <Form.Item name="id" label="Id" />
                 </Col>
                 {!formEdit && (
                     <Row xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
