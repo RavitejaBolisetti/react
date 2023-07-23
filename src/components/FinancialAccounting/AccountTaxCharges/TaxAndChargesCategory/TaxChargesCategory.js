@@ -111,7 +111,6 @@ export const TaxChargesCategoryMain = (props) => {
     const [taxChargeCalForm] = Form.useForm();
     const [formEdit, setFormEdit] = useState(false);
     const [taxChargeCalList, setTaxChargeCalList] = useState([]);
-    const [taxMasterId, setTaxMasterId] = useState([]);
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
@@ -142,12 +141,12 @@ export const TaxChargesCategoryMain = (props) => {
             value: 'taxCategoryCode',
             name: 'taxCategoryCode',
         },
-        {
-            key: 'searchParam',
-            title: 'Search Param',
-            value: 'GST12',
-            name: 'GST12',
-        },
+        // {
+        //     key: 'searchParam',
+        //     title: 'Search Param',
+        //     value: 'GST12',
+        //     name: 'GST12',
+        // },
         {
             key: 'sortBy',
             title: 'Sort By',
@@ -189,19 +188,15 @@ export const TaxChargesCategoryMain = (props) => {
             forceUpdate();
         }
 
-        if (value) {
-            const extraParams = [
-                {
-                    key: 'taxChargeType',
-                    title: 'taxChargeType',
-                    value: value,
-                    name: 'taxChargeType',
-                },
-            ];
-            fetchTaxCodeList({ setIsLoading: listShowLoadingTaxChargeCategory, userId, extraParams, onSuccessAction });
-        } else {
-            fetchTaxCodeList({ setIsLoading: listShowLoadingTaxChargeCategory, userId, extraParams: [{ key: 'taxChargeType', title: 'taxChargeType', value: null, name: 'taxChargeType' }], onSuccessAction });
-        }
+        const extraParams = [
+            {
+                key: 'taxChargeType',
+                title: 'taxChargeType',
+                value: value ? value : null,
+                name: 'taxChargeType',
+            },
+        ];
+        fetchTaxCodeList({ setIsLoading: listShowLoadingTaxChargeCategory, userId, extraParams, onSuccessAction });
     };
 
     useEffect(() => {
@@ -213,7 +208,7 @@ export const TaxChargesCategoryMain = (props) => {
 
     useEffect(() => {
         if (userId && refershData) {
-            fetchTaxChargeCategory({ setIsLoading: listShowLoadingTaxChargeCategory, userId, onSuccessAction });
+            fetchTaxChargeCategory({ setIsLoading: listShowLoadingTaxChargeCategory, userId, customURL, extraParams, onSuccessAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, refershData]);
@@ -271,14 +266,6 @@ export const TaxChargesCategoryMain = (props) => {
         }
     };
 
-    useEffect(() => {
-        console.log(taxMasterId, 'taxMasterId');
-    }, [taxMasterId]);
-
-    useEffect(() => {
-        console.log(taxChargeCalList, 'taxMasterId');
-    }, [taxChargeCalList]);
-
     const onFinish = (values) => {
         let data = { ...values, id: formData?.id || '', taxCategoryDetail: taxChargeCalList };
         const onSuccess = (res) => {
@@ -286,7 +273,7 @@ export const TaxChargesCategoryMain = (props) => {
             setShowDataLoading(true);
 
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            fetchTaxChargeCategory({ setIsLoading: listShowLoadingTaxChargeCategory, userId, onSuccessAction });
+            fetchTaxChargeCategory({ setIsLoading: listShowLoadingTaxChargeCategory, userId, customURL, extraParams, onSuccessAction });
 
             setButtonData({ ...buttonData, formBtnActive: false });
             if (buttonData?.saveAndNewBtnClicked) {
@@ -369,8 +356,6 @@ export const TaxChargesCategoryMain = (props) => {
         setFormEdit,
         taxChargeCalList,
         setTaxChargeCalList,
-        taxMasterId,
-        setTaxMasterId,
     };
 
     const tableProps = {

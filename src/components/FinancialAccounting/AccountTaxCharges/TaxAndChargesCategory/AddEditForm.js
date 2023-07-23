@@ -53,7 +53,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const AddEditFormMain = (props) => {
     const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined, isVisible, fetchTaxChargeCategoryDetail, setDisabledEdit, disabledEdit, userId, handleCodeFunction, taxChargeCategoryCodeData, onFinish, onFinishFailed, stateData, saleData, taxChargeCategoryTypeData, editForm, taxChargeCalForm } = props;
-    const { buttonData, setButtonData, handleButtonClick, formEdit, setFormEdit, taxChargeCalList, setTaxChargeCalList, taxMasterId, setTaxMasterId } = props;
+    const { buttonData, setButtonData, handleButtonClick, formEdit, setFormEdit, taxChargeCalList, setTaxChargeCalList } = props;
 
     const [openAccordian, setOpenAccordian] = useState(1);
     const [taxCategory, setTaxCategory] = useState();
@@ -133,8 +133,8 @@ const AddEditFormMain = (props) => {
         taxCategory,
         taxChargeCalList,
         setTaxChargeCalList,
-        taxMasterId,
-        setTaxMasterId,
+        buttonData,
+        setButtonData,
     };
     return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>

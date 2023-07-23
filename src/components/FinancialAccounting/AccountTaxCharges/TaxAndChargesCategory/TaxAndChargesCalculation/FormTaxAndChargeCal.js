@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Input, Form, Col, Row, Button } from 'antd';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
@@ -12,7 +12,7 @@ import { customSelectBox } from 'utils/customSelectBox';
 import styles from 'components/common/Common.module.css';
 
 function FormProductAttribute(props) {
-    const { taxChargeCalForm, isVisible, taxCharges, addTaxChargeCal, formEdit, editForm, taxChargeCategoryCodeData, handleCodeFunction, setChangeValue, taxMasterId, setTaxMasterId, handleDescriptionChange } = props;
+    const { taxChargeCalForm, isVisible, taxCharges, addTaxChargeCal, formEdit, editForm, taxChargeCategoryCodeData, handleCodeFunction, handleDescriptionChange } = props;
 
     return (
         <Form form={formEdit ? editForm : taxChargeCalForm} id="myForm" autoComplete="off" layout="vertical">

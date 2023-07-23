@@ -12,19 +12,21 @@ import FormProductAttribute from './FormTaxAndChargeCal';
 const { Text } = Typography;
 
 const CardProductAttribute = (props) => {
-    const { isVisible, finalFormdata, taxChargeCalForm, forceUpdate, taxCharges, productHierarchyAttributeData, taxChargeCategoryCodeData, setDisabledEdit, taxChargeCalList, setTaxChargeCalList, objTaxCharge, setOpenAccordian, changeValue, setChangeValue, handleCodeFunction, editForm, formEdit, setFormEdit, uniqueCardEdit, setuniqueCardEdit, setTaxMasterId,handleDescriptionChange } = props;
+    const { isVisible, finalFormdata, taxChargeCalForm, forceUpdate, taxCharges, productHierarchyAttributeData, taxChargeCategoryCodeData, setDisabledEdit, taxChargeCalList, setTaxChargeCalList, objTaxCharge, setOpenAccordian, changeValue, setChangeValue, handleCodeFunction, editForm, formEdit, setFormEdit, uniqueCardEdit, setuniqueCardEdit, handleDescriptionChange, buttonData, setButtonData } = props;
     const taxChargeDesc = taxCharges?.find((e) => e?.taxType === props?.chargeType)?.taxDescription;
+
     const taxChargeCalEdit = (props) => {
         setuniqueCardEdit(props?.internalId);
         setFormEdit(true);
+        setButtonData({ ...buttonData, formBtnActive: true });
+
         editForm.setFieldsValue({
             chargeCode: props?.chargeCode,
             chargeType: props?.chargeType,
             chargeDescription: props?.chargeDescription,
             internalId: props?.internalId,
+            taxMasterId: props?.taxMasterId,
         });
-
-        //setFormBtnActive(true);
     };
 
     const taxChargeCalSave = () => {
@@ -32,10 +34,11 @@ const CardProductAttribute = (props) => {
 
         const upd_obj = taxChargeCalList?.map((obj) => {
             if (obj?.internalId === newFormData?.internalId) {
-                obj.chargeCode = typeof newFormData?.chargeCode === 'object' ? newFormData?.chargeCode?.title : newFormData?.chargeCode;
-                obj.chargeType = typeof newFormData?.chargeType === 'object' ? newFormData?.chargeType?.title : newFormData?.chargeType;
+                obj.chargeCode = newFormData?.chargeCode;
+                obj.chargeType = newFormData?.chargeType;
                 obj.chargeDescription = newFormData?.chargeDescription;
                 obj.internalId = newFormData?.internalId;
+                obj.taxMasterId = newFormData?.taxMasterId;
             }
             return obj;
         });
@@ -46,15 +49,7 @@ const CardProductAttribute = (props) => {
     };
 
     const onTaxChargeCalculationDelete = (val) => {
-        console.log(val, 'VAL____');
         setTaxChargeCalList((prev) => {
-            const indx = prev.findIndex((el) => el.internalId === val?.internalId);
-            let updatedValue = prev;
-            updatedValue?.splice(indx, 1);
-            return updatedValue;
-        });
-
-        setTaxMasterId((prev) => {
             const indx = prev.findIndex((el) => el.internalId === val?.internalId);
             let updatedValue = prev;
             updatedValue?.splice(indx, 1);
@@ -84,15 +79,13 @@ const CardProductAttribute = (props) => {
         setChangeValue,
         handleCodeFunction,
         taxChargeCalForm,
-        setTaxMasterId,
         handleDescriptionChange,
     };
 
     useEffect(() => {
         if (formEdit) {
             setDisabledEdit(true);
-        } else {
-            setDisabledEdit(false);
+            setButtonData({ ...buttonData, formBtnActive: true });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formEdit]);
@@ -107,7 +100,6 @@ const CardProductAttribute = (props) => {
             <Row align="middle" justify="space-between">
                 <Row align="center">
                     <div>
-                        {/* <Text>{taxChargeDesc}</Text> */}
                         <Text>{taxChargeDesc}</Text>
                     </div>
                     <Divider type="vertical" />
