@@ -7,7 +7,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Col, Form, Row } from 'antd';
+import { Col, Form, Row, Button } from 'antd';
 
 import { tableColumn } from './tableColumn';
 import { AdvancedSearch } from './AdvancedSearch';
@@ -118,6 +118,7 @@ const mapDispatchToProps = (dispatch) => ({
             listVehiclePriceShowLoading: vehiclePriceMasterDataAction.listShowLoading,
             setFilterString: vehiclePriceMasterDataAction.setFilter,
             saveData: vehiclePriceMasterDataAction.saveData,
+            resetData: vehiclePriceMasterDataAction.reset,
 
             showGlobalNotification,
         },
@@ -130,7 +131,7 @@ export const VehiclePriceMasterBase = (props) => {
     const { accessToken, token, viewDocument, isViewDataLoaded, viewListShowLoading, resetViewData, fetchViewDocument } = props;
     const { isDataCountryLoaded, isCountryLoading, countryData, findDistrictCode, defaultCountry, isDistrictDataLoaded, districtData, typeData, fetchVehiclePriceList, listVehiclePriceShowLoading } = props;
     const { isStateDataLoaded, stateData, moduleTitle, vehiclePriceData, totalRecords, isCityDataLoaded, cityData, isProductHierarchyDataLoaded, productHierarchyList, isProductHierarchyLoading, isTehsilDataLoaded, tehsilData } = props;
-    const { isSupportingDataLoaded, isSupportingDataLoading, supportingData, downloadFile, listShowLoading } = props;
+    const { resetData, isSupportingDataLoaded, isSupportingDataLoading, supportingData, downloadFile, listShowLoading } = props;
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
@@ -286,6 +287,31 @@ export const VehiclePriceMasterBase = (props) => {
         setIsFormVisible(true);
     };
 
+    const downloadReport = (documentId) => {
+        const onSuccessAction = (res) => {
+            setFileList();
+            setUploadedFile();
+            setUploadedFileName();
+            resetData();
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+        };
+
+        const onErrorAction = (res) => {
+            showGlobalNotification({ notificationType: 'error', title: 'Error', message: res, placement: 'bottomRight' });
+        };
+
+        const extraParams = [
+            {
+                key: 'docId',
+                title: 'docId',
+                value: documentId,
+                name: 'docId',
+            },
+        ];
+        downloadFile({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+        resetData();
+    };
+
     const handleFilterChange =
         (name, type = 'value') =>
         (value) => {
@@ -361,8 +387,20 @@ export const VehiclePriceMasterBase = (props) => {
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         };
 
-        const onError = (res) => {
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message: res, placement: 'bottomRight' });
+        const onError = (res, data) => {
+            let message = res;
+            if (data?.docId) {
+                message = (
+                    <>
+                        {message}
+                        <Button type="link" onClick={() => downloadReport(data?.docId)}>
+                            Download Here
+                        </Button>
+                    </>
+                );
+            }
+
+            showGlobalNotification({ notificationType: 'error', title: 'Error', message: message });
         };
 
         const requestData = {
