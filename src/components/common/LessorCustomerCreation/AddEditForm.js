@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState, useEffect } from 'react';
-import { Space, Form, Select, Button } from 'antd';
+import { Row, Col, Space, Form, Select, Button } from 'antd';
 
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
@@ -152,18 +152,21 @@ const AddEditFormMain = (props) => {
             )}
             {downloadForm && (
                 <>
-                    <Space direction="vertical">
-                        <Form.Item label="State Name" name="stateCode">
-                            <Select placeholder={preparePlaceholderSelect('State Name')} {...selectProps}>
-                                {stateData?.map((item) => (
-                                    <Option value={item?.key}>{item?.value}</Option>
-                                ))}
-                            </Select>
-                        </Form.Item>
+                    <Row>
+                        <Col xs={24} sm={24} md={24} lg={24}>
+                            <Form.Item label="State Name" name="stateCode">
+                                <Select placeholder={preparePlaceholderSelect('State Name')} {...selectProps}>
+                                    {stateData?.map((item) => (
+                                        <Option value={item?.key}>{item?.value}</Option>
+                                    ))}
+                                </Select>
+                            </Form.Item>
+                        </Col>
+
                         <Button type="primary" onClick={handleDownload}>
                             Download
                         </Button>
-                    </Space>
+                    </Row>
                 </>
             )}
             <DrawerFormButton {...buttonProps} />
