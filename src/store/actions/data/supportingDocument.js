@@ -57,7 +57,7 @@ supportingDocumentDataActions.uploadFile = withAuthToken((params) => ({ token, a
 });
 
 supportingDocumentDataActions.downloadFile = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-    const { setIsLoading, onError, data, userId, method = 'get', extraParams = [] } = params;
+    const { setIsLoading, onErrorAction = undefined, data, userId, onSuccessAction = undefined, method = 'get', extraParams = [] } = params;
     setIsLoading(true);
 
     let sExtraParamsString = '?';
@@ -67,10 +67,15 @@ supportingDocumentDataActions.downloadFile = withAuthToken((params) => ({ token,
     sExtraParamsString = sExtraParamsString.substring(0, sExtraParamsString.length - 1);
 
     const onSuccess = (res) => {
+        onSuccessAction && onSuccessAction(res);
         let a = document.createElement('a');
         a.href = `data:image/png;base64,${res?.data?.base64}`;
         a.download = res?.data?.fileName;
         a.click();
+    };
+
+    const onError = (res) => {
+        onErrorAction && onErrorAction(res);
     };
     const apiCallParams = {
         data,

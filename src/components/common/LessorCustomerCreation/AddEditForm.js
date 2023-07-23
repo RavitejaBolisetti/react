@@ -86,6 +86,7 @@ const AddEditFormMain = (props) => {
         const onErrorAction = (res) => {
             showGlobalNotification({ notificationType: 'error', title: 'Error', message: res, placement: 'bottomRight' });
         };
+
         if (typeof form.getFieldValue('stateCode') === 'undefined') {
             fetchList({ setIsLoading: listLessorShowLoading, isDataLoaded, userId, onSuccessAction, onErrorAction });
         } else {

@@ -121,6 +121,31 @@ export const ListCustomerCreationBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isStateDataLoaded]);
 
+    const downloadReport = (documentId) => {
+        const onSuccessAction = (res) => {
+            setFileList();
+            setUploadedFile();
+            setUploadedFileName();
+            resetData();
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+        };
+
+        const onErrorAction = (res) => {
+            showGlobalNotification({ notificationType: 'error', title: 'Error', message: res, placement: 'bottomRight' });
+        };
+
+        const extraParams = [
+            {
+                key: 'docId',
+                title: 'docId',
+                value: documentId,
+                name: 'docId',
+            },
+        ];
+        downloadFile({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+        resetData();
+    };
+
     const onFinish = () => {
         const data = { docId: uploadedFile };
 
@@ -133,8 +158,20 @@ export const ListCustomerCreationBase = (props) => {
         };
 
         const onError = (res, data) => {
-            console.log('🚀 ~ file: ListCustomerCreation.js:136 ~ onError ~ data:', data);
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message: res });
+            console.log('🚀 ~ file: ListCustomerCreation.js:157 ~ onError ~ res:', res, 'data', data);
+            let message = res;
+            if (data?.docId) {
+                message = (
+                    <>
+                        {message}{' '}
+                        <Button type="link" onClick={() => downloadReport(data?.docId)}>
+                            Download Here
+                        </Button>
+                    </>
+                );
+            }
+
+            showGlobalNotification({ notificationType: 'error', title: 'Error', message: message });
         };
 
         const requestData = {
@@ -249,6 +286,7 @@ export const ListCustomerCreationBase = (props) => {
         setDownLoadForm(true);
         setIsFormVisible(true);
     };
+
     const title = 'Lessor Customer Details';
 
     return (

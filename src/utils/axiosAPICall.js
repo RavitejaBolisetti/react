@@ -57,7 +57,7 @@ const baseAPICall = (params) => {
                         if (response?.data?.statusCode === 200) {
                             onSuccess(response?.data);
                         } else if (response?.data?.statusCode === 400) {
-                            handleErrorMessage({ onError, displayErrorTitle, errorData: response?.data?.data, errorTitle: response?.data?.errorTitle, errorMessage: response?.data?.errors || response?.data?.data?.responseMessage });
+                            handleErrorMessage({ onError, displayErrorTitle, errorData: response?.data?.data, errorTitle: response?.data?.errorTitle, errorMessage: response?.data?.errors || response?.data?.data?.responseMessage || response?.data?.responseMessage });
                         } else if (response?.data?.statusCode === 404) {
                             handleErrorMessage({ onError, displayErrorTitle, errorTitle: response?.data?.errorTitle, errorMessage: response?.data?.errors || response?.data?.data?.responseMessage });
                         } else if (response?.data?.statusCode === 409) {
