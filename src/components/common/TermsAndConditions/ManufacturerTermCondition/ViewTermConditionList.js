@@ -1,13 +1,14 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
 import { Descriptions } from 'antd';
-import { convertDate } from 'utils/formatDateTime';
+import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
+import { DATA_TYPE } from 'constants/dataType';
 
-const ViewTermConditionListMain = ({ formData, styles }) => {
+const ViewTermConditionListMain = ({ formData, isLoading, styles }) => {
     const viewProps = {
         bordered: false,
         colon: false,
@@ -18,13 +19,13 @@ const ViewTermConditionListMain = ({ formData, styles }) => {
         <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
             <>
                 <Descriptions {...viewProps}>
-                    <Descriptions.Item label="Product Hierarchy">{formData?.productName}</Descriptions.Item>
-                    <Descriptions.Item label="Document Type">{formData?.documentTypeCode}</Descriptions.Item>
-                    <Descriptions.Item label="Language">{formData?.languageDesc}</Descriptions.Item>
-                    <Descriptions.Item label="Effective From">{convertDate(formData?.effectivefrom)}</Descriptions.Item>
-                    <Descriptions.Item label="Effective To">{convertDate(formData?.effectiveto)}</Descriptions.Item>
-                    <Descriptions.Item label="Version">{formData?.version}</Descriptions.Item>
-                    <Descriptions.Item label="Terms & Conditions">{formData?.termsconditiondescription}</Descriptions.Item>
+                    <Descriptions.Item label="Product Hierarchy">{checkAndSetDefaultValue(formData?.productName, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Document Type">{checkAndSetDefaultValue(formData?.documentTypeCode, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Language">{checkAndSetDefaultValue(formData?.languageDesc, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Effective From">{checkAndSetDefaultValue(formData?.effectivefrom, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                    <Descriptions.Item label="Effective To">{checkAndSetDefaultValue(formData?.effectiveto, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                    <Descriptions.Item label="Version">{checkAndSetDefaultValue(formData?.version, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Terms & Conditions">{checkAndSetDefaultValue(formData?.termsconditiondescription, isLoading)}</Descriptions.Item>
                 </Descriptions>
             </>
         </div>
