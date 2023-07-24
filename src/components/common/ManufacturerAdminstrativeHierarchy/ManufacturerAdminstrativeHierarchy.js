@@ -126,6 +126,7 @@ const mapDispatchToProps = (dispatch) => ({
             resetViewData: documentViewDataActions.reset,
 
             uploadDocumentFile: supportingDocumentDataActions.uploadFile,
+            downloadFile: supportingDocumentDataActions.downloadFile,
             fetchDocumentFileDocId: manufacturerAdminUploadDataActions.fetchList,
             saveAuthorityData: manufacturerAdminUploadDataActions.saveData,
             authorityShowLoading: manufacturerAdminUploadDataActions.listShowLoading,
@@ -141,7 +142,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
     const { viewTitle, manufacturerAdminHierarchyData, fetchList, hierarchyAttributeFetchList, saveData, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, cardBtnDisableAction } = props;
     const { isDataOrgLoaded, manufacturerOrgHierarchyData, fetchOrgList, fetchDocumentFileDocId } = props;
     const { resetData, resetViewData, detailData, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
-    const { uploadDocumentFile, accessToken, token } = props;
+    const { downloadFile, uploadDocumentFile, accessToken, token } = props;
     const { isDataOrgLoading } = props;
 
     const { authorityShowLoading, isAuthorityDataLoaded, isAuthorityDataLoading, authorityData, typeData } = props;
@@ -184,8 +185,15 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
     const [uploadedFile, setUploadedFile] = useState();
     const [emptyList, setEmptyList] = useState(true);
 
+    const [uploadedFileName, setUploadedFileName] = useState('');
+
+    const [fileList, setFileList] = useState([]);
+
     const [downloadForm, setDownLoadForm] = useState(false);
     const [isUploadDrawer, setIsUploadDrawer] = useState(false);
+
+    const supportedFileTypes = ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
+    const maxSize = 8;
 
     const errorAction = () => {};
 
@@ -520,8 +528,16 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         setUploadedFile,
         emptyList,
         setEmptyList,
+        uploadedFileName,
+        setUploadedFileName,
         resetViewData,
         isLoading,
+        fileList,
+        setFileList,
+        downloadFile,
+        resetData,
+        supportedFileTypes,
+        maxSize,
     };
     const organizationFieldNames = { title: 'manufactureOrgShrtName', key: 'id', children: 'subManufactureOrg' };
     const treeOrgFieldNames = { ...organizationFieldNames, label: organizationFieldNames?.title, value: organizationFieldNames?.key };
