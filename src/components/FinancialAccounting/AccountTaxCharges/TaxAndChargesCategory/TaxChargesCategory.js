@@ -108,7 +108,6 @@ export const TaxChargesCategoryMain = (props) => {
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
     const [page, setPage] = useState({ pageSize: 10, current: 1 });
-    console.log('🚀 ~ file: TaxChargesCategory.js:112 ~ TaxChargesCategoryMain ~ page:', page);
     const dynamicPagination = true;
 
     const [editForm] = Form.useForm();
@@ -196,7 +195,6 @@ export const TaxChargesCategoryMain = (props) => {
             editForm?.setFieldsValue(obj);
         } else {
             taxChargeCalForm?.setFieldsValue(obj);
-            forceUpdate();
         }
 
         const extraParams = [
@@ -207,6 +205,7 @@ export const TaxChargesCategoryMain = (props) => {
                 name: 'taxChargeType',
             },
         ];
+        
         fetchTaxCodeList({ setIsLoading: listShowLoadingTaxChargeCategory, userId, extraParams, onSuccessAction });
     };
 

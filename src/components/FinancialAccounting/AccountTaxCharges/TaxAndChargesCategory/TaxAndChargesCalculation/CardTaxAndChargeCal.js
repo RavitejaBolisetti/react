@@ -27,6 +27,8 @@ const CardProductAttribute = (props) => {
             internalId: props?.internalId,
             taxMasterId: props?.taxMasterId,
         });
+
+        handleCodeFunction(props?.chargeType);
     };
 
     const taxChargeCalSave = () => {
@@ -90,9 +92,6 @@ const CardProductAttribute = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formEdit]);
 
-    console.log(isVisible, 'isVisible');
-    console.log(formEdit, 'formEdit');
-
     return (
         <Card
             style={{
@@ -122,9 +121,9 @@ const CardProductAttribute = (props) => {
                                         onClick={() => {
                                             taxChargeCalEdit(props);
                                         }}
-                                        disabled={props?.disabledEdit}
+                                        //disabled={props?.disabledEdit}
                                     />
-                                    <Button onClick={() => onTaxChargeCalculationDelete(props)} type="link" icon={<FiTrash />} disabled={props?.disabledEdit || (props?.id ? true : false)} />
+                                    <Button onClick={() => onTaxChargeCalculationDelete(props)} type="link" icon={<FiTrash />} disabled={props?.id ? true : false} />
                                 </>
                             </div>
                         ) : (
