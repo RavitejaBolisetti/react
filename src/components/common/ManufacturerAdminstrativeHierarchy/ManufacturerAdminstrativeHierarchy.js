@@ -499,7 +499,6 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         fileList,
         setFileList,
         downloadFile,
-        resetData,
         supportedFileTypes,
         maxSize,
     };
