@@ -12,6 +12,7 @@ import { validateAadhar, validateDrivingLicenseNo, validateGSTIN, validateRequir
 import { preparePlaceholderSelect, preparePlaceholderText, prepareDatePickerText } from 'utils/preparePlaceholder';
 import { disableFutureDate } from 'utils/disableDate';
 import { expandIcon } from 'utils/accordianExpandIcon';
+import { convertToUpperCase } from 'utils/convertToUpperCase';
 
 import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
 import { UploadUtil } from 'utils/Upload';
@@ -264,13 +265,13 @@ const AddEditFormMain = (props) => {
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item label="PAN" name="panNumber" initialValue={formData?.panNumber} rules={[validatePanField('pan'), validateRequiredInputField('pan')]}>
-                                            <Input maxLength={10} className={styles.inputBox} placeholder={preparePlaceholderText('pan')} {...disabledProps} />
+                                            <Input maxLength={10} onInput={convertToUpperCase} className={styles.inputBox} placeholder={preparePlaceholderText('pan')} {...disabledProps} />
                                         </Form.Item>
                                     </Col>
 
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item label="GSTIN" name="gstin" initialValue={formData?.gstin} rules={[validateGSTIN('gstin')]}>
-                                            <Input value={null} className={styles.inputBox} placeholder={preparePlaceholderText('gstin')} {...disabledProps} />
+                                            <Input value={null} onInput={convertToUpperCase} className={styles.inputBox} placeholder={preparePlaceholderText('gstin')} {...disabledProps} />
                                         </Form.Item>
                                     </Col>
                                 </Row>

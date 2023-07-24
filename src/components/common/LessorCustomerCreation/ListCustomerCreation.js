@@ -162,7 +162,7 @@ export const ListCustomerCreationBase = (props) => {
             if (data?.docId) {
                 message = (
                     <>
-                        {message}{' '}
+                        {message}
                         <Button type="link" onClick={() => downloadReport(data?.docId)}>
                             Download Here
                         </Button>

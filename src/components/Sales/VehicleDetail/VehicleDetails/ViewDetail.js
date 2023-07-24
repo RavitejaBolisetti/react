@@ -4,15 +4,15 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Row, Col, Space, Collapse, Descriptions, Card, Divider } from 'antd';
+import { Row, Col, Space, Collapse, Descriptions, Divider } from 'antd';
 
-import styles from 'components/common/Common.module.css';
-import dayjs from 'dayjs';
-import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { DATA_TYPE } from 'constants/dataType';
 import { USER_TYPE } from 'constants/userType';
+import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 
 import { expandIcon } from 'utils/accordianExpandIcon';
+import styles from 'components/common/Common.module.css';
+
 const { Panel } = Collapse;
 
 const ViewDetailMain = (props) => {

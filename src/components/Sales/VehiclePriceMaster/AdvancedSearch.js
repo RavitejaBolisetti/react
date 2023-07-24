@@ -103,7 +103,6 @@ const mapDispatchToProps = (dispatch) => ({
         },
         dispatch
     ),
-
 });
 export const AdvancedSearchFrom = (props) => {
     const { productHierarchyList, filteredStateData, filteredCityData, handleFilterChange } = props;
@@ -178,7 +177,7 @@ export const AdvancedSearchFrom = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="City" initialValue={filterString?.cityCode} name="cityCode" rules={[validateRequiredSelectField('city')]}>
+                    <Form.Item label="City" initialValue={filterString?.cityCode} name="cityCode">
                         <Select placeholder="Select" {...selectProps} onChange={handleFilterChange('cityCode')}>
                             {filteredCityData?.map((item) => (
                                 <Option value={item?.key}>{item?.value}</Option>

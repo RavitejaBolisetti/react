@@ -9,15 +9,16 @@ import { Form, Upload, Button, Space, Typography } from 'antd';
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
 import { UploadUtil } from 'utils/Upload';
+import { PARAM_MASTER } from 'constants/paramMaster';
 
 import styles from 'components/common/Common.module.css';
 
 const UploadMain = (props) => {
-    const { form, formData, onCloseAction, onFinishFailed } = props;
+    const { typeData, downloadFile, form, formData, onCloseAction, onFinishFailed } = props;
     const { buttonData, setButtonData, handleButtonClick } = props;
     const { userId, setUploadedFile, listShowLoading, showGlobalNotification, setEmptyList } = props;
     const { organizationId } = props;
-    const { setFileList, setUploadedFileName, downloadShowLoading, resetData, downloadFile, authorityShowLoading, saveAuthorityData, uploadedFile, fetchDocumentFileDocId } = props;
+    const { setFileList, setUploadedFileName, downloadShowLoading, resetData, authorityShowLoading, saveAuthorityData, uploadedFile, fetchDocumentFileDocId } = props;
 
     const downloadReport = (documentId) => {
         const onSuccessAction = (res) => {
@@ -25,7 +26,6 @@ const UploadMain = (props) => {
             setUploadedFile();
             setUploadedFileName();
             resetData();
-
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
         };
 
@@ -112,6 +112,23 @@ const UploadMain = (props) => {
             onSuccessAction,
         });
     };
+    const handleTemplateDownLoad = () => {
+        const filteredTypeData = typeData[PARAM_MASTER.FILE_DOWNLOAD_TMPLT.id].filter((value) => value.key === PARAM_MASTER.ADMINAUTHTMPLT.id);
+        let templateID = null;
+        if (filteredTypeData.length === 1) {
+            templateID = filteredTypeData[0];
+        }
+        const extraParams = [
+            {
+                key: 'docId',
+                title: 'docId',
+                value: templateID?.value,
+                name: 'docId',
+            },
+        ];
+
+        downloadFile({ setIsLoading: listShowLoading, userId, extraParams });
+    };
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
@@ -128,7 +145,6 @@ const UploadMain = (props) => {
         setButtonData,
         handleButtonClick,
     };
-
     return (
         <>
             <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
@@ -137,7 +153,7 @@ const UploadMain = (props) => {
                         <Space className={styles.accordianIconWithText}>Authority Form</Space>
                         <Space>Please download "Authority Form Template" using below button</Space>
                         <Space>
-                            <Button type="primary" onClick={getDocIdFromOrgId}>
+                            <Button type="primary" onClick={handleTemplateDownLoad}>
                                 Download Template
                             </Button>
                         </Space>

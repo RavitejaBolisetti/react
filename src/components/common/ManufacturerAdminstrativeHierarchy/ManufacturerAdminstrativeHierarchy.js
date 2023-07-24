@@ -202,8 +202,15 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
     const [fileList, setFileList] = useState([]);
     const [uploadedFileName, setUploadedFileName] = useState('');
 
+    const [uploadedFileName, setUploadedFileName] = useState('');
+
+    const [fileList, setFileList] = useState([]);
+
     const [downloadForm, setDownLoadForm] = useState(false);
     const [isUploadDrawer, setIsUploadDrawer] = useState(false);
+
+    const supportedFileTypes = ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
+    const maxSize = 8;
 
     const errorAction = () => {};
     const onErrorAction = (message) => {
