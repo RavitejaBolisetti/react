@@ -12,14 +12,15 @@ import { CustomerListMaster } from 'components/utils/CustomerListModal';
 import styles from 'components/common/Common.module.css';
 
 export const AddressCommonForm = (props) => {
-    const { formType, formData, handleOnChange, fnSetData, data } = props;
+    const { formType, formData, handleOnChange, fnSetData, data, sameAsBookingCustomer } = props;
     const canUpdate = (formType === 'ownerCustomer' && !data?.ownerCustomer?.customerId) || formType === 'billingCustomer';
+
     return (
         <>
             {canUpdate && (
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <CustomerListMaster fnSetData={fnSetData} />
+                        <CustomerListMaster disabled={sameAsBookingCustomer} fnSetData={fnSetData} />
                     </Col>
                 </Row>
             )}
