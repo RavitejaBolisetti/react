@@ -331,7 +331,7 @@ Object {
                           style="padding-left: 10px;"
                         >
                           <img
-                            alt=""
+                            alt="brandImage"
                             class="brandImage"
                             src="test-file-stub"
                             width="20"
@@ -2359,7 +2359,7 @@ Object {
                         style="padding-left: 10px;"
                       >
                         <img
-                          alt=""
+                          alt="brandImage"
                           class="brandImage"
                           src="test-file-stub"
                           width="20"

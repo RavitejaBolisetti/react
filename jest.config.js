@@ -15,6 +15,7 @@ module.exports = {
         '^@Icons(.*)$': '<rootDir>/Icons$1',
         '^@store(.*)$': '<rootDir>/store$1',
         '^@utils(.*)$': '<rootDir>/utils$1',
+        '^@mocks(.*)$': '<rootDir>/mocks$1',
     },
     moduleDirectories: ['node_modules', 'src'],
     testMatch: ['**/__tests__/**/*.test.(js|jsx)'],

@@ -1,4 +1,4 @@
-import {server} from './mockServiceWorker'
+import { server } from './mockServiceWorker'
 import { randomFillSync } from "crypto";
 
 Object.defineProperty(globalThis, "crypto", {

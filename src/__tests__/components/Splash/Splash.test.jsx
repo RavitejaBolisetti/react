@@ -34,7 +34,7 @@ describe('splash component render', () => {
     });
 
     it("should check setTimeOut function", async()=>{
-        render(<Splash />);
+        customRender(<Splash />);
         const animationB = screen.getByAltText('logo-imagesB');
         jest.runOnlyPendingTimers();
 
@@ -84,7 +84,7 @@ describe('splash component render', () => {
 
 
     it('shows the loading state after 1500 milliseconds', async() => { 
-        render(<Splash />);
+        customRender(<Splash />);
 
         // Check that the loading animation elements are initially hidden
 

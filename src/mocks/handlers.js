@@ -1,5 +1,11 @@
 import { rest } from "msw";
-import { BASE_URL_LOGIN, BASE_URL_HEADER_DETAIL, BASE_URL_VERIFY_USER, BASE_URL_CHANGE_PASSWORD } from 'constants/routingApi';
+import { 
+  BASE_URL_LOGIN, 
+  BASE_URL_HEADER_DETAIL, 
+  BASE_URL_VERIFY_USER, 
+  BASE_URL_CHANGE_PASSWORD, 
+  BASE_URL_MENU,
+} from 'constants/routingApi';
 
 export const handlers = [
   rest.post(BASE_URL_LOGIN, (req, res, ctx) => {
@@ -56,4 +62,64 @@ export const handlers = [
       );
     }
   }),
+  rest.get(BASE_URL_HEADER_DETAIL, (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json(
+        {
+            responseMessage: "Header Retrieved Successfully.",
+            data: {
+                header: null,
+                tickerMessage: "Ticker Message",
+                notificationCount: 2,
+                userType: "DLR",
+                firstName: "Sushil",
+                lastName: "Kumar",
+                mobileNo: "2656765423",
+                emailId: "sushil.kumar74@wipro.com",
+                userId: "sushil",
+                dealerId: "2c2262b0-b362-40cd-87d5-dcf468d62b55",
+                dealerName: "G3 MOTORS LTD.",
+                dealerLocation: null,
+                dealerImage: null,
+                parentGroupCode: null
+            }
+        }
+      ),
+      ctx.delay(100)
+    )
+  }),
+  rest.get(BASE_URL_MENU, (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json(
+              {
+                status: "OK",
+                statusCode: 200,
+                responseMessage: "User Menus Retrieved Successfully.",
+                data: [
+                    {
+                        menuId: "FAV",
+                        menuTitle: "Favourites",
+                        parentMenuId: "Web",
+                        menuIconUrl: "",
+                        isFavourite: "1",
+                        accessType: "R",
+                        displayOrder: 0,
+                        subMenu: [
+                            {
+                                menuId: "COMN-10.01",
+                                menuTitle: "Customer Master",
+                                parentMenuId: "FAV",
+                                menuIconUrl: ""
+                            }
+                        ]
+                    },
+                ]
+            }
+      ),
+      ctx.delay(100)
+    )
+
+  })
 ];
