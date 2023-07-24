@@ -32,7 +32,7 @@ const ViewDetailMain = (props) => {
     const handleInnerCollapse = (key) => {
         setInnerCollapse((prev) => (prev === key ? '' : key));
     };
-    const { productAttributeDetail, aggregates, connectedVehicle } = formData;
+    const { productAttributeDetail, connectedVehicle } = formData;
     const viewProps = {
         bordered: false,
         colon: false,
@@ -45,6 +45,7 @@ const ViewDetailMain = (props) => {
             <Space style={{ display: 'flex' }} direction="vertical" size="middle">
                 <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse(1)} expandIconPosition="end" {...collapseProps}>
                     <Panel header="Product Attribute Details" key="1">
+                        <Divider />
                         <Descriptions {...viewProps}>
                             <Descriptions.Item label="Product Division">{checkAndSetDefaultValue(productAttributeDetail?.productDivision, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Model Family">{checkAndSetDefaultValue(productAttributeDetail?.modelFamily, isLoading)}</Descriptions.Item>
@@ -96,6 +97,7 @@ const ViewDetailMain = (props) => {
                 </Collapse>
                 <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse(3)} expandIconPosition="end" {...collapseProps}>
                     <Panel header="Aggregates" key="3">
+                        <Divider />
                         <DataTable tableColumn={tableColumn({ formActionType, bindCodeValue })} tableData={optionsServiceModified} pagination={false} />
                     </Panel>
                 </Collapse>

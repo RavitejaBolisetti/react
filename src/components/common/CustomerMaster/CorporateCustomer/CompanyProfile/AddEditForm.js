@@ -134,7 +134,6 @@ const AddEditFormMain = (props) => {
                         <Collapse defaultActiveKey={['1']} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
                             <Panel header="Company Information" key="1">
                                 <Divider />
-
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item label="PAN" initialValue={formData?.panNumber} name="panNumber" rules={[validatePanField('panNumber'), validateRequiredInputField('panNumber')]}>

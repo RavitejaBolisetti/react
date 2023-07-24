@@ -58,16 +58,18 @@ export default function DataTable({ isLoading, rowSelection = undefined, dynamic
     });
 
     return (
-        <Table
-            rowSelection={rowSelection}
-            columns={isLoading ? tableSkeletonColumn : tableColumnWithSrl}
-            dataSource={isLoading ? skeletonData : tableData}
-            onChange={handleTableChange}
-            pagination={pagination ? !isLoading && tablePagination : false}
-            rowKey={rowKey}
-            scroll={{
-                x: scroll,
-            }}
-        />
+        <div style={{ marginBottom: '20px' }}>
+            <Table
+                rowSelection={rowSelection}
+                columns={isLoading ? tableSkeletonColumn : tableColumnWithSrl}
+                dataSource={isLoading ? skeletonData : tableData}
+                onChange={handleTableChange}
+                pagination={pagination ? !isLoading && tablePagination : false}
+                rowKey={rowKey}
+                scroll={{
+                    x: scroll,
+                }}
+            />
+        </div>
     );
 }
