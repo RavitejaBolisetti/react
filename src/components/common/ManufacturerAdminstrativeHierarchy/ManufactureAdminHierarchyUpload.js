@@ -11,6 +11,7 @@ import { FiEye, FiTrash } from 'react-icons/fi';
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
 import { PARAM_MASTER } from 'constants/paramMaster';
+import { UploadUtil } from 'utils/Upload';
 
 import styles from 'components/common/Common.module.css';
 
@@ -219,29 +220,29 @@ const UploadMain = (props) => {
                     </Space>
                 </div>
 
-                <Row gutter={16}>
+                <UploadUtil {...uploadProps} uploadButtonName={'Upload Authority Form'} messageText={'Click or drop your file here to upload'} validationText={'File type should be .xlsx and max file size to be 8Mb'} handleFormValueChange={handleFormValueChange} />
+
+                {/* <Row gutter={16}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Space direction="vertical">
-                            <div className={styles.uploadContainer} style={{ opacity: '100' }}>
-                                <Dragger customRequest={handleUpload} {...uploadProps} showUploadList={emptyList}>
-                                    <Empty
-                                        image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                        description={
-                                            <>
-                                                <Title level={5}>Click or drop your file here to upload</Title>
-                                                <Text>File type should be .xlsx and max file size to be 8Mb</Text>
-                                            </>
-                                        }
-                                    />
-                                    <Button className={styles.marB20} type="primary">
-                                        Upload Authority Form
-                                    </Button>
-                                </Dragger>
-                            </div>
-                        </Space>
+                        <div className={styles.uploadContainer} style={{ opacity: '100' }}>
+                            <Dragger customRequest={handleUpload} {...uploadProps} showUploadList={emptyList}>
+                                <Empty
+                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                    description={
+                                        <>
+                                            <Title level={5}>Click or drop your file here to upload</Title>
+                                            <Text>File type should be .xlsx and max file size to be 8Mb</Text>
+                                        </>
+                                    }
+                                />
+                                <Button className={styles.marB20} type="primary">
+                                    Upload Authority Form
+                                </Button>
+                            </Dragger>
+                        </div>
                     </Col>
-                    <DrawerFormButton {...buttonProps} />
-                </Row>
+                </Row> */}
+                <DrawerFormButton {...buttonProps} />
             </Form>
         </>
     );

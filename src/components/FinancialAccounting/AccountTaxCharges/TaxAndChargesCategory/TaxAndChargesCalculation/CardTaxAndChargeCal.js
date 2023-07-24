@@ -12,19 +12,21 @@ import FormProductAttribute from './FormTaxAndChargeCal';
 const { Text } = Typography;
 
 const CardProductAttribute = (props) => {
-    const { isVisible, finalFormdata, taxChargeCalForm, forceUpdate, taxCharges, productHierarchyAttributeData, taxChargeCategoryCodeData, setDisabledEdit, taxChargeCalList, setTaxChargeCalList, objTaxCharge, objTaxCode, setOpenAccordian, changeValue, setChangeValue, handleCodeFunction, editForm, formEdit, setFormEdit, uniqueCardEdit, setuniqueCardEdit } = props;
+    const { isVisible, finalFormdata, taxChargeCalForm, forceUpdate, taxCharges, productHierarchyAttributeData, taxChargeCategoryCodeData, setDisabledEdit, taxChargeCalList, setTaxChargeCalList, objTaxCharge, setOpenAccordian, changeValue, setChangeValue, handleCodeFunction, editForm, formEdit, setFormEdit, uniqueCardEdit, setuniqueCardEdit, handleDescriptionChange, buttonData, setButtonData } = props;
     const taxChargeDesc = taxCharges?.find((e) => e?.taxType === props?.chargeType)?.taxDescription;
+
     const taxChargeCalEdit = (props) => {
         setuniqueCardEdit(props?.internalId);
         setFormEdit(true);
+        setButtonData({ ...buttonData, formBtnActive: true });
+
         editForm.setFieldsValue({
             chargeCode: props?.chargeCode,
             chargeType: props?.chargeType,
             chargeDescription: props?.chargeDescription,
             internalId: props?.internalId,
+            taxMasterId: props?.taxMasterId,
         });
-
-        //setFormBtnActive(true);
     };
 
     const taxChargeCalSave = () => {
@@ -32,10 +34,11 @@ const CardProductAttribute = (props) => {
 
         const upd_obj = taxChargeCalList?.map((obj) => {
             if (obj?.internalId === newFormData?.internalId) {
-                obj.chargeCode = typeof newFormData?.chargeCode === 'object' ? newFormData?.chargeCode?.title : newFormData?.chargeCode;
-                obj.chargeType = typeof newFormData?.chargeType === 'object' ? newFormData?.chargeType?.title : newFormData?.chargeType;
+                obj.chargeCode = newFormData?.chargeCode;
+                obj.chargeType = newFormData?.chargeType;
                 obj.chargeDescription = newFormData?.chargeDescription;
                 obj.internalId = newFormData?.internalId;
+                obj.taxMasterId = newFormData?.taxMasterId;
             }
             return obj;
         });
@@ -45,7 +48,7 @@ const CardProductAttribute = (props) => {
         forceUpdate();
     };
 
-    const onAttributeDelete = (val) => {
+    const onTaxChargeCalculationDelete = (val) => {
         setTaxChargeCalList((prev) => {
             const indx = prev.findIndex((el) => el.internalId === val?.internalId);
             let updatedValue = prev;
@@ -58,7 +61,7 @@ const CardProductAttribute = (props) => {
         forceUpdate();
     };
 
-    const onAttributeCancel = () => {
+    const onTaxChargeCalculationCancel = () => {
         setFormEdit(false);
     };
 
@@ -70,23 +73,25 @@ const CardProductAttribute = (props) => {
         taxChargeCalList,
         taxCharges,
         taxCharge: objTaxCharge,
-        taxCode: objTaxCode,
         taxChargeCategoryCodeData,
         setOpenAccordian,
         changeValue,
         setChangeValue,
         handleCodeFunction,
         taxChargeCalForm,
+        handleDescriptionChange,
     };
 
     useEffect(() => {
         if (formEdit) {
             setDisabledEdit(true);
-        } else {
-            setDisabledEdit(false);
+            setButtonData({ ...buttonData, formBtnActive: true });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formEdit]);
+
+    console.log(isVisible, 'isVisible');
+    console.log(formEdit, 'formEdit');
 
     return (
         <Card
@@ -98,7 +103,6 @@ const CardProductAttribute = (props) => {
             <Row align="middle" justify="space-between">
                 <Row align="center">
                     <div>
-                        {/* <Text>{taxChargeDesc}</Text> */}
                         <Text>{taxChargeDesc}</Text>
                     </div>
                     <Divider type="vertical" />
@@ -120,13 +124,13 @@ const CardProductAttribute = (props) => {
                                         }}
                                         disabled={props?.disabledEdit}
                                     />
-                                    <Button onClick={() => onAttributeDelete(props)} type="link" icon={<FiTrash />} disabled={props?.disabledEdit || (props?.id ? true : false)} />
+                                    <Button onClick={() => onTaxChargeCalculationDelete(props)} type="link" icon={<FiTrash />} disabled={props?.disabledEdit || (props?.id ? true : false)} />
                                 </>
                             </div>
                         ) : (
                             props?.internalId === uniqueCardEdit && (
                                 <div className={styles.cardItemBtn}>
-                                    <Button type="link" onClick={onAttributeCancel}>
+                                    <Button type="link" onClick={onTaxChargeCalculationCancel}>
                                         Cancel
                                     </Button>
                                     <Button type="link" onClick={taxChargeCalSave}>
@@ -135,11 +139,9 @@ const CardProductAttribute = (props) => {
                                 </div>
                             )
                         )}
-
                     </Row>
                 )}
             </Row>
-
 
             {formEdit && props?.internalId === uniqueCardEdit && (
                 <>

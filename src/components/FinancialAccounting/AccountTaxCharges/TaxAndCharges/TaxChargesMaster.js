@@ -127,7 +127,6 @@ export const TaxChargesMain = ({
 
     const [formData, setFormData] = useState([]);
     const [selectedTreeData, setSelectedTreeData] = useState([]);
-    console.log('🚀 ~ file: TaxChargesMaster.js:98 ~ TaxChargesMain ~ selectedTreeData:', selectedTreeData);
 
     const [isFormBtnActive, setFormBtnActive] = useState(false);
     const [searchValue, setSearchValue] = useState('');
@@ -244,8 +243,8 @@ export const TaxChargesMain = ({
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
 
             if (res?.data) {
-                setAttributeType(formData?.data?.attributeTypeCode);
-                setCalculationType(formData?.data?.calculationType);
+                setAttributeType(res?.data?.attributeTypeCode);
+                setCalculationType(res?.data?.calculationType);
 
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
 

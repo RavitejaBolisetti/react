@@ -8,7 +8,7 @@ import CardProductAttribute from './CardTaxAndChargeCal';
 import FormProductAttribute from './FormTaxAndChargeCal';
 
 export const TaxAndChargesCalculationMaster = (props) => {
-    const { isVisible, selectedTreeData, showGlobalNotification, taxChargeCategoryTypeData, taxMasterId, setTaxMasterId, taxCategory, taxChargeCategoryCodeData, handleCodeFunction, form, editForm, taxChargeCalForm, formEdit, setFormEdit, taxChargeCalList, setTaxChargeCalList } = props;
+    const { isVisible, selectedTreeData, showGlobalNotification, taxChargeCategoryTypeData, taxCategory, taxChargeCategoryCodeData, handleCodeFunction, form, editForm, taxChargeCalForm, formEdit, setFormEdit, taxChargeCalList, setTaxChargeCalList, buttonData, setButtonData } = props;
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [disableSaveButton, setDisableSaveButton] = useState(false);
 
@@ -21,20 +21,32 @@ export const TaxAndChargesCalculationMaster = (props) => {
             .validateFields()
             .then(() => {
                 let data = taxChargeCalForm.getFieldsValue();
-                let updateData = { ...data, internalId: Math.floor(Math.random() * 100000000 + 1) };
+
+                let updateData = { ...data, internalId: Math.floor(Math.random() * 100000000 + 1), id: '' };
+                console.log(updateData, '_DATA');
                 setTaxChargeCalList((item) => [updateData, ...item]);
                 taxChargeCalForm.resetFields();
                 forceUpdate();
-                // setFormBtnActive(true);
+                setButtonData({ ...buttonData, formBtnActive: true });
+                handleCodeFunction();
             })
             .catch((error) => console.log(error));
     };
 
-    const taxCode = [
-        { key: 1, title: 'AOP' },
-        { key: 2, title: 'BOB' },
-        { key: 3, title: 'C_C' },
-    ];
+    const handleDescriptionChange = (taxCode) => {
+        setChangeValue(taxChargeCategoryCodeData?.find((i) => i?.taxCode === taxCode)?.taxDescription);
+        formEdit ? editForm.setFieldValue('chargeDescription', taxChargeCategoryCodeData?.find((i) => i?.taxCode === taxCode)?.taxDescription) : taxChargeCalForm.setFieldValue('chargeDescription', taxChargeCategoryCodeData?.find((i) => i?.taxCode === taxCode)?.taxDescription);
+
+        let codeFind = {
+            taxMasterId: taxChargeCategoryCodeData?.find((i) => i?.taxCode === taxCode)?.id,
+        };
+        if (formEdit) {
+            editForm.setFieldsValue(codeFind);
+        } else {
+            taxChargeCalForm.setFieldsValue(codeFind);
+        }
+    };
+
     const cardAttributeProps = {
         taxChargeCalForm,
         addTaxChargeCal,
@@ -42,10 +54,7 @@ export const TaxAndChargesCalculationMaster = (props) => {
         isVisible,
         selectedTreeData,
         taxCharges: taxChargeCategoryTypeData,
-        taxCode,
         objTaxCharge: taxCategory,
-        objTaxCode: taxCode,
-        //setFormBtnActive,
         disableSaveButton,
         setDisableSaveButton,
         showGlobalNotification,
@@ -63,8 +72,9 @@ export const TaxAndChargesCalculationMaster = (props) => {
         setFormEdit,
         uniqueCardEdit,
         setuniqueCardEdit,
-        taxMasterId,
-        setTaxMasterId,
+        handleDescriptionChange,
+        buttonData,
+        setButtonData,
     };
 
     const formProductAttributeProps = {
@@ -89,7 +99,7 @@ export const TaxAndChargesCalculationMaster = (props) => {
 
             {taxChargeCalList?.length > 0 &&
                 taxChargeCalList?.map((action) => {
-                    return <CardProductAttribute {...cardAttributeProps} chargeType={action?.chargeType} chargeCode={action?.chargeCode} chargeDescription={action?.chargeDescription} internalId={action?.internalId} id={action?.id} />;
+                    return <CardProductAttribute {...cardAttributeProps} chargeType={action?.chargeType} chargeCode={action?.chargeCode} chargeDescription={action?.chargeDescription} internalId={action?.internalId} id={action?.id} taxMasterId={action?.taxMasterId} />;
                 })}
         </>
     );

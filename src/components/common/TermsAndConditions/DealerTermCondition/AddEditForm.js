@@ -108,12 +108,12 @@ const AddEditFormMain = (props) => {
                     <Row gutter={20}>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item {...fromDateInitialValue} label="Effective From" name="effectiveFrom" rules={[validateRequiredInputField('date')]}>
-                                <DatePicker format="YYYY-MM-DD" disabled={formActionType?.viewMode} onChange={handleFromDateChange} disabledDate={disableFromDate} />
+                                <DatePicker format={dateFormat} disabled={formActionType?.viewMode} style={{ width: '100%' }} onChange={handleFromDateChange} disabledDate={disableFromDate} />
                             </Form.Item>
                         </Col>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item {...toDateInitialValue} label="Effective To" name="effectiveTo">
-                                <DatePicker format="YYYY-MM-DD" disabled disabledDate={disableToDate} />
+                                <DatePicker format={dateFormat} disabled style={{ width: '100%' }} disabledDate={disableToDate} />
                             </Form.Item>
                         </Col>
                     </Row>

@@ -8,7 +8,7 @@ import { Row, Col, Form } from 'antd';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { formattedCalendarDate } from 'utils/formatDateTime';
+import { formatDate, formattedCalendarDate } from 'utils/formatDateTime';
 
 import { showGlobalNotification } from 'store/actions/notification';
 import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
@@ -192,8 +192,8 @@ const IndividualProfileBase = (props) => {
         const data = {
             ...rest,
             customerId: selectedCustomerId,
-            dateOfBirth: formattedCalendarDate(values?.dateOfBirth),
-            weddingAnniversary: formattedCalendarDate(values?.weddingAnniversary),
+            dateOfBirth: formatDate(values?.dateOfBirth),
+            weddingAnniversary: formatDate(values?.weddingAnniversary),
             keyAccountDetails: { customerId: selectedCustomerId, accountCode: values?.accountCode || '', accountName: values?.accountName || '', accountSegment: values?.accountSegment || '', accountClientName: values?.accountClientName || '', accountMappingDate: values?.accountMappingDate || '' },
             authorityRequest: { customerId: selectedCustomerId, personName: values.personName || '', postion: values.postion || '', companyName: values.companyName || '', remarks: values.remarks || '', id: recordId },
             id: recordId,
