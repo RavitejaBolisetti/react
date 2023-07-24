@@ -14,7 +14,8 @@ import { ManufacturerOrgHierarchyChangeHistoryDataActions } from 'store/actions/
 import { tableColumnAdmin, tableColumnAuthority } from './TableColumns';
 
 import { DataTable } from 'utils/dataTable';
-import styles from './../ManufacturerAdmin.module.css';
+// import styles from './../ManufacturerAdmin.module.css';
+import styles from 'components/common/Common.module.css';
 
 const mapStateToProps = (state) => {
     const {

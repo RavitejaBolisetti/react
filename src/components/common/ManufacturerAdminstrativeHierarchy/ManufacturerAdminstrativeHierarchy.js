@@ -34,7 +34,6 @@ import { disableParent } from 'components/common/ProductHierarchy/ProductHierarc
 
 import LeftPanel from '../LeftPanel';
 import styles from 'components/common/Common.module.css';
-import style from './ManufacturerAdmin.module.css';
 
 import { LANGUAGE_EN } from 'language/en';
 
@@ -465,7 +464,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
 
     const chgHistoryToggleButton = (
         <Row>
-            <Col className={style.changeHistoryToggleBtn}>
+            <Col className={styles.changeHistoryToggleBtn} >
                 {Object.values(historyOptions)?.map((item) => {
                     return (
                         <Button onClick={() => handleTabChange(item?.key)} type={activeKey === item?.key ? 'primary' : 'link'}>
