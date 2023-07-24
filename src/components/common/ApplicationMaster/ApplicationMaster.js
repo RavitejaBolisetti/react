@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -96,17 +96,12 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
     const fieldNames = { title: 'menuTitle', key: 'menuId', children: 'subMenu' };
 
     useEffect(() => {
-        if (!userId) return;
-        if (!criticalityGroupData?.length) {
+        if (userId) {
             fetchApplicationCriticality({ setIsLoading: applicationMasterDataShowLoading });
-        }
-        if (!actions?.length) {
             fetchApplicationAction({ setIsLoading: applicationMasterDataShowLoading, userId, id: 'Finac' });
-        }
-        if (!criticalityGroupData?.length) {
             fetchCriticalitiData({ setIsLoading: applicationMasterDataShowLoading });
+            fetchList({ setIsLoading: applicationMasterDataShowLoading, userId, deviceType: menuType, sid: 'APPMST' });
         }
-        fetchList({ setIsLoading: applicationMasterDataShowLoading, userId, deviceType: menuType, sid: 'APPMST' });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, menuType]);
 
@@ -275,13 +270,11 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
     return (
         <>
             <div>
-            <ContentHeader {...ContentHeaderProps} />
+                <ContentHeader {...ContentHeaderProps} />
             </div>
             <Row gutter={20} span={24}>
                 <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol} className={`${styles.borderBottomCorner} ${styles.marT20}`}>
                     <Spin spinning={isLoading}>
-                       
-
                         <div className={styles.content}>
                             {menuData?.length <= 0 ? (
                                 <div className={styles.emptyContainer}>
