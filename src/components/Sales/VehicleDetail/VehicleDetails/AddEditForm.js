@@ -223,11 +223,7 @@ const AddEditFormMain = (props) => {
             <Collapse defaultActiveKey={['2']} bordered={false} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
                 <Panel header="Registration Number Change Request" key="2">
                     <Divider />
-                    <Row gutter={16}>
-                        <div className={styles.viewDrawerContainer}>
-                            <Card>Coming Soon</Card>
-                        </div>
-                    </Row>
+                    <div>Coming Soon</div>
                 </Panel>
             </Collapse>
         </Space>
