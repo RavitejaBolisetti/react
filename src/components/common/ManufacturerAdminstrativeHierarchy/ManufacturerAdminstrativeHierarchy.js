@@ -139,6 +139,9 @@ const mapDispatchToProps = (dispatch) => ({
             resetViewData: documentViewDataActions.reset,
 
             uploadDocumentFile: supportingDocumentDataActions.uploadFile,
+            downloadFile: supportingDocumentDataActions.downloadFile,
+            downloadShowLoading: supportingDocumentDataActions.listShowLoading,
+
             fetchDocumentFileDocId: manufacturerAdminUploadDataActions.fetchList,
             saveAuthorityData: manufacturerAdminUploadDataActions.saveData,
             authorityShowLoading: manufacturerAdminUploadDataActions.listShowLoading,
@@ -151,15 +154,16 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const ManufacturerAdminstrativeHierarchyMain = (props) => {
-    const { viewTitle, manufacturerAdminHierarchyData, fetchList, hierarchyAttributeFetchList, saveData, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, cardBtnDisableAction } = props;
+    const { viewTitle, manufacturerAdminHierarchyData, fetchList, hierarchyAttributeFetchList, saveData, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading } = props;
     const { isDataOrgLoaded, manufacturerOrgHierarchyData, fetchOrgList, fetchDocumentFileDocId } = props;
     const { resetData, resetViewData, detailData, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
     const { uploadDocumentFile, accessToken, token, ManufacturerAdminHierarchyLoading } = props;
     const { AdminDetailData, isAdminDetailDataLoaded, ManufacturerAdminHierarchyDetailLoading, fetchDetailList, DetailLoading } = props;
-
     const { authorityShowLoading, isAuthorityDataLoaded, isAuthorityDataLoading, authorityData, typeData } = props;
     const { saveAuthorityData, isViewDataLoaded, isLoading, viewListShowLoading, fetchViewDocument, viewDocument } = props;
     const { authorityDropDownfetchList, authorityDropDownlistShowLoading, authTypeDropdownData } = props;
+    const { downloadShowLoading, downloadFile, isDataOrgLoading } = props;
+
     const [form] = Form.useForm();
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
 
@@ -178,7 +182,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [searchValue, setSearchValue] = useState('');
 
-    const defaultBtnVisiblity = { editBtn: false, childBtn: false, siblingBtn: false, enable: false };
+    const defaultBtnVisiblity = { editBtn: true, childBtn: true, siblingBtn: true, enable: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const [documentTypesList, setDocumentTypesList] = useState([]);
     const [isChangeHistoryVisible, setIsChangeHistoryVisible] = useState(false);
@@ -195,6 +199,8 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
 
     const [uploadedFile, setUploadedFile] = useState();
     const [emptyList, setEmptyList] = useState(true);
+    const [fileList, setFileList] = useState([]);
+    const [uploadedFileName, setUploadedFileName] = useState('');
 
     const [downloadForm, setDownLoadForm] = useState(false);
     const [isUploadDrawer, setIsUploadDrawer] = useState(false);
@@ -537,7 +543,10 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         viewListShowLoading,
         fetchViewDocument,
 
-        onCloseAction,
+        onCloseAction: () => {
+            setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
+            setIsUploadDrawer(false);
+        },
 
         ADD_ACTION,
         EDIT_ACTION,
@@ -548,8 +557,14 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         setUploadedFile,
         emptyList,
         setEmptyList,
+        fileList,
+        setFileList,
+        uploadedFileName,
+        setUploadedFileName,
         resetViewData,
         isLoading,
+        downloadFile,
+        downloadShowLoading,
     };
     const organizationFieldNames = { title: 'manufactureOrgShrtName', key: 'id', children: 'subManufactureOrg' };
     const treeOrgFieldNames = { ...organizationFieldNames, label: organizationFieldNames?.title, value: organizationFieldNames?.key };
@@ -572,8 +587,8 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
     const title = 'Hierarchy';
 
     const handleOnClickUpload = () => {
-        setButtonData({ ...defaultBtnVisiblity, saveAndNewBtn: false, cancelBtn: true, saveBtn: true });
         setIsUploadDrawer(true);
+        setButtonData({ ...defaultBtnVisiblity, saveAndNewBtn: false, cancelBtn: true, saveBtn: true, editBtn: false });
     };
 
     const drawerProps = {
