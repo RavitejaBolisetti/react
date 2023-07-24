@@ -97,7 +97,7 @@ Object {
                                 class="ant-form-item-control-input-content"
                               >
                                 <div
-                                  class="ant-select ant-select-in-form-item ant-select-auto-complete searchField css-dev-only-do-not-override-14wwjjs ant-select-single ant-select-customize-input ant-select-show-search"
+                                  class="ant-select ant-select-in-form-item ant-select-auto-complete css-dev-only-do-not-override-14wwjjs ant-select-single ant-select-customize-input ant-select-show-search"
                                 >
                                   <div
                                     class="ant-select-selector"
@@ -107,7 +107,6 @@ Object {
                                     >
                                       <span
                                         class="ant-input-group-wrapper ant-input-search ant-select-selection-search-input css-dev-only-do-not-override-14wwjjs"
-                                        style="width: 100%;"
                                       >
                                         <span
                                           class="ant-input-wrapper ant-input-group css-dev-only-do-not-override-14wwjjs"
@@ -224,7 +223,7 @@ Object {
             />
             <div
               class="changeTheme"
-              style="padding: 10px 14px; position: absolute;"
+              style="padding: 10px 14px;"
             >
               <div
                 class="changeThemeBorder"
@@ -235,11 +234,11 @@ Object {
                 >
                   <svg
                     fill="currentColor"
-                    height="30"
+                    height="20"
                     stroke="currentColor"
                     stroke-width="0"
                     viewBox="0 0 16 16"
-                    width="30"
+                    width="20"
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
@@ -256,11 +255,11 @@ Object {
                 >
                   <svg
                     fill="currentColor"
-                    height="30"
+                    height="20"
                     stroke="currentColor"
                     stroke-width="0"
                     viewBox="0 0 16 16"
-                    width="30"
+                    width="20"
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
@@ -802,7 +801,7 @@ Object {
                     </span>
                   </button>
                   <button
-                    class="ant-btn css-dev-only-do-not-override-14wwjjs ant-btn-primary ant-btn-dangerous actionbtn"
+                    class="ant-btn css-dev-only-do-not-override-14wwjjs ant-btn-primary actionbtn"
                     data-testid="addActionBtn"
                     type="button"
                   >
@@ -2125,7 +2124,7 @@ Object {
                               class="ant-form-item-control-input-content"
                             >
                               <div
-                                class="ant-select ant-select-in-form-item ant-select-auto-complete searchField css-dev-only-do-not-override-14wwjjs ant-select-single ant-select-customize-input ant-select-show-search"
+                                class="ant-select ant-select-in-form-item ant-select-auto-complete css-dev-only-do-not-override-14wwjjs ant-select-single ant-select-customize-input ant-select-show-search"
                               >
                                 <div
                                   class="ant-select-selector"
@@ -2135,7 +2134,6 @@ Object {
                                   >
                                     <span
                                       class="ant-input-group-wrapper ant-input-search ant-select-selection-search-input css-dev-only-do-not-override-14wwjjs"
-                                      style="width: 100%;"
                                     >
                                       <span
                                         class="ant-input-wrapper ant-input-group css-dev-only-do-not-override-14wwjjs"
@@ -2252,7 +2250,7 @@ Object {
           />
           <div
             class="changeTheme"
-            style="padding: 10px 14px; position: absolute;"
+            style="padding: 10px 14px;"
           >
             <div
               class="changeThemeBorder"
@@ -2263,11 +2261,11 @@ Object {
               >
                 <svg
                   fill="currentColor"
-                  height="30"
+                  height="20"
                   stroke="currentColor"
                   stroke-width="0"
                   viewBox="0 0 16 16"
-                  width="30"
+                  width="20"
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
@@ -2284,11 +2282,11 @@ Object {
               >
                 <svg
                   fill="currentColor"
-                  height="30"
+                  height="20"
                   stroke="currentColor"
                   stroke-width="0"
                   viewBox="0 0 16 16"
-                  width="30"
+                  width="20"
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
@@ -2830,7 +2828,7 @@ Object {
                   </span>
                 </button>
                 <button
-                  class="ant-btn css-dev-only-do-not-override-14wwjjs ant-btn-primary ant-btn-dangerous actionbtn"
+                  class="ant-btn css-dev-only-do-not-override-14wwjjs ant-btn-primary actionbtn"
                   data-testid="addActionBtn"
                   type="button"
                 >
