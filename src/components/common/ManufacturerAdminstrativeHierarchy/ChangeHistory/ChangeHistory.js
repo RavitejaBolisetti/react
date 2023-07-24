@@ -12,7 +12,7 @@ import { withDrawer } from 'components/withDrawer';
 
 import { ManufacturerAdminHierarchyChangeHistoryDataActions } from 'store/actions/data/manufacturerAdminHierarchy/manufacturerAdminHierarchyChangeHistory';
 import { ManufacturerOrgHierarchyChangeHistoryDataActions } from 'store/actions/data/manufacturerOrgHierarchy/manufacturerorgHierarchyChangeHistory';
-import { tableColumnAdmin, tableColumnAuthority } from './tableColumns';
+import { tableColumnAdmin, tableColumnAuthority } from './TableColumns';
 
 import { DataTable } from 'utils/dataTable';
 import { MANUFACTURER_HIERARCHY_TYPE } from 'constants/manufacturerHierarchyType';
