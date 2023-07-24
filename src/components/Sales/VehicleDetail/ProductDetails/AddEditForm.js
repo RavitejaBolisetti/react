@@ -143,7 +143,6 @@ const AddEditFormMain = (props) => {
                         <Collapse onChange={() => handleCollapse('Attribute')} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian} {...collapseProps}>
                             <Panel header="Product Attribute Details" key="Attribute">
                                 <Divider />
-
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item label="Product Division" name="productDivision">
