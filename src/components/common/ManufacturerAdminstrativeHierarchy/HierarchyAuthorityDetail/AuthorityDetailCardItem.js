@@ -22,19 +22,14 @@ const { Text } = Typography;
 const mapStateToProps = (state) => {
     const {
         data: {
-            ManufacturerAdminHierarchy: { authorityVisible, errorMessage, isUpdating, authTypeDropdown: authTypeDropdownData },
             ManufacturerAdmin: {
-                ManufactureAdminValidateToken: {data: tokenValidationData }
+                ManufactureAdminValidateToken: { data: tokenValidationData },
             },
         },
     } = state;
 
     let returnValue = {
-        authorityVisible,
         tokenValidationData,
-        errorMessage,
-        isUpdating,
-        authTypeDropdownData,
     };
     return returnValue;
 };
@@ -43,7 +38,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            // errorTokenValidate: manufacturerAdminHierarchyDataActions.errorTokenValidate,
             showGlobalNotification,
         },
         dispatch
@@ -53,9 +47,10 @@ const mapDispatchToProps = (dispatch) => ({
 const AuthorityCardItemMain = (props) => {
     const { isUpdating, viewMode, onFinish, setDocumentTypesList, documentTypesList, setIsBtnDisabled, isBtnDisabled, record, handleFormValueChange } = props;
     const { employeeName, setEmployeeName, tokenValidate, setTokenValidate, tokenValidationData, showGlobalNotification } = props;
-    const { selectedValueOnUpdate, setselectedValueOnUpdate, authTypeDropdownData, errorMessage, setErrorMessage,formType, setFormType, resetData, isMainForm } = props;
+    const { selectedValueOnUpdate, setselectedValueOnUpdate, authTypeDropdownData, errorMessage, setErrorMessage, formType, setFormType, resetData, isMainForm } = props;
     const [form] = Form.useForm();
     const [isEditing, setIsEditing] = useState(false);
+    console.log('authTypeDropdownData', authTypeDropdownData);
 
     const onEdit = () => {
         form.setFieldsValue({ ...record, effectiveTo: dayjs(record?.effectiveTo), effectiveFrom: dayjs(record?.effectiveFrom) });
@@ -70,7 +65,7 @@ const AuthorityCardItemMain = (props) => {
         const tokenNo = form.getFieldValue('authorityEmployeeTokenNo');
         const isPreviousTokenNo = record?.authorityEmployeeTokenNo === tokenNo;
 
-        if ( !isPreviousTokenNo && !tokenValidationData?.employeeName) {
+        if (!isPreviousTokenNo && !tokenValidationData?.employeeName) {
             return showGlobalNotification({ notificationType: 'warning', title: 'Warning', message: 'Validate token to proceed' });
         }
 
@@ -166,7 +161,7 @@ const AuthorityCardItemMain = (props) => {
                 {isEditing && (
                     <Fragment>
                         <Divider />
-                        <AddEditForm handleFormValueChange={handleFormValueChange} tokenValidate={tokenValidate} setEmployeeName={setEmployeeName} setTokenValidate={setTokenValidate} employeeName={employeeName} record={record} onFinish={onFinish} form={form} setDocumentTypesList={setDocumentTypesList} documentTypesList={documentTypesList} isEditing={isEditing} selectedValueOnUpdate={selectedValueOnUpdate} setselectedValueOnUpdate={setselectedValueOnUpdate} errorMessage={errorMessage} setErrorMessage={setErrorMessage} formType={formType} setFormType={setFormType} isMainForm={isMainForm}/>
+                        <AddEditForm handleFormValueChange={handleFormValueChange} tokenValidate={tokenValidate} setEmployeeName={setEmployeeName} setTokenValidate={setTokenValidate} employeeName={employeeName} record={record} onFinish={onFinish} form={form} setDocumentTypesList={setDocumentTypesList} documentTypesList={documentTypesList} isEditing={isEditing} selectedValueOnUpdate={selectedValueOnUpdate} setselectedValueOnUpdate={setselectedValueOnUpdate} errorMessage={errorMessage} setErrorMessage={setErrorMessage} formType={formType} setFormType={setFormType} isMainForm={isMainForm}  />
                     </Fragment>
                 )}
             </Card>

@@ -12,11 +12,10 @@ import dayjs from 'dayjs';
 import { dateFormat } from 'utils/formatDateTime';
 import { validateRequiredInputField, validateRequiredSelectField, duplicateValidator } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
-import { manufacturerAdminHierarchyDataActions } from 'store/actions/data/manufacturerAdminHierarchy';
 import { hierarchyAttributeMasterDataActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { ManufactureAdminValidateToken } from 'store/actions/data/manufacturerAdminHierarchy/manufactureAdminValidateToken';
-
 import style from 'components/common/Common.module.css';
+
 
 const { Search } = Input;
 const { Text } = Typography;
@@ -25,10 +24,10 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ManufacturerAdminHierarchy: { isLoaded: isDataLoaded = false, data: manufacturerAdminHierarchyData = [], recordId: formRecordId, tokenNumber = [], isUpdating, changeHistoryVisible, historyData = [], authTypeDropdown: authTypeDropdownData = [], authorityVisible },
             HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, isLoading: searchLoading },
             ManufacturerAdmin: {
                 ManufactureAdminValidateToken: { data: tokenValidationData },
+                AuthorityHierarchy: { data: authTypeDropdownData = [] },
             },
         },
         common: {
@@ -39,18 +38,10 @@ const mapStateToProps = (state) => {
     let returnValue = {
         collapsed,
         userId,
-        formRecordId,
-        isDataLoaded,
-        isChangeHistoryVisible: changeHistoryVisible,
-        manufacturerAdminHierarchyData,
         isDataAttributeLoaded,
-        tokenNumber,
-        authTypeDropdownData,
-        historyData,
-        authorityVisible,
-        isUpdating,
         searchLoading,
         tokenValidationData,
+        authTypeDropdownData,
     };
     return returnValue;
 };
@@ -64,32 +55,23 @@ const mapDispatchToProps = (dispatch) => ({
             listShowLoading: ManufactureAdminValidateToken.listShowLoading,
             resetData: ManufactureAdminValidateToken.reset,
 
-            authTypeDropdown: manufacturerAdminHierarchyDataActions.authTypeDropdown,
-
             hierarchyAttributesearchList: hierarchyAttributeMasterDataActions.searchList,
             hierarchyAttributeSaveData: hierarchyAttributeMasterDataActions.saveData,
             hierarchyAttributeListShowLoading: hierarchyAttributeMasterDataActions.listShowLoading,
-
-            cardBtnDisableAction: manufacturerAdminHierarchyDataActions.cardBtnDisableAction,
         },
         dispatch
     ),
 });
 
 const AuthorityFormMin = (props) => {
-    const { isMainForm, handleFormValueChange, tokenValidationData, recordId = '', viewMode, userId, onFinish, form, isEditing, isBtnDisabled, listShowLoading, searchList, setIsBtnDisabled, setDocumentTypesList, authTypeDropdown, documentTypesList, authorityVisible, cardBtnDisableAction } = props;
-    const { setselectedValueOnUpdate, authTypeDropdownData, searchLoading, errorMessage, setErrorMessage, formType, setFormType, resetData, record } = props;
+    const { isMainForm, handleFormValueChange, tokenValidationData, recordId = '', viewMode, userId, onFinish, form, isEditing, isBtnDisabled, listShowLoading, searchList, setIsBtnDisabled, setDocumentTypesList, documentTypesList, cardBtnDisableAction } = props;
+    const { setselectedValueOnUpdate, searchLoading, authTypeDropdownData, errorMessage, setErrorMessage, formType, setFormType, resetData, record } = props;
     const disableAddBtn = { disabled: isBtnDisabled || !tokenValidationData?.employeeName };
-    console.log("🚀 ~ file: AddEditForm.js:83 ~ AuthorityFormMin ~ errorMessage:", errorMessage)
-    // const [errorMessage, setErrorMessage] = useState('');
-    
-    console.log("🚀 ~ file: AddEditForm.js:83 ~ AuthorityFormMin ~ formType:", formType)
     const onFinishFailed = (err) => {
         console.error(err);
     };
 
     const onErrorAction = (message) => {
-        console.log('🚀 ~ file: AddEditForm.js:90 ~ onErrorAction ~ message:', message);
         setErrorMessage(message);
     };
 
@@ -107,19 +89,11 @@ const AuthorityFormMin = (props) => {
         data && searchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
     };
 
-    console.log('🚀 ~ file: AddEditForm.js:111 ~ onChangeHandle ~ isMainForm:', isMainForm);
     const onChangeHandle = (recordId) => (e) => {
         setFormType(isMainForm);
         resetData();
         setErrorMessage();
     };
-
-    useEffect(() => {
-        if (userId) {
-            authTypeDropdown({ setIsLoading: listShowLoading, userId });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId]);
 
     const fieldNames = { label: 'value', value: 'key' };
 
@@ -168,7 +142,7 @@ const AuthorityFormMin = (props) => {
                 </Row>
             )}
 
-            {!isEditing && authorityVisible && (
+            {!isEditing && (
                 <Button {...disableAddBtn} icon={<PlusOutlined />} type="primary" onClick={onFinish}>
                     Add
                 </Button>

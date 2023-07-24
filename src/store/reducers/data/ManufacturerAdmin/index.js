@@ -9,10 +9,13 @@ import { ManufacturerAdminHierarchy } from './manufacturerAdminHierarchy';
 import { ManufacturerAdminUpload } from './manufacturerAdminUpload';
 import { ManufacturerAdminHierarchyChangeHistory } from './manufacturerAdminHierarchyChangeHistory';
 import { ManufactureAdminValidateToken } from './manufactureAdminValidateToken';
-
+import { ManufacturerAdminHierarchyDetailData } from './manufacturerAdminHierarchyDetailData';
+import { AuthorityHierarchy } from './authorityHierarchy'
 export const ManufacturerAdmin = combineReducers({
     ManufacturerAdminHierarchy,
     ManufacturerAdminUpload,
     ManufacturerAdminHierarchyChangeHistory,
     ManufactureAdminValidateToken,
+    ManufacturerAdminHierarchyDetailData,
+    AuthorityHierarchy,
 });

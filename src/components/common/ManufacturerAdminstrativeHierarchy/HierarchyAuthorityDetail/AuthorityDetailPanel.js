@@ -9,12 +9,11 @@ import { Collapse } from 'antd';
 import AuthorityDetailMaster from './AuthorityDetailMaster';
 import { accordianExpandIcon } from 'utils/accordianExpandIcon';
 
-
 const { Panel } = Collapse;
 
 const AuthorityDetailPanel = (props) => {
     const { viewMode, tokenValidate, setTokenValidate, forceUpdate } = props;
-    const { selectedTreeData, documentTypesList, setDocumentTypesList, handleFormValueChange } = props;
+    const { selectedTreeData, documentTypesList, setDocumentTypesList, handleFormValueChange, authTypeDropdownData } = props;
     const [openAccordian, setOpenAccordian] = useState('');
 
     const handleCollapse = (key) => {
@@ -30,6 +29,7 @@ const AuthorityDetailPanel = (props) => {
         setTokenValidate,
         forceUpdate,
         handleFormValueChange,
+        authTypeDropdownData,
     };
     return (
         <Collapse onChange={() => handleCollapse(1)} expandIcon={accordianExpandIcon} activeKey={openAccordian}>
