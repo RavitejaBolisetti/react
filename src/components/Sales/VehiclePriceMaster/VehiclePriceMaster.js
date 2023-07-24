@@ -169,6 +169,11 @@ export const VehiclePriceMasterBase = (props) => {
         setRefershData(false);
         setShowDataLoading(false);
     };
+
+    const onErrorAction = (res) => {
+        showGlobalNotification({ message: res });
+    };
+
     const paramMasterId = 'VH_PRC_SRCH';
     const extraParams = useMemo(() => {
         return [
@@ -224,8 +229,8 @@ export const VehiclePriceMasterBase = (props) => {
             {
                 key: 'priceAsOnDate',
                 title: 'End Date',
-                value: checkAndSetDefaultValue(filterString?.priceAsOnDate, false, DATA_TYPE?.DATE?.key),
-                name: filterString?.priceAsOnDate,
+                value: filterString?.priceAsOnDate && checkAndSetDefaultValue(filterString?.priceAsOnDate, false, DATA_TYPE?.DATE?.key),
+                name: filterString?.priceAsOnDate && checkAndSetDefaultValue(filterString?.priceAsOnDate, false, DATA_TYPE?.DATE?.key),
                 canRemove: true,
                 filter: true,
             },
@@ -263,7 +268,7 @@ export const VehiclePriceMasterBase = (props) => {
 
     useEffect(() => {
         if (userId) {
-            fetchVehiclePriceList({ setIsLoading: listVehiclePriceShowLoading, userId, extraParams, customURL, onSuccessAction });
+            fetchVehiclePriceList({ setIsLoading: listVehiclePriceShowLoading, userId, extraParams, customURL, onErrorAction, onSuccessAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, extraParams]);
