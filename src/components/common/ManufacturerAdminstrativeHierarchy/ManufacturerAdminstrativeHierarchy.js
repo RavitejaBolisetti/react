@@ -200,11 +200,9 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
     const [uploadedFile, setUploadedFile] = useState();
     const [emptyList, setEmptyList] = useState(true);
     const [fileList, setFileList] = useState([]);
-    const [uploadedFileName, setUploadedFileName] = useState('');
 
     const [uploadedFileName, setUploadedFileName] = useState('');
 
-    const [fileList, setFileList] = useState([]);
 
     const [downloadForm, setDownLoadForm] = useState(false);
     const [isUploadDrawer, setIsUploadDrawer] = useState(false);
