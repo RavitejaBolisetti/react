@@ -1,20 +1,16 @@
-import { createStore, combineReducers } from 'redux';
-import { Provider } from 'react-redux';
 import React, { useState } from 'react';
+import { Provider } from 'react-redux';
 import { fireEvent, screen, logRoles, act, render} from "@testing-library/react";
-import '@testing-library/jest-dom/extend-expect';
 // import { act } from 'react-dom/test-utils';
 import customRender from "@utils/test-utils";
+import createMockStore from '__mocks__/store';
 import { ApplicationMaster } from "@components/common/ApplicationMaster";
-import { AddEditForm } from 'components/common/ApplicationMaster/AddEditForm';
-import { ContentHeader } from 'utils/ContentHeader';
 
 describe('Application Master Component', () => {
 
     it('should render Application Master', async () => {
         customRender(<ApplicationMaster />);
         const checkRender = screen.getByTestId('applicationMaster');
-        logRoles(screen.getByTestId("applicationMaster"));
         expect(checkRender).toBeInTheDocument();
     });
 
@@ -37,21 +33,45 @@ describe('Application Master Component', () => {
       });
     });
 
-    // it('handleAdd button should work', async () => {
-    //     customRender(<ApplicationMaster />);
-    //     console.log("Menu Data: "+screen.menuData+"Application Data: "+screen.applicationData)
-    //     const addButton = await screen.findByRole("button", { name: 'Add', exact:false });
-    //     expect(addButton).toBeInTheDocument();
-    //     fireEvent.click(addButton);
+    it('add button should work', async () => {
+      const mockStore = createMockStore({
+        auth: { userId: 123 },
+        data:{
+            ApplicationMaster:{
+                applicationData:[],
+                applicationCriticalityGroupData:[
+                  {id: 1, name:'A', activeIndicator:true},
+                  {id: 2, name:'C', activeIndicator:false},
+                  {id: 3, name:'B', activeIndicator:true},
+                ],
+                criticalityGroupData:[]
+            },
+        }
+      });
+
+      customRender(
+        <Provider store={mockStore}>
+          <ApplicationMaster />
+        </Provider>
+      );
+      const addButton = await screen.findByRole("button", { name: 'plus Add', exact:false });
+      expect(addButton).toBeInTheDocument();
+      fireEvent.click(addButton);
+    });
+
+    // it('HierarchyFormButton should work', async () => {
+    //   const mockStore = createMockStore({
+    //     auth: { userId: 123 },
+    //     data:{
+    //         ApplicationMaster:{
+    //           applicationDetailsData:[{"id":"79eaef50-ecca-4e0c-9b07-a583b9d0ab1a","applicationId":"TESTAD","parentApplicationId":"Web","applicationName":"ADMINTEST","applicationType":"Module","applicationTitle":"ADMINTEST","documentNumRequired":true,"status":true,"nodeType":" ","criticalityGroupName":"criticality","criticalityGroupMasterId":"8ec901d0-4b8a-4c30-9ba1-a08d0c2df984","accessableIndicator":0,"deviceType":"W","documentType":[{"id":"8324eda1-639f-48bb-8ff6-11358f389925","documentTypeCode":"342","digitalSignatureRequired":true,"documentTypeDescription":"NEW DOC","termAndConRequired":true}],"accessibleLocation":[],"applicationAction":[{"id":"2457c966-a6ce-4543-886f-ae5ee8bc6c8f","actionMasterId":"e34eda20-d186-4c54-9647-187306095d2e","actionName":"view","status":true,"actionId":"V01"}]}]
+    //         },
+    //     },
+    //   });
+    //   customRender(
+    //     <Provider store={mockStore}>
+    //       <ApplicationMaster selectedTreeKey={1} setSelectedTreeKey={jest.fn()}/>
+    //     </Provider>
+    //   );      
     // });
-
-    it('content header', async () => {
-        customRender(
-          <AddEditForm />
-        );
-        logRoles(screen.getByTestId("applicationMaster"));
-  });
-    
-
-
 });

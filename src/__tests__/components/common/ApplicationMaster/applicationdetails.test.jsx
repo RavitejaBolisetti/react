@@ -11,7 +11,7 @@ describe('Application Details Component', () => {
         logRoles(screen.getByTestId("myForm"));
     });
     
-    it('on change form input', async () => {
+    it('on change application id should work', async () => {
         customRender(<ApplicationDetails setparentAppCode={jest.fn()} setCanFormSave={jest.fn()} />);
         const inputBox = screen.getByRole('textbox', { name: 'Application ID', exact: false});
         await act(async () => {
@@ -20,13 +20,13 @@ describe('Application Details Component', () => {
         });
     });
 
-    it('on change switch', async () => {
+    it('on change document number to be generated should work', async () => {
         customRender(<ApplicationDetails setparentAppCode={jest.fn()} setIsDocumentToGenerate={jest.fn()} setCanFormSave={jest.fn()}  />);
         const inputBox = screen.getByRole('switch', { name: 'Document number to be generated', exact: false});
         fireEvent.click(inputBox)
     });
 
-    it('on change select', async () => {
+    it('on change accessible location should work, async () => {
         customRender(<ApplicationDetails setparentAppCode={jest.fn()} setCanFormSave={jest.fn()}  />);
         const inputBox = screen.getByRole('combobox', { name: 'Accessible Location', exact: false});
         fireEvent.change(inputBox, { target: { value: 1 } });
@@ -35,18 +35,24 @@ describe('Application Details Component', () => {
     });
 
     it('tree select field should work', async () => {
+
+        const finalFormdata={
+            applicationDetails:{
+                parentApplicationId:"Test"
+            }
+        }
+
         const treeSelectFieldProps = {
             treeDisabled: false,
             selectedTreeSelectKey: "Web",
-            defaultValue: "Test",
         };
-        customRender(<ApplicationDetails setparentAppCode={jest.fn()} setCanFormSave={jest.fn()} treeSelectFieldProps={treeSelectFieldProps}/>);
+        customRender(<ApplicationDetails finalFormdata={finalFormdata} setparentAppCode={jest.fn()} setCanFormSave={jest.fn()} treeSelectFieldProps={treeSelectFieldProps}/>);
         const inputBox = screen.getByRole('combobox', { name: '', exact: false});
         fireEvent.change(inputBox, { target: { value: "Web" } });
         expect(inputBox.value).toBe("Web");
     });
 
-    it('application type', async () => {
+    it('on change application type should work', async () => {
         const configurableParamData = [
             { value: '1', label: 'Test1'},
             { value: '2', label: 'Test2'},
