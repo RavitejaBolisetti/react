@@ -1,11 +1,11 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableCloumn';
 import styles from 'components/common/Common.module.css';
-import { convertDate } from 'utils/formatDateTime';
+import { convertDateMonthYear } from 'utils/formatDateTime';
 
 export const tableColumn = (handleButtonClick, page, pageSize) => {
     const tableColumn = [];
@@ -33,13 +33,13 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             title: 'Effective From',
             dataIndex: 'effectivefrom',
             width: '12%',
-            render: (text) => convertDate(text),
+            render: (text) => convertDateMonthYear(text),
         }),
         tblPrepareColumns({
             title: 'Effective To',
             dataIndex: 'effectiveto',
             width: '12%',
-            render: (text) => convertDate(text),
+            render: (text) => convertDateMonthYear(text),
         }),
 
         // tblPrepareColumns({
