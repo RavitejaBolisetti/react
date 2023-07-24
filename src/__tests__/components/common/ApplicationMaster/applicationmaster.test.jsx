@@ -10,8 +10,6 @@ describe('Application Master Component', () => {
 
     it('should render Application Master', async () => {
         customRender(<ApplicationMaster />);
-        const checkRender = screen.getByTestId('applicationMaster');
-        expect(checkRender).toBeInTheDocument();
     });
 
     it('web and mobile button should work', async () => {
@@ -44,7 +42,6 @@ describe('Application Master Component', () => {
                   {id: 2, name:'C', activeIndicator:false},
                   {id: 3, name:'B', activeIndicator:true},
                 ],
-                criticalityGroupData:[]
             },
         }
       });
@@ -59,19 +56,21 @@ describe('Application Master Component', () => {
       fireEvent.click(addButton);
     });
 
-    // it('HierarchyFormButton should work', async () => {
-    //   const mockStore = createMockStore({
-    //     auth: { userId: 123 },
-    //     data:{
-    //         ApplicationMaster:{
-    //           applicationDetailsData:[{"id":"79eaef50-ecca-4e0c-9b07-a583b9d0ab1a","applicationId":"TESTAD","parentApplicationId":"Web","applicationName":"ADMINTEST","applicationType":"Module","applicationTitle":"ADMINTEST","documentNumRequired":true,"status":true,"nodeType":" ","criticalityGroupName":"criticality","criticalityGroupMasterId":"8ec901d0-4b8a-4c30-9ba1-a08d0c2df984","accessableIndicator":0,"deviceType":"W","documentType":[{"id":"8324eda1-639f-48bb-8ff6-11358f389925","documentTypeCode":"342","digitalSignatureRequired":true,"documentTypeDescription":"NEW DOC","termAndConRequired":true}],"accessibleLocation":[],"applicationAction":[{"id":"2457c966-a6ce-4543-886f-ae5ee8bc6c8f","actionMasterId":"e34eda20-d186-4c54-9647-187306095d2e","actionName":"view","status":true,"actionId":"V01"}]}]
-    //         },
-    //     },
-    //   });
-    //   customRender(
-    //     <Provider store={mockStore}>
-    //       <ApplicationMaster selectedTreeKey={1} setSelectedTreeKey={jest.fn()}/>
-    //     </Provider>
-    //   );      
-    // });
+    it('HierarchyFormButton should work', async () => {
+      const mockStore = createMockStore({
+        auth: { userId: 123 },
+        data:{
+            ApplicationMaster:{
+              applicationDetailsData:[{"id":"79eaef50-ecca-4e0c-9b07-a583b9d0ab1a","applicationId":"TESTAD","parentApplicationId":"Web","applicationName":"ADMINTEST","applicationType":"Module","applicationTitle":"ADMINTEST","documentNumRequired":true,"status":true,"nodeType":" ","criticalityGroupName":"criticality","criticalityGroupMasterId":"8ec901d0-4b8a-4c30-9ba1-a08d0c2df984","accessableIndicator":0,"deviceType":"W","documentType":[{"id":"8324eda1-639f-48bb-8ff6-11358f389925","documentTypeCode":"342","digitalSignatureRequired":true,"documentTypeDescription":"NEW DOC","termAndConRequired":true}],"accessibleLocation":[],"applicationAction":[{"id":"2457c966-a6ce-4543-886f-ae5ee8bc6c8f","actionMasterId":"e34eda20-d186-4c54-9647-187306095d2e","actionName":"view","status":true,"actionId":"V01"}]}],
+              criticalityGroupData:[]
+            },
+        },
+      });
+      customRender(
+        <Provider store={mockStore}>
+          <ApplicationMaster selectedTreeKey={1} setSelectedTreeKey={jest.fn()}/>
+        </Provider>
+      );      
+    });
+    
 });

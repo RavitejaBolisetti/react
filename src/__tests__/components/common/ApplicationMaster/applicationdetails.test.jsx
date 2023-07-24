@@ -8,7 +8,6 @@ describe('Application Details Component', () => {
 
     it('should render Application Details', async () => {
         customRender(<ApplicationDetails setparentAppCode={jest.fn()} />);
-        logRoles(screen.getByTestId("myForm"));
     });
     
     it('on change application id should work', async () => {
@@ -26,11 +25,10 @@ describe('Application Details Component', () => {
         fireEvent.click(inputBox)
     });
 
-    it('on change accessible location should work, async () => {
+    it('on change accessible location should work', async () => {
         customRender(<ApplicationDetails setparentAppCode={jest.fn()} setCanFormSave={jest.fn()}  />);
         const inputBox = screen.getByRole('combobox', { name: 'Accessible Location', exact: false});
         fireEvent.change(inputBox, { target: { value: 1 } });
-        // const inputBox1 = screen.getByRole('combobox', { name: 'Accessible Location', exact: false});
         waitFor(() => expect(inputBox.value).toHaveValue(1));
     });
 
@@ -70,4 +68,5 @@ describe('Application Details Component', () => {
         fireEvent.change(inputBox1, { target: { value: 2 } });
         waitFor(() =>expect(inputBox.value).toHaveValue(2));
     });
+
 });
