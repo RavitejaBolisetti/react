@@ -23,7 +23,6 @@ export const TaxAndChargesCalculationMaster = (props) => {
                 let data = taxChargeCalForm.getFieldsValue();
 
                 let updateData = { ...data, internalId: Math.floor(Math.random() * 100000000 + 1), id: '' };
-                console.log(updateData, '_DATA');
                 setTaxChargeCalList((item) => [updateData, ...item]);
                 taxChargeCalForm.resetFields();
                 forceUpdate();

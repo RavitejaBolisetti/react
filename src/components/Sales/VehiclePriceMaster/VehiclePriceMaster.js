@@ -13,6 +13,7 @@ import { tableColumn } from './tableColumn';
 import { AdvancedSearch } from './AdvancedSearch';
 
 import ListDataTable from 'utils/ListDataTable/ListDataTable';
+import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 
 import { documentViewDataActions } from 'store/actions/data/customerMaster/documentView';
 import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
@@ -25,6 +26,7 @@ import styles from 'components/common/Common.module.css';
 import { ViewDetail } from './ViewDetail';
 import { VehiclePriceMasterUpload } from './VehiclePriceMasterUpload';
 
+import { DATA_TYPE } from 'constants/dataType';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import AdvanceVehiclePriceMasterFilter from './AdvanceVehiclePriceMasterFilter';
 import { vehiclePriceMasterDataAction } from 'store/actions/data/vehiclePriceMaster';
@@ -222,7 +224,7 @@ export const VehiclePriceMasterBase = (props) => {
             {
                 key: 'priceAsOnDate',
                 title: 'End Date',
-                value: filterString?.priceAsOnDate,
+                value: checkAndSetDefaultValue(filterString?.priceAsOnDate, false, DATA_TYPE?.DATE?.key),
                 name: filterString?.priceAsOnDate,
                 canRemove: true,
                 filter: true,

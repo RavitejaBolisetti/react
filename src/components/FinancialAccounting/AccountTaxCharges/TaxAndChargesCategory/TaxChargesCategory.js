@@ -19,7 +19,6 @@ import { BASE_URL_FINANCIAL_ACC_TAX_CHARGE_CATEGORY_SEARCH as customURL } from '
 import { showGlobalNotification } from 'store/actions/notification';
 
 import { ListDataTable } from 'utils/ListDataTable';
-import { filterFunction } from 'utils/filterFunction';
 import { btnVisiblity } from 'utils/btnVisiblity';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 import { PARAM_MASTER } from 'constants/paramMaster';
@@ -212,33 +211,11 @@ export const TaxChargesCategoryMain = (props) => {
     };
 
     useEffect(() => {
-        if (userId && !isTaxChargeCategoryLoaded) {
+        if (userId) {
             fetchTaxChargeCategory({ setIsLoading: listShowLoadingTaxChargeCategory, userId, customURL, extraParams, onSuccessAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isTaxChargeCategoryTypeLoaded]);
-
-    useEffect(() => {
-        if (userId && refershData) {
-            fetchTaxChargeCategory({ setIsLoading: listShowLoadingTaxChargeCategory, userId, customURL, extraParams, onSuccessAction });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, refershData]);
-
-    useEffect(() => {
-        if (isDataLoaded && data && userId) {
-            if (filterString) {
-                const keyword = filterString?.keyword;
-                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.name) : true));
-                setSearchdata(filterDataItem);
-                setShowDataLoading(false);
-            } else {
-                setSearchdata(data);
-                setShowDataLoading(false);
-            }
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, isDataLoaded, data, userId]);
+    }, [userId, refershData, extraParams]);
 
     const handleReferesh = () => {
         setShowDataLoading(true);
@@ -258,6 +235,7 @@ export const TaxChargesCategoryMain = (props) => {
 
     const onSearchHandle = (value) => {
         if (value?.trim()?.length >= 3) {
+            setPage({ ...page, current: 1 });
             setFilterString({ ...filterString, advanceFilter: false, keyword: value });
         }
     };
