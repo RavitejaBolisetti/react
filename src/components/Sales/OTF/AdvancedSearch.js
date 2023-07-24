@@ -22,7 +22,6 @@ export const AdvancedSearchFrom = (props) => {
         setFilterString,
         advanceFilterForm,
         advanceFilterForm: { resetFields },
-        handleResetFilter,
     } = props;
 
     useEffect(() => {
@@ -40,6 +39,10 @@ export const AdvancedSearchFrom = (props) => {
             advanceFilter: true,
         });
         setAdvanceSearchVisible(false);
+    };
+
+    const handleResetFilter = (e) => {
+        advanceFilterForm.resetFields();
     };
 
     const onFinishFailed = () => {
