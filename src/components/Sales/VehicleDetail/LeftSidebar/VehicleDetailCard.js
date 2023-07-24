@@ -6,7 +6,7 @@
 import React from 'react';
 import { Collapse, Space, Avatar, Typography } from 'antd';
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
-
+import styles from 'components/common/Common.module.css';
 const { Panel } = Collapse;
 const { Title } = Typography;
 
@@ -33,16 +33,16 @@ const VehicleDetailCard = (props) => {
                 header={
                     <>
                         <Space>
-                            <Avatar size={50}>{userAvatar?.toUpperCase()}</Avatar>
+                            {/* <Avatar size={50}>{userAvatar?.toUpperCase()}</Avatar> */}
                             <div>
-                                <Title level={5} style={{ textTransform: 'capitalize' }}>
+                                {/* <Title level={5} style={{ textTransform: 'capitalize' }}>
                                     {selectedRecord?.customerName?.toLowerCase()}
-                                </Title>
+                                </Title> */}
                                 <div>
-                                    VIN.: <span>{selectedRecordId}</span>
+                                    VIN: <span className={styles.floatRight}>{selectedRecordId}</span>
                                 </div>
                                 <div>
-                                    Reg No.: <span>{selectedRecord?.registrationNumber}</span>
+                                    Reg No: <span className={styles.floatRight}>{selectedRecord?.registrationNumber}</span>
                                 </div>
                             </div>
                         </Space>
@@ -50,21 +50,23 @@ const VehicleDetailCard = (props) => {
                 }
                 key={1}
             >
+                {selectedRecord?.customerCode && (
+                    <p>
+                        Customer ID: <span className={styles.floatRight}>{selectedRecord?.customerCode}</span>
+                    </p>
+                )}
                 <p>
-                    Customer ID: <span>{selectedRecord?.customerCode}</span>
+                    Mobile No.: <span className={styles.floatRight}>{selectedRecord?.mobileNumber || 'NA'}</span>
                 </p>
                 <p>
-                    Mobile No.: <span>{selectedRecord?.mobileNumber || 'NA'}</span>
-                </p>
-                <p>
-                    Model: <span>{selectedRecord?.model || 'NA'}</span>
+                    Model: <span className={styles.floatRight}>{selectedRecord?.model || 'NA'}</span>
                 </p>
 
                 <p>
-                    Color: <span>{selectedRecord?.color || 'NA'}</span>
+                    Color: <span className={styles.floatRight}>{selectedRecord?.color || 'NA'}</span>
                 </p>
                 <p>
-                    MFG Warrenty: <span>{selectedRecord?.mfgWarranty || 'NA'}</span>
+                    MFG Warranty: <span className={styles.floatRight}>{selectedRecord?.mfgWarranty || 'NA'}</span>
                 </p>
             </Panel>
         </Collapse>

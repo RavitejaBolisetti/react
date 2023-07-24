@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   Copyright (c) 1013 Mahindra & Mahindra Ltd. 
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -13,11 +13,11 @@ const ViewCriticalityGroupMain = (props) => {
         bordered: false,
         colon: false,
         layout: 'vertical',
-        column: { xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 },
+        column: { xxl: 2, xl: 2, lg: 2, md: 1, sm: 1, xs: 1 },
     };
 
     return (
-        <div className={`${style?.viewContainer} ${style?.drwaerDetailsView}`}>
+        <div className={style?.viewContainer}>
             <>
                 <Descriptions {...viewProps}>
                     <Descriptions.Item label="Criticality Group Id">{formData?.criticalityGroupCode}</Descriptions.Item>

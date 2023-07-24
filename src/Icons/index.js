@@ -22,5 +22,6 @@ import { SVGComponent as EditIcon } from './EditIcon';
 import { SVGComponent as ViewEyeIcon } from './ViewEyeIcon';
 import { SVGComponent as FilterIcon } from './FilterIcon';
 import { SVGComponent as RupeeIcon } from './RupeeIcon';
+import { SVGComponent as UploadBoxIcon } from './UploadBoxIcon';
 
-export { HeadPhoneIcon, MenuArrow, AdminIcon, HomeIcon, CrmIcon, ServiceIcon, SparesIcon, HrIcon, ProfileIcon, ChangePasswordIcon, SettingsIcon, LogoutIcon, LinearTrash, EditIcon, ViewEyeIcon, FilterIcon, RupeeIcon, PlusBorderedIcon, MinusBorderedIcon };
+export { HeadPhoneIcon, MenuArrow, AdminIcon, HomeIcon, CrmIcon, ServiceIcon, SparesIcon, HrIcon, ProfileIcon, ChangePasswordIcon, SettingsIcon, LogoutIcon, LinearTrash, EditIcon, ViewEyeIcon, FilterIcon, RupeeIcon, UploadBoxIcon, PlusBorderedIcon, MinusBorderedIcon };

@@ -4,14 +4,19 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect, createContext, useCallback } from 'react';
-import { connect } from 'react-redux';
 import { ConfigProvider, notification } from 'antd';
-import { MainPage } from './components/MainPage';
-import { readFromStorageAndValidateAuth } from 'store/actions/auth';
+import { connect } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
+
+import { readFromStorageAndValidateAuth } from 'store/actions/auth';
+import { hideGlobalNotification } from 'store/actions/notification';
+
+import { CheckNetworkStatus } from 'utils/CheckNetworkStatus';
+
+import { MainPage } from './components/MainPage';
+
 import { AiOutlineCheckCircle, AiOutlineInfoCircle, AiOutlineCloseCircle } from 'react-icons/ai';
 import { FcCancel } from 'react-icons/fc';
-import { hideGlobalNotification } from 'store/actions/notification';
 
 import styles from './App.module.css';
 
@@ -72,10 +77,11 @@ const AppBase = ({ readFromStorageAndValidateAuth, hideGlobalNotification }) => 
                             colorPrimary: '#ff3e5b',
                             colorBgContainer: '#ffffff',
                             fontFamily: 'Lato',
+                            borderRadius: 4, //this sets the border-radius to 4px, for every single element having a border-radius in AntD
                         },
                         components: {
                             Button: {
-                                borderRadius: 5,
+                                // borderRadius: 5,
                                 colorErrorActive: '#ff4d4f',
                                 colorBg: '#ff4d4f',
                                 colorBorder: '#ff3e5b',
@@ -88,6 +94,7 @@ const AppBase = ({ readFromStorageAndValidateAuth, hideGlobalNotification }) => 
                 >
                     <NotificationContext.Provider value={informationModalBox}>
                         {contextInformationNotification}
+                        <CheckNetworkStatus />
                         <MainPage />
                     </NotificationContext.Provider>
                 </ConfigProvider>

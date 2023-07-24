@@ -7,13 +7,13 @@ import React, { useState } from 'react';
 import { Row, Col, Input, Form, Select, DatePicker, Card, Collapse, Divider } from 'antd';
 import { expandIcon } from 'utils/accordianExpandIcon';
 
+import { dateFormat } from 'utils/formatDateTime';
 import { validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
-const { Option } = Select;
 
 const AddEditFormMain = (props) => {
     const { formData, typeData } = props;
@@ -67,7 +67,7 @@ const AddEditFormMain = (props) => {
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item name="saleConsultant" label="Received On">
-                                <DatePicker disabled={true} format="YYYY-MM-DD" style={{ display: 'auto', width: '100%' }} />
+                                <DatePicker disabled={true} format={dateFormat} style={{ display: 'auto', width: '100%' }} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>

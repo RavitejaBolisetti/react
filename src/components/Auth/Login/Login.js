@@ -91,6 +91,7 @@ const Login = (props) => {
         hideGlobalNotification();
         setIsLoading(false);
         const passwordStatus = data?.passwordStatus;
+        // const loginFromRegisteredDevice = data?.userRegisteredDevice;
         if (passwordStatus) {
             authPreLogin(data);
             updatePasswordStatusInfo(data);
@@ -213,9 +214,9 @@ const Login = (props) => {
                                                     <div className={styles.loginSubHeading}>Please enter your credentials to login</div>
                                                 </div>
                                                 <Row gutter={20}>
-                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className="textfieldWithPrefix">
-                                                        <Form.Item name="userId" className="textfieldWithPrefix__input" data-testid="userIdInput" rules={[validateRequiredInputField('user id')]} className={styles.inputBox}>
-                                                            {<Input data-testid="userNameInput" ref={userIdRef} prefix={<BiUser size={18} />} type="text" maxLength={25} onChange={handleFormChange('userId')} />}
+                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} class="textfieldWithPrefix">
+                                                        <Form.Item name="userId" class="textfieldWithPrefix__input" data-testid="userIdInput" rules={[validateRequiredInputField('user id')]} className={styles.inputBox}>
+                                                            {<Input data-testid="userNameInput" ref={userIdRef} prefix={<BiUser size={16} />} type="text" maxLength={25} onChange={handleFormChange('userId')} />}
                                                         </Form.Item>
                                                         {!fieldData?.userId && (
                                                             <label className="textfieldWithPrefix__label" onClick={handleFieldFocus(userIdRef)}>
@@ -225,9 +226,9 @@ const Login = (props) => {
                                                     </Col>
                                                 </Row>
                                                 <Row gutter={20}>
-                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className="textfieldWithPrefix">
-                                                        <Form.Item name="password" className="textfieldWithPrefix__input" data-testid="password" rules={[validateRequiredInputField('password')]} className={styles.inputBox}>
-                                                            <Input data-testid="inputPassword" ref={passwordInputRef} type={showPassword ? 'text' : 'password'} prefix={<FiLock size={18} />} suffix={passowrdSuffix} onChange={handleFormChange('password')} />
+                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} class="textfieldWithPrefix">
+                                                        <Form.Item name="password" class="textfieldWithPrefix__input" data-testid="password" rules={[validateRequiredInputField('password')]} className={styles.inputBox}>
+                                                            <Input  data-testid="inputPassword"  ref={passwordInputRef} type={showPassword ? 'text' : 'password'} prefix={<FiLock size={16} />} suffix={passowrdSuffix} onChange={handleFormChange('password')} />
                                                         </Form.Item>
                                                         {!fieldData?.password && (
                                                             <label className="textfieldWithPrefix__label" onClick={handleFieldFocus(passwordInputRef)}>

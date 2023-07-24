@@ -244,7 +244,7 @@ const ContactMasterMain = (props) => {
                                         )}
                                     </Row>
                                     <Divider className={styles.marT20} />
-                                    <Space direction="vertical" style={{ width: '100%' }} className={styles.accordianContainer}>
+                                    <Space direction="vertical" className={styles.accordianContainer}>
                                         <div className={styles.headerBox}>
                                             {!formActionType?.viewMode && showAddEditForm && <AddEditForm {...formProps} />}
                                             {!contactData?.length && !isAdding ? (

@@ -7,7 +7,9 @@ import React, { useState } from 'react';
 import { Form, Divider } from 'antd';
 import AuthorityDetailCardItem from './AuthorityDetailCardItem';
 import { AddEditForm } from './AddEditForm';
-import dayjs from 'dayjs';
+
+import { formattedCalendarDate } from 'utils/formatDateTime';
+
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { manufacturerAdminHierarchyDataActions } from 'store/actions/data/manufacturerAdminHierarchy';
@@ -45,7 +47,7 @@ const AuthorityDetailMain = ({ tokenNumber, handleFormValueChange, errorTokenVal
     const onActionFormFinish = (val) => {
         // const { authorityTypeCode, ...rest } = val;
         // const { label, value } = authorityTypeCode;
-        setDocumentTypesList((prev) => [...prev, { ...val, effectiveFrom: dayjs(val?.effectiveFrom).format('YYYY-MM-DD'), effectiveTo: dayjs(val?.effectiveTo).format('YYYY-MM-DD'), isModified: val?.isModified ?? false, employeeName: tokenNumber?.employeeName }]);
+        setDocumentTypesList((prev) => [...prev, { ...val, effectiveFrom: formattedCalendarDate(val?.effectiveFrom), effectiveTo: formattedCalendarDate(val?.effectiveTo), isModified: val?.isModified ?? false, employeeName: tokenNumber?.employeeName }]);
         actionForm.resetFields();
         errorTokenValidate('');
         // forceUpdate();

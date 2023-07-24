@@ -267,17 +267,20 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
         setIsBtnDisabled,
     };
 
-    const leftCol = menuData?.length > 0 ? 16 : 24;
-    const rightCol = menuData?.length > 0 ? 8 : 24;
+    const leftCol = menuData?.length > 0 ? 14 : 24;
+    const rightCol = menuData?.length > 0 ? 10 : 24;
     const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
     const noDataMessage = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', moduleTitle);
     const ContentHeaderProps = { isAdvanceFilter: false, isTogglePresent: true, isDefaultContentHeader: false, toggleFirst: 'Web', toggleSecond: 'Mobile', styles, onChange, onFinish, validateTriggervalue: ['onSearch'], menuType, title: '', handleTypeClick };
     return (
         <>
+            <div>
+            <ContentHeader {...ContentHeaderProps} />
+            </div>
             <Row gutter={20} span={24}>
-                <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol} className={styles.borderBottomCorner}>
+                <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol} className={`${styles.borderBottomCorner} ${styles.marT20}`}>
                     <Spin spinning={isLoading}>
-                        <ContentHeader {...ContentHeaderProps} />
+                       
 
                         <div className={styles.content}>
                             {menuData?.length <= 0 ? (
@@ -293,7 +296,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
                                             </span>
                                         }
                                     >
-                                        <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleAdd('add')}>
+                                        <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" onClick={() => handleAdd('add')}>
                                             Add
                                         </Button>
                                     </Empty>

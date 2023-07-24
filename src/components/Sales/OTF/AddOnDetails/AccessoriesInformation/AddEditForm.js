@@ -29,9 +29,9 @@ function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm
             .validateFields()
             .then((values) => {
                 if (isPresent(values?.partNumber)) {
-                    showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Duplicate Part Number' });
                     return;
                 }
+
                 if (!values?.partNumber) {
                     showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Please provide part number' });
                     return;
@@ -57,8 +57,14 @@ function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm
     };
 
     const handleOnSearch = (value) => {
-        onSearchPart(value);
+        if (isPresent(value)) {
+            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Duplicate Part Number' });
+            return;
+        } else {
+            onSearchPart(value);
+        }
     };
+
     const handlePartSearch = (values) => {
         const { partNumber } = accessoryForm.getFieldsValue();
         accessoryForm.setFieldsValue({ partNumber: partNumber?.trim() });
@@ -119,7 +125,7 @@ function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.addOnButtons}>
                     {addButtonDisabled?.partDetailsResponses ? (
                         <>
-                            <Button disabled={isBtnDisabled} onClick={handleAccesoriesForm} type="primary" danger>
+                            <Button disabled={isBtnDisabled} onClick={handleAccesoriesForm} type="primary">
                                 Add
                             </Button>
                             <Button danger onClick={onCancel}>

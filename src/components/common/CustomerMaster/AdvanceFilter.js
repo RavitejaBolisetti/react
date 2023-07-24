@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -21,10 +21,10 @@ export default function AdvanceFilter(props) {
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={5} lg={5} xl={5}>
                                 <div className={`${styles.userManagement} ${styles.headingToggle}`}>
-                                    <Button className={styles.marR5} type={toggleButton === 'Individual' ? 'primary' : 'link'} danger onClick={() => settoggleButton('Individual')}>
+                                    <Button className={styles.marR5} type={toggleButton === 'Individual' ? 'primary' : 'link'} onClick={() => settoggleButton('Individual')}>
                                         Individual
                                     </Button>
-                                    <Button type={toggleButton === 'Firm/Company' ? 'primary' : 'link'} danger onClick={() => settoggleButton('Firm/Company')}>
+                                    <Button type={toggleButton === 'Firm/Company' ? 'primary' : 'link'} onClick={() => settoggleButton('Firm/Company')}>
                                         Corporate
                                     </Button>
                                 </div>
@@ -40,7 +40,7 @@ export default function AdvanceFilter(props) {
                                 </div>
                             </Col>
                             <Col xs={24} sm={24} md={7} lg={7} xl={7} className={styles.advanceFilterClear}>
-                                <Button danger type="primary" icon={<PlusOutlined />} onClick={() => handleAdd({ buttonAction: FROM_ACTION_TYPE?.ADD, record: '' })}>
+                                <Button type="primary" icon={<PlusOutlined />} onClick={() => handleAdd({ buttonAction: FROM_ACTION_TYPE?.ADD, record: '' })}>
                                     Add
                                 </Button>
                             </Col>

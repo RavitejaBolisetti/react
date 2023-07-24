@@ -59,7 +59,7 @@ const ViewAddressList = (props) => {
     };
 
     return (
-        <div>
+        <>
             {addressData?.length > 0 &&
                 addressData?.map((data, i) => {
                     return (
@@ -78,7 +78,7 @@ const ViewAddressList = (props) => {
                                         </Col>
                                         <Col xs={10} sm={10} md={10} lg={10} xl={10}>
                                             {!(isEditing || isAdding) && (
-                                                <div style={{ float: 'right' }}>
+                                                <div className={styles.floatRight}>
                                                     <Checkbox valuePropName="checked" checked={data?.deafultAddressIndicator} defaultChecked={data?.deafultAddressIndicator} onClick={(e) => onCheckdefaultAddClick(e, data)} {...disableProp}>
                                                         Mark As Default
                                                     </Checkbox>
@@ -90,12 +90,13 @@ const ViewAddressList = (props) => {
                                     </Row>
                                 }
                             >
+                                <Divider />
                                 {!isEditing ? <ViewIndividualAddressDetails styles={styles} formData={data} index={i} {...detailProps} /> : <AddEditForm {...formProps} />}
                             </Panel>
                         </Collapse>
                     );
                 })}
-        </div>
+        </>
     );
 };
 

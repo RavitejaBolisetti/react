@@ -3,8 +3,8 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect } from 'react';
-import { Space, Form, Select, Button } from 'antd';
+import React, { useEffect } from 'react';
+import { Row, Col, Space, Form, Select, Button } from 'antd';
 
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
@@ -21,7 +21,7 @@ const AddEditFormMain = (props) => {
 
     const { buttonData, setButtonData, handleButtonClick } = props;
     const { lessorData, fetchList, typeData, userId, showGlobalNotification } = props;
-    const { downloadForm, isDataLoaded, listLessorShowLoading, stateData, viewListShowLoading, fetchViewDocument } = props;
+    const { downloadFile, listShowLoading, downloadForm, isDataLoaded, listLessorShowLoading, stateData, viewListShowLoading, fetchViewDocument } = props;
 
     const { uploadProps } = props;
 
@@ -35,7 +35,7 @@ const AddEditFormMain = (props) => {
                     name: 'docId',
                 },
             ];
-            fetchViewDocument({ setIsLoading: viewListShowLoading, userId, extraParams, lessorData });
+            downloadFile({ setIsLoading: listShowLoading, userId, extraParams });
             resetData();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -49,6 +49,7 @@ const AddEditFormMain = (props) => {
         const onErrorAction = (res) => {
             showGlobalNotification({ notificationType: 'error', title: 'Error', message: res, placement: 'bottomRight' });
         };
+
         const filteredTypeData = typeData[PARAM_MASTER.FILE_DOWNLOAD_TMPLT.id].filter((value) => value.key === PARAM_MASTER.LSRCUSTTMPLT.id);
         let templateID = null;
         if (filteredTypeData.length === 1) {
@@ -65,7 +66,7 @@ const AddEditFormMain = (props) => {
         const name = {
             docName: 'Lessor Template',
         };
-        fetchViewDocument({ setIsLoading: viewListShowLoading, userId, extraParams, name, onSuccessAction, onErrorAction });
+        downloadFile({ setIsLoading: listShowLoading, userId, extraParams, name, onSuccessAction, onErrorAction });
         resetData();
     };
 
@@ -77,9 +78,7 @@ const AddEditFormMain = (props) => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
 
-    const [showStatus, setShowStatus] = useState('');
-
-    const handleDownload = (file) => {
+    const handleDownload = () => {
         const onSuccessAction = (res) => {
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
         };
@@ -87,6 +86,7 @@ const AddEditFormMain = (props) => {
         const onErrorAction = (res) => {
             showGlobalNotification({ notificationType: 'error', title: 'Error', message: res, placement: 'bottomRight' });
         };
+
         if (typeof form.getFieldValue('stateCode') === 'undefined') {
             fetchList({ setIsLoading: listLessorShowLoading, isDataLoaded, userId, onSuccessAction, onErrorAction });
         } else {
@@ -130,42 +130,27 @@ const AddEditFormMain = (props) => {
                             </Space>
                         </Space>
                     </div>
-                    {/* <Divider className={`${styles.marT20} ${styles.marB20}`} /> */}
-                    {/* <Space direction="vertical" style={{ width: '100%' }}>
-                        <div className={styles.uploadContainer} style={{ opacity: '100' }}>
-                            <Dragger customRequest={handleUpload} {...uploadProps} showUploadList={emptyList}>
-                                <Empty
-                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                    description={
-                                        <>
-                                            <Title level={5}>Click or drop your file here to upload</Title>
-                                            <Text>File type should be .xlsx and max file size to be 8Mb</Text>
-                                        </>
-                                    }
-                                />
-                                <Button className={styles.marB20} type="primary">
-                                    Upload Lessor Form
-                                </Button>
-                            </Dragger>
-                        </div>
-                    </Space> */}
+
                     <UploadUtil {...uploadProps} handleFormValueChange={handleFormValueChange} />
                 </>
             )}
             {downloadForm && (
                 <>
-                    <Space direction="vertical" style={{ width: '100%' }}>
-                        <Form.Item label="State Name" name="stateCode">
-                            <Select placeholder={preparePlaceholderSelect('State Name')} {...selectProps}>
-                                {stateData?.map((item) => (
-                                    <Option value={item?.key}>{item?.value}</Option>
-                                ))}
-                            </Select>
-                        </Form.Item>
+                    <Row>
+                        <Col xs={24} sm={24} md={24} lg={24}>
+                            <Form.Item label="State Name" name="stateCode">
+                                <Select placeholder={preparePlaceholderSelect('State Name')} {...selectProps}>
+                                    {stateData?.map((item) => (
+                                        <Option value={item?.key}>{item?.value}</Option>
+                                    ))}
+                                </Select>
+                            </Form.Item>
+                        </Col>
+
                         <Button type="primary" onClick={handleDownload}>
                             Download
                         </Button>
-                    </Space>
+                    </Row>
                 </>
             )}
             <DrawerFormButton {...buttonProps} />

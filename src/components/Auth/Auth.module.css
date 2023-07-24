@@ -10,7 +10,7 @@
 p {
     margin-bottom: 0px !important;
     margin-top: 0px !important;
-    color: #342C2C;
+    color: #342c2c;
     padding-left: 28px !important;
     text-align: left;
 }
@@ -20,7 +20,7 @@ p {
 }
 
 .textCenter {
-    text-align: center
+    text-align: center;
 }
 
 .loginSection .center {
@@ -38,7 +38,7 @@ p {
     line-height: 24px;
     margin-top: 20px;
     height: 40px;
-    background: #FF3E5B;
+    background: #ff3e5b;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -62,9 +62,9 @@ p {
     visibility: visible;
 }
 
-.button:hover {
+/* .button:hover {
     background: #FF3E5B;
-}
+} */
 
 .loginSection {
     background: url(assets/images/mainbg.png) no-repeat center center fixed;
@@ -88,29 +88,25 @@ p {
 
 .loginSection .logOutFooter {
     padding: 20px 10px 10px;
-    /* position: absolute;
-    bottom: 0;
-    width: 98%;
-    */
 }
 
-.loginSection .loginMainFooter div>a,
-.loginSection .logOutFooter div>a {
+.loginSection .loginMainFooter div > a,
+.loginSection .logOutFooter div > a {
     padding: 0 32px 0 16px;
     text-transform: uppercase;
-    color: #8E8585;
+    color: #8e8585;
     font-size: 14px;
-    border-right: 1px solid #8E8585;
+    border-right: 1px solid #8e8585;
 }
 
-.loginSection .loginMainFooter div>a:last-child,
-.loginSection .logOutFooter div>a:last-child {
+.loginSection .loginMainFooter div > a:last-child,
+.loginSection .logOutFooter div > a:last-child {
     border-right: none;
 }
 
-.loginSection .loginMainFooter div>span,
-.loginSection .logOutFooter div>span {
-    color: #8E8585;
+.loginSection .loginMainFooter div > span,
+.loginSection .logOutFooter div > span {
+    color: #8e8585;
     font-weight: 400;
     font-size: 14px;
     padding-right: 12px;
@@ -125,7 +121,7 @@ p {
     text-align: center;
     margin-top: 12px;
     margin-bottom: 20px;
-    color: #FFFFFF;
+    color: #ffffff;
 }
 
 .loginSection .center .loginLogoSection .mainLogo {
@@ -148,7 +144,7 @@ p {
 
 .loginSection .loginWrap {
     /* margin: 20px; */
-    background: #1C1C1C;
+    background: #1c1c1c;
     /* box-shadow: 0px 0px 8px rgba(213, 142, 167, 0.6); */
     border-radius: 10px;
     -moz-border-radius: 10px;
@@ -172,7 +168,7 @@ p {
 }
 
 .loginSection .loginWrap .loginHtml .verifyUser :global .ant-form-item {
-    margin-bottom: 0px !important
+    margin-bottom: 0px !important;
 }
 
 .loginSection .loginWrap .logOutHtml {
@@ -204,7 +200,7 @@ p {
 }
 
 .loginSection .loginWrap .loginHtml .loginForm .inputBox :global .ant-form-item-control-input {
-    background: #0B0B0C !important;
+    background: #0b0b0c !important;
     border-radius: 6px !important;
 }
 
@@ -219,7 +215,7 @@ p {
 
 .loginSection .loginWrap .loginHtml .loginForm .inputBox.disabledInput p {
     padding-left: 0 !important;
-    color: #70C922 !important;
+    color: #70c922 !important;
     font-size: 12px;
     font-weight: 400;
     line-height: 20px;
@@ -233,7 +229,7 @@ p {
 
 .loginSection .loginWrap .loginHtml .loginForm .inputBox input::placeholder,
 .changer input::placeholder {
-    color: #8E8585;
+    color: #8e8585;
     font-size: 16px !important;
     font-weight: 400 !important;
     line-height: 24px;
@@ -243,19 +239,15 @@ p {
     padding: 3px 0;
 } */
 
-.loginSection :global .ant-input-affix-wrapper>input.ant-input.disabledInput {
+.loginSection :global .ant-input-affix-wrapper > input.ant-input.disabledInput {
     color: #838383 !important;
 }
 
 .loginSection :global .ant-input-affix-wrapper {
-    background: #0B0B0C;
-    height: 36px !important;
-    /* border-style: none none solid none; */
+    background: #0b0b0c;
     border-color: #545454;
     color: #ffffff;
-    font-size: 16px;
-    border-radius: 4px;
-    padding: 0;
+    /* font-size: 16px; */
 }
 
 .loginSection :global .ant-input-affix-wrapper:hover {
@@ -276,14 +268,14 @@ p {
 }
 
 .loginSection :global .ant-input-affix-wrapper .ant-input-prefix {
-    margin-inline-start: 12px;
-    margin-inline-end: 12px;
+    /* margin-inline-start: 12px;
+    margin-inline-end: 12px; */
     color: #858585;
 }
 
 .loginSection :global .ant-input-affix-wrapper-focused .ant-input-prefix,
 .loginSection :global .ant-input-affix-wrapper-status-success .ant-input-prefix {
-    color: #FFFFFF;
+    color: #ffffff;
 }
 
 .loginSection :global .ant-input-affix-wrapper:hover,
@@ -293,7 +285,7 @@ p {
 
 .loginSection :global .ant-input-affix-wrapper-focused:hover,
 .loginSection :global .ant-input-affix-wrapper-focused:not(.ant-input-affix-wrapper-disabled):hover {
-    border-color: #FFFFFF;
+    border-color: #ffffff;
 }
 
 .loginSection :global .ant-input-affix-wrapper-status-error:hover,
@@ -301,21 +293,16 @@ p {
     border-color: #ff4d4f !important;
 }
 
-.loginSection .loginWrap .loginHtml .loginForm .inputBox :global .ant-input-affix-wrapper .ant-input-suffix {
-    margin-inline-end: 8px;
-    line-height: 16px;
-    transform: scaleX(-1) !important;
-    color: #FF3E5B;
-}
-
 .loginForm :global .ant-btn-primary:disabled {
+    border: 1px solid #858585;
+    background: #545454;
     color: #858585;
 }
 
-.loginForm :global .ant-btn-primary:disabled:hover {
+/* .loginForm :global .ant-btn-primary:disabled:hover {
     color: #858585;
     background: transparent;
-}
+} */
 
 .ant-input-affix-wrapper-status-error:not(.ant-input-affix-wrapper-disabled):not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper:focus,
 .ant-input-affix-wrapper-status-error:not(.ant-input-affix-wrapper-disabled):not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper-focused {
@@ -325,7 +312,7 @@ p {
 .loginSection :global .ant-input-affix-wrapper:focus,
 .loginSection :global .ant-input-affix-wrapper-focused {
     box-shadow: none !important;
-    border-color: #FFFFFF;
+    border-color: #ffffff;
     background: transparent;
     z-index: 0;
 }
@@ -348,7 +335,7 @@ p {
 .loginSection .loginWrap .logOutHtml .loginForm .logOutHeading h1 {
     font-size: 32px;
     font-style: normal;
-    color: #FFFFFF;
+    color: #ffffff;
     text-align: center;
     line-height: 48px;
     font-weight: 600;
@@ -359,7 +346,7 @@ p {
 .loginSection .loginWrap .logOutHtml .loginForm .logOutHeading h1 {
     font-size: 32px;
     font-style: normal;
-    color: #FFFFFF;
+    color: #ffffff;
     text-align: center;
     line-height: 48px;
     font-weight: 600;
@@ -370,7 +357,7 @@ p {
 .loginSection .loginWrap .loginHtml .loginForm .loginHeading .loginSubHeading,
 .loginSection .loginWrap .logOutHtml .loginForm .logOutHeading .logOutSubHeading {
     font-size: 16px;
-    color: #B5B5B6;
+    color: #b5b5b6;
     margin-top: 8px;
     margin-bottom: 30px;
     text-align: center;
@@ -397,7 +384,7 @@ p {
 
 .registered {
     padding: 16px 0 8px;
-    color: #B5B5B6;
+    color: #b5b5b6;
     font-size: 14px;
     line-height: 22px;
     font-weight: 400;
@@ -407,7 +394,7 @@ p {
     /* display: flex !important;
     align-items: center !important; */
     padding: 0;
-    color: #FF3E5B;
+    color: #ff3e5b;
     font-size: 14px;
     line-height: 24px;
     font-weight: 500;
@@ -417,14 +404,18 @@ p {
     align-self: center;
 }
 
-.fielderror .registered :global .ant-checkbox:not(.ant-checkbox-checked)+span,
-.fielderror .registered :global .ant-checkbox:not(.ant-checkbox-checked)+span p {
+.fielderror .registered :global .ant-checkbox:not(.ant-checkbox-checked) + span,
+.fielderror .registered :global .ant-checkbox:not(.ant-checkbox-checked) + span p {
     color: #858585 !important;
+}
+
+.fielderror .registered span {
+    color: #ff3e5b;
 }
 
 .fielderror .registered p {
     padding-left: 0px !important;
-    color: #FF3E5B;
+    color: #ff3e5b;
 }
 
 .fielderror .registered :global .ant-checkbox-checked:checked {
@@ -432,14 +423,14 @@ p {
 }
 
 .registered :global .ant-checkbox .ant-checkbox-inner {
-    width: 18px;
-    height: 18px;
+    width: 22px;
+    height: 22px;
     background-color: transparent;
-    border: 1px solid #838383;
+    border: 1px solid #545454;
 }
 
-.registered :global .ant-checkbox-checked .ant-checkbox-inner {
-    border-color: #838383 !important;
+.registered :global .ant-checkbox.ant-checkbox-checked .ant-checkbox-inner {
+    border: 1px solid #ffffff;
 }
 
 .registered :global .ant-checkbox-wrapper-checked:not(.ant-checkbox-wrapper-disabled):hover .ant-checkbox-inner,
@@ -447,23 +438,12 @@ p {
     background-color: transparent !important;
 }
 
-.registered :global .ant-checkbox .ant-checkbox-inner:after {
-    top: 48%;
-    inset-inline-start: 35%;
-    width: 4px;
-    height: 7px;
-    border: 1px solid red;
-    border-top: 0;
-    border-inline-start: 0;
-}
-
 .registered :global .ant-checkbox-checked:after {
-    border: 1px solid #ff3e5b !important;
-    background-color: transparent !important;
+    border-width: 1px;
 }
 
 :global .ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled):hover .ant-checkbox-checked:not(.ant-checkbox-disabled) .ant-checkbox-inner {
-    background-color: transparent !important;
+    background-color: transparent;
 }
 
 .loginSection .loginWrap .loginHtml .loginForm .input-group .input-group-prepend .input-group-text {
@@ -502,7 +482,7 @@ p {
     width: 100%;
     color: #fff;
     display: block;
-    background: #FF3E5B;
+    background: #ff3e5b;
     cursor: pointer;
     border-radius: 5px;
     border: none;
@@ -539,7 +519,7 @@ p {
 }
 
 .loginSection .loginWrap .loginHtml .loginForm .forgotPasswordLink a {
-    color: #FF3E5B !important;
+    color: #ff3e5b !important;
 }
 
 .loginSection .loginWrap .loginHtml .loginForm .forgotPasswordLink a:hover {
@@ -547,7 +527,7 @@ p {
 }
 
 .loginSection .loginWrap .loginHtml .loginForm .loginFooter {
-    color: #FF3E5B;
+    color: #ff3e5b;
     text-align: center;
     font-size: 14px;
     line-height: 22px;
@@ -557,7 +537,7 @@ p {
 }
 
 .loginSection :global .ant-form-item .ant-form-item-explain-error {
-    color: #ED302D;
+    color: #ed302d;
     line-height: 18px;
     font-weight: 400;
 }
@@ -566,7 +546,7 @@ p {
     font-size: 14px;
     font-weight: 600;
     line-height: 24px;
-    color: #FF3E5B;
+    color: #ff3e5b;
     text-align: center;
 }
 
@@ -643,7 +623,7 @@ select.form-control:focus::-ms-value {
     width: 100%;
 }
 
-.loginSection :global .g-recaptcha>div>div {
+.loginSection :global .g-recaptcha > div > div {
     /* transform:scale(1.77); -webkit-transform:scale(1.77); transform-origin:0 0; -webkit-transform-origin:0 0; */
     margin: 0px auto;
 }
@@ -653,8 +633,7 @@ select.form-control:focus::-ms-value {
     margin-bottom: -10px !important;
 }
 
-
-.loginForm :global .ant-checkbox-disabled+span {
+.loginForm :global .ant-checkbox-disabled + span {
     color: #ffffff;
 }
 
@@ -733,7 +712,7 @@ select.form-control:focus::-ms-value {
     color: white;
 }
 
-.changer>input:focus-visible {
+.changer > input:focus-visible {
     /* outline: white; */
     margin-right: 10px;
     /* border: 1px solid #FFFFFF !important; */
@@ -748,7 +727,7 @@ select.form-control:focus::-ms-value {
 }
 
 .otpFilled input {
-    border: solid 1px #ED302D !important;
+    border: solid 1px #ed302d !important;
     margin-right: 13px !important;
 }
 
@@ -955,7 +934,7 @@ select.form-control:focus::-ms-value {
         padding: 2px 10px 0;
     } */
 
-    .loginSection :global .ant-input-affix-wrapper>input.ant-input {
+    .loginSection :global .ant-input-affix-wrapper > input.ant-input {
         padding: 2px 5px 3px 0px;
         font-size: 14px;
         line-height: 24px;
@@ -1036,5 +1015,4 @@ select.form-control:focus::-ms-value {
     .resendEnabled {
         font-size: 13px;
     }
-
 }

@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -116,9 +116,9 @@ const ChangePasswordBase = ({ form, password, fieldData, setFieldData, setPasswo
     return (
         <Form className={styles.changePasswordForm} form={form} name="change_password" layout="vertical" autoComplete="off" onFinish={onFinish}>
             <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} className="textfieldWithPrefix">
-                    <Form.Item name="oldPassword" className="textfieldWithPrefix__input" rules={[validateRequiredInputField('old password', false)]}>
-                        <Input data-testid="oldPasswordInput" type={showPassword?.oldPassword ? 'text' : 'password'} ref={oldPasswordInput} prefix={<FiLock size={18} />} onChange={handleFormChange('oldPassword')} suffix={passwordSuffix('oldPassword')} />
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} class="textfieldWithPrefix">
+                    <Form.Item name="oldPassword" class="textfieldWithPrefix__input" rules={[validateRequiredInputField('old password', false)]}>
+                        <Input  data-testid="oldPasswordInput" type={showPassword?.oldPassword ? 'text' : 'password'} ref={oldPasswordInput} prefix={<FiLock size={16} />} onChange={handleFormChange('oldPassword')} suffix={passwordSuffix('oldPassword')} />
                     </Form.Item>
                     {!fieldData?.oldPassword && (
                         <label className="textfieldWithPrefix__label" onClick={handleFieldFocus(oldPasswordInput)}>
@@ -128,9 +128,9 @@ const ChangePasswordBase = ({ form, password, fieldData, setFieldData, setPasswo
                 </Col>
             </Row>
             <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} className="textfieldWithPrefix">
-                    <Form.Item name="newPassword" className="textfieldWithPrefix__input" rules={[validateRequiredInputField('new password')]}>
-                        <Input data-testid="newPasswordInput" onChange={handleNewPasswordChange} type={showPassword?.newPassword ? 'text' : 'password'} ref={newPasswordInput} prefix={<FiLock size={18} />} suffix={passwordSuffix('newPassword')} onFocus={() => setTooltipVisible(true)} onBlur={() => setTooltipVisible(false)} />
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} class="textfieldWithPrefix">
+                    <Form.Item name="newPassword" class="textfieldWithPrefix__input" rules={[validateRequiredInputField('new password')]}>
+                        <Input data-testid="newPasswordInput" onChange={handleNewPasswordChange} type={showPassword?.newPassword ? 'text' : 'password'} ref={newPasswordInput} prefix={<FiLock size={16} />} suffix={passwordSuffix('newPassword')} onFocus={() => setTooltipVisible(true)} onBlur={() => setTooltipVisible(false)} />
                     </Form.Item>
                     {!fieldData?.newPassword && (
                         <label className="textfieldWithPrefix__label" onClick={handleFieldFocus(newPasswordInput)}>
@@ -158,7 +158,7 @@ const ChangePasswordBase = ({ form, password, fieldData, setFieldData, setPasswo
                             }),
                         ]}
                     >
-                        <Input  data-testid="confirmNewPasswordInput" type={showPassword?.confirmNewPassword ? 'text' : 'password'} ref={confirmPasswordInput} prefix={<FiLock size={18} />} onChange={handleFormChange('confirmNewPassword')} suffix={passwordSuffix('confirmNewPassword')} />
+                        <Input data-testid="confirmNewPasswordInput" type={showPassword?.confirmNewPassword ? 'text' : 'password'} ref={confirmPasswordInput} prefix={<FiLock size={16} />} onChange={handleFormChange('confirmNewPassword')} suffix={passwordSuffix('confirmNewPassword')} />
                     </Form.Item>
                     {!fieldData?.confirmNewPassword && (
                         <label className="textfieldWithPrefix__label" onClick={handleFieldFocus(confirmPasswordInput)}>
@@ -169,7 +169,7 @@ const ChangePasswordBase = ({ form, password, fieldData, setFieldData, setPasswo
             </Row>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.textCenter}>
-                    <Button  data-testid="changePassword" style={{ marginTop: '6px' }} type="primary" htmlType="submit">
+                    <Button data-testid="changePassword" type="primary" htmlType="submit">
                         Change Password
                     </Button>
                 </Col>

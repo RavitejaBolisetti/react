@@ -178,7 +178,7 @@ const AddEditFormMain = (props) => {
                     <Collapse onChange={() => handleCollapse(2)} expandIconPosition="end" expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={openAccordian}>
                         <Panel header="Tax Details" key="2">
                             <Divider />
-                            <DataTable tableColumn={taxDetailsColumn} tableData={formData['taxDetails']} removePagination={true} />
+                            <DataTable tableColumn={taxDetailsColumn} tableData={formData['taxDetails']} pagination={false} />
                         </Panel>
                     </Collapse>
                     <Collapse onChange={() => handleCollapse(3)} expandIconPosition="end" expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={openAccordian}>
@@ -199,7 +199,7 @@ const AddEditFormMain = (props) => {
                         >
                             {!isReadOnly && <Divider />}
                             {isReadOnly && <OptionServicesForm {...OptionServicesFormProps} />}
-                            <DataTable tableColumn={optionalServicesColumns} tableData={optionsServiceModified} removePagination={true} />
+                            <DataTable tableColumn={optionalServicesColumns} tableData={optionsServiceModified} pagination={false} />
                         </Panel>
                     </Collapse>
                 </Space>

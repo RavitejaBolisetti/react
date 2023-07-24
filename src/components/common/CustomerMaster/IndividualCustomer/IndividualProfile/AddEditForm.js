@@ -4,31 +4,30 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect, useState } from 'react';
-import dayjs from 'dayjs';
-import { Button, Collapse, Form, Typography, Upload, message, Row, Col, Space, Select, Input, DatePicker, Checkbox, Divider, Card, Empty } from 'antd';
-import Svg from 'assets/images/Filter.svg';
-import { FiDownload, FiTrash } from 'react-icons/fi';
+import { Collapse, Form, Row, Col, Space, Select, Input, DatePicker, Checkbox, Divider, Card } from 'antd';
+
+import { FiDownload } from 'react-icons/fi';
 
 import { validateAadhar, validateDrivingLicenseNo, validateGSTIN, validateRequiredInputField, validateRequiredSelectField, validatePanField, validateVoterId, validatFacebookProfileUrl, validatYoutubeProfileUrl, validattwitterProfileUrl, validatInstagramProfileUrl } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText, prepareDatePickerText } from 'utils/preparePlaceholder';
 import { disableFutureDate } from 'utils/disableDate';
 import { expandIcon } from 'utils/accordianExpandIcon';
 
-import UploadUtils from 'components/common/CustomerMaster/Common/UploadUtils';
+import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
+import { UploadUtil } from 'utils/Upload';
 
 import styles from 'components/common/Common.module.css';
-import ViewImageUtils from '../../Common/ViewImageUtils';
 
 const { Panel } = Collapse;
 const { Option } = Select;
 const { TextArea } = Input;
-const { Dragger } = Upload;
 
 const AddEditFormMain = (props) => {
-    const { showGlobalNotification, formData, appCategoryData, userId, form, uploadDocumentFile, viewDocument, setUploadedFile, handleOnClickCustomerForm, listDocumentShowLoading, isViewDocumentLoading, setUploadedFiles, uploadedFile, uploadConsentDocumentFile } = props;
+    const { isWhoKnowsWhom, formData, appCategoryData, form, viewDocument, downloadFileFromButton } = props;
     const { isReadOnly = false } = props;
+    const { uploadedFile, setUploadedFile, emptyList, setEmptyList, fileList, setFileList, setUploadedFileName, uploadedFileName } = props;
+    const { fileConsentList, setFileConsentList, uploadedConsentFile, setUploadedConsentFile, emptyConsentList, setEmptyConsentList, uploadedConsentFileName, setUploadedConsentFileName } = props;
     const [isRead, setIsRead] = useState(false);
-    const [isReadUpload, setIsReadUpload] = useState(false);
     const [customer, setCustomer] = useState(false);
     const [activeKey, setActiveKey] = useState([1]);
 
@@ -40,15 +39,16 @@ const AddEditFormMain = (props) => {
     useEffect(() => {
         form.setFieldsValue({
             ...formData,
-        });
-        form.setFieldsValue({
             companyName: formData?.authorityDetails?.companyName,
             postion: formData?.authorityDetails?.postion,
             personName: formData?.authorityDetails?.personName,
             remarks: formData?.authorityDetails?.remarks,
             vehicleDeploymentDetails: formData?.vehicleDeploymentDetails,
-            dateOfBirth: formData?.dateOfBirth ? dayjs(formData?.dateOfBirth) : null,
+            dateOfBirth: formattedCalendarDate(formData?.dateOfBirth),
+            weddingAnniversary: formattedCalendarDate(formData?.weddingAnniversary),
+            customerConsent: formData?.customerConsent === 'true' ? true : false,
         });
+
         if (formData?.martialStatus === 'S') {
             setIsRead(true);
         } else {
@@ -90,111 +90,53 @@ const AddEditFormMain = (props) => {
         }
     };
 
-    const onDrop = (e) => {
-        // console.log('Dropped files', e.dataTransfer.files);
-    };
-
-    const uploadProps = {
-        name: 'file',
-        multiple: false,
-        accept: 'image/png, image/jpeg',
-        action: '',
-        progress: { strokeWidth: 10 },
-        success: { percent: 100 },
-        beforeUpload: (file) => {
-            const isPNG = file.type === 'image/png';
-            const isJPG = file.type === 'image/jpeg';
-            if (!isPNG && !isJPG) {
-                message.error(`${file.name} is not a correct file format`);
-            }
-            return isPNG || isJPG || Upload.LIST_IGNORE;
-        },
-        onDrop,
-        onChange: (info, event) => {
-            const { status } = info.file;
-            if (status === 'uploading') {
-            } else if (status === 'done') {
-                setUploadedFile(info?.file?.response?.docId);
-                message.success(`${info.file.name} file uploaded successfully.`);
-            } else if (status === 'error') {
-                message.error(`${info.file.name} file upload failed.`);
-            }
-        },
-    };
-
-    const uploadConsentProps = {
-        multiple: false,
-        maxCount: 1,
-        accept: 'image/png, image/jpeg, application/pdf',
-        beforeUpload: (file) => {
-            const isAccepted = file.type === 'image/png' || file.type === 'image/jpeg' || file.type === 'application/pdf';
-            if (!isAccepted) {
-                showGlobalNotification({ notificationType: 'error', title: 'Error', message: `${file.name} is not a accepted file format`, placement: 'bottomRight' });
-            }
-            return isAccepted || Upload.LIST_IGNORE;
-        },
-        showUploadList: {
-            showRemoveIcon: true,
-            removeIcon: <FiTrash />,
-            showProgress: true,
-        },
-        progress: { strokeWidth: 3, showInfo: true },
-        onDrop,
-        onChange: (info, event) => {
-            const { status } = info.file;
-            if (status === 'uploading') {
-            } else if (status === 'done') {
-                setIsReadUpload(true);
-                setUploadedFiles(info?.file?.response?.docId);
-                message.success(`${info.file.name} file uploaded successfully.`);
-            } else if (status === 'error') {
-                message.error(`${info.file.name} file upload failed.`);
-            }
-        },
-    };
-    const handleUpload = (options) => {
-        const { file, onSuccess, onError } = options;
-
-        const data = new FormData();
-        data.append('applicationId', 'app');
-        data.append('file', file);
-
-        const requestData = {
-            data: data,
-            method: 'post',
-            setIsLoading: listDocumentShowLoading,
-            userId,
-            onError,
-            onSuccess,
-        };
-
-        uploadDocumentFile(requestData);
-    };
-
-    const handleUploads = (options) => {
-        const { file, onSuccess, onError } = options;
-
-        const data = new FormData();
-        data.append('applicationId', 'app');
-        data.append('file', file);
-
-        const requestData = {
-            data: data,
-            method: 'post',
-            setIsLoading: listDocumentShowLoading,
-            userId,
-            onError,
-            onSuccess,
-        };
-
-        uploadConsentDocumentFile(requestData);
-    };
-
     const ImageProps = {
         viewDocument,
-        handleUpload,
-        uploadProps,
+        isReplaceEnabled: true,
+        fileList,
+        setFileList,
+        setUploadedFile,
+        uploadedFile,
         formData,
+        emptyList,
+        setEmptyList,
+        uploadedFileName,
+        setUploadedFileName,
+
+        uploadButtonName: 'Upload File',
+        messageText: <>Upload Your Profile Picture</>,
+        validationText: (
+            <>
+                File type should be .png and .jpg and max file
+                <br />
+                size to be 8Mb
+            </>
+        ),
+        supportedFileTypes: ['image/png', 'image/jpeg', 'image/jpg'],
+        maxSize: 8,
+    };
+
+    const consentFormProps = {
+        isReplaceEnabled: false,
+        fileList: fileConsentList,
+        setFileList: setFileConsentList,
+        setUploadedFile: setUploadedConsentFile,
+        uploadedFile: uploadedConsentFile,
+        emptyList: emptyConsentList,
+        setEmptyList: setEmptyConsentList,
+        uploadedFileName: uploadedConsentFileName,
+        setUploadedFileName: setUploadedConsentFileName,
+
+        uploadButtonName: 'Upload File',
+        messageText: (
+            <>
+                Click or drop your file here to upload the signed and <br />
+                scanned customer form
+            </>
+        ),
+        validationText: <>File type should be png, jpg or pdf and max file size to be 5Mb</>,
+        supportedFileTypes: ['image/png', 'image/jpg', 'application/pdf'],
+        maxSize: 5,
     };
 
     const disabledProps = { disabled: isReadOnly };
@@ -203,18 +145,15 @@ const AddEditFormMain = (props) => {
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Space direction="vertical" size="small" className={styles.accordianContainer}>
-                        <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
+                        <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
                             <Panel header="Individual Information" key="1">
                                 <Divider />
-                                <UploadUtils {...props} isViewModeVisible={!isViewDocumentLoading} uploadImgTitle={'Profile Picture'} setUploadImgDocId={setUploadedFile} uploadImgDocId={formData?.image} {...ImageProps} />
-                                {/* <div className={styles.uploadDragger}>
-                                    <ViewImageUtils isViewModeVisible={!isViewDocumentLoading} uploadImgTitle={'Profile Picture'} {...ImageProps} />
-                                </div> */}
+                                <UploadUtil key={1} {...ImageProps} />
                                 <Divider />
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item label="Date of Birth" name="dateOfBirth">
-                                            <DatePicker format="DD-MM-YYYY" disabledDate={disableFutureDate} disabled={isReadOnly} className={styles.datepicker} placeholder={prepareDatePickerText('DD-MM-YYYY')} />
+                                            <DatePicker format={dateFormat} disabledDate={disableFutureDate} disabled={isReadOnly} className={styles.datepicker} placeholder={prepareDatePickerText(dateFormat)} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -242,8 +181,8 @@ const AddEditFormMain = (props) => {
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label=" Wedding Anniversary Date" name="weddingAnniversary">
-                                            <DatePicker format="DD-MM-YYYY" disabledDate={disableFutureDate} className={styles.datepicker} disabled={isRead} placeholder={prepareDatePickerText('DD-MM-YYYY')} />
+                                        <Form.Item label="Wedding Anniversary Date" name="weddingAnniversary">
+                                            <DatePicker format={dateFormat} disabledDate={disableFutureDate} className={styles.datepicker} disabled={isRead} placeholder={prepareDatePickerText(dateFormat)} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -405,7 +344,7 @@ const AddEditFormMain = (props) => {
                             </Panel>
                         </Collapse>
 
-                        <Collapse defaultActiveKey={['2']} expandIcon={expandIcon} expandIconPosition="end">
+                        <Collapse collapsible="icon" defaultActiveKey={['2']} expandIcon={expandIcon} expandIconPosition="end">
                             <Panel header="Social Profile" key="2">
                                 <Divider />
                                 <Row gutter={20}>
@@ -448,7 +387,7 @@ const AddEditFormMain = (props) => {
                                 </Row>
                             </Panel>
                         </Collapse>
-                        {/* <Collapse defaultActiveKey={['3']} expandIcon={expandIcon} expandIconPosition="end">
+                        {/* <Collapse collapsible='icon'defaultActiveKey={['3']} expandIcon={expandIcon} expandIconPosition="end">
                              <Panel header="Key Account details" key="3">
                                  <Divider />
                                  <Row gutter={20}>
@@ -485,7 +424,7 @@ const AddEditFormMain = (props) => {
                                  </Row>
                              </Panel>
 	                         </Collapse> */}
-                        <Collapse defaultActiveKey={['3']} expandIcon={expandIcon} expandIconPosition="end">
+                        <Collapse collapsible="icon" defaultActiveKey={['3']} expandIcon={expandIcon} expandIconPosition="end">
                             <Panel header="Authority Details (Who Knowns Whom)" key="4">
                                 <Divider />
                                 <Row gutter={20}>
@@ -517,51 +456,27 @@ const AddEditFormMain = (props) => {
                             </Panel>
                         </Collapse>
 
-                        <Collapse defaultActiveKey={['5']} expandIcon={expandIcon} expandIconPosition="end">
+                        <Collapse collapsible="icon" defaultActiveKey={['5']} expandIcon={expandIcon} expandIconPosition="end">
                             <Panel header="Upload Customer Form" key="5">
-                                <Divider />
                                 <>
                                     <div>
                                         <Row gutter={20}>
                                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                <Form.Item initialValue={formData?.customerConsent} valuePropName="checked" name="customerConsent">
+                                                <Form.Item initialValue={formData?.customerConsent === 'true' ? true : false} valuePropName="checked" name="customerConsent">
                                                     <Checkbox> I Consent to share my details with Mahindra & Mahindra</Checkbox>
                                                 </Form.Item>
                                             </Col>
                                         </Row>
                                         <Row gutter={20}>
                                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                <div className={styles.uploadContainer}>
-                                                    <Dragger customRequest={handleUploads} {...uploadConsentProps}>
-                                                        <div>
-                                                            <img src={Svg} alt="" />
-                                                        </div>
-                                                        <Empty
-                                                            description={
-                                                                <>
-                                                                    <span>
-                                                                        Click or drop your file here to upload the signed and <br /> scanned customer form.
-                                                                    </span>
-                                                                    <span>
-                                                                        <br />
-                                                                        File type should be png, jpg or pdf and max file size to be 5Mb
-                                                                    </span>
-                                                                </>
-                                                            }
-                                                        />
-
-                                                        <Button type="primary" style={{ marginLeft: '30px', marginTop: '16px' }}>
-                                                            Upload File
-                                                        </Button>
-                                                    </Dragger>
-                                                </div>
+                                                <UploadUtil key={2} {...consentFormProps} />
                                             </Col>
                                         </Row>
                                     </div>
                                     {formData?.customerConsentForm && (
                                         <Row gutter={16}>
                                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                <Card className={styles.viewDocumentStrip} key={viewDocument?.fileName} title={viewDocument?.fileName} extra={<FiDownload />} onClick={handleOnClickCustomerForm}></Card>
+                                                <Card className={styles.viewDocumentStrip} key={formData?.customerConsentForm} title={formData?.customerConsentDocumentName} extra={<FiDownload />} onClick={downloadFileFromButton}></Card>
                                             </Col>
                                         </Row>
                                     )}

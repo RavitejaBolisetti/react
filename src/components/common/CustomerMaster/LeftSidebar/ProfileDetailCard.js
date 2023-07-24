@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Collapse, Space, Avatar, Typography } from 'antd';
+import { Collapse, Space, Avatar, Typography, Divider } from 'antd';
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
 
 const { Panel } = Collapse;
@@ -45,9 +45,15 @@ const ProfileDetailCard = (props) => {
                 <p>
                     Customer Type: <span>{selectedCustomer?.customerTypeName}</span>
                 </p>
+                <Divider />
                 <p>
                     Mobile No.: <span>{selectedCustomer?.mobileNumber}</span>
                 </p>
+                <Divider />
+                <Divider />
+                <Divider />
+                <Divider />
+                <Divider />
             </Panel>
         </Collapse>
     );

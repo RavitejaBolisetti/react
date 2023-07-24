@@ -9,12 +9,17 @@ import { OTF_STATUS } from 'constants/OTFStatus';
 export const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
 export const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
 export const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
+export const VIEW_ONLY_ACTION = FROM_ACTION_TYPE?.VIEW_ONLY;
 export const NEXT_ACTION = FROM_ACTION_TYPE?.NEXT;
+export const CANCEL_ACTION = FROM_ACTION_TYPE?.CANCEL_OTF;
+export const TRANSFER_ACTION = FROM_ACTION_TYPE?.TRANSFER_OTF;
 
 export const btnVisiblity = ({ defaultBtnVisiblity, buttonAction, saveAndNewBtn = true, orderStatus = false }) => {
     let btnVisibility = defaultBtnVisiblity;
     if (buttonAction === VIEW_ACTION) {
         btnVisibility = { ...btnVisibility, closeBtn: true, editBtn: true, nextBtn: true };
+    } else if (buttonAction === VIEW_ONLY_ACTION) {
+        btnVisibility = { ...btnVisibility, saveBtn: false, cancelBtn: false, closeBtn: true };
     } else if (buttonAction === EDIT_ACTION) {
         btnVisibility = { ...btnVisibility, saveBtn: true, cancelBtn: true };
     } else {
@@ -24,13 +29,15 @@ export const btnVisiblity = ({ defaultBtnVisiblity, buttonAction, saveAndNewBtn 
     if (orderStatus) {
         switch (orderStatus) {
             case OTF_STATUS?.BOOKED?.key:
-                return { ...btnVisibility, transferBtn: true, allotBtn: true, cancelOtfBtn: true };
+                return { ...btnVisibility, transferOTFBtn: true, allotBtn: true, cancelOTFBtn: true };
             case OTF_STATUS?.ALLOTED?.key:
                 return { ...btnVisibility, unAllotBtn: true, invoiceBtn: true };
             case OTF_STATUS?.INVOICED?.key:
-                return { ...btnVisibility, deliveryNoteBtn: true };
+                return { ...btnVisibility, editBtn: false, deliveryNoteBtn: true };
             case OTF_STATUS?.TRANSFERRED?.key:
-                return { ...btnVisibility, allotBtn: true, cancelOtfBtn: true };
+                return { ...btnVisibility, editBtn: false, allotBtn: true, cancelOTFBtn: true };
+            case OTF_STATUS?.DELIVERY_NOTE?.key:
+                return { ...btnVisibility, editBtn: false };
             case OTF_STATUS?.CANCELLED?.key:
             case OTF_STATUS?.DELIVERED?.key:
                 return { ...btnVisibility, editBtn: false };

@@ -54,7 +54,7 @@ manufacturerOrgHierarchyDataActions.changeHistoryShowLoading = (isLoading) => ({
 manufacturerOrgHierarchyDataActions.fetchList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
     const { setIsLoading, errorAction, data } = params;
     setIsLoading(true);
-    const onError = () => errorAction('Internal Error, Please try again');
+    const onError = () => ('Internal Error, Please try again');
 
     const onSuccess = (res) => {
         if (res?.data) {

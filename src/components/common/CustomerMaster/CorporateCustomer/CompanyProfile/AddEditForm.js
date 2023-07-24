@@ -7,11 +7,11 @@ import { React, useEffect, useState } from 'react';
 import { Col, Input, Collapse, Row, Button, Space, Form, Select, Upload, message, Checkbox, Divider, Card } from 'antd';
 import { validateRequiredInputField, validateLettersWithWhitespaces, validatePanField, validateGSTIN, validatFacebookProfileUrl, validattwitterProfileUrl } from 'utils/validation';
 
-import Svg from 'assets/images/Filter.svg';
 import { FiDownload, FiTrash } from 'react-icons/fi';
 
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { expandIcon } from 'utils/accordianExpandIcon';
+import UploadUtils from 'components/common/CustomerMaster/Common/UploadUtils';
 
 import styles from 'components/common/Common.module.css';
 
@@ -22,7 +22,7 @@ const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
     const { appCategoryData, userId, formData, form, handleOnClick } = props;
-    const { uploadListShowLoading, uploadFile, setUploadedFile, downloadFileFromList, setAppCustomerCategory, setAppSubCategory, customerCategory, setCustomerCategory, viewDocument, fileList, setFileList } = props;
+    const { uploadListShowLoading, uploadFile, setUploadedFile, setAppCustomerCategory, setAppSubCategory, customerCategory, setCustomerCategory, viewDocument } = props;
 
     const [activeKey, setactiveKey] = useState([1]);
 
@@ -30,6 +30,14 @@ const AddEditFormMain = (props) => {
         form.setFieldsValue({
             ...formData,
         });
+        form.setFieldsValue({
+            gstin: formData?.gstinNumber,
+            personName: formData?.authorityDetails?.personName,
+            postion: formData?.authorityDetails?.postion,
+            companyName: formData?.authorityDetails?.companyName,
+            remarks: formData?.authorityDetails?.remarks,
+        });
+        setCustomerCategory(formData?.customerCategory);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
 
@@ -59,8 +67,8 @@ const AddEditFormMain = (props) => {
         accept: 'image/png, image/jpeg, application/pdf',
         showUploadList: {
             showRemoveIcon: true,
-            showDownloadIcon: true,
-            downloadIcon: <FiDownload onClick={() => downloadFileFromList()} />,
+            // showDownloadIcon: true,
+            // downloadIcon: <FiDownload onClick={() => downloadFileFromList()} />,
             removeIcon: <FiTrash onClick={(e) => console.log(e, 'custom removeIcon event')} />,
             showProgress: true,
         },
@@ -68,9 +76,6 @@ const AddEditFormMain = (props) => {
 
         onDrop,
         onChange: (info, event) => {
-            let fileList = [...info.fileList];
-            fileList = fileList.slice(-1);
-            setFileList(fileList);
             const { status } = info.file;
             if (status === 'uploading') {
             } else if (status === 'done') {
@@ -111,6 +116,13 @@ const AddEditFormMain = (props) => {
 
     const handleCategoryChange = (value) => {
         setCustomerCategory(value);
+    };
+
+    const ImageProps = {
+        viewDocument,
+        handleUpload,
+        uploadProps,
+        formData,
     };
 
     return (
@@ -172,7 +184,7 @@ const AddEditFormMain = (props) => {
                                         </Form.Item>
                                     </Col>
                                 </Row>
-                                {(customerCategory === 'CUS_CAT_2' || formData?.customerCategory === 'CUS_CAT_2') && (
+                                {customerCategory === 'CUS_CAT_2' && (
                                     <>
                                         <Divider />
                                         <Row gutter={20}>
@@ -307,47 +319,26 @@ const AddEditFormMain = (props) => {
                         <Collapse defaultActiveKey={['5']} expandIcon={expandIcon} expandIconPosition="end">
                             <Panel key="5" header="Upload Customer Form">
                                 <Divider />
-                                <div className={styles.uploadContainer}>
-                                    <Row gutter={20}>
-                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                            <Form.Item initialValue={formData?.customerConsent} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="customerConsent">
-                                                <Checkbox className={styles.registered}>I Consent to share my details with Mahindra & Mahindra. </Checkbox>
-                                            </Form.Item>
-                                        </Col>
-                                    </Row>
-                                    <Row gutter={20}>
-                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                            <div className={styles.uploadContainer}>
-                                                <Dragger fileList={fileList} customRequest={handleUpload} {...uploadProps}>
-                                                    <div>
-                                                        <img src={Svg} alt="" />
-                                                    </div>
-                                                    <div className={styles.uploadtext}>
-                                                        Click or drop your file here to upload the signed and <br /> scanned customer form.
-                                                    </div>
-                                                    <div>File type should be png, jpg or pdf and max file size to be 5Mb</div>
-                                                    <Button type="primary">Upload File</Button>
-                                                </Dragger>
-                                            </div>
-                                        </Col>
-                                    </Row>
-                                </div>
+                                <Space direction="vertical">
+                                    <Form.Item initialValue={formData?.customerConsent} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="customerConsent">
+                                        <Checkbox>I Consent to share my details with Mahindra & Mahindra. </Checkbox>
+                                    </Form.Item>
+                                    <UploadUtils {...props} uploadImgTitle={'Profile Picture'} setUploadImgDocId={setUploadedFile} uploadImgDocId={formData?.image} {...ImageProps} />
+                                </Space>
                                 {formData?.customerFormDocId && (
                                     <>
                                         <div className={styles.viewDrawerContainer}>
-                                            <div className={styles.marT20}>
-                                                <Card
-                                                    className={styles.viewDocumentStrip}
-                                                    key={viewDocument?.fileName}
-                                                    title={viewDocument?.fileName}
-                                                    extra={
-                                                        <>
-                                                            <FiDownload onClick={handleOnClick} />
-                                                            {/* {!viewMode && <FiTrash onClick={() => deleteFile(uploadData)} />} */}
-                                                        </>
-                                                    }
-                                                ></Card>
-                                            </div>
+                                            <Card
+                                                className={styles.viewDocumentStrip}
+                                                key={viewDocument?.fileName}
+                                                title={viewDocument?.fileName}
+                                                extra={
+                                                    <>
+                                                        <FiDownload onClick={handleOnClick} />
+                                                        {/* {!viewMode && <FiTrash onClick={() => deleteFile(uploadData)} />} */}
+                                                    </>
+                                                }
+                                            ></Card>
                                         </div>
                                     </>
                                 )}

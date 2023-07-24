@@ -10,7 +10,8 @@ import { withDrawer } from 'components/withDrawer';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { CONFIGURABLE_PARAMETARS_INPUT_TYPE } from './InputType';
 import { ViewConfigDetails } from './ViewConfigDetails';
-import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
+import { preparePlaceholderSelect, prepareDatePickerText } from 'utils/preparePlaceholder';
+import { dateFormat } from 'utils/formatDateTime';
 
 import styles from 'components/common/Common.module.css';
 
@@ -104,14 +105,14 @@ const AddEditFormMain = (props) => {
                             ) : parameterType && parameterType === CONFIGURABLE_PARAMETARS_INPUT_TYPE.DATE_RANGE.KEY ? (
                                 <Row gutter={20}>
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form.Item label="From Date" name="fromDate" rules={[validateRequiredInputField('Number')]}>
-                                            <DatePicker format="DD-MM-YYYY" style={{ display: 'auto', width: '100%' }} disabled={isReadOnly} />
+                                        <Form.Item label="From Date" name="fromDate" rules={[validateRequiredInputField('from date')]}>
+                                            <DatePicker format={dateFormat} placeholder={prepareDatePickerText(dateFormat)} style={{ display: 'auto', width: '100%' }} disabled={isReadOnly} />
                                         </Form.Item>
                                     </Col>
 
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form.Item label="To Date" name="toDate" rules={[validateRequiredInputField('Number')]}>
-                                            <DatePicker format="DD-MM-YYYY" style={{ display: 'auto', width: '100%' }} disabled={isReadOnly} />
+                                        <Form.Item label="To Date" name="toDate" rules={[validateRequiredInputField('to date')]}>
+                                            <DatePicker format={dateFormat} placeholder={prepareDatePickerText(dateFormat)} style={{ display: 'auto', width: '100%' }} disabled={isReadOnly} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
