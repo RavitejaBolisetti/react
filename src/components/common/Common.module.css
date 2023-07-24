@@ -3072,6 +3072,7 @@ li.ant-timeline-item.active .ant-timeline-item-content p {
     display: flex;
     flex-wrap: nowrap;
     margin-right: 20px;
+    margin-bottom: 10px;
 }
 
 .changeHistoryToggleBtn :global .ant-btn {
@@ -3084,8 +3085,6 @@ li.ant-timeline-item.active .ant-timeline-item-content p {
 .changeHistoryContainer {
     padding: 20px 40px 0 !important;
 }
-
-
 
 @media (max-width: 768px) {
     /* For mobile phones: */

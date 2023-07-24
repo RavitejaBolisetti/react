@@ -39,19 +39,6 @@ import { LANGUAGE_EN } from 'language/en';
 
 const { Search } = Input;
 
-const historyOptions = [
-    {
-        key: '1',
-        label: 'Administrative',
-        icon: <FaHistory />,
-    },
-    {
-        key: '2',
-        label: 'Authority',
-        icon: <FaHistory />,
-    },
-];
-
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -169,7 +156,6 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const [documentTypesList, setDocumentTypesList] = useState([]);
     const [isChangeHistoryVisible, setIsChangeHistoryVisible] = useState(false);
-    const [activeKey, setActiveKey] = useState('1');
     const [organizationId, setOrganizationId] = useState('');
     const [attributeDataOptions, setattributeDataOptions] = useState('');
 
@@ -193,8 +179,6 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
 
     const supportedFileTypes = ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
     const maxSize = 8;
-
-    const errorAction = () => {};
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
@@ -458,24 +442,6 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         setButtonData({ ...defaultBtnVisiblity });
     };
 
-    const handleTabChange = (key) => {
-        setActiveKey(key);
-    };
-
-    const chgHistoryToggleButton = (
-        <Row>
-            <Col className={styles.changeHistoryToggleBtn} >
-                {Object.values(historyOptions)?.map((item) => {
-                    return (
-                        <Button onClick={() => handleTabChange(item?.key)} type={activeKey === item?.key ? 'primary' : 'link'}>
-                            {item?.label}
-                        </Button>
-                    );
-                })}
-            </Col>
-        </Row>
-    );
-
     const onCloseAction = () => {
         form.resetFields();
         setIsUploadDrawer(false);
@@ -487,7 +453,6 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         ...props,
         isVisible: isUploadDrawer,
         titleOverride: drawerTitle,
-        activeKey,
         form: uploadForm,
         typeData,
         userId,
@@ -566,8 +531,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
     const drawerProps = {
         isVisible: isChangeHistoryVisible,
         onCloseAction: myCloseAction,
-        titleOverride: chgHistoryToggleButton,
-        activeKey,
+        titleOverride: 'Change History',
         organizationId,
     };
     const onfinishHeader = (value) => {};
@@ -613,43 +577,6 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
             </div>
             <Row gutter={20} span={24}>
                 <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol} className={styles.marT20}>
-                    {/* <div className={styles.contentHeaderBackground}>
-                        <Row gutter={20}>
-                            <Col xs={24} sm={24} md={18} lg={18} xl={18}>
-                                <Form autoComplete="off" colon={false} className={styles.masterListSearchForm} onFinish={onfinishHeader} onFinishFailed={onFinishFailed}>
-                                    <Form.Item label={`${title}`} name="code">
-                                        <Row gutter={20}>
-                                            <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                                <TreeSelectField {...treeSelectFieldProps} />
-                                            </Col>
-                                            {organizationId && manufacturerAdminHierarchyData?.length > 0 && (
-                                                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                                    <Search placeholder="Search" allowClear onChange={onChange} className={styles.headerSearchField} />
-                                                </Col>
-                                            )}
-                                        </Row>
-                                    </Form.Item>
-                                </Form>
-                            </Col>
-                            {organizationId && manufacturerAdminHierarchyData?.length > 0 && (
-                                <Col className={styles.buttonHeadingContainer} xs={24} sm={24} md={6} lg={6} xl={6}>
-                                    <Button type="primary" onClick={handleOnClickUpload}>
-                                        Upload
-                                    </Button>
-
-                                    <Button
-                                        type="primary"
-                                        onClick={() => {
-                                            setIsChangeHistoryVisible(true);
-                                        }}
-                                    >
-                                        <FaHistory className={styles.buttonIcon} />
-                                        Change History
-                                    </Button>
-                                </Col>
-                            )}
-                        </Row>
-                    </div> */}
                     <div className={styles.content}>
                         {!manufacturerAdminHierarchyData?.length ? (
                             <div className={styles.emptyContainer}>
@@ -706,7 +633,6 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
                     )}
                 </Col>
             </Row>
-
             <ManufactureAdminHierarchyUpload {...uploadProps} />
             <ChangeHistory {...drawerProps} />
             <AddEditForm {...formProps} />

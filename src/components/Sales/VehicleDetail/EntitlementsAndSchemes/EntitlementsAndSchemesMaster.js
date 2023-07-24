@@ -96,7 +96,7 @@ export const EntitlementsAndSchemesMasterBase = (props) => {
                             <h2>{section?.title}</h2>
                         </Col>
                     </Row>
-                    <DataTable scroll={1800} srlTitle={'#'} pagination={false} tableColumn={tableColumn()} tableData={entitelmentData?.entitlementsAndSchemeResponses} />
+                    <DataTable scroll={{ x: 1800 }} srlTitle={'#'} pagination={false} tableColumn={tableColumn()} tableData={entitelmentData?.entitlementsAndSchemeResponses} />
                 </Col>
             </Row>
             <Row>
