@@ -158,7 +158,6 @@ export const ListCustomerCreationBase = (props) => {
         };
 
         const onError = (res, data) => {
-            console.log('🚀 ~ file: ListCustomerCreation.js:157 ~ onError ~ res:', res, 'data', data);
             let message = res;
             if (data?.docId) {
                 message = (
