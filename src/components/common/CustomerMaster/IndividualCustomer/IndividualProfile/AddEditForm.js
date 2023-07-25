@@ -31,6 +31,8 @@ const AddEditFormMain = (props) => {
     const [isRead, setIsRead] = useState(false);
     const [customer, setCustomer] = useState(false);
     const [activeKey, setActiveKey] = useState([1]);
+    const maxConsentSize = 5;
+    const maxImageSize = 8;
 
     useEffect(() => {
         setCustomer(formData?.customerCategory);
@@ -110,11 +112,11 @@ const AddEditFormMain = (props) => {
             <>
                 File type should be .png and .jpg and max file
                 <br />
-                size to be 8Mb
+                size to be {maxImageSize}Mb
             </>
         ),
         supportedFileTypes: ['image/png', 'image/jpeg', 'image/jpg'],
-        maxSize: 8,
+        maxSize: maxImageSize,
     };
 
     const consentFormProps = {
@@ -135,9 +137,9 @@ const AddEditFormMain = (props) => {
                 scanned customer form
             </>
         ),
-        validationText: <>File type should be png, jpg or pdf and max file size to be 5Mb</>,
-        supportedFileTypes: ['image/png', 'image/jpg', 'application/pdf'],
-        maxSize: 5,
+        validationText: <>File type should be png, jpg or pdf and max file size to be {maxConsentSize}Mb</>,
+        supportedFileTypes: ['image/png', 'image/jpg', 'image/jpeg', 'application/pdf'],
+        maxSize: maxConsentSize,
     };
 
     const disabledProps = { disabled: isReadOnly };
@@ -260,7 +262,6 @@ const AddEditFormMain = (props) => {
                                     </Form.Item>
                                 </Col>
                             </Row>
-
                             <Row gutter={20}>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                     <Form.Item label="PAN" name="panNumber" initialValue={formData?.panNumber} rules={[validatePanField('pan'), validateRequiredInputField('pan')]}>
@@ -345,47 +346,45 @@ const AddEditFormMain = (props) => {
                                     </Col>
                                 </Row>
                             </div>
+                            <Row gutter={20}>
+                                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                    <Form.Item label="PAN" name="panNumber" initialValue={formData?.panNumber} rules={[validatePanField('pan'), validateRequiredInputField('pan')]}>
+                                        <Input maxLength={10} onInput={convertToUpperCase} className={styles.inputBox} placeholder={preparePlaceholderText('pan')} {...disabledProps} />
+                                    </Form.Item>
+                                </Col>
 
+                                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                    <Form.Item label="GSTIN" name="gstin" initialValue={formData?.gstin} rules={[validateGSTIN('gstin')]}>
+                                        <Input value={null} onInput={convertToUpperCase} className={styles.inputBox} placeholder={preparePlaceholderText('gstin')} {...disabledProps} />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                            <div className={styles.sectionborder}>
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="PAN" name="panNumber" initialValue={formData?.panNumber} rules={[validatePanField('pan'), validateRequiredInputField('pan')]}>
-                                            <Input maxLength={10} onInput={convertToUpperCase} className={styles.inputBox} placeholder={preparePlaceholderText('pan')} {...disabledProps} />
+                                        <Form.Item label="Business Details" initialValue={formData?.businessDetails} name="businessDetails">
+                                            <Input maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('business details')} {...disabledProps} />
                                         </Form.Item>
                                     </Col>
-
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="GSTIN" name="gstin" initialValue={formData?.gstin} rules={[validateGSTIN('gstin')]}>
-                                            <Input value={null} onInput={convertToUpperCase} className={styles.inputBox} placeholder={preparePlaceholderText('gstin')} {...disabledProps} />
+                                        <Form.Item label="Vehicle Deployment Details" initialValue={formData?.vehicleDeploymentDetails} name="vehicleDeploymentDetails">
+                                            <Input maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('vehicle deployment details')} {...disabledProps} />
+                                        </Form.Item>
+                                    </Col>
+                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                        <Form.Item label="Key Role Details" initialValue={formData?.keyRolesDetails} name="keyRolesDetails">
+                                            <Input maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('key role details')} {...disabledProps} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
-                                <div className={styles.sectionborder}>
-                                    <Row gutter={20}>
-                                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                            <Form.Item label="Business Details" initialValue={formData?.businessDetails} name="businessDetails">
-                                                <Input maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('business details')} {...disabledProps} />
-                                            </Form.Item>
-                                        </Col>
-                                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                            <Form.Item label="Vehicle Deployment Details" initialValue={formData?.vehicleDeploymentDetails} name="vehicleDeploymentDetails">
-                                                <Input maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('vehicle deployment details')} {...disabledProps} />
-                                            </Form.Item>
-                                        </Col>
-                                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                            <Form.Item label="Key Role Details" initialValue={formData?.keyRolesDetails} name="keyRolesDetails">
-                                                <Input maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('key role details')} {...disabledProps} />
-                                            </Form.Item>
-                                        </Col>
-                                    </Row>
-                                    <Row gutter={20}>
-                                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                            <Form.Item label="Major Route Details" initialValue={formData?.majorRouteDetails} name="majorRouteDetails">
-                                                <Input maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('major route details')} {...disabledProps} />
-                                            </Form.Item>
-                                        </Col>
-                                    </Row>
-                                </>
-                            )}
+                                <Row gutter={20}>
+                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                        <Form.Item label="Major Route Details" initialValue={formData?.majorRouteDetails} name="majorRouteDetails">
+                                            <Input maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('major route details')} {...disabledProps} />
+                                        </Form.Item>
+                                    </Col>
+                                </Row>
+                            </div>
                         </Panel>
                     </Collapse>
 

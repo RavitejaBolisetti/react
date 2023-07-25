@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { LANGUAGE_EN } from 'language/en';
 
 import { bindActionCreators } from 'redux';
-import { Row, Col, Form } from 'antd';
+import { Row, Col, Form, Card } from 'antd';
 
 import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
 import { documentViewDataActions } from 'store/actions/data/customerMaster/documentView';
@@ -259,14 +259,16 @@ const SupportingDocumentBase = (props) => {
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <h2>{section?.title}</h2>
-                    {formActionType?.viewMode ? (
-                        <ViewDetail {...viewProps} />
-                    ) : (
-                        <>
-                            <AddEditForm {...formProps} />
+                    <Card>
+                        {formActionType?.viewMode ? (
                             <ViewDetail {...viewProps} />
-                        </>
-                    )}
+                        ) : (
+                            <>
+                                <AddEditForm {...formProps} />
+                                <ViewDetail {...viewProps} />
+                            </>
+                        )}
+                    </Card>
                 </Col>
             </Row>
             <Row>
