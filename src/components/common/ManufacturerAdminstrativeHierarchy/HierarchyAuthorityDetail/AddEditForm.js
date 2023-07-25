@@ -9,13 +9,12 @@ import { bindActionCreators } from 'redux';
 import { Input, Form, Col, Row, Button, Select, DatePicker, Typography } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
-import { dateFormat } from 'utils/formatDateTime';
+import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
 import { validateRequiredInputField, validateRequiredSelectField, duplicateValidator } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { hierarchyAttributeMasterDataActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { ManufactureAdminValidateToken } from 'store/actions/data/manufacturerAdminHierarchy/manufactureAdminValidateToken';
 import style from 'components/common/Common.module.css';
-
 
 const { Search } = Input;
 const { Text } = Typography;
@@ -94,6 +93,26 @@ const AuthorityFormMin = (props) => {
         resetData();
         setErrorMessage();
     };
+    const CheckDateEffectiveTo = (value, effectiveFrom) => {
+        const bool = dayjs(value).format('YYYY-DD-MM') >= dayjs(effectiveFrom).format('YYYY-DD-MM');
+        if (bool) {
+            return Promise.resolve();
+        }
+        return Promise.reject(new Error('Date cant be less than Effective from date'));
+    };
+    const checkEffectiveFrom = (value) => {
+        const todaDate = new Date();
+        const day = todaDate.getDate();
+        const month = todaDate.getMonth() + 1;
+        const year = todaDate.getFullYear();
+        const date = [year, month, day];
+
+        const bool = dayjs(value).format('YYYY-DD-MM') > date?.join('-');
+        if (bool) {
+            return Promise.resolve();
+        }
+        return Promise.reject(new Error(`Date cant be less than today's date`));
+    };
 
     const fieldNames = { label: 'value', value: 'key' };
 
@@ -130,12 +149,32 @@ const AuthorityFormMin = (props) => {
                         <Text type="primary">Employee Name : {tokenValidationData?.employeeName} </Text>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item label="Effective From" name="effectiveFrom" rules={[validateRequiredSelectField('Date Required')]} initialValue={dayjs(record?.effectiveFrom)}>
+                        <Form.Item
+                            label="Effective From"
+                            name="effectiveFrom"
+                            rules={[
+                                validateRequiredSelectField('Date Required'),
+                                {
+                                    validator: (_, value) => checkEffectiveFrom(value),
+                                },
+                            ]}
+                            initialValue={dayjs(record?.effectiveFrom)}
+                        >
                             <DatePicker disabledDate={(date) => date < dayjs().format('YYYY-MM-DD')} format={dateFormat} className={style.datepicker} />
                         </Form.Item>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item label="Effective To" name="effectiveTo" rules={[validateRequiredSelectField('Date Required')]} initialValue={dayjs(record?.effectiveTo)}>
+                        <Form.Item
+                            label="Effective To"
+                            name="effectiveTo"
+                            rules={[
+                                validateRequiredSelectField('Date Required'),
+                                {
+                                    validator: (_, value) => CheckDateEffectiveTo(value, form?.getFieldValue('effectiveFrom')),
+                                },
+                            ]}
+                            initialValue={dayjs(record?.effectiveTo)}
+                        >
                             <DatePicker disabledDate={(date) => date < dayjs().format('YYYY-MM-DD')} format={dateFormat} className={style.datepicker} />
                         </Form.Item>
                     </Col>
