@@ -7,12 +7,13 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Col, Form, Row } from 'antd';
+import { Col, Form, Row, Button } from 'antd';
 
 import { tableColumn } from './tableColumn';
 import { AdvancedSearch } from './AdvancedSearch';
 
 import ListDataTable from 'utils/ListDataTable/ListDataTable';
+import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 
 import { documentViewDataActions } from 'store/actions/data/customerMaster/documentView';
 import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
@@ -25,6 +26,7 @@ import styles from 'components/common/Common.module.css';
 import { ViewDetail } from './ViewDetail';
 import { VehiclePriceMasterUpload } from './VehiclePriceMasterUpload';
 
+import { DATA_TYPE } from 'constants/dataType';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import AdvanceVehiclePriceMasterFilter from './AdvanceVehiclePriceMasterFilter';
 import { vehiclePriceMasterDataAction } from 'store/actions/data/vehiclePriceMaster';
@@ -118,6 +120,7 @@ const mapDispatchToProps = (dispatch) => ({
             listVehiclePriceShowLoading: vehiclePriceMasterDataAction.listShowLoading,
             setFilterString: vehiclePriceMasterDataAction.setFilter,
             saveData: vehiclePriceMasterDataAction.saveData,
+            resetData: vehiclePriceMasterDataAction.reset,
 
             showGlobalNotification,
         },
@@ -130,7 +133,7 @@ export const VehiclePriceMasterBase = (props) => {
     const { accessToken, token, viewDocument, isViewDataLoaded, viewListShowLoading, resetViewData, fetchViewDocument } = props;
     const { isDataCountryLoaded, isCountryLoading, countryData, findDistrictCode, defaultCountry, isDistrictDataLoaded, districtData, typeData, fetchVehiclePriceList, listVehiclePriceShowLoading } = props;
     const { isStateDataLoaded, stateData, moduleTitle, vehiclePriceData, totalRecords, isCityDataLoaded, cityData, isProductHierarchyDataLoaded, productHierarchyList, isProductHierarchyLoading, isTehsilDataLoaded, tehsilData } = props;
-    const { isSupportingDataLoaded, isSupportingDataLoading, supportingData, downloadFile, listShowLoading } = props;
+    const { resetData, isSupportingDataLoaded, isSupportingDataLoading, supportingData, downloadFile, listShowLoading } = props;
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
@@ -166,15 +169,19 @@ export const VehiclePriceMasterBase = (props) => {
         setRefershData(false);
         setShowDataLoading(false);
     };
-    console.log(cityData, 'city');
 
+    const onErrorAction = (res) => {
+        showGlobalNotification({ message: res });
+    };
+
+    const paramMasterId = 'VH_PRC_SRCH';
     const extraParams = useMemo(() => {
         return [
             {
                 key: 'searchType',
                 title: 'Type',
                 value: filterString?.searchType,
-                name: typeData?.find((i) => i?.key === filterString?.searchType)?.value,
+                name: typeData[paramMasterId]?.find((i) => i?.key === filterString?.searchType)?.value,
                 canRemove: false,
                 filter: true,
             },
@@ -222,8 +229,8 @@ export const VehiclePriceMasterBase = (props) => {
             {
                 key: 'priceAsOnDate',
                 title: 'End Date',
-                value: filterString?.priceAsOnDate,
-                name: filterString?.priceAsOnDate,
+                value: filterString?.priceAsOnDate && checkAndSetDefaultValue(filterString?.priceAsOnDate, false, DATA_TYPE?.DATE?.key),
+                name: filterString?.priceAsOnDate && checkAndSetDefaultValue(filterString?.priceAsOnDate, false, DATA_TYPE?.DATE?.key),
                 canRemove: true,
                 filter: true,
             },
@@ -261,7 +268,7 @@ export const VehiclePriceMasterBase = (props) => {
 
     useEffect(() => {
         if (userId) {
-            fetchVehiclePriceList({ setIsLoading: listVehiclePriceShowLoading, userId, extraParams, customURL, onSuccessAction });
+            fetchVehiclePriceList({ setIsLoading: listVehiclePriceShowLoading, userId, extraParams, customURL, onErrorAction, onSuccessAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, extraParams]);
@@ -285,6 +292,31 @@ export const VehiclePriceMasterBase = (props) => {
     const handleButtonClick = ({ record = null, buttonAction }) => {
         setFormData(record);
         setIsFormVisible(true);
+    };
+
+    const downloadReport = (documentId) => {
+        const onSuccessAction = (res) => {
+            setFileList();
+            setUploadedFile();
+            setUploadedFileName();
+            resetData();
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+        };
+
+        const onErrorAction = (res) => {
+            showGlobalNotification({ notificationType: 'error', title: 'Error', message: res, placement: 'bottomRight' });
+        };
+
+        const extraParams = [
+            {
+                key: 'docId',
+                title: 'docId',
+                value: documentId,
+                name: 'docId',
+            },
+        ];
+        downloadFile({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+        resetData();
     };
 
     const handleFilterChange =
@@ -362,8 +394,20 @@ export const VehiclePriceMasterBase = (props) => {
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         };
 
-        const onError = (res) => {
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message: res, placement: 'bottomRight' });
+        const onError = (res, data) => {
+            let message = res;
+            if (data?.docId) {
+                message = (
+                    <>
+                        {message}
+                        <Button type="link" onClick={() => downloadReport(data?.docId)}>
+                            Download Here
+                        </Button>
+                    </>
+                );
+            }
+
+            showGlobalNotification({ notificationType: 'error', title: 'Error', message: message });
         };
 
         const requestData = {

@@ -21,7 +21,7 @@ import { TfiReload } from 'react-icons/tfi';
 import { FiEdit } from 'react-icons/fi';
 import { FaRegEye } from 'react-icons/fa';
 
-import { formattedCalendarDate } from 'utils/formatDateTime';
+import { formatDate } from 'utils/formatDateTime';
 
 import styles from 'components/common/Common.module.css';
 
@@ -262,7 +262,7 @@ export const ConfigurableParameterEditingBase = ({ saveFormShowLoading, isLoadin
 
     const onFinish = (values) => {
         const recordId = formData?.id || '';
-        let data = { ...values, id: recordId, isActive: true, configurableParameterType: parameterType, fromDate: formattedCalendarDate(values?.fromDate), toDate: formattedCalendarDate(values?.toDate) };
+        let data = { ...values, id: recordId, isActive: true, configurableParameterType: parameterType, fromDate: formatDate(values?.fromDate), toDate: formatDate(values?.toDate) };
         const onSuccess = (res) => {
             form.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });

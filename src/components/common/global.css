@@ -7,7 +7,7 @@
 /* AntD Buttons Design Start*/
 :global .ant-btn {
     line-height: 22px;
-    font-weight: 600;
+    font-weight: 500;
     height: auto;
     padding: 6px 16px;
 }
@@ -72,13 +72,6 @@
     width: auto;
     padding: 6px 15px;
     line-height: 12px;
-}
-
-:global .ant-btn-primary.ant-btn-dangerous:disabled,
-:global .ant-btn-primary:disabled {
-    border-color: #b5b5b6;
-    background-color: #e6e6e6;
-    color: #b5b5b6;
 }
 
 :global .ant-btn-primary.ant-btn-dangerous:disabled,
@@ -157,7 +150,7 @@
     inset-inline-start: 35%;
     width: 4px;
     height: 7px;
-    border: 1px solid red;
+    border: 1px solid #ff3e5b;
     border-top: 0;
     border-inline-start: 0;
 }
@@ -199,6 +192,13 @@
 /* AntD Divider Design End*/
 
 /* AntD Tags Design Start*/
+:global .ant-tag {
+    font-weight: 400;
+    padding: 1px;
+    margin-inline-end: 0;
+    padding-inline: 6px;
+}
+
 :global .ant-tag-success {
     color: #70c922;
     background: #eefcd2;
@@ -211,23 +211,29 @@
     border-color: #ed302d;
 }
 
-:global .ant-tag-orange {
+:global .ant-tag-warning {
     color: #f99c22;
     background: #fef3d2;
     border-color: #f99c22;
 }
 
-:global .ant-tag-blue {
+:global .ant-tag-processing {
     color: #2782f9;
     background: #d3edfe;
     border-color: #2782f9;
 }
 
-:global .ant-tag-has-color {
+:global .ant-tag-purple {
+    color: #9747ff;
+    background: #f3eaff;
+    border-color: #9747ff;
+}
+
+/* :global .ant-tag-has-color {
     color: #545454 !important;
     background: #b5b5b6 !important;
     border-color: #545454 !important;
-}
+} */
 
 /* AntD Tags Design End*/
 
@@ -235,6 +241,10 @@
 :global .ant-table-wrapper table {
     border: 1px solid #e6e6e6;
     border-radius: 4px;
+}
+
+:global .ant-table-wrapper .ant-table-expanded-row-fixed {
+    width: 100% !important;
 }
 
 :global .ant-table-wrapper .ant-table .ant-table-content {
@@ -280,11 +290,11 @@
 }
 
 :global .ant-table-wrapper .ant-table-tbody > tr > td {
+    padding: 10px 16px;
     color: #545454;
     font-weight: 500;
-    line-height: 23px;
+    line-height: 26px;
     border-bottom: 1px solid #e6e6e6;
-    padding: 7px 16px;
 }
 
 /* :global .ant-table-wrapper .ant-table-tbody>tr>td:last-child {
@@ -650,8 +660,9 @@
 
 /* AntD Picker Design Start*/
 :global .ant-picker {
-    height: 36px;
     border-color: #b5b5b6;
+    padding: 6px 12px;
+    width: 100%;
 }
 
 :global .ant-picker:hover {
@@ -959,3 +970,10 @@
 }
 
 /* AntD Menu Design End*/
+
+/* AntD Space Design Start*/
+/* :global .ant-space {
+    width: 100%;
+} */
+
+/* AntD Space Design End*/

@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button, Row, Col } from 'antd';
 import { FilterIcon } from 'Icons';
 import { RxCross2 } from 'react-icons/rx';
@@ -12,13 +12,34 @@ import { SearchBox } from 'components/utils/SearchBox';
 import styles from 'components/common/Common.module.css';
 
 export default function AdvanceVehiclePriceMasterFilter(props) {
-    const { extraParams, removeFilter, handleResetFilter, advanceFilter = false, otfFilter = false, title, filterString, setFilterString, typeData, setAdvanceSearchVisible, searchForm, moduleTitle, handleOnClick } = props;
+    const {
+        extraParams,
+        removeFilter,
+        handleResetFilter,
+        advanceFilter = false,
+        otfFilter = false,
+        title,
+        filterString,
+        setFilterString,
+        typeData,
+        setAdvanceSearchVisible,
+        searchForm,
+        searchForm: { setFieldsValue },
+        moduleTitle,
+        handleOnClick,
+    } = props;
+
     const serachBoxProps = {
         searchForm,
         filterString,
         optionType: typeData,
         setFilterString,
     };
+
+    useEffect(() => {
+        setFieldsValue({ searchParam: filterString?.searchParam, searchType: filterString?.searchType });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [filterString]);
 
     return (
         <div className={styles.contentHeaderBackground}>

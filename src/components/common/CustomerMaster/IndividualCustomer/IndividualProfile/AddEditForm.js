@@ -12,9 +12,9 @@ import { validateAadhar, validateDrivingLicenseNo, validateGSTIN, validateRequir
 import { preparePlaceholderSelect, preparePlaceholderText, prepareDatePickerText } from 'utils/preparePlaceholder';
 import { disableFutureDate } from 'utils/disableDate';
 import { expandIcon } from 'utils/accordianExpandIcon';
+import { convertToUpperCase } from 'utils/convertToUpperCase';
 
 import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
-
 import { UploadUtil } from 'utils/Upload';
 
 import styles from 'components/common/Common.module.css';
@@ -24,13 +24,13 @@ const { Option } = Select;
 const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
-    const { formData, appCategoryData, form, viewDocument, downloadFileFromButton } = props;
+    const { isWhoKnowsWhom, formData, appCategoryData, form, viewDocument, downloadFileFromButton } = props;
     const { isReadOnly = false } = props;
     const { uploadedFile, setUploadedFile, emptyList, setEmptyList, fileList, setFileList, setUploadedFileName, uploadedFileName } = props;
     const { fileConsentList, setFileConsentList, uploadedConsentFile, setUploadedConsentFile, emptyConsentList, setEmptyConsentList, uploadedConsentFileName, setUploadedConsentFileName } = props;
     const [isRead, setIsRead] = useState(false);
     const [customer, setCustomer] = useState(false);
-    const [activeKey, setActiveKey] = useState([]);
+    const [activeKey, setActiveKey] = useState([1]);
 
     useEffect(() => {
         setCustomer(formData?.customerCategory);
@@ -40,15 +40,13 @@ const AddEditFormMain = (props) => {
     useEffect(() => {
         form.setFieldsValue({
             ...formData,
-        });
-        form.setFieldsValue({
             companyName: formData?.authorityDetails?.companyName,
             postion: formData?.authorityDetails?.postion,
             personName: formData?.authorityDetails?.personName,
             remarks: formData?.authorityDetails?.remarks,
             vehicleDeploymentDetails: formData?.vehicleDeploymentDetails,
-            dateOfBirth: formData?.dateOfBirth && formattedCalendarDate(formData?.dateOfBirth),
-            weddingAnniversary: formData?.weddingAnniversary ? formattedCalendarDate(formData?.weddingAnniversary) : null,
+            dateOfBirth: formattedCalendarDate(formData?.dateOfBirth),
+            weddingAnniversary: formattedCalendarDate(formData?.weddingAnniversary),
             customerConsent: formData?.customerConsent === 'true' ? true : false,
         });
 
@@ -115,7 +113,7 @@ const AddEditFormMain = (props) => {
                 size to be 8Mb
             </>
         ),
-        supportedFileTypes: ['image/png', 'image/jpg'],
+        supportedFileTypes: ['image/png', 'image/jpeg', 'image/jpg'],
         maxSize: 8,
     };
 
@@ -184,7 +182,7 @@ const AddEditFormMain = (props) => {
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label=" Wedding Anniversary Date" name="weddingAnniversary">
+                                        <Form.Item label="Wedding Anniversary Date" name="weddingAnniversary">
                                             <DatePicker format={dateFormat} disabledDate={disableFutureDate} className={styles.datepicker} disabled={isRead} placeholder={prepareDatePickerText(dateFormat)} />
                                         </Form.Item>
                                     </Col>
@@ -267,13 +265,13 @@ const AddEditFormMain = (props) => {
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item label="PAN" name="panNumber" initialValue={formData?.panNumber} rules={[validatePanField('pan'), validateRequiredInputField('pan')]}>
-                                            <Input maxLength={10} className={styles.inputBox} placeholder={preparePlaceholderText('pan')} {...disabledProps} />
+                                            <Input maxLength={10} onInput={convertToUpperCase} className={styles.inputBox} placeholder={preparePlaceholderText('pan')} {...disabledProps} />
                                         </Form.Item>
                                     </Col>
 
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item label="GSTIN" name="gstin" initialValue={formData?.gstin} rules={[validateGSTIN('gstin')]}>
-                                            <Input value={null} className={styles.inputBox} placeholder={preparePlaceholderText('gstin')} {...disabledProps} />
+                                            <Input value={null} onInput={convertToUpperCase} className={styles.inputBox} placeholder={preparePlaceholderText('gstin')} {...disabledProps} />
                                         </Form.Item>
                                     </Col>
                                 </Row>

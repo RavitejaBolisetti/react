@@ -90,7 +90,7 @@ export const ListCustomerCreationBase = (props) => {
     const { listLessorShowLoading, isSupportingDataLoaded, isSupportingDataLoading, supportingData, accessToken, token } = props;
 
     const { typeData, saveData, fetchList, lessorData } = props;
-    const { downloadFile,isViewDataLoaded, isLoading, viewListShowLoading, fetchViewDocument, viewDocument } = props;
+    const { downloadFile, isViewDataLoaded, isLoading, viewListShowLoading, fetchViewDocument, viewDocument } = props;
 
     const [form] = Form.useForm();
 
@@ -121,7 +121,30 @@ export const ListCustomerCreationBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isStateDataLoaded]);
 
-    
+    const downloadReport = (documentId) => {
+        const onSuccessAction = (res) => {
+            setFileList();
+            setUploadedFile();
+            setUploadedFileName();
+            resetData();
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+        };
+
+        const onErrorAction = (res) => {
+            showGlobalNotification({ notificationType: 'error', title: 'Error', message: res, placement: 'bottomRight' });
+        };
+
+        const extraParams = [
+            {
+                key: 'docId',
+                title: 'docId',
+                value: documentId,
+                name: 'docId',
+            },
+        ];
+        downloadFile({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+        resetData();
+    };
 
     const onFinish = () => {
         const data = { docId: uploadedFile };
@@ -134,8 +157,20 @@ export const ListCustomerCreationBase = (props) => {
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         };
 
-        const onError = (res) => {
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message: res });
+        const onError = (res, data) => {
+            let message = res;
+            if (data?.docId) {
+                message = (
+                    <>
+                        {message}
+                        <Button type="link" onClick={() => downloadReport(data?.docId)}>
+                            Download Here
+                        </Button>
+                    </>
+                );
+            }
+
+            showGlobalNotification({ notificationType: 'error', title: 'Error', message: message });
         };
 
         const requestData = {
@@ -158,8 +193,6 @@ export const ListCustomerCreationBase = (props) => {
         setFileList();
     };
     const drawerTitle = downloadForm ? 'Download ' : 'Upload ';
-
-   
 
     const formProps = {
         ...props,
@@ -252,6 +285,7 @@ export const ListCustomerCreationBase = (props) => {
         setDownLoadForm(true);
         setIsFormVisible(true);
     };
+
     const title = 'Lessor Customer Details';
 
     return (

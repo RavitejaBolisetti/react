@@ -15,7 +15,7 @@ import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
 const ViewDetailMain = (props) => {
-    const { downloadFileFromButton, setActiveKey, activeKey, formData, viewDocument, isLoading, appCategoryData } = props;
+    const { downloadFileFromButton, setActiveKey, activeKey, formData, viewDocument, handleOnClickCustomerForm, isLoading, appCategoryData } = props;
 
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
@@ -55,7 +55,7 @@ const ViewDetailMain = (props) => {
                         <Descriptions.Item label="Date of Birth">{checkAndSetDefaultValue(formData?.dateOfBirth, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                         <Descriptions.Item label="Gender">{checkAndSetDefaultValue(getCodeValue(appCategoryData?.GENDER_CD, formData?.gender), isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Maritial Status">{checkAndSetDefaultValue(getCodeValue(appCategoryData?.MARITAL_STATUS, formData?.martialStatus), isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Wedding Anniversary Date">{checkAndSetDefaultValue(formData?.weddingAnniversary, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Wedding Anniversary Date">{checkAndSetDefaultValue(formData?.weddingAnniversary, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                         <Descriptions.Item label="Occupation">{checkAndSetDefaultValue(getCodeValue(appCategoryData?.OCC_TYPE, formData?.occuption), isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Annual Income">{checkAndSetDefaultValue(getCodeValue(appCategoryData?.Annual_Income, formData?.annualIncome), isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Driving License No.">{checkAndSetDefaultValue(formData?.drivingLicenseNumber, isLoading)}</Descriptions.Item>

@@ -21,7 +21,7 @@ const AddEditFormMain = (props) => {
             form.setFieldsValue({
                 ...formData,
                 dob: formattedCalendarDate(formData?.dob || formData?.dateOfBirth),
-                chasisNumber: formData?.chasisNumber || formData?.chassisNumber,
+                chassisNumber: formData?.chasisNumber || formData?.chassisNumber,
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -42,7 +42,7 @@ const AddEditFormMain = (props) => {
                 </Col>
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name="chasisNumber" label="Chassis Number" initialValue={formData?.chasisNumber}>
+                    <Form.Item name="chassisNumber" label="Chassis Number" initialValue={formData?.chassisNumber}>
                         <Input disabled={true} maxLength={50} placeholder={preparePlaceholderText('Chassis Number')} />
                     </Form.Item>
                 </Col>

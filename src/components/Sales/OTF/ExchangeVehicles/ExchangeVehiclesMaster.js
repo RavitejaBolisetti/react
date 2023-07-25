@@ -46,7 +46,6 @@ const mapStateToProps = (state) => {
             customerDetail: { isLoaded: isDataCustomerLoaded = false, isLoading: isCustomerLoading = false, data: customerDetail = [] },
         },
     } = state;
-    console.log('state', state);
 
     const moduleTitle = 'Exchange Vehichle';
 

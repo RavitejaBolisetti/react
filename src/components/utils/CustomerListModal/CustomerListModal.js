@@ -50,7 +50,7 @@ export const CustomerListBase = (props) => {
         <div className={styles.customerChooseContainer}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <DataTable scroll={1000} pagination={false} {...tableProps} />
+                    <DataTable scroll={{ x: 1000 }} pagination={false} {...tableProps} />
                 </Col>
             </Row>
 

@@ -18,7 +18,7 @@ import { geoStateDataActions } from 'store/actions/data/geo/states';
 import { geoDistrictDataActions } from 'store/actions/data/geo/districts';
 import { tehsilDataActions } from 'store/actions/data/geo/tehsils';
 
-import { formattedCalendarDate } from 'utils/formatDateTime';
+import { formatDate } from 'utils/formatDateTime';
 
 import { showGlobalNotification } from 'store/actions/notification';
 import { AddEditForm } from './AddEditForm';
@@ -253,7 +253,7 @@ export const ListTehsilBase = (props) => {
         };
 
     const onFinish = (values) => {
-        let data = { ...values, includedOn: formattedCalendarDate(values?.includedOn) };
+        let data = { ...values, includedOn: formatDate(values?.includedOn) };
 
         const onSuccess = (res) => {
             form.resetFields();

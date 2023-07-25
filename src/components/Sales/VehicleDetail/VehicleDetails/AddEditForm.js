@@ -58,7 +58,7 @@ const AddEditFormMain = (props) => {
                     <Divider />
                     <Row gutter={20}>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item label="Manufacturer Warranty End Date" name="mnfcWarrEndDate">
+                            <Form.Item initialValue={formattedCalendarDate(formData?.mnfcWarrEndDate)} label="Manufacturer Warranty End Date" name="mnfcWarrEndDate">
                                 <DatePicker disabledDate={disablePastDate} format={dateFormat} {...disabledProps} style={{ display: 'auto', width: '100%' }} />
                             </Form.Item>
                         </Col>
@@ -223,11 +223,7 @@ const AddEditFormMain = (props) => {
             <Collapse defaultActiveKey={['2']} bordered={false} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
                 <Panel header="Registration Number Change Request" key="2">
                     <Divider />
-                    <Row gutter={16}>
-                        <div className={styles.viewDrawerContainer}>
-                            <Card>Coming Soon</Card>
-                        </div>
-                    </Row>
+                    <div>Coming Soon</div>
                 </Panel>
             </Collapse>
         </Space>

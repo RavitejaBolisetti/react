@@ -20,7 +20,7 @@ import { ChangeHistory } from './changeHistoryForm';
 
 import { AddEditForm } from './AddEditForm';
 
-import { formattedCalendarDate } from 'utils/formatDateTime';
+import { formatDate } from 'utils/formatDateTime';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { btnVisiblity } from 'utils/btnVisiblity';
@@ -220,7 +220,7 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHi
         const newVersion = (values.version ? Number(values?.version) : 1.0).toFixed(1);
         const termConditionText = typeof values.termConditionDescription === 'string' ? values.termConditionDescription : values.termConditionDescription.editor.getData();
         // .replace(/[&/\\#,+()$~%.'":*?<p></p>\n{}]/g, '')
-        const data = { ...values, version: String(newVersion), id: recordId, termConditionDescription: termConditionText, effectiveFrom: formattedCalendarDate(values?.effectiveFrom), effectiveTo: formattedCalendarDate(values?.effectiveTo) };
+        const data = { ...values, version: String(newVersion), id: recordId, termConditionDescription: termConditionText, effectiveFrom: formatDate(values?.effectiveFrom), effectiveTo: formatDate(values?.effectiveTo) };
 
         const onSuccess = (res) => {
             listShowLoading(false);

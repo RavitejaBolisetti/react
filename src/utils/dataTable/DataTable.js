@@ -13,7 +13,14 @@ import { Table } from 'antd';
 import { InputSkeleton } from 'components/common/Skeleton';
 import { tblSerialNumberColumn } from 'utils/tableCloumn';
 
-export default function DataTable({ isLoading, rowSelection = undefined, dynamicPagination = false, totalRecords = '10', pagination = true, removePagination = false, srl = true, srlTitle = '#', tableColumn, scroll = 'auto', tableData, rowKey = 'index', setPage = () => {} }) {
+export default function DataTable({ isLoading, rowSelection = undefined, showSizeChanger = true, dynamicPagination = false, totalRecords = '10', pagination = true, removePagination = false, srl = true, srlTitle = '#', tableColumn, scroll = 'auto', tableData, rowKey = 'index', setPage = () => {} }) {
+    useEffect(() => {
+        if (dynamicPagination) {
+            setPagination({ ...tablePagination, total: totalRecords });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [dynamicPagination, totalRecords]);
+
     const showTotal = (total) =>
         total && (
             <>
@@ -22,21 +29,13 @@ export default function DataTable({ isLoading, rowSelection = undefined, dynamic
         );
 
     const [tablePagination, setPagination] = useState({
-        total: totalRecords,
         pageSize: 10,
         current: 1,
         position: ['bottomRight'],
-        showSizeChanger: true,
+        showSizeChanger: showSizeChanger,
         hideOnSinglePage: false,
         showTotal,
     });
-
-    useEffect(() => {
-        if (dynamicPagination) {
-            setPagination({ ...tablePagination, total: totalRecords });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [dynamicPagination, totalRecords]);
 
     const handleTableChange = (pagination, filters, sorter) => {
         if (dynamicPagination) {
@@ -58,16 +57,8 @@ export default function DataTable({ isLoading, rowSelection = undefined, dynamic
     });
 
     return (
-        <Table
-            rowSelection={rowSelection}
-            columns={isLoading ? tableSkeletonColumn : tableColumnWithSrl}
-            dataSource={isLoading ? skeletonData : tableData}
-            onChange={handleTableChange}
-            pagination={pagination ? !isLoading && tablePagination : false}
-            rowKey={rowKey}
-            scroll={{
-                x: scroll,
-            }}
-        />
+        <div style={{ marginBottom: '20px' }}>
+            <Table rowSelection={rowSelection} columns={isLoading ? tableSkeletonColumn : tableColumnWithSrl} dataSource={isLoading ? skeletonData : tableData} onChange={handleTableChange} pagination={pagination ? !isLoading && tablePagination : false} rowKey={rowKey} scroll={scroll} />
+        </div>
     );
 }
