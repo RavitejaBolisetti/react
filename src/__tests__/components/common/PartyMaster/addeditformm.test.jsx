@@ -127,8 +127,7 @@ describe("party master Components", () => {
     expect(defaulttitle).toBeInTheDocument()
 
     const partycategory = screen.getByTitle('Party Category');
-    expect(partycategory).toBeInTheDocument()
-    screen.debug()
+    expect(partycategory).toBeInTheDocument();
   });
 
   it('Is pin code search Field Present or not', () => {
