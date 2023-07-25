@@ -31,8 +31,8 @@ const AddEditFormMain = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
-
-
+    
+ 
     return (
         <Card className={styles.drawerCardView}>
             <Row gutter={20}>
@@ -40,12 +40,7 @@ const AddEditFormMain = (props) => {
                         <Form.Item initialValue={formData?.orderType} rules={[validateRequiredSelectField('Order Type')]} name="orderType" label="Order Type">
                             <Select placeholder="Select" showSearch allowClear options={typeData['CTC_TYP']} fieldNames={{ label: 'value', value: 'key' }} />
                         </Form.Item>
-                </Col>
-                {/* <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name="dealerName" label="Dealer Name" initialValue={formData?.dealerName}>
-                        <Input maxLength={50}  />
-                    </Form.Item>
-                </Col> */}
+                </Col>               
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.uniqueSearchInput}>
                     <Form.Item name="dealerName" label="Dealer Name" initialValue={formData?.dealerName} >
                         <Search loading={isCustomerLoading} style={{ width: '100%' }} maxLength={35} allowClear type="text" onSearch={onSearch} />
@@ -56,33 +51,24 @@ const AddEditFormMain = (props) => {
                         <Input maxLength={50} {...disabledProps} />
                     </Form.Item>
                 </Col>
-
-
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.uniqueSearchInput}>
                     <Form.Item name="purchaseOrderNumber" label="Purchase Order Number" initialValue={formData?.purchaseOrderNumber}>
                     <Search loading={isCustomerLoading} style={{ width: '100%' }} maxLength={35} allowClear type="text" onSearch={onSearch} />
-
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={convertCalenderDate(formData?.purchaseOrderDate, 'YYYY/MM/DD')} label="Purchase Order Date" name="purchaseOrderDate">
                         <DatePicker disabledDate={disablePastDate} format="YYYY-MM-DD"  style={{ display: 'auto', width: '100%' }} />
                     </Form.Item>
-                </Col>
-               
+                </Col>               
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name="purchaseOrderStatus" label="Purchase Order Status" initialValue={formData?.purchaseOrderStatus}>
                         <Input maxLength={50} {...disabledProps} />
                     </Form.Item>
-                </Col>               
+                </Col>              
                                               
-            </Row>
-            {/* <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <h4 className={styles.customHeading}> Product Details </h4>
-                </Col>
-            </Row> */}
-             
+            </Row>  
+                         
         </Card>
     );
 };

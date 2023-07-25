@@ -174,12 +174,12 @@ const VehiclePurchaseOrderDetailMasterBase = (props) => {
                             <h2>{section?.title}</h2>
                         </Col>
                     </Row>
-                    {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <><AddEditForm {...formProps} /> <ListDataTable {...tableProps} showAddButton={false} /></>}
+                    {formActionType?.viewMode ? <><ViewDetail {...viewProps} /><ListDataTable {...tableProps} showAddButton={false} /> </> : <><AddEditForm {...formProps} /> <ListDataTable {...tableProps} showAddButton={false} />  </>}
                 </Col>
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <VehiclePurchaseOrderFormButton {...props} />
+                    <VehiclePurchaseOrderFormButton {...props} /> 
                 </Col>
             </Row>
         </Form>

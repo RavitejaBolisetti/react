@@ -34,14 +34,14 @@ const VehiclePurchaseOrderMainContainerMain = (props) => {
 
     return (
         <Row gutter={0}>
-            <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6} className={styles.drawerBodyLeft}>
+            {/* <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6} className={styles.drawerBodyLeft}>
                 <LeftSidebar {...myProps} />
-            </Col>
-            <Col xs={24} sm={24} md={18} lg={18} xl={18} xxl={18} className={styles.drawerRightMainContainer}>
+            </Col> */}
+            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.drawerRightMainContainer}>
                 <div>{renderElement()}</div>
             </Col>
         </Row>
     );
 };
 
-export const VehiclePurchaseOrderMainContainer = withDrawer(VehiclePurchaseOrderMainContainerMain, { width: '90%', footer: null });
+export const VehiclePurchaseOrderMainContainer = withDrawer(VehiclePurchaseOrderMainContainerMain, { width: '75%', footer: null });

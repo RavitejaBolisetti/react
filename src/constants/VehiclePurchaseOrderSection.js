@@ -6,12 +6,8 @@
 export const VEHICLE_PURCHASE_ORDER_SECTION = {
     PURCHASE_ORDER: {
         id: 1,
-        title: 'Purchase Order',
+        title: '',
         displayOnList: true,
     },
-    PURCHASE_ORDER: {
-        id: 1,
-        title: 'Purchase Order',
-        displayOnList: true,
-    },
+   
 };

@@ -43,6 +43,7 @@ const ViewDetailMain = (props) => {
     return (
         <div className={styles.drawerCardView}>
             <Row gutter={20}>
+                
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Space direction="vertical" size="middle" className={styles.accordianContainer}>
                         <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end" className={styles.collapseContainer}>
