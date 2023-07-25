@@ -189,7 +189,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
     const [activeKey, setActiveKey] = useState('1');
     const [organizationId, setOrganizationId] = useState('');
     const [attributeDataOptions, setattributeDataOptions] = useState([]);
-
+    const [ViewDocumentTypesList, setViewDocumentTypesList] = useState([]);
     const fieldNames = { title: 'manufactureAdminShortName', key: 'id', children: 'subManufactureAdmin' };
     const [uploadForm] = Form.useForm();
 
@@ -202,7 +202,6 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
     const [fileList, setFileList] = useState([]);
 
     const [uploadedFileName, setUploadedFileName] = useState('');
-
 
     const [downloadForm, setDownLoadForm] = useState(false);
     const [isUploadDrawer, setIsUploadDrawer] = useState(false);
@@ -264,6 +263,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
             setFormData({ ...detailData, isChildAllowed });
             setSelectedTreeData({ ...detailData, hierarchyAttribueName, parentName: prodctShrtName });
             setDocumentTypesList(detailData?.adminAuthority?.map((authority) => ({ ...authority, isModified: false })) || []);
+            setViewDocumentTypesList(detailData?.adminAuthority?.map((authority) => ({ ...authority, isModified: false })) || []);
             setattributeDataOptions(attributeData);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -358,6 +358,8 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
             }
             case FROM_ACTION_TYPE.EDIT: {
                 setFormData(selectedTreeData);
+                setDocumentTypesList(ViewDocumentTypesList);
+
                 break;
             }
         }
@@ -470,12 +472,13 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         handleButtonClick,
         styles,
         viewTitle,
-        documentTypesList,
-        setDocumentTypesList,
+        documentTypesList: ViewDocumentTypesList,
+        setDocumentTypesList: setViewDocumentTypesList,
         viewMode: true,
         AdminDetailData,
         manufacturerAdminHierarchyData,
         isLoading: ManufacturerAdminHierarchyDetailLoading,
+        authTypeDropdownData,
     };
     const leftCol = manufacturerAdminHierarchyData?.length > 0 && organizationId ? 14 : 24;
     const rightCol = manufacturerAdminHierarchyData?.length > 0 && organizationId ? 10 : 24;
