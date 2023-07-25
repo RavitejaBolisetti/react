@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -27,5 +27,9 @@ export const HIERARCHY_ATTRIBUTES = {
     DEALER_HIERARCHY: {
         KEY: 'Dealer Hierarchy',
         TITLE: 'Dealer Hierarchy',
+    },
+    TAX_AND_CHARGES: {
+        KEY: 'Tax and Charges',
+        TITLE: 'Tax and Charges',
     },
 };

@@ -7,7 +7,7 @@ import { dataActions } from 'store/actions/crud/dataAction';
 import { withAuthToken } from 'utils/withAuthToken';
 import { axiosAPICall } from 'utils/axiosAPICall';
 
-import { BASE_URL_SUPPORTING_DOCUMENT as baseURL, BASE_URL_DOCUMENT_UPLOAD as baseUploadURL, BASE_URL_DOCUMENT_DOWNLOAD as baseDownloadUrl } from 'constants/routingApi';
+import { BASE_URL_SUPPORTING_DOCUMENT as baseURL, BASE_URL_DOCUMENT_UPLOAD as baseUploadURL, BASE_URL_DOCUMENT_VIEW_URL as baseDownloadUrl } from 'constants/routingApi';
 
 const PREFIX = 'UPLOAD_';
 const moduleName = 'Supporting Document(Vault)';
@@ -57,7 +57,7 @@ supportingDocumentDataActions.uploadFile = withAuthToken((params) => ({ token, a
 });
 
 supportingDocumentDataActions.downloadFile = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-    const { setIsLoading, userId, extraParams = [], documentName = undefined } = params;
+    const { setIsLoading, onErrorAction = undefined, data, userId, onSuccessAction = undefined, method = 'get', extraParams = [] } = params;
     setIsLoading(true);
 
     let sExtraParamsString = '?';
@@ -66,37 +66,31 @@ supportingDocumentDataActions.downloadFile = withAuthToken((params) => ({ token,
     });
     sExtraParamsString = sExtraParamsString.substring(0, sExtraParamsString.length - 1);
 
-    const AuthStr = 'Bearer '.concat(token);
-    const headers = { Authorization: AuthStr, userId, accessToken: token, deviceType: 'W', deviceId: '' };
+    const onSuccess = (res) => {
+        onSuccessAction && onSuccessAction(res);
+        let a = document.createElement('a');
+        a.href = `data:image/png;base64,${res?.data?.base64}`;
+        a.download = res?.data?.fileName;
+        a.click();
+    };
 
-    fetch(baseDownloadUrl + sExtraParamsString, {
-        method: 'GET',
-        headers: headers,
-    }).then((response) => {
-        response.blob().then((blob) => {
-            let url = window.URL.createObjectURL(blob);
-            let a = document.createElement('a');
-            a.href = url;
-            a.download = documentName + '.pdf';
-            a.click();
-        });
-    });
+    const onError = (res) => {
+        onErrorAction && onErrorAction(res);
+    };
+    const apiCallParams = {
+        data,
+        method: method,
+        url: baseDownloadUrl + (sExtraParamsString ? sExtraParamsString : ''),
+        token,
+        accessToken,
+        userId,
+        onSuccess,
+        onError,
+        onTimeout: () => onError('Request timed out, Please try again'),
+        postRequest: () => setIsLoading(false),
+    };
 
-    // const apiCallParams = {
-    //     data,
-    //     method: method,
-    //     url: baseDownloadUrl + (sExtraParamsString ? sExtraParamsString : ''),
-    //     token,
-    //     accessToken,
-    //     userId,
-    //     onSuccess: onSuccessAction,
-    //     onError,
-    //     onTimeout: () => onError('Request timed out, Please try again'),
-    //     postRequest: () => setIsLoading(false),
-    //     // headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + window.localStorage['Access_Token'] },
-    // };
-
-    // axiosAPICall(apiCallParams);
+    axiosAPICall(apiCallParams);
 });
 
 export { supportingDocumentDataActions };

@@ -20,7 +20,7 @@ import { VEHICLE_RECEIPT_SECTION } from 'constants/VehicleReceiptSection';
 
 import { showGlobalNotification } from 'store/actions/notification';
 import { vehicleReceiptDataActions } from 'store/actions/data/vehicleReceipt/vehicleReceipt';
-import { otfSearchListAction } from 'store/actions/data/otf/otfSearchAction';
+// import { otfSearchListAction } from 'store/actions/data/otf/otfSearchAction';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
 import { validateVehicleReceiptMenu } from './utils/validateVehicleReceiptMenu';
@@ -59,8 +59,8 @@ const mapDispatchToProps = (dispatch) => ({
     ...bindActionCreators(
         {
             fetchOTFSearchedList: vehicleReceiptDataActions.fetchList,
-            setFilterString: otfSearchListAction.setFilter,
-            resetData: otfSearchListAction.reset,
+            setFilterString: vehicleReceiptDataActions.setFilter,
+            resetData: vehicleReceiptDataActions.reset,
             // fetchList: vehicleReceiptDataActions.fetchList,
             saveData: vehicleReceiptDataActions.saveData,
             listShowLoading: vehicleReceiptDataActions.listShowLoading,

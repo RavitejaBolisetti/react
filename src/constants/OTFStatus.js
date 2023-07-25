@@ -34,14 +34,14 @@ export const OTF_STATUS = {
     },
     DELIVERED: {
         id: 5,
-        key: 'Delivered',
+        key: 'D',
         title: 'Delivered',
         desc: 'Delivered',
         displayOnView: true,
     },
     TRANSFERRED: {
         id: 6,
-        key: 'Transferred',
+        key: 'T',
         title: 'Transferred',
         desc: 'Transferred',
         displayOnView: false,
@@ -65,6 +65,13 @@ export const OTF_STATUS = {
         key: 'Rejected',
         title: 'Rejected',
         desc: 'Rejected',
+        displayOnView: false,
+    },
+    DELIVERY_NOTE: {
+        id: 9,
+        key: 'N',
+        title: 'Delivery Note',
+        desc: 'Delivery Note',
         displayOnView: false,
     },
 };

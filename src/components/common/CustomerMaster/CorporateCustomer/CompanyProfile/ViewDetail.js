@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { Space, Collapse, Typography, Descriptions, Card } from 'antd';
+import { Space, Collapse, Typography, Descriptions, Card, Divider } from 'antd';
 import { FiDownload } from 'react-icons/fi';
 
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
@@ -49,6 +49,7 @@ const ViewDetailMain = (props) => {
             <Space style={{ display: 'flex' }} direction="vertical" size="middle">
                 <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
                     <Panel header="Company Information" key="1">
+                        <Divider />
                         <Descriptions {...viewProps}>
                             <Descriptions.Item label="PAN">{checkAndSetDefaultValue(formData?.panNumber, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="GSTIN">{checkAndSetDefaultValue(formData?.gstinNumber, isLoading)}</Descriptions.Item>
@@ -74,6 +75,7 @@ const ViewDetailMain = (props) => {
 
                 <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
                     <Panel header="Social Profiles" key="2">
+                        <Divider />
                         <Descriptions {...viewProps}>
                             <Descriptions.Item label="M1-MMFSL">{checkAndSetDefaultValue(formData?.m1mmfsl, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Facebook Link">{checkAndSetDefaultValue(formData?.facebookLink, isLoading)}</Descriptions.Item>
@@ -84,6 +86,7 @@ const ViewDetailMain = (props) => {
 
                 <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(3)} expandIconPosition="end">
                     <Panel header="Key Account Details" key="3">
+                        <Divider />
                         {formData?.keyAccountDetails && (
                             <Descriptions {...viewProps}>
                                 <Descriptions.Item label="Account Code">{checkAndSetDefaultValue(formData?.keyAccountDetails?.accountCode, isLoading)}</Descriptions.Item>
@@ -98,6 +101,7 @@ const ViewDetailMain = (props) => {
 
                 <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(4)} expandIconPosition="end">
                     <Panel header="Authority Details(Who Knows Whom)" key="4">
+                        <Divider />
                         {formData?.authorityDetails && (
                             <Descriptions {...viewProps}>
                                 <Descriptions.Item label="Name Of Person">{checkAndSetDefaultValue(formData?.authorityDetails.personName, isLoading)}</Descriptions.Item>
@@ -110,6 +114,7 @@ const ViewDetailMain = (props) => {
                 </Collapse>
                 <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(5)} expandIconPosition="end">
                     <Panel header="Upload Customer Form" key="5">
+                        <Divider />
                         {viewDocument?.fileName && <Card className={styles.viewDocumentStrip} key={viewDocument?.fileName} title={viewDocument?.fileName} extra={<FiDownload />} onClick={handleOnClick}></Card>}
                     </Panel>
                 </Collapse>

@@ -10,7 +10,7 @@ import { doLogout, unAuthenticateUser } from '../../actions/auth';
 import { LANGUAGE_EN } from 'language/en';
 
 export const dataActions = (params) => {
-    const { baseURL: inBaseURL, RECEIVE_DATA_LOADING_ACTION_CONSTANT, RECEIVE_DATA_ACTION_CONSTANT, RECEIVE_DATA_ACTION_APPLY_FILTER_CONSTANT, RECEIVE_FILTERED_DATA_ACTION_CONSTANT, RECIEVE_DATA_DETAIL_ACTION_CONSTANT, RESET_DATA_ACTION_CONSTANT, SAVE_FORM_DATA_LOADING_CONSTANT } = params;
+    const { baseURL: inBaseURL, RECEIVE_DATA_LOADING_ACTION_CONSTANT, RECEIVE_DATA_ACTION_CONSTANT, RECEIVE_DATA_ACTION_APPLY_FILTER_CONSTANT, RECEIVE_FILTERED_DATA_ACTION_CONSTANT, RECIEVE_DATA_DETAIL_ACTION_CONSTANT, RESET_DATA_ACTION_CONSTANT, SAVE_FORM_DATA_LOADING_CONSTANT, RECEIVE_CHANGE_HISTORY_DATA_ACTION_CONSTANT, RECEIVE_CHANGE_HISTORY_DATA_LOADING_ACTION_CONSTANT } = params;
 
     const saveFormShowLoading = (isLoading) => ({
         type: SAVE_FORM_DATA_LOADING_CONSTANT,
@@ -25,6 +25,16 @@ export const dataActions = (params) => {
     const recieveData = (data) => ({
         type: RECEIVE_DATA_ACTION_CONSTANT,
         data,
+    });
+
+    const recieveChangeHistoryData = (data) => ({
+        type: RECEIVE_CHANGE_HISTORY_DATA_ACTION_CONSTANT,
+        data,
+    });
+
+    const listShowChangeHistoryLoading = (isLoading) => ({
+        type: RECEIVE_CHANGE_HISTORY_DATA_LOADING_ACTION_CONSTANT,
+        isLoading,
     });
 
     const setFilter = (filter) => ({
@@ -48,11 +58,12 @@ export const dataActions = (params) => {
 
     const innerDataActions = {
         fetchList: withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-            const { setIsLoading, data, type = '', mytype = '', onSuccessAction = undefined, onErrorAction = undefined, extraParams = [] } = params;
+            const { customURL = '', setIsLoading, data, type = '', mytype = '', onSuccessAction = undefined, onErrorAction = undefined, extraParams = [] } = params;
             setIsLoading(true);
 
             const onError = (message) => {
                 onErrorAction && onErrorAction(message);
+                dispatch(recieveData([]));
             };
 
             const onSuccess = (res) => {
@@ -75,7 +86,7 @@ export const dataActions = (params) => {
             const apiCallParams = {
                 data,
                 method: 'get',
-                url: inBaseURL + (type ? '?type=' + type : '') + (mytype ? mytype : '') + (sExtraParamsString ? sExtraParamsString : ''),
+                url: (customURL || inBaseURL) + (type ? '?type=' + type : '') + (mytype ? mytype : '') + (sExtraParamsString ? sExtraParamsString : ''),
                 token,
                 accessToken,
                 userId,
@@ -93,7 +104,11 @@ export const dataActions = (params) => {
         fetchFilteredList: withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
             const { setIsLoading, data } = params;
             setIsLoading(true);
-            const onError = (errorMessage) => message.error(errorMessage);
+
+            const onError = (errorMessage) => {
+                message.error(errorMessage);
+                dispatch(filteredRecieveData([]));
+            };
 
             const onSuccess = (res) => {
                 if (res?.data) {
@@ -122,11 +137,12 @@ export const dataActions = (params) => {
         }),
 
         fetchDetail: withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-            const { setIsLoading, data, code = '', onErrorAction = undefined, partyCode = '', parameterType = '', onSuccessAction = undefined, id = '', type = '', customerId = '' } = params;
+            const { customURL = '', setIsLoading, data, code = '', onErrorAction = undefined, partyCode = '', parameterType = '', onSuccessAction = undefined, id = '', type = '', customerId = '', extraParams = [] } = params;
             setIsLoading(true);
 
             const onError = (message) => {
                 onErrorAction(message);
+                dispatch(recieveDataDetail([]));
             };
 
             const onSuccess = (res) => {
@@ -134,21 +150,23 @@ export const dataActions = (params) => {
                     onSuccessAction && onSuccessAction(res);
                     dispatch(recieveDataDetail(res?.data));
                 } else {
+                    dispatch(recieveDataDetail([]));
+
                     onError(LANGUAGE_EN.INTERNAL_SERVER_ERROR);
                 }
             };
 
-            // let sExtraParamsString = '?';
-            // extraParams?.forEach((item, index) => {
-            //     sExtraParamsString += item?.value && item?.key ? item?.value && item?.key + '=' + item?.value + '&' : '';
-            // });
+            let sExtraParamsString = '?';
+            extraParams?.forEach((item, index) => {
+                sExtraParamsString += item?.value && item?.key ? item?.value && item?.key + '=' + item?.value + '&' : '';
+            });
 
-            // sExtraParamsString = sExtraParamsString.substring(0, sExtraParamsString.length - 1);
+            sExtraParamsString = sExtraParamsString.substring(0, sExtraParamsString.length - 1);
 
             const apiCallParams = {
                 data,
                 method: 'get',
-                url: inBaseURL + (id ? '?id=' + id : '') + (type ? '?type=' + type : '') + (code ? '?code=' + code : '') + (partyCode ? '?partyCode=' + partyCode : '') + (parameterType ? '?parameterType=' + parameterType : '') + (customerId ? '?customerId=' + customerId : ''),
+                url: (customURL || inBaseURL) + (id ? '?id=' + id : '') + (type ? '?type=' + type : '') + (code ? '?code=' + code : '') + (partyCode ? '?partyCode=' + partyCode : '') + (parameterType ? '?parameterType=' + parameterType : '') + (customerId ? '?customerId=' + customerId : '') + (sExtraParamsString ? sExtraParamsString : ''),
                 token,
                 accessToken,
                 userId,
@@ -164,18 +182,19 @@ export const dataActions = (params) => {
         }),
 
         saveData: withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-            const { setIsLoading, onError, data, userId, onSuccess, method = 'post' } = params;
+            const { setIsLoading, onError, data, userId, onSuccess, method = 'post', customURL, extraParams } = params;
             setIsLoading(true);
 
             const onSuccessAction = (res) => {
                 onSuccess(res);
+                // RECEIVE_DATA_ACTION_CONSTANT && dispatch(innerDataActions.fetchList({ setIsLoading: () => {}, userId, extraParams }));
                 RECEIVE_FILTERED_DATA_ACTION_CONSTANT && dispatch(innerDataActions.fetchFilteredList({ setIsLoading: () => {}, userId }));
             };
 
             const apiCallParams = {
                 data,
                 method: method,
-                url: inBaseURL,
+                url: customURL || inBaseURL,
                 token,
                 accessToken,
                 userId,
@@ -216,6 +235,49 @@ export const dataActions = (params) => {
             const apiCallParams = {
                 method: 'get',
                 url: (customURL || inBaseURL) + (sExtraParamsString ? sExtraParamsString : ''),
+                token,
+                accessToken,
+                userId,
+                onSuccess,
+                onError,
+                onTimeout: () => onError('Request timed out, Please try again'),
+                onUnAuthenticated: () => dispatch(doLogout()),
+                onUnauthorized: (message) => dispatch(unAuthenticateUser(message)),
+                postRequest: () => setIsLoading(false),
+            };
+
+            axiosAPICall(apiCallParams);
+        }),
+
+        changeHistory: withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
+            const { customURL = '', setIsLoading, data, onSuccessAction = undefined, onErrorAction = undefined, extraParams = [] } = params;
+            setIsLoading(true);
+
+            const onError = (message) => {
+                dispatch(recieveChangeHistoryData([]));
+                onErrorAction && onErrorAction(message);
+            };
+
+            const onSuccess = (res) => {
+                if (res?.data) {
+                    onSuccessAction && onSuccessAction(res);
+                    dispatch(recieveChangeHistoryData(res?.data));
+                } else {
+                    dispatch(recieveChangeHistoryData([]));
+                }
+            };
+
+            let sExtraParamsString = '?';
+            extraParams?.forEach((item, index) => {
+                sExtraParamsString += item?.value && item?.key ? item?.value && item?.key + '=' + item?.value + '&' : '';
+            });
+
+            sExtraParamsString = sExtraParamsString.substring(0, sExtraParamsString.length - 1);
+
+            const apiCallParams = {
+                data,
+                method: 'get',
+                url: (customURL ? customURL : inBaseURL + '/changehistory') + (sExtraParamsString ? sExtraParamsString : ''),
                 token,
                 accessToken,
                 userId,
@@ -351,6 +413,9 @@ export const dataActions = (params) => {
         },
         listShowLoading: (isLoading) => (dispatch) => {
             dispatch(listShowLoading(isLoading));
+        },
+        listShowChangeHistoryLoading: (isLoading) => (dispatch) => {
+            dispatch(listShowChangeHistoryLoading(isLoading));
         },
         saveFormShowLoading: (isLoading) => (dispatch) => {
             dispatch(saveFormShowLoading(isLoading));

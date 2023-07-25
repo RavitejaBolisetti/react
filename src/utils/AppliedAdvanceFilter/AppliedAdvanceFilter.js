@@ -45,11 +45,10 @@ export default function AppliedAdvanceFilter(props) {
                                 </Form>
                             </Col>
                             {advanceFilter && (
-                                <Col xs={24} sm={24} md={4} lg={4} xl={4}>
+                                <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.verticallyCentered}>
                                     <Button
                                         icon={<FilterIcon />}
                                         type="link"
-                                        className={styles.filterBtn}
                                         onClick={() => {
                                             setAdvanceSearchVisible(true);
                                         }}
@@ -64,7 +63,7 @@ export default function AppliedAdvanceFilter(props) {
                         <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
                             {showChangeHistoryButton && (
                                 <>
-                                    <Button onClick={showChangeHistoryList} className={styles.actionbtn} type="primary" danger>
+                                    <Button onClick={showChangeHistoryList} className={styles.actionbtn} type="primary">
                                         Change History
                                     </Button>
                                 </>
@@ -76,7 +75,7 @@ export default function AppliedAdvanceFilter(props) {
                                 </Button>
                             )}
                             <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
-                            <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
+                            <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
                                 Add
                             </Button>
                         </Col>

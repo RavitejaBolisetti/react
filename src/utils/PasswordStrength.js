@@ -43,8 +43,8 @@ const PasswordStrength = () => {
     };
 
     return (
-        <div style={{  marginBottom: '20px', width: '100%' }}>
-            <input style={{ width: '100%' }} type="password" id="password" value={password} onChange={handleChange} />
+        <div style={{ marginBottom: '20px', width: '100%' }}>
+            <input type="password" id="password" value={password} onChange={handleChange} />
             {password && <div>Password strength: {strength}</div>}
         </div>
     );

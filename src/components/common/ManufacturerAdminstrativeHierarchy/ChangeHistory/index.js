@@ -4,5 +4,5 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 
-import { ChangeHistory1 } from './ChangeHistory';
-export { ChangeHistory1 };
+import { ChangeHistory } from './ChangeHistory';
+export { ChangeHistory };

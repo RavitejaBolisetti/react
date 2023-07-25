@@ -9,7 +9,7 @@ import { Button, Row, Col, Popover } from 'antd';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import styles from './OTFFormButton.module.css';
 
-export const OTFFormButton = ({ record, onCloseAction, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection }) => {
+export const OTFFormButton = ({ record, handleChangeHistory, onCloseAction, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection }) => {
     const content = <div>Coming Soon</div>;
     return (
         <Row gutter={20} className={styles.formFooter}>
@@ -34,25 +34,17 @@ export const OTFFormButton = ({ record, onCloseAction, buttonData, setButtonData
                     </Button>
                 )}
 
-                {buttonData?.transferBtn && (
-                    <Popover content={content} trigger="hover">
-                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.TRANSFER, record })} type="primary">
-                            Transfer
-                        </Button>
-                    </Popover>
-                )}
-
                 {buttonData?.allotBtn && (
                     <Popover content={content} trigger="hover">
-                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.ALLOT, record })} type="primary">
+                        <Button onClick={() => {}} type="primary">
                             Allot
                         </Button>
                     </Popover>
                 )}
 
-                {buttonData?.unAllot && (
+                {buttonData?.unAllotBtn && (
                     <Popover content={content} trigger="hover">
-                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.UNALLOT, record })} type="primary">
+                        <Button onClick={() => {}} type="primary">
                             Un-Allot
                         </Button>
                     </Popover>
@@ -60,7 +52,7 @@ export const OTFFormButton = ({ record, onCloseAction, buttonData, setButtonData
 
                 {buttonData?.invoiceBtn && (
                     <Popover content={content} trigger="hover">
-                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.INVOICE, record })} type="primary">
+                        <Button onClick={() => {}} type="primary">
                             Invoice
                         </Button>
                     </Popover>
@@ -68,18 +60,28 @@ export const OTFFormButton = ({ record, onCloseAction, buttonData, setButtonData
 
                 {buttonData?.deliveryNoteBtn && (
                     <Popover content={content} trigger="hover">
-                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.DELIVERY_NOTE, record })} type="primary">
+                        <Button onClick={() => {}} type="primary">
                             Delivery Note
                         </Button>
                     </Popover>
                 )}
 
-                {buttonData?.cancelOtfBtn && (
-                    <Popover content={content} trigger="hover">
-                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.CANCEL_OTF, record })} type="primary">
-                            Cancel OTF
-                        </Button>
-                    </Popover>
+                {buttonData?.transferOTFBtn && (
+                    <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.TRANSFER_OTF, record })} type="primary">
+                        Transfer OTF
+                    </Button>
+                )}
+
+                {buttonData?.cancelOTFBtn && (
+                    <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.CANCEL_OTF, record })} type="primary">
+                        Cancel OTF
+                    </Button>
+                )}
+
+                {buttonData?.changeHistory && (
+                    <Button onClick={handleChangeHistory} type="primary">
+                        Change History
+                    </Button>
                 )}
 
                 {buttonData?.nextBtn && !isLastSection && (
@@ -93,8 +95,6 @@ export const OTFFormButton = ({ record, onCloseAction, buttonData, setButtonData
                         {saveButtonName}
                     </Button>
                 )}
-
-                {}
             </Col>
         </Row>
     );

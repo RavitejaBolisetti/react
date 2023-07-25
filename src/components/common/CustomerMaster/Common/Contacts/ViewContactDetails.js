@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Descriptions } from 'antd';
+import { Descriptions, Divider } from 'antd';
 import AddEditForm from './AddEditForm';
 import UploadUtils from './../UploadUtils';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
@@ -36,6 +36,7 @@ const ViewDetailBase = (props) => {
         <div className={styles.viewDrawerContainer}>
             {!isEditing ? (
                 <>
+                    <Divider />
                     <UploadUtils {...formProps} />
                     <Descriptions {...viewProps}>
                         <Descriptions.Item label="Purpose of Contact">{checkAndSetDefaultValue(getCodeValue(typeData?.PURPOSE, formData?.purposeOfContact), isLoading)}</Descriptions.Item>

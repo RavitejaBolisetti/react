@@ -20,7 +20,7 @@ export const ThankYouMaster = (props) => {
 
     const myProps = {
         ...props,
-        buttonData: { ...props.buttonData, closeBtn: true, saveBtn: false, cancelBtn: false },
+        buttonData: { ...props.defaultBtnVisiblity, closeBtn: true },
     };
 
     return (

@@ -379,8 +379,8 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         disabledEdit,
         setDisabledEdit,
     };
-    const leftCol = organizationId && productHierarchyData.length > 0 ? 16 : 24;
-    const rightCol = organizationId && productHierarchyData.length > 0 ? 8 : 24;
+    const leftCol = organizationId && productHierarchyData.length > 0 ? 14 : 24;
+    const rightCol = organizationId && productHierarchyData.length > 0 ? 10 : 24;
 
     const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
     const noDataMessage = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', moduleTitle);
@@ -390,9 +390,38 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
 
     return (
         <>
+            <div className={styles.contentHeaderBackground}>
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={18} lg={18} xl={18}>
+                    <Form autoComplete="off" colon={false} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                                    <Form.Item label={`${title}`} name="code">
+                                        <Row gutter={20}>
+                                            <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                                                <TreeSelectField {...treeSelectFieldProps} />
+                                            </Col>
+                                            {organizationId && (
+                                                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                                                    <Search placeholder="Search" allowClear onChange={onChange} className={`${styles.headerSearchField} ${styles.headerSearchInput}`} />
+                                                </Col>
+                                            )}
+                                        </Row>
+                                    </Form.Item>
+                                </Form>
+                    </Col>
+                    {organizationId && (
+                                <Col className={styles.buttonHeadingContainer} xs={24} sm={24} md={6} lg={6} xl={6}>
+                                    <Button type="primary" className={`${styles.changeHistoryModelOpen} ${styles.floatRight}`} onClick={changeHistoryModelOpen}>
+                                        <FaHistory className={styles.buttonIcon} />
+                                        Change History
+                                    </Button>
+                                </Col>
+                    
+                    )}
+                </Row>
+            </div>
             <Row gutter={20} span={24}>
-                <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol} className={`${styles.borderBottomCorner} ${styles.productHierarchy}`}>
-                    <div className={styles.contentHeaderBackground}>
+                <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol} className={`${styles.borderBottomCorner} ${styles.productHierarchy} ${styles.marT20}`}>
+                    {/* <div className={styles.contentHeaderBackground}>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={18} lg={18} xl={18}>
                                 <Form autoComplete="off" colon={false} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
@@ -419,7 +448,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
                                 </Col>
                             )}
                         </Row>
-                    </div>
+                    </div> */}
                     <div className={styles.content}>
                         {productHierarchyData.length <= 0 ? (
                             <div className={styles.emptyContainer}>
@@ -442,7 +471,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
                                 >
                                     {organizationId && (
                                         <div>
-                                            <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
+                                            <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" onClick={handleAdd}>
                                                 Add
                                             </Button>
                                         </div>

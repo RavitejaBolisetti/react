@@ -271,7 +271,7 @@ const AddressMasterBase = (props) => {
                                         )}
                                     </Row>
                                     <Divider className={styles.marT20} />
-                                    <Space direction="vertical" style={{ width: '100%' }}>
+                                    <Space direction="vertical">
                                         <div className={styles.headerBox}>
                                             {!formActionType?.viewMode && showAddEditForm && <AddEditForm {...formProps} />}
                                             {!addressData?.length && !isAdding ? (

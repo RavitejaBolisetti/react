@@ -11,6 +11,7 @@ export const validateOTFMenu = ({ item, status, otfData }) => {
     if (item?.id === OTF_SECTION.INVOICE_INFORMATION.id) {
         return status === OTF_STATUS?.INVOICED.key || status === OTF_STATUS?.DELIVERED.key;
     }
+    
     switch (item?.id) {
         case OTF_SECTION.FINANCE_DETAILS.id:
             return otfData?.financeArrangedBy === FINANCE_ARRANGED_BY?.DEALER?.key;

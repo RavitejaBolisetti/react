@@ -19,9 +19,9 @@ export const ViewDetail = (props) => {
         formActionType: { viewMode },
         supportingData,
         deleteFile,
+        downloadFile,
     } = props;
     const downloadFileFromButton = (uploadData) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Your download will start soon' });
         const extraParams = [
             {
                 key: 'docId',
@@ -30,9 +30,9 @@ export const ViewDetail = (props) => {
                 name: 'docId',
             },
         ];
+
         const documentName = uploadData?.documentName;
-        console.log('uploadData', uploadData, 'extraParams', extraParams, 'supportingDocument', documentName);
-        fetchViewDocument({ setIsLoading: viewListShowLoading, userId, extraParams, documentName });
+        downloadFile({ setIsLoading: viewListShowLoading, userId, extraParams });
     };
 
     return (

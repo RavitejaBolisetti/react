@@ -199,6 +199,12 @@ export const MenuConstant = {
         icon: undefined,
         parentMenuId: 'COMN-11',
     },
+    [getMenyKey('SACT-03.04')]: {
+        key: 'SACT-03.04',
+        link: routing.ROUTING_VEHICLE_PRICE_MASTER,
+        icon: undefined,
+        parentMenuId: 'SACT-03',
+    },
 
     [getMenyKey('MILE-01.04')]: {
         key: 'MILE-01.04',
@@ -293,6 +299,22 @@ export const MenuConstant = {
         link: undefined,
         icon: <RupeeIcon fontSize={22} />,
         parentMenuId: 'WEB',
+    },
+
+    [getMenyKey('FINA-01.04')]: {
+        key: 'FINA-01.04',
+        link: routing.ROUTING_TAX_CHARGES,
+        icon: undefined,
+        parentMenuId: 'FINA-01',
+    },
+
+    //ROUTING_TAX_CHARGES_CATEGORY
+
+    [getMenyKey('FINA-01.05')]: {
+        key: 'FINA-01.05',
+        link: routing.ROUTING_TAX_CHARGES_CATEGORY,
+        icon: undefined,
+        parentMenuId: 'FINA-01',
     },
 
     [getMenyKey('HR')]: {

@@ -20,6 +20,9 @@ import { PlusOutlined } from '@ant-design/icons';
 import { TfiReload } from 'react-icons/tfi';
 import { FiEdit } from 'react-icons/fi';
 import { FaRegEye } from 'react-icons/fa';
+
+import { formatDate } from 'utils/formatDateTime';
+
 import styles from 'components/common/Common.module.css';
 
 const { Search } = Input;
@@ -259,7 +262,7 @@ export const ConfigurableParameterEditingBase = ({ saveFormShowLoading, isLoadin
 
     const onFinish = (values) => {
         const recordId = formData?.id || '';
-        let data = { ...values, id: recordId, isActive: true, configurableParameterType: parameterType, fromDate: values?.fromDate?.format('YYYY-MM-DD'), toDate: values?.toDate?.format('YYYY-MM-DD') };
+        let data = { ...values, id: recordId, isActive: true, configurableParameterType: parameterType, fromDate: formatDate(values?.fromDate), toDate: formatDate(values?.toDate) };
         const onSuccess = (res) => {
             form.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
@@ -369,7 +372,7 @@ export const ConfigurableParameterEditingBase = ({ saveFormShowLoading, isLoadin
                                 <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
 
-                                    <Button icon={<PlusOutlined />} className={`${styles.actionbtn} ${styles.lastheaderbutton}`} type="primary" danger onClick={handleAdd}>
+                                    <Button icon={<PlusOutlined />} className={`${styles.actionbtn} ${styles.lastheaderbutton}`} type="primary" onClick={handleAdd}>
                                         Add
                                     </Button>
                                 </Col>
@@ -403,7 +406,7 @@ export const ConfigurableParameterEditingBase = ({ saveFormShowLoading, isLoadin
                                 {!configData?.length ? (
                                     <Row>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                            <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
+                                            <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" onClick={handleAdd}>
                                                 Add
                                             </Button>
                                         </Col>

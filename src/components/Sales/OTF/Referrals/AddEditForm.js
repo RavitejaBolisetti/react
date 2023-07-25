@@ -8,43 +8,35 @@ import { Col, Input, Form, Row, DatePicker, Card, Select } from 'antd';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
 import { validateRequiredInputField, validateMobileNoField } from 'utils/validation';
-import { formatDateToCalenderDate } from 'utils/formatDateTime';
+import { formattedCalendarDate, dateFormat } from 'utils/formatDateTime';
 
-import { SearchBox } from 'components/utils/SearchBox';
+import { CustomerListMaster } from 'components/utils/CustomerListModal';
 import styles from 'components/common/Common.module.css';
 
 const AddEditFormMain = (props) => {
-    const { form, formData, optionType, searchForm, filterString, setFilterString, typeData } = props;
+    const { form, formData, typeData, fnSetData } = props;
 
     useEffect(() => {
         if (formData) {
             form.setFieldsValue({
                 ...formData,
-                dateOfBirth: formatDateToCalenderDate(formData?.dob || formData?.dateOfBirth),
-                vehicleRegistrationNumber: formData?.registrationNumber || formData?.registrationNumber,
+                dob: formattedCalendarDate(formData?.dob || formData?.dateOfBirth),
+                chassisNumber: formData?.chasisNumber || formData?.chassisNumber,
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
 
-    const serachBoxProps = {
-        searchForm,
-        filterString,
-        optionType: optionType,
-        setFilterString,
-        selectWide: true,
-    };
-
     return (
         <Card style={{ backgroundColor: '#F2F2F2' }}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.referralSearch}>
-                    <SearchBox {...serachBoxProps} />
+                    <CustomerListMaster fnSetData={fnSetData} />
                 </Col>
             </Row>
             <Row gutter={20} className={styles.marT20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.uniqueSearchInput}>
-                    <Form.Item name="vehicleRegistrationNumber" label="Vehicle Registration Number" initialValue={formData?.vehicleRegistrationNumber}>
+                    <Form.Item name="registrationNumber" label="Vehicle Registration Number" initialValue={formData?.registrationNumber}>
                         <Input disabled={true} maxLength={30} placeholder={preparePlaceholderText('Vehicle Registration Number')} />
                     </Form.Item>
                 </Col>
@@ -54,29 +46,34 @@ const AddEditFormMain = (props) => {
                         <Input disabled={true} maxLength={50} placeholder={preparePlaceholderText('Chassis Number')} />
                     </Form.Item>
                 </Col>
+
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name="customerId" label="Customer Code" initialValue={formData?.customerId}>
                         <Input disabled={true} maxLength={6} placeholder={preparePlaceholderText('Customer Code')} />
                     </Form.Item>
                 </Col>
             </Row>
+
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name="customerType" initialValue={formData?.customerType} label="Customer Type" data-testid="customerType">
                         <Select disabled={true} placeholder={preparePlaceholderSelect('customer Type')} fieldNames={{ label: 'value', value: 'key' }} options={typeData?.CUST_TYPE} allowClear></Select>
                     </Form.Item>
                 </Col>
+
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name="customerName" label="Customer Name" initialValue={formData?.customerName}>
                         <Input disabled={true} placeholder={preparePlaceholderText('Customer Name')} maxLength={50} />
                     </Form.Item>
                 </Col>
+
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.uniqueSearchInput}>
                     <Form.Item name="mobileNumber" label="Mobile Number" initialValue={formData?.mobileNumber} rules={[validateRequiredInputField('Mobile Number'), validateMobileNoField('Mobile Number'), { min: 10, message: 'Phone number must be minimum 10 digits Long.' }]}>
                         <Input disabled={true} maxLength={6} placeholder={preparePlaceholderText('Vehicle Registration Number')} />
                     </Form.Item>
                 </Col>
             </Row>
+
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name="emailId" label="Email Id" initialValue={formData?.emailId}>
@@ -84,8 +81,8 @@ const AddEditFormMain = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name="dateOfBirth" label="Date of Birth">
-                        <DatePicker disabled={true} format="YYYY-MM-DD" placeholder={preparePlaceholderText('Date of Birth')} style={{ width: '250px' }} />
+                    <Form.Item name="dob" label="Date of Birth">
+                        <DatePicker disabled={true} format={dateFormat} placeholder={preparePlaceholderText('Date of Birth')} style={{ width: '250px' }} />
                     </Form.Item>
                 </Col>
             </Row>

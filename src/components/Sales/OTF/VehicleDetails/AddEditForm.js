@@ -93,7 +93,7 @@ const AddEditFormMain = (props) => {
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.modelTooltip}>
-                                    {addToolTip(tooltTipText, 'bottom', '#D3EDFE', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}
+                                    {addToolTip(tooltTipText, 'bottom', '#D3EDFE', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor}  size={13} />)}
                                     <Form.Item label="Model" name="model" data-testid="model" rules={[validateRequiredSelectField('Model')]}>
                                         <Select loading={isVehicleLovDataLoading} onSelect={onHandleSelect} placeholder="Select" allowClear options={ProductHierarchyData} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }} showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
                                     </Form.Item>
@@ -178,7 +178,7 @@ const AddEditFormMain = (props) => {
                     <Collapse onChange={() => handleCollapse(2)} expandIconPosition="end" expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={openAccordian}>
                         <Panel header="Tax Details" key="2">
                             <Divider />
-                            <DataTable tableColumn={taxDetailsColumn} tableData={formData['taxDetails']} removePagination={true} />
+                            <DataTable tableColumn={taxDetailsColumn} tableData={formData['taxDetails']} pagination={false} />
                         </Panel>
                     </Collapse>
                     <Collapse onChange={() => handleCollapse(3)} expandIconPosition="end" expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={openAccordian}>
@@ -199,7 +199,7 @@ const AddEditFormMain = (props) => {
                         >
                             {!isReadOnly && <Divider />}
                             {isReadOnly && <OptionServicesForm {...OptionServicesFormProps} />}
-                            <DataTable tableColumn={optionalServicesColumns} tableData={optionsServiceModified} removePagination={true} />
+                            <DataTable tableColumn={optionalServicesColumns} tableData={optionsServiceModified} pagination={false} />
                         </Panel>
                     </Collapse>
                 </Space>

@@ -13,9 +13,11 @@ import { OTFFormButton } from '../OTFFormButton';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { otfDetailsDataActions } from 'store/actions/data/otf/otfDetails';
+import { otfDataActions } from 'store/actions/data/otf/otf';
 import { showGlobalNotification } from 'store/actions/notification';
 import { salesConsultantActions } from 'store/actions/data/otf/salesConsultant';
+import { BASE_URL_OTF_DETAILS as customURL } from 'constants/routingApi';
+import { formatDate } from 'utils/formatDateTime';
 
 import { OTFStatusBar } from '../utils/OTFStatusBar';
 
@@ -26,7 +28,7 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             OTF: {
-                OtfDetails: { isLoaded: isDataLoaded = false, isLoading, data: otfData = [] },
+                OtfSearchList: { isDetailLoaded: isDataLoaded, detailData: otfData = [] },
                 salesConsultantLov: { isLoaded: isSalesConsultantDataLoaded, data: salesConsultantLov = [] },
             },
         },
@@ -37,9 +39,8 @@ const mapStateToProps = (state) => {
     let returnValue = {
         userId,
         isDataLoaded,
-
         otfData,
-        isLoading,
+        isLoading: !isDataLoaded,
         moduleTitle,
         isSalesConsultantDataLoaded,
         salesConsultantLov,
@@ -51,10 +52,10 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchList: otfDetailsDataActions.fetchList,
-            saveData: otfDetailsDataActions.saveData,
-            resetData: otfDetailsDataActions.reset,
-            listShowLoading: otfDetailsDataActions.listShowLoading,
+            fetchOTFDetail: otfDataActions.fetchDetail,
+            saveData: otfDataActions.saveData,
+            resetData: otfDataActions.reset,
+            listShowLoading: otfDataActions.listShowLoading,
 
             fetchSalesConsultant: salesConsultantActions.fetchList,
             listConsultantShowLoading: salesConsultantActions.listShowLoading,
@@ -66,7 +67,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const OtfDetailsMasterBase = (props) => {
     const { typeData, listConsultantShowLoading } = props;
-    const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, otfData, saveData, isLoading } = props;
+    const { userId, showGlobalNotification, section, fetchOTFDetail, listShowLoading, isDataLoaded, otfData, saveData, isLoading } = props;
     const { form, selectedOrderId, formActionType, handleFormValueChange, fetchSalesConsultant, salesConsultantLov, isSalesConsultantDataLoaded, NEXT_ACTION, handleButtonClick } = props;
     const [exchangeValue, setexchangeValue] = useState(false);
     const [loyaltyValue, setloyaltyValue] = useState(false);
@@ -108,7 +109,7 @@ const OtfDetailsMasterBase = (props) => {
                     name: 'OTF Number',
                 },
             ];
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
+            fetchOTFDetail({ customURL, setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedOrderId]);
@@ -124,7 +125,7 @@ const OtfDetailsMasterBase = (props) => {
         const recordId = otfData?.id || '';
         const otfNum = otfData?.otfNumber || '';
         const exchange = values?.exchange === true ? 1 : 0;
-        const data = { ...values, id: recordId, otfNumber: otfNum, loyaltyScheme: values?.loyaltyScheme === true ? 1 : 0, exchange: exchange, initialPromiseDeliveryDate: values?.initialPromiseDeliveryDate?.format('YYYY-MM-DD'), custExpectedDeliveryDate: values?.custExpectedDeliveryDate?.format('YYYY-MM-DD') };
+        const data = { ...values, id: recordId, otfNumber: otfNum, loyaltyScheme: values?.loyaltyScheme === true ? 1 : 0, exchange: exchange, initialPromiseDeliveryDate: formatDate(values?.initialPromiseDeliveryDate), custExpectedDeliveryDate: formatDate(values?.custExpectedDeliveryDate) };
         delete data?.mitraName;
         delete data?.mitraType;
         delete data?.modeOfPAyment;
@@ -132,7 +133,7 @@ const OtfDetailsMasterBase = (props) => {
         const onSuccess = (res) => {
             handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
             // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams });
+            fetchOTFDetail({ customURL, fetchOTFDetail, setIsLoading: listShowLoading, userId, extraParams });
         };
 
         const onError = (message) => {
@@ -140,6 +141,7 @@ const OtfDetailsMasterBase = (props) => {
         };
 
         const requestData = {
+            customURL,
             data: data,
             method: 'put',
             setIsLoading: listShowLoading,
@@ -158,7 +160,7 @@ const OtfDetailsMasterBase = (props) => {
         form,
         onFinish,
         onFinishFailed,
-        fetchList,
+        fetchList: fetchOTFDetail,
         typeData,
 
         userId,

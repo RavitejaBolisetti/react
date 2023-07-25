@@ -45,6 +45,7 @@ const mapStateToProps = (state) => {
         userId,
         isDataLoaded,
         data: data?.customerMasterDetails || [],
+        totalRecords: data?.totalRecords || [],
         isLoading,
         moduleTitle,
         typeData: typeData && typeData[PARAM_MASTER.CUST_MST.id],
@@ -69,7 +70,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const CustomerMasterMain = (props) => {
-    const { data, fetchList, userId, isLoading, listShowLoading, moduleTitle, typeData, resetData } = props;
+    const { data, fetchList, userId, isLoading, listShowLoading, moduleTitle, typeData, resetData, totalRecords } = props;
     const { filterString, setFilterString } = props;
     const { resetViewData } = props;
 
@@ -95,6 +96,8 @@ const CustomerMasterMain = (props) => {
 
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
+    const [page, setPage] = useState({ pageSize: 10, current: 1 });
+    const dynamicPagination = true;
 
     const defaultExtraParam = useMemo(() => {
         return [
@@ -107,18 +110,34 @@ const CustomerMasterMain = (props) => {
             {
                 key: 'pageSize',
                 title: 'Value',
-                value: 100,
+                value: page?.pageSize,
                 canRemove: true,
+                filter: false,
             },
             {
                 key: 'pageNumber',
                 title: 'Value',
-                value: 1,
+                value: page?.current,
                 canRemove: true,
+                filter: false,
+            },
+            {
+                key: 'sortBy',
+                title: 'Sort By',
+                value: page?.sortBy,
+                canRemove: true,
+                filter: false,
+            },
+            {
+                key: 'sortIn',
+                title: 'Sort Type',
+                value: page?.sortType,
+                canRemove: true,
+                filter: false,
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [customerType]);
+    }, [customerType, page]);
 
     const extraParams = useMemo(() => {
         if (filterString) {
@@ -253,6 +272,9 @@ const CustomerMasterMain = (props) => {
     };
 
     const tableProps = {
+        dynamicPagination,
+        totalRecords,
+        setPage,
         isLoading: isLoading,
         tableData: data,
         tableColumn: tableColumn(handleButtonClick),
@@ -385,7 +407,7 @@ const CustomerMasterMain = (props) => {
                                 <div className={`${styles.userManagement} ${styles.headingToggle}`}>
                                     {Object.values(CUSTOMER_TYPE)?.map((item) => {
                                         return (
-                                            <Button type={customerType === item?.id ? 'primary' : 'link'} danger onClick={() => handleCustomerTypeChange(item?.id)}>
+                                            <Button type={customerType === item?.id ? 'primary' : 'link'} onClick={() => handleCustomerTypeChange(item?.id)}>
                                                 {item?.title}
                                             </Button>
                                         );
@@ -396,7 +418,7 @@ const CustomerMasterMain = (props) => {
                                 </div>
                             </Col>
                             <Col xs={24} sm={24} md={10} lg={10} xl={10} className={styles.advanceFilterClear}>
-                                {/* <Button danger type="primary" icon={<PlusOutlined />} onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
+                                {/* <Button type="primary" icon={<PlusOutlined />} onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
                                     Add
                                 </Button> */}
                             </Col>
@@ -453,7 +475,7 @@ const CustomerMasterMain = (props) => {
                                 }
                             >
                                 {showAddButton && !data?.length && (
-                                    <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
+                                    <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
                                         {`Add`}
                                     </Button>
                                 )}

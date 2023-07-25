@@ -8,6 +8,8 @@ import { Row, Col, Input, Form, Select, DatePicker, Card, Collapse, Divider, Spa
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { InfoCircleOutlined } from '@ant-design/icons';
 
+import { dateFormat } from 'utils/formatDateTime';
+import { validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import styles from 'components/common/Common.module.css';
@@ -96,7 +98,7 @@ const AddEditFormMain = (props) => {
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item name="saleConsultant" label="Received On">
-                                <DatePicker disabled={true} format="YYYY-MM-DD" style={{ display: 'auto', width: '100%' }} />
+                                <DatePicker disabled={true} format={dateFormat} style={{ display: 'auto', width: '100%' }} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>

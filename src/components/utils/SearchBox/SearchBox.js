@@ -13,7 +13,7 @@ const { Option } = Select;
 const { Search } = Input;
 
 const SearchBox = (props) => {
-    const { selectWide, searchForm, optionType, searchParamRule, filterString, setFilterString, handleChange } = props;
+    const { selectWide, searchForm, optionType, searchParamRule, filterString, setFilterString, handleChange, disabled = false } = props;
     const onKeyPressHandler = (e) => {
         e.key === 'Enter' && e.preventDefault();
     };
@@ -52,9 +52,9 @@ const SearchBox = (props) => {
         <div className={styles.selectSearchBg}>
             <Form onKeyPress={onKeyPressHandler} form={searchForm} layout="vertical" autoComplete="off">
                 <Form.Item name="searchType" rules={[validateRequiredSelectField('parameter')]}>
-                    <Select placeholder="Select Parameter" {...selectProps}>
+                    <Select disabled={disabled} placeholder="Select Parameter" {...selectProps}>
                         {optionType?.map((item) => (
-                            <Option key={'st' + item.key} value={item.key} selected>
+                            <Option key={'st' + item.key} value={item.key}>
                                 {item.value}
                             </Option>
                         ))}
@@ -62,7 +62,7 @@ const SearchBox = (props) => {
                 </Form.Item>
 
                 <Form.Item {...searchParamRule} name="searchParam" rules={[validateRequiredInputField('search parameter')]} validateTrigger={['onChange', 'onSearch']}>
-                    <Search placeholder="Search" value={filterString?.searchParam} allowClear onChange={handleChange} onSearch={handleSearchParamSearch} className={selectWide ? styles.headerSearchFieldWide : styles.headerSearchField} />
+                    <Search disabled={disabled} placeholder="Search" maxLength={25} value={filterString?.searchParam} allowClear onChange={handleChange} onSearch={handleSearchParamSearch} className={selectWide ? styles.headerSearchFieldWide : styles.headerSearchField} />
                 </Form.Item>
             </Form>
         </div>
