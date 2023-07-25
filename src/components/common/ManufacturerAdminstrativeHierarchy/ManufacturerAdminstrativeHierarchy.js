@@ -37,24 +37,10 @@ import { disableParent } from 'components/common/ProductHierarchy/ProductHierarc
 
 import LeftPanel from '../LeftPanel';
 import styles from 'components/common/Common.module.css';
-import style from './ManufacturerAdmin.module.css';
 
 import { LANGUAGE_EN } from 'language/en';
 
 const { Search } = Input;
-
-const historyOptions = [
-    {
-        key: '1',
-        label: 'Administrative',
-        icon: <FaHistory />,
-    },
-    {
-        key: '2',
-        label: 'Authority',
-        icon: <FaHistory />,
-    },
-];
 
 const mapStateToProps = (state) => {
     const {
@@ -186,7 +172,6 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const [documentTypesList, setDocumentTypesList] = useState([]);
     const [isChangeHistoryVisible, setIsChangeHistoryVisible] = useState(false);
-    const [activeKey, setActiveKey] = useState('1');
     const [organizationId, setOrganizationId] = useState('');
     const [attributeDataOptions, setattributeDataOptions] = useState([]);
     const [ViewDocumentTypesList, setViewDocumentTypesList] = useState([]);
@@ -493,24 +478,6 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         setButtonData({ ...defaultBtnVisiblity });
     };
 
-    const handleTabChange = (key) => {
-        setActiveKey(key);
-    };
-
-    const chgHistoryToggleButton = (
-        <Row>
-            <Col className={style.changeHistoryToggleBtn}>
-                {Object.values(historyOptions)?.map((item) => {
-                    return (
-                        <Button onClick={() => handleTabChange(item?.key)} type={activeKey === item?.key ? 'primary' : 'link'}>
-                            {item?.label}
-                        </Button>
-                    );
-                })}
-            </Col>
-        </Row>
-    );
-
     const onCloseAction = () => {
         form.resetFields();
         setIsUploadDrawer(false);
@@ -522,7 +489,6 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         ...props,
         isVisible: isUploadDrawer,
         titleOverride: drawerTitle,
-        activeKey,
         form: uploadForm,
         typeData,
         userId,
@@ -572,7 +538,8 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         resetViewData,
         isLoading,
         downloadFile,
-        downloadShowLoading,
+        supportedFileTypes,
+        maxSize,
     };
     const organizationFieldNames = { title: 'manufactureOrgShrtName', key: 'id', children: 'subManufactureOrg' };
     const treeOrgFieldNames = { ...organizationFieldNames, label: organizationFieldNames?.title, value: organizationFieldNames?.key };
@@ -602,8 +569,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
     const drawerProps = {
         isVisible: isChangeHistoryVisible,
         onCloseAction: myCloseAction,
-        titleOverride: chgHistoryToggleButton,
-        activeKey,
+        titleOverride: 'Change History',
         organizationId,
     };
     const onfinishHeader = (value) => {};
@@ -705,7 +671,6 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
                     )}
                 </Col>
             </Row>
-
             <ManufactureAdminHierarchyUpload {...uploadProps} />
             <ChangeHistory {...drawerProps} />
             <AddEditForm {...formProps} />

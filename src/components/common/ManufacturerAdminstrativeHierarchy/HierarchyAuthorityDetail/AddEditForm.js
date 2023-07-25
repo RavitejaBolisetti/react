@@ -94,7 +94,7 @@ const AuthorityFormMin = (props) => {
         setErrorMessage();
     };
     const CheckDateEffectiveTo = (value, effectiveFrom) => {
-        const bool = dayjs(value).format('YYYY-DD-MM') >= dayjs(effectiveFrom).format('YYYY-DD-MM');
+        const bool = dayjs(value).format('YYYY-MM-DD') >= dayjs(effectiveFrom).format('YYYY-MM-DD');
         if (bool) {
             return Promise.resolve();
         }
@@ -103,11 +103,14 @@ const AuthorityFormMin = (props) => {
     const checkEffectiveFrom = (value) => {
         const todaDate = new Date();
         const day = todaDate.getDate();
-        const month = todaDate.getMonth() + 1;
+        let month = todaDate.getMonth() + 1;
+        if (month <= 9) {
+            month = '0' + month;
+        }
         const year = todaDate.getFullYear();
         const date = [year, month, day];
-
-        const bool = dayjs(value).format('YYYY-DD-MM') > date?.join('-');
+        console.log('date', date?.join('-'), dayjs(value).format('YYYY-MM-DD'));
+        const bool = dayjs(value).format('YYYY-MM-DD') > date?.join('-');
         if (bool) {
             return Promise.resolve();
         }

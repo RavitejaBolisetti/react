@@ -9,7 +9,7 @@ import { tblPrepareColumns } from 'utils/tableCloumn';
 import { withDrawer } from 'components/withDrawer';
 import { ListDataTable } from 'utils/ListDataTable';
 
-import { convertDate } from 'utils/formatDateTime';
+import { convertDateMonthYear } from 'utils/formatDateTime';
 const ChangeHistoryMain = (props) => {
     const { ChangeHistoryTermsConditionsData } = props;
 
@@ -38,13 +38,13 @@ const ChangeHistoryMain = (props) => {
             title: 'Effective From',
             dataIndex: 'effectiveFrom',
             width: '15%',
-            render: (text) => convertDate(text),
+            render: (text) => convertDateMonthYear(text),
         }),
         tblPrepareColumns({
             title: 'Effective To',
             dataIndex: 'effectiveTo',
             width: '15%',
-            render: (text) => convertDate(text),
+            render: (text) => convertDateMonthYear(text),
         }),
         tblPrepareColumns({
             title: 'Version',
