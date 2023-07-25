@@ -599,6 +599,7 @@ Object {
                           <svg
                             baseProfile="tiny"
                             color="#B5B5B6"
+                            data-testid="addfav"
                             fill="currentColor"
                             height="13"
                             stroke="currentColor"
@@ -2626,6 +2627,7 @@ Object {
                         <svg
                           baseProfile="tiny"
                           color="#B5B5B6"
+                          data-testid="addfav"
                           fill="currentColor"
                           height="13"
                           stroke="currentColor"
