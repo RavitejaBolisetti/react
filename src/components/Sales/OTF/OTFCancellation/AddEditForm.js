@@ -10,7 +10,7 @@ import styles from 'components/common/Common.module.css';
 import style from '../../../common/LeftSideBar/LeftSideBar.module.css';
 import { convertDateTime } from 'utils/formatDateTime';
 import { preparePlaceholderText, preparePlaceholderSelect, preparePlaceholderAutoComplete } from 'utils/preparePlaceholder';
-import { validateRequiredSelectField } from 'utils/validation';
+import { validateRequiredSelectField, validateRequiredInputField } from 'utils/validation';
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
 import { checkAndSetDefaultValue, getStatus } from 'utils/checkAndSetDefaultValue';
@@ -54,6 +54,8 @@ const AddEditFormMain = (props) => {
         setFileList,
         setEmptyList,
         multiple: false,
+        supportedFileTypes : ['image/png', 'image/jpeg', 'application/pdf'],
+        maxSize : 5,
         accept: 'image/png, image/jpeg, application/pdf',
         showUploadList: {
             showRemoveIcon: true,
@@ -192,7 +194,7 @@ const AddEditFormMain = (props) => {
                     </Form.Item>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Form.Item name="cancellationReasonType" label="Cancellation Reason Type" rules={[validateRequiredSelectField('Reason Type')]}>
-                            <Select {...selectProps} placeholder="Select" onChange={handleCancellationReasonTypeChange} allowClear fieldNames={{ label: 'value', value: 'key' }} options={typeData['OTF_CANCL_REASON_TYPE']}></Select>
+                            <Select {...selectProps} placeholder={preparePlaceholderSelect('Cancellation Reason Type')} onChange={handleCancellationReasonTypeChange} allowClear fieldNames={{ label: 'value', value: 'key' }} options={typeData['OTF_CANCL_REASON_TYPE']}></Select>
                         </Form.Item>
                     </Col>
                 </Row>
@@ -253,7 +255,7 @@ const AddEditFormMain = (props) => {
                 </Row>
                 <Row>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Form.Item name="cancellationRemark" label="Cancellation Remarks">
+                        <Form.Item name="cancellationRemark" label="Cancellation Remarks" rules={[validateRequiredInputField('Cancellation Remarks')]}>
                             <TextArea placeholder={preparePlaceholderText('Cancellation Remarks')} />
                         </Form.Item>
                     </Col>

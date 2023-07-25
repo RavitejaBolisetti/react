@@ -3,20 +3,15 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-export const FINANCE_ARRANGED_BY = {
-    DEALER: {
+export const MANUFACTURER_HIERARCHY_TYPE = {
+    ADMINISTRATIVE: {
         id: 1,
-        key: 'DEL',
-        title: 'Dealer',
+        key: 'ADMINISTRATIVE',
+        title: 'Administrative',
     },
-    DSA: {
+    AUTHORITY: {
         id: 2,
-        key: 'DSA',
-        title: 'DSA',
-    },
-    SELF: {
-        id: 2,
-        key: 'SELF',
-        title: 'Self',
+        key: 'AUTHORITY',
+        title: 'Authority',
     },
 };

@@ -7,14 +7,17 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+import { Row, Col, Button } from 'antd';
 import { withDrawer } from 'components/withDrawer';
 
 import { ManufacturerAdminHierarchyChangeHistoryDataActions } from 'store/actions/data/manufacturerAdminHierarchy/manufacturerAdminHierarchyChangeHistory';
 import { ManufacturerOrgHierarchyChangeHistoryDataActions } from 'store/actions/data/manufacturerOrgHierarchy/manufacturerorgHierarchyChangeHistory';
-import { tableColumnAdmin, tableColumnAuthority } from './TableColumns';
+import { tableColumnAdmin, tableColumnAuthority } from './tableColumns';
 
 import { DataTable } from 'utils/dataTable';
-import styles from './../ManufacturerAdmin.module.css';
+import { MANUFACTURER_HIERARCHY_TYPE } from 'constants/manufacturerHierarchyType';
+
+import styles from 'components/common/Common.module.css';
 
 const mapStateToProps = (state) => {
     const {
@@ -58,8 +61,10 @@ const mapDispatchToProps = (dispatch) => ({
 const ChangeHistoryMain = (props) => {
     const { fetchAdminHierarchy, changeHistoryAdminShowLoading, fetchOrgChangeHistoryList, changeHistoryOrgShowLoading } = props;
     const { userId, isAdminHierarchyHistoryLoading, isHistoryOrgHierarchyLoading, ChangeHistoryAdminData, ChangeHistoryOrgData } = props;
-    const { activeKey, organizationId } = props;
-    const [page, setPage] = useState({ pageSize: 10, current: 1 });
+    const { organizationId, onCloseAction } = props;
+
+    const isAdministrative = MANUFACTURER_HIERARCHY_TYPE?.ADMINISTRATIVE.key;
+    const [activeKey, setActiveKey] = useState(isAdministrative);
 
     useEffect(() => {
         if (userId && activeKey) {
@@ -70,38 +75,65 @@ const ChangeHistoryMain = (props) => {
                     value: organizationId,
                     name: 'manufacturerOrgId',
                 },
-                {
-                    key: 'pageNumber',
-                    title: 'pageNumber',
-                    value: page?.current,
-                    name: 'pageNumber',
-                },
-                {
-                    key: 'pageSize',
-                    title: 'pageSize',
-                    value: page?.pageSize,
-                    name: 'pageSize',
-                },
+                // {
+                //     key: 'pageNumber',
+                //     title: 'pageNumber',
+                //     value: page?.current,
+                //     name: 'pageNumber',
+                // },
+                // {
+                //     key: 'pageSize',
+                //     title: 'pageSize',
+                //     value: page?.pageSize,
+                //     name: 'pageSize',
+                // },
             ];
-            if (activeKey === '1') {
+            if (activeKey === isAdministrative) {
                 fetchAdminHierarchy({ setIsLoading: changeHistoryAdminShowLoading, userId, extraParams });
             } else {
                 fetchOrgChangeHistoryList({ setIsLoading: changeHistoryOrgShowLoading, userId, extraParams });
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, activeKey, page?.pageSize, page?.current]);
+    }, [userId, activeKey]);
 
     const tableProps = {
-        isLoading: activeKey === '1' ? isAdminHierarchyHistoryLoading : isHistoryOrgHierarchyLoading,
-        tableColumn: activeKey === '1' ? tableColumnAdmin : tableColumnAuthority,
-        tableData: activeKey === '1' ? ChangeHistoryAdminData : ChangeHistoryOrgData,
-        setPage,
+        pagination: false,
+        isLoading: activeKey === isAdministrative ? isAdminHierarchyHistoryLoading : isHistoryOrgHierarchyLoading,
+        tableColumn: activeKey === isAdministrative ? tableColumnAdmin : tableColumnAuthority,
+        tableData: activeKey === isAdministrative ? ChangeHistoryAdminData : ChangeHistoryOrgData,
+        scroll: { x: 1600, y: 'calc(100vh - 270px)' },
+    };
+
+    const handleTabChange = (key) => {
+        setActiveKey(key);
     };
 
     return (
         <div className={styles.changeHistoryContainer}>
-            <DataTable {...tableProps} />
+            <Row>
+                <Col className={styles.changeHistoryToggleBtn}>
+                    {Object.values(MANUFACTURER_HIERARCHY_TYPE)?.map((item) => {
+                        return (
+                            <Button onClick={() => handleTabChange(item?.key)} type={activeKey === item?.key ? 'primary' : 'link'}>
+                                {item?.title}
+                            </Button>
+                        );
+                    })}
+                </Col>
+            </Row>
+            <Row>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    <DataTable {...tableProps} />
+                </Col>
+            </Row>
+            <Row gutter={20} className={styles.formFooter}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    <Button danger onClick={onCloseAction}>
+                        Close
+                    </Button>
+                </Col>
+            </Row>
         </div>
     );
 };

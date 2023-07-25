@@ -274,7 +274,6 @@ const LeftSideBarMain = (props) => {
                     onClick={handleThemeChange}
                     style={{
                         padding: collapsed ? '10px' : '10px 14px',
-                        position: isMobile ? (collapsed ? 'relative' : 'absolute') : 'absolute',
                     }}
                 >
                     {/* <div className={styles.changeThemeBorder} style={{ padding: collapsed ? '9px 10px' : '5px' }}> */}

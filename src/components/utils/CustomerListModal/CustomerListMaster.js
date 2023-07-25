@@ -55,16 +55,12 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const CustomerListBase = (props) => {
-    const { showGlobalNotification, listShowLoading, userId, referralData, fnSetData = undefined } = props;
+    const { showGlobalNotification, listShowLoading, userId, referralData, fnSetData = undefined, disabled = false } = props;
     const { handleFormValueChange, fetchCustomerList, typeData } = props;
 
     const [searchForm] = Form.useForm();
     const [selectedRowData, setSelectedRowData] = useState();
     const [filterString, setFilterString] = useState();
-    console.log('🚀 ~ file: CustomerListMaster.js:70 ~ CustomerListBase ~ filterString:', filterString);
-    // const { filterString, setFilterString } = props;
-
-    console.log('🚀 ~ file: ReferralsMaster.js:80 ~ ReferralsMasterBase ~ selectedRowData:', selectedRowData);
 
     const [isCusomerSearchVisible, setCusomerSearchVisible] = useState(false);
     const [customerList, setCustomerList] = useState();
@@ -167,6 +163,7 @@ const CustomerListBase = (props) => {
         optionType: typeData[PARAM_MASTER?.CUST_VEH_SEARCH?.id],
         setFilterString,
         selectWide: true,
+        disabled,
     };
 
     return (

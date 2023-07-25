@@ -32,7 +32,6 @@ const ViewDetailMain = (props) => {
                         <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse('ci')} expandIconPosition="end">
                             <Panel header="Accessories Information" key={'ci'}>
                                 <Divider />
-
                                 {formData?.partDetailsResponses?.map((element, i) => {
                                     return (
                                         <div className={styles.accessInfo}>
@@ -64,21 +63,25 @@ const ViewDetailMain = (props) => {
                         </Collapse>
                         <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse('shield')} expandIconPosition="end">
                             <Panel header="Shield" key="shield">
+                                <Divider />
                                 <ShieldForm formActionType={formActionType} formData={formData} shieldForm={shieldForm} />
                             </Panel>
                         </Collapse>
                         <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse('Amc')} expandIconPosition="end">
                             <Panel header="Amc" key={'Amc'}>
+                                <Divider />
                                 <AMCForm formActionType={formActionType} formData={formData} amcForm={amcForm} />
                             </Panel>
                         </Collapse>
                         <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse('Rsa')} expandIconPosition="end">
                             <Panel header="RSA" key={'Rsa'}>
+                                <Divider />
                                 <RSAForm formActionType={formActionType} formData={formData} rsaForm={rsaForm} />
                             </Panel>
                         </Collapse>
                         <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse('fMS')} expandIconPosition="end">
                             <Panel header="FMS" key={'fMS'}>
+                                <Divider />
                                 <FMSForm formActionType={formActionType} formData={formData} fmsForm={fmsForm} />
                             </Panel>
                         </Collapse>

@@ -53,7 +53,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const AddEditFormMain = (props) => {
     const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined, isVisible, fetchTaxChargeCategoryDetail, setDisabledEdit, disabledEdit, userId, handleCodeFunction, taxChargeCategoryCodeData, onFinish, onFinishFailed, stateData, saleData, taxChargeCategoryTypeData, editForm, taxChargeCalForm } = props;
-    const { buttonData, setButtonData, handleButtonClick, formEdit, setFormEdit, taxChargeCalList, setTaxChargeCalList, taxMasterId, setTaxMasterId } = props;
+    const { buttonData, setButtonData, handleButtonClick, formEdit, setFormEdit, taxChargeCalList, setTaxChargeCalList } = props;
 
     const [openAccordian, setOpenAccordian] = useState(1);
     const [taxCategory, setTaxCategory] = useState();
@@ -90,15 +90,17 @@ const AddEditFormMain = (props) => {
     }, [formData]);
 
     useEffect(() => {
-        let obj = {
-            taxCategoryCode: taxCategory?.taxCategoryCode,
-            taxCategoryDescription: taxCategory?.taxCategoryDescription,
-            stateCode: taxCategory?.stateCode,
-            saleType: taxCategory?.saleType,
-            status: taxCategory?.status,
-        };
-        form.setFieldsValue({ obj });
-    });
+        if (!viewMode) {
+            form.setFieldsValue({
+                taxCategoryCode: taxCategory?.taxCategoryCode,
+                taxCategoryDescription: taxCategory?.taxCategoryDescription,
+                stateCode: taxCategory?.stateCode,
+                saleType: taxCategory?.saleType,
+                status: taxCategory?.status,
+            });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [taxCategory]);
 
     const viewProps = {
         isVisible: viewMode,
@@ -131,13 +133,9 @@ const AddEditFormMain = (props) => {
         taxCategory,
         taxChargeCalList,
         setTaxChargeCalList,
-        taxMasterId,
-        setTaxMasterId
-
+        buttonData,
+        setButtonData,
     };
-
-    console.log(viewMode, 'viewMode');
-
     return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             {viewMode ? (

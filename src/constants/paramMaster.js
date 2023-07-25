@@ -224,4 +224,8 @@ export const PARAM_MASTER = {
         id: 'LOMMD',
         title: 'Lost other M&M Dealer',
     },
+    SALE_TYPE: {
+        id: 'SALE_TYPE',
+        title: 'Sales Type',
+    },
 };

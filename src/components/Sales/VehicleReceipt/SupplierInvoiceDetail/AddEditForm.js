@@ -6,9 +6,8 @@
 import React from 'react';
 import { Row, Col, Input, Form, DatePicker, Card } from 'antd';
 
-import { formattedCalendarDate } from 'utils/formatDateTime';
-
 import { validateRequiredSelectField, validateRequiredInputField } from 'utils/validation';
+import { formattedCalendarDate } from 'utils/formatDateTime';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import styles from 'components/common/Common.module.css';

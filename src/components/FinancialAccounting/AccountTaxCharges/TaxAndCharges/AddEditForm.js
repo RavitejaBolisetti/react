@@ -49,18 +49,14 @@ const AddEditFormMain = (props) => {
 
     const taxChargeTypeList = Object.values(TAX_CHARGES_TYPE);
 
-    const currentAttribute = taxChargeTypeList?.find((i) => i.ORDER);
-    attributeCode = currentAttribute?.KEY;
-    setAttributeType(attributeCode);
-
     if (formActionType === FROM_ACTION_TYPE.EDIT || formActionType === FROM_ACTION_TYPE.VIEW) {
         treeCodeId = formData?.parentCode;
         attributeCode = formData?.attributeTypeCode;
+        setAttributeType(attributeCode);
     } else if (formActionType === FROM_ACTION_TYPE.CHILD) {
         treeCodeId = selectedTreeKey && selectedTreeKey[0];
         treeCodeReadOnly = true;
         attributeCode = formData?.attributeTypeCode;
-
         const treeCodeData = flatternData.find((i) => i.key === treeCodeId);
         const currentAttributeOrder = taxChargeTypeList?.find((i) => i.KEY === treeCodeData?.data?.attributeTypeCode)?.ORDER;
         const childAttribute = taxChargeTypeList?.find((i) => i?.ORDER > currentAttributeOrder);
@@ -70,8 +66,11 @@ const AddEditFormMain = (props) => {
         treeCodeReadOnly = true;
         const treeCodeData = flatternData.find((i) => i.key === selectedTreeKey[0]);
         treeCodeId = treeCodeData && treeCodeData?.data?.parentCode;
-
         const currentAttribute = taxChargeTypeList?.find((i) => i.KEY === treeCodeData?.data?.attributeTypeCode);
+        attributeCode = currentAttribute?.KEY;
+        setAttributeType(attributeCode);
+    } else {
+        const currentAttribute = taxChargeTypeList?.find((i) => i.ORDER);
         attributeCode = currentAttribute?.KEY;
         setAttributeType(attributeCode);
     }

@@ -38,6 +38,7 @@ const mapStateToProps = (state) => {
             LeftSideBar: { collapsed = false },
         },
     } = state;
+    console.log(manufacturerOrgHierarchyData, 'manufacturerOrgHierarchyData');
     const moduleTitle = 'Manufacturer Organisation Detail';
     const viewTitle = 'Hierarchy Details';
 
@@ -92,6 +93,7 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
     const fieldNames = { title: 'manufactureOrgShrtName', key: 'id', children: 'subManufactureOrg' };
+
     const onKeyPressHandler = (e) => {
         e.key === 'Enter' && e.preventDefault();
     };
@@ -136,7 +138,7 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
         return dataList;
     };
 
-    const flatternData = generateList(finalManufacturerOrgHierarchyData);
+    const flatternData = finalManufacturerOrgHierarchyData && generateList(finalManufacturerOrgHierarchyData);
 
     const handleTreeViewClick = (keys) => {
         form.resetFields();
@@ -313,9 +315,8 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
                     )}
                 </Row>
             </div>
-            <Row gutter={20} span={24} >
+            <Row gutter={20} span={24}>
                 <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol} className={`${styles.borderBottomCorner} ${styles.marT20}`}>
-                   
                     <div className={styles.content}>
                         {manufacturerOrgHierarchyData?.length <= 0 ? (
                             <div className={styles.emptyContainer}>
@@ -343,7 +344,7 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
 
                 <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol} className={styles.padRight0}>
                     {selectedTreeData && selectedTreeData?.id ? (
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{paddingRight: 0 }}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{ paddingRight: 0 }}>
                             <ViewManufacturerOrgDetail {...viewProps} />
                             <div className={styles.hyrbuttonContainer}>
                                 <HierarchyFormButton {...viewProps} />

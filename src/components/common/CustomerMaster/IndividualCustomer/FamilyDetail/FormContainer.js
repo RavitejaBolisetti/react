@@ -29,7 +29,6 @@ const FormBase = (props) => {
 
     const onDateChange = (prop) => {
         let dateString = formattedCalendarDate(prop);
-
         let calAge1 = GetAge(dateString);
         form.setFieldsValue({
             relationAge: calAge1,
