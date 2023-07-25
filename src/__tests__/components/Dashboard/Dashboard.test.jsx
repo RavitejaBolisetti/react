@@ -9,7 +9,6 @@ describe("dashboard component render",()=>{
     it("should render dashboard component ",()=>{
       customRender(<Dashboard />)
       expect(screen.getByText(/Home/i)).toBeInTheDocument();
-    screen.debug();
     });
     it("should check button events", async()=>{
       customRender(<Dashboard LeftSideBar={LeftSideBar}/>)

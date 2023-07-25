@@ -5,6 +5,9 @@ import {
   BASE_URL_VERIFY_USER, 
   BASE_URL_CHANGE_PASSWORD, 
   BASE_URL_MENU,
+  BASE_URL_GENERATE_OTP,
+  BASE_URL_VALIDATE_OTP,
+  BASE_URL_MENU_FAVOURITE,
 } from 'constants/routingApi';
 
 export const handlers = [
@@ -17,7 +20,7 @@ export const handlers = [
       );
     } else {
       return res(
-        ctx.status(401),
+        ctx.status(400),
         ctx.json({ error: 'Invalid credentials' })
       );
     }
@@ -37,8 +40,38 @@ export const handlers = [
       );
     } else {
       return res(
-        ctx.status(401),
+        ctx.status(404),
         ctx.json({ error: 'USER_NOT_FOUND' })
+      );
+    }
+  }),
+  rest.post(BASE_URL_GENERATE_OTP, (req,res,ctx) => {
+    const { userId } = req.json();
+    if (userId == 'test') {
+      return res(
+        ctx.status(200),
+        ctx.json({userId: "sushil", sentOnMobile: true, sentOnEmail: true})
+      )
+    }
+    else{
+      return res(
+        ctx.status(400),
+        ctx.json({ error: 'This OTP is expired.' })
+      );
+    }
+  }),
+  rest.post(BASE_URL_VALIDATE_OTP, (req, res, ctx) =>{
+    const { userId } = req.json();
+    if (userId == 'test' && otp==='123456') {
+      return res(
+        ctx.status(200),
+        ctx.json({userId: "sushil", otp: "123456",validationKey:"2b4b15bf-a5c1-46b6-b75e-08666490cee7"}),
+      )
+    }
+    else{
+      return res(
+        ctx.status(400),
+        ctx.json({ error: 'The OTP you entered is invalid. Please make sure you entered the correct OTP and try again.' })
       );
     }
   }),
@@ -118,6 +151,14 @@ export const handlers = [
                 ]
             }
       ),
+      ctx.delay(100)
+    )
+
+  }),
+  rest.put(BASE_URL_MENU_FAVOURITE, (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({menuId: "COMN-10.01", addOrRemove: "add"}),
       ctx.delay(100)
     )
 

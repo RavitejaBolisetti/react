@@ -24,7 +24,7 @@ const props = {
     setFormData: jest.fn(),
     showGlobalNotification: jest.fn(),
     forceUpdate: jest.fn(),
-    handleFormValueChange: jest.fn(),
+    handleFormChange: jest.fn(),
     handleFormFieldChange: jest.fn(),
     doCloseLoginError: jest.fn(),
 };
@@ -32,7 +32,7 @@ const props = {
 describe('Login Form Component', () => {
    
     it('should render Login Form', async () => {
-        customRender(<Logins handler={handler} />);
+        customRender(<Logins handler={handler} {...props} />);
         expect(
             screen.getByRole('heading', {
                 name: /Welcome/i,
@@ -49,19 +49,19 @@ describe('Login Form Component', () => {
         expect(screen.getByRole('link', { name: /m&m user login/i })).toBeInTheDocument();
     });
     it('should check forgot password link event', async () => {
-        customRender(<Logins handler={handler} />);
+        customRender(<Logins handler={handler} {...props}  />);
         const forgetLink = screen.getByRole('link', { name: /Forgot Password?/i });
         expect(forgetLink.getAttribute('href')).toBe('/forgot-password');
     });
     it('should check application home event event', async () => {
-        customRender(<Logins handler={handler} />);
+        customRender(<Logins handler={handler} {...props}  />);
         const loginLink = screen.getByRole('link', { name: /M&M User Login/i });
         expect(loginLink.getAttribute('href')).toBe('/');
     });
 
     it('should render login form input field username and password', async () => {
         jest.setTimeout(200000);
-        const { getByTestId } = customRender(<Logins handler={handler} />);
+        const { getByTestId } = customRender(<Logins handler={handler} {...props} />);
 
         const userName = getByTestId('userNameInput');
         fireEvent.change(userName, {
@@ -90,7 +90,7 @@ describe('Login Form Component', () => {
 describe("check login form flow", ()=>{
     it("should check login details enter incorrect", async()=>{
         jest.setTimeout(200000);
-       const {getByTestId} = customRender(<Logins handler={handler} />);
+       const { getByTestId } = customRender(<Logins handler={handler} {...props} />);
 
         const userName = getByTestId('userNameInput');
         fireEvent.change(userName, {
@@ -103,11 +103,7 @@ describe("check login form flow", ()=>{
             target: { value: 'wrong-password' },
         });
        expect(userPassword.value.includes('wrong-password'));
-
-
             fireEvent.click(screen.getByText('Login'));
-
-
         await waitFor(() =>{
             screen.findByText("Invalid credentials");
         })

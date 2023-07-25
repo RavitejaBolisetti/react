@@ -21,7 +21,6 @@ describe('AllowedTimingCard Components', () => {
     it('should render AllowedTimingCard components', () => {
         const { container } = customRender(<AllowedTimingCard />);
         expect(container.firstChild).toHaveClass('timingCardItem');
-        screen.debug();
     });
     it('should render text', () => {
         customRender(<AllowedTimingCard />);
@@ -31,7 +30,6 @@ describe('AllowedTimingCard Components', () => {
     it('should render text', async () => {
         customRender(<AllowedTimingCard {...props} />);
         const screenText = screen.getByRole('button');
-
         fireEvent.click(screenText);
     });
     it('should render text', () => {
