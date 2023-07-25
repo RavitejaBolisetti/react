@@ -2518,6 +2518,7 @@
     border-spacing: 0;
 }
 
+.drawerBodyRight .accordianContainer :global .ant-collapse>.ant-collapse-item>.ant-collapse-header,
 .drawerBodyRight .viewDrawerContainer :global .ant-collapse>.ant-collapse-item>.ant-collapse-header {
     padding: 20px 30px;
 }
