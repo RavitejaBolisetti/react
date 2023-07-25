@@ -153,7 +153,7 @@ const UploadMain = (props) => {
                         <Space className={styles.accordianIconWithText}>Authority Form</Space>
                         <Space>Please download "Authority Form Template" using below button</Space>
                         <Space>
-                            <Button type="primary" onClick={handleTemplateDownLoad}>
+                            <Button type="primary" onClick={getDocIdFromOrgId}>
                                 Download Template
                             </Button>
                         </Space>
