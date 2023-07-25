@@ -182,11 +182,12 @@ export const dataActions = (params) => {
         }),
 
         saveData: withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-            const { setIsLoading, onError, data, userId, onSuccess, method = 'post', customURL } = params;
+            const { setIsLoading, onError, data, userId, onSuccess, method = 'post', customURL, extraParams } = params;
             setIsLoading(true);
 
             const onSuccessAction = (res) => {
                 onSuccess(res);
+                // RECEIVE_DATA_ACTION_CONSTANT && dispatch(innerDataActions.fetchList({ setIsLoading: () => {}, userId, extraParams }));
                 RECEIVE_FILTERED_DATA_ACTION_CONSTANT && dispatch(innerDataActions.fetchFilteredList({ setIsLoading: () => {}, userId }));
             };
 

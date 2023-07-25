@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -16,17 +16,16 @@ export const MANUFACTURER_ORG_HIERARCHY_CHANGE_HISTORY_DATA_LOADED = 'MANUFACTUR
 export const MANUFACTURER_ORG_HIERARCHY_CHANGE_HISTORY_SHOW_LOADING = 'MANUFACTURER_ORG_HIERARCHY_CHANGE_HISTORY_SHOW_LOADING';
 export const MANUFACTURER_ORG_HIERARCHY_CHANGE_HISTORY_VISIBLE = 'MANUFACTURER_ORG_HIERARCHY_CHANGE_HISTORY_VISIBLE';
 
-
 const receiveManufacturerOrgHierarchyData = (data) => ({
     type: MANUFACTURER_ORG_HIERARCHY_DATA_LOADED,
     isLoaded: true,
     data,
 });
 
-const receiveChangeHistoryData = (data) => ({
+const receiveChangeHistoryData = (historyData) => ({
     type: MANUFACTURER_ORG_HIERARCHY_CHANGE_HISTORY_DATA_LOADED,
     isLoaded: true,
-    data,
+    historyData,
 });
 
 const manufacturerOrgHierarchyDataActions = {};
@@ -54,7 +53,7 @@ manufacturerOrgHierarchyDataActions.changeHistoryShowLoading = (isLoading) => ({
 manufacturerOrgHierarchyDataActions.fetchList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
     const { setIsLoading, errorAction, data } = params;
     setIsLoading(true);
-    const onError = () => ('Internal Error, Please try again');
+    const onError = () => 'Internal Error, Please try again';
 
     const onSuccess = (res) => {
         if (res?.data) {

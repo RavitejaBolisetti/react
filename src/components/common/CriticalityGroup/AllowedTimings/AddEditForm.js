@@ -8,7 +8,8 @@ import { Input, Form, Col, Row, Button, TimePicker, Space } from 'antd';
 
 import { validateRequiredInputField } from 'utils/validation';
 
-import style from '../../Common.module.css';
+// import style from '../../Common.module.css';
+import style from 'components/common/Common.module.css';
 
 const AddEditForm = (props) => {
     const { allowedTimingSave, isAddTimeVisible, form, onFinish, handleFormValueChange, handleFormFieldChange } = props;
@@ -30,7 +31,7 @@ const AddEditForm = (props) => {
                                         <TimePicker placeholder={'End time*'} use12Hours size="large" format="h:mm A" />
                                     </Form.Item>
                                 </Col>
-                                <Col xs={4} sm={4} md={4} lg={4} xl={4} xxl={4}>
+                                <Col xs={4} sm={4} md={4} lg={4} xl={4} xxl={4} className={style.verticallyCentered} >
                                     <Button disabled={allowedTimingSave} type="link" htmlType="submit">
                                         Save
                                     </Button>

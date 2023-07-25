@@ -29,7 +29,6 @@ export default function AdvanceVehiclePriceMasterFilter(props) {
         handleOnClick,
     } = props;
 
-    
     const serachBoxProps = {
         searchForm,
         filterString,
@@ -84,8 +83,6 @@ export default function AdvanceVehiclePriceMasterFilter(props) {
                             <Col xs={24} sm={24} md={24} lg={22} xl={22} className={styles.advanceFilterContainer}>
                                 <div className={styles.advanceFilterTitle}>Applied Advance Filters : </div>
                                 {extraParams?.map((filter) => {
-                                 
-
                                     return (
                                         filter?.value &&
                                         filter?.filter && (
