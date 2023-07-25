@@ -7,10 +7,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { Form, Row, Col } from 'antd';
 import { bindActionCreators } from 'redux';
-// import { convertDate } from 'utils/formatDateTime';
 import { tableColumn } from './tableColumn';
-
-// import { BASE_URL_GEO_GRAPHY_PINCODE_REPORT } from 'constants/routingApi';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
@@ -20,18 +17,17 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { AddEditForm } from './AddEditForm';
 import { AdvancedSearch } from './AdvancedSearch';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
-import { filterFunction } from 'utils/filterFunction';
 import { btnVisiblity } from 'utils/btnVisiblity';
 
 import { searchValidatorPincode } from 'utils/validation';
 import { FilterIcon } from 'Icons';
 
-import { geoCountryDataActions } from 'store/actions/data/geo/country';
-import { geoStateDataActions } from 'store/actions/data/geo/state';
-import { geoDistrictDataActions } from 'store/actions/data/geo/district';
-import { geoTehsilDataActions } from 'store/actions/data/geo/tehsil';
-import { geoCityDataActions } from 'store/actions/data/geo/city';
-import { geoPincodeDataActions } from 'store/actions/data/geo/pincode';
+import { geoCountryDataActions } from 'store/actions/data/geo/countries';
+import { geoStateDataActions } from 'store/actions/data/geo/states';
+import { geoDistrictDataActions } from 'store/actions/data/geo/districts';
+import { tehsilDataActions } from 'store/actions/data/geo/tehsils';
+import { geoCityDataActions } from 'store/actions/data/geo/cities';
+import { geoPinCodeDataActions } from 'store/actions/data/geo/pincodes';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
 import styles from 'components/common/Common.module.css';
@@ -73,11 +69,12 @@ const mapStateToProps = (state) => {
         districtData,
         isTehsilDataLoaded,
         isTehsilLoading,
-        tehsilData,
+        tehsilData: tehsilData,
         isCityDataLoaded,
         isCityLoading,
         cityData,
-        data,
+        data: data?.pinCodeDetails,
+        totalRecords: data?.totalRecords,
         stateData,
         isDataLoaded,
         typeData: typeData && typeData[PARAM_MASTER.PIN_CATG.id],
@@ -97,15 +94,15 @@ const mapDispatchToProps = (dispatch) => ({
             listStateShowLoading: geoStateDataActions.listShowLoading,
             fetchDistrictLovList: geoDistrictDataActions.fetchFilteredList,
             listDistrictShowLoading: geoDistrictDataActions.listShowLoading,
-            fetchTehsilLovList: geoTehsilDataActions.fetchFilteredList,
-            listTehsilShowLoading: geoTehsilDataActions.listShowLoading,
+            fetchTehsilLovList: tehsilDataActions.fetchFilteredList,
+            listTehsilShowLoading: tehsilDataActions.listShowLoading,
             fetchCityLovList: geoCityDataActions.fetchFilteredList,
             listCityShowLoading: geoCityDataActions.listShowLoading,
-            fetchList: geoPincodeDataActions.fetchList,
-            listShowLoading: geoPincodeDataActions.listShowLoading,
-            exportToExcel: geoPincodeDataActions.exportToExcel,
-            saveData: geoPincodeDataActions.saveData,
-            resetData: geoPincodeDataActions.reset,
+            fetchList: geoPinCodeDataActions.fetchList,
+            listShowLoading: geoPinCodeDataActions.listShowLoading,
+            exportToExcel: geoPinCodeDataActions.exportToExcel,
+            saveData: geoPinCodeDataActions.saveData,
+            resetData: geoPinCodeDataActions.reset,
             showGlobalNotification,
         },
         dispatch
@@ -120,7 +117,7 @@ const ListPinCodeMasterBase = (props) => {
     const { isDistrictDataLoaded, isDistrictLoading, districtData, listDistrictShowLoading, fetchDistrictLovList } = props;
     const { isTehsilDataLoaded, isTehsilLoading, tehsilData, listTehsilShowLoading, fetchTehsilLovList } = props;
     const { isCityDataLoaded, isCityLoading, cityData, listCityShowLoading, fetchCityLovList } = props;
-    const { typeData } = props;
+    const { typeData, totalRecords } = props;
 
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
@@ -139,13 +136,15 @@ const ListPinCodeMasterBase = (props) => {
     const [filterString, setFilterString] = useState();
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
-    const [searchData, setSearchdata] = useState([]);
 
     const [tehsilCodeValue, setTehsilCodeValue] = useState();
     const [cityCodeValue, setCityCodeValue] = useState();
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
+
+    const [page, setPage] = useState({ pageSize: 10, current: 1 });
+    const dynamicPagination = true;
 
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
@@ -173,6 +172,82 @@ const ListPinCodeMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    const extraParams = useMemo(() => {
+        return [
+            {
+                key: 'countryCode',
+                title: 'Country',
+                value: filterString?.countryCode,
+                name: countryData?.find((i) => i?.countryCode === filterString?.countryCode)?.countryName,
+                canRemove: false,
+            },
+            {
+                key: 'stateCode',
+                title: 'State',
+                value: filterString?.stateCode,
+                name: filteredStateData?.find((i) => i?.key === filterString?.stateCode)?.value,
+                canRemove: false,
+            },
+            {
+                key: 'districtCode',
+                title: 'District',
+                value: filterString?.districtCode,
+                name: filteredDistrictData?.find((i) => i?.key === filterString?.districtCode)?.value,
+                canRemove: false,
+            },
+            {
+                key: 'tehsilCode',
+                title: 'Tehsil',
+                value: filterString?.tehsilCode,
+                name: filteredTehsilData?.find((i) => i?.key === filterString?.tehsilCode)?.value,
+                canRemove: false,
+            },
+            {
+                key: 'cityCode',
+                title: 'City',
+                value: filterString?.cityCode,
+                name: filteredCityData?.find((i) => i?.key === filterString?.cityCode)?.value,
+                canRemove: false,
+            },
+            {
+                key: 'pincode',
+                title: 'Pincode',
+                value: filterString?.pincode,
+                name: filterString?.pincode,
+                canRemove: true,
+            },
+            {
+                key: 'pageSize',
+                title: 'Value',
+                value: page?.pageSize,
+                canRemove: true,
+                filter: false,
+            },
+            {
+                key: 'pageNumber',
+                title: 'Value',
+                value: page?.current,
+                canRemove: true,
+                filter: false,
+            },
+            {
+                key: 'sortBy',
+                title: 'Sort By',
+                value: page?.sortBy,
+                canRemove: true,
+                filter: false,
+            },
+            {
+                key: 'sortIn',
+                title: 'Sort Type',
+                value: page?.sortType,
+                canRemove: true,
+                filter: false,
+            },
+        ];
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [filterString, page]);
+
     useEffect(() => {
         if (userId) {
             if (!isDataCountryLoaded && !isCountryLoading) {
@@ -199,7 +274,7 @@ const ListPinCodeMasterBase = (props) => {
     }, [userId, isDataCountryLoaded, isStateDataLoaded, isDistrictDataLoaded, isCityDataLoaded, isTehsilDataLoaded, isDataLoaded]);
 
     const loadPinCodeDataList = () => {
-        if (userId && (filterString?.pincode || (filterString?.countryCode && filterString?.stateCode && filterString?.districtCode))) {
+        if (userId) {
             setShowDataLoading(true);
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
@@ -247,72 +322,11 @@ const ListPinCodeMasterBase = (props) => {
     }, [isDataCountryLoaded, isStateDataLoaded]);
 
     useEffect(() => {
-        if (!showDataLoading && data && userId) {
-            if (filterString?.length > 0) {
-                const keyword = filterString?.pincode ? filterString?.pincode : filterString?.keyword;
-                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.pincode) : true));
-                setSearchdata(filterDataItem?.map((el, i) => ({ ...el, srl: i + 1 })));
-                setShowDataLoading(false);
-            }
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, isDataLoaded, userId]);
-
-    useEffect(() => {
-        setSearchdata(data?.map((el, i) => ({ ...el, srl: i + 1 })));
-    }, [data]);
-
-    const extraParams = [
-        {
-            key: 'countryCode',
-            title: 'Country',
-            value: filterString?.countryCode,
-            name: countryData?.find((i) => i?.countryCode === filterString?.countryCode)?.countryName,
-            canRemove: false,
-        },
-        {
-            key: 'stateCode',
-            title: 'State',
-            value: filterString?.stateCode,
-            name: filteredStateData?.find((i) => i?.key === filterString?.stateCode)?.value,
-            canRemove: false,
-        },
-        {
-            key: 'districtCode',
-            title: 'District',
-            value: filterString?.districtCode,
-            name: filteredDistrictData?.find((i) => i?.key === filterString?.districtCode)?.value,
-            canRemove: false,
-        },
-        {
-            key: 'tehsilCode',
-            title: 'Tehsil',
-            value: filterString?.tehsilCode,
-            name: filteredTehsilData?.find((i) => i?.key === filterString?.tehsilCode)?.value,
-            canRemove: false,
-        },
-        {
-            key: 'cityCode',
-            title: 'City',
-            value: filterString?.cityCode,
-            name: filteredCityData?.find((i) => i?.key === filterString?.cityCode)?.value,
-            canRemove: false,
-        },
-        {
-            key: 'pincode',
-            title: 'Pincode',
-            value: filterString?.pincode,
-            name: filterString?.pincode,
-            canRemove: true,
-        },
-    ];
-
-    useEffect(() => {
-        if (userId && filterString) {
+        if (userId && filterString && page) {
             loadPinCodeDataList();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, userId]);
+    }, [filterString, userId, page]);
 
     const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
@@ -503,11 +517,16 @@ const ListPinCodeMasterBase = (props) => {
             Please search with pincode OR country, state, tehsil, city <br /> to view data
         </>
     );
-    const tableProps = {
-        tableColumn: tableColumn(handleButtonClick),
-        tableData: searchData,
 
+    const tableProps = {
+        dynamicPagination,
+        totalRecords,
+        setPage,
+        isLoading: showDataLoading,
+        tableColumn: tableColumn(handleButtonClick),
+        tableData: data,
         noDataMessage: dataMessage,
+        scroll: 1800,
     };
 
     const onAdvanceSearchCloseAction = () => {
@@ -571,14 +590,12 @@ const ListPinCodeMasterBase = (props) => {
     const handleClearInSearch = (e) => {
         if (e.target.value.length > 2) {
             listFilterForm.validateFields(['code']);
-        }
-        else if (e?.target?.value === '') {
+        } else if (e?.target?.value === '') {
             setFilterString();
             listFilterForm.resetFields();
             setShowDataLoading(false);
         }
     };
-
 
     const removeFilter = (key) => {
         if (key === 'countryCode') {
@@ -638,7 +655,7 @@ const ListPinCodeMasterBase = (props) => {
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.tableProduct}>
-                        <ListDataTable isLoading={showDataLoading} scroll={1800} {...tableProps} handleAdd={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })} addTitle={title} />
+                        <ListDataTable {...tableProps} handleAdd={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })} addTitle={title} />
                     </div>
                 </Col>
             </Row>

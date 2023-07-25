@@ -9,59 +9,29 @@ import { Button } from 'antd';
 import { FiEdit, FiTrash } from 'react-icons/fi';
 
 export const tableColumn = (props) => {
-    const { handleEdit, identification, isEditing, viewMode = false, handleSave, handleCancel, renderFormItems, handleDelete } = props;
+    const { handleButtonClick, formActionType, bindCodeValue } = props;
     const tableColumn = [
-        {
+        tblPrepareColumns({
             title: 'Item',
-            dataIndex: 'serviceName',
+            dataIndex: 'item',
             width: '20%',
-            render: (text, record, index) => renderFormItems({ dataIndex: 'serviceName', ...props, Index: index, text: text }),
-        },
-
-        {
+            render: (text, record, index) => bindCodeValue(text, 'item'),
+        }),
+        tblPrepareColumns({
             title: 'Make ',
             dataIndex: 'make',
             width: '20%',
-            render: (text, record, index) => renderFormItems({ dataIndex: 'make', ...props, Index: index, text: text }),
-        },
-        {
-            title: 'Serial No. ',
-            dataIndex: 'amount',
-            width: '20%',
-            render: (text, record, index) => renderFormItems({ dataIndex: 'amount', ...props, Index: index, text: text }),
-        },
-        !viewMode && {
-            title: 'Action',
-            dataIndex: 'Action',
-            key: 'Action',
-            width: '25%',
-            render: (text, record, index) => {
-                console.log('tableRecord', index);
-                return (
-                    <>
-                        {index !== identification ? (
-                            <>
-                                <Button disabled={isEditing} data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" icon={<FiEdit />} onClick={(e) => handleEdit({ record, index })} />
-                                <Button disabled={isEditing} data-testid="edit" className={styles.tableIcons} aria-label="fa-trash" icon={<FiTrash />} onClick={(e) => handleDelete({ record, index })} />
-                            </>
-                        ) : (
-                            isEditing &&
-                            index === identification && (
-                                <>
-                                    <Button data-testid="Save" type="link" aria-label="fa-edit" onClick={(e) => handleSave({ record, index })}>
-                                        Save
-                                    </Button>
-                                    <Button data-testid="Cancel" type="link" aria-label="fa-edit" onClick={(e) => handleCancel({ record, index })}>
-                                        Cancel
-                                    </Button>
-                                </>
-                            )
-                        )}
-                    </>
-                );
-            },
-        },
-    ];
+            render: (text, record, index) => bindCodeValue(text, 'make'),
+        }),
 
+        tblPrepareColumns({
+            title: 'Serial No. ',
+            dataIndex: 'serialNo',
+            width: '20%',
+        }),
+    ];
+    if (!formActionType?.viewMode) {
+        tableColumn.push(tblActionColumn({ handleButtonClick, styles, width: '15%', EditIcon: true, EyeIcon: false, DeleteIcon: true }));
+    }
     return tableColumn;
 };

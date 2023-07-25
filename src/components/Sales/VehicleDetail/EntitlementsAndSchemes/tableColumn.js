@@ -6,7 +6,7 @@
 
 import { tblPrepareColumns, tblStatusColumn } from 'utils/tableCloumn';
 import styles from 'components/common/Common.module.css';
-import { convertDateTime } from 'utils/formatDateTime';
+import { formattedCalendarDate } from 'utils/formatDateTime';
 
 export const tableColumn = () => {
     const tableColumn = [
@@ -36,7 +36,7 @@ export const tableColumn = () => {
             dataIndex: 'documentDate',
             width: '200px',
             sorter: true,
-            render: (text) => convertDateTime(text, 'YYYY-MM-DD'),
+            render: (text) => formattedCalendarDate(text),
         }),
 
         tblPrepareColumns({
@@ -51,7 +51,7 @@ export const tableColumn = () => {
             dataIndex: 'validityStartDate',
             width: '200px',
             sorter: true,
-            render: (text) => convertDateTime(text, 'YYYY-MM-DD'),
+            render: (text) => formattedCalendarDate(text),
         }),
 
         tblPrepareColumns({
@@ -59,7 +59,7 @@ export const tableColumn = () => {
             dataIndex: 'validityEndDate',
             width: '200px',
             sorter: true,
-            render: (text) => convertDateTime(text, 'YYYY-MM-DD'),
+            render: (text) => formattedCalendarDate(text),
         }),
 
         tblPrepareColumns({

@@ -21,6 +21,8 @@ import { ListDataTable } from 'utils/ListDataTable';
 import { btnVisiblity } from 'utils/btnVisiblity';
 import { CustomEditor } from 'components/common/CustomEditor';
 
+import { formatDate } from 'utils/formatDateTime';
+
 import { tableColumn } from './tableColumn';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 import moment from 'moment';
@@ -122,7 +124,10 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
         setRefershData(false);
         setShowDataLoading(false);
     };
-
+    const onErrorAction = (res) => {
+        setRefershData(false);
+        setShowDataLoading(false);
+    };
     useEffect(() => {
         if (!isDataLoaded && userId) {
             fetchProductList({ setIsLoading: listShowLoading, userId });
@@ -134,7 +139,7 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
 
     useEffect(() => {
         if (userId) {
-            fetchTermCondition({ setIsLoading: listShowLoading, userId, onSuccessAction });
+            fetchTermCondition({ setIsLoading: listShowLoading, userId, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [refershData, userId]);
@@ -186,7 +191,7 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
         const recordId = formData?.id || '';
         const newVersion = (values.version ? Number(values?.version) : 1.0).toFixed(1);
         const termConditionText = typeof values.termsconditiondescription === 'string' ? values.termsconditiondescription : values.termsconditiondescription.editor.getData();
-        const data = { ...values, version: String(newVersion), id: recordId, termsconditiondescription: termConditionText, effectivefrom: values?.effectivefrom?.format('YYYY-MM-DD'), effectiveto: values?.effectiveto?.format('YYYY-MM-DD') };
+        const data = { ...values, version: String(newVersion), id: recordId, termsconditiondescription: termConditionText, effectivefrom: formatDate(values?.effectivefrom), effectiveto: formatDate(values?.effectiveto) };
 
         const onSuccess = (res) => {
             listShowLoading(false);

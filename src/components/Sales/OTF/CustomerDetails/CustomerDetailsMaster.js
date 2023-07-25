@@ -10,7 +10,7 @@ import { Row, Col, Form } from 'antd';
 
 import { bindActionCreators } from 'redux';
 import { otfCustomerDetailsAction } from 'store/actions/data/otf/customerDetails';
-import { geoPincodeDataActions } from 'store/actions/data/geo/pincode';
+import { geoPinCodeDataActions } from 'store/actions/data/geo/pincodes';
 import { showGlobalNotification } from 'store/actions/notification';
 
 import { OTFStatusBar } from '../utils/OTFStatusBar';
@@ -69,8 +69,8 @@ const mapDispatchToProps = (dispatch) => ({
             resetData: otfCustomerDetailsAction.reset,
             showGlobalNotification,
 
-            listPinCodeShowLoading: geoPincodeDataActions.listShowLoading,
-            fetchPincodeDetail: geoPincodeDataActions.fetchList,
+            listPinCodeShowLoading: geoPinCodeDataActions.listShowLoading,
+            fetchPincodeDetail: geoPinCodeDataActions.fetchList,
         },
         dispatch
     ),
@@ -126,9 +126,9 @@ export const CustomerDetailsMain = (props) => {
     }, [userId, selectedOrderId]);
 
     const onFinish = (values) => {
-        if (!values?.bookingCustomer?.panNo || !values?.billingCustomer?.panNo) {
-            setActiveKey([...activeKey, !values?.bookingCustomer?.panNo ? 1 : '']);
-            setActiveKey([...activeKey, !values?.billingCustomer?.panNo ? 2 : '']);
+        if (!values?.bookingCustomer?.panNo || !values?.billingCustomer?.panNo || !values?.bookingCustomer?.customerId || !values?.billingCustomer?.customerId) {
+            setActiveKey([...activeKey, !values?.bookingCustomer?.panNo || !values?.bookingCustomer?.customerId ? 1 : '']);
+            setActiveKey([...activeKey, !values?.billingCustomer?.panNo || !values?.billingCustomer?.customerId ? 2 : '']);
             return false;
         }
         form.getFieldsValue();

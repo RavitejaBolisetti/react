@@ -20,6 +20,8 @@ import { ChangeHistory } from './changeHistoryForm';
 
 import { AddEditForm } from './AddEditForm';
 
+import { formatDate } from 'utils/formatDateTime';
+
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { btnVisiblity } from 'utils/btnVisiblity';
 import { ListDataTable } from 'utils/ListDataTable';
@@ -127,6 +129,11 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHi
         setShowDataLoading(false);
     };
 
+    const onErrorAction = (res) => {
+        setRefershData(false);
+        setShowDataLoading(false);
+    };
+
     useEffect(() => {
         if (!isDataLoaded && userId) {
             fetchProductList({ setIsLoading: listShowLoading, userId });
@@ -138,7 +145,7 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHi
 
     useEffect(() => {
         if (userId) {
-            fetchTermCondition({ setIsLoading: listShowLoading, userId, onSuccessAction });
+            fetchTermCondition({ setIsLoading: listShowLoading, userId, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [refershData, userId]);
@@ -150,13 +157,6 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHi
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, userId]);
-
-    // useEffect(() => {
-    //     if (userId && refershData) {
-    //         fetchTermCondition({ setIsLoading: listShowLoading, userId, onSuccessAction });
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [refershData, userId]);
 
     useEffect(() => {
         if (DealerTermsConditionsDataLoaded && DealerTermsConditionsData) {
@@ -220,7 +220,7 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHi
         const newVersion = (values.version ? Number(values?.version) : 1.0).toFixed(1);
         const termConditionText = typeof values.termConditionDescription === 'string' ? values.termConditionDescription : values.termConditionDescription.editor.getData();
         // .replace(/[&/\\#,+()$~%.'":*?<p></p>\n{}]/g, '')
-        const data = { ...values, version: String(newVersion), id: recordId, termConditionDescription: termConditionText, effectiveFrom: values?.effectiveFrom?.format('YYYY-MM-DD'), effectiveTo: values?.effectiveTo?.format('YYYY-MM-DD') };
+        const data = { ...values, version: String(newVersion), id: recordId, termConditionDescription: termConditionText, effectiveFrom: formatDate(values?.effectiveFrom), effectiveTo: formatDate(values?.effectiveTo) };
 
         const onSuccess = (res) => {
             listShowLoading(false);

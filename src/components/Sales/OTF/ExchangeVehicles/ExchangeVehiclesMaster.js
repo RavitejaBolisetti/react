@@ -32,14 +32,14 @@ const mapStateToProps = (state) => {
         data: {
             OTF: {
                 ExchangeVehicle: { isLoaded: isDataLoaded = false, isLoading, data: exchangeData = [] },
-                FinanceLov: { isLoaded: isFinanceLovDataLoaded = false, isloading: isFinanceLovLoading, data: financeLovData = [] },
-                SchemeDetail: { isFilteredListLoaded: isSchemeLovDataLoaded = false, isloading: isSchemeLovLoading, filteredListData: schemeLovData = [] },
+                FinanceLov: { isLoaded: isFinanceLovDataLoaded = false, isLoading: isFinanceLovLoading, data: financeLovData = [] },
+                SchemeDetail: { isFilteredListLoaded: isSchemeLovDataLoaded = false, isLoading: isSchemeLovLoading, filteredListData: schemeLovData = [] },
             },
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             Vehicle: {
-                MakeVehicleDetails: { isLoaded: isMakeDataLoaded = false, isMakeLoading, data: makeData = [] },
-                ModelVehicleDetails: { isLoaded: isModelDataLoaded = false, isModelLoading, data: modelData = [] },
-                VariantVehicleDetails: { isLoaded: isVariantDataLoaded = false, isVariantLoading, data: variantData = [] },
+                MakeVehicleDetails: { isLoaded: isMakeDataLoaded = false, isLoading: isMakeLoading, data: makeData = [] },
+                ModelVehicleDetails: { isLoaded: isModelDataLoaded = false, isLoading: isModelLoading, data: modelData = [] },
+                VariantVehicleDetails: { isLoaded: isVariantDataLoaded = false, isLoading: isVariantLoading, data: variantData = [] },
             },
         },
         customer: {
@@ -103,13 +103,16 @@ const mapDispatchToProps = (dispatch) => ({
 
             fetchModelLovList: vehicleModelDetailsDataActions.fetchList,
             listModelShowLoading: vehicleModelDetailsDataActions.listShowLoading,
+            resetModel: vehicleModelDetailsDataActions.reset,
 
             fetchVariantLovList: vehicleVariantDetailsDataActions.fetchList,
             listVariantShowLoading: vehicleVariantDetailsDataActions.listShowLoading,
+            resetVariant: vehicleModelDetailsDataActions.reset,
 
             fetchList: schemeDataActions.fetchList,
             listShowLoading: schemeDataActions.listShowLoading,
             saveData: schemeDataActions.saveData,
+
             resetData: schemeDataActions.reset,
             showGlobalNotification,
         },
@@ -121,19 +124,33 @@ const ExchangeVehiclesBase = (props) => {
     const { exchangeData, isLoading, fetchList, userId, listShowLoading, showGlobalNotification, section } = props;
     const { typeData } = props;
     const { fetchMakeLovList, listMakeShowLoading, fetchModelLovList, listModelShowLoading, fetchVariantLovList, listVariantShowLoading } = props;
-    const { isMakeDataLoaded, isMakeLoading, makeData, isModelDataLoaded, isModelLoading, modelData, isVariantDataLoaded, isVariantLoading, variantData, saveData } = props;
-    const { financeLovData, isFinanceLovLoading, isFinanceLovDataLoaded, fetchFinanceLovList, listFinanceLovShowLoading } = props;
-    const { schemeLovData, isSchemeLovLoading, isSchemeLovDataLoaded, fetchSchemeLovList, listSchemeLovShowLoading } = props;
-    const { form, selectedOrderId, formActionType, handleFormValueChange } = props;
+    const { isMakeLoading, makeData, isModelDataLoaded, isModelLoading, modelData, isVariantDataLoaded, isVariantLoading, variantData, saveData } = props;
+    const { financeLovData, isFinanceLovLoading, fetchFinanceLovList, listFinanceLovShowLoading } = props;
+    const { schemeLovData, isSchemeLovLoading, fetchSchemeLovList, listSchemeLovShowLoading } = props;
+    const { form, selectedOrderId, formActionType, handleFormValueChange, isDataLoaded, resetData } = props;
     const { fetchCustomerList, listCustomerShowLoading, handleButtonClick, NEXT_ACTION } = props;
-
     const [formData, setFormData] = useState('');
-
+    const [filteredModelData, setfilteredModelData] = useState([]);
+    const [filteredVariantData, setfilteredVariantData] = useState([]);
     useEffect(() => {
-        setFormData(exchangeData);
+        if (exchangeData && isDataLoaded) {
+            setFormData(exchangeData);
+            exchangeData?.make && handleFilterChange('make', exchangeData?.make ?? '');
+            exchangeData?.modelGroup && handleFilterChange('modelGroup', exchangeData?.modelGroup ?? '');
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [exchangeData]);
-
+    }, [exchangeData, isDataLoaded]);
+    const makeExtraParams = (key, title, value, name) => {
+        const extraParams = [
+            {
+                key: key,
+                title: title,
+                value: value,
+                name: name,
+            },
+        ];
+        return extraParams;
+    };
     const extraParams = [
         {
             key: 'otfNumber',
@@ -143,7 +160,7 @@ const ExchangeVehiclesBase = (props) => {
         },
     ];
 
-    const errorAction = (message) => {
+    const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
 
@@ -152,49 +169,94 @@ const ExchangeVehiclesBase = (props) => {
     };
 
     useEffect(() => {
-        if (userId) {
-            if (!isSchemeLovDataLoaded) {
-                fetchFinanceLovList({ setIsLoading: listSchemeLovShowLoading, userId });
-            }
-            if (!isFinanceLovDataLoaded) {
-                fetchSchemeLovList({ setIsLoading: listFinanceLovShowLoading, userId });
-            }
-            if (!isMakeDataLoaded) {
-                fetchMakeLovList({ setIsLoading: listMakeShowLoading, userId });
-            }
-            if (!isModelDataLoaded) {
-                fetchModelLovList({ setIsLoading: listModelShowLoading, userId });
-            }
-            if (!isVariantDataLoaded) {
-                fetchVariantLovList({ setIsLoading: listVariantShowLoading, userId });
-            }
+        if (isModelDataLoaded && modelData) {
+            setfilteredModelData(modelData);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isMakeDataLoaded, isModelDataLoaded, isVariantDataLoaded]);
+    }, [modelData]);
+    useEffect(() => {
+        if (isVariantDataLoaded && variantData) {
+            setfilteredVariantData(variantData);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [variantData]);
 
     useEffect(() => {
         if (userId && selectedOrderId) {
-            fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, errorAction, userId });
+            fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, onErrorAction, userId });
+            fetchFinanceLovList({ setIsLoading: listFinanceLovShowLoading, userId });
+            fetchSchemeLovList({ setIsLoading: listSchemeLovShowLoading, userId });
+            fetchMakeLovList({ setIsLoading: listMakeShowLoading, userId });
         }
+        return () => {
+            resetData();
+        };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedOrderId]);
 
-    const onErrorAction = (message) => {
-        showGlobalNotification({ message });
+    const handleFilterChange = (name, value, selectobj) => {
+        if (!value) {
+            switch (name) {
+                case 'make': {
+                    setfilteredModelData();
+                    setfilteredVariantData();
+                    form.setFieldsValue({
+                        modelGroup: undefined,
+                        variant: undefined,
+                    });
+                    break;
+                }
+                case 'modelGroup': {
+                    setfilteredVariantData();
+                    form.setFieldsValue({
+                        variant: undefined,
+                    });
+                    break;
+                }
+                default: {
+                    setfilteredModelData();
+                    setfilteredVariantData();
+                    form.setFieldsValue({
+                        modelGroup: undefined,
+                        variant: undefined,
+                    });
+                    break;
+                }
+            }
+            return;
+        } else if (name === 'make') {
+            setfilteredModelData();
+            setfilteredVariantData();
+            form.setFieldsValue({
+                modelGroup: undefined,
+                variant: undefined,
+            });
+            fetchModelLovList({ setIsLoading: listModelShowLoading, userId, extraParams: makeExtraParams('make', 'make', value, 'make') });
+        } else if (name === 'modelGroup') {
+            form.setFieldsValue({
+                variant: undefined,
+            });
+            setfilteredVariantData();
+            fetchVariantLovList({ setIsLoading: listVariantShowLoading, userId, extraParams: makeExtraParams('model', 'model', value, 'model') });
+        }
     };
-
     const onFinish = (values) => {
+        const { customerName } = values;
+        if (!customerName) {
+            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Verify Customer id to continue' });
+            return;
+        }
         const data = { ...values, id: exchangeData?.id || '', otfNumber: selectedOrderId };
 
         const onSuccess = (res) => {
             form.resetFields();
-            fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, errorAction, userId });
+            fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, onErrorAction, userId });
             handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
         };
 
         const requestData = {
             data: data,
-            method: 'put',
+            method: formData?.id ? 'put' : 'post',
             setIsLoading: listShowLoading,
             userId,
             onError: onErrorAction,
@@ -254,6 +316,7 @@ const ExchangeVehiclesBase = (props) => {
             userId,
             onSuccessAction: (res) => {
                 res?.data && res?.data?.customerMasterDetails && res?.data?.customerMasterDetails[0] && setFormData(res?.data?.customerMasterDetails[0] ?? []);
+                !res?.data?.customerMasterDetails && showGlobalNotification({ message: res?.responseMessage });
             },
             onErrorAction,
         });
@@ -284,6 +347,9 @@ const ExchangeVehiclesBase = (props) => {
         variantData,
         isLoading,
         onSearch,
+        handleFilterChange,
+        filteredModelData,
+        filteredVariantData,
     };
 
     const viewProps = {

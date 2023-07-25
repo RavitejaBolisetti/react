@@ -6,7 +6,7 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Form, Select, Input, Upload, Button, Empty, Divider, Space, Collapse } from 'antd';
 
-import { FiEye, FiTrash } from 'react-icons/fi';
+import { FiDownload, FiTrash } from 'react-icons/fi';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import Svg from 'assets/images/Filter.svg';
@@ -59,7 +59,7 @@ const AddEditForm = (props) => {
             showRemoveIcon: true,
             showDownloadIcon: true,
             removeIcon: <FiTrash />,
-            downloadIcon: <FiEye style={{ color: '#ff3e5b' }} />,
+            downloadIcon: <FiDownload style={{ color: '#ff3e5b' }} />,
             showProgress: true,
         },
         progress: { strokeWidth: 3, showInfo: true },
@@ -170,7 +170,7 @@ const AddEditForm = (props) => {
                                         </Select>
                                     </Form.Item>
                                 </Col>
-                                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                                <Col xs={24} sm={24} md={12} lg={12} xl={12} className={`${styles.inputWrapper} ${styles.allowsection}`}>
                                     <Form.Item {...documentTitleRule} label="Document Name" name="documentTitle" validateTrigger={['onChange']}>
                                         <Input placeholder={preparePlaceholderText('File Name')} onChange={handleDocumentTitle} allowClear />
                                     </Form.Item>
@@ -210,7 +210,7 @@ const AddEditForm = (props) => {
             </Collapse>
             <Collapse defaultActiveKey={['2']} bordered={false} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
                 <Panel header="Technical Documents" key="2">
-                    <Divider className={styles.marT20} />
+                    <Divider />
                     <Row gutter={16}>
                         <ViewTechnicalDocDetail {...viewProps} />
                     </Row>

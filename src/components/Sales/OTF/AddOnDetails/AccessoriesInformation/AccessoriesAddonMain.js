@@ -13,10 +13,10 @@ import { Space } from 'antd';
 const AccessoriesAddonMain = ({ setIsBtnDisabled, openAccordian, setOpenAccordian, isEditing, setisEditing, selectedOrderId, handleFormValueChange, showGlobalNotification, setsearchData, searchData, setaddButtonDisabled, onSearchPart, AddonPartsData, addButtonDisabled, accessoryForm, isBtnDisabled, setFormBtnDisable, setAddOnItemInfo, addOnItemInfo, formData }) => {
     const [EditingForm] = Form.useForm();
 
-    const isPresent = (values, i = -1) => {
-        const found = addOnItemInfo.filter((element, index) => element?.partNumber === values && index !== i);
-        if (found?.length === 2 || (found?.length === 1 && values === found['0']['partNumber'])) {
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Duplicate Part Number' });
+    const isPresent = (partNumber, i = -1) => {
+        const isPartAlreadyExist = addOnItemInfo?.find((element, index) => element?.partNumber === partNumber);
+        if (isPartAlreadyExist) {
+            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Part number is already exist' });
             return true;
         }
         return false;
@@ -52,10 +52,11 @@ const AccessoriesAddonMain = ({ setIsBtnDisabled, openAccordian, setOpenAccordia
     };
     const onCancel = () => {
         accessoryForm.resetFields();
+        setsearchData();
         setaddButtonDisabled({ ...addButtonDisabled, partDetailsResponses: false });
-        if (!formData?.partDetailsResponses) {
-            setOpenAccordian([]);
-        }
+        // if (!formData?.partDetailsResponses) {
+        //     setOpenAccordian([]);
+        // } Need to check
     };
 
     const onFieldsChange = () => {

@@ -15,13 +15,14 @@ import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 
 import { ListDataTable } from 'utils/ListDataTable';
 import { VehicleDetailMainContainer } from './VehicleDetailMainContainer';
 // import { AdvancedSearch } from './AdvancedSearch';
+import { showGlobalNotification } from 'store/actions/notification';
+import { vehicleDetailDataActions } from 'store/actions/data/vehicle/vehicleDetail';
 
 import { VEHICLE_DETAIL_STATUS } from 'constants/VehicleDetailStatus';
 import { VEHICLE_DETAIL_SECTION } from 'constants/VehicleDetailSection';
 import { validateRequiredInputField } from 'utils/validation';
+import { LANGUAGE_EN } from 'language/en';
 
-import { showGlobalNotification } from 'store/actions/notification';
-import { vehicleDetailDataActions } from 'store/actions/data/vehicle/vehicleDetail';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
 const mapStateToProps = (state) => {
@@ -42,6 +43,7 @@ const mapStateToProps = (state) => {
         typeData: typeData[PARAM_MASTER.VH_DTLS_SER.id],
         isDataLoaded: true,
         data: data?.vehicleSearch,
+        totalRecords: data?.totalRecords || [],
         vehicleDetailStatusList: Object.values(VEHICLE_DETAIL_STATUS),
         vehicleDetailData: [],
         moduleTitle,
@@ -68,7 +70,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const VehicleDetailMasterBase = (props) => {
-    const { fetchList, saveData, isLoading, listShowLoading, userId, fetchDetail, data, vehicleDetailData } = props;
+    const { fetchList, saveData, listShowLoading, userId, data, totalRecords, vehicleDetailData } = props;
     const { typeData, moduleTitle } = props;
     const { filterString, setFilterString, vehicleDetailStatusList } = props;
 
@@ -88,7 +90,6 @@ export const VehicleDetailMasterBase = (props) => {
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
-    const [selectedCustomer, setselectedCustomer] = useState('');
 
     const defaultBtnVisiblity = {
         editBtn: false,
@@ -110,6 +111,9 @@ export const VehicleDetailMasterBase = (props) => {
 
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
+
+    const [page, setPage] = useState({ pageSize: 10, current: 1 });
+    const dynamicPagination = true;
 
     const [formData, setFormData] = useState([]);
     const [otfSearchRules, setOtfSearchRules] = useState({ rules: [validateRequiredInputField('search parametar')] });
@@ -171,34 +175,30 @@ export const VehicleDetailMasterBase = (props) => {
             {
                 key: 'pageSize',
                 title: 'Value',
-                value: 1000,
+                value: page?.pageSize,
                 canRemove: true,
-                filter: false,
             },
             {
                 key: 'pageNumber',
                 title: 'Value',
-                value: 1,
+                value: page?.current,
                 canRemove: true,
-                filter: false,
             },
-            // {
-            //     key: 'sortBy',
-            //     title: 'Sort by',
-            //     value: 'customerName',
-            //     canRemove: true,
-            //     filter: false,
-            // },
-            // {
-            //     key: 'sortIn',
-            //     title: 'Sort By',
-            //     value: 'ASC',
-            //     canRemove: true,
-            //     filter: false,
-            // },
+            {
+                key: 'sortBy',
+                title: 'Sort By',
+                value: page?.sortBy,
+                canRemove: true,
+            },
+            {
+                key: 'sortIn',
+                title: 'Sort Type',
+                value: page?.sortType,
+                canRemove: true,
+            },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString]);
+    }, [filterString, page]);
 
     useEffect(() => {
         if (userId) {
@@ -206,6 +206,13 @@ export const VehicleDetailMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, extraParams]);
+
+    useEffect(() => {
+        return () => {
+            setFilterString();
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     useEffect(() => {
         const defaultSection = VEHICLE_DETAIL_SECTION.VEHICLE_DETAILS.id;
@@ -228,11 +235,18 @@ export const VehicleDetailMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentSection, sectionName]);
 
+    const handleResetFilter = (e) => {
+        if (filterString) {
+            setShowDataLoading(true);
+        }
+        setFilterString();
+        // advanceFilterForm.resetFields();
+        // setAdvanceSearchVisible(false);
+    };
+
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
-        console.log('🚀 ~ file: VehicleDetailMaster.js:231 ~ handleButtonClick ~ record:', record);
         form.resetFields();
         form.setFieldsValue(undefined);
-        setSelectedRecordId('MAKGF1F57A7192174');
         switch (buttonAction) {
             case ADD_ACTION:
                 defaultSection && setCurrentSection(defaultSection);
@@ -319,9 +333,14 @@ export const VehicleDetailMasterBase = (props) => {
     };
 
     const tableProps = {
+        dynamicPagination,
+        totalRecords,
+        setPage,
         tableColumn: tableColumn(handleButtonClick),
         tableData: data,
         showAddButton: false,
+        handleButtonClick,
+        noMessge: LANGUAGE_EN.GENERAL.LIST_NO_DATA_FOUND.TITLE,
     };
 
     const removeFilter = (key) => {
@@ -354,6 +373,7 @@ export const VehicleDetailMasterBase = (props) => {
         setOtfSearchRules,
         searchForm,
         onFinishSearch,
+        handleResetFilter,
     };
 
     const drawerTitle = useMemo(() => {
@@ -368,7 +388,6 @@ export const VehicleDetailMasterBase = (props) => {
 
     const containerProps = {
         record: selectedRecord,
-        selectedCustomer,
         form,
         formActionType,
         setFormActionType,

@@ -3,10 +3,11 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
- .changeHistoryWrapper :global .ant-drawer-wrapper-body .ant-drawer-body {
+.changeHistoryWrapper :global .ant-drawer-wrapper-body .ant-drawer-body {
     padding: 16px 20px;
     overflow: hidden;
-} 
+}
+
 .myDrawerStyle :global .ant-drawer-body {
     padding-top: 10px;
     height: calc(100vh - 100px);
@@ -14,12 +15,10 @@
     overflow-y: auto;
 }
 
- .bigDrawerStyle :global .ant-drawer-wrapper-body .ant-drawer-body {
+.bigDrawerStyle :global .ant-drawer-wrapper-body .ant-drawer-body {
     padding: 0px;
     overflow: hidden;
-} 
-
-
+}
 
 .myDrawerStyle :global .ant-drawer-body::-webkit-scrollbar-track {
     background-color: #ffffff;
@@ -42,8 +41,7 @@
 }
 
 .myDrawerStyle :global .ant-input-affix-wrapper {
-    border-color: #B5B5B6 !important;
-    height: max-content !important;
+    border-color: #b5b5b6 !important;
 }
 
 .myDrawerStyle :global .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover,
@@ -63,8 +61,8 @@
     color: #000000;
 }
 
-.myDrawerStyle :global .ant-drawer-wrapper-body .ant-drawer-body .ant-form-item .ant-form-item-label>label .ant-form-item-tooltip {
-    color: #2782F9;
+.myDrawerStyle :global .ant-drawer-wrapper-body .ant-drawer-body .ant-form-item .ant-form-item-label > label .ant-form-item-tooltip {
+    color: #2782f9;
     cursor: inherit;
     position: absolute;
     right: -24px;
@@ -82,7 +80,6 @@
     .myDrawerStyle :global .ant-drawer-header {
         padding: 14px 24px;
     }
-
 }
 
 @media screen and (max-width: 767px) {

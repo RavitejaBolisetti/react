@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { Form, Row, Col } from 'antd';
 import { bindActionCreators } from 'redux';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
-import { geoCountryDataActions } from 'store/actions/data/geo/country';
+import { geoCountryDataActions } from 'store/actions/data/geo/countries';
 import { tableColumn } from './tableColumn';
 
 import { ListDataTable } from 'utils/ListDataTable';
@@ -17,14 +17,14 @@ import { btnVisiblity } from 'utils/btnVisiblity';
 
 import { showGlobalNotification } from 'store/actions/notification';
 import { AddEditForm } from './AddEditForm';
-import { geoStateDataActions } from 'store/actions/data/geo/state';
-import { geoCityDataActions } from 'store/actions/data/geo/city';
+import { geoStateDataActions } from 'store/actions/data/geo/states';
+import { geoCityDataActions } from 'store/actions/data/geo/cities';
 import { AdvancedSearch } from './AdvancedSearch';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 import { FilterIcon } from 'Icons';
 
 import styles from 'components/common/Common.module.css';
-import { geoDistrictDataActions } from 'store/actions/data/geo/district';
+import { geoDistrictDataActions } from 'store/actions/data/geo/districts';
 
 const mapStateToProps = (state) => {
     const {

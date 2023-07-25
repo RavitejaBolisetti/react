@@ -100,7 +100,7 @@ export const InvoiceDetailsMasterBase = (props) => {
 
     const myProps = {
         ...props,
-        buttonData: { ...props.buttonData, nextBtn: true, saveBtn: false },
+        buttonData: { ...props.buttonData, editBtn: false, nextBtn: true, saveBtn: false },
     };
 
     const onFinish = (values) => {
@@ -128,7 +128,7 @@ export const InvoiceDetailsMasterBase = (props) => {
                         {displaySection?.invoiceInformation && (
                             <Collapse onChange={() => onChange(1)} expandIconPosition="end" expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={activeKey}>
                                 <Panel header="Invoice Information" key={1}>
-                                    <DataTable srlTitle={'#'} removePagination={true} tableColumn={tableColumnInvoice()} tableData={invoiceData?.invoiceDetails} />
+                                    <DataTable srlTitle={'#'} pagination={false} tableColumn={tableColumnInvoice()} tableData={invoiceData?.invoiceDetails} />
                                 </Panel>
                             </Collapse>
                         )}
@@ -136,7 +136,7 @@ export const InvoiceDetailsMasterBase = (props) => {
                         {displaySection?.deliveryInformation && (
                             <Collapse onChange={() => onChange(2)} expandIconPosition="end" expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={activeKey}>
                                 <Panel header="Delivery Information" key={2}>
-                                    <DataTable srlTitle={'#'} removePagination={true} tableColumn={tableColumnDelivery()} tableData={invoiceData?.deliveryDetails} />
+                                    <DataTable srlTitle={'#'} pagination={false} tableColumn={tableColumnDelivery()} tableData={invoiceData?.deliveryDetails} />
                                 </Panel>
                             </Collapse>
                         )}

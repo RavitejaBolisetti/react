@@ -275,7 +275,7 @@ const HeaderMain = (props) => {
                             </Col>
                             {/* {pagePath === routing.ROUTING_DASHBOARD && (
                                 <Col xs={0} sm={0} md={7} lg={7} xl={7} xxl={7}>
-                                    <div className={styles.headerRight} style={{ width: '100%' }}>
+                                    <div className={styles.headerRight} >
                                         <Search data-testid="search" allowClear placeholder="Search by Doc ID" onSearch={onSearch} />
                                     </div>
                                 </Col>
@@ -284,7 +284,7 @@ const HeaderMain = (props) => {
                                 <div className={styles.headerRight}>
                                     <div className={styles.navbarNav}>
                                         <div className={`${styles.floatLeft}`}>
-                                            <Link className={styles.navLink} data-toggle="dropdown" to={routing.ROUTING_DASHBOARD}>
+                                            <Link className={styles.navLink} data-toggle="dropdown">
                                                 <Badge size="small" count={notificationCount}>
                                                     {addToolTip('Notification')(<FaRegBell size={20} />)}
                                                 </Badge>

@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect } from 'react';
-import { Col, Row, Checkbox, Space, Collapse, AutoComplete } from 'antd';
+import { Col, Row, Space, Collapse, AutoComplete, Divider } from 'antd';
 
 import { FiEdit } from 'react-icons/fi';
 import { AddressCommonForm } from './AddressCommonForm';
@@ -45,23 +45,6 @@ const AddEditFormBase = (props) => {
         }
     };
 
-    const bookingCustomerProps = {
-        ...props,
-        AutoComplete,
-        typeData,
-        formData: formData?.bookingCustomer,
-        formType: 'bookingCustomer',
-    };
-
-    const bilingCustomerProps = {
-        ...props,
-        AutoComplete,
-        typeData,
-        formData: formData?.billingCustomer,
-        formType: 'billingCustomer',
-        disabledProps: { disabled: sameAsBookingCustomer },
-    };
-
     const handleOnChange = (vall) => {
         if (vall.target.checked) {
             setSameAsBookingCustomer(true);
@@ -72,24 +55,38 @@ const AddEditFormBase = (props) => {
         }
     };
 
+    const bookingCustomerProps = {
+        ...props,
+        AutoComplete,
+        typeData,
+        formData: formData?.bookingCustomer,
+        formType: 'bookingCustomer',
+        onChange: () => {},
+    };
+
+    const bilingCustomerProps = {
+        ...props,
+        AutoComplete,
+        typeData,
+        formData: formData?.billingCustomer,
+        formType: 'billingCustomer',
+        disabledProps: { disabled: sameAsBookingCustomer },
+        onChange: handleOnChange,
+    };
+
     return (
         <Row gutter={20}>
             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                 <Space style={{ display: 'flex' }} size="middle" direction="vertical">
-                    <Collapse collapsible='icon' expandIcon={({ isActive }) => expandIconWithText(isActive, <FiEdit />, <FiEdit style={{ color: '#B5B5B6' }} />)} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
+                    <Collapse collapsible="icon" expandIcon={({ isActive }) => expandIconWithText(isActive, <FiEdit />, <FiEdit style={{ color: '#B5B5B6' }} />)} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
                         <Panel header="Booking Customer" key="1">
+                            <Divider />
                             <AddressCommonForm key="3" {...bookingCustomerProps} isBillingCustmrForm={false} />
                         </Panel>
                     </Collapse>
-                    <Collapse collapsible='icon' expandIcon={({ isActive }) => expandIconWithText(isActive, <FiEdit />, <FiEdit style={{ color: '#B5B5B6' }} />)} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
+                    <Collapse collapsible="icon" expandIcon={({ isActive }) => expandIconWithText(isActive, <FiEdit />, <FiEdit style={{ color: '#B5B5B6' }} />)} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
                         <Panel header="Billing Customer" key="2">
-                            <Row>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                    <Checkbox valuePropName="checked" style={{ margin: '5px 0px 15px 0px' }} onClick={handleOnChange} name="sameAsBookingCustomer">
-                                        Same as Booking Customer
-                                    </Checkbox>
-                                </Col>
-                            </Row>
+                            <Divider />
                             <AddressCommonForm key="4" {...bilingCustomerProps} isBillingCustmrForm={true} />
                         </Panel>
                     </Collapse>

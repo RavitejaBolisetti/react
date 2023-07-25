@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Input, Menu, Layout, Row, Col, Form, AutoComplete, Button } from 'antd';
-import { BsMoon, BsSun, BsSearch } from 'react-icons/bs';
+import { BsChevronUp, BsChevronDown, BsMoon, BsSun, BsSearch } from 'react-icons/bs';
 import { RxCross2 } from 'react-icons/rx';
 import IMG_ICON from 'assets/img/icon.png';
 import IMG_LOGO from 'assets/images/RobinLightTheme.svg';
@@ -228,11 +228,11 @@ const LeftSideBarMain = (props) => {
                             <div className={styles.searchContainer}>
                                 <Form autoComplete="off" layout="vertical" form={menuForm}>
                                     {collapsed ? (
-                                        <BsSearch size={18} onClick={onMenuCollapsed} />
+                                        <BsSearch size={20} onClick={onMenuCollapsed} />
                                     ) : (
                                         <Form.Item name="searchKeyword">
-                                            <AutoComplete className={styles.searchField} options={options} onSelect={onSelect} onChange={handleSearch}>
-                                                <Input.Search placeholder="Search" style={{ width: '100%' }} allowClear type="text" />
+                                            <AutoComplete options={options} onSelect={onSelect} onChange={handleSearch}>
+                                                <Input.Search placeholder="Search" allowClear type="text" />
                                             </AutoComplete>
                                         </Form.Item>
                                     )}
@@ -251,7 +251,15 @@ const LeftSideBarMain = (props) => {
                             selectedKeys={selectedKeys}
                             onOpenChange={onOpenChange}
                             collapsed={collapsed.toString()}
+                            expandIcon={({ isOpen }) => {
+                                if (isOpen) {
+                                    return <BsChevronUp />;
+                                } else {
+                                    return <BsChevronDown />;
+                                }
+                            }}
                             style={{
+                                // paddingLeft: collapsed ? '18px' : '24px',
                                 paddingLeft: collapsed ? '18px' : '14px',
                             }}
                         >
@@ -266,24 +274,24 @@ const LeftSideBarMain = (props) => {
                     onClick={handleThemeChange}
                     style={{
                         padding: collapsed ? '10px' : '10px 14px',
-                        position: isMobile ? (collapsed ? 'relative' : 'absolute') : 'absolute',
                     }}
                 >
+                    {/* <div className={styles.changeThemeBorder} style={{ padding: collapsed ? '9px 10px' : '5px' }}> */}
                     <div className={styles.changeThemeBorder}>
                         {collapsed ? (
                             theme === 'light' ? (
-                                <BsSun size={30} className={styles.sun} />
+                                <BsSun size={20} className={styles.sun} />
                             ) : (
-                                <BsMoon size={30} className={styles.moon} />
+                                <BsMoon size={20} className={styles.moon} />
                             )
                         ) : (
                             <>
                                 <Button className={theme === 'light' ? styles.lightThemeActive : styles.lightTheme} danger onClick={() => handleThemeChange()}>
-                                    <BsSun size={30} /> Light Mode
+                                    <BsSun size={20} /> Light Mode
                                 </Button>
 
                                 <Button className={theme === 'dark' ? styles.darkThemeActive : styles.darkTheme} danger onClick={() => handleThemeChange()}>
-                                    <BsMoon size={30} /> Dark Mode
+                                    <BsMoon size={20} /> Dark Mode
                                 </Button>
                             </>
                         )}

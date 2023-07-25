@@ -13,7 +13,7 @@ import { connect } from 'react-redux';
 import { vehicleContactDataActions } from 'store/actions/data/vehicle/contacts';
 import { showGlobalNotification } from 'store/actions/notification';
 
-import { CustomerFormButton } from 'components/common/CustomerMaster/CustomerFormButton/CustomerFormButton';
+import { VehicleDetailFormButton } from '../VehicleDetailFormButton';
 import AddEditForm from './AddEditForm';
 import ViewList from './ViewList';
 
@@ -63,7 +63,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ContactMasterMain = (props) => {
-    const { form, section, userId, searchType, vehicleContactData, listShowLoading, showGlobalNotification, typeData } = props;
+    const { form, section, userId, searchType, vehicleContactData, resetData, listShowLoading, showGlobalNotification, typeData } = props;
     const { isContactDataLoading, selectedRecordId, fetchList, saveData } = props;
     const { buttonData, setButtonData, formActionType, handleButtonClick, NEXT_ACTION } = props;
 
@@ -84,6 +84,13 @@ const ContactMasterMain = (props) => {
             name: 'vin',
         },
     ];
+
+    useEffect(() => {
+        return () => {
+            resetData();
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     useEffect(() => {
         if (selectedRecordId && userId) {
@@ -123,7 +130,7 @@ const ContactMasterMain = (props) => {
                     });
                 } else {
                     setContactData((prev) => {
-                        const updVal = prev?.length ? [ {...value} , ...prev] : [{ ...value, preferredContactTimeFrom, preferredContactTimeTo }];
+                        const updVal = prev?.length ? [{ ...value, preferredContactTimeFrom, preferredContactTimeTo }, ...prev] : [{ ...value, preferredContactTimeFrom, preferredContactTimeTo }];
                         return updVal;
                     });
                 }
@@ -170,7 +177,10 @@ const ContactMasterMain = (props) => {
     };
 
     const onFinish = () => {
-        let data = { vehicleIdentificationNumber: selectedRecordId, contact: contactData?.map((el) => ({ ...el})) };
+        let data = {
+            vehicleIdentificationNumber: selectedRecordId,
+            contact: contactData?.map(({ preferredContactTime, ...rest }) => rest),
+        };
         const onSuccess = (res) => {
             contactform.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
@@ -234,7 +244,7 @@ const ContactMasterMain = (props) => {
                                         )}
                                     </Row>
                                     <Divider className={styles.marT20} />
-                                    <Space direction="vertical" style={{ width: '100%' }} className={styles.accordianContainer}>
+                                    <Space direction="vertical" className={styles.accordianContainer}>
                                         <div className={styles.headerBox}>
                                             {!formActionType?.viewMode && showAddEditForm && <AddEditForm {...formProps} />}
                                             {!contactData?.length && !isAdding ? (
@@ -263,7 +273,7 @@ const ContactMasterMain = (props) => {
                 </Row>
                 <Row>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <CustomerFormButton {...props} />
+                        <VehicleDetailFormButton {...props} />
                     </Col>
                 </Row>
             </Form>

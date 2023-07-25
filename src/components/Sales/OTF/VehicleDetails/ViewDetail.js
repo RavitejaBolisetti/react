@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Row, Col, Space, Collapse, Typography, Descriptions, Divider } from 'antd';
+import { Row, Col, Space, Collapse, Descriptions, Divider } from 'antd';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
@@ -13,13 +13,11 @@ import { InputSkeleton } from 'components/common/Skeleton';
 import { addToolTip } from 'utils/customMenuLink';
 import { DataTable } from 'utils/dataTable';
 import { expandIcon } from 'utils/accordianExpandIcon';
-import styles from 'components/common/Common.module.css';
+import { DATA_TYPE } from 'constants/dataType';
 
 import { taxDetailsColumn, optionalServicesColumns } from './tableColumn';
 
 const { Panel } = Collapse;
-const { Text } = Typography;
-
 const ViewDetailMain = (props) => {
     const { isLoading, activeKey, onChange, tooltTipText, styles, formData } = props;
     const viewProps = {
@@ -52,7 +50,7 @@ const ViewDetailMain = (props) => {
                                     <Descriptions.Item label="Available Stock">{checkAndSetDefaultValue(formData?.availableStock, isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label="Vehicle Allocated Status">{checkAndSetDefaultValue(formData?.vehicleAllocatedStatus, isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label="PO Number">{checkAndSetDefaultValue(formData?.ponumber, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="PO Date">{checkAndSetDefaultValue(formData?.podate, isLoading, 'date')}</Descriptions.Item>
+                                    <Descriptions.Item label="PO Date">{checkAndSetDefaultValue(formData?.podate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                                     <Descriptions.Item label="PO Status">{checkAndSetDefaultValue(formData?.postatus, isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label="SO Number">{checkAndSetDefaultValue(formData?.sonumber, isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label="SO Status">{checkAndSetDefaultValue(formData?.sostatus, isLoading)}</Descriptions.Item>
@@ -68,14 +66,14 @@ const ViewDetailMain = (props) => {
                         <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end" className={styles.collapseContainer}>
                             <Panel header="Tax Details" key="2">
                                 <Divider />
-                                <DataTable tableColumn={taxDetailsColumn} tableData={formData['taxDetails']} removePagination={true} />
+                                <DataTable tableColumn={taxDetailsColumn} tableData={formData['taxDetails']} pagination={false} />
                             </Panel>
                         </Collapse>
 
                         <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(3)} expandIconPosition="end" className={styles.collapseContainer}>
                             <Panel header="Charges" key="3">
                                 <Divider />
-                                <DataTable tableColumn={optionalServicesColumns} tableData={formData['optionalServices']} removePagination={true} />
+                                <DataTable tableColumn={optionalServicesColumns} tableData={formData['optionalServices']} pagination={false} />
                             </Panel>
                         </Collapse>
                     </Space>

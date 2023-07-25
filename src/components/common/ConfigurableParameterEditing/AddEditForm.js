@@ -3,14 +3,15 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Col, Input, Form, Row, Select, Button, InputNumber, DatePicker } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { withDrawer } from 'components/withDrawer';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { CONFIGURABLE_PARAMETARS_INPUT_TYPE } from './InputType';
 import { ViewConfigDetails } from './ViewConfigDetails';
-import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
+import { preparePlaceholderSelect, prepareDatePickerText } from 'utils/preparePlaceholder';
+import { dateFormat } from 'utils/formatDateTime';
 
 import styles from 'components/common/Common.module.css';
 
@@ -19,6 +20,12 @@ const AddEditFormMain = (props) => {
     const { typeData, configData, parameterType, setParameterType, hanndleEditData, setSaveAndAddNewBtnClicked } = props;
     const { footerEdit, form, isReadOnly, showSaveBtn, formData, onCloseAction, isViewModeVisible } = props;
     const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed, isLoadingOnSave } = props;
+
+    useEffect(() => {
+        setParameterType(formData?.configurableParameterType);
+        form.setFieldValue('parameterType', formData?.configurableParameterType);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formData]);
 
     const handleFormValueChange = () => {
         setFormBtnActive(true);
@@ -98,14 +105,14 @@ const AddEditFormMain = (props) => {
                             ) : parameterType && parameterType === CONFIGURABLE_PARAMETARS_INPUT_TYPE.DATE_RANGE.KEY ? (
                                 <Row gutter={20}>
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form.Item label="From Date" name="fromDate" rules={[validateRequiredInputField('Number')]}>
-                                            <DatePicker format="DD-MM-YYYY" style={{ display: 'auto', width: '100%' }} disabled={isReadOnly} />
+                                        <Form.Item label="From Date" name="fromDate" rules={[validateRequiredInputField('from date')]}>
+                                            <DatePicker format={dateFormat} placeholder={prepareDatePickerText(dateFormat)} style={{ display: 'auto', width: '100%' }} disabled={isReadOnly} />
                                         </Form.Item>
                                     </Col>
 
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form.Item label="To Date" name="toDate" rules={[validateRequiredInputField('Number')]}>
-                                            <DatePicker format="DD-MM-YYYY" style={{ display: 'auto', width: '100%' }} disabled={isReadOnly} />
+                                        <Form.Item label="To Date" name="toDate" rules={[validateRequiredInputField('to date')]}>
+                                            <DatePicker format={dateFormat} placeholder={prepareDatePickerText(dateFormat)} style={{ display: 'auto', width: '100%' }} disabled={isReadOnly} />
                                         </Form.Item>
                                     </Col>
                                 </Row>

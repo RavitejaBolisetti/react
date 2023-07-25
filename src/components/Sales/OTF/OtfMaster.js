@@ -7,24 +7,33 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { Col, Form, Row } from 'antd';
+import { Col, Form, Row, Modal } from 'antd';
 import { tableColumn } from './tableColumn';
 import AdvanceOtfFilter from './AdvanceOtfFilter';
-import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 'utils/btnVisiblity';
+import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, CANCEL_ACTION, TRANSFER_ACTION, btnVisiblity } from 'utils/btnVisiblity';
 
 import { OTFMainConatiner } from './OTFMainConatiner';
 import { ListDataTable } from 'utils/ListDataTable';
 import { AdvancedSearch } from './AdvancedSearch';
 import { OTF_STATUS } from 'constants/OTFStatus';
 import { OTF_SECTION } from 'constants/OTFSection';
+import { CancellationMaster } from './OTFCancellation/CancellationMaster';
+import { TransferMaster } from './OTFTransfer/TransferMaster';
 
 import { showGlobalNotification } from 'store/actions/notification';
-import { otfDetailsDataActions } from 'store/actions/data/otf/otfDetails';
-import { otfSearchListAction } from 'store/actions/data/otf/otfSearchAction';
+import { otfDataActions } from 'store/actions/data/otf/otf';
 import { PARAM_MASTER } from 'constants/paramMaster';
+import { BASE_URL_OTF_DETAILS as baseURL, BASE_URL_OTF_TRANSFER as otfTransferURL, BASE_URL_OTF_CANCELLATION as otfCancelURL } from 'constants/routingApi';
 
+import { LANGUAGE_EN } from 'language/en';
 import { validateOTFMenu } from './utils/validateOTFMenu';
+
 import { FilterIcon } from 'Icons';
+import { ChangeHistory } from './ChangeHistory';
+
+import styles from 'components/common/Common.module.css';
+
+const { confirm } = Modal;
 
 const mapStateToProps = (state) => {
     const {
@@ -32,24 +41,33 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             OTF: {
-                OtfDetails: { isLoaded: isDataLoaded = false, isLoading, data: otfData = [] },
-                OtfSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isOTFSearchLoading, data, filter: filterString },
+                OtfSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isOTFSearchLoading, data, filter: filterString, isDetailLoaded, detailData: otfData = [], isChangeHistoryLoaded, isChangeHistoryLoading, isChangeHistoryData = [] },
             },
         },
     } = state;
     const moduleTitle = 'Order Tracking Form';
+    const ChangeHistoryTitle = 'OTF Change History ';
+
     let returnValue = {
         userId,
         typeData,
-        isDataLoaded,
         data: data?.otfDetails,
+        totalRecords: data?.totalRecords || [],
         otfStatusList: Object.values(OTF_STATUS),
+
+        isDetailLoaded,
+        isLoading: !isDetailLoaded,
         otfData,
-        isLoading,
+
         moduleTitle,
         isOTFSearchLoading,
         isSearchDataLoaded,
         filterString,
+        ChangeHistoryTitle,
+
+        isChangeHistoryLoaded,
+        isChangeHistoryLoading,
+        isChangeHistoryData,
     };
     return returnValue;
 };
@@ -58,12 +76,14 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchOTFSearchedList: otfSearchListAction.fetchList,
-            setFilterString: otfSearchListAction.setFilter,
-            resetData: otfSearchListAction.reset,
-            fetchList: otfDetailsDataActions.fetchList,
-            saveData: otfDetailsDataActions.saveData,
-            listShowLoading: otfDetailsDataActions.listShowLoading,
+            fetchOTFSearchedList: otfDataActions.fetchList,
+            fetchOTFChangeHistory: otfDataActions.changeHistory,
+            fetchOTFDetail: otfDataActions.fetchDetail,
+            saveData: otfDataActions.saveData,
+            setFilterString: otfDataActions.setFilter,
+            resetData: otfDataActions.reset,
+            transferOTF: otfDataActions.transferOTF,
+            listShowLoading: otfDataActions.listShowLoading,
             showGlobalNotification,
         },
         dispatch
@@ -71,8 +91,10 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const OtfMasterBase = (props) => {
-    const { fetchList, saveData, listShowLoading, userId, fetchOTFSearchedList, data, otfData, resetData } = props;
-    const { typeData, moduleTitle } = props;
+    const { showGlobalNotification, fetchOTFDetail, saveData, listShowLoading, userId, fetchOTFSearchedList, data, totalRecords, otfData, resetData } = props;
+    const { ChangeHistoryTitle } = props;
+
+    const { typeData, moduleTitle, transferOTF } = props;
     const { filterString, setFilterString, otfStatusList } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
 
@@ -93,21 +115,28 @@ export const OtfMasterBase = (props) => {
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
+    const [isCancelVisible, setIsCancelVisible] = useState(false);
+    const [isTransferVisible, setIsTransferVisible] = useState(false);
+    const [uploadedFile, setUploadedFile] = useState();
+
+    const [otfTransferForm] = Form.useForm();
+    const [otfCancellationForm] = Form.useForm();
 
     const defaultBtnVisiblity = {
         editBtn: false,
         saveBtn: false,
+        cancelBtn: false,
         saveAndNewBtn: false,
         saveAndNewBtnClicked: false,
         closeBtn: false,
-        cancelBtn: false,
         formBtnActive: false,
-        transferBtn: false,
+        cancelOTFBtn: false,
+        transferOTFBtn: false,
         allotBtn: false,
         unAllotBtn: false,
         invoiceBtn: false,
         deliveryNote: false,
-        cancelOtfBtn: false,
+        changeHistory: true,
     };
 
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -115,10 +144,14 @@ export const OtfMasterBase = (props) => {
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
+    const [page, setPage] = useState({ pageSize: 10, current: 1 });
+    const dynamicPagination = true;
+
     const [formData, setFormData] = useState([]);
+    const [ChangeHistoryVisible, setChangeHistoryVisible] = useState(false);
 
     const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
         searchForm.resetFields();
         setShowDataLoading(false);
@@ -174,31 +207,47 @@ export const OtfMasterBase = (props) => {
             {
                 key: 'pageSize',
                 title: 'Value',
-                value: 1000,
+                value: page?.pageSize,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'pageNumber',
                 title: 'Value',
-                value: 1,
+                value: page?.current,
+                canRemove: true,
+                filter: false,
+            },
+            {
+                key: 'sortBy',
+                title: 'Sort By',
+                value: page?.sortBy,
+                canRemove: true,
+                filter: false,
+            },
+            {
+                key: 'sortIn',
+                title: 'Sort Type',
+                value: page?.sortType,
                 canRemove: true,
                 filter: false,
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString]);
+    }, [filterString, page]);
 
     useEffect(() => {
         return () => {
             resetData();
             setFilterString();
+            setUploadedFile();
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
         if (userId) {
+            setShowDataLoading(true);
             fetchOTFSearchedList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -228,6 +277,9 @@ export const OtfMasterBase = (props) => {
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
         form.resetFields();
         form.setFieldsValue(undefined);
+        setIsFormVisible(true);
+        setIsCancelVisible(false);
+        setIsTransferVisible(false);
         switch (buttonAction) {
             case ADD_ACTION:
                 defaultSection && setCurrentSection(defaultSection);
@@ -247,7 +299,15 @@ export const OtfMasterBase = (props) => {
                 section && setCurrentSection(nextSection?.id);
                 setLastSection(!nextSection?.id);
                 break;
-
+            case CANCEL_ACTION:
+                //  setFormActionType(CANCEL_OTF)
+                setIsCancelVisible(true);
+                setIsFormVisible(false);
+                break;
+            case TRANSFER_ACTION:
+                setIsFormVisible(false);
+                setIsTransferVisible(true);
+                break;
             default:
                 break;
         }
@@ -260,13 +320,14 @@ export const OtfMasterBase = (props) => {
             });
             setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction, orderStatus: record?.orderStatus }));
         }
-        setIsFormVisible(true);
     };
 
     const onFinishSearch = (values) => {};
 
     const handleResetFilter = (e) => {
-        setShowDataLoading(true);
+        if (filterString) {
+            setShowDataLoading(true);
+        }
         setFilterString();
         advanceFilterForm.resetFields();
         setAdvanceSearchVisible(false);
@@ -281,7 +342,7 @@ export const OtfMasterBase = (props) => {
             setShowDataLoading(true);
 
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+            fetchOTFDetail({ setIsLoading: listShowLoading, userId, onSuccessAction });
 
             setButtonData({ ...buttonData, formBtnActive: false });
 
@@ -294,6 +355,7 @@ export const OtfMasterBase = (props) => {
 
         const requestData = {
             data: data,
+            baseURL,
             method: formActionType?.editMode ? 'put' : 'post',
             setIsLoading: listShowLoading,
             userId,
@@ -306,6 +368,9 @@ export const OtfMasterBase = (props) => {
 
     const onFinishFailed = (errorInfo) => {
         return;
+    };
+    const handleChangeHistory = () => {
+        setChangeHistoryVisible(true);
     };
 
     const handleFormValueChange = () => {
@@ -326,9 +391,14 @@ export const OtfMasterBase = (props) => {
     };
 
     const tableProps = {
+        dynamicPagination,
+        totalRecords,
+        setPage,
+        isLoading: showDataLoading,
         tableColumn: tableColumn(handleButtonClick),
         tableData: data,
         showAddButton: false,
+        noDataMessage: LANGUAGE_EN.GENERAL.LIST_NO_DATA_FOUND.TITLE,
     };
 
     const onAdvanceSearchCloseAction = () => {
@@ -349,6 +419,67 @@ export const OtfMasterBase = (props) => {
     };
 
     const title = 'Search OTF';
+
+    const fnOTFTransfer = ({ modalTitle, modalMessage, finalData, callBackMethod, customURL }) => {
+        const onSuccess = (res) => {
+            setIsTransferVisible(false);
+            setIsTransferVisible(false);
+            setIsCancelVisible(false);
+            otfTransferForm.resetFields();
+            otfCancellationForm.resetFields();
+            setShowDataLoading(true);
+            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            fetchOTFSearchedList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+            setButtonData({ ...buttonData, formBtnActive: false });
+            setIsFormVisible(false);
+        };
+
+        const requestData = {
+            data: finalData,
+            customURL,
+            method: 'put',
+            setIsLoading: () => {},
+            userId,
+            onSuccessAction: onSuccess,
+            onErrorAction,
+        };
+
+        confirm({
+            title: modalTitle,
+            icon: '',
+            content: modalMessage,
+            okText: 'Yes',
+            okType: 'danger',
+            cancelText: 'No',
+            wrapClassName: styles.confirmModal,
+            centered: true,
+            closable: true,
+            onOk() {
+                callBackMethod(requestData);
+            },
+            onCancel() {},
+        });
+    };
+
+    const onFinishOTFTansfer = (values) => {
+        fnOTFTransfer({
+            modalTitle: 'OTF Transfer',
+            modalMessage: `Do you want to transfer this ${otfData?.otfNumber}`,
+            finalData: { ...values, id: otfData?.id, otfNumber: otfData?.otfNumber },
+            callBackMethod: transferOTF,
+            customURL: otfTransferURL,
+        });
+    };
+
+    const onFinishOTFCancellation = (values) => {
+        fnOTFTransfer({
+            modalTitle: 'OTF Cancel',
+            modalMessage: `Do you want to cancel this ${otfData?.otfNumber}`,
+            finalData: { dealerCode: '', oemCode: '', productCode: '', ...values, id: otfData?.id, otfNumber: otfData?.otfNumber, uploadCancellationLetterDocId: uploadedFile },
+            callBackMethod: transferOTF,
+            customURL: otfCancelURL,
+        });
+    };
 
     const advanceFilterResultProps = {
         extraParams,
@@ -398,6 +529,18 @@ export const OtfMasterBase = (props) => {
             return 'Add New ';
         }
     }, [formActionType]);
+    const ChangeHistoryProps = {
+        isVisible: ChangeHistoryVisible,
+        onCloseAction: () => {
+            setChangeHistoryVisible(false);
+        },
+        titleOverride: ChangeHistoryTitle,
+        formData,
+        setIsFormVisible,
+        buttonData,
+        ChangeHistoryTitle,
+        selectedOrderId,
+    };
 
     const containerProps = {
         record: selectedOrder,
@@ -414,6 +557,7 @@ export const OtfMasterBase = (props) => {
         EDIT_ACTION,
         VIEW_ACTION,
         NEXT_ACTION,
+        CANCEL_ACTION,
         buttonData,
 
         setButtonData,
@@ -434,18 +578,52 @@ export const OtfMasterBase = (props) => {
         typeData,
         otfData,
         saveButtonName: !selectedOrderId ? 'Create Customer ID' : isLastSection ? 'Submit' : 'Save & Next',
+        handleChangeHistory,
+    };
+
+    const onCancelCloseAction = () => {
+        setIsCancelVisible(false);
+        setIsTransferVisible(false);
+        otfTransferForm.resetFields();
+        otfCancellationForm.resetFields();
+    };
+
+    const cancelProps = {
+        ...props,
+        otfCancellationForm,
+        otfData,
+        selectedOrder,
+        CANCEL_ACTION,
+        isVisible: isCancelVisible,
+        onCloseAction: onCancelCloseAction,
+        onFinishOTFCancellation,
+        setUploadedFile,
+        uploadedFile,
+    };
+
+    const transferOTFProps = {
+        ...props,
+        otfTransferForm,
+        onFinishOTFTansfer,
+        selectedOrder,
+        TRANSFER_ACTION,
+        isVisible: isTransferVisible,
+        onCloseAction: onCancelCloseAction,
     };
 
     return (
         <>
             <AdvanceOtfFilter {...advanceFilterResultProps} />
             <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable handleAdd={handleButtonClick} isLoading={showDataLoading} {...tableProps} showAddButton={false} />
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.tableProduct}>
+                    <ListDataTable handleAdd={handleButtonClick} {...tableProps} showAddButton={false} />
                 </Col>
             </Row>
             <AdvancedSearch {...advanceFilterProps} />
             <OTFMainConatiner {...containerProps} />
+            <CancellationMaster {...cancelProps} />
+            <TransferMaster {...transferOTFProps} />
+            <ChangeHistory {...ChangeHistoryProps} />
         </>
     );
 };

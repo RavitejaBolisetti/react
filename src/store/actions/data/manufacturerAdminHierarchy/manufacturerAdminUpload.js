@@ -4,8 +4,6 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { dataActions } from 'store/actions/crud/dataAction';
-import { withAuthToken } from 'utils/withAuthToken';
-import { axiosAPICall } from 'utils/axiosAPICall';
 import { BASE_URL_MANUFACTURER_ADMIN_AUTHORITY_UPLOAD as baseURL } from 'constants/routingApi';
 
 const PREFIX = 'MANUFACTURER_ADMIN_UPLOAD_';

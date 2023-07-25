@@ -38,6 +38,7 @@ const mapStateToProps = (state) => {
             LeftSideBar: { collapsed = false },
         },
     } = state;
+    console.log(manufacturerOrgHierarchyData, 'manufacturerOrgHierarchyData');
     const moduleTitle = 'Manufacturer Organisation Detail';
     const viewTitle = 'Hierarchy Details';
 
@@ -92,6 +93,7 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
     const fieldNames = { title: 'manufactureOrgShrtName', key: 'id', children: 'subManufactureOrg' };
+
     const onKeyPressHandler = (e) => {
         e.key === 'Enter' && e.preventDefault();
     };
@@ -136,7 +138,7 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
         return dataList;
     };
 
-    const flatternData = generateList(finalManufacturerOrgHierarchyData);
+    const flatternData = finalManufacturerOrgHierarchyData && generateList(finalManufacturerOrgHierarchyData);
 
     const handleTreeViewClick = (keys) => {
         form.resetFields();
@@ -285,36 +287,36 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
     const noDataMessage = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', moduleTitle);
     const sameParentAndChildWarning = LANGUAGE_EN.GENERAL.HIERARCHY_SAME_PARENT_AND_CHILD_WARNING;
 
-    const leftCol = manufacturerOrgHierarchyData?.length > 0 ? 16 : 24;
-    const rightCol = manufacturerOrgHierarchyData?.length > 0 ? 8 : 24;
+    const leftCol = manufacturerOrgHierarchyData?.length > 0 ? 14 : 24;
+    const rightCol = manufacturerOrgHierarchyData?.length > 0 ? 10 : 24;
     const title = 'Hierarchy';
     return (
         <>
-            <Row gutter={20} span={24}>
-                <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol} className={styles.borderBottomCorner}>
-                    <div className={styles.contentHeaderBackground}>
-                        <Row gutter={20}>
-                            <Col xs={24} sm={24} md={18} lg={18} xl={18}>
-                                <Form onKeyPress={onKeyPressHandler} autoComplete="off" colon={false} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                                    <Row gutter={20}>
-                                        <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                            <Form.Item label={`${title}`} name="code" validateTrigger={['onSearch']}>
-                                                <Search placeholder="Search" allowClear onChange={onChange} className={styles.headerSearchField} />
-                                            </Form.Item>{' '}
-                                        </Col>
-                                    </Row>
-                                </Form>
-                            </Col>
-                            {manufacturerOrgHierarchyData?.length > 0 && (
-                                <Col className={styles.buttonHeadingContainer} xs={24} sm={24} md={6} lg={6} xl={6}>
-                                    <Button type="primary" onClick={changeHistoryModelOpen}>
-                                        <FaHistory className={styles.buttonIcon} />
-                                        Change History
-                                    </Button>
+            <div className={styles.contentHeaderBackground}>
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={18} lg={18} xl={18}>
+                        <Form onKeyPress={onKeyPressHandler} autoComplete="off" colon={false} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                            <Row gutter={20}>
+                                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                                    <Form.Item label={`${title}`} name="code" validateTrigger={['onSearch']}>
+                                        <Search placeholder="Search" allowClear onChange={onChange} className={`${styles.headerSearchField} ${styles.headerSearchInput}`} />
+                                    </Form.Item>{' '}
                                 </Col>
-                            )}
-                        </Row>
-                    </div>
+                            </Row>
+                        </Form>
+                    </Col>
+                    {manufacturerOrgHierarchyData?.length > 0 && (
+                        <Col className={styles.buttonHeadingContainer} xs={24} sm={24} md={6} lg={6} xl={6}>
+                            <Button type="primary" onClick={changeHistoryModelOpen}>
+                                <FaHistory className={styles.buttonIcon} />
+                                Change History
+                            </Button>
+                        </Col>
+                    )}
+                </Row>
+            </div>
+            <Row gutter={20} span={24}>
+                <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol} className={`${styles.borderBottomCorner} ${styles.marT20}`}>
                     <div className={styles.content}>
                         {manufacturerOrgHierarchyData?.length <= 0 ? (
                             <div className={styles.emptyContainer}>
@@ -329,7 +331,7 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
                                         </span>
                                     }
                                 >
-                                    <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
+                                    <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" onClick={handleAdd}>
                                         Add
                                     </Button>
                                 </Empty>
@@ -340,9 +342,9 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
                     </div>
                 </Col>
 
-                <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol} className={styles.pad0}>
+                <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol} className={styles.padRight0}>
                     {selectedTreeData && selectedTreeData?.id ? (
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{ paddingRight: 0 }}>
                             <ViewManufacturerOrgDetail {...viewProps} />
                             <div className={styles.hyrbuttonContainer}>
                                 <HierarchyFormButton {...viewProps} />
@@ -367,7 +369,7 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
                 </Col>
             </Row>
             <AddEditForm {...formProps} />
-            <ManufacturerOrgHierarchyChangeHistory />
+            <ManufacturerOrgHierarchyChangeHistory isChangeHistoryContainer={true} />
         </>
     );
 };

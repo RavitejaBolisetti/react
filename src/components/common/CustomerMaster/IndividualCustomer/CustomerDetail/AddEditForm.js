@@ -138,6 +138,13 @@ const AddEditFormMain = (props) => {
         }
     };
 
+    // const ImageProps = {
+    //     viewDocument,
+    //     handleUpload,
+    //     uploadProps,
+    //     formData,
+    // };
+
     return (
         <>
             <Space direction="vertical" size="small" style={{ display: 'flex' }}>
@@ -214,47 +221,28 @@ const AddEditFormMain = (props) => {
 
                             {editMode && (
                                 <>
-                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        {/* <div className={styles.uploadContainer} style={{ opacity: '100' }}>
-                                            <Dragger fileList={fileList} customRequest={handleUpload} {...uploadProps}>
-                                                <div>
-                                                    <img src={Svg} alt="" />
+                                    <div className={styles.uploadDragger}>
+                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                            <Space direction="vertical">
+                                                <div className={styles.uploadContainer} style={{ opacity: '100' }}>
+                                                    <Dragger customRequest={handleUpload} {...uploadProps} fileList={fileList}>
+                                                        <Empty
+                                                            image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                                            description={
+                                                                <>
+                                                                    <Title level={5}>Upload supporting documents</Title>
+                                                                    <Text>File type should be .png and .jpg and max file size to be 5MB</Text>
+                                                                </>
+                                                            }
+                                                        />
+                                                        <Button className={styles.marB20} type="primary">
+                                                            Upload File
+                                                        </Button>
+                                                    </Dragger>
                                                 </div>
-                                                <Empty
-                                                    description={
-                                                        <>
-                                                            <span>Upload supporting documents</span>
-                                                            <span>
-                                                                <br />
-                                                                File type should be .png and .jpg and max file size to be 5MB
-                                                            </span>
-                                                        </>
-                                                    }
-                                                />
-
-                                                <Button type="primary">Upload File</Button>
-                                            </Dragger>
-                                        </div> */}
-
-                                        <Space direction="vertical" style={{ width: '100%' }}>
-                                            <div className={styles.uploadContainer} style={{ opacity: '100' }}>
-                                                <Dragger customRequest={handleUpload} {...uploadProps} fileList={fileList}>
-                                                    <Empty
-                                                        image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                                        description={
-                                                            <>
-                                                                <Title level={5}>Upload supporting documents</Title>
-                                                                <Text>File type should be .png and .jpg and max file size to be 5MB</Text>
-                                                            </>
-                                                        }
-                                                    />
-                                                    <Button className={styles.marB20} type="primary">
-                                                        Upload File
-                                                    </Button>
-                                                </Dragger>
-                                            </div>
-                                        </Space>
-                                    </Col>
+                                            </Space>
+                                        </Col>
+                                    </div>
                                 </>
                             )}
                         </Row>

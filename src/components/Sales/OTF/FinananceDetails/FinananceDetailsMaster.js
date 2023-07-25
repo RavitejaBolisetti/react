@@ -11,6 +11,7 @@ import { bindActionCreators } from 'redux';
 import { otfFinanceDetailDataActions } from 'store/actions/data/otf/financeDetail';
 import { financeLovDataActions } from 'store/actions/data/otf/financeLov';
 import { showGlobalNotification } from 'store/actions/notification';
+import { formattedCalendarDate } from 'utils/formatDateTime';
 
 import { OTFFormButton } from '../OTFFormButton';
 import { OTFStatusBar } from '../utils/OTFStatusBar';
@@ -68,7 +69,7 @@ const mapDispatchToProps = (dispatch) => ({
 export const FinananceDetailsMasterBase = (props) => {
     const { saveData, resetData, fetchList, userId, listShowLoading, financeData, isFinanceLovDataLoaded, setFormActionType, isFinanceLovLoading, FinanceLovData, fetchFinanceLovList, listFinanceLovShowLoading, section, isLoading } = props;
 
-    const { form, selectedOrderId, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION } = props;
+    const { typeData, form, selectedOrderId, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION } = props;
 
     const [isFormVisible, setIsFormVisible] = useState(false);
 
@@ -129,7 +130,7 @@ export const FinananceDetailsMasterBase = (props) => {
     };
 
     const onFinish = (values) => {
-        const data = { ...values, id: financeData?.id, otfNumber: selectedOrderId, doDate: values?.doDate?.format('YYYY-MM-DD') };
+        const data = { ...values, id: financeData?.id, otfNumber: selectedOrderId, doDate: formattedCalendarDate(values?.doDate) };
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -160,6 +161,7 @@ export const FinananceDetailsMasterBase = (props) => {
 
     const formProps = {
         ...props,
+        typeData,
         form,
         formData,
         formActionType,
@@ -188,6 +190,7 @@ export const FinananceDetailsMasterBase = (props) => {
         styles,
         isLoading,
         FinanceLovData,
+        typeData,
     };
 
     return (

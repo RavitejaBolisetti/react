@@ -156,6 +156,18 @@ export const PARAM_MASTER = {
         id: 'MONTH',
         title: 'Months of year',
     },
+    FILE_DOWNLOAD_TMPLT: {
+        id: 'FILE_DOWNLOAD_TMPLT',
+        title: 'Template download',
+    },
+    LSRCUSTTMPLT: {
+        id: 'LSRCUSTTMPLT',
+        title: 'Lessor creation template download',
+    },
+    TRNSFER_REASON: {
+        id: 'TRNSFER_REASON',
+        title: 'TRNSFER_REASON',
+    },
     VH_CONTACT_TYPE: {
         id: 'VH_CONTACT_TYPE',
         title: 'Vehicle Contact Type',
@@ -168,13 +180,9 @@ export const PARAM_MASTER = {
         id: 'REFERRAL_SEARCH',
         title: 'REFERRAL_SEARCH',
     },
-    FILE_DOWNLOAD_TMPLT: {
-        id: 'FILE_DOWNLOAD_TMPLT',
-        title: 'Template download',
-    },
-    LSRCUSTTMPLT: {
-        id: 'LSRCUSTTMPLT',
-        title: 'Lessor creation template download',
+    VCLPRCMSTTMPLT: {
+        id: 'VCLPRCMSTTMPLT',
+        title: 'Vehicle Price Master template download',
     },
     ADMINAUTHTMPLT: {
         id: 'ADMINAUTHTMPLT',
@@ -187,5 +195,41 @@ export const PARAM_MASTER = {
     VH_PURCHASE_RORDER_SER: {
         id: 'VH_PURCHASE_RORDER_SER',
         title: 'Vehicle Purchase Order List', 
+    },
+    YES_NO_FLG: {
+        id: 'YES_NO_FLG',
+        title: 'Yes No Flag',
+    },
+    CUST_VEH_SEARCH: {
+        id: 'CUST_VEH_SEARCH',
+        title: 'Yes CUST_VEH_SEARCH Flag',
+    },
+    VEH_MAKE: {
+        id: 'VEH_MAKE',
+        title: 'product Details Vehicle Make',
+    },
+    VEH_ITEM: {
+        id: 'VEH_ITEM',
+        title: 'product Details Vehicle Item',
+    },
+    VH_PRC_SRCH: {
+        id: 'VH_PRC_SRCH',
+        title: 'Vehicle Price Search',
+    },
+    LTC: {
+        id: 'LTC',
+        title: 'Lost to Competition',
+    },
+    PROCAN: {
+        id: 'PROCAN',
+        title: 'Product Change',
+    },
+    LOMMD: {
+        id: 'LOMMD',
+        title: 'Lost other M&M Dealer',
+    },
+    SALE_TYPE: {
+        id: 'SALE_TYPE',
+        title: 'Sales Type',
     },
 };

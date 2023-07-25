@@ -9,18 +9,21 @@ import { Row, Col, Form } from 'antd';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { customerDetailDataActions } from 'store/actions/customer/customerDetail';
+import { BASE_URL_CUSTOMER_MASTER_VEHICLE_LIST as customURL } from 'constants/routingApi';
 import { otfReferralsDataActions } from 'store/actions/data/otf/referrals';
 import { showGlobalNotification } from 'store/actions/notification';
 
-import styles from 'components/common/Common.module.css';
+import { formattedCalendarDate } from 'utils/formatDateTime';
 
 import { AddEditForm } from './AddEditForm';
 import { ViewDetail } from './ViewDetail';
+
 import { OTFFormButton } from '../OTFFormButton';
 import { OTFStatusBar } from '../utils/OTFStatusBar';
-import { convertCalenderDate } from 'utils/formatDateTime';
+import { formatDate } from 'utils/formatDateTime';
 import { PARAM_MASTER } from 'constants/paramMaster';
+
+import styles from 'components/common/Common.module.css';
 
 const mapStateToProps = (state) => {
     const {
@@ -29,7 +32,6 @@ const mapStateToProps = (state) => {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             OTF: {
                 Referrals: { isLoaded: isDataLoaded = false, isLoading, data: referralData = [], filter: filterString },
-                // ReferralDetails: { isLoaded: isReferralDataLoaded = false, isLoading: isReferralLoading, data: referralDetail = [] },
             },
         },
         customer: {
@@ -55,9 +57,8 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchCustomerList: customerDetailDataActions.fetchList,
-            listCustomerShowLoading: customerDetailDataActions.listShowLoading,
             fetchList: otfReferralsDataActions.fetchList,
+            fetchCustomerList: otfReferralsDataActions.fetchData,
             setFilterString: otfReferralsDataActions.setFilter,
             listShowLoading: otfReferralsDataActions.listShowLoading,
             resetData: otfReferralsDataActions.reset,
@@ -70,17 +71,22 @@ const mapDispatchToProps = (dispatch) => ({
 
 const ReferralsMasterBase = (props) => {
     const { formActionType, fetchList, showGlobalNotification, saveData, listShowLoading, userId, referralData, isLoading } = props;
-    const { form, selectedOrderId, section, handleFormValueChange, onFinishFailed, fetchCustomerList, listCustomerShowLoading, typeData, handleButtonClick, NEXT_ACTION } = props;
+    const { form, selectedOrderId, section, handleFormValueChange, onFinishFailed, fetchCustomerList, typeData, handleButtonClick, NEXT_ACTION } = props;
 
     const [searchForm] = Form.useForm();
     const [formData, setFormData] = useState();
     const [viewFormData, setViewFormData] = useState();
     const [resetField, setResetField] = useState(false);
     const { filterString, setFilterString } = props;
-    const [vehicleRegNum, setVehicleRegNum] = useState();
+
+    const [isCusomerSearchVisible, setCusomerSearchVisible] = useState(false);
+    const [customerList, setCustomerList] = useState();
 
     useEffect(() => {
-        setFormData(referralData);
+        setFilterString();
+        if (referralData) {
+            setFormData({ ...referralData });
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [referralData]);
 
@@ -110,12 +116,6 @@ const ReferralsMasterBase = (props) => {
     useEffect(() => {
         if (userId && filterString?.searchType && filterString?.searchParam) {
             const searchParams = [
-                {
-                    key: 'customerType',
-                    title: 'Customer Type',
-                    value: 'ALL',
-                    canRemove: true,
-                },
                 {
                     key: 'searchType',
                     title: 'Type',
@@ -147,22 +147,27 @@ const ReferralsMasterBase = (props) => {
             ];
 
             fetchCustomerList({
+                customURL,
                 setIsLoading: listShowLoading,
                 extraParams: searchParams,
                 onSuccessAction: (res) => {
-                    res?.data?.customerMasterDetails && setFormData(res?.data?.customerMasterDetails?.[0]);
-
-                    // res?.data?.referralData?.referralDetails.length === 1 ? setFormData(res?.data?.referralData?.referralDetails[0]) : setVehicleRegNum(res?.data?.referralData?.referralDetails);
+                    if (res?.data?.customerMasterDetails?.length > 0) {
+                        setCusomerSearchVisible(true);
+                        setCustomerList(res?.data?.customerMasterDetails);
+                    } else {
+                        res?.data?.customerMasterDetails && setFormData(res?.data?.customerMasterDetails?.[0]);
+                        handleFormValueChange();
+                    }
                 },
                 onErrorAction,
                 userId,
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, filterString]);
+    }, [filterString]);
 
     const onFinish = (values) => {
-        const data = { ...values, otfNumber: selectedOrderId, dob: convertCalenderDate(values?.dob, 'YYYY-MM-DD'), id: referralData?.id };
+        const data = { ...values, otfNumber: selectedOrderId, dob: formatDate(values?.dob), id: referralData?.id };
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -195,55 +200,9 @@ const ReferralsMasterBase = (props) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
 
-    const onSearch = (value) => {
-        setResetField(false);
-        if (!value) {
-            setFormData();
-            return false;
-        }
-        const defaultExtraParam = [
-            {
-                key: 'customerType',
-                title: 'Customer Type',
-                value: 'ALL',
-                canRemove: true,
-            },
-            {
-                key: 'pageSize',
-                title: 'Value',
-                value: 1000,
-                canRemove: true,
-            },
-            {
-                key: 'pageNumber',
-                title: 'Value',
-                value: 1,
-                canRemove: true,
-            },
-
-            {
-                key: 'searchType',
-                title: 'Type',
-                value: 'mobileNumber',
-                canRemove: true,
-            },
-            {
-                key: 'searchParam',
-                title: 'Value',
-                value: value,
-                canRemove: true,
-            },
-        ];
-
-        fetchCustomerList({
-            setIsLoading: listCustomerShowLoading,
-            extraParams: defaultExtraParam,
-            userId,
-            onSuccessAction: (res) => {
-                setFormData(res?.data?.customerMasterDetails[0]);
-            },
-            onErrorAction,
-        });
+    const fnSetData = (data) => {
+        setFormData(data);
+        handleFormValueChange();
     };
 
     const formProps = {
@@ -252,16 +211,13 @@ const ReferralsMasterBase = (props) => {
         formData,
         onFinish,
         onFinishFailed,
-        onSearch,
         resetField,
-        // optionType: typeData[PARAM_MASTER.REFERRAL_SEARCH.id],
-        optionType: typeData[PARAM_MASTER.CUST_MST.id],
-        // searchParamRule: referralSearchRules,
+        optionType: typeData[PARAM_MASTER?.CUST_VEH_SEARCH?.id],
         filterString,
         setFilterString,
-        vehicleRegNum,
         typeData,
         searchForm,
+        fnSetData,
     };
 
     const viewProps = {
@@ -272,26 +228,28 @@ const ReferralsMasterBase = (props) => {
     };
 
     return (
-        <Form form={form} autoComplete="off" layout="vertical" colon={false} onFinish={onFinish} onFinishFailed={onFinishFailed} onValuesChange={handleFormValueChange}>
-            <Row gutter={20} className={styles.drawerBodyRight}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Row>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <h2>{section?.title}</h2>
-                        </Col>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <OTFStatusBar status={props?.selectedOrder?.orderStatus} />
-                        </Col>
-                    </Row>
-                    {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
-                </Col>
-            </Row>
-            <Row>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <OTFFormButton {...props} />
-                </Col>
-            </Row>
-        </Form>
+        <>
+            <Form form={form} autoComplete="off" layout="vertical" colon={false} onFinish={onFinish} onFinishFailed={onFinishFailed} onValuesChange={handleFormValueChange}>
+                <Row gutter={20} className={styles.drawerBodyRight}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <Row>
+                            <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                <h2>{section?.title}</h2>
+                            </Col>
+                            <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                <OTFStatusBar status={props?.selectedOrder?.orderStatus} />
+                            </Col>
+                        </Row>
+                        {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
+                    </Col>
+                </Row>
+                <Row>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <OTFFormButton {...props} />
+                    </Col>
+                </Row>
+            </Form>
+        </>
     );
 };
 export const ReferralsMaster = connect(mapStateToProps, mapDispatchToProps)(ReferralsMasterBase);

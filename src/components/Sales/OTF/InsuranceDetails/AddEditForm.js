@@ -51,7 +51,7 @@ const AddEditFormMain = (props) => {
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                         <Form.Item {...toDateInitialValue} label="Date" name="insuranceDate">
-                                            <DatePicker className={styles.inputBox} placeholder={preparePlaceholderSelect('Date')} style={{ width: '100%' }} disabled={true} />
+                                            <DatePicker className={styles.inputBox} placeholder={preparePlaceholderSelect('Date')} disabled={true} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>

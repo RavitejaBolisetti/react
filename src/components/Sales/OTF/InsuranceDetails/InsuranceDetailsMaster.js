@@ -105,7 +105,7 @@ const InsuranceDetailsMasterBase = (props) => {
 
     const myProps = {
         ...props,
-        buttonData: { ...props.buttonData, nextBtn: true, saveBtn: false },
+        buttonData: { ...props.buttonData, editBtn: false, nextBtn: true, saveBtn: false },
     };
 
     const onFinish = (values) => {

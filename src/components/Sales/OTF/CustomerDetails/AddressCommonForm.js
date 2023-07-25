@@ -4,17 +4,29 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Col, Input, Form, Row, DatePicker } from 'antd';
+import { Col, Input, Form, Row, DatePicker, Checkbox } from 'antd';
 
 import { disableFutureDate } from 'utils/disableDate';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
+import { dateFormat } from 'utils/formatDateTime';
 
 import { validateRequiredInputField, validateRequiredSelectField, validateEmailField, validatePincodeField, validateMobileNoField, validatePanField, validateAadhar, validateDrivingLicenseNoWithSpace, validateGSTIN } from 'utils/validation';
 
 export const AddressCommonForm = (props) => {
-    const { formType, formData, disabledProps } = props;
+    const { formType, formData, disabledProps, onChange } = props;
     return (
         <>
+            {formType === 'billingCustomer' && (
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <Form.Item name={[formType, 'sameAsBookingCustomer']} label="" initialValue={formData?.sameAsBookingCustomer}>
+                            <Checkbox valuePropName="checked" style={{ margin: '5px 0px 15px 0px' }} onClick={onChange} name="sameAsBookingCustomer">
+                                Same as Booking Customer
+                            </Checkbox>
+                        </Form.Item>
+                    </Col>
+                </Row>
+            )}
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name={[formType, 'mobileNumber']} label="Mobile Number" initialValue={formData?.mobileNumber} rules={[validateRequiredInputField('Mobile Number')]}>
@@ -109,7 +121,7 @@ export const AddressCommonForm = (props) => {
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name={[formType, 'birthDate']} label="Birth Date">
-                        <DatePicker disabledDate={disableFutureDate} format="YYYY-MM-DD" style={{ display: 'auto', width: '100%' }} {...disabledProps} />
+                        <DatePicker disabledDate={disableFutureDate} format={dateFormat} style={{ display: 'auto', width: '100%' }} {...disabledProps} />
                     </Form.Item>
                 </Col>
             </Row>

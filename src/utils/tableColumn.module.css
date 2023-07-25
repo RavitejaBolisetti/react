@@ -1,0 +1,14 @@
+.tableIcons {
+  border: none !important;
+  padding: 0px;
+  box-shadow: transparent !important;
+  width: 18px !important;
+}
+
+.activeText {
+  color: #00a310;
+}
+
+.inactiveText {
+  color: #8e8585;
+}

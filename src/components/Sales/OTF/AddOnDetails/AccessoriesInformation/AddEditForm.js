@@ -28,6 +28,10 @@ function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm
         accessoryForm
             .validateFields()
             .then((values) => {
+                if (isPresent(values?.partNumber)) {
+                    return;
+                }
+
                 if (!values?.partNumber) {
                     showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Please provide part number' });
                     return;
@@ -53,9 +57,17 @@ function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm
     };
 
     const handleOnSearch = (value) => {
-        onSearchPart(value);
+        if (isPresent(value)) {
+            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Duplicate Part Number' });
+            return;
+        } else {
+            onSearchPart(value);
+        }
     };
-    const handlePartSearch = () => {
+
+    const handlePartSearch = (values) => {
+        const { partNumber } = accessoryForm.getFieldsValue();
+        accessoryForm.setFieldsValue({ partNumber: partNumber?.trim() });
         accessoryForm.resetFields(['type', 'sellingPrice', 'mrp', 'partDescription']);
     };
 
@@ -63,7 +75,7 @@ function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm
         <>
             <Form autoComplete="off" form={accessoryForm} onFieldsChange={onFieldsChange} layout="vertical" onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.uniqueSearchInput}>
+                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item label="Part Number" name="partNumber" rules={[validateRequiredInputField('part number')]}>
                             <Search placeholder={preparePlaceholderText('Part Number')} maxLength={55} allowClear type="text" onSearch={handleOnSearch} onChange={handlePartSearch} />
                         </Form.Item>
@@ -113,7 +125,7 @@ function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.addOnButtons}>
                     {addButtonDisabled?.partDetailsResponses ? (
                         <>
-                            <Button disabled={isBtnDisabled} onClick={handleAccesoriesForm} type="primary" danger>
+                            <Button disabled={isBtnDisabled} onClick={handleAccesoriesForm} type="primary">
                                 Add
                             </Button>
                             <Button danger onClick={onCancel}>

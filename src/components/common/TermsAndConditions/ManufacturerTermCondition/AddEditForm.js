@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -10,9 +10,10 @@ import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { ViewTermConditionList } from './ViewTermConditionList';
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
-import styles from 'components/common/Common.module.css';
 import { CustomEditor } from 'components/common/CustomEditor';
-import { convertCalenderDate } from 'utils/formatDateTime';
+import { formattedCalendarDate, dateFormat } from 'utils/formatDateTime';
+
+import styles from 'components/common/Common.module.css';
 
 const { Option } = Select;
 
@@ -52,8 +53,8 @@ const AddEditFormMain = (props) => {
         return value < startDate;
     };
 
-    const fromDateInitialValue = { initialValue: convertCalenderDate(formData?.effectivefrom, 'YYYY/MM/DD') };
-    const toDateInitialValue = { initialValue: convertCalenderDate(formData?.effectiveto ? formData?.effectiveto : new Date('December 31, 9999'), 'YYYY/MM/DD') };
+    const fromDateInitialValue = { initialValue: formattedCalendarDate(formData?.effectivefrom) };
+    const toDateInitialValue = { initialValue: formattedCalendarDate(formData?.effectiveto ? formData?.effectiveto : new Date('December 31, 9999')) };
 
     return (
         <Form autoComplete="off" form={form} id="myForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed} onFieldsChange={handleFormFieldChange}>
@@ -107,12 +108,12 @@ const AddEditFormMain = (props) => {
                     <Row gutter={20}>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item {...fromDateInitialValue} label="Effective From" name="effectivefrom" rules={[validateRequiredInputField('date')]}>
-                                <DatePicker format="YYYY-MM-DD" disabled={formActionType?.viewMode} style={{ width: '100%' }} onChange={handleFromDateChange} disabledDate={disableFromDate} />
+                                <DatePicker format={dateFormat} disabled={formActionType?.viewMode} style={{ width: '100%' }} onChange={handleFromDateChange} disabledDate={disableFromDate} />
                             </Form.Item>
                         </Col>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item {...toDateInitialValue} label="Effective To" name="effectiveto">
-                                <DatePicker format="YYYY-MM-DD" disabled style={{ width: '100%' }} disabledDate={disableToDate} />
+                                <DatePicker format={dateFormat} disabled style={{ width: '100%' }} disabledDate={disableToDate} />
                             </Form.Item>
                         </Col>
                     </Row>

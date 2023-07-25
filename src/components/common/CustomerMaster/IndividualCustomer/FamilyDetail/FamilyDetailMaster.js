@@ -15,6 +15,8 @@ import { GetAge } from 'utils/getAge';
 import { AddEditForm } from './AddEditForm';
 import { CustomerFormButton } from '../../CustomerFormButton';
 
+import { formatDate } from 'utils/formatDateTime';
+
 import styles from 'components/common/Common.module.css';
 
 import dayjs from 'dayjs';
@@ -108,34 +110,37 @@ const FamilyDetailMasterBase = (props) => {
     };
 
     const onSearch = (value) => {
-        if (value === selectedCustomerId) {
-            showGlobalNotification({ message: 'Can not Add Same User as family member' });
-            return;
-        } else {
-            let found = null;
-            found = familyDetailList?.find((e) => e?.relationCustomerId === value);
-            if (found) {
-                showGlobalNotification({ message: 'Entered Customer Id is already added to this customer' });
+        if (value) {
+            if (value === selectedCustomerId) {
+                showGlobalNotification({ message: 'Can not Add Same User as family member' });
                 return;
+            } else if (value !== '') {
+                let found = null;
+                found = familyDetailList?.find((e) => e?.relationCustomerId === value);
+                if (found) {
+                    showGlobalNotification({ message: 'Entered Customer Id is already added to this customer' });
+                    return;
+                }
             }
-        }
-        let searchParams = [
-            {
-                key: 'customerId',
-                title: 'Customer',
-                value: value,
-                name: 'customerId',
-            },
-        ];
+            let searchParams = [
+                {
+                    key: 'customerId',
+                    title: 'Customer',
+                    value: value,
+                    name: 'customerId',
+                },
+            ];
 
-        fetchFamilySearchList({ setIsLoading: listFamilySearchLoading, userId, extraParams: searchParams, onErrorAction });
+            fetchFamilySearchList({ setIsLoading: listFamilySearchLoading, userId, extraParams: searchParams, onErrorAction });
+        }
     };
 
     const onSave = () => {
         form.validateFields()
             .then(() => {
                 let values = form.getFieldsValue();
-                setFamilyDetailsList((items) => [{ ...values, customerId: selectedCustomerId, dateOfBirth: typeof values?.dateOfBirth === 'object' ? dayjs(values?.dateOfBirth).format('YYYY-MM-DD') : values?.dateOfBirth }, ...items]);
+                setFamilyDetailsList((items) => [{ ...values, customerId: selectedCustomerId, dateOfBirth: typeof values?.dateOfBirth === 'object' ? formatDate(values?.dateOfBirth) : values?.dateOfBirth.split('-').reverse().join('-'), editedId: values?.editedId === '' ? Math.floor(Math.random() * 100000000 + 1) : values?.editedId }, ...items]);
+
                 if (editedMode) {
                     const upd_obj = familyDetailList?.map((obj) => {
                         if (obj?.editedId === values?.editedId) {
@@ -146,7 +151,7 @@ const FamilyDetailMasterBase = (props) => {
                             obj.relationship = values?.relationship;
                             obj.relationCode = values?.relationCode;
                             obj.relationCustomerId = values?.relationCustomerId;
-                            obj.dateOfBirth = typeof values?.dateOfBirth === 'object' ? dayjs(values?.dateOfBirth).format('YYYY-MM-DD') : values?.dateOfBirth;
+                            obj.dateOfBirth = typeof values?.dateOfBirth === 'object' ? formatDate(values?.dateOfBirth) : values?.dateOfBirth;
                             obj.remarks = values?.remarks;
                         }
                         return obj;
@@ -220,7 +225,7 @@ const FamilyDetailMasterBase = (props) => {
 
     useEffect(() => {
         form.setFieldsValue({
-            customerName: familySearchData?.firstName + ' ' + familySearchData?.middleName + ' ' + familySearchData?.lastName,
+            customerName: (familySearchData?.firstName ? familySearchData?.firstName : '') + ' ' + (familySearchData?.middleName ? familySearchData?.middleName : '') + ' ' + (familySearchData?.lastName ? familySearchData?.lastName : ''),
             dateOfBirth: familySearchData?.dateOfBirth === null ? null : dayjs(familySearchData?.dateOfBirth),
             relationAge: familySearchData?.dateOfBirth === null ? 'NA' : GetAge(familySearchData?.dateOfBirth),
         });

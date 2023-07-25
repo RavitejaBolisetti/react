@@ -103,7 +103,7 @@ export const AddOnDetailsMasterMain = (props) => {
                 name: 'partNumber',
             },
         ];
-        fetchSearchPartList({ setIsLoading: partListLoading, userId, extraParams, onSuccessAction, onErrorAction });
+        fetchSearchPartList({ setIsLoading: partListLoading, userId, extraParams, onErrorAction });
     };
 
     const handleCollapse = (values) => {

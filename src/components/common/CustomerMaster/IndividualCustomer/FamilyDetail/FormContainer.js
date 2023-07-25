@@ -11,12 +11,11 @@ import { validateRequiredInputField, validateRequiredSelectField } from 'utils/v
 
 import { GetAge } from 'utils/getAge';
 import { disableFutureDate } from 'utils/disableDate';
-import dayjs from 'dayjs';
-
+import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
 import styles from 'components/common/Common.module.css';
 
 const { Option } = Select;
-const { TextArea } = Input;
+const { TextArea, Search } = Input;
 
 const FormBase = (props) => {
     const { customerType, onSave, form, onChange, relationData, onSearch, isSearchLoading, onCancel, showForm, initialVal, editedValues } = props;
@@ -29,7 +28,7 @@ const FormBase = (props) => {
     const [customer, setCustomer] = useState(null);
 
     const onDateChange = (prop) => {
-        let dateString = dayjs(prop).format('YYYY-MM-DD');
+        let dateString = formattedCalendarDate(prop);
         let calAge1 = GetAge(dateString);
         form.setFieldsValue({
             relationAge: calAge1,
@@ -82,15 +81,15 @@ const FormBase = (props) => {
                     </Form.Item>
                 </Col>
                 {customer ? (
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.noLeftPadding}>
                         <Form.Item initialValue={props?.relationCustomerId ? props?.relationCustomerId : ''} label="Customer Id" name="relationCustomerId">
-                            <Input.Search placeholder={preparePlaceholderText('Customer Id')} onSearch={onSearch} enterButton loading={isSearchLoading} />
+                            <Search placeholder={preparePlaceholderText('Customer Id')} allowClear loading={isSearchLoading} onSearch={onSearch} />
                         </Form.Item>
                     </Col>
                 ) : (
-                    <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
+                    <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0} className={styles.noLeftPadding}>
                         <Form.Item initialValue={props?.relationCustomerId ? props?.relationCustomerId : ''} label="Customer Id" name="relationCustomerId">
-                            <Input.Search placeholder={preparePlaceholderText('Customer Id')} onSearch={onSearch} enterButton loading={isSearchLoading} />
+                            <Search placeholder={preparePlaceholderText('Customer Id')} allowClear loading={isSearchLoading} onSearch={onSearch} />
                         </Form.Item>
                     </Col>
                 )}
@@ -134,7 +133,7 @@ const FormBase = (props) => {
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item label="Date of Birth" name="dateOfBirth" rules={[validateRequiredInputField('Date of Birth')]}>
-                        <DatePicker format="YYYY-MM-DD" onChange={onDateChange} disabledDate={disableFutureDate} style={{ display: 'auto', width: '100%' }} disabled={customer} placeholder={preparePlaceholderSelect('Date of Birth')} className={styles.inputBox} />
+                        <DatePicker format={dateFormat} onChange={onDateChange} disabledDate={disableFutureDate} style={{ display: 'auto', width: '100%' }} disabled={customer} placeholder={preparePlaceholderSelect('Date of Birth')} className={styles.inputBox} getPopupContainer={(triggerNode) => triggerNode.parentElement} />
                     </Form.Item>
                 </Col>
 
@@ -165,21 +164,22 @@ const FormBase = (props) => {
                 </Col>
             </Row>
 
-            <Row style={{ display: 'flex' }}>
-                <Button
-                    type="primary"
-                    onClick={() => {
-                        // form.submit();
-                        onSave();
-                    }}
-                    className={styles.marR20}
-                >
-                    Save
-                </Button>
-
-                <Button onClick={onCancel} className={styles.marB20} danger>
-                    Cancel
-                </Button>
+            <Row gutter={20}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                    <Button
+                        type="primary"
+                        onClick={() => {
+                            // form.submit();
+                            onSave();
+                        }}
+                        className={styles.marR20}
+                    >
+                        Save
+                    </Button>
+                    <Button onClick={onCancel} className={styles.marB20} danger>
+                        Cancel
+                    </Button>
+                </Col>
             </Row>
         </div>
     );

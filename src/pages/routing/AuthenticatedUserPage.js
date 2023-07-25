@@ -19,6 +19,7 @@ import {
     CriticalityGroupPage,
     RoleManagementPage,
     StatePage,
+    StateCrudPage,
     DistrictPage,
     CityPage,
     TehsilPage,
@@ -38,8 +39,9 @@ import {
     OtfReportsPage,
     LessorCustomerCreationPage,
 } from 'pages/common';
+import { TaxChargesPage, TaxChargesCategoryPage } from 'pages/FinancialAccounting';
 
-import { OTFMasterPage, VehicleDetailMasterPage, VehiclePurchaseOrderMasterPage } from 'pages/Sales';
+import { OTFMasterPage, VehicleDetailMasterPage, VehiclePriceMasterPage, VehicleReceiptMasterPage,VehiclePurchaseOrderMasterPage } from 'pages/Sales';
 import * as routing from 'constants/routing';
 import { SplashPage } from 'pages/splash';
 
@@ -65,6 +67,7 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_COMMON_HIERARCHY_ATTRIBUTE_MASTER} element={<HierarchyAttributeMasterPage />} exact />
             <Route path={routing.ROUTING_COMMON_MANUFACTURER_ADMINISTRATIVE_HIERARCHY} element={<ManufacturerAdministrativeHierarchyPage />} />
 
+            <Route path={routing.ROUTING_COMMON_GEO_STATE_CRUD} element={<StateCrudPage />} />
             <Route path={routing.ROUTING_COMMON_GEO_STATE} element={<StatePage />} />
             <Route path={routing.ROUTING_COMMON_GEO_CITY} element={<CityPage />} />
             <Route path={routing.ROUTING_COMMON_GEO_DISTRICT} element={<DistrictPage />} />
@@ -112,10 +115,16 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_USER_DISCLAIMER} element={<CMSPage />} exact />
             <Route path={routing.ROUTING_USER_CONTACT} element={<CMSPage />} exact />
             <Route path={routing.ROUTING_OTF} element={<OTFMasterPage />} exact />
-            <Route path={routing.ROUTING_VECHILE_DETAILS} element={<VehicleDetailMasterPage />} exact />
+            {/* <Route path={routing.ROUTING_VECHILE_DETAILS} element={<VehicleDetailMasterPage />} exact /> */}
             <Route path={routing.ROUTING_VECHILE_PURCHASE_ORDER_DETAILS} element={<VehiclePurchaseOrderMasterPage />} exact />
 
+            <Route path={routing.ROUTING_VEHICLE_DETAILS} element={<VehicleDetailMasterPage />} exact />
+            <Route path={routing.ROUTING_VEHICLE_PRICE_MASTER} element={<VehiclePriceMasterPage />} exact />
+            <Route path={routing.ROUTING_VEHICLE_RECEIPT} element={<VehicleReceiptMasterPage />} exact />
             <Route path={routing.ROUTING_REPORT_OTF_REPORTS} element={<OtfReportsPage />} />
+
+            <Route path={routing.ROUTING_TAX_CHARGES} element={<TaxChargesPage />} exact />
+            <Route path={routing.ROUTING_TAX_CHARGES_CATEGORY} element={<TaxChargesCategoryPage />} exact />
 
             {/* <Route path="*" element={<LoginPage />} exact /> */}
         </Routes>

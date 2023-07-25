@@ -101,8 +101,7 @@ const AddEditForm = (props) => {
         addressForm
             .validateFields()
             .then((value) => {
-                
-                const defaultAdddress = addressData.find((i) => i?.deafultAddressIndicator && i?.addressType !== value?.addressType) && value?.deafultAddressIndicator;
+                const defaultAdddress = addressData.find((i) => i?.deafultAddressIndicator && i?.addressType !== editingData?.addressType) && value?.deafultAddressIndicator;
                 if (defaultAdddress) {
                     return showGlobalNotification({ message: 'Only one address can be default' });
                 }
@@ -143,7 +142,7 @@ const AddEditForm = (props) => {
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item label="Address Type" name="addressType" rules={[validateRequiredSelectField('Address Type'), { validator: (rule, value) => duplicateValidator(value, 'addressType', addressData, editingData?.addressType) }]}>
-                            <Select {...disabledProps} placeholder={preparePlaceholderSelect('address type')} fieldNames={{ label: 'value', value: 'value' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} options={addData} allowClear></Select>
+                            <Select {...disabledProps} placeholder={preparePlaceholderSelect('address type')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} options={addData} allowClear></Select>
                         </Form.Item>
                     </Col>
 
@@ -163,7 +162,7 @@ const AddEditForm = (props) => {
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.uniqueSearchInput}>
                         <Form.Item initialValue={formData?.pinCode} label="Pin Code" name="pinCode" rules={[validateRequiredInputField('Pin Code'), validatePincodeField('Pin Code')]}>
                             <AutoComplete {...disabledProps} maxLength={6} className={styles.searchField} options={options} onSelect={handleOnSelect} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
-                                <Search onSearch={handleOnSearch} onChange={handleOnClear} placeholder="Search" loading={isPinCodeLoading} style={{ width: '100%' }} type="text" allowClear />
+                                <Search onSearch={handleOnSearch} onChange={handleOnClear} placeholder="Search" loading={isPinCodeLoading} type="text" allowClear />
                             </AutoComplete>
                         </Form.Item>
                     </Col>
@@ -234,7 +233,7 @@ const AddEditForm = (props) => {
                             <Button className={styles.marR20} onClick={handleSave} type="primary">
                                 Save
                             </Button>
-                            <Button className={styles.marB20} onClick={handleCancelFormEdit} ghost type="primary">
+                            <Button className={styles.marB20} onClick={handleCancelFormEdit} danger>
                                 Cancel
                             </Button>
                         </Col>

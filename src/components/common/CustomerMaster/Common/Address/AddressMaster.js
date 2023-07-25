@@ -9,7 +9,7 @@ import { Form, Space, Row, Col, Typography, Button, Empty, Card, Divider } from 
 
 import { PlusOutlined } from '@ant-design/icons';
 
-import { geoPincodeDataActions } from 'store/actions/data/geo/pincode';
+import { geoPinCodeDataActions } from 'store/actions/data/geo/pincodes';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { CUSTOMER_TYPE } from 'constants/CustomerType';
 
@@ -71,8 +71,8 @@ const mapDispatchToProps = (dispatch) => ({
             resetDataCorporate: addressCorporateDataActions.reset,
             listShowLoadingCorporate: addressCorporateDataActions.listShowLoading,
 
-            listPinCodeShowLoading: geoPincodeDataActions.listShowLoading,
-            fetchPincodeDetail: geoPincodeDataActions.fetchList,
+            listPinCodeShowLoading: geoPinCodeDataActions.listShowLoading,
+            fetchPincodeDetail: geoPinCodeDataActions.fetchList,
 
             showGlobalNotification,
         },
@@ -271,7 +271,7 @@ const AddressMasterBase = (props) => {
                                         )}
                                     </Row>
                                     <Divider className={styles.marT20} />
-                                    <Space direction="vertical" style={{ width: '100%' }} >
+                                    <Space direction="vertical">
                                         <div className={styles.headerBox}>
                                             {!formActionType?.viewMode && showAddEditForm && <AddEditForm {...formProps} />}
                                             {!addressData?.length && !isAdding ? (

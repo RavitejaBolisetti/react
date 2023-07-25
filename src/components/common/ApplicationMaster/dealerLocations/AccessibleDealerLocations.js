@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -53,21 +53,26 @@ const AccessibleDealerLocationMain = ({ setCanFormSave, userId, dealerLocations,
     const [searchValue, setSearchValue] = useState('');
     const [dealerLocationsList, setDealerLocationList] = useState([]);
 
+    const fetchLocation = () => {
+        if (searchValue?.length > 2) {
+            fetchDealerLocations({ setIsLoading: locationDataLoding, searchParam: searchValue });
+        }
+    };
+
     const highlightFinalLocatonList = useMemo(
         () => (data) => {
             if (data?.length < 1) return [];
             let finalLocations = data?.map((item) => {
                 const index = item?.dealerLocationName?.toLowerCase().indexOf(searchValue);
-                const beforeStr = index > 1 ? item?.dealerLocationName?.substring(0, 1).toUpperCase() + item?.dealerLocationName?.substring(1, index) : '';
-                const searchString = index <= 1 ? searchValue?.substring(0, 1).toUpperCase() + searchValue?.substring(1, searchValue?.length)?.toLocaleLowerCase() : searchValue;
+                const beforeStr = item?.dealerLocationName?.substring(0, index);
                 const afterStr = item?.dealerLocationName?.slice(index + searchValue?.length);
-
                 let locatonName =
                     index > -1 ? (
                         <span>
                             {beforeStr}
                             <span className="site-tree-search-value" style={{ color: 'red' }}>
-                                {searchString}
+                                {/* {searchString} */}
+                                {item?.dealerLocationName?.substring(index, index + searchValue?.length)}
                             </span>
                             {afterStr}
                         </span>
@@ -79,20 +84,26 @@ const AccessibleDealerLocationMain = ({ setCanFormSave, userId, dealerLocations,
                     label: locatonName,
                 };
             });
-
-            setDealerLocationList([...finalLocations]);
+            return finalLocations;
         },
-        [ searchValue]
+        [searchValue]
     );
 
     useEffect(() => {
-        if (dealerLocations?.length < 1 || !searchValue?.length >= 3) {
+        if (!searchValue?.length > 2) {
             setDealerLocationList([]);
         } else {
-            highlightFinalLocatonList(dealerLocations);
+            setDealerLocationList(highlightFinalLocatonList(dealerLocations) || []);
         }
-// eslint-disable-next-line react-hooks/exhaustive-deps
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dealerLocations, searchValue]);
+
+    useEffect(() => {
+        if (searchValue?.length >= 3 && userId) fetchLocation();
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [searchValue, userId]);
 
     const handleSelect = (value) => {
         let locationDetails = dealerLocations?.find((location) => location?.dealerLocationName === value);
@@ -102,17 +113,12 @@ const AccessibleDealerLocationMain = ({ setCanFormSave, userId, dealerLocations,
         }
         setFinalFormdata((prev) => ({ ...prev, accessibleLocation: [...finalFormdata?.accessibleLocation, { dealerMasterLocationId: locationDetails?.id, locationName: value, id: '' }] }));
         showGlobalNotification({ notificationType: 'success', title: addDealerLocationTitle, message: addDealerLocation, placement: 'bottomRight' });
-        setCanFormSave(true)
+        setCanFormSave(true);
     };
 
     const onSearchLocation = debounce(function (text) {
-        if (text?.length < 3 || !userId) return;
-        fetchDealerLocations({ setIsLoading: locationDataLoding, searchParam: text });
-    }, 300);
-
-    const handleChange = (text) => {
         setSearchValue(text?.trim());
-    };
+    }, 300);
 
     const handleDeleteLocation = (values) => {
         setFinalFormdata((prev) => {
@@ -130,7 +136,7 @@ const AccessibleDealerLocationMain = ({ setCanFormSave, userId, dealerLocations,
             <Divider />
             <Row gap={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <AutoComplete className={styles.searchField} options={dealerLocationsList} backfill={false} onSelect={handleSelect} onSearch={onSearchLocation} onChange={handleChange} allowSearch notFoundContent="No location found">
+                    <AutoComplete className={styles.searchField} options={dealerLocationsList} backfill={false} onSelect={handleSelect} onSearch={onSearchLocation} allowSearch notFoundContent="No location found">
                         <Input.Search size="large" allowClear placeholder={preparePlaceholderAutoComplete('')} />
                     </AutoComplete>
                 </Col>

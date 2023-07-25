@@ -17,9 +17,9 @@
     width: 410px;
 }
 
-.selectSearchBg :global .anticon-close-circle {
+/* .selectSearchBg :global .anticon-close-circle {
     margin-right: 12px;
-}
+} */
 
 .selectSearchBg :global .ant-form-vertical {
     height: 26px;
@@ -33,24 +33,7 @@
     margin-top: -26px;
 }
 
-.selectSearchBg .headerSearchField :global .ant-input-wrapper .ant-input-affix-wrapper {
-    height: 26px;
-    padding: 4px 12px;
-    border-inline-end-width: 0px;
-}
-
-.selectSearchBg .headerSearchField :global .ant-input-wrapper .ant-input-affix-wrapper .ant-input {
-    height: 18px !important;
-    padding: 0 !important;
-}
-
-.selectSearchBg .headerSearchField :global .anticon svg {
-    width: 1.25em;
-    height: 1.25em;
-    margin-top: 4px;
-}
-
-.selectSearchBg :global .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) {
+.selectSearchBg :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) {
     margin-top: -4px;
     background-color: #ffffff;
 }
@@ -74,6 +57,7 @@
     padding: 5px 10px;
     border-radius: 5px;
 }
+
 .selectSearchBg :global .ant-form-vertical .ant-form-item:first-child .ant-form-item-explain .ant-form-item-explain-error:after {
     content: '';
     position: absolute;
@@ -103,6 +87,7 @@
     padding: 5px 10px;
     border-radius: 5px;
 }
+
 .selectSearchBg :global .ant-form-vertical .ant-form-item:last-child .ant-form-item-explain .ant-form-item-explain-error:after {
     content: '';
     position: absolute;
@@ -117,24 +102,9 @@
     margin-left: -10px;
 }
 
-.selectSearchBg .headerSelectField {
-    width: 140px;
-    position: absolute;
-    z-index: 99;
-    top: 0;
-}
-
-.selectSearchBg .headerSearchField {
-    width: calc(100% - 136px);
-    float: right;
-}
-
-.selectSearchBg .headerSearchField :global .ant-input-group button {
-    width: 20px;
-}
-
 .selectSearchBg :global .ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
     height: 26px;
+    background-color: #e6e6e6;
     /* margin-right: 20px; */
 }
 
@@ -146,31 +116,85 @@
     min-height: 26px;
 }
 
-.selectSearchBg .headerSelectField :global .ant-select-selector {
-    background: #e6e6e6;
-    padding-top: 0px;
+.selectSearchBg .headerSelectFieldWide {
+    width: 180px;
+    position: absolute;
+    z-index: 99;
+    top: 0;
 }
 
+.selectSearchBg .headerSelectField {
+    width: 140px;
+    position: absolute;
+    z-index: 99;
+    top: 0;
+}
+
+.selectSearchBg .headerSelectFieldWide :global .ant-select-clear,
+.selectSearchBg .headerSelectField :global .ant-select-clear {
+    background: #e6e6e6;
+}
+
+.selectSearchBg .headerSelectFieldWide :global .ant-select-selector .ant-select-selection-placeholder,
+.selectSearchBg .headerSelectFieldWide :global .ant-select-selector .ant-select-selection-item,
 .selectSearchBg .headerSelectField :global .ant-select-selector .ant-select-selection-placeholder,
 .selectSearchBg .headerSelectField :global .ant-select-selector .ant-select-selection-item {
     padding-inline-end: 12px;
     color: #0b0b0c;
     font-size: 12px;
     font-weight: 500;
-    line-height: 24px;
+    line-height: 20px;
 }
 
+.selectSearchBg .headerSearchFieldWide {
+    width: calc(100% - 176px);
+    float: right;
+}
 
+.selectSearchBg .headerSearchField {
+    width: calc(100% - 136px);
+    float: right;
+}
+
+.selectSearchBg .headerSearchFieldWide :global .ant-input-wrapper .ant-input-affix-wrapper,
+.selectSearchBg .headerSearchField :global .ant-input-wrapper .ant-input-affix-wrapper {
+    height: 26px;
+    padding: 4px 12px;
+    border-inline-end-width: 0px;
+    border: none;
+}
+
+.selectSearchBg .headerSearchFieldWide :global .ant-input-wrapper .ant-input-affix-wrapper .ant-input,
+.selectSearchBg .headerSearchField :global .ant-input-wrapper .ant-input-affix-wrapper .ant-input {
+    height: 18px !important;
+    padding: 0 !important;
+}
+
+.selectSearchBg .headerSearchFieldWide :global .anticon svg,
+.selectSearchBg .headerSearchField :global .anticon svg {
+    width: 1.25em;
+    height: 1.25em;
+    margin-top: 4px;
+}
+
+.selectSearchBg .headerSearchFieldWide :global .ant-input-group button,
+.selectSearchBg .headerSearchField :global .ant-input-group button {
+    width: 20px;
+}
+
+.selectSearchBg .headerSearchFieldWide :global .ant-input-group,
 .selectSearchBg .headerSearchField :global .ant-input-group {
     border: none;
     height: 29px;
 }
 
+.selectSearchBg .headerSearchFieldWide :global .ant-input-group .ant-input-group-addon button,
 .selectSearchBg .headerSearchField :global .ant-input-group .ant-input-group-addon button {
     box-shadow: none;
     margin-right: -6px;
 }
 
+.selectSearchBg .headerSearchFieldWide :global .ant-input-group .ant-input::placeholder,
 .selectSearchBg .headerSearchField :global .ant-input-group .ant-input::placeholder {
     color: red;
     font-size: 14px;
@@ -190,4 +214,8 @@
 .selectSearchBg :global .ant-input-affix-wrapper-status-error:not(.ant-input-affix-wrapper-disabled):not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper-focused {
     border-color: transparent;
     box-shadow: none;
+}
+
+.selectSearchBg :global .ant-card .ant-card-body .ant-form-item .ant-select .ant-select-selector .ant-select-selection-placeholder {
+    line-height: 23px !important;
 }

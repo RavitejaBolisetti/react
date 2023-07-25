@@ -262,14 +262,6 @@
     width: 180px;
 }
 
-:global .ant-btn-link {
-    color: #ff3e5b;
-}
-
-:global .ant-btn-link:not(:disabled):hover {
-    color: #ff3e5b !important;
-}
-
 :global .ant-drawer .ant-drawer-header-title {
     display: inline-block;
 }
@@ -317,15 +309,20 @@
 :global .ant-picker-time-panel-column::-webkit-scrollbar-thumb {
     background-color: #c1c1c1 !important;
     border-radius: 10px;
+    border: 2px solid #ffffff;
+}
+
+:global .ant-picker-time-panel-column::-webkit-scrollbar-thumb:hover {
+    border: 2px solid #c1c1c1;
 }
 
 :global .ant-picker-time-panel-column::-webkit-scrollbar {
-    width: 5px;
-    background-color: #f4f4f4;
+    width: 8px;
+    background-color: #ffffff;
 }
 
 :global .ant-picker-time-panel-column::-webkit-scrollbar-track {
-    background-color: #f4f4f4;
+    background-color: #ffffff;
 }
 
 :global .ant-picker .ant-picker-input span.ant-picker-suffix .anticon.anticon-clock-circle,

@@ -13,10 +13,12 @@ import { btnVisiblity } from 'utils/btnVisiblity';
 
 import { tableColumn } from './tableColumn';
 
-import { geoCountryDataActions } from 'store/actions/data/geo/country';
-import { geoStateDataActions } from 'store/actions/data/geo/state';
-import { geoDistrictDataActions } from 'store/actions/data/geo/district';
-import { geoTehsilDataActions } from 'store/actions/data/geo/tehsil';
+import { geoCountryDataActions } from 'store/actions/data/geo/countries';
+import { geoStateDataActions } from 'store/actions/data/geo/states';
+import { geoDistrictDataActions } from 'store/actions/data/geo/districts';
+import { tehsilDataActions } from 'store/actions/data/geo/tehsils';
+
+import { formatDate } from 'utils/formatDateTime';
 
 import { showGlobalNotification } from 'store/actions/notification';
 import { AddEditForm } from './AddEditForm';
@@ -78,10 +80,10 @@ const mapDispatchToProps = (dispatch) => ({
             listStateShowLoading: geoStateDataActions.listShowLoading,
             fetchDistrictLovList: geoDistrictDataActions.fetchFilteredList,
             listDistrictShowLoading: geoDistrictDataActions.listShowLoading,
-            fetchList: geoTehsilDataActions.fetchList,
-            saveData: geoTehsilDataActions.saveData,
-            listShowLoading: geoTehsilDataActions.listShowLoading,
-            resetData: geoTehsilDataActions.reset,
+            fetchList: tehsilDataActions.fetchList,
+            saveData: tehsilDataActions.saveData,
+            listShowLoading: tehsilDataActions.listShowLoading,
+            resetData: tehsilDataActions.reset,
             showGlobalNotification,
         },
         dispatch
@@ -251,7 +253,7 @@ export const ListTehsilBase = (props) => {
         };
 
     const onFinish = (values) => {
-        let data = { ...values, includedOn: values?.includedOn?.format('YYYY-MM-DD') };
+        let data = { ...values, includedOn: formatDate(values?.includedOn) };
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -393,14 +395,12 @@ export const ListTehsilBase = (props) => {
     const handleClearInSearch = (e) => {
         if (e.target.value.length > 2) {
             listFilterForm.validateFields(['code']);
-        }
-        else if (e?.target?.value === '') {
+        } else if (e?.target?.value === '') {
             setFilterString();
             listFilterForm.resetFields();
             setShowDataLoading(false);
         }
     };
-
 
     const removeFilter = (key) => {
         if (key === 'countryCode') {

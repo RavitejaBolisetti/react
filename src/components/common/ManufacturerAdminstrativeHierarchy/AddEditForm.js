@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Col, Input, Form, Row, Select, Switch, Button, Space } from 'antd';
 import { withDrawer } from 'components/withDrawer';
 import { AuthorityDetailPanel } from './HierarchyAuthorityDetail';
@@ -11,7 +11,6 @@ import { AuthorityDetailPanel } from './HierarchyAuthorityDetail';
 import styles from 'components/common/Common.module.css';
 import TreeSelectField from '../TreeSelectField';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
-
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
@@ -21,17 +20,36 @@ const { TextArea } = Input;
 const AddEditFormMain = (props) => {
     const { onCloseAction, handleAttributeChange, formActionType, fieldNames, isReadOnly = false, formData, isDataAttributeLoaded, attributeData, manufacturerAdminHierarchyData } = props;
     const { selectedTreeKey, selectedTreeSelectKey, setSelectedTreeSelectKey, handleSelectTreeClick, flatternData } = props;
-    const { isFormBtnActive, setFormBtnActive } = props;
-    const { onFinish, onFinishFailed } = props;
-
+    const { isFormBtnActive, setFormBtnActive, detailData } = props;
+    const { onFinish, onFinishFailed, EDIT_ACTION } = props;
+    const { attributeDataOptions, setattributeDataOptions } = props;
+    const disabledProps = { disabled: EDIT_ACTION === formActionType ? true : false };
     const [form] = Form.useForm();
     const treeFieldNames = { ...fieldNames, label: fieldNames?.title, value: fieldNames?.key };
 
-    const disabledProps = { disabled: isReadOnly };
+    useEffect(() => {
+        const arr = [];
+        if (attributeDataOptions && attributeDataOptions?.length) {
+            attributeData?.map((element) => {
+                if (attributeData?.status) arr.push(element?.hierarchyAttribueName);
+            });
+
+            setattributeDataOptions(
+                attributeDataOptions?.map((element) => {
+                    if (arr?.includes(element?.hierarchyAttribueName)) {
+                        return { ...element, disabled: true };
+                    } else {
+                        return element;
+                    }
+                })
+            );
+        }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [attributeData]);
 
     let treeCodeId = '';
     let treeCodeReadOnly = false;
-
     if (formActionType === FROM_ACTION_TYPE.EDIT) {
         treeCodeId = formData?.manufactureAdminParntId;
     } else if (formActionType === FROM_ACTION_TYPE.CHILD) {
@@ -73,13 +91,7 @@ const AddEditFormMain = (props) => {
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item name="attributeKey" label="Attribute Level" initialValue={formData?.attributeKey} rules={[validateRequiredSelectField('attribute level')]}>
-                                <Select onChange={handleAttributeChange} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('attribute level')} {...disabledProps} showSearch allowClear>
-                                    {attributeData?.map((item) => (
-                                        <Option key={item?.id} value={item?.id}>
-                                            {item?.hierarchyAttribueName}
-                                        </Option>
-                                    ))}
-                                </Select>
+                                <Select options={attributeDataOptions} fieldNames={{ label: 'hierarchyAttribueName', value: 'id' }} onChange={handleAttributeChange} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('attribute level')} {...disabledProps} showSearch allowClear />
                             </Form.Item>
                         </Col>
 
@@ -93,7 +105,7 @@ const AddEditFormMain = (props) => {
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item name="manufactureAdminCode" label="Code" initialValue={formData?.manufactureAdminCode} rules={[validateRequiredInputField('code'), validationFieldLetterAndNumber('code')]}>
-                                <Input placeholder={preparePlaceholderText('Code')} maxLength={6} className={styles.inputBox} disabled={formData?.id || isReadOnly} />
+                                <Input placeholder={preparePlaceholderText('Code')} maxLength={6} className={styles.inputBox} {...disabledProps} />
                             </Form.Item>
                         </Col>
 
@@ -113,7 +125,7 @@ const AddEditFormMain = (props) => {
 
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padLeft10}>
                             <Form.Item initialValue={typeof formData?.status === 'boolean' ? formData?.status : true} label="Status" name="status">
-                                <Switch checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={typeof formData?.status === 'boolean' ? formData?.status : true} {...disabledProps} onChange={(checked) => (checked ? 1 : 0)} />
+                                <Switch checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={typeof formData?.status === 'boolean' ? formData?.status : true} onChange={(checked) => (checked ? 1 : 0)} />
                             </Form.Item>
                         </Col>
                         <Col xs={0} sm={0} md={0} lg={0} xl={0}>
@@ -131,7 +143,7 @@ const AddEditFormMain = (props) => {
                         </Col>
 
                         <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
-                            <Button htmlType="submit" type="primary" danger disabled={!isFormBtnActive}>
+                            <Button htmlType="submit" type="primary" disabled={!isFormBtnActive}>
                                 Save
                             </Button>
                         </Col>

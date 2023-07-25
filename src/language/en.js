@@ -13,6 +13,8 @@ export const LANGUAGE_EN = {
         INTERNAL_SERVER_ERROR: { TITLE: 'Server Error', MESSAGE: 'Internal server error. Please try again.' },
         SESSION_EXPIRED: { TITLE: 'Session Expired', MESSAGE: 'Your session has been expired. Please login again' },
         NO_DATA_EXIST: { TITLE: 'No records found', MESSAGE: 'Please add New "{NAME}" using below button' },
+        LIST_NO_DATA_FOUND_WITH_ADD: { TITLE: 'No records found', MESSAGE: 'Please add New "{NAME}" using below button' },
+        LIST_NO_DATA_FOUND: { TITLE: 'No records found', MESSAGE: '' },
         NO_DATA_VALIDATOIN: { TITLE: 'Error', MESSAGE: 'Please add {NAME}  to proceed' },
         ADD_DEALER_LOCATION: { TITLE: 'Success', MESSAGE: 'Location added successfully' },
         ADD_DUPLICATE_DEALER_LOCATION: { TITLE: 'Error', MESSAGE: 'This location is already added' },
