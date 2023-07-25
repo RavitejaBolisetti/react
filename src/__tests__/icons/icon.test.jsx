@@ -19,62 +19,86 @@ import { SVGComponent as SettingsIcon } from '@Icons/SettingsIcon';
 import { SVGComponent as SparesIcon } from '@Icons/SparesIcon';
 import { SVGComponent as ViewEyeIcon } from '@Icons/ViewEyeIcon';
 import { SVGComponent as RupeeIcon } from '@Icons/RupeeIcon';
+import { SVGComponent as UploadBoxIcon } from '@Icons/UploadBoxIcon';
 describe('Icons Components', () => {
-    it('should render AdminIcon components', () => {
-        render(<AdminIcon />);
+    it('should render AdminIcon components', async() => {
+        const adminIcon = render(<AdminIcon />);
+        expect(adminIcon).toMatchSnapshot();
     });
-    it('should render ChangePasswordIcon components', () => {
-        render(<ChangePasswordIcon />);
+    it('should render ChangePasswordIcon components', async() => {
+       const changePasswordIcon = render(<ChangePasswordIcon />);
+       expect(changePasswordIcon).toMatchSnapshot();
     });
-    it('should render CrmIcon components', () => {
-        render(<CrmIcon />);
+    it('should render CrmIcon components', async() => {
+        const crmIcon = render(<CrmIcon />);
+        expect(crmIcon).toMatchSnapshot();
     });
-    it('should render EditIcon components', () => {
-        render(<EditIcon />);
+    it('should render EditIcon components', async() => {
+       const editIcon = render(<EditIcon />);
+       expect(editIcon).toMatchSnapshot();
     });
-    it('should render FilterIcon components', () => {
-        render(<FilterIcon />);
+    it('should render FilterIcon components', async() => {
+        const filterIcon = render(<FilterIcon />);
+        expect(filterIcon).toMatchSnapshot();
     });
-    it('should render HeadPhone components', () => {
-        render(<HeadPhone />);
+    it('should render HeadPhone components', async() => {
+        const headPhone =  render(<HeadPhone />);
+        expect(headPhone).toMatchSnapshot();
     });
-    it('should render HomeIcon components', () => {
-        render(<HomeIcon />);
+    it('should render HomeIcon components', async() => {
+       const homeIcon =  render(<HomeIcon />);
+       expect(homeIcon).toMatchSnapshot();
     });
-    it('should render HrIcon components', () => {
-        render(<HrIcon />);
+    it('should render HrIcon components', async() => {
+       const hrIcon = render(<HrIcon />);
+       expect(hrIcon).toMatchSnapshot();
     });
-    it('should render LinearTrash components', () => {
-        render(<LinearTrash />);
+    it('should render LinearTrash components', async() => {
+        const linearTrash =  render(<LinearTrash />);
+        expect(linearTrash).toMatchSnapshot();
     });
-    it('should render LogoutIcon components', () => {
-        render(<LogoutIcon />);
+    it('should render LogoutIcon components', async() => {
+        const logoutIcon =  render(<LogoutIcon />);
+        expect(logoutIcon).toMatchSnapshot();
     });
-    it('should render MenuArrow components', () => {
-        render(<MenuArrow />);
+    it('should render MenuArrow components', async() => {
+        const menuArrow = render(<MenuArrow />);
+        expect(menuArrow).toMatchSnapshot();
     });
-    it('should render MinusBorderedIcon components', () => {
-        render(<MinusBorderedIcon />);
+    it('should render MinusBorderedIcon components', async() => {
+        const minusBorderedIcon = render(<MinusBorderedIcon />);
+        expect(minusBorderedIcon).toMatchSnapshot();
     });
-    it('should render PlusBorderedIcon components', () => {
-        render(<PlusBorderedIcon />);
+    it('should render PlusBorderedIcon components', async() => {
+        const plusBorderedIcon = render(<PlusBorderedIcon />);
+        expect(plusBorderedIcon).toMatchSnapshot();
     });
-    it('should render ProfileIcon components', () => {
-        render(<ProfileIcon />);
+    it('should render ProfileIcon components', async() => {
+        const profileIcon = render(<ProfileIcon />);
+        expect(profileIcon).toMatchSnapshot();
     });
-    it('should render ServiceIcon components', () => {
-        render(<ServiceIcon />);
+    it('should render ServiceIcon components', async() => {
+        const serviceIcon = render(<ServiceIcon />);
+        expect(serviceIcon).toMatchSnapshot();
     });
-    it('should render SettingsIcon components', () => {
-        render(<SettingsIcon />);
+    it('should render SettingsIcon components', async() => {
+        const settingsIcon = render(<SettingsIcon />);
+        expect(settingsIcon).toMatchSnapshot();
     });
-    it('should render SparesIcon components', () => {
-        render(<SparesIcon />);
+    it('should render SparesIcon components', async() => {
+        const sparesIcon = render(<SparesIcon />);
+        expect(sparesIcon).toMatchSnapshot();
     });
-    it('should render ViewEyeIcon components', () => {
-        render(<ViewEyeIcon />);
+    it('should render ViewEyeIcon components', async() => {
+        const viewEyeIcon = render(<ViewEyeIcon />);
+        expect(viewEyeIcon).toMatchSnapshot();
     });
-    it('should render RupeeIcon components', () => {
-        render(<RupeeIcon />);
+    it('should render RupeeIcon components', async() => {
+        const rupeeIcon =  render(<RupeeIcon />);
+        expect(rupeeIcon).toMatchSnapshot();
     }); 
+    it('should render UploadBoxIcon icon component', async() =>{
+        const uploadBoxIcon = render(<UploadBoxIcon />)
+        expect(uploadBoxIcon).toMatchSnapshot();
+    })
 });
