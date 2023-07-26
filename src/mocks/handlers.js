@@ -158,7 +158,8 @@ export const handlers = [
   rest.put(BASE_URL_MENU_FAVOURITE, (req, res, ctx) => {
     return res(
       ctx.status(200),
-      ctx.json({menuId: "COMN-10.01", addOrRemove: "Remove"}),
+      ctx.json({menuId: "COMN-10.01", addOrRemove: "Remove"},
+      { responseMessage: "Favourite's Menu updated Successfully.",}),
       ctx.delay(100)
     )
 
