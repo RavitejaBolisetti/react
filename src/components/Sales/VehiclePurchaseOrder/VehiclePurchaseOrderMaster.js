@@ -6,26 +6,23 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
 import { Col, Form, Row } from 'antd';
 import { tableColumn } from './tableColumn';
 import AdvanceVehiclePurchaseOrderFilter from './AdvanceVehiclePurchaseOrderFilter';
-import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 'utils/btnVisiblity';
- 
+import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION,CANCEL_ACTION, btnVisiblity } from 'utils/btnVisiblity';
+
 import { ListDataTable } from 'utils/ListDataTable';
 import { VehiclePurchaseOrderMainContainer } from './VehiclePurchaseOrderMainContainer';
 import { AdvancedSearch } from './AdvancedSearch';
-
 import { VEHICLE_DETAIL_STATUS } from 'constants/VehicleDetailStatus';
 import { VEHICLE_PURCHASE_ORDER_SECTION } from 'constants/VehiclePurchaseOrderSection';
-
 import { validateRequiredInputField } from 'utils/validation';
 
 import { showGlobalNotification } from 'store/actions/notification';
 import { vehicleDetailDataActions } from 'store/actions/data/vehicle/vehicleDetail';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { FilterIcon } from 'Icons';
-
+import { PoCancellationMaster } from './VehiclePurchaseOrderCancellation/PoCancellationMaster';
 
 const mapStateToProps = (state) => {
     const {
@@ -93,7 +90,6 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
     const [advanceFilterForm] = Form.useForm();
 
     const [showDataLoading, setShowDataLoading] = useState(true);
-    const [isFormVisible, setIsFormVisible] = useState(false);
  
     const defaultBtnVisiblity = {
         editBtn: false,
@@ -109,6 +105,8 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         invoiceBtn: false,
         deliveryNote: false,
         cancelOtfBtn: false,
+               
+        
     };
 
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -118,6 +116,9 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
 
     const [formData, setFormData] = useState([]);
     const [otfSearchRules, setOtfSearchRules] = useState({ rules: [validateRequiredInputField('search parametar')] });
+
+    const [isFormVisible, setIsFormVisible] = useState(false);
+    const [isCancelVisible, setIsCancelVisible] = useState(false);
 
     const onSuccessAction = (res) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -237,6 +238,8 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         console.log('🚀 ~ file: VehicleDetailMaster.js:231 ~ handleButtonClick ~ record:', record);
         form.resetFields();
         form.setFieldsValue(undefined);
+        setIsFormVisible(true);
+        setIsCancelVisible(false);
         setSelectedRecordId('MAKGF1F57A7192174');
         switch (buttonAction) {
             case ADD_ACTION:
@@ -257,7 +260,11 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
                 section && setCurrentSection(nextSection?.id);
                 setLastSection(!nextSection?.id);
                 break;
-
+            case CANCEL_ACTION:
+                setIsCancelVisible(true); 
+                setIsFormVisible(false);
+                
+                break;
             default:
                 break;
         }
@@ -270,7 +277,6 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
             });
             setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction, orderStatus: record?.orderStatus }));
         }
-        setIsFormVisible(true);
     };
 
     const onFinishSearch = (values) => {};
@@ -322,7 +328,12 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         setIsFormVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
     };
-
+    const onCancelCloseAction = () => {
+        setIsCancelVisible(false);
+        // setIsTransferVisible(false);
+        // otfTransferForm.resetFields();
+        // otfCancellationForm.resetFields();
+    };
     const tableProps = {
         tableColumn: tableColumn(handleButtonClick),
         tableData: data,
@@ -401,6 +412,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         }
     }, [formActionType]);
 
+    
     const containerProps = {
         record: selectedRecord,
         form,
@@ -417,6 +429,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         EDIT_ACTION,
         VIEW_ACTION,
         NEXT_ACTION,
+        CANCEL_ACTION,
         buttonData,
         setButtonData,
         handleButtonClick,
@@ -437,10 +450,17 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         vehicleDetailData,
         saveButtonName: isLastSection ? 'Submit' : 'Save & Next',
     };
-    console.log('isLastSection---',isLastSection);
-
-    console.log('setButtonData---',setButtonData);
-
+    const cancelProps = {
+        ...props,
+        // otfCancellationForm,
+        // otfData,
+        // selectedOrder,
+        // CANCEL_ACTION,
+        isVisible: isCancelVisible,
+        onCloseAction: onCancelCloseAction,
+        // onFinishOTFCancellation,
+    };
+    
     return (
         <>
             <AdvanceVehiclePurchaseOrderFilter {...advanceFilterResultProps} />
@@ -451,6 +471,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
             </Row>
             <AdvancedSearch {...advanceFilterProps} />
             <VehiclePurchaseOrderMainContainer {...containerProps} />
+            <PoCancellationMaster {...cancelProps} />
         </>
     );
 };

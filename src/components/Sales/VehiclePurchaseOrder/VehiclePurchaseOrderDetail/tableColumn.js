@@ -9,13 +9,7 @@ import { Row, Col } from 'antd';
 import styles from 'components/common/Common.module.css';
 
 export const tableColumn = (handleButtonClick, page, pageSize) => {
-    <Row gutter={20}>
-    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-        <h4 className={styles.customHeading}> Product Details </h4>
-    </Col>
-
-
-</Row>
+    
     const tableColumn = [
         tblPrepareColumns({
             title: 'Model',
@@ -27,10 +21,9 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             title: 'Quantity ',
             dataIndex: 'quantity',
             width: '14%',
-        }),
- 
+        }), 
         
-        tblActionColumn({ handleButtonClick, styles, width: '8%' }),
+        tblActionColumn({ handleButtonClick, styles, width: '8%', EditIcon:false, EyeIcon: false, DeleteIcon: true }),
     ];
 
     return tableColumn;

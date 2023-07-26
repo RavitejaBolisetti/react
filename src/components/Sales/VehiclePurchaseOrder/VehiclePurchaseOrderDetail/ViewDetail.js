@@ -47,7 +47,7 @@ const ViewDetailMain = (props) => {
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Space direction="vertical" size="middle" className={styles.accordianContainer}>
                         <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end" className={styles.collapseContainer}>
-                            <Panel header="Vehicle Purchase Order" key="1">
+                            <Panel header="Purchase Order" key="1">
                                 <Descriptions {...viewProps}>
                                     <Descriptions.Item label="Purchase Order ID">{checkAndSetDefaultValue(mnfcWarrEndDate, isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label="Purchase Order Date">{checkAndSetDefaultValue(deliveryDate, isLoading)}</Descriptions.Item>
@@ -57,13 +57,11 @@ const ViewDetailMain = (props) => {
                                     </Descriptions>
                             </Panel>
                         </Collapse>
-
-                        {/* <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end" className={styles.collapseContainer}>
-                            <Panel header="Registration Number Change Request" key="2">
-                                <div>Coming Soon...</div>
-                            </Panel>
-                        </Collapse> */}
+                       
                     </Space>
+                </Col>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    <h3 > Product Details </h3>
                 </Col>
             </Row>
         </div>

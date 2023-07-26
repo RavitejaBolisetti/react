@@ -5,11 +5,12 @@
  */
 import React from 'react';
 import { Button, Row, Col } from 'antd';
-
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import styles from './VehiclePurchaseOrderFormButton.module.css';
 
 export const VehiclePurchaseOrderFormButton = ({ record, onCloseAction, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection }) => {
+    console.log('buttonData',buttonData);
+    console.log('setButtonData',setButtonData);
     return (
         <Row gutter={20} className={styles.formFooter}>
             <Col xs={24} sm={8} md={6} lg={4} xl={4} className={styles.footerBtnLeft}>
@@ -28,41 +29,21 @@ export const VehiclePurchaseOrderFormButton = ({ record, onCloseAction, buttonDa
 
             <Col xs={24} sm={16} md={18} lg={20} xl={20} className={styles.footerBtnRight}>
                 {buttonData?.editBtn && (
-                    <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record, openDefaultSection: false })} type="primary">
+                  <>  <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record, openDefaultSection: false })} type="primary">
                         Edit
                     </Button>
+                    <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.CANCEL_OTF, record, openDefaultSection: false })} type="primary">
+                        Cancel PO
+                    </Button>
+                </>
                 )}
-
-                {buttonData?.transferBtn && (
-                    <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.TRANSFER, record })} type="primary">
-                        Transfer
+ 
+                {buttonData?.cancelVPOBtn && (
+                    <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.CANCEL_VEHICLE_PURCHASE_ORDER, record })} type="primary">
+                        Cancel VPO
                     </Button>
                 )}
-
-                {buttonData?.allotBtn && (
-                    <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.ALLOT, record })} type="primary">
-                        Allot
-                    </Button>
-                )}
-
-                {buttonData?.unAllot && (
-                    <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.UNALLOT, record })} type="primary">
-                        Un-Allot
-                    </Button>
-                )}
-
-                {buttonData?.invoiceBtn && (
-                    <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.INVOICE, record })} type="primary">
-                        Invoice
-                    </Button>
-                )}
-
-                {buttonData?.deliveryNoteBtn && (
-                    <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.DELIVERY_NOTE, record })} type="primary">
-                        Delivery Note
-                    </Button>
-                )}
-
+ 
                 {buttonData?.cancelOtfBtn && (
                     <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.CANCEL_OTF, record })} type="primary">
                         Cancel OTF

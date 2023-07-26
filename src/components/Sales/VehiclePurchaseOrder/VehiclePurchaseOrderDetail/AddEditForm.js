@@ -33,7 +33,7 @@ const AddEditFormMain = (props) => {
     }, [formData]);
     
  
-    return (
+    return ( <>
         <Card className={styles.drawerCardView}>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -68,8 +68,14 @@ const AddEditFormMain = (props) => {
                 </Col>              
                                               
             </Row>  
-                         
+                 
         </Card>
+        <Row gutter={20}>
+            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                <h3> Product Details </h3>
+            </Col>
+        </Row>
+        </>
     );
 };
 

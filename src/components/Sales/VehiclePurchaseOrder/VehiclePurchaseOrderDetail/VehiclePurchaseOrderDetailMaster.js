@@ -162,9 +162,12 @@ const VehiclePurchaseOrderDetailMasterBase = (props) => {
     };
     const tableProps = {
         tableColumn: tableColumn(handleButtonClick),
-        tableData: [], //data,
+        tableData: [
+            { model: "XUV700", quantity: 2 },                
+        ], //data,
         showAddButton: false,
     };
+    
     return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20} className={styles.drawerBodyRight}>
@@ -174,7 +177,7 @@ const VehiclePurchaseOrderDetailMasterBase = (props) => {
                             <h2>{section?.title}</h2>
                         </Col>
                     </Row>
-                    {formActionType?.viewMode ? <><ViewDetail {...viewProps} /><ListDataTable {...tableProps} showAddButton={false} /> </> : <><AddEditForm {...formProps} /> <ListDataTable {...tableProps} showAddButton={false} />  </>}
+                    {formActionType?.viewMode ? <><ViewDetail {...viewProps} /><ListDataTable {...tableProps} showAddButton={false} pagination={false}/> </> : <><AddEditForm {...formProps} /> <ListDataTable {...tableProps} showAddButton={false} pagination={false} />  </>}
                 </Col>
             </Row>
             <Row>
