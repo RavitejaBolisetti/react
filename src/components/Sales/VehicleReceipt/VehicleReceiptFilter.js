@@ -14,7 +14,7 @@ import styles from 'components/common/Common.module.css';
 
 const { Search } = Input;
 
-export default function AdvanceOTFFilter(props) {
+export default function VehicleReceiptFilter(props) {
     const { extraParams, removeFilter, handleResetFilter, advanceFilter = false, otfFilter = false, title, filterString, setFilterString, typeData, setAdvanceSearchVisible, searchForm } = props;
 
     const [toggleButton, settoggleButton] = useState();

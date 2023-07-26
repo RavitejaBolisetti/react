@@ -9,7 +9,7 @@ import { bindActionCreators } from 'redux';
 
 import { Col, Form, Row } from 'antd';
 import { tableColumn } from './tableColumn';
-import AdvanceOtfFilter from './AdvanceOtfFilter';
+import VehicleReceiptFilter from './VehicleReceiptFilter';
 import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 'utils/btnVisiblity';
 
 import { VehicleReceiptMainConatiner } from './VehicleReceiptMainConatiner';
@@ -23,7 +23,7 @@ import { vehicleReceiptDataActions } from 'store/actions/data/vehicleReceipt/veh
 // import { otfSearchListAction } from 'store/actions/data/otf/otfSearchAction';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
-import { validateVehicleReceiptMenu } from './utils/validateVehicleReceiptMenu';
+// import { validateVehicleReceiptMenu } from './utils/validateVehicleReceiptMenu';
 import { FilterIcon } from 'Icons';
 
 const mapStateToProps = (state) => {
@@ -434,7 +434,7 @@ export const VehicleReceiptMasterBase = (props) => {
 
     return (
         <>
-            <AdvanceOtfFilter {...advanceFilterResultProps} />
+            <VehicleReceiptFilter {...advanceFilterResultProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <ListDataTable handleAdd={handleButtonClick} isLoading={showDataLoading} {...tableProps} showAddButton={true} />
