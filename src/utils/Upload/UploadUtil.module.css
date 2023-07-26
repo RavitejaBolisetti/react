@@ -47,6 +47,7 @@
     height: auto;
     margin-top: 10px;
     padding: 0;
+    background-color: transparent;
     border: none;
     box-shadow: none;
 }
@@ -64,7 +65,6 @@
     padding-bottom: 16px;
 }
 
-.uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item:hover,
 .uploadDragger .uploadDraggerStrip :global .ant-upload-list .ant-upload-list-item:hover {
     background-color: transparent;
 }
@@ -91,6 +91,8 @@
 
 .uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item .ant-upload-list-item-actions .ant-upload-list-item-action.ant-btn-sm.ant-btn-icon-only,
 .uploadDragger .uploadDraggerStrip :global .ant-upload-list .ant-upload-list-item .ant-upload-list-item-actions .ant-upload-list-item-action.ant-btn-sm.ant-btn-icon-only {
+    display: flex;
+    align-items: center;
     width: 20px;
     color: #FF3E5B;
 }
@@ -155,8 +157,13 @@
     margin-top: 10px;
     padding: 10px 20px;
     border: 1px solid #e6e6e6;
+    background-color: #f2f2f2;
     border-radius: 4px;
     box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.15);
+}
+
+.uploadDragger :global .ant-upload-list .ant-upload-list-item:hover {
+    background-color: #f2f2f2;
 }
 
 .uploadDragger :global .ant-upload-list .ant-upload-list-item .ant-upload-list-item-name {
