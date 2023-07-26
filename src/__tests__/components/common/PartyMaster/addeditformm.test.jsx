@@ -1,157 +1,143 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import '@testing-library/jest-dom/extend-expect';
-import customRender from "@utils/test-utils";
-import { AddEditForm } from "@components/common/PartyMaster/addeditform";
-import { screen, fireEvent } from "@testing-library/react";
+import customRender from '@utils/test-utils';
+import { AddEditForm } from '@components/common/PartyMaster/addeditform';
+import { screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { act } from 'react-dom/test-utils';
 
 beforeEach(() => {
-  jest.clearAllMocks();
+    jest.clearAllMocks();
 });
 
 const buttonData = {
-  closeBtn: true,
-  cancelBtn: true,
-  saveBtn: true,
-  saveAndNewBtn: true,
-  editBtn: true,
-  formBtnActive: true,
+    closeBtn: true,
+    cancelBtn: true,
+    saveBtn: true,
+    saveAndNewBtn: true,
+    editBtn: true,
+    formBtnActive: true,
 };
 
 const user = userEvent.setup();
 const saveButtonName = 'Save';
 const isLoadingOnSave = false;
 
-const props = {                
-  buttonData: [],
-  setButtonData: jest.fn(),
-  formActionType: '',
-  formData: {},
-  setFormData: jest.fn(),
-  forceUpdate: jest.fn(),
-  handleFormValueChange: jest.fn(),
-  handleFormFieldChange: jest.fn(),
-  allowedTimingSave: false,
-  onCloseAction: true,
+const props = {
+    buttonData: [],
+    setButtonData: jest.fn(),
+    formActionType: '',
+    formData: {},
+    setFormData: jest.fn(),
+    forceUpdate: jest.fn(),
+    handleFormValueChange: jest.fn(),
+    handleFormFieldChange: jest.fn(),
+    allowedTimingSave: false,
+    onCloseAction: true,
 };
 
-describe("party master Components", () => {
-  it("should render input field components", () => {
-    customRender(<AddEditForm
-      isVisible={true}
-      formData={{}}
-      resetFields={jest.fn()}
-      editMode={jest.fn()}
-      buttonData={buttonData}
-      setButtonData={jest.fn()}
-      handleButtonClick={jest.fn()}
-      onCloseAction={jest.fn()}
-      saveButtonName={saveButtonName}
-      isLoadingOnSave={isLoadingOnSave}
-      {...props}
-    />
-  );
-    const partyname = screen.getByLabelText('Party Name');
-    fireEvent.change(partyname, { target: { value: 'Dmstest' } });
-    expect(partyname.value.includes('Dmstest'));
+describe('party master Components', () => {
+    it('should render input field components', () => {
+        customRender(<AddEditForm isVisible={true} viewMode={false} formData={{}} resetFields={jest.fn()} editMode={jest.fn()} buttonData={buttonData} setButtonData={jest.fn()} handleButtonClick={jest.fn()} onCloseAction={jest.fn()} saveButtonName={saveButtonName} isLoadingOnSave={isLoadingOnSave} {...props} />);
+        screen.debug();
+        const partyname = screen.getByLabelText('Party Name');
+        fireEvent.change(partyname, { target: { value: 'Dmstest' } });
+        expect(partyname.value.includes('Dmstest'));
 
-    const contactpersonname = screen.getByLabelText('Contact Person Name');
-    fireEvent.change(contactpersonname, { target: { value: 'Dmstest' } });
-    expect(contactpersonname.value.includes('Dmstest'));
+        const partyCode = screen.getByLabelText('Party Code');
+        fireEvent.change(partyname, { target: { value: 'Dms' } });
+        expect(partyname.value.includes('Dms'));
 
-    const designation = screen.getByLabelText('Designation');
-    fireEvent.change(designation, { target: { value: 'Dmsdesignation' } });
-    expect(designation.value.includes('Dmsdesignation'));
+        const comboBox = screen.getByRole('combobox', { name: /party category/i });
+        fireEvent.click(comboBox);
+        expect(comboBox).toBeTruthy();
 
-    const address = screen.getByLabelText('Address');
-    fireEvent.change(address, { target: { value: 'Dmsaddress' } });
-    expect(address.value.includes('Dmsaddress'));
+        const mobileNo = screen.getAllByText('Mobile Number');
+        expect(mobileNo).toBeTruthy();
 
-    const city = screen.getByLabelText('City');
-    fireEvent.change(city, { target: { value: 'Dmscity' } });
-    expect(city.value.includes('Dmscity'));
+        const alternateNo = screen.getAllByText('Alternate Mobile Number');
+        expect(alternateNo).toBeTruthy();
 
-    const tehsil = screen.getByLabelText('Tehsil');
-    fireEvent.change(tehsil, { target: { value: 'Dmstehsil' } });
-    expect(tehsil.value.includes('Dmstehsil'));
+        const contactpersonname = screen.getByLabelText('Contact Person Name');
+        fireEvent.change(contactpersonname, { target: { value: 'Dmstest' } });
+        expect(contactpersonname.value.includes('Dmstest'));
 
-    const district = screen.getByLabelText('District');
-    fireEvent.change(district, { target: { value: 'Dmsdistrict' } });
-    expect(district.value.includes('Dmsdistrict'));
+        const designation = screen.getByLabelText('Designation');
+        fireEvent.change(designation, { target: { value: 'Dmsdesignation' } });
+        expect(designation.value.includes('Dmsdesignation'));
 
-    const state = screen.getByLabelText('State');
-    fireEvent.change(state, { target: { value: 'Dmsstate' } });
-    expect(state.value.includes('Dmsdistrict'));
+        const address = screen.getByLabelText('Address');
+        fireEvent.change(address, { target: { value: 'Dmsaddress' } });
+        expect(address.value.includes('Dmsaddress'));
 
-    const GSTINnumber = screen.getByLabelText('GSTIN number');
-    fireEvent.change(GSTINnumber, { target: { value: 'Dmsgsti' } });
-    expect(GSTINnumber.value.includes('Dmsgsti'));
+        const getText = screen.getByText('Party Address and Contact Details');
+        expect(getText).toBeTruthy();
 
-    const pan = screen.getByLabelText('PAN');
-    fireEvent.change(pan, { target: { value: 'Dmspan' } });
-    expect(pan.value.includes('Dmspan'));
+        const city = screen.getByLabelText('City');
+        fireEvent.change(city, { target: { value: 'Dmscity' } });
+        expect(city.value.includes('Dmscity'));
 
-    const creditlimit = screen.getByLabelText('Credit Limit');
-    fireEvent.change(creditlimit, { target: { value: 'Dmscreditlimit' } });
-    expect(creditlimit.value.includes('Dmscreditlimit'));
+        const tehsil = screen.getByLabelText('Tehsil');
+        fireEvent.change(tehsil, { target: { value: 'Dmstehsil' } });
+        expect(tehsil.value.includes('Dmstehsil'));
 
-    const creditdays = screen.getByLabelText('Credit Days');
-    fireEvent.change(creditdays, { target: { value: 'Dmscreditdays' } });
-    expect(creditdays.value.includes('Dmscreditdays'));
+        const district = screen.getByLabelText('District');
+        fireEvent.change(district, { target: { value: 'Dmsdistrict' } });
+        expect(district.value.includes('Dmsdistrict'));
 
-    const checkremarks = screen.getByLabelText('Remarks');
-    user.type(checkremarks, 'Dmatest');
-    expect(checkremarks.value.includes('Dmatest'));
-  });
+        const state = screen.getByLabelText('State');
+        fireEvent.change(state, { target: { value: 'Dmsstate' } });
+        expect(state.value.includes('Dmsdistrict'));
 
+        const GSTINnumber = screen.getByLabelText('GSTIN number');
+        fireEvent.change(GSTINnumber, { target: { value: 'Dmsgsti' } });
+        expect(GSTINnumber.value.includes('Dmsgsti'));
 
-  it("should render text", ()=> {
-    customRender(<AddEditForm 
-      isVisible={true}
-      formData={{}}
-      resetFields={jest.fn()}
-      editMode={jest.fn()}
-      buttonData={buttonData}
-      setButtonData={jest.fn()}
-      handleButtonClick={jest.fn()}
-      onCloseAction={jest.fn()}
-      saveButtonName={saveButtonName}
-      isLoadingOnSave={isLoadingOnSave}
-      {...props}
-  />);
-    const defaulttitle = screen.getByText('default title');
-    expect(defaulttitle).toBeInTheDocument()
+        const pan = screen.getByLabelText('PAN');
+        fireEvent.change(pan, { target: { value: 'Dmspan' } });
+        expect(pan.value.includes('Dmspan'));
 
-    const partycategory = screen.getByTitle('Party Category');
-    expect(partycategory).toBeInTheDocument();
-  });
+        const creditlimit = screen.getByLabelText('Credit Limit');
+        fireEvent.change(creditlimit, { target: { value: 'Dmscreditlimit' } });
+        expect(creditlimit.value.includes('Dmscreditlimit'));
 
-  it('Is pin code search Field Present or not', () => {
-    customRender(<AddEditForm 
-      isVisible={true}
-      formData={{}}
-      resetFields={jest.fn()}
-      editMode={jest.fn()}
-      buttonData={buttonData}
-      setButtonData={jest.fn()}
-      handleButtonClick={jest.fn()}
-      onCloseAction={jest.fn()}
-      saveButtonName={saveButtonName}
-      isLoadingOnSave={isLoadingOnSave}
-      {...props}
-    />);
-    const btnSearch = screen.findByPlaceholderText('Search');
-    expect(btnSearch).toBeTruthy();
-    expect(screen.getByRole('img', { name: 'search' })).toBeTruthy();
-    fireEvent.click(screen.getByRole('img', { name: 'search' }));
-    const SearchBtn = screen.getByRole('button', { name: 'search' });
-    fireEvent.click(SearchBtn); 
-    expect(SearchBtn).toBeTruthy();
-  });
+        const creditdays = screen.getByLabelText('Credit Days');
+        fireEvent.change(creditdays, { target: { value: 'Dmscreditdays' } });
+        expect(creditdays.value.includes('Dmscreditdays'));
 
+        const checkremarks = screen.getByLabelText('Remarks');
+        user.type(checkremarks, 'Dmatest');
+        expect(checkremarks.value.includes('Dmatest'));
+
+        const partDiscount = screen.getByRole('textbox', { name: /parts discount\(%\)/i });
+        expect(partDiscount).toBeTruthy();
+
+        const otherDetails = screen.getByText('Other Details');
+        expect(otherDetails).toBeTruthy();
+    });
+
+    it('should render text', () => {
+        customRender(<AddEditForm isVisible={true} formData={{}} resetFields={jest.fn()} editMode={jest.fn()} buttonData={buttonData} setButtonData={jest.fn()} handleButtonClick={jest.fn()} onCloseAction={jest.fn()} saveButtonName={saveButtonName} isLoadingOnSave={isLoadingOnSave} {...props} />);
+        const defaulttitle = screen.getByText('default title');
+        expect(defaulttitle).toBeInTheDocument();
+
+        const partycategory = screen.getByText('Party Category');
+        expect(partycategory).toBeTruthy();
+    });
+
+    it('Is pin code search Field Present or not', async () => {
+        customRender(<AddEditForm isVisible={true} formData={{}} resetFields={jest.fn()} editMode={jest.fn()} buttonData={buttonData} setButtonData={jest.fn()} handleButtonClick={jest.fn()} onCloseAction={jest.fn()} saveButtonName={saveButtonName} isLoadingOnSave={isLoadingOnSave} {...props} />);
+
+        const btnSearch = screen.findByPlaceholderText('Search');
+        expect(btnSearch).toBeTruthy();
+        expect(screen.getByRole('img', { name: 'search' })).toBeTruthy();
+        fireEvent.click(screen.getByRole('img', { name: 'search' }));
+        const SearchBtn = screen.getByRole('button', { name: 'search' });
+        fireEvent.click(SearchBtn);
+        expect(SearchBtn).toBeTruthy();
+    });
 });
-
