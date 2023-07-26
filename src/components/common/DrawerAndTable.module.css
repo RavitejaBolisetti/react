@@ -248,14 +248,14 @@
     justify-content: right;
 }
 
-.actionbtn {
+/* .actionbtn {
     background-color: #ff3e5b;
     border-radius: 5px;
     padding: 4px 16px;
     font-size: 12px;
     line-height: 20px;
     font-weight: 500;
-}
+} */
 
 :global .ant-picker-large {
     padding: 6.5px 11px 6.5px;
@@ -302,7 +302,7 @@
     font-size: 11px !important;
 }
 
-.drawerFooterButtons button {
+/* .drawerFooterButtons button {
     margin-bottom: 0 !important;
     height: 34px;
 }
@@ -315,7 +315,7 @@
     background-color: #b5b5b6 !important;
     color: #ffffff !important;
     border-color: white !important;
-}
+} */
 
 .viewMode :global(.ant-switch.ant-switch-checked) {
     background: #b5b5b6 !important;
@@ -339,7 +339,6 @@
 
 .viewMode :global input[type='text']:disabled {
     background-color: #ffffff !important;
-
     border-color: transparent !important;
     padding-left: 0px !important;
     font-weight: 700;
@@ -381,14 +380,14 @@
     padding-bottom: 0px !important;
 }
 
-:global .ant-btn-default.ant-btn-dangerous.ant-btn-background-ghost:disabled {
+/* :global .ant-btn-default.ant-btn-dangerous.ant-btn-background-ghost:disabled {
     border: transparent;
-}
+} */
 
-:global .ant-drawer-wrapper-body .ant-drawer-footer {
+/* :global .ant-drawer-wrapper-body .ant-drawer-footer {
     box-shadow: 0px -4px 4px rgba(0, 0, 0, 0.15) !important;
     padding: 10px 20px;
-}
+} */
 
 .accordianHeader {
     color: #e31837 !important;

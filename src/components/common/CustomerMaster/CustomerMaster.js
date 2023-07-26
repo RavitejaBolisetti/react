@@ -475,7 +475,7 @@ const CustomerMasterMain = (props) => {
                                 }
                             >
                                 {showAddButton && !data?.length && (
-                                    <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
+                                    <Button icon={<PlusOutlined />} type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
                                         {`Add`}
                                     </Button>
                                 )}

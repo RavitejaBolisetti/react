@@ -211,7 +211,7 @@ const AddEditFormMain = (props) => {
                     <Row gutter={16}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={formData?.pinCode} label="Pin Code" name="pinCode" rules={[validatePincodeField('Pin Code'), validatePincodeField('Pin Code')]}>
-                                <AutoComplete className={styles.searchField} options={options} onSelect={handleOnSelect} maxLength={6} onFocus={handleOnfocus}>
+                                <AutoComplete options={options} onSelect={handleOnSelect} maxLength={6} onFocus={handleOnfocus}>
                                     <Input.Search type="number" onSearch={handleOnSearch} onChange={handleOnClear} maxLength={6} placeholder="Search" loading={isPinCodeLoading} allowClear />
                                 </AutoComplete>
                             </Form.Item>

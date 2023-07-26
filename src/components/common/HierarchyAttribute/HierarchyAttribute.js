@@ -328,7 +328,7 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, resetData, isDataL
                                     {detailData?.hierarchyAttribute?.length > 0 && (
                                         <Col className={styles.addGroup} xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
                                             <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
-                                            <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" onClick={handleAdd}>
+                                            <Button icon={<PlusOutlined />} type="primary" onClick={handleAdd}>
                                                 Add
                                             </Button>
                                         </Col>

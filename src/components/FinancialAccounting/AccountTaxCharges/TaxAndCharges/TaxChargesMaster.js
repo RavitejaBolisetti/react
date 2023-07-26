@@ -406,7 +406,7 @@ export const TaxChargesMain = ({
                                         </span>
                                     }
                                 >
-                                    <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
+                                    <Button icon={<PlusOutlined />} type="primary" danger onClick={handleAdd}>
                                         Add
                                     </Button>
                                 </Empty>

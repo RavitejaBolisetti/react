@@ -412,16 +412,16 @@
 }
 
 .buttonHeadingContainer {
-    margin-top: 0px;
+    /* margin-top: 0px;
     display: inline-block;
     width: 100%;
-    padding: 0;
+    padding: 0; */
     text-align: right;
 }
 
-.buttonHeadingContainer button:first-child {
+/* .buttonHeadingContainer button:first-child {
     margin-right: 12px;
-}
+} */
 
 .buttonHeadingContainer .buttonIcon {
     margin-right: 6px;
@@ -471,14 +471,14 @@
     margin-bottom: 12px !important;
 }
 
-.drawerFooterButtons button {
+/* .drawerFooterButtons button {
     margin-bottom: 0 !important;
     height: 34px;
-}
+} */
 
-.drawerFooterButtons button:not(:first-child) {
+/* .drawerFooterButtons button:not(:first-child) {
     margin-left: 10px !important;
-}
+} */
 
 /* .contentHeaderBackground .headerSearchField :global .ant-btn-default {
     border-color: transparent !important;
@@ -512,7 +512,7 @@
     margin-bottom: 10px;
 }
 
-.treeCollapsibleButton {
+/* .treeCollapsibleButton {
     border: 1px solid #ff3e5b;
     border-radius: 3px;
     position: absolute;
@@ -529,9 +529,9 @@
     float: left;
     will-change: box-shadow, transform;
     transition: box-shadow 0.2s cubic-bezier(0.4, 0, 1, 1), background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
+} */
 
-.treeCollapsibleButton:hover,
+/* .treeCollapsibleButton:hover,
 .treeCollapsibleButton:focus,
 .treeCollapsibleButton:active,
 .treeCollapsibleButton.active,
@@ -539,9 +539,9 @@
 .treeCollapsibleButton.active:hover {
     background-color: #ff3e5b;
     color: #ffffff !important;
-}
+} */
 
-.leftpanel {
+/* .leftpanel {
     padding: 0.2em;
     width: 99%;
     background: #f4f4f4;
@@ -551,7 +551,7 @@
     height: 66vh;
     white-space: nowrap;
     margin-top: 5px;
-}
+} */
 
 .treeMenuLeft {
     padding-left: 0 !important;
@@ -600,6 +600,8 @@
 }
 
 .formFooter {
+    position: relative;
+    z-index: 999;
     background: #ffffff;
     padding: 12px 20px;
     box-shadow: 0px -1px 1px 0px rgba(0, 0, 0, 0.15);
@@ -1017,8 +1019,7 @@
 
 .content {
     border: 1px solid #e8e8e8;
-    border-radius: 0 0 4px 4px;
-    margin-top: -21px;
+    border-radius: 4px;
     overflow-y: hidden;
     /* height: 62.2vh; */
     height: calc(100vh - 248px);
@@ -1028,9 +1029,9 @@
     height: 62.6vh;
 } */
 
-.content .emptyContainer {
+/* .content .emptyContainer {
     border: none !important;
-}
+} */
 
 .emptyContainer {
     display: flex;
@@ -1110,8 +1111,7 @@
 
 .viewProductDetail :global .ant-descriptions .ant-descriptions-view {
     overflow-y: auto;
-    /* height: calc(100vh - 288px); */
-    height: calc(100vh - 367px);
+    height: calc(100vh - 373px);
 }
 
 :global .ant-descriptions .ant-descriptions-view::-webkit-scrollbar-track,
@@ -1541,8 +1541,9 @@
 }
 
 .masterListSearchForm :global .ant-form-item .ant-form-item-label>label {
-    margin-right: 12px;
-    margin-left: 10px;
+    margin-right: 10px;
+    height: 36px;
+    color: #0b0b0c;
 }
 
 .masterListSearchForm :global .ant-form-item .ant-form-item-explain-error {
@@ -2103,21 +2104,21 @@
     border-top-right-radius: 0;
 } */
 
-.drawerBodyRight :global .ant-table-wrapper .ant-table-tbody>tr.ant-table-row:hover>th,
+/* .drawerBodyRight :global .ant-table-wrapper .ant-table-tbody>tr.ant-table-row:hover>th,
 .drawerBodyRight :global .ant-table-wrapper .ant-table-tbody>tr.ant-table-row:hover>td,
 .drawerBodyRight :global .ant-table-wrapper .ant-table-tbody>tr>th.ant-table-cell-row-hover>td.ant-table-cell-row-hover {
     background: #fafafa;
-}
+} */
 
-.drawerBodyRight :global .ant-table-wrapper .ant-table-tbody>tr:last-child>td:first-child,
+/* .drawerBodyRight :global .ant-table-wrapper .ant-table-tbody>tr:last-child>td:first-child,
 .drawerBodyRight :global .ant-table-wrapper .ant-table-tbody>tr.ant-table-row:last-child:hover>td:first-child {
     border-radius: 0 0 0 7px;
-}
+} */
 
-.drawerBodyRight :global .ant-table-wrapper .ant-table-tbody>tr:last-child>td:last-child,
+/* .drawerBodyRight :global .ant-table-wrapper .ant-table-tbody>tr:last-child>td:last-child,
 .drawerBodyRight :global .ant-table-wrapper .ant-table-tbody>tr.ant-table-row:last-child:hover>td:last-child {
     border-radius: 0 0 7px 0;
-}
+} */
 
 /* .drawerBodyRight :global .ant-form-item {
     margin-bottom: 20px;

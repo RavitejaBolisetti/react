@@ -217,15 +217,15 @@ export const crudListingBase = ({ advanceFilter = false, handleButtonClick, hand
                 (canAddMaster || canEditMaster ? (
                     addButtonRoute ? (
                         <Link to={addButtonRoute}>
-                            <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger>
+                            <Button icon={<PlusOutlined />} type="primary" danger>
                                 {addButtonTitle ? addButtonTitle : 'Add ' + moduleName}
                             </Button>
                         </Link>
                     ) : (
-                        <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd(this.props.onAddAction)}>
+                        <Button icon={<PlusOutlined />} type="primary" danger onClick={handleAdd(this.props.onAddAction)}>
                             {addButtonTitle ? addButtonTitle : 'Add ' + moduleName}
                         </Button>
-                        // <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
+                        // <Button icon={<PlusOutlined />} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
                     )
                 ) : (
                     <DisableItemComponent />
@@ -272,7 +272,7 @@ export const crudListingBase = ({ advanceFilter = false, handleButtonClick, hand
 
                                     <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
                                         <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
-                                        <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
+                                        <Button icon={<PlusOutlined />} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
                                             Add
                                         </Button>
                                     </Col>

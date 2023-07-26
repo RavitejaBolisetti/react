@@ -230,7 +230,7 @@ const AddEditFormMain = (props) => {
                     <Row>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.inputAutFillWrapper}>
                             <Form.Item name="dealerName" label="Find Dealer Name" rules={[validateRequiredSelectField('Dealer Name')]}>
-                                <AutoComplete className={style.searchField} label="Find Dealer Name" options={dealerList} backfill={false} onSelect={handleSelect} onSearch={onSearchDealer} allowSearch notFoundContent="No Dealer found">
+                                <AutoComplete label="Find Dealer Name" options={dealerList} backfill={false} onSelect={handleSelect} onSearch={onSearchDealer} allowSearch notFoundContent="No Dealer found">
                                     <Search allowClear placeholder={preparePlaceholderAutoComplete(' / Search Dealer Name')} />
                                 </AutoComplete>
                             </Form.Item>

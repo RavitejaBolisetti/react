@@ -227,7 +227,7 @@ const AddEditFormMain = (props) => {
                                         },
                                     ]}
                                 >
-                                    <AutoComplete {...disabledProps} maxLength={6} className={styles.searchField} options={options} onSelect={handleOnSelect} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
+                                    <AutoComplete {...disabledProps} maxLength={6} options={options} onSelect={handleOnSelect} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
                                         <Search onSearch={handleOnSearch} onChange={handleOnClear} placeholder="Search" loading={isPinCodeLoading} type="text" allowClear />
                                     </AutoComplete>
                                 </Form.Item>
