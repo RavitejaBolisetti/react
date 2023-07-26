@@ -10,7 +10,7 @@ const finalFormdata ={ documentType: [ {termAndConRequired:true, digitalSignatur
 
 describe('Card Document Type Component', () => {
      it('should render card document type component', async () => {
-        customRender(<CardDocumentType setIsBtnDisabled={jest.fn()} />);
+        customRender(<CardDocumentType setIsBtnDisabled={jest.fn()} />) ;
      });
 
      it('delete icon button should work', async () => {
