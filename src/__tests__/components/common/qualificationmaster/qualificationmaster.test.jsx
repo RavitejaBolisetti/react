@@ -55,6 +55,5 @@ describe('Qualification Master Test', () => {
                 timeout: 5000,
             })
         ).toBeVisible();
-        screen.debug();
     });
 });

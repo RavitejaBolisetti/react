@@ -40,7 +40,5 @@ describe('AddEditForm Components', () => {
         expect(statusText).toBeTruthy();
         const checkActive = screen.getByText('Active');
         fireEvent.click(checkActive);
-
-        screen.debug();
     });
 });

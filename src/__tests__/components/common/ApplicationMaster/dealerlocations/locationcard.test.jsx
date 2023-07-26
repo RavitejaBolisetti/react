@@ -17,6 +17,5 @@ describe('Location card component render', () => {
         const renderButton = screen.getByRole('button');
         expect(renderButton).toBeTruthy();
         fireEvent.click(renderButton);
-        screen.debug();
     });
 });

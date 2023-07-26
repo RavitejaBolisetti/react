@@ -19,8 +19,6 @@ const props = {
 describe('Dealer Location component render', () => {
     it('should able to search data', async () => {
         customRender(<AccessibleDealerLocations notFoundContent="No location found" {...props} />);
-        screen.debug();
-
         const inputBox = screen.getByRole('combobox');
         fireEvent.change(inputBox, { target: { value: 'Agra' } });
         expect(inputBox.value.includes('Agra'));

@@ -41,6 +41,5 @@ describe('ViewQualification component', () => {
         expect(qualificationStatus).toBeTruthy();
         const checkInactive = screen.getByText('InActive');
         fireEvent.click(checkInactive);
-        screen.debug();
     });
 });
