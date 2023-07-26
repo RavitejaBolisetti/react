@@ -116,6 +116,7 @@ const AddEditFormMain = (props) => {
     const handleSearchValue = (event) => {
         setSearchValue(event.target.value);
     };
+
     const handleDefaultCheckedKeys = (Mode, keys, checkedMenuKeys) => {
         if (!Mode) {
             let newCheckedKeys = [];
@@ -140,7 +141,7 @@ const AddEditFormMain = (props) => {
                     {menuData?.map((el, i) => {
                         const treeData = el?.children;
                         const flatternData = flattenData(treeData);
-                        const checkedMenuKeys = flatternData?.map((i) => i.checked && i?.value);
+                        const checkedMenuKeys = flatternData?.filter((i) => i.checked && i.type === 'Action');
                         const allowedAccess = treeData?.filter((i) => i.checked);
 
                         const myProps = {
@@ -152,7 +153,8 @@ const AddEditFormMain = (props) => {
                             isTreeViewVisible: true,
                             onCheck: onCheck(el?.value),
                             disableCheckbox: viewMode,
-                            checkedKeys: handleDefaultCheckedKeys(addMode, defaultCheckedKeysMangement, checkedMenuKeys),
+                            checkedKeys: checkedMenuKeys.map((i) => i.value),
+                            // checkedKeys: handleDefaultCheckedKeys(addMode, defaultCheckedKeysMangement, checkedMenuKeys),
                         };
 
                         return (
