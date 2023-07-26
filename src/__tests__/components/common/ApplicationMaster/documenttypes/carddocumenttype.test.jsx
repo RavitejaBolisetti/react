@@ -10,10 +10,10 @@ const finalFormdata ={ documentType: [ {termAndConRequired:true, digitalSignatur
 
 describe('Card Document Type Component', () => {
      it('should render card document type component', async () => {
-        customRender(<CardDocumentType setIsBtnDisabled={jest.fn()} />) ;
+        customRender(<CardDocumentType setIsBtnDisabled={jest.fn()} />);
      });
 
-     it('delete icon button should work', async () => {
+     it('should delete icon button', async () => {
         const setfinalFormdata=jest.fn();
         jest.spyOn(React, 'useState').mockReturnValue([null,setfinalFormdata]);
         render(<CardDocumentType id={null} setCanFormSave={jest.fn()} setfinalFormdata={setfinalFormdata} setIsBtnDisabled={jest.fn()} finalFormdata={finalFormdata} status={'Active'} />);
