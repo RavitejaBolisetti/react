@@ -88,11 +88,11 @@ const ViewDetailMain = (props) => {
                     <Divider />
                     <Descriptions {...viewProps}>
                         <Descriptions.Item label="M1-MMFSL">{checkAndSetDefaultValue(formData?.mmfsl, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Facebook Link">{checkAndSetDefaultValue(formData?.facebookLink, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Twitter Link">{checkAndSetDefaultValue(formData?.twitterLink, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Instagram Link">{checkAndSetDefaultValue(formData?.instagramLink, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Youtube Channel">{checkAndSetDefaultValue(formData?.youtubeChannelLink, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Team BHP Link">{checkAndSetDefaultValue(formData?.teamBhpLink, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Facebook Link">{checkAndSetDefaultValue(formData?.facebookLink, isLoading, '-', true, formData?.facebookLink)}</Descriptions.Item>
+                        <Descriptions.Item label="Twitter Link">{checkAndSetDefaultValue(formData?.twitterLink, isLoading, '-', true, formData?.twitterLink)}</Descriptions.Item>
+                        <Descriptions.Item label="Instagram Link">{checkAndSetDefaultValue(formData?.instagramLink, isLoading, '-', true, formData?.instagramLink)}</Descriptions.Item>
+                        <Descriptions.Item label="Youtube Channel">{checkAndSetDefaultValue(formData?.youtubeChannelLink, isLoading, '-', true, formData?.youtubeChannelLink)}</Descriptions.Item>
+                        <Descriptions.Item label="Team BHP Link">{checkAndSetDefaultValue(formData?.teamBhpLink, isLoading, '-', true, formData?.teamBhpLink)}</Descriptions.Item>
                     </Descriptions>
                 </Panel>
             </Collapse>

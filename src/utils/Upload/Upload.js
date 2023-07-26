@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button, Typography, Upload, Image, Space, Avatar } from 'antd';
 import { FiDownload, FiTrash } from 'react-icons/fi';
+import { AiOutlineCloseCircle } from 'react-icons/ai';
 
 import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
 import { documentViewDataActions } from 'store/actions/data/customerMaster/documentView';
@@ -111,6 +112,9 @@ const UploadBase = (props) => {
     const [visible, setVisible] = useState(false);
     const [isReplacing, setIsReplacing] = useState(false);
     const [base64Img, setBase64Img] = useState('');
+    const [uploadTime, setUploadTime] = useState(false);
+
+    const removeIcon = uploadTime ? <AiOutlineCloseCircle /> : <FiTrash />;
 
     const onReplaceClick = () => {
         setIsReplacing(true);
@@ -160,6 +164,7 @@ const UploadBase = (props) => {
 
     const uploadProps = {
         beforeUpload: (file) => {
+            setUploadTime(true);
             const fileSize = file.size / 1024 / 1024;
 
             const isValid = supportedFileTypes.find((element) => element === file.type);
@@ -167,10 +172,12 @@ const UploadBase = (props) => {
                 return true;
             } else if (fileSize > maxSize) {
                 showGlobalNotification({ notificationType: 'error', title: 'Error', message: `Please upload file under ${maxSize} Mb`, placement: 'bottomRight' });
+                setUploadTime(false);
                 return Upload.LIST_IGNORE;
             } else {
                 if (!isValid) {
                     showGlobalNotification({ notificationType: 'error', title: 'Error', message: `${file.name} is not in accepted format`, placement: 'bottomRight' });
+                    setUploadTime(false);
                 }
                 return isValid || Upload.LIST_IGNORE;
             }
@@ -181,7 +188,7 @@ const UploadBase = (props) => {
         showUploadList: {
             showRemoveIcon,
             showDownloadIcon,
-            removeIcon: <FiTrash />,
+            removeIcon: removeIcon,
             downloadIcon: <FiDownload onClick={() => downloadFileFromList()} style={{ color: '#ff3e5b' }} />,
             showProgress,
             showPreviewIcon,
@@ -196,6 +203,7 @@ const UploadBase = (props) => {
             const { status } = info.file;
             setShowStatus(info.file);
             if (status === 'done') {
+                setUploadTime(false);
                 setUploadedFile(info?.file?.response?.docId);
                 setUploadedFileName(info?.file?.response?.documentName);
             }
@@ -266,7 +274,7 @@ const UploadBase = (props) => {
                     </>
                 ) : (
                     <>
-                        <Dragger fileList={fileList} customRequest={handleUpload} {...uploadProps}>
+                        <Dragger className={uploadTime ? styles.uploadDraggerStrip : ''} fileList={fileList} customRequest={handleUpload} {...uploadProps}>
                             <Space direction="vertical">
                                 <UploadBoxIcon />
                                 <div>
@@ -274,7 +282,9 @@ const UploadBase = (props) => {
                                     <Text>{validationText}</Text>
                                 </div>
                                 <Space>
-                                    <Button type="primary">{uploadButtonName}</Button>
+                                    <Button disabled={uploadTime} type="primary">
+                                        {uploadButtonName}
+                                    </Button>
                                     {isReplacing && (
                                         <Button onClick={onCancelReplace} danger>
                                             Cancel
