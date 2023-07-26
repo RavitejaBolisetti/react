@@ -87,9 +87,11 @@ const CustomerDetailMasterBase = (props) => {
     const [emptyList, setEmptyList] = useState(true);
     const [fileList, setFileList] = useState([]);
     const [uploadedFileName, setUploadedFileName] = useState('');
+    const [editedMode, setEditedMode] = useState(false);
     const [uploadedFile, setUploadedFile] = useState();
     const [formData, setFormData] = useState();
     const [uploadImgDocId, setUploadImgDocId] = useState('');
+    const [customerNameList, setCustomerNameList] = useState(data);
     const [supportingDataView, setSupportingDataView] = useState();
 
     const [whatsAppConfiguration, setWhatsAppConfiguration] = useState({ contactOverWhatsApp: null, contactOverWhatsAppActive: null, sameMobileNoAsWhatsApp: null, sameMobileNoAsWhatsAppActive: null });
@@ -205,11 +207,11 @@ const CustomerDetailMasterBase = (props) => {
             fetchList({ setIsLoading: listShowLoading, userId });
             setButtonData({ ...buttonData, formBtnActive: false });
             setRefreshCustomerList(true);
-
             if (res.data) {
                 handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
                 setSelectedCustomer({ ...res.data, customerName: res?.data?.firstName + ' ' + res?.data?.middleName + ' ' + res?.data?.lastName });
                 setSelectedCustomerId(res?.data?.customerId);
+                setCustomerNameList(res?.data);
             }
         };
 
@@ -286,10 +288,14 @@ const CustomerDetailMasterBase = (props) => {
         isViewDataLoaded,
         viewDocument,
         setUploadedFile,
+        uploadedFile,
         downloadFileFromButton,
         deleteFile,
+        editedMode,
+        setEditedMode,
         downloadFileFromList,
         setUploadedFileName,
+        uploadedFileName,
         setFileList,
         fileList,
         setEmptyList,
@@ -300,6 +306,8 @@ const CustomerDetailMasterBase = (props) => {
         whatsAppConfiguration,
         setWhatsAppConfiguration,
         handleFormFieldChange,
+        setCustomerNameList,
+        customerNameList,
     };
 
     const viewProps = {

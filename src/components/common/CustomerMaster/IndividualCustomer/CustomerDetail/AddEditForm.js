@@ -5,12 +5,15 @@
  */
 
 import { useEffect, useState } from 'react';
-import { Col, Input, Form, Row, Select, Space, Typography, Card, Divider, Switch, Button, Empty, Upload } from 'antd';
+import { Col, Input, Form, Row, Select, Space, Typography, Card, Divider, Switch, Button, Tag, Upload, Collapse } from 'antd';
 import { validateEmailField, validateMobileNoField, validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
+import { expandIcon } from 'utils/accordianExpandIcon';
+import { UploadUtil } from 'utils/Upload';
 
-import { FiEye, FiTrash } from 'react-icons/fi';
+import { FiEye, FiTrash, FiEdit } from 'react-icons/fi';
+import { BiTimeFive } from 'react-icons/bi';
 
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { NameChangeHistory } from './NameChangeHistory';
@@ -19,17 +22,22 @@ import styles from 'components/common/Common.module.css';
 import Svg from 'assets/images/Filter.svg';
 
 const { Dragger } = Upload;
+const { Panel } = Collapse;
 const { Text, Title } = Typography;
 
 const AddEditFormMain = (props) => {
     const { form, typeData, formData, corporateLovData, formActionType: { editMode } = undefined, customerType } = props;
-    const { setUploadedFileName, downloadFileFromList, fileList, setFileList, handleFormValueChange, userId, uploadDocumentFile, setUploadedFile, listShowLoading, showGlobalNotification, setEmptyList } = props;
+    const { setUploadedFileName, downloadFileFromList, fileList, setFileList, handleFormValueChange, userId, uploadDocumentFile, editedMode, setCustomerNameList, customerNameList, setEditedMode, setUploadedFile, listShowLoading, showGlobalNotification, setEmptyList } = props;
 
     const { whatsAppConfiguration, setWhatsAppConfiguration, handleFormFieldChange } = props;
     const { contactOverWhatsApp, contactOverWhatsAppActive, sameMobileNoAsWhatsApp, sameMobileNoAsWhatsAppActive } = whatsAppConfiguration;
 
     const [isHistoryVisible, setIsHistoryVisible] = useState(false);
     const [corporateType, setCorporateType] = useState('');
+    const [activeKey, setactiveKey] = useState([]);
+    const [disabled, setDisabled] = useState(false);
+    const [onSave, setOnSave] = useState(false);
+
 
     const [showStatus, setShowStatus] = useState('');
     useEffect(() => {
@@ -42,9 +50,10 @@ const AddEditFormMain = (props) => {
     }, [showStatus]);
 
     useEffect(() => {
+        setCustomerNameList(formData);
         setCorporateType(formData?.corporateType);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formData?.corporateType]);
+    }, [formData?.corporateType, formData]);
 
     useEffect(() => {
         setWhatsAppConfiguration({ contactOverWhatsApp: formData?.whatsappCommunicationIndicator, sameMobileNoAsWhatsApp: formData?.mobileNumberAsWhatsappNumber });
@@ -52,32 +61,24 @@ const AddEditFormMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
 
-    const onDrop = (e) => {};
+    useEffect(() => {
+        if (editedMode) {
+            setDisabled(true);
+        } else {
+            setDisabled(false);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [editedMode]);
+
+    const onDrop = (e) => { };
 
     const uploadProps = {
-        multiple: false,
-        accept: 'image/png, image/jpeg, application/pdf',
-        showUploadList: {
-            showRemoveIcon: true,
-            showDownloadIcon: true,
-            removeIcon: <FiTrash />,
-            downloadIcon: <FiEye onClick={() => downloadFileFromList()} style={{ color: '#ff3e5b' }} />,
-            showProgress: true,
-        },
-        progress: { strokeWidth: 3, showInfo: true },
-        onDrop,
-        onChange: (info) => {
-            let fileList = [...info.fileList];
-            fileList = fileList.slice(-1);
-            setFileList(fileList);
-            handleFormValueChange();
-            const { status } = info.file;
-            setShowStatus(info.file);
-            if (status === 'done') {
-                setUploadedFile(info?.file?.response?.docId);
-                setUploadedFileName(info?.file?.response?.documentName);
-            }
-        },
+        messageText: (
+            <>
+                Upload supporting documents
+            </>
+        ),
+        ...props,
     };
 
     const handleUpload = (options) => {
@@ -99,6 +100,30 @@ const AddEditFormMain = (props) => {
 
         uploadDocumentFile(requestData);
     };
+
+    const onEdit = () => {
+        setEditedMode(true);
+        setactiveKey(1);
+    };
+
+    const onHandleChange = () => {
+        form.validateFields()
+            .then(() => {
+                setCustomerNameList(form.getFieldsValue());
+                setactiveKey([]);
+                setEditedMode(false);
+                setOnSave(true);
+            })
+            .catch((err) => console.error(err));
+
+    }
+
+    const handleResetChange = () => {
+        form.setFieldsValue({ titleCode: null });
+        form.setFieldsValue({ middleName: null });
+        form.setFieldsValue({ firstName: null });
+        form.setFieldsValue({ lastName: null });
+    }
 
     const handleCorporateChange = (value) => {
         setCorporateType(value);
@@ -124,6 +149,11 @@ const AddEditFormMain = (props) => {
         setIsHistoryVisible(false);
     };
 
+    const onCollapseChange = (value) => {
+        console.log(value, 'ssssss')
+        setactiveKey(1);
+        setEditedMode(true);
+    }
     const changeHistoryProps = {
         isVisible: isHistoryVisible,
         onCloseAction: changeHistoryClose,
@@ -194,58 +224,127 @@ const AddEditFormMain = (props) => {
                                 <Text style={{ fontSize: '16px' }} strong>
                                     Customer Name
                                 </Text>
+
+                            </Col>
+                            <Col xs={24} sm={24} md={12} lg={12} xl={12} style={{ textAlign: 'right' }}>
+                                <Button type="link" icon={<BiTimeFive />}>
+                                    View History
+                                </Button>
                             </Col>
                         </Row>
                         <Divider />
-                        <Row gutter={20}>
-                            <Col xs={24} sm={24} md={4} lg={4} xl={4}>
-                                <Form.Item label="Title" initialValue={formData?.titleCode} name="titleCode" data-testid="title" rules={[validateRequiredSelectField('title')]}>
-                                    <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} placeholder={preparePlaceholderSelect('title')} fieldNames={{ label: 'value', value: 'key' }} options={typeData['TITLE']}></Select>
-                                </Form.Item>
-                            </Col>
-                            <Col xs={24} sm={24} md={6} lg={6} xl={6}>
-                                <Form.Item label="First Name" initialValue={formData?.firstName} name="firstName" data-testid="firstName" rules={[validateRequiredInputField('first name')]}>
-                                    <Input placeholder={preparePlaceholderText('first name')} />
-                                </Form.Item>
-                            </Col>
-                            <Col xs={24} sm={24} md={7} lg={7} xl={7}>
-                                <Form.Item label="Middle Name" initialValue={formData?.middleName} name="middleName" data-testid="middleName">
-                                    <Input placeholder={preparePlaceholderText('middle name')} />
-                                </Form.Item>
-                            </Col>
-                            <Col xs={24} sm={24} md={7} lg={7} xl={7}>
-                                <Form.Item label="Last Name" initialValue={formData?.lastName} name="lastName" data-testid="lastName" rules={[validateRequiredInputField('last name')]}>
-                                    <Input placeholder={preparePlaceholderText('last name')} />
-                                </Form.Item>
-                            </Col>
-
-                            {editMode && (
+                        <Collapse expandIcon={expandIcon} activeKey={activeKey} expandIconPosition="end" onChange={() => onCollapseChange(1)} >
+                            <Panel header={
                                 <>
-                                    <div className={styles.uploadDragger}>
-                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                            <Space direction="vertical">
-                                                <div className={styles.uploadContainer} style={{ opacity: '100' }}>
-                                                    <Dragger customRequest={handleUpload} {...uploadProps} fileList={fileList}>
-                                                        <Empty
-                                                            image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                                            description={
-                                                                <>
-                                                                    <Title level={5}>Upload supporting documents</Title>
-                                                                    <Text>File type should be .png and .jpg and max file size to be 5MB</Text>
-                                                                </>
-                                                            }
-                                                        />
-                                                        <Button className={styles.marB20} type="primary">
-                                                            Upload File
-                                                        </Button>
-                                                    </Dragger>
-                                                </div>
-                                            </Space>
-                                        </Col>
-                                    </div>
+                                    <Row type="flex" justify="space-between" align="middle" size="large">
+                                        <Row type="flex" justify="space-around" align="middle">
+                                            <Typography>
+                                                {customerNameList?.titleCode} {customerNameList?.firstName} {customerNameList?.middleName} {customerNameList?.lastName}
+                                            </Typography>
+                                            <Button
+                                                type="link"
+                                                icon={<FiEdit />}
+                                                onClick={() => {
+                                                    onEdit();
+                                                }}
+                                                disabled={disabled}
+                                                style={{ color: disabled ? 'grey' : 'red' }}
+                                            >
+                                                Edit
+                                            </Button>
+                                        </Row>
+                                        {onSave ? (
+                                            <Tag style={{ textAlign: 'right' }} color="warning">Pending</Tag>) :
+                                            null}
+                                    </Row>
+                                    {editedMode || onSave ? (
+                                        <Text type="secondary">Current Name</Text>
+                                    ) :
+                                        null
+                                    }
                                 </>
-                            )}
-                        </Row>
+                            }
+                                key={1}>
+                                <Row gutter={20}>
+                                    <Col xs={24} sm={24} md={4} lg={4} xl={4}>
+                                        <Form.Item label="Title" initialValue={formData?.titleCode} name="titleCode" data-testid="title" rules={[validateRequiredSelectField('title')]}>
+                                            <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} placeholder={preparePlaceholderSelect('title')} fieldNames={{ label: 'value', value: 'key' }} options={typeData['TITLE']}></Select>
+                                        </Form.Item>
+                                    </Col>
+                                    <Col xs={24} sm={24} md={6} lg={6} xl={6}>
+                                        <Form.Item label="First Name" initialValue={formData?.firstName} name="firstName" data-testid="firstName" rules={[validateRequiredInputField('first name')]}>
+                                            <Input placeholder={preparePlaceholderText('first name')} />
+                                        </Form.Item>
+                                    </Col>
+                                    <Col xs={24} sm={24} md={7} lg={7} xl={7}>
+                                        <Form.Item label="Middle Name" initialValue={formData?.middleName} name="middleName" data-testid="middleName">
+                                            <Input placeholder={preparePlaceholderText('middle name')} />
+                                        </Form.Item>
+                                    </Col>
+                                    <Col xs={24} sm={24} md={7} lg={7} xl={7}>
+                                        <Form.Item label="Last Name" initialValue={formData?.lastName} name="lastName" data-testid="lastName" rules={[validateRequiredInputField('last name')]}>
+                                            <Input placeholder={preparePlaceholderText('last name')} />
+                                        </Form.Item>
+                                    </Col>
+
+                                    {/* {editMode && (
+                                        <>
+                                            <div className={styles.uploadDragger}>
+                                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                    <Space direction="vertical">
+                                                        <div className={styles.uploadContainer} style={{ opacity: '100' }}>
+                                                            <Dragger customRequest={handleUpload} {...uploadProps} fileList={fileList}>
+                                                                <Empty
+                                                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                                                    description={
+                                                                        <>
+                                                                            <Title level={5}>Upload supporting documents</Title>
+                                                                            <Text>File type should be .png and .jpg and max file size to be 5MB</Text>
+                                                                        </>
+                                                                    }
+                                                                />
+                                                                <Button className={styles.marB20} type="primary">
+                                                                    Upload File
+                                                                </Button>
+                                                            </Dragger>
+                                                        </div>
+                                                    </Space>
+                                                </Col>
+                                            </div>
+                                        </>
+                                    )} */}
+
+                                </Row>
+                                <Row gutter={20}>
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                        <UploadUtil {...uploadProps} />
+                                    </Col>
+                                </Row>
+                                <Row gutter={20}>
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                        <Button type="primary" className={styles.marR20} onClick={onHandleChange} htmlType="button" >
+                                            Save
+                                        </Button>
+                                        <Button className={styles.marB20} onClick={handleResetChange} danger>
+                                            Reset
+                                        </Button>
+                                    </Col>
+                                </Row>
+                            </Panel>
+                        </Collapse>
+                        {onSave && (
+                            <Card title={<>
+                                <Row type="flex" justify="space-between" align="middle" size="large">
+                                    <Row type="flex" justify="space-around" align="middle">
+                                        <Typography>
+                                            {formData?.titleCode} {formData?.firstName} {formData?.middleName} {formData?.lastName}
+                                        </Typography>
+                                    </Row>
+                                </Row>
+
+                                <Text type="secondary">Previous Name</Text>
+
+                            </>} />)}
                     </div>
                     <Divider />
                     <div className={styles.blockSection}>
@@ -322,7 +421,7 @@ const AddEditFormMain = (props) => {
                         </Col>
                     </Row>
                 </Card>
-            </Space>
+            </Space >
             <NameChangeHistory {...changeHistoryProps} />
         </>
     );
