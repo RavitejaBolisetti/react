@@ -57,22 +57,6 @@
     transform: scaleX(-1);
 }
 
-.fullyCentered {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.verticallyCentered {
-    display: flex;
-    align-items: center;
-}
-
-.horizontallyCentered {
-    display: flex;
-    justify-content: center;
-}
-
 .lineHeight33 {
     line-height: 33px;
     padding-right: 0 !important;
@@ -133,6 +117,15 @@
     position: absolute;
     right: 175px;
     top: 5px;
+}
+
+.drawerBody {
+    padding: 30px;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    height: calc(100vh - 120px);
+    overflow: hidden;
+    overflow-y: auto;
 }
 
 .content :global .ant-tree-show-line .ant-tree-switcher-line-icon svg {
@@ -607,18 +600,9 @@
 }
 
 .formFooter {
-    width: 100%;
-    position: absolute;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    padding: 12px 0px;
     background: #ffffff;
-    left: 10px;
-    bottom: 0;
-    box-shadow: 0px -4px 4px rgba(0, 0, 0, 0.15);
-    z-index: 1;
+    padding: 12px 20px;
+    box-shadow: 0px -1px 1px 0px rgba(0, 0, 0, 0.15);
 }
 
 .formFooter .footerBtnLeft {
@@ -627,17 +611,16 @@
 
 .formFooter .footerBtnRight {
     text-align: right;
-    right: 10px;
 }
 
-.formFooter button {
-    margin-left: 14px;
+.formFooter .footerBtnRight button {
+    margin-left: 10px;
 }
 
-.formFooter .buttonIcon {
+/* .formFooter .buttonIcon {
     margin-right: 6px;
     padding-top: 2px;
-}
+} */
 
 .addGroup {
     display: flex;
@@ -2194,21 +2177,25 @@
     box-shadow: none;
 }
 
+.drawerBody::-webkit-scrollbar-track,
 .drawerBodyRight::-webkit-scrollbar-track {
     background-color: #ffffff;
 }
 
+.drawerBody::-webkit-scrollbar,
 .drawerBodyRight::-webkit-scrollbar {
     width: 8px;
     background-color: #ffffff;
 }
 
+.drawerBody::-webkit-scrollbar-thumb,
 .drawerBodyRight::-webkit-scrollbar-thumb {
     background-color: #c1c1c1;
     border-radius: 10px;
     border: 2px solid #ffffff;
 }
 
+.drawerBody::-webkit-scrollbar-thumb:hover,
 .drawerBodyRight::-webkit-scrollbar-thumb:hover {
     border: 2px solid #c1c1c1;
 }

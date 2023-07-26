@@ -8,37 +8,11 @@
     overflow: hidden;
 }
 
-.myDrawerStyle :global .ant-drawer-body {
-    padding-top: 10px;
-    height: calc(100vh - 100px);
-    overflow: hidden;
-    overflow-y: auto;
-}
-
+/* .myDrawerStyle :global .ant-drawer-wrapper-body .ant-drawer-body,
 .bigDrawerStyle :global .ant-drawer-wrapper-body .ant-drawer-body {
-    padding: 0px;
+    padding: 0;
     overflow: hidden;
-}
-
-.myDrawerStyle :global .ant-drawer-body::-webkit-scrollbar-track {
-    background-color: #ffffff;
-}
-
-.myDrawerStyle :global .ant-drawer-body::-webkit-scrollbar {
-    width: 5px;
-    background-color: #ffffff;
-}
-
-.myDrawerStyle :global .ant-drawer-body::-webkit-scrollbar-thumb {
-    background-color: rgba(52, 44, 44, 0.34);
-    border-radius: 10px;
-}
-
-.myDrawerStyle :global .ant-drawer-title {
-    font-size: 20px;
-    font-weight: 500;
-    color: #262626;
-}
+} */
 
 .myDrawerStyle :global .ant-input-affix-wrapper {
     border-color: #b5b5b6 !important;
@@ -49,19 +23,11 @@
     border-color: #0b0b0c !important;
 }
 
-.myDrawerStyle :global .ant-drawer-header {
-    height: 60px;
-}
-
 .myDrawerStyle :global .ant-drawer-wrapper-body {
     height: calc(100vh - 0px) !important;
 }
 
-.myDrawerStyle :global .ant-drawer-close {
-    color: #000000;
-}
-
-.myDrawerStyle :global .ant-drawer-wrapper-body .ant-drawer-body .ant-form-item .ant-form-item-label > label .ant-form-item-tooltip {
+.myDrawerStyle :global .ant-drawer-wrapper-body .ant-drawer-body .ant-form-item .ant-form-item-label>label .ant-form-item-tooltip {
     color: #2782f9;
     cursor: inherit;
     position: absolute;
@@ -86,10 +52,6 @@
     :global .ant-drawer-content-wrapper {
         width: 98% !important;
     }
-
-    /* .myDrawerStyle :global .ant-drawer-content-wrapper {
-        width: 98% !important;
-    } */
 
     .myDrawerStyle :global .ant-drawer-title {
         font-size: 18px;
