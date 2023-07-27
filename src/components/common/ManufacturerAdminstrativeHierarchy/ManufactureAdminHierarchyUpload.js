@@ -3,31 +3,22 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect } from 'react';
-import { Row, Col, Form, Upload, Button, Empty, Space, Typography } from 'antd';
-
-import { FiEye, FiTrash } from 'react-icons/fi';
+import React, { useState } from 'react';
+import { Form, Upload, Button, Space, Typography } from 'antd';
 
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
-import { PARAM_MASTER } from 'constants/paramMaster';
 import { UploadUtil } from 'utils/Upload';
+import { PARAM_MASTER } from 'constants/paramMaster';
 
 import styles from 'components/common/Common.module.css';
-
-const { Dragger } = Upload;
-const { Text, Title } = Typography;
 
 const UploadMain = (props) => {
     const { typeData, downloadFile, form, formData, onCloseAction, onFinishFailed } = props;
     const { buttonData, setButtonData, handleButtonClick } = props;
-    const { userId, uploadDocumentFile, setUploadedFile, listShowLoading, showGlobalNotification, emptyList, setEmptyList } = props;
-    const { isDataLoaded, viewListShowLoading, fetchViewDocument, organizationId } = props;
-    const { setFileList, resetData, setUploadedFileName, authorityShowLoading, saveAuthorityData, uploadedFile, authorityData, fetchDocumentFileDocId } = props;
-    const [showStatus, setShowStatus] = useState('');
-    const [errDocId, setErrDocId] = useState('');
-
-   
+    const { userId, setUploadedFile, listShowLoading, showGlobalNotification, setEmptyList } = props;
+    const { organizationId } = props;
+    const { setFileList, setUploadedFileName, downloadShowLoading, resetData, authorityShowLoading, saveAuthorityData, uploadedFile, fetchDocumentFileDocId } = props;
 
     const downloadReport = (documentId) => {
         const onSuccessAction = (res) => {
@@ -79,6 +70,7 @@ const UploadMain = (props) => {
 
             showGlobalNotification({ notificationType: 'error', title: 'Error', message: message });
         };
+
         const requestData = {
             data: data,
             method: 'post',
@@ -91,6 +83,35 @@ const UploadMain = (props) => {
         saveAuthorityData(requestData);
     };
 
+    const getDocIdFromOrgId = () => {
+        const extraParams = [
+            {
+                key: 'manufacturerOrgId',
+                title: 'manufacturerOrgId',
+                value: organizationId,
+                name: 'manufacturerOrgId',
+            },
+        ];
+
+        const onSuccessAction = (res) => {
+            const extraParams = [
+                {
+                    key: 'docId',
+                    title: 'docId',
+                    value: res?.data?.docId,
+                    name: 'docId',
+                },
+            ];
+            downloadFile({ setIsLoading: downloadShowLoading, userId, extraParams });
+            resetData();
+        };
+        fetchDocumentFileDocId({
+            setIsLoading: authorityShowLoading,
+            extraParams,
+            userId,
+            onSuccessAction,
+        });
+    };
     const handleTemplateDownLoad = () => {
         const filteredTypeData = typeData[PARAM_MASTER.FILE_DOWNLOAD_TMPLT.id].filter((value) => value.key === PARAM_MASTER.ADMINAUTHTMPLT.id);
         let templateID = null;
@@ -132,7 +153,7 @@ const UploadMain = (props) => {
                         <Space className={styles.accordianIconWithText}>Authority Form</Space>
                         <Space>Please download "Authority Form Template" using below button</Space>
                         <Space>
-                            <Button type="primary" onClick={handleTemplateDownLoad}>
+                            <Button type="primary" onClick={getDocIdFromOrgId}>
                                 Download Template
                             </Button>
                         </Space>
@@ -141,7 +162,6 @@ const UploadMain = (props) => {
 
                 <UploadUtil {...props} uploadButtonName={'Upload Authority Form'} messageText={'Click or drop your file here to upload'} validationText={'File type should be .xlsx and max file size to be 8Mb'} handleFormValueChange={handleFormValueChange} />
 
-                
                 <DrawerFormButton {...buttonProps} />
             </Form>
         </>

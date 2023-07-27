@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -14,7 +14,7 @@ const ViewQualificationListMain = ({ formData, style }) => {
         column: { xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 },
     };
     return (
-        <div className={`${style.viewContainer} ${style.hierarchyRightContaners}`}>
+        <div className={`${style.viewContainer} ${style.hierarchyRightContainers}`}>
             <>
                 <Descriptions {...viewProps}>
                     <Descriptions.Item label="Qualification Code">{formData?.qualificationCode}</Descriptions.Item>

@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -74,57 +74,63 @@ const AddEditFormMain = (props) => {
     };
     return (
         <Form autoComplete="off" layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-            {viewMode ? (
-                <>
-                    <ViewDetail {...viewProps} />
-                </>
-            ) : (
-                <>
-                    <Row gutter={16}>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.countryCode || defaultCountry} label="Country" name="countryCode" placeholder={preparePlaceholderSelect('Country')} rules={[validateRequiredSelectField('Country')]}>
-                                <Select className={styles.headerSelectField} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear onChange={handleCountryChange}>
-                                    {countryData?.map((item) => (
-                                        <Option key={item?.countryCode} value={item?.countryCode}>{item?.countryName}</Option>
-                                    ))}
-                                </Select>
-                            </Form.Item>
-                        </Col>
+            <Row gutter={20} className={styles.drawerBody}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                    {viewMode ? (
+                        <>
+                            <ViewDetail {...viewProps} />
+                        </>
+                    ) : (
+                        <>
+                            <Row gutter={16}>
+                                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                    <Form.Item initialValue={formData?.countryCode || defaultCountry} label="Country" name="countryCode" placeholder={preparePlaceholderSelect('Country')} rules={[validateRequiredSelectField('Country')]}>
+                                        <Select className={styles.headerSelectField} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear onChange={handleCountryChange}>
+                                            {countryData?.map((item) => (
+                                                <Option key={item?.countryCode} value={item?.countryCode}>
+                                                    {item?.countryName}
+                                                </Option>
+                                            ))}
+                                        </Select>
+                                    </Form.Item>
+                                </Col>
 
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.stateCode} label="State Name" name="stateCode" {...stateFieldValidation}>
-                                <Select placeholder={preparePlaceholderSelect('State Name')} {...selectProps} onChange={handleStateChange}>
-                                    {stateData?.map((item) => (
-                                        <Option value={item?.key}>{item?.value}</Option>
-                                    ))}
-                                </Select>
-                            </Form.Item>
-                        </Col>
-                    </Row>
+                                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                    <Form.Item initialValue={formData?.stateCode} label="State Name" name="stateCode" {...stateFieldValidation}>
+                                        <Select placeholder={preparePlaceholderSelect('State Name')} {...selectProps} onChange={handleStateChange}>
+                                            {stateData?.map((item) => (
+                                                <Option value={item?.key}>{item?.value}</Option>
+                                            ))}
+                                        </Select>
+                                    </Form.Item>
+                                </Col>
+                            </Row>
 
-                    <Row gutter={16}>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.code} label="District Code" name="code" rules={[validateRequiredInputField('district Code')]}>
-                                <Input placeholder={preparePlaceholderText('District Code')} className={styles.inputBox} maxLength={6} disabled={editMode ? true : false} />
-                            </Form.Item>
-                        </Col>
+                            <Row gutter={16}>
+                                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                    <Form.Item initialValue={formData?.code} label="District Code" name="code" rules={[validateRequiredInputField('district Code')]}>
+                                        <Input placeholder={preparePlaceholderText('District Code')} maxLength={6} disabled={editMode ? true : false} />
+                                    </Form.Item>
+                                </Col>
 
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.name} label="District Name" name="name" rules={[validateRequiredInputField('District Name')]}>
-                                <Input placeholder={preparePlaceholderText('District Name')} className={styles.inputBox} />
-                            </Form.Item>
-                        </Col>
-                    </Row>
+                                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                    <Form.Item initialValue={formData?.name} label="District Name" name="name" rules={[validateRequiredInputField('District Name')]}>
+                                        <Input placeholder={preparePlaceholderText('District Name')} />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
 
-                    <Row gutter={20}>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.padLeft10}>
-                            <Form.Item initialValue={editMode ? formData.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label="Status">
-                                <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} />
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                </>
-            )}
+                            <Row gutter={20}>
+                                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                    <Form.Item initialValue={editMode ? formData.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label="Status">
+                                        <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                        </>
+                    )}
+                </Col>
+            </Row>
 
             <DrawerFormButton {...buttonProps} />
         </Form>

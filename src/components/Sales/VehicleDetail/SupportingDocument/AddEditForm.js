@@ -3,8 +3,8 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect } from 'react';
-import { Row, Col, Form, Select, Input, Upload, Button, Empty, Divider, Space, Collapse } from 'antd';
+import React, { useState } from 'react';
+import { Row, Col, Form, Select, Input, Upload, Divider, Space, Collapse } from 'antd';
 
 import { FiDownload, FiTrash } from 'react-icons/fi';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
@@ -14,15 +14,15 @@ import { expandIcon } from 'utils/accordianExpandIcon';
 import styles from 'components/common/Common.module.css';
 import { ViewSupportingDocDetail } from './ViewSupportingDocDetail';
 import { ViewTechnicalDocDetail } from './ViewTechnicalDocDetail';
-import { getNameFromKey } from 'utils/checkAndSetDefaultValue';
+import { UploadUtil } from 'utils/Upload';
 
 const { Panel } = Collapse;
 const { Option } = Select;
 const { Dragger } = Upload;
 
 const AddEditForm = (props) => {
-    const { setUploadedFileName, downloadFileFromList, formActionType, deleteFileFromList, fileList, setFileList, handleFormValueChange, typeData, userId, uploadDocumentFile, setUploadedFile, listShowLoading, showGlobalNotification, setEmptyList, documentTypeRule, setDocumentTypeRule, documentTitleRule, setDocumentTitleRule } = props;
-    const { form, supportingDocs, setSupportingDocs } = props;
+    const { formActionType, handleFormValueChange, typeData } = props;
+    const { uploadProps, mandatoryFields } = props;
     const { ...viewProps } = props;
 
     const [showStatus, setShowStatus] = useState('');
@@ -160,8 +160,8 @@ const AddEditForm = (props) => {
                         <>
                             <Row gutter={16}>
                                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                    <Form.Item {...documentTypeRule} label="Document Type" name="documentTypeCd" placeholder={preparePlaceholderSelect('document type')} validateTrigger={['onChange']}>
-                                        <Select className={styles.headerSelectField} loading={!(typeData?.length !== 0)} placeholder="Select" {...selectProps} onChange={handleDocumentType}>
+                                    <Form.Item label="Document Type" name="documentTypeCd" rules={mandatoryFields ? [validateRequiredSelectField('document type')] : ''} placeholder={preparePlaceholderSelect('document type')}>
+                                        <Select className={styles.headerSelectField} loading={!(typeData?.length !== 0)} placeholder="Select" {...selectProps}>
                                             {typeData?.map((item) => (
                                                 <Option key={item?.key} value={item?.key}>
                                                     {item?.value}
@@ -170,7 +170,8 @@ const AddEditForm = (props) => {
                                         </Select>
                                     </Form.Item>
                                 </Col>
-                                <Col xs={24} sm={24} md={12} lg={12} xl={12} className={`${styles.inputWrapper} ${styles.allowsection}`}>
+
+                                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                                     <Form.Item {...documentTitleRule} label="Document Name" name="documentTitle" validateTrigger={['onChange']}>
                                         <Input placeholder={preparePlaceholderText('File Name')} onChange={handleDocumentTitle} allowClear />
                                     </Form.Item>
@@ -178,29 +179,7 @@ const AddEditForm = (props) => {
                             </Row>
                             <Row gutter={16}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    <div className={styles.uploadContainer} style={{ opacity: '100' }}>
-                                        <Dragger fileList={fileList} customRequest={handleUpload} {...uploadProps}>
-                                            <div>
-                                                <img src={Svg} alt="" />
-                                            </div>
-                                            <Empty
-                                                description={
-                                                    <>
-                                                        <span>
-                                                            Click or drop your file here to upload the signed and <br />
-                                                            scanned customer form.
-                                                        </span>
-                                                        <span>
-                                                            <br />
-                                                            File type should be png, jpg or pdf and max file size to be 5Mb
-                                                        </span>
-                                                    </>
-                                                }
-                                            />
-
-                                            <Button type="primary">Upload File</Button>
-                                        </Dragger>
-                                    </div>
+                                    <UploadUtil {...uploadProps} handleFormValueChange={handleFormValueChange} />
                                 </Col>
                             </Row>
                         </>

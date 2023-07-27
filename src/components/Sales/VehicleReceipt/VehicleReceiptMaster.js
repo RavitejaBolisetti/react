@@ -9,20 +9,21 @@ import { bindActionCreators } from 'redux';
 
 import { Col, Form, Row } from 'antd';
 import { tableColumn } from './tableColumn';
-import AdvanceOtfFilter from './AdvanceOtfFilter';
+import VehicleReceiptFilter from './VehicleReceiptFilter';
 import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 'utils/btnVisiblity';
 
 import { VehicleReceiptMainConatiner } from './VehicleReceiptMainConatiner';
 import { ListDataTable } from 'utils/ListDataTable';
 import { AdvancedSearch } from './AdvancedSearch';
-import { OTF_STATUS } from 'constants/OTFStatus';
+import { VEHICLE_RECEIPT_STATUS } from 'constants/VehicleReceiptStatus';
 import { VEHICLE_RECEIPT_SECTION } from 'constants/VehicleReceiptSection';
 
 import { showGlobalNotification } from 'store/actions/notification';
-import { otfDataActions } from 'store/actions/data/otf/otf';
+import { vehicleReceiptDataActions } from 'store/actions/data/vehicleReceipt/vehicleReceipt';
+// import { otfSearchListAction } from 'store/actions/data/otf/otfSearchAction';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
-import { validateVehicleReceiptMenu } from './utils/validateVehicleReceiptMenu';
+// import { validateVehicleReceiptMenu } from './utils/validateVehicleReceiptMenu';
 import { FilterIcon } from 'Icons';
 
 const mapStateToProps = (state) => {
@@ -30,8 +31,9 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
-            OTF: {
-                OtfSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isOTFSearchLoading, data, filter: filterString, isDetailLoaded, detailData: otfData = [] },
+            VehicleReceipt: {
+                VehicleReceiptSearch: { isLoaded: isSearchDataLoaded = false, isLoading: isOTFSearchLoading, data, filter: filterString },
+                // VehicleReceiptDetails: { isLoaded: isDataLoaded = false, isLoading, data: otfData = [] },
             },
         },
     } = state;
@@ -39,11 +41,11 @@ const mapStateToProps = (state) => {
     let returnValue = {
         userId,
         typeData,
-        isDataLoaded: isDetailLoaded,
+        // isDataLoaded,
         data: data?.otfDetails,
-        otfStatusList: Object.values(OTF_STATUS),
-        otfData,
-        isLoading: !isDetailLoaded,
+        vehicleReceiptStatusList: Object.values(VEHICLE_RECEIPT_STATUS),
+        // otfData,
+        // isLoading,
         moduleTitle,
         isOTFSearchLoading,
         isSearchDataLoaded,
@@ -56,12 +58,12 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchOTFSearchedList: otfDataActions.fetchList,
-            setFilterString: otfDataActions.setFilter,
-            resetData: otfDataActions.reset,
-            fetchList: otfDataActions.fetchList,
-            saveData: otfDataActions.saveData,
-            listShowLoading: otfDataActions.listShowLoading,
+            fetchOTFSearchedList: vehicleReceiptDataActions.fetchList,
+            setFilterString: vehicleReceiptDataActions.setFilter,
+            resetData: vehicleReceiptDataActions.reset,
+            // fetchList: vehicleReceiptDataActions.fetchList,
+            saveData: vehicleReceiptDataActions.saveData,
+            listShowLoading: vehicleReceiptDataActions.listShowLoading,
             showGlobalNotification,
         },
         dispatch
@@ -71,7 +73,7 @@ const mapDispatchToProps = (dispatch) => ({
 export const VehicleReceiptMasterBase = (props) => {
     const { fetchList, saveData, listShowLoading, userId, fetchOTFSearchedList, data, otfData, resetData } = props;
     const { typeData, moduleTitle } = props;
-    const { filterString, setFilterString, otfStatusList } = props;
+    const { filterString, setFilterString, vehicleReceiptStatusList } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
 
     const [listFilterForm] = Form.useForm();
@@ -160,7 +162,7 @@ export const VehicleReceiptMasterBase = (props) => {
                 key: 'otfStatus',
                 title: 'OTF Status',
                 value: filterString?.otfStatus,
-                name: otfStatusList?.find((i) => i?.key === filterString?.otfStatus)?.desc,
+                name: vehicleReceiptStatusList?.find((i) => i?.key === filterString?.otfStatus)?.desc,
                 canRemove: true,
                 filter: true,
             },
@@ -236,7 +238,8 @@ export const VehicleReceiptMasterBase = (props) => {
                 defaultSection && setCurrentSection(defaultSection);
                 break;
             case NEXT_ACTION:
-                const nextSection = Object.values(sectionName)?.find((i) => validateVehicleReceiptMenu({ item: i, status: selectedOrder?.orderStatus, otfData }) && i.id > currentSection);
+                const nextSection = Object.values(sectionName)?.find((i) => i.id > currentSection);
+                // validateVehicleReceiptMenu({ item: i, status: selectedOrder?.orderStatus, otfData }) &&
                 section && setCurrentSection(nextSection?.id);
                 setLastSection(!nextSection?.id);
                 break;
@@ -251,7 +254,7 @@ export const VehicleReceiptMasterBase = (props) => {
                 editMode: buttonAction === EDIT_ACTION,
                 viewMode: buttonAction === VIEW_ACTION,
             });
-            setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction, orderStatus: record?.orderStatus }));
+            setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
         }
         setIsFormVisible(true);
     };
@@ -331,25 +334,25 @@ export const VehicleReceiptMasterBase = (props) => {
         setAdvanceSearchVisible(false);
     };
 
-    const removeFilter = (key) => {
-        if (key === 'searchParam') {
-            const { searchType, searchParam, ...rest } = filterString;
-            setFilterString({ ...rest });
-        } else {
-            const { [key]: names, ...rest } = filterString;
-            setFilterString({ ...rest });
-        }
-    };
+    // const removeFilter = (key) => {
+    //     if (key === 'searchParam') {
+    //         const { searchType, searchParam, ...rest } = filterString;
+    //         setFilterString({ ...rest });
+    //     } else {
+    //         const { [key]: names, ...rest } = filterString;
+    //         setFilterString({ ...rest });
+    //     }
+    // };
 
     const title = 'Search OTF';
 
     const advanceFilterResultProps = {
         extraParams,
-        removeFilter,
-        otfStatusList,
+        // removeFilter,
+        vehicleReceiptStatusList,
         advanceFilter: true,
         otfFilter: true,
-        filterString,
+        // filterString,
         setFilterString,
         from: listFilterForm,
         onFinish,
@@ -373,11 +376,11 @@ export const VehicleReceiptMasterBase = (props) => {
 
         onCloseAction: onAdvanceSearchCloseAction,
         handleResetFilter,
-        filterString,
+        // filterString,
         setFilterString,
         advanceFilterForm,
         setAdvanceSearchVisible,
-        otfStatusList,
+        vehicleReceiptStatusList,
         typeData,
         onFinishSearch,
     };
@@ -431,7 +434,7 @@ export const VehicleReceiptMasterBase = (props) => {
 
     return (
         <>
-            <AdvanceOtfFilter {...advanceFilterResultProps} />
+            <VehicleReceiptFilter {...advanceFilterResultProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <ListDataTable handleAdd={handleButtonClick} isLoading={showDataLoading} {...tableProps} showAddButton={true} />

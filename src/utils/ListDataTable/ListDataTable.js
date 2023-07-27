@@ -34,7 +34,7 @@ export default function ListDataTable(props) {
                             ? addButtonOption
                             : addButtonOption
                             ? showAddButton && (
-                                  <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleButtonClick}>
+                                  <Button icon={<PlusOutlined />} type="primary" danger onClick={handleButtonClick}>
                                       {`Add`}
                                   </Button>
                               )

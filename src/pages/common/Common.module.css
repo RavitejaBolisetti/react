@@ -165,13 +165,13 @@
   margin-bottom: 10px;
 }
 
-.treeCollapsibleButton {
+/* .treeCollapsibleButton {
   border: 1px solid #ff3e5b;
   border-radius: 3px;
   position: absolute;
   z-index: 10;
   top: 136px;
-  /* left:266px; */
+  left:266px;
   padding: 5px;
   color: #ff3e5b;
   line-height: 2px;
@@ -183,9 +183,9 @@
   float: left;
   will-change: box-shadow, transform;
   transition: box-shadow 0.2s cubic-bezier(0.4, 0, 1, 1), background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
+} */
 
-.treeCollapsibleButton:hover,
+/* .treeCollapsibleButton:hover,
 .treeCollapsibleButton:focus,
 .treeCollapsibleButton:active,
 .treeCollapsibleButton.active,
@@ -193,7 +193,7 @@
 .treeCollapsibleButton.active:hover {
   background-color: #ff3e5b;
   color: #ffffff !important;
-}
+} */
 
 .buttonContainer {
   text-align: right;

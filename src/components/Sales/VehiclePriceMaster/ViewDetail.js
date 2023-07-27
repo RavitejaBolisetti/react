@@ -78,7 +78,7 @@ const ViewDetailMain = (props) => {
 
     return (
         <>
-            <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
+            <div className={`${styles.viewContainer} ${styles.hierarchyRightContainers}`}>
                 <Descriptions {...viewProps}>
                     <Descriptions.Item label="Effective From">{checkAndSetDefaultValue(vehiclePrice?.effectiveFrom, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                     <Descriptions.Item label="Effective To">{checkAndSetDefaultValue(vehiclePrice?.effectiveTo, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>

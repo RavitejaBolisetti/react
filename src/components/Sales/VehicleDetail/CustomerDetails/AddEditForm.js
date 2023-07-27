@@ -124,7 +124,7 @@ const AddEditFormBase = (props) => {
                             </Panel>
                         </Collapse>
                         <Collapse onChange={() => handleCollapse(2)} activeKey={activeKey} expandIcon={({ isActive }) => expandIconWithText(isActive, <FiEdit />, <FiEdit style={{ color: '#B5B5B6' }} />)} expandIconPosition="end">
-                            <Panel header=" Booking Customer" key="2">
+                            <Panel header=" Billing Customer" key="2">
                                 <Divider />
                                 <AddressCommonForm key="2" {...bilingCustomerProps} isBillingCustmrForm={true} />
                             </Panel>

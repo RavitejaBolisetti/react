@@ -35,6 +35,7 @@ import { FinancialAccounting } from './financialAccounting';
 import { VehiclePriceMaster } from './vehiclePriceMaster';
 import { ManufacturerAdmin } from './ManufacturerAdmin';
 import { ManufacturerOrg } from './ManufacturerOrg';
+import { VehicleReceipt } from './vehicleReceipt';
 
 export const data = combineReducers({
     Menu,
@@ -67,5 +68,7 @@ export const data = combineReducers({
     FinancialAccounting,
     ManufacturerAdmin,
     ManufacturerOrg,
+    VehicleReceipt,
     VehiclePriceMaster,
+    ManufacturerAdmin,
 });

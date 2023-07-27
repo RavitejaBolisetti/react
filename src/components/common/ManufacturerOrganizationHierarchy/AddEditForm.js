@@ -79,66 +79,71 @@ const AddEditFormMain = (props) => {
     return (
         <>
             <Form autoComplete="off" form={form} layout="vertical" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                <Row gutter={20}>
+                <Row gutter={20} className={styles.drawerBody}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Attribute Type" rules={[validateRequiredSelectField('Attribute Type Code')]}>
-                            <Select onChange={handleAttributeChange} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('Attribute Type Code')} disabled={formData?.id || isReadOnly} showSearch allowClear>
-                                {attributeData?.map((item) => (
-                                    <Option key={item?.id} value={item?.id}>
-                                        {item?.hierarchyAttribueName}
-                                    </Option>
-                                ))}
-                            </Select>
-                        </Form.Item>
-                    </Col>
+                        <Row gutter={20}>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Attribute Type" rules={[validateRequiredSelectField('Attribute Type Code')]}>
+                                    <Select onChange={handleAttributeChange} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('Attribute Type Code')} disabled={formData?.id || isReadOnly} showSearch allowClear>
+                                        {attributeData?.map((item) => (
+                                            <Option key={item?.id} value={item?.id}>
+                                                {item?.hierarchyAttribueName}
+                                            </Option>
+                                        ))}
+                                    </Select>
+                                </Form.Item>
+                            </Col>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                <Form.Item initialValue={treeCodeId} label="Parent" name="manufactureOrgParntId">
+                                    <TreeSelectField {...treeSelectFieldProps} />
+                                </Form.Item>
+                            </Col>
+                        </Row>
 
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padRight18}>
-                        <Form.Item initialValue={treeCodeId} label="Parent" name="manufactureOrgParntId">
-                            <TreeSelectField {...treeSelectFieldProps} />
-                        </Form.Item>
+                        <Row gutter={20}>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                <Form.Item initialValue={formData?.manufactureOrgCode} label="Hierarchy Code" name="manufactureOrgCode" rules={[validateRequiredInputField('Code')]}>
+                                    <Input maxLength={6} placeholder={preparePlaceholderText('Attribute Code')} disabled={formData?.id || isReadOnly} />
+                                </Form.Item>
+                            </Col>
+
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                <Form.Item name="manufactureOrgShrtName" label="Short Description" initialValue={formData?.manufactureOrgShrtName} rules={[validateRequiredInputField('Short Description')]}>
+                                    <Input placeholder={preparePlaceholderText('Short Description')} disabled={formData?.id || isReadOnly} />
+                                </Form.Item>
+                            </Col>
+                        </Row>
+
+                        <Row gutter={20}>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                <Form.Item name="manufactureOrgLongName" label="Long Description" placeholder={preparePlaceholderSelect('Long Description')} initialValue={formData?.manufactureOrgLongName} rules={[validateRequiredInputField('Long Description')]}>
+                                    <TextArea placeholder={preparePlaceholderText('Long Description')} maxLength={300} disabled={formData?.id || isReadOnly} showCount />
+                                </Form.Item>
+                            </Col>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                <Form.Item initialValue={formData?.active === null || false ? false : true} label="Status" name="active">
+                                    <Switch value={formData?.active === null || false ? false : true} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.active === true || null || undefined ? true : false} {...disabledProps} />
+                                </Form.Item>
+                            </Col>
+                        </Row>
                     </Col>
                 </Row>
 
-                <Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item initialValue={formData?.manufactureOrgCode} label="Hierarchy Code" name="manufactureOrgCode" rules={[validateRequiredInputField('Code')]}>
-                            <Input maxLength={6} placeholder={preparePlaceholderText('Attribute Code')} className={styles.inputBox} disabled={formData?.id || isReadOnly} />
-                        </Form.Item>
-                    </Col>
+                <div className={styles.formFooter}>
+                    <Row gutter={20}>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
+                            <Button danger onClick={onCloseAction}>
+                                Cancel
+                            </Button>
+                        </Col>
 
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item name="manufactureOrgShrtName" label="Short Description" initialValue={formData?.manufactureOrgShrtName} rules={[validateRequiredInputField('Short Description')]}>
-                            <Input className={styles.inputBox} placeholder={preparePlaceholderText('Short Description')} disabled={formData?.id || isReadOnly} />
-                        </Form.Item>
-                    </Col>
-                </Row>
-
-                <Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item name="manufactureOrgLongName" label="Long Description" placeholder={preparePlaceholderSelect('Long Description')} initialValue={formData?.manufactureOrgLongName} rules={[validateRequiredInputField('Long Description')]}>
-                            <TextArea rows={1} placeholder={preparePlaceholderText('Long Description')} maxLength={300} disabled={formData?.id || isReadOnly} />
-                        </Form.Item>
-                    </Col>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padLeft10}>
-                        <Form.Item initialValue={formData?.active === null || false ? false : true} label="Status" name="active">
-                            <Switch value={formData?.active === null || false ? false : true} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.active === true || null || undefined ? true : false} {...disabledProps} />
-                        </Form.Item>
-                    </Col>
-                </Row>
-
-                <Row gutter={20} className={styles.formFooter}>
-                    <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
-                        <Button danger onClick={onCloseAction}>
-                            Cancel
-                        </Button>
-                    </Col>
-
-                    <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
-                        <Button data-testid="isFormBtnActive" htmlType="submit" type="primary" disabled={!isFormBtnActive}>
-                            Save
-                        </Button>
-                    </Col>
-                </Row>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
+                            <Button data-testid="isFormBtnActive" htmlType="submit" type="primary" disabled={!isFormBtnActive}>
+                                Save
+                            </Button>
+                        </Col>
+                    </Row>
+                </div>
             </Form>
         </>
     );

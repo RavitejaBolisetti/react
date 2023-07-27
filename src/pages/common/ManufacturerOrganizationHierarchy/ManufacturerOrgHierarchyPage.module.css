@@ -97,13 +97,13 @@
     margin-bottom: 10px;
 }
 
-.treeCollapsibleButton {
+/* .treeCollapsibleButton {
     border: 1px solid #ff3e5b;
     border-radius: 3px;
     position: absolute;
     z-index: 10;
     top: 136px;
-    /* left:266px; */
+    left:266px;
     padding: 5px;
     color: #ff3e5b;
     line-height: 2px;
@@ -115,11 +115,9 @@
     float: left;
     will-change: box-shadow, transform;
     transition: box-shadow 0.2s cubic-bezier(0.4, 0, 1, 1), background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
+} */
 
-
-
-.treeCollapsibleButton:hover,
+/* .treeCollapsibleButton:hover,
 .treeCollapsibleButton:focus,
 .treeCollapsibleButton:active,
 .treeCollapsibleButton.active,
@@ -127,7 +125,7 @@
 .treeCollapsibleButton.active:hover {
     background-color: #ff3e5b;
     color: #ffffff !important;
-}
+} */
 
 .buttonContainer {
     text-align: right;
@@ -143,20 +141,20 @@
     padding-top: 2px;
 }
 
-.leftpanel {
+/* .leftpanel {
     padding: 0.2em;
     width: 99%;
     background: #f4f4f4;
-    /* margin-left: 8px; */
+    margin-left: 8px;
     box-shadow: 0px 0px 8px rgba(78, 78, 78, 0.25);
     border-radius: 10px;
     border-top-left-radius: 0;
     margin-bottom: 20px;
     height: 66vh;
-    /* overflow-y: scroll; */
+    overflow-y: scroll;
     white-space: nowrap;
     margin-top: 5px;
-}
+} */
 
 .treeMenuLeft {
     padding-left: 0 !important;
@@ -305,7 +303,7 @@
         gap: 8px;
     }
 
-.treeCollapsibleButton {
+    .treeCollapsibleButton {
         top: 184px;
     }
 

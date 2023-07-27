@@ -228,4 +228,8 @@ export const PARAM_MASTER = {
         id: 'SALE_TYPE',
         title: 'Sales Type',
     },
+    VH_RECEIT_SER: {
+        id: 'VH_RECEIT_SER',
+        title: 'Vehicle Receipt checklist',
+    },
 };

@@ -51,53 +51,57 @@ const AddEditFormMain = (props) => {
 
     return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-            {viewMode ? (
-                <ViewDetail {...viewProps} />
-            ) : (
-                <>
-                    <Row gutter={16}>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.countryCode || defaultCountry} label="Country" name="countryCode" placeholder={preparePlaceholderSelect('Country')} rules={[validateRequiredInputField('Country')]}>
-                                <Select className={styles.headerSelectField} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear onChange={handleCountryChange}>
-                                    {countryData?.map((item) => (
-                                        <Option key={item?.countryCode} value={item?.countryCode}>
-                                            {item?.countryName}
-                                        </Option>
-                                    ))}
-                                </Select>
-                            </Form.Item>
-                        </Col>
+            <Row gutter={20} className={styles.drawerBody}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                    {viewMode ? (
+                        <ViewDetail {...viewProps} />
+                    ) : (
+                        <>
+                            <Row gutter={16}>
+                                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                    <Form.Item initialValue={formData?.countryCode || defaultCountry} label="Country" name="countryCode" placeholder={preparePlaceholderSelect('Country')} rules={[validateRequiredInputField('Country')]}>
+                                        <Select className={styles.headerSelectField} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear onChange={handleCountryChange}>
+                                            {countryData?.map((item) => (
+                                                <Option key={item?.countryCode} value={item?.countryCode}>
+                                                    {item?.countryName}
+                                                </Option>
+                                            ))}
+                                        </Select>
+                                    </Form.Item>
+                                </Col>
 
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.code} label="State Code" name="code" rules={[validateRequiredInputField('State Code')]}>
-                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('State Code')} maxLength={6} disabled={editMode ? true : false} />
-                            </Form.Item>
-                        </Col>
-                    </Row>
+                                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                    <Form.Item initialValue={formData?.code} label="State Code" name="code" rules={[validateRequiredInputField('State Code')]}>
+                                        <Input placeholder={preparePlaceholderText('State Code')} maxLength={6} disabled={editMode ? true : false} />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
 
-                    <Row gutter={16}>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item label="State Name" initialValue={formData?.name} rules={[validateRequiredInputField('State Name')]} name="name">
-                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('State Name')} maxLength={50} />
-                            </Form.Item>
-                        </Col>
+                            <Row gutter={16}>
+                                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                    <Form.Item label="State Name" initialValue={formData?.name} rules={[validateRequiredInputField('State Name')]} name="name">
+                                        <Input placeholder={preparePlaceholderText('State Name')} maxLength={50} />
+                                    </Form.Item>
+                                </Col>
 
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.gstStateCode} label="GST State Code" name="gstStateCode" rules={[validateRequiredInputField('gst state code'), validationNumber('gst state code')]}>
-                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('gst State Code')} maxLength={2} />
-                            </Form.Item>
-                        </Col>
-                    </Row>
+                                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                    <Form.Item initialValue={formData?.gstStateCode} label="GST State Code" name="gstStateCode" rules={[validateRequiredInputField('gst state code'), validationNumber('gst state code')]}>
+                                        <Input placeholder={preparePlaceholderText('gst State Code')} maxLength={2} />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
 
-                    <Row gutter={16}>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={editMode ? formData.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label="Status">
-                                <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} />
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                </>
-            )}
+                            <Row gutter={16}>
+                                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                    <Form.Item initialValue={editMode ? formData.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label="Status">
+                                        <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                        </>
+                    )}
+                </Col>
+            </Row>
 
             <DrawerFormButton {...buttonProps} />
         </Form>
