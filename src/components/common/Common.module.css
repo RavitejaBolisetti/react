@@ -81,7 +81,7 @@
     box-shadow: 0px 0px 12px rgba(2, 2, 111, 0.4);
 }
 
-.text:hover+.text-tooltip {
+.text:hover + .text-tooltip {
     visibility: visible;
     opacity: 1;
     transition: opacity 0.5s ease-in-out;
@@ -92,7 +92,7 @@
     align-items: center;
 }
 
-.tooltipAlign>svg {
+.tooltipAlign > svg {
     margin-left: 5px;
     color: #2782f9;
 }
@@ -112,7 +112,7 @@
     background: #2782f9;
 }
 
-.modelTooltip>svg {
+.modelTooltip > svg {
     color: #2782f9;
     position: absolute;
     right: 175px;
@@ -705,11 +705,11 @@
     background: #F2F2F2;
 } */
 
-.accordianContainer :global .ant-collapse>.ant-collapse-item>.ant-collapse-header {
+.accordianContainer :global .ant-collapse > .ant-collapse-item > .ant-collapse-header {
     padding: 12px 20px;
 }
 
-.accordianContainer :global .ant-collapse>.ant-collapse-item.ant-collapse-item-active>.ant-collapse-header {
+.accordianContainer :global .ant-collapse > .ant-collapse-item.ant-collapse-item-active > .ant-collapse-header {
     color: #0b0b0c;
     background: #f2f2f2;
     border-radius: 7px 7px 0 0;
@@ -719,7 +719,7 @@
     border-top: transparent;
 }
 
-.accordianContainer :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box {
+.accordianContainer :global .ant-collapse .ant-collapse-content > .ant-collapse-content-box {
     padding: 16px 20px;
     border-radius: 0 0 7px 7px;
 }
@@ -951,7 +951,7 @@
     border-end-start-radius: 3px;
 } */
 
-.contentHeaderBackground :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary):disabled {
+.contentHeaderBackground :global .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary):disabled {
     background-color: #e6e6e6;
     border-left: #e6e6e6;
 }
@@ -1000,7 +1000,7 @@
     vertical-align: middle;
 } */
 
-.contentHeaderBackground :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) :hover {
+.contentHeaderBackground :global .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) :hover {
     border-left: #ff3e5b;
 }
 
@@ -1243,8 +1243,8 @@
     line-height: 22px;
 } */
 
-.allowedTiming :global .ant-picker-input>input:placeholder-shown,
-.allowedTiming :global .ant-picker-input>input {
+.allowedTiming :global .ant-picker-input > input:placeholder-shown,
+.allowedTiming :global .ant-picker-input > input {
     font-size: 14px;
 }
 
@@ -1553,8 +1553,8 @@
     margin-top: 10px;
 }
 
-.timingCardItem :global .ant-descriptions .ant-descriptions-row>th,
-.timingCardItem :global .ant-descriptions .ant-descriptions-row>td {
+.timingCardItem :global .ant-descriptions .ant-descriptions-row > th,
+.timingCardItem :global .ant-descriptions .ant-descriptions-row > td {
     padding-bottom: 0px;
 }
 
@@ -1562,7 +1562,7 @@
     margin-bottom: 0px;
 }
 
-.masterListSearchForm :global .ant-form-item .ant-form-item-label>label {
+.masterListSearchForm :global .ant-form-item .ant-form-item-label > label {
     margin-right: 10px;
     height: 36px;
     color: #0b0b0c;
@@ -1626,7 +1626,7 @@
     /* margin: 30px 30px 0px 30px; */
 }
 
-.drawerBodyLeft :global .ant-collapse>.ant-collapse-item>.ant-collapse-header {
+.drawerBodyLeft :global .ant-collapse > .ant-collapse-item > .ant-collapse-header {
     padding: 12px 16px 16px;
 }
 
@@ -1634,13 +1634,13 @@
      padding-bottom: 10px;
  } */
 
-.drawerBodyLeft :global .ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-collapse-header-text .ant-space {
+.drawerBodyLeft :global .ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-collapse-header-text .ant-space {
     gap: 10px !important;
     margin-bottom: 16px;
     width: 100%;
 }
 
-.drawerBodyLeft :global .ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-collapse-header-text .ant-space .ant-space-item h5.ant-typography {
+.drawerBodyLeft :global .ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-collapse-header-text .ant-space .ant-space-item h5.ant-typography {
     margin-top: 0;
     margin-bottom: 0;
     color: #ff3e5b;
@@ -1649,7 +1649,7 @@
     line-height: 24px;
 }
 
-.drawerBodyLeft :global .ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-collapse-header-text .ant-space .ant-space-item span.ant-typography {
+.drawerBodyLeft :global .ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-collapse-header-text .ant-space .ant-space-item span.ant-typography {
     color: #0b0b0c;
     font-size: 12px;
     font-weight: 400;
@@ -1660,22 +1660,22 @@
     border-top: none;
 } */
 
-.drawerBodyLeft :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box {
+.drawerBodyLeft :global .ant-collapse .ant-collapse-content > .ant-collapse-content-box {
     padding: 0 16px 12px;
 }
 
-.drawerBodyLeft :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box .ant-divider-horizontal {
+.drawerBodyLeft :global .ant-collapse .ant-collapse-content > .ant-collapse-content-box .ant-divider-horizontal {
     margin: 0;
     margin-top: 5px;
     border-block-start: 1px solid #e6e6e6;
 }
 
-.drawerBodyLeft :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box .ant-divider-horizontal:last-child {
+.drawerBodyLeft :global .ant-collapse .ant-collapse-content > .ant-collapse-content-box .ant-divider-horizontal:last-child {
     margin-top: 0;
     border-block-start: 1px solid #f2f2f2;
 }
 
-.drawerBodyLeft :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box p {
+.drawerBodyLeft :global .ant-collapse .ant-collapse-content > .ant-collapse-content-box p {
     padding-top: 5px;
     padding-left: 0 !important;
     font-size: 12px;
@@ -1684,7 +1684,7 @@
     color: #545454;
 }
 
-.drawerBodyLeft :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box p span {
+.drawerBodyLeft :global .ant-collapse .ant-collapse-content > .ant-collapse-content-box p span {
     float: right !important;
     font-size: 12px;
     font-weight: 500;
@@ -1692,17 +1692,17 @@
     color: #0b0b0c;
 }
 
-.drawerBodyLeft :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box p:first-child {
+.drawerBodyLeft :global .ant-collapse .ant-collapse-content > .ant-collapse-content-box p:first-child {
     border-top: 1px solid #e6e6e6;
 }
 
-.drawerBodyLeft :global .ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-collapse-expand-icon {
+.drawerBodyLeft :global .ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-collapse-expand-icon {
     position: absolute;
     bottom: 4px;
     color: #ff3e5b;
 }
 
-.drawerBodyLeft :global .ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-collapse-expand-icon span {
+.drawerBodyLeft :global .ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-collapse-expand-icon span {
     padding-right: 4px !important;
     font-size: 12px;
     font-weight: 700;
@@ -1710,7 +1710,7 @@
     text-transform: capitalize;
 }
 
-.drawerBodyLeft :global .ant-collapse>.ant-collapse-item>.ant-collapse-header>.ant-collapse-header-text .ant-space-vertical {
+.drawerBodyLeft :global .ant-collapse > .ant-collapse-item > .ant-collapse-header > .ant-collapse-header-text .ant-space-vertical {
     display: inline-block;
     width: 100%;
 }
@@ -1727,7 +1727,7 @@
     line-height: 46px !important;
 }
 
-.drawerBodyLeft :global .ant-collapse>.ant-collapse-item>.ant-collapse-header>.ant-collapse-header-text .ant-space .ant-space-item p {
+.drawerBodyLeft :global .ant-collapse > .ant-collapse-item > .ant-collapse-header > .ant-collapse-header-text .ant-space .ant-space-item p {
     padding-left: 0 !important;
     color: #0b0b0c;
     font-size: 14px;
@@ -1739,7 +1739,7 @@
     max-width: 15ch;
 }
 
-.drawerBodyLeft :global .ant-collapse>.ant-collapse-item>.ant-collapse-header>.ant-collapse-header-text .ant-space .ant-space-item p span {
+.drawerBodyLeft :global .ant-collapse > .ant-collapse-item > .ant-collapse-header > .ant-collapse-header-text .ant-space .ant-space-item p span {
     color: #ff3e5b;
     font-size: 18px;
     font-weight: 700;
@@ -1750,7 +1750,7 @@
     max-width: 12ch;
 }
 
-.drawerBodyLeft :global .ant-collapse>.ant-collapse-item>.ant-collapse-header>.ant-collapse-header-text .ant-space .ant-space-item:last-child {
+.drawerBodyLeft :global .ant-collapse > .ant-collapse-item > .ant-collapse-header > .ant-collapse-header-text .ant-space .ant-space-item:last-child {
     color: #0b0b0c;
     font-size: 14px;
     font-weight: 500;
@@ -1793,7 +1793,7 @@
      line-height: 22px;
  } */
 
-.drawerBodyLeft :global .ant-timeline .ant-timeline-item-last>.ant-timeline-item-content {
+.drawerBodyLeft :global .ant-timeline .ant-timeline-item-last > .ant-timeline-item-content {
     min-height: 32px;
 }
 
@@ -1869,7 +1869,7 @@
     box-shadow: none;
 } */
 
-.drawerBodyRight .uniqueSearchInput :global .ant-form-item .ant-input-group-wrapper .ant-input-affix-wrapper:hover+.ant-input-group-addon {
+.drawerBodyRight .uniqueSearchInput :global .ant-form-item .ant-input-group-wrapper .ant-input-affix-wrapper:hover + .ant-input-group-addon {
     border-color: #0b0b0c !important;
     border-left: none;
     box-shadow: none;
@@ -1932,8 +1932,8 @@
     margin-inline-start: 68px;
 }
 
-.drawerBodyRight :global .ant-steps .ant-steps-item-process>.ant-steps-item-container>.ant-steps-item-tail::after,
-.drawerBodyRight :global .ant-steps .ant-steps-item-wait>.ant-steps-item-container>.ant-steps-item-tail::after {
+.drawerBodyRight :global .ant-steps .ant-steps-item-process > .ant-steps-item-container > .ant-steps-item-tail::after,
+.drawerBodyRight :global .ant-steps .ant-steps-item-wait > .ant-steps-item-container > .ant-steps-item-tail::after {
     background-color: #b5b5b6;
 }
 
@@ -1959,8 +1959,8 @@
     width: 80px;
 }
 
-.drawerBodyRight :global .ant-steps .ant-steps-item-process>.ant-steps-item-container>.ant-steps-item-content>.ant-steps-item-title,
-.drawerBodyRight :global .ant-steps .ant-steps-item-wait>.ant-steps-item-container>.ant-steps-item-content>.ant-steps-item-title {
+.drawerBodyRight :global .ant-steps .ant-steps-item-process > .ant-steps-item-container > .ant-steps-item-content > .ant-steps-item-title,
+.drawerBodyRight :global .ant-steps .ant-steps-item-wait > .ant-steps-item-container > .ant-steps-item-content > .ant-steps-item-title {
     color: #0b0b0c;
     font-size: 10px;
     font-weight: 500;
@@ -2257,29 +2257,29 @@
     padding: 20px 30px;
 } */
 
-.drawerBodyRight :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box {
+.drawerBodyRight :global .ant-collapse .ant-collapse-content > .ant-collapse-content-box {
     padding: 0 30px;
 }
 
-.drawerBodyRight :global .ant-card.ant-card-bordered .ant-collapse .ant-collapse-content>.ant-collapse-content-box {
+.drawerBodyRight :global .ant-card.ant-card-bordered .ant-collapse .ant-collapse-content > .ant-collapse-content-box {
     padding: 0 20px;
 }
 
-.drawerBodyRight .accordianContainer :global .ant-collapse>.ant-collapse-item {
+.drawerBodyRight .accordianContainer :global .ant-collapse > .ant-collapse-item {
     border-bottom: none !important;
 }
 
-.drawerBodyRight .accordianContainer :global .ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-collapse-header-text .ant-btn-secondary,
-.drawerBodyRight .accordianContainer :global .ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-collapse-header-text .ant-btn-link {
+.drawerBodyRight .accordianContainer :global .ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-collapse-header-text .ant-btn-secondary,
+.drawerBodyRight .accordianContainer :global .ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-collapse-header-text .ant-btn-link {
     padding: 0;
     height: 22px;
 }
 
-.drawerBodyRight .sectionborder :global .ant-collapse>.ant-collapse-item>.ant-collapse-header {
+.drawerBodyRight .sectionborder :global .ant-collapse > .ant-collapse-item > .ant-collapse-header {
     background: #e6e6e6;
 }
 
-.drawerBodyRight .sectionborder :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box {
+.drawerBodyRight .sectionborder :global .ant-collapse .ant-collapse-content > .ant-collapse-content-box {
     background: #e6e6e6;
 }
 
@@ -2299,7 +2299,7 @@
 }
 
 .drawerBodyRight :global .ant-card-bordered .ant-card-body .ant-typography,
-.drawerBodyRight :global .ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-typography {
+.drawerBodyRight :global .ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-typography {
     margin-left: 0 !important;
     margin-top: 0 !important;
     margin-right: 30px;
@@ -2309,7 +2309,7 @@
     margin-right: 8px;
 }
 
-.drawerBodyRight :global .ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-typography strong {
+.drawerBodyRight :global .ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-typography strong {
     font-weight: 700;
     font-size: 16px;
     line-height: 22px;
@@ -2354,7 +2354,7 @@
     color: #FF3E5B;
 } */
 
-.drawerBodyRight :global .ant-collapse.ant-collapse-icon-position-end>.ant-collapse-item-active>.ant-collapse-header .ant-collapse-expand-icon {
+.drawerBodyRight :global .ant-collapse.ant-collapse-icon-position-end > .ant-collapse-item-active > .ant-collapse-header .ant-collapse-expand-icon {
     color: #ff3e5b;
     /* color: #B5B5B6; */
     /* pointer-events: none; */
@@ -2389,7 +2389,7 @@
     padding-top: 20px;
 }
 
-.drawerBodyRight .sectionborder :global .ant-collapse>.ant-collapse-item {
+.drawerBodyRight .sectionborder :global .ant-collapse > .ant-collapse-item {
     border-bottom: none;
 }
 
@@ -2410,7 +2410,7 @@
      margin-bottom: 20px;
  } */
 
-.drawerBodyRight :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box .ant-form-item button {
+.drawerBodyRight :global .ant-collapse .ant-collapse-content > .ant-collapse-content-box .ant-form-item button {
     margin-bottom: 0;
 }
 
@@ -2420,7 +2420,7 @@
      box-shadow: 0 2px 0 rgba(255, 5, 5, 0.06);
  } */
 
-.drawerBodyRight :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box .ant-divider-horizontal {
+.drawerBodyRight :global .ant-collapse .ant-collapse-content > .ant-collapse-content-box .ant-divider-horizontal {
     margin-top: 0;
     margin-bottom: 20px;
     border-block-start: 1px solid #e6e6e6;
@@ -2533,8 +2533,8 @@
     border-spacing: 0;
 }
 
-.drawerBodyRight .accordianContainer :global .ant-collapse>.ant-collapse-item>.ant-collapse-header,
-.drawerBodyRight .viewDrawerContainer :global .ant-collapse>.ant-collapse-item>.ant-collapse-header {
+.drawerBodyRight .accordianContainer :global .ant-collapse > .ant-collapse-item > .ant-collapse-header,
+.drawerBodyRight .viewDrawerContainer :global .ant-collapse > .ant-collapse-item > .ant-collapse-header {
     padding: 20px 30px;
 }
 
@@ -2768,12 +2768,13 @@
     color: #00a310;
 }
 
+.drawerCardView :global .ant-collapse-content-box .ant-descriptions .ant-descriptions-view .ant-descriptions-row:nth-child(odd) .ant-descriptions-item,
 .drawerCardView :global .ant-card-body .ant-descriptions .ant-descriptions-view .ant-descriptions-row:nth-child(odd) .ant-descriptions-item,
 .ExchangeCard :global .ant-card-body .ant-descriptions .ant-descriptions-view .ant-descriptions-row:nth-child(odd) .ant-descriptions-item {
     padding-bottom: 0px;
 }
 
-.ExchangeCard :global .ant-card-body .ant-descriptions .ant-descriptions-row:last-child>td {
+.ExchangeCard :global .ant-card-body .ant-descriptions .ant-descriptions-row:last-child > td {
     padding-bottom: 0;
 }
 
@@ -2808,7 +2809,7 @@
     background: red;
 }
 
-.drawerBodyRight .accordianContainer :global .ant-table-wrapper .ant-table-thead>tr>th {
+.drawerBodyRight .accordianContainer :global .ant-table-wrapper .ant-table-thead > tr > th {
     background: #f2f2f2 !important;
 }
 
@@ -2887,7 +2888,7 @@
     line-height: 23px;
 }
 
-.drawerBodyRight :global .ant-result-success .ant-result-icon>.anticon-check-circle {
+.drawerBodyRight :global .ant-result-success .ant-result-icon > .anticon-check-circle {
     border: 47px solid #eefcd2;
     border-radius: 100px;
 }
@@ -2964,10 +2965,6 @@ li.ant-timeline-item.active .ant-timeline-item-content p {
     line-height: 22px;
 }
 
-.inputWrapper :global .ant-btn-default {
-    padding: 5px 0;
-}
-
 /* .inputWrapper :global .ant-input-affix-wrapper {
     padding: 5px 6px 5px 0;
     border-color: #B5B5B6;
@@ -3026,6 +3023,24 @@ li.ant-timeline-item.active .ant-timeline-item-content p {
     margin-top: 5px;
 } */
 
+.infoWrapper :global .ant-btn-default {
+    padding: 5px 0;
+}
+
+.infoWrapper :global .ant-input-affix-wrapper {
+    padding: 0px 6px 5px;
+    height: 37px;
+    background-color: #e6e6e6;
+}
+
+.infoWrapper :global .ant-input-affix-wrapper .ant-input {
+    height: 35px;
+}
+
+.infoWrapper :global .ant-input-affix-wrapper .ant-input-suffix {
+    margin-top: 5px;
+    margin-right: 5px;
+}
 .contactDays :global .ant-form-item .ant-form-item-control-input .ant-select-multiple .ant-select-selector {
     height: auto;
     min-height: 36px;
@@ -3108,7 +3123,6 @@ li.ant-timeline-item.active .ant-timeline-item-content p {
 }
 
 @media (max-width: 768px) {
-
     /* For mobile phones: */
     .headerSearchField {
         vertical-align: middle;

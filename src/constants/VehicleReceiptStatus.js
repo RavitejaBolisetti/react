@@ -4,67 +4,32 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 export const VEHICLE_RECEIPT_STATUS = {
-    BOOKED: {
+    IN_TRANSIT: {
         id: 1,
         key: 'O',
-        title: 'Booked',
-        desc: 'Booked',
+        title: 'In-Transit',
+        desc: 'In-Transit',
         displayOnView: true,
     },
-    ALLOTED: {
+    PARTIALLY_RECEIVED: {
         id: 2,
         key: 'A',
-        title: 'Allotted',
-        desc: 'Allotted',
+        title: 'PartiallyReceived',
+        desc: 'PartiallyReceived',
         displayOnView: true,
     },
-    CANCELLED: {
+    RECEIVED: {
         id: 3,
         key: 'C',
-        title: 'Cancelled',
-        desc: 'Cancelled',
+        title: 'Received',
+        desc: 'Received',
         displayOnView: true,
     },
-    INVOICED: {
+    RETURNED: {
         id: 4,
         key: 'I',
-        title: 'Invoiced',
-        desc: 'Invoiced',
+        title: 'Returned',
+        desc: 'Returned',
         displayOnView: true,
-    },
-    DELIVERED: {
-        id: 5,
-        key: 'Delivered',
-        title: 'Delivered',
-        desc: 'Delivered',
-        displayOnView: true,
-    },
-    TRANSFERRED: {
-        id: 6,
-        key: 'Transferred',
-        title: 'Transferred',
-        desc: 'Transferred',
-        displayOnView: false,
-    },
-    PENDING_FOR_CANCELLATION: {
-        id: 7,
-        key: 'Pending for cancellation',
-        title: 'Pending for cancellation',
-        desc: 'Pending for Cancellation',
-        displayOnView: false,
-    },
-    CANCELLATION_REQUESTED: {
-        id: 8,
-        key: 'Cancellation Requested',
-        title: 'Cancellation Requested',
-        desc: 'Cancellation Requested',
-        displayOnView: false,
-    },
-    REJECTED: {
-        id: 9,
-        key: 'Rejected',
-        title: 'Rejected',
-        desc: 'Rejected',
-        displayOnView: false,
     },
 };

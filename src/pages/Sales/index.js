@@ -7,4 +7,5 @@ import OTFMasterPage from './OTF';
 import VehicleDetailMasterPage from './VehicleDetail';
 import VehicleReceiptMasterPage from './VehicleReceipt';
 import VehiclePriceMasterPage from './VehiclePriceMaster';
-export { OTFMasterPage, VehicleDetailMasterPage, VehicleReceiptMasterPage, VehiclePriceMasterPage };
+import VehicleRecieptChecklistMaster from './VehicleRecieptMaster';
+export { OTFMasterPage, VehicleDetailMasterPage, VehicleReceiptMasterPage, VehiclePriceMasterPage, VehicleRecieptChecklistMaster };

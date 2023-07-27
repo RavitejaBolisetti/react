@@ -213,4 +213,4 @@ const SupplierInvoiceDetailsMasterBase = (props) => {
     );
 };
 
-export const SupplierInvoiceDetailsMaster = connect(mapStateToProps, mapDispatchToProps)(SupplierInvoiceDetailsMasterBase);
+export const SupplierInvoiceDetailsMaster = connect(null, null)(SupplierInvoiceDetailsMasterBase);
