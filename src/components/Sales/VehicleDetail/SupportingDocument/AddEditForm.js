@@ -4,12 +4,10 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { Row, Col, Form, Select, Input, Upload, Divider, Space, Collapse } from 'antd';
+import { Row, Col, Form, Select, Input, Divider, Space, Collapse } from 'antd';
 
-import { FiDownload, FiTrash } from 'react-icons/fi';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
-import Svg from 'assets/images/Filter.svg';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import styles from 'components/common/Common.module.css';
 import { ViewSupportingDocDetail } from './ViewSupportingDocDetail';
@@ -18,17 +16,13 @@ import { UploadUtil } from 'utils/Upload';
 
 const { Panel } = Collapse;
 const { Option } = Select;
-const { Dragger } = Upload;
 
 const AddEditForm = (props) => {
     const { formActionType, handleFormValueChange, typeData } = props;
     const { uploadProps, mandatoryFields } = props;
     const { ...viewProps } = props;
 
-    const [showStatus, setShowStatus] = useState('');
     const [activeKey, setactiveKey] = useState([1]);
-
-    const onDrop = (e) => {};
 
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
@@ -47,109 +41,11 @@ const AddEditForm = (props) => {
         }
     };
 
-    const uploadProps = {
-        multiple: false,
-        accept: 'image/png, image/jpeg, application/pdf',
-
-        beforeUpload: () => {
-            setDocumentTypeRule({ rules: [validateRequiredSelectField('documentType')] });
-            setDocumentTitleRule({ rules: [validateRequiredInputField('documentTitle')] });
-        },
-        showUploadList: {
-            showRemoveIcon: true,
-            showDownloadIcon: true,
-            removeIcon: <FiTrash />,
-            downloadIcon: <FiDownload style={{ color: '#ff3e5b' }} />,
-            showProgress: true,
-        },
-        progress: { strokeWidth: 3, showInfo: true },
-        onDrop,
-        onChange: (info) => {
-            form.validateFields()
-                .then((values) => {
-                    deleteFileFromList(info);
-                    let fileList = [...info.fileList];
-                    fileList = fileList.slice(-1);
-                    setFileList(fileList);
-                    handleFormValueChange();
-                    const { status } = info.file;
-                    setShowStatus(info.file);
-
-                    if (status === 'done') {
-                        setUploadedFile(info?.file?.response?.docId);
-                        setUploadedFileName(info?.file?.response?.documentName);
-                        let supportingDocList = [
-                            ...supportingDocs,
-                            {
-                                id: '',
-                                documentId: info?.file?.response?.docId,
-                                documentTitle: form.getFieldValue('documentTitle'),
-                                documentTypeCd: form.getFieldValue('documentTypeCd'),
-                                documentTypeName: getNameFromKey(typeData, form.getFieldValue('documentTypeCd')),
-                            },
-                        ];
-                        setSupportingDocs(supportingDocList);
-                        form.resetFields();
-                        setDocumentTypeRule({ rules: [] });
-                        setDocumentTitleRule({ rules: [] });
-                    }
-                })
-                .catch((err) => {
-                    return;
-                });
-        },
-        onDownload: (info) => {
-            downloadFileFromList(info);
-        },
-        onRemove: (info) => {
-            setDocumentTypeRule({ rules: [] });
-            setDocumentTitleRule({ rules: [] });
-            deleteFileFromList(info);
-        },
-    };
-
-    useEffect(() => {
-        if (showStatus.status === 'done') {
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'File uploaded successfully' });
-        } else if (showStatus.status === 'error') {
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Error' });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [showStatus]);
-
-    const handleUpload = (options) => {
-        const { file, onSuccess, onError } = options;
-        setEmptyList(true);
-
-        const data = new FormData();
-        data.append('applicationId', 'app');
-        data.append('file', file);
-
-        const requestData = {
-            data: data,
-            method: 'post',
-            setIsLoading: listShowLoading,
-            userId,
-            onError,
-            onSuccess,
-        };
-
-        uploadDocumentFile(requestData);
-    };
-
     const selectProps = {
         optionFilterProp: 'children',
         showSearch: true,
         allowClear: true,
         className: styles.headerSelectField,
-    };
-
-    const handleDocumentType = () => {
-        setDocumentTypeRule({ rules: [] });
-    };
-
-    const handleDocumentTitle = () => {
-        setDocumentTitleRule({ rules: [] });
     };
 
     return (
@@ -170,10 +66,9 @@ const AddEditForm = (props) => {
                                         </Select>
                                     </Form.Item>
                                 </Col>
-
-                                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                    <Form.Item {...documentTitleRule} label="Document Name" name="documentTitle" validateTrigger={['onChange']}>
-                                        <Input placeholder={preparePlaceholderText('File Name')} onChange={handleDocumentTitle} allowClear />
+                                <Col xs={24} sm={24} md={12} lg={12} xl={12} className={`${styles.inputWrapper} ${styles.allowsection}`}>
+                                    <Form.Item label="Document Name" name="documentTitle" rules={mandatoryFields ? [validateRequiredInputField('document name')] : ''}>
+                                        <Input placeholder={preparePlaceholderText('File Name')} allowClear />
                                     </Form.Item>
                                 </Col>
                             </Row>
