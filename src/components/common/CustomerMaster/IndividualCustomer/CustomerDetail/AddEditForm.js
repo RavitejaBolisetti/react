@@ -27,7 +27,7 @@ const { Text, Title } = Typography;
 
 const AddEditFormMain = (props) => {
     const { form, typeData, formData, corporateLovData, formActionType: { editMode } = undefined, customerType } = props;
-    const { setUploadedFileName, downloadFileFromList, fileList, setFileList, handleFormValueChange, userId, uploadDocumentFile, editedMode, setCustomerNameList, customerNameList, setEditedMode, setUploadedFile, listShowLoading, showGlobalNotification, setEmptyList } = props;
+    const { setUploadedFileName, downloadFileFromList, fileList, setFileList, setFormData, userId, uploadDocumentFile, editedMode, approval, setCustomerNameList, customerNameList, setEditedMode, setUploadedFile, listShowLoading, showGlobalNotification, setEmptyList } = props;
 
     const { whatsAppConfiguration, setWhatsAppConfiguration, handleFormFieldChange } = props;
     const { contactOverWhatsApp, contactOverWhatsAppActive, sameMobileNoAsWhatsApp, sameMobileNoAsWhatsAppActive } = whatsAppConfiguration;
@@ -81,25 +81,10 @@ const AddEditFormMain = (props) => {
         ...props,
     };
 
-    const handleUpload = (options) => {
-        const { file, onSuccess, onError } = options;
-        setEmptyList(true);
+    const onViewHistoryChange = () => {
+        setIsHistoryVisible(true);
+    }
 
-        const data = new FormData();
-        data.append('applicationId', 'app');
-        data.append('file', file);
-
-        const requestData = {
-            data: data,
-            method: 'post',
-            setIsLoading: listShowLoading,
-            userId,
-            onError,
-            onSuccess,
-        };
-
-        uploadDocumentFile(requestData);
-    };
 
     const onEdit = () => {
         setEditedMode(true);
@@ -107,7 +92,7 @@ const AddEditFormMain = (props) => {
     };
 
     const onHandleChange = () => {
-        form.validateFields()
+        form.validateFields(['lastName', 'firstName', 'titleCode'])
             .then(() => {
                 setCustomerNameList(form.getFieldsValue());
                 setactiveKey([]);
@@ -227,7 +212,7 @@ const AddEditFormMain = (props) => {
 
                             </Col>
                             <Col xs={24} sm={24} md={12} lg={12} xl={12} style={{ textAlign: 'right' }}>
-                                <Button type="link" icon={<BiTimeFive />}>
+                                <Button type="link" onClick={onViewHistoryChange} icon={<BiTimeFive />}>
                                     View History
                                 </Button>
                             </Col>
@@ -253,7 +238,7 @@ const AddEditFormMain = (props) => {
                                                 Edit
                                             </Button>
                                         </Row>
-                                        {onSave ? (
+                                        {approval ? (
                                             <Tag style={{ textAlign: 'right' }} color="warning">Pending</Tag>) :
                                             null}
                                     </Row>

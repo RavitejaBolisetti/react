@@ -85,6 +85,7 @@ const CustomerDetailMasterBase = (props) => {
 
     const [showForm, setShowForm] = useState(false);
     const [emptyList, setEmptyList] = useState(true);
+    const [approval, setApproval] = useState(false);
     const [fileList, setFileList] = useState([]);
     const [uploadedFileName, setUploadedFileName] = useState('');
     const [editedMode, setEditedMode] = useState(false);
@@ -207,11 +208,14 @@ const CustomerDetailMasterBase = (props) => {
             fetchList({ setIsLoading: listShowLoading, userId });
             setButtonData({ ...buttonData, formBtnActive: false });
             setRefreshCustomerList(true);
+
             if (res.data) {
                 handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
                 setSelectedCustomer({ ...res.data, customerName: res?.data?.firstName + ' ' + res?.data?.middleName + ' ' + res?.data?.lastName });
                 setSelectedCustomerId(res?.data?.customerId);
                 setCustomerNameList(res?.data);
+                setApproval(true);
+                console.log(approval, customerNameList, 'sdsdsdsdsd')
             }
         };
 
@@ -283,6 +287,7 @@ const CustomerDetailMasterBase = (props) => {
         setButtonData,
         typeData,
         formData,
+        setFormData,
         isSupportingDocumentDataLoaded,
         supportingData,
         isViewDataLoaded,
@@ -307,7 +312,9 @@ const CustomerDetailMasterBase = (props) => {
         setWhatsAppConfiguration,
         handleFormFieldChange,
         setCustomerNameList,
-        customerNameList,
+        customerNameList: customerNameList || formData,
+        approval,
+        setApproval
     };
 
     const viewProps = {
