@@ -71,7 +71,7 @@ const FormBase = (props) => {
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={customerType} label="M&M Customer" name="mnmCustomer" rules={[validateRequiredSelectField('M&M Customer')]}>
-                        <Select placeholder={preparePlaceholderText('M&M Customer')} onChange={onChange} className={styles.inputBox}>
+                        <Select placeholder={preparePlaceholderText('M&M Customer')} onChange={onChange}>
                             {type?.map((item) => (
                                 <Option key={'mc' + item?.key} value={item?.value}>
                                     {item?.name}
@@ -96,13 +96,13 @@ const FormBase = (props) => {
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={null} label="Customer Name" name="customerName" rules={[validateRequiredInputField('Customer Name')]}>
-                        <Input maxLength={50} placeholder={preparePlaceholderText('Customer Name')} disabled={customer} className={styles.inputBox} />
+                        <Input maxLength={50} placeholder={preparePlaceholderText('Customer Name')} disabled={customer} />
                     </Form.Item>
                 </Col>
                 {!customer ? (
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item initialValue={null} label="Relationship" name="relationship" rules={[validateRequiredSelectField('Relationship')]}>
-                            <Select placeholder={preparePlaceholderText('Relationship')} className={styles.inputBox} allowClear onChange={getRelationCode}>
+                            <Select placeholder={preparePlaceholderText('Relationship')} allowClear onChange={getRelationCode}>
                                 {relationData?.map((item) => (
                                     <Option key={'rel' + item?.key} value={item.value}>
                                         {item?.value}
@@ -118,7 +118,7 @@ const FormBase = (props) => {
                 {customer ? (
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item initialValue={null} label="Relationship" name="relationship" rules={[validateRequiredSelectField('Relationship')]}>
-                            <Select placeholder={preparePlaceholderText('Relationship')} className={styles.inputBox} allowClear onChange={getRelationCode}>
+                            <Select placeholder={preparePlaceholderText('Relationship')} allowClear onChange={getRelationCode}>
                                 {relationData?.map((item) => (
                                     <Option key={'rel' + item?.key} value={item.value}>
                                         {item?.value}
@@ -133,20 +133,20 @@ const FormBase = (props) => {
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item label="Date of Birth" name="dateOfBirth" rules={[validateRequiredInputField('Date of Birth')]}>
-                        <DatePicker format={dateFormat} onChange={onDateChange} disabledDate={disableFutureDate} style={{ display: 'auto', width: '100%' }} disabled={customer} placeholder={preparePlaceholderSelect('Date of Birth')} className={styles.inputBox} getPopupContainer={(triggerNode) => triggerNode.parentElement} />
+                        <DatePicker format={dateFormat} onChange={onDateChange} disabledDate={disableFutureDate} style={{ display: 'auto', width: '100%' }} disabled={customer} placeholder={preparePlaceholderSelect('Date of Birth')} getPopupContainer={(triggerNode) => triggerNode.parentElement} />
                     </Form.Item>
                 </Col>
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item label="Age" name="relationAge" rules={[validateRequiredInputField('Age')]}>
-                        <Input placeholder={preparePlaceholderText('Age')} className={styles.inputBox} disabled={true} />
+                        <Input placeholder={preparePlaceholderText('Age')} disabled={true} />
                     </Form.Item>
                 </Col>
             </Row>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item label="Remark" name="remarks">
-                        <TextArea rows={2} maxLength={300} placeholder={preparePlaceholderText('Remark')} disabled={customer} />
+                        <TextArea maxLength={300} placeholder={preparePlaceholderText('Remark')} disabled={customer} showCount />
                     </Form.Item>
                 </Col>
             </Row>

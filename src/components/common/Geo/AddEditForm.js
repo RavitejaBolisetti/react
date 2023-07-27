@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -87,13 +87,15 @@ const AddEditFormMain = (props) => {
                         <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Attribute Level" {...attributeHierarchyFieldValidation}>
                             <Select onChange={handleAttributeChange} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('attribute level')} {...disabledProps} showSearch allowClear>
                                 {attributeData?.map((item) => (
-                                    <Option key={item?.id} value={item?.id}>{item?.hierarchyAttribueName}</Option>
+                                    <Option key={item?.id} value={item?.id}>
+                                        {item?.hierarchyAttribueName}
+                                    </Option>
                                 ))}
                             </Select>
                         </Form.Item>
                     </Col>
 
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padRight18}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Form.Item initialValue={treeCodeId} label="Parent" name="geoParentCode">
                             <TreeSelectField {...treeSelectFieldProps} />
                         </Form.Item>
@@ -103,19 +105,19 @@ const AddEditFormMain = (props) => {
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Form.Item initialValue={formData?.geoCode} label="Code" name="geoCode" rules={[validateRequiredInputField('Code'), validationFieldLetter('Code')]}>
-                            <Input placeholder={preparePlaceholderText('Code')} maxLength={6} className={styles.inputBox} disabled={formData?.id || isReadOnly} />
+                            <Input placeholder={preparePlaceholderText('Code')} maxLength={6} disabled={formData?.id || isReadOnly} />
                         </Form.Item>
                     </Col>
 
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padRight18}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Form.Item initialValue={formData?.geoName} label="Name" name="geoName" rules={[validateRequiredInputField('Name'), validateLettersWithWhitespaces('Name')]}>
-                            <Input placeholder={preparePlaceholderText('Name')} className={styles.inputBox} maxLength={50} {...disabledProps} />
+                            <Input placeholder={preparePlaceholderText('Name')} maxLength={50} {...disabledProps} />
                         </Form.Item>
                     </Col>
                 </Row>
 
                 <Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padLeft10}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Form.Item initialValue={formData?.active} label="Status" name="isActive">
                             <Switch value={formData?.active} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked {...disabledProps} />
                         </Form.Item>

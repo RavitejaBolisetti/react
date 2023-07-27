@@ -421,7 +421,7 @@ export const TaxChargesMain = ({
                     {selectedTreeData && selectedTreeData?.taxChargesTypeCode ? (
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <ViewTaxCharges {...viewProps} />
-                            <div className={styles.hyrbuttonContainer}>
+                            <div className={styles.viewContainerFooter}>
                                 <HierarchyFormButton {...viewProps} />
                             </div>
                         </Col>

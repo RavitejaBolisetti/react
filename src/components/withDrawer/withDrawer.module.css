@@ -8,16 +8,6 @@
     overflow: hidden;
 }
 
-/* .myDrawerStyle :global .ant-drawer-wrapper-body .ant-drawer-body,
-.bigDrawerStyle :global .ant-drawer-wrapper-body .ant-drawer-body {
-    padding: 0;
-    overflow: hidden;
-} */
-
-/* .myDrawerStyle :global .ant-input-affix-wrapper {
-    border-color: #b5b5b6 !important;
-} */
-
 .myDrawerStyle :global .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover,
 .myDrawerStyle :global .ant-input-affix-wrapper-focused {
     border-color: #0b0b0c !important;
@@ -38,7 +28,7 @@
     background-color: #ff3e5b !important;
 }
 
-@media screen and (max-width: 1199px) {
+/* @media screen and (max-width: 1199px) {
     .myDrawerStyle :global .ant-drawer-title {
         font-size: 18px;
     }
@@ -46,9 +36,9 @@
     .myDrawerStyle :global .ant-drawer-header {
         padding: 14px 24px;
     }
-}
+} */
 
-@media screen and (max-width: 767px) {
+/* @media screen and (max-width: 767px) {
     :global .ant-drawer-content-wrapper {
         width: 98% !important;
     }
@@ -64,4 +54,4 @@
         background: #fff;
         overflow: auto;
     }
-}
+} */

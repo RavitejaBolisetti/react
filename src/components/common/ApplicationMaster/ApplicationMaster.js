@@ -308,7 +308,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
                         {selectedTreeKey?.length && applicationDetailsData?.length ? (
                             <>
                                 <ViewApplicationDetailMain applicationDetailsData={applicationDetailsData} styles={styles} />
-                                <div className={styles.hyrbuttonContainer}>
+                                <div className={styles.viewContainerFooter}>
                                     <HierarchyFormButton buttonData={buttonData} handleButtonClick={handleButtonClick} />
                                 </div>
                             </>

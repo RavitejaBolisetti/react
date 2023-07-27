@@ -53,13 +53,13 @@ const AddEditFormMain = (props) => {
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.locationCode} label="Location Type Code" name="locationCode" rules={[validateRequiredInputField('location type code')]}>
-                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('location type code')} maxLength={6} disabled={editMode ? true : false} />
+                                <Input placeholder={preparePlaceholderText('location type code')} maxLength={6} disabled={editMode ? true : false} />
                             </Form.Item>
                         </Col>
 
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item label="Location Type Name" initialValue={formData?.locationDescription} rules={[validateRequiredInputField('location type name')]} name="locationDescription">
-                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('location type name')} maxLength={50} />
+                                <Input placeholder={preparePlaceholderText('location type name')} maxLength={50} />
                             </Form.Item>
                         </Col>
                     </Row>

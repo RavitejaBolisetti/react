@@ -151,7 +151,7 @@ const AddEditFormMain = (props) => {
                                 </Form.Item>
                             </Col>
 
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padRight18}>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <Form.Item initialValue={treeCodeId} label="Parent" name="parntProdctId">
                                     <TreeSelectField {...treeSelectFieldProps} />
                                 </Form.Item>
@@ -161,13 +161,13 @@ const AddEditFormMain = (props) => {
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <Form.Item label="Code" name="prodctCode" initialValue={formData?.prodctCode} rules={[validateRequiredInputField('code')]}>
-                                    <Input placeholder={preparePlaceholderText('code')} maxLength={6} className={styles.inputBox} disabled={formData?.id || isReadOnly} />
+                                    <Input placeholder={preparePlaceholderText('code')} maxLength={6} disabled={formData?.id || isReadOnly} />
                                 </Form.Item>
                             </Col>
 
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <Form.Item name="prodctShrtName" label="Short Description" initialValue={formData?.prodctShrtName} rules={[validateRequiredInputField('short description')]}>
-                                    <Input className={styles.inputBox} placeholder={preparePlaceholderText('short description')} maxLength={50} disabled={formData?.id || isReadOnly} />
+                                    <Input placeholder={preparePlaceholderText('short description')} maxLength={50} disabled={formData?.id || isReadOnly} />
                                 </Form.Item>
                             </Col>
                         </Row>
@@ -178,7 +178,7 @@ const AddEditFormMain = (props) => {
                                     <TextArea placeholder={preparePlaceholderText('long description')} maxLength={300} showCount disabled={formData?.id || isReadOnly} />
                                 </Form.Item>
                             </Col>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padLeft10}>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <Form.Item initialValue={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.active ? true : false} label="Status" name="active">
                                     <Switch value={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.active ? true : false} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.active === true || null || undefined ? true : false} {...disabledProps} />
                                 </Form.Item>

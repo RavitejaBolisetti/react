@@ -256,7 +256,7 @@ const AddEditFormMain = (props) => {
                 <Row>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Form.Item name="cancellationRemark" label="Cancellation Remarks" rules={[validateRequiredInputField('Cancellation Remarks')]}>
-                            <TextArea placeholder={preparePlaceholderText('Cancellation Remarks')} />
+                            <TextArea maxLength={300} placeholder={preparePlaceholderText('Cancellation Remarks')} showCount />
                         </Form.Item>
                     </Col>
                 </Row>

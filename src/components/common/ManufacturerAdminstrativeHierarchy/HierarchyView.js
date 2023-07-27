@@ -29,7 +29,7 @@ export const HierarchyViewMain = ({ viewMode, isLoading, viewTitle, buttonData, 
         bordered: false,
         colon: false,
         layout: 'vertical',
-        title: <div className={styles.contentHeaderRightBackground}>{viewTitle}</div>,
+        title: <div className={styles.viewContainerHeader}>{viewTitle}</div>,
         column: { xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 },
     };
     const manufacturerAdminHierarchyDataFlat = generateList(manufacturerAdminHierarchyData, { children: 'subManufactureAdmin' });
@@ -37,7 +37,7 @@ export const HierarchyViewMain = ({ viewMode, isLoading, viewTitle, buttonData, 
 
     const status = selectedTreeData?.status ? 'Active' : 'InActive';
     return (
-        <div className={`${styles.viewContainer} ${styles.hierarchyRightContaner}`}>
+        <div className={styles.viewContainer}>
             <Descriptions {...viewProps}>
                 <Descriptions.Item label="Attribute Level">{checkAndSetDefaultValue(selectedTreeData?.hierarchyAttribueName, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Parent">{checkAndSetDefaultValue(selectedTreeData?.parentName, isLoading) !== '-' || findParentName(manufacturerAdminHierarchyDataFlat, selectedTreeData?.manufactureAdminParntId) || HIERARCHY_DEFAULT_PARENT}</Descriptions.Item>

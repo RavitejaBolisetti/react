@@ -180,7 +180,7 @@ const AddEditFormMain = (props) => {
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item label="Group Name" initialValue={groupValue ? groupValue : formData?.dealerParentName} name="dealerParentName">
-                                <Input disabled className={styles.inputBox} placeholder={preparePlaceholderText('Group Name')} />
+                                <Input disabled placeholder={preparePlaceholderText('Group Name')} />
                             </Form.Item>
                         </Col>
                         <Col xs={0} sm={0} md={0} lg={0} xl={0}>
@@ -192,19 +192,19 @@ const AddEditFormMain = (props) => {
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.companyCode} label="Company Code" name="companyCode" rules={[validateRequiredInputField('Company Code'), [{ validator: searchValidator }]]}>
-                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('Company Code')} maxLength={6} disabled={editMode} />
+                                <Input placeholder={preparePlaceholderText('Company Code')} maxLength={6} disabled={editMode} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.companyName} label="Company Name" name="companyName" rules={[validateRequiredInputField('Company Name')]}>
-                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('Company Name')} />
+                                <Input placeholder={preparePlaceholderText('Company Name')} />
                             </Form.Item>
                         </Col>
                     </Row>
                     <Row gutter={16}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={formData?.address} label="Company Address" name="address" rules={[validateRequiredInputField('Company Address')]}>
-                                <TextArea rows={2} placeholder={preparePlaceholderText('Company Address')} showCount maxLength={300} />
+                                <TextArea placeholder={preparePlaceholderText('Company Address')} showCount maxLength={300} />
                             </Form.Item>
                         </Col>
                     </Row>
@@ -221,65 +221,65 @@ const AddEditFormMain = (props) => {
                     <Row gutter={16}>
                         <Col xs={0} sm={0} md={0} lg={0} xl={0}>
                             <Form.Item initialValue={formData?.cityCode} label="City" name="cityCode">
-                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('City')} disabled />
+                                <Input placeholder={preparePlaceholderText('City')} disabled />
                             </Form.Item>
                         </Col>
                         <Col xs={0} sm={0} md={0} lg={0} xl={0}>
                             <Form.Item initialValue={formData?.tehsilCode} label="Tehsil" name="tehsilCode">
-                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('Tehsil')} disabled />
+                                <Input placeholder={preparePlaceholderText('Tehsil')} disabled />
                             </Form.Item>
                         </Col>
 
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.cityName} label="City" name="cityName">
-                                <Input className={styles.inputBox} placeholder="City" disabled />
+                                <Input placeholder="City" disabled />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.tehsilName} label="Tehsil" name="tehsilName">
-                                <Input className={styles.inputBox} placeholder="Tehsil" disabled />
+                                <Input placeholder="Tehsil" disabled />
                             </Form.Item>
                         </Col>
                     </Row>
                     <Row gutter={16}>
                         <Col xs={0} sm={0} md={0} lg={0} xl={0}>
                             <Form.Item initialValue={formData?.districtCode} label="District" name="districtCode">
-                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('District')} disabled />
+                                <Input placeholder={preparePlaceholderText('District')} disabled />
                             </Form.Item>
                         </Col>
                         <Col xs={0} sm={0} md={0} lg={0} xl={0}>
                             <Form.Item initialValue={formData?.stateCode} label="State" name="stateCode">
-                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('State')} disabled />
+                                <Input placeholder={preparePlaceholderText('State')} disabled />
                             </Form.Item>
                         </Col>
 
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.districtName} label="District" name="districtName">
-                                <Input className={styles.inputBox} placeholder="District" disabled />
+                                <Input placeholder="District" disabled />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.stateName} label="State" name="stateName">
-                                <Input className={styles.inputBox} placeholder="State" disabled />
+                                <Input placeholder="State" disabled />
                             </Form.Item>
                         </Col>
                     </Row>
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.companyTin} label="TIN" name="companyTin" rules={[validateRequiredInputField('TIN'), validateTin('TIN')]}>
-                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('TIN')} />
+                                <Input placeholder={preparePlaceholderText('TIN')} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.companyTan} label="TAN" name="companyTan" rules={[validateRequiredInputField('TAN'), validateTan('TAN')]}>
-                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('TAN')} />
+                                <Input placeholder={preparePlaceholderText('TAN')} />
                             </Form.Item>
                         </Col>
                     </Row>
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.companyPan} label="PAN" name="companyPan" rules={[validateRequiredInputField('PAN'), validatePanField('PAN')]}>
-                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('PAN')} />
+                                <Input placeholder={preparePlaceholderText('PAN')} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>

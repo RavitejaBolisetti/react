@@ -68,7 +68,7 @@
 
 .scrollTreeData {
     width: 100%;
-    height: calc(100vh - 248px);
+    height: calc(100vh - 246px);
     overflow: auto;
     padding: 20px;
     border: 1px solid #e6e6e6;
@@ -77,11 +77,11 @@
 
 .scrollTreeData::-webkit-scrollbar-track {
     background-color: #ffffff;
+    border-radius: 10px;
 }
 
 .scrollTreeData::-webkit-scrollbar {
     width: 8px;
-    background-color: #f4f4f4;
 }
 
 .scrollTreeData::-webkit-scrollbar-thumb {

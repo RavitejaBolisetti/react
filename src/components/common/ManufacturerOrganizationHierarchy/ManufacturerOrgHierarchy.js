@@ -294,7 +294,7 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
         <>
             <div className={styles.contentHeaderBackground}>
                 <Row gutter={20}>
-                    <Col xs={24} sm={24} md={18} lg={18} xl={18}>
+                    <Col xs={24} sm={24} md={16} lg={16} xl={16}>
                         <Form onKeyPress={onKeyPressHandler} autoComplete="off" colon={false} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
@@ -306,9 +306,8 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
                         </Form>
                     </Col>
                     {manufacturerOrgHierarchyData?.length > 0 && (
-                        <Col className={styles.buttonHeadingContainer} xs={24} sm={24} md={6} lg={6} xl={6}>
-                            <Button type="primary" onClick={changeHistoryModelOpen}>
-                                <FaHistory className={styles.buttonIcon} />
+                        <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.addGroup}>
+                            <Button icon={<FaHistory />} type="primary" className={styles.verticallyCentered} onClick={changeHistoryModelOpen}>
                                 Change History
                             </Button>
                         </Col>
@@ -316,40 +315,38 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
                 </Row>
             </div>
             <Row gutter={20} span={24}>
-                <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol} className={`${styles.borderBottomCorner} ${styles.marT20}`}>
-                    <div className={styles.content}>
-                        {manufacturerOrgHierarchyData?.length <= 0 ? (
-                            <div className={styles.emptyContainer}>
-                                <Empty
-                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                    imageStyle={{
-                                        height: 60,
-                                    }}
-                                    description={
-                                        <span>
-                                            {noDataTitle} <br /> {noDataMessage}
-                                        </span>
-                                    }
-                                >
-                                    <Button icon={<PlusOutlined />} type="primary" onClick={handleAdd}>
-                                        Add
-                                    </Button>
-                                </Empty>
-                            </div>
-                        ) : (
-                            <LeftPanel {...myProps} />
-                        )}
-                    </div>
+                <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol}>
+                    {manufacturerOrgHierarchyData?.length <= 0 ? (
+                        <div className={styles.emptyContainer}>
+                            <Empty
+                                image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                imageStyle={{
+                                    height: 60,
+                                }}
+                                description={
+                                    <span>
+                                        {noDataTitle} <br /> {noDataMessage}
+                                    </span>
+                                }
+                            >
+                                <Button icon={<PlusOutlined />} type="primary" onClick={handleAdd}>
+                                    Add
+                                </Button>
+                            </Empty>
+                        </div>
+                    ) : (
+                        <LeftPanel {...myProps} />
+                    )}
                 </Col>
 
-                <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol} className={styles.padRight0}>
+                <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol}>
                     {selectedTreeData && selectedTreeData?.id ? (
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{ paddingRight: 0 }}>
+                        <>
                             <ViewManufacturerOrgDetail {...viewProps} />
-                            <div className={styles.hyrbuttonContainer}>
+                            <div className={styles.viewContainerFooter}>
                                 <HierarchyFormButton {...viewProps} />
                             </div>
-                        </Col>
+                        </>
                     ) : (
                         <div className={styles.emptyContainer}>
                             <Empty

@@ -409,8 +409,8 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
                         </Form>
                     </Col>
                     {organizationId && (
-                        <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.buttonHeadingContainer}>
-                            <Button icon={<FaHistory />} type="primary" onClick={changeHistoryModelOpen}>
+                        <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.addGroup}>
+                            <Button icon={<FaHistory />} type="primary" className={styles.verticallyCentered} onClick={changeHistoryModelOpen}>
                                 Change History
                             </Button>
                         </Col>
@@ -419,34 +419,6 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
             </div>
             <Row gutter={20} span={24}>
                 <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol}>
-                    {/* <div className={styles.contentHeaderBackground}>
-                        <Row gutter={20}>
-                            <Col xs={24} sm={24} md={18} lg={18} xl={18}>
-                                <Form autoComplete="off" colon={false} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                                    <Form.Item label={`${title}`} name="code">
-                                        <Row gutter={20}>
-                                            <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                                <TreeSelectField {...treeSelectFieldProps} />
-                                            </Col>
-                                            {organizationId && (
-                                                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                                    <Search placeholder="Search" allowClear onChange={onChange} className={styles.headerSearchField} />
-                                                </Col>
-                                            )}
-                                        </Row>
-                                    </Form.Item>
-                                </Form>
-                            </Col>
-                            {organizationId && (
-                                <Col className={styles.buttonHeadingContainer} xs={24} sm={24} md={6} lg={6} xl={6}>
-                                    <Button type="primary" className={`${styles.changeHistoryModelOpen} ${styles.floatRight}`} onClick={changeHistoryModelOpen}>
-                                        <FaHistory className={styles.buttonIcon} />
-                                        Change History
-                                    </Button>
-                                </Col>
-                            )}
-                        </Row>
-                    </div> */}
                     {/* <div className={styles.content}> */}
                     {productHierarchyData.length <= 0 ? (
                         <div className={styles.emptyContainer}>
@@ -483,13 +455,13 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
                 </Col>
 
                 {productHierarchyData.length > 0 && (
-                    <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol} className={styles.pad0}>
+                    <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol}>
                         {isCollapsableView ? <></> : null}
 
                         {selectedTreeData && selectedTreeData?.id ? (
                             <>
                                 <ViewProductDetail {...viewProps} />
-                                <div className={styles.hyrbuttonContainer}>
+                                <div className={styles.viewContainerFooter}>
                                     <HierarchyFormButton {...viewProps} />
                                 </div>
                             </>
