@@ -70,5 +70,4 @@ export const data = combineReducers({
     ManufacturerOrg,
     VehicleReceipt,
     VehiclePriceMaster,
-    ManufacturerAdmin,
 });

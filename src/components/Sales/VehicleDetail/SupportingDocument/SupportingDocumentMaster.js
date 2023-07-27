@@ -5,8 +5,6 @@
  */
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { LANGUAGE_EN } from 'language/en';
-
 import { bindActionCreators } from 'redux';
 import { Row, Col, Form } from 'antd';
 
@@ -73,7 +71,7 @@ const mapDispatchToProps = (dispatch) => ({
 const SupportingDocumentBase = (props) => {
     const { isViewDataLoaded, uploadDocumentFile, accessToken, token, onFinishFailed, form, setIsFormVisible } = props;
 
-    const { userId, selectedRecordId, showGlobalNotification, section, listShowLoading, typeData, saveData, fetchList, documentData, fetchViewDocument, resetData, resetViewData } = props;
+    const { userId, selectedRecordId, showGlobalNotification, section, listShowLoading, typeData, saveData, fetchList, documentData } = props;
     const { buttonData, setButtonData, formActionType, handleFormValueChange } = props;
     const { downloadFile, viewDocument, viewListShowLoading } = props;
 
@@ -116,6 +114,7 @@ const SupportingDocumentBase = (props) => {
         return () => {
             setUploadedFile(undefined);
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [fileList]);
 
     const onRemove = (file) => {
