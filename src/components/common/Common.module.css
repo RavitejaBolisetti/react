@@ -1237,11 +1237,11 @@
     margin-bottom: 0;
 }
 
-.allowedTiming :global .ant-space .ant-space-item .ant-btn span {
+/* .allowedTiming :global .ant-space .ant-space-item .ant-btn span {
     font-size: 14px;
     font-weight: 600;
     line-height: 22px;
-}
+} */
 
 .allowedTiming :global .ant-picker-input>input:placeholder-shown,
 .allowedTiming :global .ant-picker-input>input {

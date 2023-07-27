@@ -715,6 +715,10 @@
     border-color: #e6e6e6 !important;
 }
 
+:global .ant-picker-dropdown .ant-picker-time-panel-column::after {
+    height: auto;
+}
+
 /* :global .ant-modal-mask,
 :global body {
     width: 100% !important;
