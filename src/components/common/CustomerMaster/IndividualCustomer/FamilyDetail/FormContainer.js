@@ -11,7 +11,7 @@ import { validateRequiredInputField, validateRequiredSelectField } from 'utils/v
 
 import { GetAge } from 'utils/getAge';
 import { disableFutureDate } from 'utils/disableDate';
-import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
+import { dateFormat, formatDate } from 'utils/formatDateTime';
 import styles from 'components/common/Common.module.css';
 
 const { Option } = Select;
@@ -28,7 +28,7 @@ const FormBase = (props) => {
     const [customer, setCustomer] = useState(null);
 
     const onDateChange = (prop) => {
-        let dateString = formattedCalendarDate(prop);
+        let dateString = formatDate(prop);
         let calAge1 = GetAge(dateString);
         form.setFieldsValue({
             relationAge: calAge1,
