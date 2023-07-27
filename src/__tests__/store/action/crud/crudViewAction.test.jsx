@@ -1,7 +1,7 @@
 import { viewActions, viewActionConstants } from '@store/actions/crud/crudView';
 
 describe('viewActions', () => {
-    test('should create a showModal action with the correct type and payload', () => {
+    it('should create a showModal action with the correct type and payload', () => {
         const id = 123;
         const expectedAction = {
             type: viewActionConstants.SHOW_MODAL,
@@ -13,7 +13,7 @@ describe('viewActions', () => {
         expect(action).toEqual(expectedAction);
     });
 
-    test('should create a hideModal action with the correct type', () => {
+    it('should create a hideModal action with the correct type', () => {
         const expectedAction = {
             type: viewActionConstants.HIDE_MODAL,
         };
@@ -25,7 +25,7 @@ describe('viewActions', () => {
 });
 
 describe('viewActionConstants', () => {
-    test('should create the action constants with the correct prefix', () => {
+    it('should create the action constants with the correct prefix', () => {
         const prefix = 'PREFIX_';
         const expectedConstants = {
             SHOW_MODAL: 'PREFIX_VIEW_SHOW_MODAL',

@@ -5,7 +5,7 @@ describe('addActions', () => {
     const actionConstants = addActionConstants(prefix);
     const actions = addActions(actionConstants);
 
-    test('success action', () => {
+    it('success action', () => {
         const message = 'Item added successfully';
         const isFormShown = true;
         const newItemId = 123;
@@ -20,7 +20,7 @@ describe('addActions', () => {
         });
     });
 
-    test('error action', () => {
+    it('error action', () => {
         const message = 'Error occurred';
 
         const action = actions.error(message);
@@ -31,7 +31,7 @@ describe('addActions', () => {
         });
     });
 
-    test('showForm action', () => {
+    it('showForm action', () => {
         const action = actions.showForm();
 
         expect(action).toEqual({
@@ -39,7 +39,7 @@ describe('addActions', () => {
         });
     });
 
-    test('hideForm action', () => {
+    it('hideForm action', () => {
         const action = actions.hideForm();
 
         expect(action).toEqual({
@@ -47,7 +47,7 @@ describe('addActions', () => {
         });
     });
 
-    test('showLoading action', () => {
+    it('showLoading action', () => {
         const isLoading = true;
 
         const action = actions.showLoading(isLoading);
@@ -58,7 +58,7 @@ describe('addActions', () => {
         });
     });
 
-    test('setFileHash action', () => {
+    it('setFileHash action', () => {
         const fileData = { name: 'file.txt', hash: 'hash123' };
 
         const action = actions.setFileHash(fileData);
@@ -69,7 +69,7 @@ describe('addActions', () => {
         });
     });
 
-    test('successClose action', () => {
+    it('successClose action', () => {
         const action = actions.successClose();
 
         expect(action).toEqual({
@@ -77,7 +77,7 @@ describe('addActions', () => {
         });
     });
 
-    test('errorClose action', () => {
+    it('errorClose action', () => {
         const action = actions.errorClose();
 
         expect(action).toEqual({

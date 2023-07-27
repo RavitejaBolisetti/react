@@ -5,7 +5,7 @@ describe('listActions', () => {
     const actionConstants = listActionConstants(prefix);
     const actions = listActions(actionConstants);
 
-    test('showLoading action', () => {
+    it('showLoading action', () => {
         const isLoading = true;
 
         const action = actions.showLoading(isLoading);
@@ -16,7 +16,7 @@ describe('listActions', () => {
         });
     });
 
-    test('fetchError action', () => {
+    it('fetchError action', () => {
         const message = 'Error occurred while fetching data';
 
         const action = actions.fetchError(message);
@@ -27,7 +27,7 @@ describe('listActions', () => {
         });
     });
 
-    test('setFilterString action', () => {
+    it('setFilterString action', () => {
         const filterString = 'search query';
 
         const action = actions.setFilterString(filterString);
@@ -38,7 +38,7 @@ describe('listActions', () => {
         });
     });
 
-    test('setFilter action', () => {
+    it('setFilter action', () => {
         const additionalFilterValues = { category: 'books', price: '100' };
 
         const action = actions.setFilter(additionalFilterValues);
@@ -49,7 +49,7 @@ describe('listActions', () => {
         });
     });
 
-    test('errorClose action', () => {
+    it('errorClose action', () => {
         const action = actions.errorClose();
 
         expect(action).toEqual({

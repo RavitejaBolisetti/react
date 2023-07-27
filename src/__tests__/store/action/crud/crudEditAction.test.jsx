@@ -5,7 +5,7 @@ describe('editActions', () => {
     const actionConstants = editActionConstants(prefix);
     const actions = editActions(actionConstants);
 
-    test('success action', () => {
+    it('success action', () => {
         const message = 'Item edited successfully';
         const isFormShown = true;
 
@@ -18,7 +18,7 @@ describe('editActions', () => {
         });
     });
 
-    test('error action', () => {
+    it('error action', () => {
         const message = 'Error occurred';
 
         const action = actions.error(message);
@@ -29,7 +29,7 @@ describe('editActions', () => {
         });
     });
 
-    test('showLoading action', () => {
+    it('showLoading action', () => {
         const isLoading = true;
 
         const action = actions.showLoading(isLoading);
@@ -40,7 +40,7 @@ describe('editActions', () => {
         });
     });
 
-    test('hideForm action', () => {
+    it('hideForm action', () => {
         const action = actions.hideForm();
 
         expect(action).toEqual({
@@ -48,7 +48,7 @@ describe('editActions', () => {
         });
     });
 
-    test('showForm action', () => {
+    it('showForm action', () => {
         const id = 123;
         const manageCountryMilestone = true;
 
@@ -61,7 +61,7 @@ describe('editActions', () => {
         });
     });
 
-    test('setFileHash action', () => {
+    it('setFileHash action', () => {
         const fileData = { name: 'file.txt', hash: 'hash123' };
 
         const action = actions.setFileHash(fileData);
@@ -72,7 +72,7 @@ describe('editActions', () => {
         });
     });
 
-    test('errorClose action', () => {
+    it('errorClose action', () => {
         const action = actions.errorClose();
 
         expect(action).toEqual({
