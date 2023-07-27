@@ -2732,6 +2732,7 @@
     color: #00a310;
 }
 
+.drawerCardView :global .ant-collapse-content-box .ant-descriptions .ant-descriptions-view .ant-descriptions-row:nth-child(odd) .ant-descriptions-item,
 .drawerCardView :global .ant-card-body .ant-descriptions .ant-descriptions-view .ant-descriptions-row:nth-child(odd) .ant-descriptions-item,
 .ExchangeCard :global .ant-card-body .ant-descriptions .ant-descriptions-view .ant-descriptions-row:nth-child(odd) .ant-descriptions-item {
     padding-bottom: 0px;
@@ -2928,9 +2929,6 @@ li.ant-timeline-item.active .ant-timeline-item-content p {
     line-height: 22px;
 }
 
-.inputWrapper :global .ant-btn-default {
-    padding: 5px 0;
-}
 
 /* .inputWrapper :global .ant-input-affix-wrapper {
     padding: 5px 6px 5px 0;
@@ -2942,6 +2940,7 @@ li.ant-timeline-item.active .ant-timeline-item-content p {
     border-color: #b5b5b6;
     height: 38px;
 }
+
 
 .supportingDocument :global .ant-input-affix-wrapper-focused {
     padding: 5px 6px;
@@ -2990,6 +2989,26 @@ li.ant-timeline-item.active .ant-timeline-item-content p {
     margin-top: 5px;
 } */
 
+
+.infoWrapper :global .ant-btn-default {
+    padding: 5px 0;
+}
+
+.infoWrapper :global .ant-input-affix-wrapper {
+    padding: 0px 6px 5px;
+    height: 37px;
+    background-color: #e6e6e6;
+}
+
+.infoWrapper :global .ant-input-affix-wrapper .ant-input {
+    height: 35px;
+}
+
+.infoWrapper :global .ant-input-affix-wrapper .ant-input-suffix {
+    margin-top: 5px;
+    margin-right: 5px;
+    
+}
 .contactDays :global .ant-form-item .ant-form-item-control-input .ant-select-multiple .ant-select-selector {
     height: auto;
     min-height: 36px;

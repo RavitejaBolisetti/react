@@ -68,13 +68,8 @@ export const AdvancedSearchFrom = (props) => {
             </Row>
 
             <Row gutter={16}>
-                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form.Item initialValue={filterString?.otfStatus} label="GRN Type" name="otfStatus">
-                        <Select placeholder={preparePlaceholderSelect('')} fieldNames={{ label: 'desc', value: 'key' }} options={otfStatusList} {...selectProps} className={styles.headerSelectField}></Select>
-                    </Form.Item>
-                </Col>
-                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item initialValue={filterString?.otfStatus} label="GRN Status" name="otfStatus">
                         <Select placeholder={preparePlaceholderSelect('')} fieldNames={{ label: 'desc', value: 'key' }} options={otfStatusList} {...selectProps} className={styles.headerSelectField}></Select>
                     </Form.Item>
                 </Col>
