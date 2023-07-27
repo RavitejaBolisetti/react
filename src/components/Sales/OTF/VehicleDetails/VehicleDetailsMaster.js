@@ -88,6 +88,8 @@ const VehicleDetailsMasterMain = (props) => {
     const [ProductHierarchyDataOptions, setProductHierarchyDataOptions] = useState();
     const [modelData, setmodelData] = useState();
 
+    const [modelCode, setmodelCode] = useState();
+
     const onSuccessAction = (res) => {
         // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
@@ -145,7 +147,7 @@ const VehicleDetailsMasterMain = (props) => {
         if (ProductHierarchyData && isProductHierarchyDataLoaded && userId) {
             setmodelData(ProductHierarchyData['0']);
             form.setFieldsValue({
-                modelCode: ProductHierarchyData['0']['model'] ?? 'NA',
+                modelCode: ProductHierarchyData['0']['prodctCode'] ?? 'NA',
             });
             settooltTipText(
                 <div>
@@ -189,12 +191,13 @@ const VehicleDetailsMasterMain = (props) => {
             ];
             VehicleDetailsData?.modelCode && VehicleDetailsData?.modelCode !== '' && fetchProductLovCode({ setIsLoading: ProductLovLoading, userId, onErrorAction, extraparams: LovParams });
             setformData(VehicleDetailsData);
-            setoptionsServiceModified(VehicleDetailsData['optionalServices']);
+            VehicleDetailsData['optionalServices'] && setoptionsServiceModified(VehicleDetailsData['optionalServices']);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [VehicleDetailsData, isDataLoaded]);
 
     const onHandleSelect = (values) => {
+        setmodelCode(values);
         const LovParams = [
             {
                 key: 'prodctCode',
@@ -210,7 +213,7 @@ const VehicleDetailsMasterMain = (props) => {
         if (!values.hasOwnProperty('vehicleUsageType')) {
             data = { otfNumber: selectedOrderId, OtfId: formData?.id, id: formData?.id, podate: dayjs(formData?.podate?.substr(0, 10)).format('DD/MM/YYYY'), vehicleUsageType: VehicleDetailsData?.vehicleUsageType, model: VehicleDetailsData?.model, modelCode: VehicleDetailsData?.modelCode, discountAmount: VehicleDetailsData?.discountAmount, optionalServices: optionsServicesMapping };
         } else {
-            data = { ...values, otfNumber: selectedOrderId, OtfId: formData?.id, id: formData?.id, optionalServices: optionsServicesMapping };
+            data = { ...values, otfNumber: selectedOrderId, OtfId: formData?.id, id: formData?.id, optionalServices: optionsServicesMapping, model: ProductHierarchyData['0']['prodctShrtName'] };
         }
 
         const onSuccess = (res) => {
