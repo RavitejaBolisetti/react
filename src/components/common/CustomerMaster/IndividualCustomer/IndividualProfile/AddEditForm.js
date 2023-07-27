@@ -27,7 +27,7 @@ const AddEditFormMain = (props) => {
     const { isWhoKnowsWhom, formData, appCategoryData, form, viewDocument, downloadFileFromButton } = props;
     const { isReadOnly = false } = props;
     const { uploadedFile, setUploadedFile, emptyList, setEmptyList, fileList, setFileList, setUploadedFileName, uploadedFileName } = props;
-    const { fileConsentList, setFileConsentList, uploadedConsentFile, setUploadedConsentFile, emptyConsentList, setEmptyConsentList, uploadedConsentFileName, setUploadedConsentFileName } = props;
+    const { handleFormValueChange,fetchViewDocument, fileConsentList, setFileConsentList, uploadedConsentFile, setUploadedConsentFile, emptyConsentList, setEmptyConsentList, uploadedConsentFileName, setUploadedConsentFileName } = props;
     const [isRead, setIsRead] = useState(false);
     const [customer, setCustomer] = useState(false);
     const [activeKey, setActiveKey] = useState([1]);
@@ -92,6 +92,7 @@ const AddEditFormMain = (props) => {
     };
 
     const ImageProps = {
+        fetchViewDocument,
         viewDocument,
         isReplaceEnabled: true,
         fileList,
@@ -103,6 +104,7 @@ const AddEditFormMain = (props) => {
         setEmptyList,
         uploadedFileName,
         setUploadedFileName,
+        handleFormValueChange,
 
         uploadButtonName: 'Upload File',
         messageText: <>Upload Your Profile Picture</>,
@@ -115,6 +117,7 @@ const AddEditFormMain = (props) => {
         ),
         supportedFileTypes: ['image/png', 'image/jpeg', 'image/jpg'],
         maxSize: 8,
+        single: true
     };
 
     const consentFormProps = {
@@ -127,6 +130,7 @@ const AddEditFormMain = (props) => {
         setEmptyList: setEmptyConsentList,
         uploadedFileName: uploadedConsentFileName,
         setUploadedFileName: setUploadedConsentFileName,
+        handleFormValueChange,
 
         uploadButtonName: 'Upload File',
         messageText: (
@@ -138,6 +142,7 @@ const AddEditFormMain = (props) => {
         validationText: <>File type should be png, jpg or pdf and max file size to be 5Mb</>,
         supportedFileTypes: ['image/png', 'image/jpg', 'application/pdf'],
         maxSize: 5,
+        single: true
     };
 
     const disabledProps = { disabled: isReadOnly };
@@ -344,7 +349,6 @@ const AddEditFormMain = (props) => {
                                 )}
                             </Panel>
                         </Collapse>
-
                         <Collapse collapsible="icon" defaultActiveKey={['2']} expandIcon={expandIcon} expandIconPosition="end">
                             <Panel header="Social Profile" key="2">
                                 <Divider />
@@ -456,7 +460,7 @@ const AddEditFormMain = (props) => {
                                 </Row>
                             </Panel>
                         </Collapse>
-
+                        ``
                         <Collapse collapsible="icon" defaultActiveKey={['5']} expandIcon={expandIcon} expandIconPosition="end">
                             <Panel header="Upload Customer Form" key="5">
                                 <>

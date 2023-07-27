@@ -46,7 +46,7 @@ const ViewDetailMain = (props) => {
                 <Panel header="Individual Information" key="1">
                     <Divider />
                     <div>
-                        <img alt="uploaded suppoting document" width="120" height="100" src={`data:image/png;base64,${viewDocument?.base64}`} />
+                        <img alt="Uploaded profile picture" width="120" height="100" src={`data:image/png;base64,${viewDocument?.base64}`} />
                     </div>
                     <br />
                     <br />

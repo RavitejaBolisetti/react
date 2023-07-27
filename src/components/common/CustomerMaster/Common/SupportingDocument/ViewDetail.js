@@ -21,6 +21,7 @@ export const ViewDetail = (props) => {
         deleteFile,
         downloadFile,
     } = props;
+    
     const downloadFileFromButton = (uploadData) => {
         const extraParams = [
             {
