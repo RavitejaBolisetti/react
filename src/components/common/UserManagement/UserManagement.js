@@ -572,7 +572,7 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
                                 </div>
                             </Col>
                             <Col xs={24} sm={24} md={7} lg={7} xl={7}>
-                                <Select className={styles.headerSelectField} onChange={handleChange} placeholder="Select" allowClear>
+                                <Select onChange={handleChange} placeholder="Select" allowClear>
                                     {dealersData?.map((item) => (
                                         <Option value={item}>{item}</Option>
                                     ))}

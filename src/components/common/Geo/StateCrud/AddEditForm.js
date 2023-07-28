@@ -77,7 +77,7 @@ export const AddEditFormBase = (props) => {
             <Row gutter={16}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item initialValue={state?.countryCode || defaultCountry} disabled label="Country" name="countryCode" placeholder={preparePlaceholderSelect('Country')} rules={[validateRequiredInputField('Country')]}>
-                        <Select className={styles.headerSelectField} showSearch loading={!isCountryLoaded} placeholder="Select" allowClear disabled={true}>
+                        <Select showSearch loading={!isCountryLoaded} placeholder="Select" allowClear disabled={true}>
                             {countries?.map((item) => (
                                 <Option value={item?.countryCode}>{item?.countryName}</Option>
                             ))}

@@ -9,9 +9,9 @@ import { Col, Form, Row, Select, Button, DatePicker } from 'antd';
 import { withModal } from 'components/withModal';
 import { validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
-
 import { dateFormat, formatDate, formatDateToCalenderDate } from 'utils/formatDateTime';
 import { disableFutureDate } from 'utils/disableDate';
+import { ModalButtons } from 'components/common/Button';
 
 import styles from 'components/common/Common.module.css';
 
@@ -58,6 +58,13 @@ export const AdvancedSearchFrom = (props) => {
         allowClear: true,
         className: styles.headerSelectField,
     };
+    const modalProps = {
+        reset: true,
+        submit: true,
+        resetName: 'Reset',
+        submitName: 'Apply',
+        handleResetFilter,
+    };
     return (
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
@@ -76,29 +83,17 @@ export const AdvancedSearchFrom = (props) => {
             <Row gutter={16}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item initialValue={filterString?.model} label="Model" name="model">
-                        <Select placeholder={preparePlaceholderSelect('model')} fieldNames={{ label: '', value: '' }} options={[{}]} {...selectProps} className={styles.headerSelectField} />
+                        <Select placeholder={preparePlaceholderSelect('model')} fieldNames={{ label: '', value: '' }} options={[{}]} {...selectProps} />
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item initialValue={filterString?.otfStatus} label="Status" name="status">
-                        <Select placeholder={preparePlaceholderSelect('status')} fieldNames={{ label: '', value: '' }} options={[{}]} {...selectProps} className={styles.headerSelectField} />
+                        <Select placeholder={preparePlaceholderSelect('status')} fieldNames={{ label: '', value: '' }} options={[{}]} {...selectProps} />
                     </Form.Item>
                 </Col>
             </Row>
 
-            <Row gutter={20}>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignLeft}>
-                    <Button onClick={handleResetFilter} danger>
-                        Reset
-                    </Button>
-                </Col>
-
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignRight}>
-                    <Button htmlType="submit" type="primary">
-                        Apply
-                    </Button>
-                </Col>
-            </Row>
+            <ModalButtons {...modalProps} />
         </Form>
     );
 };

@@ -29,7 +29,7 @@ const AddEditForm = (uploadProps) => {
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                     <Form.Item label="Document Type" name="documentTypeId" rules={mandatoryFields ? [validateRequiredInputField('document type')] : ''} placeholder={preparePlaceholderSelect('document type')}>
-                        <Select className={styles.headerSelectField} loading={!(typeData?.length !== 0)} placeholder="Select" {...selectProps}>
+                        <Select loading={!(typeData?.length !== 0)} placeholder="Select" {...selectProps}>
                             {typeData?.map((item) => (
                                 <Option key={item?.key} value={item?.key}>
                                     {item?.value}

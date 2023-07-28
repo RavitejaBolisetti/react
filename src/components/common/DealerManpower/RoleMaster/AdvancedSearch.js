@@ -54,7 +54,7 @@ export const AdvancedSearchFrom = (props) => {
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item initialValue={filterString?.divisionCode} label="Division Name" name="divisionCode" rules={[validateRequiredSelectField('Division')]}>
-                        <Select className={styles.headerSelectField} showSearch loading={!isDivisionDataLoaded} placeholder="Select" allowClear onChange={handleFilterChange('code')}>
+                        <Select showSearch loading={!isDivisionDataLoaded} placeholder="Select" allowClear onChange={handleFilterChange('code')}>
                             {divisionData?.map((item) => (
                                 <Option key={item?.key} value={item?.key}>
                                     {item?.value}
@@ -66,7 +66,7 @@ export const AdvancedSearchFrom = (props) => {
 
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item initialValue={filterString?.departmentCode} label="Department Name" name="departmentCode">
-                        <Select className={styles.headerSelectField} {...selectProps} showSearch loading={!isDepartmentDataLoaded} placeholder="Select" allowClear onChange={handleFilterChange('departmentCode')}>
+                        <Select {...selectProps} showSearch loading={!isDepartmentDataLoaded} placeholder="Select" allowClear onChange={handleFilterChange('departmentCode')}>
                             {filteredDepartmentData?.map((item) => (
                                 <Option key={item?.key} value={item?.key}>
                                     {item?.value}

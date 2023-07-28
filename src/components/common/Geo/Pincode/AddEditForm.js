@@ -89,7 +89,7 @@ const AddEditFormMain = (props) => {
                             <Row gutter={16}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                     <Form.Item initialValue={formData?.countryCode || defaultCountry} label="Country" name="countryCode" placeholder={preparePlaceholderSelect('Country')} rules={[validateRequiredInputField('Country')]}>
-                                        <Select className={styles.headerSelectField} {...selectProps} loading={!isDataCountryLoaded} placeholder="Select" onChange={handleCountryChange}>
+                                        <Select {...selectProps} loading={!isDataCountryLoaded} placeholder="Select" onChange={handleCountryChange}>
                                             {countryData?.map((item) => (
                                                 <Option key={'co' + item?.countryCode} value={item?.countryCode}>
                                                     {item?.countryName}

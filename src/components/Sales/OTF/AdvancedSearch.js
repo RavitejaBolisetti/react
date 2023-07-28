@@ -13,6 +13,7 @@ import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { dateFormat, formatDate, formatDateToCalenderDate } from 'utils/formatDateTime';
 import { disableFutureDate } from 'utils/disableDate';
 
+import { ModalButtons } from 'components/common/Button';
 import styles from 'components/common/Common.module.css';
 
 export const AdvancedSearchFrom = (props) => {
@@ -55,6 +56,14 @@ export const AdvancedSearchFrom = (props) => {
         allowClear: true,
         className: styles.headerSelectField,
     };
+
+    const modalProps = {
+        reset: true,
+        submit: true,
+        resetName: 'Reset',
+        submitName: 'Apply',
+        handleResetFilter,
+    };
     return (
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
@@ -73,24 +82,12 @@ export const AdvancedSearchFrom = (props) => {
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form.Item initialValue={filterString?.otfStatus} label="OTF Status" name="otfStatus">
-                        <Select placeholder={preparePlaceholderSelect('')} fieldNames={{ label: 'desc', value: 'key' }} options={otfStatusList} {...selectProps} className={styles.headerSelectField}></Select>
+                        <Select placeholder={preparePlaceholderSelect('')} fieldNames={{ label: 'desc', value: 'key' }} options={otfStatusList} {...selectProps}></Select>
                     </Form.Item>
                 </Col>
             </Row>
 
-            <Row gutter={20}>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignLeft}>
-                    <Button onClick={handleResetFilter} danger>
-                        Reset
-                    </Button>
-                </Col>
-
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignRight}>
-                    <Button htmlType="submit" type="primary">
-                        Apply
-                    </Button>
-                </Col>
-            </Row>
+            <ModalButtons {...modalProps} />
         </Form>
     );
 };

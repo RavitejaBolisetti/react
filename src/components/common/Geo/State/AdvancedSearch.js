@@ -7,7 +7,7 @@ import React, { useEffect } from 'react';
 import { Col, Form, Row, Select, Input, Button } from 'antd';
 import { searchValidator, validateRequiredSelectField } from 'utils/validation';
 import { withModal } from 'components/withModal';
-
+import { ModalButtons } from 'components/common/Button';
 import styles from 'components/common/Common.module.css';
 
 const { Option } = Select;
@@ -31,13 +31,21 @@ export const AdvancedSearchFrom = (props) => {
         return;
     };
 
+    const modalProps = {
+        reset: true,
+        submit: true,
+        resetName: 'Reset',
+        submitName: 'Search',
+        handleResetFilter,
+    };
+
     return (
         <Form layout="vertical" autoComplete="off" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item initialValue={defaultCountry} label="Country" name="countryCode" rules={[validateRequiredSelectField('Country')]}>
                         {defaultCountry && (
-                            <Select defaultValue={defaultCountry} className={styles.headerSelectField} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear>
+                            <Select defaultValue={defaultCountry} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear>
                                 {countryData?.map((item) => (
                                     <Option key={item?.countryCode} value={item?.countryCode}>
                                         {item?.countryName}
@@ -65,19 +73,7 @@ export const AdvancedSearchFrom = (props) => {
                 </Col>
             </Row>
 
-            <Row gutter={20}>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignLeft}>
-                    <Button onClick={handleResetFilter} danger>
-                        Reset
-                    </Button>
-                </Col>
-
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignRight}>
-                    <Button htmlType="submit" type="primary">
-                        Search
-                    </Button>
-                </Col>
-            </Row>
+            <ModalButtons {...modalProps} />
         </Form>
     );
 };

@@ -18,7 +18,7 @@ const ViewDetailBase = ({ formData, styles, parameterType, taxCharges, taxCatego
         column: { xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 },
     };
     return (
-        <div className={`${styles.viewContainer} ${styles.hierarchyRightContainers}`}>
+        <div className={styles.viewContainer}>
             <>
                 <Descriptions {...viewProps}>
                     <Descriptions.Item label="Code">{taxCategory?.taxCategoryCode}</Descriptions.Item>

@@ -393,7 +393,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
             <div className={styles.contentHeaderBackground}>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={16} lg={16} xl={16}>
-                        <Form autoComplete="off" colon={false} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                        <Form autoComplete="off" colon={false} className={styles.masterListSearchForm}>
                             <Form.Item label={`${title}`} name="code">
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={10} lg={10} xl={10}>
