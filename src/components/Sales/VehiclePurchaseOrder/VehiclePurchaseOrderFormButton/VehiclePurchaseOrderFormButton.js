@@ -9,8 +9,7 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import styles from './VehiclePurchaseOrderFormButton.module.css';
 
 export const VehiclePurchaseOrderFormButton = ({ record, onCloseAction, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection }) => {
-    console.log('buttonData',buttonData);
-    console.log('setButtonData',setButtonData);
+     
     return (
         <Row gutter={20} className={styles.formFooter}>
             <Col xs={24} sm={8} md={6} lg={4} xl={4} className={styles.footerBtnLeft}>

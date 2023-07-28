@@ -56,7 +56,7 @@ export const AdvancedSearchFrom = (props) => {
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
             <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item initialValue={filterString?.otfStatus} label="Order Type" name="otfStatus">
+                    <Form.Item initialValue={filterString?.otfStatus} label="Order Type" name="otfStatus" rules={[validateRequiredSelectField('Order Type')]}>
                         <Select placeholder={preparePlaceholderSelect('')} fieldNames={{ label: 'desc', value: 'key' }} options={otfStatusList} {...selectProps} className={styles.headerSelectField}></Select>
                     </Form.Item>
                 </Col>

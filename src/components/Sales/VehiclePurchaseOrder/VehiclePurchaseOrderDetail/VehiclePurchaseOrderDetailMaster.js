@@ -102,12 +102,22 @@ const VehiclePurchaseOrderDetailMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedRecordId]);
 
+    const onSearch = (value) => {
+        console.log('search vehicle-',value);
+        if (!value) {
+            return false;
+        }
+
+
+    };
+
     const onFinish = (values) => {
+        console.log('values==>>', values);
         const recordId = vehicleDetails.vehicleDetails?.id || '';
         const vin = vehicleDetails.vehicleDetails?.vin || '';
         const registrationNumber = vehicleDetails.vehicleDetails?.registrationNumber || '';
 
-        const data = { ...values, id: recordId, vin: vin, mnfcWarrEndDate: values?.mnfcWarrEndDate?.format('YYYY-MM-DD'), deliveryDate: values?.deliveryDate?.format('YYYY-MM-DD'), nextServiceDueDate: values?.nextServiceDueDate?.format('YYYY-MM-DD'), pucExpiryDate: values?.pucExpiryDate?.format('YYYY-MM-DD'), insuranceExpiryDate: values?.insuranceExpiryDate?.format('YYYY-MM-DD'), saleDate: values?.saleDate?.format('YYYY-MM-DD'), registrationNumber: registrationNumber };
+        const data = { ...values, id: recordId, vin: vin, deliveryDate: values?.deliveryDate?.format('YYYY-MM-DD'), registrationNumber: registrationNumber };
         const onSuccess = (res) => {
             handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -160,33 +170,24 @@ const VehiclePurchaseOrderDetailMasterBase = (props) => {
         activeKey,
         setactiveKey,
     };
-    const tableProps = {
-        tableColumn: tableColumn(handleButtonClick),
-        tableData: [
-            { model: "XUV700", quantity: 2 },                
-        ], //data,
-        showAddButton: false,
-    };
-    
+     
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-            <Row gutter={20} className={styles.drawerBodyRight}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Row>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <h2>{section?.title}</h2>
-                        </Col>
-                    </Row>
-                    {formActionType?.viewMode ? <><ViewDetail {...viewProps} /><ListDataTable {...tableProps} showAddButton={false} pagination={false}/> </> : <><AddEditForm {...formProps} /> <ListDataTable {...tableProps} showAddButton={false} pagination={false} />  </>}
-                </Col>
-            </Row>
-            <Row>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <VehiclePurchaseOrderFormButton {...props} /> 
-                </Col>
-            </Row>
-        </Form>
-    );
+    <>
+        <Row gutter={20}>
+            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                <Row>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <h2>{section?.title}</h2>
+                    </Col>
+                </Row>
+                {/* {formActionType?.viewMode ?<ViewDetail {...vieProps} /> : <AddEditForm {...formProps} /> } */}
+                <AddEditForm {...formProps} />
+            </Col>
+        </Row>
+
+        {/* <VehiclePurchaseOrderFormButton {...props} />  */} 
+    </>
+    )
 };
 
 export const VehiclePurchaseOrderDetailMaster = connect(mapStateToProps, mapDispatchToProps)(VehiclePurchaseOrderDetailMasterBase);

@@ -12,7 +12,8 @@ import { convertDateTime } from 'utils/formatDateTime';
 import { preparePlaceholderText, preparePlaceholderSelect, preparePlaceholderAutoComplete } from 'utils/preparePlaceholder';
 import { validateRequiredSelectField, validateRequiredInputField } from 'utils/validation';
 import { withDrawer } from 'components/withDrawer';
-import { DrawerFormButton } from 'components/common/Button';
+import { VehiclePurchaseOrderFormButton } from '../VehiclePurchaseOrderFormButton';
+
 import { checkAndSetDefaultValue, getStatus } from 'utils/checkAndSetDefaultValue';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
@@ -20,10 +21,16 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 const { TextArea, Search } = Input;
 
 const AddEditFormMain = (props) => {
-    const { otfCancellationForm,formData, otfData, selectedOrder, fieldNames, onFinishOTFCancellation, selectedTreeSelectKey, treeCodeId } = props;
-    const { handleButtonClick, buttonData, setButtonData, onCloseAction, handleFormValueChange, typeData, userId, uploadDocumentFile, setUploadedFile, listShowLoading, showGlobalNotification, viewDocument, setEmptyList } = props;
+    const { otfCancellationForm,formData, otfData, selectedOrder, fieldNames, onFinishOTFCancellation, onFinishFailed, } = props;
+    const { handleButtonClick, buttonData, setButtonData, onCloseAction, typeData, userId, listShowLoading, showGlobalNotification, setEmptyList } = props;
     const { searchDealerValue, setSearchDealerValue, dealerDataList } = props;
- 
+    const handleFormValueChange = () => {
+        setButtonData({ ...buttonData, formBtnActive: true });
+    };
+
+    const handleFormFieldChange = () => {
+        setButtonData({ ...buttonData, formBtnActive: true });
+    };
     const buttonProps = {
         formData,
         onCloseAction,
@@ -36,16 +43,22 @@ const AddEditFormMain = (props) => {
                   
     };
     const isLoading = false;
+   
     return (
         <>            
-            <Form form={otfCancellationForm} onFinish={onFinishOTFCancellation} layout="vertical" autocomplete="off" colon="false">
+            <Form form={otfCancellationForm} onFinish={onFinishOTFCancellation} layout="vertical" autocomplete="off" colon="false" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} >
                 <Row gutter={20}>
-                     
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Form.Item name="cancellationReasonType" label="Cancellation Reason Type" rules={[validateRequiredSelectField('Reason Type')]}>
-                            <Select placeholder={preparePlaceholderSelect('Cancellation Reason Type')} onChange={handleCancellationReasonTypeChange} allowClear fieldNames={{ label: 'value', value: 'key' }} options={typeData['']}></Select>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                        <Form.Item name="cancellationReasonType" label="Cancellation Reason 1" rules={[validateRequiredSelectField('Reason Type')]}>
+                            <Select placeholder={preparePlaceholderSelect('Cancellation Reason 1')} onChange={handleCancellationReasonTypeChange} allowClear fieldNames={{ label: 'value', value: 'key' }} options={typeData['']}></Select>
                         </Form.Item>
                     </Col>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                        <Form.Item name="cancellationReasonType" label="Cancellation Reason 2" rules={[validateRequiredSelectField('Reason Type')]}>
+                            <Select placeholder={preparePlaceholderSelect('Cancellation Reason 2')} onChange={handleCancellationReasonTypeChange} allowClear fieldNames={{ label: 'value', value: 'key' }} options={typeData['']}></Select>
+                        </Form.Item>
+                    </Col>
+                     
                
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Form.Item name="cancellationRemark" label="Cancellation Remarks" rules={[validateRequiredInputField('Cancellation Remarks')]}>
@@ -54,7 +67,7 @@ const AddEditFormMain = (props) => {
                     </Col>
                 </Row>
                  
-                <DrawerFormButton {...buttonProps} />
+                <VehiclePurchaseOrderFormButton {...props} />
             </Form>
         </>
     );

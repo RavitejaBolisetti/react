@@ -43,5 +43,6 @@ const VehiclePurchaseOrderMainContainerMain = (props) => {
         </Row>
     );
 };
+export const VehiclePurchaseOrderMainContainer = withDrawer(VehiclePurchaseOrderMainContainerMain, { footer: null });
 
-export const VehiclePurchaseOrderMainContainer = withDrawer(VehiclePurchaseOrderMainContainerMain, { width: '75%', footer: null });
+// export const VehiclePurchaseOrderMainContainer = VehiclePurchaseOrderMainContainerMain; 

@@ -63,10 +63,10 @@ const mapDispatchToProps = (dispatch) => ({
 
 const PoCancellationMasterBase = (props) => {
     const { otfData, selectedOrder } = props;
-    const { userId, listShowLoading, uploadDocumentFile } = props;
-    const { fetchProductHierarchyList, productHierarchyData, onFinishOTFCancellation, fetchDealerList, dealerDataList } = props;
+    const { userId, listShowLoading, onFinishFailed } = props;
+    const { fetchProductHierarchyList, productHierarchyData, fetchDealerList, dealerDataList } = props;
 
-    const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn:true, cancelOTFBtn: true };
+    const defaultBtnVisiblity = { editBtn: false, saveBtn: true, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: true, cancelBtn:false, cancelOTFBtn: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
 
@@ -75,7 +75,10 @@ const PoCancellationMasterBase = (props) => {
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
-
+    const onFinishOTFCancellation = (values) => {
+        console.log('values==>>', values);
+        
+    };
     useEffect(() => {
         if (userId) {
             fetchProductHierarchyList({ setIsLoading: listShowLoading, userId });
@@ -83,24 +86,26 @@ const PoCancellationMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
 
-     
+    
+        
     const formProps = {
         ...props,
-        // titleOverride: moduleTitle,
+        //  titleOverride: moduleTitle,
+        titleOverride: 'Vehicle Purchase Order Cancellation',
         otfData,
         selectedOrder,
         buttonData,
         setButtonData,
         handleButtonClick,
-         
-        productHierarchyData,
-        onFinishOTFCancellation,        
-        dealerDataList,
-       
-         
         
+        productHierarchyData,                
+        dealerDataList,  
+        onFinishOTFCancellation,
         
     };
+
+
+   
 
     return <AddEditForm {...formProps} />;
 };
