@@ -406,7 +406,7 @@ export const ConfigurableParameterEditingBase = ({ saveFormShowLoading, isLoadin
                                 {!configData?.length ? (
                                     <Row>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                            <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" onClick={handleAdd}>
+                                            <Button icon={<PlusOutlined />} type="primary" onClick={handleAdd}>
                                                 Add
                                             </Button>
                                         </Col>

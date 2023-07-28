@@ -25,7 +25,7 @@ const ViewDetailMain = (props) => {
             <Descriptions {...viewProps}>
                 <Descriptions.Item label="Referral ID">{checkAndSetDefaultValue(formData?.referralId, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Registration Number">{checkAndSetDefaultValue(formData?.registrationNumber, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Chassis Number">{checkAndSetDefaultValue(formData?.chasisNumber, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Chassis Number">{checkAndSetDefaultValue(formData?.chassisNumber, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Customer ID">{checkAndSetDefaultValue(formData?.customerId, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Customer Type">{checkAndSetDefaultValue(getCodeValue(typeData?.CUST_TYPE, formData?.customerType), isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Customer Name">{checkAndSetDefaultValue(formData?.customerName, isLoading)}</Descriptions.Item>

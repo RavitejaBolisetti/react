@@ -65,7 +65,7 @@ const AddEditFormMain = (props) => {
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item label="Control Description" initialValue={formData?.controlDescription} rules={[validateRequiredInputField('Control Description')]} name="controlDescription">
-                                <TextArea rows={2} value={formData?.controlDescription} placeholder="Enter Data" disabled={isReadOnly} />
+                                <TextArea maxLength={300} value={formData?.controlDescription} placeholder="Enter Data" disabled={isReadOnly} showCount />
                             </Form.Item>
                         </Col>
                     </Row>

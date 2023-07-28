@@ -16,8 +16,8 @@
 }
 
 :global .ant-notification-topRight .ant-notification-notice {
-    width: 320px !important;
-    padding: 12px 18px !important;
+    width: 320px;
+    padding: 10px 16px;
 }
 
 /*--------- Notification Pop Up Design Start ---------*/
@@ -73,14 +73,14 @@
 .successBeforeLogin :global .ant-notification-notice-description {
     line-height: 24px !important;
     font-weight: 400 !important;
-    padding-right: 20px;
+    padding-right: 30px;
 }
 
 .error :global .ant-notification-notice-btn,
 .warning :global .ant-notification-notice-btn,
 .errorBeforeLogin :global .ant-notification-notice-btn {
     margin-left: 35px;
-    float: left;
+    float: left !important;
     font-size: 12px;
 }
 
@@ -102,9 +102,8 @@
 }
 
 .warning :global .ant-notification-notice-btn .ant-btn-dangerous {
-    color: #f99c22 !important;
-    border-color: #f99c22;
-    background-color: transparent;
+    color: #f99c22;
+    border-color: #f99c22 !important;
 }
 
 .error :global .ant-btn-default.ant-btn-dangerous:not(:disabled):hover,
@@ -114,6 +113,7 @@
 
 .warning :global .ant-btn-default.ant-btn-dangerous:not(:disabled):hover {
     background-color: #f99c22 !important;
+    color: #ffffff;
 }
 
 .error :global .ant-notification-notice-close,
@@ -136,10 +136,9 @@
 .error :global .ant-btn.ant-btn-sm,
 .warning :global .ant-btn.ant-btn-sm,
 .errorBeforeLogin :global .ant-btn.ant-btn-sm {
-    height: 28px !important;
-    padding: 4px 16px;
-    margin-bottom: 0px !important;
+    padding: 0 16px;
     font-size: 12px !important;
+    line-height: 20px;
 }
 
 .warning :global .ant-notification-notice-description,

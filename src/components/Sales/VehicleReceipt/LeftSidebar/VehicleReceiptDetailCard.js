@@ -8,6 +8,8 @@ import { Collapse, Space, Avatar, Typography } from 'antd';
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
 import { convertDateTime } from 'utils/formatDateTime';
 import { getCodeValue } from 'utils/getCodeValue';
+import { DATA_TYPE } from 'constants/dataType';
+import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
 const { Panel } = Collapse;
@@ -27,7 +29,7 @@ const expandIcon = ({ isActive }) =>
     );
 
 const VehicleReceiptDetailCard = (props) => {
-    const { selectedOrder, typeData } = props;
+    const { selectedOrder, typeData, isLoading } = props;
     const fullName = selectedOrder?.customerName?.split(' ');
     const userAvatar = fullName ? fullName[0]?.slice(0, 1) + (fullName[1] ? fullName[1].slice(0, 1) : '') : '';
     return (
@@ -36,13 +38,9 @@ const VehicleReceiptDetailCard = (props) => {
                 header={
                     <>
                         <Space>
-                            <Avatar size={50}>{userAvatar?.toUpperCase()}</Avatar>
                             <div>
-                                <Title level={5} style={{ textTransform: 'capitalize' }}>
-                                    {selectedOrder?.customerName?.toLowerCase()}
-                                </Title>
                                 <Text>
-                                    OTF No.: <span>{selectedOrder?.otfNumber}</span>
+                                    GRN Number: <span>{selectedOrder?.otfNumber}</span>
                                 </Text>
                             </div>
                         </Space>
@@ -51,19 +49,13 @@ const VehicleReceiptDetailCard = (props) => {
                 key={1}
             >
                 <p>
-                    Customer Type: <span>{selectedOrder && getCodeValue(typeData?.[PARAM_MASTER?.CUST_TYPE?.id], selectedOrder?.customerType)}</span>
+                    GRN Type: <span>{selectedOrder && getCodeValue(typeData?.[PARAM_MASTER?.CUST_TYPE?.id], selectedOrder?.customerType)}</span>
                 </p>
                 <p>
-                    Mobile No.: <span>{selectedOrder?.mobileNumber || 'NA'}</span>
+                    GRN Date: <span>{checkAndSetDefaultValue(selectedOrder?.otfDate, isLoading, DATA_TYPE?.DATE?.key) || 'NA'}</span>
                 </p>
                 <p>
-                    OTF Date: <span>{convertDateTime(selectedOrder?.otfDate, 'DD MMM YYYY') || 'NA'}</span>
-                </p>
-                <p>
-                    Model: <span>{selectedOrder?.model || 'NA'}</span>
-                </p>
-                <p>
-                    CPD: <span>{convertDateTime(selectedOrder?.cpd, 'DD MMM YYYY') || 'NA'}</span>
+                    GRN Status: <span>{selectedOrder?.model || 'NA'}</span>
                 </p>
             </Panel>
         </Collapse>

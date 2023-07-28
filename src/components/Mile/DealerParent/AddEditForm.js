@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -56,13 +56,13 @@ const AddEditFormMain = (props) => {
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.code} label="Group Code" name="code" rules={[validateRequiredInputField('Group Code')]}>
-                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('Group Code')} maxLength={6} disabled={editMode} />
+                                <Input placeholder={preparePlaceholderText('Group Code')} maxLength={6} disabled={editMode} />
                             </Form.Item>
                         </Col>
 
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.name} label="Group Name" name="name" rules={[validateRequiredInputField('Group Name')]}>
-                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('Group Name')} maxLenght={50} />
+                                <Input placeholder={preparePlaceholderText('Group Name')} maxLenght={50} />
                             </Form.Item>
                         </Col>
                     </Row>
@@ -87,7 +87,7 @@ const AddEditFormMain = (props) => {
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.ownerName} label="Owner Name" name="ownerName" rules={[validateRequiredInputField('Owner Name')]}>
-                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('Owner Name')} />
+                                <Input placeholder={preparePlaceholderText('Owner Name')} />
                             </Form.Item>
                         </Col>
                     </Row>
@@ -95,12 +95,12 @@ const AddEditFormMain = (props) => {
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.mobileNumber} label="Contact Number" name="mobileNumber" rules={[validateRequiredInputField('Contact Number'), validateMobileNoField('Contact Number')]}>
-                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('Contact Number')} maxLength={10} />
+                                <Input placeholder={preparePlaceholderText('Contact Number')} maxLength={10} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.emailId} label="Email ID" name="emailId" rules={[validateRequiredInputField('Email ID'), validateEmailField('Email ID')]}>
-                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('Email ID')} />
+                                <Input placeholder={preparePlaceholderText('Email ID')} />
                             </Form.Item>
                         </Col>
                     </Row>

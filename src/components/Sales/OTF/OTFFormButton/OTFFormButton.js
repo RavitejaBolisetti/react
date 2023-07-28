@@ -12,90 +12,92 @@ import styles from './OTFFormButton.module.css';
 export const OTFFormButton = ({ record, handleChangeHistory, onCloseAction, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection }) => {
     const content = <div>Coming Soon</div>;
     return (
-        <Row gutter={20} className={styles.formFooter}>
-            <Col xs={24} sm={8} md={6} lg={4} xl={4} className={styles.footerBtnLeft}>
-                {buttonData?.closeBtn && (
-                    <Button danger onClick={onCloseAction}>
-                        Close
-                    </Button>
-                )}
-
-                {buttonData?.cancelBtn && (
-                    <Button danger onClick={onCloseAction}>
-                        Cancel
-                    </Button>
-                )}
-            </Col>
-
-            <Col xs={24} sm={16} md={18} lg={20} xl={20} className={styles.footerBtnRight}>
-                {buttonData?.editBtn && (
-                    <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record, openDefaultSection: false })} type="primary">
-                        Edit
-                    </Button>
-                )}
-
-                {buttonData?.allotBtn && (
-                    <Popover content={content} trigger="hover">
-                        <Button onClick={() => {}} type="primary">
-                            Allot
+        <div className={styles.formFooter}>
+            <Row gutter={20}>
+                <Col xs={24} sm={8} md={6} lg={4} xl={4} className={styles.footerBtnLeft}>
+                    {buttonData?.closeBtn && (
+                        <Button danger onClick={onCloseAction}>
+                            Close
                         </Button>
-                    </Popover>
-                )}
+                    )}
 
-                {buttonData?.unAllotBtn && (
-                    <Popover content={content} trigger="hover">
-                        <Button onClick={() => {}} type="primary">
-                            Un-Allot
+                    {buttonData?.cancelBtn && (
+                        <Button danger onClick={onCloseAction}>
+                            Cancel
                         </Button>
-                    </Popover>
-                )}
+                    )}
+                </Col>
 
-                {buttonData?.invoiceBtn && (
-                    <Popover content={content} trigger="hover">
-                        <Button onClick={() => {}} type="primary">
-                            Invoice
+                <Col xs={24} sm={16} md={18} lg={20} xl={20} className={styles.footerBtnRight}>
+                    {buttonData?.editBtn && (
+                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record, openDefaultSection: false })} type="primary">
+                            Edit
                         </Button>
-                    </Popover>
-                )}
+                    )}
 
-                {buttonData?.deliveryNoteBtn && (
-                    <Popover content={content} trigger="hover">
-                        <Button onClick={() => {}} type="primary">
-                            Delivery Note
+                    {buttonData?.allotBtn && (
+                        <Popover content={content} trigger="hover">
+                            <Button onClick={() => {}} type="primary">
+                                Allot
+                            </Button>
+                        </Popover>
+                    )}
+
+                    {buttonData?.unAllotBtn && (
+                        <Popover content={content} trigger="hover">
+                            <Button onClick={() => {}} type="primary">
+                                Un-Allot
+                            </Button>
+                        </Popover>
+                    )}
+
+                    {buttonData?.invoiceBtn && (
+                        <Popover content={content} trigger="hover">
+                            <Button onClick={() => {}} type="primary">
+                                Invoice
+                            </Button>
+                        </Popover>
+                    )}
+
+                    {buttonData?.deliveryNoteBtn && (
+                        <Popover content={content} trigger="hover">
+                            <Button onClick={() => {}} type="primary">
+                                Delivery Note
+                            </Button>
+                        </Popover>
+                    )}
+
+                    {buttonData?.transferOTFBtn && (
+                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.TRANSFER_OTF, record })} type="primary">
+                            Transfer OTF
                         </Button>
-                    </Popover>
-                )}
+                    )}
 
-                {buttonData?.transferOTFBtn && (
-                    <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.TRANSFER_OTF, record })} type="primary">
-                        Transfer OTF
-                    </Button>
-                )}
+                    {buttonData?.cancelOTFBtn && (
+                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.CANCEL_OTF, record })} type="primary">
+                            Cancel OTF
+                        </Button>
+                    )}
 
-                {buttonData?.cancelOTFBtn && (
-                    <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.CANCEL_OTF, record })} type="primary">
-                        Cancel OTF
-                    </Button>
-                )}
+                    {buttonData?.changeHistory && (
+                        <Button onClick={handleChangeHistory} type="primary">
+                            Change History
+                        </Button>
+                    )}
 
-                {buttonData?.changeHistory && (
-                    <Button onClick={handleChangeHistory} type="primary">
-                        Change History
-                    </Button>
-                )}
+                    {buttonData?.nextBtn && !isLastSection && (
+                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.NEXT, record })} type="primary">
+                            Next
+                        </Button>
+                    )}
 
-                {buttonData?.nextBtn && !isLastSection && (
-                    <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.NEXT, record })} type="primary">
-                        Next
-                    </Button>
-                )}
-
-                {buttonData?.saveBtn && (
-                    <Button loading={isLoadingOnSave} disabled={!buttonData?.formBtnActive} onClick={(e) => setButtonData({ ...buttonData, saveAndNewBtnClicked: false })} htmlType="submit" type="primary">
-                        {saveButtonName}
-                    </Button>
-                )}
-            </Col>
-        </Row>
+                    {buttonData?.saveBtn && (
+                        <Button loading={isLoadingOnSave} disabled={!buttonData?.formBtnActive} onClick={(e) => setButtonData({ ...buttonData, saveAndNewBtnClicked: false })} htmlType="submit" type="primary">
+                            {saveButtonName}
+                        </Button>
+                    )}
+                </Col>
+            </Row>
+        </div>
     );
 };

@@ -3,14 +3,13 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, Fragment, useEffect } from 'react';
+import React, { useState, Fragment } from 'react';
 import { connect } from 'react-redux';
 
 import { Col, Card, Row, Button, Divider, Typography, Form } from 'antd';
 import { FiEdit, FiTrash } from 'react-icons/fi';
 import dayjs from 'dayjs';
 import { bindActionCreators } from 'redux';
-import { manufacturerAdminHierarchyDataActions } from 'store/actions/data/manufacturerAdminHierarchy';
 import styles from 'components/common/Common.module.css';
 import { showGlobalNotification } from 'store/actions/notification';
 
@@ -23,16 +22,14 @@ const { Text } = Typography;
 const mapStateToProps = (state) => {
     const {
         data: {
-            ManufacturerAdminHierarchy: { authorityVisible, tokenNumber = [], errorMessage, isUpdating, authTypeDropdown: authTypeDropdownData },
+            ManufacturerAdmin: {
+                ManufactureAdminValidateToken: { data: tokenValidationData },
+            },
         },
     } = state;
 
     let returnValue = {
-        authorityVisible,
-        tokenNumber,
-        errorMessage,
-        isUpdating,
-        authTypeDropdownData,
+        tokenValidationData,
     };
     return returnValue;
 };
@@ -41,7 +38,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            errorTokenValidate: manufacturerAdminHierarchyDataActions.errorTokenValidate,
             showGlobalNotification,
         },
         dispatch
@@ -50,40 +46,26 @@ const mapDispatchToProps = (dispatch) => ({
 
 const AuthorityCardItemMain = (props) => {
     const { isUpdating, viewMode, onFinish, setDocumentTypesList, documentTypesList, setIsBtnDisabled, isBtnDisabled, record, handleFormValueChange } = props;
-    const { employeeName, setEmployeeName, tokenValidate, setTokenValidate, errorTokenValidate, tokenNumber, errorMessage, showGlobalNotification } = props;
-    const { selectedValueOnUpdate, setselectedValueOnUpdate, authTypeDropdownData } = props;
+    const { employeeName, setEmployeeName, tokenValidate, setTokenValidate, tokenValidationData, showGlobalNotification } = props;
+    const { selectedValueOnUpdate, setselectedValueOnUpdate, authTypeDropdownData, errorMessage, setErrorMessage, formType, setFormType, resetData, isMainForm } = props;
     const [form] = Form.useForm();
     const [isEditing, setIsEditing] = useState(false);
-    const [tokenValidationData, setTokenValidationData] = useState({});
+    console.log('authTypeDropdownData', authTypeDropdownData);
 
-    useEffect(() => {
-        if (record) {
-            setTokenValidationData({ ...record });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [record]);
-
-    useEffect(() => {
-        if (errorMessage || tokenNumber?.employeeName) {
-            setTokenValidationData({ ...record, errorMessage, ...tokenNumber });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [errorMessage, tokenNumber]);
-
-    const recordId = record?.id;
-
-    const onEdit = ({ employeeName, authorityTypeCode, authorityEmployeeTokenNo, effectiveTo, effectiveFrom, id }) => {
-        if (!isUpdating || tokenNumber?.employeeName || errorMessage) {
-            errorTokenValidate({ errorMessage: '', isUpdating: true });
-        }
+    const onEdit = () => {
         form.setFieldsValue({ ...record, effectiveTo: dayjs(record?.effectiveTo), effectiveFrom: dayjs(record?.effectiveFrom) });
+        resetData();
+        setFormType(!!isMainForm);
+        setErrorMessage('');
         setIsEditing(true);
         setIsBtnDisabled(true);
     };
 
     const onUpdate = () => {
         const tokenNo = form.getFieldValue('authorityEmployeeTokenNo');
-        if (record?.authorityEmployeeTokenNo !== tokenNo && !tokenNumber?.employeeName) {
+        const isPreviousTokenNo = record?.authorityEmployeeTokenNo === tokenNo;
+
+        if (!isPreviousTokenNo && !tokenValidationData?.employeeName) {
             return showGlobalNotification({ notificationType: 'warning', title: 'Warning', message: 'Validate token to proceed' });
         }
 
@@ -92,14 +74,14 @@ const AuthorityCardItemMain = (props) => {
                 setDocumentTypesList((prev) => {
                     const updatedData = [...prev];
                     const index = updatedData?.findIndex((el) => el?.authorityEmployeeTokenNo === record?.authorityEmployeeTokenNo);
-                    updatedData?.splice(index, 1, { ...data, authorityEmployeeTokenNo: tokenNumber?.authorityEmployeeTokenNo || data?.authorityEmployeeTokenNo, employeeName: tokenNumber?.employeeName || data?.employeeName });
+                    updatedData?.splice(index, 1, { ...data, effectiveTo: isPreviousTokenNo ? record?.effectiveTo : data?.effectiveTo, effectiveFrom: isPreviousTokenNo ? record?.effectiveFrom : data?.effectiveFrom, authorityEmployeeTokenNo: tokenValidationData?.authorityEmployeeTokenNo || data?.authorityEmployeeTokenNo, employeeName: tokenValidationData?.employeeName || data?.employeeName, isModified: !!data?.id });
                     return updatedData;
                 });
+                setIsEditing(false);
+                setIsBtnDisabled(false);
+                resetData();
             })
             .catch((error) => console.error(error));
-        setIsEditing(false);
-        setIsBtnDisabled(false);
-        errorTokenValidate('');
     };
 
     const handleDelete = (val) => {
@@ -118,7 +100,7 @@ const AuthorityCardItemMain = (props) => {
     const onCancel = () => {
         setIsEditing(false);
         setIsBtnDisabled(false);
-        errorTokenValidate('');
+        resetData();
     };
 
     const colLeft = viewMode ? 24 : 18;
@@ -179,7 +161,7 @@ const AuthorityCardItemMain = (props) => {
                 {isEditing && (
                     <Fragment>
                         <Divider />
-                        <AddEditForm handleFormValueChange={handleFormValueChange} tokenValidationData={tokenValidationData} setTokenValidationData={setTokenValidationData} tokenValidate={tokenValidate} setEmployeeName={setEmployeeName} setTokenValidate={setTokenValidate} employeeName={employeeName} record={record} recordId={recordId} onFinish={onFinish} form={form} setDocumentTypesList={setDocumentTypesList} documentTypesList={documentTypesList} isEditing={isEditing} selectedValueOnUpdate={selectedValueOnUpdate} setselectedValueOnUpdate={setselectedValueOnUpdate} />
+                        <AddEditForm handleFormValueChange={handleFormValueChange} tokenValidate={tokenValidate} setEmployeeName={setEmployeeName} setTokenValidate={setTokenValidate} employeeName={employeeName} record={record} onFinish={onFinish} form={form} setDocumentTypesList={setDocumentTypesList} documentTypesList={documentTypesList} isEditing={isEditing} selectedValueOnUpdate={selectedValueOnUpdate} setselectedValueOnUpdate={setselectedValueOnUpdate} errorMessage={errorMessage} setErrorMessage={setErrorMessage} formType={formType} setFormType={setFormType} isMainForm={isMainForm}  />
                     </Fragment>
                 )}
             </Card>

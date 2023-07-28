@@ -48,7 +48,7 @@ function FormProductAttribute(props) {
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item labelAlign="left" name="value" label="Attribute Value" rules={[validateRequiredInputField('Attribute Value')]} initialValue={props?.value}>
-                        <Input placeholder={preparePlaceholderText('Attribute Value')} className={styles.inputBox} />
+                        <Input placeholder={preparePlaceholderText('Attribute Value')} />
                     </Form.Item>
                 </Col>
 
