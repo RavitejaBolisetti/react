@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, screen, logRoles, act, } from "@testing-library/react";
+import { fireEvent, screen, act, } from "@testing-library/react";
 import customRender from "@utils/test-utils";
 import createMockStore from '__mocks__/store';
 import LeftPanel from 'components/common/LeftPanel';

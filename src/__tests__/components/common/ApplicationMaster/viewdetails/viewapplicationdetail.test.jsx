@@ -1,5 +1,5 @@
 import React from "react";
-import { logRoles, render, screen, fireEvent } from "@testing-library/react";
+import {  render, screen, fireEvent } from "@testing-library/react";
 import '@testing-library/jest-dom/extend-expect';
 // import { act } from 'react-dom/test-utils';
 import customRender from "@utils/test-utils";
@@ -20,7 +20,7 @@ describe('View Application Detail Component', () => {
             contentHeaderRightBackground:'Hello'
         }
         customRender(<ViewApplicationDetail applicationDetailsData={applicationDetailsData} styles={styles} />);
-        // logRoles(screen.getByTestId("logRole"));
+
         const appActionCollapse = screen.getByRole("button", {name: 'Application Actions *', exact: false});
         fireEvent.click(appActionCollapse);
         const docTypeCollapse = screen.getByRole("button", {name: 'Document Type *', exact: false});

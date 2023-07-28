@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import { Provider } from 'react-redux';
-import { fireEvent, logRoles, render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 // import { act } from 'react-dom/test-utils';
 import customRender from "@utils/test-utils";
 import createMockStore from '__mocks__/store';
