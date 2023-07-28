@@ -32,6 +32,7 @@ const ViewDetailMain = (props) => {
 
     return (
         <>
+        
             <Card className={styles.ExchangeCard}>
                 <Descriptions {...viewProps}>
                     <Descriptions.Item label="Order Type">{'Against Stock'}</Descriptions.Item>
@@ -54,6 +55,7 @@ const ViewDetailMain = (props) => {
                     <Descriptions.Item label="">{'Cancel Reason for vehicle purchase order'}</Descriptions.Item>
                 </Descriptions>
             </Card>
+           
 
 
         </>

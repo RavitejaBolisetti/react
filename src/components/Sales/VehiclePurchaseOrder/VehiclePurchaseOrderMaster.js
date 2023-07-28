@@ -354,7 +354,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         }
     };
 
-    const title = 'Search';
+    const title = 'Search VPO';
 
     const advanceFilterResultProps = {
         extraParams,

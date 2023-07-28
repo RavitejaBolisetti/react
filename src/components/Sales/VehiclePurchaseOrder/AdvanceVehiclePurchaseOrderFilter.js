@@ -38,6 +38,7 @@ export default function AppliedAdvanceFilter(props) {
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={16} lg={16} xl={16} className={styles.subheading}>
                         <Row gutter={20}>
+                        <span className={styles.headerText}>{title}</span>
                         {otfFilter && (
                             <Col xs={24} sm={24} md={14} lg={14} xl={14}>
                                 <SearchBox {...searchBoxProps} />
