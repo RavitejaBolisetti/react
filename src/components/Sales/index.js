@@ -10,4 +10,4 @@ import { VehiclePurchaseOrderMaster } from './VehiclePurchaseOrder';
 
 import { VehicleRecieptChecklistMaster } from './VehicleRecieptChecklist';
 
-export { OtfMaster, VehicleDetailMaster, VehicleReceiptMaster, VehiclePurchaseOrderMaster, VehicleRecieptChecklistMaster };
+export { OtfMaster, VehicleDetailMaster, VehicleReceiptMaster, VehiclePurchaseOrderMaster, VehicleRecieptChecklistMaster, };
