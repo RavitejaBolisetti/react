@@ -6,8 +6,40 @@
 import customRender from '@utils/test-utils';
 import '@testing-library/jest-dom/extend-expect';
 import { InputSkeleton } from '@components/common/Skeleton/InputSkeleton';
+
 describe('InputSkeleton Components', () => {
     it('should render InputSkeleton components', () => {
         customRender(<InputSkeleton />);
     });
+});
+
+describe('InputSkeleton', () => {
+  it('renders the skeleton with default theme correctly', () => {
+    const { container } = customRender(<InputSkeleton />);
+    const skeleton = container.querySelector('.react-loading-skeleton');
+    expect(skeleton).toBeInTheDocument();
+
+  });
+
+  it('renders the skeleton with light theme correctly', () => {
+    const { container } = customRender(<InputSkeleton theme="light" />);
+    const skeleton = container.querySelector('.react-loading-skeleton');
+    expect(skeleton).toBeInTheDocument();
+
+  });
+
+  it('renders the skeleton with dark theme correctly', () => {
+    const { container } = customRender(<InputSkeleton theme="dark" />);
+    const skeleton = container.querySelector('.react-loading-skeleton');
+    expect(skeleton).toBeInTheDocument();
+
+  });
+
+  it('renders the skeleton with card theme correctly', () => {
+    const { container } = customRender(<InputSkeleton theme="card" />);
+    const skeleton = container.querySelector('.react-loading-skeleton');
+    expect(skeleton).toBeInTheDocument();
+
+  });
+
 });
