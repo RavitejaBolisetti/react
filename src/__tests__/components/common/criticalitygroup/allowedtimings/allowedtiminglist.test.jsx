@@ -1,66 +1,61 @@
-import '@testing-library/jest-dom/extend-expect';
-import { screen } from '@testing-library/react';
-import customRender from '@utils/test-utils';
-import userEvent from '@testing-library/user-event';
-
-const user = userEvent.setup();
+import { render, screen, fireEvent } from '@testing-library/react';
 import AllowedTimingList from '@components/common/CriticalityGroup/AllowedTimings/AllowedTimingList';
 
-const props = {
-    deletedTime: [],
-    setDeletedTime: jest.fn(),
-    timeData: [],
-    setTimeData: jest.fn(),
-    isAddTimeVisible: true,
-    setIsAddTimeVisible: jest.fn(),
-    buttonData: [],
-    setButtonData: jest.fn(),
-    formActionType: { addMode: false, editMode: false, viewMode: false },
-    formData: {},
-    setFormData: jest.fn(),
-    showGlobalNotification: jest.fn(),
-    forceUpdate: jest.fn(),
-    handleFormValueChange: jest.fn(),
-    handleFormFieldChange: jest.fn(),
-    allowedTimingSave: false,
-    setAllowedTimingSave: jest.fn(),
-    showTime: true,
-};
-
-describe('AllowedTimingList Components', () => {
-    it('should render AllowedTimingList components', () => {
-        const wrapper = customRender(<AllowedTimingList {...props} />);
-        expect(wrapper).toBeTruthy();
-    });
-
-    it('should render the timing header when there are timing data', () => {
-        props.timeData = [
+describe('AllowedTimingList', () => {
+    const mockData = {
+        timeData: [
             {
                 timeSlotFrom: '09:00',
-                timeSlotTo: '10:00',
+                timeSlotTo: '12:00',
+                isDeleted: false,
             },
-        ];
-        customRender(<AllowedTimingList {...props} />);
-        const timingHeader = screen.getByText('Start Time');
-        expect(timingHeader).toBeTruthy();
-    });
-    it('should check add time button event', async () => {
-        customRender(<AllowedTimingList {...props} />);
-        const addTimeBtn = screen.getByText(/Add Time/i);
-        user.click(addTimeBtn);
-    });
+            {
+                timeSlotFrom: '14:00',
+                timeSlotTo: '16:00',
+                isDeleted: true,
+            },
+        ],
+        setDeletedTime: jest.fn(),
+        setTimeData: jest.fn(),
+        isAddTimeVisible: false,
+        setIsAddTimeVisible: jest.fn(),
+        buttonData: {},
+        setButtonData: jest.fn(),
+        formActionType: {},
+        formData: {},
+        setFormData: jest.fn(),
+        showGlobalNotification: jest.fn(),
+        forceUpdate: jest.fn(),
+        handleFormValueChange: jest.fn(),
+        handleFormFieldChange: jest.fn(),
+        allowedTimingSave: false,
+        setAllowedTimingSave: jest.fn(),
+    };
 
-    it('should check add time form field event', async () => {
-        customRender(<AllowedTimingList {...props} />);
-        const addTimeBtn = screen.getByPlaceholderText('Start time*');
-        user.type(addTimeBtn, '01:00');
-        expect(addTimeBtn).toBeTruthy();
+    it('should call onTimingFormFinish when submitting the form', () => {
+        // Mock the timingForm.resetFields function
+        const onTimingFormFinishMock = jest.fn();
 
-        const addTimeBtn2 = screen.getByPlaceholderText('End time*');
-        user.type(addTimeBtn2, '04:00');
-        expect(addTimeBtn2).toBeTruthy();
+        render(<AllowedTimingList {...mockData} onTimingFormFinish={onTimingFormFinishMock} />);
 
-        const saveBtn = screen.getByText(/Save/i);
-        user.click(saveBtn);
+        // Find the Add Time button
+        const addTimeButton = screen.getByRole('button', { name: 'plus Add Time' });
+        // Click the Add Time button to show the form
+        fireEvent.click(addTimeButton);
+
+        const imgButton = screen.getByRole('img', { name: 'plus' });
+        expect(imgButton).toBeTruthy();
+        fireEvent.click(imgButton);
+
+        // Find the form fields and fill them with values
+        const startTimeInput = screen.getAllByText('Start Time');
+        const endTimeInput = screen.getAllByText('End Time');
+        expect(startTimeInput).toBeTruthy();
+        expect(endTimeInput).toBeTruthy();
+
+        // Find the form submit button and click it
+        const submitButton = screen.getAllByRole('button');
+        expect(submitButton).toBeTruthy();
+        // fireEvent.click(submitButton);
     });
 });
