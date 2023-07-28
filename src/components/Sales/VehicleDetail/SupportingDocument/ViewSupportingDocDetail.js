@@ -13,7 +13,6 @@ import styles from 'components/common/Common.module.css';
 export const ViewSupportingDocDetail = (props) => {
     const {
         downloadFileFromButton,
-        // formActionType: { viewMode },
         documentData,
     } = props;
 

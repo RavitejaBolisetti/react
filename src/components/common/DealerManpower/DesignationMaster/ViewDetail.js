@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -14,7 +14,7 @@ const ViewDetailBase = ({ formData, styles, parameterType }) => {
         column: { xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 },
     };
     return (
-        <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
+        <div className={`${styles.viewContainer} ${styles.hierarchyRightContainers}`}>
             <>
                 <Descriptions {...viewProps}>
                     <Descriptions.Item label="Division Name">{formData?.divisionName}</Descriptions.Item>
@@ -33,7 +33,6 @@ const ViewDetailBase = ({ formData, styles, parameterType }) => {
                     <Descriptions.Item label="Capability (L1/L2/L3)">{formData?.isCapabilityIndicatorRequired ? 'Yes' : 'No'}</Descriptions.Item>
                     <Descriptions.Item label="FFT Department Approval">{formData?.isFftDepartmentApprovalIndicatorRequired ? 'Yes' : 'No'}</Descriptions.Item>
                     <Descriptions.Item label="Create User Id">{formData?.isCreateUserIdRequired ? 'Yes' : 'No'}</Descriptions.Item>
-
                 </Descriptions>
             </>
         </div>

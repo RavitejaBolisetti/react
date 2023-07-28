@@ -50,10 +50,6 @@ const ProfileDetailCard = (props) => {
                     Mobile No.: <span>{selectedCustomer?.mobileNumber}</span>
                 </p>
                 <Divider />
-                <Divider />
-                <Divider />
-                <Divider />
-                <Divider />
             </Panel>
         </Collapse>
     );

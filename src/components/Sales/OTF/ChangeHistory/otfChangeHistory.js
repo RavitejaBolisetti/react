@@ -114,13 +114,15 @@ const ChangeHistoryMain = ({ fetchOTFChangeHistory, onCloseAction, listShowChang
                     <DataTable {...tableProps} />
                 </div>
             </div>
-            <Row gutter={20} className={ChangeHistoryStyles.formFooter}>
-                <Col xs={24} sm={8} md={6} lg={4} xl={4}>
-                    <Button danger onClick={onCloseAction}>
-                        Close
-                    </Button>
-                </Col>
-            </Row>
+            <div className={ChangeHistoryStyles.formFooter}>
+                <Row gutter={20}>
+                    <Col xs={24} sm={8} md={6} lg={4} xl={4}>
+                        <Button danger onClick={onCloseAction}>
+                            Close
+                        </Button>
+                    </Col>
+                </Row>
+            </div>
         </div>
     );
 };

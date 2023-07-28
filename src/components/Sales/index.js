@@ -8,4 +8,6 @@ import { VehicleDetailMaster } from './VehicleDetail';
 import { VehicleReceiptMaster } from './VehicleReceipt';
 import { VehiclePurchaseOrderMaster } from './VehiclePurchaseOrder';
 
-export { OtfMaster, VehicleDetailMaster, VehicleReceiptMaster, VehiclePurchaseOrderMaster };
+import { VehicleRecieptChecklistMaster } from './VehicleRecieptChecklist';
+
+export { OtfMaster, VehicleDetailMaster, VehicleReceiptMaster, VehiclePurchaseOrderMaster, VehicleRecieptChecklistMaster };

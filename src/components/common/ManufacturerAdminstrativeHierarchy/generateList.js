@@ -25,10 +25,10 @@ export const generateList = (data, fieldNames) => {
 
 export const findParentName = (data, key) => {
     let parentName = undefined;
-    // const foundParent = data?.find((node) => {
-    //     if (node?.key === key) {
-    //         parentName = node?.data?.manufactureAdminLongName;
-    //     }
-    // });
+    const foundParent = data?.find((node) => {
+        if (node?.key === key) {
+            parentName = node?.data?.manufactureAdminLongName;
+        }
+    });
     return parentName;
 };

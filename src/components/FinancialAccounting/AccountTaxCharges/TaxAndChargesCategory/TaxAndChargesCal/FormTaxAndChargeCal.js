@@ -80,7 +80,7 @@ function FormProductAttribute(props) {
                 </Col>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item labelAlign="left" name="chargeDesc" label="Description" rules={[validateRequiredInputField('Description')]} initialValue={props?.value}>
-                        <Input placeholder={preparePlaceholderText('Description')} className={styles.inputBox} disabled />
+                        <Input placeholder={preparePlaceholderText('Description')} disabled />
                     </Form.Item>
                 </Col>
                 <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>

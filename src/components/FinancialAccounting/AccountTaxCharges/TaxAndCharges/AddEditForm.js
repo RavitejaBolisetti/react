@@ -119,7 +119,7 @@ const AddEditFormMain = (props) => {
                         </Form.Item>
                     </Col>
 
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padRight18}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Form.Item initialValue={treeCodeId} label="Parent" name="parentCode">
                             <TreeSelectField {...treeSelectFieldProps} />
                         </Form.Item>
@@ -129,13 +129,13 @@ const AddEditFormMain = (props) => {
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Form.Item initialValue={formData?.taxChargesTypeCode} label="Tax/Charge Type Code" name="taxChargesTypeCode" rules={[validateRequiredInputField('Tax/Charge Type Code')]}>
-                            <Input maxLength={6} placeholder={preparePlaceholderText('Tax/Charge Type Code')} className={styles.inputBox} disabled={formData?.attributeTypeCode || isReadOnly} />
+                            <Input maxLength={6} placeholder={preparePlaceholderText('Tax/Charge Type Code')} disabled={formData?.attributeTypeCode || isReadOnly} />
                         </Form.Item>
                     </Col>
 
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Form.Item initialValue={formData?.taxChargesTypeDescription} label="Tax/Charge Type Descrption" name="taxChargesTypeDescription" rules={[validateRequiredInputField('Tax/Charge Type Descrption')]}>
-                            <TextArea className={styles.inputBox} placeholder={preparePlaceholderText('Tax/Charge Type Descrption')} />
+                            <TextArea maxLength={300} placeholder={preparePlaceholderText('Tax/Charge Type Descrption')} showCount />
                         </Form.Item>
                     </Col>
                 </Row>
@@ -153,13 +153,13 @@ const AddEditFormMain = (props) => {
                             {calculationType === TAX_CHARGES_CALCULATION_TYPE?.PERCENTAGE?.KEY ? (
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                     <Form.Item initialValue={formData?.percentage} label="Percentage" name="percentage" rules={[validateRequiredInputField('Percentage'), valueOfPer('Percentage')]}>
-                                        <InputNumber placeholder={preparePlaceholderText('Percentage')} className={styles.inputBox} type="number" />
+                                        <InputNumber placeholder={preparePlaceholderText('Percentage')} type="number" />
                                     </Form.Item>
                                 </Col>
                             ) : calculationType === TAX_CHARGES_CALCULATION_TYPE?.AMOUNT?.KEY ? (
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                     <Form.Item initialValue={formData?.rate} label="Rate" name="rate" rules={[validateRequiredInputField('Rate'), validateNumberWithTwoDecimalPlaces('Rate')]}>
-                                        <InputNumber placeholder={preparePlaceholderText('Rate')} className={styles.inputBox} type="number" />
+                                        <InputNumber placeholder={preparePlaceholderText('Rate')} type="number" />
                                     </Form.Item>
                                 </Col>
                             ) : null}
@@ -185,7 +185,7 @@ const AddEditFormMain = (props) => {
                 ) : null}
 
                 <Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padLeft10}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Form.Item initialValue={formActionType === FROM_ACTION_TYPE.CHILD || formActionType === FROM_ACTION_TYPE.SIBLING ? true : formData?.status ? true : false} label="Status" name="status">
                             <Switch value={formActionType === FROM_ACTION_TYPE.CHILD || formActionType === FROM_ACTION_TYPE.SIBLING ? true : formData?.status ? true : false} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={formActionType === FROM_ACTION_TYPE.CHILD || formActionType === FROM_ACTION_TYPE.SIBLING ? true : formData?.status === true || null || undefined ? true : false} {...disabledProps} />
                         </Form.Item>

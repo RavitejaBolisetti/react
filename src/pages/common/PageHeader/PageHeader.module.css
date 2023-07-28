@@ -23,9 +23,9 @@
 }
 
 .pageHeader .headingGradient {
-    padding-bottom: 12px;
-    border-radius: 5px;
-    border: 0px;
+    padding-bottom: 13px;
+    /* border-radius: 5px;
+    border: 0px; */
     border-bottom: 4px solid;
     border-image: rgba(255, 62, 91, 1);
     border-image: linear-gradient(135deg, #ff3e5b 0.19%, #ffe1d8 99.81%);
@@ -35,8 +35,8 @@
     border-image: -o-linear-gradient(left, rgba(255, 62, 91, 1) 0%, rgba(255, 225, 216, 1) 100%);
     border-image: -ms-linear-gradient(left, rgba(255, 62, 91, 1) 0%, rgba(255, 225, 216, 1) 100%);
     border-image-slice: 1;
-    text-decoration: none;
-    margin-bottom: 28px;
+    /* text-decoration: none;
+    margin-bottom: 28px; */
     color: #0B0B0C;
     font-size: 16px;
     font-weight: 700;
@@ -53,8 +53,9 @@
 }
 
 .pageHeaderNameSection {
-    border-bottom: 1px solid #dedede;
-    margin: 0 0 16px 0;
+    border-bottom: 1px solid transparent;
+    box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.15);
+    margin-bottom: 20px;
 }
 
 .pageHeader .buttonContainer {

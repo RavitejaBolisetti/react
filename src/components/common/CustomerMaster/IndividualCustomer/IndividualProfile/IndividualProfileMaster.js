@@ -245,6 +245,10 @@ const IndividualProfileBase = (props) => {
         setButtonData({ ...defaultBtnVisiblity });
     };
 
+    const handleFormValueChange = () => {
+        setButtonData({ ...buttonData, formBtnActive: true });
+    };
+
     const formProps = {
         form,
         formData: indiviualData,
@@ -281,6 +285,7 @@ const IndividualProfileBase = (props) => {
         setEmptyList,
         uploadedFileName,
         setUploadedFileName,
+        fetchViewDocument,
 
         fileConsentList,
         setFileConsentList,
@@ -289,6 +294,7 @@ const IndividualProfileBase = (props) => {
         setEmptyConsentList,
         uploadedConsentFileName,
         setUploadedConsentFileName,
+        handleFormValueChange,
     };
 
     const viewProps = {
@@ -302,10 +308,6 @@ const IndividualProfileBase = (props) => {
         handleOnClick,
         isLoading,
         downloadFileFromButton,
-    };
-
-    const handleFormValueChange = () => {
-        setButtonData({ ...buttonData, formBtnActive: true });
     };
 
     return (

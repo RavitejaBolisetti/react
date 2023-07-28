@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { LANGUAGE_EN } from 'language/en';
 
 import { bindActionCreators } from 'redux';
-import { Row, Col, Form } from 'antd';
+import { Row, Col, Form, Card } from 'antd';
 
 import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
 import { documentViewDataActions } from 'store/actions/data/customerMaster/documentView';
@@ -77,13 +77,16 @@ const SupportingDocumentBase = (props) => {
     const { selectedCustomerId, viewDocument, viewListShowLoading, downloadFile, resetData } = props;
 
     const [uploadedFile, setUploadedFile] = useState();
+    const [uploadedFileList, setUploadedFileList] = useState();
     const [emptyList, setEmptyList] = useState(true);
 
     const [supportingDataView, setSupportingDataView] = useState();
     const [fileList, setFileList] = useState([]);
     const [uploadedFileName, setUploadedFileName] = useState('');
+    const [payload, setPayload] = useState([]);
+    const [mandatoryFields, setMandatoryFields] = useState(false);
 
-    const supportedFileTypes = ['image/png', 'image/jpg', 'application/pdf'];
+    const supportedFileTypes = ['image/png', 'image/jpg', 'image/jpeg', 'application/pdf'];
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
@@ -103,19 +106,28 @@ const SupportingDocumentBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedCustomerId]);
 
-    // useEffect(() => {
-    //     if (viewDocument && isViewDataLoaded) {
-    //         let a = document.createElement('a');
-    //         a.href = `data:image/png;base64,${viewDocument?.base64}`;
-    //         a.download = viewDocument?.fileName;
-    //         a.click();
-    //         resetViewData();
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [isViewDataLoaded, viewDocument]);
+    useEffect(() => {
+        if (fileList.length === 0) {
+            setMandatoryFields(false);
+        }
+        uploadedFile && setPayload([...payload, { customerId: selectedCustomerId, status: true, docId: uploadedFile, documentTypeId: form.getFieldValue('documentTypeId'), id: '', documentName: form.getFieldValue('documentName') }]);
+
+        uploadedFile && form.resetFields();
+
+        return () => {
+            setUploadedFile(undefined);
+        };
+    }, [fileList]);
+
+    const onRemove = (file) => {
+        const index = payload.findIndex((payload) => payload.docId === file.response.docId);
+        payload.splice(index, 1);
+    };
 
     const downloadFileFromButton = (uploadData) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Your download will start soon' });
+        const onSuccessAction = (res) => {
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res.responseMessage });
+        };
         const extraParams = [
             {
                 key: 'docId',
@@ -125,7 +137,7 @@ const SupportingDocumentBase = (props) => {
             },
         ];
         const supportingDocument = uploadData?.documentName;
-        fetchViewDocument({ setIsLoading: viewListShowLoading, userId, extraParams, supportingDocument });
+        downloadFile({ setIsLoading: viewListShowLoading, userId, extraParams, onSuccessAction });
     };
 
     const deleteFile = (uploadData) => {
@@ -150,13 +162,11 @@ const SupportingDocumentBase = (props) => {
         saveData(requestData);
     };
 
-    const onFinish = (values) => {
-        const data = { ...values, customerId: selectedCustomerId, status: true, docId: uploadedFile, documentTypeId: form.getFieldValue('documentTypeId'), id: '' };
-
+    const onFinish = () => {
         const title = LANGUAGE_EN.GENERAL.CUSTOMER_UPDATE.TITLE;
         const message = LANGUAGE_EN.GENERAL.CUSTOMER_UPDATE.MESSAGE;
 
-        if (data?.docId && data?.documentName && data?.documentTypeId) {
+        if (fileList.length > 0) {
             const onSuccess = (res) => {
                 setFileList([]);
                 setEmptyList(false);
@@ -173,7 +183,7 @@ const SupportingDocumentBase = (props) => {
             };
 
             const requestData = {
-                data: data,
+                data: payload,
                 method: 'post',
                 setIsLoading: listShowLoading,
                 userId,
@@ -192,7 +202,7 @@ const SupportingDocumentBase = (props) => {
         }
     };
     const viewProps = {
-        downloadFileFromButton,
+        // downloadFileFromButton,
         isViewDataLoaded,
         supportingData,
         supportingDataView,
@@ -216,6 +226,7 @@ const SupportingDocumentBase = (props) => {
 
     const formProps = {
         ...props,
+        onRemove,
         typeData,
         userId,
         accessToken,
@@ -229,7 +240,7 @@ const SupportingDocumentBase = (props) => {
         showGlobalNotification,
         viewDocument,
         downloadFile,
-        downloadFileFromButton,
+        // downloadFileFromButton,
         viewListShowLoading,
 
         ADD_ACTION,
@@ -248,6 +259,11 @@ const SupportingDocumentBase = (props) => {
         formActionType,
         supportedFileTypes,
         isReplaceEnabled: false,
+        uploadedFileList,
+        setUploadedFileList,
+        mandatoryFields,
+        setMandatoryFields,
+        supportingDocs: true,
     };
 
     const myProps = {
@@ -259,14 +275,16 @@ const SupportingDocumentBase = (props) => {
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <h2>{section?.title}</h2>
-                    {formActionType?.viewMode ? (
-                        <ViewDetail {...viewProps} />
-                    ) : (
-                        <>
-                            <AddEditForm {...formProps} />
+                    <Card>
+                        {formActionType?.viewMode ? (
                             <ViewDetail {...viewProps} />
-                        </>
-                    )}
+                        ) : (
+                            <>
+                                <AddEditForm {...formProps} />
+                                <ViewDetail {...viewProps} />
+                            </>
+                        )}
+                    </Card>
                 </Col>
             </Row>
             <Row>

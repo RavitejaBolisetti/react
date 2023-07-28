@@ -5,8 +5,6 @@
  */
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { LANGUAGE_EN } from 'language/en';
-
 import { bindActionCreators } from 'redux';
 import { Row, Col, Form } from 'antd';
 
@@ -20,6 +18,7 @@ import { VehicleDetailFormButton } from '../VehicleDetailFormButton';
 import AddEditForm from './AddEditForm';
 
 import styles from 'components/common/Common.module.css';
+import { getNameFromKey } from 'utils/checkAndSetDefaultValue';
 
 const mapStateToProps = (state) => {
     const {
@@ -58,6 +57,7 @@ const mapDispatchToProps = (dispatch) => ({
             viewListShowLoading: vehicleDetailDocumentDataActions.listShowLoading,
             resetData: vehicleDetailDocumentDataActions.reset,
             uploadDocumentFile: supportingDocumentDataActions.uploadFile,
+            downloadFile: supportingDocumentDataActions.downloadFile,
             fetchViewDocument: documentViewDataActions.fetchList,
             resetViewData: documentViewDataActions.reset,
             listShowLoading: supportingDocumentDataActions.listShowLoading,
@@ -71,9 +71,9 @@ const mapDispatchToProps = (dispatch) => ({
 const SupportingDocumentBase = (props) => {
     const { isViewDataLoaded, uploadDocumentFile, accessToken, token, onFinishFailed, form, setIsFormVisible } = props;
 
-    const { userId, selectedRecordId, showGlobalNotification, section, listShowLoading, typeData, saveData, fetchList, documentData, fetchViewDocument, resetData, resetViewData } = props;
+    const { userId, selectedRecordId, showGlobalNotification, section, listShowLoading, typeData, saveData, fetchList, documentData } = props;
     const { buttonData, setButtonData, formActionType, handleFormValueChange } = props;
-    const { viewDocument, viewListShowLoading } = props;
+    const { downloadFile, viewDocument, viewListShowLoading } = props;
 
     const [uploadedFile, setUploadedFile] = useState();
     const [emptyList, setEmptyList] = useState(true);
@@ -82,18 +82,12 @@ const SupportingDocumentBase = (props) => {
     const [uploadedFileName, setUploadedFileName] = useState('');
     const [documentTypeRule, setDocumentTypeRule] = useState([]);
     const [documentTitleRule, setDocumentTitleRule] = useState([]);
+    const [mandatoryFields, setMandatoryFields] = useState(false);
+    const [payload, setPayload] = useState([]);
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
-
-    useEffect(() => {
-        return () => {
-            resetData();
-            resetViewData();
-        };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
     const extraParams = [
         {
@@ -110,17 +104,28 @@ const SupportingDocumentBase = (props) => {
     }, [userId]);
 
     useEffect(() => {
-        if (viewDocument && isViewDataLoaded) {
-            let a = document.createElement('a');
-            a.href = `data:image/png;base64,${viewDocument?.base64}`;
-            a.download = viewDocument?.fileName;
-            a.click();
+        if (fileList.length === 0) {
+            setMandatoryFields(false);
         }
+        uploadedFile && setPayload([...payload, { documentId: uploadedFile, documentTypeCd: form.getFieldValue('documentTypeCd'), id: '', documentTitle: form.getFieldValue('documentTitle'), documentTypeName: getNameFromKey(typeData, form.getFieldValue('documentTypeCd')) }]);
+
+        uploadedFile && form.resetFields();
+
+        return () => {
+            setUploadedFile(undefined);
+        };
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isViewDataLoaded, viewDocument]);
+    }, [fileList]);
+
+    const onRemove = (file) => {
+        const index = payload.findIndex((payload) => payload.docId === file.response.docId);
+        payload.splice(index, 1);
+    };
 
     const downloadFileFromButton = (uploadData) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Your download will start soon' });
+        const onSuccessAction = (res) => {
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        };
         const extraParams = [
             {
                 key: 'docId',
@@ -129,8 +134,7 @@ const SupportingDocumentBase = (props) => {
                 name: 'docId',
             },
         ];
-        const supportingDocument = uploadData?.documentName;
-        fetchViewDocument({ setIsLoading: viewListShowLoading, userId, extraParams, supportingDocument });
+        downloadFile({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction });
     };
 
     const downloadFileFromList = (info) => {
@@ -143,21 +147,13 @@ const SupportingDocumentBase = (props) => {
                 name: 'docId',
             },
         ];
-        const supportingDocument = uploadedFileName;
-        fetchViewDocument({ setIsLoading: viewListShowLoading, userId, extraParams, supportingDocument });
+        downloadFile({ setIsLoading: listShowLoading, userId, extraParams });
     };
 
-    const deleteFileFromList = (info) => {
-        const index = supportingDocs?.findIndex((el) => el?.documentId === info?.response?.docId);
-        supportingDocs.splice(index, 1);
-    };
+    const onFinish = () => {
+        const data = { vehicleIdentificationNumber: selectedRecordId, supportingDocuments: payload, technicalDocuments: null };
 
-    const onFinish = (values) => {
-        const data = { vehicleIdentificationNumber: selectedRecordId, supportingDocuments: supportingDocs, technicalDocuments: null };
-        // const title = LANGUAGE_EN.GENERAL.CUSTOMER_UPDATE.TITLE;
-        // const message = LANGUAGE_EN.GENERAL.CUSTOMER_UPDATE.MESSAGE;
-
-        if (supportingDocs.length) {
+        if (fileList.length > 0) {
             const onSuccess = (res) => {
                 setFileList([]);
                 setEmptyList(false);
@@ -183,9 +179,8 @@ const SupportingDocumentBase = (props) => {
             };
 
             saveData(requestData);
-            setSupportingDocs([]);
+            setPayload([]);
         } else {
-            // showGlobalNotification({ notificationType: 'success', title, message });
             setFileList([]);
             setEmptyList(false);
             setUploadedFile();
@@ -220,7 +215,6 @@ const SupportingDocumentBase = (props) => {
         viewDocument,
         downloadFileFromButton,
         downloadFileFromList,
-        deleteFileFromList,
 
         ADD_ACTION,
         EDIT_ACTION,
@@ -241,6 +235,42 @@ const SupportingDocumentBase = (props) => {
         setDocumentTypeRule,
         documentTitleRule,
         setDocumentTitleRule,
+        mandatoryFields,
+        setMandatoryFields,
+    };
+
+    const uploadProps = {
+        form,
+        typeData,
+        userId,
+        accessToken,
+        token,
+        saveData,
+        onFinish,
+        uploadedFileName,
+        setUploadedFileName,
+
+        listShowLoading,
+        downloadFile,
+        showGlobalNotification,
+        viewDocument,
+        viewListShowLoading,
+
+        uploadedFile,
+        setUploadedFile,
+        emptyList,
+        setEmptyList,
+        fileList,
+        setFileList,
+
+        uploadButtonName: 'Upload File',
+        messageText: 'Click or drop your file here to upload',
+        validationText: 'File type should be .xlxs and max file size to be 8Mb',
+        supportedFileTypes: ['image/png', 'image/jpeg', 'application/pdf'],
+        maxSize: 8,
+        supportingDocs: true,
+        setMandatoryFields,
+        onRemove,
     };
 
     const myProps = {
@@ -252,14 +282,7 @@ const SupportingDocumentBase = (props) => {
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <h2>{section?.title}</h2>
-                    {/* {formActionType?.viewMode ? (
-                        <ViewSupportingDocDetail {...viewProps} />
-                    ) : (
-                        <> */}
-                    <AddEditForm {...formProps} />
-                    {/* <ViewSupportingDocDetail {...viewProps} /> */}
-                    {/* </>
-                    )} */}
+                    <AddEditForm uploadProps={uploadProps} {...formProps} />
                 </Col>
             </Row>
             <Row>

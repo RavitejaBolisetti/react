@@ -4,9 +4,10 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 .hierarchyButtonContainer {
-  display: inline-block;
+  /* display: inline-block; */
   width: 100%;
-  padding: 10px 20px;
+  padding: 12px 20px;
+  box-shadow: 0px -2px 4px 0px rgba(0, 0, 0, 0.15);
 }
 
 .hierarchyButtonContainer .buttonIcon {
@@ -15,7 +16,6 @@
 }
 
 .hierarchyButtonContainer .btnLeft {
-  text-align: left;
   float: left;
 }
 
@@ -24,7 +24,7 @@
 }
 
 .hierarchyButtonContainer .btnRight button {
-  margin-left: 14px;
+  margin-left: 10px;
 }
 
 .hierarchyButtonContainer :global .ant-btn-default.ant-btn-dangerous:not(:disabled):hover {

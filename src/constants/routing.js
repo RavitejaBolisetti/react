@@ -97,3 +97,5 @@ export const ROUTING_TAX_CHARGES = ROUTING_FINANCIAL_ACCOUNTING.concat('tax-char
 export const ROUTING_TAX_CHARGES_CATEGORY = ROUTING_FINANCIAL_ACCOUNTING.concat('tax-charges-category');
 
 export const ROUTING_REPORT_OTF_REPORTS = ROUTING_REPORT.concat('otf-reports');
+
+export const ROUTING_VEHICLE_RECIEPT_CHECKLIST = ROUTING_SALES.concat('receipt-checklist');

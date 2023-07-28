@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -284,95 +284,101 @@ const AddEditFormMain = (props) => {
     return (
         <>
             <Form form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed} layout="vertical">
-                {!isViewModeVisible ? (
-                    <>
-                        <Row gutter={20}>
-                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                <Form.Item initialValue={formData?.roleId} name="roleId" label="Role Id" rules={[validateRequiredInputField('id'), validationFieldLetterAndNumber('id')]}>
-                                    <Input maxLength={6} placeholder={preparePlaceholderText('id')} disabled={isReadOnly} />
-                                </Form.Item>
-                            </Col>
-                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                <Form.Item initialValue={formData?.roleName} name="roleName" label="Role Name" rules={[validateRequiredInputField('name'), validateAlphanumericWithSpaceHyphenPeriod('name')]}>
-                                    <Input maxLength={50} placeholder={preparePlaceholderText('name')} disabled={isReadOnly} />
-                                </Form.Item>
-                            </Col>
-                        </Row>
-                        <Row gutter={20}>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                <Form.Item initialValue={formData?.roleDesceription} label="Role Description" name="roleDesceription" rules={[validateRequiredInputField('description')]}>
-                                    <TextArea
-                                        placeholder={preparePlaceholderText('description')}
-                                        autoSize={{
-                                            minRows: 2,
-                                            maxRows: 5,
-                                        }}
-                                        maxLength={300}
-                                        disabled={isReadOnly}
-                                    />
-                                </Form.Item>
-                            </Col>
-                        </Row>
-                        <Row gutter={20}>
-                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                <Form.Item initialValue={formData?.activeIndicator} labelAlign="left" wrapperCol={{ span: 24 }} name="activeIndicator" label="Status">
-                                    <Switch checkedChildren="Active" unCheckedChildren="Inactive" value={formData?.activeIndicator} disabled={isReadOnly} />
-                                </Form.Item>
-                            </Col>
-                        </Row>
-                        <hr />
-                        <Tabs
-                            defaultActiveKey="1"
-                            items={[
-                                {
-                                    label: 'Web',
-                                    key: '1',
-                                    children: AccordianTreeUtils(FinalTreedata),
-                                },
+                <Row gutter={20} className={styles.drawerBody}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                        {!isViewModeVisible ? (
+                            <>
+                                <Row gutter={20}>
+                                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                                        <Form.Item initialValue={formData?.roleId} name="roleId" label="Role Id" rules={[validateRequiredInputField('id'), validationFieldLetterAndNumber('id')]}>
+                                            <Input maxLength={6} placeholder={preparePlaceholderText('id')} disabled={isReadOnly} />
+                                        </Form.Item>
+                                    </Col>
+                                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                                        <Form.Item initialValue={formData?.roleName} name="roleName" label="Role Name" rules={[validateRequiredInputField('name'), validateAlphanumericWithSpaceHyphenPeriod('name')]}>
+                                            <Input maxLength={50} placeholder={preparePlaceholderText('name')} disabled={isReadOnly} />
+                                        </Form.Item>
+                                    </Col>
+                                </Row>
+                                <Row gutter={20}>
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                        <Form.Item initialValue={formData?.roleDesceription} label="Role Description" name="roleDesceription" rules={[validateRequiredInputField('description')]}>
+                                            <TextArea
+                                                placeholder={preparePlaceholderText('description')}
+                                                autoSize={{
+                                                    minRows: 2,
+                                                    maxRows: 5,
+                                                }}
+                                                maxLength={300}
+                                                disabled={isReadOnly}
+                                            />
+                                        </Form.Item>
+                                    </Col>
+                                </Row>
+                                <Row gutter={20}>
+                                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                                        <Form.Item initialValue={formData?.activeIndicator} labelAlign="left" wrapperCol={{ span: 24 }} name="activeIndicator" label="Status">
+                                            <Switch checkedChildren="Active" unCheckedChildren="Inactive" value={formData?.activeIndicator} disabled={isReadOnly} />
+                                        </Form.Item>
+                                    </Col>
+                                </Row>
+                                <hr />
+                                <Tabs
+                                    defaultActiveKey="1"
+                                    items={[
+                                        {
+                                            label: 'Web',
+                                            key: '1',
+                                            children: AccordianTreeUtils(FinalTreedata),
+                                        },
 
-                                {
-                                    label: 'Mobile',
-                                    key: '2',
-                                    children: '',
-                                },
-                            ]}
-                        />
-                        <Row>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                {AccordianTreeUtils(FinalTreedata)}
-                            </Col>
-                        </Row>
-                    </>
-                ) : (
-                    <ViewRoleManagement {...viewProps} />
-                )}
-                <Row gutter={20} className={styles.formFooter}>
-                    <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
-                        <Button danger onClick={onCloseAction}>
-                            {footerEdit ? 'Close' : 'Cancel'}
-                        </Button>
-                    </Col>
-
-                    <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
-                        {!footerEdit && showSaveBtn && (
-                            <Button disabled={!isFormBtnActive} onClick={() => setSaveAndAddNewBtnClicked(false)} htmlType="submit" type="primary">
-                                Save
-                            </Button>
-                        )}
-
-                        {!formData?.id && (
-                            <Button htmlType="submit" disabled={!isFormBtnActive} onClick={() => setSaveAndAddNewBtnClicked(true)} type="primary">
-                                Save & Add New
-                            </Button>
-                        )}
-
-                        {footerEdit && (
-                            <Button onClick={handleEditData} form="myForm" key="submitAndNew" htmlType="submit" type="primary">
-                                Edit
-                            </Button>
+                                        {
+                                            label: 'Mobile',
+                                            key: '2',
+                                            children: '',
+                                        },
+                                    ]}
+                                />
+                                <Row>
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                        {AccordianTreeUtils(FinalTreedata)}
+                                    </Col>
+                                </Row>
+                            </>
+                        ) : (
+                            <ViewRoleManagement {...viewProps} />
                         )}
                     </Col>
                 </Row>
+                <div className={styles.formFooter}>
+                    <Row gutter={20}>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
+                            <Button danger onClick={onCloseAction}>
+                                {footerEdit ? 'Close' : 'Cancel'}
+                            </Button>
+                        </Col>
+
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
+                            {!footerEdit && showSaveBtn && (
+                                <Button disabled={!isFormBtnActive} onClick={() => setSaveAndAddNewBtnClicked(false)} htmlType="submit" type="primary">
+                                    Save
+                                </Button>
+                            )}
+
+                            {!formData?.id && (
+                                <Button htmlType="submit" disabled={!isFormBtnActive} onClick={() => setSaveAndAddNewBtnClicked(true)} type="primary">
+                                    Save & Add New
+                                </Button>
+                            )}
+
+                            {footerEdit && (
+                                <Button onClick={handleEditData} form="myForm" key="submitAndNew" htmlType="submit" type="primary">
+                                    Edit
+                                </Button>
+                            )}
+                        </Col>
+                    </Row>
+                </div>
             </Form>
         </>
     );

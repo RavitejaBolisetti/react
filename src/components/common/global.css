@@ -313,6 +313,10 @@
 /* AntD Table Design End*/
 
 /* AntD Table Pagination Design Start*/
+:global .ant-table-wrapper .ant-table-pagination.ant-pagination {
+    margin: 20px 0 0;
+}
+
 :global .ant-pagination .ant-pagination-total-text {
     position: absolute;
     left: 0px;
@@ -455,6 +459,18 @@
     height: 20px;
 }
 
+:global .ant-input-group.ant-input-group-compact {
+    display: flex;
+}
+
+:global .ant-input-group.ant-input-group-compact .ant-input-status-success {
+    border-color: transparent;
+}
+
+:global .ant-input-group.ant-input-group-compact .ant-input-status-success:not(:first-child):not(:last-child) {
+    width: 10%;
+}
+
 :global .ant-form-item {
     margin-bottom: 20px;
 }
@@ -483,12 +499,15 @@
     border: 1px solid #b5b5b6;
     height: auto;
     padding: 2px 12px;
-    /* couldn't give padding: 5px 12px; as the height was increasing more than the required */
 }
 
 :global .ant-select:not(.ant-select-disabled):not(.ant-select-customize-input):not(.ant-pagination-size-changer):hover .ant-select-selector {
     border-color: #0b0b0c !important;
     box-shadow: none;
+}
+
+:global .ant-select-single:not(.ant-select-customize-input) .ant-select-selector .ant-select-selection-search-input {
+    height: 34px;
 }
 
 :global .ant-select .ant-select-arrow {
@@ -533,6 +552,7 @@
 :global .ant-input[disabled],
 :global .ant-input-disabled:hover,
 :global .ant-input[disabled]:hover,
+:global .ant-input-textarea-affix-wrapper.ant-input-affix-wrapper-disabled .ant-input[disabled],
 :global .ant-select-disabled.ant-select:not(.ant-select-customize-input) .ant-select-selector,
 :global .ant-select-disabled.ant-select .ant-select-arrow {
     color: #858585;
@@ -542,6 +562,11 @@
 
 :global .ant-input-textarea-affix-wrapper.ant-input-affix-wrapper {
     margin-bottom: 20px;
+}
+
+:global .ant-input-textarea-affix-wrapper.ant-input-affix-wrapper-disabled,
+:global .ant-input-textarea-affix-wrapper.ant-input-affix-wrapper-disabled:hover {
+    border-color: #e6e6e6;
 }
 
 :global .ant-input-textarea-affix-wrapper.ant-input-affix-wrapper > textarea.ant-input {
@@ -630,14 +655,34 @@
 /* AntD Modal Design End*/
 
 /* AntD Drawer Design Start*/
-:global .ant-drawer .ant-drawer-header-title {
-    display: inline-block;
+:global .ant-drawer .ant-drawer-header {
+    padding: 16px 20px;
 }
 
-:global .ant-drawer-close {
-    float: right !important;
-    padding: 4px 0 0 0 !important;
-    margin-inline-end: 0 !important;
+:global .ant-drawer .ant-drawer-header-title {
+    flex-direction: row-reverse;
+}
+
+:global .ant-drawer .ant-drawer-header-title .ant-drawer-title {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 27px;
+    color: #0b0b0c;
+}
+
+:global .ant-drawer .ant-drawer-close {
+    float: right;
+    display: flex;
+    margin-inline-end: 0;
+    margin-inline-start: 16px;
+    padding: 0;
+    font-size: 18px;
+    color: #0b0b0c;
+}
+
+:global .ant-drawer-wrapper-body .ant-drawer-body {
+    padding: 0;
+    overflow: hidden;
 }
 
 :global .ant-drawer-body .ant-input-number {
@@ -680,6 +725,10 @@
 :global .ant-picker.ant-picker-disabled {
     background: #e6e6e6;
     border-color: #e6e6e6 !important;
+}
+
+:global .ant-picker-dropdown .ant-picker-time-panel-column::after {
+    height: auto;
 }
 
 /* :global .ant-modal-mask,

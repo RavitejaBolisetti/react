@@ -51,18 +51,17 @@ const AddEditFormMain = (props) => {
                                                         style={{
                                                             width: '100%',
                                                         }}
-                                                        className={styles.inputBox}
                                                     ></Select>
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                                 <Form.Item initialValue={schemeForm?.schemeCategory} label="Scheme Category" name="schemeCategory">
-                                                    <Input className={styles.inputBox} placeholder={preparePlaceholderText('Scheme Category')} disabled={true} />
+                                                    <Input placeholder={preparePlaceholderText('Scheme Category')} disabled={true} />
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                                 <Form.Item initialValue={schemeForm?.amount} label="Amount" name="amount">
-                                                    <Input className={styles.inputBox} placeholder={preparePlaceholderText('Amount')} disabled={true} />
+                                                    <Input placeholder={preparePlaceholderText('Amount')} disabled={true} />
                                                 </Form.Item>
                                             </Col>
                                         </Row>
@@ -71,12 +70,12 @@ const AddEditFormMain = (props) => {
                                     <Row gutter={20}>
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                             <Form.Item initialValue={formattedCalendarDate(schemeForm?.validFrom)} label="Valid From" name="validFrom">
-                                                <DatePicker className={styles.inputBox} placeholder={preparePlaceholderText('Valid From')} onChange={onChange} style={{ width: '100%' }} disabled={true} />
+                                                <DatePicker placeholder={preparePlaceholderText('Valid From')} onChange={onChange} style={{ width: '100%' }} disabled={true} />
                                             </Form.Item>
                                         </Col>
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                             <Form.Item initialValue={formattedCalendarDate(schemeForm?.validTo)} label="Valid To" name="validTo">
-                                                <DatePicker className={styles.inputBox} placeholder={preparePlaceholderText('Valid To')} onChange={onChange} style={{ width: '100%' }} disabled={true} />
+                                                <DatePicker placeholder={preparePlaceholderText('Valid To')} onChange={onChange} style={{ width: '100%' }} disabled={true} />
                                             </Form.Item>
                                         </Col>
                                     </Row>
@@ -84,7 +83,7 @@ const AddEditFormMain = (props) => {
                                     <Row gutter={20}>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                             <Form.Item initialValue={schemeForm?.description} label="Description" name="description">
-                                                <TextArea className={styles.inputBox} placeholder={preparePlaceholderText('Description')} disabled={true} />
+                                                <TextArea maxLength={300} placeholder={preparePlaceholderText('Description')} disabled={true} showCount />
                                             </Form.Item>
                                         </Col>
                                     </Row>

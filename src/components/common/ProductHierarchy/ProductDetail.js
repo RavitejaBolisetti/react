@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -30,7 +30,7 @@ const ProductDetail = (props) => {
                     </Form.Item>
                 </Col>
 
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padRight18}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form.Item initialValue={treeCodeId} label="Parent" name="parentCode">
                         <TreeSelectField {...treeSelectProps} />
                     </Form.Item>
@@ -40,13 +40,13 @@ const ProductDetail = (props) => {
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form.Item label="Code" name="prodctCode" initialValue={formData?.prodctCode} rules={[validateRequiredInputField('code'), validationFieldLetterAndNumber('code')]}>
-                        <Input placeholder={preparePlaceholderText('code')} maxLength={6} className={styles.inputBox} disabled={formData?.id || isReadOnly} />
+                        <Input placeholder={preparePlaceholderText('code')} maxLength={6} disabled={formData?.id || isReadOnly} />
                     </Form.Item>
                 </Col>
 
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form.Item name="prodctShrtName" label="Short Description" initialValue={formData?.prodctShrtName} rules={[validateRequiredInputField('short description'), validateAlphanumericWithSpaceHyphenPeriod('short description')]}>
-                        <Input className={styles.inputBox} placeholder={preparePlaceholderText('short description')} maxLength={50} disabled={formData?.id || isReadOnly} />
+                        <Input placeholder={preparePlaceholderText('short description')} maxLength={50} disabled={formData?.id || isReadOnly} />
                     </Form.Item>
                 </Col>
             </Row>
@@ -54,11 +54,11 @@ const ProductDetail = (props) => {
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form.Item name="prodctLongName" label="Long Description" initialValue={formData?.prodctLongName} rules={[validateRequiredInputField('long description'), validateAlphanumericWithSpaceHyphenPeriod('long description')]}>
-                        <TextArea rows={1} placeholder={preparePlaceholderText('long description')} maxLength={300} disabled={formData?.id || isReadOnly} />
+                        <TextArea placeholder={preparePlaceholderText('long description')} maxLength={300} disabled={formData?.id || isReadOnly} showCount />
                     </Form.Item>
                 </Col>
 
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padLeft10}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form.Item initialValue={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.active ? true : false} label="Status" name="active">
                         <Switch value={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.active ? true : false} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.active === true || null || undefined ? true : false} {...disabledProps} />
                     </Form.Item>

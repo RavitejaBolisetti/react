@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -84,12 +84,12 @@ const AddEditFormMain = (props) => {
                     <Row gutter={16}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item initialValue={formData?.roleCode} label="Role Code" name="roleCode" rules={[validateRequiredInputField('role code')]}>
-                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('role code')} maxLength={6} disabled={editMode ? true : false} />
+                                <Input placeholder={preparePlaceholderText('role code')} maxLength={6} disabled={editMode ? true : false} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item label="Role Name" initialValue={formData?.roleDescription} rules={[validateRequiredInputField('role Name')]} name="roleDescription">
-                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('role Name')} maxLength={50} />
+                                <Input placeholder={preparePlaceholderText('role Name')} maxLength={50} />
                             </Form.Item>
                         </Col>
                     </Row>

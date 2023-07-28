@@ -9,4 +9,5 @@ import VehiclePurchaseOrderMasterPage from './VehiclePurchaseOrder';
 
 import VehicleReceiptMasterPage from './VehicleReceipt';
 import VehiclePriceMasterPage from './VehiclePriceMaster';
-export { OTFMasterPage, VehicleDetailMasterPage, VehicleReceiptMasterPage,VehiclePurchaseOrderMasterPage, VehiclePriceMasterPage };
+import VehicleRecieptChecklistMaster from './VehicleRecieptMaster';
+export { OTFMasterPage, VehicleDetailMasterPage, VehicleReceiptMasterPage, VehiclePriceMasterPage, VehiclePurchaseOrderMasterPage, VehicleRecieptChecklistMaster };

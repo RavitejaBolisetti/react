@@ -3,6 +3,10 @@
     padding-bottom: 20px;
 }
 
+.uploadDraggerStrip {
+    border: 1px solid red;
+}
+
 .uploadDragger :global h5.ant-typography {
     margin: 0 !important;
     color: #0B0B0C;
@@ -39,16 +43,21 @@
 }
 
 /* Uploaded Files List */
-.uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item {
+.uploadDragger .uploadDraggerStrip :global .ant-upload-list .ant-upload-list-item {
     height: auto;
     margin-top: 10px;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
 }
 
-.uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item .ant-upload-icon {
+.uploadDragger :global .ant-upload-list .ant-upload-list-item .ant-upload-icon,
+.uploadDragger .uploadDraggerStrip :global .ant-upload-list .ant-upload-list-item .ant-upload-icon {
     display: none;
 }
 
-.uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item .ant-upload-list-item-name {
+.uploadDragger .uploadDraggerStrip :global .ant-upload-list .ant-upload-list-item .ant-upload-list-item-name {
     padding-left: 0;
     color: #0B0B0C;
     font-weight: 600;
@@ -56,40 +65,116 @@
     padding-bottom: 16px;
 }
 
-.uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item:hover {
+.uploadDragger .uploadDraggerStrip :global .ant-upload-list .ant-upload-list-item:hover {
     background-color: transparent;
 }
 
-.uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item:hover .ant-upload-list-item-action {
+.uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item:hover .ant-upload-list-item-action,
+.uploadDragger .uploadDraggerStrip :global .ant-upload-list .ant-upload-list-item:hover .ant-upload-list-item-action {
     color: #FF3E5B;
 }
 
-.uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item .ant-upload-list-item-actions {
+.uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item .ant-upload-list-item-actions,
+.uploadDragger .uploadDraggerStrip :global .ant-upload-list .ant-upload-list-item .ant-upload-list-item-actions {
     display: flex;
     align-items: center;
 }
 
-.uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item .ant-upload-list-item-actions .ant-upload-list-item-action {
+.uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item .ant-upload-list-item-actions .ant-upload-list-item-action,
+.uploadDragger .uploadDraggerStrip :global .ant-upload-list .ant-upload-list-item .ant-upload-list-item-actions .ant-upload-list-item-action {
     opacity: 1;
 }
 
-.uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item .ant-upload-list-item-actions .ant-upload-list-item-action.ant-btn-sm:not(:last-child) {
+.uploadDragger .uploadDraggerStrip :global .ant-upload-list .ant-upload-list-item .ant-upload-list-item-actions .ant-upload-list-item-action.ant-btn-sm:not(:last-child) {
     display: none;
 }
 
-.uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item .ant-upload-list-item-actions .ant-upload-list-item-action.ant-btn-sm.ant-btn-icon-only {
+.uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item .ant-upload-list-item-actions .ant-upload-list-item-action.ant-btn-sm.ant-btn-icon-only,
+.uploadDragger .uploadDraggerStrip :global .ant-upload-list .ant-upload-list-item .ant-upload-list-item-actions .ant-upload-list-item-action.ant-btn-sm.ant-btn-icon-only {
+    display: flex;
+    align-items: center;
     width: 20px;
     color: #FF3E5B;
 }
 
-.uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item .ant-upload-list-item-actions .ant-upload-list-item-action.ant-btn-sm.ant-btn-icon-only .ant-btn-icon svg {
+.uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item .ant-upload-list-item-actions .ant-upload-list-item-action.ant-btn-sm.ant-btn-icon-only .ant-btn-icon svg,
+.uploadDragger .uploadDraggerStrip :global .ant-upload-list .ant-upload-list-item .ant-upload-list-item-actions .ant-upload-list-item-action.ant-btn-sm.ant-btn-icon-only .ant-btn-icon svg {
     width: 20px;
     height: 20px;
 }
 
-.uploadDragger :global .ant-btn-text:not(:disabled):not(.ant-btn-disabled):hover {
+.uploadDragger :global .ant-btn-text:not(:disabled):not(.ant-btn-disabled):hover,
+.uploadDragger .uploadDraggerStrip :global .ant-btn-text:not(:disabled):not(.ant-btn-disabled):hover {
     color: #FF3E5B;
     background-color: transparent;
+}
+
+/* Upload File Progress Bar */
+.uploadDragger .uploadDraggerStrip :global .ant-upload-list .ant-upload-list-item .ant-upload-list-item-progress {
+    bottom: -6px;
+    padding-inline-start: 0;
+    display: block;
+    opacity: 1;
+}
+
+.uploadDragger .uploadDraggerStrip :global .ant-upload-list .ant-upload-list-item-done .ant-upload-list-item-progress {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+}
+
+.uploadDragger .uploadDraggerStrip :global .ant-upload-list .ant-upload-list-item-done .ant-upload-list-item-progress .ant-progress.ant-progress-line,
+.uploadDragger .uploadDraggerStrip :global .ant-upload-list .ant-upload-list-item-done .ant-upload-list-item-progress .ant-progress.ant-progress-status-success {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible;
+}
+
+.uploadDragger .uploadDraggerStrip :global .ant-progress .ant-progress-inner {
+    width: 95%;
+    background-color: #EEFCD2;
+}
+
+.uploadDragger .uploadDraggerStrip :global .ant-progress .ant-progress-text {
+    position: absolute;
+    z-index: 1;
+    top: -18px;
+    margin-inline-start: -66px;
+    color: #0B0B0C;
+    font-weight: 600;
+    text-align: end;
+}
+
+.uploadDragger .uploadDraggerStrip :global .ant-progress .ant-progress-success-bg,
+.uploadDragger .uploadDraggerStrip :global .ant-progress .ant-progress-bg {
+    height: 8px !important;
+    background-color: #70c922;
+}
+
+/* Uploaded Files View */
+.uploadDragger :global .ant-upload-list .ant-upload-list-item {
+    height: auto;
+    margin-top: 10px;
+    padding: 10px 20px;
+    border: 1px solid #e6e6e6;
+    background-color: #f2f2f2;
+    border-radius: 4px;
+    box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.15);
+}
+
+.uploadDragger :global .ant-upload-list .ant-upload-list-item:hover {
+    background-color: #f2f2f2;
+}
+
+.uploadDragger :global .ant-upload-list .ant-upload-list-item .ant-upload-list-item-name {
+    padding-left: 0;
+    color: #0B0B0C;
+    font-weight: 600;
+    line-height: 24px;
+}
+
+.uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item .ant-upload-list-item-actions .ant-btn:not(:first-child) {
+    margin-left: 20px;
 }
 
 /* View File Box */
@@ -120,46 +205,4 @@
     font-weight: 600;
     line-height: 24px;
     text-transform: capitalize;
-}
-
-/* Upload File Progress Bar */
-.uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item .ant-upload-list-item-progress {
-    bottom: -6px;
-    padding-inline-start: 0;
-    display: block;
-    opacity: 1;
-}
-
-.uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-done .ant-upload-list-item-progress {
-    display: block;
-    opacity: 1;
-    visibility: visible;
-}
-
-.uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-done .ant-upload-list-item-progress .ant-progress.ant-progress-line,
-.uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item-done .ant-upload-list-item-progress .ant-progress.ant-progress-status-success {
-    display: block !important;
-    opacity: 1 !important;
-    visibility: visible;
-}
-
-.uploadDragger :global .ant-progress .ant-progress-inner {
-    width: 95%;
-    background-color: #EEFCD2;
-}
-
-.uploadDragger :global .ant-progress .ant-progress-text {
-    position: absolute;
-    z-index: 1;
-    top: -18px;
-    margin-inline-start: -66px;
-    color: #0B0B0C;
-    font-weight: 600;
-    text-align: end;
-}
-
-.uploadDragger :global .ant-progress .ant-progress-success-bg,
-.uploadDragger :global .ant-progress .ant-progress-bg {
-    height: 8px !important;
-    background-color: #70c922;
 }
