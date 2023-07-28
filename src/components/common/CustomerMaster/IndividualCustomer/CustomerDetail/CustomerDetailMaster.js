@@ -95,6 +95,9 @@ const CustomerDetailMasterBase = (props) => {
     const [uploadImgDocId, setUploadImgDocId] = useState('');
     const [customerNameList, setCustomerNameList] = useState({});
     const [supportingDataView, setSupportingDataView] = useState();
+    const [isHistoryVisible, setIsHistoryVisible] = useState(false);
+    const [activeKey, setactiveKey] = useState([]);
+
 
     const [whatsAppConfiguration, setWhatsAppConfiguration] = useState({ contactOverWhatsApp: null, contactOverWhatsAppActive: null, sameMobileNoAsWhatsApp: null, sameMobileNoAsWhatsAppActive: null });
 
@@ -204,6 +207,14 @@ const CustomerDetailMasterBase = (props) => {
         const supportingDocument = uploadedFileName;
         fetchViewDocument({ setIsLoading: viewListShowLoading, userId, extraParams, supportingDocument });
     };
+
+    const changeHistoryClose = () => {
+        setIsHistoryVisible(false);
+    };
+
+    const onViewHistoryChange = () => {
+        setIsHistoryVisible(true);
+    }
 
     const onFinish = (values) => {
         setFileList([]);
@@ -325,9 +336,14 @@ const CustomerDetailMasterBase = (props) => {
         setWhatsAppConfiguration,
         handleFormFieldChange,
         setCustomerNameList,
+        onViewHistoryChange,
+        changeHistoryClose,
+        isHistoryVisible,
         customerNameList,
         status,
         setStatus,
+        activeKey,
+        setactiveKey,
     };
 
     const viewProps = {

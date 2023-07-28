@@ -9,7 +9,7 @@ import { Button, Row, Col } from 'antd';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import styles from './CustomerFormButton.module.css';
 
-export const CustomerFormButton = ({ record, onCloseAction, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection }) => {
+export const CustomerFormButton = ({ record, onCloseAction, buttonData, handleChangeHistory, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection }) => {
     return (
         <Row gutter={20} className={styles.formFooter}>
             <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
@@ -27,6 +27,11 @@ export const CustomerFormButton = ({ record, onCloseAction, buttonData, setButto
             </Col>
 
             <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
+                {buttonData?.changeHistory && (
+                    <Button onClick={handleChangeHistory} type="primary">
+                        View History
+                    </Button>
+                )}
                 {buttonData?.editBtn && (
                     <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record, openDefaultSection: false })} type="primary">
                         Edit

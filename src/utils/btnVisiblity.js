@@ -17,7 +17,7 @@ export const TRANSFER_ACTION = FROM_ACTION_TYPE?.TRANSFER_OTF;
 export const btnVisiblity = ({ defaultBtnVisiblity, buttonAction, saveAndNewBtn = true, orderStatus = false }) => {
     let btnVisibility = defaultBtnVisiblity;
     if (buttonAction === VIEW_ACTION) {
-        btnVisibility = { ...btnVisibility, closeBtn: true, editBtn: true, nextBtn: true };
+        btnVisibility = { ...btnVisibility, closeBtn: true, editBtn: true, nextBtn: true, changeHistory: true };
     } else if (buttonAction === VIEW_ONLY_ACTION) {
         btnVisibility = { ...btnVisibility, saveBtn: false, cancelBtn: false, closeBtn: true };
     } else if (buttonAction === EDIT_ACTION) {

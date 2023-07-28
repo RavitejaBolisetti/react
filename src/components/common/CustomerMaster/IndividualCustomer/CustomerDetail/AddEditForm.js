@@ -27,14 +27,12 @@ const { Text, Title } = Typography;
 
 const AddEditFormMain = (props) => {
     const { form, typeData, formData, corporateLovData, formActionType: { editMode } = undefined, customerType } = props;
-    const { nameChangeHistoryForm, editedMode, setCustomerNameList, customerNameList, setEditedMode, setButtonData, buttonData, status, setStatus, showGlobalNotification, setEmptyList } = props;
+    const { nameChangeHistoryForm, editedMode, setCustomerNameList, activeKey, setactiveKey, customerNameList, setEditedMode, isHistoryVisible, onViewHistoryChange, changeHistoryClose, setButtonData, buttonData, status, setStatus, showGlobalNotification, setEmptyList } = props;
 
     const { whatsAppConfiguration, setWhatsAppConfiguration, handleFormFieldChange } = props;
     const { contactOverWhatsApp, contactOverWhatsAppActive, sameMobileNoAsWhatsApp, sameMobileNoAsWhatsAppActive } = whatsAppConfiguration;
 
-    const [isHistoryVisible, setIsHistoryVisible] = useState(false);
     const [corporateType, setCorporateType] = useState('');
-    const [activeKey, setactiveKey] = useState([]);
     const [disabled, setDisabled] = useState(false);
     const [onSave, setOnSave] = useState(false);
     const [showStatus, setShowStatus] = useState('');
@@ -76,11 +74,6 @@ const AddEditFormMain = (props) => {
         ),
         ...props,
     };
-
-    const onViewHistoryChange = () => {
-        setIsHistoryVisible(true);
-    }
-
 
     const onEdit = () => {
         setEditedMode(true);
@@ -128,10 +121,6 @@ const AddEditFormMain = (props) => {
         form.setFieldsValue({
             corporateCode: value,
         });
-    };
-
-    const changeHistoryClose = () => {
-        setIsHistoryVisible(false);
     };
 
     const onCollapseChange = (value) => {
