@@ -3,21 +3,26 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React from 'react';
+import React, { useState } from 'react';
 import { Typography, Descriptions, Divider, Card, Collapse, Tag, Col, Row, Space, Button } from 'antd';
 import { BiTimeFive } from 'react-icons/bi';
 import { FiDownload } from 'react-icons/fi';
+import { BiLockAlt } from 'react-icons/bi';
 
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { getCodeValue } from 'utils/getCodeValue';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { NameChangeHistory } from './NameChangeHistory';
+import { RejectionModal } from './RejectionModal';
 
 const { Text } = Typography;
 const { Panel } = Collapse;
 
 const ViewDetailMain = (props) => {
     const { styles, formData, isLoading, typeData, corporateLovData, onViewHistoryChange, isHistoryVisible, changeHistoryClose, activeKey, setactiveKey } = props;
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [rejected, setRejected] = useState(true);
+
     const findListedNonListed = () => {
         if (checkAndSetDefaultValue(getCodeValue(typeData?.CORP_TYPE, formData?.corporateType), isLoading) === 'Non-Listed') {
             return formData?.corporateName;
@@ -25,6 +30,19 @@ const ViewDetailMain = (props) => {
             return checkAndSetDefaultValue(getCodeValue(corporateLovData, formData?.corporateName), isLoading);
         }
     };
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
+
+    const onCloseActionOnContinue = () => {
+        setIsModalOpen(false);
+        setactiveKey([]);
+        setRejected(false);
+    };
+
+    const onRejectionHandled = () => {
+        setIsModalOpen(true);
+    }
 
     const viewProps = {
         bordered: false,
@@ -43,6 +61,15 @@ const ViewDetailMain = (props) => {
     const changeHistoryProps = {
         isVisible: isHistoryVisible,
         onCloseAction: changeHistoryClose,
+    };
+
+    const modalProps = {
+        isVisible: isModalOpen,
+        icon: <BiLockAlt />,
+        titleOverride: 'Rejection Note',
+        closable: false,
+        onCloseAction: handleCancel,
+        onCloseActionOnContinue,
     };
 
     const onCollapseChange = (value) => {
@@ -68,7 +95,9 @@ const ViewDetailMain = (props) => {
 
                                 </Col>
                                 <Col xs={24} sm={24} md={6} lg={6} xl={6} >
-                                    <Tag style={{ textAlign: 'right' }} color="warning">Pending for Approval</Tag>
+                                    {rejected ? (
+                                        <Tag style={{ textAlign: 'right' }} color="warning">Pending for Approval</Tag>
+                                    ) : (<Tag style={{ textAlign: 'right' }} color="error">Rejected</Tag>)}
                                 </Col>
                                 <Col xs={24} sm={24} md={12} lg={12} xl={12} style={{ textAlign: 'right' }}>
                                     <Button type="link" onClick={onViewHistoryChange} icon={<BiTimeFive />}>
@@ -113,7 +142,7 @@ const ViewDetailMain = (props) => {
                                             <Button type="primary" className={styles.marR20} >
                                                 Approved
                                             </Button>
-                                            <Button className={styles.marB20} danger>
+                                            <Button className={styles.marB20} onClick={onRejectionHandled} danger>
                                                 Rejected
                                             </Button>
                                         </Col>
@@ -146,6 +175,8 @@ const ViewDetailMain = (props) => {
             </div>
 
             <NameChangeHistory {...changeHistoryProps} />
+            <RejectionModal {...modalProps} />
+
         </>
 
     );
