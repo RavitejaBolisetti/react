@@ -1,5 +1,5 @@
 import React from "react";
-import { fireEvent, logRoles, render, screen, act, waitFor} from "@testing-library/react";
+import { fireEvent, screen, act, waitFor} from "@testing-library/react";
 import '@testing-library/jest-dom/extend-expect';
 import customRender from "@utils/test-utils";
 import  ApplicationDetails from '@components/common/ApplicationMaster/ApplicationDetails';
@@ -32,24 +32,6 @@ describe('Application Details Component', () => {
         waitFor(() => expect(inputBox.value).toHaveValue(1));
     });
 
-    it('tree select field should work', async () => {
-
-        const finalFormdata={
-            applicationDetails:{
-                parentApplicationId:"Test"
-            }
-        }
-
-        const treeSelectFieldProps = {
-            treeDisabled: false,
-            selectedTreeSelectKey: "Web",
-        };
-        customRender(<ApplicationDetails finalFormdata={finalFormdata} setparentAppCode={jest.fn()} setCanFormSave={jest.fn()} treeSelectFieldProps={treeSelectFieldProps}/>);
-        const inputBox = screen.getByRole('combobox', { name: '', exact: false});
-        fireEvent.change(inputBox, { target: { value: "Web" } });
-        expect(inputBox.value).toBe("Web");
-    });
-
     it('on change application type should work', async () => {
         const configurableParamData = [
             { value: '1', label: 'Test1'},
@@ -67,6 +49,20 @@ describe('Application Details Component', () => {
         const inputBox1 = screen.getByRole('combobox', { name: 'Application Criticality Group', exact: false});
         fireEvent.change(inputBox1, { target: { value: 2 } });
         waitFor(() =>expect(inputBox.value).toHaveValue(2));
+    });
+
+    it('tree select should work', async () => {
+        const finalFormdata={
+            applicationDetails:{
+                parentApplicationId:"Web"
+            }
+        }
+        const menuData= [ { menuId: 1, menuTitle: 'tree1', subMenu: [{menuId: 2, menuTitle: 'tree2'}] }, { menuId: 3, menuTitle: 'tree3', }, ];
+        customRender(<ApplicationDetails setCanFormSave={jest.fn()} setparentAppCode={jest.fn()} parentAppCode={"Web"} finalFormdata={finalFormdata} menuData={menuData} isReadOnly={false} />);
+        const inputBox=screen.getByRole("combobox", {name: '', exact:false});
+        fireEvent.change(inputBox, { target: { value: 'tree3'}});
+        const treeSelect=screen.getByText('tree3');
+        fireEvent.click(treeSelect);
     });
 
 });

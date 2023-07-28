@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Provider } from 'react-redux';
-import { fireEvent, screen, logRoles, act, render} from "@testing-library/react";
-// import { act } from 'react-dom/test-utils';
+import { fireEvent, screen, act} from "@testing-library/react";
 import customRender from "@utils/test-utils";
 import createMockStore from '__mocks__/store';
 import { ApplicationMaster } from "@components/common/ApplicationMaster";
@@ -56,21 +55,63 @@ describe('Application Master Component', () => {
       fireEvent.click(addButton);
     });
 
-    it('HierarchyFormButton should work', async () => {
+    it('edit button, add child, and add sibling button should work', async () => {
       const mockStore = createMockStore({
         auth: { userId: 123 },
         data:{
             ApplicationMaster:{
               applicationDetailsData:[{"id":"79eaef50-ecca-4e0c-9b07-a583b9d0ab1a","applicationId":"TESTAD","parentApplicationId":"Web","applicationName":"ADMINTEST","applicationType":"Module","applicationTitle":"ADMINTEST","documentNumRequired":true,"status":true,"nodeType":" ","criticalityGroupName":"criticality","criticalityGroupMasterId":"8ec901d0-4b8a-4c30-9ba1-a08d0c2df984","accessableIndicator":0,"deviceType":"W","documentType":[{"id":"8324eda1-639f-48bb-8ff6-11358f389925","documentTypeCode":"342","digitalSignatureRequired":true,"documentTypeDescription":"NEW DOC","termAndConRequired":true}],"accessibleLocation":[],"applicationAction":[{"id":"2457c966-a6ce-4543-886f-ae5ee8bc6c8f","actionMasterId":"e34eda20-d186-4c54-9647-187306095d2e","actionName":"view","status":true,"actionId":"V01"}]}],
-              criticalityGroupData:[]
+              criticalityGroupData:[],
+              applicationData: [ { menuId: 1, menuTitle: 'tree1', subMenu: [{menuId: 2, menuTitle: 'tree2'}] }, { menuId: 3, menuTitle: 'tree3', }, ]
             },
         },
       });
       customRender(
         <Provider store={mockStore}>
-          <ApplicationMaster selectedTreeKey={1} setSelectedTreeKey={jest.fn()}/>
+          <ApplicationMaster />
         </Provider>
-      );      
+      );
+
+      const parentText=screen.getByText('tree3');
+      fireEvent.click(parentText);
+      const editButton=screen.getByRole('button', {name: 'Edit', exact: false});
+      fireEvent.click(editButton);
+      const editCancel=screen.getByRole('button', {name: 'Cancel', exact: false});
+      fireEvent.click(editCancel);
+      const childButton=screen.getByRole('button', {name: 'Add Child', exact: false});
+      fireEvent.click(childButton);
+      const siblingButton=screen.getByRole('button', {name: 'Add Sibling', exact: false});
+      fireEvent.click(siblingButton);
+
     });
+
+    it('edit panel save button should work', async () => {
+      const mockStore = createMockStore({
+        auth: { userId: 123 },
+        data:{
+            ApplicationMaster:{
+              applicationDetailsData:[{"id":"79eaef50-ecca-4e0c-9b07-a583b9d0ab1a","applicationId":"TESTAD","parentApplicationId":"Web","applicationName":"ADMINTEST","applicationType":"Module","applicationTitle":"ADMINTEST","documentNumRequired":true,"status":true,"nodeType":" ","criticalityGroupName":"criticality","criticalityGroupMasterId":"8ec901d0-4b8a-4c30-9ba1-a08d0c2df984","accessableIndicator":0,"deviceType":"W","documentType":[{"id":"8324eda1-639f-48bb-8ff6-11358f389925","documentTypeCode":"342","digitalSignatureRequired":true,"documentTypeDescription":"NEW DOC","termAndConRequired":true}],"accessibleLocation":[],"applicationAction":[{"id":"2457c966-a6ce-4543-886f-ae5ee8bc6c8f","actionMasterId":"e34eda20-d186-4c54-9647-187306095d2e","actionName":"view","status":true,"actionId":"V01"}]}],
+              criticalityGroupData:[],
+              applicationData: [ { menuId: 1, menuTitle: 'tree1', subMenu: [{menuId: 2, menuTitle: 'tree2'}] }, { menuId: 3, menuTitle: 'tree3', }, ]
+            },
+        },
+      });
+      customRender(
+        <Provider store={mockStore}>
+          <ApplicationMaster />
+        </Provider>
+      );
+
+      const parentText=screen.getByText('tree3');
+      fireEvent.click(parentText);
+      const editButton=screen.getByRole('button', {name: 'Edit', exact: false});
+      fireEvent.click(editButton);
+      const appTitle=screen.getByRole('textbox', {name: 'Application Title', exact: false});
+      fireEvent.change(appTitle, { target : { value: "test" }});
+      const editSave=screen.getByRole('button', {name: 'Save', exact:false});
+      fireEvent.click(editSave);
+    });
+
+
     
 });
