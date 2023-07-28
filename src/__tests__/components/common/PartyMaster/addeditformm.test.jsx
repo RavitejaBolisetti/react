@@ -43,7 +43,6 @@ const props = {
 describe('party master Components', () => {
     it('should render input field components', () => {
         customRender(<AddEditForm isVisible={true} viewMode={false} formData={{}} resetFields={jest.fn()} editMode={jest.fn()} buttonData={buttonData} setButtonData={jest.fn()} handleButtonClick={jest.fn()} onCloseAction={jest.fn()} saveButtonName={saveButtonName} isLoadingOnSave={isLoadingOnSave} {...props} />);
-        screen.debug();
         const partyname = screen.getByLabelText('Party Name');
         fireEvent.change(partyname, { target: { value: 'Dmstest' } });
         expect(partyname.value.includes('Dmstest'));

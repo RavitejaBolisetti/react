@@ -34,7 +34,6 @@ describe('LeftSideBar Components', () => {
         const findLeft = screen.getByRole('img', { name: /left/i });
         expect(findLeft).toBeTruthy();
         fireEvent.click(findLeft);
-        screen.debug();
     });
 });
 describe('LeftSideBar Components', () => {
