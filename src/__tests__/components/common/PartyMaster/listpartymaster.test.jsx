@@ -1,33 +1,37 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import '@testing-library/jest-dom/extend-expect';
-import customRender from "@utils/test-utils";
-import { ListPartyMaster } from "@components/common/PartyMaster/listpartymaster"
-import { screen, fireEvent } from "@testing-library/react";
+import customRender from '@utils/test-utils';
+import { ListPartyMaster } from '@components/common/PartyMaster/listpartymaster';
+import { screen, fireEvent } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
 
-
-
-describe("List party master Components", () => {
-    it("should render list components", ()=> {
-      customRender(<ListPartyMaster />);
-    });
-
-    it("should render partyName text", ()=> {
+describe('List party master Components', () => {
+    it('should render list components', () => {
         customRender(<ListPartyMaster />);
-        const partyName= screen.getByTitle("Party Name")  
-        expect(partyName).toBeInTheDocument()
     });
 
-    it("should render search input field", ()=> {
+    it('should render partyName text', () => {
         customRender(<ListPartyMaster />);
-        const search= screen.getByPlaceholderText("Search")  
-        expect(search).toBeInTheDocument()
+        const partyName = screen.getByTitle('Party Name');
+        expect(partyName).toBeInTheDocument();
     });
-    
+
+    it('should render search input field', () => {
+        customRender(<ListPartyMaster />);
+        const search = screen.getByPlaceholderText('Search');
+        expect(search).toBeInTheDocument();
+    });
+
+    it('should render button', async () => {
+        customRender(<ListPartyMaster />);
+        const getButton = screen.getAllByRole('button');
+        expect(getButton).toBeTruthy();
+    });
+
     it('Is search Field Present or not', () => {
         customRender(<ListPartyMaster />);
         const searchBtn = screen.findByPlaceholderText('Search');
@@ -47,9 +51,9 @@ describe("List party master Components", () => {
         const searchButton = screen.getByRole('button', { name: /search/i });
         await act(async () => {
             fireEvent.click(searchButton);
-       });
+        });
     });
-   
+
     it('should validate search', async () => {
         jest.setTimeout(200000);
         customRender(<ListPartyMaster />);
@@ -66,21 +70,18 @@ describe("List party master Components", () => {
         const btnClick = screen.getByRole('button', { name: /Add/i });
         fireEvent.click(btnClick);
     });
-    
-    it("is drawer opening on click of Add btn", ()=> {
+
+    it('is drawer opening on click of Add btn', () => {
         customRender(<ListPartyMaster />);
-        const addDrawerBtn = screen.getByTestId("addActionBtn")  
+        const addDrawerBtn = screen.getByTestId('addActionBtn');
         fireEvent.click(addDrawerBtn);
         expect(addDrawerBtn).toBeEnabled();
     });
-    
-    it("render refresh button", ()=> {
+
+    it('render refresh button', () => {
         customRender(<ListPartyMaster />);
-        const refreshbutton = screen.getByTestId("refreshBtn");
+        const refreshbutton = screen.getByTestId('refreshBtn');
         fireEvent.click(refreshbutton);
         expect(refreshbutton).toBeEnabled();
     });
-        
 });
- 
-    
