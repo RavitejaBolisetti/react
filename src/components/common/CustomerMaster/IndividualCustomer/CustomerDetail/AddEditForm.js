@@ -27,7 +27,7 @@ const { Text, Title } = Typography;
 
 const AddEditFormMain = (props) => {
     const { form, typeData, formData, corporateLovData, formActionType: { editMode } = undefined, customerType } = props;
-    const { setUploadedFileName, downloadFileFromList, fileList, setFileList, setFormData, userId, uploadDocumentFile, editedMode, approval, setCustomerNameList, customerNameList, setEditedMode, setUploadedFile, listShowLoading, showGlobalNotification, setEmptyList } = props;
+    const { nameChangeHistoryForm, editedMode, setCustomerNameList, customerNameList, setEditedMode, setButtonData, buttonData, status, setStatus, showGlobalNotification, setEmptyList } = props;
 
     const { whatsAppConfiguration, setWhatsAppConfiguration, handleFormFieldChange } = props;
     const { contactOverWhatsApp, contactOverWhatsAppActive, sameMobileNoAsWhatsApp, sameMobileNoAsWhatsAppActive } = whatsAppConfiguration;
@@ -37,9 +37,8 @@ const AddEditFormMain = (props) => {
     const [activeKey, setactiveKey] = useState([]);
     const [disabled, setDisabled] = useState(false);
     const [onSave, setOnSave] = useState(false);
-
-
     const [showStatus, setShowStatus] = useState('');
+
     useEffect(() => {
         if (showStatus.status === 'done') {
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: `${showStatus.name} file uploaded successfully` });
@@ -50,10 +49,9 @@ const AddEditFormMain = (props) => {
     }, [showStatus]);
 
     useEffect(() => {
-        setCustomerNameList(formData);
         setCorporateType(formData?.corporateType);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formData?.corporateType, formData]);
+    }, [formData?.corporateType]);
 
     useEffect(() => {
         setWhatsAppConfiguration({ contactOverWhatsApp: formData?.whatsappCommunicationIndicator, sameMobileNoAsWhatsApp: formData?.mobileNumberAsWhatsappNumber });
@@ -69,8 +67,6 @@ const AddEditFormMain = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [editedMode]);
-
-    const onDrop = (e) => { };
 
     const uploadProps = {
         messageText: (
@@ -92,22 +88,26 @@ const AddEditFormMain = (props) => {
     };
 
     const onHandleChange = () => {
-        form.validateFields(['lastName', 'firstName', 'titleCode'])
+        nameChangeHistoryForm.validateFields()
             .then(() => {
-                setCustomerNameList(form.getFieldsValue());
+                setCustomerNameList(nameChangeHistoryForm.getFieldsValue());
+                setStatus("Pending");
                 setactiveKey([]);
                 setEditedMode(false);
                 setOnSave(true);
+                setButtonData({ ...buttonData, formBtnActive: true });
+
             })
             .catch((err) => console.error(err));
 
     }
 
+
     const handleResetChange = () => {
-        form.setFieldsValue({ titleCode: null });
-        form.setFieldsValue({ middleName: null });
-        form.setFieldsValue({ firstName: null });
-        form.setFieldsValue({ lastName: null });
+        nameChangeHistoryForm.setFieldsValue({ titleCode: null });
+        nameChangeHistoryForm.setFieldsValue({ middleName: null });
+        nameChangeHistoryForm.setFieldsValue({ firstName: null });
+        nameChangeHistoryForm.setFieldsValue({ lastName: null });
     }
 
     const handleCorporateChange = (value) => {
@@ -135,7 +135,6 @@ const AddEditFormMain = (props) => {
     };
 
     const onCollapseChange = (value) => {
-        console.log(value, 'ssssss')
         setactiveKey(1);
         setEditedMode(true);
     }
@@ -203,76 +202,76 @@ const AddEditFormMain = (props) => {
                             </Col>
                         </Row>
                     </div>
-                    <div className={styles.cardInsideBox}>
-                        <Row>
-                            <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                <Text style={{ fontSize: '16px' }} strong>
-                                    Customer Name
-                                </Text>
+                    <Form form={nameChangeHistoryForm} id="myForm" autoComplete="off" layout="vertical">
+                        <div className={styles.cardInsideBox}>
+                            <Row>
+                                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                                    <Text style={{ fontSize: '16px' }} strong>
+                                        Customer Name
+                                    </Text>
 
-                            </Col>
-                            <Col xs={24} sm={24} md={12} lg={12} xl={12} style={{ textAlign: 'right' }}>
-                                <Button type="link" onClick={onViewHistoryChange} icon={<BiTimeFive />}>
-                                    View History
-                                </Button>
-                            </Col>
-                        </Row>
-                        <Divider />
-                        <Collapse expandIcon={expandIcon} activeKey={activeKey} expandIconPosition="end" onChange={() => onCollapseChange(1)} >
-                            <Panel header={
-                                <>
-                                    <Row type="flex" justify="space-between" align="middle" size="large">
-                                        <Row type="flex" justify="space-around" align="middle">
-                                            <Typography>
-                                                {customerNameList?.titleCode} {customerNameList?.firstName} {customerNameList?.middleName} {customerNameList?.lastName}
-                                            </Typography>
-                                            <Button
-                                                type="link"
-                                                icon={<FiEdit />}
-                                                onClick={() => {
-                                                    onEdit();
-                                                }}
-                                                disabled={disabled}
-                                                style={{ color: disabled ? 'grey' : 'red' }}
-                                            >
-                                                Edit
-                                            </Button>
+                                </Col>
+                                <Col xs={24} sm={24} md={12} lg={12} xl={12} style={{ textAlign: 'right' }}>
+                                    <Button type="link" onClick={onViewHistoryChange} icon={<BiTimeFive />}>
+                                        View History
+                                    </Button>
+                                </Col>
+                            </Row>
+                            <Divider />
+                            <Collapse expandIcon={expandIcon} activeKey={activeKey} expandIconPosition="end" onChange={() => onCollapseChange(1)} >
+                                <Panel header={
+                                    <>
+                                        <Row type="flex" justify="space-between" align="middle" size="large">
+                                            <Row type="flex" justify="space-around" align="middle">
+                                                <Typography>
+                                                    {customerNameList?.titleCode} {customerNameList?.firstName} {customerNameList?.middleName} {customerNameList?.lastName}
+                                                </Typography>
+                                                <Button
+                                                    type="link"
+                                                    icon={<FiEdit />}
+                                                    onClick={() => {
+                                                        onEdit();
+                                                    }}
+                                                    disabled={disabled}
+                                                    style={{ color: disabled ? 'grey' : 'red' }}
+                                                >
+                                                    Edit
+                                                </Button>
+                                            </Row>
+                                            {status === 'Pending' ? (
+                                                <Tag style={{ textAlign: 'right' }} color="warning">Pending</Tag>) : (status === 'Approved') ? <Tag style={{ textAlign: 'right' }} color="warning">Pending</Tag> : null}
                                         </Row>
-                                        {approval ? (
-                                            <Tag style={{ textAlign: 'right' }} color="warning">Pending</Tag>) :
-                                            null}
-                                    </Row>
-                                    {editedMode || onSave ? (
-                                        <Text type="secondary">Current Name</Text>
-                                    ) :
-                                        null
-                                    }
-                                </>
-                            }
-                                key={1}>
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={4} lg={4} xl={4}>
-                                        <Form.Item label="Title" initialValue={formData?.titleCode} name="titleCode" data-testid="title" rules={[validateRequiredSelectField('title')]}>
-                                            <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} placeholder={preparePlaceholderSelect('title')} fieldNames={{ label: 'value', value: 'key' }} options={typeData['TITLE']}></Select>
-                                        </Form.Item>
-                                    </Col>
-                                    <Col xs={24} sm={24} md={6} lg={6} xl={6}>
-                                        <Form.Item label="First Name" initialValue={formData?.firstName} name="firstName" data-testid="firstName" rules={[validateRequiredInputField('first name')]}>
-                                            <Input placeholder={preparePlaceholderText('first name')} />
-                                        </Form.Item>
-                                    </Col>
-                                    <Col xs={24} sm={24} md={7} lg={7} xl={7}>
-                                        <Form.Item label="Middle Name" initialValue={formData?.middleName} name="middleName" data-testid="middleName">
-                                            <Input placeholder={preparePlaceholderText('middle name')} />
-                                        </Form.Item>
-                                    </Col>
-                                    <Col xs={24} sm={24} md={7} lg={7} xl={7}>
-                                        <Form.Item label="Last Name" initialValue={formData?.lastName} name="lastName" data-testid="lastName" rules={[validateRequiredInputField('last name')]}>
-                                            <Input placeholder={preparePlaceholderText('last name')} />
-                                        </Form.Item>
-                                    </Col>
+                                        {editedMode || onSave ? (
+                                            <Text type="secondary">Current Name</Text>
+                                        ) :
+                                            null
+                                        }
+                                    </>
+                                }
+                                    key={1}>
+                                    <Row gutter={20}>
+                                        <Col xs={24} sm={24} md={4} lg={4} xl={4}>
+                                            <Form.Item label="Title" initialValue={customerNameList?.titleCode} name="titleCode" data-testid="title" rules={[validateRequiredSelectField('title')]}>
+                                                <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} placeholder={preparePlaceholderSelect('title')} fieldNames={{ label: 'value', value: 'key' }} options={typeData['TITLE']}></Select>
+                                            </Form.Item>
+                                        </Col>
+                                        <Col xs={24} sm={24} md={6} lg={6} xl={6}>
+                                            <Form.Item label="First Name" initialValue={customerNameList?.firstName} name="firstName" data-testid="firstName" rules={[validateRequiredInputField('first name')]}>
+                                                <Input placeholder={preparePlaceholderText('first name')} />
+                                            </Form.Item>
+                                        </Col>
+                                        <Col xs={24} sm={24} md={7} lg={7} xl={7}>
+                                            <Form.Item label="Middle Name" initialValue={customerNameList?.middleName} name="middleName" data-testid="middleName">
+                                                <Input placeholder={preparePlaceholderText('middle name')} />
+                                            </Form.Item>
+                                        </Col>
+                                        <Col xs={24} sm={24} md={7} lg={7} xl={7}>
+                                            <Form.Item label="Last Name" initialValue={customerNameList?.lastName} name="lastName" data-testid="lastName" rules={[validateRequiredInputField('last name')]}>
+                                                <Input placeholder={preparePlaceholderText('last name')} />
+                                            </Form.Item>
+                                        </Col>
 
-                                    {/* {editMode && (
+                                        {/* {editMode && (
                                         <>
                                             <div className={styles.uploadDragger}>
                                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -299,38 +298,39 @@ const AddEditFormMain = (props) => {
                                         </>
                                     )} */}
 
-                                </Row>
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <UploadUtil {...uploadProps} />
-                                    </Col>
-                                </Row>
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <Button type="primary" className={styles.marR20} onClick={onHandleChange} htmlType="button" >
-                                            Save
-                                        </Button>
-                                        <Button className={styles.marB20} onClick={handleResetChange} danger>
-                                            Reset
-                                        </Button>
-                                    </Col>
-                                </Row>
-                            </Panel>
-                        </Collapse>
-                        {onSave && (
-                            <Card title={<>
-                                <Row type="flex" justify="space-between" align="middle" size="large">
-                                    <Row type="flex" justify="space-around" align="middle">
-                                        <Typography>
-                                            {formData?.titleCode} {formData?.firstName} {formData?.middleName} {formData?.lastName}
-                                        </Typography>
                                     </Row>
-                                </Row>
+                                    <Row gutter={20}>
+                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                            <UploadUtil {...uploadProps} />
+                                        </Col>
+                                    </Row>
+                                    <Row gutter={20}>
+                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                            <Button type="primary" className={styles.marR20} onClick={onHandleChange}>
+                                                Save
+                                            </Button>
+                                            <Button className={styles.marB20} onClick={handleResetChange} danger>
+                                                Reset
+                                            </Button>
+                                        </Col>
+                                    </Row>
+                                </Panel>
+                            </Collapse>
+                            {status === 'Pending' && (
+                                <Card title={<>
+                                    <Row type="flex" justify="space-between" align="middle" size="large">
+                                        <Row type="flex" justify="space-around" align="middle">
+                                            <Typography>
+                                                {formData?.titleCode} {formData?.firstName} {formData?.middleName} {formData?.lastName}
+                                            </Typography>
+                                        </Row>
+                                    </Row>
 
-                                <Text type="secondary">Previous Name</Text>
+                                    <Text type="secondary">Previous Name</Text>
 
-                            </>} />)}
-                    </div>
+                                </>} />)}
+                        </div>
+                    </Form>
                     <Divider />
                     <div className={styles.blockSection}>
                         <Row gutter={20}>

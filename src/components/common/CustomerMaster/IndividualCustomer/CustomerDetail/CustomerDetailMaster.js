@@ -84,15 +84,16 @@ const CustomerDetailMasterBase = (props) => {
     const { fetchViewDocument, viewListShowLoading, listSupportingDocumentShowLoading, isSupportingDocumentDataLoaded, supportingData, isViewDataLoaded, viewDocument } = props;
 
     const [showForm, setShowForm] = useState(false);
+    const [status, setStatus] = useState(null);
     const [emptyList, setEmptyList] = useState(true);
-    const [approval, setApproval] = useState(false);
+    const [nameChangeHistoryForm] = Form.useForm();
     const [fileList, setFileList] = useState([]);
     const [uploadedFileName, setUploadedFileName] = useState('');
     const [editedMode, setEditedMode] = useState(false);
     const [uploadedFile, setUploadedFile] = useState();
     const [formData, setFormData] = useState();
     const [uploadImgDocId, setUploadImgDocId] = useState('');
-    const [customerNameList, setCustomerNameList] = useState(data);
+    const [customerNameList, setCustomerNameList] = useState({});
     const [supportingDataView, setSupportingDataView] = useState();
 
     const [whatsAppConfiguration, setWhatsAppConfiguration] = useState({ contactOverWhatsApp: null, contactOverWhatsAppActive: null, sameMobileNoAsWhatsApp: null, sameMobileNoAsWhatsAppActive: null });
@@ -111,10 +112,18 @@ const CustomerDetailMasterBase = (props) => {
     }, [isDataLoaded]);
 
     useEffect(() => {
+        if (data) {
+            console.log('data', data);
+            setCustomerNameList({
+                titleCode: data?.titleCode, firstName: data?.firstName, middleName: data?.middleName, lastName: data?.lastName
+            })
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [data]);
+    useEffect(() => {
         return () => {
             resetData();
         };
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -200,9 +209,10 @@ const CustomerDetailMasterBase = (props) => {
         setFileList([]);
         setEmptyList(false);
         setUploadedFile();
-        const data = { ...values, customerId: selectedCustomer?.customerId, status: true, docId: uploadedFile, documentTypeId: form.getFieldValue('documentTypeId') };
+        const data = { ...values, customerId: selectedCustomer?.customerId, status: true, docId: uploadedFile, documentTypeId: form.getFieldValue('documentTypeId'), titleCode: customerNameList?.titleCode, firstName: customerNameList?.firstName, middleName: customerNameList?.middleName, lastName: customerNameList?.lastName };
 
         const onSuccess = (res) => {
+            setStatus("Approved");
             form.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId });
@@ -211,14 +221,13 @@ const CustomerDetailMasterBase = (props) => {
 
             if (res.data) {
                 handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
-                setSelectedCustomer({ ...res.data, customerName: res?.data?.firstName + ' ' + res?.data?.middleName + ' ' + res?.data?.lastName });
+                // setSelectedCustomer({ ...res.data, customerName: res?.data?.firstName + ' ' + res?.data?.middleName + ' ' + res?.data?.lastName });
                 setSelectedCustomerId(res?.data?.customerId);
-                setCustomerNameList(res?.data);
-                setApproval(true);
-                console.log(approval, customerNameList, 'sdsdsdsdsd')
+                setCustomerNameList({
+                    titleCode: res?.data?.titleCode, firstName: res?.data?.firstName, middleName: res?.data?.middleName, lastName: res?.data?.lastName
+                })
             }
         };
-
         const onError = (message) => {
             showGlobalNotification({ message });
         };
@@ -234,6 +243,7 @@ const CustomerDetailMasterBase = (props) => {
 
         saveData(requestData);
     };
+
 
     const handlePreview = (selectedDocument) => {
         const extraParams = [
@@ -285,6 +295,8 @@ const CustomerDetailMasterBase = (props) => {
         setUploadImgDocId,
         uploadImgDocId,
         setButtonData,
+        buttonData,
+        nameChangeHistoryForm,
         typeData,
         formData,
         setFormData,
@@ -295,6 +307,7 @@ const CustomerDetailMasterBase = (props) => {
         setUploadedFile,
         uploadedFile,
         downloadFileFromButton,
+        handleFormValueChange,
         deleteFile,
         editedMode,
         setEditedMode,
@@ -312,9 +325,9 @@ const CustomerDetailMasterBase = (props) => {
         setWhatsAppConfiguration,
         handleFormFieldChange,
         setCustomerNameList,
-        customerNameList: customerNameList || formData,
-        approval,
-        setApproval
+        customerNameList,
+        status,
+        setStatus,
     };
 
     const viewProps = {
@@ -324,6 +337,7 @@ const CustomerDetailMasterBase = (props) => {
         styles,
         isLoading,
     };
+
 
     return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
