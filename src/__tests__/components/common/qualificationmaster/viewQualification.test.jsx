@@ -1,45 +1,24 @@
-import '@testing-library/jest-dom/extend-expect';
-import customRender from '@utils/test-utils';
-import { screen, fireEvent } from '@testing-library/react';
-
+import React from 'react';
+import { render } from '@testing-library/react';
 import { ViewQualificationList } from '@components/common/QualificationMaster/ViewQualificationList';
 
-beforeEach(() => {
-    jest.clearAllMocks();
-});
+describe('ViewQualificationList', () => {
+    test('renders qualification details correctly', () => {
+        const formData = {
+            qualificationCode: 'Q123',
+            qualificationName: 'Sample Qualification',
+            status: 1,
+        };
 
-const props = {
-    deletedTime: [],
-    setDeletedTime: jest.fn(),
-    timeData: [],
-    setTimeData: jest.fn(),
-    isAddTimeVisible: true,
-    setIsAddTimeVisible: jest.fn(),
-    setButtonData: jest.fn(),
-    formActionType: true,
-    formData: {},
-    setFormData: jest.fn(),
-    showGlobalNotification: jest.fn(),
-    forceUpdate: jest.fn(),
-    handleFormValueChange: jest.fn(),
-    handleFormFieldChange: jest.fn(),
-    allowedTimingSave: true,
-    setAllowedTimingSave: jest.fn(),
-    onFinish: jest.fn(),
-    onFinishFailed: jest.fn(),
-    viewProps: jest.fn(),
-};
+        const { getByText } = render(<ViewQualificationList formData={formData} style={{}} />);
 
-describe('ViewQualification component', () => {
-    it('should render the ViewQualification components', () => {
-        customRender(<ViewQualificationList {...props} />);
-        const qualificationCode = screen.getByText('Qualification Code');
-        expect(qualificationCode).toBeTruthy();
-        const qualificationName = screen.getByText('Qualification Name');
-        expect(qualificationName).toBeTruthy();
-        const qualificationStatus = screen.getByText('Status');
-        expect(qualificationStatus).toBeTruthy();
-        const checkInactive = screen.getByText('InActive');
-        fireEvent.click(checkInactive);
+        expect(getByText('Qualification Code')).toBeInTheDocument();
+        expect(getByText('Q123')).toBeInTheDocument();
+
+        expect(getByText('Qualification Name')).toBeInTheDocument();
+        expect(getByText('Sample Qualification')).toBeInTheDocument();
+
+        expect(getByText('Status')).toBeInTheDocument();
+        expect(getByText('Active')).toBeInTheDocument();
     });
 });
