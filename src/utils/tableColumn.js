@@ -7,6 +7,8 @@ import { Button, Space, Tag, Switch } from 'antd';
 import { FiEdit } from 'react-icons/fi';
 import { FaRegEye } from 'react-icons/fa';
 
+import { addToolTip } from 'utils/addToolTip';
+
 import { tableColumnActions } from './tableColumnActions';
 import { DEFAULT_PAGE_SIZE } from 'constants/constants';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
@@ -83,10 +85,10 @@ export const tblActionColumnCurd =
             render: (record) => [
                 <Space wrap>
                     <Button data-testid="view" className={styles.tableIcons} aria-label="ai-view" onClick={(record) => onEditAction(record?.code)}>
-                        <FaRegEye />
+                        {addToolTip('View')(<FaRegEye />)}
                     </Button>
                     <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={(record) => onEditAction(record?.code)}>
-                        <FiEdit />
+                        {addToolTip('Edit')(<FiEdit />)}
                     </Button>
                 </Space>,
             ],
@@ -102,10 +104,10 @@ export const tblActionColumn = ({ title = 'Action', handleButtonClick, width = '
         render: (record) => [
             <Space wrap>
                 <Button data-testid="view" className={styles.tableIcons} aria-label="ai-view" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.VIEW, record })}>
-                    <FaRegEye />
+                    {addToolTip('View')(<FaRegEye />)}
                 </Button>
                 <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.EDIT, record })}>
-                    <FiEdit />
+                    {addToolTip('Edit')(<FiEdit />)}
                 </Button>
             </Space>,
         ],
@@ -132,10 +134,10 @@ export const tableColumnActionsEditDelete =
         render: (record) => [
             <Space wrap>
                 <Button data-testid="view" className={styles.tableIcons} aria-label="ai-view" onClick={(e) => onEditAction(record?.code)}>
-                    <FaRegEye />
+                    {addToolTip('View')(<FaRegEye />)}
                 </Button>
                 <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={(e) => onEditAction(record?.code)}>
-                    <FiEdit />
+                    {addToolTip('Edit')(<FiEdit />)}
                 </Button>
             </Space>,
         ],

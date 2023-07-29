@@ -349,7 +349,7 @@ const AddEditFormMain = (props) => {
                                 )}
                             </Panel>
                         </Collapse>
-                        <Collapse collapsible="icon" defaultActiveKey={['2']} expandIcon={expandIcon} expandIconPosition="end">
+                        <Collapse collapsible="icon" expandIcon={expandIcon} expandIconPosition="end">
                             <Panel header="Social Profile" key="2">
                                 <Divider />
                                 <Row gutter={20}>
@@ -429,12 +429,12 @@ const AddEditFormMain = (props) => {
                                  </Row>
                              </Panel>
 	                         </Collapse> */}
-                        <Collapse collapsible="icon" defaultActiveKey={['3']} expandIcon={expandIcon} expandIconPosition="end">
+                        <Collapse collapsible="icon" expandIcon={expandIcon} expandIconPosition="end">
                             <Panel header="Authority Details (Who Knowns Whom)" key="4">
                                 <Divider />
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Name of Person" initialValue={formData?.authorityDetails?.personName} name="personName" rules={[validateRequiredInputField('Name of Person')]}>
+                                        <Form.Item label="Name of Person" initialValue={formData?.authorityDetails?.personName} name="personName">
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Enter name of person')} />
                                         </Form.Item>
                                     </Col>
@@ -446,7 +446,7 @@ const AddEditFormMain = (props) => {
                                     </Col>
 
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Company Name" initialValue={formData?.authorityDetails?.companyName} name="companyName" rules={[validateRequiredInputField('Company Name')]}>
+                                        <Form.Item label="Company Name" initialValue={formData?.authorityDetails?.companyName} name="companyName">
                                             <Input maxLength={50} placeholder={preparePlaceholderText('Enter company name')} />
                                         </Form.Item>
                                     </Col>
@@ -460,9 +460,8 @@ const AddEditFormMain = (props) => {
                                 </Row>
                             </Panel>
                         </Collapse>
-                        ``
-                        <Collapse collapsible="icon" defaultActiveKey={['5']} expandIcon={expandIcon} expandIconPosition="end">
-                            <Panel header="Upload Customer Form" key="5">
+                        <Collapse collapsible="icon" expandIcon={expandIcon} expandIconPosition="end">
+                            <Panel header="Upload Customer Form" key="4">
                                 <>
                                     <div>
                                         <Row gutter={20}>

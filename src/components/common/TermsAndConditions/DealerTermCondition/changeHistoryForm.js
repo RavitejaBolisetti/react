@@ -6,7 +6,7 @@
 import React from 'react';
 import { Row, Col } from 'antd';
 
-import { tblPrepareColumns } from 'utils/tableCloumn';
+import { tblPrepareColumns } from 'utils/tableColumn';
 
 import { withDrawer } from 'components/withDrawer';
 import { ListDataTable } from 'utils/ListDataTable';
@@ -64,6 +64,7 @@ const ChangeHistoryMain = (props) => {
     const tableProps = {
         tableColumn,
         tableData: ChangeHistoryTermsConditionsData,
+        scroll: { x: '100%', y: 'calc(100vh - 220px)' },
     };
     return (
         <>

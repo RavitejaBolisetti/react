@@ -10,7 +10,7 @@ import { Button, Col, Input, Form, Row, Space, Empty, ConfigProvider } from 'ant
 import dayjs from 'dayjs';
 import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { CONFIGURABLE_PARAMETARS_INPUT_TYPE } from './InputType';
-import { tblPrepareColumns } from 'utils/tableCloumn';
+import { tblPrepareColumns } from 'utils/tableColumn';
 import { DataTable } from 'utils/dataTable';
 import { filterFunction } from 'utils/filterFunction';
 import { PARAM_MASTER } from 'constants/paramMaster';

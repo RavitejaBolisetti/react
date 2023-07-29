@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { convertDateTime } from 'utils/formatDateTime';
 
-import { tblPrepareColumns } from 'utils/tableCloumn';
+import { tblPrepareColumns } from 'utils/tableColumn';
 import { otfDataActions } from 'store/actions/data/otf/otf';
 
 import ChangeHistoryStyles from './ChangeHistory.module.css';

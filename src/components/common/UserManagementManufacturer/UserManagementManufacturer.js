@@ -11,7 +11,7 @@ import { EditIcon, ViewEyeIcon } from 'Icons';
 import { IoBanOutline } from 'react-icons/io5';
 import { PlusOutlined } from '@ant-design/icons';
 
-import { tblPrepareColumns } from 'utils/tableCloumn';
+import { tblPrepareColumns } from 'utils/tableColumn';
 import DataTable from 'utils/dataTable/DataTable';
 import { showGlobalNotification } from 'store/actions/notification';
 import { escapeRegExp } from 'utils/escapeRegExp';

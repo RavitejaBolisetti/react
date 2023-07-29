@@ -112,11 +112,11 @@
     background: #2782f9;
 }
 
-.modelTooltip > svg {
+.modelTooltip svg {
     color: #2782f9;
     position: absolute;
-    right: 175px;
-    top: 5px;
+    right: 37px;
+    top: 39px;
 }
 
 .drawerBody {
