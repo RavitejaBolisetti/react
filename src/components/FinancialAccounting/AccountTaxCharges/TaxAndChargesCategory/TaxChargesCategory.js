@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect, useMemo, useReducer } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { Col, Form, Row } from 'antd';
 import { bindActionCreators } from 'redux';
@@ -88,18 +88,15 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const TaxChargesCategoryMain = (props) => {
-    const { data, saveData, userId, isDataLoaded, showGlobalNotification, taxChargeCategoryCodeData, isStateDataLoaded, fetchStateList, listStateShowLoading, stateData, saleData, isTaxChargeCategoryTypeLoaded, fetchTaxCodeList, fetchTaxChargeCategoryType, taxChargeCategoryTypeData, listShowLoadingTaxChargeCategoryType, isTaxChargeCategoryLoaded, fetchTaxChargeCategory, listShowLoadingTaxChargeCategory, totalRecords, taxChargeCategoryData } = props;
+    const { saveData, userId, showGlobalNotification, taxChargeCategoryCodeData, isStateDataLoaded, fetchStateList, listStateShowLoading, stateData, saleData, fetchTaxCodeList, fetchTaxChargeCategoryType, taxChargeCategoryTypeData, listShowLoadingTaxChargeCategoryType, fetchTaxChargeCategory, listShowLoadingTaxChargeCategory, totalRecords, taxChargeCategoryData } = props;
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
     const [showDataLoading, setShowDataLoading] = useState(true);
-    const [searchData, setSearchdata] = useState('');
     const [refershData, setRefershData] = useState(false);
-    const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
     const [formData, setFormData] = useState([]);
     const [filterString, setFilterString] = useState();
     const [isFormVisible, setIsFormVisible] = useState(false);
-    const [disabledEdit, setDisabledEdit] = useState(false);
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -114,6 +111,7 @@ export const TaxChargesCategoryMain = (props) => {
     const [taxChargeCalForm] = Form.useForm();
     const [formEdit, setFormEdit] = useState(false);
     const [taxChargeCalList, setTaxChargeCalList] = useState([]);
+    const [dropdownItems, setDropdownItems] = useState([]);
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
@@ -205,7 +203,7 @@ export const TaxChargesCategoryMain = (props) => {
                 name: 'taxChargeType',
             },
         ];
-        
+
         fetchTaxCodeList({ setIsLoading: listShowLoadingTaxChargeCategory, userId, extraParams, onSuccessAction });
     };
 
@@ -216,6 +214,30 @@ export const TaxChargesCategoryMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, refershData, extraParams]);
 
+    useEffect(() => {
+        setDropdownItems(() => []);
+        if (taxChargeCalList && taxChargeCalList?.length > 0) {
+            let len1 = taxChargeCalList?.length;
+            let len2 = taxChargeCategoryCodeData?.length;
+            for (let j = 0; j < len2; j++) {
+                let flag = false;
+                for (let i = 0; i < len1; i++) {
+                    if (taxChargeCalList[i]?.chargeCode === taxChargeCategoryCodeData[j]?.taxCode) {
+                        setDropdownItems((item) => [...item, { ...taxChargeCategoryCodeData[j], disabled: true }]);
+                        flag = true;
+                        break;
+                    }
+                }
+                if (!flag) {
+                    setDropdownItems((item) => [...item, { ...taxChargeCategoryCodeData[j], disabled: false }]);
+                }
+            }
+        } else if (taxChargeCategoryCodeData && taxChargeCategoryCodeData?.length) {
+            setDropdownItems(() => [...taxChargeCategoryCodeData]);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [taxChargeCategoryCodeData]);
+
     const handleReferesh = () => {
         setShowDataLoading(true);
         setRefershData(!refershData);
@@ -224,10 +246,8 @@ export const TaxChargesCategoryMain = (props) => {
     const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
         setFormData([]);
-
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
         setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
-
         record && setFormData(record);
         setIsFormVisible(true);
     };
@@ -295,11 +315,13 @@ export const TaxChargesCategoryMain = (props) => {
     };
 
     const onCloseAction = () => {
+        setFormEdit(false);
         form.resetFields();
         taxChargeCalForm.resetFields();
         setIsFormVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
         setTaxChargeCalList(() => []);
+        setDropdownItems(() => []);
     };
 
     const drawerTitle = useMemo(() => {
@@ -323,7 +345,6 @@ export const TaxChargesCategoryMain = (props) => {
         isVisible: isFormVisible,
         onCloseAction,
         titleOverride: drawerTitle.concat('Tax & Charges Category'),
-        tableData: searchData,
 
         ADD_ACTION,
         EDIT_ACTION,
@@ -337,15 +358,14 @@ export const TaxChargesCategoryMain = (props) => {
         taxChargeCategoryTypeData,
         taxChargeCategoryCodeData,
         handleCodeFunction,
-        setDisabledEdit,
-        disabledEdit,
-
         editForm,
         taxChargeCalForm,
         formEdit,
         setFormEdit,
         taxChargeCalList,
         setTaxChargeCalList,
+        dropdownItems,
+        setDropdownItems,
     };
 
     const tableProps = {
