@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { tblPrepareColumns, tblStatusColumn } from 'utils/tableCloumn';
+import { tblPrepareColumns, tblStatusColumn } from 'utils/tableColumn';
 
 import { DataTable } from 'utils/dataTable';
 import { withDrawer } from 'components/withDrawer';

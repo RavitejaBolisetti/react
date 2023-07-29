@@ -24,7 +24,7 @@ const { Text } = Typography;
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { tooltTipText, isVehicleLovDataLoading, handleFormValueChange, onHandleSelect, optionsServicesMapping, setoptionsServicesMapping, optionsServiceModified, setoptionsServiceModified, formData, openAccordian, isReadOnly, setIsReadOnly, setOpenAccordian, selectedOrderId, form, onErrorAction, showGlobalNotification, fetchList, userId, listShowLoading, saveData, onSuccessAction, ProductHierarchyData, typeData, formActionType } = props;
+    const { toolTipContent, isVehicleLovDataLoading, handleFormValueChange, onHandleSelect, optionsServicesMapping, setoptionsServicesMapping, optionsServiceModified, setoptionsServiceModified, formData, openAccordian, isReadOnly, setIsReadOnly, setOpenAccordian, selectedOrderId, form, onErrorAction, showGlobalNotification, fetchList, userId, listShowLoading, saveData, onSuccessAction, ProductHierarchyData, typeData, formActionType } = props;
     const [optionForm] = Form.useForm();
     const findUsageType = (usage) => {
         const foundVal = typeData[PARAM_MASTER.VEHCL_TYPE.id]?.find((element, index) => element?.value === usage);
@@ -95,12 +95,13 @@ const AddEditFormMain = (props) => {
                                         <Select placeholder="Select Vehicle Usage Type" allowClear options={typeData['VEHCL_TYPE']} fieldNames={{ label: 'value', value: 'key' }} />
                                     </Form.Item>
                                 </Col>
-                                <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.modelTooltip}>
-                                    {addToolTip(tooltTipText, 'bottom', '#D3EDFE', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}
-                                    <Form.Item label={`${modelTitle}`} name="model" data-testid="model" rules={[validateRequiredSelectField('Model')]}>
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item label="Model" name="model" data-testid="model" rules={[validateRequiredSelectField('Model')]}>
                                         <Select loading={isVehicleLovDataLoading} onSelect={onHandleSelect} placeholder="Select" allowClear options={ProductHierarchyData} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }} showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
                                     </Form.Item>
+                                    {toolTipContent && form.getFieldValue('model') && <div className={styles.modelTooltip}>{addToolTip(toolTipContent, 'bottom', '#D3EDFE', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}</div>}
                                 </Col>
+
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Form.Item label="Model Code" name="modelCode" data-testid="vehicleVariant">
                                         <Input {...disabledProp} placeholder={preparePlaceholderText('Model Code')} />

@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import { ROUTING_USER_MANAGEMENT_MANUFACTURER } from 'constants/routing';
 import { IoBanOutline } from 'react-icons/io5';
 import { PlusOutlined } from '@ant-design/icons';
-import { tblPrepareColumns } from 'utils/tableCloumn';
+import { tblPrepareColumns } from 'utils/tableColumn';
 import DataTable from 'utils/dataTable/DataTable';
 import { showGlobalNotification } from 'store/actions/notification';
 import { userManagementDataActions } from 'store/actions/data/userManagement';
