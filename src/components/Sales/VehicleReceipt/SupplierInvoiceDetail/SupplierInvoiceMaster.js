@@ -13,9 +13,8 @@ import { VehicleReceiptFormButton } from '../VehicleReceiptFormButton';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { otfDataActions } from 'store/actions/data/otf/otf';
+import { supplierInvoiceDataActions } from 'store/actions/data/vehicleReceipt/supplierInvoice';
 import { showGlobalNotification } from 'store/actions/notification';
-import { salesConsultantActions } from 'store/actions/data/otf/salesConsultant';
 
 import styles from 'components/common/Common.module.css';
 
@@ -23,9 +22,8 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            OTF: {
-                OtfDetails: { isLoaded: isDataLoaded = false, isLoading, data: otfData = [] },
-                salesConsultantLov: { isLoaded: isSalesConsultantDataLoaded, data: salesConsultantLov = [] },
+            VehicleReceipt: {
+                SupplierInvoice: { isLoaded: isDataLoaded = false, isLoading, data: supplierInvoiceData = [] },
             },
         },
     } = state;
@@ -36,11 +34,9 @@ const mapStateToProps = (state) => {
         userId,
         isDataLoaded,
 
-        otfData,
+        supplierInvoiceData,
         isLoading,
         moduleTitle,
-        isSalesConsultantDataLoaded,
-        salesConsultantLov,
     };
     return returnValue;
 };
@@ -49,13 +45,10 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchList: otfDataActions.fetchList,
-            saveData: otfDataActions.saveData,
-            resetData: otfDataActions.reset,
-            listShowLoading: otfDataActions.listShowLoading,
-
-            fetchSalesConsultant: salesConsultantActions.fetchList,
-            listConsultantShowLoading: salesConsultantActions.listShowLoading,
+            fetchList: supplierInvoiceDataActions.fetchList,
+            saveData: supplierInvoiceDataActions.saveData,
+            resetData: supplierInvoiceDataActions.reset,
+            listShowLoading: supplierInvoiceDataActions.listShowLoading,
             showGlobalNotification,
         },
         dispatch
@@ -63,25 +56,11 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const SupplierInvoiceDetailsMasterBase = (props) => {
-    const { typeData, listConsultantShowLoading } = props;
-    const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, otfData, saveData, isLoading } = props;
-    const { form, selectedOrderId, formActionType, handleFormValueChange, fetchSalesConsultant, salesConsultantLov, isSalesConsultantDataLoaded, NEXT_ACTION, handleButtonClick } = props;
+    const { typeData } = props;
+    const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, supplierInvoiceData, saveData, isLoading } = props;
+    const { form, selectedId, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick } = props;
     const [exchangeValue, setexchangeValue] = useState(false);
     const [loyaltyValue, setloyaltyValue] = useState(false);
-
-    useEffect(() => {
-        if (otfData?.exchange) {
-            setexchangeValue(false);
-            setloyaltyValue(true);
-        } else if (otfData?.loyaltyScheme) {
-            setexchangeValue(true);
-            setloyaltyValue(false);
-        } else {
-            setexchangeValue(false);
-            setloyaltyValue(false);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [otfData]);
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
@@ -91,38 +70,30 @@ const SupplierInvoiceDetailsMasterBase = (props) => {
         {
             key: 'otfNumber',
             title: 'otfNumber',
-            value: selectedOrderId,
+            value: selectedId,
             name: 'OTF Number',
         },
     ];
 
     useEffect(() => {
-        if (userId && selectedOrderId) {
+        if (userId && selectedId) {
             const extraParams = [
                 {
-                    key: 'otfNumber',
-                    title: 'otfNumber',
-                    value: selectedOrderId,
-                    name: 'OTF Number',
+                    key: 'supplierInvoiceNumber',
+                    title: 'supplierInvoiceNumber',
+                    value: selectedId,
+                    name: 'Supplier Invoice Number',
                 },
             ];
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedOrderId]);
-
-    useEffect(() => {
-        if (!isSalesConsultantDataLoaded && userId) {
-            fetchSalesConsultant({ setIsLoading: listConsultantShowLoading, userId });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isSalesConsultantDataLoaded, userId]);
+    }, [userId]);
 
     const onFinish = (values) => {
-        const recordId = otfData?.id || '';
-        const otfNum = otfData?.otfNumber || '';
+        const recordId = supplierInvoiceData?.id || '';
         const exchange = values?.exchange === true ? 1 : 0;
-        const data = { ...values, id: recordId, otfNumber: otfNum, loyaltyScheme: values?.loyaltyScheme === true ? 1 : 0, exchange: exchange, initialPromiseDeliveryDate: values?.initialPromiseDeliveryDate?.format('YYYY-MM-DD'), custExpectedDeliveryDate: values?.custExpectedDeliveryDate?.format('YYYY-MM-DD') };
+        const data = { ...values, id: recordId, otfNumber: '', loyaltyScheme: values?.loyaltyScheme === true ? 1 : 0, exchange: exchange, initialPromiseDeliveryDate: values?.initialPromiseDeliveryDate?.format('YYYY-MM-DD'), custExpectedDeliveryDate: values?.custExpectedDeliveryDate?.format('YYYY-MM-DD') };
         delete data?.mitraName;
         delete data?.mitraType;
         delete data?.modeOfPAyment;
@@ -161,9 +132,8 @@ const SupplierInvoiceDetailsMasterBase = (props) => {
 
         userId,
         isDataLoaded,
-        formData: otfData,
+        formData: supplierInvoiceData,
         isLoading,
-        salesConsultantLov,
         exchangeValue,
         setexchangeValue,
         loyaltyValue,
@@ -172,10 +142,9 @@ const SupplierInvoiceDetailsMasterBase = (props) => {
 
     const viewProps = {
         typeData,
-        formData: otfData,
+        formData: supplierInvoiceData,
         styles,
         isLoading,
-        salesConsultantLov,
     };
 
     const handleFieldsChange = () => {

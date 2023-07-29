@@ -15,7 +15,7 @@ import styles from 'components/common/Common.module.css';
 const { Search } = Input;
 
 export default function VehicleReceiptFilter(props) {
-    const { extraParams, removeFilter, handleResetFilter, advanceFilter = false, otfFilter = false, title, filterString, setFilterString, typeData, setAdvanceSearchVisible, searchForm } = props;
+    const { extraParams, removeFilter, handleResetFilter, advanceFilter = false, otfFilter = false, title, filterString, setFilterString, receiptType, handleReceiptTypeChange, typeData, setAdvanceSearchVisible, searchForm, handleChange, handleSearch } = props;
 
     const [toggleButton, settoggleButton] = useState();
     const handleToggle = (value) => {
@@ -29,28 +29,16 @@ export default function VehicleReceiptFilter(props) {
                     <Row gutter={20}>
                         <Col xs={24} sm={16} md={16} lg={16} xl={16} className={styles.searchAndLabelAlign}>
                             <div className={`${styles.userManagement} ${styles.headingToggle}`}>
-                                {/* {Object.values(CUSTOMER_TYPE)?.map((item) => {
+                                {typeData?.map((item) => {
                                     return (
-                                        <Button type={customerType === item?.id ? 'primary' : 'link'} onClick={() => handleCustomerTypeChange(item?.id)}>
-                                            {item?.title}
+                                        <Button type={receiptType === item?.key ? 'primary' : 'link'} onClick={() => handleReceiptTypeChange(item?.key)}>
+                                            {item?.value}
                                         </Button>
                                     );
-                                })} */}
-                                <Button className={styles.marR5} type={toggleButton === 'inTransit' ? 'primary' : 'link'} onClick={() => handleToggle('inTransit')}>
-                                    In-Transit
-                                </Button>
-                                <Button type={toggleButton === 'partiallyReceived' ? 'primary' : 'link'} onClick={() => handleToggle('partiallyReceived')}>
-                                    Partially Received
-                                </Button>
-                                <Button type={toggleButton === 'received' ? 'primary' : 'link'} onClick={() => handleToggle('received')}>
-                                    Received
-                                </Button>
-                                <Button type={toggleButton === 'returned' ? 'primary' : 'link'} onClick={() => handleToggle('returned')}>
-                                    Returned
-                                </Button>
+                                })}
                             </div>
                             <div className={styles.headerSearchField}>
-                                <Search placeholder="Search" value="" onChange="" onSearch="" allowClear className={styles.headerSearchField} />
+                                <Search placeholder="Search" onChange={handleChange} onSearch={handleSearch} allowClear className={styles.headerSearchField} />
                             </div>
                         </Col>
                         <Col xs={24} sm={8} md={8} lg={8} xl={8} className={styles.verticallyCentered}>

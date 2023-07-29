@@ -13,42 +13,48 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
     const tableColumn = [
         tblPrepareColumns({
             title: 'GRN Type.',
-            dataIndex: 'otfNumber',
-            width: '14%',
+            dataIndex: 'grnType',
+            width: '10%',
         }),
 
         tblPrepareColumns({
             title: 'GRN Number',
-            dataIndex: 'otfDate',
-            width: '14%',
+            dataIndex: 'grnNumber',
+            width: '12%',
             render: (text) => convertDateMonthYear(text),
         }),
         tblPrepareColumns({
             title: 'GRN Date',
-            dataIndex: 'customerName',
-            width: '14%',
+            dataIndex: 'grnDate',
+            width: '12%',
         }),
 
         tblPrepareColumns({
             title: 'Supplier Name',
-            dataIndex: 'mobileNumber',
+            dataIndex: 'supplierName',
             width: '14%',
         }),
 
         tblPrepareColumns({
             title: 'Supplier Invoice Number',
-            dataIndex: 'model',
+            dataIndex: 'supplierInvoiceNumber',
+            width: '14%',
+        }),
+
+        tblPrepareColumns({
+            title: 'Supplier Invoice Date',
+            dataIndex: 'supplierInvoiceDate',
             width: '14%',
         }),
 
         tblPrepareColumns({
             title: 'Status',
-            dataIndex: 'orderStatus',
-            width: '12%',
-            render: (_, record) => VehicleReceiptStatusTag(record.orderStatus),
+            dataIndex: 'status',
+            width: '10%',
+            // render: (_, record) => VehicleReceiptStatusTag(record.orderStatus),
         }),
 
-        tblActionColumn({ handleButtonClick, styles, width: '10%', EditIcon: true }),
+        tblActionColumn({ handleButtonClick, styles, width: '12%', EditIcon: true }),
     ];
 
     return tableColumn;

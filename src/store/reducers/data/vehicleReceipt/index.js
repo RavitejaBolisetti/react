@@ -11,7 +11,9 @@
 import { combineReducers } from 'redux';
 
 import { VehicleReceiptSearch } from './vehicleReceipt';
+import { SupplierInvoice } from './supplierInvoice';
 
 export const VehicleReceipt = combineReducers({
     VehicleReceiptSearch,
+    SupplierInvoice,
 });

@@ -232,4 +232,12 @@ export const PARAM_MASTER = {
         id: 'VH_RECEIT_SER',
         title: 'Vehicle Receipt checklist',
     },
+    GRN_STATS: {
+        id: 'GRN_STATS',
+        title: 'Vehicle Receipt Type',
+    },
+    GRN_TYPE: {
+        id: 'GRN_TYPE',
+        title: 'GRN Type',
+    },
 };

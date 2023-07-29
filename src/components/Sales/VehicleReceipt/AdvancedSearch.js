@@ -16,13 +16,14 @@ import { disableFutureDate } from 'utils/disableDate';
 import styles from 'components/common/Common.module.css';
 
 export const AdvancedSearchFrom = (props) => {
-    const { setAdvanceSearchVisible, otfStatusList } = props;
+    const { setAdvanceSearchVisible } = props;
     const {
         filterString,
         setFilterString,
         advanceFilterForm,
         advanceFilterForm: { resetFields },
         handleResetFilter,
+        grnTypeData,
     } = props;
 
     useEffect(() => {
@@ -34,9 +35,9 @@ export const AdvancedSearchFrom = (props) => {
         setFilterString({
             ...filterString,
             ...values,
-            fromDate: formatDate(values?.fromDate),
-            toDate: formatDate(values?.toDate),
-            otfStatus: values?.otfStatus,
+            grnFromDate: formatDate(values?.fromDate),
+            grnToDate: formatDate(values?.toDate),
+            grnType: values?.grnType,
             advanceFilter: true,
         });
         setAdvanceSearchVisible(false);
@@ -69,8 +70,8 @@ export const AdvancedSearchFrom = (props) => {
 
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Form.Item initialValue={filterString?.otfStatus} label="GRN Type" name="otfStatus">
-                        <Select placeholder={preparePlaceholderSelect('')} fieldNames={{ label: 'desc', value: 'key' }} options={otfStatusList} {...selectProps} className={styles.headerSelectField}></Select>
+                    <Form.Item initialValue={filterString?.grnType} label="GRN Type" name="grnType">
+                        <Select placeholder={preparePlaceholderSelect('')} fieldNames={{ label: 'value', value: 'key' }} options={grnTypeData} {...selectProps} className={styles.headerSelectField}></Select>
                     </Form.Item>
                 </Col>
             </Row>
