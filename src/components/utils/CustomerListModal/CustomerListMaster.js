@@ -17,7 +17,6 @@ import { CustomerListModal } from './CustomerListModal';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { SearchBox } from 'components/utils/SearchBox';
 
-import styles from 'components/common/Common.module.css';
 const mapStateToProps = (state) => {
     const {
         auth: { userId },

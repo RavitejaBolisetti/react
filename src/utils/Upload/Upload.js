@@ -10,7 +10,7 @@ import { Button, Typography, Upload, Image, Space, Avatar } from 'antd';
 import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
 import { documentViewDataActions } from 'store/actions/data/customerMaster/documentView';
 import { showGlobalNotification } from 'store/actions/notification';
-import { FiEye } from 'react-icons/fi';
+import { FiDownload } from 'react-icons/fi';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 import { BsTrash3 } from 'react-icons/bs';
 import { HiCheck } from 'react-icons/hi';
@@ -75,14 +75,11 @@ const UploadBase = (props) => {
         showProgress = { strokeWidth: 3, showInfo: true },
         showPreviewIcon = true,
         form = undefined,
-        formData = [],
         resetViewData,
         fetchViewDocument,
         viewListShowLoading,
         uploadedFile,
-
         viewDocument,
-
         uploadedFileName,
         setUploadedFileName,
         fileList,
@@ -105,12 +102,10 @@ const UploadBase = (props) => {
         downloadFile,
         formActionType,
         isReplaceEnabled = false,
-
         onRemove = () => {},
         single = false,
         supportingDocs = false,
         setMandatoryFields,
-        multipleList = false,
     } = props;
 
     const [showStatus, setShowStatus] = useState('');
@@ -157,19 +152,22 @@ const UploadBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [uploadedFile]);
 
-    const downloadFileFromList = (file) => {
+    const onDrop = (e) => {};
+
+    const onDownload = (file) => {
+        const onSuccessAction = (res) => {
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        };
         const extraParams = [
             {
                 key: 'docId',
                 title: 'docId',
-                value: uploadedFile,
+                value: file?.response?.docId,
                 name: 'docId',
             },
         ];
-        downloadFile({ setIsLoading: viewListShowLoading, userId, extraParams });
+        downloadFile({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction });
     };
-
-    const onDrop = (e) => {};
 
     const uploadProps = {
         beforeUpload: (file) => {
@@ -200,13 +198,14 @@ const UploadBase = (props) => {
             showRemoveIcon,
             showDownloadIcon,
             removeIcon: removeIcon,
-            downloadIcon: <FiEye onClick={() => downloadFileFromList()} style={{ color: '#ff3e5b' }} />,
+            downloadIcon: <FiDownload style={{ color: '#ff3e5b' }} />,
             showProgress,
             showPreviewIcon,
         },
         onRemove,
         progress: { strokeWidth: 3, showInfo: true },
         onDrop,
+        onDownload,
         onChange: (info) => {
             let fileList = [...info.fileList];
             if (supportingDocs) {

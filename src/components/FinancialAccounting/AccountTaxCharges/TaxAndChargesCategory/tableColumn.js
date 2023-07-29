@@ -10,11 +10,6 @@ import styles from 'components/common/Common.module.css';
 export const tableColumn = (handleButtonClick, page, pageSize) => {
     const tableColumn = [];
     tableColumn.push(
-        // tblPrepareColumns({
-        //     title: 'State',
-        //     dataIndex: 'name',
-        //     width: '20%',
-        // }),
         tblPrepareColumns({
             title: 'Code',
             dataIndex: 'taxCategoryCode',
@@ -26,12 +21,6 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             dataIndex: 'taxCategoryDescription',
             width: '20%',
         }),
-
-        // tblPrepareColumns({
-        //     title: 'Sale Type',
-        //     dataIndex: 'name',
-        //     width: '20%',
-        // }),
 
         tblStatusColumn({ styles, width: '10%' }),
 

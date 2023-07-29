@@ -4,10 +4,9 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect, useState, useMemo } from 'react';
-import { Row, Col, Input, Form, Select, Card, Descriptions, Upload, AutoComplete } from 'antd';
+import { Row, Col, Input, Form, Select, Card, Descriptions, AutoComplete } from 'antd';
 
 import styles from 'components/common/Common.module.css';
-import style from '../../../common/LeftSideBar/LeftSideBar.module.css';
 import { convertDateTime } from 'utils/formatDateTime';
 import { preparePlaceholderText, preparePlaceholderSelect, preparePlaceholderAutoComplete } from 'utils/preparePlaceholder';
 import { validateRequiredSelectField, validateRequiredInputField } from 'utils/validation';
@@ -25,8 +24,8 @@ import { FiEye, FiTrash } from 'react-icons/fi';
 const { TextArea, Search } = Input;
 
 const AddEditFormMain = (props) => {
-    const { otfCancellationForm, formData, otfData, selectedOrder, fieldNames, onFinishOTFCancellation, selectedTreeSelectKey, treeCodeId } = props;
-    const { handleButtonClick, buttonData, setButtonData, onCloseAction, handleFormValueChange, typeData, userId, uploadDocumentFile, setUploadedFile, listShowLoading, showGlobalNotification, viewDocument, setEmptyList } = props;
+    const { otfCancellationForm, formData, selectedOrder, fieldNames, onFinishOTFCancellation } = props;
+    const { handleButtonClick, buttonData, setButtonData, onCloseAction, handleFormValueChange, typeData, setUploadedFile, showGlobalNotification, viewDocument, setEmptyList } = props;
     const { searchDealerValue, setSearchDealerValue, dealerDataList } = props;
     const { uploadedFileName, setUploadedFileName, uploadedFile, parentAppCode, setparentAppCode } = props;
 
@@ -83,7 +82,7 @@ const AddEditFormMain = (props) => {
 
     const handleCancellationReasonTypeChange = (value) => {
         setReasonTypeChange(value);
-        otfCancellationForm.setFieldsValue({ dealerCode: '', oemCode: '', productCode: '', dealerName: '', reasonForCancellation: '', cancellationRemark: '' });
+        otfCancellationForm.resetFields(['dealerCode', 'oemCode', 'productCode', 'dealerName', 'cancellationRemark', 'reasonForCancellation']);
         setUploadedFile('');
         setFileList([]);
     };
@@ -139,7 +138,7 @@ const AddEditFormMain = (props) => {
 
     const handleSelectTreeClick = (value) => {
         setparentAppCode(value);
-        otfCancellationForm.setFieldsValue({ productCode: value });
+        otfCancellationForm.setFieldValue('productCode', value);
     };
 
     const selectProps = {
