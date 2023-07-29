@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 1013 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 1013 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -7,7 +7,7 @@ import React from 'react';
 import { Descriptions } from 'antd';
 
 const ViewCriticalityGroupMain = (props) => {
-    const { formData, style } = props;
+    const { formData, styles } = props;
 
     const viewProps = {
         bordered: false,
@@ -17,7 +17,7 @@ const ViewCriticalityGroupMain = (props) => {
     };
 
     return (
-        <div className={style.viewContainer}>
+        <div className={styles.viewContainer}>
             <>
                 <Descriptions {...viewProps}>
                     <Descriptions.Item label="Criticality Group Id">{formData?.criticalityGroupCode}</Descriptions.Item>

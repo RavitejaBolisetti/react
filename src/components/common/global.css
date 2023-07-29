@@ -867,9 +867,9 @@
 
 /* AntD Collapse Design End*/
 
-:global(.ant-card.ant-card-actions) {
+/* :global(.ant-card.ant-card-actions) {
     height: 40px;
-}
+} */
 
 /* Previously unchecked global AntD CSS overrides */
 
