@@ -42,18 +42,17 @@ function FormProductAttribute(props) {
                     <Form.Item name="id" label="Id" />
                 </Col>
                 {!formEdit && (
-                    <Row xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Button
                             type="primary"
-                            danger
-                            style={{ margin: '0 0 0 12px' }}
+                            className={styles.marB20}
                             onClick={() => {
                                 addTaxChargeCal();
                             }}
                         >
                             Add
                         </Button>
-                    </Row>
+                    </Col>
                 )}
             </Row>
         </Form>

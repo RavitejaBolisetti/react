@@ -7,13 +7,13 @@
     font-size: 12px;
 }
 
-p {
+/* p {
     margin-bottom: 0px !important;
     margin-top: 0px !important;
     color: #342c2c;
     padding-left: 28px !important;
     text-align: left;
-}
+} */
 
 .floatLeft {
     float: left;

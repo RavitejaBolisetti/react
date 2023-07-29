@@ -55,10 +55,11 @@ export default function AdvanceVehiclePriceMasterFilter(props) {
                                     </Col>
                                 )}
                                 {advanceFilter && (
-                                    <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.verticallyCentered}>
+                                    <Col xs={24} sm={24} md={10} lg={10} xl={10} className={styles.verticallyCentered}>
                                         <Button
-                                            icon={<FilterIcon className={styles.verticallyCentered} />}
+                                            icon={<FilterIcon />}
                                             type="link"
+                                            className={styles.verticallyCentered}
                                             onClick={() => {
                                                 setAdvanceSearchVisible(true);
                                             }}

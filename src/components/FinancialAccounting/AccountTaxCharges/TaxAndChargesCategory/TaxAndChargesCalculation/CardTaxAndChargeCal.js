@@ -96,10 +96,9 @@ const CardProductAttribute = (props) => {
         <Card
             style={{
                 backgroundColor: '#BEBEBE1A',
-                marginTop: '12px',
             }}
         >
-            <Row align="middle" justify="space-between">
+            <Row align="middle" justify="space-between" className={styles.marB20}>
                 <Row align="center">
                     <div>
                         <Text>{taxChargeDesc}</Text>

@@ -204,15 +204,7 @@ const AddEditFormMain = (props) => {
                             <Row>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                     <Form.Item name="oemCode" label="OEM Name" rules={[validateRequiredSelectField('OEM Name')]}>
-                                        <Select
-                                            {...selectProps}
-                                            style={{
-                                                width: '100%',
-                                            }}
-                                            fieldNames={{ label: 'value', value: 'key' }}
-                                            options={typeData['COMPTR_MFG']}
-                                            placeholder={preparePlaceholderSelect('OEM Name')}
-                                        />
+                                        <Select {...selectProps} fieldNames={{ label: 'value', value: 'key' }} options={typeData['COMPTR_MFG']} placeholder={preparePlaceholderSelect('OEM Name')} />
                                     </Form.Item>
                                 </Col>
                             </Row>
@@ -243,15 +235,7 @@ const AddEditFormMain = (props) => {
                         <Row>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                 <Form.Item name="reasonForCancellation" label="Reason For Cancellation" rules={[validateRequiredSelectField('Reason For Cancellation')]}>
-                                    <Select
-                                        {...selectProps}
-                                        style={{
-                                            width: '100%',
-                                        }}
-                                        fieldNames={{ label: 'value', value: 'key' }}
-                                        options={typeData[reasonTypeChange]}
-                                        placeholder={preparePlaceholderSelect('Reason For Cancellation')}
-                                    />
+                                    <Select {...selectProps} fieldNames={{ label: 'value', value: 'key' }} options={typeData[reasonTypeChange]} placeholder={preparePlaceholderSelect('Reason For Cancellation')} />
                                 </Form.Item>
                             </Col>
                         </Row>

@@ -22,8 +22,12 @@ const ViewCriticalityGroupMain = (props) => {
                 <Descriptions {...viewProps}>
                     <Descriptions.Item label="Criticality Group Id">{formData?.criticalityGroupCode}</Descriptions.Item>
                     <Descriptions.Item label="Criticality Group Name">{formData?.criticalityGroupName}</Descriptions.Item>
-                    <Descriptions.Item label="Default Group">{formData?.criticalityDefaultGroup ? 'Active' : 'Inactive'}</Descriptions.Item>
-                    <Descriptions.Item label="Status">{formData?.activeIndicator ? 'Active' : 'Inactive'}</Descriptions.Item>
+                    <Descriptions.Item label="Default Group">
+                        <span className={formData?.criticalityDefaultGroup ? styles.activeText : styles.inactiveText}>{formData?.criticalityDefaultGroup ? 'Active' : 'Inactive'}</span>
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Status">
+                        <span className={formData?.activeIndicator ? styles.activeText : styles.inactiveText}>{formData?.activeIndicator ? 'Active' : 'Inactive'}</span>
+                    </Descriptions.Item>
                 </Descriptions>
             </>
         </div>

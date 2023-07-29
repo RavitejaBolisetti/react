@@ -363,12 +363,10 @@
 
 .activeText {
     color: #70c922;
-    /* background: #EEFCD2;
-     border-color: #70C922; */
 }
 
 .inactiveText {
-    color: #8e8585;
+    color: #858585;
 }
 
 .floatRight {
@@ -1040,7 +1038,6 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    /* height: calc(100vh - 170px); */
     height: calc(100vh - 248px);
     border: 1px solid #e8e8e8;
     border-radius: 4px;
@@ -1105,33 +1102,30 @@
 } */
 
 .viewContainer :global .ant-descriptions .ant-descriptions-view table tbody tr th {
-    padding: 0 !important;
+    padding: 0;
 }
 
 .viewContainer :global .ant-descriptions .ant-descriptions-view table tbody tr td {
-    padding: 0 !important;
-    padding-bottom: 20px !important;
+    padding: 0;
+    padding-bottom: 20px;
 }
 
 .viewContainer :global .ant-descriptions .ant-descriptions-item-label {
-    color: rgba(11, 11, 12, 1) !important;
-    font-size: 14px !important;
-    font-weight: 500;
+    color: #0b0b0c;
 }
 
 .viewContainer :global .ant-descriptions .ant-descriptions-item-content {
-    color: rgba(142, 133, 133, 1) !important;
-    font-size: 14px !important;
+    color: #858585;
 }
 
-.drwaerDetailsView {
+/* .drwaerDetailsView {
     background: #f2f2f2;
     border: 1px solid #e6e6e6;
     padding: 12px 16px;
     border-radius: 4px;
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
-}
+} */
 
 /* .hierarchyRightContainer {
     border-radius: 4px 4px 0px 0px;
@@ -1182,11 +1176,11 @@
     font-weight: 700;
 }
 
-.addTimeBtn {
+/* .addTimeBtn {
     display: flex;
     align-items: center;
     flex-flow: row-reverse;
-}
+} */
 
 .viewAllowedTiming button {
     font-size: 14px;
@@ -2426,11 +2420,11 @@
      box-shadow: 0 2px 0 rgba(255, 5, 5, 0.06);
  } */
 
-.drawerBodyRight :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box .ant-divider-horizontal {
+/* .drawerBodyRight :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box .ant-divider-horizontal {
     margin-top: 0;
     margin-bottom: 20px;
     border-block-start: 1px solid #e6e6e6;
-}
+} */
 
 /* .drawerBodyRight :global .ant-card .ant-card-body .ant-divider-horizontal {
      margin-top: 0;
@@ -2925,7 +2919,7 @@
 }
 
 .viewDrawerContainer .viewNoDataFound {
-    padding: 20px 30px !important;
+    padding-bottom: 20px;
 }
 
 .addOnCards :global .ant-space {

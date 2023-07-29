@@ -94,11 +94,10 @@ const CardProductAttribute = (props) => {
         <Card
             style={{
                 backgroundColor: '#BEBEBE1A',
-                marginTop: '12px',
             }}
         >
             <Row align="middle" justify="space-between">
-                <Row align="center">
+                <Row className={styles.marB20} align="center">
                     <div>
                         <Text>{props?.taxChargeTypeCode}</Text>
                     </div>

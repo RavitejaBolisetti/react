@@ -4,6 +4,11 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 
+p {
+    margin-block-start: 0;
+    margin-block-end: 0;
+}
+
 /* AntD Buttons Design Start*/
 :global .ant-btn {
     line-height: 22px;
@@ -776,10 +781,42 @@
 
 /* AntD Picker Design End*/
 
+/* AntD Date Picker Design Start*/
+:global .ant-picker-dropdown .ant-picker-header {
+    height: 36px;
+}
+
+:global .ant-picker-dropdown .ant-picker-header button {
+    line-height: 36px;
+}
+
+:global .ant-picker-dropdown .ant-picker-date-panel .ant-picker-body {
+    padding: 8px 18px;
+}
+
+:global .ant-picker-dropdown .ant-picker-date-panel .ant-picker-content th {
+    width: auto;
+    height: auto;
+}
+
+:global .ant-picker-dropdown .ant-picker-cell {
+    padding: 4px 0;
+}
+
+:global .ant-picker-dropdown .ant-picker-footer {
+    line-height: 35px;
+}
+
+/* AntD Date Picker Design End*/
+
 /* AntD Card Design Start*/
 :global .ant-card {
-    /* margin-bottom: 10px; */
+    margin-bottom: 10px;
     background: #f2f2f2;
+}
+
+:global .ant-card:last-child:not(:first-child) {
+    margin-bottom: 20px;
 }
 
 :global .ant-card-bordered {
@@ -827,7 +864,7 @@
     box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.15);
 }
 
-:global .ant-collapse:last-child {
+:global .ant-collapse:last-child:not(:first-child) {
     margin-bottom: 20px;
 }
 
@@ -863,6 +900,10 @@
 :global .ant-collapse .ant-collapse-content {
     background-color: #f2f2f2;
     border-top: none;
+}
+
+:global .ant-collapse .ant-collapse-content>.ant-collapse-content-box {
+    padding: 0 20px;
 }
 
 /* AntD Collapse Design End*/
