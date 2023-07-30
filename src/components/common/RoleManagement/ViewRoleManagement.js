@@ -36,7 +36,7 @@ const ViewRoleManagementMain = ({ formData, styles, menuTreeData, onTabChange, A
                     </Descriptions>
                 </div>
                 <div className={styles.subTitleSec}>Application Access</div>
-                {AccordianTreePanel()}
+                {AccordianTreePanel({ viewMode: true, menuTreeData })}
             </>
         </div>
     );

@@ -8,13 +8,15 @@ import { useMemo, useState, useEffect } from 'react';
 import styles from './TreeView.module.css';
 
 const LeftPanel = (props) => {
-    const { selectedTreeKey, treeData, fieldNames, handleTreeViewClick, isOpenInModal, checkedKeys } = props;
+    const { selectedTreeKey, treeData, fieldNames, handleTreeViewClick, isOpenInModal, checkedKeys, expendedKeys: defaultExpandedKeys = [] } = props;
+    console.log('🚀 ~ file: LeftPanel.js:12 ~ LeftPanel ~ defaultExpandedKeys:', defaultExpandedKeys);
     const { isTreeViewVisible, checkable, onCheck = () => {} } = props;
     const { searchValue, setSearchValue } = props;
-    const { defaultCheckedKeys = [], defaultSelectedKeys = [], disableCheckbox = false } = props;
+    const { defaultCheckedKeys = [], defaultSelectedKeys = [], disableCheckbox = false, noLeftRightPadding = false } = props;
 
     const [expandedKeys, setExpandedKeys] = useState([]);
     const [autoExpandParent, setAutoExpandParent] = useState(true);
+    console.log('🚀 ~ file: LeftPanel.js:19 ~ LeftPanel ~ autoExpandParent:', autoExpandParent);
 
     const onExpand = (newExpandedKeys) => {
         setExpandedKeys(newExpandedKeys);
@@ -93,26 +95,29 @@ const LeftPanel = (props) => {
                 if (item[fieldNames?.children]) {
                     return {
                         title,
-                        disableCheckbox: disableCheckbox ? item?.checked : false,
+                        disableCheckbox,
                         key: item[fieldNames?.key],
                         children: loop(item[fieldNames?.children]),
                     };
                 }
                 return {
                     title,
-                    disableCheckbox: disableCheckbox ? item?.checked : false,
+                    disableCheckbox,
                     key: item[fieldNames?.key],
                 };
             });
         return loop(treeData);
     }, [searchValue, fieldNames, treeData, disableCheckbox]);
 
+    const noLeftRightPaddingParentClass = noLeftRightPadding && styles.noLeftRightParentPadding;
+    const noLeftRightPaddingClass = noLeftRightPadding && styles.noLeftRightPadding;
+
     return (
         <div>
             {isTreeViewVisible ? (
                 <div className={isOpenInModal ? styles.modalView : ''}>
                     <div className={styles.scrollTreeData}>
-                        <Tree onCheck={onCheck} defaultCheckedKeys={defaultCheckedKeys} defaultSelectedKeys={defaultSelectedKeys} checkedKeys={checkedKeys} checkable={checkable} expandedKeys={expandedKeys} selectedKeys={selectedTreeKey} onSelect={handleTreeViewClick} showLine={true} showIcon={true} onExpand={onExpand} autoExpandParent={autoExpandParent} treeData={finalTreeData} />
+                        <Tree onCheck={onCheck} defaultExpandedKeys={['SAMGC1', 'SAMCO1']} defaultCheckedKeys={['SAMGC1', 'SAMCO1']} defaultSelectedKeys={['SAMGC1', 'SAMCO1']} checkedKeys={checkedKeys} checkable={checkable} onSelect={handleTreeViewClick} showLine={true} showIcon={true} onExpand={onExpand} treeData={finalTreeData} />
                     </div>
                 </div>
             ) : undefined}

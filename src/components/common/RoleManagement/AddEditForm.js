@@ -3,8 +3,8 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect } from 'react';
-import { Input, Form, Col, Row, Switch, Space, Collapse, Tabs, Typography } from 'antd';
+import React, { useState } from 'react';
+import { Input, Form, Col, Row, Switch, Space, Collapse, Tabs } from 'antd';
 
 import { validateAlphanumericWithSpaceHyphenPeriod, validateRequiredInputField, validationFieldLetterAndNumber } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
@@ -19,12 +19,10 @@ import { DrawerFormButton } from 'components/common/Button';
 import LeftPanel from 'components/common/LeftPanel';
 
 import styles from 'components/common/Common.module.css';
-import { BsExclamationSquareFill } from 'react-icons/bs';
 
 const { TextArea } = Input;
 const { Panel } = Collapse;
 const { Search } = Input;
-const { Text } = Typography;
 
 const checkKey = (data, key) => data?.includes(key);
 
@@ -43,14 +41,15 @@ const fnMapData = ({ data, fieldNames, selectedKeys }) =>
     );
 
 const AddEditFormMain = (props) => {
-    const { checkedKeys, setCheckedKeys, webApplications, setWebApplications, mobileApplications, setMobileApplications, deviceType, setDeviceType, setClosePanels, menuTreeData, formData, onCloseAction, form, onFinish, formActionType: { addMode, viewMode, editMode } = undefined } = props;
-    const { defaultCheckedKeysMangement, setdefaultCheckedKeysMangement } = props;
+    const { checkedMenuKeys, setCheckedMenuKeys, webApplications, mobileApplications, deviceType, setDeviceType, setClosePanels, unfilteredMenuData, setUnFilteredMenuData, formData, onCloseAction, form, onFinish, formActionType: { viewMode, editMode } = undefined } = props;
+
     const APPLICATION_WEB = APPLICATION_DEVICE_TYPE?.WEB?.key;
     const APPLICATION_MOBILE = APPLICATION_DEVICE_TYPE?.MOBILE?.key;
 
-    const [accordianOpen, setAccordianOpen] = useState('');
     const [searchValue, setSearchValue] = useState();
     const [activeKey, setActiveKey] = useState([]);
+
+    const [searchItem] = Form.useForm();
 
     const fieldNames = { title: 'label', key: 'value', children: 'children' };
 
@@ -71,8 +70,9 @@ const AddEditFormMain = (props) => {
     };
 
     const onChange = (values) => {
+        setSearchValue('');
+        searchItem.setFieldValue('search', '');
         const isPresent = activeKey.includes(values);
-
         if (isPresent) {
             const newActivekeys = [];
 
@@ -90,11 +90,13 @@ const AddEditFormMain = (props) => {
     const onCheck =
         (currentKey) =>
         (checkedKeysValue, { halfCheckedKeys }) => {
-            setdefaultCheckedKeysMangement({ ...defaultCheckedKeysMangement, [deviceType]: checkedKeysValue });
             handleFormValueChange();
+
             const selectedKeys = [...checkedKeysValue, ...halfCheckedKeys] || [];
-            const deviceTypePrev = checkedKeys?.[deviceType] ? checkedKeys[deviceType] : {};
-            setCheckedKeys(selectedKeys.length !== 0 ? { ...checkedKeys, [deviceType]: { ...deviceTypePrev, [currentKey]: [currentKey, ...selectedKeys] } } : []);
+            const deviceTypePrev = checkedMenuKeys?.[deviceType] ? checkedMenuKeys[deviceType] : {};
+
+            setCheckedMenuKeys(selectedKeys?.length > 0 ? { ...checkedMenuKeys, [deviceType]: { ...deviceTypePrev, [currentKey]: [currentKey, ...selectedKeys] } } : { ...checkedMenuKeys, [deviceType]: { ...deviceTypePrev } });
+
             const mapSelectedKeyData = (data) =>
                 data?.map((item) =>
                     item.value === currentKey
@@ -107,9 +109,9 @@ const AddEditFormMain = (props) => {
                 );
 
             if (deviceType === APPLICATION_WEB) {
-                setWebApplications(mapSelectedKeyData(webApplications));
+                setUnFilteredMenuData({ ...unfilteredMenuData, [deviceType]: mapSelectedKeyData(webApplications) });
             } else if (deviceType === APPLICATION_MOBILE) {
-                setMobileApplications(mapSelectedKeyData(mobileApplications));
+                setUnFilteredMenuData({ ...unfilteredMenuData, [deviceType]: mapSelectedKeyData(mobileApplications) });
             }
         };
 
@@ -117,97 +119,68 @@ const AddEditFormMain = (props) => {
         setSearchValue(event.target.value);
     };
 
-    const handleDefaultCheckedKeys = (Mode, keys, checkedMenuKeys) => {
-        if (!Mode) {
-            let newCheckedKeys = [];
-            let checkedKey = [];
-            if (!viewMode) {
-                for (const key in checkedKeys[deviceType]) {
-                    newCheckedKeys = [...newCheckedKeys, ...checkedKeys[deviceType][key]];
-                }
-            }
-            checkedKey = [...newCheckedKeys, ...checkedMenuKeys];
-
-            return checkedKey;
-        } else {
-            return defaultCheckedKeysMangement[deviceType];
-        }
-    };
-
-    const AccordianTreeUtils = ({ menuData }) => {
+    const AccordianTreeUtils = ({ menuData, viewMode = false }) => {
+        console.log('viewMode', viewMode);
         return (
-            <>
-                <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
-                    {menuData?.map((el, i) => {
-                        const treeData = el?.children;
-                        const flatternData = flattenData(treeData);
-                        const checkedMenuKeys = flatternData?.filter((i) => i.checked && i.type === 'Action');
-                        const allowedAccess = treeData?.filter((i) => i.checked);
+            <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
+                {menuData?.map((el, i) => {
+                    const treeData = el?.children;
+                    const flatternData = flattenData(treeData);
+                    const checkedKeys = flatternData?.filter((i) => i.checked && (!i?.children || i?.children?.length <= 0));
+                    const expendedKeys = flatternData?.filter((i) => i.checked);
+                    const allowedAccess = treeData?.filter((i) => i.checked);
+                    const myProps = {
+                        noLeftRightPadding: true,
+                        fieldNames,
+                        treeData,
+                        searchValue,
+                        setSearchValue,
+                        checkable: true,
+                        isTreeViewVisible: true,
+                        onCheck: onCheck(el?.value),
+                        disableCheckbox: viewMode,
+                        expendedKeys: expendedKeys?.map((i) => i.value),
+                        checkedKeys: checkedKeys?.map((i) => i.value), // handleDefaultCheckedKeys(viewMode, defaultCheckedKeysMangement, checkedMenuKeys),
+                    };
 
-                        const myProps = {
-                            fieldNames,
-                            treeData,
-                            searchValue,
-                            setSearchValue,
-                            checkable: true,
-                            isTreeViewVisible: true,
-                            onCheck: onCheck(el?.value),
-                            disableCheckbox: viewMode,
-                            checkedKeys: checkedMenuKeys.map((i) => i.value),
-                            // checkedKeys: handleDefaultCheckedKeys(addMode, defaultCheckedKeysMangement, checkedMenuKeys),
-                        };
-
-                        return (
-                            <div className={`${styles.accordianContainer} ${styles.rolemanagmentContaner}`}>
-                                <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(i)} expandIconPosition="end">
-                                    <Panel
-                                        header={
-                                            <Row type="flex" justify="space-between" align="middle" size="large">
-                                                <Row type="flex" justify="space-around" align="middle">
-                                                    <Typography>{el?.value}</Typography>
-                                                </Row>
-                                                {allowedAccess?.length > 0 && (
-                                                    <Text type="secondary" className={styles.allowAccess}>
-                                                        {allowedAccess?.length} Access Provided
-                                                    </Text>
-                                                )}
-                                            </Row>
-                                        }
-                                        key={i}
-                                    >
-                                        <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
-                                            <Row gutter={20}>
+                    return (
+                        <div className={`${styles.accordianContainer} ${styles.rolemanagmentContaner}`}>
+                            <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(i)} expandIconPosition="end">
+                                <Panel
+                                    header={
+                                        <Row>
+                                            {el?.value}
+                                            {allowedAccess?.length > 0 && <div className={styles.allowAccess}>{allowedAccess?.length} Access Provided</div>}
+                                        </Row>
+                                    }
+                                    key={i}
+                                >
+                                    <div style={{ borderTop: 'solid 1px #E6E6E6', paddingTop: '10px' }}>
+                                        <Form layout="vertical" autoComplete="off" form={searchItem}>
+                                            <Row>
                                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.roleMangementSearch}>
                                                     <Form.Item label={''} name="search" validateTrigger={['onSearch']}>
-                                                        <Search
-                                                            placeholder="Search"
-                                                            style={{
-                                                                width: '100%',
-                                                            }}
-                                                            initialValue={searchValue}
-                                                            onChange={handleSearchValue}
-                                                            allowClear
-                                                        />
+                                                        <Search placeholder="Search" initialValue={searchValue} onChange={handleSearchValue} allowClear />
                                                     </Form.Item>
                                                 </Col>
                                             </Row>
-                                            <Row gutter={20}>
+                                            <Row>
                                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.rollTree}>
                                                     <LeftPanel {...myProps} />
                                                 </Col>
                                             </Row>
-                                        </Space>
-                                    </Panel>
-                                </Collapse>
-                            </div>
-                        );
-                    })}
-                </Space>
-            </>
+                                        </Form>
+                                    </div>
+                                </Panel>
+                            </Collapse>
+                        </div>
+                    );
+                })}
+            </Space>
         );
     };
 
-    const AccordianTreePanel = () => {
+    const AccordianTreePanel = ({ viewMode, menuTreeData }) => {
         return (
             <Tabs
                 defaultActiveKey="1"
@@ -215,7 +188,7 @@ const AddEditFormMain = (props) => {
                 items={Object.values(APPLICATION_DEVICE_TYPE)?.map((item) => ({
                     key: item?.key,
                     label: item?.title,
-                    children: AccordianTreeUtils({ menuData: viewMode ? menuTreeData?.filter((i) => i.checked) : menuTreeData }),
+                    children: AccordianTreeUtils({ viewMode, menuData: viewMode ? menuTreeData[item?.key]?.filter((i) => i.checked) : menuTreeData[item?.key] }),
                 }))}
             />
         );
@@ -228,7 +201,7 @@ const AddEditFormMain = (props) => {
         styles,
         onTabChange,
         AccordianTreePanel,
-        menuTreeData: menuTreeData?.filter((i) => i.checked),
+        menuTreeData: unfilteredMenuData,
         disableCheckbox: true,
     };
 
@@ -290,7 +263,7 @@ const AddEditFormMain = (props) => {
                                         Application Access<span className={styles.mandatory}>*</span>
                                     </Col>
                                 </Row>
-                                {AccordianTreePanel()}
+                                {AccordianTreePanel({ menuTreeData: unfilteredMenuData })}
                             </>
                         )}
                     </Col>

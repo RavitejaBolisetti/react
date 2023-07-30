@@ -80,6 +80,7 @@ const baseAPICall = (params) => {
                 // onUnAuthenticated();
                 // The following code is mostly copy/pasted from axios documentation at https://github.com/axios/axios#handling-errors
                 // Added support for handling timeout errors separately, dont use this code in production
+                console.log('🚀 ~ file: axiosAPICall.js:84 ~ baseAPICall ~ error:', error);
                 if (error.response) {
                     handleErrorMessage({ onError, displayErrorTitle, errorTitle: LANGUAGE_EN.GENERAL.ERROR.TITLE, errorMessage: LANGUAGE_EN.GENERAL.ERROR.MESSAGE });
                 } else if (error.code) {

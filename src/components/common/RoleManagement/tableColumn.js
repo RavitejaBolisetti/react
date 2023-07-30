@@ -28,7 +28,7 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
         }),
 
         tblStatusColumn({ styles, width: '15%' }),
-        tblActionColumn({ handleButtonClick, styles })
+        tblActionColumn({ handleButtonClick, styles, width: '10%' })
     );
 
     return tableColumn;

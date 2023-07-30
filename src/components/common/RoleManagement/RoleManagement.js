@@ -40,7 +40,7 @@ const mapStateToProps = (state) => {
         userId,
         moduleTitle,
         menuTreeData: rolemenuData,
-        // menuTreeData: rolemenuData?.filter((i) => i?.label?.toLowerCase() === 'spares'),
+        // menuTreeData: rolemenuData?.filter((i) => i?.value?.toLowerCase() === 'finac'),
         isDataLoading,
         isMenuLoading,
         isDataLoaded,
@@ -91,8 +91,8 @@ export const RoleManagementMain = (props) => {
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
     const [webApplications, setWebApplications] = useState([]);
     const [mobileApplications, setMobileApplications] = useState([]);
-    const [checkedKeys, setCheckedKeys] = useState({ W: [], M: [] });
-    const [defaultCheckedKeysMangement, setdefaultCheckedKeysMangement] = useState({ W: [], M: [] });
+    const [checkedMenuKeys, setCheckedMenuKeys] = useState([]);
+    const [unfilteredMenuData, setUnFilteredMenuData] = useState([]);
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
@@ -126,8 +126,10 @@ export const RoleManagementMain = (props) => {
     useEffect(() => {
         if (deviceType === APPLICATION_WEB && menuTreeData) {
             setWebApplications(menuTreeData);
+            setUnFilteredMenuData({ ...unfilteredMenuData, [deviceType]: menuTreeData });
         } else if (deviceType === APPLICATION_MOBILE && menuTreeData) {
             setMobileApplications(menuTreeData);
+            setUnFilteredMenuData({ ...unfilteredMenuData, [deviceType]: menuTreeData });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [deviceType, menuTreeData]);
@@ -147,14 +149,15 @@ export const RoleManagementMain = (props) => {
 
     const onFinish = (values) => {
         const recordId = formData?.id || '';
-        const checkedWebParentKeys = checkedKeys?.[APPLICATION_WEB] ? Object.keys(checkedKeys?.[APPLICATION_WEB]) : [];
-        const checkedMobileParentKeys = checkedKeys?.[APPLICATION_MOBILE] ? Object.keys(checkedKeys?.[APPLICATION_MOBILE]) : [];
+
+        const checkedWebParentKeys = checkedMenuKeys?.[APPLICATION_WEB] ? Object.keys(checkedMenuKeys?.[APPLICATION_WEB]) : [];
+        const checkedMobileParentKeys = checkedMenuKeys?.[APPLICATION_MOBILE] ? Object.keys(checkedMenuKeys?.[APPLICATION_MOBILE]) : [];
 
         const data = {
             ...values,
             id: recordId,
-            webRoleManagementRequest: webApplications?.filter((i) => checkedWebParentKeys?.includes(i?.value)),
-            mobileRoleManagementRequest: mobileApplications?.filter((i) => checkedMobileParentKeys?.includes(i?.value)),
+            webRoleManagementRequest: unfilteredMenuData?.[APPLICATION_WEB]?.filter((i) => checkedWebParentKeys?.includes(i?.value)) || [],
+            mobileRoleManagementRequest: unfilteredMenuData?.[APPLICATION_MOBILE]?.filter((i) => checkedMobileParentKeys?.includes(i?.value)) || [],
         };
 
         const onSuccess = (res) => {
@@ -163,7 +166,7 @@ export const RoleManagementMain = (props) => {
             if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(false);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-                setCheckedKeys();
+                setCheckedMenuKeys([]);
             } else {
                 setIsFormVisible(true);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
@@ -261,6 +264,8 @@ export const RoleManagementMain = (props) => {
     }, [formActionType]);
 
     const formProps = {
+        unfilteredMenuData,
+        setUnFilteredMenuData,
         saveAndAddNewBtnClicked,
         setSaveAndAddNewBtnClicked,
         listShowLoading,
@@ -276,7 +281,7 @@ export const RoleManagementMain = (props) => {
             form.resetFields();
             setIsFormVisible(false);
             setFormData([]);
-            setdefaultCheckedKeysMangement({ W: [], M: [] });
+            setCheckedMenuKeys([]);
         },
         formData,
         onFinish,
@@ -298,13 +303,11 @@ export const RoleManagementMain = (props) => {
 
         setButtonData,
         handleButtonClick,
-        checkedKeys,
-        setCheckedKeys,
+        checkedMenuKeys,
+        setCheckedMenuKeys,
 
         APPLICATION_WEB,
         APPLICATION_MOBILE,
-        defaultCheckedKeysMangement,
-        setdefaultCheckedKeysMangement,
     };
 
     const tableProps = {

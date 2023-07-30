@@ -3123,6 +3123,13 @@ li.ant-timeline-item.active .ant-timeline-item-content p {
 .rolemanagmentContaner :global .ant-space-vertical {
     border-top: 1px solid #e6e6e6;
 }
+.allowAccess {
+    padding: 0px 5px;
+    color: #ff3e5b;
+    border: solid 1px #b5b5b6;
+    margin-left: 10px;
+    font-size: 12px;
+}
 
 .rollTree {
     height: calc(100vh - 280px);
