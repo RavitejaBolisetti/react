@@ -9,7 +9,7 @@ import { BsRecordCircleFill } from 'react-icons/bs';
 import { FaCheckCircle } from 'react-icons/fa';
 
 import { VEHICLE_RECEIPT_SECTION } from 'constants/VehicleReceiptSection';
-import { validateVehicleReceiptMenu } from '../utils/validateVehicleReceiptMenu';
+// import { validateVehicleReceiptMenu } from '../utils/validateVehicleReceiptMenu';
 
 import styles from 'components/common/Common.module.css';
 
@@ -44,9 +44,9 @@ const MenuNav = (props) => {
         ?.filter((i) => i?.displayOnList)
         ?.map((item) => ({
             // validateVehicleReceiptMenu({ item, status: orderStatus, otfData }) && {
-                dot: item?.id === currentSection ? <BsRecordCircleFill className={styles.activeForm} /> : <FaCheckCircle />,
-                children: <p onClick={() => onHandle(item?.id)}>{item?.title}</p>,
-                className: item?.id === currentSection ? 'active' : 'noactive',
+            dot: item?.id === currentSection ? <BsRecordCircleFill className={styles.activeForm} /> : <FaCheckCircle />,
+            children: <p onClick={() => onHandle(item?.id)}>{item?.title}</p>,
+            className: item?.id === currentSection ? 'active' : 'noactive',
             // };
         }));
     const finalItem = items?.filter((i) => i);

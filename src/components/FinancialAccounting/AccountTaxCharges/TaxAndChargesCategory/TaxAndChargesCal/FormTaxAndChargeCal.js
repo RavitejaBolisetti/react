@@ -36,20 +36,7 @@ function FormProductAttribute(props) {
                             //{ validator: () => duplicateProductValidator(changeValue, taxChargeCalList) }
                         ]}
                     >
-                        <Select
-                            getPopupContainer={(triggerNode) => triggerNode.parentElement}
-                            placeholder={preparePlaceholderSelect('Tax Charge')}
-                            style={{
-                                width: '100%',
-                            }}
-                            options={taxCharge}
-                            fieldNames={fieldNames}
-                            allowClear
-                            labelInValue
-                            onChange={onChange}
-                            key={taxCharge?.key}
-                            value={taxCharge?.key}
-                        />
+                        <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} placeholder={preparePlaceholderSelect('Tax Charge')} options={taxCharge} fieldNames={fieldNames} allowClear labelInValue onChange={onChange} key={taxCharge?.key} value={taxCharge?.key} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
@@ -62,36 +49,23 @@ function FormProductAttribute(props) {
                             // { validator: () => duplicateProductValidator(changeValue, taxChargeCalList) }
                         ]}
                     >
-                        <Select
-                            getPopupContainer={(triggerNode) => triggerNode.parentElement}
-                            placeholder={preparePlaceholderSelect('Tax Code')}
-                            style={{
-                                width: '100%',
-                            }}
-                            options={taxCode}
-                            fieldNames={fieldNames}
-                            allowClear
-                            labelInValue
-                            onChange={onTaxCodeChange}
-                            key={taxCode?.key}
-                            value={taxCode?.key}
-                        />
+                        <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} placeholder={preparePlaceholderSelect('Tax Code')} options={taxCode} fieldNames={fieldNames} allowClear labelInValue onChange={onTaxCodeChange} key={taxCode?.key} value={taxCode?.key} />
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item labelAlign="left" name="chargeDesc" label="Description" rules={[validateRequiredInputField('Description')]} initialValue={props?.value}>
-                        <Input placeholder={preparePlaceholderText('Description')} className={styles.inputBox} disabled />
+                        <Input placeholder={preparePlaceholderText('Description')} disabled />
                     </Form.Item>
                 </Col>
                 <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
                     <Form.Item name="internalId" label="Internal Id" />
                 </Col>
                 {!formEdit && (
-                    <Row xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Button type="primary" danger style={{ margin: '0 0 0 12px' }} onClick={() => addTaxChargeCal()}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                        <Button type="primary" onClick={() => addTaxChargeCal()}>
                             Add
                         </Button>
-                    </Row>
+                    </Col>
                 )}
             </Row>
         </Form>

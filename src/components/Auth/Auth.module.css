@@ -7,17 +7,18 @@
     font-size: 12px;
 }
 
-p {
+/* p {
     margin-bottom: 0px !important;
     margin-top: 0px !important;
     color: #342c2c;
     padding-left: 28px !important;
     text-align: left;
-}
+} */
 
 .floatLeft {
     float: left;
 }
+
 .floatRight {
     float: right;
 }
@@ -93,8 +94,8 @@ p {
     padding: 20px 10px 10px;
 }
 
-.loginSection .loginMainFooter div > a,
-.loginSection .logOutFooter div > a {
+.loginSection .loginMainFooter div>a,
+.loginSection .logOutFooter div>a {
     padding: 0 32px 0 16px;
     text-transform: uppercase;
     color: #8e8585;
@@ -102,13 +103,13 @@ p {
     border-right: 1px solid #8e8585;
 }
 
-.loginSection .loginMainFooter div > a:last-child,
-.loginSection .logOutFooter div > a:last-child {
+.loginSection .loginMainFooter div>a:last-child,
+.loginSection .logOutFooter div>a:last-child {
     border-right: none;
 }
 
-.loginSection .loginMainFooter div > span,
-.loginSection .logOutFooter div > span {
+.loginSection .loginMainFooter div>span,
+.loginSection .logOutFooter div>span {
     color: #8e8585;
     font-weight: 400;
     font-size: 14px;
@@ -242,7 +243,7 @@ p {
     padding: 3px 0;
 } */
 
-.loginSection :global .ant-input-affix-wrapper > input.ant-input.disabledInput {
+.loginSection :global .ant-input-affix-wrapper>input.ant-input.disabledInput {
     color: #838383 !important;
 }
 
@@ -407,8 +408,8 @@ p {
     align-self: center;
 }
 
-.fielderror .registered :global .ant-checkbox:not(.ant-checkbox-checked) + span,
-.fielderror .registered :global .ant-checkbox:not(.ant-checkbox-checked) + span p {
+.fielderror .registered :global .ant-checkbox:not(.ant-checkbox-checked)+span,
+.fielderror .registered :global .ant-checkbox:not(.ant-checkbox-checked)+span p {
     color: #858585 !important;
 }
 
@@ -443,10 +444,6 @@ p {
 
 .registered :global .ant-checkbox-checked:after {
     border-width: 1px;
-}
-
-:global .ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled):hover .ant-checkbox-checked:not(.ant-checkbox-disabled) .ant-checkbox-inner {
-    background-color: transparent;
 }
 
 .loginSection .loginWrap .loginHtml .loginForm .input-group .input-group-prepend .input-group-text {
@@ -626,7 +623,7 @@ select.form-control:focus::-ms-value {
     width: 100%;
 }
 
-.loginSection :global .g-recaptcha > div > div {
+.loginSection :global .g-recaptcha>div>div {
     /* transform:scale(1.77); -webkit-transform:scale(1.77); transform-origin:0 0; -webkit-transform-origin:0 0; */
     margin: 0px auto;
 }
@@ -636,7 +633,7 @@ select.form-control:focus::-ms-value {
     margin-bottom: -10px !important;
 }
 
-.loginForm :global .ant-checkbox-disabled + span {
+.loginForm :global .ant-checkbox-disabled+span {
     color: #ffffff;
 }
 
@@ -715,7 +712,7 @@ select.form-control:focus::-ms-value {
     color: white;
 }
 
-.changer > input:focus-visible {
+.changer>input:focus-visible {
     /* outline: white; */
     margin-right: 10px;
     /* border: 1px solid #FFFFFF !important; */
@@ -937,7 +934,7 @@ select.form-control:focus::-ms-value {
         padding: 2px 10px 0;
     } */
 
-    .loginSection :global .ant-input-affix-wrapper > input.ant-input {
+    .loginSection :global .ant-input-affix-wrapper>input.ant-input {
         padding: 2px 5px 3px 0px;
         font-size: 14px;
         line-height: 24px;

@@ -77,7 +77,7 @@ export const AddEditFormBase = (props) => {
             <Row gutter={16}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item initialValue={state?.countryCode || defaultCountry} disabled label="Country" name="countryCode" placeholder={preparePlaceholderSelect('Country')} rules={[validateRequiredInputField('Country')]}>
-                        <Select className={styles.headerSelectField} showSearch loading={!isCountryLoaded} placeholder="Select" allowClear disabled={true}>
+                        <Select showSearch loading={!isCountryLoaded} placeholder="Select" allowClear disabled={true}>
                             {countries?.map((item) => (
                                 <Option value={item?.countryCode}>{item?.countryName}</Option>
                             ))}
@@ -87,7 +87,7 @@ export const AddEditFormBase = (props) => {
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item initialValue={state?.code} label="State Code" name="code" rules={[validateRequiredInputField('State Code'), validationFieldLetterAndNumber('State Code')]}>
-                        <Input className={styles.inputBox} placeholder={preparePlaceholderText('State Code')} maxLength={6} disabled={editMode ? true : false} />
+                        <Input placeholder={preparePlaceholderText('State Code')} maxLength={6} disabled={editMode ? true : false} />
                     </Form.Item>
                 </Col>
             </Row>
@@ -95,13 +95,13 @@ export const AddEditFormBase = (props) => {
             <Row gutter={16}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item label="State Name" initialValue={state?.name} rules={[validateRequiredInputField('State Name'), validateAlphanumericWithSpace('State Name')]} name="name">
-                        <Input className={styles.inputBox} placeholder={preparePlaceholderText('State Name')} maxLength={50} />
+                        <Input placeholder={preparePlaceholderText('State Name')} maxLength={50} />
                     </Form.Item>
                 </Col>
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item initialValue={state?.gstStateCode} label="GST State Code" name="gstStateCode" rules={[validateRequiredInputField('gst state code'), validationNumber('gst state code')]}>
-                        <Input className={styles.inputBox} placeholder={preparePlaceholderText('State Code')} maxLength={2} disabled={editMode ? true : false} />
+                        <Input placeholder={preparePlaceholderText('State Code')} maxLength={2} disabled={editMode ? true : false} />
                     </Form.Item>
                 </Col>
             </Row>

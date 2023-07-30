@@ -65,7 +65,7 @@ const LeftPanel = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchValue]);
 
-    const panelParentClass = isTreeViewVisible ? styles.panelVisible : styles.panelHidden;
+    // const panelParentClass = isTreeViewVisible ? styles.panelVisible : styles.panelHidden;
 
     const finalTreeData = useMemo(() => {
         const loop = (data) =>
@@ -108,15 +108,11 @@ const LeftPanel = (props) => {
     }, [searchValue, fieldNames, treeData, disableCheckbox]);
 
     return (
-        <div className={`${styles.leftpanel} ${panelParentClass}`}>
+        <div>
             {isTreeViewVisible ? (
-                <div className={styles.treeViewContainer}>
-                    <div className={styles.treemenu}>
-                        <div className={isOpenInModal ? styles.modalView : ''}>
-                            <div className={styles.scrollTreeData}>
-                                <Tree onCheck={onCheck} defaultCheckedKeys={defaultCheckedKeys} defaultSelectedKeys={defaultSelectedKeys} checkedKeys={checkedKeys} checkable={checkable} expandedKeys={expandedKeys} selectedKeys={selectedTreeKey} onSelect={handleTreeViewClick} showLine={true} showIcon={true} onExpand={onExpand} autoExpandParent={autoExpandParent} treeData={finalTreeData} />
-                            </div>
-                        </div>
+                <div className={isOpenInModal ? styles.modalView : ''}>
+                    <div className={styles.scrollTreeData}>
+                        <Tree onCheck={onCheck} defaultCheckedKeys={defaultCheckedKeys} defaultSelectedKeys={defaultSelectedKeys} checkedKeys={checkedKeys} checkable={checkable} expandedKeys={expandedKeys} selectedKeys={selectedTreeKey} onSelect={handleTreeViewClick} showLine={true} showIcon={true} onExpand={onExpand} autoExpandParent={autoExpandParent} treeData={finalTreeData} />
                     </div>
                 </div>
             ) : undefined}

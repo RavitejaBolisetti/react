@@ -161,7 +161,7 @@ const AddEditForm = (props) => {
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.uniqueSearchInput}>
                         <Form.Item initialValue={formData?.pinCode} label="Pin Code" name="pinCode" rules={[validateRequiredInputField('Pin Code'), validatePincodeField('Pin Code')]}>
-                            <AutoComplete {...disabledProps} maxLength={6} className={styles.searchField} options={options} onSelect={handleOnSelect} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
+                            <AutoComplete {...disabledProps} maxLength={6} options={options} onSelect={handleOnSelect} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
                                 <Search onSearch={handleOnSearch} onChange={handleOnClear} placeholder="Search" loading={isPinCodeLoading} type="text" allowClear />
                             </AutoComplete>
                         </Form.Item>
@@ -169,7 +169,7 @@ const AddEditForm = (props) => {
 
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item initialValue={formData?.tehsilName} label="Tehsil" name="tehsilName">
-                            <Input disabled={true} className={styles.inputBox} placeholder={preparePlaceholderText('tehsil')} maxLength={6} />
+                            <Input disabled={true} placeholder={preparePlaceholderText('tehsil')} maxLength={6} />
                         </Form.Item>
                         <Form.Item hidden initialValue={formData?.tehsilCode} name="tehsilCode">
                             <Input />
@@ -178,7 +178,7 @@ const AddEditForm = (props) => {
 
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item label="City" initialValue={formData?.cityName} name="cityName">
-                            <Input disabled={true} className={styles.inputBox} placeholder={preparePlaceholderText('city')} maxLength={50} />
+                            <Input disabled={true} placeholder={preparePlaceholderText('city')} maxLength={50} />
                         </Form.Item>
                         <Form.Item hidden initialValue={formData?.cityCode} name="cityCode">
                             <Input />
@@ -188,7 +188,7 @@ const AddEditForm = (props) => {
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item label="District" initialValue={formData?.districtName} name="districtName">
-                            <Input disabled={true} className={styles.inputBox} placeholder={preparePlaceholderText('district')} maxLength={50} />
+                            <Input disabled={true} placeholder={preparePlaceholderText('district')} maxLength={50} />
                         </Form.Item>
                         <Form.Item hidden initialValue={formData?.districtCode} name="districtCode">
                             <Input />
@@ -196,7 +196,7 @@ const AddEditForm = (props) => {
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item initialValue={formData?.stateName} label="State" name="stateName">
-                            <Input disabled={true} className={styles.inputBox} placeholder={preparePlaceholderText('state')} maxLength={50} />
+                            <Input disabled={true} placeholder={preparePlaceholderText('state')} maxLength={50} />
                         </Form.Item>
                         <Form.Item hidden initialValue={formData?.stateCode} name="stateCode">
                             <Input />

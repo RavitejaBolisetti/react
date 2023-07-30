@@ -29,9 +29,9 @@
     margin-bottom: 0;
 }
 
-.selectSearchBg :global .ant-form-vertical .ant-form-item:last-child {
+/* .selectSearchBg :global .ant-form-vertical .ant-form-item:last-child {
     margin-top: -26px;
-}
+} */
 
 .selectSearchBg :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) {
     margin-top: -4px;
@@ -159,7 +159,7 @@
 .selectSearchBg .headerSearchFieldWide :global .ant-input-wrapper .ant-input-affix-wrapper,
 .selectSearchBg .headerSearchField :global .ant-input-wrapper .ant-input-affix-wrapper {
     height: 26px;
-    padding: 4px 12px;
+    padding: 4px 10px;
     border-inline-end-width: 0px;
     border: none;
 }
@@ -170,12 +170,12 @@
     padding: 0 !important;
 }
 
-.selectSearchBg .headerSearchFieldWide :global .anticon svg,
+/* .selectSearchBg .headerSearchFieldWide :global .anticon svg,
 .selectSearchBg .headerSearchField :global .anticon svg {
     width: 1.25em;
     height: 1.25em;
     margin-top: 4px;
-}
+} */
 
 .selectSearchBg .headerSearchFieldWide :global .ant-input-group button,
 .selectSearchBg .headerSearchField :global .ant-input-group button {
@@ -186,6 +186,10 @@
 .selectSearchBg .headerSearchField :global .ant-input-group {
     border: none;
     height: 29px;
+}
+
+.selectSearchBg .headerSearchFieldWide :global .ant-input-group {
+    margin-top: -39px;
 }
 
 .selectSearchBg .headerSearchFieldWide :global .ant-input-group .ant-input-group-addon button,

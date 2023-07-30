@@ -24,8 +24,6 @@ const VehiclePriceMasterUploadMain = (uploadProps) => {
     const defaultBtnVisiblity = { editBtn: false, saveBtn: true, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: true, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
-    
-
     const handleTemplateDownLoad = () => {
         const filteredTypeData = typeData[PARAM_MASTER.FILE_DOWNLOAD_TMPLT.id].filter((value) => value.key === PARAM_MASTER.VCLPRCMSTTMPLT.id);
         let templateID = null;
@@ -62,21 +60,25 @@ const VehiclePriceMasterUploadMain = (uploadProps) => {
 
     return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-            <div className={styles.contentHeaderBackground}>
-                <Space direction="vertical">
-                    <Space className={styles.accordianIconWithText}> Vehicle Price Master Form</Space>
-                    <Space> Please download "Vehicle Price Template" using below button</Space>
-                    <Space>
-                        <Button type="primary" onClick={handleTemplateDownLoad}>
-                            Download Template
-                        </Button>
-                    </Space>
-                </Space>
-            </div>
+            <Row gutter={20} className={styles.drawerBody}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                    <div className={styles.contentHeaderBackground}>
+                        <Space direction="vertical">
+                            <Space className={styles.accordianIconWithText}> Vehicle Price Master Form</Space>
+                            <Space> Please download "Vehicle Price Template" using below button</Space>
+                            <Space>
+                                <Button type="primary" onClick={handleTemplateDownLoad}>
+                                    Download Template
+                                </Button>
+                            </Space>
+                        </Space>
+                    </div>
 
-            <Row gutter={16}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <UploadUtil {...uploadProps} handleFormValueChange={handleFormValueChange} />
+                    <Row gutter={16}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <UploadUtil {...uploadProps} handleFormValueChange={handleFormValueChange} />
+                        </Col>
+                    </Row>
                 </Col>
             </Row>
 

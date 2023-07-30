@@ -17,7 +17,7 @@ const ViewDetailMain = ({ formData, styles, parameterType, isLoading = false }) 
     };
 
     return (
-        <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
+        <div className={styles.viewContainer}>
             <>
                 <Descriptions {...viewProps}>
                     <Descriptions.Item label="State Name">{checkAndSetDefaultValue(formData?.stateName, isLoading)}</Descriptions.Item>

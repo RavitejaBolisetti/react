@@ -10,32 +10,17 @@ import styles from 'components/common/Common.module.css';
 export const VehicleReceiptStatusTag = (status) => {
     let tag = '';
     switch (status) {
-        case VEHICLE_RECEIPT_STATUS.BOOKED.key:
-            tag = <Tag color="success">{VEHICLE_RECEIPT_STATUS.BOOKED.desc}</Tag>;
+        case VEHICLE_RECEIPT_STATUS.RECEIVED.key:
+            tag = <Tag className={styles.success}>{VEHICLE_RECEIPT_STATUS.RECEIVED.desc}</Tag>;
             break;
-        case VEHICLE_RECEIPT_STATUS.ALLOTED.key:
-            tag = <Tag color="success">{VEHICLE_RECEIPT_STATUS.ALLOTED.desc}</Tag>;
+        case VEHICLE_RECEIPT_STATUS.RETURNED.key:
+            tag = <Tag className={styles.error}>{VEHICLE_RECEIPT_STATUS.RETURNED.desc}</Tag>;
             break;
-        case VEHICLE_RECEIPT_STATUS.CANCELLED.key:
-            tag = <Tag color="error">{VEHICLE_RECEIPT_STATUS.CANCELLED.desc}</Tag>;
+        case VEHICLE_RECEIPT_STATUS.PARTIALLY_RECEIVED.key:
+            tag = <Tag className={styles.violet}>{VEHICLE_RECEIPT_STATUS.PARTIALLY_RECEIVED.desc}</Tag>;
             break;
-        case VEHICLE_RECEIPT_STATUS.INVOICED.key:
-            tag = <Tag color="purple">{VEHICLE_RECEIPT_STATUS.INVOICED.desc}</Tag>;
-            break;
-        case VEHICLE_RECEIPT_STATUS.DELIVERED.key:
-            tag = <Tag color="success">{VEHICLE_RECEIPT_STATUS.DELIVERED.desc}</Tag>;
-            break;
-        case VEHICLE_RECEIPT_STATUS.TRANSFERRED.key:
-            tag = <Tag color="processing">{VEHICLE_RECEIPT_STATUS.TRANSFERRED.desc}</Tag>;
-            break;
-        case VEHICLE_RECEIPT_STATUS.PENDING_FOR_CANCELLATION.key:
-            tag = <Tag color="warning">{VEHICLE_RECEIPT_STATUS.PENDING_FOR_CANCELLATION.desc}</Tag>;
-            break;
-        case VEHICLE_RECEIPT_STATUS.CANCELLATION_REQUESTED.key:
-            tag = <Tag color="warning">{VEHICLE_RECEIPT_STATUS.CANCELLATION_REQUESTED.desc}</Tag>;
-            break;
-        case VEHICLE_RECEIPT_STATUS.REJECTED.key:
-            tag = <Tag color="error">{VEHICLE_RECEIPT_STATUS.REJECTED.desc}</Tag>;
+        case VEHICLE_RECEIPT_STATUS.IN_TRANSIT.key:
+            tag = <Tag className={styles.warning}>{VEHICLE_RECEIPT_STATUS.IN_TRANSIT.desc}</Tag>;
             break;
         default:
     }

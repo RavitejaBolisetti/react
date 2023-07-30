@@ -6,7 +6,6 @@
 import React from 'react';
 import { Row, Col, Input, Form, DatePicker, Card } from 'antd';
 
-import { validateRequiredSelectField, validateRequiredInputField } from 'utils/validation';
 import { formattedCalendarDate } from 'utils/formatDateTime';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
@@ -19,7 +18,7 @@ const AddEditFormMain = (props) => {
         <Card className={styles.drawerCardView}>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formattedCalendarDate(formData?.initialPromiseDeliveryDate)} label="Supplier Type" name="initialPromiseDeliveryDate" rules={[validateRequiredInputField('Initial Promise Delivery Date')]}>
+                    <Form.Item initialValue={formattedCalendarDate(formData?.initialPromiseDeliveryDate)} label="Supplier Type" name="initialPromiseDeliveryDate">
                         <Input maxLength={10} placeholder={preparePlaceholderText('Supplier Type')} disabled={true} />
                     </Form.Item>
                 </Col>
@@ -29,7 +28,7 @@ const AddEditFormMain = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.saleType} name="saleType" label="Supplier Invoice No." rules={[validateRequiredSelectField('Sale Type')]}>
+                    <Form.Item initialValue={formData?.saleType} name="saleType" label="Supplier Invoice No.">
                         <Input maxLength={10} placeholder={preparePlaceholderText('Supplier Invoice')} disabled={true} />
                     </Form.Item>
                 </Col>
@@ -63,7 +62,7 @@ const AddEditFormMain = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.deliveryAt} label="Transporter" name="deliveryAt" rules={[validateRequiredSelectField('Delivery At')]}>
+                    <Form.Item initialValue={formData?.deliveryAt} label="Transporter" name="deliveryAt">
                         <Input disabled={true} maxLength={50} placeholder={preparePlaceholderText('Transporter')} />
                     </Form.Item>
                 </Col>

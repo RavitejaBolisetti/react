@@ -242,55 +242,59 @@ const AddEditFormMain = (props) => {
     return (
         <>
             <Form form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed} layout="vertical">
-                {viewMode ? (
-                    <>
-                        <ViewRoleManagement {...viewProps} />
-                    </>
-                ) : (
-                    <>
-                        <div className={styles.roleDescription}>
-                            <Row gutter={20}>
-                                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                    <Form.Item initialValue={formData?.roleId} name="roleId" label="Role Id" rules={[validateRequiredInputField('id'), validationFieldLetterAndNumber('id')]}>
-                                        <Input maxLength={6} placeholder={preparePlaceholderText('id')} />
-                                    </Form.Item>
-                                </Col>
-                                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                    <Form.Item initialValue={formData?.roleName} name="roleName" label="Role Name" rules={[validateRequiredInputField('name'), validateAlphanumericWithSpaceHyphenPeriod('name')]}>
-                                        <Input maxLength={50} placeholder={preparePlaceholderText('name')} />
-                                    </Form.Item>
-                                </Col>
-                            </Row>
-                            <Row gutter={20}>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                    <Form.Item initialValue={formData?.roleDesceription} label="Role Description" name="roleDescription" rules={[validateRequiredInputField('description')]}>
-                                        <TextArea
-                                            placeholder={preparePlaceholderText('description')}
-                                            autoSize={{
-                                                minRows: 2,
-                                                maxRows: 5,
-                                            }}
-                                            maxLength={250}
-                                        />
-                                    </Form.Item>
-                                </Col>
-                            </Row>
-                            <Row gutter={20}>
-                                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                    <Form.Item initialValue={editMode ? formData.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label="Status">
-                                        <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} />
-                                    </Form.Item>
-                                </Col>
-                            </Row>
-                        </div>
-                        <Row gutter={20}>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.subTitleSec}>
-                                Application Access<span className={styles.mandatory}>*</span>
-                            </Col>
-                        </Row>
-                        {AccordianTreePanel()}
-                    </>
-                )}
+                <Row gutter={20} className={styles.drawerBody}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                        {viewMode ? (
+                            <>
+                                <ViewRoleManagement {...viewProps} />
+                            </>
+                        ) : (
+                            <>
+                                <div className={styles.roleDescription}>
+                                    <Row gutter={20}>
+                                        <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                                            <Form.Item initialValue={formData?.roleId} name="roleId" label="Role Id" rules={[validateRequiredInputField('id'), validationFieldLetterAndNumber('id')]}>
+                                                <Input maxLength={6} placeholder={preparePlaceholderText('id')} />
+                                            </Form.Item>
+                                        </Col>
+                                        <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                                            <Form.Item initialValue={formData?.roleName} name="roleName" label="Role Name" rules={[validateRequiredInputField('name'), validateAlphanumericWithSpaceHyphenPeriod('name')]}>
+                                                <Input maxLength={50} placeholder={preparePlaceholderText('name')} />
+                                            </Form.Item>
+                                        </Col>
+                                    </Row>
+                                    <Row gutter={20}>
+                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                            <Form.Item initialValue={formData?.roleDesceription} label="Role Description" name="roleDescription" rules={[validateRequiredInputField('description')]}>
+                                                <TextArea
+                                                    placeholder={preparePlaceholderText('description')}
+                                                    autoSize={{
+                                                        minRows: 2,
+                                                        maxRows: 5,
+                                                    }}
+                                                    maxLength={250}
+                                                />
+                                            </Form.Item>
+                                        </Col>
+                                    </Row>
+                                    <Row gutter={20}>
+                                        <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                                            <Form.Item initialValue={editMode ? formData.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label="Status">
+                                                <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} />
+                                            </Form.Item>
+                                        </Col>
+                                    </Row>
+                                </div>
+                                <Row gutter={20}>
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.subTitleSec}>
+                                        Application Access<span className={styles.mandatory}>*</span>
+                                    </Col>
+                                </Row>
+                                {AccordianTreePanel()}
+                            </>
+                        )}
+                    </Col>
+                </Row>
                 <DrawerFormButton {...buttonProps} />
             </Form>
         </>

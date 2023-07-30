@@ -211,12 +211,12 @@ export const crudListingBase = ({
             (canAddMaster || canEditMaster ? (
                 addButtonRoute ? (
                     <Link to={addButtonRoute}>
-                        <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger>
+                        <Button icon={<PlusOutlined />} type="primary" danger>
                             {addButtonTitle ? addButtonTitle : 'Add '}
                         </Button>
                     </Link>
                 ) : (
-                    <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd(props.onAddAction)}>
+                    <Button icon={<PlusOutlined />} type="primary" danger onClick={handleAdd(props.onAddAction)}>
                         {addButtonTitle ? addButtonTitle : 'Add '}
                     </Button>
                 )

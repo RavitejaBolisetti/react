@@ -4,20 +4,16 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 /* Tree panel CSS */
-.leftpanel {
-    /* padding: 0.2em; */
-    /* padding: 4px; */
-    width: 100%;
-    /* border-radius: 3px; */
-    /* border-top-left-radius: 0; */
-    /* margin-bottom: 20px; */
-    white-space: nowrap;
-    /* margin-top: 4px; */
-}
-
-/* .panelVisible {
-    height: 68vh;
-} */
+/* .leftpanel { */
+/* padding: 0.2em; */
+/* padding: 4px; */
+/* width: 100%; */
+/* border-radius: 3px; */
+/* border-top-left-radius: 0; */
+/* margin-bottom: 20px; */
+/* white-space: nowrap; */
+/* margin-top: 4px; */
+/* } */
 
 .panelVisible {
     height: calc(100vh - 280px);
@@ -33,25 +29,25 @@
     margin-bottom: 10px;
 } */
 
-.treemenu {
-    /* margin-bottom: 10px; */
-    /* margin-top: 10px; */
-    /* padding-left: 25px; */
-    padding-left: 0px;
+/* .treemenu { */
+/* margin-bottom: 10px; */
+/* margin-top: 10px; */
+/* padding-left: 25px; */
+/* padding-left: 0px;
     padding-bottom: 0px;
     line-height: 2em;
     list-style: none;
     background-color: transparent;
     color: #0B0B0C;
-}
+} */
 
-.treeCollapsibleButton {
-    /* border: 1px solid #ff3e5b; */
+/* .treeCollapsibleButton {
+    border: 1px solid #ff3e5b;
     border-radius: 3px;
-    /* position: absolute; */
-    /* z-index: 10; */
-    /* top: 136px; */
-    /* left:266px; */
+    position: absolute;
+    z-index: 10;
+    top: 136px;
+    left:266px;
     padding: 5px;
     padding-left: 8px;
     color: #ff3e5b;
@@ -59,47 +55,46 @@
     background-color: #f4f4f4;
     font-weight: 400;
     cursor: pointer;
-    /* width: 30px; */
-    /* margin: 8px auto 0px 8px; */
+    width: 30px;
+    margin: 8px auto 0px 8px;
     float: left;
     will-change: box-shadow, transform;
     transition: box-shadow 0.2s cubic-bezier(0.4, 0, 1, 1), background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
+} */
 
-.bigblue {
+/* .bigblue {
     color: red;
-}
+} */
 
 .scrollTreeData {
     width: 100%;
+    height: calc(100vh - 246px);
     overflow: auto;
-    max-height: 61.9vh;
-    padding: 16px 0px 16px 10px ;
+    padding: 20px;
+    border: 1px solid #e6e6e6;
+    border-radius: 4px;
 }
 
 .scrollTreeData::-webkit-scrollbar-track {
-    background-color: #f4f4f4;
-}
-
-.scrollTreeData::-webkit-scrollbar {
-    width: 5px;
-    height: 0px;
-    background-color: #F4F4F4;
-}
-
-.scrollTreeData::-webkit-scrollbar-thumb {
-    background-color: #C1C1C1;
+    background-color: #ffffff;
     border-radius: 10px;
 }
 
-.scrollTreeData:hover::-webkit-scrollbar {
-    width: 8px !important;
+.scrollTreeData::-webkit-scrollbar {
+    width: 8px;
 }
 
-/* .modalView{
-    border:solid 2px red;
-} */
-.modalView .scrollTreeData::-webkit-scrollbar-track {
+.scrollTreeData::-webkit-scrollbar-thumb {
+    background-color: #c1c1c1;
+    border-radius: 10px;
+    border: 2px solid #ffffff;
+}
+
+.scrollTreeData::-webkit-scrollbar-thumb:hover {
+    border: 2px solid #c1c1c1;
+}
+
+/* .modalView .scrollTreeData::-webkit-scrollbar-track {
     background-color: #fff;
 }
 
@@ -107,14 +102,14 @@
     width: 5px;
     height: 0px;
     background-color: #fff;
-}
+} */
 
-.searchField {
+/* .searchField {
     padding: 0 8px;
     margin-bottom: 8px;
     margin-top: 12px;
-    width: '100%';
-}
+    width: 100%;
+} */
 
 :global .ant-form-item-required:before {
     position: absolute;
@@ -138,9 +133,9 @@
 }
 
 :global .ant-tree .ant-tree-node-content-wrapper.ant-tree-node-selected,
-:global .ant-tree .ant-tree-checkbox+span.ant-tree-node-selected {
+:global .ant-tree .ant-tree-checkbox + span.ant-tree-node-selected {
     background-color: transparent;
-    color: #FF3E5B;
+    color: #ff3e5b;
     border-radius: 4px;
     padding: 0px 17px 0px 4px;
     font-weight: 500;
@@ -151,7 +146,7 @@
     color: #FF3E5B;} */
 
 :global .ant-tree .ant-tree-node-content-wrapper,
-:global .ant-tree .ant-tree-checkbox+span {
+:global .ant-tree .ant-tree-checkbox + span {
     position: relative;
     z-index: auto;
     min-height: 24px;
@@ -163,15 +158,15 @@
 }
 
 :global .ant-tree .ant-tree-node-content-wrapper:hover,
-:global .ant-tree .ant-tree-checkbox+span:hover {
+:global .ant-tree .ant-tree-checkbox + span:hover {
     background-color: transparent;
-    color: #FF3E5B;
+    color: #ff3e5b;
     border-radius: 4px;
     padding: 0px 17px 0px 4px;
 }
 
 :global .ant-tree .ant-tree-node-content-wrapper:hover .site-tree-search-value,
-:global .ant-tree .ant-tree-checkbox+span:hover .site-tree-search-value {
+:global .ant-tree .ant-tree-checkbox + span:hover .site-tree-search-value {
     color: #ff3e5b !important;
 }
 
@@ -194,8 +189,6 @@
     cursor: pointer;
     user-select: none;
 }
-
-
 
 @media (max-width: 576px) {
     .scrollTreeData {

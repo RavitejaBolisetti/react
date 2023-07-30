@@ -75,62 +75,56 @@ body::-webkit-scrollbar-thumb {
     /* border: 2px solid #FFFFFF; */
 }
 
+.scrollTreeData::-webkit-scrollbar-track,
 .drawerBodyLeft::-webkit-scrollbar-track {
     background-color: #f4f4f4;
 }
 
+.scrollTreeData::-webkit-scrollbar,
 .drawerBodyLeft::-webkit-scrollbar {
     background-color: #f4f4f4;
     width: 8px;
 }
 
+.scrollTreeData::-webkit-scrollbar-thumb,
 .drawerBodyLeft::-webkit-scrollbar-thumb {
     background-color: #c1c1c1;
     border-radius: 10px;
     border: 2px solid #f4f4f4;
 }
 
+.scrollTreeData::-webkit-scrollbar-thumb:hover,
 .drawerBodyLeft::-webkit-scrollbar-thumb:hover {
     border: 2px solid #c1c1c1;
 }
 
+.lightThemeScroll::-webkit-scrollbar-track,
+.modalView .scrollTreeData::-webkit-scrollbar-track,
+.drawerBody::-webkit-scrollbar-track,
 .drawerBodyRight::-webkit-scrollbar-track {
     background-color: #ffffff;
 }
 
+.lightThemeScroll::-webkit-scrollbar,
+.modalView .scrollTreeData::-webkit-scrollbar,
+.drawerBody::-webkit-scrollbar,
 .drawerBodyRight::-webkit-scrollbar {
-    width: 8px;
     background-color: #ffffff;
+    width: 8px;
 }
 
+.lightThemeScroll::-webkit-scrollbar-thumb,
+.drawerBody::-webkit-scrollbar-thumb,
 .drawerBodyRight::-webkit-scrollbar-thumb {
     background-color: #c1c1c1;
     border-radius: 10px;
     border: 2px solid #ffffff;
 }
 
+.lightThemeScroll::-webkit-scrollbar-thumb:hover,
+.drawerBody::-webkit-scrollbar-thumb:hover,
 .drawerBodyRight::-webkit-scrollbar-thumb:hover {
     border: 2px solid #c1c1c1;
-}
-
-.lightThemeScroll::-webkit-scrollbar-track {
-    background-color: #FFFFFF;
-}
-
-.lightThemeScroll::-webkit-scrollbar {
-    width: 8px;
-    height: 5px;
-    background-color: #D9D9D9;
-}
-
-.lightThemeScroll::-webkit-scrollbar-thumb {
-    background-color: #C1C1C1;
-    border-radius: 10px;
-    border: 2px solid #FFFFFF;
-}
-
-.lightThemeScroll::-webkit-scrollbar-thumb:hover {
-    border: 2px solid #C1C1C1;
 }
 
 .darkThemeScroll::-webkit-scrollbar-track {
@@ -151,50 +145,4 @@ body::-webkit-scrollbar-thumb {
 
 .darkThemeScroll::-webkit-scrollbar-thumb:hover {
     border: 2px solid #232324;
-}
-
-.scrollTreeData::-webkit-scrollbar-track {
-    background-color: #f4f4f4;
-}
-
-.scrollTreeData::-webkit-scrollbar {
-    width: 5px;
-    height: 0px;
-    background-color: #F4F4F4;
-}
-
-.scrollTreeData::-webkit-scrollbar-thumb {
-    background-color: #C1C1C1;
-    border-radius: 10px;
-}
-
-.scrollTreeData:hover::-webkit-scrollbar {
-    width: 8px !important;
-}
-
-/* .modalView{
-    border:solid 2px red;
-} */
-.modalView .scrollTreeData::-webkit-scrollbar-track {
-    background-color: #fff;
-}
-
-.modalView .scrollTreeData::-webkit-scrollbar {
-    width: 5px;
-    height: 0px;
-    background-color: #fff;
-}
-
-.myDrawerStyle :global .ant-drawer-body::-webkit-scrollbar-track {
-    background-color: #ffffff;
-}
-
-.myDrawerStyle :global .ant-drawer-body::-webkit-scrollbar {
-    width: 5px;
-    background-color: #ffffff;
-}
-
-.myDrawerStyle :global .ant-drawer-body::-webkit-scrollbar-thumb {
-    background-color: rgba(52, 44, 44, 0.34);
-    border-radius: 10px;
 }

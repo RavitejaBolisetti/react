@@ -21,6 +21,7 @@ export const ViewDetail = (props) => {
         deleteFile,
         downloadFile,
     } = props;
+    
     const downloadFileFromButton = (uploadData) => {
         const extraParams = [
             {
@@ -38,7 +39,7 @@ export const ViewDetail = (props) => {
     return (
         <div className={styles.viewDrawerContainer}>
             {supportingData.length > 0 ? (
-                <Card>
+                <>
                     {supportingData.map((uploadData) => {
                         return (
                             <Card
@@ -54,7 +55,7 @@ export const ViewDetail = (props) => {
                             ></Card>
                         );
                     })}
-                </Card>
+                </>
             ) : (
                 viewMode && <div className={styles.viewNoDataFound}>No Supporting Document Available</div>
             )}

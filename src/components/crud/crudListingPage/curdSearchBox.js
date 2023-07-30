@@ -67,7 +67,7 @@ const CurdSearchBox = (props) => {
                         <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
                             {showChangeHistoryButton && (
                                 <>
-                                    <Button onClick={showChangeHistoryList} className={styles.actionbtn} type="primary" danger>
+                                    <Button onClick={showChangeHistoryList} type="primary" danger>
                                         Change History
                                     </Button>
                                 </>
