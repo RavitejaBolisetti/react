@@ -31,25 +31,25 @@ const ChangeHistoryMain = (props) => {
         tblPrepareColumns({
             title: 'Language',
             dataIndex: 'languageDesc',
-            width: '15%',
+            width: '10%',
         }),
 
         tblPrepareColumns({
             title: 'Effective From',
             dataIndex: 'effectiveFrom',
-            width: '15%',
+            width: '18%',
             render: (text) => convertDateMonthYear(text),
         }),
         tblPrepareColumns({
             title: 'Effective To',
             dataIndex: 'effectiveTo',
-            width: '15%',
+            width: '18%',
             render: (text) => convertDateMonthYear(text),
         }),
         tblPrepareColumns({
             title: 'Version',
             dataIndex: 'version',
-            width: '15%',
+            width: '7%',
         }),
 
         tblPrepareColumns({

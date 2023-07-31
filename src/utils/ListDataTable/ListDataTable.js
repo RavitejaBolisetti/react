@@ -31,9 +31,9 @@ export default function ListDataTable(props) {
                         description={!tableData?.length ? <span>{noDataMessage || noDataInformation}</span> : <span> No records found.</span>}
                     >
                         {!tableData?.length
-                            ? addButtonOption
-                            : addButtonOption
-                            ? showAddButton && (
+                            ? // ? addButtonOption
+                              // : addButtonOption
+                              showAddButton && (
                                   <Button icon={<PlusOutlined />} type="primary" danger onClick={handleButtonClick}>
                                       {`Add`}
                                   </Button>

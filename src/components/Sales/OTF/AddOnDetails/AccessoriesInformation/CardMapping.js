@@ -35,9 +35,9 @@ const CardMapping = ({ index, AddEditFormProps, handleDelete, element, isEditing
                 <Row>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Space>
-                            <Text strong>{element?.partDescription}</Text>
-                            <Text strong> {'|'}</Text>
-                            <Text strong> {element?.partNumber}</Text>
+                            <Text className={style.headText}>{element?.partDescription}</Text>
+                            <Text className={style.headText}> {'|'}</Text>
+                            <Text className={style.headText}> {element?.partNumber}</Text>
                         </Space>
                         <Row>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
