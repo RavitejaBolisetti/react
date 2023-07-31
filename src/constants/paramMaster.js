@@ -240,4 +240,8 @@ export const PARAM_MASTER = {
         id: 'GRN_TYPE',
         title: 'GRN Type',
     },
+    PHYSICAL_STATUS: {
+        id: 'PHYSICAL_STATUS',
+        title: 'Physical Status',
+    },
 };

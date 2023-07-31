@@ -25,9 +25,9 @@ export default function VehicleReceiptFilter(props) {
     return (
         <div className={styles.contentHeaderBackground}>
             <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.subheading}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row gutter={20}>
-                        <Col xs={24} sm={16} md={16} lg={16} xl={16} className={styles.searchAndLabelAlign}>
+                        <Col xs={24} sm={16} md={16} lg={16} xl={16} className={styles.verticallyCentered}>
                             <div className={`${styles.userManagement} ${styles.headingToggle}`}>
                                 {typeData?.map((item) => {
                                     return (

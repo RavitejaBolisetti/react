@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { Row, Col, Input, Form, Select, DatePicker, Card, Collapse, Divider, Space, Typography, Tooltip } from 'antd';
+import { Row, Col, Input, Form, Select, DatePicker, Card, Collapse, Divider, Space, Typography, Tooltip, Button } from 'antd';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { InfoCircleOutlined } from '@ant-design/icons';
 
@@ -19,9 +19,17 @@ const { Text } = Typography;
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { formData, typeData } = props;
+    const { formData, typeData, vehicleStatusType, physicalStatusType } = props;
+    console.log('🚀 ~ file: AddEditForm.js:23 ~ AddEditFormMain ~ physicalStatusType:', physicalStatusType);
 
     const [activeKey, setactiveKey] = useState([1]);
+
+    const selectProps = {
+        optionFilterProp: 'children',
+        showSearch: true,
+        allowClear: true,
+        className: styles.headerSelectField,
+    };
 
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
@@ -39,6 +47,10 @@ const AddEditFormMain = (props) => {
             setactiveKey([...activeKey, values]);
         }
     };
+
+    const handleSave = () => {};
+
+    const handleCancelFormEdit = () => {};
 
     return (
         <div className={styles.accessInfo}>
@@ -115,12 +127,12 @@ const AddEditFormMain = (props) => {
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item initialValue={formData?.placeOfRegistration} label="Vehicle Status" name="placeOfRegistration">
-                                <Select placeholder="Select" showSearch allowClear options={typeData['SALE_TYP']} fieldNames={{ label: 'value', value: 'key' }} />
+                                <Select placeholder="Select" showSearch allowClear options={vehicleStatusType} {...selectProps} fieldNames={{ label: 'value', value: 'key' }} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item initialValue={formData?.deliveryAt} label="Physical Status" name="deliveryAt">
-                                <Select placeholder="Select" showSearch allowClear options={typeData['SALE_TYP']} fieldNames={{ label: 'value', value: 'key' }} />
+                                <Select placeholder="Select" showSearch allowClear options={physicalStatusType} {...selectProps} fieldNames={{ label: 'value', value: 'key' }} />
                             </Form.Item>
                         </Col>
                     </Row>
@@ -135,6 +147,16 @@ const AddEditFormMain = (props) => {
                             <Form.Item initialValue={formData?.mitraType} name="mitraType" label="Vehicle Receipt Checklist No.">
                                 <Input maxLength={10} placeholder={preparePlaceholderText('Vehicle Receipt Checklist No.')} disabled={true} />
                             </Form.Item>
+                        </Col>
+                    </Row>
+                    <Row gutter={20}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                            <Button className={styles.marR20} onClick={handleSave} type="primary">
+                                Save
+                            </Button>
+                            <Button className={styles.marB20} onClick={handleCancelFormEdit} danger>
+                                Cancel
+                            </Button>
                         </Col>
                     </Row>
                 </Panel>

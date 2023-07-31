@@ -13,9 +13,9 @@ import { VehicleReceiptFormButton } from '../VehicleReceiptFormButton';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { otfDataActions } from 'store/actions/data/otf/otf';
+import { supplierInvoiceDataActions } from 'store/actions/data/vehicleReceipt/supplierInvoice';
 import { showGlobalNotification } from 'store/actions/notification';
-import { salesConsultantActions } from 'store/actions/data/otf/salesConsultant';
+import { PARAM_MASTER } from 'constants/paramMaster';
 
 import styles from 'components/common/Common.module.css';
 
@@ -23,24 +23,24 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            OTF: {
-                OtfDetails: { isLoaded: isDataLoaded = false, isLoading, data: otfData = [] },
-                salesConsultantLov: { isLoaded: isSalesConsultantDataLoaded, data: salesConsultantLov = [] },
+            ConfigurableParameterEditing: { filteredListData: typeData = [] },
+            VehicleReceipt: {
+                VehicleDetails: { isLoaded: isDataLoaded = false, isLoading, data: supplierInvoiceData = [] },
             },
         },
     } = state;
 
-    const moduleTitle = 'OTF Details';
+    const moduleTitle = 'Vehicle Details';
 
     let returnValue = {
         userId,
         isDataLoaded,
+        vehicleStatusType: typeData[PARAM_MASTER.PHYSICAL_STATUS.id],
+        physicalStatusType: typeData[PARAM_MASTER.PHYSICAL_STATUS.id],
 
-        otfData,
+        supplierInvoiceData,
         isLoading,
         moduleTitle,
-        isSalesConsultantDataLoaded,
-        salesConsultantLov,
     };
     return returnValue;
 };
@@ -49,13 +49,10 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchList: otfDataActions.fetchList,
-            saveData: otfDataActions.saveData,
-            resetData: otfDataActions.reset,
-            listShowLoading: otfDataActions.listShowLoading,
-
-            fetchSalesConsultant: salesConsultantActions.fetchList,
-            listConsultantShowLoading: salesConsultantActions.listShowLoading,
+            fetchList: supplierInvoiceDataActions.fetchList,
+            saveData: supplierInvoiceDataActions.saveData,
+            resetData: supplierInvoiceDataActions.reset,
+            listShowLoading: supplierInvoiceDataActions.listShowLoading,
             showGlobalNotification,
         },
         dispatch
@@ -63,25 +60,12 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const VehicleDetailsMasterBase = (props) => {
-    const { typeData, listConsultantShowLoading } = props;
+    const { typeData, vehicleStatusType, physicalStatusType } = props;
+    console.log('🚀 ~ file: VehicleDetailMaster.js:64 ~ VehicleDetailsMasterBase ~ physicalStatusType:', physicalStatusType);
     const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, otfData, saveData, isLoading } = props;
-    const { form, selectedOrderId, formActionType, handleFormValueChange, fetchSalesConsultant, salesConsultantLov, isSalesConsultantDataLoaded, NEXT_ACTION, handleButtonClick } = props;
+    const { form, selectedOrderId, formActionType, handleFormValueChange, fetchSalesConsultant, NEXT_ACTION, handleButtonClick } = props;
     const [exchangeValue, setexchangeValue] = useState(false);
     const [loyaltyValue, setloyaltyValue] = useState(false);
-
-    useEffect(() => {
-        if (otfData?.exchange) {
-            setexchangeValue(false);
-            setloyaltyValue(true);
-        } else if (otfData?.loyaltyScheme) {
-            setexchangeValue(true);
-            setloyaltyValue(false);
-        } else {
-            setexchangeValue(false);
-            setloyaltyValue(false);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [otfData]);
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
@@ -110,13 +94,6 @@ const VehicleDetailsMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedOrderId]);
-
-    useEffect(() => {
-        if (!isSalesConsultantDataLoaded && userId) {
-            fetchSalesConsultant({ setIsLoading: listConsultantShowLoading, userId });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isSalesConsultantDataLoaded, userId]);
 
     const onFinish = (values) => {
         const recordId = otfData?.id || '';
@@ -158,12 +135,13 @@ const VehicleDetailsMasterBase = (props) => {
         onFinishFailed,
         fetchList,
         typeData,
+        vehicleStatusType,
+        physicalStatusType,
 
         userId,
         isDataLoaded,
         formData: otfData,
         isLoading,
-        salesConsultantLov,
         exchangeValue,
         setexchangeValue,
         loyaltyValue,
@@ -175,7 +153,6 @@ const VehicleDetailsMasterBase = (props) => {
         formData: otfData,
         styles,
         isLoading,
-        salesConsultantLov,
     };
 
     const handleFieldsChange = () => {
@@ -213,4 +190,4 @@ const VehicleDetailsMasterBase = (props) => {
     );
 };
 
-export const VehicleDetailsMaster = connect(null, null)(VehicleDetailsMasterBase);
+export const VehicleDetailsMaster = connect(mapStateToProps, mapDispatchToProps)(VehicleDetailsMasterBase);

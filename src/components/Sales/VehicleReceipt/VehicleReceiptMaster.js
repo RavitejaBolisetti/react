@@ -20,7 +20,6 @@ import { VEHICLE_RECEIPT_SECTION } from 'constants/VehicleReceiptSection';
 
 import { showGlobalNotification } from 'store/actions/notification';
 import { vehicleReceiptDataActions } from 'store/actions/data/vehicleReceipt/vehicleReceipt';
-// import { otfSearchListAction } from 'store/actions/data/otf/otfSearchAction';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
 // import { validateVehicleReceiptMenu } from './utils/validateVehicleReceiptMenu';
