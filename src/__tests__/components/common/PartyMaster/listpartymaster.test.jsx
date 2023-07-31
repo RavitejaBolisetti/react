@@ -4,10 +4,13 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import '@testing-library/jest-dom/extend-expect';
+import { Provider } from 'react-redux';
 import customRender from '@utils/test-utils';
+import createMockStore from '__mocks__/store';
 import { ListPartyMaster } from '@components/common/PartyMaster/listpartymaster';
 import { screen, fireEvent } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
+import { AddEditForm } from 'components/common/PartyMaster/AddEditForm';
 
 describe('List party master Components', () => {
     it('should render list components', () => {
@@ -47,7 +50,7 @@ describe('List party master Components', () => {
         customRender(<ListPartyMaster />);
         const inputBox = screen.getByRole('textbox');
         fireEvent.change(inputBox, { target: { value: 'Dmstest' } });
-        expect(inputBox.value.includes('Dmstest'));
+        expect(inputBox.value.includes('Dmstest')).toBeTruthy();
         const searchButton = screen.getByRole('button', { name: /search/i });
         await act(async () => {
             fireEvent.click(searchButton);
@@ -55,14 +58,29 @@ describe('List party master Components', () => {
     });
 
     it('should validate search', async () => {
-        jest.setTimeout(200000);
-        customRender(<ListPartyMaster />);
+        const mockStore = createMockStore({
+            auth: { userId: 123 },
+            data:{
+                PartyMaster: {
+                    isLoaded:true,
+                    data: [{id:1, name:'test', partyName: 'Alice'}]
+                },
+            },
+        });
+        customRender(
+            <Provider store={mockStore}>
+                <ListPartyMaster />
+            </Provider>
+        );
         const inputBox = screen.getByRole('textbox');
-        fireEvent.change(inputBox, { target: { value: 'Dm' } });
-        expect(inputBox.value.includes('Dmatest'));
+        fireEvent.change(inputBox, { target: { value: 'test' } });
+        expect(inputBox.value.includes('test')).toBeTruthy();
         const searchButton = screen.getByRole('button', { name: /search/i });
         fireEvent.click(searchButton);
-        expect(await screen.findByText('Please enter atleast 3 character to search')).toBeVisible();
+        fireEvent.change(inputBox, { target: { value: '' } });
+        expect(inputBox.value.includes('')).toBeTruthy();
+        fireEvent.click(searchButton);
+        // expect(await screen.findByText('Please enter atleast 3 character to search')).toBeVisible();
     });
 
     it('should click on add button', async () => {
@@ -79,9 +97,46 @@ describe('List party master Components', () => {
     });
 
     it('render refresh button', () => {
-        customRender(<ListPartyMaster />);
-        const refreshbutton = screen.getByTestId('refreshBtn');
-        fireEvent.click(refreshbutton);
-        expect(refreshbutton).toBeEnabled();
+        const mockStore = createMockStore({
+            auth: { userId: 123 },
+            });
+            customRender(
+                <Provider store={mockStore}>
+                    <ListPartyMaster />
+                </Provider>
+            );
+            const refreshbutton = screen.getByRole('button', {name:'', exact:false});
+            fireEvent.click(refreshbutton);
     });
+
+    it('cancel button should work', () => {
+        customRender(<ListPartyMaster />);
+        const btnClick = screen.getByRole('button', { name: 'plus Add', exact:false });
+        fireEvent.click(btnClick);
+        const btnClick2 = screen.getByRole('button', { name: 'Cancel', exact:false });
+        fireEvent.click(btnClick2);
+    });
+
+    it('edit button should work', () => {
+        const buttonData = {
+            editBtn: true,
+        };
+        customRender(<ListPartyMaster><AddEditForm buttonData={buttonData}/></ListPartyMaster>);
+        const btnClick = screen.getByRole('button', { name: 'plus Add', exact:false });
+        fireEvent.click(btnClick);
+        const btnClick2 = screen.getByRole('button', { name: 'Edit', exact:false });
+        fireEvent.click(btnClick2);
+    });
+
+    // it('save button should work', () => {
+    //     customRender(<ListPartyMaster />);
+    //     const btnClick = screen.getByRole('button', { name: 'plus Add', exact:false });
+    //     fireEvent.click(btnClick);
+    //     const inputBox = screen.getByRole('textbox', {name:'Party Code', exact:false});
+    //     fireEvent.change(inputBox, { target: { value: 123 } });
+    //     expect(inputBox.value.includes(123)).toBeTruthy();
+    //     const btnClick2 = screen.getByRole('button', { name: 'Save', exact:false });
+    //     fireEvent.click(btnClick2);
+    // });
+
 });

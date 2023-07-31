@@ -3,16 +3,14 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
+import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
 import { AddEditForm } from '@components/common/PartyMaster/addeditform';
-import { screen, fireEvent } from '@testing-library/react';
+import { screen, fireEvent, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { act } from 'react-dom/test-utils';
-
-beforeEach(() => {
-    jest.clearAllMocks();
-});
+import { Form } from 'antd';
 
 const buttonData = {
     closeBtn: true,
@@ -40,10 +38,14 @@ const props = {
     onCloseAction: true,
 };
 
+const FormWrapper = (props) => {
+    const [form]=Form.useForm();
+    return <AddEditForm form={form} {...props} />
+}
+
 describe('party master Components', () => {
     it('should render input field components', () => {
         customRender(<AddEditForm isVisible={true} viewMode={false} formData={{}} resetFields={jest.fn()} editMode={jest.fn()} buttonData={buttonData} setButtonData={jest.fn()} handleButtonClick={jest.fn()} onCloseAction={jest.fn()} saveButtonName={saveButtonName} isLoadingOnSave={isLoadingOnSave} {...props} />);
-        screen.debug();
         const partyname = screen.getByLabelText('Party Name');
         fireEvent.change(partyname, { target: { value: 'Dmstest' } });
         expect(partyname.value.includes('Dmstest'));
@@ -140,4 +142,57 @@ describe('party master Components', () => {
         fireEvent.click(SearchBtn);
         expect(SearchBtn).toBeTruthy();
     });
+
+    it('should check if search field is empty', async () => {
+        const formActionType = { editMode:true };
+        const detailData={ name:'test' };
+        const pincodeData=[ {id: '1', pinCode: '123456', localityName: 'Konohagakure', cityName: 'Konohagakure', districtName: 'Konohagakure', stateName: 'Konohagakure'}, {id: '2', pinCode: '123456', cityName: 'Konohagakure', districtName: 'Konohagakure', stateName: 'Konohagakure'} ];
+        const typeData = { PTY_CAT: [ {value: 'test'} ] }
+
+        render(<FormWrapper isVisible={true} formActionType={formActionType} fetchDetail={jest.fn()} detailData={detailData} setFormData={jest.fn()} setButtonData={jest.fn()} fetchPincodeDetail={jest.fn()} pincodeData={pincodeData} typeData={typeData}/>);
+
+        const searchBox=screen.getByPlaceholderText('Search');
+        fireEvent.change(searchBox, { target: { value: '' }})
+        const SearchBtn = screen.getByRole('button', { name: 'search' });
+        fireEvent.click(SearchBtn);
+    })
+
+    it('should check if search field is correct', async () => {
+        const formActionType = { editMode:true };
+        const detailData={ name:'test' };
+
+        render(<FormWrapper isVisible={true} formActionType={formActionType} fetchDetail={jest.fn()} detailData={detailData} setFormData={jest.fn()} setButtonData={jest.fn()} fetchPincodeDetail={jest.fn()}/>);
+
+        const searchBox=screen.getByPlaceholderText('Search');
+        fireEvent.change(searchBox, { target: { value: '123456' }})
+        const SearchBtn = screen.getByRole('button', { name: 'search' });
+        fireEvent.click(SearchBtn);
+    })
+
+    it('should check if search field has more than 5 char', async () => {
+        const formActionType = { editMode:true };
+        const detailData={ name:'test' };
+
+        render(<FormWrapper isVisible={true} formActionType={formActionType} fetchDetail={jest.fn()} detailData={detailData} setFormData={jest.fn()} setButtonData={jest.fn()} fetchPincodeDetail={jest.fn()}/>);
+
+        const searchBox=screen.getByPlaceholderText('Search');
+        fireEvent.change(searchBox, { target: { value: '1234567' }})
+        const SearchBtn = screen.getByRole('button', { name: 'search' });
+        fireEvent.click(SearchBtn);
+    })
+
+    it('should able to select option from search', async () => {
+        const formActionType={ editMode:true };
+        const detailData={ name:'test' };
+        const formData=[{pinCode: '123456'}];
+        const pincodeData=[ {id: '1', pinCode: '123456', localityName: 'Konohagakure', cityName: 'Konohagakure', districtName: 'Konohagakure', stateName: 'Konohagakure'}, {id: '2', pinCode: '123457', cityName: 'Konohagakure', districtName: 'Konohagakure', stateName: 'Konohagakure'} ];
+
+        render(<FormWrapper fetchPincodeDetail={jest.fn()} setButtonData={jest.fn()} pincodeData={pincodeData} formData={formData} isVisible={true} formActionType={formActionType} fetchDetail={jest.fn()} detailData={detailData} setFormData={jest.fn()} forceUpdate={jest.fn()} />);
+        
+        const searchBox=screen.getByPlaceholderText('Search');
+        fireEvent.keyDown(searchBox, {key:'ArrowDown', code:40});
+        const optionSelect=screen.getByText('123456 - Konohagakure-Konohagakure -Konohagakure -Konohagakure');
+        fireEvent.click(optionSelect);
+    });
+
 });
