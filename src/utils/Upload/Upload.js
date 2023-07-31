@@ -11,7 +11,7 @@ import { supportingDocumentDataActions } from 'store/actions/data/supportingDocu
 import { documentViewDataActions } from 'store/actions/data/customerMaster/documentView';
 import { showGlobalNotification } from 'store/actions/notification';
 import { FiDownload } from 'react-icons/fi';
-import { AiOutlineCloseCircle } from 'react-icons/ai';
+import { AiOutlineCloseCircle, AiOutlineClose, AiOutlineEye } from 'react-icons/ai';
 import { BsTrash3 } from 'react-icons/bs';
 import { HiCheck } from 'react-icons/hi';
 import { UploadBoxIcon } from 'Icons';
@@ -114,7 +114,7 @@ const UploadBase = (props) => {
     const [base64Img, setBase64Img] = useState('');
     const [uploadTime, setUploadTime] = useState(false);
 
-    const removeIcon = uploadTime ? <AiOutlineCloseCircle /> : <BsTrash3 />;
+    const removeIcon = uploadTime ? <AiOutlineCloseCircle className={styles.iconSize} /> : <AiOutlineClose className={styles.iconSize}  />;
 
     const onReplaceClick = () => {
         setIsReplacing(true);
@@ -198,7 +198,7 @@ const UploadBase = (props) => {
             showRemoveIcon,
             showDownloadIcon,
             removeIcon: removeIcon,
-            downloadIcon: <FiDownload style={{ color: '#ff3e5b' }} />,
+            downloadIcon: <AiOutlineEye className={styles.iconSize} />,
             showProgress,
             showPreviewIcon,
         },
