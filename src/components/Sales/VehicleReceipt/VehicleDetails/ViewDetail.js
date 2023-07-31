@@ -64,7 +64,7 @@ const ViewDetailMain = (props) => {
                         <Divider />
                         <Descriptions {...viewProps}>
                             <Descriptions.Item label="Model Description">
-                                {checkAndSetDefaultValue(getCodeValue(typeData?.SALE_TYP, formData?.saleType), isLoading)}
+                                {checkAndSetDefaultValue(formData?.modelDescription, isLoading)}
                                 {/* <Tooltip title="Extra information">
                                     <InfoCircleOutlined
                                         style={{
@@ -73,16 +73,16 @@ const ViewDetailMain = (props) => {
                                     />
                                 </Tooltip> */}
                             </Descriptions.Item>
-                            <Descriptions.Item label="VIN">{checkAndSetDefaultValue(formData?.custExpectedDeliveryDate, isLoading, 'date')}</Descriptions.Item>
-                            <Descriptions.Item label="Key Number">{checkAndSetDefaultValue(getCodeValue(typeData?.SALE_TYP, formData?.saleType), isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="MFG Date">{checkAndSetDefaultValue(getCodeValue(typeData?.PRC_TYP, formData?.priceType), isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Received On">{checkAndSetDefaultValue(formData?.bookingAmount, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Vehicle Cost">{checkAndSetDefaultValue(getCodeValue(salesConsultantLov, formData?.saleConsultant), isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Demo Vehicle">{checkAndSetDefaultValue(formData?.specialRequest, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Vehicle Status">{checkAndSetDefaultValue(formData?.placeOfRegistration, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Physical Status">{checkAndSetDefaultValue(getCodeValue(typeData?.DLVR_AT, formData?.deliveryAt), isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Shortage">{checkAndSetDefaultValue(getCodeValue(typeData?.RFRL, formData?.referral), isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Vehicle Receipt Checklist No.">{checkAndSetDefaultValue(formData?.mitraType, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="VIN">{checkAndSetDefaultValue(formData?.vin, isLoading, 'date')}</Descriptions.Item>
+                            <Descriptions.Item label="Key Number">{checkAndSetDefaultValue(formData?.keyNumber, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="MFG Date">{checkAndSetDefaultValue(formData?.mfgDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                            <Descriptions.Item label="Received On">{checkAndSetDefaultValue(formData?.receivedOn, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                            <Descriptions.Item label="Vehicle Cost">{checkAndSetDefaultValue(formData?.vehicleCost, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Demo Vehicle">{checkAndSetDefaultValue(formData?.demoVehicle, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Vehicle Status">{checkAndSetDefaultValue(formData?.vehicleStatus, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Physical Status">{checkAndSetDefaultValue(getCodeValue(typeData?.DLVR_AT, formData?.physicalStatus), isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Shortage">{checkAndSetDefaultValue(getCodeValue(typeData?.RFRL, formData?.shortage), isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Vehicle Receipt Checklist No.">{checkAndSetDefaultValue(formData?.vehicleRecieptCheckListNumber, isLoading)}</Descriptions.Item>
                         </Descriptions>
                     </Panel>
                 </Collapse>

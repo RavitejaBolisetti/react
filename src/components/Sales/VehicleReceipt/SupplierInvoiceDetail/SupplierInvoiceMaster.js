@@ -68,10 +68,10 @@ const SupplierInvoiceDetailsMasterBase = (props) => {
 
     const extraParams = [
         {
-            key: 'otfNumber',
-            title: 'otfNumber',
+            key: 'supplierInvoiceNumber',
+            title: 'supplierInvoiceNumber',
             value: selectedId,
-            name: 'OTF Number',
+            name: 'Supplier Invoice Number',
         },
     ];
 
@@ -93,7 +93,7 @@ const SupplierInvoiceDetailsMasterBase = (props) => {
     const onFinish = (values) => {
         const recordId = supplierInvoiceData?.id || '';
         const exchange = values?.exchange === true ? 1 : 0;
-        const data = { ...values, id: recordId, otfNumber: '', loyaltyScheme: values?.loyaltyScheme === true ? 1 : 0, exchange: exchange, initialPromiseDeliveryDate: values?.initialPromiseDeliveryDate?.format('YYYY-MM-DD'), custExpectedDeliveryDate: values?.custExpectedDeliveryDate?.format('YYYY-MM-DD') };
+        const data = { ...values, id: recordId, supplierInvoiceNumber: '', loyaltyScheme: values?.loyaltyScheme === true ? 1 : 0, exchange: exchange, initialPromiseDeliveryDate: values?.initialPromiseDeliveryDate?.format('YYYY-MM-DD'), custExpectedDeliveryDate: values?.custExpectedDeliveryDate?.format('YYYY-MM-DD') };
         delete data?.mitraName;
         delete data?.mitraType;
         delete data?.modeOfPAyment;

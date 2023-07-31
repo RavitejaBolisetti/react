@@ -13,7 +13,7 @@ import { VehicleReceiptFormButton } from '../VehicleReceiptFormButton';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { supplierInvoiceDataActions } from 'store/actions/data/vehicleReceipt/supplierInvoice';
+import { vehicleDetailDataActions } from 'store/actions/data/vehicleReceipt/vehicleDetails';
 import { showGlobalNotification } from 'store/actions/notification';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
@@ -25,7 +25,7 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             VehicleReceipt: {
-                VehicleDetails: { isLoaded: isDataLoaded = false, isLoading, data: supplierInvoiceData = [] },
+                VehicleDetails: { isLoaded: isDataLoaded = false, isLoading, data: vehicleDetailData = [] },
             },
         },
     } = state;
@@ -38,7 +38,7 @@ const mapStateToProps = (state) => {
         vehicleStatusType: typeData[PARAM_MASTER.PHYSICAL_STATUS.id],
         physicalStatusType: typeData[PARAM_MASTER.PHYSICAL_STATUS.id],
 
-        supplierInvoiceData,
+        vehicleDetailData,
         isLoading,
         moduleTitle,
     };
@@ -49,10 +49,10 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchList: supplierInvoiceDataActions.fetchList,
-            saveData: supplierInvoiceDataActions.saveData,
-            resetData: supplierInvoiceDataActions.reset,
-            listShowLoading: supplierInvoiceDataActions.listShowLoading,
+            fetchList: vehicleDetailDataActions.fetchList,
+            saveData: vehicleDetailDataActions.saveData,
+            resetData: vehicleDetailDataActions.reset,
+            listShowLoading: vehicleDetailDataActions.listShowLoading,
             showGlobalNotification,
         },
         dispatch
@@ -60,10 +60,9 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const VehicleDetailsMasterBase = (props) => {
-    const { typeData, vehicleStatusType, physicalStatusType } = props;
-    console.log('🚀 ~ file: VehicleDetailMaster.js:64 ~ VehicleDetailsMasterBase ~ physicalStatusType:', physicalStatusType);
-    const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, otfData, saveData, isLoading } = props;
-    const { form, selectedOrderId, formActionType, handleFormValueChange, fetchSalesConsultant, NEXT_ACTION, handleButtonClick } = props;
+    const { typeData, vehicleStatusType, physicalStatusType, vehicleDetailData } = props;
+    const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, saveData, isLoading } = props;
+    const { form, selectedId, formActionType, handleFormValueChange, fetchSalesConsultant, NEXT_ACTION, handleButtonClick } = props;
     const [exchangeValue, setexchangeValue] = useState(false);
     const [loyaltyValue, setloyaltyValue] = useState(false);
 
@@ -73,33 +72,32 @@ const VehicleDetailsMasterBase = (props) => {
 
     const extraParams = [
         {
-            key: 'otfNumber',
-            title: 'otfNumber',
-            value: selectedOrderId,
-            name: 'OTF Number',
+            key: 'supplierInvoiceNumber',
+            title: 'supplierInvoiceNumber',
+            value: selectedId,
+            name: 'Supplier Invoice Number',
         },
     ];
 
     useEffect(() => {
-        if (userId && selectedOrderId) {
+        if (userId && selectedId) {
             const extraParams = [
                 {
-                    key: 'otfNumber',
-                    title: 'otfNumber',
-                    value: selectedOrderId,
-                    name: 'OTF Number',
+                    key: 'supplierInvoiceNumber',
+                    title: 'supplierInvoiceNumber',
+                    value: selectedId,
+                    name: 'Supplier Invoice Number',
                 },
             ];
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedOrderId]);
+    }, [userId, selectedId]);
 
     const onFinish = (values) => {
-        const recordId = otfData?.id || '';
-        const otfNum = otfData?.otfNumber || '';
+        const recordId = vehicleDetailData?.id || '';
         const exchange = values?.exchange === true ? 1 : 0;
-        const data = { ...values, id: recordId, otfNumber: otfNum, loyaltyScheme: values?.loyaltyScheme === true ? 1 : 0, exchange: exchange, initialPromiseDeliveryDate: values?.initialPromiseDeliveryDate?.format('YYYY-MM-DD'), custExpectedDeliveryDate: values?.custExpectedDeliveryDate?.format('YYYY-MM-DD') };
+        const data = { ...values, id: recordId, supplierInvoiceNumber: '', loyaltyScheme: values?.loyaltyScheme === true ? 1 : 0, exchange: exchange, initialPromiseDeliveryDate: values?.initialPromiseDeliveryDate?.format('YYYY-MM-DD'), custExpectedDeliveryDate: values?.custExpectedDeliveryDate?.format('YYYY-MM-DD') };
         delete data?.mitraName;
         delete data?.mitraType;
         delete data?.modeOfPAyment;
@@ -140,7 +138,7 @@ const VehicleDetailsMasterBase = (props) => {
 
         userId,
         isDataLoaded,
-        formData: otfData,
+        formData: vehicleDetailData,
         isLoading,
         exchangeValue,
         setexchangeValue,
@@ -150,7 +148,7 @@ const VehicleDetailsMasterBase = (props) => {
 
     const viewProps = {
         typeData,
-        formData: otfData,
+        formData: vehicleDetailData,
         styles,
         isLoading,
     };

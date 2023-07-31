@@ -20,7 +20,6 @@ const { Option } = Select;
 
 const AddEditFormMain = (props) => {
     const { formData, typeData, vehicleStatusType, physicalStatusType } = props;
-    console.log('🚀 ~ file: AddEditForm.js:23 ~ AddEditFormMain ~ physicalStatusType:', physicalStatusType);
 
     const [activeKey, setactiveKey] = useState([1]);
 
@@ -74,7 +73,7 @@ const AddEditFormMain = (props) => {
                     <Divider />
                     <Row gutter={20}>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.infoWrapper}>
-                            <Form.Item label="Model Description" name="initialPromiseDeliveryDate">
+                            <Form.Item initialValue={formData?.modelDescription} label="Model Description" name="modelDescription">
                                 <Input
                                     maxLength={10}
                                     suffix={
@@ -92,59 +91,59 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item label="VIN" name="custExpectedDeliveryDate">
+                            <Form.Item initialValue={formData?.vin} label="VIN" name="vin">
                                 <Input maxLength={10} placeholder={preparePlaceholderText('VIN')} disabled={true} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={formData?.saleType} name="saleType" label="Key Number">
+                            <Form.Item initialValue={formData?.keyNumber} label="Key Number" name="keyNumber">
                                 <Input maxLength={10} placeholder={preparePlaceholderText('Key Number')} disabled={true} />
                             </Form.Item>
                         </Col>
                     </Row>
                     <Row gutter={20}>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item label="MFG Date" name="priceType">
-                                <DatePicker disabled={true} style={{ display: 'auto', width: '100%' }} />
+                            <Form.Item initialValue={formData?.mfgDate} label="MFG Date" name="mfgDate">
+                                <DatePicker format={dateFormat} disabled={true} style={{ display: 'auto', width: '100%' }} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item name="saleConsultant" label="Received On">
-                                <DatePicker disabled={true} format={dateFormat} style={{ display: 'auto', width: '100%' }} />
+                            <Form.Item initialValue={formData?.receivedOn} label="Received On" name="receivedOn">
+                                <DatePicker format={dateFormat} disabled={true} style={{ display: 'auto', width: '100%' }} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={formData?.bookingAmount} label="Vehicle Cost" name="bookingAmount">
+                            <Form.Item initialValue={formData?.vehicleCost} label="Vehicle Cost" name="vehicleCost">
                                 <Input maxLength={10} placeholder={preparePlaceholderText('Vehicle Cost')} disabled={true} />
                             </Form.Item>
                         </Col>
                     </Row>
                     <Row gutter={20}>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={formData?.specialRequest} label="Demo Vehicle" name="specialRequest">
+                            <Form.Item initialValue={formData?.demoVehicle} label="Demo Vehicle" name="demoVehicle">
                                 <Select placeholder="Select" showSearch allowClear options={typeData['SALE_TYP']} fieldNames={{ label: 'value', value: 'key' }} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={formData?.placeOfRegistration} label="Vehicle Status" name="placeOfRegistration">
+                            <Form.Item initialValue={formData?.vehicleStatus} label="Vehicle Status" name="vehicleStatus">
                                 <Select placeholder="Select" showSearch allowClear options={vehicleStatusType} {...selectProps} fieldNames={{ label: 'value', value: 'key' }} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={formData?.deliveryAt} label="Physical Status" name="deliveryAt">
+                            <Form.Item initialValue={formData?.physicalStatus} label="Physical Status" name="physicalStatus">
                                 <Select placeholder="Select" showSearch allowClear options={physicalStatusType} {...selectProps} fieldNames={{ label: 'value', value: 'key' }} />
                             </Form.Item>
                         </Col>
                     </Row>
                     <Row gutter={20}>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={formData?.referral} label="Shortage" name="referral">
+                            <Form.Item initialValue={formData?.shortage} label="Shortage" name="shortage">
                                 <Select placeholder="Select" showSearch allowClear options={typeData['SALE_TYP']} fieldNames={{ label: 'value', value: 'key' }} />
                             </Form.Item>
                         </Col>
 
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={formData?.mitraType} name="mitraType" label="Vehicle Receipt Checklist No.">
+                            <Form.Item initialValue={formData?.vehicleRecieptCheckListNumber} label="Vehicle Receipt Checklist No." name="vehicleRecieptCheckListNumber">
                                 <Input maxLength={10} placeholder={preparePlaceholderText('Vehicle Receipt Checklist No.')} disabled={true} />
                             </Form.Item>
                         </Col>
