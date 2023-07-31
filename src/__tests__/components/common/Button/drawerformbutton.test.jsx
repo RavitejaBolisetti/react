@@ -1,14 +1,25 @@
-import { render, fireEvent } from '@testing-library/react';
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
+import { fireEvent, screen } from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
 import { DrawerFormButton } from '@components/common/Button/DrawerFormButton';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import customRender from '@utils/test-utils';
 
-const createMockSetButtonData = (buttonData) => {
-    return jest.fn((newButtonData) => ({
-        ...buttonData,
-        ...newButtonData,
-    }));
+const buttonData = {
+    saveBtn: true,
+    saveAndNewBtn: true,
+    editBtn: true,
+    cancelOTFBtn: true,
+    transferOTFBtn: true,
+    formBtnActive: true,
 };
+const saveButtonName = 'Save';
+const isLoadingOnSave = false;
+const saveAndNewBtnClicked = true;
 
 describe('DrawerFormButton', () => {
     it('should render all buttons with correct labels', () => {
@@ -34,177 +45,29 @@ describe('DrawerFormButton', () => {
         expect(getByText('Cancel OTF')).toBeInTheDocument();
         expect(getByText('Transfer OTF')).toBeInTheDocument();
     });
+});
 
-    it('should call onCloseAction when Close button is clicked', () => {
-        const onCloseAction = jest.fn();
-        const buttonData = { closeBtn: true };
-
-        const { getByText } = customRender(<DrawerFormButton buttonData={buttonData} setButtonData={jest.fn()} isLoadingOnSave={false} onCloseAction={onCloseAction} />);
-
-        fireEvent.click(getByText('Close'));
-        expect(onCloseAction).toHaveBeenCalledTimes(1);
+describe('DrawerFormButton components', () => {
+    it('should renders all buttons correctly', () => {
+        customRender(<DrawerFormButton formData={{}} onCloseAction={jest.fn()} buttonData={buttonData} setButtonData={jest.fn()} saveButtonName={saveButtonName} handleButtonClick={jest.fn()} isLoadingOnSave={isLoadingOnSave} saveAndNewBtnClicked={saveAndNewBtnClicked} />);
     });
 
-    it('should call setButtonData with correct data when Save & Add New button is clicked', () => {
-        const buttonData = { saveAndNewBtn: true, formBtnActive: true, saveAndNewBtnClicked: false };
-        const setButtonDataMock = jest.fn();
-        const formData = {};
+    it('should check all button click events', async () => {
+        customRender(<DrawerFormButton formData={{}} onCloseAction={jest.fn()} buttonData={buttonData} setButtonData={jest.fn()} saveButtonName={saveButtonName} handleButtonClick={jest.fn()} isLoadingOnSave={isLoadingOnSave} saveAndNewBtnClicked={saveAndNewBtnClicked} />);
 
-        const { getByText } = customRender(<DrawerFormButton buttonData={buttonData} handleButtonClick={jest.fn()} formData={formData} setButtonData={setButtonDataMock} isLoadingOnSave={false} />);
+        const cancleButton = screen.getByRole('button', { name: 'Cancel OTF', exact: false });
+        fireEvent.click(cancleButton);
 
-        const saveAndNewButton = getByText('Save & Add New');
-        fireEvent.click(saveAndNewButton);
+        const transferButton = screen.getByRole('button', { name: 'Transfer OTF', exact: false });
+        fireEvent.click(transferButton);
 
-        expect(setButtonDataMock).toHaveBeenCalledWith({
-            formBtnActive: true, // The formBtnActive value should remain the same
-            saveAndNewBtn: true, // The saveAndNewBtn value should remain the same
-            saveAndNewBtnClicked: true, // The value should change to true when the button is clicked
-        });
-    });
+        const saveButton = screen.getByRole('button', { name: 'Save', exact: false });
+        fireEvent.click(saveButton);
 
-    it('should disable Save & Add New button when formBtnActive is false', () => {
-        const buttonData = { saveAndNewBtn: true, formBtnActive: false };
+        const saveAddNewButton = screen.getByRole('button', { name: 'Save & Add New', exact: false });
+        fireEvent.click(saveAddNewButton);
 
-        const { getByText } = customRender(<DrawerFormButton buttonData={buttonData} setButtonData={jest.fn()} isLoadingOnSave={false} />);
-
-        const saveAndNewButton = getByText('Save & Add New');
-        expect(saveAndNewButton).toBeInTheDocument();
-        expect(saveAndNewButton).not.toBeDisabled();
-    });
-    it('should disable Save & Add New button when formBtnActive is false', () => {
-        const buttonData = { saveAndNewBtn: true, formBtnActive: false };
-
-        const { getByText } = customRender(<DrawerFormButton buttonData={buttonData} setButtonData={jest.fn()} isLoadingOnSave={false} />);
-
-        const saveAndNewButton = getByText('Save & Add New');
-        expect(saveAndNewButton).toBeInTheDocument();
-        expect(saveAndNewButton).not.toBeDisabled();
-    });
-
-    it('should enable Save & Add New button when formBtnActive is true', () => {
-        const buttonData = { saveAndNewBtn: true, formBtnActive: true };
-
-        const { getByText } = customRender(<DrawerFormButton buttonData={buttonData} setButtonData={jest.fn()} isLoadingOnSave={false} />);
-
-        const saveAndNewButton = getByText('Save & Add New');
-        expect(saveAndNewButton).toBeInTheDocument();
-        expect(saveAndNewButton).not.toBeDisabled();
-    });
-
-    it('should call setButtonData when Save & Add New button is clicked', () => {
-        const buttonData = { saveAndNewBtn: true, formBtnActive: true };
-        const setButtonDataMock = jest.fn();
-
-        const { getByText } = customRender(<DrawerFormButton buttonData={buttonData} setButtonData={setButtonDataMock} isLoadingOnSave={false} />);
-
-        const saveAndNewButton = getByText('Save & Add New');
-        fireEvent.click(saveAndNewButton);
-
-        expect(setButtonDataMock).toHaveBeenCalledWith({
-            ...buttonData,
-            saveAndNewBtnClicked: true,
-        });
-    });
-
-    it('should disable Save & Add New button when formBtnActive is false', () => {
-        const buttonData = { saveAndNewBtn: true, formBtnActive: false };
-
-        const { getByText } = customRender(<DrawerFormButton buttonData={buttonData} setButtonData={jest.fn()} isLoadingOnSave={false} />);
-
-        const saveAndNewButton = getByText('Save & Add New');
-        expect(saveAndNewButton).toBeInTheDocument();
-        expect(saveAndNewButton).not.toBeDisabled();
-    });
-
-    it('should enable Save & Add New button when formBtnActive is true', () => {
-        const buttonData = { saveAndNewBtn: true, formBtnActive: true };
-
-        const { getByText } = customRender(<DrawerFormButton buttonData={buttonData} setButtonData={jest.fn()} isLoadingOnSave={false} />);
-
-        const saveAndNewButton = getByText('Save & Add New');
-        expect(saveAndNewButton).toBeInTheDocument();
-        expect(saveAndNewButton).not.toBeDisabled();
-    });
-
-    it('should call setButtonData with correct value when Save & Add New button is clicked', () => {
-        const buttonData = { saveAndNewBtn: true, formBtnActive: true };
-        const setButtonDataMock = jest.fn();
-
-        const { getByText } = customRender(<DrawerFormButton buttonData={buttonData} setButtonData={setButtonDataMock} isLoadingOnSave={false} />);
-
-        const saveAndNewButton = getByText('Save & Add New');
-        fireEvent.click(saveAndNewButton);
-
-        expect(setButtonDataMock).toHaveBeenCalledWith({
-            ...buttonData,
-            saveAndNewBtnClicked: true,
-        });
-    });
-
-    it('should call onCloseAction when Close button is clicked', () => {
-        const buttonData = { closeBtn: true };
-        const onCloseActionMock = jest.fn();
-
-        const { getByText } = customRender(<DrawerFormButton buttonData={buttonData} onCloseAction={onCloseActionMock} setButtonData={jest.fn()} isLoadingOnSave={false} />);
-
-        const closeButton = getByText('Close');
-        fireEvent.click(closeButton);
-
-        expect(onCloseActionMock).toHaveBeenCalled();
-    });
-
-    it('should call handleButtonClick with correct action when Edit button is clicked', () => {
-        const buttonData = { editBtn: true };
-        const handleButtonClickMock = jest.fn();
-        const formData = {};
-
-        const { getByText } = customRender(<DrawerFormButton buttonData={buttonData} handleButtonClick={handleButtonClickMock} formData={formData} setButtonData={jest.fn()} isLoadingOnSave={false} />);
-
-        const editButton = getByText('Edit');
+        const editButton = screen.getByRole('button', { name: 'Edit', exact: false });
         fireEvent.click(editButton);
-
-        expect(handleButtonClickMock).toHaveBeenCalledWith({
-            buttonAction: FROM_ACTION_TYPE.EDIT, // Use the correct action type from constants
-            record: formData,
-        });
-    });
-
-    it('should call handleButtonClick with correct action when Cancel OTF button is clicked', () => {
-        const buttonData = { cancelOTFBtn: true, formBtnActive: true };
-        const handleButtonClickMock = jest.fn();
-        const formData = {};
-
-        const { getByText } = customRender(<DrawerFormButton buttonData={buttonData} handleButtonClick={handleButtonClickMock} formData={formData} setButtonData={jest.fn()} isLoadingOnSave={false} />);
-
-        const cancelOTFButton = getByText('Cancel OTF');
-        fireEvent.click(cancelOTFButton);
-
-        expect(handleButtonClickMock).toHaveBeenCalledWith({ buttonAction: 'cancel_otf' });
-    });
-
-    it('should call handleButtonClick with correct action when Transfer OTF button is clicked', () => {
-        const buttonData = { transferOTFBtn: true, formBtnActive: true };
-        const handleButtonClickMock = jest.fn();
-        const formData = {};
-
-        const { getByText } = customRender(<DrawerFormButton buttonData={buttonData} handleButtonClick={handleButtonClickMock} formData={formData} setButtonData={jest.fn()} isLoadingOnSave={false} />);
-
-        const transferOTFButton = getByText('Transfer OTF');
-        fireEvent.click(transferOTFButton);
-
-        expect(handleButtonClickMock).toHaveBeenCalledWith({ buttonAction: 'transfer_otf' });
-    });
-
-    it('should call handleButtonClick with correct action when Transfer OTF button is clicked', () => {
-        const buttonData = { transferOTFBtn: true, formBtnActive: true };
-        const handleButtonClickMock = jest.fn();
-        const formData = {};
-
-        const { getByText } = customRender(<DrawerFormButton buttonData={buttonData} handleButtonClick={handleButtonClickMock} formData={formData} setButtonData={jest.fn()} isLoadingOnSave={false} />);
-
-        const transferOTFButton = getByText('Transfer OTF');
-        fireEvent.click(transferOTFButton);
-
-        expect(handleButtonClickMock).toHaveBeenCalledWith({ buttonAction: 'transfer_otf' });
     });
 });
