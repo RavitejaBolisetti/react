@@ -182,7 +182,7 @@ export const dataActions = (params) => {
         }),
 
         saveData: withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-            const { setIsLoading, onError, data, userId, onSuccess, method = 'post', customURL, extraParams } = params;
+            const { setIsLoading, onError, data, userId, onSuccess, method = 'post', customURL } = params;
             setIsLoading(true);
 
             const onSuccessAction = (res) => {

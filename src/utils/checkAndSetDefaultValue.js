@@ -14,7 +14,7 @@ export const checkAndSetDefaultValue = (value, isLoading, type, makeToolTip = fa
     if (isLoading) return <InputSkeleton width={'100px'} height={20} theme={'card'} />;
     if (makeToolTip && text)
         return (
-            <a href={text} target="_blank">
+            <a href={text} target="_blank" rel="noreferrer">
                 {addToolTip(text)(text)}
             </a>
         );
