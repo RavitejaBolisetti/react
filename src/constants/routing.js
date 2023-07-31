@@ -90,6 +90,7 @@ export const ROUTING_OTF = ROUTING_SALES.concat('order-tracking-form');
 export const ROUTING_VEHICLE_DETAILS = ROUTING_SALES.concat('vehicle-details');
 export const ROUTING_VEHICLE_PRICE_MASTER = ROUTING_SALES.concat('vehicle-price-master');
 export const ROUTING_VEHICLE_RECEIPT = ROUTING_SALES.concat('vehicle-receipt');
+export const ROUTING_SO_MAPPING = ROUTING_SALES.concat('otf-so-mapping');
 
 export const ROUTING_TAX_CHARGES = ROUTING_FINANCIAL_ACCOUNTING.concat('tax-charges');
 export const ROUTING_TAX_CHARGES_CATEGORY = ROUTING_FINANCIAL_ACCOUNTING.concat('tax-charges-category');
