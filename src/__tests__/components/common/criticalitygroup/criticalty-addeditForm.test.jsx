@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
-import { render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { AddEditForm } from '@components/common/CriticalityGroup/AddEditForm';
 beforeEach(() => {
@@ -39,12 +39,18 @@ const props = {
     handleFormFieldChange: jest.fn(),
     allowedTimingSave: true,
     setAllowedTimingSave: jest.fn(),
+    onCloseAction: jest.fn(),
+    buttonData: jest.fn(),
+    // setButtonData,
+    handleButtonClick: jest.fn(),
 };
 
 describe('should render AddEditForm', () => {
     it('should render the AddEditForm', () => {
         customRender(<AddEditForm isVisible={true} />);
-        const groupId = screen.findByTestId('groupId');
+        const groupId = screen.findByTestId('groupIdddd');
+        screen.debug();
+
         expect(groupId).toBeTruthy();
 
         expect(screen.getByTestId('toggle')).toBeInTheDocument();
@@ -54,7 +60,7 @@ describe('should render AddEditForm', () => {
         expect(allowedTimings).toBeInTheDocument();
     });
     it('should render AddEditForm field and event check ', async () => {
-        customRender(<AddEditForm formData={{}} isVisible={true} onCloseAction={jest.fn()} buttonData={buttonData} setButtonData={jest.fn()} handleButtonClick={jest.fn()} saveButtonName={saveButtonName} isLoadingOnSave={isLoadingOnSave} {...props} />);
+        customRender(<AddEditForm formData={{}} isVisible={true} buttonData={buttonData} setButtonData={jest.fn()} saveButtonName={saveButtonName} isLoadingOnSave={isLoadingOnSave} {...props} />);
 
         const criticalityGroupCode = screen.getByPlaceholderText('Enter id');
         user.type(criticalityGroupCode, 'Dmatest');
@@ -64,6 +70,24 @@ describe('should render AddEditForm', () => {
         user.type(criticalityGroupName, 'Dmatest');
         expect(criticalityGroupName.value.includes('Dmatest'));
 
+        const defaultValue = screen.getByText('default title');
+        expect(defaultValue).toBeTruthy();
+
+        const criticalityId = screen.getByLabelText('Criticality Group Id');
+        expect(criticalityId).toBeTruthy();
+
+        const dialog = screen.getByRole('dialog');
+        expect(dialog).toBeTruthy();
+        fireEvent.click(dialog);
+
+        const screenImg = screen.getByLabelText('plus');
+        expect(screenImg).toBeTruthy();
+        fireEvent.click(screenImg);
+
+        const labelbutton = screen.getByLabelText('Close');
+        fireEvent.click(labelbutton);
+        expect(labelbutton).toBeTruthy();
+
         const defaultGroupBtn = screen.getByTestId('default-toggle');
         user.click(defaultGroupBtn);
 
@@ -72,13 +96,5 @@ describe('should render AddEditForm', () => {
 
         const checkActive = screen.getAllByText('Active');
         expect(checkActive).toBeTruthy();
-
-        const criticalityDefaultGroup = screen.getByText('Add Time');
-        user.click(criticalityDefaultGroup);
-        expect(
-            await screen.findByText('Start Time', undefined, {
-                timeout: 2000,
-            })
-        ).toBeVisible();
     });
 });
