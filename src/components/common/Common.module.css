@@ -127,9 +127,9 @@
     top: 39px;
 }
 
-.vechilemodelTooltip svg{
+.vechilemodelTooltip svg {
     color: #2782f9;
-    padding:3px 0 0 3px;
+    padding: 3px 0 0 3px;
 }
 
 .drawerBody {
@@ -3097,7 +3097,6 @@ li.ant-timeline-item.active .ant-timeline-item-content p {
     margin-top: 5px;
     margin-right: 5px;
 }
-
 .contactDays :global .ant-form-item .ant-form-item-control-input .ant-select-multiple .ant-select-selector {
     height: auto;
     min-height: 36px;
@@ -3179,9 +3178,7 @@ li.ant-timeline-item.active .ant-timeline-item-content p {
     padding: 20px 40px 0 !important;
 }
 
-
 @media (max-width: 768px) {
-
     /* For mobile phones: */
     .headerSearchField {
         vertical-align: middle;
