@@ -5,5 +5,6 @@
  */
 import { DrawerFormButton } from './DrawerFormButton';
 import { HierarchyFormButton } from './HierarchyFormButton';
+import { ModalButtons } from './ModalButtons';
 
-export { DrawerFormButton, HierarchyFormButton };
+export { DrawerFormButton, HierarchyFormButton, ModalButtons };

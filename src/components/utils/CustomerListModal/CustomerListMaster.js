@@ -17,7 +17,6 @@ import { CustomerListModal } from './CustomerListModal';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { SearchBox } from 'components/utils/SearchBox';
 
-import styles from 'components/common/Common.module.css';
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -169,7 +168,7 @@ const CustomerListBase = (props) => {
     return (
         <>
             <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.referralSearch}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <SearchBox {...searchBoxProps} />
                 </Col>
             </Row>

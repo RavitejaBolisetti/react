@@ -117,42 +117,46 @@ const AddEditFormMain = (props) => {
 
     return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-            {!downloadForm && (
-                <>
-                    <div className={styles.contentHeaderBackground}>
-                        <Space direction="vertical">
-                            <Space className={styles.accordianIconWithText}>Lessor Customer Form</Space>
-                            <Space>Please download "Lessor Customer Template" using below button</Space>
-                            <Space>
-                                <Button type="primary" onClick={handleTemplateDownLoad}>
-                                    Download Template
+            <Row gutter={20} className={styles.drawerBody}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                    {!downloadForm && (
+                        <>
+                            <div className={styles.contentHeaderBackground}>
+                                <Space direction="vertical">
+                                    <Space className={styles.accordianIconWithText}>Lessor Customer Form</Space>
+                                    <Space>Please download "Lessor Customer Template" using below button</Space>
+                                    <Space>
+                                        <Button type="primary" onClick={handleTemplateDownLoad}>
+                                            Download Template
+                                        </Button>
+                                    </Space>
+                                </Space>
+                            </div>
+
+                            <UploadUtil {...uploadProps} handleFormValueChange={handleFormValueChange} />
+                        </>
+                    )}
+                    {downloadForm && (
+                        <>
+                            <Row>
+                                <Col xs={24} sm={24} md={24} lg={24}>
+                                    <Form.Item label="State Name" name="stateCode">
+                                        <Select placeholder={preparePlaceholderSelect('State Name')} {...selectProps}>
+                                            {stateData?.map((item) => (
+                                                <Option value={item?.key}>{item?.value}</Option>
+                                            ))}
+                                        </Select>
+                                    </Form.Item>
+                                </Col>
+
+                                <Button type="primary" onClick={handleDownload}>
+                                    Download
                                 </Button>
-                            </Space>
-                        </Space>
-                    </div>
-
-                    <UploadUtil {...uploadProps} handleFormValueChange={handleFormValueChange} />
-                </>
-            )}
-            {downloadForm && (
-                <>
-                    <Row>
-                        <Col xs={24} sm={24} md={24} lg={24}>
-                            <Form.Item label="State Name" name="stateCode">
-                                <Select placeholder={preparePlaceholderSelect('State Name')} {...selectProps}>
-                                    {stateData?.map((item) => (
-                                        <Option value={item?.key}>{item?.value}</Option>
-                                    ))}
-                                </Select>
-                            </Form.Item>
-                        </Col>
-
-                        <Button type="primary" onClick={handleDownload}>
-                            Download
-                        </Button>
-                    </Row>
-                </>
-            )}
+                            </Row>
+                        </>
+                    )}
+                </Col>
+            </Row>
             <DrawerFormButton {...buttonProps} />
         </Form>
     );

@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect } from 'react';
-import { Button, Row, Col } from 'antd';
+import { Button, Row, Col, Form } from 'antd';
 import { FilterIcon } from 'Icons';
 import { RxCross2 } from 'react-icons/rx';
 import { SearchBox } from 'components/utils/SearchBox';
@@ -44,36 +44,39 @@ export default function AdvanceVehiclePriceMasterFilter(props) {
     return (
         <div className={styles.contentHeaderBackground}>
             <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.subheading}>
-                    <Row gutter={20}>
-                        <Col xs={24} sm={24} md={4} lg={4} xl={4}>
-                            <span className={styles.headerText}>{title}</span>
-                        </Col>
-                        {otfFilter && (
-                            <Col xs={24} sm={24} md={11} lg={11} xl={11}>
-                                <SearchBox {...serachBoxProps} />
-                            </Col>
-                        )}
-                        {advanceFilter && (
-                            <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.verticallyCentered}>
-                                <Button
-                                    icon={<FilterIcon className={styles.verticallyCentered} />}
-                                    type="link"
-                                    onClick={() => {
-                                        setAdvanceSearchVisible(true);
-                                    }}
-                                >
-                                    Advanced Filters
-                                </Button>
-                            </Col>
-                        )}
+                {/* <span className={styles.headerText}>{title}</span> */}
+                <Col xs={24} sm={24} md={18} lg={18} xl={18}>
+                    <Form autoComplete="off" colon={false} className={styles.masterListSearchForm}>
+                        <Form.Item label={`${title}`}>
+                            <Row gutter={20}>
+                                {otfFilter && (
+                                    <Col xs={24} sm={24} md={14} lg={14} xl={14}>
+                                        <SearchBox {...serachBoxProps} />
+                                    </Col>
+                                )}
+                                {advanceFilter && (
+                                    <Col xs={24} sm={24} md={10} lg={10} xl={10} className={styles.verticallyCentered}>
+                                        <Button
+                                            icon={<FilterIcon />}
+                                            type="link"
+                                            className={styles.verticallyCentered}
+                                            onClick={() => {
+                                                setAdvanceSearchVisible(true);
+                                            }}
+                                        >
+                                            Advanced Filters
+                                        </Button>
+                                    </Col>
+                                )}
+                            </Row>
+                        </Form.Item>
+                    </Form>
+                </Col>
 
-                        <Col xs={24} sm={24} md={3} lg={3} xl={3} className={styles.alignRight}>
-                            <Button type="primary" onClick={handleOnClick}>
-                                Upload
-                            </Button>
-                        </Col>
-                    </Row>
+                <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.addGroup}>
+                    <Button type="primary" onClick={handleOnClick}>
+                        Upload
+                    </Button>
                 </Col>
             </Row>
             {advanceFilter && filterString?.advanceFilter && extraParams.find((i) => i.name) && (

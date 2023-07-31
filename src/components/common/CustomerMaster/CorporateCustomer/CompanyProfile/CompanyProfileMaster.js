@@ -76,12 +76,14 @@ const CompanyProfileBase = (props) => {
     const { uploadListShowLoading } = props;
 
     const [form] = Form.useForm();
-    const [uploadedFile, setUploadedFile] = useState();
 
     const [appCategory, setAppCustomerCategory] = useState();
     const [appSubCategory, setAppSubCategory] = useState();
     const [customerCategory, setCustomerCategory] = useState();
     const [fileList, setFileList] = useState([]);
+    const [uploadedFile, setUploadedFile] = useState();
+    const [emptyList, setEmptyList] = useState(true);
+    const [uploadedFileName, setUploadedFileName] = useState('');
 
     const NEXT_ACTION = FROM_ACTION_TYPE?.NEXT;
 
@@ -249,6 +251,12 @@ const CompanyProfileBase = (props) => {
         downloadFileFromList,
         fileList,
         setFileList,
+        uploadedFile,
+        setUploadedFile,
+        emptyList,
+        setEmptyList,
+        uploadedFileName,
+        setUploadedFileName,
     };
 
     const viewProps = {

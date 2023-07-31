@@ -422,25 +422,33 @@ const CustomerMasterMain = (props) => {
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.contentHeaderBackground}>
                         <Row gutter={20}>
-                            <Col xs={24} sm={24} md={14} lg={14} xl={14} className={styles.searchAndLabelAlign}>
-                                <div className={`${styles.userManagement} ${styles.headingToggle}`}>
-                                    {Object.values(CUSTOMER_TYPE)?.map((item) => {
-                                        return (
-                                            <Button type={customerType === item?.id ? 'primary' : 'link'} onClick={() => handleCustomerTypeChange(item?.id)}>
-                                                {item?.title}
-                                            </Button>
-                                        );
-                                    })}
-                                </div>
-                                <div className={styles.headerSearchField}>
-                                    <SearchBox {...searchBoxProps} />
-                                </div>
+                            <Col xs={24} sm={24} md={14} lg={14} xl={14}>
+                                <Form autoComplete="off" colon={false} className={styles.masterListSearchForm}>
+                                    <Form.Item>
+                                        <Row gutter={20}>
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.verticallyCentered}>
+                                                <div className={`${styles.userManagement} ${styles.headingToggle}`}>
+                                                    {Object.values(CUSTOMER_TYPE)?.map((item) => {
+                                                        return (
+                                                            <Button type={customerType === item?.id ? 'primary' : 'link'} onClick={() => handleCustomerTypeChange(item?.id)}>
+                                                                {item?.title}
+                                                            </Button>
+                                                        );
+                                                    })}
+                                                </div>
+                                                <div className={styles.fullWidth}>
+                                                    <SearchBox {...searchBoxProps} />
+                                                </div>
+                                            </Col>
+                                        </Row>
+                                    </Form.Item>
+                                </Form>
                             </Col>
-                            <Col xs={24} sm={24} md={10} lg={10} xl={10} className={styles.advanceFilterClear}>
-                                {/* <Button type="primary" icon={<PlusOutlined />} onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
+                            {/* <Col xs={24} sm={24} md={10} lg={10} xl={10} className={styles.advanceFilterClear}>
+                                <Button type="primary" icon={<PlusOutlined />} onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
                                     Add
-                                </Button> */}
-                            </Col>
+                                </Button>
+                            </Col> */}
                         </Row>
                         {filterString && extraParams.find((i) => i.name) && (
                             <Row gutter={20}>
@@ -494,7 +502,7 @@ const CustomerMasterMain = (props) => {
                                 }
                             >
                                 {showAddButton && !data?.length && (
-                                    <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
+                                    <Button icon={<PlusOutlined />} type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
                                         {`Add`}
                                     </Button>
                                 )}

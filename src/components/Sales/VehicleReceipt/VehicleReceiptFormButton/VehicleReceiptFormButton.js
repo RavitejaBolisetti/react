@@ -10,7 +10,6 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import styles from './VehicleReceiptFormButton.module.css';
 
 export const VehicleReceiptFormButton = ({ record, onCloseAction, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection }) => {
-    const content = <div>Coming Soon</div>;
     return (
         <Row gutter={20} className={styles.formFooter}>
             <Col xs={24} sm={8} md={6} lg={4} xl={4} className={styles.footerBtnLeft}>
@@ -41,7 +40,8 @@ export const VehicleReceiptFormButton = ({ record, onCloseAction, buttonData, se
                 )}
 
                 {buttonData?.saveBtn && (
-                    <Button loading={isLoadingOnSave} disabled={!buttonData?.formBtnActive} onClick={(e) => setButtonData({ ...buttonData, saveAndNewBtnClicked: false })} htmlType="submit" type="primary">
+                    <Button loading={isLoadingOnSave} onClick={(e) => setButtonData({ ...buttonData, saveAndNewBtnClicked: false })} htmlType="submit" type="primary">
+                        {/* disabled={!buttonData?.formBtnActive} */}
                         {saveButtonName}
                     </Button>
                 )}

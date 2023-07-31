@@ -30,7 +30,7 @@ const mapStateToProps = (state) => {
             DealerManpower: {
                 DealerLocationTypeMaster: { isLoaded: isDataLoaded = false, isLoading, data },
             },
-            ConfigurableParameterEditing: { paramdata: applicableToData = [] },
+            ConfigurableParameterEditing: {filteredListData: typeData = [] },
         },
     } = state;
 
@@ -41,7 +41,7 @@ const mapStateToProps = (state) => {
         isDataLoaded,
         data,
         isLoading,
-        applicableToData: applicableToData && applicableToData[PARAM_MASTER.DLR_APP_TYPE.id],
+        applicableToData: typeData && typeData[PARAM_MASTER.DLR_APP_TYPE.id],
         moduleTitle,
     };
     return returnValue;

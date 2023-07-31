@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -8,6 +8,7 @@ import { Col, Form, Row, Select, Input, Button } from 'antd';
 import { withModal } from 'components/withModal';
 import styles from 'components/common/Common.module.css';
 import { validateRequiredSelectField, searchValidator } from 'utils/validation';
+import { ModalButtons } from 'components/common/Button';
 
 const { Option } = Select;
 
@@ -35,7 +36,14 @@ export const AdvancedSearchFrom = (props) => {
         optionFilterProp: 'children',
         showSearch: true,
         allowClear: true,
-        className: styles.headerSelectField,
+        // className: styles.headerSelectField,
+    };
+    const modalProps = {
+        reset: true,
+        submit: true,
+        resetName: 'Reset',
+        submitName: 'Search',
+        handleResetFilter,
     };
     return (
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
@@ -68,19 +76,7 @@ export const AdvancedSearchFrom = (props) => {
                 </Col>
             </Row>
 
-            <Row gutter={20}>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignLeft}>
-                    <Button onClick={handleResetFilter} danger>
-                        Reset
-                    </Button>
-                </Col>
-
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignRight}>
-                    <Button htmlType="submit" type="primary">
-                        Search
-                    </Button>
-                </Col>
-            </Row>
+            <ModalButtons {...modalProps} />
         </Form>
     );
 };

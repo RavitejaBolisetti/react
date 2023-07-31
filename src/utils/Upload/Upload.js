@@ -7,12 +7,12 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button, Typography, Upload, Image, Space, Avatar } from 'antd';
-import { FiDownload, FiTrash } from 'react-icons/fi';
-
 import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
 import { documentViewDataActions } from 'store/actions/data/customerMaster/documentView';
 import { showGlobalNotification } from 'store/actions/notification';
-
+import { FiDownload } from 'react-icons/fi';
+import { AiOutlineCloseCircle } from 'react-icons/ai';
+import { BsTrash3 } from 'react-icons/bs';
 import { HiCheck } from 'react-icons/hi';
 import { UploadBoxIcon } from 'Icons';
 import styles from './UploadUtil.module.css';
@@ -26,7 +26,7 @@ const mapStateToProps = (state) => {
         data: {
             SupportingDocument: { isLoaded: isDataLoaded = false, isLoading, data: supportingData },
             CustomerMaster: {
-                ViewDocument: { isLoaded: isViewDataLoaded = false, data: viewDocument },
+                ViewDocument: { isLoaded: isViewDataLoaded = false, data: viewDocument = [] },
             },
         },
     } = state;
@@ -38,8 +38,8 @@ const mapStateToProps = (state) => {
         isDataLoaded,
         isLoading,
         supportingData,
-        isViewDataLoaded,
         viewDocument,
+        isViewDataLoaded,
     };
     return returnValue;
 };
@@ -48,9 +48,9 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchViewDocument: documentViewDataActions.fetchList,
             viewListShowLoading: documentViewDataActions.listShowLoading,
             resetViewData: documentViewDataActions.reset,
+            fetchViewDocument: documentViewDataActions.fetchList,
             fetchList: supportingDocumentDataActions.fetchList,
             saveData: supportingDocumentDataActions.saveData,
             uploadDocumentFile: supportingDocumentDataActions.uploadFile,
@@ -65,6 +65,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const UploadBase = (props) => {
     const {
+        key = undefined,
         listType = 'text',
         accept = '',
         handleFormValueChange = () => {},
@@ -73,16 +74,12 @@ const UploadBase = (props) => {
         showDownloadIcon = true,
         showProgress = { strokeWidth: 3, showInfo: true },
         showPreviewIcon = true,
-        // docId = '',
-        // documentName = '',
-        // isUploadDataLoaded = false,
+        form = undefined,
         resetViewData,
         fetchViewDocument,
         viewListShowLoading,
         uploadedFile,
-        // isViewDataLoaded,
         viewDocument,
-
         uploadedFileName,
         setUploadedFileName,
         fileList,
@@ -105,28 +102,39 @@ const UploadBase = (props) => {
         downloadFile,
         formActionType,
         isReplaceEnabled = false,
+        onRemove = () => {},
+        single = false,
+        supportingDocs = false,
+        setMandatoryFields,
     } = props;
 
     const [showStatus, setShowStatus] = useState('');
     const [visible, setVisible] = useState(false);
     const [isReplacing, setIsReplacing] = useState(false);
     const [base64Img, setBase64Img] = useState('');
+    const [uploadTime, setUploadTime] = useState(false);
+
+    const removeIcon = uploadTime ? <AiOutlineCloseCircle /> : <BsTrash3 />;
 
     const onReplaceClick = () => {
         setIsReplacing(true);
     };
+
     const onCancelReplace = (e) => {
         e.stopPropagation();
         setIsReplacing(false);
     };
 
     useEffect(() => {
-        setBase64Img(viewDocument?.base64);
-        setIsReplacing(false);
+        if (isReplaceEnabled && viewDocument?.base64) {
+            setBase64Img(viewDocument?.base64);
+            setIsReplacing(false);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [viewDocument?.base64]);
 
     useEffect(() => {
-        if (uploadedFile) {
+        if (uploadedFile && isReplaceEnabled) {
             const extraParams = [
                 {
                     key: 'docId',
@@ -144,22 +152,28 @@ const UploadBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [uploadedFile]);
 
-    const downloadFileFromList = () => {
+    const onDrop = (e) => {};
+
+    const onDownload = (file) => {
+        const onSuccessAction = (res) => {
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        };
         const extraParams = [
             {
                 key: 'docId',
                 title: 'docId',
-                value: uploadedFile,
+                value: file?.response?.docId,
                 name: 'docId',
             },
         ];
-        downloadFile({ setIsLoading: viewListShowLoading, userId, extraParams });
+        downloadFile({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction });
     };
-
-    const onDrop = (e) => {};
 
     const uploadProps = {
         beforeUpload: (file) => {
+            if (supportingDocs) {
+                setMandatoryFields(true);
+            }
             const fileSize = file.size / 1024 / 1024;
 
             const isValid = supportedFileTypes.find((element) => element === file.type);
@@ -167,10 +181,12 @@ const UploadBase = (props) => {
                 return true;
             } else if (fileSize > maxSize) {
                 showGlobalNotification({ notificationType: 'error', title: 'Error', message: `Please upload file under ${maxSize} Mb`, placement: 'bottomRight' });
+                setUploadTime(false);
                 return Upload.LIST_IGNORE;
             } else {
                 if (!isValid) {
                     showGlobalNotification({ notificationType: 'error', title: 'Error', message: `${file.name} is not in accepted format`, placement: 'bottomRight' });
+                    setUploadTime(false);
                 }
                 return isValid || Upload.LIST_IGNORE;
             }
@@ -181,23 +197,48 @@ const UploadBase = (props) => {
         showUploadList: {
             showRemoveIcon,
             showDownloadIcon,
-            removeIcon: <FiTrash />,
-            downloadIcon: <FiDownload onClick={() => downloadFileFromList()} style={{ color: '#ff3e5b' }} />,
+            removeIcon: removeIcon,
+            downloadIcon: <FiDownload style={{ color: '#ff3e5b' }} />,
             showProgress,
             showPreviewIcon,
         },
+        onRemove,
         progress: { strokeWidth: 3, showInfo: true },
         onDrop,
+        onDownload,
         onChange: (info) => {
             let fileList = [...info.fileList];
-            fileList = fileList.slice(-1);
-            setFileList(fileList);
-            handleFormValueChange();
-            const { status } = info.file;
-            setShowStatus(info.file);
-            if (status === 'done') {
-                setUploadedFile(info?.file?.response?.docId);
-                setUploadedFileName(info?.file?.response?.documentName);
+            if (supportingDocs) {
+                form.validateFields()
+                    .then(() => {
+                        setFileList(fileList);
+
+                        handleFormValueChange();
+                        const { status } = info.file;
+                        setShowStatus(info.file);
+                        if (status === 'done') {
+                            setUploadedFile(info?.file?.response?.docId);
+                            setUploadedFileName(info?.file?.response?.documentName);
+                        }
+                        setMandatoryFields(false);
+                    })
+                    .catch((err) => {
+                        return;
+                    });
+            } else {
+                if (single) {
+                    fileList = fileList.slice(-1);
+                }
+
+                setFileList(fileList);
+
+                handleFormValueChange();
+                const { status } = info.file;
+                setShowStatus(info.file);
+                if (status === 'done') {
+                    setUploadedFile(info?.file?.response?.docId);
+                    setUploadedFileName(info?.file?.response?.documentName);
+                }
             }
         },
     };
@@ -230,11 +271,10 @@ const UploadBase = (props) => {
 
         uploadDocumentFile(requestData);
     };
-
     return (
         <>
             <div className={styles.uploadDragger}>
-                {(!isReplacing && base64Img && isReplaceEnabled) || formActionType?.viewMode ? (
+                {(!isReplacing && base64Img) || formActionType?.viewMode ? (
                     <>
                         <Space direction="vertical" className={styles.viewDragger}>
                             <Space>
@@ -243,18 +283,19 @@ const UploadBase = (props) => {
                             </Space>
                             <Space>
                                 <Image
+                                    key={key}
                                     style={{ borderRadius: '6px' }}
                                     width={80}
                                     preview={{
                                         visible,
                                         scaleStep: 0.5,
-                                        src: `data:image/png;base64,${viewDocument?.base64}`,
+                                        src: `data:image/png;base64,${base64Img}`,
                                         onVisibleChange: (value) => {
                                             setVisible(value);
                                         },
                                     }}
-                                    placeholder={<Image preview={false} src={`data:image/png;base64,${viewDocument?.base64}`} width={80} />}
-                                    src={`data:image/png;base64,${viewDocument?.base64}`}
+                                    placeholder={<Image preview={false} src={`data:image/png;base64,${base64Img}`} width={80} />}
+                                    src={`data:image/png;base64,${base64Img}`}
                                 />
                                 {!formActionType?.viewMode && (
                                     <Button onClick={onReplaceClick} type="link">
@@ -266,7 +307,7 @@ const UploadBase = (props) => {
                     </>
                 ) : (
                     <>
-                        <Dragger fileList={fileList} customRequest={handleUpload} {...uploadProps}>
+                        <Dragger key={key} className={uploadTime ? styles.uploadDraggerStrip : ''} fileList={fileList} customRequest={handleUpload} {...uploadProps}>
                             <Space direction="vertical">
                                 <UploadBoxIcon />
                                 <div>
@@ -274,7 +315,9 @@ const UploadBase = (props) => {
                                     <Text>{validationText}</Text>
                                 </div>
                                 <Space>
-                                    <Button type="primary">{uploadButtonName}</Button>
+                                    <Button disabled={uploadTime} type="primary">
+                                        {uploadButtonName}
+                                    </Button>
                                     {isReplacing && (
                                         <Button onClick={onCancelReplace} danger>
                                             Cancel
