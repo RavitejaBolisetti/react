@@ -14,7 +14,6 @@ const AccessoriesAddonMain = ({ setIsBtnDisabled, openAccordian, setOpenAccordia
     const [EditingForm] = Form.useForm();
 
     const isPresent = (partNumber, i = -1) => {
-        console.log('i', i, addOnItemInfo);
         const isPartAlreadyExist = addOnItemInfo?.find((element, index) => element?.partNumber === partNumber && index !== i);
         if (isPartAlreadyExist) {
             showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Part number is already exist' });
