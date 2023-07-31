@@ -4,6 +4,10 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 /* Upload File Box */
+.iconSize {
+    width: 20px;
+    color:#ff3e5b;
+}
 .uploadDragger {
     padding-bottom: 20px;
 }

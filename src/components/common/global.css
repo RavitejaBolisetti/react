@@ -367,9 +367,9 @@ p {
     color: #0b0b0c;
 }
 
-:global .ant-pagination .ant-pagination-options .ant-select .ant-select-dropdown {
+/* :global .ant-pagination .ant-pagination-options .ant-select .ant-select-dropdown {
     top: -142px !important;
-}
+} */
 
 :global .ant-pagination .ant-pagination-prev,
 :global .ant-pagination .ant-pagination-next,
