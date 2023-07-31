@@ -1,18 +1,13 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-
-import { Form, Row, Col, Button } from 'antd';
-
+import { Form, Row, Col, Button, Divider } from 'antd';
 import moment from 'moment';
-
 import { PlusOutlined } from '@ant-design/icons';
-
 import { LANGUAGE_EN } from 'language/en';
-
 import AddEditForm from './AddEditForm';
 import AllowedTimingCard from './AllowedTimingCard';
 
@@ -90,29 +85,25 @@ const AllowedTimingList = (props) => {
 
     return (
         <>
-            <Row>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.graySeparator}>
-                    <Row gutter={20}>
-                        <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                            <p className={styles.allowedTimingAlignment}>Allowed Timings</p>
-                        </Col>
-
-                        {!formActionType?.viewMode && (
-                            <Col xs={24} sm={24} md={12} lg={12} xl={12} className={styles.addTimeBtn}>
-                                <Button
-                                    type="link"
-                                    onClick={() => {
-                                        setIsAddTimeVisible(!isAddTimeVisible);
-                                        timingForm.resetFields();
-                                    }}
-                                    icon={<PlusOutlined />}
-                                >
-                                    Add Time
-                                </Button>
-                            </Col>
-                        )}
-                    </Row>
+            <Row gutter={20}>
+                <Divider />
+                <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
+                    <p className={styles.allowedTimingAlignment}>Allowed Timings</p>
                 </Col>
+                {!formActionType?.viewMode && (
+                    <Col xs={24} sm={24} md={12} lg={12} xl={12} className={styles.addGroup}>
+                        <Button
+                            type="link"
+                            onClick={() => {
+                                setIsAddTimeVisible(!isAddTimeVisible);
+                                timingForm.resetFields();
+                            }}
+                            // icon={<PlusOutlined />}
+                        >
+                            Add Time
+                        </Button>
+                    </Col>
+                )}
             </Row>
 
             {showTime && (

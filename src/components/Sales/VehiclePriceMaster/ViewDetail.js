@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState, useEffect } from 'react';
-import { Descriptions } from 'antd';
+import { Row, Col, Descriptions } from 'antd';
 import { withDrawer } from 'components/withDrawer';
 import styles from 'components/common/Common.module.css';
 
@@ -78,30 +78,33 @@ const ViewDetailMain = (props) => {
 
     return (
         <>
-            <div className={`${styles.viewContainer} ${styles.hierarchyRightContainers}`}>
-                <Descriptions {...viewProps}>
-                    <Descriptions.Item label="Effective From">{checkAndSetDefaultValue(vehiclePrice?.effectiveFrom, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                    <Descriptions.Item label="Effective To">{checkAndSetDefaultValue(vehiclePrice?.effectiveTo, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                    <Descriptions.Item label="Plant">{checkAndSetDefaultValue(vehiclePrice?.plant, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="State">{checkAndSetDefaultValue(vehiclePrice?.state, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="City">{checkAndSetDefaultValue(vehiclePrice?.city, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="City Code">{checkAndSetDefaultValue(vehiclePrice?.cityCode, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Model Code">{checkAndSetDefaultValue(vehiclePrice?.modelCode, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Model Group">{checkAndSetDefaultValue(vehiclePrice?.modelGroup, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Model Description">{checkAndSetDefaultValue(vehiclePrice?.modelDescription, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Distribution Channel">{checkAndSetDefaultValue(vehiclePrice?.distributionChannel, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Price Type">{checkAndSetDefaultValue(vehiclePrice?.priceType, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="GST">{checkAndSetDefaultValue(vehiclePrice?.gst, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Cess">{checkAndSetDefaultValue(vehiclePrice?.cess, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="GST Amount">{checkAndSetDefaultValue(vehiclePrice?.gstAmount, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="MM Invoice Amount">{checkAndSetDefaultValue(vehiclePrice?.mmInvoiceAmount, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Dealer Margin">{checkAndSetDefaultValue(vehiclePrice?.dealerMargin, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="GST Amount on Dealer Margin">{checkAndSetDefaultValue(vehiclePrice?.gstAmountOndealerMargin, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Net Dealer Price">{checkAndSetDefaultValue(vehiclePrice?.netDealerPrice, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Selling Price">{checkAndSetDefaultValue(vehiclePrice?.sellingPrice, isLoading)}</Descriptions.Item>
-                </Descriptions>
-            </div>
-
+            <Row gutter={20} className={styles.drawerBody}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                    <div className={styles.viewContainer}>
+                        <Descriptions {...viewProps}>
+                            <Descriptions.Item label="Effective From">{checkAndSetDefaultValue(vehiclePrice?.effectiveFrom, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                            <Descriptions.Item label="Effective To">{checkAndSetDefaultValue(vehiclePrice?.effectiveTo, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                            <Descriptions.Item label="Plant">{checkAndSetDefaultValue(vehiclePrice?.plant, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="State">{checkAndSetDefaultValue(vehiclePrice?.state, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="City">{checkAndSetDefaultValue(vehiclePrice?.city, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="City Code">{checkAndSetDefaultValue(vehiclePrice?.cityCode, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Model Code">{checkAndSetDefaultValue(vehiclePrice?.modelCode, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Model Group">{checkAndSetDefaultValue(vehiclePrice?.modelGroup, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Model Description">{checkAndSetDefaultValue(vehiclePrice?.modelDescription, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Distribution Channel">{checkAndSetDefaultValue(vehiclePrice?.distributionChannel, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Price Type">{checkAndSetDefaultValue(vehiclePrice?.priceType, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="GST">{checkAndSetDefaultValue(vehiclePrice?.gst, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Cess">{checkAndSetDefaultValue(vehiclePrice?.cess, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="GST Amount">{checkAndSetDefaultValue(vehiclePrice?.gstAmount, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="MM Invoice Amount">{checkAndSetDefaultValue(vehiclePrice?.mmInvoiceAmount, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Dealer Margin">{checkAndSetDefaultValue(vehiclePrice?.dealerMargin, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="GST Amount on Dealer Margin">{checkAndSetDefaultValue(vehiclePrice?.gstAmountOndealerMargin, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Net Dealer Price">{checkAndSetDefaultValue(vehiclePrice?.netDealerPrice, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Selling Price">{checkAndSetDefaultValue(vehiclePrice?.sellingPrice, isLoading)}</Descriptions.Item>
+                        </Descriptions>
+                    </div>
+                </Col>
+            </Row>
             <DrawerFormButton {...buttonProps} />
         </>
     );

@@ -14,7 +14,7 @@ import { BsDownload } from 'react-icons/bs';
 
 const { Search } = Input;
 const CurdSearchBox = (props) => {
-    const { addButtonOption, showAddButton = true, advanceFilter = false, title, filterString, listSetFilterString, form, onFinish, onFinishFailed, extraParams, removeFilter, handleClearInSearch, onSearchHandle, setAdvanceSearchVisible, handleReferesh, handleButtonClick, validator = searchValidator, downloadReport = false, handleDownloadReport = false, showChangeHistoryButton = false, showChangeHistoryList } = props;
+    const { addButtonOption, showAddButton = true, advanceFilter = false, title, filterString, listSetFilterString, form, onFinish, onFinishFailed, extraParams, removeFilter, handleClearInSearch, onSearchHandle, setAdvanceSearchVisible, handleReferesh, validator = searchValidator, downloadReport = false, handleDownloadReport = false, showChangeHistoryButton = false, showChangeHistoryList } = props;
     const onKeyPressHandler = (e) => {
         e.key === 'Enter' && e.preventDefault();
     };

@@ -342,47 +342,37 @@ export const ConfigurableParameterEditingBase = ({ saveFormShowLoading, isLoadin
         saveAndAddNewBtnClicked,
         isLoadingOnSave,
     };
+
+    const title = 'Configurable Parameter Editing';
+
     return (
         <>
-            <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <div className={styles.contentHeaderBackground}>
-                        <Row gutter={20}>
-                            <Col xs={24} sm={24} md={16} lg={16} xl={16}>
+            <div className={styles.contentHeaderBackground}>
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={16} lg={16} xl={16}>
+                        <Form autoComplete="off" colon={false} className={styles.masterListSearchForm}>
+                            <Form.Item label={`${title}`} name="code">
                                 <Row gutter={20}>
-                                    <div className={styles.searchBox}>
-                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.subheading}>
-                                            Configurable Parameter Editing
-                                            <Search
-                                                placeholder="Search"
-                                                style={{
-                                                    width: 300,
-                                                    marginLeft: '10px',
-                                                }}
-                                                allowClear
-                                                className={styles.headerSelectField}
-                                                onSearch={onSearchHandle}
-                                            />
-                                        </Col>
-                                    </div>
+                                    <Col xs={24} sm={20} md={20} lg={20} xl={20}>
+                                        <Search placeholder="Search" allowClear onSearch={onSearchHandle} />
+                                    </Col>
                                 </Row>
-                            </Col>
+                            </Form.Item>
+                        </Form>
+                    </Col>
 
-                            {configData?.length ? (
-                                <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
-
-                                    <Button icon={<PlusOutlined />} className={`${styles.actionbtn} ${styles.lastheaderbutton}`} type="primary" onClick={handleAdd}>
-                                        Add
-                                    </Button>
-                                </Col>
-                            ) : (
-                                ''
-                            )}
-                        </Row>
-                    </div>
-                </Col>
-            </Row>
+                    {configData?.length ? (
+                        <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
+                            <Button icon={<TfiReload />} onClick={handleReferesh} danger />
+                            <Button icon={<PlusOutlined />} type="primary" onClick={handleAdd}>
+                                Add
+                            </Button>
+                        </Col>
+                    ) : (
+                        ''
+                    )}
+                </Row>
+            </div>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <ConfigProvider

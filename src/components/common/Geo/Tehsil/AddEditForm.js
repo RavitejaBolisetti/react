@@ -96,7 +96,7 @@ const AddEditFormMain = (props) => {
                             <Row gutter={16}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                     <Form.Item initialValue={formData?.countryCode || defaultCountry} label="Country" name="countryCode" placeholder={preparePlaceholderSelect('Country')} rules={[validateRequiredInputField('Country')]}>
-                                        <Select className={styles.headerSelectField} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear onChange={handleCountryChange}>
+                                        <Select showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear onChange={handleCountryChange}>
                                             {countryData?.map((item) => (
                                                 <Option key={item?.countryCode} value={item?.countryCode}>
                                                     {item?.countryName}
@@ -147,7 +147,7 @@ const AddEditFormMain = (props) => {
 
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                     <Form.Item initialValue={formData?.tehsilCategoryCode} label="Tehsil Category" name="tehsilCategoryCode">
-                                        <Select className={styles.headerSelectField} placeholder={preparePlaceholderSelect('tehsil category')} allowClear>
+                                        <Select placeholder={preparePlaceholderSelect('tehsil category')} allowClear>
                                             {tehsilCategoryData?.map((item) => (
                                                 <Option value={item?.key}>{item?.value}</Option>
                                             ))}

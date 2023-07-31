@@ -25,7 +25,7 @@ export default function DataTable({ isLoading, rowSelection = undefined, showSiz
     const showTotal = (total) =>
         total && (
             <>
-                Total <span style={{ color: '#0B0B0C' }}> {total} </span> items
+                Total <span style={{ color: '#0b0b0c' }}> {total} </span> items
             </>
         );
 

@@ -80,6 +80,9 @@ const AddEditFormMain = (props) => {
         handleFormValueChange,
     };
 
+    const modelTitle = 'Model';
+    // const infoIcon = () => <span>{addToolTip(tooltTipText, 'bottom', '#D3EDFE', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}</span>;
+
     return (
         <Row gutter={20}>
             <Col xs={24} sm={24} md={24} lg={24} xl={24}>

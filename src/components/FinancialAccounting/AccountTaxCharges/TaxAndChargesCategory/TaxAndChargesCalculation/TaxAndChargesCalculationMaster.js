@@ -8,13 +8,12 @@ import CardProductAttribute from './CardTaxAndChargeCal';
 import FormProductAttribute from './FormTaxAndChargeCal';
 
 export const TaxAndChargesCalculationMaster = (props) => {
-    const { isVisible, selectedTreeData, showGlobalNotification, taxChargeCategoryTypeData, taxCategory, taxChargeCategoryCodeData, handleCodeFunction, form, editForm, taxChargeCalForm, formEdit, setFormEdit, taxChargeCalList, setTaxChargeCalList, buttonData, setButtonData } = props;
+    const { isVisible, selectedTreeData, showGlobalNotification, taxChargeCategoryTypeData, taxCategory, taxChargeCategoryCodeData, handleCodeFunction, form, editForm, taxChargeCalForm, formEdit, setFormEdit, taxChargeCalList, setTaxChargeCalList, buttonData, setButtonData, viewMode, dropdownItems, setDropdownItems } = props;
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [disableSaveButton, setDisableSaveButton] = useState(false);
-
-    const [disabledEdit, setDisabledEdit] = useState(false);
     const [changeValue, setChangeValue] = useState(null);
     const [uniqueCardEdit, setuniqueCardEdit] = useState(null);
+    const [mainFomEdit, setMainFormEdit] = useState(false);
 
     const addTaxChargeCal = (val) => {
         taxChargeCalForm
@@ -57,8 +56,6 @@ export const TaxAndChargesCalculationMaster = (props) => {
         disableSaveButton,
         setDisableSaveButton,
         showGlobalNotification,
-        disabledEdit,
-        setDisabledEdit,
         taxChargeCalList,
         setTaxChargeCalList,
         taxChargeCategoryCodeData,
@@ -74,6 +71,9 @@ export const TaxAndChargesCalculationMaster = (props) => {
         handleDescriptionChange,
         buttonData,
         setButtonData,
+        viewMode,
+        dropdownItems,
+        setDropdownItems,
     };
 
     const formProductAttributeProps = {
@@ -92,9 +92,18 @@ export const TaxAndChargesCalculationMaster = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [taxCategory]);
 
+    useEffect(() => {
+        if (formEdit) {
+            setMainFormEdit(true);
+        } else {
+            setMainFormEdit(false);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formEdit]);
+
     return (
         <>
-            <FormProductAttribute {...formProductAttributeProps} />
+            <FormProductAttribute {...formProductAttributeProps} mainFomEdit={mainFomEdit} />
 
             {taxChargeCalList?.length > 0 &&
                 taxChargeCalList?.map((action) => {

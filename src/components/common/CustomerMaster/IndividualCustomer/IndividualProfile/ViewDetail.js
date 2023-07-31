@@ -48,9 +48,7 @@ const ViewDetailMain = (props) => {
                     <div>
                         <img alt="Uploaded profile picture" width="120" height="100" src={`data:image/png;base64,${viewDocument?.base64}`} />
                     </div>
-                    <br />
-                    <br />
-                    <Divider />
+                    <Divider className={styles.marT20} />
                     <Descriptions {...viewProps}>
                         <Descriptions.Item label="Date of Birth">{checkAndSetDefaultValue(formData?.dateOfBirth, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                         <Descriptions.Item label="Gender">{checkAndSetDefaultValue(getCodeValue(appCategoryData?.GENDER_CD, formData?.gender), isLoading)}</Descriptions.Item>
