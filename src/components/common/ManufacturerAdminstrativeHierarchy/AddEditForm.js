@@ -88,7 +88,7 @@ const AddEditFormMain = (props) => {
 
     return (
         <>
-            <Space direction="vertical" size="small" className={styles.accordianContainer}>
+            <Space direction="vertical" size="small" className={`${styles.accordianContainer} ${styles.drawerBodyNew}`}>
                 <Form autoComplete="off" form={form} id="myForm" layout="vertical" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -137,7 +137,7 @@ const AddEditFormMain = (props) => {
                         </Col>
                     </Row>
 
-                    <Row gutter={20} className={styles.formFooter}>
+                    <Row gutter={20} className={styles.formFooterNew}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
                             <Button danger onClick={onCloseAction}>
                                 Cancel

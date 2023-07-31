@@ -595,18 +595,19 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
                         </Form>
                     </Col>
                     {organizationId && manufacturerAdminHierarchyData?.length > 0 && (
-                        <Col className={styles.buttonHeadingContainer} xs={24} sm={24} md={6} lg={6} xl={6}>
+                        <Col className={styles.addGroup} xs={24} sm={24} md={6} lg={6} xl={6}>
                             <Button type="primary" onClick={handleOnClickUpload}>
                                 Upload
                             </Button>
 
                             <Button
+                                className={styles.verticallyCentered}
+                                icon={<FaHistory />}
                                 type="primary"
                                 onClick={() => {
                                     setIsChangeHistoryVisible(true);
                                 }}
                             >
-                                <FaHistory className={styles.buttonIcon} />
                                 Change History
                             </Button>
                         </Col>
@@ -614,42 +615,40 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
                 </Row>
             </div>
             <Row gutter={20} span={24}>
-                <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol} className={styles.marT20}>
-                    <div className={styles.content}>
-                        {!manufacturerAdminHierarchyData?.length ? (
-                            <div className={styles.emptyContainer}>
-                                <Empty
-                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                    imageStyle={{
-                                        height: 60,
-                                    }}
-                                    description={
-                                        <span>
-                                            {noDataTitle} <br /> {noDataMessage}
-                                        </span>
-                                    }
-                                >
-                                    {organizationId && (
-                                        <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
-                                            Add
-                                        </Button>
-                                    )}
-                                </Empty>
-                            </div>
-                        ) : (
-                            organizationId && <LeftPanel {...myProps} />
-                        )}
-                    </div>
+                <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol}>
+                    {!manufacturerAdminHierarchyData?.length ? (
+                        <div className={styles.emptyContainer}>
+                            <Empty
+                                image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                imageStyle={{
+                                    height: 60,
+                                }}
+                                description={
+                                    <span>
+                                        {noDataTitle} <br /> {noDataMessage}
+                                    </span>
+                                }
+                            >
+                                {organizationId && (
+                                    <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
+                                        Add
+                                    </Button>
+                                )}
+                            </Empty>
+                        </div>
+                    ) : (
+                        organizationId && <LeftPanel {...myProps} />
+                    )}
                 </Col>
 
-                <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol} className={styles.padRight0}>
+                <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol}>
                     {selectedTreeKey && selectedTreeKey?.length && organizationId ? (
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padRight0}>
+                        <>
                             <HierarchyView {...viewProps} />
-                            <div className={styles.hyrbuttonContainer}>
+                            <div className={styles.viewContainerFooter}>
                                 <HierarchyFormButton {...viewProps} />
                             </div>
-                        </Col>
+                        </>
                     ) : (
                         organizationId &&
                         manufacturerAdminHierarchyData?.length > 0 && (
