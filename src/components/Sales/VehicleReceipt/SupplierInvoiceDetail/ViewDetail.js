@@ -23,17 +23,17 @@ const ViewDetailMain = (props) => {
     return (
         <Card className={styles.drawerCardView}>
             <Descriptions {...viewProps}>
-                <Descriptions.Item label="Supplier Type">{checkAndSetDefaultValue(formData?.initialPromiseDeliveryDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                <Descriptions.Item label="Supplier Name">{checkAndSetDefaultValue(formData?.custExpectedDeliveryDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                <Descriptions.Item label="Supplier Invoice No.">{checkAndSetDefaultValue(getCodeValue(typeData?.SALE_TYP, formData?.saleType), isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Supplier Invoice Date">{checkAndSetDefaultValue(getCodeValue(typeData?.PRC_TYP, formData?.priceType), isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Supplier Type">{checkAndSetDefaultValue(formData?.supplierType, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Supplier Name">{checkAndSetDefaultValue(formData?.supplierName, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Supplier Invoice No.">{checkAndSetDefaultValue(formData?.supplierInvoiceNumber, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Supplier Invoice Date">{checkAndSetDefaultValue(formData?.supplierInvoiceDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                 <Descriptions.Item label="Road Permit Number">{checkAndSetDefaultValue(formData?.bookingAmount, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Actual Dispatch Date">{checkAndSetDefaultValue(getCodeValue(typeData, formData?.saleConsultant), isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Total Invoice Amount">{checkAndSetDefaultValue(formData?.specialRequest, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Lorry Receipt No.">{checkAndSetDefaultValue(formData?.placeOfRegistration, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Transporter">{checkAndSetDefaultValue(getCodeValue(typeData?.DLVR_AT, formData?.deliveryAt), isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Supplier GST Number">{checkAndSetDefaultValue(getCodeValue(typeData?.RFRL, formData?.referral), isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Geo Fencing Date & Time">{checkAndSetDefaultValue(formData?.mitraType, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Actual Dispatch Date">{checkAndSetDefaultValue(formData?.actualDispatchDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                <Descriptions.Item label="Total Invoice Amount">{checkAndSetDefaultValue(formData?.totalInvoiveAmount, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Lorry Receipt No.">{checkAndSetDefaultValue(formData?.lorryRecieptNumber, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Transporter">{checkAndSetDefaultValue(formData?.transporter, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Supplier GST Number">{checkAndSetDefaultValue(formData?.supplierGstNumber, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Geo Fencing Date & Time">{checkAndSetDefaultValue(formData?.goFencingDateAndTime, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
             </Descriptions>
         </Card>
     );

@@ -279,7 +279,6 @@ export const VehicleReceiptMasterBase = (props) => {
         return () => {
             resetData();
             setFilterString();
-            console.log('🚀 ~ file: VehicleReceiptMaster.js:203 ~ return ~ setFilterString:', filterString);
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -321,7 +320,7 @@ export const VehicleReceiptMasterBase = (props) => {
                 break;
             case EDIT_ACTION:
                 setSelectedOrder(record);
-                record && setSelectedId('record?.supplierInvoiceNumber');
+                record && setSelectedId(record?.supplierInvoiceNumber);
                 openDefaultSection && setCurrentSection(defaultSection);
                 break;
             case VIEW_ACTION:
