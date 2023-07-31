@@ -89,10 +89,8 @@ export const RoleManagementMain = (props) => {
 
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
-    const [webApplications, setWebApplications] = useState([]);
-    const [mobileApplications, setMobileApplications] = useState([]);
-    const [checkedMenuKeys, setCheckedMenuKeys] = useState([]);
-    const [unfilteredMenuData, setUnFilteredMenuData] = useState([]);
+    const [unFilteredMenuData, setUnFilteredMenuData] = useState([]);
+    console.log('🚀 ~ file: RoleManagement.js:93 ~ RoleManagementMain ~ unFilteredMenuData:', unFilteredMenuData);
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
@@ -125,11 +123,9 @@ export const RoleManagementMain = (props) => {
 
     useEffect(() => {
         if (deviceType === APPLICATION_WEB && menuTreeData) {
-            setWebApplications(menuTreeData);
-            setUnFilteredMenuData({ ...unfilteredMenuData, [deviceType]: menuTreeData });
+            setUnFilteredMenuData({ ...unFilteredMenuData, [deviceType]: menuTreeData });
         } else if (deviceType === APPLICATION_MOBILE && menuTreeData) {
-            setMobileApplications(menuTreeData);
-            setUnFilteredMenuData({ ...unfilteredMenuData, [deviceType]: menuTreeData });
+            setUnFilteredMenuData({ ...unFilteredMenuData, [deviceType]: menuTreeData });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [deviceType, menuTreeData]);
@@ -150,15 +146,24 @@ export const RoleManagementMain = (props) => {
     const onFinish = (values) => {
         const recordId = formData?.id || '';
 
-        const checkedWebParentKeys = checkedMenuKeys?.[APPLICATION_WEB] ? Object.keys(checkedMenuKeys?.[APPLICATION_WEB]) : [];
-        const checkedMobileParentKeys = checkedMenuKeys?.[APPLICATION_MOBILE] ? Object.keys(checkedMenuKeys?.[APPLICATION_MOBILE]) : [];
-
         const data = {
             ...values,
             id: recordId,
-            webRoleManagementRequest: unfilteredMenuData?.[APPLICATION_WEB]?.filter((i) => checkedWebParentKeys?.includes(i?.value)) || [],
-            mobileRoleManagementRequest: unfilteredMenuData?.[APPLICATION_MOBILE]?.filter((i) => checkedMobileParentKeys?.includes(i?.value)) || [],
+            webRoleManagementRequest: unFilteredMenuData?.[APPLICATION_WEB]?.filter((i) => i?.checked) || [],
+            mobileRoleManagementRequest: unFilteredMenuData?.[APPLICATION_MOBILE]?.filter((i) => i?.checked) || [],
+            // webRoleManagementRequest: unFilteredMenuData?.[APPLICATION_WEB]?.filter((i) => checkedWebParentKeys?.includes(i?.value)) || [],
+            // mobileRoleManagementRequest: unFilteredMenuData?.[APPLICATION_MOBILE]?.filter((i) => checkedMobileParentKeys?.includes(i?.value)) || [],
         };
+
+        // const checkedWebParentKeys = checkedMenuKeys?.[APPLICATION_WEB] ? Object.keys(checkedMenuKeys?.[APPLICATION_WEB]) : [];
+        // const checkedMobileParentKeys = checkedMenuKeys?.[APPLICATION_MOBILE] ? Object.keys(checkedMenuKeys?.[APPLICATION_MOBILE]) : [];
+
+        // const data = {
+        //     ...values,
+        //     id: recordId,
+        //     webRoleManagementRequest: unFilteredMenuData?.[APPLICATION_WEB]?.filter((i) => checkedWebParentKeys?.includes(i?.value)) || [],
+        //     mobileRoleManagementRequest: unFilteredMenuData?.[APPLICATION_MOBILE]?.filter((i) => checkedMobileParentKeys?.includes(i?.value)) || [],
+        // };
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -166,7 +171,7 @@ export const RoleManagementMain = (props) => {
             if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(false);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-                setCheckedMenuKeys([]);
+                setUnFilteredMenuData([]);
             } else {
                 setIsFormVisible(true);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
@@ -191,7 +196,8 @@ export const RoleManagementMain = (props) => {
     };
 
     useEffect(() => {
-        if (userId && deviceType) {
+        if (userId && deviceType && !unFilteredMenuData?.[deviceType]) {
+            console.log(deviceType, unFilteredMenuData);
             const extraParams = [
                 {
                     key: 'menuType',
@@ -209,7 +215,7 @@ export const RoleManagementMain = (props) => {
             fetchMenuList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, deviceType, formData?.id]);
+    }, [userId, deviceType]);
 
     const handleReferesh = () => {
         setShowDataLoading(true);
@@ -264,7 +270,7 @@ export const RoleManagementMain = (props) => {
     }, [formActionType]);
 
     const formProps = {
-        unfilteredMenuData,
+        unFilteredMenuData,
         setUnFilteredMenuData,
         saveAndAddNewBtnClicked,
         setSaveAndAddNewBtnClicked,
@@ -272,7 +278,6 @@ export const RoleManagementMain = (props) => {
         fetchMenuList,
         onErrorAction,
         userId,
-        menuTreeData,
         form,
         setDeviceType,
         isVisible: isFormVisible,
@@ -281,15 +286,12 @@ export const RoleManagementMain = (props) => {
             form.resetFields();
             setIsFormVisible(false);
             setFormData([]);
-            setCheckedMenuKeys([]);
+            setUnFilteredMenuData([]);
         },
         formData,
         onFinish,
         deviceType,
-        webApplications,
-        setWebApplications,
-        mobileApplications,
-        setMobileApplications,
+
         formActionType,
         setFormActionType,
         onFinishFailed,
@@ -303,8 +305,6 @@ export const RoleManagementMain = (props) => {
 
         setButtonData,
         handleButtonClick,
-        checkedMenuKeys,
-        setCheckedMenuKeys,
 
         APPLICATION_WEB,
         APPLICATION_MOBILE,

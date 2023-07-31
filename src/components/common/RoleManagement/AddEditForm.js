@@ -41,7 +41,7 @@ const fnMapData = ({ data, fieldNames, selectedKeys }) =>
     );
 
 const AddEditFormMain = (props) => {
-    const { checkedMenuKeys, setCheckedMenuKeys, webApplications, mobileApplications, deviceType, setDeviceType, setClosePanels, unfilteredMenuData, setUnFilteredMenuData, formData, onCloseAction, form, onFinish, formActionType: { viewMode, editMode } = undefined } = props;
+    const { deviceType, setDeviceType, setClosePanels, unFilteredMenuData, setUnFilteredMenuData, formData, onCloseAction, form, onFinish, formActionType: { viewMode, editMode } = undefined } = props;
 
     const APPLICATION_WEB = APPLICATION_DEVICE_TYPE?.WEB?.key;
     const APPLICATION_MOBILE = APPLICATION_DEVICE_TYPE?.MOBILE?.key;
@@ -91,11 +91,9 @@ const AddEditFormMain = (props) => {
         (currentKey) =>
         (checkedKeysValue, { halfCheckedKeys }) => {
             handleFormValueChange();
-
             const selectedKeys = [...checkedKeysValue, ...halfCheckedKeys] || [];
-            const deviceTypePrev = checkedMenuKeys?.[deviceType] ? checkedMenuKeys[deviceType] : {};
-
-            setCheckedMenuKeys(selectedKeys?.length > 0 ? { ...checkedMenuKeys, [deviceType]: { ...deviceTypePrev, [currentKey]: [currentKey, ...selectedKeys] } } : { ...checkedMenuKeys, [deviceType]: { ...deviceTypePrev } });
+            // const deviceTypePrev = checkedMenuKeys?.[deviceType] ? checkedMenuKeys[deviceType] : {};
+            // setCheckedMenuKeys(selectedKeys?.length > 0 ? { ...checkedMenuKeys, [deviceType]: { ...deviceTypePrev, [currentKey]: [currentKey, ...selectedKeys] } } : { ...checkedMenuKeys, [deviceType]: { ...deviceTypePrev } });
 
             const mapSelectedKeyData = (data) =>
                 data?.map((item) =>
@@ -109,9 +107,9 @@ const AddEditFormMain = (props) => {
                 );
 
             if (deviceType === APPLICATION_WEB) {
-                setUnFilteredMenuData({ ...unfilteredMenuData, [deviceType]: mapSelectedKeyData(webApplications) });
+                setUnFilteredMenuData({ ...unFilteredMenuData, [deviceType]: mapSelectedKeyData(unFilteredMenuData?.[deviceType]) });
             } else if (deviceType === APPLICATION_MOBILE) {
-                setUnFilteredMenuData({ ...unfilteredMenuData, [deviceType]: mapSelectedKeyData(mobileApplications) });
+                setUnFilteredMenuData({ ...unFilteredMenuData, [deviceType]: mapSelectedKeyData(unFilteredMenuData?.[deviceType]) });
             }
         };
 
@@ -120,7 +118,7 @@ const AddEditFormMain = (props) => {
     };
 
     const AccordianTreeUtils = ({ menuData, viewMode = false }) => {
-        console.log('viewMode', viewMode);
+        console.log('menuData', menuData);
         return (
             <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
                 {menuData?.map((el, i) => {
@@ -130,7 +128,7 @@ const AddEditFormMain = (props) => {
                     const expendedKeys = flatternData?.filter((i) => i.checked);
                     const allowedAccess = treeData?.filter((i) => i.checked);
                     const myProps = {
-                        noLeftRightPadding: true,
+                        callOnForm: true,
                         fieldNames,
                         treeData,
                         searchValue,
@@ -149,7 +147,7 @@ const AddEditFormMain = (props) => {
                                 <Panel
                                     header={
                                         <Row>
-                                            {el?.value}
+                                            {el?.label}
                                             {allowedAccess?.length > 0 && <div className={styles.allowAccess}>{allowedAccess?.length} Access Provided</div>}
                                         </Row>
                                     }
@@ -165,7 +163,7 @@ const AddEditFormMain = (props) => {
                                                 </Col>
                                             </Row>
                                             <Row>
-                                                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.rollTree}>
+                                                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                                     <LeftPanel {...myProps} />
                                                 </Col>
                                             </Row>
@@ -181,6 +179,7 @@ const AddEditFormMain = (props) => {
     };
 
     const AccordianTreePanel = ({ viewMode, menuTreeData }) => {
+        console.log('🚀 ~ file: AddEditForm.js:182 ~ AccordianTreePanel ~ menuTreeData:', menuTreeData);
         return (
             <Tabs
                 defaultActiveKey="1"
@@ -201,7 +200,7 @@ const AddEditFormMain = (props) => {
         styles,
         onTabChange,
         AccordianTreePanel,
-        menuTreeData: unfilteredMenuData,
+        menuTreeData: unFilteredMenuData,
         disableCheckbox: true,
     };
 
@@ -263,7 +262,7 @@ const AddEditFormMain = (props) => {
                                         Application Access<span className={styles.mandatory}>*</span>
                                     </Col>
                                 </Row>
-                                {AccordianTreePanel({ menuTreeData: unfilteredMenuData })}
+                                {AccordianTreePanel({ menuTreeData: unFilteredMenuData })}
                             </>
                         )}
                     </Col>

@@ -8,7 +8,7 @@ import { useMemo, useState, useEffect } from 'react';
 import styles from './TreeView.module.css';
 
 const LeftPanel = (props) => {
-    const { selectedTreeKey, treeData, fieldNames, handleTreeViewClick, isOpenInModal, checkedKeys, expendedKeys: defaultExpandedKeys = [] } = props;
+    const { selectedTreeKey, callOnForm = false, treeData, fieldNames, handleTreeViewClick, isOpenInModal, checkedKeys, expendedKeys: defaultExpandedKeys = [] } = props;
     console.log('🚀 ~ file: LeftPanel.js:12 ~ LeftPanel ~ defaultExpandedKeys:', defaultExpandedKeys);
     const { isTreeViewVisible, checkable, onCheck = () => {} } = props;
     const { searchValue, setSearchValue } = props;
@@ -109,15 +109,14 @@ const LeftPanel = (props) => {
         return loop(treeData);
     }, [searchValue, fieldNames, treeData, disableCheckbox]);
 
-    const noLeftRightPaddingParentClass = noLeftRightPadding && styles.noLeftRightParentPadding;
-    const noLeftRightPaddingClass = noLeftRightPadding && styles.noLeftRightPadding;
+    const mainClass = callOnForm ? styles.scrollTreeDataInner : styles.scrollTreeData;
 
     return (
         <div>
             {isTreeViewVisible ? (
                 <div className={isOpenInModal ? styles.modalView : ''}>
-                    <div className={styles.scrollTreeData}>
-                        <Tree onCheck={onCheck} defaultExpandedKeys={['SAMGC1', 'SAMCO1']} defaultCheckedKeys={['SAMGC1', 'SAMCO1']} defaultSelectedKeys={['SAMGC1', 'SAMCO1']} checkedKeys={checkedKeys} checkable={checkable} onSelect={handleTreeViewClick} showLine={true} showIcon={true} onExpand={onExpand} treeData={finalTreeData} />
+                    <div className={mainClass}>
+                        <Tree onCheck={onCheck} checkedKeys={checkedKeys} checkable={checkable} onSelect={handleTreeViewClick} showLine={true} showIcon={true} onExpand={onExpand} treeData={finalTreeData} />
                     </div>
                 </div>
             ) : undefined}
