@@ -21,7 +21,8 @@ const { Panel } = Collapse;
 const ViewDetailMain = (props) => {
     const { styles, formData, isLoading, typeData, corporateLovData, onViewHistoryChange, isHistoryVisible, changeHistoryClose, activeKey, setactiveKey } = props;
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [rejected, setRejected] = useState(true);
+    const [rejected, setRejected] = useState(false);
+    const [approved, setApproved] = useState(false);
 
     const findListedNonListed = () => {
         if (checkAndSetDefaultValue(getCodeValue(typeData?.CORP_TYPE, formData?.corporateType), isLoading) === 'Non-Listed') {
@@ -37,7 +38,7 @@ const ViewDetailMain = (props) => {
     const onCloseActionOnContinue = () => {
         setIsModalOpen(false);
         setactiveKey([]);
-        setRejected(false);
+        setRejected(true);
     };
 
     const onRejectionHandled = () => {
@@ -76,6 +77,11 @@ const ViewDetailMain = (props) => {
         setactiveKey(1);
     }
 
+    const onApprovedHandle = () => {
+        setApproved(true);
+        setRejected(false);
+        setactiveKey([])
+    }
     return (
         <>
             <div className={styles.viewDrawerContainer}>
@@ -96,8 +102,10 @@ const ViewDetailMain = (props) => {
                                 </Col>
                                 <Col xs={24} sm={24} md={6} lg={6} xl={6} >
                                     {rejected ? (
-                                        <Tag style={{ textAlign: 'right' }} color="warning">Pending for Approval</Tag>
-                                    ) : (<Tag style={{ textAlign: 'right' }} color="error">Rejected</Tag>)}
+                                        <Tag style={{ textAlign: 'right' }} color="error">Rejected</Tag>
+                                    ) : (approved ? (
+                                        <Tag style={{ textAlign: 'right' }} color="success">Approved</Tag>
+                                    ) : (<Tag style={{ textAlign: 'right' }} color="warning">Pending for Approval</Tag>))}
                                 </Col>
                                 <Col xs={24} sm={24} md={12} lg={12} xl={12} style={{ textAlign: 'right' }}>
                                     <Button type="link" onClick={onViewHistoryChange} icon={<BiTimeFive />}>
@@ -139,7 +147,7 @@ const ViewDetailMain = (props) => {
 
                                     <Row gutter={20}>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                            <Button type="primary" className={styles.marR20} >
+                                            <Button type="primary" className={styles.marR20} onClick={onApprovedHandle} >
                                                 Approved
                                             </Button>
                                             <Button className={styles.marB20} onClick={onRejectionHandled} danger>
