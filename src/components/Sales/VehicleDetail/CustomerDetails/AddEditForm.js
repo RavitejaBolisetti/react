@@ -31,6 +31,7 @@ const AddEditFormBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
+    
     const onSearch = (event) => {
         console.log('THIS IS SEARCH', event?.target?.value);
     };
@@ -96,21 +97,6 @@ const AddEditFormBase = (props) => {
         closable: false,
         onCloseAction: handleCancel,
     };
-
-    // const handleOnChange = (vall) => {
-    //     if (vall.target.checked) {
-    //         setSameAsOwner(true);
-    //         let ownerCustomer = form.getFieldsValue()?.ownerCustomer;
-    //         let billingCustomer = form.getFieldsValue()?.billingCustomer;
-    //         billingCustomer = { ...ownerCustomer };
-    //         form?.setFieldsValue({ billingCustomer: { ...ownerCustomer } });
-    //     } else setSameAsOwner(false);
-    // };
-
-    // const handleDataSet = () => {
-    //     form.setFieldsValue(data.ownerCustomer);
-    //     billCstmForm.setFieldsValue(data.billingCustomer);
-    // };
 
     return (
         <>

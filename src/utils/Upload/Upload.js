@@ -194,6 +194,7 @@ const UploadBase = (props) => {
         multiple,
         accept,
         listType,
+        onDownload,
         showUploadList: {
             showRemoveIcon,
             showDownloadIcon,
@@ -212,7 +213,6 @@ const UploadBase = (props) => {
                 form.validateFields()
                     .then(() => {
                         setFileList(fileList);
-
                         handleFormValueChange();
                         const { status } = info.file;
                         setShowStatus(info.file);
