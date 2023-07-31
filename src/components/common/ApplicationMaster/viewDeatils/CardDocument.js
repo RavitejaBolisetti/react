@@ -5,14 +5,14 @@
  */
 import React from 'react';
 import { Col, Card, Row, Divider, Typography } from 'antd';
-import style from './../../Common.module.css';
+import styles from 'components/common/Common.module.css';
 
 const { Text } = Typography;
 
 const CardDocument = ({ termAndConRequired, digitalSignatureRequired, documentTypeDescription, documentTypeCode }) => {
     return (
         <>
-            <Card className={style.viewCardSize}>
+            <Card className={styles.viewCardSize}>
                 <Row align="middle">
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Text type="secondary">T&C Required: </Text> {termAndConRequired ? <Text type="success">Active</Text> : <Text type="secondary">Inactive</Text>}

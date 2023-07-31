@@ -7,6 +7,7 @@
 import { useEffect, useState } from 'react';
 import { Col, Input, Form, Row, Select, Space, Typography, Card, Divider, Switch, Button, Empty, Upload } from 'antd';
 import { validateEmailField, validateMobileNoField, validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
+import { UploadUtil } from 'utils/Upload';
 
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
@@ -52,53 +53,15 @@ const AddEditFormMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
 
-    const onDrop = (e) => {};
-
     const uploadProps = {
-        multiple: false,
-        accept: 'image/png, image/jpeg, application/pdf',
-        showUploadList: {
-            showRemoveIcon: true,
-            showDownloadIcon: true,
-            removeIcon: <FiTrash />,
-            downloadIcon: <FiEye onClick={() => downloadFileFromList()} style={{ color: '#ff3e5b' }} />,
-            showProgress: true,
-        },
-        progress: { strokeWidth: 3, showInfo: true },
-        onDrop,
-        onChange: (info) => {
-            let fileList = [...info.fileList];
-            fileList = fileList.slice(-1);
-            setFileList(fileList);
-            handleFormValueChange();
-            const { status } = info.file;
-            setShowStatus(info.file);
-            if (status === 'done') {
-                setUploadedFile(info?.file?.response?.docId);
-                setUploadedFileName(info?.file?.response?.documentName);
-            }
-        },
+        messageText: (
+            <>
+                Upload supporting documents
+            </>
+        ),
+        ...props,
     };
 
-    const handleUpload = (options) => {
-        const { file, onSuccess, onError } = options;
-        setEmptyList(true);
-
-        const data = new FormData();
-        data.append('applicationId', 'app');
-        data.append('file', file);
-
-        const requestData = {
-            data: data,
-            method: 'post',
-            setIsLoading: listShowLoading,
-            userId,
-            onError,
-            onSuccess,
-        };
-
-        uploadDocumentFile(requestData);
-    };
 
     const handleCorporateChange = (value) => {
         setCorporateType(value);
@@ -219,7 +182,7 @@ const AddEditFormMain = (props) => {
                                 </Form.Item>
                             </Col>
 
-                            {editMode && (
+                            {/* {editMode && (
                                 <>
                                     <div className={styles.uploadDragger}>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -244,9 +207,15 @@ const AddEditFormMain = (props) => {
                                         </Col>
                                     </div>
                                 </>
-                            )}
+                            )} */}
+                        </Row>
+                        <Row gutter={20}>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                <UploadUtil {...uploadProps} />
+                            </Col>
                         </Row>
                     </div>
+
                     <Divider />
                     <div className={styles.blockSection}>
                         <Row gutter={20}>

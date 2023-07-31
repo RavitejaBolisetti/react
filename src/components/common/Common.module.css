@@ -107,9 +107,13 @@
 
 .toolTip :global .ant-tooltip-content {
     border: 1px solid #2782f9 !important;
-    background: #d3edfe;
+    background: #ffffff;
     border-radius: 4px;
     width: 225px;
+}
+
+.toolTip :global .ant-tooltip-content .ant-tooltip-inner {
+    color: #0b0b0c;
 }
 
 .toolTip :global .ant-tooltip-arrow::before {
@@ -135,6 +139,23 @@
     height: calc(100vh - 120px);
     overflow: hidden;
     overflow-y: auto;
+}
+
+.drawerBodyGroup {
+    padding: 30px 20px;
+    padding-bottom: 0;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    height: calc(100vh - 60px);
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+.formFooterGroup {
+    position: absolute;
+    margin-left: -10px;
+    bottom: 0;
+    width: 100%;
 }
 
 .content :global .ant-tree-show-line .ant-tree-switcher-line-icon svg {
@@ -165,17 +186,17 @@
     font-weight: 500;
 }
 
-.borderBottomCorner .contentHeaderBackground {
+/* .borderBottomCorner .contentHeaderBackground {
     border-bottom-left-radius: 0 !important;
     border-bottom-right-radius: 0 !important;
     padding: 12px 8px !important;
-}
+} */
 
-.contentHeaderBackground .headerText {
+/* .contentHeaderBackground .headerText {
     line-height: 34px;
     margin-left: 10px;
     margin-right: 10px;
-}
+} */
 
 /* .contentHeaderBackground .headerSelectField :global .ant-input-affix-wrapper,
 .contentHeaderBackground .headerSelectField :global .ant-btn-default,
@@ -825,14 +846,14 @@
     width: 46px !important;
 }
 
-.viewCardSize :global .ant-card-body .ant-space .ant-btn-link {
+/* .viewCardSize :global .ant-card-body .ant-space .ant-btn-link {
     padding: 0 !important;
     margin-top: 0;
-}
+} */
 
-.viewCardSize :global .ant-card-body .ant-space .ant-btn-icon-only {
+/* .viewCardSize :global .ant-card-body .ant-space .ant-btn-icon-only {
     margin-left: 20px;
-}
+} */
 
 .viewCardSize :global .ant-card-body .ant-space .ant-typography {
     margin-right: 4px;
@@ -1175,7 +1196,7 @@
 }
 
 .allowedTimingAlignment {
-    padding: 20px 0 20px 5px !important;
+    /* padding: 20px 0 20px 5px !important; */
     font-size: 16px;
     line-height: 24px;
     font-weight: 700;
@@ -2206,17 +2227,20 @@
 }
 
 .drawerBody::-webkit-scrollbar-track,
+.drawerBodyGroup::-webkit-scrollbar-track,
 .drawerBodyRight::-webkit-scrollbar-track {
     background-color: #ffffff;
 }
 
 .drawerBody::-webkit-scrollbar,
+.drawerBodyGroup::-webkit-scrollbar,
 .drawerBodyRight::-webkit-scrollbar {
     width: 8px;
     background-color: #ffffff;
 }
 
 .drawerBody::-webkit-scrollbar-thumb,
+.drawerBodyGroup::-webkit-scrollbar-thumb,
 .drawerBodyRight::-webkit-scrollbar-thumb {
     background-color: #c1c1c1;
     border-radius: 10px;
@@ -2224,6 +2248,7 @@
 }
 
 .drawerBody::-webkit-scrollbar-thumb:hover,
+.drawerBodyGroup::-webkit-scrollbar-thumb:hover,
 .drawerBodyRight::-webkit-scrollbar-thumb:hover {
     border: 2px solid #c1c1c1;
 }
