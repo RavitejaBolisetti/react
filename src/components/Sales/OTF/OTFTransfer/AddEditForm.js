@@ -8,6 +8,7 @@ import { Row, Col, Form, Select, Card, Descriptions } from 'antd';
 
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { validateRequiredSelectField } from 'utils/validation';
+import { customSelectBox } from 'utils/customSelectBox';
 
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
@@ -84,7 +85,8 @@ const AddEditFormMain = (props) => {
                         <Row>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                 <Form.Item name="transferReason" label="Reason For Transfer" initialValue={formData?.transferReason} rules={[validateRequiredSelectField('Reason For Transfer')]}>
-                                    <Select {...selectProps} fieldNames={{ label: 'value', value: 'key' }} options={typeData} placeholder={preparePlaceholderSelect('Reason For Cancellation')} />
+                                    {/* <Select {...selectProps} fieldNames={{ label: 'value', value: 'key' }} options={typeData} placeholder={preparePlaceholderSelect('Reason For Cancellation')} /> */}
+                                    {customSelectBox({ data: typeData, placeholder: preparePlaceholderSelect('Reason For Cancellation') })}
                                 </Form.Item>
                             </Col>
                         </Row>

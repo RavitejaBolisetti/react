@@ -196,3 +196,4 @@ export const BASE_URL_VEHICLE_CUSTOMER_COMMON_DETAIL = BASE_URL + 'customers/com
 
 export const BASE_URL_SUPPLIER_INVOICE_DETAIL = BASE_URL_VEHICLE + 'reciepts/supplierdetails';
 export const BASE_URL_VEHICLE_DETAIL = BASE_URL_VEHICLE + 'reciept/vehicledetails';
+export const BASE_URL_REPORTS_GET_EMBEDED_INFO = BASE_URL + 'reports/getembedinfo';
