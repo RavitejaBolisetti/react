@@ -29,9 +29,7 @@ const expandIcon = ({ isActive }) =>
     );
 
 const VehicleReceiptDetailCard = (props) => {
-    const { selectedOrder, typeData, isLoading } = props;
-    const fullName = selectedOrder?.customerName?.split(' ');
-    const userAvatar = fullName ? fullName[0]?.slice(0, 1) + (fullName[1] ? fullName[1].slice(0, 1) : '') : '';
+    const { selectedRecord, typeData, isLoading } = props;
     return (
         <Collapse bordered={true} defaultActiveKey={[1]} expandIcon={expandIcon} collapsible="icon">
             <Panel
@@ -40,7 +38,7 @@ const VehicleReceiptDetailCard = (props) => {
                         <Space>
                             <div>
                                 <Text>
-                                    GRN Number: <span>{selectedOrder?.otfNumber}</span>
+                                    GRN Number: <span>{selectedRecord?.grnNumber}</span>
                                 </Text>
                             </div>
                         </Space>
@@ -49,13 +47,13 @@ const VehicleReceiptDetailCard = (props) => {
                 key={1}
             >
                 <p>
-                    GRN Type: <span>{selectedOrder && getCodeValue(typeData?.[PARAM_MASTER?.CUST_TYPE?.id], selectedOrder?.customerType)}</span>
+                    GRN Type: <span>{selectedRecord && getCodeValue(typeData?.[PARAM_MASTER?.GRN_TYPE?.id], selectedRecord?.grnType)}</span>
                 </p>
                 <p>
-                    GRN Date: <span>{checkAndSetDefaultValue(selectedOrder?.otfDate, isLoading, DATA_TYPE?.DATE?.key) || 'NA'}</span>
+                    GRN Date: <span>{checkAndSetDefaultValue(selectedRecord?.grnDate, isLoading, DATA_TYPE?.DATE?.key) || 'NA'}</span>
                 </p>
                 <p>
-                    GRN Status: <span>{selectedOrder?.model || 'NA'}</span>
+                    GRN Status: <span>{selectedRecord?.status || 'NA'}</span>
                 </p>
             </Panel>
         </Collapse>

@@ -81,7 +81,7 @@ export const VehicleReceiptMasterBase = (props) => {
     const [receiptType, setReceiptType] = useState();
     const [searchValue, setSearchValue] = useState();
 
-    const [selectedOrder, setSelectedOrder] = useState();
+    const [selectedRecord, setSelectedRecord] = useState();
     const [selectedId, setSelectedId] = useState();
 
     const [section, setSection] = useState();
@@ -318,18 +318,18 @@ export const VehicleReceiptMasterBase = (props) => {
                 defaultSection && setCurrentSection(defaultSection);
                 break;
             case EDIT_ACTION:
-                setSelectedOrder(record);
+                setSelectedRecord(record);
                 record && setSelectedId(record?.supplierInvoiceNumber);
                 openDefaultSection && setCurrentSection(defaultSection);
                 break;
             case VIEW_ACTION:
-                setSelectedOrder(record);
+                setSelectedRecord(record);
                 record && setSelectedId(record?.supplierInvoiceNumber);
                 defaultSection && setCurrentSection(defaultSection);
                 break;
             case NEXT_ACTION:
                 const nextSection = Object.values(sectionName)?.find((i) => i.id > currentSection);
-                // validateVehicleReceiptMenu({ item: i, status: selectedOrder?.orderStatus, otfData }) &&
+                // validateVehicleReceiptMenu({ item: i, status: setSelectedRecord?.orderStatus, otfData }) &&
                 section && setCurrentSection(nextSection?.id);
                 setLastSection(!nextSection?.id);
                 break;
@@ -405,7 +405,7 @@ export const VehicleReceiptMasterBase = (props) => {
         advanceFilterForm.setFieldsValue();
         setAdvanceSearchVisible(false);
 
-        setSelectedOrder();
+        setSelectedRecord();
         setIsFormVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
     };
@@ -513,7 +513,7 @@ export const VehicleReceiptMasterBase = (props) => {
     }, [formActionType]);
 
     const containerProps = {
-        record: selectedOrder,
+        record: selectedRecord,
         form,
         formActionType,
         setFormActionType,
@@ -535,8 +535,8 @@ export const VehicleReceiptMasterBase = (props) => {
         defaultBtnVisiblity,
         selectedId,
         setSelectedId,
-        selectedOrder,
-        setSelectedOrder,
+        selectedRecord,
+        setSelectedRecord,
         section,
         currentSection,
         sectionName,
