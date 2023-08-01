@@ -35,8 +35,9 @@ const mapStateToProps = (state) => {
     let returnValue = {
         userId,
         isDataLoaded,
-        vehicleStatusType: typeData[PARAM_MASTER.PHYSICAL_STATUS.id],
+        vehicleStatusType: typeData[PARAM_MASTER.GRN_STATS.id],
         physicalStatusType: typeData[PARAM_MASTER.PHYSICAL_STATUS.id],
+        shortageType: typeData[PARAM_MASTER.YES_NO_FLG.id],
 
         vehicleDetailData,
         isLoading,
@@ -60,11 +61,13 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const VehicleDetailsMasterBase = (props) => {
-    const { typeData, vehicleStatusType, physicalStatusType, vehicleDetailData } = props;
+    const { typeData, vehicleStatusType, physicalStatusType, shortageType, vehicleDetailData } = props;
     const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, saveData, isLoading } = props;
     const { form, selectedId, formActionType, handleFormValueChange, fetchSalesConsultant, NEXT_ACTION, handleButtonClick } = props;
     const [exchangeValue, setexchangeValue] = useState(false);
     const [loyaltyValue, setloyaltyValue] = useState(false);
+
+    const [vehicleDetailForm] = Form.useForm();
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
@@ -135,6 +138,7 @@ const VehicleDetailsMasterBase = (props) => {
         typeData,
         vehicleStatusType,
         physicalStatusType,
+        shortageType,
 
         userId,
         isDataLoaded,
@@ -144,6 +148,7 @@ const VehicleDetailsMasterBase = (props) => {
         setexchangeValue,
         loyaltyValue,
         setloyaltyValue,
+        vehicleDetailForm,
     };
 
     const viewProps = {
