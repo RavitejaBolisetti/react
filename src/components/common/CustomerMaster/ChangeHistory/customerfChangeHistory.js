@@ -23,7 +23,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         customer: {
-            customerDetail: { detailData: data = [], isChangeHistoryLoaded, isChangeHistoryLoading, filter: changeHistoryData = [] },
+            customerDetail: { detailData: data = [], isChangeHistoryLoaded, isChangeHistoryLoading, changeHistoryData },
         },
     } = state;
 
@@ -49,12 +49,18 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const ChangeHistoryMain = ({ fetchCustomerChangeHistory, onCloseAction, listShowChangeHistoryLoading, totalRecords, isChangeHistoryLoading, userId, isChangeHistoryLoaded, changeHistoryData, selectedCustomerId }) => {
+const ChangeHistoryMain = ({ fetchCustomerChangeHistory, onCloseAction, listShowChangeHistoryLoading, customerType, totalRecords, isChangeHistoryLoading, userId, isChangeHistoryLoaded, changeHistoryData, selectedCustomerId }) => {
     const [page, setPage] = useState({ pageSize: 10, current: 1 });
     const dynamicPagination = true;
 
     const defaultExtraParam = useMemo(() => {
         return [
+            {
+                key: 'customerType',
+                title: 'Customer Type',
+                value: customerType,
+                canRemove: true,
+            },
             {
                 key: 'pageSize',
                 title: 'Value',
@@ -85,7 +91,7 @@ const ChangeHistoryMain = ({ fetchCustomerChangeHistory, onCloseAction, listShow
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [page]);
+    }, [customerType, page]);
 
     useEffect(() => {
         if (selectedCustomerId) {
@@ -136,7 +142,6 @@ const ChangeHistoryMain = ({ fetchCustomerChangeHistory, onCloseAction, listShow
             dataIndex: 'newValue',
         }),
     ];
-
     const tableProps = {
         setPage,
         totalRecords,

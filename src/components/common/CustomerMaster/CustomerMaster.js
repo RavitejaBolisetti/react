@@ -412,6 +412,7 @@ const CustomerMasterMain = (props) => {
         buttonData,
         selectedCustomerId,
         ChangeHistoryTitle,
+        customerType,
     };
 
     const showAddButton = true;
