@@ -41,7 +41,7 @@ const CardMapping = ({ index, AddEditFormProps, handleDelete, element, isEditing
                         </Space>
                         <Row>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                <Text type="secondary">{`Quantity ` + element?.requiredQuantity}</Text>
+                                <Text type="secondary" className={style.subSection}>{`Required Quantity: ` + element?.requiredQuantity}</Text>
                             </Col>
                         </Row>
                     </Col>

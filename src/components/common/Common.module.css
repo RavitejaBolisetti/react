@@ -127,9 +127,9 @@
     top: 39px;
 }
 
-.vechilemodelTooltip svg {
+.vechilemodelTooltip svg{
     color: #2782f9;
-    padding: 3px 0 0 3px;
+    padding:3px 0 0 3px;
 }
 
 .drawerBody {
@@ -3177,6 +3177,7 @@ li.ant-timeline-item.active .ant-timeline-item-content p {
 .changeHistoryContainer {
     padding: 20px 40px 0 !important;
 }
+
 
 @media (max-width: 768px) {
     /* For mobile phones: */

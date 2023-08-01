@@ -354,7 +354,7 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
             <AppliedAdvanceFilter {...advanceFilterResultProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable handleAdd={handleAdd} isLoading={showDataLoading} {...tableProps} showAddButton={true} />
+                    <ListDataTable handleButtonClick={handleAdd} isLoading={showDataLoading} {...tableProps} showAddButton={true} />
                 </Col>
             </Row>
             <ChangeHistory {...changeHistoryProps} />
