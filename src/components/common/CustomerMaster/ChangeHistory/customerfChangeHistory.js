@@ -9,29 +9,28 @@ import { bindActionCreators } from 'redux';
 import { convertDateTime } from 'utils/formatDateTime';
 
 import { tblPrepareColumns } from 'utils/tableCloumn';
-import { otfDataActions } from 'store/actions/data/otf/otf';
+import { customerDetailDataActions } from 'store/actions/customer/customerDetail';
 
 import ChangeHistoryStyles from './ChangeHistory.module.css';
 
 import { DataTable } from 'utils/dataTable';
 import { withDrawer } from 'components/withDrawer';
-import { BASE_URL_OTF_CHANGE_HISTORY as customURL } from 'constants/routingApi';
+import { BASE_URL_CUSTOMER_MASTER_CHANGE_HISTORY as customURL } from 'constants/routingApi';
 
 import { Row, Button, Col } from 'antd';
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
-        data: {
-            OTF: {
-                OtfSearchList: { detailData: otfData = [], isChangeHistoryLoaded, isChangeHistoryLoading, changeHistoryData = [] },
-            },
+        customer: {
+            customerDetail: { detailData: data = [], isChangeHistoryLoaded, isChangeHistoryLoading, changeHistoryData = [] },
         },
+
     } = state;
 
     let returnValue = {
         userId,
-        otfData,
+        data,
         isChangeHistoryLoaded,
         isChangeHistoryLoading,
         changeHistoryData,
@@ -43,28 +42,28 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchOTFChangeHistory: otfDataActions.changeHistory,
-            listShowChangeHistoryLoading: otfDataActions.listShowChangeHistoryLoading,
+            fetchCustomerChangeHistory: customerDetailDataActions.changeHistory,
+            listShowChangeHistoryLoading: customerDetailDataActions.listShowChangeHistoryLoading,
         },
         dispatch
     ),
 });
 
-const ChangeHistoryMain = ({ fetchOTFChangeHistory, onCloseAction, listShowChangeHistoryLoading, isChangeHistoryLoading, userId, isChangeHistoryLoaded, changeHistoryData, selectedCustomerId }) => {
-    // useEffect(() => {
-    //     if (selectedOrderId) {
-    //         const extraParams = [
-    //             {
-    //                 key: 'otfNumber',
-    //                 title: 'otfNumber',
-    //                 value: selectedOrderId,
-    //                 name: 'OTF Number',
-    //             },
-    //         ];
-    //         fetchOTFChangeHistory({ customURL, setIsLoading: listShowChangeHistoryLoading, userId, extraParams });
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [selectedOrderId]);
+const ChangeHistoryMain = ({ fetchCustomerChangeHistory, onCloseAction, listShowChangeHistoryLoading, isChangeHistoryLoading, userId, isChangeHistoryLoaded, changeHistoryData, selectedCustomerId }) => {
+    useEffect(() => {
+        if (selectedCustomerId) {
+            const extraParams = [
+                {
+                    key: 'customerCode',
+                    title: 'customerCode',
+                    value: selectedCustomerId,
+                    name: 'Customer Code',
+                },
+            ];
+            fetchCustomerChangeHistory({ customURL, setIsLoading: listShowChangeHistoryLoading, userId, extraParams });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [selectedCustomerId]);
 
     const tableColumn = [
         tblPrepareColumns({
@@ -125,4 +124,4 @@ const ChangeHistoryMain = ({ fetchOTFChangeHistory, onCloseAction, listShowChang
     );
 };
 
-export const ChangeHistory = connect()(withDrawer(ChangeHistoryMain, { title: 'Change History', width: '90%' }));
+export const ChangeHistory = connect(mapStateToProps, mapDispatchToProps)(withDrawer(ChangeHistoryMain, { title: 'Change History', width: '90%' }));
