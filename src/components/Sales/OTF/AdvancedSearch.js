@@ -6,6 +6,7 @@
 import React, { useEffect } from 'react';
 import { Col, Form, Row, Select, Button, DatePicker } from 'antd';
 import dayjs from 'dayjs';
+import moment from 'moment';
 
 import { withModal } from 'components/withModal';
 import { validateRequiredSelectField } from 'utils/validation';
@@ -71,32 +72,17 @@ export const AdvancedSearchFrom = (props) => {
         handleResetFilter,
     };
 
-    const CheckDateEffectiveTo = (value, effectiveFrom) => {
-        const bool = dayjs(value).format('YYYY-MM-DD') >= dayjs(effectiveFrom).format('YYYY-MM-DD');
-        if (bool) {
-            return Promise.resolve();
-        }
-        return Promise.reject(new Error('Date cant be less than Effective from date'));
-    };
-
-
     return (
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item initialValue={formatDateToCalenderDate(filterString?.fromDate)} label="From Date" name="fromDate" rules={[validateRequiredSelectField('From Date')]} className={styles?.datePicker}>
-                        <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} />
+                        <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} className={styles.fullWidth} onChange={() => advanceFilterForm.setFieldsValue({ toDate: undefined })} disabledDate={(current) => current.isBefore(moment().subtract(1, 'day'))} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.toDate)} label="To Date" name="toDate" rules={[
-                        validateRequiredSelectField('To Date'),
-                        {
-                            validator: (_, value) => CheckDateEffectiveTo(value, advanceFilterForm?.getFieldValue('fromDate')),
-                        },
-                    ]}
-                        className={styles?.datePicker}>
-                        <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} />
+                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.toDate)} label="To Date" name="toDate" rules={[validateRequiredSelectField('To Date')]} className={styles?.datePicker}>
+                        <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} disabledDate={(current) => current < advanceFilterForm?.getFieldValue('fromDate')} className={styles.fullWidth} />
                     </Form.Item>
                 </Col>
             </Row>
