@@ -18,7 +18,7 @@ import { ModalButtons } from 'components/common/Button';
 import styles from 'components/common/Common.module.css';
 
 export const AdvancedSearchFrom = (props) => {
-    const { setAdvanceSearchVisible, otfStatusList } = props;
+    const { setAdvanceSearchVisible, otfStatusList, extraParams } = props;
     const {
         filterString,
         setFilterString,
@@ -44,7 +44,12 @@ export const AdvancedSearchFrom = (props) => {
     };
 
     const handleResetFilter = (e) => {
-        advanceFilterForm.resetFields();
+        advanceFilterForm.setFieldsValue({
+            toDate: null,
+            fromDate: null,
+            otfStatus: null,
+        });
+        setFilterString();
     };
 
     const onFinishFailed = () => {
@@ -86,7 +91,7 @@ export const AdvancedSearchFrom = (props) => {
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item initialValue={formatDateToCalenderDate(filterString?.toDate)} label="To Date" name="toDate" rules={[
                         validateRequiredSelectField('To Date'),
-                                {
+                        {
                             validator: (_, value) => CheckDateEffectiveTo(value, advanceFilterForm?.getFieldValue('fromDate')),
                         },
                     ]}
