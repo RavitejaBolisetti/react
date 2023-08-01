@@ -216,7 +216,7 @@ Object {
           />
           <div
             class="changeTheme"
-            style="padding: 10px 14px;"
+            style="padding: 10px 14px; position: absolute;"
           >
             <div
               class="changeThemeBorder"
@@ -506,7 +506,7 @@ Object {
         />
         <div
           class="changeTheme"
-          style="padding: 10px 14px;"
+          style="padding: 10px 14px; position: absolute;"
         >
           <div
             class="changeThemeBorder"
