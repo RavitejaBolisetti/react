@@ -3,7 +3,6 @@ import '@testing-library/jest-dom/extend-expect';
 import { screen, fireEvent, getByTestId, logRoles, render } from '@testing-library/react';
 import customRender from '@utils/test-utils';
 import AllowedTimingCard from '@components/common/CriticalityGroup/AllowedTimings/AllowedTimingCard';
-import customRender from '@utils/test-utils';
 
 describe('AllowedTimingCard Components', () => {
     it('should render AllowedTimingCard components', () => {
