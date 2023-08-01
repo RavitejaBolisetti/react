@@ -4,6 +4,11 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 
+p {
+    margin-block-start: 0;
+    margin-block-end: 0;
+}
+
 /* AntD Buttons Design Start*/
 :global .ant-btn {
     line-height: 22px;
@@ -146,10 +151,10 @@
 }
 
 :global .ant-checkbox .ant-checkbox-inner:after {
-    top: 48%;
-    inset-inline-start: 35%;
-    width: 4px;
-    height: 7px;
+    top: 44%;
+    inset-inline-start: 30%;
+    width: 6px;
+    height: 10px;
     border: 1px solid #ff3e5b;
     border-top: 0;
     border-inline-start: 0;
@@ -171,6 +176,18 @@
 :global .ant-checkbox-disabled .ant-checkbox-inner {
     background: #f2f2f2;
     border-color: #b5b5b6;
+}
+
+:global .ant-checkbox-checked:after {
+    border-width: 1px;
+}
+
+:global .ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled):hover .ant-checkbox-checked:not(.ant-checkbox-disabled):after {
+    border-color: #ff3e5b;
+}
+
+:global .ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled):hover .ant-checkbox-checked:not(.ant-checkbox-disabled) .ant-checkbox-inner {
+    background-color: transparent;
 }
 
 /* AntD Checkbox Design End*/
@@ -313,6 +330,10 @@
 /* AntD Table Design End*/
 
 /* AntD Table Pagination Design Start*/
+:global .ant-table-wrapper .ant-table-pagination.ant-pagination {
+    margin: 20px 0 0;
+}
+
 :global .ant-pagination .ant-pagination-total-text {
     position: absolute;
     left: 0px;
@@ -324,7 +345,7 @@
 
 :global .ant-pagination .ant-pagination-options {
     position: absolute;
-    left: 110px;
+    left: 86px;
     color: #0b0b0c;
     font-weight: 500;
 }
@@ -346,9 +367,9 @@
     color: #0b0b0c;
 }
 
-:global .ant-pagination .ant-pagination-options .ant-select .ant-select-dropdown {
+/* :global .ant-pagination .ant-pagination-options .ant-select .ant-select-dropdown {
     top: -142px !important;
-}
+} */
 
 :global .ant-pagination .ant-pagination-prev,
 :global .ant-pagination .ant-pagination-next,
@@ -374,12 +395,37 @@
 
 /* AntD Form Items & Input/Select Design Start*/
 :global .ant-input,
-:global .ant-input-affix-wrapper {
+:global .ant-input-affix-wrapper,
+:global .ant-input-number .ant-input-number-input {
     height: auto;
     padding: 5px 12px;
-    border-color: #b5b5b6;
+    border: 1px solid #b5b5b6;
     font-weight: 400;
     line-height: 24px;
+}
+
+:global .ant-input-number {
+    border-width: 0;
+}
+
+:global .ant-input-number:hover,
+:global .ant-input-number:hover {
+    border-color: #0b0b0c;
+    border-inline-end-width: 0;
+}
+
+:global .ant-input-number:hover .ant-input-number-input,
+:global .ant-input-number-focused .ant-input-number-input {
+    border: 1px solid #0b0b0c;
+    border-right-width: 0;
+    box-shadow: none;
+}
+
+:global .ant-input-number:hover .ant-input-number-handler-wrap,
+:global .ant-input-number-focused .ant-input-number-handler-wrap {
+    border: 1px solid #0b0b0c;
+    border-left-width: 0;
+    opacity: 1;
 }
 
 :global .ant-input {
@@ -455,6 +501,18 @@
     height: 20px;
 }
 
+:global .ant-input-group.ant-input-group-compact {
+    display: flex;
+}
+
+:global .ant-input-group.ant-input-group-compact .ant-input-status-success {
+    border-color: transparent;
+}
+
+:global .ant-input-group.ant-input-group-compact .ant-input-status-success:not(:first-child):not(:last-child) {
+    width: 10%;
+}
+
 :global .ant-form-item {
     margin-bottom: 20px;
 }
@@ -483,12 +541,15 @@
     border: 1px solid #b5b5b6;
     height: auto;
     padding: 2px 12px;
-    /* couldn't give padding: 5px 12px; as the height was increasing more than the required */
 }
 
 :global .ant-select:not(.ant-select-disabled):not(.ant-select-customize-input):not(.ant-pagination-size-changer):hover .ant-select-selector {
     border-color: #0b0b0c !important;
     box-shadow: none;
+}
+
+:global .ant-select-single:not(.ant-select-customize-input) .ant-select-selector .ant-select-selection-search-input {
+    height: 34px;
 }
 
 :global .ant-select .ant-select-arrow {
@@ -533,6 +594,7 @@
 :global .ant-input[disabled],
 :global .ant-input-disabled:hover,
 :global .ant-input[disabled]:hover,
+:global .ant-input-textarea-affix-wrapper.ant-input-affix-wrapper-disabled .ant-input[disabled],
 :global .ant-select-disabled.ant-select:not(.ant-select-customize-input) .ant-select-selector,
 :global .ant-select-disabled.ant-select .ant-select-arrow {
     color: #858585;
@@ -542,6 +604,11 @@
 
 :global .ant-input-textarea-affix-wrapper.ant-input-affix-wrapper {
     margin-bottom: 20px;
+}
+
+:global .ant-input-textarea-affix-wrapper.ant-input-affix-wrapper-disabled,
+:global .ant-input-textarea-affix-wrapper.ant-input-affix-wrapper-disabled:hover {
+    border-color: #e6e6e6;
 }
 
 :global .ant-input-textarea-affix-wrapper.ant-input-affix-wrapper > textarea.ant-input {
@@ -630,14 +697,34 @@
 /* AntD Modal Design End*/
 
 /* AntD Drawer Design Start*/
-:global .ant-drawer .ant-drawer-header-title {
-    display: inline-block;
+:global .ant-drawer .ant-drawer-header {
+    padding: 16px 20px;
 }
 
-:global .ant-drawer-close {
-    float: right !important;
-    padding: 4px 0 0 0 !important;
-    margin-inline-end: 0 !important;
+:global .ant-drawer .ant-drawer-header-title {
+    flex-direction: row-reverse;
+}
+
+:global .ant-drawer .ant-drawer-header-title .ant-drawer-title {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 27px;
+    color: #0b0b0c;
+}
+
+:global .ant-drawer .ant-drawer-close {
+    float: right;
+    display: flex;
+    margin-inline-end: 0;
+    margin-inline-start: 16px;
+    padding: 0;
+    font-size: 18px;
+    color: #0b0b0c;
+}
+
+:global .ant-drawer-wrapper-body .ant-drawer-body {
+    padding: 0;
+    overflow: hidden;
 }
 
 :global .ant-drawer-body .ant-input-number {
@@ -682,6 +769,10 @@
     border-color: #e6e6e6 !important;
 }
 
+:global .ant-picker-dropdown .ant-picker-time-panel-column::after {
+    height: auto;
+}
+
 /* :global .ant-modal-mask,
 :global body {
     width: 100% !important;
@@ -690,10 +781,42 @@
 
 /* AntD Picker Design End*/
 
+/* AntD Date Picker Design Start*/
+:global .ant-picker-dropdown .ant-picker-header {
+    height: 36px;
+}
+
+:global .ant-picker-dropdown .ant-picker-header button {
+    line-height: 36px;
+}
+
+:global .ant-picker-dropdown .ant-picker-date-panel .ant-picker-body {
+    padding: 8px 18px;
+}
+
+:global .ant-picker-dropdown .ant-picker-date-panel .ant-picker-content th {
+    width: auto;
+    height: auto;
+}
+
+:global .ant-picker-dropdown .ant-picker-cell {
+    padding: 4px 0;
+}
+
+:global .ant-picker-dropdown .ant-picker-footer {
+    line-height: 35px;
+}
+
+/* AntD Date Picker Design End*/
+
 /* AntD Card Design Start*/
 :global .ant-card {
-    /* margin-bottom: 10px; */
+    margin-bottom: 10px;
     background: #f2f2f2;
+}
+
+:global .ant-card:last-child:not(:first-child) {
+    margin-bottom: 20px;
 }
 
 :global .ant-card-bordered {
@@ -735,13 +858,14 @@
 
 /* AntD Collapse Design Start*/
 :global .ant-collapse {
+    width: 100%;
     margin-bottom: 10px;
     background-color: #f2f2f2;
     border: 1px solid #e6e6e6;
     box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.15);
 }
 
-:global .ant-collapse:last-child {
+:global .ant-collapse:last-child:not(:first-child) {
     margin-bottom: 20px;
 }
 
@@ -779,11 +903,15 @@
     border-top: none;
 }
 
+:global .ant-collapse .ant-collapse-content > .ant-collapse-content-box {
+    padding: 0 20px;
+}
+
 /* AntD Collapse Design End*/
 
-:global(.ant-card.ant-card-actions) {
+/* :global(.ant-card.ant-card-actions) {
     height: 40px;
-}
+} */
 
 /* Previously unchecked global AntD CSS overrides */
 
@@ -799,6 +927,10 @@
     max-height: calc(100vh - 170px);
     /* padding: 0 24px; */
     padding: 0 14px;
+}
+
+:global .ant-menu-light.ant-menu-inline-collapsed.ant-menu-vertical {
+    max-height: calc(100vh - 153px);
 }
 
 :global .ant-menu-item:not(.ant-menu-item-selected):hover {
@@ -912,10 +1044,6 @@
 :global .ant-menu-light.ant-menu-root.ant-menu-inline::-webkit-scrollbar-thumb:hover,
 :global .ant-menu-light.ant-menu-root.ant-menu-vertical::-webkit-scrollbar-thumb:hover {
     border: 2px solid #c1c1c1;
-}
-
-:global .ant-menu-light.ant-menu-root.ant-menu-vertical {
-    max-height: calc(100vh - 165px);
 }
 
 :global .ant-menu .ant-menu-submenu-title .ant-menu-item-icon + span {

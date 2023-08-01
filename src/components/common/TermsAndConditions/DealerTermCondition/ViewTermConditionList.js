@@ -5,9 +5,10 @@
  */
 import React from 'react';
 import { Descriptions } from 'antd';
-import { convertDate } from 'utils/formatDateTime';
+import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
+import { DATA_TYPE } from 'constants/dataType';
 
-const ViewTermConditionListMain = ({ formData, styles }) => {
+const ViewTermConditionListMain = ({ formData, isLoading, styles }) => {
     const viewProps = {
         bordered: false,
         colon: false,
@@ -15,16 +16,16 @@ const ViewTermConditionListMain = ({ formData, styles }) => {
         column: { xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 },
     };
     return (
-        <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
+        <div className={styles.viewContainer}>
             <>
                 <Descriptions {...viewProps}>
-                    <Descriptions.Item label="Product Hierarchy">{formData?.productName ? formData?.productName : formData?.productName}</Descriptions.Item>
-                    <Descriptions.Item label="Document Type">{formData?.documentTypeCode}</Descriptions.Item>
-                    <Descriptions.Item label="Language">{formData?.language ? formData?.language : formData?.languageDesc}</Descriptions.Item>
-                    <Descriptions.Item label="Effective From">{formData?.effectiveFrom ? convertDate(formData?.effectiveFrom) : convertDate(formData?.effectivefrom)}</Descriptions.Item>
-                    <Descriptions.Item label="Effective To">{formData?.effectiveTo ? convertDate(formData?.effectiveTo) : convertDate(formData?.effectiveto)}</Descriptions.Item>
-                    <Descriptions.Item label="Version">{formData?.version}</Descriptions.Item>
-                    <Descriptions.Item label="Terms & Conditions">{formData?.termConditionDescription ? formData?.termConditionDescription : formData?.termsconditiondescription}</Descriptions.Item>
+                    <Descriptions.Item label="Product Hierarchy">{checkAndSetDefaultValue(formData?.productName, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Document Type">{checkAndSetDefaultValue(formData?.documentTypeCode, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Language">{checkAndSetDefaultValue(formData?.language || formData?.languageDesc, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Effective From">{checkAndSetDefaultValue(formData?.effectiveFrom || formData.effectivefrom, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                    <Descriptions.Item label="Effective To">{checkAndSetDefaultValue(formData?.effectiveTo || formData?.effectiveto, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                    <Descriptions.Item label="Version">{checkAndSetDefaultValue(formData?.version, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Terms & Conditions">{checkAndSetDefaultValue(formData?.termConditionDescription || formData?.termsconditiondescription, isLoading)}</Descriptions.Item>
                 </Descriptions>
             </>
         </div>

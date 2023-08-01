@@ -223,3 +223,7 @@ export const ageGreator18 = (value) => {
         return Promise.resolve('');
     }
 };
+export const noWhiteSpaceinBeginning = (fieldName) => ({
+    pattern: /^[^\s]+(\s+[^\s]+)*$/,
+    message: 'Please dont enter spaces ',
+});

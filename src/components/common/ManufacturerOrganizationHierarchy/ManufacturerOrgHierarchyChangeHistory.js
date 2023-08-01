@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -9,7 +9,7 @@ import { bindActionCreators } from 'redux';
 
 import { manufacturerOrgHierarchyDataActions } from 'store/actions/data/manufacturerOrgHierarchy';
 import { convertDateTime } from 'utils/formatDateTime';
-import { tblPrepareColumns, tblStatusColumn } from 'utils/tableCloumn';
+import { tblPrepareColumns, tblStatusColumn } from 'utils/tableColumn';
 import styles from '../ChangeHistory/ChangeHistory.module.css';
 import { DataTable } from 'utils/dataTable';
 import { withDrawer } from 'components/withDrawer';
@@ -56,7 +56,13 @@ const ManufacturerOrgHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, cha
         tblPrepareColumns({
             title: 'Changed Date ',
             dataIndex: 'changedDate',
-            render: (text) => convertDateTime(text),
+            render: (text) => [
+                <div>
+                    {convertDateTime(text, 'DD MMM YYYY')}
+                    <br />
+                    {convertDateTime(text, 'HH:mm a')}
+                </div>,
+            ],
         }),
         tblPrepareColumns({
             title: 'Changed By',

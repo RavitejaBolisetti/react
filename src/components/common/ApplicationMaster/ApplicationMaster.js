@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -96,17 +96,12 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
     const fieldNames = { title: 'menuTitle', key: 'menuId', children: 'subMenu' };
 
     useEffect(() => {
-        if (!userId) return;
-        if (!criticalityGroupData?.length) {
+        if (userId) {
             fetchApplicationCriticality({ setIsLoading: applicationMasterDataShowLoading });
-        }
-        if (!actions?.length) {
             fetchApplicationAction({ setIsLoading: applicationMasterDataShowLoading, userId, id: 'Finac' });
-        }
-        if (!criticalityGroupData?.length) {
             fetchCriticalitiData({ setIsLoading: applicationMasterDataShowLoading });
+            fetchList({ setIsLoading: applicationMasterDataShowLoading, userId, deviceType: menuType, sid: 'APPMST' });
         }
-        fetchList({ setIsLoading: applicationMasterDataShowLoading, userId, deviceType: menuType, sid: 'APPMST' });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, menuType]);
 
@@ -274,48 +269,42 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
     const ContentHeaderProps = { isAdvanceFilter: false, isTogglePresent: true, isDefaultContentHeader: false, toggleFirst: 'Web', toggleSecond: 'Mobile', styles, onChange, onFinish, validateTriggervalue: ['onSearch'], menuType, title: '', handleTypeClick };
     return (
         <>
-            <div>
             <ContentHeader {...ContentHeaderProps} />
-            </div>
             <Row gutter={20} span={24}>
-                <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol} className={`${styles.borderBottomCorner} ${styles.marT20}`}>
+                <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol}>
                     <Spin spinning={isLoading}>
-                       
-
-                        <div className={styles.content}>
-                            {menuData?.length <= 0 ? (
-                                <div className={styles.emptyContainer}>
-                                    <Empty
-                                        image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                        imageStyle={{
-                                            height: 60,
-                                        }}
-                                        description={
-                                            <span>
-                                                {noDataTitle} <br /> {noDataMessage}
-                                            </span>
-                                        }
-                                    >
-                                        <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" onClick={() => handleAdd('add')}>
-                                            Add
-                                        </Button>
-                                    </Empty>
-                                </div>
-                            ) : (
-                                <div className={` ${styles.leftPanelScroll}`}>
-                                    <LeftPanel {...myProps} />
-                                </div>
-                            )}
-                        </div>
+                        {menuData?.length <= 0 ? (
+                            <div className={styles.emptyContainer}>
+                                <Empty
+                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                    imageStyle={{
+                                        height: 60,
+                                    }}
+                                    description={
+                                        <span>
+                                            {noDataTitle} <br /> {noDataMessage}
+                                        </span>
+                                    }
+                                >
+                                    <Button icon={<PlusOutlined />} type="primary" onClick={() => handleAdd('add')}>
+                                        Add
+                                    </Button>
+                                </Empty>
+                            </div>
+                        ) : (
+                            <div className={` ${styles.leftPanelScroll}`}>
+                                <LeftPanel {...myProps} />
+                            </div>
+                        )}
                     </Spin>
                 </Col>
 
-                <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol} className={`${styles.padRight0} ${styles.viewDetails}`}>
+                <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol}>
                     <Spin spinning={isApplicationDeatilsLoading}>
                         {selectedTreeKey?.length && applicationDetailsData?.length ? (
                             <>
                                 <ViewApplicationDetailMain applicationDetailsData={applicationDetailsData} styles={styles} />
-                                <div className={styles.hyrbuttonContainer}>
+                                <div className={styles.viewContainerFooter}>
                                     <HierarchyFormButton buttonData={buttonData} handleButtonClick={handleButtonClick} />
                                 </div>
                             </>

@@ -91,8 +91,11 @@ const Login = (props) => {
         hideGlobalNotification();
         setIsLoading(false);
         const passwordStatus = data?.passwordStatus;
-        // const loginFromRegisteredDevice = data?.userRegisteredDevice;
-        if (passwordStatus) {
+        const loginFromRegisteredDevice = data?.userRegisteredDevice;
+        if (loginFromRegisteredDevice && !loginFromRegisteredDevice?.match) {
+            authPreLogin(data);
+            accessFromRegisteredDeviceStatusInfo(data);
+        } else if (passwordStatus) {
             authPreLogin(data);
             updatePasswordStatusInfo(data);
             forceUpdate();
@@ -134,6 +137,41 @@ const Login = (props) => {
 
     const onFinishFailed = (errorInfo) => {
         form.validateFields().then((values) => {});
+    };
+
+    const accessFromRegisteredDeviceStatusInfo = (data) => {
+        const { userRegisteredDevice, passwordStatus } = data;
+        const { errorMessage: message } = userRegisteredDevice;
+
+        const title = 'Unauthorized Access';
+
+        const handleSkip = () => {
+            if (passwordStatus) {
+                authPreLogin(data);
+                updatePasswordStatusInfo(data);
+                forceUpdate();
+            } else {
+                handleSkipUpdatePassword(data);
+            }
+        };
+
+        const btn = (
+            <Space className={styles.floatLeft}>
+                <Button onClick={handleSkip} danger size="small">
+                    Continue
+                </Button>
+            </Space>
+        );
+
+        alertNotification.open({
+            icon: <AiOutlineWarning />,
+            message: title,
+            description: message,
+            btn: btn,
+            duration: 0,
+            onClose: handleSkip,
+            className: notificationStyles.warning,
+        });
     };
 
     const updatePasswordStatusInfo = (data) => {

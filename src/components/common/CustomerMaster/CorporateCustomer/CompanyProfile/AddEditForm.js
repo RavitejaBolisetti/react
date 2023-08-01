@@ -10,8 +10,9 @@ import { validateRequiredInputField, validateLettersWithWhitespaces, validatePan
 import { FiDownload, FiTrash } from 'react-icons/fi';
 
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
+import { convertToUpperCase } from 'utils/convertToUpperCase';
 import { expandIcon } from 'utils/accordianExpandIcon';
-import UploadUtils from 'components/common/CustomerMaster/Common/UploadUtils';
+import { UploadUtil } from 'utils/Upload';
 
 import styles from 'components/common/Common.module.css';
 
@@ -22,7 +23,7 @@ const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
     const { appCategoryData, userId, formData, form, handleOnClick } = props;
-    const { uploadListShowLoading, uploadFile, setUploadedFile, setAppCustomerCategory, setAppSubCategory, customerCategory, setCustomerCategory, viewDocument } = props;
+    const { handleFormValueChange, fileList, setFileList, uploadedFile, emptyList, setEmptyList, uploadedFileName, setUploadedFileName, uploadListShowLoading, uploadFile, setUploadedFile, setAppCustomerCategory, setAppSubCategory, customerCategory, setCustomerCategory, viewDocument } = props;
 
     const [activeKey, setactiveKey] = useState([1]);
 
@@ -62,50 +63,6 @@ const AddEditFormMain = (props) => {
         // console.log('Dropped files', e.dataTransfer.files);
     };
 
-    const uploadProps = {
-        multiple: false,
-        accept: 'image/png, image/jpeg, application/pdf',
-        showUploadList: {
-            showRemoveIcon: true,
-            // showDownloadIcon: true,
-            // downloadIcon: <FiDownload onClick={() => downloadFileFromList()} />,
-            removeIcon: <FiTrash onClick={(e) => console.log(e, 'custom removeIcon event')} />,
-            showProgress: true,
-        },
-        progress: { strokeWidth: 3, showInfo: true },
-
-        onDrop,
-        onChange: (info, event) => {
-            const { status } = info.file;
-            if (status === 'uploading') {
-            } else if (status === 'done') {
-                setUploadedFile(info?.file?.response?.docId);
-                message.success(`${info.file.name} file uploaded successfully.`);
-            } else if (status === 'error') {
-                message.error(`${info.file.name} file upload failed.`);
-            }
-        },
-    };
-
-    const handleUpload = (options) => {
-        const { file, onSuccess, onError } = options;
-
-        const data = new FormData();
-        data.append('applicationId', 'app');
-        data.append('file', file);
-
-        const requestData = {
-            data: data,
-            method: 'post',
-            setIsLoading: uploadListShowLoading,
-            userId,
-            onError,
-            onSuccess,
-        };
-
-        uploadFile(requestData);
-    };
-
     const handleAppCategoryChange = (value) => {
         setAppCustomerCategory(value);
     };
@@ -118,11 +75,29 @@ const AddEditFormMain = (props) => {
         setCustomerCategory(value);
     };
 
-    const ImageProps = {
-        viewDocument,
-        handleUpload,
-        uploadProps,
-        formData,
+    const consentFormProps = {
+        isReplaceEnabled: false,
+        fileList,
+        setFileList,
+        setUploadedFile,
+        uploadedFile,
+        emptyList,
+        setEmptyList,
+        uploadedFileName,
+        setUploadedFileName,
+        handleFormValueChange,
+
+        uploadButtonName: 'Upload File',
+        messageText: (
+            <>
+                Click or drop your file here to upload the signed and <br />
+                scanned customer form
+            </>
+        ),
+        validationText: <>File type should be png, jpg or pdf and max file size to be 5Mb</>,
+        supportedFileTypes: ['image/png', 'image/jpg', 'image/jpeg', 'application/pdf'],
+        maxSize: 5,
+        single: true,
     };
 
     return (
@@ -133,17 +108,16 @@ const AddEditFormMain = (props) => {
                         <Collapse defaultActiveKey={['1']} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
                             <Panel header="Company Information" key="1">
                                 <Divider />
-
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="PAN" initialValue={formData?.panNumber} name="panNumber" rules={[validatePanField('panNumber'), validateRequiredInputField('panNumber')]}>
-                                            <Input maxLength={50} placeholder={preparePlaceholderText('PAN')} />
+                                        <Form.Item label="PAN" initialValue={formData?.panNumber} name="panNumber" rules={[validatePanField('pan'), validateRequiredInputField('pan')]}>
+                                            <Input maxLength={50} onInput={convertToUpperCase} placeholder={preparePlaceholderText('PAN')} />
                                         </Form.Item>
                                     </Col>
 
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="GSTIN" initialValue={formData?.gstinNumber} name="gstin" rules={[validateGSTIN('gstin'), validateRequiredInputField('panNumber')]}>
-                                            <Input maxLength={50} placeholder={preparePlaceholderText('GSTIN')} />
+                                        <Form.Item label="GSTIN" initialValue={formData?.gstinNumber} name="gstin" rules={[validateGSTIN('gstin'), validateRequiredInputField('gstin')]}>
+                                            <Input maxLength={50} onInput={convertToUpperCase} placeholder={preparePlaceholderText('GSTIN')} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
@@ -323,7 +297,7 @@ const AddEditFormMain = (props) => {
                                     <Form.Item initialValue={formData?.customerConsent} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="customerConsent">
                                         <Checkbox>I Consent to share my details with Mahindra & Mahindra. </Checkbox>
                                     </Form.Item>
-                                    <UploadUtils {...props} uploadImgTitle={'Profile Picture'} setUploadImgDocId={setUploadedFile} uploadImgDocId={formData?.image} {...ImageProps} />
+                                    <UploadUtil key={2} {...consentFormProps} />
                                 </Space>
                                 {formData?.customerFormDocId && (
                                     <>

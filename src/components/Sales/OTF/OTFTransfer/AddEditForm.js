@@ -8,6 +8,7 @@ import { Row, Col, Form, Select, Card, Descriptions } from 'antd';
 
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { validateRequiredSelectField } from 'utils/validation';
+import { customSelectBox } from 'utils/customSelectBox';
 
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
@@ -47,43 +48,48 @@ const AddEditFormMain = (props) => {
 
     return (
         <>
-            <Card className={styles.ExchangeCard}>
-                <Descriptions {...viewProps}>
-                    <Descriptions.Item label="OTF No.">{checkAndSetDefaultValue(selectedOrder?.otfNumber, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="OTF Date">{checkAndSetDefaultValue(convertDateTime(selectedOrder?.otfDate, 'DD MMM YYYY'), isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Customer Name">{checkAndSetDefaultValue(selectedOrder?.customerName, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Mobile No.">{checkAndSetDefaultValue(selectedOrder?.mobileNumber, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Model">{checkAndSetDefaultValue(selectedOrder?.model, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Order Status">{getStatus(selectedOrder?.orderStatus)}</Descriptions.Item>
-                </Descriptions>
-            </Card>
             <Form form={otfTransferForm} onFinish={onFinishOTFTansfer} layout="vertical" autocomplete="off" colon="false">
-                <Row gutter={20}>
-                    <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item name="otfTransferLocation" label="Transfer To Location" initialValue={formData?.otfTransferLocation} rules={[validateRequiredSelectField('Transfer To Location')]}>
-                            <Select placeholder="Select" showSearch allowClear onChange={ handleOtfTransferLocationChange }>
-                                {dealerLocations?.map((item) => (
-                                    <Option value={item.locationId}>{item.dealerLocationName}</Option>
-                                ))}
-                            </Select>
-                        </Form.Item>
-                    </Col>
-
-                    <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item name="salesConsultant" label="Sales Consultant" initialValue={formData?.salesConsultant} rules={[validateRequiredSelectField('Sales Consultant')]}>
-                            <Select placeholder="Select" showSearch allowClear>
-                                {salesConsultantLov?.map((item) => (
-                                    <Option value={item.key}>{item.value}</Option>
-                                ))}
-                            </Select>
-                        </Form.Item>
-                    </Col>
-                </Row>
-                <Row>
+                <Row gutter={20} className={styles.drawerBody}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Form.Item name="transferReason" label="Reason For Transfer" initialValue={formData?.transferReason} rules={[validateRequiredSelectField('Reason For Transfer')]}>
-                            <Select {...selectProps} fieldNames={{ label: 'value', value: 'key' }} options={typeData} placeholder={preparePlaceholderSelect('Reason For Cancellation')} />
-                        </Form.Item>
+                        <Card className={styles.ExchangeCard}>
+                            <Descriptions {...viewProps}>
+                                <Descriptions.Item label="OTF No.">{checkAndSetDefaultValue(selectedOrder?.otfNumber, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="OTF Date">{checkAndSetDefaultValue(convertDateTime(selectedOrder?.otfDate, 'DD MMM YYYY'), isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Customer Name">{checkAndSetDefaultValue(selectedOrder?.customerName, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Mobile No.">{checkAndSetDefaultValue(selectedOrder?.mobileNumber, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Model">{checkAndSetDefaultValue(selectedOrder?.model, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Order Status">{getStatus(selectedOrder?.orderStatus)}</Descriptions.Item>
+                            </Descriptions>
+                        </Card>
+                        <Row gutter={20}>
+                            <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
+                                <Form.Item name="otfTransferLocation" label="Transfer To Location" initialValue={formData?.otfTransferLocation} rules={[validateRequiredSelectField('Transfer To Location')]}>
+                                    <Select placeholder="Select" showSearch allowClear onChange={handleOtfTransferLocationChange}>
+                                        {dealerLocations?.map((item) => (
+                                            <Option value={item.locationId}>{item.dealerLocationName}</Option>
+                                        ))}
+                                    </Select>
+                                </Form.Item>
+                            </Col>
+
+                            <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
+                                <Form.Item name="salesConsultant" label="Sales Consultant" initialValue={formData?.salesConsultant} rules={[validateRequiredSelectField('Sales Consultant')]}>
+                                    <Select placeholder="Select" showSearch allowClear>
+                                        {salesConsultantLov?.map((item) => (
+                                            <Option value={item.key}>{item.value}</Option>
+                                        ))}
+                                    </Select>
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                <Form.Item name="transferReason" label="Reason For Transfer" initialValue={formData?.transferReason} rules={[validateRequiredSelectField('Reason For Transfer')]}>
+                                    {/* <Select {...selectProps} fieldNames={{ label: 'value', value: 'key' }} options={typeData} placeholder={preparePlaceholderSelect('Reason For Cancellation')} /> */}
+                                    {customSelectBox({ data: typeData, placeholder: preparePlaceholderSelect('Reason For Cancellation') })}
+                                </Form.Item>
+                            </Col>
+                        </Row>
                     </Col>
                 </Row>
                 <DrawerFormButton {...buttonProps} />

@@ -6,6 +6,7 @@
 import { Button, Row, Col, Form, Input } from 'antd';
 import { searchValidator } from 'utils/validation';
 import { RxCross2 } from 'react-icons/rx';
+import { FaHistory } from 'react-icons/fa';
 import { FilterIcon } from 'Icons';
 import styles from 'components/common/Common.module.css';
 
@@ -26,7 +27,7 @@ export default function AppliedAdvanceFilter(props) {
         <>
             <div className={styles.contentHeaderBackground}>
                 <Row gutter={20}>
-                    <Col xs={24} sm={24} md={16} lg={16} xl={16} className={styles.subheading}>
+                    <Col xs={24} sm={24} md={16} lg={16} xl={16}>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={16} lg={16} xl={16}>
                                 <Form onKeyPress={onKeyPressHandler} autoComplete="off" colon={false} form={from} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
@@ -64,7 +65,7 @@ export default function AppliedAdvanceFilter(props) {
                         <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
                             {showChangeHistoryButton && (
                                 <>
-                                    <Button data-testid="changeHistoryBtn" onClick={showChangeHistoryList} className={styles.actionbtn} type="primary">
+                                    <Button icon={<FaHistory />} onClick={showChangeHistoryList} type="primary">
                                         Change History
                                     </Button>
                                 </>
@@ -75,8 +76,8 @@ export default function AppliedAdvanceFilter(props) {
                                     Download
                                 </Button>
                             )}
-                            <Button data-testid="refreshBtn" icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
-                            <Button data-testid="addActionBtn" icon={<PlusOutlined />} className={styles.actionbtn} type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
+                            <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
+                            <Button icon={<PlusOutlined />} type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
                                 Add
                             </Button>
                         </Col>

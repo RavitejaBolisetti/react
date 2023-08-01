@@ -7,12 +7,16 @@
     font-size: 12px;
 }
 
-p {
+/* p {
     margin-bottom: 0px !important;
     margin-top: 0px !important;
     color: #342c2c;
     padding-left: 28px !important;
     text-align: left;
+} */
+
+.floatLeft {
+    float: left;
 }
 
 .floatRight {
@@ -440,10 +444,6 @@ p {
 
 .registered :global .ant-checkbox-checked:after {
     border-width: 1px;
-}
-
-:global .ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled):hover .ant-checkbox-checked:not(.ant-checkbox-disabled) .ant-checkbox-inner {
-    background-color: transparent;
 }
 
 .loginSection .loginWrap .loginHtml .loginForm .input-group .input-group-prepend .input-group-text {

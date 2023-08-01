@@ -133,7 +133,7 @@ const AddEditFormMain = (props) => {
     return (
         <>
             {!isViewModeVisible ? (
-                <Card className="">
+                <Card>
                     <Row type="flex" align="middle">
                         <Typography>Family Details</Typography>
                         {!VIEW_ACTION && (
@@ -142,7 +142,7 @@ const AddEditFormMain = (props) => {
                             </Button>
                         )}
                     </Row>
-                    <Divider />
+                    <Divider className={styles.marT20} />
                     {showForm && !editedMode && <FormContainer {...formProps} />}
                     {familyDetailList?.length > 0 ? (
                         familyDetailList?.map((item, index) => (

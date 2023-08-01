@@ -15,7 +15,7 @@ import { AddEditForm } from './AddEditForm';
 import { rolemanagementDataActions } from 'store/actions/data/roleManagement';
 import styles from 'components/common/Common.module.css';
 import { escapeRegExp } from 'utils/escapeRegExp';
-import { tblPrepareColumns } from 'utils/tableCloumn';
+import { tblPrepareColumns } from 'utils/tableColumn';
 import { DataTable } from 'utils/dataTable';
 
 const { Search } = Input;
@@ -371,7 +371,7 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
                                 <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleRefresh} danger aria-label="fa-ref" />
 
-                                    <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" onClick={handleAdd}>
+                                    <Button icon={<PlusOutlined />} type="primary" onClick={handleAdd}>
                                         Add New Role
                                     </Button>
                                 </Col>
@@ -405,7 +405,7 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
                                 {!RoleManagementData?.length ? (
                                     <Row>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                            <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" onClick={handleAdd}>
+                                            <Button icon={<PlusOutlined />} type="primary" onClick={handleAdd}>
                                                 Add Role
                                             </Button>
                                         </Col>

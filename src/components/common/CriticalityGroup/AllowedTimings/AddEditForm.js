@@ -1,14 +1,13 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
 import { Input, Form, Col, Row, Button, TimePicker, Space } from 'antd';
-
 import { validateRequiredInputField } from 'utils/validation';
 
-import style from '../../Common.module.css';
+import styles from 'components/common/Common.module.css';
 
 const AddEditForm = (props) => {
     const { allowedTimingSave, isAddTimeVisible, form, onFinish, handleFormValueChange, handleFormFieldChange } = props;
@@ -17,7 +16,7 @@ const AddEditForm = (props) => {
         <>
             {isAddTimeVisible && (
                 <Form form={form} onFinish={onFinish} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange}>
-                    <div className={style.allowedTiming}>
+                    <div className={styles.allowedTiming}>
                         <Space size="middle">
                             <Row gutter={20}>
                                 <Col xs={10} sm={10} md={10} lg={10} xl={10} xxl={10}>
@@ -30,7 +29,7 @@ const AddEditForm = (props) => {
                                         <TimePicker placeholder={'End time*'} use12Hours size="large" format="h:mm A" />
                                     </Form.Item>
                                 </Col>
-                                <Col xs={4} sm={4} md={4} lg={4} xl={4} xxl={4}>
+                                <Col xs={4} sm={4} md={4} lg={4} xl={4} xxl={4} className={styles.verticallyCentered}>
                                     <Button disabled={allowedTimingSave} type="link" htmlType="submit">
                                         Save
                                     </Button>

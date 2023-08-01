@@ -213,4 +213,4 @@ const VehicleDetailsMasterBase = (props) => {
     );
 };
 
-export const VehicleDetailsMaster = connect(mapStateToProps, mapDispatchToProps)(VehicleDetailsMasterBase);
+export const VehicleDetailsMaster = connect(null, null)(VehicleDetailsMasterBase);

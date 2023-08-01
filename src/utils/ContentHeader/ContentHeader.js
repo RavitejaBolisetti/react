@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -16,9 +16,9 @@ const ContentHeader = ({ isAdvanceFilter = false, isTogglePresent = false, isDef
         return <AppliedAdvanceFilter {...advanceFilterResultProps} />;
     } else if (isTogglePresent) {
         return (
-            <div className={styles.contentHeaderBackground} >
+            <div className={styles.contentHeaderBackground}>
                 <Row gutter={20}>
-                    <Col xs={16} sm={16} md={16} lg={16} xl={16} className={styles.searchAndLabelAlign}>
+                    <Col xs={16} sm={16} md={16} lg={16} xl={16} className={styles.verticallyCentered}>
                         <div className={`${styles.userManagement} ${styles.headingToggle}`}>
                             <Button className={styles.marR5} type={menuType === 'W' ? 'primary' : 'link'} onClick={() => handleTypeClick('W')}>
                                 {toggleFirst}

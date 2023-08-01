@@ -62,7 +62,7 @@ const mapDispatchToProps = (dispatch) => ({
 const TransferMasterBase = (props) => {
     const { otfData, selectedOrder, fetchSalesConsultant, listConsultantShowLoading, fetchDealerLocations, dealerLocations, locationDataLoding } = props;
     const { userId, salesConsultantLov, reset } = props;
-    const { moduleTitle } = props;
+    const { moduleTitle, otfTransferForm } = props;
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: true, transferOTFBtn: true };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -85,7 +85,7 @@ const TransferMasterBase = (props) => {
         const extraParams = [
             {
                 key: 'locationCode',
-                value: value,
+                value: value ? value : 'No Data',
             },
         ];
         fetchSalesConsultant({ setIsLoading: listConsultantShowLoading, extraParams, userId, onErrorAction });

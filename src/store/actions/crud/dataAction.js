@@ -187,6 +187,7 @@ export const dataActions = (params) => {
 
             const onSuccessAction = (res) => {
                 onSuccess(res);
+                // RECEIVE_DATA_ACTION_CONSTANT && dispatch(innerDataActions.fetchList({ setIsLoading: () => {}, userId, extraParams }));
                 RECEIVE_FILTERED_DATA_ACTION_CONSTANT && dispatch(innerDataActions.fetchFilteredList({ setIsLoading: () => {}, userId }));
             };
 

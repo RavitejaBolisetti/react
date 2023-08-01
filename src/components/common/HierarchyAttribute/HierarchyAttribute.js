@@ -299,46 +299,42 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, resetData, isDataL
         form,
     };
 
+    const titleHierarchy = 'Hierarchy Attribute Type';
+
     return (
         <>
-            <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <div className={styles.contentHeaderBackground}>
-                        <Row gutter={20}>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+            <div className={styles.contentHeaderBackground}>
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={16} lg={16} xl={16}>
+                        <Form autoComplete="off" colon={false} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                            <Form.Item label={`${titleHierarchy}`} name="code">
                                 <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={18} lg={18} xl={18} className={styles.subheading}>
-                                        <Row gutter={20}>
-                                            <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.lineHeight33}>
-                                                Hierarchy Attribute Type
-                                            </Col>
-                                            <Col xs={24} sm={24} md={9} lg={9} xl={9}>
-                                                <Select className={styles.headerSelectField} showSearch onChange={handleChange} loading={!isDataAttributeLoaded} placeholder="Select" allowClear>
-                                                    {attributeData?.map((item) => (
-                                                        <Option value={item}>{item}</Option>
-                                                    ))}
-                                                </Select>
-                                            </Col>
-                                            <Col xs={24} sm={24} md={9} lg={9} xl={9}>
-                                                {detailData?.hierarchyAttribute?.length > 0 && <Search placeholder="Search" className={styles.headerSearchField} allowClear onChange={onChangeHandle} onSearch={onSearchHandle} />}
-                                            </Col>
-                                        </Row>
+                                    <Col xs={24} sm={24} md={10} lg={10} xl={10}>
+                                        <Select showSearch onChange={handleChange} loading={!isDataAttributeLoaded} placeholder="Select" allowClear>
+                                            {attributeData?.map((item) => (
+                                                <Option value={item}>{item}</Option>
+                                            ))}
+                                        </Select>
                                     </Col>
-
                                     {detailData?.hierarchyAttribute?.length > 0 && (
-                                        <Col className={styles.addGroup} xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                                            <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
-                                            <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" onClick={handleAdd}>
-                                                Add
-                                            </Button>
+                                        <Col xs={24} sm={24} md={10} lg={10} xl={10}>
+                                            <Search placeholder="Search" className={styles.headerSearchField} allowClear onChange={onChangeHandle} onSearch={onSearchHandle} />
                                         </Col>
                                     )}
                                 </Row>
-                            </Col>
-                        </Row>
-                    </div>
-                </Col>
-            </Row>
+                            </Form.Item>
+                        </Form>
+                    </Col>
+                    {detailData?.hierarchyAttribute?.length > 0 && (
+                        <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8} xxl={8}>
+                            <Button icon={<TfiReload />} onClick={handleReferesh} danger />
+                            <Button icon={<PlusOutlined />} type="primary" onClick={handleAdd}>
+                                Add
+                            </Button>
+                        </Col>
+                    )}
+                </Row>
+            </div>
 
             <div className={styles.tableProduct}>
                 <ListDataTable isLoading={showDataLoading} {...tableProps} handleAdd={handleAdd} addTitle={title} />

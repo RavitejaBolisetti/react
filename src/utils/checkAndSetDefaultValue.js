@@ -8,10 +8,16 @@ import { InputSkeleton } from 'components/common/Skeleton';
 import { convertDate } from 'utils/formatDateTime';
 import { DATA_TYPE } from 'constants/dataType';
 import { OTF_STATUS } from 'constants/OTFStatus';
+import { addToolTip } from 'utils/customMenuLink';
 
-export const checkAndSetDefaultValue = (value, isLoading, type) => {
+export const checkAndSetDefaultValue = (value, isLoading, type, makeToolTip = false, text) => {
     if (isLoading) return <InputSkeleton width={'100px'} height={20} theme={'card'} />;
-
+    if (makeToolTip && text)
+        return (
+            <a href={text} target="_blank" rel="noreferrer">
+                {addToolTip(text)(text)}
+            </a>
+        );
     switch (type) {
         case DATA_TYPE?.BOOL?.key:
             return value ? 'Yes' : 'No';
@@ -37,25 +43,25 @@ export const getStatus = (status) => {
             tag = OTF_STATUS.ALLOTED.desc;
             break;
         case OTF_STATUS.CANCELLED.key:
-            tag = OTF_STATUS.CANCELLED.desc
+            tag = OTF_STATUS.CANCELLED.desc;
             break;
         case OTF_STATUS.INVOICED.key:
-            tag = OTF_STATUS.INVOICED.desc
+            tag = OTF_STATUS.INVOICED.desc;
             break;
         case OTF_STATUS.DELIVERED.key:
-            tag = OTF_STATUS.DELIVERED.desc
+            tag = OTF_STATUS.DELIVERED.desc;
             break;
         case OTF_STATUS.TRANSFERRED.key:
-            tag = OTF_STATUS.TRANSFERRED.desc
+            tag = OTF_STATUS.TRANSFERRED.desc;
             break;
         case OTF_STATUS.PENDING_FOR_CANCELLATION.key:
-            tag = OTF_STATUS.PENDING_FOR_CANCELLATION.desc
+            tag = OTF_STATUS.PENDING_FOR_CANCELLATION.desc;
             break;
         case OTF_STATUS.CANCELLATION_REQUESTED.key:
-            tag = OTF_STATUS.CANCELLATION_REQUESTED.desc
+            tag = OTF_STATUS.CANCELLATION_REQUESTED.desc;
             break;
         case OTF_STATUS.REJECTED.key:
-            tag = OTF_STATUS.REJECTED.desc
+            tag = OTF_STATUS.REJECTED.desc;
             break;
         default:
     }

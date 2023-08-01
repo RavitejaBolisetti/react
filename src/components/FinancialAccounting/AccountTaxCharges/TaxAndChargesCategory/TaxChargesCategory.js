@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect, useMemo, useReducer } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { Col, Form, Row } from 'antd';
 import { bindActionCreators } from 'redux';
@@ -19,7 +19,6 @@ import { BASE_URL_FINANCIAL_ACC_TAX_CHARGE_CATEGORY_SEARCH as customURL } from '
 import { showGlobalNotification } from 'store/actions/notification';
 
 import { ListDataTable } from 'utils/ListDataTable';
-import { filterFunction } from 'utils/filterFunction';
 import { btnVisiblity } from 'utils/btnVisiblity';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 import { PARAM_MASTER } from 'constants/paramMaster';
@@ -58,7 +57,8 @@ const mapStateToProps = (state) => {
         isTaxChargeCategoryLoaded,
         isTaxCategoryCodeLoaded,
         isTaxChargeCategoryLoading,
-        taxChargeCategoryData,
+        taxChargeCategoryData: taxChargeCategoryData?.taxCategoryHeaderListDto,
+        totalRecords: taxChargeCategoryData?.totalRecords,
         taxChargeCategoryCodeData,
     };
     return returnValue;
@@ -88,18 +88,15 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const TaxChargesCategoryMain = (props) => {
-    const { data, saveData, userId, isDataLoaded, showGlobalNotification, taxChargeCategoryCodeData, isStateDataLoaded, fetchStateList, listStateShowLoading, stateData, saleData, isTaxChargeCategoryTypeLoaded, fetchTaxCodeList, fetchTaxChargeCategoryType, taxChargeCategoryTypeData, listShowLoadingTaxChargeCategoryType, isTaxChargeCategoryLoaded, fetchTaxChargeCategory, listShowLoadingTaxChargeCategory, taxChargeCategoryData } = props;
+    const { saveData, userId, showGlobalNotification, taxChargeCategoryCodeData, isStateDataLoaded, fetchStateList, listStateShowLoading, stateData, saleData, fetchTaxCodeList, fetchTaxChargeCategoryType, taxChargeCategoryTypeData, listShowLoadingTaxChargeCategoryType, fetchTaxChargeCategory, listShowLoadingTaxChargeCategory, totalRecords, taxChargeCategoryData } = props;
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
     const [showDataLoading, setShowDataLoading] = useState(true);
-    const [searchData, setSearchdata] = useState('');
     const [refershData, setRefershData] = useState(false);
-    const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
     const [formData, setFormData] = useState([]);
     const [filterString, setFilterString] = useState();
     const [isFormVisible, setIsFormVisible] = useState(false);
-    const [disabledEdit, setDisabledEdit] = useState(false);
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -107,10 +104,14 @@ export const TaxChargesCategoryMain = (props) => {
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
+    const [page, setPage] = useState({ pageSize: 10, current: 1 });
+    const dynamicPagination = true;
+
     const [editForm] = Form.useForm();
     const [taxChargeCalForm] = Form.useForm();
     const [formEdit, setFormEdit] = useState(false);
     const [taxChargeCalList, setTaxChargeCalList] = useState([]);
+    const [dropdownItems, setDropdownItems] = useState([]);
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
@@ -122,44 +123,51 @@ export const TaxChargesCategoryMain = (props) => {
         setShowDataLoading(false);
     };
 
-    const extraParams = [
-        {
-            key: 'pageNumber',
-            title: 'Page Number',
-            value: 1,
-            name: 1,
-        },
-        {
-            key: 'pageSize',
-            title: 'Page Size',
-            value: 10,
-            name: 10,
-        },
-        {
-            key: 'searchType',
-            title: 'Search Type',
-            value: 'taxCategoryCode',
-            name: 'taxCategoryCode',
-        },
-        // {
-        //     key: 'searchParam',
-        //     title: 'Search Param',
-        //     value: 'GST12',
-        //     name: 'GST12',
-        // },
-        {
-            key: 'sortBy',
-            title: 'Sort By',
-            value: 'taxCategoryCode',
-            name: 'taxCategoryCode',
-        },
-        {
-            key: 'sortIn',
-            title: 'Sort In',
-            value: 'DESC',
-            name: 'DESC',
-        },
-    ];
+    const extraParams = useMemo(() => {
+        return [
+            {
+                key: 'searchType',
+                title: 'Search Type',
+                value: 'taxCategoryCode',
+                name: 'taxCategoryCode',
+            },
+            {
+                key: 'searchParam',
+                title: 'Search Param',
+                value: filterString?.keyword,
+                name: 'TAX',
+            },
+            {
+                key: 'pageSize',
+                title: 'Value',
+                value: page?.pageSize,
+                canRemove: true,
+                filter: false,
+            },
+            {
+                key: 'pageNumber',
+                title: 'Value',
+                value: page?.current,
+                canRemove: true,
+                filter: false,
+            },
+            {
+                key: 'sortBy',
+                title: 'Sort By',
+                value: page?.sortBy,
+                canRemove: true,
+                filter: false,
+            },
+            {
+                key: 'sortIn',
+                title: 'Sort Type',
+                value: page?.sortType,
+                canRemove: true,
+                filter: false,
+            },
+        ];
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [filterString, page]);
 
     useEffect(() => {
         if (userId && !isStateDataLoaded) {
@@ -169,11 +177,11 @@ export const TaxChargesCategoryMain = (props) => {
     }, [userId, isStateDataLoaded]);
 
     useEffect(() => {
-        if (userId && !isTaxChargeCategoryTypeLoaded) {
+        if (userId) {
             fetchTaxChargeCategoryType({ setIsLoading: listShowLoadingTaxChargeCategoryType, userId, onSuccessAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isTaxChargeCategoryTypeLoaded]);
+    }, [userId]);
 
     const handleCodeFunction = (value) => {
         let obj = {
@@ -185,7 +193,6 @@ export const TaxChargesCategoryMain = (props) => {
             editForm?.setFieldsValue(obj);
         } else {
             taxChargeCalForm?.setFieldsValue(obj);
-            forceUpdate();
         }
 
         const extraParams = [
@@ -196,37 +203,40 @@ export const TaxChargesCategoryMain = (props) => {
                 name: 'taxChargeType',
             },
         ];
+
         fetchTaxCodeList({ setIsLoading: listShowLoadingTaxChargeCategory, userId, extraParams, onSuccessAction });
     };
 
     useEffect(() => {
-        if (userId && !isTaxChargeCategoryLoaded) {
+        if (userId) {
             fetchTaxChargeCategory({ setIsLoading: listShowLoadingTaxChargeCategory, userId, customURL, extraParams, onSuccessAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isTaxChargeCategoryTypeLoaded]);
+    }, [userId, refershData, extraParams]);
 
     useEffect(() => {
-        if (userId && refershData) {
-            fetchTaxChargeCategory({ setIsLoading: listShowLoadingTaxChargeCategory, userId, customURL, extraParams, onSuccessAction });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, refershData]);
-
-    useEffect(() => {
-        if (isDataLoaded && data && userId) {
-            if (filterString) {
-                const keyword = filterString?.keyword;
-                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.name) : true));
-                setSearchdata(filterDataItem);
-                setShowDataLoading(false);
-            } else {
-                setSearchdata(data);
-                setShowDataLoading(false);
+        setDropdownItems(() => []);
+        if (taxChargeCalList && taxChargeCalList?.length > 0) {
+            let len1 = taxChargeCalList?.length;
+            let len2 = taxChargeCategoryCodeData?.length;
+            for (let j = 0; j < len2; j++) {
+                let flag = false;
+                for (let i = 0; i < len1; i++) {
+                    if (taxChargeCalList[i]?.chargeCode === taxChargeCategoryCodeData[j]?.taxCode) {
+                        setDropdownItems((item) => [...item, { ...taxChargeCategoryCodeData[j], disabled: true }]);
+                        flag = true;
+                        break;
+                    }
+                }
+                if (!flag) {
+                    setDropdownItems((item) => [...item, { ...taxChargeCategoryCodeData[j], disabled: false }]);
+                }
             }
+        } else if (taxChargeCategoryCodeData && taxChargeCategoryCodeData?.length) {
+            setDropdownItems(() => [...taxChargeCategoryCodeData]);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, isDataLoaded, data, userId]);
+    }, [taxChargeCategoryCodeData]);
 
     const handleReferesh = () => {
         setShowDataLoading(true);
@@ -236,16 +246,15 @@ export const TaxChargesCategoryMain = (props) => {
     const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
         setFormData([]);
-
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
         setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
-
         record && setFormData(record);
         setIsFormVisible(true);
     };
 
     const onSearchHandle = (value) => {
         if (value?.trim()?.length >= 3) {
+            setPage({ ...page, current: 1 });
             setFilterString({ ...filterString, advanceFilter: false, keyword: value });
         }
     };
@@ -306,11 +315,13 @@ export const TaxChargesCategoryMain = (props) => {
     };
 
     const onCloseAction = () => {
+        setFormEdit(false);
         form.resetFields();
         taxChargeCalForm.resetFields();
         setIsFormVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
         setTaxChargeCalList(() => []);
+        setDropdownItems(() => []);
     };
 
     const drawerTitle = useMemo(() => {
@@ -334,7 +345,6 @@ export const TaxChargesCategoryMain = (props) => {
         isVisible: isFormVisible,
         onCloseAction,
         titleOverride: drawerTitle.concat('Tax & Charges Category'),
-        tableData: searchData,
 
         ADD_ACTION,
         EDIT_ACTION,
@@ -348,21 +358,23 @@ export const TaxChargesCategoryMain = (props) => {
         taxChargeCategoryTypeData,
         taxChargeCategoryCodeData,
         handleCodeFunction,
-        setDisabledEdit,
-        disabledEdit,
-
         editForm,
         taxChargeCalForm,
         formEdit,
         setFormEdit,
         taxChargeCalList,
         setTaxChargeCalList,
+        dropdownItems,
+        setDropdownItems,
     };
 
     const tableProps = {
+        dynamicPagination,
+        totalRecords,
+        setPage,
+        isLoading: showDataLoading,
         tableColumn: tableColumn(handleButtonClick),
-        //tableData: searchData,
-        tableData: taxChargeCategoryData?.taxCategoryHeaderListDto,
+        tableData: taxChargeCategoryData,
     };
 
     const title = 'Tax & Charges Category';
@@ -387,7 +399,7 @@ export const TaxChargesCategoryMain = (props) => {
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable isLoading={showDataLoading} {...tableProps} handleAdd={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })} />
+                    <ListDataTable {...tableProps} handleAdd={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })} />
                 </Col>
             </Row>
             <AddEditForm {...formProps} />

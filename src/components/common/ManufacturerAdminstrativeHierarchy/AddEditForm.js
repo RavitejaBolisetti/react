@@ -13,6 +13,7 @@ import TreeSelectField from '../TreeSelectField';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
+import { HIERARCHY_DEFAULT_PARENT } from 'constants/constants';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -20,30 +21,30 @@ const { TextArea } = Input;
 const AddEditFormMain = (props) => {
     const { onCloseAction, handleAttributeChange, formActionType, fieldNames, isReadOnly = false, formData, isDataAttributeLoaded, attributeData, manufacturerAdminHierarchyData } = props;
     const { selectedTreeKey, selectedTreeSelectKey, setSelectedTreeSelectKey, handleSelectTreeClick, flatternData } = props;
-    const { isFormBtnActive, setFormBtnActive, detailData } = props;
+    const { isFormBtnActive, setFormBtnActive, detailData, authTypeDropdownData } = props;
     const { onFinish, onFinishFailed, EDIT_ACTION } = props;
     const { attributeDataOptions, setattributeDataOptions } = props;
     const disabledProps = { disabled: EDIT_ACTION === formActionType ? true : false };
     const [form] = Form.useForm();
     const treeFieldNames = { ...fieldNames, label: fieldNames?.title, value: fieldNames?.key };
-
     useEffect(() => {
         const arr = [];
+        const newOptions = [];
         if (attributeDataOptions && attributeDataOptions?.length) {
             attributeData?.map((element) => {
-                if (attributeData?.status) arr.push(element?.hierarchyAttribueName);
+                if (!element?.status) arr.push(element?.hierarchyAttribueName);
             });
 
-            setattributeDataOptions(
-                attributeDataOptions?.map((element) => {
-                    if (arr?.includes(element?.hierarchyAttribueName)) {
-                        return { ...element, disabled: true };
-                    } else {
-                        return element;
-                    }
-                })
-            );
+            attributeDataOptions?.map((element) => {
+                if (arr?.includes(element?.hierarchyAttribueName)) {
+                    newOptions.push({ ...element, disabled: true });
+                } else {
+                    newOptions.push({ ...element, disabled: false });
+                }
+            });
+            setattributeDataOptions(newOptions);
         }
+        console.log('newOptions', newOptions);
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [attributeData]);
@@ -58,7 +59,8 @@ const AddEditFormMain = (props) => {
     } else if (formActionType === FROM_ACTION_TYPE.SIBLING) {
         treeCodeReadOnly = true;
         const treeCodeData = flatternData.find((i) => i.key === selectedTreeKey[0]);
-        treeCodeId = treeCodeData && treeCodeData?.data?.manufactureAdminParntId;
+        treeCodeId = treeCodeData?.data?.manufactureAdminParntId;
+        if (treeCodeId === 'null') treeCodeId = 'DMS';
     }
 
     useEffect(() => {
@@ -86,7 +88,7 @@ const AddEditFormMain = (props) => {
 
     return (
         <>
-            <Space direction="vertical" size="small" className={styles.accordianContainer}>
+            <Space direction="vertical" size="small" className={`${styles.accordianContainer} ${styles.drawerBodyNew}`}>
                 <Form autoComplete="off" form={form} id="myForm" layout="vertical" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -135,7 +137,7 @@ const AddEditFormMain = (props) => {
                         </Col>
                     </Row>
 
-                    <Row gutter={20} className={styles.formFooter}>
+                    <Row gutter={20} className={styles.formFooterNew}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
                             <Button danger onClick={onCloseAction}>
                                 Cancel

@@ -8,7 +8,7 @@ import { VEHICLE_RECEIPT_STATUS } from 'constants/VehicleReceiptStatus';
 
 export const validateVehicleReceiptMenu = ({ item, status, otfData }) => {
     if (item?.id === VEHICLE_RECEIPT_SECTION.SUPPLIER_INVOICE_DETAILS.id) {
-        return status === VEHICLE_RECEIPT_STATUS?.INVOICED.key || status === VEHICLE_RECEIPT_STATUS?.DELIVERED.key;
+        return status === VEHICLE_RECEIPT_STATUS?.RECEIVED.key || status === VEHICLE_RECEIPT_STATUS?.PARTIALLY_RECEIVED.key;
     }
     switch (item?.id) {
         case VEHICLE_RECEIPT_SECTION.SUPPLIER_INVOICE_DETAILS.id:

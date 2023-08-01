@@ -78,7 +78,7 @@ export const AdvanceFilterStateForm = (props) => {
                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item initialValue={defaultCountry} label="Country" name="countryCode" rules={[validateRequiredSelectField('Country')]}>
                         {defaultCountry && (
-                            <Select defaultValue={defaultCountry} className={styles.headerSelectField} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear>
+                            <Select defaultValue={defaultCountry} showSearch loading={!isDataCountryLoaded} placeholder="Select" allowClear>
                                 {countryData?.map((item) => (
                                     <Option value={item?.countryCode}>{item?.countryName}</Option>
                                 ))}

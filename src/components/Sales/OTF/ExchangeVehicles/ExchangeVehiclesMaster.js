@@ -163,7 +163,6 @@ const ExchangeVehiclesBase = (props) => {
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
-
     const onSuccessAction = (res) => {
         // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
@@ -315,7 +314,7 @@ const ExchangeVehiclesBase = (props) => {
             extraParams: defaultExtraParam,
             userId,
             onSuccessAction: (res) => {
-                res?.data && res?.data?.customerMasterDetails && res?.data?.customerMasterDetails[0] && setFormData(res?.data?.customerMasterDetails[0] ?? []);
+                res?.data && res?.data?.customerMasterDetails && res?.data?.customerMasterDetails[0] && setFormData({ ...res?.data?.customerMasterDetails[0], id: formData?.id ?? '' } ?? []);
                 !res?.data?.customerMasterDetails && showGlobalNotification({ message: res?.responseMessage });
             },
             onErrorAction,

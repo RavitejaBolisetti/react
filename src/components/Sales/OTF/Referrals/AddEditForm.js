@@ -28,12 +28,8 @@ const AddEditFormMain = (props) => {
     }, [formData]);
 
     return (
-        <Card style={{ backgroundColor: '#F2F2F2' }}>
-            <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.referralSearch}>
-                    <CustomerListMaster fnSetData={fnSetData} />
-                </Col>
-            </Row>
+        <Card>
+            <CustomerListMaster fnSetData={fnSetData} />
             <Row gutter={20} className={styles.marT20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.uniqueSearchInput}>
                     <Form.Item name="registrationNumber" label="Vehicle Registration Number" initialValue={formData?.registrationNumber}>

@@ -7,11 +7,11 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { Col, Row, Button, Alert, ConfigProvider, Empty, Form } from 'antd';
+import { Col, Row, Button, Alert, Form } from 'antd';
 
 import { searchValidator } from 'utils/validation';
 import { PlusOutlined } from '@ant-design/icons';
-import { BsDownload } from 'react-icons/bs';
+// import { BsDownload } from 'react-icons/bs';
 
 import { injectParams } from 'utils/inject';
 import { filteredData } from 'utils/listFilter';
@@ -20,7 +20,6 @@ import { sortObjectOfArray } from 'utils/sortObjectOfArray';
 import { PAGINATION } from 'constants/constants';
 
 import CurdSearchBox from './curdSearchBox';
-import { DataTable } from 'utils/dataTable';
 import { ListDataTable } from 'utils/ListDataTable';
 
 import styles from './crudListing.module.css';
@@ -128,29 +127,29 @@ export const crudListingBase = ({
             fetchlist(fetchListProps);
         };
 
-        const onClickExportToExcel = () => {
-            const { exportToExcel, listShowLoading: setIsLoading, applyFilterList, filterString } = props;
-            const keyword = (applyFilterList ? applyFilterList : '') + (filterString ? 'keyword=' + filterString + '&' : '');
+        // const onClickExportToExcel = () => {
+        //     const { exportToExcel, listShowLoading: setIsLoading, applyFilterList, filterString } = props;
+        //     const keyword = (applyFilterList ? applyFilterList : '') + (filterString ? 'keyword=' + filterString + '&' : '');
 
-            exportToExcel({
-                setIsLoading,
-                errorAction: () => {},
-                applyFilterList: keyword,
-            });
-        };
+        //     exportToExcel({
+        //         setIsLoading,
+        //         errorAction: () => {},
+        //         applyFilterList: keyword,
+        //     });
+        // };
 
         // const handleOnChange = (e) => {
         //     const { listSetFilterString } = props;
         //     listSetFilterString(e.target.value);
         // };
 
-        const handleSearch = (value) => {
-            listSetFilterString(filterString);
-            if (value?.trim()?.length >= 3) {
-                listSetFilterString({ ...filterString, advanceFilter: true, keyword: value });
-                listFilterForm.setFieldsValue({ keyword: undefined });
-            }
-        };
+        // const handleSearch = (value) => {
+        //     listSetFilterString(filterString);
+        //     if (value?.trim()?.length >= 3) {
+        //         listSetFilterString({ ...filterString, advanceFilter: true, keyword: value });
+        //         listFilterForm.setFieldsValue({ keyword: undefined });
+        //     }
+        // };
 
         const removeFilter = (key) => {
             const { [key]: names, ...rest } = filterString;
@@ -182,19 +181,19 @@ export const crudListingBase = ({
         //     }
         // };
 
-        const handleDynamicSearch = (e) => {
-            const { filterString: keyword } = props;
-            const customProps = { ...fetchListProps, keyword, postSucessCallback: () => successAction && successAction(props) };
-            data && fetchlist(customProps);
-        };
+        // const handleDynamicSearch = (e) => {
+        //     const { filterString: keyword } = props;
+        //     const customProps = { ...fetchListProps, keyword, postSucessCallback: () => successAction && successAction(props) };
+        //     data && fetchlist(customProps);
+        // };
 
         const columns = injectParams(props)(tableColumnList(props));
 
-        const downloadBtn = exportData && (
-            <span onClick={onClickExportToExcel} className={styles.exportData}>
-                <BsDownload className={styles.excelIcon} title="Export to Excel" />
-            </span>
-        );
+        // const downloadBtn = exportData && (
+        //     <span onClick={onClickExportToExcel} className={styles.exportData}>
+        //         <BsDownload className={styles.excelIcon} title="Export to Excel" />
+        //     </span>
+        // );
 
         const sortFn = (pagination, filters, sorter, extra) => {
             const { filterString: keyword, data } = props;
@@ -211,12 +210,12 @@ export const crudListingBase = ({
             (canAddMaster || canEditMaster ? (
                 addButtonRoute ? (
                     <Link to={addButtonRoute}>
-                        <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger>
+                        <Button icon={<PlusOutlined />} type="primary" danger>
                             {addButtonTitle ? addButtonTitle : 'Add '}
                         </Button>
                     </Link>
                 ) : (
-                    <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd(props.onAddAction)}>
+                    <Button icon={<PlusOutlined />} type="primary" danger onClick={handleAdd(props.onAddAction)}>
                         {addButtonTitle ? addButtonTitle : 'Add '}
                     </Button>
                 )

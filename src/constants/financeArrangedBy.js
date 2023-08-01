@@ -6,7 +6,7 @@
 export const FINANCE_ARRANGED_BY = {
     DEALER: {
         id: 1,
-        key: 'DLR',
+        key: 'DEL',
         title: 'Dealer',
     },
     DSA: {

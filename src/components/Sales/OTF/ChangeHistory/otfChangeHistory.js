@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { convertDateTime } from 'utils/formatDateTime';
 
-import { tblPrepareColumns } from 'utils/tableCloumn';
+import { tblPrepareColumns } from 'utils/tableColumn';
 import { otfDataActions } from 'store/actions/data/otf/otf';
 
 import ChangeHistoryStyles from './ChangeHistory.module.css';
@@ -114,13 +114,15 @@ const ChangeHistoryMain = ({ fetchOTFChangeHistory, onCloseAction, listShowChang
                     <DataTable {...tableProps} />
                 </div>
             </div>
-            <Row gutter={20} className={ChangeHistoryStyles.formFooter}>
-                <Col xs={24} sm={8} md={6} lg={4} xl={4}>
-                    <Button danger onClick={onCloseAction}>
-                        Close
-                    </Button>
-                </Col>
-            </Row>
+            <div className={ChangeHistoryStyles.formFooter}>
+                <Row gutter={20}>
+                    <Col xs={24} sm={8} md={6} lg={4} xl={4}>
+                        <Button danger onClick={onCloseAction}>
+                            Close
+                        </Button>
+                    </Col>
+                </Row>
+            </div>
         </div>
     );
 };

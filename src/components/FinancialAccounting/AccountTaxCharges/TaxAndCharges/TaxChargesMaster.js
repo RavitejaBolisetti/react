@@ -382,7 +382,7 @@ export const TaxChargesMain = ({
                             <Form.Item label={title} name="code" validateTrigger={['onSearch']}>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                        <Search placeholder="Search" allowClear onChange={onChange} className={styles.headerSearchField} />
+                                        <Search placeholder="Search" allowClear onChange={onChange} />
                                     </Col>
                                 </Row>
                             </Form.Item>
@@ -391,40 +391,38 @@ export const TaxChargesMain = ({
                 </Row>
             </div>
             <Row gutter={20} span={24}>
-                <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol} className={styles.marT20}>
-                    <div className={styles.content}>
-                        {taxChargeData?.length <= 0 ? (
-                            <div className={styles.emptyContainer}>
-                                <Empty
-                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                    imageStyle={{
-                                        height: 60,
-                                    }}
-                                    description={
-                                        <span>
-                                            {noDataTitle} <br /> {noDataMessage}
-                                        </span>
-                                    }
-                                >
-                                    <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
-                                        Add
-                                    </Button>
-                                </Empty>
-                            </div>
-                        ) : (
-                            <LeftPanel {...myProps} />
-                        )}
-                    </div>
+                <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol}>
+                    {taxChargeData?.length <= 0 ? (
+                        <div className={styles.emptyContainer}>
+                            <Empty
+                                image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                imageStyle={{
+                                    height: 60,
+                                }}
+                                description={
+                                    <span>
+                                        {noDataTitle} <br /> {noDataMessage}
+                                    </span>
+                                }
+                            >
+                                <Button icon={<PlusOutlined />} type="primary" danger onClick={handleAdd}>
+                                    Add
+                                </Button>
+                            </Empty>
+                        </div>
+                    ) : (
+                        <LeftPanel {...myProps} />
+                    )}
                 </Col>
 
-                <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol} className={styles.pad0}>
+                <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol}>
                     {selectedTreeData && selectedTreeData?.taxChargesTypeCode ? (
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <>
                             <ViewTaxCharges {...viewProps} />
-                            <div className={styles.hyrbuttonContainer}>
+                            <div className={styles.viewContainerFooter}>
                                 <HierarchyFormButton {...viewProps} />
                             </div>
-                        </Col>
+                        </>
                     ) : (
                         <div className={styles.emptyContainer}>
                             <Empty

@@ -3,12 +3,12 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { tblPrepareColumns, tblActionColumn } from 'utils/tableCloumn';
+import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import { Button, Space } from 'antd';
 import { FiEye } from 'react-icons/fi';
 import styles from 'components/common/Common.module.css';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
-import { convertDate } from 'utils/formatDateTime';
+import { convertDateMonthYear } from 'utils/formatDateTime';
 
 export const tableColumn = (handleButtonClick, handleManufacturerButtonClick, page, pageSize) => {
     const tableColumn = [];
@@ -36,13 +36,13 @@ export const tableColumn = (handleButtonClick, handleManufacturerButtonClick, pa
             title: 'Effective From',
             dataIndex: 'effectiveFrom',
             width: '14%',
-            render: (text) => convertDate(text),
+            render: (text) => convertDateMonthYear(text),
         }),
         tblPrepareColumns({
             title: 'Effective To',
             dataIndex: 'effectiveTo',
             width: '14%',
-            render: (text) => convertDate(text),
+            render: (text) => convertDateMonthYear(text),
         }),
         // tblPrepareColumns({
         //     title: 'Description',

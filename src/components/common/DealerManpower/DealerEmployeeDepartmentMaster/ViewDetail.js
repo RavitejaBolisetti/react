@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -14,15 +14,13 @@ const ViewDetailBase = ({ formData, styles, parameterType }) => {
         column: { xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 },
     };
     return (
-        <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
-            <>
-                <Descriptions {...viewProps}>
-                    <Descriptions.Item label="Division Name">{formData?.divisionName}</Descriptions.Item>
-                    <Descriptions.Item label="Department Code">{formData?.departmentCode}</Descriptions.Item>
-                    <Descriptions.Item label="Department Name">{formData?.departmentName}</Descriptions.Item>
-                    <Descriptions.Item label="Status">{formData?.status ? 'Active' : 'Inactive'}</Descriptions.Item>
-                </Descriptions>
-            </>
+        <div className={styles.viewContainer}>
+            <Descriptions {...viewProps}>
+                <Descriptions.Item label="Division Name">{formData?.divisionName}</Descriptions.Item>
+                <Descriptions.Item label="Department Code">{formData?.departmentCode}</Descriptions.Item>
+                <Descriptions.Item label="Department Name">{formData?.departmentName}</Descriptions.Item>
+                <Descriptions.Item label="Status">{formData?.status ? 'Active' : 'Inactive'}</Descriptions.Item>
+            </Descriptions>
         </div>
     );
 };
