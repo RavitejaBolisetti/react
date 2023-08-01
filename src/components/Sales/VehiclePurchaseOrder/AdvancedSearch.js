@@ -16,7 +16,7 @@ import { disableFutureDate } from 'utils/disableDate';
 import styles from 'components/common/Common.module.css';
 
 export const AdvancedSearchFrom = (props) => {
-    const { setAdvanceSearchVisible, otfStatusList } = props;
+    const { setAdvanceSearchVisible, otfStatusList,typeData } = props;
     const {
         filterString,
         setFilterString,
@@ -52,33 +52,36 @@ export const AdvancedSearchFrom = (props) => {
         allowClear: true,
         className: styles.headerSelectField,
     };
+    console.log('typeData searchpg=>',typeData);
+
     return (
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
             <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item initialValue={filterString?.otfStatus} label="Order Type" name="otfStatus" rules={[validateRequiredSelectField('Order Type')]}>
-                        <Select placeholder={preparePlaceholderSelect('')} fieldNames={{ label: 'desc', value: 'key' }} options={otfStatusList} {...selectProps} className={styles.headerSelectField}></Select>
-                    </Form.Item>
+                        <Select placeholder={preparePlaceholderSelect('')} fieldNames={{ label: 'value', value: 'key' }} options={typeData['PO_TYPE']} {...selectProps} className={styles.headerSelectField}></Select>
+                    </Form.Item> 
+                    {/* otfStatusList */}
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item name="orderStatus" label="Order Status" initialValue={filterString?.orderStatus}>
-                        <Input maxLength={50}  />
-                    </Form.Item>
+                    <Form.Item initialValue={filterString?.orderStatus} label="Order Status" name="orderStatus">
+                        <Select placeholder={preparePlaceholderSelect('')} fieldNames={{ label: 'value', value: 'key' }} options={typeData['PO_STATS']} {...selectProps} className={styles.headerSelectField}></Select>
+                    </Form.Item> 
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item name="poNumber" label="PO Number" initialValue={filterString?.poNumber}>
+                    <Form.Item name="poNumber" label="Purchase Order Number" initialValue={filterString?.poNumber}>
                         <Input maxLength={50}  />
                     </Form.Item>
                 </Col>
                 </Row>
                 <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.fromDate)} label="From Date" name="fromDate" rules={[validateRequiredSelectField('From Date')]} className={styles?.datePicker}>
+                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.fromDate)} label="From Date" name="fromDate" className={styles?.datePicker}>
                         <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.toDate)} label="To Date" name="toDate" rules={[validateRequiredSelectField('To Date')]} className={styles?.datePicker}>
+                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.toDate)} label="To Date" name="toDate" className={styles?.datePicker}>
                         <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} />
                     </Form.Item>
                 </Col>

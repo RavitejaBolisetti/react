@@ -29,7 +29,7 @@ export default function AppliedAdvanceFilter(props) {
         searchForm,
         filterString,
         setFilterString,
-        optionType: typeData,
+        optionType: typeData['PO_MST'],
         // handleChange,
     };
     return (

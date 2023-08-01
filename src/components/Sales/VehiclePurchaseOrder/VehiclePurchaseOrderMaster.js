@@ -49,7 +49,7 @@ const mapStateToProps = (state) => {
 
     let returnValue = {
         userId,
-        typeData: typeData[PARAM_MASTER.VH_PURCHASE_RORDER_SER.id],
+        typeData: typeData,  //PARAM_MASTER.VH_PURCHASE_RORDER_SER.id //PO_MST
         isDataLoaded: true,
         data: data?.vehicleSearch,
         vehicleDetailStatusList: Object.values(VEHICLE_DETAIL_STATUS),
@@ -244,7 +244,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
     }, [currentSection, sectionName]);
 
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
-        console.log('🚀 ~ file: VehicleDetailMaster.js:231 ~ handleButtonClick ~ record:', record);
+        // console.log('🚀 ~ file: VehicleDetailMaster.js:231 ~ handleButtonClick ~ record:', record);
         form.resetFields();
         form.setFieldsValue(undefined);
         setIsFormVisible(true);
@@ -402,6 +402,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         setAdvanceSearchVisible,
         // otfStatusList,
         typeData,
+        
         onFinishSearch,
     };
     const drawerTitle = useMemo(() => {
@@ -466,7 +467,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
     };
     const fnVPOFCancel = ({ modalTitle, modalMessage, finalData, callBackMethod, customURL }) => {
         const onSuccess = (res) => {
-            console.log('res',res);
+            // console.log('res',res);
             // setIsTransferVisible(false);
             // setIsCancelVisible(false);
             // otfTransferForm.resetFields();
@@ -514,7 +515,8 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         });
     };
 
-    
+    // console.log('typeData=>',typeData);
+
     return (
         <>
             <AdvanceVehiclePurchaseOrderFilter {...advanceFilterResultProps} />

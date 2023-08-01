@@ -18,7 +18,6 @@ export const VehiclePurchaseOrderFormButton = ({ record, onCloseAction, buttonDa
                         Close
                     </Button>
                 )}
-
                 {buttonData?.cancelBtn && (
                     <Button danger onClick={onCloseAction}>
                         Cancel

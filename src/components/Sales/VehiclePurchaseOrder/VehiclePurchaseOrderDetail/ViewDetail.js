@@ -32,7 +32,6 @@ const ViewDetailMain = (props) => {
 
     return (
         <>
-        
             <Card className={styles.ExchangeCard}>
                 <Descriptions {...viewProps}>
                     <Descriptions.Item label="Order Type">{'Against Stock'}</Descriptions.Item>
@@ -40,11 +39,11 @@ const ViewDetailMain = (props) => {
                     <Descriptions.Item label="Purchase Order Date">{checkAndSetDefaultValue(deliveryDate, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="Purchase Order Status">{'Open'}</Descriptions.Item>
                     <Descriptions.Item label="Purchase Cancel Date">{checkAndSetDefaultValue(deliveryDate, isLoading)}</Descriptions.Item>
-                    {/* <Descriptions.Item label="Stock Order Number">{'SO10237'}</Descriptions.Item>
-                                    <Descriptions.Item label="Stock Order Date">{checkAndSetDefaultValue(deliveryDate, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Stock Order Status">{'Cancel'}</Descriptions.Item> */}
+                    {/* <Descriptions.Item label="SO Number">{'SO10237'}</Descriptions.Item>
+                                    <Descriptions.Item label="SO Date">{checkAndSetDefaultValue(deliveryDate, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="SO Status">{'Cancel'}</Descriptions.Item> */}
                 </Descriptions>
-                
+
                 <h4> Product Details</h4>
                 <Descriptions {...viewProps}>
                     <Descriptions.Item label="Model">{'XUV300'}</Descriptions.Item>
@@ -55,12 +54,8 @@ const ViewDetailMain = (props) => {
                     <Descriptions.Item label="">{'Cancel Reason for vehicle purchase order'}</Descriptions.Item>
                 </Descriptions>
             </Card>
-           
-
-
         </>
     );
 };
 
 export const ViewDetail = ViewDetailMain;
-
