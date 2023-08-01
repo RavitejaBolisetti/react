@@ -32,6 +32,7 @@ const AddEditFormMain = (props) => {
     const [customer, setCustomer] = useState(false);
     const [activeKey, setActiveKey] = useState([1]);
     const [isAuthorityMandatory, setIsAuthorityMandatory] = useState(false);
+    const [singleDisabled, setSingleDisabled] = useState(false);
 
     useEffect(() => {
         setCustomer(formData?.customerCategory);
@@ -155,9 +156,15 @@ const AddEditFormMain = (props) => {
             </>
         ),
         validationText: <>File type should be png, jpg or pdf and max file size to be 5Mb</>,
-        supportedFileTypes: ['image/png', 'image/jpg', 'application/pdf'],
+        supportedFileTypes: ['image/png', 'image/jpg', 'image/jpeg', 'application/pdf'],
         maxSize: 5,
         single: true,
+        singleDisabled,
+        setSingleDisabled,
+        onRemove: () => {
+            setFileList([]);
+            setSingleDisabled(false);
+        },
     };
 
     const disabledProps = { disabled: isReadOnly };
