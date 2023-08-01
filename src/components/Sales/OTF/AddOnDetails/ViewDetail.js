@@ -46,7 +46,7 @@ const ViewDetailMain = (props) => {
                                                                     <Text className={styles.headText}> {`${element?.partNumber ? element?.partNumber : 'NA'} `}</Text>
                                                                 </Space>
                                                                 <Row>
-                                                                    <Text className={styles.subSection}> {`Quantity ${element?.requiredQuantity ? element?.requiredQuantity : 'NA'} `}</Text>
+                                                                    <Text className={styles.subSection}> {`Required Quantity: ${element?.requiredQuantity ? element?.requiredQuantity : 'NA'} `}</Text>
                                                                 </Row>
                                                             </Col>
                                                         </Row>

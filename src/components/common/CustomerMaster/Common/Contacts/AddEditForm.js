@@ -70,7 +70,6 @@ const AddEditForm = (props) => {
                 <Space direction="vertical">
                     <UploadUtils
                         {...props}
-                        // {...uploadProps}
                         isViewModeVisible={isViewModeVisible}
                         setUploadImgDocId={setUploadImgDocId}
                         formActionType={formActionType}
@@ -82,7 +81,7 @@ const AddEditForm = (props) => {
                                 <Select {...disabledProps} placeholder={preparePlaceholderSelect('purpose of contact')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} options={typeData['PURPOSE']} allowClear></Select>
                             </Form.Item>
                         </Col>
-                        <Col xs={24} sm={12} md={8} lg={8} xl={8} >
+                        <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                             <Form.Item label="Mobile Number" name="mobileNumber" rules={[validateRequiredInputField('mobile number'), validateMobileNoField('mobile number')]}>
                                 <Input
                                     maxLength={10}

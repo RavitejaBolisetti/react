@@ -13,7 +13,9 @@ import { bindActionCreators } from 'redux';
 import styles from 'components/common/Common.module.css';
 import { showGlobalNotification } from 'store/actions/notification';
 
+import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { getCodeValue } from 'utils/getCodeValue';
+import { DATA_TYPE } from 'constants/dataType';
 
 import { AddEditForm } from './AddEditForm';
 
@@ -120,9 +122,9 @@ const AuthorityCardItemMain = (props) => {
                         </Col>
 
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Text type="secondary">From - {dayjs(record?.effectiveFrom).format('DD-MM-YYYY')}</Text>
+                            <Text type="secondary">From - {checkAndSetDefaultValue(record?.effectiveFrom, false, DATA_TYPE?.DATE?.key)}</Text>
                             <Divider type="vertical" />
-                            <Text type="secondary">To - {dayjs(record?.effectiveTo)?.format('DD-MM-YYYY')}</Text>
+                            <Text type="secondary">To - {checkAndSetDefaultValue(record?.effectiveTo, false, DATA_TYPE?.DATE?.key)}</Text>
                         </Col>
                     </Col>
                     {!viewMode && (
@@ -161,7 +163,7 @@ const AuthorityCardItemMain = (props) => {
                 {isEditing && (
                     <Fragment>
                         <Divider />
-                        <AddEditForm handleFormValueChange={handleFormValueChange} tokenValidate={tokenValidate} setEmployeeName={setEmployeeName} setTokenValidate={setTokenValidate} employeeName={employeeName} record={record} onFinish={onFinish} form={form} setDocumentTypesList={setDocumentTypesList} documentTypesList={documentTypesList} isEditing={isEditing} selectedValueOnUpdate={selectedValueOnUpdate} setselectedValueOnUpdate={setselectedValueOnUpdate} errorMessage={errorMessage} setErrorMessage={setErrorMessage} formType={formType} setFormType={setFormType} isMainForm={isMainForm}  />
+                        <AddEditForm handleFormValueChange={handleFormValueChange} tokenValidate={tokenValidate} setEmployeeName={setEmployeeName} setTokenValidate={setTokenValidate} employeeName={employeeName} record={record} onFinish={onFinish} form={form} setDocumentTypesList={setDocumentTypesList} documentTypesList={documentTypesList} isEditing={isEditing} selectedValueOnUpdate={selectedValueOnUpdate} setselectedValueOnUpdate={setselectedValueOnUpdate} errorMessage={errorMessage} setErrorMessage={setErrorMessage} formType={formType} setFormType={setFormType} isMainForm={isMainForm} />
                     </Fragment>
                 )}
             </Card>
