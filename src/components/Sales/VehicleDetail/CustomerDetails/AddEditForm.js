@@ -31,6 +31,7 @@ const AddEditFormBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
+    
     const onSearch = (event) => {
         console.log('THIS IS SEARCH', event?.target?.value);
     };
@@ -97,21 +98,6 @@ const AddEditFormBase = (props) => {
         onCloseAction: handleCancel,
     };
 
-    // const handleOnChange = (vall) => {
-    //     if (vall.target.checked) {
-    //         setSameAsOwner(true);
-    //         let ownerCustomer = form.getFieldsValue()?.ownerCustomer;
-    //         let billingCustomer = form.getFieldsValue()?.billingCustomer;
-    //         billingCustomer = { ...ownerCustomer };
-    //         form?.setFieldsValue({ billingCustomer: { ...ownerCustomer } });
-    //     } else setSameAsOwner(false);
-    // };
-
-    // const handleDataSet = () => {
-    //     form.setFieldsValue(data.ownerCustomer);
-    //     billCstmForm.setFieldsValue(data.billingCustomer);
-    // };
-
     return (
         <>
             <Row gutter={20}>
@@ -124,13 +110,13 @@ const AddEditFormBase = (props) => {
                             </Panel>
                         </Collapse>
                         <Collapse onChange={() => handleCollapse(2)} activeKey={activeKey} expandIcon={({ isActive }) => expandIconWithText(isActive, <FiEdit />, <FiEdit style={{ color: '#B5B5B6' }} />)} expandIconPosition="end">
-                            <Panel header=" Billing Customer" key="2">
+                            <Panel header=" Billing Customer Details" key="2">
                                 <Divider />
                                 <AddressCommonForm key="2" {...bilingCustomerProps} isBillingCustmrForm={true} />
                             </Panel>
                         </Collapse>
                         <Collapse onChange={() => handleCollapse(3)} activeKey={activeKey} expandIcon={({ isActive }) => expandIconWithText(isActive, <FiEdit />, <FiEdit style={{ color: '#B5B5B6' }} />)} expandIconPosition="end">
-                            <Panel header="Key Account Details" key="3">
+                            <Panel header=" Key Account Details" key="3">
                                 <Divider />
                                 <KeyAccountDetails key="3" {...keyAccountDetailsProps} />
                             </Panel>

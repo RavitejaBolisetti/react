@@ -88,9 +88,8 @@ productHierarchyDataActions.cardBtnDisableAction = (value) => ({
 });
 
 productHierarchyDataActions.fetchList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-    const { setIsLoading, onError, data, id, manufacturerOrgId } = params;
+    const { setIsLoading, onError, data, id } = params;
     setIsLoading(true);
-    // const onError = () => errorAction('Internal Error, Please try again');
 
     const onSuccess = (res) => {
         if (res?.data) {

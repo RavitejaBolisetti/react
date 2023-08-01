@@ -15,15 +15,13 @@ const ViewDetailBase = ({ formData, styles, parameterType }) => {
     };
     return (
         <div className={styles.viewContainer}>
-            <>
-                <Descriptions {...viewProps}>
-                    <Descriptions.Item label="Division Name">{formData?.divisionName}</Descriptions.Item>
-                    <Descriptions.Item label="Department Name">{formData?.departmentName}</Descriptions.Item>
-                    <Descriptions.Item label="Role Code">{formData?.roleCode}</Descriptions.Item>
-                    <Descriptions.Item label="Role Name">{formData?.roleDescription}</Descriptions.Item>
-                    <Descriptions.Item label="Status">{formData?.status ? 'Active' : 'Inactive'}</Descriptions.Item>
-                </Descriptions>
-            </>
+            <Descriptions {...viewProps}>
+                <Descriptions.Item label="Division Name">{formData?.divisionName}</Descriptions.Item>
+                <Descriptions.Item label="Department Name">{formData?.departmentName}</Descriptions.Item>
+                <Descriptions.Item label="Role Code">{formData?.roleCode}</Descriptions.Item>
+                <Descriptions.Item label="Role Name">{formData?.roleDescription}</Descriptions.Item>
+                <Descriptions.Item label="Status">{formData?.status ? 'Active' : 'Inactive'}</Descriptions.Item>
+            </Descriptions>
         </div>
     );
 };

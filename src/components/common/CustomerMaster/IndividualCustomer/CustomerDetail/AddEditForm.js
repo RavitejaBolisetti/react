@@ -7,6 +7,7 @@
 import { useEffect, useState } from 'react';
 import { Col, Input, Form, Row, Select, Space, Typography, Card, Divider, Switch, Button, Tag, Upload, Collapse } from 'antd';
 import { validateEmailField, validateMobileNoField, validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
+import { UploadUtil } from 'utils/Upload';
 
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { expandIcon } from 'utils/accordianExpandIcon';
@@ -102,6 +103,8 @@ const AddEditFormMain = (props) => {
         nameChangeHistoryForm.setFieldsValue({ firstName: null });
         nameChangeHistoryForm.setFieldsValue({ lastName: null });
     }
+    };
+
 
     const handleCorporateChange = (value) => {
         setCorporateType(value);
