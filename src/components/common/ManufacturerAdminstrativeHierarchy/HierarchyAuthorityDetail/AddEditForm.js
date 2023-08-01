@@ -3,18 +3,18 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Input, Form, Col, Row, Button, Select, DatePicker, Typography } from 'antd';
+import moment from 'moment';
 import { PlusOutlined } from '@ant-design/icons';
+
 import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
 import { validateRequiredInputField, validateRequiredSelectField, duplicateValidator } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { hierarchyAttributeMasterDataActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { ManufactureAdminValidateToken } from 'store/actions/data/manufacturerAdminHierarchy/manufactureAdminValidateToken';
-import dayjs from 'dayjs';
-import moment from 'moment';
 
 import styles from 'components/common/Common.module.css';
 
@@ -131,12 +131,12 @@ const AuthorityFormMin = (props) => {
                         <Text strong>Employee Name : {tokenValidationData?.employeeName} </Text>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item label="Effective From" name="effectiveFrom" rules={[validateRequiredSelectField('Date Required')]} initialValue={dayjs(record?.effectiveFrom)}>
+                        <Form.Item label="Effective From" name="effectiveFrom" rules={[validateRequiredSelectField('Date Required')]} initialValue={formattedCalendarDate(record?.effectiveFrom)}>
                             <DatePicker onChange={() => form.setFieldsValue({ effectiveTo: undefined })} disabledDate={(current) => current.isBefore(moment().subtract(1, 'day'))} format={dateFormat} />
                         </Form.Item>
                     </Col>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item label="Effective To" name="effectiveTo" rules={[validateRequiredSelectField('Date Required')]} initialValue={dayjs(record?.effectiveTo)}>
+                        <Form.Item label="Effective To" name="effectiveTo" rules={[validateRequiredSelectField('Date Required')]} initialValue={formattedCalendarDate(record?.effectiveTo)}>
                             <DatePicker disabledDate={(current) => current < form?.getFieldValue('effectiveFrom')} format={dateFormat} />
                         </Form.Item>
                     </Col>
