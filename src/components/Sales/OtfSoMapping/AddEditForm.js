@@ -116,13 +116,13 @@ const AddEditFormMain = (props) => {
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <Form.Item initialValue={attributeCode} name="attributeTypeCode" label="Attribute Type" rules={[validateRequiredSelectField('Attribute Type Code')]}>
+                                <Form.Item initialValue={attributeCode} name="attributeTypeCode" label="Variant Code" rules={[validateRequiredSelectField('Attribute Type Code')]}>
                                     {customSelectBox({ data: attributeData, fieldNames: { key: 'hierarchyAttribueCode', value: 'hierarchyAttribueName' }, onChange: handleAttributeChange, loading: !isDataAttributeLoaded, placeholder: preparePlaceholderSelect('Attribute Type Code'), disabled: true })}
                                 </Form.Item>
                             </Col>
 
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <Form.Item initialValue={treeCodeId} label="Parent" name="parentCode">
+                                <Form.Item initialValue={treeCodeId} label="Product Variant" name="parentCode">
                                     <TreeSelectField {...treeSelectFieldProps} />
                                 </Form.Item>
                             </Col>
@@ -130,16 +130,16 @@ const AddEditFormMain = (props) => {
 
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <Form.Item initialValue={formData?.taxChargesTypeCode} label="Tax/Charge Type Code" name="taxChargesTypeCode" rules={[validateRequiredInputField('Tax/Charge Type Code')]}>
+                                <Form.Item initialValue={formData?.taxChargesTypeCode} label="User for Mapping/Unmapping" name="taxChargesTypeCode" rules={[validateRequiredInputField('Tax/Charge Type Code')]}>
                                     <Input maxLength={6} placeholder={preparePlaceholderText('Tax/Charge Type Code')} disabled={formData?.attributeTypeCode || isReadOnly} />
                                 </Form.Item>
                             </Col>
 
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            {/* <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <Form.Item initialValue={formData?.taxChargesTypeDescription} label="Tax/Charge Type Descrption" name="taxChargesTypeDescription" rules={[validateRequiredInputField('Tax/Charge Type Descrption')]}>
                                     <TextArea maxLength={300} placeholder={preparePlaceholderText('Tax/Charge Type Descrption')} showCount />
                                 </Form.Item>
-                            </Col>
+                            </Col> */}
                         </Row>
 
                         {attributeType === TAX_CHARGES_TYPE?.TAX_CHARGES_TYPE_CALCULATION?.KEY ? (

@@ -24,10 +24,10 @@ export const ViewTaxChargesMain = (props) => {
     return (
         <div className={styles.viewContainer}>
             <Descriptions {...viewProps}>
-                <Descriptions.Item label="Attribute Level">{selectedTreeData?.hierarchyAttribueName}</Descriptions.Item>
-                <Descriptions.Item label="Parent">{selectedTreeData?.parentName || HIERARCHY_DEFAULT_PARENT}</Descriptions.Item>
-                <Descriptions.Item label="Tax/Charge Type Code">{selectedTreeData?.taxChargesTypeCode}</Descriptions.Item>
-                <Descriptions.Item label="Tax/Charge Type Descrption">{selectedTreeData?.taxChargesTypeDescription}</Descriptions.Item>
+                <Descriptions.Item label="Variant Code">{selectedTreeData?.hierarchyAttribueName}</Descriptions.Item>
+                <Descriptions.Item label="Product Variant">{selectedTreeData?.parentName || HIERARCHY_DEFAULT_PARENT}</Descriptions.Item>
+                <Descriptions.Item label="User for Mapping/Unmapping">{selectedTreeData?.taxChargesTypeCode}</Descriptions.Item>
+                {/* <Descriptions.Item label="Tax/Charge Type Descrption">{selectedTreeData?.taxChargesTypeDescription}</Descriptions.Item> */}
                 {/* {attributeType === TAX_CHARGES_TYPE?.TAX_CHARGES_TYPE_CALCULATION?.KEY && (
                     <>
                         <Descriptions.Item label="Calculation Type">{getCodeValue(CALCULTION_TYPE, selectedTreeData?.calculationType)}</Descriptions.Item>
