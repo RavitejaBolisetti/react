@@ -11,7 +11,7 @@ import { convertDateTime } from 'utils/formatDateTime';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import { customerDetailDataActions } from 'store/actions/customer/customerDetail';
 
-import ChangeHistoryStyles from './ChangeHistory.module.css';
+import styles from 'components/common/Common.module.css';
 
 import { DataTable } from 'utils/dataTable';
 import { withDrawer } from 'components/withDrawer';
@@ -94,7 +94,7 @@ const ChangeHistoryMain = ({ fetchCustomerChangeHistory, onCloseAction, listShow
     }, [customerType, page]);
 
     useEffect(() => {
-        if (selectedCustomerId) {
+        if (selectedCustomerId && defaultExtraParam) {
             const extraParams = [
                 ...defaultExtraParam,
                 {
@@ -107,7 +107,7 @@ const ChangeHistoryMain = ({ fetchCustomerChangeHistory, onCloseAction, listShow
             fetchCustomerChangeHistory({ customURL, setIsLoading: listShowChangeHistoryLoading, userId, extraParams: extraParams || defaultExtraParam });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectedCustomerId]);
+    }, [selectedCustomerId, defaultExtraParam]);
 
     const tableColumn = [
         tblPrepareColumns({
@@ -149,24 +149,26 @@ const ChangeHistoryMain = ({ fetchCustomerChangeHistory, onCloseAction, listShow
         isChangeHistoryLoading,
         tableColumn,
         tableData: changeHistoryData?.dataList,
+        scroll: { x: '100%', y: 'calc(100vh - 320px)' },
     };
 
     return (
-        <div className={ChangeHistoryStyles.ChangeHistoryDrawer}>
-            <div className={ChangeHistoryStyles.changeHistoryMainContainer}>
-                <h4>Customer ID: {selectedCustomerId}</h4>
-                <div className={ChangeHistoryStyles.ChangeHistoryContainer}>
+        <>
+            <Row gutter={20} className={styles.drawerBody}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <DataTable {...tableProps} />
-                </div>
-            </div>
-            <Row gutter={20} className={ChangeHistoryStyles.formFooter}>
-                <Col xs={24} sm={8} md={6} lg={4} xl={4}>
-                    <Button danger onClick={onCloseAction}>
-                        Close
-                    </Button>
                 </Col>
             </Row>
-        </div>
+            <div className={styles.formFooter}>
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <Button danger onClick={onCloseAction}>
+                            Close
+                        </Button>
+                    </Col>
+                </Row>
+            </div>
+        </>
     );
 };
 
