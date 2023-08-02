@@ -37,7 +37,7 @@ export default function VehicleReceiptFilter(props) {
                                     );
                                 })}
                             </div>
-                            <div className={styles.headerSearchField}>
+                            <div className={styles.fullWidth}>
                                 <Search placeholder="Search" onChange={handleChange} onSearch={handleSearch} allowClear className={styles.headerSearchField} />
                             </div>
                         </Col>
