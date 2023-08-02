@@ -54,14 +54,10 @@ const AddEditFormMain = (props) => {
     }, [formData]);
 
     const uploadProps = {
-        messageText: (
-            <>
-                Upload supporting documents
-            </>
-        ),
+        // supportingDocs: true,
+        messageText: <>Upload supporting documents</>,
         ...props,
     };
-
 
     const handleCorporateChange = (value) => {
         setCorporateType(value);
