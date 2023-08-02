@@ -29,11 +29,11 @@ const ViewDetailMain = (props) => {
                 <Descriptions.Item label="Supplier Invoice Date">{checkAndSetDefaultValue(formData?.supplierInvoiceDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                 <Descriptions.Item label="Road Permit Number">{checkAndSetDefaultValue(formData?.bookingAmount, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Actual Dispatch Date">{checkAndSetDefaultValue(formData?.actualDispatchDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                <Descriptions.Item label="Total Invoice Amount">{checkAndSetDefaultValue(formData?.totalInvoiveAmount, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Lorry Receipt No.">{checkAndSetDefaultValue(formData?.lorryRecieptNumber, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Transporter">{checkAndSetDefaultValue(formData?.transporter, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Total Invoice Amount">{checkAndSetDefaultValue(formData?.totalInvoiceAmount, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Lorry Receipt No.">{checkAndSetDefaultValue(formData?.lorryReceiptNumber, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Transporter">{checkAndSetDefaultValue(formData?.transpoter, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Supplier GST Number">{checkAndSetDefaultValue(formData?.supplierGstNumber, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Geo Fencing Date & Time">{checkAndSetDefaultValue(formData?.goFencingDateAndTime, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                <Descriptions.Item label="Geo Fencing Date & Time">{checkAndSetDefaultValue(formData?.geoFencingDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
             </Descriptions>
         </Card>
     );

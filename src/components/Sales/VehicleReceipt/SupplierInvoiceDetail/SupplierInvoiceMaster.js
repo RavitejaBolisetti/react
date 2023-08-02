@@ -34,7 +34,7 @@ const mapStateToProps = (state) => {
         userId,
         isDataLoaded,
 
-        supplierInvoiceData,
+        supplierInvoiceData: supplierInvoiceData?.supplierAndInvoiceDetails,
         isLoading,
         moduleTitle,
     };
@@ -92,32 +92,29 @@ const SupplierInvoiceDetailsMasterBase = (props) => {
 
     const onFinish = (values) => {
         const recordId = supplierInvoiceData?.id || '';
-        const exchange = values?.exchange === true ? 1 : 0;
-        const data = { ...values, id: recordId, supplierInvoiceNumber: '', loyaltyScheme: values?.loyaltyScheme === true ? 1 : 0, exchange: exchange, initialPromiseDeliveryDate: values?.initialPromiseDeliveryDate?.format('YYYY-MM-DD'), custExpectedDeliveryDate: values?.custExpectedDeliveryDate?.format('YYYY-MM-DD') };
-        delete data?.mitraName;
-        delete data?.mitraType;
-        delete data?.modeOfPAyment;
+        // const data = { ...values, id: recordId, supplierInvoiceNumber: '', loyaltyScheme: values?.loyaltyScheme === true ? 1 : 0, exchange: exchange, initialPromiseDeliveryDate: values?.initialPromiseDeliveryDate?.format('YYYY-MM-DD'), custExpectedDeliveryDate: values?.custExpectedDeliveryDate?.format('YYYY-MM-DD') };
+        handleButtonClick({ record: values, buttonAction: NEXT_ACTION });
 
-        const onSuccess = (res) => {
-            handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
-            // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams });
-        };
+        // const onSuccess = (res) => {
+        //     handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
+        //     // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        //     fetchList({ setIsLoading: listShowLoading, userId, extraParams });
+        // };
 
-        const onError = (message) => {
-            showGlobalNotification({ message });
-        };
+        // const onError = (message) => {
+        //     showGlobalNotification({ message });
+        // };
 
-        const requestData = {
-            data: data,
-            method: 'put',
-            setIsLoading: listShowLoading,
-            userId,
-            onError,
-            onSuccess,
-        };
+        // const requestData = {
+        //     data: data,
+        //     method: 'put',
+        //     setIsLoading: listShowLoading,
+        //     userId,
+        //     onError,
+        //     onSuccess,
+        // };
 
-        saveData(requestData);
+        // saveData(requestData);
     };
 
     const onFinishFailed = () => {};

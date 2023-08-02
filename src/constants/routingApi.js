@@ -194,6 +194,7 @@ export const BASE_URL_VEHICLE_PRICE_MASTER_SEARCH = BASE_URL_VEHICLE + 'pricemas
 export const BASE_URL_VEHICLE_CUSTOMER_DETAIL = BASE_URL_VEHICLE + 'customerdetails';
 export const BASE_URL_VEHICLE_CUSTOMER_COMMON_DETAIL = BASE_URL + 'customers/commondetails';
 
-export const BASE_URL_SUPPLIER_INVOICE_DETAIL = BASE_URL_VEHICLE + 'reciepts/supplierdetails';
-export const BASE_URL_VEHICLE_DETAIL = BASE_URL_VEHICLE + 'reciept/vehicledetails';
+export const BASE_URL_VEHICLE_RECEIPT_SEARCH_LIST = BASE_URL_VEHICLE + 'receipts/search';
+export const BASE_URL_SUPPLIER_INVOICE_DETAIL = BASE_URL_VEHICLE + 'receipts/supplierdetails';
+export const BASE_URL_VEHICLE_DETAIL = BASE_URL_VEHICLE + 'receipts';
 export const BASE_URL_REPORTS_GET_EMBEDED_INFO = BASE_URL + 'reports/getembedinfo';

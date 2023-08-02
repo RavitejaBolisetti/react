@@ -15,7 +15,7 @@ import styles from 'components/common/Common.module.css';
 const { Search } = Input;
 
 export default function VehicleReceiptFilter(props) {
-    const { extraParams, removeFilter, handleResetFilter, advanceFilter = false, otfFilter = false, title, filterString, setFilterString, receiptType, handleReceiptTypeChange, typeData, setAdvanceSearchVisible, searchForm, handleChange, handleSearch } = props;
+    const { extraParams, removeFilter, handleResetFilter, advanceFilter = false, vehicleReceiptStatusList, filterString, setFilterString, receiptType, handleReceiptTypeChange, typeData, setAdvanceSearchVisible, searchForm, handleChange, handleSearch } = props;
 
     const [toggleButton, settoggleButton] = useState();
     const handleToggle = (value) => {
@@ -29,10 +29,10 @@ export default function VehicleReceiptFilter(props) {
                     <Row gutter={20}>
                         <Col xs={24} sm={16} md={16} lg={16} xl={16} className={styles.verticallyCentered}>
                             <div className={`${styles.userManagement} ${styles.headingToggle}`}>
-                                {typeData?.map((item) => {
+                                {vehicleReceiptStatusList?.map((item) => {
                                     return (
                                         <Button type={receiptType === item?.key ? 'primary' : 'link'} onClick={() => handleReceiptTypeChange(item?.key)}>
-                                            {item?.value}
+                                            {item?.desc}
                                         </Button>
                                     );
                                 })}

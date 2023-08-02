@@ -36,13 +36,14 @@ const mapStateToProps = (state) => {
             },
         },
     } = state;
+
     const moduleTitle = 'Vehicle Receipt';
     let returnValue = {
         userId,
         typeData: typeData[PARAM_MASTER.GRN_STATS.id],
         grnTypeData: typeData[PARAM_MASTER.GRN_TYPE.id],
         // isDataLoaded,
-        data: data?.otfDetails,
+        data: data?.vehicleReciept,
         vehicleReceiptStatusList: Object.values(VEHICLE_RECEIPT_STATUS),
         // otfData,
         // isLoading,
@@ -78,7 +79,7 @@ export const VehicleReceiptMasterBase = (props) => {
 
     const [listFilterForm] = Form.useForm();
 
-    const [receiptType, setReceiptType] = useState();
+    const [receiptType, setReceiptType] = useState(VEHICLE_RECEIPT_STATUS.IN_TRANSIT.key);
     const [searchValue, setSearchValue] = useState();
 
     const [selectedRecord, setSelectedRecord] = useState();
@@ -143,104 +144,18 @@ export const VehicleReceiptMasterBase = (props) => {
             //     value: receiptType,
             //     name: typeData?.[PARAM_MASTER.GRN_STATS.id]?.find((i) => i?.key === receiptType)?.value,
             // },
-            // {
-            //     key: 'grnNumber',
-            //     title: 'grnNumber',
-            //     value: searchValue,
-            //     name: 'grnNumber',
-            // },
-            // {
-            // {
-            //     key: 'pageSize',
-            //     title: 'Value',
-            //     value: page?.pageSize,
-            //     canRemove: true,
-            //     filter: false,
-            // },
-            // {
-            //     key: 'pageNumber',
-            //     title: 'Value',
-            //     value: page?.current,
-            //     canRemove: true,
-            //     filter: false,
-            // },
-            // {
-            //     key: 'grnFromDate',
-            //     title: 'Start Date',
-            //     value: filterString?.grnFromDate,
-            //     name: filterString?.grnFromDate,
-            //     canRemove: true,
-            //     filter: true,
-            // },
-            // {
-            //     key: 'grnToDate',
-            //     title: 'End Date',
-            //     value: filterString?.grnToDate,
-            //     name: filterString?.grnToDate,
-            //     canRemove: true,
-            //     filter: true,
-            // },
-            // {
-            //     key: 'grnType',
-            //     title: 'GRN Type',
-            //     value: filterString?.grnType,
-            //     name: grnTypeData?.find((i) => i?.key === filterString?.grnType)?.value,
-            //     canRemove: true,
-            //     filter: true,
-            // },
-            // {
-            //     key: 'sortBy',
-            //     title: 'Sort By',
-            //     value: page?.sortBy,
-            //     canRemove: true,
-            //     filter: false,
-            // },
-            // {
-            //     key: 'sortIn',
-            //     title: 'Sort Type',
-            //     value: page?.sortType,
-            //     canRemove: true,
-            //     filter: false,
-            // },
             {
-                key: 'searchType',
-                title: 'Type',
-                value: filterString?.searchType,
-                name: typeData?.[PARAM_MASTER.OTF_SER.id]?.find((i) => i?.key === filterString?.searchType)?.value,
-                canRemove: false,
-                filter: true,
+                key: 'grnNumber',
+                title: 'grnNumber',
+                value: searchValue,
+                name: 'grnNumber',
             },
             {
-                key: 'searchParam',
+                key: 'pageNumber',
                 title: 'Value',
-                value: filterString?.searchParam,
-                name: filterString?.searchParam,
+                value: page?.current,
                 canRemove: true,
-                filter: true,
-            },
-            {
-                key: 'fromDate',
-                title: 'Start Date',
-                value: filterString?.fromDate,
-                name: filterString?.fromDate,
-                canRemove: true,
-                filter: true,
-            },
-            {
-                key: 'toDate',
-                title: 'End Date',
-                value: filterString?.toDate,
-                name: filterString?.toDate,
-                canRemove: true,
-                filter: true,
-            },
-            {
-                key: 'otfStatus',
-                title: 'OTF Status',
-                value: filterString?.otfStatus,
-                name: filterString?.otfStatus,
-                canRemove: true,
-                filter: true,
+                filter: false,
             },
             {
                 key: 'pageSize',
@@ -250,11 +165,28 @@ export const VehicleReceiptMasterBase = (props) => {
                 filter: false,
             },
             {
-                key: 'pageNumber',
-                title: 'Value',
-                value: page?.current,
+                key: 'grnFromDate',
+                title: 'Start Date',
+                value: filterString?.grnFromDate,
+                name: filterString?.grnFromDate,
                 canRemove: true,
-                filter: false,
+                filter: true,
+            },
+            {
+                key: 'grnToDate',
+                title: 'End Date',
+                value: filterString?.grnToDate,
+                name: filterString?.grnToDate,
+                canRemove: true,
+                filter: true,
+            },
+            {
+                key: 'grnType',
+                title: 'GRN Type',
+                value: filterString?.grnType,
+                name: grnTypeData?.find((i) => i?.key === filterString?.grnType)?.value,
+                canRemove: true,
+                filter: true,
             },
             {
                 key: 'sortBy',
@@ -270,6 +202,74 @@ export const VehicleReceiptMasterBase = (props) => {
                 canRemove: true,
                 filter: false,
             },
+            // {
+            //     key: 'searchType',
+            //     title: 'Type',
+            //     value: filterString?.searchType,
+            //     name: typeData?.[PARAM_MASTER.OTF_SER.id]?.find((i) => i?.key === filterString?.searchType)?.value,
+            //     canRemove: false,
+            //     filter: true,
+            // },
+            // {
+            //     key: 'searchParam',
+            //     title: 'Value',
+            //     value: filterString?.searchParam,
+            //     name: filterString?.searchParam,
+            //     canRemove: true,
+            //     filter: true,
+            // },
+            // {
+            //     key: 'fromDate',
+            //     title: 'Start Date',
+            //     value: filterString?.fromDate,
+            //     name: filterString?.fromDate,
+            //     canRemove: true,
+            //     filter: true,
+            // },
+            // {
+            //     key: 'toDate',
+            //     title: 'End Date',
+            //     value: filterString?.toDate,
+            //     name: filterString?.toDate,
+            //     canRemove: true,
+            //     filter: true,
+            // },
+            // {
+            //     key: 'otfStatus',
+            //     title: 'OTF Status',
+            //     value: filterString?.otfStatus,
+            //     name: filterString?.otfStatus,
+            //     canRemove: true,
+            //     filter: true,
+            // },
+            // {
+            //     key: 'pageSize',
+            //     title: 'Value',
+            //     value: page?.pageSize,
+            //     canRemove: true,
+            //     filter: false,
+            // },
+            // {
+            //     key: 'pageNumber',
+            //     title: 'Value',
+            //     value: page?.current,
+            //     canRemove: true,
+            //     filter: false,
+            // },
+            // {
+            //     key: 'sortBy',
+            //     title: 'Sort By',
+            //     value: page?.sortBy,
+            //     canRemove: true,
+            //     filter: false,
+            // },
+            // {
+            //     key: 'sortIn',
+            //     title: 'Sort Type',
+            //     value: page?.sortType,
+            //     canRemove: true,
+            //     filter: false,
+            // },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [receiptType, searchValue, filterString]);
@@ -287,7 +287,7 @@ export const VehicleReceiptMasterBase = (props) => {
             fetchVehicleReceiptList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, filterString]);
+    }, [userId, receiptType, filterString]);
 
     useEffect(() => {
         const defaultSection = VEHICLE_RECEIPT_SECTION.SUPPLIER_INVOICE_DETAILS.id;
@@ -324,7 +324,7 @@ export const VehicleReceiptMasterBase = (props) => {
                 break;
             case VIEW_ACTION:
                 setSelectedRecord(record);
-                record && setSelectedId(record?.supplierInvoiceNumber);
+                record && setSelectedId('INV9876543');
                 defaultSection && setCurrentSection(defaultSection);
                 break;
             case NEXT_ACTION:
@@ -432,19 +432,6 @@ export const VehicleReceiptMasterBase = (props) => {
     //         setFilterString({ ...rest });
     //     }
     // };
-
-    useEffect(() => {
-        if (receiptType) {
-            const defaultSection = 'TRN';
-            // setSetionName(receiptType === CUSTOMER_TYPE?.INDIVIDUAL.id ? CUSTOMER_INDIVIDUAL_SECTION : CUSTOMER_CORPORATE_SECTION);
-            setDefaultSection(defaultSection);
-            // setSection(defaultSection);
-            setFilterString();
-            setShowDataLoading(true);
-            resetData();
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [receiptType]);
 
     const handleReceiptTypeChange = (key) => {
         setReceiptType(key);
@@ -554,7 +541,7 @@ export const VehicleReceiptMasterBase = (props) => {
             <VehicleReceiptFilter {...advanceFilterResultProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable handleAdd={handleButtonClick} isLoading={showDataLoading} {...tableProps} showAddButton={true} />
+                    <ListDataTable handleButtonClick={handleButtonClick} isLoading={showDataLoading} {...tableProps} showAddButton={true} />
                 </Col>
             </Row>
             <AdvancedSearch {...advanceFilterProps} />

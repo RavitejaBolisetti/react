@@ -38,7 +38,7 @@ const VehicleReceiptDetailCard = (props) => {
                         <Space>
                             <div>
                                 <Text>
-                                    GRN Number: <span>{selectedRecord?.grnNumber}</span>
+                                    GRN Number: <span>{checkAndSetDefaultValue(selectedRecord?.grnNumber, isLoading)}</span>
                                 </Text>
                             </div>
                         </Space>
@@ -47,7 +47,7 @@ const VehicleReceiptDetailCard = (props) => {
                 key={1}
             >
                 <p>
-                    GRN Type: <span>{selectedRecord && getCodeValue(typeData?.[PARAM_MASTER?.GRN_TYPE?.id], selectedRecord?.grnType)}</span>
+                    GRN Type: <span>{selectedRecord && checkAndSetDefaultValue(selectedRecord?.grnType, isLoading)}</span>
                 </p>
                 <p>
                     GRN Date: <span>{checkAndSetDefaultValue(selectedRecord?.grnDate, isLoading, DATA_TYPE?.DATE?.key) || 'NA'}</span>

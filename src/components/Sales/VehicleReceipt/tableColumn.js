@@ -21,12 +21,12 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             title: 'GRN Number',
             dataIndex: 'grnNumber',
             width: '12%',
-            render: (text) => convertDateMonthYear(text),
         }),
         tblPrepareColumns({
             title: 'GRN Date',
             dataIndex: 'grnDate',
             width: '12%',
+            render: (text) => convertDateMonthYear(text),
         }),
 
         tblPrepareColumns({

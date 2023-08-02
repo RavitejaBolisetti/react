@@ -39,7 +39,7 @@ const mapStateToProps = (state) => {
         physicalStatusType: typeData[PARAM_MASTER.PHYSICAL_STATUS.id],
         shortageType: typeData[PARAM_MASTER.YES_NO_FLG.id],
 
-        vehicleDetailData,
+        vehicleDetailData: vehicleDetailData?.vehicleDetails,
         isLoading,
         moduleTitle,
     };
@@ -66,6 +66,7 @@ const VehicleDetailsMasterBase = (props) => {
     const { form, selectedId, formActionType, handleFormValueChange, fetchSalesConsultant, NEXT_ACTION, handleButtonClick } = props;
     const [exchangeValue, setexchangeValue] = useState(false);
     const [loyaltyValue, setloyaltyValue] = useState(false);
+    const [tooltTipText, settooltTipText] = useState();
 
     const [vehicleDetailForm] = Form.useForm();
 
@@ -96,6 +97,31 @@ const VehicleDetailsMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedId]);
+
+    useEffect(() => {
+        if (isDataLoaded && vehicleDetailData) {
+            settooltTipText(
+                <div>
+                    <p>
+                        Model Name: <span>XUV</span>
+                    </p>
+                    <p>
+                        Color: <span>{vehicleDetailData?.color ?? 'Na'}</span>
+                    </p>
+                    <p>
+                        Seating Capacity: <span>{vehicleDetailData?.seatingCapacity ?? 'Na'}</span>
+                    </p>
+                    <p>
+                        Fuel: <span>{vehicleDetailData?.fuel ?? 'Na'}</span>
+                    </p>
+                    <p>
+                        Variants: <span>{vehicleDetailData?.variant ?? 'Na'}</span>
+                    </p>
+                </div>
+            );
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isDataLoaded, vehicleDetailData]);
 
     const onFinish = (values) => {
         const recordId = vehicleDetailData?.id || '';
@@ -139,6 +165,8 @@ const VehicleDetailsMasterBase = (props) => {
         vehicleStatusType,
         physicalStatusType,
         shortageType,
+        tooltTipText,
+        settooltTipText,
 
         userId,
         isDataLoaded,
@@ -156,6 +184,8 @@ const VehicleDetailsMasterBase = (props) => {
         formData: vehicleDetailData,
         styles,
         isLoading,
+        tooltTipText,
+        settooltTipText,
     };
 
     const handleFieldsChange = () => {

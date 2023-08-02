@@ -52,17 +52,17 @@ const AddEditFormMain = (props) => {
             </Row>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.totalInvoiveAmount} label="Total Invoice Amount" name="totalInvoiveAmount">
+                    <Form.Item initialValue={formData?.totalInvoiceAmount} label="Total Invoice Amount" name="totalInvoiceAmount">
                         <Input disabled={true} maxLength={50} placeholder={preparePlaceholderText('Special Request')} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.lorryRecieptNumber} label="Lorry Receipt No." name="lorryRecieptNumber">
-                        <Input disabled={true} maxLength={50} placeholder={preparePlaceholderText('Place Of Registration')} />
+                    <Form.Item initialValue={formData?.lorryReceiptNumber} label="Lorry Receipt No." name="lorryReceiptNumber">
+                        <Input disabled={true} maxLength={50} placeholder={preparePlaceholderText('Lorry Receipt No.')} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.transporter} label="Transporter" name="transporter">
+                    <Form.Item initialValue={formData?.transpoter} label="Transporter" name="transpoter">
                         <Input disabled={true} maxLength={50} placeholder={preparePlaceholderText('Transporter')} />
                     </Form.Item>
                 </Col>
@@ -75,7 +75,7 @@ const AddEditFormMain = (props) => {
                 </Col>
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formattedCalendarDate(formData?.goFencingDateAndTime)} name="goFencingDateAndTime" label="GEO Fencing Date & Time">
+                    <Form.Item initialValue={formattedCalendarDate(formData?.geoFencingDate)} name="geoFencingDate" label="GEO Fencing Date & Time">
                         <DatePicker disabled={true} style={{ display: 'auto', width: '100%' }} />
                     </Form.Item>
                 </Col>

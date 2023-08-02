@@ -45,49 +45,53 @@ const ViewDetailMain = (props) => {
     };
 
     return (
-        <div className={styles.accessInfo}>
-            <div className={styles.drawerCardView}>
-                <Collapse defaultActiveKey={['1']} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
-                    <Panel
-                        header={
-                            <Space direction="vertical">
-                                <Space>
-                                    <Text className={styles.headText}> Model: Scorpio </Text>
-                                    <Text className={styles.headText}> {`|`}</Text>
-                                    <Text className={styles.headText}> VIN: 234254543453</Text>
-                                </Space>
-                                <Text className={styles.subSection}> Vehicle Status: Received</Text>
-                            </Space>
-                        }
-                        key="1"
-                    >
-                        <Divider />
-                        <Descriptions {...viewProps}>
-                            <Descriptions.Item label="Model Description">
-                                {checkAndSetDefaultValue(formData?.modelDescription, isLoading)}
-                                {/* <Tooltip title="Extra information">
+        <>
+            {formData?.map((item) => (
+                <div className={styles.accessInfo}>
+                    <div className={styles.drawerCardView}>
+                        <Collapse defaultActiveKey={['1']} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
+                            <Panel
+                                header={
+                                    <Space direction="vertical">
+                                        <Space>
+                                            <Text className={styles.headText}> Model: {checkAndSetDefaultValue(item?.modelDescription, isLoading)} </Text>
+                                            <Text className={styles.headText}> {`|`}</Text>
+                                            <Text className={styles.headText}> VIN: {checkAndSetDefaultValue(item?.vin, isLoading)}</Text>
+                                        </Space>
+                                        <Text className={styles.subSection}> Vehicle Status: </Text>
+                                    </Space>
+                                }
+                                key="1"
+                            >
+                                <Divider />
+                                <Descriptions {...viewProps}>
+                                    <Descriptions.Item label="Model Description">
+                                        {checkAndSetDefaultValue(item?.modelDescription, isLoading)}
+                                        {/* <Tooltip title="Extra information">
                                     <InfoCircleOutlined
                                         style={{
                                             color: 'rgba(0,0,0,.45)',
                                         }}
                                     />
                                 </Tooltip> */}
-                            </Descriptions.Item>
-                            <Descriptions.Item label="VIN">{checkAndSetDefaultValue(formData?.vin, isLoading, 'date')}</Descriptions.Item>
-                            <Descriptions.Item label="Key Number">{checkAndSetDefaultValue(formData?.keyNumber, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="MFG Date">{checkAndSetDefaultValue(formData?.mfgDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                            <Descriptions.Item label="Received On">{checkAndSetDefaultValue(formData?.receivedOn, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                            <Descriptions.Item label="Vehicle Cost">{checkAndSetDefaultValue(formData?.vehicleCost, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Demo Vehicle">{checkAndSetDefaultValue(formData?.demoVehicle, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Vehicle Status">{checkAndSetDefaultValue(formData?.vehicleStatus, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Physical Status">{checkAndSetDefaultValue(getCodeValue(typeData?.DLVR_AT, formData?.physicalStatus), isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Shortage">{checkAndSetDefaultValue(getCodeValue(typeData?.RFRL, formData?.shortage), isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Vehicle Receipt Checklist No.">{checkAndSetDefaultValue(formData?.vehicleRecieptCheckListNumber, isLoading)}</Descriptions.Item>
-                        </Descriptions>
-                    </Panel>
-                </Collapse>
-            </div>
-        </div>
+                                    </Descriptions.Item>
+                                    <Descriptions.Item label="VIN">{checkAndSetDefaultValue(item?.vin, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Key Number">{checkAndSetDefaultValue(item?.keyNumber, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="MFG Date">{checkAndSetDefaultValue(item?.mfgdate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                                    <Descriptions.Item label="Received On">{checkAndSetDefaultValue(item?.receivedOn, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                                    <Descriptions.Item label="Vehicle Cost">{checkAndSetDefaultValue(item?.vehicleCost, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Demo Vehicle">{checkAndSetDefaultValue(item?.demoVehicle, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Vehicle Status">{checkAndSetDefaultValue(item?.vehicleStatus, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Physical Status">{checkAndSetDefaultValue(getCodeValue(typeData?.DLVR_AT, item?.physicalStatus), isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Shortage">{checkAndSetDefaultValue(getCodeValue(typeData?.RFRL, item?.shortage), isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Vehicle Receipt Checklist No.">{checkAndSetDefaultValue(item?.vehicleReceiptChecklistNumber, isLoading)}</Descriptions.Item>
+                                </Descriptions>
+                            </Panel>
+                        </Collapse>
+                    </div>
+                </div>
+            ))}
+        </>
     );
 };
 
