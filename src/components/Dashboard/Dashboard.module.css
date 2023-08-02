@@ -21,7 +21,7 @@
 }
 
 .dashboardContainer .svgIcon {
-    vertical-align: sub;
+    vertical-align: top;
     margin-right: 6px;
 }
 
@@ -74,8 +74,8 @@
 }
 
 .dashboardCard {
-    margin-top: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 20px !important;
+    background: #ffffff !important;
 }
 
 .headingGradient {
@@ -177,7 +177,7 @@
 }
 
 .buttonHolder {
-    margin-top: 12px;
+    margin-top: 10px;
     display: flex;
     align-items: center;
     flex-direction: column;

@@ -118,14 +118,14 @@ const AddEditFormMain = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name="customerExpectedPrice" label="Customer Expected Price" initialValue={formData?.customerExpectedPrice} rules={[validateRequiredInputField('Customer Expected Price'), validateNumberWithTwoDecimalPlaces('Customer Expected Price')]}>
+                    <Form.Item name="customerExpectedPrice" label="Customer Expected Price" initialValue={formData?.customerExpectedPrice} rules={[validateNumberWithTwoDecimalPlaces('Customer Expected Price')]}>
                         <Input placeholder={preparePlaceholderText('Customer Expected Price')} maxLength={50} />
                     </Form.Item>
                 </Col>
             </Row>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name="procurementPrice" label="Procurement Price" initialValue={formData?.procurementPrice} rules={[validateRequiredInputField('Procurement Price'), validateNumberWithTwoDecimalPlaces('Procurement Price')]}>
+                    <Form.Item name="procurementPrice" label="Procurement Price" initialValue={formData?.procurementPrice} rules={[validateNumberWithTwoDecimalPlaces('Procurement Price')]}>
                         <Input maxLength={50} placeholder={preparePlaceholderText('Procurement Price')} />
                     </Form.Item>
                 </Col>

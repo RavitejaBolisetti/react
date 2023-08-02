@@ -5,7 +5,7 @@
  */
 import React, { useEffect, useState } from 'react';
 import { Col, Collapse, Row, Button, Space, Spin } from 'antd';
-import style from './../../common/Common.module.css';
+import styles from 'components/common/Common.module.css';
 
 import ApplicationDetails from './ApplicationDetails';
 import ApplicationActions from './actions/ApplicationActions';
@@ -83,8 +83,9 @@ const AddEditFormMain = ({
 
     return (
         <>
-            <Spin spinning={isApplicatinoOnSaveLoading}>
-                <Space direction="vertical" size="small" className={style.accordianContainer}>
+            <div className={styles.drawerBodyNew}>
+                <Spin spinning={isApplicatinoOnSaveLoading}>
+                    {/* <Space direction="vertical" size="small" className={styles.accordianContainer}> */}
                     <ApplicationDetails
                         showGlobalNotification={showGlobalNotification}
                         isFieldDisable={isFieldDisable}
@@ -103,30 +104,57 @@ const AddEditFormMain = ({
                         setparentAppCode={setparentAppCode}
                         parentAppCode={parentAppCode}
                         setCanFormSave={setCanFormSave}
+                        isApplicatinoOnSaveLoading={isApplicatinoOnSaveLoading}
+                        canFormSave={canFormSave}
+                        onCloseAction={onCloseAction}
                     />
 
                     <Collapse onChange={() => handleCollapse(1)} expandIcon={accordianExpandIcon} activeKey={openAccordian}>
-                        <Panel header={<><span>Application Actions</span><span style={{color:'#ff3e5b'}}>*</span></>} key="1">
+                        <Panel
+                            header={
+                                <>
+                                    <span>Application Actions</span>
+                                    <span style={{ color: '#ff3e5b' }}>*</span>
+                                </>
+                            }
+                            key="1"
+                        >
                             <ApplicationActions actions={actions} setFinalFormdata={setFinalFormdata} finalFormdata={finalFormdata} setCanFormSave={setCanFormSave} />
                         </Panel>
                     </Collapse>
                     {isDocumentToGenerate && (
                         <Collapse onChange={() => handleCollapse(2)} expandIcon={accordianExpandIcon} activeKey={openAccordian}>
-                            <Panel header={<><span>Document Type</span><span style={{color:'#ff3e5b'}}>*</span></>} key="2">
+                            <Panel
+                                header={
+                                    <>
+                                        <span>Document Type</span>
+                                        <span style={{ color: '#ff3e5b' }}>*</span>
+                                    </>
+                                }
+                                key="2"
+                            >
                                 <DocumentTypes setFinalFormdata={setFinalFormdata} finalFormdata={finalFormdata} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} setCanFormSave={setCanFormSave} />
                             </Panel>
                         </Collapse>
                     )}
                     {isRestrictedLocation && (
                         <Collapse onChange={() => handleCollapse(3)} expandIcon={accordianExpandIcon} activeKey={openAccordian}>
-                            <Panel header={<><span>Accessible Dealer Location</span><span style={{color:'#ff3e5b'}}>*</span></>} key="3">
+                            <Panel
+                                header={
+                                    <>
+                                        <span>Accessible Dealer Location</span>
+                                        <span style={{ color: '#ff3e5b' }}>*</span>
+                                    </>
+                                }
+                                key="3"
+                            >
                                 <AccessibleDealerLocations setFinalFormdata={setFinalFormdata} finalFormdata={finalFormdata} setCanFormSave={setCanFormSave} />
                             </Panel>
                         </Collapse>
                     )}
-                </Space>
-            </Spin>
-            <Row gutter={20} className={style.formFooter}>
+                    {/* </Space> */}
+                </Spin>
+                {/* <Row gutter={20} className={style.formFooter}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={style.footerBtnLeft}>
                     <Button danger onClick={onCloseAction}>
                         Cancel
@@ -137,7 +165,8 @@ const AddEditFormMain = ({
                         Save
                     </Button>
                 </Col>
-            </Row>
+            </Row> */}
+            </div>
         </>
     );
 };
