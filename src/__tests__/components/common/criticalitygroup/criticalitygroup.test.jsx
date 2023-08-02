@@ -81,7 +81,6 @@ describe('CriticalityGroup Components', () => {
         fireEvent.click(status);
         const saveBtn=screen.getByRole('button', { name: 'Save', exact:false });
         fireEvent.click(saveBtn);
-        logRoles(screen.getByTestId('logRole'));
     });
 
     it('should validate fields on finish failed', async () => {
