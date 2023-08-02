@@ -106,6 +106,8 @@ const UploadBase = (props) => {
         single = false,
         supportingDocs = false,
         setMandatoryFields,
+        singleDisabled,
+        setSingleDisabled,
     } = props;
 
     const [showStatus, setShowStatus] = useState('');
@@ -114,7 +116,7 @@ const UploadBase = (props) => {
     const [base64Img, setBase64Img] = useState('');
     const [uploadTime, setUploadTime] = useState(false);
 
-    const removeIcon = uploadTime ? <AiOutlineCloseCircle className={styles.iconSize} /> : <AiOutlineClose className={styles.iconSize}  />;
+    const removeIcon = uploadTime ? <AiOutlineCloseCircle className={styles.iconSize} /> : <AiOutlineClose className={styles.iconSize} />;
 
     const onReplaceClick = () => {
         setIsReplacing(true);
@@ -206,7 +208,6 @@ const UploadBase = (props) => {
         onRemove,
         progress: { strokeWidth: 3, showInfo: true },
         onDrop,
-        onDownload,
         onChange: (info) => {
             let fileList = [...info.fileList];
             if (supportingDocs) {
@@ -236,6 +237,8 @@ const UploadBase = (props) => {
                 const { status } = info.file;
                 setShowStatus(info.file);
                 if (status === 'done') {
+                    setUploadTime(false);
+
                     setUploadedFile(info?.file?.response?.docId);
                     setUploadedFileName(info?.file?.response?.documentName);
                 }
@@ -255,6 +258,10 @@ const UploadBase = (props) => {
     const handleUpload = (options) => {
         const { file, onSuccess, onError } = options;
         setEmptyList(true);
+        setUploadTime(true);
+        if (single) {
+            setSingleDisabled(true);
+        }
 
         const data = new FormData();
         data.append('applicationId', 'app');
@@ -307,7 +314,7 @@ const UploadBase = (props) => {
                     </>
                 ) : (
                     <>
-                        <Dragger key={key} className={uploadTime ? styles.uploadDraggerStrip : ''} fileList={fileList} customRequest={handleUpload} {...uploadProps}>
+                        <Dragger key={key} className={fileList.length === 0 ? '' : uploadTime ? styles.uploadDraggerStrip : styles.uploadDraggerBox} fileList={fileList} customRequest={handleUpload} {...uploadProps}>
                             <Space direction="vertical">
                                 <UploadBoxIcon />
                                 <div>
@@ -315,7 +322,7 @@ const UploadBase = (props) => {
                                     <Text>{validationText}</Text>
                                 </div>
                                 <Space>
-                                    <Button disabled={uploadTime} type="primary">
+                                    <Button disabled={uploadTime || singleDisabled} type="primary">
                                         {uploadButtonName}
                                     </Button>
                                     {isReplacing && (
