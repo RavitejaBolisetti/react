@@ -58,4 +58,12 @@ describe('AllowedTimingList Components', () => {
         });
     });
 
+    it('add time button should work', () => {
+        const formActionType = { viewMode: false };
+        customRender(<AllowedTimingList isAddTimeVisible={false} formActionType={formActionType} setIsAddTimeVisible={jest.fn()} />);
+        const addTimeBtn=screen.getByRole('button', {name: 'Add Time', exact:false});
+        fireEvent.click(addTimeBtn);
+        
+    });
+
 });
