@@ -160,7 +160,6 @@ const VehicleDetailsMasterBase = (props) => {
         form,
         onFinish,
         onFinishFailed,
-        fetchList,
         typeData,
         vehicleStatusType,
         physicalStatusType,

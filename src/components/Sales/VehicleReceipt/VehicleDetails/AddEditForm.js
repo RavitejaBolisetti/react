@@ -144,6 +144,9 @@ const AddEditFormMain = (props) => {
                                             <Input maxLength={10} placeholder={preparePlaceholderText('Vehicle Receipt Checklist No.')} disabled={true} />
                                         </Form.Item>
                                     </Col>
+                                    <Form.Item hidden initialValue={item?.id} name="id">
+                                        <Input />
+                                    </Form.Item>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
