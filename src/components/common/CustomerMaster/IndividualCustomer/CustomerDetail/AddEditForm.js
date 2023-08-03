@@ -10,6 +10,7 @@ import { validateEmailField, validateMobileNoField, validateRequiredInputField, 
 
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { expandIcon } from 'utils/accordianExpandIcon';
+import { UploadUtil } from 'utils/Upload';
 
 import { FiEdit } from 'react-icons/fi';
 import { BiTimeFive } from 'react-icons/bi';
@@ -18,17 +19,20 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import { NameChangeHistory } from './NameChangeHistory';
 
 import styles from 'components/common/Common.module.css';
+import Svg from 'assets/images/Filter.svg';
 
+const { Dragger } = Upload;
 const { Panel } = Collapse;
 const { Text } = Typography;
 
 const AddEditFormMain = (props) => {
     const { form, typeData, formData, corporateLovData, formActionType: { editMode } = undefined, customerType } = props;
-    const { nameChangeHistoryForm, editedMode, setCustomerNameList, activeKey, setactiveKey, customerNameList, setEditedMode, onViewHistoryChange, changeHistoryClose, setButtonData, buttonData, status, setStatus, showGlobalNotification, setEmptyList } = props;
 
+    const { nameChangeHistoryForm, editedMode, setCustomerNameList, activeKey, setactiveKey, customerNameList, setEditedMode, isHistoryVisible, onViewHistoryChange, changeHistoryClose, setButtonData, buttonData, status, setStatus, showGlobalNotification } = props;
     const { whatsAppConfiguration, setWhatsAppConfiguration, handleFormFieldChange } = props;
     const { contactOverWhatsApp, contactOverWhatsAppActive, sameMobileNoAsWhatsApp, sameMobileNoAsWhatsAppActive } = whatsAppConfiguration;
 
+    // const [isHistoryVisible, setIsHistoryVisible] = useState(false);
     const [corporateType, setCorporateType] = useState('');
     const [disabled, setDisabled] = useState(false);
     const [onSave, setOnSave] = useState(false);
@@ -132,6 +136,13 @@ const AddEditFormMain = (props) => {
             return Promise.resolve('');
         }
     };
+
+    // const ImageProps = {
+    //     viewDocument,
+    //     handleUpload,
+    //     uploadProps,
+    //     formData,
+    // };
 
     return (
         <>
