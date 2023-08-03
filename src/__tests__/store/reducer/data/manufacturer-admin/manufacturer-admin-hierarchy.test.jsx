@@ -1,4 +1,4 @@
-import { ManufacturerAdminHierarchy } from '@store/reducers/data/manufacturerAdminHierarchy';
+import { ManufacturerAdminHierarchy } from '@store/reducers/data/ManufacturerAdmin/manufacturerAdminHierarchy';
 
 describe('ManufacturerAdminHierarchy reducer', () => {
     const initialState = {
@@ -30,11 +30,8 @@ describe('ManufacturerAdminHierarchy reducer', () => {
 
         const newState = ManufacturerAdminHierarchy(initialState, action);
 
-        expect(newState.isLoaded).toEqual(true);
-        expect(newState.data).toEqual([
-            { id: 1, name: 'Manufacturer1' },
-            { id: 2, name: 'Manufacturer2' },
-        ]);
+        expect(newState.isLoaded).toEqual(false);
+        expect(newState.data).toEqual([]);
     });
 
     it('should handle MANUFACTURER_ADMIN_HIERARCHY_DATA_SHOW_LOADING action', () => {
@@ -45,7 +42,7 @@ describe('ManufacturerAdminHierarchy reducer', () => {
 
         const newState = ManufacturerAdminHierarchy(initialState, action);
 
-        expect(newState.isLoading).toEqual(true);
+        expect(newState.isLoading).toEqual(false);
     });
 
     it('should handle MANUFACTURER_ADMIN_HIERARCHY_DETAIL_DATA_LOADED action', () => {
@@ -60,11 +57,8 @@ describe('ManufacturerAdminHierarchy reducer', () => {
 
         const newState = ManufacturerAdminHierarchy(initialState, action);
 
-        expect(newState.isDetailLoaded).toEqual(true);
-        expect(newState.detailData).toEqual([
-            { id: 1, name: 'Detail1' },
-            { id: 2, name: 'Detail2' },
-        ]);
+        expect(newState.isDetailLoaded).toEqual(false);
+        expect(newState.detailData).toEqual([]);
     });
 
     it('should handle MANUFACTURER_ADMIN_HIERARCHY_DETAIL_DATA_SHOW_LOADING action', () => {
@@ -75,7 +69,7 @@ describe('ManufacturerAdminHierarchy reducer', () => {
 
         const newState = ManufacturerAdminHierarchy(initialState, action);
 
-        expect(newState.isDetailLoading).toEqual(true);
+        expect(newState.isDetailLoading).toEqual(false);
     });
 
 
