@@ -12,6 +12,7 @@ import { HierarchyFormButton } from 'components/common/Button';
 import { financialAccTaxChargeActions } from 'store/actions/data/financialAccounting/taxCharges';
 import { documentDescriptionDataActions } from 'store/actions/data/financialAccounting/documentDescription';
 import { financialAccountHeadDataActions } from 'store/actions/data/financialAccounting/financialAccountHead';
+import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 import { hierarchyAttributeMasterDataActions } from 'store/actions/data/hierarchyAttributeMaster';
 import TreeSelectField from '../../common/TreeSelectField';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
@@ -40,6 +41,7 @@ const mapStateToProps = (state) => {
                 TaxCharges: { isLoaded: isTaxChargeLoaded = false, data: taxChargeData = [] },
             },
             ManufacturerOrgHierarchy: { isLoaded: isDataOrgLoaded = false, data: manufacturerOrgHierarchyData = [] },
+            ProductHierarchy: { isLoading, isLoaded: isDataLoaded = false, data: productHierarchyData = [], attributeData: productHierarchyAttributeData = [], organizationId = '' },
         },
         common: {
             LeftSideBar: { collapsed = false },
@@ -66,6 +68,11 @@ const mapStateToProps = (state) => {
         unFilteredAttributeData: attributeData?.filter((i) => i?.status),
         isDataOrgLoaded,
         manufacturerOrgHierarchyData,
+        isLoading,
+        isDataLoaded,
+        productHierarchyData,
+        productHierarchyAttributeData,
+        organizationId,
     };
     return returnValue;
 };
@@ -85,6 +92,9 @@ const mapDispatchToProps = (dispatch) => ({
             fetchDocumentDescriptionHead: documentDescriptionDataActions.fetchList,
 
             fetchOrgList: manufacturerOrgHierarchyDataActions.fetchList,
+
+            fetchProductDataList: productHierarchyDataActions.fetchList,
+            setSelectedOrganizationId: productHierarchyDataActions.setSelectedOrganizationId,
 
             showGlobalNotification,
         },
@@ -124,6 +134,10 @@ export const OtfSoMappingMain = ({
     manufacturerOrgHierarchyData,
     fetchOrgList,
     isDataOrgLoaded,
+    productHierarchyData,
+    setSelectedOrganizationId,
+    organizationId,
+    fetchProductDataList,
 }) => {
     const [form] = Form.useForm();
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
@@ -141,12 +155,11 @@ export const OtfSoMappingMain = ({
     const [searchValue, setSearchValue] = useState('');
     const [attributeType, setAttributeType] = useState();
     const [calculationType, setCalculationType] = useState();
-    const [selectedOrganizationId, setSelectedOrganizationId] = useState(null);
 
     const defaultBtnVisiblity = { editBtn: false, childBtn: false, siblingBtn: false, enable: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const organizationFieldNames = { title: 'manufactureOrgShrtName', key: 'id', children: 'subManufactureOrg' };
-    const fieldNames = { title: 'taxChargesTypeCode', key: 'taxChargesTypeCode', children: 'subChargeTypes' };
+    const fieldNames = { title: 'prodctShrtName', key: 'id', children: 'subProdct' };
 
     const onKeyPressHandler = (e) => {
         e.key === 'Enter' && e.preventDefault();
@@ -186,6 +199,13 @@ export const OtfSoMappingMain = ({
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataOrgLoaded, userId]);
+
+    useEffect(() => {
+        if (organizationId && userId) {
+            fetchProductDataList({ setIsLoading: listShowLoading, userId, id: organizationId });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, organizationId]);
 
     const onChange = (e) => {
         setSearchValue(e.target.value);
@@ -323,7 +343,7 @@ export const OtfSoMappingMain = ({
     const treeSelectFieldProps = {
         treeFieldNames: treeOrgFieldNames,
         treeData: manufacturerOrgHierarchyData,
-        selectedTreeSelectKey: selectedOrganizationId,
+        selectedTreeSelectKey: organizationId,
         defaultParent: false,
         handleSelectTreeClick: (value) => {
             setSelectedTreeKey();
@@ -331,7 +351,7 @@ export const OtfSoMappingMain = ({
             setSelectedOrganizationId(value);
             // !value && resetData();
         },
-        //defaultValue: organizationId,
+        defaultValue: organizationId,
         placeholder: preparePlaceholderSelect('Organization Hierarchy'),
     };
 
@@ -342,7 +362,7 @@ export const OtfSoMappingMain = ({
         selectedTreeSelectKey,
         fieldNames,
         handleTreeViewClick,
-        treeData: taxChargeData,
+        treeData: productHierarchyData,
         searchValue,
         setSearchValue,
     };
@@ -407,6 +427,9 @@ export const OtfSoMappingMain = ({
     const leftCol = taxChargeData?.length > 0 ? 14 : 24;
     const rightCol = taxChargeData?.length > 0 ? 10 : 24;
     const title = 'Hierarchy';
+
+    console.log('productHierarchyData', productHierarchyData);
+
     return (
         <>
             <div className={styles.contentHeaderBackground}>
