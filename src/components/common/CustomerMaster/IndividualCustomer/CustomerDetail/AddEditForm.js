@@ -7,12 +7,12 @@
 import { useEffect, useState } from 'react';
 import { Col, Input, Form, Row, Select, Space, Typography, Card, Divider, Switch, Button, Tag, Upload, Collapse } from 'antd';
 import { validateEmailField, validateMobileNoField, validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
-import { UploadUtil } from 'utils/Upload';
 
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { expandIcon } from 'utils/accordianExpandIcon';
+import { UploadUtil } from 'utils/Upload';
 
-import { FiEye, FiTrash, FiEdit } from 'react-icons/fi';
+import { FiEdit } from 'react-icons/fi';
 import { BiTimeFive } from 'react-icons/bi';
 
 import { PARAM_MASTER } from 'constants/paramMaster';
@@ -22,15 +22,16 @@ import styles from 'components/common/Common.module.css';
 
 const { Dragger } = Upload;
 const { Panel } = Collapse;
-const { Text, Title } = Typography;
+const { Text } = Typography;
 
 const AddEditFormMain = (props) => {
     const { form, typeData, formData, corporateLovData, formActionType: { editMode } = undefined, customerType } = props;
-    const { nameChangeHistoryForm, editedMode, setCustomerNameList, activeKey, setactiveKey, customerNameList, setEditedMode, data, isHistoryVisible, onViewHistoryChange, changeHistoryClose, setButtonData, buttonData, status, setStatus, showGlobalNotification, setEmptyList } = props;
 
+    const { nameChangeHistoryForm, editedMode, setCustomerNameList, activeKey, setactiveKey, data, customerNameList, setEditedMode, isHistoryVisible, onViewHistoryChange, changeHistoryClose, setButtonData, buttonData, status, setStatus, showGlobalNotification } = props;
     const { whatsAppConfiguration, setWhatsAppConfiguration, handleFormFieldChange } = props;
     const { contactOverWhatsApp, contactOverWhatsAppActive, sameMobileNoAsWhatsApp, sameMobileNoAsWhatsAppActive } = whatsAppConfiguration;
 
+    // const [isHistoryVisible, setIsHistoryVisible] = useState(false);
     const [corporateType, setCorporateType] = useState('');
     const [disabled, setDisabled] = useState(false);
     const [onSave, setOnSave] = useState(false);

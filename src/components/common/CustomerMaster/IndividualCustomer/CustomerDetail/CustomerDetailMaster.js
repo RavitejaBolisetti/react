@@ -98,7 +98,6 @@ const CustomerDetailMasterBase = (props) => {
     const [isHistoryVisible, setIsHistoryVisible] = useState(false);
     const [activeKey, setactiveKey] = useState([]);
 
-
     const [whatsAppConfiguration, setWhatsAppConfiguration] = useState({ contactOverWhatsApp: null, contactOverWhatsAppActive: null, sameMobileNoAsWhatsApp: null, sameMobileNoAsWhatsAppActive: null });
 
     const onErrorAction = (message) => {
@@ -118,8 +117,11 @@ const CustomerDetailMasterBase = (props) => {
         if (data) {
             console.log('data', data);
             setCustomerNameList({
-                titleCode: data?.titleCode, firstName: data?.firstName, middleName: data?.middleName, lastName: data?.lastName
-            })
+                titleCode: data?.titleCode,
+                firstName: data?.firstName,
+                middleName: data?.middleName,
+                lastName: data?.lastName,
+            });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data]);
@@ -214,7 +216,7 @@ const CustomerDetailMasterBase = (props) => {
 
     const onViewHistoryChange = () => {
         setIsHistoryVisible(true);
-    }
+    };
 
     const onFinish = (values) => {
         setFileList([]);
@@ -223,7 +225,7 @@ const CustomerDetailMasterBase = (props) => {
         const data = { ...values, customerId: selectedCustomer?.customerId, status: true, docId: uploadedFile, documentTypeId: form.getFieldValue('documentTypeId'), titleCode: customerNameList?.titleCode, firstName: customerNameList?.firstName, middleName: customerNameList?.middleName, lastName: customerNameList?.lastName };
 
         const onSuccess = (res) => {
-            setStatus("Approved");
+            setStatus('Approved');
             form.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId });
@@ -235,8 +237,11 @@ const CustomerDetailMasterBase = (props) => {
                 // setSelectedCustomer({ ...res.data, customerName: res?.data?.firstName + ' ' + res?.data?.middleName + ' ' + res?.data?.lastName });
                 setSelectedCustomerId(res?.data?.customerId);
                 setCustomerNameList({
-                    titleCode: res?.data?.titleCode, firstName: res?.data?.firstName, middleName: res?.data?.middleName, lastName: res?.data?.lastName
-                })
+                    titleCode: res?.data?.titleCode,
+                    firstName: res?.data?.firstName,
+                    middleName: res?.data?.middleName,
+                    lastName: res?.data?.lastName,
+                });
             }
         };
         const onError = (message) => {
@@ -254,7 +259,6 @@ const CustomerDetailMasterBase = (props) => {
 
         saveData(requestData);
     };
-
 
     const handlePreview = (selectedDocument) => {
         const extraParams = [
@@ -355,7 +359,6 @@ const CustomerDetailMasterBase = (props) => {
         styles,
         isLoading,
     };
-
 
     return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
