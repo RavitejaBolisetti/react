@@ -88,7 +88,7 @@ const AddEditFormMain = (props) => {
 
     return (
         <>
-            <Space direction="vertical" size="small" className={`${styles.accordianContainer} ${styles.drawerBodyNew}`}>
+            <div className={styles.drawerBodyNew}>
                 <Form autoComplete="off" form={form} id="myForm" layout="vertical" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -157,7 +157,7 @@ const AddEditFormMain = (props) => {
                         <AuthorityDetailPanel {...props} formActionType={formActionType} handleFormValueChange={handleFormValueChange} />
                     </Col>
                 </Row>
-            </Space>
+            </div>
         </>
     );
 };

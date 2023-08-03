@@ -16,7 +16,7 @@ import { ModalButtons } from 'components/common/Button';
 import styles from 'components/common/Common.module.css';
 
 export const AdvancedSearchFrom = (props) => {
-    const { setAdvanceSearchVisible, otfStatusList } = props;
+    const { setAdvanceSearchVisible, isVisible } = props;
     const {
         filterString,
         setFilterString,
@@ -24,28 +24,19 @@ export const AdvancedSearchFrom = (props) => {
         advanceFilterForm: { resetFields },
     } = props;
 
-    useEffect(() => {
-        resetFields();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString]);
-
     const onFinish = (values) => {
         setFilterString({
             ...filterString,
-            ...values,
-            receiptFromDate: formatDate(values?.fromDate),
-            receipttoDate: formatDate(values?.toDate),
-            status: values?.status,
+            receiptFromDate: formatDate(values?.receiptFromDate),
+            receipttoDate: formatDate(values?.receipttoDate),
             model: values?.model,
             advanceFilter: true,
         });
-
         setAdvanceSearchVisible(false);
     };
-    console.log('filterString', filterString);
 
     const handleResetFilter = (e) => {
-        advanceFilterForm.resetFields();
+        resetFields();
     };
 
     const onFinishFailed = () => {
@@ -56,7 +47,6 @@ export const AdvancedSearchFrom = (props) => {
         optionFilterProp: 'children',
         showSearch: true,
         allowClear: true,
-        className: styles.headerSelectField,
     };
     const modalProps = {
         reset: true,
@@ -69,26 +59,21 @@ export const AdvancedSearchFrom = (props) => {
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.fromDate)} label="Receipt From Date" name="receiptFromDate" rules={[validateRequiredSelectField('From Date')]} className={styles?.datePicker}>
+                    <Form.Item label="Receipt From Date" name="receiptFromDate" className={styles?.datePicker}>
                         <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.toDate)} label="Receipt To Date" name="receipttoDate" rules={[validateRequiredSelectField('To Date')]} className={styles?.datePicker}>
+                    <Form.Item label="Receipt To Date" name="receipttoDate" className={styles?.datePicker}>
                         <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} />
                     </Form.Item>
                 </Col>
             </Row>
 
             <Row gutter={16}>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item initialValue={filterString?.model} label="Model" name="model">
-                        <Select placeholder={preparePlaceholderSelect('model')} fieldNames={{ label: '', value: '' }} options={[{}]} {...selectProps} />
-                    </Form.Item>
-                </Col>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item initialValue={filterString?.otfStatus} label="Status" name="status">
-                        <Select placeholder={preparePlaceholderSelect('status')} fieldNames={{ label: '', value: '' }} options={[{}]} {...selectProps} />
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    <Form.Item label="Model" name="model">
+                        <Select placeholder={preparePlaceholderSelect('model')} fieldNames={{ label: 'label', value: 'value' }} options={[{ label: 'Shaka', value: 'Shaka' }]} {...selectProps} className={styles.headerSelectField} />
                     </Form.Item>
                 </Col>
             </Row>

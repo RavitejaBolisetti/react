@@ -18,7 +18,7 @@ const ContentHeader = ({ isAdvanceFilter = false, isTogglePresent = false, isDef
         return (
             <div className={styles.contentHeaderBackground}>
                 <Row gutter={20}>
-                    <Col xs={16} sm={16} md={16} lg={16} xl={16} className={styles.verticallyCentered}>
+                    <Col xs={24} sm={24} md={14} lg={14} xl={14} className={styles.verticallyCentered}>
                         <div className={`${styles.userManagement} ${styles.headingToggle}`}>
                             <Button className={styles.marR5} type={menuType === 'W' ? 'primary' : 'link'} onClick={() => handleTypeClick('W')}>
                                 {toggleFirst}

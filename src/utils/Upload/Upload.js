@@ -94,10 +94,10 @@ const UploadBase = (props) => {
         supportedFileTypes = [],
         messageText = (
             <>
-                Click or drop your file here to upload the signed and <br /> scanned customer form.
+                Click or drop your file here <br /> to upload the signed and scanned customer form.
             </>
         ),
-        validationText = <>File type should be png, jpg or pdf and max file size to be 5Mb</>,
+        validationText = <>(File type should be png, jpg or pdf and max file size to be 5Mb)</>,
         maxSize = 5,
         downloadFile,
         formActionType,
@@ -106,6 +106,8 @@ const UploadBase = (props) => {
         single = false,
         supportingDocs = false,
         setMandatoryFields,
+        singleDisabled,
+        setSingleDisabled,
     } = props;
 
     const [showStatus, setShowStatus] = useState('');
@@ -114,7 +116,7 @@ const UploadBase = (props) => {
     const [base64Img, setBase64Img] = useState('');
     const [uploadTime, setUploadTime] = useState(false);
 
-    const removeIcon = uploadTime ? <AiOutlineCloseCircle className={styles.iconSize} /> : <AiOutlineClose className={styles.iconSize}  />;
+    const removeIcon = uploadTime ? <AiOutlineCloseCircle className={styles.iconSize} /> : <AiOutlineClose className={styles.iconSize} />;
 
     const onReplaceClick = () => {
         setIsReplacing(true);
@@ -124,6 +126,10 @@ const UploadBase = (props) => {
         e.stopPropagation();
         setIsReplacing(false);
     };
+    // const formValues = form.getFieldsValue();
+    // useEffect(() => {
+    //     setUploadTime(false);
+    // }, [formValues]);
 
     useEffect(() => {
         if (isReplaceEnabled && viewDocument?.base64) {
@@ -204,9 +210,8 @@ const UploadBase = (props) => {
             showPreviewIcon,
         },
         onRemove,
-        progress: { strokeWidth: 3, showInfo: true },
+        progress: { strokeWidth: 3, showInfo: true, format: (percent) => percent && `${parseFloat(percent.toFixed(2))}%` },
         onDrop,
-        onDownload,
         onChange: (info) => {
             let fileList = [...info.fileList];
             if (supportingDocs) {
@@ -217,12 +222,16 @@ const UploadBase = (props) => {
                         const { status } = info.file;
                         setShowStatus(info.file);
                         if (status === 'done') {
+                            setTimeout(() => {
+                                setUploadTime(false);
+                            }, 2500);
                             setUploadedFile(info?.file?.response?.docId);
                             setUploadedFileName(info?.file?.response?.documentName);
                         }
                         setMandatoryFields(false);
                     })
                     .catch((err) => {
+                        setUploadTime(false);
                         return;
                     });
             } else {
@@ -236,6 +245,9 @@ const UploadBase = (props) => {
                 const { status } = info.file;
                 setShowStatus(info.file);
                 if (status === 'done') {
+                    setTimeout(() => {
+                        setUploadTime(false);
+                    }, 2700);
                     setUploadedFile(info?.file?.response?.docId);
                     setUploadedFileName(info?.file?.response?.documentName);
                 }
@@ -255,6 +267,10 @@ const UploadBase = (props) => {
     const handleUpload = (options) => {
         const { file, onSuccess, onError } = options;
         setEmptyList(true);
+        setUploadTime(true);
+        if (single) {
+            setSingleDisabled(true);
+        }
 
         const data = new FormData();
         data.append('applicationId', 'app');
@@ -307,7 +323,7 @@ const UploadBase = (props) => {
                     </>
                 ) : (
                     <>
-                        <Dragger key={key} className={uploadTime ? styles.uploadDraggerStrip : ''} fileList={fileList} customRequest={handleUpload} {...uploadProps}>
+                        <Dragger key={key} className={fileList.length === 0 ? '' : uploadTime ? styles.uploadDraggerStrip : styles.uploadDraggerBox} fileList={fileList} customRequest={handleUpload} {...uploadProps}>
                             <Space direction="vertical">
                                 <UploadBoxIcon />
                                 <div>
@@ -315,7 +331,7 @@ const UploadBase = (props) => {
                                     <Text>{validationText}</Text>
                                 </div>
                                 <Space>
-                                    <Button disabled={uploadTime} type="primary">
+                                    <Button disabled={uploadTime || singleDisabled} type="primary">
                                         {uploadButtonName}
                                     </Button>
                                     {isReplacing && (

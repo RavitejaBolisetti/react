@@ -587,7 +587,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
                                     </Col>
                                     {organizationId && manufacturerAdminHierarchyData?.length > 0 && (
                                         <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                            <Search placeholder="Search" allowClear onChange={onChange} className={styles.headerSearchField} />
+                                            <Search placeholder="Search" allowClear onChange={onChange} />
                                         </Col>
                                     )}
                                 </Row>

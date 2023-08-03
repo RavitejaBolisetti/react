@@ -12,6 +12,7 @@ import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/prepareP
 import { validateRequiredInputField, validateNumberWithTwoDecimalPlaces, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
 
 import styles from 'components/common/Common.module.css';
+import { ModalButtons } from 'components/common/Button';
 
 export const AdvanceForm = (props) => {
     const { AdvanceformData, setAdvanceformData } = props;
@@ -21,6 +22,7 @@ export const AdvanceForm = (props) => {
     const InputGroup = Input.Group;
     const { RangePicker } = DatePicker;
     const { TextArea } = Input;
+
     const bindFormItems = (props) => {
         const { record, index, formItemType } = props;
         switch (formItemType) {
@@ -88,6 +90,15 @@ export const AdvanceForm = (props) => {
     const onFinishFailed = () => {
         return;
     };
+    const modalProps = {
+        reset: true,
+        submit: true,
+        resetName: 'Cancel',
+        submitName: 'Save',
+        handleResetFilter: onCloseAction,
+        htmltype: false,
+        onClickAction: onFinish,
+    };
 
     return (
         <Form autoComplete="off" layout="vertical" form={aggregateForm} onFinishFailed={onFinishFailed}>
@@ -106,19 +117,7 @@ export const AdvanceForm = (props) => {
                             <Form.Item name="id" hidden></Form.Item>
                         </Col>
                     </Row>
-                    <Row gutter={20}>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignLeft}>
-                            <Button onClick={onCloseAction} danger>
-                                Cancel
-                            </Button>
-                        </Col>
-
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignRight}>
-                            <Button onClick={onFinish} type="primary">
-                                Save
-                            </Button>
-                        </Col>
-                    </Row>
+                    <ModalButtons {...modalProps} />
                 </Col>
             </Row>
         </Form>

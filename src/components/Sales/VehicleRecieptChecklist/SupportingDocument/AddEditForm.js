@@ -161,7 +161,7 @@ const AddEditForm = (props) => {
                             <Row gutter={16}>
                                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                                     <Form.Item {...documentTypeRule} label="Document Type" name="documentTypeCd" placeholder={preparePlaceholderSelect('document type')} validateTrigger={['onChange']}>
-                                        <Select loading={!(typeData?.length !== 0)} placeholder="Select" {...selectProps} onChange={handleDocumentType}>
+                                        <Select className={styles.headerSelectField} loading={!(typeData?.length !== 0)} placeholder="Select" {...selectProps} onChange={handleDocumentType}>
                                             {typeData?.map((item) => (
                                                 <Option key={item?.key} value={item?.key}>
                                                     {item?.value}
