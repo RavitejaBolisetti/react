@@ -854,6 +854,11 @@ p {
     padding-bottom: 0;
 }
 
+:global .ant-card .ant-card-body::before,
+:global .ant-card .ant-card-body::after {
+    display: none;
+}
+
 /* AntD Card Design End*/
 
 /* AntD Collapse Design Start*/
@@ -905,6 +910,7 @@ p {
 
 :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box {
     padding: 0 20px;
+    margin-bottom: 20px;
 }
 
 /* AntD Collapse Design End*/
@@ -1105,3 +1111,14 @@ p {
 } */
 
 /* AntD Space Design End*/
+
+/* Miscellaneous CSS Design Start*/
+:global .rc-virtual-list-scrollbar.rc-virtual-list-scrollbar-show {
+    display: block !important;
+}
+
+:global .rc-virtual-list-scrollbar-thumb {
+    background: #c1c1c1 !important;
+}
+
+/* Miscellaneous CSS Design End*/

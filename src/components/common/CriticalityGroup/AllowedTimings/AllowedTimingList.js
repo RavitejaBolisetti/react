@@ -86,24 +86,28 @@ const AllowedTimingList = (props) => {
     return (
         <>
             <Row gutter={20}>
-                <Divider />
-                <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                    <p className={styles.allowedTimingAlignment}>Allowed Timings</p>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.marB20}>
+                    <Divider />
+                    <Row gutter={20}>
+                        <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
+                            <p className={styles.allowedTimingAlignment}>Allowed Timings</p>
+                        </Col>
+                        {!formActionType?.viewMode && (
+                            <Col xs={24} sm={24} md={12} lg={12} xl={12} className={styles.addGroup}>
+                                <Button
+                                    type="link"
+                                    onClick={() => {
+                                        setIsAddTimeVisible(!isAddTimeVisible);
+                                        timingForm.resetFields();
+                                    }}
+                                    // icon={<PlusOutlined />}
+                                >
+                                    Add Time
+                                </Button>
+                            </Col>
+                        )}
+                    </Row>
                 </Col>
-                {!formActionType?.viewMode && (
-                    <Col xs={24} sm={24} md={12} lg={12} xl={12} className={styles.addGroup}>
-                        <Button
-                            type="link"
-                            onClick={() => {
-                                setIsAddTimeVisible(!isAddTimeVisible);
-                                timingForm.resetFields();
-                            }}
-                            // icon={<PlusOutlined />}
-                        >
-                            Add Time
-                        </Button>
-                    </Col>
-                )}
             </Row>
 
             {showTime && (
@@ -114,27 +118,31 @@ const AllowedTimingList = (props) => {
                                 <Col xs={10} sm={10} md={10} lg={10} xl={10} xxl={10}>
                                     <div className={styles.paddingLeft}>Start Time</div>
                                 </Col>
-                                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                    <div className={styles.paddingLeft}> End Time</div>
+                                <Col xs={14} sm={14} md={14} lg={14} xl={14} xxl={14}>
+                                    <div className={styles.paddingLeft}>End Time</div>
                                 </Col>
                             </Row>
                         </div>
                     </Col>
                 </Row>
             )}
-            <div className={styles.advanceTimingContainer}>
-                {!formActionType?.viewMode && isAddTimeVisible && <AddEditForm {...formProps} />}
-                {timeData?.length > 0 && (
-                    <div className={styles.viewTiming}>
-                        <div className={formActionType?.viewMode || !isAddTimeVisible ? styles.viewSeparator : styles.separator}></div>
-                        {timeData
-                            ?.filter((i) => i?.isDeleted)
-                            ?.map((timing) => (
-                                <AllowedTimingCard styles={{ marginBottom: '10px', backgroundColor: '#B5B5B6' }} {...cardProps} {...timing} />
-                            ))}
+            <Row gutter={20}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    <div className={styles.advanceTimingContainer}>
+                        {!formActionType?.viewMode && isAddTimeVisible && <AddEditForm {...formProps} />}
+                        {timeData?.length > 0 && (
+                            <div className={styles.viewTiming}>
+                                <div className={formActionType?.viewMode || !isAddTimeVisible ? styles.viewSeparator : styles.separator}></div>
+                                {timeData
+                                    ?.filter((i) => i?.isDeleted)
+                                    ?.map((timing) => (
+                                        <AllowedTimingCard styles={{ marginBottom: '10px', backgroundColor: '#B5B5B6' }} {...cardProps} {...timing} />
+                                    ))}
+                            </div>
+                        )}
                     </div>
-                )}
-            </div>
+                </Col>
+            </Row>
         </>
     );
 };

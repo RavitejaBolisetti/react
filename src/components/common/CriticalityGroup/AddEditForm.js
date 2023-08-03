@@ -88,6 +88,7 @@ const AddEditFormMain = (props) => {
         buttonData,
         setButtonData,
         handleButtonClick,
+        multipleForm: true,
     };
 
     return (
@@ -126,19 +127,6 @@ const AddEditFormMain = (props) => {
                         <ViewCriticalityGroup {...viewProps} {...cardProps} />
                     )}
                     <DrawerFormButton {...buttonProps} isLoadingOnSave={isLoadingOnSave} />
-                    {/* <Row gutter={20} className={styles.formFooterNew}>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
-                            <Button danger onClick={onCloseAction}>
-                                Cancel
-                            </Button>
-                        </Col>
-
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
-                            <Button htmlType="submit" type="primary" disabled={!isFormBtnActive}>
-                                Save
-                            </Button>
-                        </Col>
-                    </Row> */}
                 </Form>
 
                 <AllowedTimingList {...listProps} />

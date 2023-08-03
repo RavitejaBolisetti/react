@@ -83,9 +83,8 @@ const AddEditFormMain = ({
 
     return (
         <>
-            <div className={styles.drawerBodyNew}>
-                <Spin spinning={isApplicatinoOnSaveLoading}>
-                    {/* <Space direction="vertical" size="small" className={styles.accordianContainer}> */}
+            <Spin spinning={isApplicatinoOnSaveLoading}>
+                <div className={`${styles.drawerBodyNew} ${styles.drawerBodyApplicationMaster}`}>
                     <ApplicationDetails
                         showGlobalNotification={showGlobalNotification}
                         isFieldDisable={isFieldDisable}
@@ -152,9 +151,9 @@ const AddEditFormMain = ({
                             </Panel>
                         </Collapse>
                     )}
-                    {/* </Space> */}
-                </Spin>
-                {/* <Row gutter={20} className={style.formFooter}>
+                </div>
+            </Spin>
+            {/* <Row gutter={20} className={style.formFooter}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={style.footerBtnLeft}>
                     <Button danger onClick={onCloseAction}>
                         Cancel
@@ -166,7 +165,6 @@ const AddEditFormMain = ({
                     </Button>
                 </Col>
             </Row> */}
-            </div>
         </>
     );
 };

@@ -131,9 +131,9 @@
     top: 39px;
 }
 
-.vechilemodelTooltip svg{
+.vechilemodelTooltip svg {
     color: #2782f9;
-    padding:3px 0 0 3px;
+    padding: 3px 0 0 3px;
 }
 
 .drawerBody {
@@ -171,24 +171,34 @@
     overflow-y: auto;
 }
 
-.content :global .ant-tree-show-line .ant-tree-switcher-line-icon svg {
+.drawerBodyApplicationMaster {
+    height: calc(100vh - 120px);
+}
+
+.drawerBodyApplicationMaster :global .ant-collapse:last-child:not(:first-child) {
+    margin-bottom: 60px;
+}
+
+.drawerBodyNew .viewContainer {
+    border: none;
+}
+
+.drawerBodyNew .viewContainer :global .ant-descriptions .ant-descriptions-view {
+    overflow: hidden;
+    height: auto;
+    padding: 0;
+}
+
+/* .content :global .ant-tree-show-line .ant-tree-switcher-line-icon svg {
     width: 1.25em;
     height: 1.25em;
-}
+} */
 
-:global .rc-virtual-list-scrollbar.rc-virtual-list-scrollbar-show {
-    display: block !important;
-}
-
-:global .rc-virtual-list-scrollbar-thumb {
-    background: #c1c1c1 !important;
-}
-
-.changeThemeBorder {
+/* .changeThemeBorder {
     border: 1px solid red;
     border-radius: 4px;
     padding: 5px;
-}
+} */
 
 .contentHeaderBackground {
     background-color: #f2f2f2;
@@ -909,10 +919,7 @@
 }
 
 .viewCardSize :global .ant-card-body {
-    border: 1px solid rgba(62, 62, 62, 0.1);
-    border-radius: 6px;
-    background-color: rgba(190, 190, 190, 0.1);
-    gap: 10px;
+    padding: 16px 20px;
 }
 
 .viewCardSize :global .ant-card-body .ant-btn-link {
@@ -1265,7 +1272,7 @@
     border-top-left-radius: 8px !important;
     border-top-right-radius: 8px !important;
     font-size: 14px;
-    color: #342c2c;
+    color: #0b0b0c;
 }
 
 .paddingLeft {
@@ -1280,18 +1287,17 @@
  } */
 
 .allowedTiming {
-    background: #f4f4f4;
+    /* background: #f2f2f2; */
     border-radius: 8px;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 20px 0px 20px 20px;
-    gap: 20px;
-    /* padding-bottom: 0; */
-    /* margin-bottom: 20px; */
+    padding: 20px;
 }
 
 .allowedTiming :global .ant-space .ant-space-item .ant-form-item {
     margin-bottom: 0;
+}
+
+.allowedTiming :global .ant-space-item .ant-form-item .ant-picker {
+    width: 167px;
 }
 
 /* .allowedTiming :global .ant-space .ant-space-item .ant-btn span {
@@ -1305,9 +1311,9 @@
     font-size: 14px;
 }
 
-.allowedTiming :global .ant-btn-default.ant-btn-dangerous.ant-btn-icon-only:hover {
+/* .allowedTiming :global .ant-btn-default.ant-btn-dangerous.ant-btn-icon-only:hover {
     color: #ff3e5b !important;
-}
+} */
 
 .deleteBtn :disabled {
     background-color: #ffffff;
@@ -1545,7 +1551,7 @@
 } */
 
 .advanceTimingContainer {
-    background-color: #f4f4f4;
+    background-color: #f2f2f2;
     border-bottom-right-radius: 8px;
     border-bottom-left-radius: 8px;
 }
@@ -1556,7 +1562,8 @@
 }
 
 .viewTiming {
-    padding: 0px 20px 10px 20px;
+    padding: 20px;
+    padding-top: 0;
 }
 
 .notViewTiming {
@@ -1574,7 +1581,7 @@
 }
 
 .timingCardItem {
-    margin: 10px 0px;
+    margin-top: 10px;
     background-color: #f2f2f2;
     border: 1px solid #e6e6e6;
     border-radius: 4px;
