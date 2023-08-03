@@ -6,7 +6,7 @@
 import React from 'react';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
-import { RSMApprovalMaster } from 'components/Sales/RSM Approval';
+import { RSMApprovalMaster } from 'components/Sales/RSMApproval';
 
 const RSMApprovalBase = (props) => {
     const pageTitle = 'RSM Approval';

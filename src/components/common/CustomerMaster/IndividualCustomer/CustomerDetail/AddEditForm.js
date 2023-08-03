@@ -11,7 +11,6 @@ import { UploadUtil } from 'utils/Upload';
 
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { expandIcon } from 'utils/accordianExpandIcon';
-import { UploadUtil } from 'utils/Upload';
 
 import { FiEye, FiTrash, FiEdit } from 'react-icons/fi';
 import { BiTimeFive } from 'react-icons/bi';
@@ -33,7 +32,6 @@ const AddEditFormMain = (props) => {
     const { whatsAppConfiguration, setWhatsAppConfiguration, handleFormFieldChange } = props;
     const { contactOverWhatsApp, contactOverWhatsAppActive, sameMobileNoAsWhatsApp, sameMobileNoAsWhatsAppActive } = whatsAppConfiguration;
 
-    const [isHistoryVisible, setIsHistoryVisible] = useState(false);
     const [corporateType, setCorporateType] = useState('');
     const [disabled, setDisabled] = useState(false);
     const [onSave, setOnSave] = useState(false);

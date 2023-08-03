@@ -22,7 +22,6 @@ export default function AppliedAdvanceFilter(props) {
     const onKeyPressHandler = (e) => {
         e.key === 'Enter' && e.preventDefault();
     };
-
     return (
         <>
             <div className={styles.contentHeaderBackground}>
@@ -88,20 +87,22 @@ export default function AppliedAdvanceFilter(props) {
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={22} xl={22} className={styles.advanceFilterContainer}>
                                     <div className={styles.advanceFilterTitle}>Applied Advance Filters : </div>
-                                    {extraParams?.map((filter) => {
-                                        return (
-                                            filter?.value && (
-                                                <div className={styles.advanceFilterItem} key={filter?.key}>
-                                                    {filter?.name}
-                                                    {filter?.canRemove && (
-                                                        <span>
-                                                            <RxCross2 onClick={() => removeFilter(filter?.key)} />
-                                                        </span>
-                                                    )}
-                                                </div>
-                                            )
-                                        );
-                                    })}
+                                    {extraParams
+                                        ?.filter((item, index) => index < 5)
+                                        ?.map((filter) => {
+                                            return (
+                                                filter?.value && (
+                                                    <div className={styles.advanceFilterItem} key={filter?.key}>
+                                                        {filter?.name}
+                                                        {filter?.canRemove && (
+                                                            <span>
+                                                                <RxCross2 onClick={() => removeFilter(filter?.key)} />
+                                                            </span>
+                                                        )}
+                                                    </div>
+                                                )
+                                            );
+                                        })}
                                 </Col>
                                 <Col xs={24} sm={2} md={2} lg={2} xl={2} className={styles.advanceFilterClear}>
                                     <Button className={styles.clearBtn} onClick={() => handleResetFilter()} danger>
