@@ -36,6 +36,7 @@ import { VehiclePriceMaster } from './vehiclePriceMaster';
 import { ManufacturerAdmin } from './ManufacturerAdmin';
 import { ManufacturerOrg } from './ManufacturerOrg';
 import { VehicleReceipt } from './vehicleReceipt';
+import { Report } from './report';
 
 export const data = combineReducers({
     Menu,
@@ -70,4 +71,5 @@ export const data = combineReducers({
     ManufacturerOrg,
     VehicleReceipt,
     VehiclePriceMaster,
+    Report,
 });
