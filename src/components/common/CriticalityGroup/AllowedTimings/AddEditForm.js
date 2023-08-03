@@ -24,7 +24,7 @@ const AddEditForm = (props) => {
                             <Form.Item name={'timeSlotTo'} rules={[validateRequiredInputField('end time')]}>
                                 <TimePicker placeholder={'End time*'} use12Hours size="large" format="h:mm A" />
                             </Form.Item>
-                            <Button disabled={allowedTimingSave} type="link" htmlType="submit">
+                            <Button disabled={allowedTimingSave} type="link" htmlType="submit" className={styles.marB20}>
                                 Save
                             </Button>
                         </Space>

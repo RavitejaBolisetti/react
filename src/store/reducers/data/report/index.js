@@ -3,6 +3,10 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { EmbeddedReport } from './EmbeddedReport';
+import { combineReducers } from 'redux';
 
-export { EmbeddedReport };
+import { Reports } from './reports';
+
+export const Report = combineReducers({
+    Reports,
+});
