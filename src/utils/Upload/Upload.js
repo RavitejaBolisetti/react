@@ -94,10 +94,10 @@ const UploadBase = (props) => {
         supportedFileTypes = [],
         messageText = (
             <>
-                Click or drop your file here to upload the signed and <br /> scanned customer form.
+                Click or drop your file here <br /> to upload the signed and scanned customer form.
             </>
         ),
-        validationText = <>File type should be png, jpg or pdf and max file size to be 5Mb</>,
+        validationText = <>(File type should be png, jpg or pdf and max file size to be 5Mb)</>,
         maxSize = 5,
         downloadFile,
         formActionType,
@@ -126,6 +126,10 @@ const UploadBase = (props) => {
         e.stopPropagation();
         setIsReplacing(false);
     };
+    // const formValues = form.getFieldsValue();
+    // useEffect(() => {
+    //     setUploadTime(false);
+    // }, [formValues]);
 
     useEffect(() => {
         if (isReplaceEnabled && viewDocument?.base64) {
@@ -206,7 +210,7 @@ const UploadBase = (props) => {
             showPreviewIcon,
         },
         onRemove,
-        progress: { strokeWidth: 3, showInfo: true },
+        progress: { strokeWidth: 3, showInfo: true, format: (percent) => percent && `${parseFloat(percent.toFixed(2))}%` },
         onDrop,
         onChange: (info) => {
             let fileList = [...info.fileList];
@@ -218,12 +222,16 @@ const UploadBase = (props) => {
                         const { status } = info.file;
                         setShowStatus(info.file);
                         if (status === 'done') {
+                            setTimeout(() => {
+                                setUploadTime(false);
+                            }, 2500);
                             setUploadedFile(info?.file?.response?.docId);
                             setUploadedFileName(info?.file?.response?.documentName);
                         }
                         setMandatoryFields(false);
                     })
                     .catch((err) => {
+                        setUploadTime(false);
                         return;
                     });
             } else {
@@ -237,8 +245,9 @@ const UploadBase = (props) => {
                 const { status } = info.file;
                 setShowStatus(info.file);
                 if (status === 'done') {
-                    setUploadTime(false);
-
+                    setTimeout(() => {
+                        setUploadTime(false);
+                    }, 2700);
                     setUploadedFile(info?.file?.response?.docId);
                     setUploadedFileName(info?.file?.response?.documentName);
                 }

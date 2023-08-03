@@ -3089,9 +3089,9 @@ li.ant-timeline-item.active .ant-timeline-item-content p {
     padding: 0px 6px 5px 10px !important;
 }
 
-.inputWrapper :global .ant-btn-default {
+/* .inputWrapper :global .ant-btn-default {
     padding: 5px 0;
-}
+} */
 
 /* .inputWrapper :global .ant-input-affix-wrapper {
     padding: 0px 6px 5px 0px;

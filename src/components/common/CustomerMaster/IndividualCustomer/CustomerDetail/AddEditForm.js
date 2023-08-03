@@ -7,6 +7,7 @@
 import { useEffect, useState } from 'react';
 import { Col, Input, Form, Row, Select, Space, Typography, Card, Divider, Switch, Button, Tag, Upload, Collapse } from 'antd';
 import { validateEmailField, validateMobileNoField, validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
+import { UploadUtil } from 'utils/Upload';
 
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { expandIcon } from 'utils/accordianExpandIcon';
@@ -32,6 +33,7 @@ const AddEditFormMain = (props) => {
     const { whatsAppConfiguration, setWhatsAppConfiguration, handleFormFieldChange } = props;
     const { contactOverWhatsApp, contactOverWhatsAppActive, sameMobileNoAsWhatsApp, sameMobileNoAsWhatsAppActive } = whatsAppConfiguration;
 
+    const [isHistoryVisible, setIsHistoryVisible] = useState(false);
     const [corporateType, setCorporateType] = useState('');
     const [disabled, setDisabled] = useState(false);
     const [onSave, setOnSave] = useState(false);
@@ -67,11 +69,8 @@ const AddEditFormMain = (props) => {
     }, [editedMode]);
 
     const uploadProps = {
-        messageText: (
-            <>
-                Upload supporting documents
-            </>
-        ),
+        // supportingDocs: true,
+        messageText: <>Upload supporting documents</>,
         ...props,
     };
 
@@ -95,14 +94,13 @@ const AddEditFormMain = (props) => {
 
     }
 
-
     const handleResetChange = () => {
         nameChangeHistoryForm.setFieldsValue({ titleCode: null });
         nameChangeHistoryForm.setFieldsValue({ middleName: null });
         nameChangeHistoryForm.setFieldsValue({ firstName: null });
         nameChangeHistoryForm.setFieldsValue({ lastName: null });
     }
-
+    
     const handleCorporateChange = (value) => {
         setCorporateType(value);
         if (value === 'NON-LIS') {
