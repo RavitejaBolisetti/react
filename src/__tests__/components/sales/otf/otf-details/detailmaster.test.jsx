@@ -182,7 +182,16 @@ describe('AddEdit Component render', () => {
         fireEvent.click(addBtn);
         const status = screen.getByRole('columnheader', { name: 'Exchange', exact: false });
         fireEvent.click(status);
+        const disableChecked = screen.getByRole('columnheader', { name: 'Loyality Scheme', exact: false });
+        expect(disableChecked).not.toBeDisabled();
         const saveBtn = screen.getByRole('button', { name: 'Save & Next', exact: false });
         fireEvent.click(saveBtn);
+    });
+});
+
+describe('AddEdit Component render when viewmode is false', () => {
+    const formActionType = { addMode: false, editMode: false, viewMode: false };
+    it('should render addedit page', async () => {
+        customRender(<OtfDetailsMaster {...formActionType} typeData={('SALE_TYP', 'PRC_TYP')} />);
     });
 });

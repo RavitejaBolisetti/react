@@ -1,12 +1,14 @@
 import React from 'react';
-import { screen } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 import { AddEditForm } from '@components/Sales/OTF/OtfDetails/AddEditForm';
 import customRender from '@utils/test-utils';
+import { act } from 'react-dom/test-utils';
 
 const props = {
     formActionType: { editMode: 'true' },
     formData: {
         exchange: 1,
+        loyaltyScheme: 1,
     },
 };
 
@@ -16,7 +18,7 @@ describe('AddEdit Component render', () => {
     });
 
     it('should render all text components', async () => {
-        customRender(<AddEditForm typeData="SALE_TYP" />);
+        customRender(<AddEditForm typeData="SALE_TYP" {...props} />);
         const initialDate = screen.getByText('Initial Promise Delivery Date');
         expect(initialDate).toBeTruthy();
 
@@ -61,5 +63,13 @@ describe('AddEdit Component render', () => {
 
         const loyaltyScheme = screen.getByText('Loyality Scheme');
         expect(loyaltyScheme).toBeTruthy();
+
+        const Switch = screen.getByRole('switch', { name: /Loyality Scheme/i });
+        fireEvent.click(Switch);
+        expect(Switch).toBeChecked();
+
+        const Switch2 = screen.getByRole('switch', { name: /Exchange/i });
+        fireEvent.click(Switch2);
+        expect(Switch2).toBeChecked();
     });
 });
