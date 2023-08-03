@@ -4,16 +4,16 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Row, Col } from 'antd';
+import { Row, Col, Button } from 'antd';
 
 import { tblPrepareColumns } from 'utils/tableColumn';
-
 import { withDrawer } from 'components/withDrawer';
 import { ListDataTable } from 'utils/ListDataTable';
 import { convertDateMonthYear } from 'utils/formatDateTime';
-import styles from '../../ChangeHistory/ChangeHistory.module.css';
+import styles from 'components/common/Common.module.css';
+
 const ChangeHistoryMain = (props) => {
-    const { ChangeHistoryTermsConditionsData } = props;
+    const { ChangeHistoryTermsConditionsData, onCloseAction } = props;
 
     const tableColumn = [];
 
@@ -64,17 +64,24 @@ const ChangeHistoryMain = (props) => {
     const tableProps = {
         tableColumn,
         tableData: ChangeHistoryTermsConditionsData,
-        scroll: { x: '100%', y: 'calc(100vh - 220px)' },
+        scroll: { x: '100%', y: 'calc(100vh - 320px)' },
     };
     return (
         <>
-            <Row gutter={20}>
+            <Row gutter={20} className={styles.drawerBody}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <div className={styles.changeHistoryContainer}>
-                        <ListDataTable {...tableProps} />
-                    </div>
+                    <ListDataTable {...tableProps} />
                 </Col>
             </Row>
+            <div className={styles.formFooter}>
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <Button danger onClick={onCloseAction}>
+                            Close
+                        </Button>
+                    </Col>
+                </Row>
+            </div>
         </>
     );
 };

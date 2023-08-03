@@ -41,7 +41,7 @@ export default function AppliedAdvanceFilter(props) {
                                         ]}
                                         validateTrigger={['onSearch']}
                                     >
-                                        <Search placeholder="Search" allowClear className={styles.headerSearchField} onSearch={onSearchHandle} onChange={handleClearInSearch} />
+                                        <Search placeholder="Search" allowClear onSearch={onSearchHandle} onChange={handleClearInSearch} />
                                     </Form.Item>
                                 </Form>
                             </Col>
@@ -64,18 +64,18 @@ export default function AppliedAdvanceFilter(props) {
                         <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
                             {showChangeHistoryButton && (
                                 <>
-                                    <Button icon={<FaHistory />} onClick={showChangeHistoryList} type="primary">
+                                    <Button icon={<FaHistory />} className={styles.verticallyCentered} onClick={showChangeHistoryList} type="primary">
                                         Change History
                                     </Button>
                                 </>
                             )}
 
                             {advanceFilter && filterString?.advanceFilter && downloadReport && (
-                                <Button icon={<BsDownload />} className={styles.refreshBtn} onClick={handleDownloadReport} danger>
+                                <Button icon={<BsDownload />} onClick={handleDownloadReport} danger>
                                     Download
                                 </Button>
                             )}
-                            <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
+                            <Button icon={<TfiReload />} onClick={handleReferesh} danger />
                             <Button icon={<PlusOutlined />} type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
                                 Add
                             </Button>
