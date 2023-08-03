@@ -10,7 +10,7 @@ import { bindActionCreators } from 'redux';
 import { Col, Form, Row, Button } from 'antd';
 
 import { tableColumn } from './tableColumn';
-import AdvanceOtfFilter from './AdvanceOtfFilter';
+import AdvanceFilter from './AdvanceFilter';
 import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 'utils/btnVisiblity';
 
 import { ListDataTable } from 'utils/ListDataTable';
@@ -21,13 +21,14 @@ import { vehicleDetailDataActions } from 'store/actions/data/vehicle/vehicleDeta
 
 import { VEHICLE_CHECKLIST_STATUS } from 'constants/VehicleRecieptChecklistStatus';
 import { VEHICLE_RECIEPT_CHECKLIST } from 'constants/VehicleRecieptCheckListConstants';
+import { dateFormat, formatDate, formatDateToCalenderDate } from 'utils/formatDateTime';
 
 import { validateRequiredInputField } from 'utils/validation';
 import { LANGUAGE_EN } from 'language/en';
 
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { FilterIcon } from 'Icons';
-import { QueryButtons } from './QueryButtons';
+import { QueryButtons, QUERY_BUTTONS_CONSTANTS } from './QueryButtons';
 
 const mapStateToProps = (state) => {
     const {
@@ -123,6 +124,8 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
     const [formData, setFormData] = useState([]);
     const [otfSearchRules, setOtfSearchRules] = useState({ rules: [validateRequiredInputField('search parametar')] });
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
+    const [buttonType, setbuttonType] = useState(QUERY_BUTTONS_CONSTANTS?.PENDING?.key);
+    const [actionButtonVisibility, setactionButtonVisibility] = useState({ EditIcon: false, EyeIcon: false, DeleteIcon: false, AddIcon: true });
 
     const onSuccessAction = (res) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -136,7 +139,21 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         setShowDataLoading(false);
     };
     const handleButtonQuery = (buttonName) => {
-        // console.log('buttonName', buttonName);
+        setbuttonType(buttonName);
+        switch (buttonName) {
+            case 'pending': {
+                setactionButtonVisibility({ EditIcon: false, EyeIcon: false, DeleteIcon: false, AddIcon: true });
+                break;
+            }
+            case 'partially': {
+                setactionButtonVisibility({ EditIcon: true, EyeIcon: true, DeleteIcon: false, AddIcon: false });
+                break;
+            }
+            case 'completed': {
+                setactionButtonVisibility({ EditIcon: false, EyeIcon: true, DeleteIcon: false, AddIcon: false });
+                break;
+            }
+        }
     };
 
     const extraParams = useMemo(() => {
@@ -158,18 +175,18 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
                 filter: true,
             },
             {
-                key: 'recieptFromDate',
+                key: 'receiptFromDate',
                 title: 'Reciept From Date',
-                value: filterString?.recieptFromDate,
-                name: filterString?.recieptFromDate,
+                value: filterString?.receiptFromDate,
+                name: filterString?.receiptFromDate,
                 canRemove: true,
                 filter: true,
             },
             {
-                key: 'reciepttoDate',
+                key: 'receipttoDate',
                 title: 'Reciept To Date',
-                value: filterString?.reciepttoDate,
-                name: filterString?.reciepttoDate,
+                value: filterString?.receipttoDate,
+                name: filterString?.receipttoDate,
                 canRemove: true,
                 filter: true,
             },
@@ -252,11 +269,23 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentSection, sectionName]);
 
+    useEffect(() => {
+        if (isAdvanceSearchVisible && filterString) {
+            const { receiptFromDate, receipttoDate } = filterString;
+            advanceFilterForm.setFieldsValue({ ...filterString, receiptFromDate: formatDateToCalenderDate(receiptFromDate), receipttoDate: formatDateToCalenderDate(receipttoDate) });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isAdvanceSearchVisible, filterString]);
+
     const onAdvanceSearchCloseAction = () => {
-        form.resetFields();
-        advanceFilterForm.resetFields();
-        advanceFilterForm.setFieldsValue();
         setAdvanceSearchVisible(false);
+    };
+    const handleSearchChange = (value) => {
+        const searchValue = value?.trim();
+        if (!searchValue) {
+            return;
+        }
+        searchForm.resetFields();
     };
 
     const handleResetFilter = (e) => {
@@ -264,8 +293,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
             setShowDataLoading(true);
         }
         setFilterString();
-        // advanceFilterForm.resetFields();
-        // setAdvanceSearchVisible(false);
+        advanceFilterForm.resetFields();
     };
 
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
@@ -360,7 +388,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         dynamicPagination,
         totalRecords,
         setPage,
-        tableColumn: tableColumn(handleButtonClick),
+        tableColumn: tableColumn({ handleButtonClick, actionButtonVisibility }),
         tableData: [{}],
         showAddButton: false,
         handleButtonClick,
@@ -382,7 +410,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         removeFilter,
         vehicleDetailStatusList,
         advanceFilter: true,
-        otfFilter: true,
+        filter: true,
         filterString,
         setFilterString,
         from: listFilterForm,
@@ -398,6 +426,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         handleResetFilter,
         isAdvanceSearchVisible,
         setAdvanceSearchVisible,
+        handleSearchChange,
     };
 
     const drawerTitle = useMemo(() => {
@@ -465,7 +494,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
 
     return (
         <>
-            <AdvanceOtfFilter {...advanceFilterResultProps} />
+            <AdvanceFilter {...advanceFilterResultProps} />
             <AdvancedSearch {...advanceFilterProps} />
 
             <Row gutter={20}>
