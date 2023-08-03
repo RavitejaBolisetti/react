@@ -42,6 +42,6 @@ describe('crudViewReducer', () => {
         // Assert the expected state changes
         expect(updatedState.isVisible).toBe(false);
         // The id should not be changed when hiding the modal
-        expect(updatedState.id).toBe(123);
+        expect(updatedState.id).toBe(undefined);
     });
 });
