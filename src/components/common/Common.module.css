@@ -1210,6 +1210,7 @@
 :global .ant-table-wrapper .ant-table .ant-table-content::-webkit-scrollbar {
     background-color: #ffffff;
     width: 8px;
+    height: 8px;
 }
 
 :global .ant-descriptions .ant-descriptions-view::-webkit-scrollbar-thumb,
@@ -1290,11 +1291,12 @@
     /* background: #f2f2f2; */
     border-radius: 8px;
     padding: 20px;
+    padding-bottom: 0;
 }
 
-.allowedTiming :global .ant-space .ant-space-item .ant-form-item {
+/* .allowedTiming :global .ant-space .ant-space-item .ant-form-item {
     margin-bottom: 0;
-}
+} */
 
 .allowedTiming :global .ant-space-item .ant-form-item .ant-picker {
     width: 167px;
@@ -1481,13 +1483,13 @@
     margin-bottom: 0px !important;
 }
 
-/* .alignLeft {
+.alignLeft {
     text-align: left;
 }
 
 .alignRight {
     text-align: right;
-} */
+}
 
 .advanceFilterTop {
     margin-top: 18px;
