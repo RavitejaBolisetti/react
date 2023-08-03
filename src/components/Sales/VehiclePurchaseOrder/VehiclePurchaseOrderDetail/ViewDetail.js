@@ -27,7 +27,6 @@ const ViewDetailMain = (props) => {
         column: { xs: 1, sm: 2, lg: 2, xl: 2, xxl: 2 },
     };
 
-    const mnfcWarrEndDate = dayjs(formData?.mnfcWarrEndDate).format('DD/MM/YYYY');
     const deliveryDate = dayjs(formData?.deliveryDate).format('DD/MM/YYYY');
 
     return (
@@ -36,9 +35,15 @@ const ViewDetailMain = (props) => {
                 <Descriptions {...viewProps}>
                     <Descriptions.Item label="Order Type">{'Against Stock'}</Descriptions.Item>
                     <Descriptions.Item label="Purchase Order Number">{'PO10001'}</Descriptions.Item>
-                    <Descriptions.Item label="Purchase Order Date">{checkAndSetDefaultValue(deliveryDate, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Purchase Order Date">
+                        {/* {checkAndSetDefaultValue(deliveryDate, isLoading)} */}
+                        {checkAndSetDefaultValue(formData?.deliveryDate, isLoading, DATA_TYPE?.DATE?.key)}
+                        </Descriptions.Item>
                     <Descriptions.Item label="Purchase Order Status">{'Open'}</Descriptions.Item>
-                    <Descriptions.Item label="Purchase Cancel Date">{checkAndSetDefaultValue(deliveryDate, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Purchase Cancel Date">
+                        {checkAndSetDefaultValue(formData?.deliveryDate, isLoading)}
+                        {/* {checkAndSetDefaultValue(formData?.deliveryDate, isLoading, DATA_TYPE?.DATE?.key)} */}
+                        </Descriptions.Item>
                     {/* <Descriptions.Item label="SO Number">{'SO10237'}</Descriptions.Item>
                                     <Descriptions.Item label="SO Date">{checkAndSetDefaultValue(deliveryDate, isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label="SO Status">{'Cancel'}</Descriptions.Item> */}

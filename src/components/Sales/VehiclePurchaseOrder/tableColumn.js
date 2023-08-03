@@ -13,25 +13,25 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
     const tableColumn = [
         tblPrepareColumns({
             title: 'Purchase Order ID',
-            dataIndex: 'registrationNumber',
+            dataIndex: 'purchaseOrderNumber',
             width: '14%',
         }),
 
         tblPrepareColumns({
             title: 'Purchase Order Date ',
-            dataIndex: 'customerName',
+            dataIndex: 'purchaseOrderDate',
             width: '14%',
         }),
 
-        tblPrepareColumns({
+        tblPrepareColumns({ 
             title: 'Order Type',
-            dataIndex: 'mobileNumber',
+            dataIndex: 'orderType',
             width: '14%',
         }),
 
         tblPrepareColumns({
             title: 'Status',
-            dataIndex: 'orderStatus',
+            dataIndex: 'purchaseOrderStatus',
             width: '14%',
             render: (_, record) => VechilePurchaseOrderStatusTag(record.orderStatus),
         }),

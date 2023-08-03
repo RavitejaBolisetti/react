@@ -20,6 +20,8 @@ import { validateRequiredInputField } from 'utils/validation';
 
 import { showGlobalNotification } from 'store/actions/notification';
 import { vehicleDetailDataActions } from 'store/actions/data/vehicle/vehicleDetail';
+import { vehiclePurchaseOrderDataActions } from 'store/actions/data/vehicle/vehiclePurchaseOrderDetails';
+
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { FilterIcon } from 'Icons';
 import { PoCancellationMaster } from './VehiclePurchaseOrderCancellation/PoCancellationMaster';
@@ -36,6 +38,9 @@ const mapStateToProps = (state) => {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             Vehicle: {  
                 VehicleDetail: { isLoaded: isDataLoaded = false, isLoading, isDetailLoaded, detailData: vehicleDetailData = [], data, filter: filterString },
+
+                // VehiclePurchaseOrderDetail: { isLoaded: isDataLoaded = false, isLoading, isDetailLoaded, data, filter: filterString },
+                
             },
             // OTF: {
             //     OtfSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isOTFSearchLoading, data, filter: filterString, isDetailLoaded, detailData: [], isChangeHistoryLoaded, isChangeHistoryLoading, isChangeHistoryData = [] },
@@ -44,12 +49,12 @@ const mapStateToProps = (state) => {
             
         },
     } = state;
-
+console.log('state',state);
     const moduleTitle = 'Vehicle Purchase Order';
 
     let returnValue = {
         userId,
-        typeData: typeData,  //PARAM_MASTER.VH_PURCHASE_RORDER_SER.id //PO_MST
+        typeData: typeData,  //PARAM_MASTER.VH_PURCHASE_RORDER_SER.id 
         isDataLoaded: true,
         data: data?.vehicleSearch,
         vehicleDetailStatusList: Object.values(VEHICLE_DETAIL_STATUS),
@@ -58,6 +63,7 @@ const mapStateToProps = (state) => {
         isLoading: false,
         isDetailLoaded: true,
         filterString,
+        
     };
     return returnValue;
 };
@@ -66,6 +72,8 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
+            // fetchList: vehiclePurchaseOrderDataActions.fetchList,
+
             fetchList: vehicleDetailDataActions.fetchList,
             fetchDetail: vehicleDetailDataActions.fetchDetail,
             listShowLoading: vehicleDetailDataActions.listShowLoading,
@@ -78,7 +86,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const VehiclePurchaseOrderMasterBase = (props) => {
-    const { fetchList, saveData, isLoading, listShowLoading, userId, fetchDetail, data, vehicleDetailData,onFinishOTFCancellation } = props;
+    const { fetchList, saveData, isLoading, listShowLoading, userId, fetchDetail, data, vehicleDetailData, onFinishOTFCancellation } = props;
     const { typeData, moduleTitle } = props;
     const { filterString, setFilterString, vehicleDetailStatusList } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);    
@@ -184,6 +192,14 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
                 filter: true,
             },
             {
+                key: 'poNumber',
+                title: 'Purchase Order Number',
+                value: filterString?.poNumber,
+                name: filterString?.poNumber, 
+                canRemove: true,
+                filter: true,
+            },
+            {
                 key: 'pageSize',
                 title: 'Value',
                 value: 1000,
@@ -244,7 +260,6 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
     }, [currentSection, sectionName]);
 
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
-        // console.log('🚀 ~ file: VehicleDetailMaster.js:231 ~ handleButtonClick ~ record:', record);
         form.resetFields();
         form.setFieldsValue(undefined);
         setIsFormVisible(true);
@@ -289,7 +304,10 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
     };
 
     const onFinishSearch = (values) => {};
+
     const onFinish = (values) => {
+
+        console.log('advance search',values);
         const recordId = formData?.parentId || form.getFieldValue('parentId');
         let data = { ...values, parentId: recordId };
         const onSuccess = (res) => {
@@ -354,6 +372,15 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         }
     };
 
+    const handleResetFilter = (e) => {
+        // setShowDataLoading(true);
+        if (filterString) {
+            setShowDataLoading(true);
+        }
+        setFilterString();
+        advanceFilterForm.resetFields();
+        setAdvanceSearchVisible(false);
+    };
     const title = 'Search VPO';
 
     const advanceFilterResultProps = {
@@ -375,15 +402,11 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         searchForm,
         onFinishSearch,
         setAdvanceSearchVisible,
-        handleButtonClick,        
+        handleButtonClick,    
+        handleResetFilter,    
         
     };
-    const handleResetFilter = (e) => {
-        setShowDataLoading(true);
-        setFilterString();
-        advanceFilterForm.resetFields();
-        setAdvanceSearchVisible(false);
-    };
+   
     const onAdvanceSearchCloseAction = () => {
         form.resetFields();
         advanceFilterForm.resetFields();
@@ -455,9 +478,9 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
     };
     const cancelProps = {
         ...props,
-        vpoCancellationForm,
+        vpoCancellationForm,       
+
         // otfCancellationForm,
-        
         // otfData,
         // selectedOrder,
         // CANCEL_ACTION,

@@ -37,6 +37,7 @@ export const AdvancedSearchFrom = (props) => {
             fromDate: formatDate(values?.fromDate),
             toDate: formatDate(values?.toDate),
             otfStatus: values?.otfStatus,
+            purchaseOrderNo:values?.poNumber,
             advanceFilter: true,
         });
         setAdvanceSearchVisible(false);

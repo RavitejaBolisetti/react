@@ -62,13 +62,12 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const PoCancellationMasterBase = (props) => {
-    const { otfData, selectedOrder } = props;
+    const { otfData, selectedOrder,typeData } = props;
     const { userId, listShowLoading, onFinishFailed } = props;
     const { fetchProductHierarchyList, productHierarchyData, fetchDealerList, dealerDataList } = props;
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: true, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: true, cancelBtn:false, cancelOTFBtn: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
-
 
     const handleButtonClick = ({ record = null, buttonAction }) => {};
 
@@ -76,7 +75,7 @@ const PoCancellationMasterBase = (props) => {
         showGlobalNotification({ message });
     };
     const onFinishOTFCancellation = (values) => {
-        console.log('values==>>', values);
+        console.log('req values==>>', values);
         
     };
     useEffect(() => {
@@ -97,7 +96,7 @@ const PoCancellationMasterBase = (props) => {
         buttonData,
         setButtonData,
         handleButtonClick,
-        
+        typeData: typeData,
         productHierarchyData,                
         dealerDataList,  
         onFinishOTFCancellation,

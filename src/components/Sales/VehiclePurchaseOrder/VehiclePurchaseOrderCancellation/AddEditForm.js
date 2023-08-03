@@ -20,7 +20,7 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 const { TextArea, Search } = Input;
 
 const AddEditFormMain = (props) => {
-    const { otfCancellationForm, formData, otfData, selectedOrder, fieldNames, onFinishOTFCancellation, onFinishFailed } = props;
+    const { otfCancellationForm, formData, otfData, selectedOrder, fieldNames, onFinishOTFCancellation, onFinishFailed, cancelationReason } = props;
     const { handleButtonClick, buttonData, setButtonData, onCloseAction, typeData, userId, listShowLoading, showGlobalNotification, setEmptyList } = props;
     const { searchDealerValue, setSearchDealerValue, dealerDataList } = props;
     const handleFormValueChange = () => {
@@ -49,13 +49,13 @@ const AddEditFormMain = (props) => {
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                <Form.Item name="cancellationReasonType" label="Cancellation Reason 1" rules={[validateRequiredSelectField('Reason Type')]}>
-                                    <Select placeholder={preparePlaceholderSelect('Cancellation Reason 1')} onChange={handleCancellationReasonTypeChange} allowClear fieldNames={{ label: 'value', value: 'key' }} options={typeData['']}></Select>
+                                <Form.Item name="cancellationReason" label="Cancellation Reason " rules={[validateRequiredSelectField('Cancellation Reason')]}>
+                                    <Select placeholder={preparePlaceholderSelect('Cancellation Reason')} allowClear fieldNames={{ label: 'value', value: 'key' }} options={typeData['PO_CNCL_RSN']}></Select>
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                <Form.Item name="cancellationReasonType" label="Cancellation Reason 2" rules={[validateRequiredSelectField('Reason Type')]}>
-                                    <Select placeholder={preparePlaceholderSelect('Cancellation Reason 2')} onChange={handleCancellationReasonTypeChange} allowClear fieldNames={{ label: 'value', value: 'key' }} options={typeData['']}></Select>
+                                <Form.Item name="cancellationReasonType" label="Cancellation Reason Type" rules={[validateRequiredSelectField('Reason Type')]}>
+                                    <Select placeholder={preparePlaceholderSelect('Cancellation Reason Type')} onChange={handleCancellationReasonTypeChange} allowClear fieldNames={{ label: 'value', value: 'key' }} options={typeData['']}></Select>
                                 </Form.Item>
                             </Col>
 

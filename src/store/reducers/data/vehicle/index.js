@@ -17,6 +17,8 @@ import { CustomerDetails } from './customerDetails';
 import { CustomerCommonDetails } from './customerCommonDetails';
 import { VehicleSearchList } from './vehicleSearch';
 import { ProductDetails } from './productDetails';
+import { VehiclePurchaseOrderDetail } from './vehiclePurchaseOrderDetails';
+
 export const Vehicle = combineReducers({
     VehicleDetail,
     MakeVehicleDetails,
@@ -30,4 +32,5 @@ export const Vehicle = combineReducers({
     CustomerCommonDetails,
     VehicleSearchList,
     ProductDetails,
+    VehiclePurchaseOrderDetail,
 });

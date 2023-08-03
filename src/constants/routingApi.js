@@ -195,5 +195,5 @@ export const BASE_URL_VEHICLE_PRICE_MASTER_SEARCH = BASE_URL_VEHICLE + 'pricemas
 export const BASE_URL_VEHICLE_CUSTOMER_DETAIL = BASE_URL_VEHICLE + 'customerdetails';
 export const BASE_URL_VEHICLE_CUSTOMER_COMMON_DETAIL = BASE_URL + 'customers/commondetails';
 
-export const BASE_URL_VEHICLE_PURCHASE_ORDER_DETAILS = BASE_URL_VEHICLE + 'vehicle/purchaseorder';
+export const BASE_URL_VEHICLE_PURCHASE_ORDER_DETAILS = BASE_URL + 'otf/purchaseorder/search';
 
