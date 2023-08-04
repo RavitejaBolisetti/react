@@ -31,18 +31,13 @@ export const QueryButtons = ({ handleButtonQuery }) => {
     };
     return (
         <div className={`${styles.userManagement} ${styles.headingToggle}`}>
-            <Button onClick={() => handleQuery(QUERY_BUTTONS?.ALL?.key)} type={queryButtons?.all ? 'primary' : 'link'}>
-                {QUERY_BUTTONS?.ALL?.title}
-            </Button>
-            <Button onClick={() => handleQuery(QUERY_BUTTONS?.PENDING?.key)} type={queryButtons?.pending ? 'primary' : 'link'}>
-                {QUERY_BUTTONS?.PENDING?.title}
-            </Button>
-            <Button onClick={() => handleQuery(QUERY_BUTTONS?.PARTIALLY_COMPLETED?.key)} type={queryButtons?.partially ? 'primary' : 'link'}>
-                {QUERY_BUTTONS?.PARTIALLY_COMPLETED?.title}
-            </Button>
-            <Button onClick={() => handleQuery(QUERY_BUTTONS?.COMPLETED?.key)} type={queryButtons?.completed ? 'primary' : 'link'}>
-                {QUERY_BUTTONS?.COMPLETED?.title}
-            </Button>
+            {Object.keys(QUERY_BUTTONS)?.map((element, index) => {
+                return (
+                    <Button onClick={() => handleQuery(QUERY_BUTTONS[element]?.key)} type={queryButtons[QUERY_BUTTONS[element]?.key] ? 'primary' : 'link'}>
+                        {QUERY_BUTTONS[element]?.title}
+                    </Button>
+                );
+            })}
         </div>
     );
 };

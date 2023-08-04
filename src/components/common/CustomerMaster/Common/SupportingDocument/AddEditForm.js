@@ -21,7 +21,7 @@ const AddEditForm = (uploadProps) => {
         optionFilterProp: 'children',
         showSearch: true,
         allowClear: true,
-        className: styles.headerSelectField,
+        // className: styles.headerSelectField,
     };
 
     return (
@@ -38,7 +38,7 @@ const AddEditForm = (uploadProps) => {
                         </Select>
                     </Form.Item>
                 </Col>
-                <Col xs={24} sm={24} md={12} lg={12} xl={12} className={styles.inputWrapper}>
+                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                     <Form.Item label="File Name" name="documentName" rules={mandatoryFields ? [validateRequiredInputField('file name')] : ''}>
                         <Input placeholder={preparePlaceholderText('File Name')} allowClear />
                     </Form.Item>

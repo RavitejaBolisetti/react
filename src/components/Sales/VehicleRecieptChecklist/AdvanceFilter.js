@@ -4,27 +4,27 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Button, Row, Col } from 'antd';
+import { Button, Row, Col, Input, Form } from 'antd';
 import { FilterIcon } from 'Icons';
 import styles from 'components/common/Common.module.css';
-import { SearchBox } from 'components/utils/SearchBox';
+const { Search } = Input;
 
-export default function AdvanceOTFFilter(props) {
-    const { extraParams, handleResetFilter, advanceFilter = false, otfFilter = false, title, filterString, setFilterString, typeData, setAdvanceSearchVisible, searchForm } = props;
-
-    const searchBoxProps = {
-        searchForm,
-        filterString,
-        setFilterString,
-        optionType: typeData,
-    };
-
+export default function AdvanceFilter(props) {
+    const { extraParams, handleResetFilter, searchValue, handleSearchChange, advanceFilter = false, filter = false, title, filterString, setFilterString, typeData, setAdvanceSearchVisible, searchForm } = props;
     return (
         <div className={styles.contentHeaderBackground}>
             <Row gutter={20}>
-                <Col xs={24} sm={24} md={18} lg={18} xl={18} className={styles.searchAndLabelAlign}>
-                    {title}
-                    <div className={styles.headerSearchField}>{otfFilter && <SearchBox {...searchBoxProps} />}</div>
+                <Col xs={24} sm={24} md={14} lg={14} xl={14}>
+                    {filter && (
+                        <Form form={searchForm} className={styles.masterListSearchForm}>
+                            <Form.Item name="Search">
+                                <div className={styles.verticallyCentered}>
+                                    {title}
+                                    <Search placeholder="Search receipt number" allowClear onSearch={handleSearchChange} className={styles.headerSearchField} />
+                                </div>
+                            </Form.Item>
+                        </Form>
+                    )}
                 </Col>
                 {advanceFilter && (
                     <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.verticallyCentered}>

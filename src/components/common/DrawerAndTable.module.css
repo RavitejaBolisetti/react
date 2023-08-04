@@ -257,18 +257,18 @@
     font-weight: 500;
 } */
 
-:global .ant-picker-large {
+/* :global .ant-picker-large {
     padding: 6.5px 11px 6.5px;
     width: 180px;
-}
+} */
 
-:global .ant-empty-normal {
+/* :global .ant-empty-normal {
     color: #635d5d;
-}
+} */
 
-.drawerCriticalityGrp :global .ant-drawer .ant-drawer-body .ant-form-item {
+/* .drawerCriticalityGrp :global .ant-drawer .ant-drawer-body .ant-form-item {
     padding-bottom: 16px;
-}
+} */
 
 .drawerConfigParam :global .ant-drawer-wrapper-body .ant-drawer-body .ant-form-item {
     padding-bottom: 0 !important;
