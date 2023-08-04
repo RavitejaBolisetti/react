@@ -7,6 +7,8 @@ import React, { useState } from 'react';
 import { Card, Descriptions, Collapse, Divider, Space, Typography, Row, Col, Tooltip } from 'antd';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { InfoCircleOutlined } from '@ant-design/icons';
+import { AiOutlineInfoCircle } from 'react-icons/ai';
+import { addToolTip } from 'utils/customMenuLink';
 import styles from 'components/common/Common.module.css';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { getCodeValue } from 'utils/getCodeValue';
@@ -16,7 +18,7 @@ const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
-    const { formData, isLoading, typeData, salesConsultantLov } = props;
+    const { formData, isLoading, physicalStatusType, vehicleStatusType, shortageType, salesConsultantLov } = props;
 
     const [activeKey, setactiveKey] = useState([1]);
 
@@ -58,7 +60,7 @@ const ViewDetailMain = (props) => {
                                             <Text className={styles.headText}> {`|`}</Text>
                                             <Text className={styles.headText}> VIN: {checkAndSetDefaultValue(item?.vin, isLoading)}</Text>
                                         </Space>
-                                        <Text className={styles.subSection}> Vehicle Status: </Text>
+                                        <Text className={styles.subSection}> Vehicle Status: {checkAndSetDefaultValue(getCodeValue(vehicleStatusType, item?.vehicleStatus), isLoading)}</Text>
                                     </Space>
                                 }
                                 key="1"
@@ -67,23 +69,42 @@ const ViewDetailMain = (props) => {
                                 <Descriptions {...viewProps}>
                                     <Descriptions.Item label="Model Description">
                                         {checkAndSetDefaultValue(item?.modelDescription, isLoading)}
-                                        {/* <Tooltip title="Extra information">
-                                    <InfoCircleOutlined
-                                        style={{
-                                            color: 'rgba(0,0,0,.45)',
-                                        }}
-                                    />
-                                </Tooltip> */}
+                                        {item?.modelDescription && (
+                                            <div className={styles.modelTooltip}>
+                                                {addToolTip(
+                                                    <div>
+                                                        <p>
+                                                            Model Name: <span>{item?.name ?? 'Na'}</span>
+                                                        </p>
+                                                        <p>
+                                                            Color: <span>{item?.color ?? 'Na'}</span>
+                                                        </p>
+                                                        <p>
+                                                            Seating Capacity: <span>{item?.seatingCapacity ?? 'Na'}</span>
+                                                        </p>
+                                                        <p>
+                                                            Fuel: <span>{item?.fuel ?? 'Na'}</span>
+                                                        </p>
+                                                        <p>
+                                                            Variants: <span>{item?.variant ?? 'Na'}</span>
+                                                        </p>
+                                                    </div>,
+                                                    'bottom',
+                                                    '#FFFFFF',
+                                                    styles.toolTip
+                                                )(<AiOutlineInfoCircle size={13} />)}
+                                            </div>
+                                        )}
                                     </Descriptions.Item>
                                     <Descriptions.Item label="VIN">{checkAndSetDefaultValue(item?.vin, isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label="Key Number">{checkAndSetDefaultValue(item?.keyNumber, isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label="MFG Date">{checkAndSetDefaultValue(item?.mfgdate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                                     <Descriptions.Item label="Received On">{checkAndSetDefaultValue(item?.receivedOn, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                                     <Descriptions.Item label="Vehicle Cost">{checkAndSetDefaultValue(item?.vehicleCost, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Demo Vehicle">{checkAndSetDefaultValue(item?.demoVehicle, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Vehicle Status">{checkAndSetDefaultValue(item?.vehicleStatus, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Physical Status">{checkAndSetDefaultValue(getCodeValue(typeData?.DLVR_AT, item?.physicalStatus), isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Shortage">{checkAndSetDefaultValue(getCodeValue(typeData?.RFRL, item?.shortage), isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Demo Vehicle">{checkAndSetDefaultValue(getCodeValue(shortageType, item?.demoVehicle), isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Vehicle Status">{checkAndSetDefaultValue(getCodeValue(vehicleStatusType, item?.vehicleStatus), isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Physical Status">{checkAndSetDefaultValue(getCodeValue(physicalStatusType, item?.physicalStatus), isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Shortage">{checkAndSetDefaultValue(getCodeValue(shortageType, item?.shortage), isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label="Vehicle Receipt Checklist No.">{checkAndSetDefaultValue(item?.vehicleReceiptChecklistNumber, isLoading)}</Descriptions.Item>
                                 </Descriptions>
                             </Panel>

@@ -151,6 +151,9 @@ const VehicleDetailsMasterBase = (props) => {
 
     const viewProps = {
         typeData,
+        vehicleStatusType,
+        physicalStatusType,
+        shortageType,
         formData: vehicleDetailData,
         styles,
         isLoading,

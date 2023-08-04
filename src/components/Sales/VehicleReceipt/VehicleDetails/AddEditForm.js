@@ -10,7 +10,8 @@ import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { addToolTip } from 'utils/customMenuLink';
 import { InfoCircleOutlined } from '@ant-design/icons';
 
-import { formattedCalendarDate, dateFormat } from 'utils/formatDateTime';
+import { getCodeValue } from 'utils/getCodeValue';
+import { formattedCalendarDate, dateFormat, formatDate } from 'utils/formatDateTime';
 import { validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
@@ -21,7 +22,7 @@ const { Text } = Typography;
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { formData, typeData, vehicleStatusType, physicalStatusType, shortageType, vehicleDetailForm } = props;
+    const { formData, vehicleStatusType, physicalStatusType, shortageType, vehicleDetailForm } = props;
 
     const [activeKey, setactiveKey] = useState([1]);
 
@@ -59,13 +60,17 @@ const AddEditFormMain = (props) => {
                     item.vehicleStatus = value.vehicleStatus;
                     item.physicalStatus = value.physicalStatus;
                     item.shortage = value.shortage;
+                    item.mfgdate = formattedCalendarDate(value?.mfgdate);
                 }
             });
-            // setVehicleDetailList((prev) => [...prev, value]);
+            setactiveKey([]);
+            console.log('🚀 ~ file: AddEditForm.js:57 ~ formData?.map ~ formData:', formData);
         });
     };
 
-    const handleCancelFormEdit = () => {};
+    const handleCancelFormEdit = () => {
+        setactiveKey([]);
+    };
 
     return (
         <>
@@ -80,7 +85,7 @@ const AddEditFormMain = (props) => {
                                         <Text className={styles.headText}> {`|`}</Text>
                                         <Text className={styles.headText}> VIN: {item?.vin}</Text>
                                     </Space>
-                                    <Text className={styles.subSection}> Vehicle Status: </Text>
+                                    <Text className={styles.subSection}> Vehicle Status: {getCodeValue(vehicleStatusType, item?.vehicleStatus)}</Text>
                                 </Space>
                             }
                             key="1"

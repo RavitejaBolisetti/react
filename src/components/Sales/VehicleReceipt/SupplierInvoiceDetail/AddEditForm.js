@@ -3,16 +3,28 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Row, Col, Input, Form, DatePicker, Card } from 'antd';
 
-import { formattedCalendarDate } from 'utils/formatDateTime';
+import { formattedCalendarDate, dateFormat } from 'utils/formatDateTime';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import styles from 'components/common/Common.module.css';
 
 const AddEditFormMain = (props) => {
-    const { formData } = props;
+    const { formData, form } = props;
+
+    useEffect(() => {
+        form.setFieldsValue({
+            ...formData,
+        });
+        form.setFieldsValue({
+            supplierInvoiceDate: formattedCalendarDate(formData?.supplierInvoiceDate),
+            actualDispatchDate: formattedCalendarDate(formData?.actualDispatchDate),
+            geoFencingDate: formattedCalendarDate(formData?.geoFencingDate),
+        });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formData]);
 
     return (
         <Card className={styles.drawerCardView}>
@@ -36,7 +48,7 @@ const AddEditFormMain = (props) => {
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={formattedCalendarDate(formData?.supplierInvoiceDate)} label="Supplier Invoice Date" name="supplierInvoiceDate">
-                        <DatePicker disabled={true} style={{ display: 'auto', width: '100%' }} />
+                        <DatePicker format={dateFormat} disabled={true} style={{ display: 'auto', width: '100%' }} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -46,7 +58,7 @@ const AddEditFormMain = (props) => {
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={formattedCalendarDate(formData?.actualDispatchDate)} name="actualDispatchDate" label="Actual Dispatch Date">
-                        <DatePicker disabled={true} style={{ display: 'auto', width: '100%' }} />
+                        <DatePicker format={dateFormat} disabled={true} style={{ display: 'auto', width: '100%' }} />
                     </Form.Item>
                 </Col>
             </Row>
@@ -76,7 +88,7 @@ const AddEditFormMain = (props) => {
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={formattedCalendarDate(formData?.geoFencingDate)} name="geoFencingDate" label="GEO Fencing Date & Time">
-                        <DatePicker disabled={true} style={{ display: 'auto', width: '100%' }} />
+                        <DatePicker format={dateFormat} disabled={true} style={{ display: 'auto', width: '100%' }} />
                     </Form.Item>
                 </Col>
             </Row>

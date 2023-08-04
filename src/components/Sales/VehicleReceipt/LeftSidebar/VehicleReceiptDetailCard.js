@@ -53,7 +53,7 @@ const VehicleReceiptDetailCard = (props) => {
                     GRN Date: <span>{checkAndSetDefaultValue(selectedRecord?.grnDate, isLoading, DATA_TYPE?.DATE?.key) || 'NA'}</span>
                 </p>
                 <p>
-                    GRN Status: <span>{selectedRecord?.status || 'NA'}</span>
+                    GRN Status: <span>{getCodeValue(typeData, selectedRecord?.status) || 'NA'}</span>
                 </p>
             </Panel>
         </Collapse>
