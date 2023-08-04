@@ -202,74 +202,6 @@ export const VehicleReceiptMasterBase = (props) => {
                 canRemove: true,
                 filter: false,
             },
-            // {
-            //     key: 'searchType',
-            //     title: 'Type',
-            //     value: filterString?.searchType,
-            //     name: typeData?.[PARAM_MASTER.OTF_SER.id]?.find((i) => i?.key === filterString?.searchType)?.value,
-            //     canRemove: false,
-            //     filter: true,
-            // },
-            // {
-            //     key: 'searchParam',
-            //     title: 'Value',
-            //     value: filterString?.searchParam,
-            //     name: filterString?.searchParam,
-            //     canRemove: true,
-            //     filter: true,
-            // },
-            // {
-            //     key: 'fromDate',
-            //     title: 'Start Date',
-            //     value: filterString?.fromDate,
-            //     name: filterString?.fromDate,
-            //     canRemove: true,
-            //     filter: true,
-            // },
-            // {
-            //     key: 'toDate',
-            //     title: 'End Date',
-            //     value: filterString?.toDate,
-            //     name: filterString?.toDate,
-            //     canRemove: true,
-            //     filter: true,
-            // },
-            // {
-            //     key: 'otfStatus',
-            //     title: 'OTF Status',
-            //     value: filterString?.otfStatus,
-            //     name: filterString?.otfStatus,
-            //     canRemove: true,
-            //     filter: true,
-            // },
-            // {
-            //     key: 'pageSize',
-            //     title: 'Value',
-            //     value: page?.pageSize,
-            //     canRemove: true,
-            //     filter: false,
-            // },
-            // {
-            //     key: 'pageNumber',
-            //     title: 'Value',
-            //     value: page?.current,
-            //     canRemove: true,
-            //     filter: false,
-            // },
-            // {
-            //     key: 'sortBy',
-            //     title: 'Sort By',
-            //     value: page?.sortBy,
-            //     canRemove: true,
-            //     filter: false,
-            // },
-            // {
-            //     key: 'sortIn',
-            //     title: 'Sort Type',
-            //     value: page?.sortType,
-            //     canRemove: true,
-            //     filter: false,
-            // },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [receiptType, searchValue, filterString]);
@@ -319,7 +251,8 @@ export const VehicleReceiptMasterBase = (props) => {
                 break;
             case EDIT_ACTION:
                 setSelectedRecord(record);
-                record && setSelectedId(record?.supplierInvoiceNumber);
+                record && setSelectedId('INV9876543');
+                // record?.supplierInvoiceNumber
                 openDefaultSection && setCurrentSection(defaultSection);
                 break;
             case VIEW_ACTION:
@@ -515,6 +448,7 @@ export const VehicleReceiptMasterBase = (props) => {
         VIEW_ACTION,
         NEXT_ACTION,
         buttonData,
+        setIsFormVisible,
 
         setButtonData,
         handleButtonClick,

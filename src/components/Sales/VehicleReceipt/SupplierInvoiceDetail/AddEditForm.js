@@ -40,7 +40,7 @@ const AddEditFormMain = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.bookingAmount} label="Road Permit Number" name="bookingAmount">
+                    <Form.Item initialValue={formData?.roadPermitNumber} label="Road Permit Number" name="roadPermitNumber">
                         <Input maxLength={10} placeholder={preparePlaceholderText('Road Permit No.')} disabled={true} />
                     </Form.Item>
                 </Col>

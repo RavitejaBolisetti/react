@@ -10,7 +10,7 @@ import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { addToolTip } from 'utils/customMenuLink';
 import { InfoCircleOutlined } from '@ant-design/icons';
 
-import { dateFormat } from 'utils/formatDateTime';
+import { formattedCalendarDate, dateFormat } from 'utils/formatDateTime';
 import { validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
@@ -24,6 +24,8 @@ const AddEditFormMain = (props) => {
     const { formData, typeData, vehicleStatusType, physicalStatusType, shortageType, tooltTipText, vehicleDetailForm } = props;
 
     const [activeKey, setactiveKey] = useState([1]);
+
+    // const [vehicleDetailList, setVehicleDetailList] = useState([]);
 
     const selectProps = {
         optionFilterProp: 'children',
@@ -51,7 +53,15 @@ const AddEditFormMain = (props) => {
 
     const handleSave = () => {
         vehicleDetailForm.validateFields().then((value) => {
-            console.log('🚀 ~ file: AddEditForm.js:51 ~ handleSave ~ value:', value);
+            formData?.map((item) => {
+                if (item.id === value.id) {
+                    item.demoVehicle = value.demoVehicle;
+                    item.vehicleStatus = value.vehicleStatus;
+                    item.physicalStatus = value.physicalStatus;
+                    item.shortage = value.shortage;
+                }
+            });
+            // setVehicleDetailList((prev) => [...prev, value]);
         });
     };
 
@@ -85,7 +95,32 @@ const AddEditFormMain = (props) => {
                                         <Form.Item initialValue={item?.modelDescription} label="Model Description" name="modelDescription">
                                             <Input maxLength={10} placeholder={preparePlaceholderText('Model Description')} disabled={true} />
                                         </Form.Item>
-                                        {item?.modelDescription && <div className={styles.modelTooltip}>{addToolTip(tooltTipText, 'bottom', '#FFFFFF', styles.toolTip)(<AiOutlineInfoCircle size={13} />)}</div>}
+                                        {item?.modelDescription && (
+                                            <div className={styles.modelTooltip}>
+                                                {addToolTip(
+                                                    <div>
+                                                        <p>
+                                                            Model Name: <span>{item?.name ?? 'Na'}</span>
+                                                        </p>
+                                                        <p>
+                                                            Color: <span>{item?.color ?? 'Na'}</span>
+                                                        </p>
+                                                        <p>
+                                                            Seating Capacity: <span>{item?.seatingCapacity ?? 'Na'}</span>
+                                                        </p>
+                                                        <p>
+                                                            Fuel: <span>{item?.fuel ?? 'Na'}</span>
+                                                        </p>
+                                                        <p>
+                                                            Variants: <span>{item?.variant ?? 'Na'}</span>
+                                                        </p>
+                                                    </div>,
+                                                    'bottom',
+                                                    '#FFFFFF',
+                                                    styles.toolTip
+                                                )(<AiOutlineInfoCircle size={13} />)}
+                                            </div>
+                                        )}
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item initialValue={item?.vin} label="VIN" name="vin">
@@ -100,12 +135,12 @@ const AddEditFormMain = (props) => {
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item initialValue={formData?.mfgDate} label="MFG Date" name="mfgDate">
+                                        <Form.Item initialValue={formattedCalendarDate(item?.mfgdate)} label="MFG Date" name="mfgDate">
                                             <DatePicker format={dateFormat} disabled={true} style={{ display: 'auto', width: '100%' }} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item initialValue={formData?.receivedOn} label="Received On" name="receivedOn">
+                                        <Form.Item initialValue={formattedCalendarDate(item?.receivedOn)} label="Received On" name="receivedOn">
                                             <DatePicker format={dateFormat} disabled={true} style={{ display: 'auto', width: '100%' }} />
                                         </Form.Item>
                                     </Col>

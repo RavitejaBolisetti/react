@@ -62,7 +62,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const VehicleDetailsMasterBase = (props) => {
     const { typeData, vehicleStatusType, physicalStatusType, shortageType, vehicleDetailData } = props;
-    const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, saveData, isLoading } = props;
+    const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, saveData, isLoading, setIsFormVisible } = props;
     const { form, selectedId, formActionType, handleFormValueChange, fetchSalesConsultant, NEXT_ACTION, handleButtonClick } = props;
     const [exchangeValue, setexchangeValue] = useState(false);
     const [loyaltyValue, setloyaltyValue] = useState(false);
@@ -124,17 +124,16 @@ const VehicleDetailsMasterBase = (props) => {
     }, [isDataLoaded, vehicleDetailData]);
 
     const onFinish = (values) => {
-        const recordId = vehicleDetailData?.id || '';
-        const exchange = values?.exchange === true ? 1 : 0;
-        const data = { ...values, id: recordId, supplierInvoiceNumber: '', loyaltyScheme: values?.loyaltyScheme === true ? 1 : 0, exchange: exchange, initialPromiseDeliveryDate: values?.initialPromiseDeliveryDate?.format('YYYY-MM-DD'), custExpectedDeliveryDate: values?.custExpectedDeliveryDate?.format('YYYY-MM-DD') };
-        delete data?.mitraName;
-        delete data?.mitraType;
-        delete data?.modeOfPAyment;
+        // const recordId = vehicleDetailData?.id || '';
+        const data = { vehicleDetails: vehicleDetailData };
+        console.log('🚀 ~ file: VehicleDetailMaster.js:129 ~ onFinish ~ data:', vehicleDetailData);
 
         const onSuccess = (res) => {
-            handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
-            // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+            // handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, extraParams });
+            form.resetFields();
+            setIsFormVisible(false);
         };
 
         const onError = (message) => {
