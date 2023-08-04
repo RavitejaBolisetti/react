@@ -13,7 +13,7 @@ import { InfoCircleOutlined } from '@ant-design/icons';
 import { getCodeValue } from 'utils/getCodeValue';
 import { formattedCalendarDate, dateFormat, formatDate } from 'utils/formatDateTime';
 import { validateRequiredSelectField } from 'utils/validation';
-import { preparePlaceholderText } from 'utils/preparePlaceholder';
+import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
 import styles from 'components/common/Common.module.css';
 
@@ -74,9 +74,9 @@ const AddEditFormMain = (props) => {
 
     return (
         <>
-            {formData?.map((item) => (
+            {formData?.map((item, key) => (
                 <div className={styles.accessInfo}>
-                    <Collapse defaultActiveKey={['1']} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
+                    <Collapse defaultActiveKey={[key + 1]} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(key + 1)} expandIconPosition="end">
                         <Panel
                             header={
                                 <Space direction="vertical">
@@ -88,7 +88,7 @@ const AddEditFormMain = (props) => {
                                     <Text className={styles.subSection}> Vehicle Status: {getCodeValue(vehicleStatusType, item?.vehicleStatus)}</Text>
                                 </Space>
                             }
-                            key="1"
+                            key={key + 1}
                         >
                             {/* <AccessoriesInformationCard formData={element} /> */}
                             {/* </Panel> */}
@@ -158,24 +158,52 @@ const AddEditFormMain = (props) => {
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item initialValue={item?.demoVehicle} label="Demo Vehicle" name="demoVehicle">
-                                            <Select placeholder="Select" showSearch allowClear options={shortageType} {...selectProps} fieldNames={{ label: 'value', value: 'key' }} />
+                                            <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} showSearch allowClear>
+                                                {shortageType?.map((item) => (
+                                                    <Option key={'dv' + item.key} value={item.key}>
+                                                        {item.value}
+                                                    </Option>
+                                                ))}
+                                            </Select>
+                                            {/* <Select placeholder="Select" showSearch allowClear options={shortageType} {...selectProps} fieldNames={{ label: 'value', value: 'key' }} /> */}
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item initialValue={item?.vehicleStatus} label="Vehicle Status" name="vehicleStatus">
-                                            <Select placeholder="Select" showSearch allowClear options={vehicleStatusType} {...selectProps} fieldNames={{ label: 'value', value: 'key' }} />
+                                            <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} showSearch allowClear>
+                                                {vehicleStatusType?.map((item) => (
+                                                    <Option key={'vs' + item.key} value={item.key}>
+                                                        {item.value}
+                                                    </Option>
+                                                ))}
+                                            </Select>
+                                            {/* <Select placeholder="Select" showSearch allowClear options={vehicleStatusType} {...selectProps} fieldNames={{ label: 'value', value: 'key' }} /> */}
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item initialValue={item?.physicalStatus} label="Physical Status" name="physicalStatus">
-                                            <Select placeholder="Select" showSearch allowClear options={physicalStatusType} {...selectProps} fieldNames={{ label: 'value', value: 'key' }} />
+                                            <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} showSearch allowClear>
+                                                {physicalStatusType?.map((item) => (
+                                                    <Option key={'ps' + item.key} value={item.key}>
+                                                        {item.value}
+                                                    </Option>
+                                                ))}
+                                            </Select>
+                                            {/* <Select placeholder="Select" showSearch allowClear options={physicalStatusType} {...selectProps} fieldNames={{ label: 'value', value: 'key' }} /> */}
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item initialValue={item?.shortage} label="Shortage" name="shortage">
-                                            <Select placeholder="Select" showSearch allowClear options={shortageType} {...selectProps} fieldNames={{ label: 'value', value: 'key' }} />
+                                            <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} showSearch allowClear>
+                                                {shortageType?.map((item) => (
+                                                    <Option key={'st' + item.key} value={item.key}>
+                                                        {item.value}
+                                                    </Option>
+                                                ))}
+                                            </Select>
+                                            {/* <Select placeholder="Select" showSearch allowClear options={shortageType} {...selectProps} fieldNames={{ label: 'value', value: 'key' }} /> */}
                                         </Form.Item>
                                     </Col>
 

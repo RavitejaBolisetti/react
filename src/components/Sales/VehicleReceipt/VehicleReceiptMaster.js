@@ -251,13 +251,13 @@ export const VehicleReceiptMasterBase = (props) => {
                 break;
             case EDIT_ACTION:
                 setSelectedRecord(record);
-                record && setSelectedId('INV9876543');
+                record && setSelectedId('INV002');
                 // record?.supplierInvoiceNumber
                 openDefaultSection && setCurrentSection(defaultSection);
                 break;
             case VIEW_ACTION:
                 setSelectedRecord(record);
-                record && setSelectedId('INV9876543');
+                record && setSelectedId('INV002');
                 defaultSection && setCurrentSection(defaultSection);
                 break;
             case NEXT_ACTION:
