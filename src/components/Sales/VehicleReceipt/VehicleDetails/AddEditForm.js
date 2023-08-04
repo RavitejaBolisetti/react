@@ -21,7 +21,7 @@ const { Text } = Typography;
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { formData, typeData, vehicleStatusType, physicalStatusType, shortageType, tooltTipText, vehicleDetailForm } = props;
+    const { formData, typeData, vehicleStatusType, physicalStatusType, shortageType, vehicleDetailForm } = props;
 
     const [activeKey, setactiveKey] = useState([1]);
 
