@@ -10,11 +10,11 @@ import { bindActionCreators } from 'redux';
 import { Col, Form, Row } from 'antd';
 import { tableColumn } from './tableColumn';
 import AdvanceFilter from './AdvanceFilter';
+import { AdvancedSearch } from './AdvancedSearch';
 import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 'utils/btnVisiblity';
 
 // import { VehicleReceiptMainConatiner } from './VehicleReceiptMainConatiner';
 import { ListDataTable } from 'utils/ListDataTable';
-// import { AdvancedSearch } from './AdvancedSearch';
 import { OTF_STATUS } from 'constants/OTFStatus';
 import { VEHICLE_RECEIPT_SECTION } from 'constants/VehicleReceiptSection';
 
@@ -431,8 +431,8 @@ export const VehicleAllotmentMasterBase = (props) => {
                     <ListDataTable handleAdd={handleButtonClick} isLoading={showDataLoading} {...tableProps} showAddButton={true} />
                 </Col>
             </Row>
-            {/* <AdvancedSearch {...advanceFilterProps} />
-            <VehicleReceiptMainConatiner {...containerProps} />  */}
+            <AdvancedSearch {...advanceFilterProps} />
+            {/* <VehicleReceiptMainConatiner {...containerProps} />  */}
         </>
     );
 };
