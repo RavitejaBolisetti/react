@@ -10,7 +10,7 @@ import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/prepareP
 import { validateRequiredInputField, validateRequiredSelectField, duplicateProductValidator } from 'utils/validation';
 import styles from 'components/common/Common.module.css';
 
-function FormProductAttribute(props) {
+function FormProductAttributeComp(props) {
     const { attributeForm, isVisible, productHierarchyAttributeData, onAttributeFormFinish, formEdit, editForm, skuAttributes } = props;
     const [changeValue, setChangeValue] = useState(null);
 
@@ -25,8 +25,10 @@ function FormProductAttribute(props) {
         setChangeValue(newFormData);
     };
 
+    console.log('formEdit--->', formEdit)
+
     return (
-        <Form form={formEdit ? editForm : attributeForm} id="myForm" autoComplete="off" layout="vertical" onFinish={onAttributeFormFinish} onFinishFailed={onFinishFailed}>
+        <Form form={formEdit ? editForm : attributeForm} id="myForm" data-testid="myForm" autoComplete="off" layout="vertical" onFinish={onAttributeFormFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item label="Attribute Name" name="attributeName" initialValue={props?.code} rules={[validateRequiredSelectField('Attribute Name'), { validator: () => duplicateProductValidator(changeValue, skuAttributes) }]}>
@@ -48,7 +50,7 @@ function FormProductAttribute(props) {
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item labelAlign="left" name="value" label="Attribute Value" rules={[validateRequiredInputField('Attribute Value')]} initialValue={props?.value}>
-                        <Input placeholder={preparePlaceholderText('Attribute Value')} />
+                        <Input data-testid="attribute-value" placeholder={preparePlaceholderText('Attribute Value')} className={styles.inputBox} />
                     </Form.Item>
                 </Col>
 
@@ -70,4 +72,4 @@ function FormProductAttribute(props) {
     );
 }
 
-export default FormProductAttribute;
+export const FormProductAttribute = FormProductAttributeComp;

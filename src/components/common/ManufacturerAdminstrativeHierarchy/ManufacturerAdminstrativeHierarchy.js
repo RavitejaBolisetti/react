@@ -33,7 +33,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 
 import { ChangeHistory } from './ChangeHistory';
 
-import { disableParent } from 'components/common/ProductHierarchy/ProductHierarchyUtils';
+import { DisableParent } from 'components/common/ProductHierarchy/ProductHierarchyUtils';
 
 import LeftPanel from '../LeftPanel';
 import styles from 'components/common/Common.module.css';
@@ -259,10 +259,10 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
             fetchOrgList({ setIsLoading: listShowLoading, userId, errorAction: onErrorAction });
             authorityDropDownfetchList({ setIsLoading: authorityDropDownlistShowLoading, userId, errorAction: onErrorAction, extraParams: makeExtraparms([{ key: 'parameterType', title: 'parameterType', value: 'AUTH_TYPE', name: 'parameterType' }]) });
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/s-deps
     }, [isDataOrgLoaded, userId]);
     useEffect(() => {
-        manufacturerOrgHierarchyData?.map((i) => disableParent(i));
+        manufacturerOrgHierarchyData?.map((i) => DisableParent(i));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [manufacturerOrgHierarchyData]);
 

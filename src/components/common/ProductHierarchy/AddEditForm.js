@@ -33,7 +33,9 @@ const AddEditFormMain = (props) => {
 
     const disabledProps = { disabled: isReadOnly };
 
-    const productSKUKey = '63ec10a2-520d-44a4-85f6-f55a1d6911f3';
+    // const productSKUKey = '63ec10a2-520d-44a4-85f6-f55a1d6911f3';
+
+    const productSKUKey = '3b34cfa7-0f29-4116-a020-7bbcfa6fa6c6'
 
     let attributeHierarchyFieldValidation = {
         rules: [validateRequiredSelectField('attribute level')],
@@ -63,6 +65,7 @@ const AddEditFormMain = (props) => {
             setShowProductAttribute(false);
         }
         if (formActionType === FROM_ACTION_TYPE.EDIT) {
+            console.log('selectedTreeData?.attributeKey----->', selectedTreeData?.attributeKey);
             setShowProductAttribute(selectedTreeData?.attributeKey === productSKUKey);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -135,82 +138,76 @@ const AddEditFormMain = (props) => {
 
     return (
         <>
-            <Form form={form} id="myForm" autoComplete="off" layout="vertical" onFinish={onFinish} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinishFailed={onFinishFailed}>
-                <Row gutter={20} className={styles.drawerBody}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Row gutter={20}>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Attribute Level" rules={[validateRequiredSelectField('attribute level')]}>
-                                    <Select {...selectProps} onChange={handleAttributeChange} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('attribute level')} disabled={formData?.id || isReadOnly}>
-                                        {attributeData?.map((item) => (
-                                            <Option key={item?.id} value={item?.id}>
-                                                {item?.hierarchyAttribueName}
-                                            </Option>
-                                        ))}
-                                    </Select>
-                                </Form.Item>
-                            </Col>
+            <Form form={form} id="myForm" autoComplete="off" layout="vertical" onFinish={onFinish} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinishFailed={onFinishFailed} data-testid="form-data">
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Attribute Level" rules={[validateRequiredSelectField('attribute level')]}>
+                            <Select {...selectProps} data-testid="attributeKey" onChange={handleAttributeChange} loading={!isDataAttributeLoaded} placeholder={preparePlaceholderSelect('attribute level')} disabled={formData?.id || isReadOnly}>
+                                {attributeData?.map((item) => (
+                                    <Option key={item?.id} value={item?.id}>
+                                        {item?.hierarchyAttribueName}
+                                    </Option>
+                                ))}
+                            </Select>
+                        </Form.Item>
+                    </Col>
 
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <Form.Item initialValue={treeCodeId} label="Parent" name="parntProdctId">
-                                    <TreeSelectField {...treeSelectFieldProps} />
-                                </Form.Item>
-                            </Col>
-                        </Row>
-
-                        <Row gutter={20}>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <Form.Item label="Code" name="prodctCode" initialValue={formData?.prodctCode} rules={[validateRequiredInputField('code')]}>
-                                    <Input placeholder={preparePlaceholderText('code')} maxLength={6} disabled={formData?.id || isReadOnly} />
-                                </Form.Item>
-                            </Col>
-
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <Form.Item name="prodctShrtName" label="Short Description" initialValue={formData?.prodctShrtName} rules={[validateRequiredInputField('short description')]}>
-                                    <Input placeholder={preparePlaceholderText('short description')} maxLength={50} disabled={formData?.id || isReadOnly} />
-                                </Form.Item>
-                            </Col>
-                        </Row>
-
-                        <Row gutter={20}>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <Form.Item name="prodctLongName" label="Long Description" initialValue={formData?.prodctLongName} rules={[validateRequiredInputField('long description')]}>
-                                    <TextArea placeholder={preparePlaceholderText('long description')} maxLength={300} showCount disabled={formData?.id || isReadOnly} />
-                                </Form.Item>
-                            </Col>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <Form.Item initialValue={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.active ? true : false} label="Status" name="active">
-                                    <Switch value={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.active ? true : false} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.active === true || null || undefined ? true : false} {...disabledProps} />
-                                </Form.Item>
-                            </Col>
-                        </Row>
-                        {showProductAttribute && (
-                            <Row gutter={20}>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    <Form.Item hidden name={'adAmHirchyAttrbtMstSk'} initialValue={formData?.attributeKey}>
-                                        <Input />
-                                    </Form.Item>
-                                </Col>
-                            </Row>
-                        )}
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padRight18}>
+                        <Form.Item initialValue={treeCodeId} label="Parent" name="parntProdctId" data-testid="parntProdctId">
+                            <TreeSelectField {...treeSelectFieldProps} />
+                        </Form.Item>
                     </Col>
                 </Row>
 
-                <div className={styles.formFooter}>
-                    <Row gutter={20}>
-                        <Col xs={12} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
-                            <Button danger onClick={onCloseAction}>
-                                Cancel
-                            </Button>
-                        </Col>
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <Form.Item label="Code" name="prodctCode" initialValue={formData?.prodctCode} rules={[validateRequiredInputField('code')]}>
+                            <Input placeholder={preparePlaceholderText('code')} data-testid="prodctCode" maxLength={6} className={styles.inputBox} disabled={formData?.id || isReadOnly} />
+                        </Form.Item>
+                    </Col>
 
-                        <Col xs={12} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
-                            <Button htmlType="submit" form="myForm" disabled={!isFormBtnActive} type="primary">
-                                Save
-                            </Button>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <Form.Item name="prodctShrtName" label="Short Description" initialValue={formData?.prodctShrtName} rules={[validateRequiredInputField('short description')]}>
+                            <Input data-testid="prodctShrtName" className={styles.inputBox} placeholder={preparePlaceholderText('short description')} maxLength={50} disabled={formData?.id || isReadOnly} />
+                        </Form.Item>
+                    </Col>
+                </Row>
+
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <Form.Item name="prodctLongName" data-testid="prodctLongName" label="Long Description" initialValue={formData?.prodctLongName} rules={[validateRequiredInputField('long description')]}>
+                            <TextArea rows={1} placeholder={preparePlaceholderText('long description')} maxLength={300} disabled={formData?.id || isReadOnly} />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padLeft10}>
+                        <Form.Item initialValue={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.active ? true : false} label="Status" name=" b" data-testid="default-toggle">
+                            <Switch value={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.active ? true : false} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.active === true || null || undefined ? true : false} {...disabledProps} />
+                        </Form.Item>
+                    </Col>
+                </Row>
+                {showProductAttribute && (
+                    <Row gutter={20}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <Form.Item hidden name={'adAmHirchyAttrbtMstSk'} sinitialValue={formData?.attributeKey}>
+                                <Input />
+                            </Form.Item>
                         </Col>
                     </Row>
-                </div>
+                )}
+
+                <Row gutter={20} className={styles.formFooter}>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
+                        <Button danger onClick={onCloseAction} data-testid="cancelBtn">
+                            Cancel
+                        </Button>
+                    </Col>
+
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
+                        <Button htmlType="submit" form="myForm" disabled={!isFormBtnActive} type="primary">
+                            Save
+                        </Button>
+                    </Col>
+                </Row>
             </Form>
             {showProductAttribute && (
                 <Collapse className={openAccordian === 1 ? styles.accordianHeader : ''} onChange={() => handleCollapse(1)} expandIcon={accordianExpandIcon}>
