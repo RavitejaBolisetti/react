@@ -17,7 +17,7 @@ const buttonData = {
 describe('HierarchyFormButton Components', () => {
     it('should render DrawerFormButton components', () => {
         const { container } = render(<HierarchyFormButton />);
-        expect(container.firstChild).toHaveClass('hierarchyButtonContainer');
+        expect(container.firstChild).toHaveClass('formFooter');
 
     });
     it('should render all buttons', async()=>{
