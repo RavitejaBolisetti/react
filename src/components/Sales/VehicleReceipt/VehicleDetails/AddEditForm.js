@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Row, Col, Input, Form, Select, DatePicker, Card, Collapse, Divider, Space, Typography, Tooltip, Button } from 'antd';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
@@ -22,11 +22,17 @@ const { Text } = Typography;
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { formData, vehicleStatusType, physicalStatusType, shortageType, vehicleDetailForm } = props;
+    const { formData, setFinalData, vehicleStatusType, physicalStatusType, shortageType, vehicleDetailForm } = props;
 
-    const [activeKey, setactiveKey] = useState([1]);
-
+    const [activeKey, setactiveKey] = useState([]);
     // const [vehicleDetailList, setVehicleDetailList] = useState([]);
+
+    useEffect(() => {
+        if (formData) {
+            formData && setFinalData(formData);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formData]);
 
     const selectProps = {
         optionFilterProp: 'children',
@@ -52,19 +58,13 @@ const AddEditFormMain = (props) => {
         }
     };
 
-    const handleSave = () => {
+    const handleSave = (indexId) => {
         vehicleDetailForm.validateFields().then((value) => {
-            formData?.map((item) => {
-                if (item.id === value.id) {
-                    item.demoVehicle = value.demoVehicle;
-                    item.vehicleStatus = value.vehicleStatus;
-                    item.physicalStatus = value.physicalStatus;
-                    item.shortage = value.shortage;
-                    item.mfgdate = formattedCalendarDate(value?.mfgdate);
-                }
-            });
+            const vehicleDetailData = vehicleDetailForm?.getFieldsValue();
+            const filteredFormData = formData?.filter((element, i) => i != indexId);
+            const finalData = { ...filteredFormData, ...vehicleDetailData };
+            setFinalData(finalData);
             setactiveKey([]);
-            console.log('🚀 ~ file: AddEditForm.js:57 ~ formData?.map ~ formData:', formData);
         });
     };
 
@@ -74,30 +74,30 @@ const AddEditFormMain = (props) => {
 
     return (
         <>
-            {formData?.map((item, key) => (
-                <div className={styles.accessInfo}>
-                    <Collapse defaultActiveKey={[key + 1]} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(key + 1)} expandIconPosition="end">
-                        <Panel
-                            header={
-                                <Space direction="vertical">
-                                    <Space>
-                                        <Text className={styles.headText}> Model: {item?.modelDescription} </Text>
-                                        <Text className={styles.headText}> {`|`}</Text>
-                                        <Text className={styles.headText}> VIN: {item?.vin}</Text>
+            <Form form={vehicleDetailForm} id="myAdd" onFinish={handleSave} autoComplete="off" layout="vertical">
+                {formData?.map((item, index) => (
+                    <div className={styles.accessInfo}>
+                        <Collapse defaultActiveKey={index} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(index)} expandIconPosition="end">
+                            <Panel
+                                header={
+                                    <Space direction="vertical">
+                                        <Space>
+                                            <Text className={styles.headText}> Model: {item?.modelDescription} </Text>
+                                            <Text className={styles.headText}> {`|`}</Text>
+                                            <Text className={styles.headText}> VIN: {item?.vin}</Text>
+                                        </Space>
+                                        <Text className={styles.subSection}> Vehicle Status: {getCodeValue(vehicleStatusType, item?.vehicleStatus)}</Text>
                                     </Space>
-                                    <Text className={styles.subSection}> Vehicle Status: {getCodeValue(vehicleStatusType, item?.vehicleStatus)}</Text>
-                                </Space>
-                            }
-                            key={key + 1}
-                        >
-                            {/* <AccessoriesInformationCard formData={element} /> */}
-                            {/* </Panel> */}
-                            {/* <Panel header="Model: Scorpio | VIN: 234254543453" key="1"> */}
-                            <Divider />
-                            <Form form={vehicleDetailForm} id="myAdd" onFinish={handleSave} autoComplete="off" layout="vertical">
+                                }
+                                key={index}
+                            >
+                                {/* <AccessoriesInformationCard formData={element} /> */}
+                                {/* </Panel> */}
+                                {/* <Panel header="Model: Scorpio | VIN: 234254543453" key="1"> */}
+                                <Divider />
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.infoWrapper}>
-                                        <Form.Item initialValue={item?.modelDescription} label="Model Description" name="modelDescription">
+                                        <Form.Item initialValue={item?.modelDescription} label="Model Description" name={[index, 'modelDescription']}>
                                             <Input maxLength={10} placeholder={preparePlaceholderText('Model Description')} disabled={true} />
                                         </Form.Item>
                                         {item?.modelDescription && (
@@ -128,36 +128,36 @@ const AddEditFormMain = (props) => {
                                         )}
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item initialValue={item?.vin} label="VIN" name="vin">
+                                        <Form.Item initialValue={item?.vin} label="VIN" name={[index, 'vin']}>
                                             <Input maxLength={10} placeholder={preparePlaceholderText('VIN')} disabled={true} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item initialValue={item?.keyNumber} label="Key Number" name="keyNumber">
+                                        <Form.Item initialValue={item?.keyNumber} label="Key Number" name={[index, 'keyNumber']}>
                                             <Input maxLength={10} placeholder={preparePlaceholderText('Key Number')} disabled={true} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item initialValue={formattedCalendarDate(item?.mfgdate)} label="MFG Date" name="mfgDate">
+                                        <Form.Item initialValue={formattedCalendarDate(item?.mfgdate)} label="MFG Date" name={[index, 'mfgDate']}>
                                             <DatePicker format={dateFormat} disabled={true} style={{ display: 'auto', width: '100%' }} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item initialValue={formattedCalendarDate(item?.receivedOn)} label="Received On" name="receivedOn">
+                                        <Form.Item initialValue={formattedCalendarDate(item?.receivedOn)} label="Received On" name={[index, 'receivedOn']}>
                                             <DatePicker format={dateFormat} disabled={true} style={{ display: 'auto', width: '100%' }} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item initialValue={item?.vehicleCost} label="Vehicle Cost" name="vehicleCost">
+                                        <Form.Item initialValue={item?.vehicleCost} label="Vehicle Cost" name={[index, 'vehicleCost']}>
                                             <Input maxLength={10} placeholder={preparePlaceholderText('Vehicle Cost')} disabled={true} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item initialValue={item?.demoVehicle} label="Demo Vehicle" name="demoVehicle">
+                                        <Form.Item initialValue={item?.demoVehicle} label="Demo Vehicle" name={[index, 'demoVehicle']}>
                                             <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} showSearch allowClear>
                                                 {shortageType?.map((item) => (
                                                     <Option key={'dv' + item.key} value={item.key}>
@@ -169,7 +169,7 @@ const AddEditFormMain = (props) => {
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item initialValue={item?.vehicleStatus} label="Vehicle Status" name="vehicleStatus">
+                                        <Form.Item initialValue={item?.vehicleStatus} label="Vehicle Status" name={[index, 'vehicleStatus']}>
                                             <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} showSearch allowClear>
                                                 {vehicleStatusType?.map((item) => (
                                                     <Option key={'vs' + item.key} value={item.key}>
@@ -181,7 +181,7 @@ const AddEditFormMain = (props) => {
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item initialValue={item?.physicalStatus} label="Physical Status" name="physicalStatus">
+                                        <Form.Item initialValue={item?.physicalStatus} label="Physical Status" name={[index, 'physicalStatus']}>
                                             <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} showSearch allowClear>
                                                 {physicalStatusType?.map((item) => (
                                                     <Option key={'ps' + item.key} value={item.key}>
@@ -195,7 +195,7 @@ const AddEditFormMain = (props) => {
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item initialValue={item?.shortage} label="Shortage" name="shortage">
+                                        <Form.Item initialValue={item?.shortage} label="Shortage" name={[index, 'shortage']}>
                                             <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} showSearch allowClear>
                                                 {shortageType?.map((item) => (
                                                     <Option key={'st' + item.key} value={item.key}>
@@ -208,17 +208,17 @@ const AddEditFormMain = (props) => {
                                     </Col>
 
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item initialValue={item?.vehicleRecieptCheckListNumber} label="Vehicle Receipt Checklist No." name="vehicleRecieptCheckListNumber">
+                                        <Form.Item initialValue={item?.vehicleRecieptCheckListNumber} label="Vehicle Receipt Checklist No." name={[index, 'vehicleRecieptCheckListNumber']}>
                                             <Input maxLength={10} placeholder={preparePlaceholderText('Vehicle Receipt Checklist No.')} disabled={true} />
                                         </Form.Item>
                                     </Col>
-                                    <Form.Item hidden initialValue={item?.id} name="id">
+                                    <Form.Item hidden initialValue={item?.id} name={[index, 'id']}>
                                         <Input />
                                     </Form.Item>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                        <Button className={styles.marR20} onClick={handleSave} type="primary">
+                                        <Button className={styles.marR20} onClick={() => handleSave(index)} type="primary">
                                             Save
                                         </Button>
                                         <Button className={styles.marB20} onClick={handleCancelFormEdit} danger>
@@ -226,11 +226,11 @@ const AddEditFormMain = (props) => {
                                         </Button>
                                     </Col>
                                 </Row>
-                            </Form>
-                        </Panel>
-                    </Collapse>
-                </div>
-            ))}
+                            </Panel>
+                        </Collapse>
+                    </div>
+                ))}
+            </Form>
         </>
     );
 };
