@@ -21,7 +21,7 @@ const VehicleRecieptMasterMainContainerMain = (props) => {
         ...props,
     };
 
-    const RenderContainer = () => {
+    const renderElement = () => {
         switch (currentSection) {
             case VEHICLE_RECIEPT_CHECKLIST_SECTION.CHECKLIST_DETAILS.id: {
                 return <VehicleRecieptCheckListMaster {...myProps} />;
@@ -41,7 +41,7 @@ const VehicleRecieptMasterMainContainerMain = (props) => {
                 <LeftSidebar {...myProps} />
             </Col>
             <Col xs={24} sm={24} md={18} lg={18} xl={18} xxl={18} className={styles.drawerRightMainContainer}>
-                <div>{RenderContainer()}</div>
+                <div>{renderElement()}</div>
             </Col>
         </Row>
     );
