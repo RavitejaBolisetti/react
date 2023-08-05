@@ -4,15 +4,13 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Input, Form, Select, DatePicker, Card, Collapse, Divider, Space, Typography, Tooltip, Button } from 'antd';
+import { Row, Col, Input, Form, Select, DatePicker, Collapse, Divider, Space, Typography, Button } from 'antd';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { addToolTip } from 'utils/customMenuLink';
-import { InfoCircleOutlined } from '@ant-design/icons';
 
 import { getCodeValue } from 'utils/getCodeValue';
-import { formattedCalendarDate, dateFormat, formatDate } from 'utils/formatDateTime';
-import { validateRequiredSelectField } from 'utils/validation';
+import { formattedCalendarDate, dateFormat } from 'utils/formatDateTime';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
 import styles from 'components/common/Common.module.css';
@@ -34,13 +32,6 @@ const AddEditFormMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
 
-    const selectProps = {
-        optionFilterProp: 'children',
-        showSearch: true,
-        allowClear: true,
-        className: styles.headerSelectField,
-    };
-
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
 
@@ -61,7 +52,7 @@ const AddEditFormMain = (props) => {
     const handleSave = (indexId) => {
         vehicleDetailForm.validateFields().then((value) => {
             const vehicleDetailData = vehicleDetailForm?.getFieldsValue();
-            const filteredFormData = formData?.filter((element, i) => i != indexId);
+            const filteredFormData = formData?.filter((element, i) => i !== indexId);
             const finalData = { ...filteredFormData, ...vehicleDetailData };
             setFinalData(finalData);
             setactiveKey([]);
@@ -167,7 +158,6 @@ const AddEditFormMain = (props) => {
                                                     </Option>
                                                 ))}
                                             </Select>
-                                            {/* <Select placeholder="Select" showSearch allowClear options={shortageType} {...selectProps} fieldNames={{ label: 'value', value: 'key' }} /> */}
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>

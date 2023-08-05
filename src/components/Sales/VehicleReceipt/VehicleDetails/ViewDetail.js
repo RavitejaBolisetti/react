@@ -4,11 +4,11 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { Card, Descriptions, Collapse, Divider, Space, Typography, Row, Col, Tooltip } from 'antd';
+import { Descriptions, Collapse, Divider, Space, Typography } from 'antd';
 import { expandIcon } from 'utils/accordianExpandIcon';
-import { InfoCircleOutlined } from '@ant-design/icons';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { addToolTip } from 'utils/customMenuLink';
+import { InputSkeleton } from 'components/common/Skeleton';
 import styles from 'components/common/Common.module.css';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { getCodeValue } from 'utils/getCodeValue';
@@ -18,7 +18,7 @@ const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
-    const { formData, isLoading, physicalStatusType, vehicleStatusType, shortageType, salesConsultantLov } = props;
+    const { formData, isLoading, physicalStatusType, vehicleStatusType, shortageType } = props;
 
     const [activeKey, setactiveKey] = useState([1]);
 
@@ -68,31 +68,35 @@ const ViewDetailMain = (props) => {
                                 <Divider />
                                 <Descriptions {...viewProps}>
                                     <Descriptions.Item label="Model Description">
-                                        {checkAndSetDefaultValue(item?.modelDescription, isLoading)}
-                                        {item?.modelDescription && (
-                                            <div className={styles.modelTooltip}>
-                                                {addToolTip(
-                                                    <div>
-                                                        <p>
-                                                            Model Name: <span>{item?.name ?? 'Na'}</span>
-                                                        </p>
-                                                        <p>
-                                                            Color: <span>{item?.color ?? 'Na'}</span>
-                                                        </p>
-                                                        <p>
-                                                            Seating Capacity: <span>{item?.seatingCapacity ?? 'Na'}</span>
-                                                        </p>
-                                                        <p>
-                                                            Fuel: <span>{item?.fuel ?? 'Na'}</span>
-                                                        </p>
-                                                        <p>
-                                                            Variants: <span>{item?.variant ?? 'Na'}</span>
-                                                        </p>
-                                                    </div>,
-                                                    'bottom',
-                                                    '#FFFFFF',
-                                                    styles.toolTip
-                                                )(<AiOutlineInfoCircle size={13} />)}
+                                        {isLoading ? (
+                                            <InputSkeleton width={'100px'} height={20} theme={'card'} />
+                                        ) : (
+                                            <div className={styles.tooltipAlign}>
+                                                {item?.modelDescription}
+                                                {!item?.modelDescription
+                                                    ? 'NA'
+                                                    : addToolTip(
+                                                          <div>
+                                                              <p>
+                                                                  Model Name: <span>{item?.name ?? 'Na'}</span>
+                                                              </p>
+                                                              <p>
+                                                                  Color: <span>{item?.color ?? 'Na'}</span>
+                                                              </p>
+                                                              <p>
+                                                                  Seating Capacity: <span>{item?.seatingCapacity ?? 'Na'}</span>
+                                                              </p>
+                                                              <p>
+                                                                  Fuel: <span>{item?.fuel ?? 'Na'}</span>
+                                                              </p>
+                                                              <p>
+                                                                  Variants: <span>{item?.variant ?? 'Na'}</span>
+                                                              </p>
+                                                          </div>,
+                                                          'bottom',
+                                                          '#FFFFFF',
+                                                          styles.toolTip
+                                                      )(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}
                                             </div>
                                         )}
                                     </Descriptions.Item>

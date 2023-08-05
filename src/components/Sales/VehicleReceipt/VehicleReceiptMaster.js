@@ -141,12 +141,12 @@ export const VehicleReceiptMasterBase = (props) => {
             //     value: 'status',
             //     name: 'status',
             // },
-            // {
-            //     key: 'searchParam',
-            //     title: 'Value',
-            //     value: receiptType,
-            //     name: typeData?.[PARAM_MASTER.GRN_STATS.id]?.find((i) => i?.key === receiptType)?.value,
-            // },
+            {
+                key: 'searchParam',
+                title: 'Value',
+                value: receiptType,
+                name: typeData?.[PARAM_MASTER.GRN_STATS.id]?.find((i) => i?.key === receiptType)?.value,
+            },
             {
                 key: 'grnNumber',
                 title: 'grnNumber',
@@ -358,15 +358,15 @@ export const VehicleReceiptMasterBase = (props) => {
         setAdvanceSearchVisible(false);
     };
 
-    // const removeFilter = (key) => {
-    //     if (key === 'searchParam') {
-    //         const { searchType, searchParam, ...rest } = filterString;
-    //         setFilterString({ ...rest });
-    //     } else {
-    //         const { [key]: names, ...rest } = filterString;
-    //         setFilterString({ ...rest });
-    //     }
-    // };
+    const removeFilter = (key) => {
+        if (key === 'searchParam') {
+            const { searchType, searchParam, ...rest } = filterString;
+            setFilterString({ ...rest });
+        } else {
+            const { [key]: names, ...rest } = filterString;
+            setFilterString({ ...rest });
+        }
+    };
 
     const handleReceiptTypeChange = (key) => {
         switch (key) {
@@ -403,7 +403,7 @@ export const VehicleReceiptMasterBase = (props) => {
 
     const advanceFilterResultProps = {
         extraParams,
-        // removeFilter,
+        removeFilter,
         vehicleReceiptStatusList,
         advanceFilter: true,
         otfFilter: true,
@@ -497,7 +497,7 @@ export const VehicleReceiptMasterBase = (props) => {
             <VehicleReceiptFilter {...advanceFilterResultProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable handleButtonClick={handleButtonClick} isLoading={showDataLoading} {...tableProps} showAddButton={true} />
+                    <ListDataTable handleButtonClick={handleButtonClick} isLoading={showDataLoading} {...tableProps} showAddButton={false} />
                 </Col>
             </Row>
             <AdvancedSearch {...advanceFilterProps} />

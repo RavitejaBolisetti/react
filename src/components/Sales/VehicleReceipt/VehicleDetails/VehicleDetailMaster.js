@@ -63,7 +63,7 @@ const mapDispatchToProps = (dispatch) => ({
 const VehicleDetailsMasterBase = (props) => {
     const { typeData, vehicleStatusType, physicalStatusType, shortageType, vehicleDetailData } = props;
     const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, saveData, isLoading, setIsFormVisible } = props;
-    const { form, selectedId, formActionType, handleFormValueChange, fetchSalesConsultant, NEXT_ACTION, handleButtonClick } = props;
+    const { form, selectedId, formActionType, handleFormValueChange } = props;
     const [exchangeValue, setexchangeValue] = useState(false);
     const [loyaltyValue, setloyaltyValue] = useState(false);
     const [finalData, setFinalData] = useState([]);

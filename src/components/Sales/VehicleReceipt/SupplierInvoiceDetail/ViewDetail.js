@@ -26,7 +26,7 @@ const ViewDetailMain = (props) => {
                 <Descriptions.Item label="Supplier Name">{checkAndSetDefaultValue(formData?.supplierName, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Supplier Invoice No.">{checkAndSetDefaultValue(formData?.supplierInvoiceNumber, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Supplier Invoice Date">{checkAndSetDefaultValue(formData?.supplierInvoiceDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                <Descriptions.Item label="Road Permit Number">{checkAndSetDefaultValue(formData?.bookingAmount, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Road Permit Number">{checkAndSetDefaultValue(formData?.roadPermitNumber, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Actual Dispatch Date">{checkAndSetDefaultValue(formData?.actualDispatchDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                 <Descriptions.Item label="Total Invoice Amount">{checkAndSetDefaultValue(formData?.totalInvoiceAmount, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Lorry Receipt No.">{checkAndSetDefaultValue(formData?.lorryReceiptNumber, isLoading)}</Descriptions.Item>

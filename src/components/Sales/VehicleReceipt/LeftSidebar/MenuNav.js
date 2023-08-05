@@ -13,7 +13,7 @@ import { VEHICLE_RECEIPT_SECTION } from 'constants/VehicleReceiptSection';
 import styles from 'components/common/Common.module.css';
 
 const MenuNav = (props) => {
-    const { currentSection, setCurrentSection, otfData, selectedOrder: { orderStatus = false } = {} } = props;
+    const { currentSection, setCurrentSection } = props;
     const vehicleReceiptSectionList = Object.values(VEHICLE_RECEIPT_SECTION);
 
     const onHandle = (key) => {
