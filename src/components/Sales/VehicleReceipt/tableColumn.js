@@ -12,7 +12,7 @@ import styles from 'components/common/Common.module.css';
 export const tableColumn = (handleButtonClick, page, pageSize) => {
     const tableColumn = [
         tblPrepareColumns({
-            title: 'GRN Type.',
+            title: 'GRN Type',
             dataIndex: 'grnType',
             width: '10%',
         }),
@@ -22,6 +22,7 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             dataIndex: 'grnNumber',
             width: '12%',
         }),
+
         tblPrepareColumns({
             title: 'GRN Date',
             dataIndex: 'grnDate',

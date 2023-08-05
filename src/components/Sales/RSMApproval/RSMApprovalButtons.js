@@ -6,7 +6,6 @@
 import React from 'react';
 import { Button, Row, Col } from 'antd';
 
-import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import styles from 'components/common/Common.module.css';
 
 export const RSMApprovalButtons = ({ record, onCloseAction, buttonData, setButtonData, handleButtonClick, handleReject, handleApprove }) => {
