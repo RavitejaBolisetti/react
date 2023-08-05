@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-export const VEHICLE_RECIEPT_CHECKLIST = {
+export const VEHICLE_RECIEPT_CHECKLIST_SECTION = {
     CHECKLIST_DETAILS: {
         id: 1,
         title: 'Checklist Details',

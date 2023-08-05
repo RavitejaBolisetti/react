@@ -9,27 +9,23 @@ export const VEHICLE_RECEIPT_STATUS = {
         key: 'TRN',
         title: 'In-Transit',
         desc: 'In-Transit',
-        displayOnView: true,
     },
     PARTIALLY_RECEIVED: {
         id: 2,
         key: 'PARCV',
         title: 'Partially Received',
         desc: 'Partially Received',
-        displayOnView: true,
     },
     RECEIVED: {
         id: 3,
         key: 'RCV',
         title: 'Received',
         desc: 'Received',
-        displayOnView: true,
     },
     RETURNED: {
         id: 4,
         key: 'RTRN',
         title: 'Returned',
         desc: 'Returned',
-        displayOnView: true,
     },
 };

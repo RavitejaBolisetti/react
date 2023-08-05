@@ -20,7 +20,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { vehicleDetailDataActions } from 'store/actions/data/vehicle/vehicleDetail';
 
 import { VEHICLE_CHECKLIST_STATUS } from 'constants/VehicleRecieptChecklistStatus';
-import { VEHICLE_RECIEPT_CHECKLIST } from 'constants/VehicleRecieptCheckListConstants';
+import { VEHICLE_RECIEPT_CHECKLIST_SECTION } from 'constants/VehicleRecieptCheckListSection';
 import { dateFormat, formatDate, formatDateToCalenderDate } from 'utils/formatDateTime';
 
 import { validateRequiredInputField } from 'utils/validation';
@@ -249,9 +249,9 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
     }, []);
 
     useEffect(() => {
-        const defaultSection = VEHICLE_RECIEPT_CHECKLIST.CHECKLIST_DETAILS.id;
+        const defaultSection = VEHICLE_RECIEPT_CHECKLIST_SECTION.CHECKLIST_DETAILS.id;
         setDefaultSection(defaultSection);
-        setSetionName(VEHICLE_RECIEPT_CHECKLIST);
+        setSetionName(VEHICLE_RECIEPT_CHECKLIST_SECTION);
         setSection(defaultSection);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
