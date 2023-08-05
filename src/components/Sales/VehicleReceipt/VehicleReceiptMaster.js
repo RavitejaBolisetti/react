@@ -251,16 +251,16 @@ export const VehicleReceiptMasterBase = (props) => {
         switch (buttonAction) {
             case ADD_ACTION:
                 defaultSection && setCurrentSection(defaultSection);
+                record && setSelectedId(record?.supplierInvoiceNumber ?? 'INV002');
                 break;
             case EDIT_ACTION:
                 setSelectedRecord(record);
-                record && setSelectedId('INV002');
-                // record?.supplierInvoiceNumber
+                record && setSelectedId(record?.supplierInvoiceNumber ?? 'INV002');
                 openDefaultSection && setCurrentSection(defaultSection);
                 break;
             case VIEW_ACTION:
                 setSelectedRecord(record);
-                record && setSelectedId('INV002');
+                record && setSelectedId(record?.supplierInvoiceNumber ?? 'INV002');
                 defaultSection && setCurrentSection(defaultSection);
                 break;
             case NEXT_ACTION:
@@ -379,7 +379,7 @@ export const VehicleReceiptMasterBase = (props) => {
                 break;
             }
             case VEHICLE_RECEIPT_STATUS?.RECEIVED?.key: {
-                setTableIconsVisibility({ ...tableActionsFalse, EyeIcon: true, EditIcon: true });
+                setTableIconsVisibility({ ...tableActionsFalse, EyeIcon: true });
 
                 break;
             }

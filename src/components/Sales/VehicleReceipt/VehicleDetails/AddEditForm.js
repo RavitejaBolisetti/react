@@ -71,13 +71,15 @@ const AddEditFormMain = (props) => {
     const handleCancelFormEdit = () => {
         setactiveKey([]);
     };
-
+    const collapseProps = {
+        collapsible: 'icon',
+    };
     return (
         <>
             <Form form={vehicleDetailForm} id="myAdd" onFinish={handleSave} autoComplete="off" layout="vertical">
                 {formData?.map((item, index) => (
                     <div className={styles.accessInfo}>
-                        <Collapse defaultActiveKey={index} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(index)} expandIconPosition="end">
+                        <Collapse defaultActiveKey={index} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(index)} expandIconPosition="end" {...collapseProps}>
                             <Panel
                                 header={
                                     <Space direction="vertical">
