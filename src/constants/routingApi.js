@@ -170,6 +170,10 @@ export const BASE_URL_DOCUMENT_VIEW_URL = BASE_URL + 'common/document/view';
 export const BASE_URL_SALES_CONSULTANT = BASE_URL + 'users/dealer/employees/lov';
 export const BASE_URL_OTF_CUSTOMER = BASE_URL + 'otf/customerdetails';
 
+export const BASE_URL_INVOICE = BASE_URL + 'invoice/'
+export const BASE_URL_RSM_APPROVAL = BASE_URL_INVOICE + 'rsm'
+export const BASE_URL_RSM_APPROVAL_SEARCH = BASE_URL_RSM_APPROVAL + '/search'
+
 export const BASE_URL_VEHICLE = BASE_URL + 'vehicle/';
 export const BASE_URL_VEHICLE_SEARCH = BASE_URL_VEHICLE + 'search';
 export const BASE_URL_VIEW_VEHICLE_DETAILS = BASE_URL_VEHICLE + 'details';

@@ -19,6 +19,7 @@ import { QualificationMaster } from './qualificationMaster';
 import { UserManagement } from './userManagement';
 import { UserManagementManufacturer } from './UserManagementManufacturer';
 import { Geo } from './geo';
+import { Sales } from './sales';
 import { DealerManpower } from './dealerManpower';
 import { PartyMaster } from './partyMaster';
 import { TermCondition } from './termsConditions';
@@ -55,6 +56,7 @@ export const data = combineReducers({
     UserManagement,
     UserManagementManufacturer,
     Geo,
+    Sales,
     DealerManpower,
     PartyMaster,
     TermCondition,
