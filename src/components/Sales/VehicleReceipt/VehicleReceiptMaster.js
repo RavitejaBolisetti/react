@@ -251,16 +251,16 @@ export const VehicleReceiptMasterBase = (props) => {
         switch (buttonAction) {
             case ADD_ACTION:
                 defaultSection && setCurrentSection(defaultSection);
-                record && setSelectedId(record?.supplierInvoiceNumber ?? 'INV002');
+                record && setSelectedId(record?.supplierInvoiceNumber);
                 break;
             case EDIT_ACTION:
                 setSelectedRecord(record);
-                record && setSelectedId(record?.supplierInvoiceNumber ?? 'INV002');
+                record && setSelectedId(record?.supplierInvoiceNumber);
                 openDefaultSection && setCurrentSection(defaultSection);
                 break;
             case VIEW_ACTION:
                 setSelectedRecord(record);
-                record && setSelectedId(record?.supplierInvoiceNumber ?? 'INV002');
+                record && setSelectedId(record?.supplierInvoiceNumber);
                 defaultSection && setCurrentSection(defaultSection);
                 break;
             case NEXT_ACTION:
@@ -380,12 +380,13 @@ export const VehicleReceiptMasterBase = (props) => {
             }
             case VEHICLE_RECEIPT_STATUS?.RECEIVED?.key: {
                 setTableIconsVisibility({ ...tableActionsFalse, EyeIcon: true });
-
                 break;
             }
             case VEHICLE_RECEIPT_STATUS?.RETURNED?.key: {
                 setTableIconsVisibility({ ...tableActionsFalse, EyeIcon: true });
-
+                break;
+            }
+            default: {
                 break;
             }
         }
@@ -414,8 +415,6 @@ export const VehicleReceiptMasterBase = (props) => {
         onFinishFailed,
         handleResetFilter,
         advanceFilterForm,
-
-        // title,
         data,
         setAdvanceSearchVisible,
         typeData,
@@ -489,7 +488,7 @@ export const VehicleReceiptMasterBase = (props) => {
         isLastSection,
         typeData,
         otfData,
-        saveButtonName: !setSelectedId ? 'Create Customer ID' : isLastSection ? 'Submit' : 'Save & Next',
+        saveButtonName: isLastSection ? 'Submit' : 'Next',
     };
 
     return (
