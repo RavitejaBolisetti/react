@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button, Col, Form, Row, Input, Empty } from 'antd';
@@ -143,14 +143,16 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
     const { viewTitle, manufacturerAdminHierarchyData, fetchList, hierarchyAttributeFetchList, saveData, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading } = props;
     const { isDataOrgLoaded, manufacturerOrgHierarchyData, fetchOrgList, fetchDocumentFileDocId } = props;
     const { resetData, resetViewData, detailData, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
-    const { uploadDocumentFile, accessToken, token, ManufacturerAdminHierarchyLoading } = props;
-    const { AdminDetailData, isAdminDetailDataLoaded, ManufacturerAdminHierarchyDetailLoading, fetchDetailList, DetailLoading } = props;
+    const { uploadDocumentFile, accessToken, token } = props;
+    const { AdminDetailData, ManufacturerAdminHierarchyDetailLoading, fetchDetailList, DetailLoading } = props;
     const { authorityShowLoading, isAuthorityDataLoaded, isAuthorityDataLoading, authorityData, typeData } = props;
     const { saveAuthorityData, isViewDataLoaded, isLoading, viewListShowLoading, fetchViewDocument, viewDocument } = props;
     const { authorityDropDownfetchList, authorityDropDownlistShowLoading, authTypeDropdownData } = props;
-    const { downloadShowLoading, downloadFile, isDataOrgLoading } = props;
+    const { downloadFile } = props;
 
     const [form] = Form.useForm();
+    const [, forceUpdate] = useReducer((x) => x + 1, 0);
+    
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
 
     const [selectedTreeKey, setSelectedTreeKey] = useState([]);
@@ -194,7 +196,6 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
     const supportedFileTypes = ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
     const maxSize = 8;
 
-    const errorAction = () => {};
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
@@ -447,6 +448,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         attributeDataOptions,
         setattributeDataOptions,
         authTypeDropdownData,
+        forceUpdate,
     };
 
     const viewProps = {
@@ -464,6 +466,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         manufacturerAdminHierarchyData,
         isLoading: ManufacturerAdminHierarchyDetailLoading,
         authTypeDropdownData,
+        forceUpdate,
     };
     const leftCol = manufacturerAdminHierarchyData?.length > 0 && organizationId ? 14 : 24;
     const rightCol = manufacturerAdminHierarchyData?.length > 0 && organizationId ? 10 : 24;

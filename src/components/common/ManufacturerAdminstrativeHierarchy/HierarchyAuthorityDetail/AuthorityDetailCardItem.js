@@ -18,6 +18,7 @@ import { getCodeValue } from 'utils/getCodeValue';
 import { DATA_TYPE } from 'constants/dataType';
 
 import { AddEditForm } from './AddEditForm';
+import moment from 'moment';
 
 const { Text } = Typography;
 
@@ -47,12 +48,11 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const AuthorityCardItemMain = (props) => {
-    const { isUpdating, viewMode, onFinish, setDocumentTypesList, documentTypesList, setIsBtnDisabled, isBtnDisabled, record, handleFormValueChange } = props;
+    const { forceUpdate, viewMode, onFinish, setDocumentTypesList, documentTypesList, setIsBtnDisabled, isBtnDisabled, record, handleFormValueChange } = props;
     const { employeeName, setEmployeeName, tokenValidate, setTokenValidate, tokenValidationData, showGlobalNotification } = props;
     const { selectedValueOnUpdate, setselectedValueOnUpdate, authTypeDropdownData, errorMessage, setErrorMessage, formType, setFormType, resetData, isMainForm } = props;
     const [form] = Form.useForm();
     const [isEditing, setIsEditing] = useState(false);
-    console.log('authTypeDropdownData', authTypeDropdownData);
 
     const onEdit = () => {
         form.setFieldsValue({ ...record, effectiveTo: dayjs(record?.effectiveTo), effectiveFrom: dayjs(record?.effectiveFrom) });
@@ -76,9 +76,10 @@ const AuthorityCardItemMain = (props) => {
                 setDocumentTypesList((prev) => {
                     const updatedData = [...prev];
                     const index = updatedData?.findIndex((el) => el?.authorityEmployeeTokenNo === record?.authorityEmployeeTokenNo);
-                    updatedData?.splice(index, 1, { ...data, effectiveTo: isPreviousTokenNo ? record?.effectiveTo : data?.effectiveTo, effectiveFrom: isPreviousTokenNo ? record?.effectiveFrom : data?.effectiveFrom, authorityEmployeeTokenNo: tokenValidationData?.authorityEmployeeTokenNo || data?.authorityEmployeeTokenNo, employeeName: tokenValidationData?.employeeName || data?.employeeName, isModified: !!data?.id });
+                    updatedData?.splice(index, 1, { ...data, effectiveTo: data?.effectiveTo, effectiveFrom: data?.effectiveFrom, authorityEmployeeTokenNo: tokenValidationData?.authorityEmployeeTokenNo || data?.authorityEmployeeTokenNo, employeeName: tokenValidationData?.employeeName || data?.employeeName, isModified: !!data?.id });
                     return updatedData;
                 });
+                forceUpdate();
                 setIsEditing(false);
                 setIsBtnDisabled(false);
                 resetData();
@@ -122,9 +123,9 @@ const AuthorityCardItemMain = (props) => {
                         </Col>
 
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Text type="secondary">From - {checkAndSetDefaultValue(record?.effectiveFrom, false, DATA_TYPE?.DATE?.key)}</Text>
+                            <Text type="secondary">From - {record?.effectiveFrom ? dayjs(record?.effectiveFrom).format('DD-MM-YYYY') : '-'}</Text>
                             <Divider type="vertical" />
-                            <Text type="secondary">To - {checkAndSetDefaultValue(record?.effectiveTo, false, DATA_TYPE?.DATE?.key)}</Text>
+                            <Text type="secondary">To - {record?.effectiveTo ? dayjs(record?.effectiveTo).format('DD-MM-YYYY') : '-'}</Text>
                         </Col>
                     </Col>
                     {!viewMode && (
