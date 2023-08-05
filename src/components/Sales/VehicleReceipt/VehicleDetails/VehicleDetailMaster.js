@@ -66,11 +66,20 @@ const VehicleDetailsMasterBase = (props) => {
     const { form, selectedId, formActionType, handleFormValueChange, fetchSalesConsultant, NEXT_ACTION, handleButtonClick } = props;
     const [exchangeValue, setexchangeValue] = useState(false);
     const [loyaltyValue, setloyaltyValue] = useState(false);
+    const [finalData, setFinalData] = useState([]);
 
     const [vehicleDetailForm] = Form.useForm();
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
+    };
+
+    const changeObjtoArr = (data) => {
+        const FinalArr = [];
+        Object?.entries(data)?.map(([key, value]) => {
+            FinalArr.push(value);
+        });
+        return FinalArr;
     };
 
     const extraParams = [
@@ -99,9 +108,9 @@ const VehicleDetailsMasterBase = (props) => {
 
     const onFinish = (values) => {
         // const recordId = vehicleDetailData?.id || '';
-        const data = { vehicleDetails: vehicleDetailData };
-        console.log('🚀 ~ file: VehicleDetailMaster.js:129 ~ onFinish ~ data:', vehicleDetailData);
-
+        const data = { vehicleDetails: changeObjtoArr(finalData) };
+        console.log('data', data);
+        return;
         const onSuccess = (res) => {
             // handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -147,6 +156,8 @@ const VehicleDetailsMasterBase = (props) => {
         loyaltyValue,
         setloyaltyValue,
         vehicleDetailForm,
+        finalData,
+        setFinalData,
     };
 
     const viewProps = {
