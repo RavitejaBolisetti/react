@@ -416,7 +416,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         from: listFilterForm,
         onFinish,
         onFinishFailed,
-        title: <QueryButtons handleButtonQuery={handleButtonQuery} />,
+        title: <QueryButtons items={QUERY_BUTTONS_CONSTANTS} handleButtonQuery={handleButtonQuery} />,
         data,
         typeData,
         otfSearchRules,

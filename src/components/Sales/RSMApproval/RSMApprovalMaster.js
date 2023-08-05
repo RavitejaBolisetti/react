@@ -11,7 +11,7 @@ import { Col, Form, Row } from 'antd';
 
 import { tableColumn } from './tableColumn';
 import AdvanceFilter from './AdvanceFilter';
-import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 'utils/btnVisiblity';
+import { VIEW_ACTION } from 'utils/btnVisiblity';
 
 import { ListDataTable } from 'utils/ListDataTable';
 import { AdvancedSearch } from './AdvancedSearch';
@@ -19,14 +19,13 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { vehicleDetailDataActions } from 'store/actions/data/vehicle/vehicleDetail';
 import { ViewDetail } from './ViewDetail';
 import { RejectRequest } from './RejectRequest';
-import { QUERY_BUTTONS } from './QueryButtons/QueryButtonsConstant';
+import { RSM_APPROVAL_STATUS } from './utils/RSMApprovalStatus';
 
 import { validateRequiredInputField } from 'utils/validation';
 import { LANGUAGE_EN } from 'language/en';
 
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { FilterIcon } from 'Icons';
-import { QueryButtons } from './QueryButtons';
 import styles from 'components/common/Common.module.css';
 
 const mapStateToProps = (state) => {
@@ -131,16 +130,19 @@ export const RSMApprovalMasterBase = (props) => {
     };
     const handleButtonQuery = (buttonName) => {
         switch (buttonName) {
-            case QUERY_BUTTONS?.PENDING?.key: {
+            case RSM_APPROVAL_STATUS?.PENDING?.key: {
                 setButtonData({ ...defaultBtnVisiblity });
                 break;
             }
-            case QUERY_BUTTONS?.APPROVED?.key: {
+            case RSM_APPROVAL_STATUS?.APPROVED?.key: {
                 setButtonData({ ...defaultBtnVisiblity, cancelBtn: false, reject: false, approve: false });
                 break;
             }
-            case QUERY_BUTTONS?.REJECTED?.key: {
+            case RSM_APPROVAL_STATUS?.REJECTED?.key: {
                 setButtonData({ ...defaultBtnVisiblity, cancelBtn: false, reject: false, approve: false });
+                break;
+            }
+            default: {
                 break;
             }
         }
@@ -229,14 +231,6 @@ export const RSMApprovalMasterBase = (props) => {
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
-    // useEffect(() => {
-    //     const defaultSection = VEHICLE_RECIEPT_CHECKLIST.CHECKLIST_DETAILS.id;
-    //     setDefaultSection(defaultSection);
-    //     setSetionName(VEHICLE_RECIEPT_CHECKLIST);
-    //     setSection(defaultSection);
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, []);
 
     useEffect(() => {
         if (currentSection && sectionName) {
@@ -376,7 +370,9 @@ export const RSMApprovalMasterBase = (props) => {
         from: listFilterForm,
         onFinish,
         onFinishFailed,
-        title: <QueryButtons handleButtonQuery={handleButtonQuery} />,
+        title: '',
+        // title: <QueryButtons handleButtonQuery={handleButtonQuery} />,
+        handleButtonQuery,
         data,
         typeData,
         otfSearchRules,

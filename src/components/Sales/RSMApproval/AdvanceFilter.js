@@ -19,7 +19,6 @@ export default function AdvanceFilter(props) {
                         <Form form={searchForm} className={styles.masterListSearchForm}>
                             <Form.Item name="Search">
                                 <div className={styles.verticallyCentered}>
-                                    {title}
                                     <Search placeholder="Search by dealer" allowClear onSearch={handleSearchChange} className={styles.headerSearchField} />
                                 </div>
                             </Form.Item>
