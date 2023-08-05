@@ -19,11 +19,8 @@ import { ViewDetail } from './ViewDetail';
 import { RejectRequest } from './RejectRequest';
 import { RSM_APPROVAL_STATUS } from './utils/RSMApprovalStatus';
 
-import { validateRequiredInputField } from 'utils/validation';
-import { QUERY_BUTTONS } from './QueryButtons/QueryButtonsConstant';
 import { LANGUAGE_EN } from 'language/en';
 import { FilterIcon } from 'Icons';
-import { QueryButtons } from './QueryButtons';
 import { rsmApprovalSearchDataAction } from 'store/actions/data/sales/rsmApprovalSearch';
 import { rsmApprovalDataAction } from 'store/actions/data/sales/rsmApproval';
 import styles from 'components/common/Common.module.css';
@@ -127,25 +124,26 @@ export const RSMApprovalMasterBase = (props) => {
         showGlobalNotification({ message });
         setShowDataLoading(false);
     };
+
     const handleButtonQuery = (buttonName) => {
         switch (buttonName) {
-            case QUERY_BUTTONS?.PENDING?.key: {
-                setFilterString({ searchParam: QUERY_BUTTONS?.PENDING?.title });
+            case RSM_APPROVAL_STATUS?.PENDING?.key: {
+                setFilterString({ searchParam: RSM_APPROVAL_STATUS?.PENDING?.title });
                 setShowDataLoading(true);
                 break;
             }
-            case QUERY_BUTTONS?.APPROVED?.key: {
-                setFilterString({ searchParam: QUERY_BUTTONS?.APPROVED?.title });
+            case RSM_APPROVAL_STATUS?.APPROVED?.key: {
+                setFilterString({ searchParam: RSM_APPROVAL_STATUS?.APPROVED?.title });
                 setShowDataLoading(true);
                 break;
             }
-            case QUERY_BUTTONS?.REJECTED?.key: {
-                setFilterString({ searchParam: QUERY_BUTTONS?.REJECTED?.title });
+            case RSM_APPROVAL_STATUS?.REJECTED?.key: {
+                setFilterString({ searchParam: RSM_APPROVAL_STATUS?.REJECTED?.title });
                 setShowDataLoading(true);
                 break;
             }
             default: {
-                setFilterString({ searchParam: QUERY_BUTTONS?.PENDING?.title });
+                setFilterString({ searchParam: RSM_APPROVAL_STATUS?.PENDING?.title });
                 setShowDataLoading(true);
             }
         }
@@ -229,7 +227,7 @@ export const RSMApprovalMasterBase = (props) => {
     }, [userId, extraParams]);
 
     useEffect(() => {
-        setFilterString({ ...filterString, searchParam: QUERY_BUTTONS?.PENDING?.title });
+        setFilterString({ ...filterString, searchParam: RSM_APPROVAL_STATUS?.PENDING?.title });
         return () => {
             setFilterString();
         };
@@ -354,7 +352,6 @@ export const RSMApprovalMasterBase = (props) => {
         onFinish,
         onFinishFailed,
         title: '',
-        // title: <QueryButtons handleButtonQuery={handleButtonQuery} />,
         handleButtonQuery,
         // title: <QueryButtons queryButtons={queryButtons} setqueryButtons={setqueryButtons} handleButtonQuery={handleButtonQuery} />,
         data,

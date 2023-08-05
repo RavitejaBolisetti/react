@@ -38,7 +38,7 @@
 }
 
 .rejectedColor {
-    color: #ED302D;
+    color: #ed302d;
 }
 
 .warningColor {
@@ -180,7 +180,7 @@
     color: #f99c22;
 }
 .drawerBody .rsmApproval .rejectedColor {
-    color: #ED302D;
+    color: #ed302d;
 }
 .drawerBody .rsmApproval .approvedColor {
     color: rgba(112, 201, 34, 1);
@@ -3258,6 +3258,14 @@ li.ant-timeline-item.active .ant-timeline-item-content p {
 /* .changeHistoryContainer {
     padding: 20px 40px 0 !important;
 } */
+
+.advanceFilterBtn {
+    margin-left: 10px;
+}
+
+.advanceFilterIcon {
+    margin-top: 5px;
+}
 
 @media (max-width: 768px) {
     /* For mobile phones: */
