@@ -36,6 +36,7 @@ import { VehiclePriceMaster } from './vehiclePriceMaster';
 import { ManufacturerAdmin } from './ManufacturerAdmin';
 import { ManufacturerOrg } from './ManufacturerOrg';
 import { VehicleReceipt } from './vehicleReceipt';
+import { VehicleModelandTaxChargesCategory } from './VehicleModelTaxChargesCategory';
 import { Report } from './report';
 
 export const data = combineReducers({
@@ -71,5 +72,6 @@ export const data = combineReducers({
     ManufacturerOrg,
     VehicleReceipt,
     VehiclePriceMaster,
+    VehicleModelandTaxChargesCategory,
     Report,
 });
