@@ -206,6 +206,13 @@ export const MenuConstant = {
         parentMenuId: 'SACT-03',
     },
 
+    [getMenyKey('SACT-04.05')]: {
+        key: 'SACT-04.05',
+        link: routing.ROUTING_RSM_APPROVAL,
+        icon: undefined,
+        parentMenuId: 'SACT-04',
+    },
+
     [getMenyKey('MILE-01.04')]: {
         key: 'MILE-01.04',
         link: routing.ROUTING_MILE_DEALER_MANPOWER_LOCATION_TYPE_MASTER,

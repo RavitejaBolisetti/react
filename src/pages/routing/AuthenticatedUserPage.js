@@ -40,6 +40,7 @@ import {
     LessorCustomerCreationPage,
 } from 'pages/common';
 import { TaxChargesPage, TaxChargesCategoryPage } from 'pages/FinancialAccounting';
+import { VehicleModelTaxChargesCategoryPage } from 'pages/FinancialAccounting';
 
 import { OTFMasterPage, VehicleDetailMasterPage, VehiclePriceMasterPage, VehicleReceiptMasterPage, RSMApprovalPage, VehicleRecieptChecklistMaster } from 'pages/Sales';
 import * as routing from 'constants/routing';
@@ -123,6 +124,7 @@ export const AuthenticatedUserPage = () => {
 
             <Route path={routing.ROUTING_TAX_CHARGES} element={<TaxChargesPage />} exact />
             <Route path={routing.ROUTING_TAX_CHARGES_CATEGORY} element={<TaxChargesCategoryPage />} exact />
+            <Route path={routing.ROUTING_VEHICLE_MODEL_TAX_CHARGES_CATEGORY} element={<VehicleModelTaxChargesCategoryPage />} exact />
             <Route path={routing.ROUTING_VEHICLE_RECIEPT_CHECKLIST} element={<VehicleRecieptChecklistMaster />} exact />
 
             {/* <Route path="*" element={<LoginPage />} exact /> */}

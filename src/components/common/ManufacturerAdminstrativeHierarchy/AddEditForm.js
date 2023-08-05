@@ -21,7 +21,7 @@ const { TextArea } = Input;
 const AddEditFormMain = (props) => {
     const { onCloseAction, handleAttributeChange, formActionType, fieldNames, isReadOnly = false, formData, isDataAttributeLoaded, attributeData, manufacturerAdminHierarchyData } = props;
     const { selectedTreeKey, selectedTreeSelectKey, setSelectedTreeSelectKey, handleSelectTreeClick, flatternData } = props;
-    const { isFormBtnActive, setFormBtnActive, detailData, authTypeDropdownData } = props;
+    const { isFormBtnActive, setFormBtnActive } = props;
     const { onFinish, onFinishFailed, EDIT_ACTION } = props;
     const { attributeDataOptions, setattributeDataOptions } = props;
     const disabledProps = { disabled: EDIT_ACTION === formActionType ? true : false };
