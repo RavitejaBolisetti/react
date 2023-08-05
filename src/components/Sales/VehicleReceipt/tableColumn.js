@@ -51,7 +51,7 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             title: 'Status',
             dataIndex: 'status',
             width: '10%',
-            // render: (_, record) => VehicleReceiptStatusTag(record.orderStatus),
+            render: (_, record) => VehicleReceiptStatusTag(record.status),
         }),
 
         tblActionColumn({ handleButtonClick, styles, width: '12%', EditIcon: true }),

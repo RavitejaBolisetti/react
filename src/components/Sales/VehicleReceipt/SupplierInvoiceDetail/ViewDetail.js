@@ -7,11 +7,10 @@ import React from 'react';
 import { Card, Descriptions } from 'antd';
 import styles from 'components/common/Common.module.css';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
-import { getCodeValue } from 'utils/getCodeValue';
 import { DATA_TYPE } from 'constants/dataType';
 
 const ViewDetailMain = (props) => {
-    const { formData, isLoading, typeData } = props;
+    const { formData, isLoading } = props;
 
     const viewProps = {
         bordered: false,

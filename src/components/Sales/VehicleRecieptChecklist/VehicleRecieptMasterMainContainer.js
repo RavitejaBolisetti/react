@@ -6,11 +6,10 @@
 import React from 'react';
 import { Col, Row } from 'antd';
 import { withDrawer } from 'components/withDrawer';
-import { VEHICLE_RECIEPT_CHECKLIST } from 'constants/VehicleRecieptCheckListConstants';
+import { VEHICLE_RECIEPT_CHECKLIST_SECTION } from 'constants/VehicleRecieptCheckListSection';
 
 import { VehicleRecieptCheckListMaster } from './CheckListDetails';
 import { SupportingDocumentMaster } from './SupportingDocument';
-// import { ComingSoonMaster } from './ComingSoon';
 import { LeftSidebar } from './LeftSidebar';
 
 import styles from 'components/common/Common.module.css';
@@ -24,14 +23,14 @@ const VehicleRecieptMasterMainContainerMain = (props) => {
 
     const RenderContainer = () => {
         switch (currentSection) {
-            case VEHICLE_RECIEPT_CHECKLIST.CHECKLIST_DETAILS.id: {
+            case VEHICLE_RECIEPT_CHECKLIST_SECTION.CHECKLIST_DETAILS.id: {
                 return <VehicleRecieptCheckListMaster {...myProps} />;
             }
-            case VEHICLE_RECIEPT_CHECKLIST.DOCUMENTS.id: {
+            case VEHICLE_RECIEPT_CHECKLIST_SECTION.DOCUMENTS.id: {
                 return <SupportingDocumentMaster {...myProps} />;
             }
             default: {
-                // return <ComingSoonMaster {...myProps} />;
+                return false;
             }
         }
     };

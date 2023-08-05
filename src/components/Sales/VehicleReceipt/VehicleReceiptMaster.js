@@ -22,7 +22,6 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { vehicleReceiptDataActions } from 'store/actions/data/vehicleReceipt/vehicleReceipt';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
-// import { validateVehicleReceiptMenu } from './utils/validateVehicleReceiptMenu';
 import { FilterIcon } from 'Icons';
 
 const mapStateToProps = (state) => {
@@ -262,7 +261,6 @@ export const VehicleReceiptMasterBase = (props) => {
                 break;
             case NEXT_ACTION:
                 const nextSection = Object.values(sectionName)?.find((i) => i.id > currentSection);
-                // validateVehicleReceiptMenu({ item: i, status: setSelectedRecord?.orderStatus, otfData }) &&
                 section && setCurrentSection(nextSection?.id);
                 setLastSection(!nextSection?.id);
                 break;
