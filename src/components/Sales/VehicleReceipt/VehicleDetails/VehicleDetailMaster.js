@@ -107,10 +107,7 @@ const VehicleDetailsMasterBase = (props) => {
     }, [userId, selectedId]);
 
     const onFinish = (values) => {
-        // const recordId = vehicleDetailData?.id || '';
         const data = { vehicleDetails: changeObjtoArr(finalData) };
-        console.log('data', data);
-        return;
         const onSuccess = (res) => {
             // handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });

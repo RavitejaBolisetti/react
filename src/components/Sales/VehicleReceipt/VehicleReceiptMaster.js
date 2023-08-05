@@ -77,9 +77,13 @@ export const VehicleReceiptMasterBase = (props) => {
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
 
     const [listFilterForm] = Form.useForm();
-
     const [receiptType, setReceiptType] = useState(VEHICLE_RECEIPT_STATUS.IN_TRANSIT.key);
     const [searchValue, setSearchValue] = useState();
+
+    const tableActions = { EyeIcon: false, EditIcon: false, DeleteIcon: false, AddIcon: true };
+    const tableActionsFalse = { EyeIcon: false, EditIcon: false, DeleteIcon: false, AddIcon: false };
+
+    const [tableIconsVisibility, setTableIconsVisibility] = useState({ ...tableActions });
 
     const [selectedRecord, setSelectedRecord] = useState();
     const [selectedId, setSelectedId] = useState();
@@ -247,16 +251,16 @@ export const VehicleReceiptMasterBase = (props) => {
         switch (buttonAction) {
             case ADD_ACTION:
                 defaultSection && setCurrentSection(defaultSection);
+                record && setSelectedId(record?.supplierInvoiceNumber ?? 'INV002');
                 break;
             case EDIT_ACTION:
                 setSelectedRecord(record);
-                record && setSelectedId('INV002');
-                // record?.supplierInvoiceNumber
+                record && setSelectedId(record?.supplierInvoiceNumber ?? 'INV002');
                 openDefaultSection && setCurrentSection(defaultSection);
                 break;
             case VIEW_ACTION:
                 setSelectedRecord(record);
-                record && setSelectedId('INV002');
+                record && setSelectedId(record?.supplierInvoiceNumber ?? 'INV002');
                 defaultSection && setCurrentSection(defaultSection);
                 break;
             case NEXT_ACTION:
@@ -342,7 +346,7 @@ export const VehicleReceiptMasterBase = (props) => {
     };
 
     const tableProps = {
-        tableColumn: tableColumn(handleButtonClick),
+        tableColumn: tableColumn({ handleButtonClick, tableIconsVisibility }),
         tableData: data,
         showAddButton: false,
     };
@@ -365,6 +369,26 @@ export const VehicleReceiptMasterBase = (props) => {
     // };
 
     const handleReceiptTypeChange = (key) => {
+        switch (key) {
+            case VEHICLE_RECEIPT_STATUS?.IN_TRANSIT?.key: {
+                setTableIconsVisibility({ ...tableActionsFalse, AddIcon: true });
+                break;
+            }
+            case VEHICLE_RECEIPT_STATUS?.PARTIALLY_RECEIVED?.key: {
+                setTableIconsVisibility({ ...tableActionsFalse, EyeIcon: true, EditIcon: true });
+                break;
+            }
+            case VEHICLE_RECEIPT_STATUS?.RECEIVED?.key: {
+                setTableIconsVisibility({ ...tableActionsFalse, EyeIcon: true });
+
+                break;
+            }
+            case VEHICLE_RECEIPT_STATUS?.RETURNED?.key: {
+                setTableIconsVisibility({ ...tableActionsFalse, EyeIcon: true });
+
+                break;
+            }
+        }
         setReceiptType(key);
         searchForm.resetFields();
     };

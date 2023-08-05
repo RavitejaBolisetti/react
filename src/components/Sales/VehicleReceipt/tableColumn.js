@@ -3,13 +3,13 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
+import { tblPrepareColumns, tblActionColumn } from './tableColumnMaster';
 import { VehicleReceiptStatusTag } from './utils/VehicleReceiptStatusTag';
 import { convertDateMonthYear } from 'utils/formatDateTime';
 
 import styles from 'components/common/Common.module.css';
 
-export const tableColumn = (handleButtonClick, page, pageSize) => {
+export const tableColumn = ({ handleButtonClick, page, pageSize, tableIconsVisibility }) => {
     const tableColumn = [
         tblPrepareColumns({
             title: 'GRN Type',
@@ -55,7 +55,7 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             render: (_, record) => VehicleReceiptStatusTag(record.status),
         }),
 
-        tblActionColumn({ handleButtonClick, styles, width: '12%', EditIcon: true }),
+        tblActionColumn({ handleButtonClick, styles, width: '12%', ...tableIconsVisibility }),
     ];
 
     return tableColumn;
