@@ -4,16 +4,14 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Collapse, Space, Avatar, Typography } from 'antd';
+import { Collapse, Space, Typography } from 'antd';
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
-import { convertDateTime } from 'utils/formatDateTime';
 import { getCodeValue } from 'utils/getCodeValue';
 import { DATA_TYPE } from 'constants/dataType';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
-import { PARAM_MASTER } from 'constants/paramMaster';
 
 const { Panel } = Collapse;
-const { Text, Title } = Typography;
+const { Text } = Typography;
 
 const expandIcon = ({ isActive }) =>
     isActive ? (

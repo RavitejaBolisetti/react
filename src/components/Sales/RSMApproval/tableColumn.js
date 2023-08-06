@@ -18,7 +18,7 @@ export const tableColumn = (handleButtonClick) => {
                 return (
                     <>
                         <div>{value?.fromDealerName}</div>
-                        <div className={styles.tableTextColor85}>Code:{' ' + `${value?.fromDealerCode}`}</div>
+                        <div className={styles.tableTextColor85}>Code: {value?.fromDealerCode}</div>
                     </>
                 );
             },
@@ -31,7 +31,7 @@ export const tableColumn = (handleButtonClick) => {
                 return (
                     <>
                         <div>{value?.toDealerName}</div>
-                        <div  className={styles.tableTextColor85}>Code: {' ' + `${value?.toDealerCode}`}</div>
+                        <div className={styles.tableTextColor85}>Code: {` ${value?.toDealerCode}`}</div>
                     </>
                 );
             },

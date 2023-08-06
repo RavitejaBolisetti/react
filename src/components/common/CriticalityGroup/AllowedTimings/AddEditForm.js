@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Input, Form, Col, Row, Button, TimePicker, Space } from 'antd';
+import { Input, Form, Button, TimePicker, Space } from 'antd';
 import { validateRequiredInputField } from 'utils/validation';
 
 import styles from 'components/common/Common.module.css';

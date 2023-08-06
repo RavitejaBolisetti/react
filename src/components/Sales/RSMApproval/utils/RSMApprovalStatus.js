@@ -7,16 +7,16 @@ export const RSM_APPROVAL_STATUS = {
     PENDING: {
         title: 'Pending',
         key: 'pending',
-        intialValue: ['pending', true],
+        active: true,
     },
     APPROVED: {
         title: 'Approved',
         key: 'approved',
-        intialValue: ['approved', false],
+        active: false,
     },
     REJECTED: {
         title: 'Rejected',
         key: 'rejected',
-        intialValue: ['rejected', false],
+        active: false,
     },
 };

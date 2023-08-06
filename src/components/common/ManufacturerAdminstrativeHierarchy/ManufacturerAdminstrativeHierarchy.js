@@ -22,7 +22,6 @@ import { hierarchyAttributeMasterDataActions } from 'store/actions/data/hierarch
 import { manufacturerOrgHierarchyDataActions } from 'store/actions/data/manufacturerOrgHierarchy';
 import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
 import { AuthorityHierarchyDataActions } from 'store/actions/data/manufacturerAdminHierarchy/authorityHierarchy';
-import { HIERARCHY_DEFAULT_PARENT } from 'constants/constants';
 
 import { documentViewDataActions } from 'store/actions/data/customerMaster/documentView';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
@@ -152,7 +151,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
 
     const [form] = Form.useForm();
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
-    
+
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
 
     const [selectedTreeKey, setSelectedTreeKey] = useState([]);
@@ -335,7 +334,6 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
                 setDocumentTypesList([]);
                 break;
             }
-
             case FROM_ACTION_TYPE.SIBLING: {
                 form.resetFields();
                 setFormData([]);
@@ -345,7 +343,9 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
             case FROM_ACTION_TYPE.EDIT: {
                 setFormData(selectedTreeData);
                 setDocumentTypesList(ViewDocumentTypesList);
-
+                break;
+            }
+            default: {
                 break;
             }
         }

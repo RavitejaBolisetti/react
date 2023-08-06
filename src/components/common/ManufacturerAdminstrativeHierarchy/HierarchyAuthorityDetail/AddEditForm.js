@@ -65,7 +65,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const AuthorityFormMin = (props) => {
-    const { isMainForm, handleFormValueChange, tokenValidationData, recordId = '', viewMode, userId, onFinish, form, isEditing, isBtnDisabled, listShowLoading, searchList, setIsBtnDisabled, setDocumentTypesList, documentTypesList, cardBtnDisableAction } = props;
+    const { isMainForm, handleFormValueChange, tokenValidationData, recordId = '', viewMode, userId, onFinish, form, isEditing, isBtnDisabled, listShowLoading, searchList, documentTypesList } = props;
     const { setselectedValueOnUpdate, searchLoading, authTypeDropdownData, errorMessage, setErrorMessage, formType, setFormType, resetData, record } = props;
     const disableAddBtn = { disabled: isBtnDisabled || !tokenValidationData?.employeeName };
     const onFinishFailed = (err) => {

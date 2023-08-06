@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect, useReducer, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Row, Col, Form } from 'antd';
@@ -25,7 +25,7 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             VehicleModelandTaxChargesCategory: {
-                VehicleModelTaxChargesCategoryMain: { isLoaded: VehicleModelTaxChargesCategoryDataLoaded = false, VehicleModelTaxChargesCategoryisLoading: VehicleModelTaxChargesCategoryisLoading, data: VehicleModelTaxChargesCategoryData = [] },
+                VehicleModelTaxChargesCategoryMain: { isLoaded: VehicleModelTaxChargesCategoryDataLoaded = false, VehicleModelTaxChargesCategoryisLoading, data: VehicleModelTaxChargesCategoryData = [] },
                 ProductModelGroup: { isLoaded: isProductHierarchyDataLoaded = false, isLoading: isProductHierarchyDataLoading = false, data: ProductHierarchyData = [] },
                 AccountCategorylov: { isFilteredListLoaded: isAccountDataLoaded = false, isLoading: isAccountDataLoading, filteredListData: AccountData },
                 TaxChargeCategoryLov: { isFilteredListLoaded: isTaxCategoryDataLoaded = false, isLoading: isTaxCategoryDataLoading, filteredListData: TaxCategoryData },
@@ -91,18 +91,11 @@ export const VehicleModelAndTaxChargersCategoryMain = (props) => {
     const { userId, moduleTitle } = props;
 
     const { VehicleModelTaxChargesCategoryData, VehicleModelTaxChargesCategoryisLoading, VehicleModelTaxChargesCategoryDataLoaded } = props;
-
     const { ProductHierarchyData, isProductHierarchyDataLoading, isProductHierarchyDataLoaded } = props;
-
-    const { isAccountDataLoaded, isAccountDataLoading, AccountData, listAccountCategoryLovLoading } = props;
-
-    const { isTaxCategoryDataLoaded, isTaxCategoryDataLoading, TaxCategoryData } = props;
-
+    const { isAccountDataLoaded, AccountData, listAccountCategoryLovLoading } = props;
+    const { isTaxCategoryDataLoaded, TaxCategoryData } = props;
     const { fetchList, listShowLoading, fetchModelList, listModelShowLoading, showGlobalNotification, saveData, fetchAccountCategoryLov, fetchTaxCategoryLov, listTaxCategoryLovLoading } = props;
-
-    const { resetData } = props;
     const [form] = Form.useForm();
-    const [searchForm] = Form.useForm();
 
     const [formData, setFormData] = useState({});
     const [searchData, setSearchdata] = useState([]);
@@ -243,15 +236,15 @@ export const VehicleModelAndTaxChargersCategoryMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, VehicleModelTaxChargesCategoryDataLoaded, VehicleModelTaxChargesCategoryData['vehicleModel'], userId]);
 
-    const removeFilter = (key) => {
-        if (key === 'searchParam') {
-            const { searchType, searchParam, ...rest } = filterString;
-            setFilterString({ ...rest });
-        } else {
-            const { [key]: names, ...rest } = filterString;
-            setFilterString({ ...rest });
-        }
-    };
+    // const removeFilter = (key) => {
+    //     if (key === 'searchParam') {
+    //         const { searchType, searchParam, ...rest } = filterString;
+    //         setFilterString({ ...rest });
+    //     } else {
+    //         const { [key]: names, ...rest } = filterString;
+    //         setFilterString({ ...rest });
+    //     }
+    // };
 
     const onFinish = (values) => {
         const recordId = formData?.id || '';
@@ -317,9 +310,9 @@ export const VehicleModelAndTaxChargersCategoryMain = (props) => {
         setIsFormVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
     };
-    const handleResetFilter = (e) => {
-        setFilterString();
-    };
+    // const handleResetFilter = (e) => {
+    //     setFilterString();
+    // };
 
     const drawerTitle = useMemo(() => {
         if (formActionType?.viewMode) {

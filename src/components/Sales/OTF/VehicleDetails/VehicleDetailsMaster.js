@@ -88,7 +88,7 @@ const VehicleDetailsMasterMain = (props) => {
     const [ProductHierarchyDataOptions, setProductHierarchyDataOptions] = useState();
     const [modelData, setmodelData] = useState();
 
-    const [modelCode, setmodelCode] = useState();
+    // const [modelCode, setmodelCode] = useState();
 
     const onSuccessAction = (res) => {
         // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -197,7 +197,7 @@ const VehicleDetailsMasterMain = (props) => {
     }, [VehicleDetailsData, isDataLoaded]);
 
     const onHandleSelect = (values) => {
-        setmodelCode(values);
+        // setmodelCode(values);
         const LovParams = [
             {
                 key: 'prodctCode',

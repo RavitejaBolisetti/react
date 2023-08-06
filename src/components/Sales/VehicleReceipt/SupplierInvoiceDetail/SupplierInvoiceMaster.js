@@ -57,7 +57,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const SupplierInvoiceDetailsMasterBase = (props) => {
     const { typeData } = props;
-    const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, supplierInvoiceData, saveData, isLoading } = props;
+    const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, supplierInvoiceData, isLoading } = props;
     const { form, selectedId, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick } = props;
     const [exchangeValue, setexchangeValue] = useState(false);
     const [loyaltyValue, setloyaltyValue] = useState(false);
@@ -66,14 +66,14 @@ const SupplierInvoiceDetailsMasterBase = (props) => {
         showGlobalNotification({ message });
     };
 
-    const extraParams = [
-        {
-            key: 'supplierInvoiceNumber',
-            title: 'supplierInvoiceNumber',
-            value: selectedId,
-            name: 'Supplier Invoice Number',
-        },
-    ];
+    // const extraParams = [
+    //     {
+    //         key: 'supplierInvoiceNumber',
+    //         title: 'supplierInvoiceNumber',
+    //         value: selectedId,
+    //         name: 'Supplier Invoice Number',
+    //     },
+    // ];
 
     useEffect(() => {
         if (userId && selectedId) {
@@ -91,7 +91,7 @@ const SupplierInvoiceDetailsMasterBase = (props) => {
     }, [userId]);
 
     const onFinish = (values) => {
-        const recordId = supplierInvoiceData?.id || '';
+        // const recordId = supplierInvoiceData?.id || '';
         // const data = { ...values, id: recordId, supplierInvoiceNumber: '', loyaltyScheme: values?.loyaltyScheme === true ? 1 : 0, exchange: exchange, initialPromiseDeliveryDate: values?.initialPromiseDeliveryDate?.format('YYYY-MM-DD'), custExpectedDeliveryDate: values?.custExpectedDeliveryDate?.format('YYYY-MM-DD') };
         handleButtonClick({ record: values, buttonAction: NEXT_ACTION });
 

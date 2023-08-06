@@ -10,15 +10,12 @@ import { Col, Card, Row, Button, Divider, Typography, Form } from 'antd';
 import { FiEdit, FiTrash } from 'react-icons/fi';
 import dayjs from 'dayjs';
 import { bindActionCreators } from 'redux';
-import styles from 'components/common/Common.module.css';
 import { showGlobalNotification } from 'store/actions/notification';
 
-import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { getCodeValue } from 'utils/getCodeValue';
-import { DATA_TYPE } from 'constants/dataType';
-
 import { AddEditForm } from './AddEditForm';
-import moment from 'moment';
+
+import styles from 'components/common/Common.module.css';
 
 const { Text } = Typography;
 

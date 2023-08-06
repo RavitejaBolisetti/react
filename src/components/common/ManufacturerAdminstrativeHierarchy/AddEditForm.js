@@ -3,19 +3,18 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect, useState } from 'react';
-import { Col, Input, Form, Row, Select, Switch, Button, Space } from 'antd';
+import React, { useEffect } from 'react';
+import { Col, Input, Form, Row, Select, Switch, Button } from 'antd';
 import { withDrawer } from 'components/withDrawer';
 import { AuthorityDetailPanel } from './HierarchyAuthorityDetail';
 
-import styles from 'components/common/Common.module.css';
 import TreeSelectField from '../TreeSelectField';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
-import { HIERARCHY_DEFAULT_PARENT } from 'constants/constants';
 
-const { Option } = Select;
+import styles from 'components/common/Common.module.css';
+
 const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
@@ -27,12 +26,16 @@ const AddEditFormMain = (props) => {
     const disabledProps = { disabled: EDIT_ACTION === formActionType ? true : false };
     const [form] = Form.useForm();
     const treeFieldNames = { ...fieldNames, label: fieldNames?.title, value: fieldNames?.key };
+
     useEffect(() => {
         const arr = [];
         const newOptions = [];
         if (attributeDataOptions && attributeDataOptions?.length) {
             attributeData?.map((element) => {
-                if (!element?.status) arr.push(element?.hierarchyAttribueName);
+                if (!element?.status) {
+                    arr.push(element?.hierarchyAttribueName);
+                }
+                return undefined;
             });
 
             attributeDataOptions?.map((element) => {
@@ -41,10 +44,10 @@ const AddEditFormMain = (props) => {
                 } else {
                     newOptions.push({ ...element, disabled: false });
                 }
+                return undefined;
             });
             setattributeDataOptions(newOptions);
         }
-        console.log('newOptions', newOptions);
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [attributeData]);

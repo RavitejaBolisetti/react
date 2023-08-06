@@ -79,7 +79,7 @@ const mapDispatchToProps = (dispatch) => ({
 const CustomerDetailMasterBase = (props) => {
     const { setRefreshCustomerList, typeData, fetchCorporateLovList, isCorporateLovDataLoaded, listCorporateLovShowLoading, corporateLovData } = props;
     const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, data, saveData, isLoading, resetData, form, handleFormValueChange, onFinishFailed } = props;
-    const { selectedCustomer, setSelectedCustomer, selectedCustomerId, setSelectedCustomerId } = props;
+    const { selectedCustomer, selectedCustomerId, setSelectedCustomerId } = props;
     const { buttonData, setButtonData, formActionType, setFormActionType, handleButtonClick, NEXT_ACTION } = props;
     const { fetchViewDocument, viewListShowLoading, listSupportingDocumentShowLoading, isSupportingDocumentDataLoaded, supportingData, isViewDataLoaded, viewDocument } = props;
 
@@ -318,7 +318,6 @@ const CustomerDetailMasterBase = (props) => {
         setFormData,
         isSupportingDocumentDataLoaded,
         supportingData,
-        setFormData,
         isViewDataLoaded,
         viewDocument,
         setUploadedFile,

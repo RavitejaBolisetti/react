@@ -4,10 +4,10 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect } from 'react';
-import { Input, Form, Col, Row, Switch, Select } from 'antd';
+import { Form, Col, Row } from 'antd';
 
-import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
-import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
+import { validateRequiredSelectField } from 'utils/validation';
+import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
 import { ViewDetail } from './ViewDetail';
 import { withDrawer } from 'components/withDrawer';
@@ -29,14 +29,14 @@ const AddEditFormMain = (props) => {
     const { buttonData, setButtonData, handleButtonClick } = props;
 
     const { ModelOptions, TaxChargesOptions, AccountDataOptions } = props;
-    const findModelId = (data, name) => {
-        const foundData = data?.find((element, index) => {
-            if (element?.value === name) {
-                return element;
-            }
-        });
-        return foundData?.id ?? 'NA';
-    };
+    // const findModelId = (data, name) => {
+    //     const foundData = data?.find((element, index) => {
+    //         if (element?.value === name) {
+    //             return element;
+    //         }
+    //     });
+    //     return foundData?.id ?? 'NA';
+    // };
 
     useEffect(() => {
         if (editMode) {

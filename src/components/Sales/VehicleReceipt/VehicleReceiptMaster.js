@@ -31,7 +31,6 @@ const mapStateToProps = (state) => {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             VehicleReceipt: {
                 VehicleReceiptSearch: { isLoaded: isSearchDataLoaded = false, isLoading: isOTFSearchLoading, data, filter: filterString },
-                // VehicleReceiptDetails: { isLoaded: isDataLoaded = false, isLoading, data: otfData = [] },
             },
         },
     } = state;

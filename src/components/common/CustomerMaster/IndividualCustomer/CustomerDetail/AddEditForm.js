@@ -5,7 +5,7 @@
  */
 
 import { useEffect, useState } from 'react';
-import { Col, Input, Form, Row, Select, Space, Typography, Card, Divider, Switch, Button, Tag, Upload, Collapse } from 'antd';
+import { Col, Input, Form, Row, Select, Space, Typography, Card, Divider, Switch, Button, Tag, Collapse } from 'antd';
 import { validateEmailField, validateMobileNoField, validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
@@ -20,7 +20,6 @@ import { NameChangeHistory } from './NameChangeHistory';
 
 import styles from 'components/common/Common.module.css';
 
-const { Dragger } = Upload;
 const { Panel } = Collapse;
 const { Text } = Typography;
 

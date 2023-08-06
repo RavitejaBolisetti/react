@@ -78,6 +78,7 @@ const VehicleDetailsMasterBase = (props) => {
         const FinalArr = [];
         Object?.entries(data)?.map(([key, value]) => {
             FinalArr.push(value);
+            return undefined;
         });
         return FinalArr;
     };
