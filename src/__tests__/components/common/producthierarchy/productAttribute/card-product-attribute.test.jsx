@@ -1,74 +1,99 @@
-
-import '@testing-library/jest-dom/extend-expect';
-import customRender from '@utils/test-utils';
-import { screen, render, cleanup, fireEvent } from '@testing-library/react';
+import React from 'react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import CardProductAttribute from '@components/common/ProductHierarchy/ProductAttribute/CardProductAttribute';
-import { act } from 'react-dom/test-utils';
+
+const mockShowGlobalNotification = jest.fn();
+const mockSetFormBtnActive = jest.fn();
+const mockSetDisabledEdit = jest.fn();
+const mockForceUpdate = jest.fn();
 
 
-const props = {
-    finalFormdata: [],
+
+const mockProps = {
+    isVisible: true,
+    finalFormdata: {},
     attributeForm: {},
-    forceUpdate: jest.fn(),
-    skuAttributes: [],
-    setSKUAttributes: [],
-    productHierarchyAttributeData: {},
-    setFormBtnActive: true,
-    showGlobalNotification: true,
-    setDisabledEdit: jest.fn(),
-    onAttributeEdit: jest.fn(),
-    onAttributeSave: jest.fn(),
-    onAttributeCancel: jest.fn()
-}
-
-afterEach(cleanup);
-
+    forceUpdate: mockForceUpdate,
+    skuAttributes: [
+        { attributeId: 1, code: 'Attribute1', value: 'Value1' },
+        { attributeId: 2, code: 'Attribute2', value: 'Value2' },
+        { attributeId: 3, code: 'Attribute3', value: 'Value3' },
+    ],
+    setSKUAttributes: jest.fn(),
+    productHierarchyAttributeData: [],
+    setFormBtnActive: mockSetFormBtnActive,
+    showGlobalNotification: mockShowGlobalNotification,
+    setDisabledEdit: mockSetDisabledEdit,
+};
 
 
-describe('CardProductAttribute component', () => {
-    it('should render the CardProductAttribute components', () => {
-        const { getByRole } = customRender(
-            <CardProductAttribute
-                isVisible={true}
-                {...props}
-                formEdit={false}
-            />); 
-        screen.getByText('save')
+
+describe('CardProductAttribute', () => {
+
+
+    it('removes element with matching attributeId from skuAttributes', () => {
+        render(<CardProductAttribute {...mockProps} />);
+        const deleteButton = screen.getAllByTestId('delete-button')[0];
+        fireEvent.click(deleteButton);
+        expect(mockProps.setSKUAttributes)
     });
 
 
-    it('should render the edit button', async () => {
-        const { getByTestId } = customRender(<CardProductAttribute isVisible={true} {...props} setFormBtnActive={jest.fn()} disabled={true} formEdit={false} onAttributeEdit={jest.fn()} />);
-        const editbutton = getByTestId("edit-button");
-        fireEvent.click(editbutton);
-        expect(editbutton).toBeEnabled();
-    })
-
-    it('should render the delete button', async () => {
-        const { getByTestId } = customRender(<CardProductAttribute isVisible={true} {...props} formEdit={false} disabled={true} onAttributeDelete={jest.fn()} setSKUAttributes={jest.fn()}/>);
-        fireEvent.click(getByTestId("delete-button"));
-    })
-
-    it("should render the secondary text", () => {
-        customRender(<CardProductAttribute isVisible={true} {...props} onAttributeDelete={jest.fn()} />);
-        expect(screen.getAllByTestId("code")).toBeTruthy();
-        expect(screen.getAllByTestId("secondary")).toBeTruthy();
-    })
-
-
-    it('should click cancel', async () => {
-        customRender(<CardProductAttribute isVisible={true} {...props} formEdit={true} onAttributeCancel={jest.fn()} />);
-        await act(async () => {
-            const buttonClick = screen.getAllByTestId('cancel', { name: /Cancel/i });
-            fireEvent.click(buttonClick);
-        });
+    it('renders correctly in readonly mode', () => {
+        render(<CardProductAttribute {...mockProps} />);
+        expect(screen.getByTestId('code')).toBeInTheDocument();
+        expect(screen.getByTestId('secondary')).toBeInTheDocument();
+        expect(screen.getByTestId('edit-button')).toBeInTheDocument();
+        expect(screen.getByTestId('delete-button')).toBeInTheDocument();
+        expect(screen.queryByTestId('cancel')).not.toBeInTheDocument();
+        expect(screen.queryByTestId('save')).not.toBeInTheDocument();
     });
 
-    it('should click save', async () => {
-        const { getByTestId } = customRender(<CardProductAttribute isVisible={true} {...props} formEdit={true}  onAttributeSave={jest.fn()} />);
-        await act(async () => {
-            const buttonClick = getByTestId('save', { name: /Save/i });
-            fireEvent.click(buttonClick);
-        });
+
+
+    it('renders correctly in edit mode', () => {
+        render(<CardProductAttribute {...mockProps} />);
+        fireEvent.click(screen.getByTestId('edit-button'));
+        expect(screen.getByTestId('cancel')).toBeInTheDocument();
+        expect(screen.getByTestId('save')).toBeInTheDocument();
+    });
+
+
+
+    it('calls onAttributeEdit when edit button is clicked', () => {
+        render(<CardProductAttribute {...mockProps} />);
+        fireEvent.click(screen.getByTestId('edit-button'));
+        expect(mockSetFormBtnActive).toHaveBeenCalledWith(true);
+    });
+
+
+
+    it('calls onAttributeDelete when delete button is clicked', () => {
+        render(<CardProductAttribute {...mockProps} />);
+        fireEvent.click(screen.getByTestId('delete-button'));
+        expect(mockProps.setSKUAttributes).toHaveBeenCalled();
+        expect(mockForceUpdate).toHaveBeenCalled();
+    });
+
+
+
+    it('calls onAttributeCancel when cancel button is clicked', () => {
+        render(<CardProductAttribute {...mockProps} />);
+        fireEvent.click(screen.getByTestId('edit-button'));
+        fireEvent.click(screen.getByTestId('cancel'));
+        expect(screen.getByTestId('edit-button')).toBeInTheDocument();
+        expect(screen.getByTestId('delete-button')).toBeInTheDocument();
+        expect(screen.queryByTestId('cancel')).not.toBeInTheDocument();
+        expect(screen.queryByTestId('save')).not.toBeInTheDocument();
+    });
+
+
+
+    it('calls onAttributeSave when save button is clicked', () => {
+        render(<CardProductAttribute {...mockProps} />);
+        fireEvent.click(screen.getByTestId('edit-button'));
+        fireEvent.click(screen.getByTestId('save'));
+        expect(mockProps.setSKUAttributes).toHaveBeenCalled();
+        expect(mockForceUpdate).toHaveBeenCalled();
     });
 });

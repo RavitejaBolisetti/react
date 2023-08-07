@@ -10,7 +10,9 @@ import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/prepareP
 import { validateRequiredInputField, validateRequiredSelectField, duplicateProductValidator } from 'utils/validation';
 import styles from 'components/common/Common.module.css';
 
-function FormProductAttributeComp(props) {
+function FormProductAttribute(props) {
+    console.log("props--->", props)
+
     const { attributeForm, isVisible, productHierarchyAttributeData, onAttributeFormFinish, formEdit, editForm, skuAttributes } = props;
     const [changeValue, setChangeValue] = useState(null);
 
@@ -70,4 +72,4 @@ function FormProductAttributeComp(props) {
     );
 }
 
-export const FormProductAttribute = FormProductAttributeComp;
+export default FormProductAttribute;

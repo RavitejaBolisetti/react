@@ -58,7 +58,6 @@ const props = {
     organizationId: "dmatestid",
     setSelectedOrganizationId: 'dmatestid',
     resetData: {},
-    onCloseAction: jest.fn()
 }
 
 const treeSelectFieldProps = {
@@ -139,6 +138,9 @@ describe("Producthierarchy Components", () => {
                     onChange={jest.fn()}
                     onFinish={jest.fn()}
                     treeSelectFieldProps={treeSelectFieldProps}
+                    handleTreeViewClick={jest.fn()}
+                    handleSelectTreeClick={jest.fn()}
+                    handleAttributeChange={jest.fn()}
                 />
             </Provider>
         );
@@ -160,5 +162,7 @@ describe("Producthierarchy Components", () => {
 
         const plus = getByRole('img', { name: 'plus', exact: false });
         fireEvent.click(plus);
+
+        screen.debug()
     })
 })
