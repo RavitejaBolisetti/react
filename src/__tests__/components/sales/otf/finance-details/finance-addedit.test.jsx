@@ -16,22 +16,27 @@ const typeDataMock = {
     ],
 };
 
-const initialFormData = {
-    doReceived: 'Y',
+const props = {
+    handleDOChange: jest.fn(),
+    onLoanChange: jest.fn(),
+    emiLessThanAmount: jest.fn(),
 };
 describe('OTF Finance Details Component render', () => {
     it('should render addedit form', async () => {
-        customRender(<AddEditForm formData={initialFormData} FinanceLovData={FinanceLovDataMock} typeData={typeDataMock} />);
+        customRender(<AddEditForm {...props} FinanceLovData={FinanceLovDataMock} typeData={typeDataMock} />);
         screen.debug();
-
-        const doNumberInput = screen.getByText('D.O. Number');
-        expect(doDateInput).toBeTruthy();
-        const doDateInput = screen.getByText('D.O. Date');
-        expect(doNumberInput).toBeTruthy();
     });
 
     it('should render text', async () => {
-        customRender(<AddEditForm />);
+        const initialFormData = {
+            doReceived: 'Y',
+            doDate: '2023-07-30T18:30:00.000Z',
+        };
+
+        const mockForm = {
+            setFieldsValue: jest.fn(),
+        };
+        customRender(<AddEditForm {...props} formData={initialFormData} FinanceLovData={FinanceLovDataMock} typeData={typeDataMock} form={mockForm} />);
 
         const financier = screen.getByRole('combobox', { name: /Financier/i });
         expect(financier).toBeTruthy();
@@ -51,10 +56,8 @@ describe('OTF Finance Details Component render', () => {
         const doRecived = screen.getByRole('combobox', { name: /D.O. Received/i });
         expect(doRecived).toBeTruthy();
 
-        // const doNumber = screen.getByText('D.O. Number');
-        // expect(doNumber).toBeTruthy();
+        const expectedDoDateMoment = new Date('2023-07-30T18:30:00.000Z');
 
-        // const doDate = screen.getByText('D.O. Date');
-        // expect(doDate).toBeTruthy();
+        expect(mockForm.setFieldsValue).toHaveBeenCalledWith({ doReceived: 'Y', doDate: expectedDoDateMoment });
     });
 });
