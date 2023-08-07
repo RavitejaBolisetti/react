@@ -8,16 +8,18 @@ import { Descriptions, Space, Row, Col, Collapse } from 'antd';
 import { HIERARCHY_DEFAULT_PARENT } from 'constants/constants';
 import CardProductAttribute from './ProductAttribute/CardProductAttribute';
 import { PlusBorderedIcon, MinusBorderedIcon } from 'Icons';
+import { IoLogoYahoo } from 'react-icons/io';
 
 const { Panel } = Collapse;
 
 const expandIcon = ({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />);
+
 export const ViewProductDetailMain = ({ form, skuAttributes, setSKUAttributes, isAddBtnDisabled, setAddBtnDisabled, onActionFormFinish, viewTitle, buttonData, attributeData, selectedTreeData, handleEditBtn, handleRootChildBtn, handleChildBtn, handleSiblingBtn, setClosePanels, styles, setDisabledEdit }) => {
     const viewProps = {
         bordered: false,
         colon: false,
         layout: 'vertical',
-        title: <div className={styles.viewContainerHeader}>{viewTitle}</div>,
+        title: <div className={styles.contentHeaderRightBackground}>{viewTitle}</div>,
         column: { xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 },
     };
 
@@ -30,7 +32,7 @@ export const ViewProductDetailMain = ({ form, skuAttributes, setSKUAttributes, i
     }, [selectedTreeData]);
 
     return (
-        <div className={styles.viewContainer}>
+        <div className={`${styles.viewContainer} ${styles.hierarchyRightContaner} ${styles.viewProductDetail}`}>
             <Descriptions {...viewProps}>
                 <Descriptions.Item label="Attribute Level">{selectedTreeData.hierarchyAttribueName}</Descriptions.Item>
                 <Descriptions.Item label="Parent">{selectedTreeData.parentName || HIERARCHY_DEFAULT_PARENT}</Descriptions.Item>
