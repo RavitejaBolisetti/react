@@ -39,6 +39,7 @@ describe("OTFMainConatiner component render",()=>{
     it("should render showGlobalNotification component ",()=>{
       customRender(<showGlobalNotification />)
     });
+  });
   describe("ChangeHistory component render",()=>{
     it("should render ChangeHistory component ",()=>{
       customRender(<ChangeHistory />)
