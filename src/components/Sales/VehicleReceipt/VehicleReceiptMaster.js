@@ -41,7 +41,7 @@ const mapStateToProps = (state) => {
         typeData: typeData[PARAM_MASTER.GRN_STATS.id],
         grnTypeData: typeData[PARAM_MASTER.GRN_TYPE.id],
         // isDataLoaded,
-        data: data?.vehicleReciept,
+        data: data?.paginationData,
         vehicleReceiptStatusList: Object.values(VEHICLE_RECEIPT_STATUS),
         // otfData,
         // isLoading,
@@ -134,12 +134,12 @@ export const VehicleReceiptMasterBase = (props) => {
 
     const extraParams = useMemo(() => {
         return [
-            // {
-            //     key: 'searchType',
-            //     title: 'Type',
-            //     value: 'status',
-            //     name: 'status',
-            // },
+            {
+                key: 'searchType',
+                title: 'Type',
+                value: 'status',
+                name: 'status',
+            },
             {
                 key: 'searchParam',
                 title: 'Value',
@@ -367,8 +367,18 @@ export const VehicleReceiptMasterBase = (props) => {
         }
     };
 
-    const handleReceiptTypeChange = (key) => {
-        switch (key) {
+    const handleReceiptTypeChange = (buttonName) => {
+        vehicleReceiptStatusList?.map((item, index) => {
+            if (item?.id !== buttonName?.id) {
+                item['active'] = false;
+            } else {
+                item['active'] = true;
+            }
+        });
+
+        const buttonkey = buttonName?.key;
+
+        switch (buttonkey) {
             case VEHICLE_RECEIPT_STATUS?.IN_TRANSIT?.key: {
                 setTableIconsVisibility({ ...tableActionsFalse, AddIcon: true });
                 break;
@@ -389,7 +399,7 @@ export const VehicleReceiptMasterBase = (props) => {
                 break;
             }
         }
-        setReceiptType(key);
+        setReceiptType(buttonkey);
         searchForm.resetFields();
     };
 

@@ -170,9 +170,9 @@ export const BASE_URL_DOCUMENT_VIEW_URL = BASE_URL + 'common/document/view';
 export const BASE_URL_SALES_CONSULTANT = BASE_URL + 'users/dealer/employees/lov';
 export const BASE_URL_OTF_CUSTOMER = BASE_URL + 'otf/customerdetails';
 
-export const BASE_URL_INVOICE = BASE_URL + 'invoice/'
-export const BASE_URL_RSM_APPROVAL = BASE_URL_INVOICE + 'rsm'
-export const BASE_URL_RSM_APPROVAL_SEARCH = BASE_URL_RSM_APPROVAL + '/search'
+export const BASE_URL_INVOICE = BASE_URL + 'invoice/';
+export const BASE_URL_RSM_APPROVAL = BASE_URL_INVOICE + 'rsm';
+export const BASE_URL_RSM_APPROVAL_SEARCH = BASE_URL_RSM_APPROVAL + '/search';
 
 export const BASE_URL_VEHICLE = BASE_URL + 'vehicle/';
 export const BASE_URL_VEHICLE_SEARCH = BASE_URL_VEHICLE + 'search';
@@ -201,9 +201,9 @@ export const BASE_URL_VEHICLE_PRICE_MASTER_SEARCH = BASE_URL_VEHICLE + 'pricemas
 export const BASE_URL_VEHICLE_CUSTOMER_DETAIL = BASE_URL_VEHICLE + 'customerdetails';
 export const BASE_URL_VEHICLE_CUSTOMER_COMMON_DETAIL = BASE_URL + 'customers/commondetails';
 
-export const BASE_URL_VEHICLE_RECEIPT_SEARCH_LIST = BASE_URL_VEHICLE + 'receipts/search';
-export const BASE_URL_SUPPLIER_INVOICE_DETAIL = BASE_URL_VEHICLE + 'receipts/supplierdetails';
-export const BASE_URL_VEHICLE_DETAIL = BASE_URL_VEHICLE + 'receipts';
+export const BASE_URL_VEHICLE_RECEIPT_SEARCH_LIST = BASE_URL_INVOICE + 'receipts/search';
+export const BASE_URL_SUPPLIER_INVOICE_DETAIL = BASE_URL_INVOICE + 'receipts/supplierdetails';
+export const BASE_URL_VEHICLE_DETAIL = BASE_URL_INVOICE + 'receipts';
 export const BASE_URL_REPORTS_GET_EMBEDED_INFO = BASE_URL + 'reports/getembedinfo';
 export const BASE_URL_VEHICLE_MODEL_AND_TAX_CHARGE_CATEGORY = BASE_URL_FINANCE + 'accounts/vehiclemapping';
 export const BASE_URL_VEHICLE_MODEL_AND_TAX_CHARGE_CATEGORY_PRODUCT_MODEL_GROUP = BASE_URL_PRODUCT_HIERARCHY + '/groups';

@@ -108,7 +108,7 @@ const VehicleDetailsMasterBase = (props) => {
     }, [userId, selectedId]);
 
     const onFinish = (values) => {
-        const data = { vehicleDetails: changeObjtoArr(finalData) };
+        const data = { supplierInvoiceNumber: selectedId, vehicleDetails: changeObjtoArr(finalData) };
         const onSuccess = (res) => {
             // handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });

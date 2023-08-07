@@ -11,6 +11,7 @@ import { addToolTip } from 'utils/customMenuLink';
 
 import { getCodeValue } from 'utils/getCodeValue';
 import { formattedCalendarDate, dateFormat } from 'utils/formatDateTime';
+import { validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
 import styles from 'components/common/Common.module.css';
@@ -49,6 +50,10 @@ const AddEditFormMain = (props) => {
         }
     };
 
+    const onFinishFailed = (errorInfo) => {
+        vehicleDetailForm.validateFields().then((values) => {});
+    };
+
     const handleSave = (indexId) => {
         vehicleDetailForm.validateFields().then((value) => {
             const vehicleDetailData = vehicleDetailForm?.getFieldsValue();
@@ -67,7 +72,7 @@ const AddEditFormMain = (props) => {
     };
     return (
         <>
-            <Form form={vehicleDetailForm} id="myAdd" onFinish={handleSave} autoComplete="off" layout="vertical">
+            <Form form={vehicleDetailForm} id="myAdd" onFinish={handleSave} autoComplete="off" layout="vertical" onFinishFailed={onFinishFailed}>
                 {formData?.map((item, index) => (
                     <div className={styles.accessInfo}>
                         <Collapse defaultActiveKey={index} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(index)} expandIconPosition="end" {...collapseProps}>
@@ -150,8 +155,8 @@ const AddEditFormMain = (props) => {
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item initialValue={item?.demoVehicle} label="Demo Vehicle" name={[index, 'demoVehicle']}>
-                                            <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} showSearch allowClear>
+                                        <Form.Item initialValue={item?.demoVehicle} label="Demo Vehicle" name={[index, 'demoVehicle']} rules={[validateRequiredSelectField('Demo Vehicle')]}>
+                                            <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} showSearch>
                                                 {shortageType?.map((item) => (
                                                     <Option key={'dv' + item.key} value={item.key}>
                                                         {item.value}
@@ -161,20 +166,19 @@ const AddEditFormMain = (props) => {
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item initialValue={item?.vehicleStatus} label="Vehicle Status" name={[index, 'vehicleStatus']}>
-                                            <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} showSearch allowClear>
+                                        <Form.Item initialValue={item?.vehicleStatus} label="Vehicle Status" name={[index, 'vehicleStatus']} rules={[validateRequiredSelectField('Vehicle Status')]}>
+                                            <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} showSearch>
                                                 {vehicleStatusType?.map((item) => (
                                                     <Option key={'vs' + item.key} value={item.key}>
                                                         {item.value}
                                                     </Option>
                                                 ))}
                                             </Select>
-                                            {/* <Select placeholder="Select" showSearch allowClear options={vehicleStatusType} {...selectProps} fieldNames={{ label: 'value', value: 'key' }} /> */}
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item initialValue={item?.physicalStatus} label="Physical Status" name={[index, 'physicalStatus']}>
-                                            <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} showSearch allowClear>
+                                        <Form.Item initialValue={item?.physicalStatus} label="Physical Status" name={[index, 'physicalStatus']} rules={[validateRequiredSelectField('Physical Status')]}>
+                                            <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} showSearch>
                                                 {physicalStatusType?.map((item) => (
                                                     <Option key={'ps' + item.key} value={item.key}>
                                                         {item.value}
@@ -188,7 +192,7 @@ const AddEditFormMain = (props) => {
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item initialValue={item?.shortage} label="Shortage" name={[index, 'shortage']}>
-                                            <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} showSearch allowClear>
+                                            <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} showSearch>
                                                 {shortageType?.map((item) => (
                                                     <Option key={'st' + item.key} value={item.key}>
                                                         {item.value}
