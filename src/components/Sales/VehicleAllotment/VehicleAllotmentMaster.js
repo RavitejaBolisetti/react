@@ -13,7 +13,7 @@ import AdvanceFilter from './AdvanceFilter';
 import { AdvancedSearch } from './AdvancedSearch';
 import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 'utils/btnVisiblity';
 
-// import { VehicleReceiptMainConatiner } from './VehicleReceiptMainConatiner';
+import { ViewDetail } from './ViewDetail';
 import { ListDataTable } from 'utils/ListDataTable';
 import { OTF_STATUS } from 'constants/OTFStatus';
 import { VEHICLE_RECEIPT_SECTION } from 'constants/VehicleReceiptSection';
@@ -225,13 +225,9 @@ export const VehicleAllotmentMasterBase = (props) => {
                 defaultSection && setCurrentSection(defaultSection);
                 break;
             case EDIT_ACTION:
-                setSelectedOrder(record);
-                record && setSelectedOrderId(record?.otfNumber);
                 openDefaultSection && setCurrentSection(defaultSection);
                 break;
             case VIEW_ACTION:
-                setSelectedOrder(record);
-                record && setSelectedOrderId(record?.otfNumber);
                 defaultSection && setCurrentSection(defaultSection);
                 break;
 
@@ -395,7 +391,7 @@ export const VehicleAllotmentMasterBase = (props) => {
         onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle.concat(moduleTitle),
+        titleOverride: drawerTitle.concat('Allotment Details'),
         tableData: data,
         ADD_ACTION,
         EDIT_ACTION,
@@ -432,7 +428,7 @@ export const VehicleAllotmentMasterBase = (props) => {
                 </Col>
             </Row>
             <AdvancedSearch {...advanceFilterProps} />
-            {/* <VehicleReceiptMainConatiner {...containerProps} />  */}
+            <ViewDetail {...containerProps} /> 
         </>
     );
 };
