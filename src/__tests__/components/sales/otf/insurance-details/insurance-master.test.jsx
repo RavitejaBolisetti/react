@@ -1,5 +1,4 @@
 import React from 'react';
-import { Form } from 'antd';
 import { fireEvent, screen } from '@testing-library/react';
 import { InsuranceDetailsMaster } from '@components/Sales/OTF/InsuranceDetails/InsuranceDetailsMaster';
 import customRender from '@utils/test-utils';
@@ -24,7 +23,6 @@ const props = {
 describe('OTF Finance Details Component render', () => {
     it('should render addedit form', async () => {
         customRender(<InsuranceDetailsMaster {...props} />);
-        screen.debug();
     });
 
     it('should render all fields', () => {
