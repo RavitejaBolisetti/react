@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -9,10 +9,11 @@ import { bindActionCreators } from 'redux';
 
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 import { convertDateTime } from 'utils/formatDateTime';
-import { tblPrepareColumns, tblStatusColumn } from 'utils/tableColumn';
+import { tblPrepareColumns, tblStatusColumn } from 'utils/tableCloumn';
 import { withDrawer } from 'components/withDrawer';
 import { DataTable } from 'utils/dataTable';
 import styles from '../ChangeHistory/ChangeHistory.module.css';
+
 
 const mapStateToProps = (state) => {
     const {
@@ -46,6 +47,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, isLoading, userId, isHistoryLoaded, isHistoryLoading, changeHistoryData, organizationId }) => {
+    
+    
     useEffect(() => {
         if (organizationId) {
             fetchChangeHistoryList({ setIsLoading: changeHistoryShowLoading, userId, manufactureOrgId: organizationId });
@@ -57,13 +60,7 @@ const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, i
         tblPrepareColumns({
             title: 'Changed/Modified Date ',
             dataIndex: 'changedDate',
-            render: (text) => [
-                <div>
-                    {convertDateTime(text, 'DD MMM YYYY')}
-                    <br />
-                    {convertDateTime(text, 'HH:mm a')}
-                </div>,
-            ],
+            render: (text) => convertDateTime(text),
         }),
         tblPrepareColumns({
             title: 'Changed By',
@@ -98,6 +95,8 @@ const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, i
         tableColumn,
         tableData: changeHistoryData,
     };
+
+    
     return (
         <div className={styles.changeHistoryContainer}>
             <DataTable {...tableProps} />
