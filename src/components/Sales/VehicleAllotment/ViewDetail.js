@@ -15,8 +15,6 @@ import { SearchBox } from 'components/utils/SearchBox';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import { DataTable } from 'utils/dataTable';
 
-import ChangeHistoryStyles from './ChangeHistory.module.css';
-
 const ViewDetailMain = (props) => {
     const { formData, isLoading, typeData, salesConsultantLov } = props;
     const { handleButtonClick, buttonData, setButtonData, onCloseAction } = props;
@@ -85,25 +83,15 @@ const ViewDetailMain = (props) => {
                         </Descriptions>
                     </Card>
 
-                    <div className={ChangeHistoryStyles.ChangeHistoryDrawer}>
-                        <div className={ChangeHistoryStyles.changeHistoryMainContainer}>
-                            <h4>Allot OTF</h4>
-                            <div className={ChangeHistoryStyles.ChangeHistoryContainer}>
-                                <div className={styles.contentHeaderBackground}>
-                                    <Row gutter={20}>
-                                        <Col xs={24} sm={24} md={20} lg={20} xl={20} className={styles.subheading}>
-                                            <Row gutter={20}>
-                                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                    <SearchBox {...serachBoxProps} />
-                                                </Col>
-                                            </Row>
-                                        </Col>
-                                    </Row>
-                                    <DataTable {...tableProps} />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <h4>Allot OTF</h4>
+                    <Card>
+                        <Row gutter={20}>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.marB20}>
+                                <SearchBox {...serachBoxProps} />
+                            </Col>
+                        </Row>
+                        <DataTable {...tableProps} />
+                    </Card>
                 </Col>
             </Row>
             <DrawerFormButton {...buttonProps} />
