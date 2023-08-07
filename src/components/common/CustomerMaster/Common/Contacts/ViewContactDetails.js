@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Descriptions, Divider } from 'antd';
 import AddEditForm from './AddEditForm';
 import UploadUtils from './../UploadUtils';
@@ -32,7 +32,10 @@ const ViewDetailBase = (props) => {
         setContactData,
         onFinish,
         form,
-        uploadedFile, setUploadedFile, base64Img, setBase64Img,
+        uploadedFile,
+        setUploadedFile,
+        base64Img,
+        setBase64Img,
         ...props,
     };
 

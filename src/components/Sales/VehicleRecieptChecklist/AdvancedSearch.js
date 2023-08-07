@@ -3,20 +3,19 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect } from 'react';
-import { Col, Form, Row, Select, Button, DatePicker } from 'antd';
+import React from 'react';
+import { Col, Form, Row, Select, DatePicker } from 'antd';
 
 import { withModal } from 'components/withModal';
-import { validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
-import { dateFormat, formatDate, formatDateToCalenderDate } from 'utils/formatDateTime';
+import { dateFormat, formatDate } from 'utils/formatDateTime';
 import { disableFutureDate } from 'utils/disableDate';
 import { ModalButtons } from 'components/common/Button';
 
 import styles from 'components/common/Common.module.css';
 
 export const AdvancedSearchFrom = (props) => {
-    const { setAdvanceSearchVisible, isVisible } = props;
+    const { setAdvanceSearchVisible } = props;
     const {
         filterString,
         setFilterString,

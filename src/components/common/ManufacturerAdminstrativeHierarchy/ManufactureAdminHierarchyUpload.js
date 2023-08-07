@@ -3,18 +3,17 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState } from 'react';
-import { Form, Row, Col, Upload, Button, Space, Typography } from 'antd';
+import React from 'react';
+import { Form, Row, Col, Button, Space } from 'antd';
 
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
 import { UploadUtil } from 'utils/Upload';
-import { PARAM_MASTER } from 'constants/paramMaster';
 
 import styles from 'components/common/Common.module.css';
 
 const UploadMain = (props) => {
-    const { typeData, downloadFile, form, formData, onCloseAction, onFinishFailed } = props;
+    const { downloadFile, form, formData, onCloseAction, onFinishFailed } = props;
     const { buttonData, setButtonData, handleButtonClick } = props;
     const { userId, setUploadedFile, listShowLoading, showGlobalNotification, setEmptyList } = props;
     const { organizationId } = props;
@@ -112,23 +111,24 @@ const UploadMain = (props) => {
             onSuccessAction,
         });
     };
-    const handleTemplateDownLoad = () => {
-        const filteredTypeData = typeData[PARAM_MASTER.FILE_DOWNLOAD_TMPLT.id].filter((value) => value.key === PARAM_MASTER.ADMINAUTHTMPLT.id);
-        let templateID = null;
-        if (filteredTypeData.length === 1) {
-            templateID = filteredTypeData[0];
-        }
-        const extraParams = [
-            {
-                key: 'docId',
-                title: 'docId',
-                value: templateID?.value,
-                name: 'docId',
-            },
-        ];
 
-        downloadFile({ setIsLoading: listShowLoading, userId, extraParams });
-    };
+    // const handleTemplateDownLoad = () => {
+    //     const filteredTypeData = typeData[PARAM_MASTER.FILE_DOWNLOAD_TMPLT.id].filter((value) => value.key === PARAM_MASTER.ADMINAUTHTMPLT.id);
+    //     let templateID = null;
+    //     if (filteredTypeData.length === 1) {
+    //         templateID = filteredTypeData[0];
+    //     }
+    //     const extraParams = [
+    //         {
+    //             key: 'docId',
+    //             title: 'docId',
+    //             value: templateID?.value,
+    //             name: 'docId',
+    //         },
+    //     ];
+
+    //     downloadFile({ setIsLoading: listShowLoading, userId, extraParams });
+    // };
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });

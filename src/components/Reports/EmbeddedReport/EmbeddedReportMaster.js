@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -46,7 +46,6 @@ const mapDispatchToProps = (dispatch) => ({
 
 const EmbeddedReportMasterMain = (props) => {
     const { userId, isDataLoaded, reportLink, fetchList, listShowLoading } = props;
-    // const reportLink = process.env.REACT_APP_POWER_BI_EMBEDDED_REPORT;
 
     const onSuccessAction = (res) => {
         // showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'File deleted Successfully' });

@@ -16,6 +16,7 @@ export const ROUTING_DASHBOARD = '/dashboard';
 export const ROUTING_COMMON = '/common/';
 export const ROUTING_MILE = '/mile/';
 export const ROUTING_SALES = '/sales/';
+export const ROUTING_FINANCE = '/finance/';
 export const ROUTING_FINANCIAL_ACCOUNTING = '/financial-accounting/';
 export const ROUTING_TERM_CONDITION = ROUTING_COMMON.concat('term-condition');
 
@@ -98,3 +99,5 @@ export const ROUTING_TAX_CHARGES_CATEGORY = ROUTING_FINANCIAL_ACCOUNTING.concat(
 export const ROUTING_REPORT_OTF_REPORTS = ROUTING_REPORT.concat('otf-reports');
 
 export const ROUTING_VEHICLE_RECIEPT_CHECKLIST = ROUTING_SALES.concat('receipt-checklist');
+
+export const ROUTING_VEHICLE_MODEL_TAX_CHARGES_CATEGORY = ROUTING_FINANCIAL_ACCOUNTING.concat('vehicle-model-tax-and-charges-category');

@@ -4,7 +4,6 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { connect } from 'react-redux';
 import { Descriptions, Space } from 'antd';
 import { AuthorityDetailPanel } from './HierarchyAuthorityDetail';
 import { HIERARCHY_DEFAULT_PARENT } from 'constants/constants';

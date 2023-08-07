@@ -6,7 +6,6 @@
 import React from 'react';
 import { Row, Col, Button } from 'antd';
 
-import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { ModalConstants } from './ButtonConstants';
 import styles from 'components/common/Common.module.css';
 

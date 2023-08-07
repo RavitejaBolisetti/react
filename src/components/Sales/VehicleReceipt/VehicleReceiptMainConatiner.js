@@ -10,7 +10,6 @@ import { VEHICLE_RECEIPT_SECTION } from 'constants/VehicleReceiptSection';
 
 import { SupplierInvoiceDetailsMaster } from './SupplierInvoiceDetail';
 import { VehicleDetailsMaster } from './VehicleDetails';
-// import { ThankYouMaster } from './ThankYou';
 
 import { LeftSidebar } from './LeftSidebar';
 

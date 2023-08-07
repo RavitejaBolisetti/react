@@ -5,10 +5,10 @@
  */
 import { Button, Space, Tag } from 'antd';
 import { FiEdit, FiEye, FiTrash } from 'react-icons/fi';
-import { PlusOutlined } from '@ant-design/icons';
 
 import { DEFAULT_PAGE_SIZE } from 'constants/constants';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
+import { PlusOutlined } from '@ant-design/icons';
 
 const onFilterFn = (value, record) => {
     if (record.ChangeDate !== undefined) {
@@ -88,8 +88,9 @@ export const tblActionColumn = ({ styles, handleButtonClick, width = '10%', fixe
                 )}
                 {DeleteIcon && !record?.id && <Button data-testid="delete" className={styles.tableIcons} aria-label="fa-trash" icon={<FiTrash />} onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.DELETE, record, index })} />}
 
-                {AddIcon && <Button data-testid="delete" className={styles.tableIcons} aria-label="fa-add" icon={<PlusOutlined />} onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD, record, index })} />}
+                {AddIcon && <Button data-testid="add" className={styles.tableIcons} aria-label="fa-add" icon={<PlusOutlined />} onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD, record, index })} />}
             </Space>,
         ],
     };
 };
+
