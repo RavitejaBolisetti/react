@@ -21,10 +21,14 @@ const props = {
     onLoanChange: jest.fn(),
     emiLessThanAmount: jest.fn(),
 };
+
+const FormWrapper = (props) => {
+    const [form] = Form.useForm();
+    return <AddEditForm form={form} {...props} />;
+};
 describe('OTF Finance Details Component render', () => {
     it('should render addedit form', async () => {
-        customRender(<AddEditForm {...props} FinanceLovData={FinanceLovDataMock} typeData={typeDataMock} />);
-        screen.debug();
+        customRender(<AddEditForm {...props} FinanceLovData={FinanceLovDataMock} setDoReceived={jest.fn} typeData={typeDataMock} />);
     });
 
     it('should render text', async () => {
@@ -36,7 +40,7 @@ describe('OTF Finance Details Component render', () => {
         const mockForm = {
             setFieldsValue: jest.fn(),
         };
-        customRender(<AddEditForm {...props} formData={initialFormData} FinanceLovData={FinanceLovDataMock} typeData={typeDataMock} form={mockForm} />);
+        customRender(<AddEditForm {...props} formData={initialFormData} setDoReceived={jest.fn} FinanceLovData={FinanceLovDataMock} typeData={typeDataMock} form={mockForm} />);
 
         const financier = screen.getByRole('combobox', { name: /Financier/i });
         expect(financier).toBeTruthy();
@@ -59,5 +63,13 @@ describe('OTF Finance Details Component render', () => {
         const expectedDoDateMoment = new Date('2023-07-30T18:30:00.000Z');
 
         expect(mockForm.setFieldsValue).toHaveBeenCalledWith({ doReceived: 'Y', doDate: expectedDoDateMoment });
+    });
+
+    it('amc form input should work', () => {
+        customRender(<FormWrapper setDoReceived={jest.fn} emiLessThanAmount={jest.fn()} />);
+        const INput = screen.getByRole('textbox', { name: 'Loan Amount' });
+        fireEvent.change(INput, { target: { value: '12' } });
+        const amcInput = screen.getByRole('textbox', { name: 'EMI' });
+        fireEvent.change(amcInput, { target: { value: '121' } });
     });
 });
