@@ -74,8 +74,8 @@ const AddEditFormMain = (props) => {
             </Row>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name="oldChessisNumber" label="Old Chessis Number" initialValue={formData?.oldChessisNumber} rules={[validateRequiredInputField('Old Chessis Number')]}>
-                        <Input maxLength={50} placeholder={preparePlaceholderText('Old Chessis Number')} />
+                    <Form.Item name="oldChessisNumber" label="Old Chassis Number" initialValue={formData?.oldChessisNumber} rules={[validateRequiredInputField('Old Chassis Number')]}>
+                        <Input maxLength={50} placeholder={preparePlaceholderText('Old Chassis Number')} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
