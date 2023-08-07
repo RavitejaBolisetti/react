@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { Form, Upload, Button, Space, Typography } from 'antd';
+import { Form, Row, Col, Upload, Button, Space, Typography } from 'antd';
 
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
@@ -148,19 +148,23 @@ const UploadMain = (props) => {
     return (
         <>
             <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                <div className={styles.contentHeaderBackground}>
-                    <Space direction="vertical">
-                        <Space className={styles.accordianIconWithText}>Authority Form</Space>
-                        <Space>Please download "Authority Form Template" using below button</Space>
-                        <Space>
-                            <Button type="primary" onClick={getDocIdFromOrgId}>
-                                Download Template
-                            </Button>
-                        </Space>
-                    </Space>
-                </div>
+                <Row gutter={20} className={styles.drawerBody}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                        <div className={styles.contentHeaderBackground}>
+                            <Space direction="vertical">
+                                <Space className={styles.accordianIconWithText}>Authority Form</Space>
+                                <Space>Please download "Authority Form Template" using below button</Space>
+                                <Space>
+                                    <Button type="primary" onClick={getDocIdFromOrgId}>
+                                        Download Template
+                                    </Button>
+                                </Space>
+                            </Space>
+                        </div>
 
-                <UploadUtil {...props} uploadButtonName={'Upload Authority Form'} messageText={'Click or drop your file here to upload'} validationText={'File type should be .xlsx and max file size to be 8Mb'} handleFormValueChange={handleFormValueChange} />
+                        <UploadUtil {...props} uploadButtonName={'Upload Authority Form'} messageText={'Click or drop your file here to upload'} validationText={'File type should be .xlsx and max file size to be 8Mb'} handleFormValueChange={handleFormValueChange} />
+                    </Col>
+                </Row>
 
                 <DrawerFormButton {...buttonProps} />
             </Form>

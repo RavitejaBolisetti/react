@@ -3,11 +3,11 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
+import { tblPrepareColumns, tblActionColumn } from './tableColumnMaster';
 import styles from 'components/common/Common.module.css';
 import { Tag } from 'antd';
 
-export const tableColumn = (handleButtonClick, page, pageSize) => {
+export const tableColumn = ({ handleButtonClick, page, pageSize, actionButtonVisibility }) => {
     const tableColumn = [
         tblPrepareColumns({
             title: 'Receipt Number',
@@ -37,14 +37,8 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             dataIndex: 'chassis',
             width: '14%',
         }),
-        tblPrepareColumns({
-            title: 'Status',
-            dataIndex: 'Status',
-            width: '14%',
-            render: (_, record) => <Tag color="success">{`Booked`}</Tag>,
-        }),
 
-        tblActionColumn({ handleButtonClick, styles, width: '8%' }),
+        tblActionColumn({ handleButtonClick, styles, width: '8%', ...actionButtonVisibility }),
     ];
 
     return tableColumn;

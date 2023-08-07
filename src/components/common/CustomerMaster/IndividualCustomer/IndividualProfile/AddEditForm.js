@@ -31,11 +31,21 @@ const AddEditFormMain = (props) => {
     const [isRead, setIsRead] = useState(false);
     const [customer, setCustomer] = useState(false);
     const [activeKey, setActiveKey] = useState([1]);
+    const [isAuthorityMandatory, setIsAuthorityMandatory] = useState(false);
+    const [singleDisabled, setSingleDisabled] = useState(false);
 
     useEffect(() => {
         setCustomer(formData?.customerCategory);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData?.customerCategory]);
+    useEffect(() => {
+        if (form.getFieldValue('personName')?.length > 0 || form.getFieldValue('companyName')?.length > 0) {
+            setIsAuthorityMandatory(true);
+        } else {
+            setIsAuthorityMandatory(false);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [form.getFieldValue('personName'), form.getFieldValue('companyName')]);
 
     useEffect(() => {
         form.setFieldsValue({
@@ -60,6 +70,12 @@ const AddEditFormMain = (props) => {
 
     const onCustomerCategoryChange = (values) => {
         setCustomer(values);
+    };
+
+    const handleValidate = (e) => {
+        if (e.target.value === '') {
+            form.resetFields(['personName', 'companyName']);
+        }
     };
 
     const handleOnChange = (e) => {
@@ -108,13 +124,7 @@ const AddEditFormMain = (props) => {
 
         uploadButtonName: 'Upload File',
         messageText: <>Upload Your Profile Picture</>,
-        validationText: (
-            <>
-                File type should be .png and .jpg and max file
-                <br />
-                size to be 8Mb
-            </>
-        ),
+        validationText: <>(File type should be .png and .jpg and max file size to be 8Mb)</>,
         supportedFileTypes: ['image/png', 'image/jpeg', 'image/jpg'],
         maxSize: 8,
         single: true,
@@ -135,14 +145,20 @@ const AddEditFormMain = (props) => {
         uploadButtonName: 'Upload File',
         messageText: (
             <>
-                Click or drop your file here to upload the signed and <br />
-                scanned customer form
+                Click or drop your file here
+                <br /> to upload the signed and scanned customer form
             </>
         ),
-        validationText: <>File type should be png, jpg or pdf and max file size to be 5Mb</>,
-        supportedFileTypes: ['image/png', 'image/jpg', 'application/pdf'],
+        validationText: <>(File type should be png, jpg or pdf and max file size to be 5Mb)</>,
+        supportedFileTypes: ['image/png', 'image/jpg', 'image/jpeg', 'application/pdf'],
         maxSize: 5,
         single: true,
+        singleDisabled,
+        setSingleDisabled,
+        onRemove: () => {
+            setFileList([]);
+            setSingleDisabled(false);
+        },
     };
 
     const disabledProps = { disabled: isReadOnly };
@@ -433,7 +449,7 @@ const AddEditFormMain = (props) => {
                             <Divider />
                             <Row gutter={20}>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                    <Form.Item label="Name of Person" initialValue={formData?.authorityDetails?.personName} name="personName">
+                                    <Form.Item label="Name of Person" initialValue={formData?.authorityDetails?.personName} name="personName" onChange={handleValidate} rules={isAuthorityMandatory ? [validateRequiredInputField('Name of Person')] : ''}>
                                         <Input maxLength={50} placeholder={preparePlaceholderText('Enter name of person')} />
                                     </Form.Item>
                                 </Col>
@@ -445,12 +461,11 @@ const AddEditFormMain = (props) => {
                                 </Col>
 
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                    <Form.Item label="Company Name" initialValue={formData?.authorityDetails?.companyName} name="companyName">
+                                    <Form.Item label="Company Name" initialValue={formData?.authorityDetails?.companyName} name="companyName" onChange={handleValidate} rules={isAuthorityMandatory ? [validateRequiredInputField('Company Name')] : ''}>
                                         <Input maxLength={50} placeholder={preparePlaceholderText('Enter company name')} />
                                     </Form.Item>
                                 </Col>
-                            </Row>
-                            <Row gutter={20}>
+
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                     <Form.Item label="Remarks" initialValue={formData?.authorityDetails?.remarks} name="remarks">
                                         <TextArea showCount maxLength={300} placeholder={preparePlaceholderText('Remarks')} />

@@ -11,3 +11,5 @@ import VehicleRecieptChecklistMaster from './VehicleRecieptMaster';
 import OtfSoMappingMasterPage from './OtfSoMapping';
 
 export { OTFMasterPage, VehicleDetailMasterPage, VehicleReceiptMasterPage, VehiclePriceMasterPage, VehicleRecieptChecklistMaster, OtfSoMappingMasterPage };
+import RSMApprovalPage from './RSMApproval';
+export { OTFMasterPage, VehicleDetailMasterPage, VehicleReceiptMasterPage, VehiclePriceMasterPage, VehicleRecieptChecklistMaster, RSMApprovalPage };

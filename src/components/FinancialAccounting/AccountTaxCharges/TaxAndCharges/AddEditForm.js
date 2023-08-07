@@ -127,7 +127,6 @@ const AddEditFormMain = (props) => {
                                 </Form.Item>
                             </Col>
                         </Row>
-
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <Form.Item initialValue={formData?.taxChargesTypeCode} label="Tax/Charge Type Code" name="taxChargesTypeCode" rules={[validateRequiredInputField('Tax/Charge Type Code')]}>
