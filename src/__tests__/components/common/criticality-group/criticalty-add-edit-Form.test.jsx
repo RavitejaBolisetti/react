@@ -49,7 +49,6 @@ describe('should render AddEditForm', () => {
     it('should render the AddEditForm', () => {
         customRender(<AddEditForm isVisible={true} />);
         const groupId = screen.findByTestId('groupIdddd');
-        screen.debug();
 
         expect(groupId).toBeTruthy();
 
