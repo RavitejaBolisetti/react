@@ -1,11 +1,13 @@
-import { screen, fireEvent } from "@testing-library/react";
 import '@testing-library/jest-dom/extend-expect';
 import customRender from "@utils/test-utils";
-import { act } from 'react-dom/test-utils';
 import { OtfMaster } from "@components/Sales/OTF/OtfMaster";
 import { OTFMainConatiner } from "@components/Sales/OTF/OTFMainConatiner";
-import { ListDataTable } from "@utils/ListDataTable";
 import { AdvancedSearch } from "@components/Sales/OTF/AdvancedSearch";
+import { CancellationMaster } from "@components/Sales/OTF/OTFCancellation/CancellationMaster";
+import { TransferMaster } from "@components/Sales/OTF/OTFTransfer/TransferMaster";
+import { ChangeHistory } from "@components/Sales/OTF/ChangeHistory";
+
+
 
 describe("OtfMaster component render",()=>{
     it("should render OtfMaster component ",()=>{
@@ -18,13 +20,27 @@ describe("OTFMainConatiner component render",()=>{
       customRender(<OTFMainConatiner />)
     });
   });
-  describe("ListDataTable component render",()=>{
-    it("should render ListDataTable component ",()=>{
-      customRender(<ListDataTable />)
-    });
-  });
-  describe("AdvancedSearch component render",()=>{
+   describe("AdvancedSearch component render",()=>{
     it("should render AdvancedSearch component ",()=>{
       customRender(<AdvancedSearch />)
+    });
+  });
+  describe("CancellationMaster component render",()=>{
+    it("should render CancellationMaster component ",()=>{
+      customRender(<CancellationMaster />)
+    });
+  });
+  describe("TransferMaster component render",()=>{
+    it("should render TransferMaster component ",()=>{
+      customRender(<TransferMaster />)
+    });
+  });
+  describe("showGlobalNotification component render",()=>{
+    it("should render showGlobalNotification component ",()=>{
+      customRender(<showGlobalNotification />)
+    });
+  describe("ChangeHistory component render",()=>{
+    it("should render ChangeHistory component ",()=>{
+      customRender(<ChangeHistory />)
     });
   });
