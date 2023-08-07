@@ -3,23 +3,18 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { useState } from 'react';
 import { Button, Form, Row, Col, Space, Select, Input, Divider, Checkbox } from 'antd';
-import { BiLockAlt } from 'react-icons/bi';
-
 import { validateLettersWithWhitespaces, validateEmailField, validateRequiredInputField, validateRequiredSelectField, validateMobileNoField, validatInstagramProfileUrl, validatFacebookProfileUrl, validatYoutubeProfileUrl, validattwitterProfileUrl, duplicateValidator } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
-
 import UploadUtils from 'components/common/CustomerMaster/Common/UploadUtils';
-
 import { CUSTOMER_TYPE } from 'constants/CustomerType';
 
 import style from 'components/common/Common.module.css';
 
 const AddEditForm = (props) => {
-    const { isReadOnly = false, onSaveFormData, contactform, setShowAddEditForm, isViewModeVisible, setIsEditing, typeData, customerType, setContinueWithOldMobNo, uploadImgDocId, formActionType, setUploadImgDocId, handleFormValueChange, setIsAdding, contactData, editingData } = props;
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [mobileLoader, setmobileLoader] = useState(false);
+    const { isReadOnly = false, onSaveFormData, contactform, setShowAddEditForm, isViewModeVisible, setIsEditing, typeData, customerType, uploadImgDocId, formActionType, setUploadImgDocId, handleFormValueChange, setIsAdding, contactData, editingData } = props;
+    // const [isModalOpen, setIsModalOpen] = useState(false);
+    // const [mobileLoader, setmobileLoader] = useState(false);
 
     const disabledProps = { disabled: isReadOnly || formActionType?.viewMode };
 
@@ -34,46 +29,42 @@ const AddEditForm = (props) => {
         const Mno = event.target.value;
         const regex = new RegExp('^([5-9]){1}([0-9]){9}$');
         if (Mno?.length === 10 && regex.test(Mno)) {
-            setmobileLoader(true);
-            setTimeout(() => {
-                setIsModalOpen(true);
-            }, 1000);
+            // setmobileLoader(true);
+            // setTimeout(() => {
+            //     setIsModalOpen(true);
+            // }, 1000);
         } else {
-            setmobileLoader(false);
+            // setmobileLoader(false);
         }
     };
 
-    const onCloseActionOnContinue = () => {
-        setIsModalOpen(false);
-        setmobileLoader(false);
-        setContinueWithOldMobNo(true);
-    };
+    // const onCloseActionOnContinue = () => {
+    //     setIsModalOpen(false);
+    //     setmobileLoader(false);
+    //     setContinueWithOldMobNo(true);
+    // };
 
-    const handleCancel = () => {
-        setIsModalOpen(false);
-        setmobileLoader(false);
-        setContinueWithOldMobNo(false);
-        setIsAdding(false);
-    };
-    const modalProps = {
-        isVisible: isModalOpen,
-        icon: <BiLockAlt />,
-        titleOverride: 'Mobile Number Validation',
-        closable: false,
-        onCloseAction: handleCancel,
-        onCloseActionOnContinue,
-    };
+    // const handleCancel = () => {
+    //     setIsModalOpen(false);
+    //     setmobileLoader(false);
+    //     setContinueWithOldMobNo(false);
+    //     setIsAdding(false);
+    // };
+
+    // const modalProps = {
+    //     isVisible: isModalOpen,
+    //     icon: <BiLockAlt />,
+    //     titleOverride: 'Mobile Number Validation',
+    //     closable: false,
+    //     onCloseAction: handleCancel,
+    //     onCloseActionOnContinue,
+    // };
 
     return (
         <>
             <Form form={contactform} autoComplete="off" onFinish={onSaveFormData} onFieldsChange={handleFormValueChange} layout="vertical">
                 <Space direction="vertical">
-                    <UploadUtils
-                        {...props}
-                        isViewModeVisible={isViewModeVisible}
-                        setUploadImgDocId={setUploadImgDocId}
-                        formActionType={formActionType}
-                    />
+                    <UploadUtils {...props} isViewModeVisible={isViewModeVisible} setUploadImgDocId={setUploadImgDocId} formActionType={formActionType} />
                     <Divider className={style.contactDivider} />
                     <Row gutter={[20, 0]}>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>

@@ -7,51 +7,42 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { Col, Form, Row } from 'antd';
+import { Row, Col, Form } from 'antd';
 
 import { tableColumn } from './tableColumn';
 import AdvanceFilter from './AdvanceFilter';
-import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 'utils/btnVisiblity';
-
+import { VIEW_ACTION } from 'utils/btnVisiblity';
 import { ListDataTable } from 'utils/ListDataTable';
 import { AdvancedSearch } from './AdvancedSearch';
 import { showGlobalNotification } from 'store/actions/notification';
-import { vehicleDetailDataActions } from 'store/actions/data/vehicle/vehicleDetail';
 import { ViewDetail } from './ViewDetail';
 import { RejectRequest } from './RejectRequest';
-import { QUERY_BUTTONS } from './QueryButtons/QueryButtonsConstant';
+import { RSM_APPROVAL_STATUS } from './utils/RSMApprovalStatus';
 
-import { validateRequiredInputField } from 'utils/validation';
 import { LANGUAGE_EN } from 'language/en';
-
-import { PARAM_MASTER } from 'constants/paramMaster';
 import { FilterIcon } from 'Icons';
-import { QueryButtons } from './QueryButtons';
+import { rsmApprovalSearchDataAction } from 'store/actions/data/sales/rsmApprovalSearch';
+import { rsmApprovalDataAction } from 'store/actions/data/sales/rsmApproval';
 import styles from 'components/common/Common.module.css';
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ConfigurableParameterEditing: { filteredListData: typeData = [] },
-            Vehicle: {
-                VehicleDetail: { isLoaded: isDataLoaded = false, isLoading, isDetailLoaded, detailData: vehicleDetailData = [], data, filter: filterString },
+            Sales: {
+                RSMApprovalSearch: { data, filter: filterString },
             },
         },
     } = state;
 
-    const moduleTitle = 'Vehicle Reciept Checklist';
+    const moduleTitle = 'RSM Approval';
 
     let returnValue = {
         userId,
-        typeData: typeData[PARAM_MASTER.VH_DTLS_SER.id],
         isDataLoaded: true,
-        data: data?.vehicleSearch,
+        data: data?.paginationData,
         totalRecords: data?.totalRecords || [],
-        vehicleDetailData: [],
         moduleTitle,
-        isLoading: false,
-        isDetailLoaded: true,
         filterString,
     };
     return returnValue;
@@ -61,11 +52,12 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchList: vehicleDetailDataActions.fetchList,
-            fetchDetail: vehicleDetailDataActions.fetchDetail,
-            listShowLoading: vehicleDetailDataActions.listShowLoading,
-            setFilterString: vehicleDetailDataActions.setFilter,
-            resetData: vehicleDetailDataActions.reset,
+            fetchList: rsmApprovalSearchDataAction.fetchList,
+            fetchDetail: rsmApprovalSearchDataAction.fetchDetail,
+            listShowLoading: rsmApprovalSearchDataAction.listShowLoading,
+            setFilterString: rsmApprovalSearchDataAction.setFilter,
+            resetData: rsmApprovalSearchDataAction.reset,
+            saveData: rsmApprovalDataAction.saveData,
             showGlobalNotification,
         },
         dispatch
@@ -73,21 +65,12 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const RSMApprovalMasterBase = (props) => {
-    const { fetchList, saveData, listShowLoading, userId, data, totalRecords, vehicleDetailData } = props;
-    const { typeData, moduleTitle } = props;
+    const { fetchList, saveData, listShowLoading, userId, data, totalRecords, showGlobalNotification } = props;
+    const { typeData } = props;
     const { filterString, setFilterString, vehicleDetailStatusList } = props;
 
     const [listFilterForm] = Form.useForm();
     const [rejectForm] = Form.useForm();
-
-    const [selectedRecord, setSelectedRecord] = useState();
-    const [selectedRecordId, setSelectedRecordId] = useState();
-
-    const [section, setSection] = useState();
-    const [defaultSection, setDefaultSection] = useState();
-    const [currentSection, setCurrentSection] = useState();
-    const [sectionName, setSetionName] = useState();
-    const [isLastSection, setLastSection] = useState(false);
 
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
@@ -114,12 +97,24 @@ export const RSMApprovalMasterBase = (props) => {
     const dynamicPagination = true;
 
     const [formData, setFormData] = useState([]);
-    const [otfSearchRules, setOtfSearchRules] = useState({ rules: [validateRequiredInputField('search parametar')] });
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [isRejectModalVisible, setRejectModalVisible] = useState(false);
+    const [requestType, setRequestType] = useState('');
+    const [queryButtons, setqueryButtons] = useState({ pending: true, approved: false, rejected: false });
+    const [rejectFormButtonActive, setRejectFormButtonActive] = useState(true);
 
-    const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+    const REQUEST_CONSTANT = {
+        Reject: {
+            key: 'Reject',
+            value: 'Reject',
+        },
+        Approve: {
+            key: 'Approve',
+            value: 'Approve',
+        },
+    };
+
+    const onSuccessAction = () => {
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
         searchForm.resetFields();
         setShowDataLoading(false);
@@ -129,19 +124,27 @@ export const RSMApprovalMasterBase = (props) => {
         showGlobalNotification({ message });
         setShowDataLoading(false);
     };
+
     const handleButtonQuery = (buttonName) => {
         switch (buttonName) {
-            case QUERY_BUTTONS?.PENDING?.key: {
-                setButtonData({ ...defaultBtnVisiblity });
+            case RSM_APPROVAL_STATUS?.PENDING?.key: {
+                setFilterString({ searchParam: RSM_APPROVAL_STATUS?.PENDING?.title });
+                setShowDataLoading(true);
                 break;
             }
-            case QUERY_BUTTONS?.APPROVED?.key: {
-                setButtonData({ ...defaultBtnVisiblity, cancelBtn: false, reject: false, approve: false });
+            case RSM_APPROVAL_STATUS?.APPROVED?.key: {
+                setFilterString({ searchParam: RSM_APPROVAL_STATUS?.APPROVED?.title });
+                setShowDataLoading(true);
                 break;
             }
-            case QUERY_BUTTONS?.REJECTED?.key: {
-                setButtonData({ ...defaultBtnVisiblity, cancelBtn: false, reject: false, approve: false });
+            case RSM_APPROVAL_STATUS?.REJECTED?.key: {
+                setFilterString({ searchParam: RSM_APPROVAL_STATUS?.REJECTED?.title });
+                setShowDataLoading(true);
                 break;
+            }
+            default: {
+                setFilterString({ searchParam: RSM_APPROVAL_STATUS?.PENDING?.title });
+                setShowDataLoading(true);
             }
         }
     };
@@ -151,8 +154,8 @@ export const RSMApprovalMasterBase = (props) => {
             {
                 key: 'searchType',
                 title: 'Type',
-                value: filterString?.searchType,
-                name: typeData?.find((i) => i?.key === filterString?.searchType)?.value,
+                value: 'invoiceActionStatus',
+                name: 'Status',
                 canRemove: false,
                 filter: true,
             },
@@ -165,26 +168,26 @@ export const RSMApprovalMasterBase = (props) => {
                 filter: true,
             },
             {
-                key: 'recieptFromDate',
-                title: 'Reciept From Date',
+                key: 'fromDate',
+                title: 'From Date',
                 value: filterString?.fromDate,
                 name: filterString?.fromDate,
                 canRemove: true,
                 filter: true,
             },
             {
-                key: 'reciepttoDate',
-                title: 'Reciept To Date',
+                key: 'toDate',
+                title: 'To Date',
                 value: filterString?.toDate,
                 name: filterString?.toDate,
                 canRemove: true,
                 filter: true,
             },
             {
-                key: 'otfStatus',
-                title: 'OTF Status',
-                value: filterString?.otfStatus,
-                name: vehicleDetailStatusList?.find((i) => i?.title === filterString?.otfStatus)?.desc,
+                key: 'dealerName',
+                title: 'Dealer Name',
+                value: filterString?.dealerName,
+                name: filterString?.dealerName,
                 canRemove: true,
                 filter: true,
             },
@@ -217,39 +220,19 @@ export const RSMApprovalMasterBase = (props) => {
     }, [filterString, page]);
 
     useEffect(() => {
-        if (userId) {
+        if (userId && extraParams) {
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, extraParams]);
 
     useEffect(() => {
+        setFilterString({ ...filterString, searchParam: RSM_APPROVAL_STATUS?.PENDING?.title });
         return () => {
             setFilterString();
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
-    // useEffect(() => {
-    //     const defaultSection = VEHICLE_RECIEPT_CHECKLIST.CHECKLIST_DETAILS.id;
-    //     setDefaultSection(defaultSection);
-    //     setSetionName(VEHICLE_RECIEPT_CHECKLIST);
-    //     setSection(defaultSection);
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, []);
-
-    useEffect(() => {
-        if (currentSection && sectionName) {
-            const section = Object.values(sectionName)?.find((i) => i.id === currentSection);
-            setSection(section);
-
-            const nextSection = Object.values(sectionName)?.find((i) => i?.displayOnList && i.id > currentSection);
-            setLastSection(!nextSection?.id);
-        }
-        form.resetFields();
-        form.setFieldsValue(undefined);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [currentSection, sectionName]);
 
     const onAdvanceSearchCloseAction = () => {
         form.resetFields();
@@ -258,88 +241,80 @@ export const RSMApprovalMasterBase = (props) => {
         setAdvanceSearchVisible(false);
     };
 
-    const handleReject = () => {
+    const handleRequest = ({ requestType = false }) => {
         setRejectModalVisible(true);
         setIsFormVisible(false);
-        setRejectRequest(true);
-    };
-    const handleApprove = () => {
-        setRejectModalVisible(true);
-        setIsFormVisible(false);
-        setRejectRequest(false);
+        requestType ? setRejectRequest(true) : setRejectRequest(false);
+        requestType ? setRequestType(REQUEST_CONSTANT?.Reject?.value) : setRequestType(REQUEST_CONSTANT?.Approve?.value);
     };
 
     const handleResetFilter = (e) => {
         if (filterString) {
             setShowDataLoading(true);
         }
-        setFilterString();
-        // advanceFilterForm.resetFields();
-        // setAdvanceSearchVisible(false);
+        setFilterString({ searchParam: filterString?.searchParam });
     };
 
-    const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
+    const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
         setFormData([]);
-
+        queryButtons?.pending ? setButtonData({ ...defaultBtnVisiblity }) : setButtonData({ ...defaultBtnVisiblity, cancelBtn: false, reject: false, approve: false });
         setFormActionType({ viewMode: buttonAction === VIEW_ACTION });
-        // setButtonData(btnVisiblity({ defaultBtnVisiblity }));
-
         record && setFormData(record);
         setIsFormVisible(true);
     };
 
-    const onFinishSearch = (values) => {};
+    const handleSearchChange = (value) => {
+        setFilterString({ ...filterString, advanceFilter: true, dealerName: `${value}` });
+    };
 
     const onFinish = (values) => {
-        const recordId = formData?.parentId || form.getFieldValue('parentId');
-        let data = { ...values, parentId: recordId };
+        if (values?.status) {
+            let data = { ...values, request: requestType, id: formData?.id };
+            delete data?.status;
+            const onSuccess = (res) => {
+                form.resetFields();
+                setShowDataLoading(true);
+                showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+                fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+                setRejectModalVisible(false);
+                setButtonData({ ...buttonData, formBtnActive: false });
+                setIsFormVisible(false);
+            };
 
-        const onSuccess = (res) => {
-            form.resetFields();
-            setShowDataLoading(true);
+            const onError = (message) => {
+                showGlobalNotification({ message });
+            };
 
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+            const requestData = {
+                data: data,
+                method: 'put',
+                setIsLoading: listShowLoading,
+                userId,
+                onError,
+                onSuccess,
+            };
 
-            setButtonData({ ...buttonData, formBtnActive: false });
-
-            setIsFormVisible(false);
-        };
-
-        const onError = (message) => {
-            showGlobalNotification({ message });
-        };
-
-        const requestData = {
-            data: data,
-            method: formActionType?.editMode ? 'put' : 'post',
-            setIsLoading: listShowLoading,
-            userId,
-            onError,
-            onSuccess,
-        };
-
-        saveData(requestData);
+            saveData(requestData);
+        } else {
+            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Please accept Terms and Condition' });
+        }
     };
 
     const onFinishFailed = (errorInfo) => {
         return;
     };
 
-    const handleFormValueChange = () => {
-        setButtonData({ ...buttonData, formBtnActive: true });
-    };
-
     const rejectModalCloseAction = () => {
         setRejectModalVisible(false);
         setIsFormVisible(true);
+        setRejectFormButtonActive(true);
+        rejectForm.resetFields();
     };
 
     const onCloseAction = () => {
         form.resetFields();
         form.setFieldsValue();
-        setSelectedRecord();
         setIsFormVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
     };
@@ -349,7 +324,7 @@ export const RSMApprovalMasterBase = (props) => {
         totalRecords,
         setPage,
         tableColumn: tableColumn(handleButtonClick),
-        tableData: [{}],
+        tableData: data,
         showAddButton: false,
         handleButtonClick,
         noMessge: LANGUAGE_EN.GENERAL.LIST_NO_DATA_FOUND.TITLE,
@@ -376,13 +351,14 @@ export const RSMApprovalMasterBase = (props) => {
         from: listFilterForm,
         onFinish,
         onFinishFailed,
-        title: <QueryButtons handleButtonQuery={handleButtonQuery} />,
+        title: '',
+        handleButtonQuery,
+        // title: <QueryButtons queryButtons={queryButtons} setqueryButtons={setqueryButtons} handleButtonQuery={handleButtonQuery} />,
         data,
         typeData,
-        otfSearchRules,
-        setOtfSearchRules,
+
         searchForm,
-        onFinishSearch,
+        handleSearchChange,
         handleResetFilter,
         isAdvanceSearchVisible,
         setAdvanceSearchVisible,
@@ -401,7 +377,6 @@ export const RSMApprovalMasterBase = (props) => {
         advanceFilterForm,
         setAdvanceSearchVisible,
         typeData,
-        onFinishSearch,
     };
 
     const viewProps = {
@@ -412,21 +387,23 @@ export const RSMApprovalMasterBase = (props) => {
         handleButtonClick,
         buttonData,
         setButtonData,
-        handleReject,
         setRejectRequest,
-        handleApprove,
+        formData,
+        handleRequest,
+        queryButtons,
     };
 
     const rejectRequestProps = {
         isVisible: isRejectModalVisible,
-        handleReject,
         onCloseAction: rejectModalCloseAction,
         titleOverride: 'Reject Co-Dealer Invoice',
         rejectForm,
         rejectModalCloseAction,
         rejectRequest,
         setRejectRequest,
-        handleApprove,
+        onFinish,
+        rejectFormButtonActive,
+        setRejectFormButtonActive,
     };
 
     return (
@@ -436,7 +413,7 @@ export const RSMApprovalMasterBase = (props) => {
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable isLoading={false} {...tableProps} showAddButton={false} />
+                    <ListDataTable isLoading={showDataLoading} {...tableProps} showAddButton={false} />
                 </Col>
             </Row>
             {formActionType?.viewMode && <ViewDetail {...viewProps} />}

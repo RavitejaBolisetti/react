@@ -23,13 +23,6 @@ const AddEditFormMain = (props) => {
     const { otfTransferForm, onFinishOTFTansfer, handleOtfTransferLocationChange } = props;
     const { handleButtonClick, buttonData, setButtonData, onCloseAction, typeData } = props;
 
-    const selectProps = {
-        optionFilterProp: 'children',
-        showSearch: true,
-        allowClear: true,
-        className: styles.headerSelectField,
-    };
-
     const buttonProps = {
         formData,
         onCloseAction,

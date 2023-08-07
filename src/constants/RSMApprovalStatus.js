@@ -3,15 +3,23 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-export const VEHICLE_RECIEPT_CHECKLIST = {
-    CHECKLIST_DETAILS: {
+export const RSM_APPROVAL_STATUS = {
+    PENDING: {
         id: 1,
-        title: 'Checklist Details',
-        displayOnList: true,
+        key: 'pending',
+        title: 'Pending',
+        active: true,
     },
-    DOCUMENTS: {
+    APPROVED: {
         id: 2,
-        title: 'Documents',
-        displayOnList: true,
+        key: 'approved',
+        title: 'Approved',
+        active: false,
+    },
+    REJECTED: {
+        id: 3,
+        key: 'rejected',
+        title: 'Rejected',
+        active: false,
     },
 };

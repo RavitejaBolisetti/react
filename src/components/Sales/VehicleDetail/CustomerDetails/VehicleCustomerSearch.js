@@ -3,24 +3,16 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-/*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
- *   All rights reserved.
- *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
- */
-import React, { useEffect } from 'react';
-import { Col, Form, Row, Select, Button, DatePicker, Table } from 'antd';
+import React from 'react';
+import { Col, Row, Button, Table } from 'antd';
 
 import { withModal } from 'components/withModal';
-// import { DataTable } from 'utils/dataTable';
 import { tableColumn } from './tableColumn';
 
 import styles from 'components/common/Common.module.css';
 
 export const VehicleCustomerSearchForm = (props) => {
-    const { formData } = props;
     const { onCloseAction } = props;
-
     return (
         <>
             <Row gutter={20}>

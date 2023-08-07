@@ -5,7 +5,7 @@
  */
 
 import { useEffect, useState } from 'react';
-import { Col, Input, Form, Row, Select, Space, Typography, Card, Divider, Switch, Button, Tag, Upload, Collapse } from 'antd';
+import { Col, Input, Form, Row, Select, Space, Typography, Card, Divider, Switch, Button, Tag, Collapse } from 'antd';
 import { validateEmailField, validateMobileNoField, validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
@@ -19,16 +19,14 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import { NameChangeHistory } from './NameChangeHistory';
 
 import styles from 'components/common/Common.module.css';
-import Svg from 'assets/images/Filter.svg';
 
-const { Dragger } = Upload;
 const { Panel } = Collapse;
 const { Text } = Typography;
 
 const AddEditFormMain = (props) => {
     const { form, typeData, formData, corporateLovData, formActionType: { editMode } = undefined, customerType } = props;
 
-    const { nameChangeHistoryForm, editedMode, setCustomerNameList, activeKey, setactiveKey, customerNameList, setEditedMode, isHistoryVisible, onViewHistoryChange, changeHistoryClose, setButtonData, buttonData, status, setStatus, showGlobalNotification } = props;
+    const { nameChangeHistoryForm, editedMode, setCustomerNameList, activeKey, setactiveKey, data, customerNameList, setEditedMode, isHistoryVisible, onViewHistoryChange, changeHistoryClose, setButtonData, buttonData, status, setStatus, showGlobalNotification } = props;
     const { whatsAppConfiguration, setWhatsAppConfiguration, handleFormFieldChange } = props;
     const { contactOverWhatsApp, contactOverWhatsAppActive, sameMobileNoAsWhatsApp, sameMobileNoAsWhatsAppActive } = whatsAppConfiguration;
 
@@ -53,6 +51,12 @@ const AddEditFormMain = (props) => {
     }, [formData?.corporateType]);
 
     useEffect(() => {
+        form.setFieldsValue({
+            mobileNumber: data?.mobileNumber,
+        });
+    }, [data?.mobileNumber, form]);
+
+    useEffect(() => {
         setWhatsAppConfiguration({ contactOverWhatsApp: formData?.whatsappCommunicationIndicator, sameMobileNoAsWhatsApp: formData?.mobileNumberAsWhatsappNumber });
         handleFormFieldChange();
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -68,7 +72,6 @@ const AddEditFormMain = (props) => {
     }, [editedMode]);
 
     const uploadProps = {
-        // supportingDocs: true,
         messageText: <>Upload supporting documents</>,
         ...props,
     };
@@ -98,7 +101,7 @@ const AddEditFormMain = (props) => {
         nameChangeHistoryForm.setFieldsValue({ firstName: null });
         nameChangeHistoryForm.setFieldsValue({ lastName: null });
     };
-    
+
     const handleCorporateChange = (value) => {
         setCorporateType(value);
         if (value === 'NON-LIS') {

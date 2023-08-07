@@ -21,7 +21,7 @@ const AddEditFormMain = (props) => {
 
     const { buttonData, setButtonData, handleButtonClick } = props;
     const { lessorData, fetchList, typeData, userId, showGlobalNotification } = props;
-    const { downloadFile, listShowLoading, downloadForm, isDataLoaded, listLessorShowLoading, stateData, viewListShowLoading, fetchViewDocument } = props;
+    const { downloadFile, listShowLoading, downloadForm, isDataLoaded, listLessorShowLoading, stateData } = props;
 
     const { uploadProps } = props;
 

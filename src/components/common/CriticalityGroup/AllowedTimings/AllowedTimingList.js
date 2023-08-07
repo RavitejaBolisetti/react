@@ -6,7 +6,6 @@
 import React from 'react';
 import { Form, Row, Col, Button, Divider } from 'antd';
 import moment from 'moment';
-import { PlusOutlined } from '@ant-design/icons';
 import { LANGUAGE_EN } from 'language/en';
 import AddEditForm from './AddEditForm';
 import AllowedTimingCard from './AllowedTimingCard';

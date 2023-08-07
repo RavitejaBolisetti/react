@@ -3,52 +3,59 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
+import { tblPrepareColumns, tblActionColumn } from './tableColumnMaster';
 import { VehicleReceiptStatusTag } from './utils/VehicleReceiptStatusTag';
 import { convertDateMonthYear } from 'utils/formatDateTime';
 
 import styles from 'components/common/Common.module.css';
 
-export const tableColumn = (handleButtonClick, page, pageSize) => {
+export const tableColumn = ({ handleButtonClick, page, pageSize, tableIconsVisibility }) => {
     const tableColumn = [
         tblPrepareColumns({
-            title: 'GRN Type.',
-            dataIndex: 'otfNumber',
-            width: '14%',
+            title: 'GRN Type',
+            dataIndex: 'grnType',
+            width: '10%',
         }),
 
         tblPrepareColumns({
             title: 'GRN Number',
-            dataIndex: 'otfDate',
-            width: '14%',
-            render: (text) => convertDateMonthYear(text),
+            dataIndex: 'grnNumber',
+            width: '12%',
         }),
+
         tblPrepareColumns({
             title: 'GRN Date',
-            dataIndex: 'customerName',
-            width: '14%',
+            dataIndex: 'grnDate',
+            width: '12%',
+            render: (text) => convertDateMonthYear(text),
         }),
 
         tblPrepareColumns({
             title: 'Supplier Name',
-            dataIndex: 'mobileNumber',
+            dataIndex: 'supplierName',
             width: '14%',
         }),
 
         tblPrepareColumns({
             title: 'Supplier Invoice Number',
-            dataIndex: 'model',
+            dataIndex: 'supplierInvoiceNumber',
+            width: '14%',
+        }),
+
+        tblPrepareColumns({
+            title: 'Supplier Invoice Date',
+            dataIndex: 'supplierInvoiceDate',
             width: '14%',
         }),
 
         tblPrepareColumns({
             title: 'Status',
-            dataIndex: 'orderStatus',
-            width: '12%',
-            render: (_, record) => VehicleReceiptStatusTag(record.orderStatus),
+            dataIndex: 'status',
+            width: '10%',
+            render: (_, record) => VehicleReceiptStatusTag(record.status),
         }),
 
-        tblActionColumn({ handleButtonClick, styles, width: '10%', EditIcon: true }),
+        tblActionColumn({ handleButtonClick, styles, width: '12%', ...tableIconsVisibility }),
     ];
 
     return tableColumn;
