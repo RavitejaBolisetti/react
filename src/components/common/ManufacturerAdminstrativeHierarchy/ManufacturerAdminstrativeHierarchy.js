@@ -259,7 +259,6 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
             fetchOrgList({ setIsLoading: listShowLoading, userId, errorAction: onErrorAction });
             authorityDropDownfetchList({ setIsLoading: authorityDropDownlistShowLoading, userId, errorAction: onErrorAction, extraParams: makeExtraparms([{ key: 'parameterType', title: 'parameterType', value: 'AUTH_TYPE', name: 'parameterType' }]) });
         }
-        // eslint-disable-next-line react-hooks/s-deps
     }, [isDataOrgLoaded, userId]);
     useEffect(() => {
         manufacturerOrgHierarchyData?.map((i) => DisableParent(i));

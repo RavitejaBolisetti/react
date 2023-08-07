@@ -16,16 +16,8 @@ const AddEditFormMain = (props) => {
     const toDateInitialValue = { initialValue: convertDateToCalender(insuranceData?.insuranceDate) };
     const [customerForm] = Form.useForm();
 
-    const handleFormValueChange = () => {
-        setButtonData({ ...buttonData, formBtnActive: true });
-    };
-
-    const handleFormFieldChange = () => {
-        setButtonData({ ...buttonData, formBtnActive: true });
-    };
-
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Space style={{ display: 'flex' }} size="middle" direction="vertical">
