@@ -50,7 +50,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const EmbeddedReportMasterMain = (props) => {
     const { userId, isDataLoaded, data, fetchList, listShowLoading } = props;
-
+    const [, setReport] = useState();
     const [sampleReportConfig, setReportConfig] = useState({
         type: 'report',
         embedUrl: undefined,
@@ -73,8 +73,6 @@ export const EmbeddedReportMasterMain = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isDataLoaded]);
-
-    const [, setReport] = useState();
 
     useEffect(() => {
         setReportConfig({
