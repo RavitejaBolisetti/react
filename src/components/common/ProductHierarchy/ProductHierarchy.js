@@ -401,7 +401,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
                                     </Col>
                                     {organizationId && (
                                         <Col xs={24} sm={24} md={10} lg={10} xl={10}>
-                                            <Search placeholder="Search" allowClear onChange={onChange} className={`${styles.headerSearchField} ${styles.headerSearchInput}`} />
+                                            <Search placeholder="Search" allowClear onChange={onChange} />
                                         </Col>
                                     )}
                                 </Row>

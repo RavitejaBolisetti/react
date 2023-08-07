@@ -4,16 +4,14 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Collapse, Space, Avatar, Typography } from 'antd';
+import { Collapse, Space, Typography } from 'antd';
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
-import { convertDateTime } from 'utils/formatDateTime';
 import { getCodeValue } from 'utils/getCodeValue';
 import { DATA_TYPE } from 'constants/dataType';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
-import { PARAM_MASTER } from 'constants/paramMaster';
 
 const { Panel } = Collapse;
-const { Text, Title } = Typography;
+const { Text } = Typography;
 
 const expandIcon = ({ isActive }) =>
     isActive ? (
@@ -29,9 +27,7 @@ const expandIcon = ({ isActive }) =>
     );
 
 const VehicleReceiptDetailCard = (props) => {
-    const { selectedOrder, typeData, isLoading } = props;
-    const fullName = selectedOrder?.customerName?.split(' ');
-    const userAvatar = fullName ? fullName[0]?.slice(0, 1) + (fullName[1] ? fullName[1].slice(0, 1) : '') : '';
+    const { selectedRecord, typeData, isLoading } = props;
     return (
         <Collapse bordered={true} defaultActiveKey={[1]} expandIcon={expandIcon} collapsible="icon">
             <Panel
@@ -40,7 +36,7 @@ const VehicleReceiptDetailCard = (props) => {
                         <Space>
                             <div>
                                 <Text>
-                                    GRN Number: <span>{selectedOrder?.otfNumber}</span>
+                                    GRN Number: <span>{checkAndSetDefaultValue(selectedRecord?.grnNumber, isLoading)}</span>
                                 </Text>
                             </div>
                         </Space>
@@ -49,13 +45,13 @@ const VehicleReceiptDetailCard = (props) => {
                 key={1}
             >
                 <p>
-                    GRN Type: <span>{selectedOrder && getCodeValue(typeData?.[PARAM_MASTER?.CUST_TYPE?.id], selectedOrder?.customerType)}</span>
+                    GRN Type: <span>{selectedRecord && checkAndSetDefaultValue(selectedRecord?.grnType, isLoading)}</span>
                 </p>
                 <p>
-                    GRN Date: <span>{checkAndSetDefaultValue(selectedOrder?.otfDate, isLoading, DATA_TYPE?.DATE?.key) || 'NA'}</span>
+                    GRN Date: <span>{checkAndSetDefaultValue(selectedRecord?.grnDate, isLoading, DATA_TYPE?.DATE?.key) || 'NA'}</span>
                 </p>
                 <p>
-                    GRN Status: <span>{selectedOrder?.model || 'NA'}</span>
+                    GRN Status: <span>{getCodeValue(typeData, selectedRecord?.status) || 'NA'}</span>
                 </p>
             </Panel>
         </Collapse>

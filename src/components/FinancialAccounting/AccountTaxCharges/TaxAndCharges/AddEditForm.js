@@ -21,7 +21,7 @@ import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/prepareP
 const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
-    const { typeData, onCloseAction, unFilteredAttributeData, documentDescription, setSelectedTreeSelectKey, financialAccount, flatternData, fieldNames, formActionType, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, handleSelectTreeClick, taxChargeData, attributeType, setAttributeType, calType, setCalType, calculationType, setCalculationType } = props;
+    const { typeData, onCloseAction, unFilteredAttributeData, documentDescription, setSelectedTreeSelectKey, financialAccount, flatternData, fieldNames, formActionType, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, handleSelectTreeClick, taxChargeData, attributeType, setAttributeType, setCalType, calculationType, setCalculationType } = props;
     const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed } = props;
 
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };

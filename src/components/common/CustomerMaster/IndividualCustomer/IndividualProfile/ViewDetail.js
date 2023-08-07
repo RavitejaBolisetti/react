@@ -15,7 +15,7 @@ import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
 const ViewDetailMain = (props) => {
-    const { downloadFileFromButton, setActiveKey, activeKey, formData, viewDocument, handleOnClickCustomerForm, isLoading, appCategoryData } = props;
+    const { downloadFileFromButton, setActiveKey, activeKey, formData, viewDocument, isLoading, appCategoryData } = props;
 
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
@@ -46,7 +46,7 @@ const ViewDetailMain = (props) => {
                 <Panel header="Individual Information" key="1">
                     <Divider />
                     <div>
-                        <img alt="Uploaded profile picture" width="120" height="100" src={`data:image/png;base64,${viewDocument?.base64}`} />
+                        <mg alt="Uploaded profile picture" width="120" height="100" src={`data:image/png;base64,${viewDocument?.base64}`} />
                     </div>
                     <Divider className={styles.marT20} />
                     <Descriptions {...viewProps}>

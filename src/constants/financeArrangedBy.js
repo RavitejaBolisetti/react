@@ -19,4 +19,9 @@ export const FINANCE_ARRANGED_BY = {
         key: 'SELF',
         title: 'Self',
     },
+    DEALER_1: {
+        id: 1,
+        key: 'DLR',
+        title: 'Dealer',
+    },
 };
