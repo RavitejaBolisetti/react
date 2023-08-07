@@ -9,42 +9,49 @@ import { Button, Row, Col } from 'antd';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import styles from './CustomerFormButton.module.css';
 
-export const CustomerFormButton = ({ record, onCloseAction, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection }) => {
+export const CustomerFormButton = ({ record, onCloseAction, buttonData, handleChangeHistory, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection }) => {
     return (
-        <Row gutter={20} className={styles.formFooter}>
-            <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
-                {buttonData?.closeBtn && (
-                    <Button danger onClick={onCloseAction}>
-                        Close
-                    </Button>
-                )}
+        <div className={styles.formFooter}>
+            <Row gutter={20}>
+                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
+                    {buttonData?.closeBtn && (
+                        <Button danger onClick={onCloseAction}>
+                            Close
+                        </Button>
+                    )}
 
-                {buttonData?.cancelBtn && (
-                    <Button danger onClick={onCloseAction}>
-                        Cancel
-                    </Button>
-                )}
-            </Col>
+                    {buttonData?.cancelBtn && (
+                        <Button danger onClick={onCloseAction}>
+                            Cancel
+                        </Button>
+                    )}
+                </Col>
 
             <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
+                {buttonData?.changeHistory && (
+                    <Button onClick={handleChangeHistory} type="primary">
+                        View History
+                    </Button>
+                )}
                 {buttonData?.editBtn && (
                     <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record, openDefaultSection: false })} type="primary">
                         Edit
                     </Button>
                 )}
 
-                {buttonData?.nextBtn && !isLastSection && (
-                    <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.NEXT, record })} type="primary">
-                        Next
-                    </Button>
-                )}
+                    {buttonData?.nextBtn && !isLastSection && (
+                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.NEXT, record })} type="primary">
+                            Next
+                        </Button>
+                    )}
 
-                {buttonData?.saveBtn && (
-                    <Button loading={isLoadingOnSave} disabled={!buttonData?.formBtnActive} onClick={(e) => setButtonData({ ...buttonData, saveAndNewBtnClicked: false })} htmlType="submit" type="primary">
-                        {saveButtonName}
-                    </Button>
-                )}
-            </Col>
-        </Row>
+                    {buttonData?.saveBtn && (
+                        <Button loading={isLoadingOnSave} disabled={!buttonData?.formBtnActive} onClick={(e) => setButtonData({ ...buttonData, saveAndNewBtnClicked: false })} htmlType="submit" type="primary">
+                            {saveButtonName}
+                        </Button>
+                    )}
+                </Col>
+            </Row>
+        </div>
     );
 };

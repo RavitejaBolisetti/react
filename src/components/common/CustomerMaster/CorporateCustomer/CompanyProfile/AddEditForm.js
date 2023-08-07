@@ -4,26 +4,25 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { React, useEffect, useState } from 'react';
-import { Col, Input, Collapse, Row, Button, Space, Form, Select, Upload, message, Checkbox, Divider, Card } from 'antd';
+import { Col, Input, Collapse, Row, Space, Form, Select, Checkbox, Divider, Card } from 'antd';
 import { validateRequiredInputField, validateLettersWithWhitespaces, validatePanField, validateGSTIN, validatFacebookProfileUrl, validattwitterProfileUrl } from 'utils/validation';
 
-import { FiDownload, FiTrash } from 'react-icons/fi';
+import { FiDownload } from 'react-icons/fi';
 
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { convertToUpperCase } from 'utils/convertToUpperCase';
 import { expandIcon } from 'utils/accordianExpandIcon';
-import UploadUtils from 'components/common/CustomerMaster/Common/UploadUtils';
+import { UploadUtil } from 'utils/Upload';
 
 import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
 const { Option } = Select;
-const { Dragger } = Upload;
 const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
-    const { appCategoryData, userId, formData, form, handleOnClick } = props;
-    const { uploadListShowLoading, uploadFile, setUploadedFile, setAppCustomerCategory, setAppSubCategory, customerCategory, setCustomerCategory, viewDocument } = props;
+    const { appCategoryData, formData, form, handleOnClick } = props;
+    const { handleFormValueChange, fileList, setFileList, uploadedFile, emptyList, setEmptyList, uploadedFileName, setUploadedFileName, setUploadedFile, setAppCustomerCategory, setAppSubCategory, customerCategory, setCustomerCategory, viewDocument } = props;
 
     const [activeKey, setactiveKey] = useState([1]);
 
@@ -59,54 +58,6 @@ const AddEditFormMain = (props) => {
         }
     };
 
-    const onDrop = (e) => {
-        // console.log('Dropped files', e.dataTransfer.files);
-    };
-
-    const uploadProps = {
-        multiple: false,
-        accept: 'image/png, image/jpeg, application/pdf',
-        showUploadList: {
-            showRemoveIcon: true,
-            // showDownloadIcon: true,
-            // downloadIcon: <FiDownload onClick={() => downloadFileFromList()} />,
-            removeIcon: <FiTrash onClick={(e) => console.log(e, 'custom removeIcon event')} />,
-            showProgress: true,
-        },
-        progress: { strokeWidth: 3, showInfo: true },
-
-        onDrop,
-        onChange: (info, event) => {
-            const { status } = info.file;
-            if (status === 'uploading') {
-            } else if (status === 'done') {
-                setUploadedFile(info?.file?.response?.docId);
-                message.success(`${info.file.name} file uploaded successfully.`);
-            } else if (status === 'error') {
-                message.error(`${info.file.name} file upload failed.`);
-            }
-        },
-    };
-
-    const handleUpload = (options) => {
-        const { file, onSuccess, onError } = options;
-
-        const data = new FormData();
-        data.append('applicationId', 'app');
-        data.append('file', file);
-
-        const requestData = {
-            data: data,
-            method: 'post',
-            setIsLoading: uploadListShowLoading,
-            userId,
-            onError,
-            onSuccess,
-        };
-
-        uploadFile(requestData);
-    };
-
     const handleAppCategoryChange = (value) => {
         setAppCustomerCategory(value);
     };
@@ -119,11 +70,29 @@ const AddEditFormMain = (props) => {
         setCustomerCategory(value);
     };
 
-    const ImageProps = {
-        viewDocument,
-        handleUpload,
-        uploadProps,
-        formData,
+    const consentFormProps = {
+        isReplaceEnabled: false,
+        fileList,
+        setFileList,
+        setUploadedFile,
+        uploadedFile,
+        emptyList,
+        setEmptyList,
+        uploadedFileName,
+        setUploadedFileName,
+        handleFormValueChange,
+
+        uploadButtonName: 'Upload File',
+        messageText: (
+            <>
+                Click or drop your file here to upload the signed and <br />
+                scanned customer form
+            </>
+        ),
+        validationText: <>File type should be png, jpg or pdf and max file size to be 5Mb</>,
+        supportedFileTypes: ['image/png', 'image/jpg', 'image/jpeg', 'application/pdf'],
+        maxSize: 5,
+        single: true,
     };
 
     return (
@@ -323,7 +292,7 @@ const AddEditFormMain = (props) => {
                                     <Form.Item initialValue={formData?.customerConsent} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="customerConsent">
                                         <Checkbox>I Consent to share my details with Mahindra & Mahindra. </Checkbox>
                                     </Form.Item>
-                                    <UploadUtils {...props} uploadImgTitle={'Profile Picture'} setUploadImgDocId={setUploadedFile} uploadImgDocId={formData?.image} {...ImageProps} />
+                                    <UploadUtil key={2} {...consentFormProps} />
                                 </Space>
                                 {formData?.customerFormDocId && (
                                     <>

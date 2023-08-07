@@ -146,30 +146,30 @@ const AddEditFormMain = (props) => {
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item label="Product Division" name="productDivision">
-                                            <Input maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('product division')} {...disabledProps} />
+                                            <Input maxLength={15} placeholder={preparePlaceholderText('product division')} {...disabledProps} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item label="Model Group" name="modelGroup">
-                                            <Input maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('model group')} {...disabledProps} />
+                                            <Input maxLength={15} placeholder={preparePlaceholderText('model group')} {...disabledProps} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item label="Model Family" name="modelFamily">
-                                            <Input maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('model familiy')} {...disabledProps} />
+                                            <Input maxLength={15} placeholder={preparePlaceholderText('model familiy')} {...disabledProps} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item label="Model Variant" name="modelVariant">
-                                            <Input maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('model variant')} {...disabledProps} />
+                                            <Input maxLength={15} placeholder={preparePlaceholderText('model variant')} {...disabledProps} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.modelTooltip}>
                                         {addToolTip(tooltTipText, 'bottom', '#D3EDFE', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}
                                         <Form.Item label="Model" name="model">
-                                            <Input maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('model ')} {...disabledProps} />
+                                            <Input maxLength={15} placeholder={preparePlaceholderText('model ')} {...disabledProps} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
@@ -199,38 +199,38 @@ const AddEditFormMain = (props) => {
                                                     <Row gutter={20}>
                                                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                                             <Form.Item label="TCU ID" name={[index, 'tcuId']}>
-                                                                <Input maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('tcu id')} {...disabledProps} />
+                                                                <Input maxLength={15} placeholder={preparePlaceholderText('tcu id')} {...disabledProps} />
                                                             </Form.Item>
                                                         </Col>
 
                                                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                                             <Form.Item label="E-Sim No" name={[index, 'esimNo']}>
-                                                                <Input maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('Sim no.')} {...disabledProps} />
+                                                                <Input maxLength={15} placeholder={preparePlaceholderText('Sim no.')} {...disabledProps} />
                                                             </Form.Item>
                                                         </Col>
 
                                                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                                             <Form.Item label="E-Sim Status" name={[index, 'esimStatus']}>
-                                                                <Input maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('Sim status')} {...disabledProps} />
+                                                                <Input maxLength={15} placeholder={preparePlaceholderText('Sim status')} {...disabledProps} />
                                                             </Form.Item>
                                                         </Col>
                                                     </Row>
                                                     <Row gutter={20}>
                                                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                                             <Form.Item label="Preffered Mobile No 1" name={[index, 'preferredMobileNo1']}>
-                                                                <Input maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('mobile no')} {...disabledProps} />
+                                                                <Input maxLength={15} placeholder={preparePlaceholderText('mobile no')} {...disabledProps} />
                                                             </Form.Item>
                                                         </Col>
 
                                                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                                             <Form.Item label="Preffered Mobile No 2" name={[index, 'preferredMobileNo2']}>
-                                                                <Input maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('mobile no')} {...disabledProps} />
+                                                                <Input maxLength={15} placeholder={preparePlaceholderText('mobile no')} {...disabledProps} />
                                                             </Form.Item>
                                                         </Col>
 
                                                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                                             <Form.Item label="KYC Status" name={[index, 'kycStatus']}>
-                                                                <Input maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('kyc status')} {...disabledProps} />
+                                                                <Input maxLength={15} placeholder={preparePlaceholderText('kyc status')} {...disabledProps} />
                                                             </Form.Item>
                                                         </Col>
                                                     </Row>
@@ -250,9 +250,20 @@ const AddEditFormMain = (props) => {
                                             <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
                                                 Aggregates
                                             </Text>
-                                            <Button onClick={addContactHandeler} icon={<PlusOutlined />} type="primary" disabled={isReadOnly}>
-                                                Add
-                                            </Button>
+                                            {!formData?.productAttributeDetail &&
+                                                addToolTip(
+                                                    'No product Attribute Details Present',
+                                                    'bottom'
+                                                )(
+                                                    <Button onClick={addContactHandeler} icon={<PlusOutlined />} type="primary" disabled={isReadOnly || !formData?.productAttributeDetail}>
+                                                        Add
+                                                    </Button>
+                                                )}
+                                            {formData?.productAttributeDetail && (
+                                                <Button onClick={addContactHandeler} icon={<PlusOutlined />} type="primary" disabled={isReadOnly || !formData?.productAttributeDetail}>
+                                                    Add
+                                                </Button>
+                                            )}
                                         </Col>
                                     </Row>
                                 }

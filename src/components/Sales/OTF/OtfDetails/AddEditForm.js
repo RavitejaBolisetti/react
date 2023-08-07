@@ -7,7 +7,7 @@ import React from 'react';
 import { Row, Col, Input, Form, DatePicker, Switch, Card } from 'antd';
 
 import { formattedCalendarDate, dateFormat } from 'utils/formatDateTime';
-import { validateRequiredSelectField, validateRequiredInputField } from 'utils/validation';
+import { validateRequiredSelectField, validateRequiredInputField, noWhiteSpaceinBeginning } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { disablePastDate } from 'utils/disableDate';
 import { customSelectBox } from 'utils/customSelectBox';
@@ -60,7 +60,7 @@ const AddEditFormMain = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.placeOfRegistration} label="Place Of Registration" name="placeOfRegistration">
+                    <Form.Item rules={[noWhiteSpaceinBeginning()]} initialValue={formData?.placeOfRegistration} label="Place Of Registration" name="placeOfRegistration">
                         <Input maxLength={50} placeholder={preparePlaceholderText('Place Of Registration')} />
                     </Form.Item>
                 </Col>

@@ -15,7 +15,7 @@ import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
 const ViewDetailMain = (props) => {
-    const { downloadFileFromButton, setActiveKey, activeKey, formData, viewDocument, handleOnClickCustomerForm, isLoading, appCategoryData } = props;
+    const { downloadFileFromButton, setActiveKey, activeKey, formData, viewDocument, isLoading, appCategoryData } = props;
 
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
@@ -46,11 +46,9 @@ const ViewDetailMain = (props) => {
                 <Panel header="Individual Information" key="1">
                     <Divider />
                     <div>
-                        <img alt="uploaded suppoting document" width="120" height="100" src={`data:image/png;base64,${viewDocument?.base64}`} />
+                        <mg alt="Uploaded profile picture" width="120" height="100" src={`data:image/png;base64,${viewDocument?.base64}`} />
                     </div>
-                    <br />
-                    <br />
-                    <Divider />
+                    <Divider className={styles.marT20} />
                     <Descriptions {...viewProps}>
                         <Descriptions.Item label="Date of Birth">{checkAndSetDefaultValue(formData?.dateOfBirth, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                         <Descriptions.Item label="Gender">{checkAndSetDefaultValue(getCodeValue(appCategoryData?.GENDER_CD, formData?.gender), isLoading)}</Descriptions.Item>
@@ -88,11 +86,11 @@ const ViewDetailMain = (props) => {
                     <Divider />
                     <Descriptions {...viewProps}>
                         <Descriptions.Item label="M1-MMFSL">{checkAndSetDefaultValue(formData?.mmfsl, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Facebook Link">{checkAndSetDefaultValue(formData?.facebookLink, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Twitter Link">{checkAndSetDefaultValue(formData?.twitterLink, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Instagram Link">{checkAndSetDefaultValue(formData?.instagramLink, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Youtube Channel">{checkAndSetDefaultValue(formData?.youtubeChannelLink, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Team BHP Link">{checkAndSetDefaultValue(formData?.teamBhpLink, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Facebook Link">{checkAndSetDefaultValue(formData?.facebookLink, isLoading, '-', true, formData?.facebookLink)}</Descriptions.Item>
+                        <Descriptions.Item label="Twitter Link">{checkAndSetDefaultValue(formData?.twitterLink, isLoading, '-', true, formData?.twitterLink)}</Descriptions.Item>
+                        <Descriptions.Item label="Instagram Link">{checkAndSetDefaultValue(formData?.instagramLink, isLoading, '-', true, formData?.instagramLink)}</Descriptions.Item>
+                        <Descriptions.Item label="Youtube Channel">{checkAndSetDefaultValue(formData?.youtubeChannelLink, isLoading, '-', true, formData?.youtubeChannelLink)}</Descriptions.Item>
+                        <Descriptions.Item label="Team BHP Link">{checkAndSetDefaultValue(formData?.teamBhpLink, isLoading, '-', true, formData?.teamBhpLink)}</Descriptions.Item>
                     </Descriptions>
                 </Panel>
             </Collapse>

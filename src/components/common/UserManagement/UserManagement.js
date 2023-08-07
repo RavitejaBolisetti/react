@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import { ROUTING_USER_MANAGEMENT_MANUFACTURER } from 'constants/routing';
 import { IoBanOutline } from 'react-icons/io5';
 import { PlusOutlined } from '@ant-design/icons';
-import { tblPrepareColumns } from 'utils/tableCloumn';
+import { tblPrepareColumns } from 'utils/tableColumn';
 import DataTable from 'utils/dataTable/DataTable';
 import { showGlobalNotification } from 'store/actions/notification';
 import { userManagementDataActions } from 'store/actions/data/userManagement';
@@ -572,7 +572,7 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
                                 </div>
                             </Col>
                             <Col xs={24} sm={24} md={7} lg={7} xl={7}>
-                                <Select className={styles.headerSelectField} onChange={handleChange} placeholder="Select" allowClear>
+                                <Select onChange={handleChange} placeholder="Select" allowClear>
                                     {dealersData?.map((item) => (
                                         <Option value={item}>{item}</Option>
                                     ))}

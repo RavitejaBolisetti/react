@@ -6,7 +6,6 @@
 import React from 'react';
 import { Col, Input, Form, Row, DatePicker, Space, Card } from 'antd';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
-import styles from 'components/common/Common.module.css';
 import { convertDateToCalender } from 'utils/formatDateTime';
 
 const AddEditFormMain = (props) => {
@@ -34,29 +33,29 @@ const AddEditFormMain = (props) => {
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                         <Form.Item initialValue={insuranceData?.insuranceCompany} label="Insurance Company" name="insuranceCompany">
-                                            <Input className={styles.inputBox} placeholder={preparePlaceholderText('Insurance Company')} disabled={true} />
+                                            <Input placeholder={preparePlaceholderText('Insurance Company')} disabled={true} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                         <Form.Item initialValue={insuranceData?.insuranceCoverNote} label="Insurance Cover Note" name="insuranceCoverNote">
-                                            <Input className={styles.inputBox} placeholder={preparePlaceholderText('Insurance Cover Note')} disabled={true} />
+                                            <Input placeholder={preparePlaceholderText('Insurance Cover Note')} disabled={true} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                         <Form.Item initialValue={insuranceData?.insuranceAmount} label="Insurance Amount" name="insuranceAmount">
-                                            <Input className={styles.inputBox} placeholder={preparePlaceholderText('Insurance Amount')} disabled={true} />
+                                            <Input placeholder={preparePlaceholderText('Insurance Amount')} disabled={true} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                         <Form.Item {...toDateInitialValue} label="Date" name="insuranceDate">
-                                            <DatePicker className={styles.inputBox} placeholder={preparePlaceholderSelect('Date')} disabled={true} />
+                                            <DatePicker placeholder={preparePlaceholderSelect('Date')} disabled={true} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                         <Form.Item initialValue={convertDateToCalender(insuranceData?.registrationNumber)} label="Registration Number" name="registrationNumber">
-                                            <Input className={styles.inputBox} placeholder={preparePlaceholderText('Registration Number')} disabled={true} />
+                                            <Input placeholder={preparePlaceholderText('Registration Number')} disabled={true} />
                                         </Form.Item>
                                     </Col>
                                 </Row>

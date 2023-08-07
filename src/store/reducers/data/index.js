@@ -9,7 +9,7 @@ import { ProductHierarchy } from './productHierarchy';
 import { HierarchyAttributeMaster } from './hierarchyAttributeMaster';
 import { CriticalityGroup } from './criticalityGroup';
 import { RoleManagement } from './roleManagement';
-import { ManufacturerAdminHierarchy } from './manufacturerAdminHierarchy';
+// import { ManufacturerAdminHierarchy } from './manufacturerAdminHierarchy';
 import { ManufacturerOrgHierarchy } from './manufacturerOrgHierarchy';
 import { ForgotPassword } from './forgotPassword';
 import { ChangePassword } from './changePassword';
@@ -19,6 +19,7 @@ import { QualificationMaster } from './qualificationMaster';
 import { UserManagement } from './userManagement';
 import { UserManagementManufacturer } from './UserManagementManufacturer';
 import { Geo } from './geo';
+import { Sales } from './sales';
 import { DealerManpower } from './dealerManpower';
 import { PartyMaster } from './partyMaster';
 import { TermCondition } from './termsConditions';
@@ -35,6 +36,9 @@ import { FinancialAccounting } from './financialAccounting';
 import { VehiclePriceMaster } from './vehiclePriceMaster';
 import { ManufacturerAdmin } from './ManufacturerAdmin';
 import { ManufacturerOrg } from './ManufacturerOrg';
+import { VehicleReceipt } from './vehicleReceipt';
+import { VehicleModelandTaxChargesCategory } from './VehicleModelTaxChargesCategory';
+import { Report } from './report';
 
 export const data = combineReducers({
     Menu,
@@ -42,7 +46,7 @@ export const data = combineReducers({
     HierarchyAttributeMaster,
     CriticalityGroup,
     RoleManagement,
-    ManufacturerAdminHierarchy,
+    // ManufacturerAdminHierarchy,
     ManufacturerOrgHierarchy,
     ForgotPassword,
     ChangePassword,
@@ -52,6 +56,7 @@ export const data = combineReducers({
     UserManagement,
     UserManagementManufacturer,
     Geo,
+    Sales,
     DealerManpower,
     PartyMaster,
     TermCondition,
@@ -67,5 +72,8 @@ export const data = combineReducers({
     FinancialAccounting,
     ManufacturerAdmin,
     ManufacturerOrg,
+    VehicleReceipt,
     VehiclePriceMaster,
+    VehicleModelandTaxChargesCategory,
+    Report,
 });

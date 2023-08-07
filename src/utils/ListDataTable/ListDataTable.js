@@ -12,6 +12,7 @@ export default function ListDataTable(props) {
     const { tableData, handleButtonClick, addTitle = 'Group', showAddButton = true, noDataMessage = '', addButtonOption = false, styles = '' } = props;
     const noDataExistTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
     const noDataExistMessage = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', addTitle);
+    console.log(addButtonOption);
 
     const noDataInformation = (
         <>
@@ -31,10 +32,10 @@ export default function ListDataTable(props) {
                         description={!tableData?.length ? <span>{noDataMessage || noDataInformation}</span> : <span> No records found.</span>}
                     >
                         {!tableData?.length
-                            ? addButtonOption
-                            : addButtonOption
-                            ? showAddButton && (
-                                  <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleButtonClick}>
+                            ? // ? addButtonOption
+                              // : addButtonOption
+                              showAddButton && (
+                                  <Button icon={<PlusOutlined />} type="primary" danger onClick={handleButtonClick}>
                                       {`Add`}
                                   </Button>
                               )

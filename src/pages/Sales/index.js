@@ -9,4 +9,6 @@ import VehicleReceiptMasterPage from './VehicleReceipt';
 import VehiclePriceMasterPage from './VehiclePriceMaster';
 import VehicleAllotmentMasterPage from './VehicleAllotment';
 
-export { OTFMasterPage, VehicleDetailMasterPage, VehicleReceiptMasterPage, VehiclePriceMasterPage, VehicleAllotmentMasterPage };
+import VehicleRecieptChecklistMaster from './VehicleRecieptMaster';
+import RSMApprovalPage from './RSMApproval';
+export { OTFMasterPage, VehicleDetailMasterPage, VehicleReceiptMasterPage, VehiclePriceMasterPage, VehicleRecieptChecklistMaster, RSMApprovalPage, VehicleAllotmentMasterPage };

@@ -7,11 +7,11 @@ import React from 'react';
 import { Button, Row, Col } from 'antd';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
-import styles from './DrawerFormButton.module.css';
+import styles from 'components/common/Common.module.css';
 
-export const DrawerFormButton = ({ formData, onCloseAction, buttonData, setButtonData, saveButtonName = 'Save', handleButtonClick, isLoadingOnSave }) => {
+const DrawerButtons = ({ formData, onCloseAction, buttonData, setButtonData, saveButtonName = 'Save', handleButtonClick, isLoadingOnSave, multipleForm = false }) => {
     return (
-        <Row gutter={20} className={styles.formFooter}>
+        <Row gutter={20} className={multipleForm ? styles.formFooterNew : ''}>
             <Col xs={24} sm={6} md={6} lg={6} xl={6} className={styles.footerBtnLeft}>
                 {buttonData?.closeBtn && (
                     <Button danger onClick={onCloseAction}>
@@ -58,5 +58,13 @@ export const DrawerFormButton = ({ formData, onCloseAction, buttonData, setButto
                 )}
             </Col>
         </Row>
+    );
+};
+
+export const DrawerFormButton = (props) => {
+    return (
+        <div className={!props.multipleForm ? styles.formFooter : ''}>
+            <DrawerButtons {...props} />
+        </div>
     );
 };

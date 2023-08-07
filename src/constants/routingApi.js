@@ -46,6 +46,7 @@ export const BASE_URL_PARTY_MASTER = BASE_URL_CUSTOMER_MASTER + '/partymaster';
 export const BASE_URL_LESSOR_COMPANY_MASTER = BASE_URL_CUSTOMER_MASTER + '/lessorcompany';
 export const BASE_URL_LESSOR_CUSTOMER_CREATION = BASE_URL_CUSTOMER_MASTER + '/lessorcustomer';
 export const BASE_URL_CUSTOMER_MASTER_LIST = BASE_URL + 'customers/search';
+export const BASE_URL_CUSTOMER_MASTER_CHANGE_HISTORY = BASE_URL + 'customers/changehistory';
 export const BASE_URL_CUSTOMER_MASTER_VEHICLE_LIST = BASE_URL + 'customers/vehicle/search';
 export const BASE_URL_SUPPORTING_DOCUMENT = BASE_URL_CUSTOMER_MASTER + '/document';
 
@@ -135,6 +136,8 @@ export const BASE_URL_CORPORATE_COMPANY_PROFILE = BASE_URL + 'customers/corporat
 export const BASE_URL_OTF = BASE_URL + 'otf/';
 
 export const BASE_URL_REFERRALS = BASE_URL_OTF + 'referrals';
+export const BASE_URL_FINANCE = BASE_URL + 'finance/';
+export const BASE_URL_ACCOUNTS = BASE_URL + 'accounts/';
 
 export const BASE_URL_OTF_REQUEST = BASE_URL_OTF + 'request/';
 export const BASE_URL_OTF_REJECT = BASE_URL_OTF_REQUEST + 'reject';
@@ -167,6 +170,10 @@ export const BASE_URL_DOCUMENT_VIEW_URL = BASE_URL + 'common/document/view';
 export const BASE_URL_SALES_CONSULTANT = BASE_URL + 'users/dealer/employees/lov';
 export const BASE_URL_OTF_CUSTOMER = BASE_URL + 'otf/customerdetails';
 
+export const BASE_URL_INVOICE = BASE_URL + 'invoice/'
+export const BASE_URL_RSM_APPROVAL = BASE_URL_INVOICE + 'rsm'
+export const BASE_URL_RSM_APPROVAL_SEARCH = BASE_URL_RSM_APPROVAL + '/search'
+
 export const BASE_URL_VEHICLE = BASE_URL + 'vehicle/';
 export const BASE_URL_VEHICLE_SEARCH = BASE_URL_VEHICLE + 'search';
 export const BASE_URL_VIEW_VEHICLE_DETAILS = BASE_URL_VEHICLE + 'details';
@@ -189,8 +196,16 @@ export const BASE_URL_FINANCIAL_ACC_TAX_CHARGE_CATEGORY = BASE_URL + 'finance/ta
 export const BASE_URL_FINANCIAL_ACC_TAX_CHARGE_TYPE = BASE_URL + 'finance/tax/chargetypes/lov';
 export const BASE_URL_FINANCIAL_ACC_TAX_CHARGE_CODE = BASE_URL + 'finance/tax/charges/lov';
 
-
 export const BASE_URL_VEHICLE_PRICE_MASTER = BASE_URL_VEHICLE + 'pricemaster';
 export const BASE_URL_VEHICLE_PRICE_MASTER_SEARCH = BASE_URL_VEHICLE + 'pricemaster/search';
 export const BASE_URL_VEHICLE_CUSTOMER_DETAIL = BASE_URL_VEHICLE + 'customerdetails';
 export const BASE_URL_VEHICLE_CUSTOMER_COMMON_DETAIL = BASE_URL + 'customers/commondetails';
+
+export const BASE_URL_VEHICLE_RECEIPT_SEARCH_LIST = BASE_URL_VEHICLE + 'receipts/search';
+export const BASE_URL_SUPPLIER_INVOICE_DETAIL = BASE_URL_VEHICLE + 'receipts/supplierdetails';
+export const BASE_URL_VEHICLE_DETAIL = BASE_URL_VEHICLE + 'receipts';
+export const BASE_URL_REPORTS_GET_EMBEDED_INFO = BASE_URL + 'reports/getembedinfo';
+export const BASE_URL_VEHICLE_MODEL_AND_TAX_CHARGE_CATEGORY = BASE_URL_FINANCE + 'accounts/vehiclemapping';
+export const BASE_URL_VEHICLE_MODEL_AND_TAX_CHARGE_CATEGORY_PRODUCT_MODEL_GROUP = BASE_URL_PRODUCT_HIERARCHY + '/groups';
+export const BASE_URL_VEHICLE_MODEL_AND_TAX_CHARGE_CATEGORY_ACCOUNT_CATEGORY = BASE_URL_FINANCE + 'accounts/categories';
+export const BASE_URL_VEHICLE_MODEL_AND_TAX_CHARGE_CATEGORY_TAX_CHARGES = BASE_URL_FINANCE + 'tax/chargecategory';

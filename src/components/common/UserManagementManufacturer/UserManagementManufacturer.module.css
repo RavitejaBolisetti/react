@@ -34,7 +34,7 @@
     margin: auto;
 }
 
-.userManagementTable :global .ant-table-wrapper .ant-table-tbody > tr > td {
+.userManagementTable :global .ant-table-wrapper .ant-table-tbody>tr>td {
     /* border-top: 1px solid #f0f0f0; */
     border-bottom: none;
     padding: 16px !important;
@@ -55,14 +55,14 @@
     border: none;
 }
 
-.userManagementDrawer :global .ant-collapse > .ant-collapse-item {
+.userManagementDrawer :global .ant-collapse>.ant-collapse-item {
     border: 1px solid rgba(62, 62, 62, 0.1);
     background: rgba(190, 190, 190, 0.1);
     border-radius: 6px;
     margin-top: 10px;
 }
 
-.userManagementDrawer :global .ant-collapse > .ant-collapse-item-active {
+.userManagementDrawer :global .ant-collapse>.ant-collapse-item-active {
     background: #f2f2f2;
 }
 
@@ -71,7 +71,7 @@
     border-top: none;
 }
 
-.userManagementDrawer :global .ant-collapse .ant-collapse-content > .ant-collapse-content-box {
+.userManagementDrawer :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box {
     padding-top: 0;
 }
 
@@ -80,15 +80,15 @@
     border-top: 1px solid #dedede;
 }
 
-.userManagementDrawer :global .ant-collapse .ant-collapse-content > .ant-collapse-content-box .ant-card {
+.userManagementDrawer :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box .ant-card {
     margin-bottom: 10px;
 }
 
-.userManagementDrawer :global .ant-collapse .ant-collapse-content > .ant-collapse-content-box .ant-card:last-child {
+.userManagementDrawer :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box .ant-card:last-child {
     margin-bottom: 0;
 }
 
-.userManagementDrawer :global .ant-collapse .ant-collapse-content > .ant-collapse-content-box .ant-card .ant-card-head {
+.userManagementDrawer :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box .ant-card .ant-card-head {
     font-size: 14px;
     font-weight: 500;
     line-height: 22px;
@@ -98,29 +98,29 @@
     border-bottom: none;
 }
 
-.userManagementDrawer :global .ant-collapse .ant-collapse-content > .ant-collapse-content-box .ant-card .ant-card-head .ant-card-extra a {
+.userManagementDrawer :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box .ant-card .ant-card-head .ant-card-extra a {
     color: #ff3e5b;
     font-size: 12px;
     font-weight: 700;
     line-height: 20px;
 }
 
-.userManagementDrawer :global .ant-collapse .ant-collapse-content > .ant-collapse-content-box .ant-card .ant-card-head .ant-card-extra a:first-child {
+.userManagementDrawer :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box .ant-card .ant-card-head .ant-card-extra a:first-child {
     color: #ff3e5b;
     margin-right: 10px;
 }
 
-.userManagementDrawer :global .ant-collapse .ant-collapse-content > .ant-collapse-content-box .ant-card .ant-card-head .ant-card-extra svg {
+.userManagementDrawer :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box .ant-card .ant-card-head .ant-card-extra svg {
     vertical-align: middle;
     font-size: 16px;
 }
 
-.userManagementDrawer :global .ant-collapse .ant-collapse-content > .ant-collapse-content-box .ant-card .ant-card-head .ant-card-extra a:first-child svg {
+.userManagementDrawer :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box .ant-card .ant-card-head .ant-card-extra a:first-child svg {
     font-size: 11px !important;
     margin-right: 5px;
 }
 
-.userManagementDrawer :global .ant-collapse .ant-collapse-content > .ant-collapse-content-box .ant-card .ant-card-body {
+.userManagementDrawer :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box .ant-card .ant-card-body {
     font-size: 12px;
     font-weight: 400;
     line-height: 22px;
@@ -128,55 +128,63 @@
     color: #747474;
 }
 
-.userManagementDrawer :global .ant-collapse > .ant-collapse-item > .ant-collapse-header {
+.userManagementDrawer :global .ant-collapse>.ant-collapse-item>.ant-collapse-header {
     border-radius: 6px;
 }
 
-.userManagementDrawer :global .ant-collapse > .ant-collapse-item-active > .ant-collapse-header,
-.userManagementDrawer :global .ant-collapse > .ant-collapse-item-active > .ant-collapse-header .ant-collapse-header-text {
+.userManagementDrawer :global .ant-collapse>.ant-collapse-item-active>.ant-collapse-header,
+.userManagementDrawer :global .ant-collapse>.ant-collapse-item-active>.ant-collapse-header .ant-collapse-header-text {
     color: #e31837 !important;
 }
 
-.userManagementDrawer :global .ant-collapse > .ant-collapse-item:last-child,
-.userManagementDrawer :global .ant-collapse > .ant-collapse-item:last-child > .ant-collapse-header {
+.userManagementDrawer :global .ant-collapse>.ant-collapse-item:last-child,
+.userManagementDrawer :global .ant-collapse>.ant-collapse-item:last-child>.ant-collapse-header {
     border-radius: 6px;
 }
 
-.userManagementDrawer :global .ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-collapse-header-text {
+.userManagementDrawer :global .ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-collapse-header-text {
     font-size: 16px;
     font-weight: 600;
     line-height: 22px;
     color: rgba(0, 0, 0, 0.85);
 }
+
 .usermanagementCard {
     background: #bebebe10;
 }
+
 .alignUsermanagementCard {
     display: flex;
     align-items: center;
 }
+
 .crossButton {
     font-size: 20px;
     color: #ff3e5b;
 }
+
 .usermanagementCardTextLeft {
     float: left;
     color: #000000;
     font-weight: 600;
     font-size: 14px;
 }
+
 .usermanagementCardTextRight {
     float: right;
     color: #000000;
     font-weight: 600;
     font-size: 14px;
 }
+
 :global .ant-select-dropdown .ant-select-item-option-state {
     display: none;
 }
+
 .attributeSelet {
     width: 100%;
 }
+
 .dealerBtn {
     border: none;
 }
@@ -242,8 +250,8 @@
     border-top: 1px solid #e6e6e6;
 }
 
-.successDisplay :global .ant-table-wrapper .ant-table-thead > tr > th,
-.successDisplay :global .ant-table-wrapper .ant-table-thead > tr > td {
+.successDisplay :global .ant-table-wrapper .ant-table-thead>tr>th,
+.successDisplay :global .ant-table-wrapper .ant-table-thead>tr>td {
     position: relative;
 
     color: rgba(0, 0, 0, 0.88);
@@ -255,9 +263,9 @@
     border-bottom: none;
 }
 
-.successDisplay :global .ant-table-wrapper .ant-table-thead > tr > th,
-.successDisplay :global .ant-table-wrapper .ant-table-tbody > tr > th,
-.successDisplay :global .ant-table-wrapper .ant-table-tbody > tr > td {
+.successDisplay :global .ant-table-wrapper .ant-table-thead>tr>th,
+.successDisplay :global .ant-table-wrapper .ant-table-tbody>tr>th,
+.successDisplay :global .ant-table-wrapper .ant-table-tbody>tr>td {
     padding: 0;
 
     background: #f4f4f4;
@@ -265,7 +273,7 @@
     border-bottom: none;
 }
 
-.successDisplay :global .ant-table-wrapper .ant-table-thead > tr > th {
+.successDisplay :global .ant-table-wrapper .ant-table-thead>tr>th {
     font-size: 12px;
 
     font-weight: 400;
@@ -275,18 +283,18 @@
     color: #747474;
 }
 
-.successDisplay :global .ant-table-wrapper .ant-table-tbody > tr.ant-table-row:hover > th,
-.successDisplay :global .ant-table-wrapper .ant-table-tbody > tr.ant-table-row:hover > td,
-.successDisplay :global .ant-table-wrapper .ant-table-tbody > tr > th.ant-table-cell-row-hover > td.ant-table-cell-row-hover {
+.successDisplay :global .ant-table-wrapper .ant-table-tbody>tr.ant-table-row:hover>th,
+.successDisplay :global .ant-table-wrapper .ant-table-tbody>tr.ant-table-row:hover>td,
+.successDisplay :global .ant-table-wrapper .ant-table-tbody>tr>th.ant-table-cell-row-hover>td.ant-table-cell-row-hover {
     background: #f4f4f4;
 }
 
-.successDisplay :global .ant-table-wrapper .ant-table-thead > tr > th:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before,
-.successDisplay :global .ant-table-wrapper .ant-table-thead > tr > td:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before {
+.successDisplay :global .ant-table-wrapper .ant-table-thead>tr>th:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before,
+.successDisplay :global .ant-table-wrapper .ant-table-thead>tr>td:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before {
     background-color: transparent;
 }
 
-.successDisplay :global .ant-table-wrapper .ant-table-tbody > tr > td {
+.successDisplay :global .ant-table-wrapper .ant-table-tbody>tr>td {
     font-size: 14px;
 
     font-weight: 500;
@@ -299,22 +307,19 @@
 
     margin-top: 5px;
 }
-.actionbtn {
+
+/* .actionbtn {
     background-color: #ff3e5b;
-
     border-radius: 5px;
-
     padding: 4px 16px;
-
     font-size: 12px;
-
     line-height: 20px;
-
     font-weight: 500;
-}
+} */
 .asterisk {
     color: #ff3e5b;
 }
+
 .manageAccessHeader {
     border-top: 1px solid #dedede;
 
@@ -333,6 +338,6 @@
     line-height: 24px;
 }
 
-.manageAccessHeader p > span {
+.manageAccessHeader p>span {
     color: #ff4d4f;
 }

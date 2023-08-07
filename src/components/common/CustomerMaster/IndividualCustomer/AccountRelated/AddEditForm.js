@@ -51,7 +51,7 @@ const AddEditFormMain = (props) => {
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Form.Item label="Remarks" name="remarks" initialValue={formData?.remarks}>
-                            <TextArea showCount rows={2} maxLength={300} placeholder={preparePlaceholderText('remark')} />
+                            <TextArea showCount maxLength={300} placeholder={preparePlaceholderText('remark')} />
                         </Form.Item>
                     </Col>
                 </Row>

@@ -31,7 +31,7 @@ export default function AdvanceFilter(props) {
                             </Col>
                             <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                                 <div className={styles.selectSearchBg}>
-                                    <Select className={styles.headerSelectField} onChange={handleChange} placeholder="Select Parameter" allowClear>
+                                    <Select onChange={handleChange} placeholder="Select Parameter" allowClear>
                                         {showDealersDataList?.map((item) => (
                                             <Option value={item.dealerId}>{item.dealerNm}</Option>
                                         ))}

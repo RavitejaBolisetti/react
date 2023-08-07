@@ -3,24 +3,24 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect, useState } from 'react';
-import { Col, Input, Form, Row, Select, Switch, Button, Space } from 'antd';
+import React, { useEffect } from 'react';
+import { Col, Input, Form, Row, Select, Switch, Button } from 'antd';
 import { withDrawer } from 'components/withDrawer';
 import { AuthorityDetailPanel } from './HierarchyAuthorityDetail';
 
-import styles from 'components/common/Common.module.css';
 import TreeSelectField from '../TreeSelectField';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
-const { Option } = Select;
+import styles from 'components/common/Common.module.css';
+
 const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
     const { onCloseAction, handleAttributeChange, formActionType, fieldNames, isReadOnly = false, formData, isDataAttributeLoaded, attributeData, manufacturerAdminHierarchyData } = props;
     const { selectedTreeKey, selectedTreeSelectKey, setSelectedTreeSelectKey, handleSelectTreeClick, flatternData } = props;
-    const { isFormBtnActive, setFormBtnActive, detailData } = props;
+    const { isFormBtnActive, setFormBtnActive } = props;
     const { onFinish, onFinishFailed, EDIT_ACTION } = props;
     const { attributeDataOptions, setattributeDataOptions } = props;
     const disabledProps = { disabled: EDIT_ACTION === formActionType ? true : false };
@@ -29,20 +29,24 @@ const AddEditFormMain = (props) => {
 
     useEffect(() => {
         const arr = [];
+        const newOptions = [];
         if (attributeDataOptions && attributeDataOptions?.length) {
             attributeData?.map((element) => {
-                if (attributeData?.status) arr.push(element?.hierarchyAttribueName);
+                if (!element?.status) {
+                    arr.push(element?.hierarchyAttribueName);
+                }
+                return undefined;
             });
 
-            setattributeDataOptions(
-                attributeDataOptions?.map((element) => {
-                    if (arr?.includes(element?.hierarchyAttribueName)) {
-                        return { ...element, disabled: true };
-                    } else {
-                        return element;
-                    }
-                })
-            );
+            attributeDataOptions?.map((element) => {
+                if (arr?.includes(element?.hierarchyAttribueName)) {
+                    newOptions.push({ ...element, disabled: true });
+                } else {
+                    newOptions.push({ ...element, disabled: false });
+                }
+                return undefined;
+            });
+            setattributeDataOptions(newOptions);
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -58,7 +62,8 @@ const AddEditFormMain = (props) => {
     } else if (formActionType === FROM_ACTION_TYPE.SIBLING) {
         treeCodeReadOnly = true;
         const treeCodeData = flatternData.find((i) => i.key === selectedTreeKey[0]);
-        treeCodeId = treeCodeData && treeCodeData?.data?.manufactureAdminParntId;
+        treeCodeId = treeCodeData?.data?.manufactureAdminParntId;
+        if (treeCodeId === 'null') treeCodeId = 'DMS';
     }
 
     useEffect(() => {
@@ -86,7 +91,7 @@ const AddEditFormMain = (props) => {
 
     return (
         <>
-            <Space direction="vertical" size="small" className={styles.accordianContainer}>
+            <div className={styles.drawerBodyNew}>
                 <Form autoComplete="off" form={form} id="myForm" layout="vertical" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -135,7 +140,7 @@ const AddEditFormMain = (props) => {
                         </Col>
                     </Row>
 
-                    <Row gutter={20} className={styles.formFooter}>
+                    <Row gutter={20} className={styles.formFooterNew}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
                             <Button danger onClick={onCloseAction}>
                                 Cancel
@@ -155,7 +160,7 @@ const AddEditFormMain = (props) => {
                         <AuthorityDetailPanel {...props} formActionType={formActionType} handleFormValueChange={handleFormValueChange} />
                     </Col>
                 </Row>
-            </Space>
+            </div>
         </>
     );
 };

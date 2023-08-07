@@ -8,16 +8,16 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { convertDateTime } from 'utils/formatDateTime';
 
-import { tblPrepareColumns } from 'utils/tableCloumn';
+import { tblPrepareColumns } from 'utils/tableColumn';
 import { otfDataActions } from 'store/actions/data/otf/otf';
-
-import ChangeHistoryStyles from './ChangeHistory.module.css';
 
 import { DataTable } from 'utils/dataTable';
 import { withDrawer } from 'components/withDrawer';
 import { BASE_URL_OTF_CHANGE_HISTORY as customURL } from 'constants/routingApi';
 
 import { Row, Button, Col } from 'antd';
+
+import styles from 'components/common/Common.module.css';
 
 const mapStateToProps = (state) => {
     const {
@@ -107,21 +107,23 @@ const ChangeHistoryMain = ({ fetchOTFChangeHistory, onCloseAction, listShowChang
     };
 
     return (
-        <div className={ChangeHistoryStyles.ChangeHistoryDrawer}>
-            <div className={ChangeHistoryStyles.changeHistoryMainContainer}>
-                <h4>OTF NUMBER: {selectedOrderId}</h4>
-                <div className={ChangeHistoryStyles.ChangeHistoryContainer}>
+        <>
+            <Row gutter={20} className={styles.drawerBody}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                    <h4 className={styles.marT0}>OTF NUMBER: {selectedOrderId}</h4>
                     <DataTable {...tableProps} />
-                </div>
-            </div>
-            <Row gutter={20} className={ChangeHistoryStyles.formFooter}>
-                <Col xs={24} sm={8} md={6} lg={4} xl={4}>
-                    <Button danger onClick={onCloseAction}>
-                        Close
-                    </Button>
                 </Col>
             </Row>
-        </div>
+            <div className={styles.formFooter}>
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <Button danger onClick={onCloseAction}>
+                            Close
+                        </Button>
+                    </Col>
+                </Row>
+            </div>
+        </>
     );
 };
 

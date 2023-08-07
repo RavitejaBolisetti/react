@@ -49,8 +49,8 @@ const ViewDetailMain = (props) => {
                                     <Descriptions.Item label="Customer Category-CSI">{checkAndSetDefaultValue(formData?.customerCategoryCsi, isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label="Customer Category-IQS">{checkAndSetDefaultValue(formData?.customerCategoryIqs, isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label="OEM Priviledge Customer">{checkAndSetDefaultValue(formData?.oemPrivilegeCustomer, isLoading, DATA_TYPE?.BOOL?.key)}</Descriptions.Item>
-                                    <Descriptions.Item label="Key Account Vihicle">{checkAndSetDefaultValue(formData?.keyAccountVehicle, isLoading, DATA_TYPE?.BOOL?.key)}</Descriptions.Item>
-                                    <Descriptions.Item label="Theft Vihicle">{checkAndSetDefaultValue(formData?.theftVehicle, isLoading, DATA_TYPE?.BOOL?.key)}</Descriptions.Item>
+                                    <Descriptions.Item label="Key Account Vehicle">{checkAndSetDefaultValue(formData?.keyAccountVehicle, isLoading, DATA_TYPE?.BOOL?.key)}</Descriptions.Item>
+                                    <Descriptions.Item label="Theft Vehicle">{checkAndSetDefaultValue(formData?.theftVehicle, isLoading, DATA_TYPE?.BOOL?.key)}</Descriptions.Item>
                                     <Descriptions.Item label="PDI Done">{checkAndSetDefaultValue(formData?.pdiDone, isLoading, DATA_TYPE?.BOOL?.key)}</Descriptions.Item>
                                     <Descriptions.Item label="Buy Back Vehicle">{checkAndSetDefaultValue(formData?.buyBackVehicle, isLoading, DATA_TYPE?.BOOL?.key)}</Descriptions.Item>
                                     <Descriptions.Item label="Government Vehicle">{checkAndSetDefaultValue(formData?.govtVehicle, isLoading, DATA_TYPE?.BOOL?.key)}</Descriptions.Item>

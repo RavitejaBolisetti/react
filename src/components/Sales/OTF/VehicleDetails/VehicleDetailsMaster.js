@@ -82,11 +82,13 @@ const VehicleDetailsMasterMain = (props) => {
     const [optionsServicesMapping, setoptionsServicesMapping] = useState([]);
     const [openAccordian, setOpenAccordian] = useState('1');
 
-    const [tooltTipText, settooltTipText] = useState();
+    const [toolTipContent, setToolTipContent] = useState();
     const [isReadOnly, setIsReadOnly] = useState();
 
     const [ProductHierarchyDataOptions, setProductHierarchyDataOptions] = useState();
     const [modelData, setmodelData] = useState();
+
+    // const [modelCode, setmodelCode] = useState();
 
     const onSuccessAction = (res) => {
         // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -145,9 +147,9 @@ const VehicleDetailsMasterMain = (props) => {
         if (ProductHierarchyData && isProductHierarchyDataLoaded && userId) {
             setmodelData(ProductHierarchyData['0']);
             form.setFieldsValue({
-                modelCode: ProductHierarchyData['0']['model'] ?? 'NA',
+                modelCode: ProductHierarchyData['0']['prodctCode'] ?? 'NA',
             });
-            settooltTipText(
+            setToolTipContent(
                 <div>
                     <p>
                         Color - <span>{ProductHierarchyData['0']['color'] ?? 'Na'}</span>
@@ -189,12 +191,13 @@ const VehicleDetailsMasterMain = (props) => {
             ];
             VehicleDetailsData?.modelCode && VehicleDetailsData?.modelCode !== '' && fetchProductLovCode({ setIsLoading: ProductLovLoading, userId, onErrorAction, extraparams: LovParams });
             setformData(VehicleDetailsData);
-            setoptionsServiceModified(VehicleDetailsData['optionalServices']);
+            VehicleDetailsData['optionalServices'] && setoptionsServiceModified(VehicleDetailsData['optionalServices']);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [VehicleDetailsData, isDataLoaded]);
 
     const onHandleSelect = (values) => {
+        // setmodelCode(values);
         const LovParams = [
             {
                 key: 'prodctCode',
@@ -210,7 +213,7 @@ const VehicleDetailsMasterMain = (props) => {
         if (!values.hasOwnProperty('vehicleUsageType')) {
             data = { otfNumber: selectedOrderId, OtfId: formData?.id, id: formData?.id, podate: dayjs(formData?.podate?.substr(0, 10)).format('DD/MM/YYYY'), vehicleUsageType: VehicleDetailsData?.vehicleUsageType, model: VehicleDetailsData?.model, modelCode: VehicleDetailsData?.modelCode, discountAmount: VehicleDetailsData?.discountAmount, optionalServices: optionsServicesMapping };
         } else {
-            data = { ...values, otfNumber: selectedOrderId, OtfId: formData?.id, id: formData?.id, optionalServices: optionsServicesMapping };
+            data = { ...values, otfNumber: selectedOrderId, OtfId: formData?.id, id: formData?.id, optionalServices: optionsServicesMapping, model: ProductHierarchyData['0']['prodctShrtName'] };
         }
 
         const onSuccess = (res) => {
@@ -275,7 +278,7 @@ const VehicleDetailsMasterMain = (props) => {
         setoptionsServicesMapping,
         handleFormValueChange,
         onHandleSelect,
-        tooltTipText,
+        toolTipContent,
         isVehicleLovDataLoading,
     };
 
@@ -286,8 +289,8 @@ const VehicleDetailsMasterMain = (props) => {
         styles,
         formData,
         modelData,
-        tooltTipText,
-        settooltTipText,
+        toolTipContent,
+        setToolTipContent,
         typeData,
         isLoading,
     };

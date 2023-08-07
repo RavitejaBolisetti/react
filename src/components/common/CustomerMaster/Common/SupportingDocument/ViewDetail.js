@@ -12,8 +12,6 @@ import styles from 'components/common/Common.module.css';
 
 export const ViewDetail = (props) => {
     const {
-        showGlobalNotification,
-        fetchViewDocument,
         viewListShowLoading,
         userId,
         formActionType: { viewMode },
@@ -21,6 +19,7 @@ export const ViewDetail = (props) => {
         deleteFile,
         downloadFile,
     } = props;
+
     const downloadFileFromButton = (uploadData) => {
         const extraParams = [
             {
@@ -30,15 +29,13 @@ export const ViewDetail = (props) => {
                 name: 'docId',
             },
         ];
-
-        const documentName = uploadData?.documentName;
         downloadFile({ setIsLoading: viewListShowLoading, userId, extraParams });
     };
 
     return (
         <div className={styles.viewDrawerContainer}>
             {supportingData.length > 0 ? (
-                <Card>
+                <>
                     {supportingData.map((uploadData) => {
                         return (
                             <Card
@@ -54,7 +51,7 @@ export const ViewDetail = (props) => {
                             ></Card>
                         );
                     })}
-                </Card>
+                </>
             ) : (
                 viewMode && <div className={styles.viewNoDataFound}>No Supporting Document Available</div>
             )}

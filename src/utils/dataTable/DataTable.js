@@ -11,7 +11,8 @@
 import { useState, useEffect } from 'react';
 import { Table } from 'antd';
 import { InputSkeleton } from 'components/common/Skeleton';
-import { tblSerialNumberColumn } from 'utils/tableCloumn';
+import { tblSerialNumberColumn } from 'utils/tableColumn';
+import styles from 'components/common/Common.module.css';
 
 export default function DataTable({ isLoading, rowSelection = undefined, showSizeChanger = true, dynamicPagination = false, totalRecords = '10', pagination = true, removePagination = false, srl = true, srlTitle = '#', tableColumn, scroll = 'auto', tableData, rowKey = 'index', setPage = () => {} }) {
     useEffect(() => {
@@ -24,7 +25,7 @@ export default function DataTable({ isLoading, rowSelection = undefined, showSiz
     const showTotal = (total) =>
         total && (
             <>
-                Total <span style={{ color: '#0B0B0C' }}> {total} </span> items
+                Total <span style={{ color: '#0b0b0c' }}> {total} </span> items
             </>
         );
 
@@ -57,7 +58,7 @@ export default function DataTable({ isLoading, rowSelection = undefined, showSiz
     });
 
     return (
-        <div style={{ marginBottom: '20px' }}>
+        <div className={styles.marB20}>
             <Table rowSelection={rowSelection} columns={isLoading ? tableSkeletonColumn : tableColumnWithSrl} dataSource={isLoading ? skeletonData : tableData} onChange={handleTableChange} pagination={pagination ? !isLoading && tablePagination : false} rowKey={rowKey} scroll={scroll} />
         </div>
     );

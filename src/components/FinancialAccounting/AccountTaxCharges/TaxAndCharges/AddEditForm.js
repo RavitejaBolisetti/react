@@ -21,7 +21,7 @@ import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/prepareP
 const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
-    const { typeData, onCloseAction, unFilteredAttributeData, documentDescription, setSelectedTreeSelectKey, financialAccount, flatternData, fieldNames, formActionType, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, handleSelectTreeClick, taxChargeData, attributeType, setAttributeType, calType, setCalType, calculationType, setCalculationType } = props;
+    const { typeData, onCloseAction, unFilteredAttributeData, documentDescription, setSelectedTreeSelectKey, financialAccount, flatternData, fieldNames, formActionType, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, handleSelectTreeClick, taxChargeData, attributeType, setAttributeType, setCalType, calculationType, setCalculationType } = props;
     const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed } = props;
 
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
@@ -112,99 +112,104 @@ const AddEditFormMain = (props) => {
     return (
         <>
             <Form autoComplete="off" form={form} layout="vertical" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                <Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item initialValue={attributeCode} name="attributeTypeCode" label="Attribute Type" rules={[validateRequiredSelectField('Attribute Type Code')]}>
-                            {customSelectBox({ data: attributeData, fieldNames: { key: 'hierarchyAttribueCode', value: 'hierarchyAttribueName' }, onChange: handleAttributeChange, loading: !isDataAttributeLoaded, placeholder: preparePlaceholderSelect('Attribute Type Code'), disabled: true })}
-                        </Form.Item>
-                    </Col>
-
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padRight18}>
-                        <Form.Item initialValue={treeCodeId} label="Parent" name="parentCode">
-                            <TreeSelectField {...treeSelectFieldProps} />
-                        </Form.Item>
-                    </Col>
-                </Row>
-
-                <Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item initialValue={formData?.taxChargesTypeCode} label="Tax/Charge Type Code" name="taxChargesTypeCode" rules={[validateRequiredInputField('Tax/Charge Type Code')]}>
-                            <Input maxLength={6} placeholder={preparePlaceholderText('Tax/Charge Type Code')} className={styles.inputBox} disabled={formData?.attributeTypeCode || isReadOnly} />
-                        </Form.Item>
-                    </Col>
-
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form.Item initialValue={formData?.taxChargesTypeDescription} label="Tax/Charge Type Descrption" name="taxChargesTypeDescription" rules={[validateRequiredInputField('Tax/Charge Type Descrption')]}>
-                            <TextArea className={styles.inputBox} placeholder={preparePlaceholderText('Tax/Charge Type Descrption')} />
-                        </Form.Item>
-                    </Col>
-                </Row>
-
-                {attributeType === TAX_CHARGES_TYPE?.TAX_CHARGES_TYPE_CALCULATION?.KEY ? (
-                    <>
+                <Row gutter={20} className={styles.drawerBody}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <Form.Item initialValue={formData?.calculationType} label="Calculation Type" name="calculationType" rules={[validateRequiredInputField('Calculation_Type')]}>
-                                    {customSelectBox({ data: typeData?.CAL_TYPE, placeholder: preparePlaceholderSelect('Calculation Type'), onChange: calTypeFun })}
+                                <Form.Item initialValue={attributeCode} name="attributeTypeCode" label="Attribute Type" rules={[validateRequiredSelectField('Attribute Type Code')]}>
+                                    {customSelectBox({ data: attributeData, fieldNames: { key: 'hierarchyAttribueCode', value: 'hierarchyAttribueName' }, onChange: handleAttributeChange, loading: !isDataAttributeLoaded, placeholder: preparePlaceholderSelect('Attribute Type Code'), disabled: true })}
                                 </Form.Item>
                             </Col>
-                        </Row>
-                        <Row gutter={20}>
-                            {calculationType === TAX_CHARGES_CALCULATION_TYPE?.PERCENTAGE?.KEY ? (
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    <Form.Item initialValue={formData?.percentage} label="Percentage" name="percentage" rules={[validateRequiredInputField('Percentage'), valueOfPer('Percentage')]}>
-                                        <InputNumber placeholder={preparePlaceholderText('Percentage')} className={styles.inputBox} type="number" />
-                                    </Form.Item>
-                                </Col>
-                            ) : calculationType === TAX_CHARGES_CALCULATION_TYPE?.AMOUNT?.KEY ? (
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    <Form.Item initialValue={formData?.rate} label="Rate" name="rate" rules={[validateRequiredInputField('Rate'), validateNumberWithTwoDecimalPlaces('Rate')]}>
-                                        <InputNumber placeholder={preparePlaceholderText('Rate')} className={styles.inputBox} type="number" />
-                                    </Form.Item>
-                                </Col>
-                            ) : null}
-                        </Row>
-                    </>
-                ) : attributeType === TAX_CHARGES_TYPE?.TAX_CHARGES_TYPE_ACCOUNT_AND_DOCUMENT_MAPPING?.KEY ? (
-                    <>
-                        <Row gutter={20}>
+
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <Form.Item initialValue={formData?.documentTypeCode} name="documentTypeCode" label="Document Description" rules={[validateRequiredSelectField('Document Description')]}>
-                                    {customSelectBox({ data: documentDescription, fieldNames: { key: 'id', value: 'documentDescription' }, placeholder: preparePlaceholderSelect('Document Description') })}
+                                <Form.Item initialValue={treeCodeId} label="Parent" name="parentCode">
+                                    <TreeSelectField {...treeSelectFieldProps} />
                                 </Form.Item>
                             </Col>
                         </Row>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <Form.Item initialValue={formData?.financialAccountHeadCode} name="financialAccountHeadCode" label="Financial Account Head" rules={[validateRequiredSelectField('Financial Account Head')]}>
-                                    {customSelectBox({ data: financialAccount, placeholder: preparePlaceholderSelect('Financial Account Head') })}
+                                <Form.Item initialValue={formData?.taxChargesTypeCode} label="Tax/Charge Type Code" name="taxChargesTypeCode" rules={[validateRequiredInputField('Tax/Charge Type Code')]}>
+                                    <Input maxLength={6} placeholder={preparePlaceholderText('Tax/Charge Type Code')} disabled={formData?.attributeTypeCode || isReadOnly} />
+                                </Form.Item>
+                            </Col>
+
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                <Form.Item initialValue={formData?.taxChargesTypeDescription} label="Tax/Charge Type Descrption" name="taxChargesTypeDescription" rules={[validateRequiredInputField('Tax/Charge Type Descrption')]}>
+                                    <TextArea maxLength={300} placeholder={preparePlaceholderText('Tax/Charge Type Descrption')} showCount />
                                 </Form.Item>
                             </Col>
                         </Row>
-                    </>
-                ) : null}
 
-                <Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padLeft10}>
-                        <Form.Item initialValue={formActionType === FROM_ACTION_TYPE.CHILD || formActionType === FROM_ACTION_TYPE.SIBLING ? true : formData?.status ? true : false} label="Status" name="status">
-                            <Switch value={formActionType === FROM_ACTION_TYPE.CHILD || formActionType === FROM_ACTION_TYPE.SIBLING ? true : formData?.status ? true : false} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={formActionType === FROM_ACTION_TYPE.CHILD || formActionType === FROM_ACTION_TYPE.SIBLING ? true : formData?.status === true || null || undefined ? true : false} {...disabledProps} />
-                        </Form.Item>
+                        {attributeType === TAX_CHARGES_TYPE?.TAX_CHARGES_TYPE_CALCULATION?.KEY ? (
+                            <>
+                                <Row gutter={20}>
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                        <Form.Item initialValue={formData?.calculationType} label="Calculation Type" name="calculationType" rules={[validateRequiredInputField('Calculation_Type')]}>
+                                            {customSelectBox({ data: typeData?.CAL_TYPE, placeholder: preparePlaceholderSelect('Calculation Type'), onChange: calTypeFun })}
+                                        </Form.Item>
+                                    </Col>
+                                </Row>
+                                <Row gutter={20}>
+                                    {calculationType === TAX_CHARGES_CALCULATION_TYPE?.PERCENTAGE?.KEY ? (
+                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                            <Form.Item initialValue={formData?.percentage} label="Percentage" name="percentage" rules={[validateRequiredInputField('Percentage'), valueOfPer('Percentage')]}>
+                                                <InputNumber placeholder={preparePlaceholderText('Percentage')} type="number" />
+                                            </Form.Item>
+                                        </Col>
+                                    ) : calculationType === TAX_CHARGES_CALCULATION_TYPE?.AMOUNT?.KEY ? (
+                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                            <Form.Item initialValue={formData?.rate} label="Rate" name="rate" rules={[validateRequiredInputField('Rate'), validateNumberWithTwoDecimalPlaces('Rate')]}>
+                                                <InputNumber placeholder={preparePlaceholderText('Rate')} type="number" />
+                                            </Form.Item>
+                                        </Col>
+                                    ) : null}
+                                </Row>
+                            </>
+                        ) : attributeType === TAX_CHARGES_TYPE?.TAX_CHARGES_TYPE_ACCOUNT_AND_DOCUMENT_MAPPING?.KEY ? (
+                            <>
+                                <Row gutter={20}>
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                        <Form.Item initialValue={formData?.documentTypeCode} name="documentTypeCode" label="Document Description" rules={[validateRequiredSelectField('Document Description')]}>
+                                            {customSelectBox({ data: documentDescription, fieldNames: { key: 'id', value: 'documentDescription' }, placeholder: preparePlaceholderSelect('Document Description') })}
+                                        </Form.Item>
+                                    </Col>
+                                </Row>
+                                <Row gutter={20}>
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                        <Form.Item initialValue={formData?.financialAccountHeadCode} name="financialAccountHeadCode" label="Financial Account Head" rules={[validateRequiredSelectField('Financial Account Head')]}>
+                                            {customSelectBox({ data: financialAccount, placeholder: preparePlaceholderSelect('Financial Account Head') })}
+                                        </Form.Item>
+                                    </Col>
+                                </Row>
+                            </>
+                        ) : null}
+
+                        <Row gutter={20}>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                <Form.Item initialValue={formActionType === FROM_ACTION_TYPE.CHILD || formActionType === FROM_ACTION_TYPE.SIBLING ? true : formData?.status ? true : false} label="Status" name="status">
+                                    <Switch value={formActionType === FROM_ACTION_TYPE.CHILD || formActionType === FROM_ACTION_TYPE.SIBLING ? true : formData?.status ? true : false} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={formActionType === FROM_ACTION_TYPE.CHILD || formActionType === FROM_ACTION_TYPE.SIBLING ? true : formData?.status === true || null || undefined ? true : false} {...disabledProps} />
+                                </Form.Item>
+                            </Col>
+                        </Row>
                     </Col>
                 </Row>
 
-                <Row gutter={20} className={styles.formFooter}>
-                    <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
-                        <Button danger onClick={onCloseAction}>
-                            Cancel
-                        </Button>
-                    </Col>
+                <div className={styles.formFooter}>
+                    <Row gutter={20}>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
+                            <Button danger onClick={onCloseAction}>
+                                Cancel
+                            </Button>
+                        </Col>
 
-                    <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
-                        <Button data-testid="isFormBtnActive" htmlType="submit" danger disabled={!isFormBtnActive}>
-                            Save
-                        </Button>
-                    </Col>
-                </Row>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
+                            <Button data-testid="isFormBtnActive" htmlType="submit" danger disabled={!isFormBtnActive}>
+                                Save
+                            </Button>
+                        </Col>
+                    </Row>
+                </div>
             </Form>
         </>
     );

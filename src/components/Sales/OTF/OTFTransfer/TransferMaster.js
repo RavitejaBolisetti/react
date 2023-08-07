@@ -85,7 +85,7 @@ const TransferMasterBase = (props) => {
         const extraParams = [
             {
                 key: 'locationCode',
-                value: value? value : 'No Data',
+                value: value ? value : 'No Data',
             },
         ];
         fetchSalesConsultant({ setIsLoading: listConsultantShowLoading, extraParams, userId, onErrorAction });

@@ -248,59 +248,27 @@
     justify-content: right;
 }
 
-.actionbtn {
+/* .actionbtn {
     background-color: #ff3e5b;
     border-radius: 5px;
     padding: 4px 16px;
     font-size: 12px;
     line-height: 20px;
     font-weight: 500;
-}
+} */
 
-:global .ant-picker-large {
+/* :global .ant-picker-large {
     padding: 6.5px 11px 6.5px;
     width: 180px;
-}
-
-:global .ant-drawer .ant-drawer-header-title {
-    display: inline-block;
-}
-
-:global .ant-drawer-close {
-    float: right;
-    margin-top: 5px;
-}
-
-/* :global .ant-empty .ant-empty-footer {
-    margin-top: 24px;
 } */
 
-:global .ant-empty-normal {
+/* :global .ant-empty-normal {
     color: #635d5d;
-}
-
-:global .ant-drawer .ant-drawer-header {
-    padding: 16px 20px;
-}
-
-:global .ant-drawer .ant-drawer-title {
-    font-weight: 600;
-    font-size: 18px;
-    line-height: 27px;
-    color: #262626;
-}
-
-:global .ant-drawer .ant-drawer-body {
-    padding: 20px 20px 80px;
-}
-
-/* :global .ant-drawer .ant-drawer-body .ant-input {
-    margin-top: 6px;
 } */
 
-.drawerCriticalityGrp :global .ant-drawer .ant-drawer-body .ant-form-item {
+/* .drawerCriticalityGrp :global .ant-drawer .ant-drawer-body .ant-form-item {
     padding-bottom: 16px;
-}
+} */
 
 .drawerConfigParam :global .ant-drawer-wrapper-body .ant-drawer-body .ant-form-item {
     padding-bottom: 0 !important;
@@ -334,7 +302,7 @@
     font-size: 11px !important;
 }
 
-.drawerFooterButtons button {
+/* .drawerFooterButtons button {
     margin-bottom: 0 !important;
     height: 34px;
 }
@@ -347,7 +315,7 @@
     background-color: #b5b5b6 !important;
     color: #ffffff !important;
     border-color: white !important;
-}
+} */
 
 .viewMode :global(.ant-switch.ant-switch-checked) {
     background: #b5b5b6 !important;
@@ -371,7 +339,6 @@
 
 .viewMode :global input[type='text']:disabled {
     background-color: #ffffff !important;
-
     border-color: transparent !important;
     padding-left: 0px !important;
     font-weight: 700;
@@ -413,36 +380,14 @@
     padding-bottom: 0px !important;
 }
 
-:global .ant-btn-default.ant-btn-dangerous.ant-btn-background-ghost:disabled {
+/* :global .ant-btn-default.ant-btn-dangerous.ant-btn-background-ghost:disabled {
     border: transparent;
-}
-
-:global .ant-drawer-wrapper-body .ant-drawer-footer {
-    box-shadow: 0px -4px 4px rgba(0, 0, 0, 0.15) !important;
-    padding: 10px 20px;
-}
-
-/* :global .ant-drawer-body::-webkit-scrollbar-track,
-:global .ant-drawer-body::-webkit-scrollbar-track {
-    background-color: #ffffff;
-}
-
-:global .ant-drawer-body::-webkit-scrollbar,
-:global .ant-drawer-body::-webkit-scrollbar {
-    width: 5px;
-    background-color: #ffffff;
-}
-
-:global .ant-drawer-body::-webkit-scrollbar-thumb,
-:global .ant-drawer-body::-webkit-scrollbar-thumb {
-    background-color: #C1C1C1;
-    border-radius: 10px;
 } */
 
-:global .ant-drawer .ant-drawer-close {
-    margin-inline-end: 0px;
-    padding-right: 0px;
-}
+/* :global .ant-drawer-wrapper-body .ant-drawer-footer {
+    box-shadow: 0px -4px 4px rgba(0, 0, 0, 0.15) !important;
+    padding: 10px 20px;
+} */
 
 .accordianHeader {
     color: #e31837 !important;
@@ -452,7 +397,3 @@
     font-weight: 600;
     font-size: 16px;
 }
-
-/* .collapseContent :global(.ant-collapse .ant-collapse-content>.ant-collapse-content-box){
-    padding: 2px 16px 16px 16px;
-} */
