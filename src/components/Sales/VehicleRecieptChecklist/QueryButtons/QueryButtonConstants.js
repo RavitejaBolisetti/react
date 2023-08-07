@@ -4,24 +4,22 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 export const QUERY_BUTTONS = {
-    ALL: {
-        title: 'All',
-        key: 'all',
-        intialValue: ['all', true],
-    },
     PENDING: {
+        id: 'pending',
         title: 'Pending',
         key: 'pending',
-        intialValue: ['pending', false],
+        active: true,
     },
     PARTIALLY_COMPLETED: {
+        id: 'partially',
         title: 'Partially Completed',
         key: 'partially',
-        intialValue: ['partially', false],
+        active: false,
     },
     COMPLETED: {
+        id: 'completed',
         title: 'Completed',
         key: 'completed',
-        intialValue: ['completed', false],
+        active: false,
     },
 };

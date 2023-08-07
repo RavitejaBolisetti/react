@@ -13,6 +13,7 @@ import { ViewDetail } from './ViewDetail';
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
 import styles from 'components/common/Common.module.css';
+import dayjs from 'dayjs';
 
 const { Option } = Select;
 
@@ -77,7 +78,7 @@ const AddEditFormMain = (props) => {
         handleButtonClick,
     };
 
-    const dateInitialValue = { initialValue: formattedCalendarDate(formData?.includedOn) };
+    const dateInitialValue = { initialValue: !editMode ? dayjs() : formattedCalendarDate(formData?.includedOn) };
 
     const selectProps = {
         optionFilterProp: 'children',
