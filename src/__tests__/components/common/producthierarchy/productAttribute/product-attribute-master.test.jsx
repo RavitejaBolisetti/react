@@ -57,6 +57,5 @@ describe('ProductAttributeMaster component', () => {
             isVisible={true}
             {...cardAttributeProps}           
         />);
-        screen.debug()
     });
 });

@@ -88,7 +88,5 @@ describe("ChangeHistory Components", () => {
 
         const status = getByRole('columnheader', { name: 'Status', exact: false });
         fireEvent.click(status);
-
-        screen.debug()
     });
 });

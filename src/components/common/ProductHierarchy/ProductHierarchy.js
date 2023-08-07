@@ -396,7 +396,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
 
     return (
         <>
-            <div className={styles.contentHeaderBackground} data-testid="form-data">
+            <div className={styles.contentHeaderBackground}>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={18} lg={18} xl={18}>
                         <Form autoComplete="off" colon={false} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>

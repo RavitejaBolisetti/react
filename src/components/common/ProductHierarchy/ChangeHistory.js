@@ -98,7 +98,7 @@ const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, i
 
     
     return (
-        <div className={styles.changeHistoryContainer} data-testid="table-data">
+        <div className={styles.changeHistoryContainer}>
             <DataTable {...tableProps} />
         </div>
     );

@@ -25,8 +25,6 @@ function FormProductAttributeComp(props) {
         setChangeValue(newFormData);
     };
 
-    console.log('formEdit--->', formEdit)
-
     return (
         <Form form={formEdit ? editForm : attributeForm} id="myForm" data-testid="myForm" autoComplete="off" layout="vertical" onFinish={onAttributeFormFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20}>

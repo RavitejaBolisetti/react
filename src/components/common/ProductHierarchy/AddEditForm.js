@@ -33,9 +33,7 @@ const AddEditFormMain = (props) => {
 
     const disabledProps = { disabled: isReadOnly };
 
-    // const productSKUKey = '63ec10a2-520d-44a4-85f6-f55a1d6911f3';
-
-    const productSKUKey = '3b34cfa7-0f29-4116-a020-7bbcfa6fa6c6'
+    const productSKUKey = '63ec10a2-520d-44a4-85f6-f55a1d6911f3';
 
     let attributeHierarchyFieldValidation = {
         rules: [validateRequiredSelectField('attribute level')],
@@ -65,7 +63,6 @@ const AddEditFormMain = (props) => {
             setShowProductAttribute(false);
         }
         if (formActionType === FROM_ACTION_TYPE.EDIT) {
-            console.log('selectedTreeData?.attributeKey----->', selectedTreeData?.attributeKey);
             setShowProductAttribute(selectedTreeData?.attributeKey === productSKUKey);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -138,7 +135,7 @@ const AddEditFormMain = (props) => {
 
     return (
         <>
-            <Form form={form} id="myForm" autoComplete="off" layout="vertical" onFinish={onFinish} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinishFailed={onFinishFailed} data-testid="form-data">
+            <Form form={form} id="myForm" autoComplete="off" layout="vertical" onFinish={onFinish} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Form.Item initialValue={formData?.attributeKey} name="attributeKey" label="Attribute Level" rules={[validateRequiredSelectField('attribute level')]}>

@@ -169,8 +169,6 @@ describe("AddEditForm Components", () => {
 
         const closeIcon = getByRole("img", { name: 'close', exact: false });
         fireEvent.click(closeIcon);
-
-        screen.debug()
     })
 
     it('should render button', async () => {

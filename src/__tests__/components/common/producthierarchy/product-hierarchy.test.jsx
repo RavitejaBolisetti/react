@@ -160,15 +160,5 @@ describe("Producthierarchy Components", () => {
 
         const plus = getByRole('img', { name: 'plus', exact: false });
         fireEvent.click(plus);
-
-        screen.getByRole("form-data")
-
-        // const inputBox = screen.getByRole('combobox');
-        // fireEvent.change(inputBox, { target: { value: 'DmaTest' } });
-        // expect(screen.getAllByText(/Hierarchy/)).toBeTruthy();
-        // expect(screen.getAllByText(/Select organization hierarchy/)).toBeTruthy();
-        // expect(screen.getAllByText(/Please select hierarchy type to view records./)).toBeTruthy();
-
-        // screen.debug()
     })
 })

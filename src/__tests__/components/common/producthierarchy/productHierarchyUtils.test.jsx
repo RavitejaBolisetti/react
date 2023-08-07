@@ -96,6 +96,5 @@ describe('FindprodctCode component', () => {
 describe('disableParent component', () => {
     it('should render the disableParent components', () => {
         customRender(<DisableParent {...node} />);
-        screen.debug()
     });
 });

@@ -96,15 +96,15 @@ const CardProductAttribute = (props) => {
             style={{
                 backgroundColor: '#BEBEBE1A',
                 marginTop: '12px',
-            }}            
+            }}
         >
             <Row align="middle">
                 <Col xs={colLeft} sm={colLeft} md={colLeft} lg={colLeft} xl={colLeft} xxl={colLeft}>
                     <div>
-                        <Text strong>{props?.code}</Text>
+                        <Text data-testid="code" strong>{props?.code}</Text>
                     </div>
-                    <div data-testid="card-product">
-                        <Text type="secondary">{props?.value}</Text>
+                    <div >
+                        <Text type="secondary" data-testid="secondary">{props?.value}</Text>
                     </div>
                 </Col>
 
@@ -115,21 +115,22 @@ const CardProductAttribute = (props) => {
                                 <>
                                     <Button
                                         type="link"
+                                        data-testid="edit-button"
                                         icon={<FiEdit />}
                                         onClick={() => {
                                             onAttributeEdit(props);
                                         }}
                                         disabled={props?.disabledEdit}
                                     />
-                                    <Button onClick={() => onAttributeDelete(props)} type="link" icon={<FiTrash />} disabled={props?.disabledEdit || (props?.id ? true : false)} />
+                                    <Button data-testid="delete-button" onClick={() => onAttributeDelete(props)} type="link" icon={<FiTrash />} disabled={props?.disabledEdit || (props?.id ? true : false)} />
                                 </>
                             </div>
                         ) : (
                             <div className={styles.cardItemBtn}>
-                                <Button type="link" onClick={onAttributeCancel}>
+                                <Button type="link" data-testid="cancel" onClick={onAttributeCancel}>
                                     Cancel
                                 </Button>
-                                <Button type="link" onClick={onAttributeSave}>
+                                <Button type="link" data-testid="save" onClick={onAttributeSave}>
                                     Save
                                 </Button>
                             </div>

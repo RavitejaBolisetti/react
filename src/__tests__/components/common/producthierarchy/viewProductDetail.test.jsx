@@ -59,6 +59,5 @@ describe('ViewProductDetail component', () => {
         expect(screen.getByText(/Short Description/)).toBeInTheDocument();
         expect(screen.getByText(/Long Description/)).toBeInTheDocument();
         expect(screen.getByText(/Status/)).toBeInTheDocument();
-        screen.debug()
     });
 });
