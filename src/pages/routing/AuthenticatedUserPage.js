@@ -41,8 +41,7 @@ import {
 } from 'pages/common';
 import { TaxChargesPage, TaxChargesCategoryPage } from 'pages/FinancialAccounting';
 
-import { OTFMasterPage, VehicleDetailMasterPage, VehiclePriceMasterPage, VehicleReceiptMasterPage, VehicleRecieptChecklistMaster, OtfSoMappingMasterPage } from 'pages/Sales';
-import { OTFMasterPage, VehicleDetailMasterPage, VehiclePriceMasterPage, VehicleReceiptMasterPage, RSMApprovalPage, VehicleRecieptChecklistMaster } from 'pages/Sales';
+import { OTFMasterPage, VehicleDetailMasterPage, VehiclePriceMasterPage, VehicleReceiptMasterPage, VehicleRecieptChecklistMaster, OtfSoMappingMasterPage, RSMApprovalPage } from 'pages/Sales';
 import * as routing from 'constants/routing';
 import { SplashPage } from 'pages/splash';
 
