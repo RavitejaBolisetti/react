@@ -414,4 +414,11 @@ export const MenuConstant = {
         icon: undefined,
         parentMenuId: 'ADMN',
     },
+
+    [getMenyKey('SACT-04.08')]: {
+        key: 'SACT-04.08',
+        link: routing.ROUTING_VEHICLE_RECEIPT,
+        icon: undefined,
+        parentMenuId: 'SACT-04',
+    },
 };

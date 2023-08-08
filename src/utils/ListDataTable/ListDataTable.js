@@ -9,7 +9,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import { LANGUAGE_EN } from 'language/en';
 
 export default function ListDataTable(props) {
-    const { tableData, handleButtonClick, addTitle = 'Group', showAddButton = true, noDataMessage = '', addButtonOption = false, styles = '' } = props;
+    const { tableData, handleButtonClick, addTitle = 'Record', showAddButton = true, noDataMessage = '', addButtonOption = false, styles = '' } = props;
     const noDataExistTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
     const noDataExistMessage = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', addTitle);
     console.log(addButtonOption);

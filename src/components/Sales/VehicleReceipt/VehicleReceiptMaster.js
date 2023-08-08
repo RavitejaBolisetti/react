@@ -300,7 +300,7 @@ export const VehicleReceiptMasterBase = (props) => {
             setShowDataLoading(true);
 
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+            fetchVehicleReceiptList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
 
             setButtonData({ ...buttonData, formBtnActive: false });
 
