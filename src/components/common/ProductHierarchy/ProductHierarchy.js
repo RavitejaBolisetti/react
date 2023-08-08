@@ -405,8 +405,8 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
                                         <TreeSelectField {...treeSelectFieldProps} />
                                     </Col>
                                     {organizationId && (
-                                        <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                            <Search placeholder="Search" allowClear onChange={onChange} className={`${styles.headerSearchField} ${styles.headerSearchInput}`} />
+                                        <Col xs={24} sm={24} md={10} lg={10} xl={10}>
+                                            <Search placeholder="Search" allowClear onChange={onChange} />
                                         </Col>
                                     )}
                                 </Row>

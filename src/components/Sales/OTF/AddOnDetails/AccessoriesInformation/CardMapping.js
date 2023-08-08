@@ -3,18 +3,18 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect } from 'react';
-import { Card, Row, Col, Typography, Button, Divider, Space } from 'antd';
+import React, { useState } from 'react';
+import { Card, Row, Col, Typography, Button, Space } from 'antd';
 import { FiEdit } from 'react-icons/fi';
 import { BsTrash3 } from 'react-icons/bs';
 
 import style from 'components/common/Common.module.css';
-
 import AddEditForm from './AddEditForm';
 const { Text } = Typography;
+
 const CardMapping = ({ index, AddEditFormProps, handleDelete, element, isEditing, setisEditing }) => {
     const [editCardForm, seteditCardForm] = useState(false);
-    const { accessoryForm, setsearchData, setaddButtonDisabled, addButtonDisabled, showGlobalNotification } = AddEditFormProps;
+    const { accessoryForm, setsearchData, setaddButtonDisabled, addButtonDisabled } = AddEditFormProps;
     const handleEdit = (index) => {
         seteditCardForm(true);
         setisEditing(true);
@@ -41,7 +41,9 @@ const CardMapping = ({ index, AddEditFormProps, handleDelete, element, isEditing
                         </Space>
                         <Row>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                <Text type="secondary" className={style.subSection}>{`Required Quantity: ` + element?.requiredQuantity}</Text>
+                                <Text type="secondary" className={style.subSection}>
+                                    {`Required Quantity: ` + element?.requiredQuantity}
+                                </Text>
                             </Col>
                         </Row>
                     </Col>
@@ -54,9 +56,6 @@ const CardMapping = ({ index, AddEditFormProps, handleDelete, element, isEditing
                                 icon={
                                     <div>
                                         <FiEdit />
-                                        {/* <Text disabled={isEditing || addButtonDisabled?.partDetailsResponses} type={'danger'}>
-                                            Edit
-                                        </Text> */}
                                     </div>
                                 }
                                 onClick={() => handleEdit(index)}

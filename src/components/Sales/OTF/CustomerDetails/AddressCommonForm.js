@@ -9,6 +9,7 @@ import { Col, Input, Form, Row, DatePicker, Checkbox } from 'antd';
 import { disableFutureDate } from 'utils/disableDate';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { dateFormat } from 'utils/formatDateTime';
+import { convertToUpperCase } from 'utils/convertToUpperCase';
 
 import { validateRequiredInputField, validateRequiredSelectField, validateEmailField, validatePincodeField, validateMobileNoField, validatePanField, validateAadhar, validateDrivingLicenseNoWithSpace, validateGSTIN } from 'utils/validation';
 
@@ -92,7 +93,7 @@ export const AddressCommonForm = (props) => {
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name={[formType, 'panNo']} label="PAN" initialValue={formData?.panNo} rules={[validateRequiredInputField('PAN'), validatePanField('PAN')]}>
-                        <Input placeholder={preparePlaceholderText('PAN')} maxLength={10} {...disabledProps} />
+                        <Input placeholder={preparePlaceholderText('PAN')} onInput={convertToUpperCase} maxLength={10} {...disabledProps} />
                     </Form.Item>
                 </Col>
             </Row>
@@ -104,7 +105,7 @@ export const AddressCommonForm = (props) => {
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name={[formType, 'gstin']} label="GSTIN" initialValue={formData?.gstin} rules={[validateGSTIN('GSTIN')]}>
-                        <Input placeholder={preparePlaceholderText('GSTIN')} maxLength={15} {...disabledProps} />
+                        <Input placeholder={preparePlaceholderText('GSTIN')} onInput={convertToUpperCase} maxLength={15} {...disabledProps} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>

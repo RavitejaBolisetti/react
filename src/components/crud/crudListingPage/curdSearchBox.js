@@ -11,6 +11,7 @@ import styles from 'components/common/Common.module.css';
 
 import { TfiReload } from 'react-icons/tfi';
 import { BsDownload } from 'react-icons/bs';
+import { FaHistory } from 'react-icons/fa';
 
 const { Search } = Input;
 const CurdSearchBox = (props) => {
@@ -67,18 +68,18 @@ const CurdSearchBox = (props) => {
                         <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
                             {showChangeHistoryButton && (
                                 <>
-                                    <Button onClick={showChangeHistoryList} type="primary" danger>
+                                    <Button icon={<FaHistory />} onClick={showChangeHistoryList} type="primary">
                                         Change History
                                     </Button>
                                 </>
                             )}
 
                             {advanceFilter && filterString?.advanceFilter && downloadReport && (
-                                <Button icon={<BsDownload />} className={styles.refreshBtn} onClick={handleDownloadReport} danger>
+                                <Button icon={<BsDownload />} onClick={handleDownloadReport} danger>
                                     Download
                                 </Button>
                             )}
-                            <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
+                            <Button icon={<TfiReload />} onClick={handleReferesh} danger />
                             {addButtonOption}
                         </Col>
                     )}

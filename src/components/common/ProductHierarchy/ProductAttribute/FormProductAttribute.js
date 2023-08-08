@@ -4,11 +4,10 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { Input, Form, Col, Row, Button, Select } from 'antd';
+import { Input, Form, Col, Row, Button, Select, Divider } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, validateRequiredSelectField, duplicateProductValidator } from 'utils/validation';
-import styles from 'components/common/Common.module.css';
 
 function FormProductAttribute(props) {
     console.log("props--->", props)
@@ -28,47 +27,39 @@ function FormProductAttribute(props) {
     };
 
     return (
-        <Form form={formEdit ? editForm : attributeForm} id="myForm" data-testid="myForm" autoComplete="off" layout="vertical" onFinish={onAttributeFormFinish} onFinishFailed={onFinishFailed}>
-            <Row gutter={20}>
-                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item label="Attribute Name" name="attributeName" initialValue={props?.code} rules={[validateRequiredSelectField('Attribute Name'), { validator: () => duplicateProductValidator(changeValue, skuAttributes) }]}>
-                        <Select
-                            getPopupContainer={(triggerNode) => triggerNode.parentElement}
-                            placeholder={preparePlaceholderSelect('attribute name')}
-                            style={{
-                                width: '100%',
-                            }}
-                            options={productHierarchyAttributeData}
-                            fieldNames={fieldNames}
-                            allowClear
-                            labelInValue
-                            onChange={onChange}
-                            key={productHierarchyAttributeData?.id}
-                            value={productHierarchyAttributeData?.attributeCode}
-                        />
-                    </Form.Item>
-                </Col>
-                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item labelAlign="left" name="value" label="Attribute Value" rules={[validateRequiredInputField('Attribute Value')]} initialValue={props?.value}>
-                        <Input data-testid="attribute-value" placeholder={preparePlaceholderText('Attribute Value')} className={styles.inputBox} />
-                    </Form.Item>
-                </Col>
+        <>
+            <Divider />
+            <Form form={formEdit ? editForm : attributeForm} id="myForm" autoComplete="off" layout="vertical" onFinish={onAttributeFormFinish} onFinishFailed={onFinishFailed}>
+                <Row gutter={20}>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item label="Attribute Name" name="attributeName" initialValue={props?.code} rules={[validateRequiredSelectField('Attribute Name'), { validator: () => duplicateProductValidator(changeValue, skuAttributes) }]}>
+                            <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} placeholder={preparePlaceholderSelect('attribute name')} options={productHierarchyAttributeData} fieldNames={fieldNames} allowClear labelInValue onChange={onChange} key={productHierarchyAttributeData?.id} value={productHierarchyAttributeData?.attributeCode} />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item labelAlign="left" name="value" label="Attribute Value" rules={[validateRequiredInputField('Attribute Value')]} initialValue={props?.value}>
+                            <Input placeholder={preparePlaceholderText('Attribute Value')} />
+                        </Form.Item>
+                    </Col>
 
-                <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
-                    <Form.Item name="id" initialValue={props?.id} />
-                </Col>
+                    <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
+                        <Form.Item name="id" initialValue={props?.id} />
+                    </Col>
 
-                <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
-                    <Form.Item name="attributeId" initialValue={props?.attributeId} />
-                </Col>
+                    <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
+                        <Form.Item name="attributeId" initialValue={props?.attributeId} />
+                    </Col>
 
-                {isVisible && (
-                    <Button icon={<PlusOutlined />} type="primary" htmlType="submit" style={{ margin: '0 0 0 12px' }}>
-                        Add
-                    </Button>
-                )}
-            </Row>
-        </Form>
+                    {isVisible && (
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                            <Button icon={<PlusOutlined />} type="primary" htmlType="submit">
+                                Add
+                            </Button>
+                        </Col>
+                    )}
+                </Row>
+            </Form>
+        </>
     );
 }
 

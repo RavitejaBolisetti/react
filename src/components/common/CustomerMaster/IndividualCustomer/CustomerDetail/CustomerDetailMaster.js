@@ -79,18 +79,24 @@ const mapDispatchToProps = (dispatch) => ({
 const CustomerDetailMasterBase = (props) => {
     const { setRefreshCustomerList, typeData, fetchCorporateLovList, isCorporateLovDataLoaded, listCorporateLovShowLoading, corporateLovData } = props;
     const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, data, saveData, isLoading, resetData, form, handleFormValueChange, onFinishFailed } = props;
-    const { selectedCustomer, setSelectedCustomer, selectedCustomerId, setSelectedCustomerId } = props;
+    const { selectedCustomer, selectedCustomerId, setSelectedCustomerId } = props;
     const { buttonData, setButtonData, formActionType, setFormActionType, handleButtonClick, NEXT_ACTION } = props;
     const { fetchViewDocument, viewListShowLoading, listSupportingDocumentShowLoading, isSupportingDocumentDataLoaded, supportingData, isViewDataLoaded, viewDocument } = props;
 
     const [showForm, setShowForm] = useState(false);
+    const [status, setStatus] = useState(null);
     const [emptyList, setEmptyList] = useState(true);
+    const [nameChangeHistoryForm] = Form.useForm();
     const [fileList, setFileList] = useState([]);
     const [uploadedFileName, setUploadedFileName] = useState('');
+    const [editedMode, setEditedMode] = useState(false);
     const [uploadedFile, setUploadedFile] = useState();
     const [formData, setFormData] = useState();
     const [uploadImgDocId, setUploadImgDocId] = useState('');
+    const [customerNameList, setCustomerNameList] = useState({});
     const [supportingDataView, setSupportingDataView] = useState();
+    const [isHistoryVisible, setIsHistoryVisible] = useState(false);
+    const [activeKey, setactiveKey] = useState([]);
 
     const [whatsAppConfiguration, setWhatsAppConfiguration] = useState({ contactOverWhatsApp: null, contactOverWhatsAppActive: null, sameMobileNoAsWhatsApp: null, sameMobileNoAsWhatsAppActive: null });
 
@@ -108,10 +114,21 @@ const CustomerDetailMasterBase = (props) => {
     }, [isDataLoaded]);
 
     useEffect(() => {
+        if (data) {
+            console.log('data', data);
+            setCustomerNameList({
+                titleCode: data?.titleCode,
+                firstName: data?.firstName,
+                middleName: data?.middleName,
+                lastName: data?.lastName,
+            });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [data]);
+    useEffect(() => {
         return () => {
             resetData();
         };
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -193,13 +210,22 @@ const CustomerDetailMasterBase = (props) => {
         fetchViewDocument({ setIsLoading: viewListShowLoading, userId, extraParams, supportingDocument });
     };
 
+    const changeHistoryClose = () => {
+        setIsHistoryVisible(false);
+    };
+
+    const onViewHistoryChange = () => {
+        setIsHistoryVisible(true);
+    };
+
     const onFinish = (values) => {
         setFileList([]);
         setEmptyList(false);
         setUploadedFile();
-        const data = { ...values, customerId: selectedCustomer?.customerId, status: true, docId: uploadedFile, documentTypeId: form.getFieldValue('documentTypeId') };
+        const data = { ...values, customerId: selectedCustomer?.customerId, status: true, docId: uploadedFile, documentTypeId: form.getFieldValue('documentTypeId'), titleCode: customerNameList?.titleCode, firstName: customerNameList?.firstName, middleName: customerNameList?.middleName, lastName: customerNameList?.lastName };
 
         const onSuccess = (res) => {
+            setStatus('Approved');
             form.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId });
@@ -208,11 +234,16 @@ const CustomerDetailMasterBase = (props) => {
 
             if (res.data) {
                 handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
-                setSelectedCustomer({ ...res.data, customerName: res?.data?.firstName + ' ' + res?.data?.middleName + ' ' + res?.data?.lastName });
+                // setSelectedCustomer({ ...res.data, customerName: res?.data?.firstName + ' ' + res?.data?.middleName + ' ' + res?.data?.lastName });
                 setSelectedCustomerId(res?.data?.customerId);
+                setCustomerNameList({
+                    titleCode: res?.data?.titleCode,
+                    firstName: res?.data?.firstName,
+                    middleName: res?.data?.middleName,
+                    lastName: res?.data?.lastName,
+                });
             }
         };
-
         const onError = (message) => {
             showGlobalNotification({ message });
         };
@@ -269,6 +300,7 @@ const CustomerDetailMasterBase = (props) => {
         form,
         onFinish,
         saveData,
+        data,
         corporateLovData,
         setFormActionType,
         onFinishFailed,
@@ -279,17 +311,25 @@ const CustomerDetailMasterBase = (props) => {
         setUploadImgDocId,
         uploadImgDocId,
         setButtonData,
+        buttonData,
+        nameChangeHistoryForm,
         typeData,
         formData,
+        setFormData,
         isSupportingDocumentDataLoaded,
         supportingData,
         isViewDataLoaded,
         viewDocument,
         setUploadedFile,
+        uploadedFile,
         downloadFileFromButton,
+        handleFormValueChange,
         deleteFile,
+        editedMode,
+        setEditedMode,
         downloadFileFromList,
         setUploadedFileName,
+        uploadedFileName,
         setFileList,
         fileList,
         setEmptyList,
@@ -300,6 +340,15 @@ const CustomerDetailMasterBase = (props) => {
         whatsAppConfiguration,
         setWhatsAppConfiguration,
         handleFormFieldChange,
+        setCustomerNameList,
+        onViewHistoryChange,
+        changeHistoryClose,
+        isHistoryVisible,
+        customerNameList,
+        status,
+        setStatus,
+        activeKey,
+        setactiveKey,
     };
 
     const viewProps = {

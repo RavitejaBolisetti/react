@@ -22,7 +22,6 @@ export default function AppliedAdvanceFilter(props) {
     const onKeyPressHandler = (e) => {
         e.key === 'Enter' && e.preventDefault();
     };
-
     return (
         <>
             <div className={styles.contentHeaderBackground}>
@@ -41,14 +40,14 @@ export default function AppliedAdvanceFilter(props) {
                                         ]}
                                         validateTrigger={['onSearch']}
                                     >
-                                        <Search placeholder="Search" allowClear className={styles.headerSearchField} onSearch={onSearchHandle} onChange={handleClearInSearch} />
+                                        <Search placeholder="Search" allowClear onSearch={onSearchHandle} onChange={handleClearInSearch} />
                                     </Form.Item>
                                 </Form>
                             </Col>
                             {advanceFilter && (
                                 <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.verticallyCentered}>
                                     <Button
-                                    data-testid="advanceFiltersBtn"
+                                        data-testid="advanceFiltersBtn"
                                         icon={<FilterIcon />}
                                         type="link"
                                         onClick={() => {
@@ -65,18 +64,18 @@ export default function AppliedAdvanceFilter(props) {
                         <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
                             {showChangeHistoryButton && (
                                 <>
-                                    <Button icon={<FaHistory />} onClick={showChangeHistoryList} type="primary">
+                                    <Button icon={<FaHistory />} className={styles.verticallyCentered} onClick={showChangeHistoryList} type="primary">
                                         Change History
                                     </Button>
                                 </>
                             )}
 
                             {advanceFilter && filterString?.advanceFilter && downloadReport && (
-                                <Button data-testid="downloadBtn" icon={<BsDownload />} className={styles.refreshBtn} onClick={handleDownloadReport} danger>
+                                <Button data-testid="downloadBtn" icon={<BsDownload />} onClick={handleDownloadReport} danger>
                                     Download
                                 </Button>
                             )}
-                            <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
+                            <Button icon={<TfiReload />} onClick={handleReferesh} danger />
                             <Button icon={<PlusOutlined />} type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
                                 Add
                             </Button>
@@ -89,20 +88,22 @@ export default function AppliedAdvanceFilter(props) {
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={22} xl={22} className={styles.advanceFilterContainer}>
                                     <div className={styles.advanceFilterTitle}>Applied Advance Filters : </div>
-                                    {extraParams?.map((filter) => {
-                                        return (
-                                            filter?.value && (
-                                                <div className={styles.advanceFilterItem} key={filter?.key}>
-                                                    {filter?.name}
-                                                    {filter?.canRemove && (
-                                                        <span>
-                                                            <RxCross2 onClick={() => removeFilter(filter?.key)} />
-                                                        </span>
-                                                    )}
-                                                </div>
-                                            )
-                                        );
-                                    })}
+                                    {extraParams
+                                        ?.filter((item, index) => index < 5)
+                                        ?.map((filter) => {
+                                            return (
+                                                filter?.value && (
+                                                    <div className={styles.advanceFilterItem} key={filter?.key}>
+                                                        {filter?.name}
+                                                        {filter?.canRemove && (
+                                                            <span>
+                                                                <RxCross2 onClick={() => removeFilter(filter?.key)} />
+                                                            </span>
+                                                        )}
+                                                    </div>
+                                                )
+                                            );
+                                        })}
                                 </Col>
                                 <Col xs={24} sm={2} md={2} lg={2} xl={2} className={styles.advanceFilterClear}>
                                     <Button data-testid="clearBtn" className={styles.clearBtn} onClick={() => handleResetFilter()} danger>
