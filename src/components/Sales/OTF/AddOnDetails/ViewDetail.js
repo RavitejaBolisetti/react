@@ -5,7 +5,6 @@
  */
 import React, { useState } from 'react';
 import { Space, Collapse, Typography, Row, Col, Divider } from 'antd';
-import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 
 import AccessoriesInformationCard from './ViewDetails/AccessoriesInformationCard';
 
@@ -14,6 +13,7 @@ import ShieldForm from './Shield/ShieldForm';
 import AMCForm from './AMC/AMCForm';
 import RSAForm from './RSA/RSAForm';
 import FMSForm from './FMS/FMSForm';
+
 const { Panel } = Collapse;
 const { Text } = Typography;
 

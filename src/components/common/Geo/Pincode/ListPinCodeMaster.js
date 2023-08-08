@@ -543,6 +543,7 @@ const ListPinCodeMasterBase = (props) => {
         setFilteredDistrictData(undefined);
         setFilteredCityData(undefined);
         setFilteredTehsilData(undefined);
+        setFilteredStateData(stateData?.filter((i) => i?.parentKey === defaultCountry));
         advanceFilterForm.resetFields();
     };
 

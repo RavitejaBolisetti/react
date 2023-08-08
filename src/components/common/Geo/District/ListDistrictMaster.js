@@ -329,6 +329,7 @@ export const ListDistrictBase = (props) => {
         setFilterString();
         advanceFilterForm.resetFields();
         setShowDataLoading(false);
+        setFilteredStateData(stateData?.filter((i) => i?.parentKey === defaultCountry));
     };
 
     const onSearchHandle = (value) => {

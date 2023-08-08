@@ -351,13 +351,14 @@ export const ListTehsilBase = (props) => {
     const onAdvanceSearchCloseAction = () => {
         setAdvanceSearchVisible(false);
         advanceFilterForm.resetFields();
-        setFilteredDistrictData([]);
+        // setFilteredDistrictData([]);
     };
 
     const handleResetFilter = () => {
         setFilterString();
         advanceFilterForm.resetFields();
         setShowDataLoading(false);
+        setFilteredStateData(stateData?.filter((i) => i?.parentKey === defaultCountry));
         setFilteredDistrictData(undefined);
     };
 

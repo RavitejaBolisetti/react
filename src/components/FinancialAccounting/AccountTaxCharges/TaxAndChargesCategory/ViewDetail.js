@@ -4,12 +4,13 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Descriptions, Space, Row, Col, Collapse, Divider } from 'antd';
+import { Descriptions, Collapse, Divider } from 'antd';
 import CardProductAttribute from './TaxAndChargesCalculation/CardTaxAndChargeCal';
 import { PlusBorderedIcon, MinusBorderedIcon } from 'Icons';
 const { Panel } = Collapse;
 
 const expandIcon = ({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />);
+
 const ViewDetailBase = ({ formData, styles, parameterType, taxCharges, taxCategory, setDisabledEdit }) => {
     const viewProps = {
         bordered: false,

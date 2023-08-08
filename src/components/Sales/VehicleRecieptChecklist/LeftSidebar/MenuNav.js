@@ -8,11 +8,11 @@ import { Timeline } from 'antd';
 import { BsRecordCircleFill } from 'react-icons/bs';
 import { FaCheckCircle } from 'react-icons/fa';
 import styles from 'components/common/Common.module.css';
-import { VEHICLE_RECIEPT_CHECKLIST } from 'constants/VehicleRecieptCheckListConstants';
+import { VEHICLE_RECIEPT_CHECKLIST_SECTION } from 'constants/VehicleRecieptCheckListSection';
 
 const MenuNav = (props) => {
     const { currentSection, setCurrentSection } = props;
-    const vehicleSectionList = Object.values(VEHICLE_RECIEPT_CHECKLIST);
+    const vehicleSectionList = Object.values(VEHICLE_RECIEPT_CHECKLIST_SECTION);
 
     const onHandle = (key) => {
         setCurrentSection(key);

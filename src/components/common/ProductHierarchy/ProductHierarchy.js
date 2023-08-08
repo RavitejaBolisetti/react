@@ -23,7 +23,7 @@ import TreeSelectField from '../TreeSelectField';
 import { FaHistory } from 'react-icons/fa';
 import { ViewProductDetail } from './ViewProductDetail';
 import { LANGUAGE_EN } from 'language/en';
-import { disableParent } from './ProductHierarchyUtils';
+import { DisableParent } from './ProductHierarchyUtils';
 
 const { Search } = Input;
 
@@ -110,6 +110,8 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     const organizationFieldNames = { title: 'manufactureOrgShrtName', key: 'id', children: 'subManufactureOrg' };
     const fieldNames = { title: 'prodctShrtName', key: 'id', children: 'subProdct' };
 
+    console.log('attributeData------>', formData);
+
     const onCloseAction = () => {
         form.resetFields();
         setIsFormVisible(false);
@@ -150,7 +152,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     }, [userId, organizationId]);
 
     useEffect(() => {
-        manufacturerOrgHierarchyData?.map((i) => disableParent(i));
+        manufacturerOrgHierarchyData?.map((i) => DisableParent(i));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [manufacturerOrgHierarchyData]);
 
@@ -268,6 +270,9 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         placeholder: preparePlaceholderSelect('Organization Hierarchy'),
     };
 
+
+    
+
     const onFinish = (values) => {
         const recordId = formData?.id?.toString() || '';
         const codeToBeSaved = selectedTreeSelectKey || '';
@@ -312,7 +317,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         saveData(requestData);
     };
 
-    const onFinishFailed = (errorInfo) => {};
+    const onFinishFailed = (errorInfo) => { };
 
     const myProps = {
         isTreeViewVisible,
@@ -392,16 +397,16 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         <>
             <div className={styles.contentHeaderBackground}>
                 <Row gutter={20}>
-                    <Col xs={24} sm={24} md={16} lg={16} xl={16}>
-                        <Form autoComplete="off" colon={false} className={styles.masterListSearchForm}>
+                    <Col xs={24} sm={24} md={18} lg={18} xl={18}>
+                        <Form autoComplete="off" colon={false} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                             <Form.Item label={`${title}`} name="code">
                                 <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={10} lg={10} xl={10}>
+                                    <Col xs={24} sm={24} md={12} lg={12} xl={12} data-testid="treeSelectField">
                                         <TreeSelectField {...treeSelectFieldProps} />
                                     </Col>
                                     {organizationId && (
                                         <Col xs={24} sm={24} md={10} lg={10} xl={10}>
-                                            <Search placeholder="Search" allowClear onChange={onChange} className={`${styles.headerSearchField} ${styles.headerSearchInput}`} />
+                                            <Search placeholder="Search" allowClear onChange={onChange} />
                                         </Col>
                                     )}
                                 </Row>
@@ -409,59 +414,89 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
                         </Form>
                     </Col>
                     {organizationId && (
-                        <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.addGroup}>
-                            <Button icon={<FaHistory />} type="primary" className={styles.verticallyCentered} onClick={changeHistoryModelOpen}>
+                        <Col className={styles.buttonHeadingContainer} xs={24} sm={24} md={6} lg={6} xl={6}>
+                            <Button type="primary" className={`${styles.changeHistoryModelOpen} ${styles.floatRight}`} onClick={changeHistoryModelOpen}>
+                                <FaHistory className={styles.buttonIcon} />
                                 Change History
                             </Button>
                         </Col>
+
                     )}
                 </Row>
             </div>
             <Row gutter={20} span={24}>
-                <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol}>
-                    {/* <div className={styles.content}> */}
-                    {productHierarchyData.length <= 0 ? (
-                        <div className={styles.emptyContainer}>
-                            <Empty
-                                image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                imageStyle={{
-                                    height: 60,
-                                }}
-                                description={
-                                    organizationId && !productHierarchyData?.hierarchyAttribute?.length ? (
-                                        <span className={styles.descriptionText}>
-                                            {noDataTitle} <br /> {noDataMessage}
-                                        </span>
-                                    ) : !organizationId ? (
-                                        <span className={styles.descriptionText}>Please select hierarchy type to view records.</span>
-                                    ) : (
-                                        <span className={styles.descriptionText}> No records found.</span>
-                                    )
-                                }
-                            >
-                                {organizationId && (
-                                    <div>
-                                        <Button icon={<PlusOutlined />} type="primary" onClick={handleAdd}>
-                                            Add
-                                        </Button>
-                                    </div>
-                                )}
-                            </Empty>
-                        </div>
-                    ) : (
-                        <LeftPanel {...myProps} />
-                    )}
-                    {/* </div> */}
+                <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol} className={`${styles.borderBottomCorner} ${styles.productHierarchy} ${styles.marT20}`}>
+                    {/* <div className={styles.contentHeaderBackground}>
+                        <Row gutter={20}>
+                            <Col xs={24} sm={24} md={18} lg={18} xl={18}>
+                                <Form autoComplete="off" colon={false} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                                    <Form.Item label={`${title}`} name="code" >
+                                        <Row gutter={20}>
+                                            <Col xs={24} sm={24} md={12} lg={12} xl={12} data-testid="code">
+                                                <TreeSelectField {...treeSelectFieldProps} />
+                                            </Col>
+                                            {organizationId && (
+                                                <Col xs={24} sm={24} md={12} lg={12} xl={12} name="search" data-testid="search">
+                                                    <Search placeholder="Search"  allowClear onChange={onChange} className={styles.headerSearchField} />
+                                                </Col>
+                                            )}
+                                        </Row>
+                                    </Form.Item>
+                                </Form>
+                            </Col>
+                            {organizationId && (
+                                <Col className={styles.buttonHeadingContainer} xs={24} sm={24} md={6} lg={6} xl={6} data-testid="change-history">
+                                    <Button data-testid="button" type="primary" className={`${styles.changeHistoryModelOpen} ${styles.floatRight}`} onClick={changeHistoryModelOpen}>
+                                        <FaHistory className={styles.buttonIcon} />
+                                        Change History
+                                    </Button>
+                                </Col>
+                            )}
+                        </Row>
+                    </div> */}
+                    <div className={styles.content}>
+                        {productHierarchyData.length <= 0 ? (
+                            <div className={styles.emptyContainer}>
+                                <Empty
+                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                    imageStyle={{
+                                        height: 60,
+                                    }}
+                                    description={
+                                        organizationId && !productHierarchyData?.hierarchyAttribute?.length ? (
+                                            <span className={styles.descriptionText}>
+                                                {noDataTitle} <br /> {noDataMessage}
+                                            </span>
+                                        ) : !organizationId ? (
+                                            <span className={styles.descriptionText} >Please select hierarchy type to view records.</span>
+                                        ) : (
+                                            <span className={styles.descriptionText}> No records found.</span>
+                                        )
+                                    }
+                                >
+                                    {organizationId && (
+                                        <div>
+                                            <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" onClick={handleAdd}>
+                                                Add
+                                            </Button>
+                                        </div>
+                                    )}
+                                </Empty>
+                            </div>
+                        ) : (
+                            <LeftPanel {...myProps} />
+                        )}
+                    </div>
                 </Col>
 
                 {productHierarchyData.length > 0 && (
-                    <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol}>
+                    <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol} className={styles.pad0}>
                         {isCollapsableView ? <></> : null}
 
                         {selectedTreeData && selectedTreeData?.id ? (
                             <>
                                 <ViewProductDetail {...viewProps} />
-                                <div className={styles.viewContainerFooter}>
+                                <div className={styles.hyrbuttonContainer}>
                                     <HierarchyFormButton {...viewProps} />
                                 </div>
                             </>

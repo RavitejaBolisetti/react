@@ -5,8 +5,6 @@
  */
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { LANGUAGE_EN } from 'language/en';
-
 import { bindActionCreators } from 'redux';
 import { Row, Col, Form } from 'antd';
 

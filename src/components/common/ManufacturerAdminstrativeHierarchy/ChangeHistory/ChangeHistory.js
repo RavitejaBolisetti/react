@@ -102,7 +102,7 @@ const ChangeHistoryMain = (props) => {
         isLoading: activeKey === isAdministrative ? isAdminHierarchyHistoryLoading : isHistoryOrgHierarchyLoading,
         tableColumn: activeKey === isAdministrative ? tableColumnAdmin : tableColumnAuthority,
         tableData: activeKey === isAdministrative ? ChangeHistoryAdminData : ChangeHistoryOrgData,
-        scroll: { x: 1600, y: 'calc(100vh - 270px)' },
+        scroll: { x: 1600, y: 'calc(100vh - 312px)' },
     };
 
     const handleTabChange = (key) => {
@@ -110,31 +110,31 @@ const ChangeHistoryMain = (props) => {
     };
 
     return (
-        <div className={styles.changeHistoryContainer}>
-            <Row>
-                <Col className={styles.changeHistoryToggleBtn}>
-                    {Object.values(MANUFACTURER_HIERARCHY_TYPE)?.map((item) => {
-                        return (
-                            <Button onClick={() => handleTabChange(item?.key)} type={activeKey === item?.key ? 'primary' : 'link'}>
-                                {item?.title}
-                            </Button>
-                        );
-                    })}
-                </Col>
-            </Row>
-            <Row>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+        <>
+            <Row gutter={20} className={styles.drawerBody}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                    <div className={styles.changeHistoryToggleBtn}>
+                        {Object.values(MANUFACTURER_HIERARCHY_TYPE)?.map((item) => {
+                            return (
+                                <Button onClick={() => handleTabChange(item?.key)} type={activeKey === item?.key ? 'primary' : 'link'}>
+                                    {item?.title}
+                                </Button>
+                            );
+                        })}
+                    </div>
                     <DataTable {...tableProps} />
                 </Col>
             </Row>
-            <Row gutter={20} className={styles.formFooter}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Button danger onClick={onCloseAction}>
-                        Close
-                    </Button>
-                </Col>
-            </Row>
-        </div>
+            <div className={styles.formFooter}>
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <Button danger onClick={onCloseAction}>
+                            Close
+                        </Button>
+                    </Col>
+                </Row>
+            </div>
+        </>
     );
 };
 
