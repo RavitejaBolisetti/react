@@ -5,18 +5,21 @@
  */
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { Row, Col, Form } from 'antd';
+import { LANGUAGE_EN } from 'language/en';
 
-import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
-import { vehicleDetailDocumentDataActions } from 'store/actions/data/vehicle/vehicleDetailDocument';
+import { bindActionCreators } from 'redux';
+import { Row, Col, Form, Card } from 'antd';
+
+import { ChecklistSupportingDocumentdataActions } from 'store/actions/data/VehicleReceiptCheckList/SupportingDocument';
 import { documentViewDataActions } from 'store/actions/data/customerMaster/documentView';
 import { showGlobalNotification } from 'store/actions/notification';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
+
 import { VehicleCheckListbutton } from '../VehicleRecieptFormButton';
 
 import AddEditForm from './AddEditForm';
+import { ViewDetail } from './ViewDetail';
 
 import styles from 'components/common/Common.module.css';
 
@@ -25,8 +28,8 @@ const mapStateToProps = (state) => {
         auth: { userId, accessToken, token },
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
-            Vehicle: {
-                VehicleDetailDocument: { isLoaded: isDataLoaded = false, isLoading, data: documentData },
+            VehicleReceiptChecklist: {
+                SupportingDocument: { isLoaded: isDataLoaded = false, isLoading, data: supportingData },
             },
             CustomerMaster: {
                 ViewDocument: { isLoaded: isViewDataLoaded = false, data: viewDocument },
@@ -41,7 +44,7 @@ const mapStateToProps = (state) => {
         typeData: typeData && typeData[PARAM_MASTER.CUST_FILES.id],
         isDataLoaded,
         isLoading,
-        documentData,
+        supportingData,
         isViewDataLoaded,
         viewDocument,
     };
@@ -52,14 +55,16 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchList: vehicleDetailDocumentDataActions.fetchList,
-            saveData: vehicleDetailDocumentDataActions.saveData,
-            viewListShowLoading: vehicleDetailDocumentDataActions.listShowLoading,
-            resetData: vehicleDetailDocumentDataActions.reset,
-            uploadDocumentFile: supportingDocumentDataActions.uploadFile,
             fetchViewDocument: documentViewDataActions.fetchList,
+            viewListShowLoading: documentViewDataActions.listShowLoading,
             resetViewData: documentViewDataActions.reset,
-            listShowLoading: supportingDocumentDataActions.listShowLoading,
+
+            fetchList: ChecklistSupportingDocumentdataActions.fetchList,
+            saveData: ChecklistSupportingDocumentdataActions.saveData,
+            uploadDocumentFile: ChecklistSupportingDocumentdataActions.uploadFile,
+            downloadFile: ChecklistSupportingDocumentdataActions.downloadFile,
+            listShowLoading: ChecklistSupportingDocumentdataActions.listShowLoading,
+            resetData: ChecklistSupportingDocumentdataActions.resetData,
 
             showGlobalNotification,
         },
@@ -68,101 +73,95 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const SupportingDocumentBase = (props) => {
-    const { isViewDataLoaded, uploadDocumentFile, accessToken, token, onFinishFailed, form, setIsFormVisible } = props;
+    const { isViewDataLoaded, uploadDocumentFile, accessToken, token, onFinishFailed, form } = props;
 
-    const { userId, selectedRecordId, showGlobalNotification, section, listShowLoading, typeData, saveData, fetchList, documentData, fetchViewDocument, resetData, resetViewData } = props;
+    const { userId, showGlobalNotification, section, listShowLoading, typeData, saveData, fetchList, supportingData, fetchViewDocument, setIsFormVisible } = props;
     const { buttonData, setButtonData, formActionType, handleFormValueChange } = props;
-    const { viewDocument, viewListShowLoading } = props;
+    const { selectedCustomerId, viewDocument, viewListShowLoading, downloadFile } = props;
+
+    const { checklistNumber = 'CHK169108935' } = props;
 
     const [uploadedFile, setUploadedFile] = useState();
+    const [uploadedFileList, setUploadedFileList] = useState();
     const [emptyList, setEmptyList] = useState(true);
+
+    const [supportingDataView, setSupportingDataView] = useState();
     const [fileList, setFileList] = useState([]);
-    const [supportingDocs, setSupportingDocs] = useState([]);
     const [uploadedFileName, setUploadedFileName] = useState('');
-    const [documentTypeRule, setDocumentTypeRule] = useState([]);
-    const [documentTitleRule, setDocumentTitleRule] = useState([]);
+    const [payload, setPayload] = useState([]);
+    const [mandatoryFields, setMandatoryFields] = useState(false);
+
+    const supportedFileTypes = ['image/png', 'image/jpg', 'image/jpeg', 'application/pdf'];
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
-    useEffect(() => {
-        return () => {
-            resetData();
-            resetViewData();
-        };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
     const extraParams = [
         {
-            key: 'vin',
-            value: selectedRecordId,
+            key: 'checklistNumber',
+            value: checklistNumber ?? 'CHK169108935',
         },
     ];
 
     useEffect(() => {
-        if (userId) {
+        if (!formActionType?.addMode && checklistNumber) {
             fetchList({ setIsLoading: listShowLoading, userId, extraParams });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId]);
+    }, [userId, checklistNumber]);
 
     useEffect(() => {
-        if (viewDocument && isViewDataLoaded) {
-            let a = document.createElement('a');
-            a.href = `data:image/png;base64,${viewDocument?.base64}`;
-            a.download = viewDocument?.fileName;
-            a.click();
+        if (fileList.length === 0) {
+            setMandatoryFields(false);
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isViewDataLoaded, viewDocument]);
+        uploadedFile && setPayload([...payload, { customerId: selectedCustomerId, status: true, docId: uploadedFile, documentTypeId: form.getFieldValue('documentTypeId'), id: '', documentName: form.getFieldValue('documentName') }]);
 
-    const downloadFileFromButton = (uploadData) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Your download will start soon' });
-        const extraParams = [
-            {
-                key: 'docId',
-                title: 'docId',
-                value: uploadData?.documentId,
-                name: 'docId',
-            },
-        ];
-        const supportingDocument = uploadData?.documentName;
-        fetchViewDocument({ setIsLoading: viewListShowLoading, userId, extraParams, supportingDocument });
+        uploadedFile && form.resetFields();
+
+        return () => {
+            setUploadedFile(undefined);
+        };
+    }, [fileList]);
+
+    const onRemove = (file) => {
+        const index = payload.findIndex((payload) => payload.docId === file.response.docId);
+        payload.splice(index, 1);
     };
 
-    const downloadFileFromList = (info) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Your download will start soon' });
-        const extraParams = [
-            {
-                key: 'docId',
-                title: 'docId',
-                value: info?.response?.docId,
-                name: 'docId',
-            },
-        ];
-        const supportingDocument = uploadedFileName;
-        fetchViewDocument({ setIsLoading: viewListShowLoading, userId, extraParams, supportingDocument });
+    const deleteFile = (uploadData) => {
+        const data = { customerId: uploadData?.customerId, status: false, docId: uploadData?.docId, documentTypeId: uploadData?.documentType, id: uploadData?.id, documentName: uploadData?.documentName };
+        const onSuccess = (res) => {
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'File deleted Successfully' });
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams });
+        };
+
+        const onError = (message) => {
+            showGlobalNotification({ message });
+        };
+        const requestData = {
+            data: data,
+            method: 'post',
+            setIsLoading: listShowLoading,
+            userId,
+            onError,
+            onSuccess,
+        };
+
+        saveData(requestData);
     };
 
-    const deleteFileFromList = (info) => {
-        const index = supportingDocs?.findIndex((el) => el?.documentId === info?.response?.docId);
-        supportingDocs.splice(index, 1);
-    };
+    const onFinish = () => {
+        const title = LANGUAGE_EN.GENERAL.CUSTOMER_UPDATE.TITLE;
+        const message = LANGUAGE_EN.GENERAL.CUSTOMER_UPDATE.MESSAGE;
 
-    const onFinish = (values) => {
-        const data = { vehicleIdentificationNumber: selectedRecordId, supportingDocuments: supportingDocs, technicalDocuments: null };
-        // const title = LANGUAGE_EN.GENERAL.CUSTOMER_UPDATE.TITLE;
-        // const message = LANGUAGE_EN.GENERAL.CUSTOMER_UPDATE.MESSAGE;
-
-        if (supportingDocs.length) {
+        if (fileList.length > 0) {
             const onSuccess = (res) => {
                 setFileList([]);
                 setEmptyList(false);
                 setUploadedFile();
                 form.resetFields();
-                showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+                showGlobalNotification({ notificationType: 'success', title, message });
 
                 fetchList({ setIsLoading: listShowLoading, userId, extraParams });
                 setIsFormVisible(false);
@@ -171,9 +170,10 @@ const SupportingDocumentBase = (props) => {
             const onError = (message) => {
                 showGlobalNotification({ message });
             };
-
+            console.log('payload', payload);
+            return;
             const requestData = {
-                data: data,
+                data: payload,
                 method: 'post',
                 setIsLoading: listShowLoading,
                 userId,
@@ -182,9 +182,8 @@ const SupportingDocumentBase = (props) => {
             };
 
             saveData(requestData);
-            setSupportingDocs([]);
         } else {
-            // showGlobalNotification({ notificationType: 'success', title, message });
+            showGlobalNotification({ notificationType: 'success', title, message });
             setFileList([]);
             setEmptyList(false);
             setUploadedFile();
@@ -194,32 +193,41 @@ const SupportingDocumentBase = (props) => {
     };
 
     const viewProps = {
-        downloadFileFromButton,
         isViewDataLoaded,
-        documentData,
+        supportingData,
+        supportingDataView,
+        setSupportingDataView,
+        deleteFile,
+
         viewDocument,
         showGlobalNotification,
         formActionType,
         listShowLoading,
+        saveData,
         userId,
+        fetchViewDocument,
+        viewListShowLoading,
+        downloadFile,
     };
 
     const formProps = {
         ...props,
-        ...viewProps,
+        onRemove,
         typeData,
         userId,
         accessToken,
         token,
+        saveData,
         onFinish,
+        uploadedFileName,
         setUploadedFileName,
 
         listShowLoading,
         showGlobalNotification,
         viewDocument,
-        downloadFileFromButton,
-        downloadFileFromList,
-        deleteFileFromList,
+        downloadFile,
+        // downloadFileFromButton,
+        viewListShowLoading,
 
         ADD_ACTION,
         EDIT_ACTION,
@@ -234,12 +242,14 @@ const SupportingDocumentBase = (props) => {
         setEmptyList,
         fileList,
         setFileList,
-        supportingDocs,
-        setSupportingDocs,
-        documentTypeRule,
-        setDocumentTypeRule,
-        documentTitleRule,
-        setDocumentTitleRule,
+        formActionType,
+        supportedFileTypes,
+        isReplaceEnabled: false,
+        uploadedFileList,
+        setUploadedFileList,
+        mandatoryFields,
+        setMandatoryFields,
+        supportingDocs: true,
     };
 
     const myProps = {
@@ -251,14 +261,16 @@ const SupportingDocumentBase = (props) => {
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <h2>{section?.title}</h2>
-                    {/* {formActionType?.viewMode ? (
-                        <ViewSupportingDocDetail {...viewProps} />
-                    ) : (
-                        <> */}
-                    <AddEditForm {...formProps} />
-                    {/* <ViewSupportingDocDetail {...viewProps} /> */}
-                    {/* </>
-                    )} */}
+                    <Card>
+                        {formActionType?.viewMode ? (
+                            <ViewDetail {...viewProps} />
+                        ) : (
+                            <>
+                                <AddEditForm {...formProps} />
+                                <ViewDetail {...viewProps} />
+                            </>
+                        )}
+                    </Card>
                 </Col>
             </Row>
             <Row>
@@ -270,4 +282,5 @@ const SupportingDocumentBase = (props) => {
     );
 };
 
-export const SupportingDocumentMaster = connect(mapStateToProps, mapDispatchToProps)(SupportingDocumentBase);
+const SupportingDocumentMaster = connect(mapStateToProps, mapDispatchToProps)(SupportingDocumentBase);
+export default SupportingDocumentMaster;

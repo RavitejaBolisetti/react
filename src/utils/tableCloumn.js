@@ -5,6 +5,7 @@
  */
 import { Button, Space, Tag } from 'antd';
 import { FiEdit, FiEye, FiTrash } from 'react-icons/fi';
+import { PlusOutlined } from '@ant-design/icons';
 
 import { DEFAULT_PAGE_SIZE } from 'constants/constants';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
@@ -66,7 +67,7 @@ export const tblStatusColumn = ({ styles, width = '15%', fixed = '' }) => {
     };
 };
 
-export const tblActionColumn = ({ styles, handleButtonClick, width = '10%', fixed = '', EditIcon = true, EyeIcon = true, DeleteIcon = false }) => {
+export const tblActionColumn = ({ styles, handleButtonClick, width = '10%', fixed = '', EditIcon = true, EyeIcon = true, DeleteIcon = false, AddIcon = false }) => {
     return {
         title: 'Action',
         dataIndex: '',
@@ -86,6 +87,8 @@ export const tblActionColumn = ({ styles, handleButtonClick, width = '10%', fixe
                     </Button>
                 )}
                 {DeleteIcon && !record?.id && <Button data-testid="delete" className={styles.tableIcons} aria-label="fa-trash" icon={<FiTrash />} onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.DELETE, record, index })} />}
+
+                {AddIcon && <Button data-testid="add" className={styles.tableIcons} aria-label="fa-Plus" icon={<PlusOutlined />} onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD, record, index })} />}
             </Space>,
         ],
     };

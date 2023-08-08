@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
+import { tblPrepareColumns, tblActionColumn } from 'utils/tableCloumn';
 import styles from 'components/common/Common.module.css';
 
 export const tableColumn = ({ handleButtonClick, page, pageSize, actionButtonVisibility }) => {
@@ -16,12 +16,6 @@ export const tableColumn = ({ handleButtonClick, page, pageSize, actionButtonVis
         tblPrepareColumns({
             title: 'Receipt Date',
             dataIndex: 'receiptDate',
-            width: '14%',
-        }),
-
-        tblPrepareColumns({
-            title: 'Customer Name',
-            dataIndex: 'customerName',
             width: '14%',
         }),
 

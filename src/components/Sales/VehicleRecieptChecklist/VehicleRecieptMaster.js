@@ -17,7 +17,6 @@ import { ListDataTable } from 'utils/ListDataTable';
 import { VehicleRecieptMasterMainContainer } from './VehicleRecieptMasterMainContainer';
 import { AdvancedSearch } from './AdvancedSearch';
 import { showGlobalNotification } from 'store/actions/notification';
-import { vehicleDetailDataActions } from 'store/actions/data/vehicle/vehicleDetail';
 
 import { VEHICLE_CHECKLIST_STATUS } from 'constants/VehicleRecieptChecklistStatus';
 import { VEHICLE_RECIEPT_CHECKLIST_SECTION } from 'constants/VehicleRecieptCheckListSection';
@@ -29,14 +28,14 @@ import { LANGUAGE_EN } from 'language/en';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { FilterIcon } from 'Icons';
 import { QueryButtons, QUERY_BUTTONS_CONSTANTS } from './QueryButtons';
+import { vehicleReceiptChecklistdataActions } from 'store/actions/data/VehicleReceiptCheckList/VehicleReceiptChecklistMain';
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ConfigurableParameterEditing: { filteredListData: typeData = [] },
-            Vehicle: {
-                VehicleDetail: { data, filter: filterString },
+            VehicleReceiptChecklist: {
+                VehicleReceiptMain: { data, filter: filterString },
             },
         },
     } = state;
@@ -45,7 +44,6 @@ const mapStateToProps = (state) => {
 
     let returnValue = {
         userId,
-        typeData: typeData[PARAM_MASTER.VH_RECEIT_SER.id],
         isDataLoaded: true,
         data: data?.vehicleSearch,
         totalRecords: data?.totalRecords || [],
@@ -63,11 +61,11 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchList: vehicleDetailDataActions.fetchList,
-            fetchDetail: vehicleDetailDataActions.fetchDetail,
-            listShowLoading: vehicleDetailDataActions.listShowLoading,
-            setFilterString: vehicleDetailDataActions.setFilter,
-            resetData: vehicleDetailDataActions.reset,
+            fetchList: vehicleReceiptChecklistdataActions.fetchList,
+            fetchDetail: vehicleReceiptChecklistdataActions.fetchDetail,
+            listShowLoading: vehicleReceiptChecklistdataActions.listShowLoading,
+            setFilterString: vehicleReceiptChecklistdataActions.setFilter,
+            resetData: vehicleReceiptChecklistdataActions.reset,
             showGlobalNotification,
         },
         dispatch
@@ -139,8 +137,19 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         setShowDataLoading(false);
     };
     const handleButtonQuery = (buttonName) => {
-        // setbuttonType(buttonName);
-        switch (buttonName) {
+        setbuttonType(buttonName?.key);
+
+        Object.values(QUERY_BUTTONS_CONSTANTS)?.map((item, index) => {
+            if (item?.id !== buttonName?.id) {
+                item['active'] = false;
+            } else {
+                item['active'] = true;
+            }
+        });
+
+        const buttonkey = buttonName?.key;
+
+        switch (buttonkey) {
             case 'pending': {
                 setactionButtonVisibility({ EditIcon: false, EyeIcon: false, DeleteIcon: false, AddIcon: true });
                 break;
@@ -162,9 +171,9 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
     const extraParams = useMemo(() => {
         return [
             {
-                key: 'searchType',
-                title: 'Type',
-                value: filterString?.searchType,
+                key: 'checklistStatus',
+                title: 'checklistStatus',
+                value: buttonType,
                 name: typeData?.find((i) => i?.key === filterString?.searchType)?.value,
                 canRemove: false,
                 filter: true,
@@ -190,14 +199,6 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
                 title: 'Reciept To Date',
                 value: filterString?.receipttoDate,
                 name: filterString?.receipttoDate,
-                canRemove: true,
-                filter: true,
-            },
-            {
-                key: 'status',
-                title: 'Status',
-                value: filterString?.status,
-                name: vehicleDetailStatusList?.find((i) => i?.title === filterString?.status)?.desc,
                 canRemove: true,
                 filter: true,
             },
@@ -235,7 +236,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, page]);
+    }, [filterString, page, buttonType]);
 
     useEffect(() => {
         if (userId) {
@@ -419,7 +420,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         from: listFilterForm,
         onFinish,
         onFinishFailed,
-        title: <QueryButtons items={QUERY_BUTTONS_CONSTANTS} handleButtonQuery={handleButtonQuery} />,
+        title: <QueryButtons items={QUERY_BUTTONS_CONSTANTS} onClick={handleButtonQuery} />,
         data,
         typeData,
         otfSearchRules,
