@@ -109,10 +109,6 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     const [disabledEdit, setDisabledEdit] = useState(false);
     const organizationFieldNames = { title: 'manufactureOrgShrtName', key: 'id', children: 'subManufactureOrg' };
     const fieldNames = { title: 'prodctShrtName', key: 'id', children: 'subProdct' };
-
-
-    console.log("skulist----->", productHierarchyData)
-
     const onCloseAction = () => {
         form.resetFields();
         setIsFormVisible(false);
@@ -272,7 +268,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     };
 
 
-    console.log("treeSelectFieldProps====>", treeSelectFieldProps);
+    
 
     const onFinish = (values) => {
         const recordId = formData?.id?.toString() || '';

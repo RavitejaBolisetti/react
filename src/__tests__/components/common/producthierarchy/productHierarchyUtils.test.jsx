@@ -1,23 +1,3 @@
-// import '@testing-library/jest-dom/extend-expect';
-// import customRender from '@utils/test-utils';
-// import { screen } from '@testing-library/react';
-// import { ProductHierarchyUtils } from '@components/common/ProductHierarchy/ProductHierarchyUtils';
-
-
-
-// describe('productHierarchyUtils component', () => {
-//     it('should render the productHierarchyUtils components', () => {
-//         const leftSideBar = customRender(<ProductHierarchyUtils isVisible={true}/>);
-//         expect(leftSideBar).toMatchSnapshot();
-//     });
-//     screen.debug();
-
-
-// });
-
-
-
-
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
 import { screen } from '@testing-library/react';

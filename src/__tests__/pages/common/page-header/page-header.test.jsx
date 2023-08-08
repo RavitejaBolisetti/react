@@ -30,11 +30,6 @@ describe('PageHeader Component', () => {
     customRender(<PageHeader pageTitle="Mark as favourite" canMarkFavourite={true} onSuccess={jest.fn()} onError={jest.fn()} handleFavouriteClick={jest.fn()} isFavourite={false} showGlobalNotification={showGlobalNotification}/>);
     const markAsFavoriteIcon = screen.getByTestId('addfav');
     fireEvent.click(markAsFavoriteIcon);
-    // const successMessage =  await waitFor(() => screen.findByText("Favourite's Menu updated Successfully"), {
-    //   timeout: 3000
-    // });
-   
-    // expect(successMessage).toBeInTheDocuments();
   });
 
   it('calls handleFavouriteClick when "Mark as favorite" icon is clicked', () => {
@@ -43,9 +38,5 @@ describe('PageHeader Component', () => {
     fireEvent.click(markAsFavoriteIcon);
     expect(mockMarkFavourite).toHaveBeenCalledTimes(1);
   });
-  // it("should check global notification component working or not", async() =>{
-  //   customRender(<PageHeader showGlobalNotification={showGlobalNotification} pageTitle="Test Page" canMarkFavourite={true}  onError={jest.fn()} handleFavouriteClick={jest.fn()} isFavourite={true} onSuccess={jest.fn()} />);
-  //   const successMessage = screen.findByText("Favourite's Menu updated Successfully");
-  //   expect(successMessage).toBeInTheDocuments();
-  // });
+
 });
