@@ -82,13 +82,13 @@ const VehicleDetailsMasterMain = (props) => {
     const [optionsServicesMapping, setoptionsServicesMapping] = useState([]);
     const [openAccordian, setOpenAccordian] = useState('1');
 
-    const [tooltTipText, settooltTipText] = useState();
+    const [toolTipContent, setToolTipContent] = useState();
     const [isReadOnly, setIsReadOnly] = useState();
 
     const [ProductHierarchyDataOptions, setProductHierarchyDataOptions] = useState();
     const [modelData, setmodelData] = useState();
 
-    const [modelCode, setmodelCode] = useState();
+    // const [modelCode, setmodelCode] = useState();
 
     const onSuccessAction = (res) => {
         // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -149,7 +149,7 @@ const VehicleDetailsMasterMain = (props) => {
             form.setFieldsValue({
                 modelCode: ProductHierarchyData['0']['prodctCode'] ?? 'NA',
             });
-            settooltTipText(
+            setToolTipContent(
                 <div>
                     <p>
                         Color - <span>{ProductHierarchyData['0']['color'] ?? 'Na'}</span>
@@ -197,7 +197,7 @@ const VehicleDetailsMasterMain = (props) => {
     }, [VehicleDetailsData, isDataLoaded]);
 
     const onHandleSelect = (values) => {
-        setmodelCode(values);
+        // setmodelCode(values);
         const LovParams = [
             {
                 key: 'prodctCode',
@@ -278,7 +278,7 @@ const VehicleDetailsMasterMain = (props) => {
         setoptionsServicesMapping,
         handleFormValueChange,
         onHandleSelect,
-        tooltTipText,
+        toolTipContent,
         isVehicleLovDataLoading,
     };
 
@@ -289,8 +289,8 @@ const VehicleDetailsMasterMain = (props) => {
         styles,
         formData,
         modelData,
-        tooltTipText,
-        settooltTipText,
+        toolTipContent,
+        setToolTipContent,
         typeData,
         isLoading,
     };

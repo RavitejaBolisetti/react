@@ -1,0 +1,638 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LeftSideBar Components should render LeftSideBar components 1`] = `
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <aside
+        class="ant-layout-sider ant-layout-sider-dark ant-layout-sider-has-trigger leftMenuBox leftMenuBoxLight"
+        style="flex: 0 0 240px; max-width: 240px; min-width: 240px; width: 240px;"
+      >
+        <div
+          class="ant-layout-sider-children"
+        >
+          <div
+            class="logoContainer"
+          >
+            <div
+              class="ant-row css-dev-only-do-not-override-14wwjjs"
+              style="margin-left: -10px; margin-right: -10px;"
+            >
+              <div
+                class="ant-col ant-col-xs-22 ant-col-sm-22 ant-col-md-24 ant-col-lg-24 ant-col-xl-24 css-dev-only-do-not-override-14wwjjs"
+                style="padding-left: 10px; padding-right: 10px;"
+              >
+                <a
+                  class="brandLink"
+                  href="/dashboard"
+                >
+                  <img
+                    alt=""
+                    class="brandImage"
+                    src="test-file-stub"
+                  />
+                  <div
+                    class="cls"
+                  />
+                </a>
+              </div>
+              <div
+                class="ant-col closeButton ant-col-xs-2 ant-col-sm-2 ant-col-md-0 ant-col-lg-0 ant-col-xl-0 css-dev-only-do-not-override-14wwjjs"
+                style="padding-left: 10px; padding-right: 10px;"
+              >
+                <svg
+                  fill="none"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 15 15"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    clip-rule="evenodd"
+                    d="M11.7816 4.03157C12.0062 3.80702 12.0062 3.44295 11.7816 3.2184C11.5571 2.99385 11.193 2.99385 10.9685 3.2184L7.50005 6.68682L4.03164 3.2184C3.80708 2.99385 3.44301 2.99385 3.21846 3.2184C2.99391 3.44295 2.99391 3.80702 3.21846 4.03157L6.68688 7.49999L3.21846 10.9684C2.99391 11.193 2.99391 11.557 3.21846 11.7816C3.44301 12.0061 3.80708 12.0061 4.03164 11.7816L7.50005 8.31316L10.9685 11.7816C11.193 12.0061 11.5571 12.0061 11.7816 11.7816C12.0062 11.557 12.0062 11.193 11.7816 10.9684L8.31322 7.49999L11.7816 4.03157Z"
+                    fill="currentColor"
+                    fill-rule="evenodd"
+                  />
+                </svg>
+              </div>
+            </div>
+            <div
+              class="ant-row css-dev-only-do-not-override-14wwjjs"
+              style="margin-left: -10px; margin-right: -10px;"
+            >
+              <div
+                class="ant-col ant-col-xs-24 ant-col-sm-24 ant-col-md-24 ant-col-lg-24 ant-col-xl-24 css-dev-only-do-not-override-14wwjjs"
+                style="padding-left: 10px; padding-right: 10px;"
+              >
+                <div
+                  class="searchContainer"
+                >
+                  <form
+                    autocomplete="off"
+                    class="ant-form ant-form-vertical css-dev-only-do-not-override-14wwjjs"
+                  >
+                    <div
+                      class="ant-form-item css-dev-only-do-not-override-14wwjjs"
+                    >
+                      <div
+                        class="ant-row ant-form-item-row css-dev-only-do-not-override-14wwjjs"
+                      >
+                        <div
+                          class="ant-col ant-form-item-control css-dev-only-do-not-override-14wwjjs"
+                        >
+                          <div
+                            class="ant-form-item-control-input"
+                          >
+                            <div
+                              class="ant-form-item-control-input-content"
+                            >
+                              <div
+                                class="ant-select ant-select-in-form-item ant-select-auto-complete css-dev-only-do-not-override-14wwjjs ant-select-single ant-select-customize-input ant-select-show-search"
+                              >
+                                <div
+                                  class="ant-select-selector"
+                                >
+                                  <span
+                                    class="ant-select-selection-search"
+                                  >
+                                    <span
+                                      class="ant-input-group-wrapper ant-input-search ant-select-selection-search-input css-dev-only-do-not-override-14wwjjs"
+                                    >
+                                      <span
+                                        class="ant-input-wrapper ant-input-group css-dev-only-do-not-override-14wwjjs"
+                                      >
+                                        <span
+                                          class="ant-input-affix-wrapper css-dev-only-do-not-override-14wwjjs"
+                                        >
+                                          <input
+                                            aria-activedescendant="searchKeyword_list_0"
+                                            aria-autocomplete="list"
+                                            aria-controls="searchKeyword_list"
+                                            aria-expanded="false"
+                                            aria-haspopup="listbox"
+                                            aria-owns="searchKeyword_list"
+                                            autocomplete="off"
+                                            class="ant-input css-dev-only-do-not-override-14wwjjs"
+                                            id="searchKeyword"
+                                            placeholder="Search"
+                                            role="combobox"
+                                            type="text"
+                                            value=""
+                                          />
+                                          <span
+                                            class="ant-input-suffix"
+                                          >
+                                            <span
+                                              class="ant-input-clear-icon ant-input-clear-icon-hidden"
+                                              role="button"
+                                              tabindex="-1"
+                                            >
+                                              <span
+                                                aria-label="close-circle"
+                                                class="anticon anticon-close-circle"
+                                                role="img"
+                                              >
+                                                <svg
+                                                  aria-hidden="true"
+                                                  data-icon="close-circle"
+                                                  fill="currentColor"
+                                                  focusable="false"
+                                                  height="1em"
+                                                  viewBox="64 64 896 896"
+                                                  width="1em"
+                                                >
+                                                  <path
+                                                    d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm165.4 618.2l-66-.3L512 563.4l-99.3 118.4-66.1.3c-4.4 0-8-3.5-8-8 0-1.9.7-3.7 1.9-5.2l130.1-155L340.5 359a8.32 8.32 0 01-1.9-5.2c0-4.4 3.6-8 8-8l66.1.3L512 464.6l99.3-118.4 66-.3c4.4 0 8 3.5 8 8 0 1.9-.7 3.7-1.9 5.2L553.5 514l130 155c1.2 1.5 1.9 3.3 1.9 5.2 0 4.4-3.6 8-8 8z"
+                                                  />
+                                                </svg>
+                                              </span>
+                                            </span>
+                                          </span>
+                                        </span>
+                                        <span
+                                          class="ant-input-group-addon"
+                                        >
+                                          <button
+                                            class="ant-btn css-dev-only-do-not-override-14wwjjs ant-btn-default ant-btn-icon-only ant-input-search-button"
+                                            type="button"
+                                          >
+                                            <span
+                                              class="ant-btn-icon"
+                                            >
+                                              <span
+                                                aria-label="search"
+                                                class="anticon anticon-search"
+                                                role="img"
+                                              >
+                                                <svg
+                                                  aria-hidden="true"
+                                                  data-icon="search"
+                                                  fill="currentColor"
+                                                  focusable="false"
+                                                  height="1em"
+                                                  viewBox="64 64 896 896"
+                                                  width="1em"
+                                                >
+                                                  <path
+                                                    d="M909.6 854.5L649.9 594.8C690.2 542.7 712 479 712 412c0-80.2-31.3-155.4-87.9-212.1-56.6-56.7-132-87.9-212.1-87.9s-155.5 31.3-212.1 87.9C143.2 256.5 112 331.8 112 412c0 80.1 31.3 155.5 87.9 212.1C256.5 680.8 331.8 712 412 712c67 0 130.6-21.8 182.7-62l259.7 259.6a8.2 8.2 0 0011.6 0l43.6-43.5a8.2 8.2 0 000-11.6zM570.4 570.4C528 612.7 471.8 636 412 636s-116-23.3-158.4-65.6C211.3 528 188 471.8 188 412s23.3-116.1 65.6-158.4C296 211.3 352.2 188 412 188s116.1 23.2 158.4 65.6S636 352.2 636 412s-23.3 116.1-65.6 158.4z"
+                                                  />
+                                                </svg>
+                                              </span>
+                                            </span>
+                                          </button>
+                                        </span>
+                                      </span>
+                                    </span>
+                                  </span>
+                                  <span
+                                    class="ant-select-selection-placeholder"
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <ul
+            class="ant-menu ant-menu-root ant-menu-inline ant-menu-light css-dev-only-do-not-override-14wwjjs"
+            collapsed="false"
+            data-menu-list="true"
+            role="menu"
+            style="padding-left: 14px;"
+            tabindex="0"
+          />
+          <div
+            aria-hidden="true"
+            style="display: none;"
+          />
+          <div
+            class="changeTheme"
+            style="padding: 10px 14px; position: absolute;"
+          >
+            <div
+              class="changeThemeBorder"
+            >
+              <button
+                class="ant-btn css-dev-only-do-not-override-14wwjjs ant-btn-default ant-btn-dangerous lightThemeActive"
+                type="button"
+              >
+                <svg
+                  fill="currentColor"
+                  height="20"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 16 16"
+                  width="20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"
+                  />
+                </svg>
+                <span>
+                   Light Mode
+                </span>
+              </button>
+              <button
+                class="ant-btn css-dev-only-do-not-override-14wwjjs ant-btn-default ant-btn-dangerous darkTheme"
+                type="button"
+              >
+                <svg
+                  fill="currentColor"
+                  height="20"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 16 16"
+                  width="20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278zM4.858 1.311A7.269 7.269 0 0 0 1.025 7.71c0 4.02 3.279 7.276 7.319 7.276a7.316 7.316 0 0 0 5.205-2.162c-.337.042-.68.063-1.029.063-4.61 0-8.343-3.714-8.343-8.29 0-1.167.242-2.278.681-3.286z"
+                  />
+                </svg>
+                <span>
+                   Dark Mode
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div
+          class="ant-layout-sider-trigger"
+          style="width: 240px;"
+        >
+          <span
+            aria-label="left"
+            class="anticon anticon-left"
+            role="img"
+          >
+            <svg
+              aria-hidden="true"
+              data-icon="left"
+              fill="currentColor"
+              focusable="false"
+              height="1em"
+              viewBox="64 64 896 896"
+              width="1em"
+            >
+              <path
+                d="M724 218.3V141c0-6.7-7.7-10.4-12.9-6.3L260.3 486.8a31.86 31.86 0 000 50.3l450.8 352.1c5.3 4.1 12.9.4 12.9-6.3v-77.3c0-4.9-2.3-9.6-6.1-12.6l-360-281 360-281.1c3.8-3 6.1-7.7 6.1-12.6z"
+              />
+            </svg>
+          </span>
+        </div>
+      </aside>
+      ;
+    </div>
+  </body>,
+  "container": <div>
+    <aside
+      class="ant-layout-sider ant-layout-sider-dark ant-layout-sider-has-trigger leftMenuBox leftMenuBoxLight"
+      style="flex: 0 0 240px; max-width: 240px; min-width: 240px; width: 240px;"
+    >
+      <div
+        class="ant-layout-sider-children"
+      >
+        <div
+          class="logoContainer"
+        >
+          <div
+            class="ant-row css-dev-only-do-not-override-14wwjjs"
+            style="margin-left: -10px; margin-right: -10px;"
+          >
+            <div
+              class="ant-col ant-col-xs-22 ant-col-sm-22 ant-col-md-24 ant-col-lg-24 ant-col-xl-24 css-dev-only-do-not-override-14wwjjs"
+              style="padding-left: 10px; padding-right: 10px;"
+            >
+              <a
+                class="brandLink"
+                href="/dashboard"
+              >
+                <img
+                  alt=""
+                  class="brandImage"
+                  src="test-file-stub"
+                />
+                <div
+                  class="cls"
+                />
+              </a>
+            </div>
+            <div
+              class="ant-col closeButton ant-col-xs-2 ant-col-sm-2 ant-col-md-0 ant-col-lg-0 ant-col-xl-0 css-dev-only-do-not-override-14wwjjs"
+              style="padding-left: 10px; padding-right: 10px;"
+            >
+              <svg
+                fill="none"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 15 15"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  clip-rule="evenodd"
+                  d="M11.7816 4.03157C12.0062 3.80702 12.0062 3.44295 11.7816 3.2184C11.5571 2.99385 11.193 2.99385 10.9685 3.2184L7.50005 6.68682L4.03164 3.2184C3.80708 2.99385 3.44301 2.99385 3.21846 3.2184C2.99391 3.44295 2.99391 3.80702 3.21846 4.03157L6.68688 7.49999L3.21846 10.9684C2.99391 11.193 2.99391 11.557 3.21846 11.7816C3.44301 12.0061 3.80708 12.0061 4.03164 11.7816L7.50005 8.31316L10.9685 11.7816C11.193 12.0061 11.5571 12.0061 11.7816 11.7816C12.0062 11.557 12.0062 11.193 11.7816 10.9684L8.31322 7.49999L11.7816 4.03157Z"
+                  fill="currentColor"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </div>
+          </div>
+          <div
+            class="ant-row css-dev-only-do-not-override-14wwjjs"
+            style="margin-left: -10px; margin-right: -10px;"
+          >
+            <div
+              class="ant-col ant-col-xs-24 ant-col-sm-24 ant-col-md-24 ant-col-lg-24 ant-col-xl-24 css-dev-only-do-not-override-14wwjjs"
+              style="padding-left: 10px; padding-right: 10px;"
+            >
+              <div
+                class="searchContainer"
+              >
+                <form
+                  autocomplete="off"
+                  class="ant-form ant-form-vertical css-dev-only-do-not-override-14wwjjs"
+                >
+                  <div
+                    class="ant-form-item css-dev-only-do-not-override-14wwjjs"
+                  >
+                    <div
+                      class="ant-row ant-form-item-row css-dev-only-do-not-override-14wwjjs"
+                    >
+                      <div
+                        class="ant-col ant-form-item-control css-dev-only-do-not-override-14wwjjs"
+                      >
+                        <div
+                          class="ant-form-item-control-input"
+                        >
+                          <div
+                            class="ant-form-item-control-input-content"
+                          >
+                            <div
+                              class="ant-select ant-select-in-form-item ant-select-auto-complete css-dev-only-do-not-override-14wwjjs ant-select-single ant-select-customize-input ant-select-show-search"
+                            >
+                              <div
+                                class="ant-select-selector"
+                              >
+                                <span
+                                  class="ant-select-selection-search"
+                                >
+                                  <span
+                                    class="ant-input-group-wrapper ant-input-search ant-select-selection-search-input css-dev-only-do-not-override-14wwjjs"
+                                  >
+                                    <span
+                                      class="ant-input-wrapper ant-input-group css-dev-only-do-not-override-14wwjjs"
+                                    >
+                                      <span
+                                        class="ant-input-affix-wrapper css-dev-only-do-not-override-14wwjjs"
+                                      >
+                                        <input
+                                          aria-activedescendant="searchKeyword_list_0"
+                                          aria-autocomplete="list"
+                                          aria-controls="searchKeyword_list"
+                                          aria-expanded="false"
+                                          aria-haspopup="listbox"
+                                          aria-owns="searchKeyword_list"
+                                          autocomplete="off"
+                                          class="ant-input css-dev-only-do-not-override-14wwjjs"
+                                          id="searchKeyword"
+                                          placeholder="Search"
+                                          role="combobox"
+                                          type="text"
+                                          value=""
+                                        />
+                                        <span
+                                          class="ant-input-suffix"
+                                        >
+                                          <span
+                                            class="ant-input-clear-icon ant-input-clear-icon-hidden"
+                                            role="button"
+                                            tabindex="-1"
+                                          >
+                                            <span
+                                              aria-label="close-circle"
+                                              class="anticon anticon-close-circle"
+                                              role="img"
+                                            >
+                                              <svg
+                                                aria-hidden="true"
+                                                data-icon="close-circle"
+                                                fill="currentColor"
+                                                focusable="false"
+                                                height="1em"
+                                                viewBox="64 64 896 896"
+                                                width="1em"
+                                              >
+                                                <path
+                                                  d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm165.4 618.2l-66-.3L512 563.4l-99.3 118.4-66.1.3c-4.4 0-8-3.5-8-8 0-1.9.7-3.7 1.9-5.2l130.1-155L340.5 359a8.32 8.32 0 01-1.9-5.2c0-4.4 3.6-8 8-8l66.1.3L512 464.6l99.3-118.4 66-.3c4.4 0 8 3.5 8 8 0 1.9-.7 3.7-1.9 5.2L553.5 514l130 155c1.2 1.5 1.9 3.3 1.9 5.2 0 4.4-3.6 8-8 8z"
+                                                />
+                                              </svg>
+                                            </span>
+                                          </span>
+                                        </span>
+                                      </span>
+                                      <span
+                                        class="ant-input-group-addon"
+                                      >
+                                        <button
+                                          class="ant-btn css-dev-only-do-not-override-14wwjjs ant-btn-default ant-btn-icon-only ant-input-search-button"
+                                          type="button"
+                                        >
+                                          <span
+                                            class="ant-btn-icon"
+                                          >
+                                            <span
+                                              aria-label="search"
+                                              class="anticon anticon-search"
+                                              role="img"
+                                            >
+                                              <svg
+                                                aria-hidden="true"
+                                                data-icon="search"
+                                                fill="currentColor"
+                                                focusable="false"
+                                                height="1em"
+                                                viewBox="64 64 896 896"
+                                                width="1em"
+                                              >
+                                                <path
+                                                  d="M909.6 854.5L649.9 594.8C690.2 542.7 712 479 712 412c0-80.2-31.3-155.4-87.9-212.1-56.6-56.7-132-87.9-212.1-87.9s-155.5 31.3-212.1 87.9C143.2 256.5 112 331.8 112 412c0 80.1 31.3 155.5 87.9 212.1C256.5 680.8 331.8 712 412 712c67 0 130.6-21.8 182.7-62l259.7 259.6a8.2 8.2 0 0011.6 0l43.6-43.5a8.2 8.2 0 000-11.6zM570.4 570.4C528 612.7 471.8 636 412 636s-116-23.3-158.4-65.6C211.3 528 188 471.8 188 412s23.3-116.1 65.6-158.4C296 211.3 352.2 188 412 188s116.1 23.2 158.4 65.6S636 352.2 636 412s-23.3 116.1-65.6 158.4z"
+                                                />
+                                              </svg>
+                                            </span>
+                                          </span>
+                                        </button>
+                                      </span>
+                                    </span>
+                                  </span>
+                                </span>
+                                <span
+                                  class="ant-select-selection-placeholder"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <ul
+          class="ant-menu ant-menu-root ant-menu-inline ant-menu-light css-dev-only-do-not-override-14wwjjs"
+          collapsed="false"
+          data-menu-list="true"
+          role="menu"
+          style="padding-left: 14px;"
+          tabindex="0"
+        />
+        <div
+          aria-hidden="true"
+          style="display: none;"
+        />
+        <div
+          class="changeTheme"
+          style="padding: 10px 14px; position: absolute;"
+        >
+          <div
+            class="changeThemeBorder"
+          >
+            <button
+              class="ant-btn css-dev-only-do-not-override-14wwjjs ant-btn-default ant-btn-dangerous lightThemeActive"
+              type="button"
+            >
+              <svg
+                fill="currentColor"
+                height="20"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 16 16"
+                width="20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"
+                />
+              </svg>
+              <span>
+                 Light Mode
+              </span>
+            </button>
+            <button
+              class="ant-btn css-dev-only-do-not-override-14wwjjs ant-btn-default ant-btn-dangerous darkTheme"
+              type="button"
+            >
+              <svg
+                fill="currentColor"
+                height="20"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 16 16"
+                width="20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278zM4.858 1.311A7.269 7.269 0 0 0 1.025 7.71c0 4.02 3.279 7.276 7.319 7.276a7.316 7.316 0 0 0 5.205-2.162c-.337.042-.68.063-1.029.063-4.61 0-8.343-3.714-8.343-8.29 0-1.167.242-2.278.681-3.286z"
+                />
+              </svg>
+              <span>
+                 Dark Mode
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div
+        class="ant-layout-sider-trigger"
+        style="width: 240px;"
+      >
+        <span
+          aria-label="left"
+          class="anticon anticon-left"
+          role="img"
+        >
+          <svg
+            aria-hidden="true"
+            data-icon="left"
+            fill="currentColor"
+            focusable="false"
+            height="1em"
+            viewBox="64 64 896 896"
+            width="1em"
+          >
+            <path
+              d="M724 218.3V141c0-6.7-7.7-10.4-12.9-6.3L260.3 486.8a31.86 31.86 0 000 50.3l450.8 352.1c5.3 4.1 12.9.4 12.9-6.3v-77.3c0-4.9-2.3-9.6-6.1-12.6l-360-281 360-281.1c3.8-3 6.1-7.7 6.1-12.6z"
+            />
+          </svg>
+        </span>
+      </div>
+    </aside>
+    ;
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;

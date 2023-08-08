@@ -269,41 +269,37 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
     const ContentHeaderProps = { isAdvanceFilter: false, isTogglePresent: true, isDefaultContentHeader: false, toggleFirst: 'Web', toggleSecond: 'Mobile', styles, onChange, onFinish, validateTriggervalue: ['onSearch'], menuType, title: '', handleTypeClick };
     return (
         <>
-            <div>
-                <ContentHeader {...ContentHeaderProps} />
-            </div>
+            <ContentHeader {...ContentHeaderProps} />
             <Row gutter={20} span={24}>
-                <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol} className={`${styles.borderBottomCorner} ${styles.marT20}`}>
+                <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol}>
                     <Spin spinning={isLoading}>
-                        <div className={styles.content}>
-                            {menuData?.length <= 0 ? (
-                                <div className={styles.emptyContainer}>
-                                    <Empty
-                                        image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                        imageStyle={{
-                                            height: 60,
-                                        }}
-                                        description={
-                                            <span>
-                                                {noDataTitle} <br /> {noDataMessage}
-                                            </span>
-                                        }
-                                    >
-                                        <Button icon={<PlusOutlined />} type="primary" onClick={() => handleAdd('add')}>
-                                            Add
-                                        </Button>
-                                    </Empty>
-                                </div>
-                            ) : (
-                                <div className={` ${styles.leftPanelScroll}`}>
-                                    <LeftPanel {...myProps} />
-                                </div>
-                            )}
-                        </div>
+                        {menuData?.length <= 0 ? (
+                            <div className={styles.emptyContainer}>
+                                <Empty
+                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                    imageStyle={{
+                                        height: 60,
+                                    }}
+                                    description={
+                                        <span>
+                                            {noDataTitle} <br /> {noDataMessage}
+                                        </span>
+                                    }
+                                >
+                                    <Button icon={<PlusOutlined />} type="primary" onClick={() => handleAdd('add')}>
+                                        Add
+                                    </Button>
+                                </Empty>
+                            </div>
+                        ) : (
+                            <div className={` ${styles.leftPanelScroll}`}>
+                                <LeftPanel {...myProps} />
+                            </div>
+                        )}
                     </Spin>
                 </Col>
 
-                <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol} className={`${styles.padRight0} ${styles.viewDetails}`}>
+                <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol}>
                     <Spin spinning={isApplicationDeatilsLoading}>
                         {selectedTreeKey?.length && applicationDetailsData?.length ? (
                             <>

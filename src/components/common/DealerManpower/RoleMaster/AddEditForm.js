@@ -53,56 +53,60 @@ const AddEditFormMain = (props) => {
 
     return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-            {viewMode ? (
-                <ViewDetail {...viewProps} />
-            ) : (
-                <>
-                    <Row gutter={16}>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.divisionCode} label="Division Name" name="divisionCode" placeholder={preparePlaceholderSelect('division name')} rules={[validateRequiredInputField('Division Name')]}>
-                                <Select className={styles.headerSelectField} showSearch loading={!isDivisionDataLoaded} placeholder="Select" allowClear onChange={handleDivisionChange}>
-                                    {divisionData?.map((item) => (
-                                        <Option key={item?.key} value={item?.key}>
-                                            {item?.value}
-                                        </Option>
-                                    ))}
-                                </Select>
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.departmentCode} label="Department Name" name="departmentCode" placeholder={preparePlaceholderSelect('department name')} rules={[validateRequiredInputField('department name')]}>
-                                <Select className={styles.headerSelectField} showSearch loading={!isDepartmentDataLoaded} placeholder="Select" allowClear>
-                                    {filteredDepartmentData?.map((item) => (
-                                        <Option key={item?.key} value={item?.key}>
-                                            {item?.value}
-                                        </Option>
-                                    ))}
-                                </Select>
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                    <Row gutter={16}>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formData?.roleCode} label="Role Code" name="roleCode" rules={[validateRequiredInputField('role code')]}>
-                                <Input placeholder={preparePlaceholderText('role code')} maxLength={6} disabled={editMode ? true : false} />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item label="Role Name" initialValue={formData?.roleDescription} rules={[validateRequiredInputField('role Name')]} name="roleDescription">
-                                <Input placeholder={preparePlaceholderText('role Name')} maxLength={50} />
-                            </Form.Item>
-                        </Col>
-                    </Row>
+            <Row gutter={20} className={styles.drawerBody}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                    {viewMode ? (
+                        <ViewDetail {...viewProps} />
+                    ) : (
+                        <>
+                            <Row gutter={16}>
+                                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                    <Form.Item initialValue={formData?.divisionCode} label="Division Name" name="divisionCode" placeholder={preparePlaceholderSelect('division name')} rules={[validateRequiredInputField('Division Name')]}>
+                                        <Select showSearch loading={!isDivisionDataLoaded} placeholder="Select" allowClear onChange={handleDivisionChange}>
+                                            {divisionData?.map((item) => (
+                                                <Option key={item?.key} value={item?.key}>
+                                                    {item?.value}
+                                                </Option>
+                                            ))}
+                                        </Select>
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                    <Form.Item initialValue={formData?.departmentCode} label="Department Name" name="departmentCode" placeholder={preparePlaceholderSelect('department name')} rules={[validateRequiredInputField('department name')]}>
+                                        <Select showSearch loading={!isDepartmentDataLoaded} placeholder="Select" allowClear>
+                                            {filteredDepartmentData?.map((item) => (
+                                                <Option key={item?.key} value={item?.key}>
+                                                    {item?.value}
+                                                </Option>
+                                            ))}
+                                        </Select>
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                            <Row gutter={16}>
+                                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                    <Form.Item initialValue={formData?.roleCode} label="Role Code" name="roleCode" rules={[validateRequiredInputField('role code')]}>
+                                        <Input placeholder={preparePlaceholderText('role code')} maxLength={6} disabled={editMode ? true : false} />
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                    <Form.Item label="Role Name" initialValue={formData?.roleDescription} rules={[validateRequiredInputField('role Name')]} name="roleDescription">
+                                        <Input placeholder={preparePlaceholderText('role Name')} maxLength={50} />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
 
-                    <Row gutter={16}>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={editMode ? formData.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label="Status">
-                                <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} />
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                </>
-            )}
+                            <Row gutter={16}>
+                                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                    <Form.Item initialValue={editMode ? formData.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label="Status">
+                                        <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                        </>
+                    )}
+                </Col>
+            </Row>
 
             <DrawerFormButton {...buttonProps} />
         </Form>

@@ -3,16 +3,18 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect } from 'react';
-import { Card, Row, Col, Typography, Button, Divider, Space } from 'antd';
-import { FiEdit, FiTrash } from 'react-icons/fi';
-import style from 'components/common/Common.module.css';
+import React, { useState } from 'react';
+import { Card, Row, Col, Typography, Button, Space } from 'antd';
+import { FiEdit } from 'react-icons/fi';
+import { BsTrash3 } from 'react-icons/bs';
 
+import style from 'components/common/Common.module.css';
 import AddEditForm from './AddEditForm';
 const { Text } = Typography;
+
 const CardMapping = ({ index, AddEditFormProps, handleDelete, element, isEditing, setisEditing }) => {
     const [editCardForm, seteditCardForm] = useState(false);
-    const { accessoryForm, setsearchData, setaddButtonDisabled, addButtonDisabled, showGlobalNotification } = AddEditFormProps;
+    const { accessoryForm, setsearchData, setaddButtonDisabled, addButtonDisabled } = AddEditFormProps;
     const handleEdit = (index) => {
         seteditCardForm(true);
         setisEditing(true);
@@ -33,13 +35,15 @@ const CardMapping = ({ index, AddEditFormProps, handleDelete, element, isEditing
                 <Row>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Space>
-                            <Text strong>{element?.partDescription}</Text>
-                            <Text strong> {'|'}</Text>
-                            <Text strong> {element?.partNumber}</Text>
+                            <Text className={style.headText}>{element?.partDescription}</Text>
+                            <Text className={style.headText}> {'|'}</Text>
+                            <Text className={style.headText}> {element?.partNumber}</Text>
                         </Space>
                         <Row>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                <Text type="secondary">{element?.requiredQuantity}</Text>
+                                <Text type="secondary" className={style.subSection}>
+                                    {`Required Quantity: ` + element?.requiredQuantity}
+                                </Text>
                             </Col>
                         </Row>
                     </Col>
@@ -52,16 +56,13 @@ const CardMapping = ({ index, AddEditFormProps, handleDelete, element, isEditing
                                 icon={
                                     <div>
                                         <FiEdit />
-                                        {/* <Text disabled={isEditing || addButtonDisabled?.partDetailsResponses} type={'danger'}>
-                                            Edit
-                                        </Text> */}
                                     </div>
                                 }
                                 onClick={() => handleEdit(index)}
                             >
                                 Edit
                             </Button>
-                            {element?.isDeleting && <Button disabled={isEditing || addButtonDisabled?.partDetailsResponses} onClick={() => handleDelete(index)} type="link" icon={<FiTrash />}></Button>}
+                            {element?.isDeleting && <Button disabled={isEditing || addButtonDisabled?.partDetailsResponses} onClick={() => handleDelete(index)} type="link" icon={<BsTrash3 />}></Button>}
                         </Space>
                     </Col>
                 </Row>

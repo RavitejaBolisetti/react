@@ -6,11 +6,12 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { Row, Col, Button } from 'antd';
 
 import { manufacturerOrgHierarchyDataActions } from 'store/actions/data/manufacturerOrgHierarchy';
 import { convertDateTime } from 'utils/formatDateTime';
-import { tblPrepareColumns, tblStatusColumn } from 'utils/tableCloumn';
-import styles from '../ChangeHistory/ChangeHistory.module.css';
+import { tblPrepareColumns, tblStatusColumn } from 'utils/tableColumn';
+import styles from 'components/common/Common.module.css';
 import { DataTable } from 'utils/dataTable';
 import { withDrawer } from 'components/withDrawer';
 
@@ -44,7 +45,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const ManufacturerOrgHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, isLoading, userId, isHistoryLoaded, changeHistoryData }) => {
+const ManufacturerOrgHierarchyChangeHistoryMain = ({ onCloseAction, fetchChangeHistoryList, changeHistoryShowLoading, isLoading, userId, isHistoryLoaded, changeHistoryData }) => {
     useEffect(() => {
         if (!isHistoryLoaded) {
             fetchChangeHistoryList({ setIsLoading: changeHistoryShowLoading, userId });
@@ -97,9 +98,22 @@ const ManufacturerOrgHierarchyChangeHistoryMain = ({ fetchChangeHistoryList, cha
         tableData: changeHistoryData,
     };
     return (
-        <div className={styles.changeHistoryContainer}>
-            <DataTable {...tableProps} />
-        </div>
+        <>
+            <Row gutter={20} className={styles.drawerBody}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                    <DataTable {...tableProps} />
+                </Col>
+            </Row>
+            <div className={styles.formFooter}>
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <Button danger onClick={onCloseAction}>
+                            Close
+                        </Button>
+                    </Col>
+                </Row>
+            </div>
+        </>
     );
 };
 

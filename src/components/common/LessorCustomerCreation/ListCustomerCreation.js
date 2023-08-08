@@ -86,7 +86,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const ListCustomerCreationBase = (props) => {
-    const { stateData, resetData, resetViewData, fetchStateLovList, isStateDataLoaded, listStateShowLoading, detailData, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
+    const { stateData, resetData, resetViewData, fetchStateLovList, isStateDataLoaded, listStateShowLoading, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
     const { listLessorShowLoading, isSupportingDataLoaded, isSupportingDataLoading, supportingData, accessToken, token } = props;
 
     const { typeData, saveData, fetchList, lessorData } = props;

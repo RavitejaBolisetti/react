@@ -3,10 +3,8 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { tblPrepareColumns, tblActionColumn } from 'utils/tableCloumn';
+import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import styles from 'components/common/Common.module.css';
-import { Button } from 'antd';
-import { FiEdit, FiTrash } from 'react-icons/fi';
 
 export const tableColumn = (props) => {
     const { handleButtonClick, formActionType, bindCodeValue } = props;

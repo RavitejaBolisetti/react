@@ -14,14 +14,12 @@ const ViewDetailBase = ({ formData, styles, parameterType }) => {
         column: { xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 },
     };
     return (
-        <div className={`${styles.viewContainer} ${styles.hierarchyRightContainers}`}>
-            <>
-                <Descriptions {...viewProps}>
-                    <Descriptions.Item label="Division Code">{formData?.code}</Descriptions.Item>
-                    <Descriptions.Item label="Division Name">{formData?.divisionName}</Descriptions.Item>
-                    <Descriptions.Item label="Status">{formData?.status ? 'Active' : 'Inactive'}</Descriptions.Item>
-                </Descriptions>
-            </>
+        <div className={styles.viewContainer}>
+            <Descriptions {...viewProps}>
+                <Descriptions.Item label="Division Code">{formData?.code}</Descriptions.Item>
+                <Descriptions.Item label="Division Name">{formData?.divisionName}</Descriptions.Item>
+                <Descriptions.Item label="Status">{formData?.status ? 'Active' : 'Inactive'}</Descriptions.Item>
+            </Descriptions>
         </div>
     );
 };

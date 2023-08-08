@@ -3,26 +3,26 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect, useState } from 'react';
-import { Col, Input, Form, Row, Select, Button, DatePicker } from 'antd';
+import React, { useEffect } from 'react';
+import { Col, Input, Form, Row, DatePicker } from 'antd';
 
 import { withModal } from 'components/withModal';
-import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
+import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
-import { validateRequiredInputField, validateNumberWithTwoDecimalPlaces, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
-
-import styles from 'components/common/Common.module.css';
+import { validateRequiredInputField } from 'utils/validation';
+import { ModalButtons } from 'components/common/Button';
 
 export const AdvanceForm = (props) => {
     const { AdvanceformData, setAdvanceformData } = props;
-    const { onCloseAction, handleFormValueChange, checkListDataModified, setcheckListDataModified, aggregateForm, formActionType } = props;
+    const { onCloseAction, handleFormValueChange, checkListDataModified, setcheckListDataModified, aggregateForm } = props;
     const { setAdvanceSearchVisible } = props;
-    const { isVisible, setisEditing, isEditing } = props;
+    const { isVisible, setisEditing } = props;
     const InputGroup = Input.Group;
     const { RangePicker } = DatePicker;
     const { TextArea } = Input;
+
     const bindFormItems = (props) => {
-        const { record, index, formItemType } = props;
+        const { formItemType } = props;
         switch (formItemType) {
             case 'input': {
                 return (
@@ -50,11 +50,12 @@ export const AdvanceForm = (props) => {
                                 format: 'HH:mm',
                             }}
                             format="YYYY-MM-DD HH:mm"
-                            // onChange={onChange}
-                            // onOk={onOk}
                         />
                     </Form.Item>
                 );
+            }
+            default: {
+                return false;
             }
         }
     };
@@ -88,6 +89,15 @@ export const AdvanceForm = (props) => {
     const onFinishFailed = () => {
         return;
     };
+    const modalProps = {
+        reset: true,
+        submit: true,
+        resetName: 'Cancel',
+        submitName: 'Save',
+        handleResetFilter: onCloseAction,
+        htmltype: false,
+        onClickAction: onFinish,
+    };
 
     return (
         <Form autoComplete="off" layout="vertical" form={aggregateForm} onFinishFailed={onFinishFailed}>
@@ -106,19 +116,7 @@ export const AdvanceForm = (props) => {
                             <Form.Item name="id" hidden></Form.Item>
                         </Col>
                     </Row>
-                    <Row gutter={20}>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignLeft}>
-                            <Button onClick={onCloseAction} danger>
-                                Cancel
-                            </Button>
-                        </Col>
-
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignRight}>
-                            <Button onClick={onFinish} type="primary">
-                                Save
-                            </Button>
-                        </Col>
-                    </Row>
+                    <ModalButtons {...modalProps} />
                 </Col>
             </Row>
         </Form>

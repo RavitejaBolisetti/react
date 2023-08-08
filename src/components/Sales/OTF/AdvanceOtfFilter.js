@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Button, Row, Col } from 'antd';
+import { Button, Row, Col, Form } from 'antd';
 import { FilterIcon } from 'Icons';
 import { RxCross2 } from 'react-icons/rx';
 import { SearchBox } from 'components/utils/SearchBox';
@@ -13,7 +13,7 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import styles from 'components/common/Common.module.css';
 
 export default function AdvanceOTFFilter(props) {
-    const { extraParams, removeFilter, handleResetFilter, advanceFilter = false, otfFilter = false, title, filterString, setFilterString, typeData, setAdvanceSearchVisible, searchForm, moduleTitle, handleOnClick } = props;
+    const { extraParams, removeFilter, handleResetFilter, advanceFilter = false, otfFilter = false, title, filterString, setFilterString, typeData, setAdvanceSearchVisible, searchForm } = props;
 
     const serachBoxProps = {
         searchForm,
@@ -25,33 +25,31 @@ export default function AdvanceOTFFilter(props) {
     return (
         <div className={styles.contentHeaderBackground}>
             <Row gutter={20}>
-                <span className={styles.headerText}>{title}</span>
-                <Col xs={24} sm={24} md={20} lg={20} xl={20} className={styles.subheading}>
-                    <Row gutter={20}>
-                        {otfFilter && (
-                            <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                <SearchBox {...serachBoxProps} />
-                            </Col>
-                        )}
-                        {advanceFilter && (
-                            <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.verticallyCentered}>
-                                <Button
-                                    icon={<FilterIcon />}
-                                    type="link"
-                                    onClick={() => {
-                                        setAdvanceSearchVisible(true);
-                                    }}
-                                >
-                                    Advanced Filters
-                                </Button>
-                            </Col>
-                        )}
-                        {moduleTitle === 'Vehicle Price Master' && (
-                            <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.alignRight}>
-                                <Button type="primary" onClick={handleOnClick}>Upload</Button>
-                            </Col>
-                        )}
-                    </Row>
+                <Col xs={24} sm={24} md={18} lg={18} xl={18}>
+                    <Form autoComplete="off" colon={false} className={styles.masterListSearchForm}>
+                        <Form.Item label={`${title}`}>
+                            <Row gutter={20}>
+                                {otfFilter && (
+                                    <Col xs={24} sm={24} md={14} lg={14} xl={14}>
+                                        <SearchBox {...serachBoxProps} />
+                                    </Col>
+                                )}
+                                {advanceFilter && (
+                                    <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.verticallyCentered}>
+                                        <Button
+                                            icon={<FilterIcon />}
+                                            type="link"
+                                            onClick={() => {
+                                                setAdvanceSearchVisible(true);
+                                            }}
+                                        >
+                                            Advanced Filters
+                                        </Button>
+                                    </Col>
+                                )}
+                            </Row>
+                        </Form.Item>
+                    </Form>
                 </Col>
             </Row>
             {advanceFilter && filterString?.advanceFilter && extraParams.find((i) => i.name) && (

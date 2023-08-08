@@ -1,15 +1,25 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 /* Upload File Box */
+.iconSize {
+    width: 20px;
+    color: #ff3e5b;
+}
+
 .uploadDragger {
     padding-bottom: 20px;
 }
 
-.uploadDraggerStrip {
+/* .uploadDraggerStrip {
     border: 1px solid red;
-}
+} */
 
 .uploadDragger :global h5.ant-typography {
     margin: 0 !important;
-    color: #0B0B0C;
+    color: #0b0b0c;
     font-size: 14px;
     font-weight: 500;
     line-height: 23px;
@@ -24,10 +34,21 @@
 }
 
 .uploadDragger :global .ant-upload-wrapper .ant-upload-drag {
-    border: 1px dashed #B5B5B6;
-    background: #F2F2F2;
+    border: 1px dashed #b5b5b6;
+    background: #f2f2f2;
     border-radius: 4px;
     padding: 20px;
+}
+
+.uploadDragger :global .ant-upload-wrapper .ant-upload-drag:not(.ant-upload-disabled):hover {
+    border-color: #ff3e5b;
+    cursor: pointer;
+}
+
+.uploadDragger .uploadDraggerStrip :global .ant-upload-drag:not(.ant-upload-disabled):hover,
+.uploadDragger .uploadDraggerBox :global .ant-upload-drag:not(.ant-upload-disabled):hover {
+    border-color: #b5b5b6;
+    cursor: not-allowed;
 }
 
 .uploadDragger :global .ant-upload-wrapper .ant-upload-drag .ant-upload {
@@ -59,7 +80,7 @@
 
 .uploadDragger .uploadDraggerStrip :global .ant-upload-list .ant-upload-list-item .ant-upload-list-item-name {
     padding-left: 0;
-    color: #0B0B0C;
+    color: #0b0b0c;
     font-weight: 600;
     line-height: 24px;
     padding-bottom: 16px;
@@ -71,7 +92,7 @@
 
 .uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item:hover .ant-upload-list-item-action,
 .uploadDragger .uploadDraggerStrip :global .ant-upload-list .ant-upload-list-item:hover .ant-upload-list-item-action {
-    color: #FF3E5B;
+    color: #ff3e5b;
 }
 
 .uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item .ant-upload-list-item-actions,
@@ -94,7 +115,7 @@
     display: flex;
     align-items: center;
     width: 20px;
-    color: #FF3E5B;
+    color: #ff3e5b;
 }
 
 .uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item .ant-upload-list-item-actions .ant-upload-list-item-action.ant-btn-sm.ant-btn-icon-only .ant-btn-icon svg,
@@ -105,7 +126,7 @@
 
 .uploadDragger :global .ant-btn-text:not(:disabled):not(.ant-btn-disabled):hover,
 .uploadDragger .uploadDraggerStrip :global .ant-btn-text:not(:disabled):not(.ant-btn-disabled):hover {
-    color: #FF3E5B;
+    color: #ff3e5b;
     background-color: transparent;
 }
 
@@ -132,7 +153,7 @@
 
 .uploadDragger .uploadDraggerStrip :global .ant-progress .ant-progress-inner {
     width: 95%;
-    background-color: #EEFCD2;
+    background-color: #eefcd2;
 }
 
 .uploadDragger .uploadDraggerStrip :global .ant-progress .ant-progress-text {
@@ -140,7 +161,7 @@
     z-index: 1;
     top: -18px;
     margin-inline-start: -66px;
-    color: #0B0B0C;
+    color: #0b0b0c;
     font-weight: 600;
     text-align: end;
 }
@@ -152,7 +173,7 @@
 }
 
 /* Uploaded Files View */
-.uploadDragger :global .ant-upload-list .ant-upload-list-item {
+.uploadDragger .uploadDraggerBox :global .ant-upload-list .ant-upload-list-item {
     height: auto;
     margin-top: 10px;
     padding: 10px 20px;
@@ -162,18 +183,19 @@
     box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.15);
 }
 
-.uploadDragger :global .ant-upload-list .ant-upload-list-item:hover {
+.uploadDragger .uploadDraggerBox :global .ant-upload-list .ant-upload-list-item:hover {
     background-color: #f2f2f2;
 }
 
-.uploadDragger :global .ant-upload-list .ant-upload-list-item .ant-upload-list-item-name {
+.uploadDragger .uploadDraggerBox :global .ant-upload-list .ant-upload-list-item .ant-upload-list-item-name {
     padding-left: 0;
-    color: #0B0B0C;
+    padding-right: 20px;
+    color: #0b0b0c;
     font-weight: 600;
     line-height: 24px;
 }
 
-.uploadDragger :global .ant-upload-wrapper .ant-upload-list .ant-upload-list-item .ant-upload-list-item-actions .ant-btn:not(:first-child) {
+.uploadDragger .uploadDraggerBox :global .ant-upload-list .ant-upload-list-item .ant-upload-list-item-actions .ant-btn:not(:first-child) {
     margin-left: 20px;
 }
 
@@ -181,7 +203,7 @@
 .uploadDragger .viewDragger {
     width: -webkit-fill-available;
     padding: 20px;
-    border: 1px dashed #B5B5B6;
+    border: 1px dashed #b5b5b6;
     border-radius: 4px;
 }
 

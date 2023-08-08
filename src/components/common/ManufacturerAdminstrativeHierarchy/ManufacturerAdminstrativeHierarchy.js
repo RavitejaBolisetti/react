@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button, Col, Form, Row, Input, Empty } from 'antd';
@@ -22,7 +22,6 @@ import { hierarchyAttributeMasterDataActions } from 'store/actions/data/hierarch
 import { manufacturerOrgHierarchyDataActions } from 'store/actions/data/manufacturerOrgHierarchy';
 import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
 import { AuthorityHierarchyDataActions } from 'store/actions/data/manufacturerAdminHierarchy/authorityHierarchy';
-import { HIERARCHY_DEFAULT_PARENT } from 'constants/constants';
 
 import { documentViewDataActions } from 'store/actions/data/customerMaster/documentView';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
@@ -143,14 +142,16 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
     const { viewTitle, manufacturerAdminHierarchyData, fetchList, hierarchyAttributeFetchList, saveData, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading } = props;
     const { isDataOrgLoaded, manufacturerOrgHierarchyData, fetchOrgList, fetchDocumentFileDocId } = props;
     const { resetData, resetViewData, detailData, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
-    const { uploadDocumentFile, accessToken, token, ManufacturerAdminHierarchyLoading } = props;
-    const { AdminDetailData, isAdminDetailDataLoaded, ManufacturerAdminHierarchyDetailLoading, fetchDetailList, DetailLoading } = props;
+    const { uploadDocumentFile, accessToken, token } = props;
+    const { AdminDetailData, ManufacturerAdminHierarchyDetailLoading, fetchDetailList, DetailLoading } = props;
     const { authorityShowLoading, isAuthorityDataLoaded, isAuthorityDataLoading, authorityData, typeData } = props;
     const { saveAuthorityData, isViewDataLoaded, isLoading, viewListShowLoading, fetchViewDocument, viewDocument } = props;
     const { authorityDropDownfetchList, authorityDropDownlistShowLoading, authTypeDropdownData } = props;
-    const { downloadShowLoading, downloadFile, isDataOrgLoading } = props;
+    const { downloadFile } = props;
 
     const [form] = Form.useForm();
+    const [, forceUpdate] = useReducer((x) => x + 1, 0);
+
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
 
     const [selectedTreeKey, setSelectedTreeKey] = useState([]);
@@ -194,7 +195,6 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
     const supportedFileTypes = ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
     const maxSize = 8;
 
-    const errorAction = () => {};
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
@@ -334,7 +334,6 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
                 setDocumentTypesList([]);
                 break;
             }
-
             case FROM_ACTION_TYPE.SIBLING: {
                 form.resetFields();
                 setFormData([]);
@@ -344,7 +343,9 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
             case FROM_ACTION_TYPE.EDIT: {
                 setFormData(selectedTreeData);
                 setDocumentTypesList(ViewDocumentTypesList);
-
+                break;
+            }
+            default: {
                 break;
             }
         }
@@ -447,6 +448,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         attributeDataOptions,
         setattributeDataOptions,
         authTypeDropdownData,
+        forceUpdate,
     };
 
     const viewProps = {
@@ -464,6 +466,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         manufacturerAdminHierarchyData,
         isLoading: ManufacturerAdminHierarchyDetailLoading,
         authTypeDropdownData,
+        forceUpdate,
     };
     const leftCol = manufacturerAdminHierarchyData?.length > 0 && organizationId ? 14 : 24;
     const rightCol = manufacturerAdminHierarchyData?.length > 0 && organizationId ? 10 : 24;
@@ -578,16 +581,16 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         <>
             <div className={styles.contentHeaderBackground}>
                 <Row gutter={20}>
-                    <Col xs={24} sm={24} md={16} lg={16} xl={16}>
+                    <Col xs={24} sm={24} md={18} lg={18} xl={18}>
                         <Form autoComplete="off" colon={false} className={styles.masterListSearchForm} onFinish={onfinishHeader} onFinishFailed={onFinishFailed}>
                             <Form.Item label={`${title}`} name="code">
                                 <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={10} lg={10} xl={10}>
+                                    <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                                         <TreeSelectField {...treeSelectFieldProps} />
                                     </Col>
                                     {organizationId && manufacturerAdminHierarchyData?.length > 0 && (
-                                        <Col xs={24} sm={24} md={10} lg={10} xl={10}>
-                                            <Search placeholder="Search" allowClear onChange={onChange} className={styles.headerSearchField} />
+                                        <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                                            <Search placeholder="Search" allowClear onChange={onChange} />
                                         </Col>
                                     )}
                                 </Row>
@@ -595,14 +598,15 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
                         </Form>
                     </Col>
                     {organizationId && manufacturerAdminHierarchyData?.length > 0 && (
-                        <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
+                        <Col className={styles.addGroup} xs={24} sm={24} md={6} lg={6} xl={6}>
                             <Button type="primary" onClick={handleOnClickUpload}>
                                 Upload
                             </Button>
+
                             <Button
+                                className={styles.verticallyCentered}
                                 icon={<FaHistory />}
                                 type="primary"
-                                className={styles.verticallyCentered}
                                 onClick={() => {
                                     setIsChangeHistoryVisible(true);
                                 }}
@@ -615,7 +619,6 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
             </div>
             <Row gutter={20} span={24}>
                 <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol}>
-                    {/* <div className={styles.content}> */}
                     {!manufacturerAdminHierarchyData?.length ? (
                         <div className={styles.emptyContainer}>
                             <Empty
@@ -630,7 +633,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
                                 }
                             >
                                 {organizationId && (
-                                    <Button icon={<PlusOutlined />} type="primary" onClick={handleAdd}>
+                                    <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
                                         Add
                                     </Button>
                                 )}
@@ -639,10 +642,9 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
                     ) : (
                         organizationId && <LeftPanel {...myProps} />
                     )}
-                    {/* </div> */}
                 </Col>
 
-                <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol} className={styles.padRight0}>
+                <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol}>
                     {selectedTreeKey && selectedTreeKey?.length && organizationId ? (
                         <>
                             <HierarchyView {...viewProps} />

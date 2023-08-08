@@ -15,7 +15,7 @@ import { AddEditForm } from './AddEditForm';
 import { rolemanagementDataActions } from 'store/actions/data/roleManagement';
 import styles from 'components/common/Common.module.css';
 import { escapeRegExp } from 'utils/escapeRegExp';
-import { tblPrepareColumns } from 'utils/tableCloumn';
+import { tblPrepareColumns } from 'utils/tableColumn';
 import { DataTable } from 'utils/dataTable';
 
 const { Search } = Input;

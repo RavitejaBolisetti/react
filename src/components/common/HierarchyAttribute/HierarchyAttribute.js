@@ -310,7 +310,7 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, resetData, isDataL
                             <Form.Item label={`${titleHierarchy}`} name="code">
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={10} lg={10} xl={10}>
-                                        <Select className={styles.headerSelectField} showSearch onChange={handleChange} loading={!isDataAttributeLoaded} placeholder="Select" allowClear>
+                                        <Select showSearch onChange={handleChange} loading={!isDataAttributeLoaded} placeholder="Select" allowClear>
                                             {attributeData?.map((item) => (
                                                 <Option value={item}>{item}</Option>
                                             ))}

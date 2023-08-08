@@ -7,7 +7,7 @@ import React, { useEffect } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { Col, Form, Row, Select, Button, DatePicker } from 'antd';
+import { Col, Form, Row, Select, DatePicker } from 'antd';
 import { validateRequiredSelectField } from 'utils/validation';
 
 import { showGlobalNotification } from 'store/actions/notification';
@@ -21,6 +21,7 @@ import { dateFormat, formatDate, formatDateToCalenderDate } from 'utils/formatDa
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { disableFutureDate } from 'utils/disableDate';
 import { withModal } from 'components/withModal';
+import { ModalButtons } from 'components/common/Button';
 
 import styles from 'components/common/Common.module.css';
 
@@ -150,14 +151,21 @@ export const AdvancedSearchFrom = (props) => {
         optionFilterProp: 'children',
         showSearch: true,
         allowClear: true,
-        className: styles.headerSelectField,
+        // className: styles.headerSelectField,
+    };
+    const modalProps = {
+        reset: true,
+        submit: true,
+        resetName: 'Reset',
+        submitName: 'Search',
+        handleResetFilter,
     };
     return (
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item label="Model" name="modelCode" rules={[validateRequiredSelectField('model')]}>
-                        <Select className={styles.headerSelectField} showSearch placeholder="Select" allowClear>
+                        <Select showSearch placeholder="Select" allowClear>
                             {productHierarchyList?.map((item) => (
                                 <Option key={'ph' + item.prodctCode} value={item.prodctCode}>
                                     {item.prodctShrtName}
@@ -192,19 +200,7 @@ export const AdvancedSearchFrom = (props) => {
                 </Col>
             </Row>
 
-            <Row gutter={20}>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignLeft}>
-                    <Button onClick={handleResetFilter} danger>
-                        Reset
-                    </Button>
-                </Col>
-
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignRight}>
-                    <Button htmlType="submit" type="primary">
-                        Search
-                    </Button>
-                </Col>
-            </Row>
+            <ModalButtons {...modalProps} />
         </Form>
     );
 };

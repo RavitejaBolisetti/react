@@ -250,9 +250,20 @@ const AddEditFormMain = (props) => {
                                             <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
                                                 Aggregates
                                             </Text>
-                                            <Button onClick={addContactHandeler} icon={<PlusOutlined />} type="primary" disabled={isReadOnly}>
-                                                Add
-                                            </Button>
+                                            {!formData?.productAttributeDetail &&
+                                                addToolTip(
+                                                    'No product Attribute Details Present',
+                                                    'bottom'
+                                                )(
+                                                    <Button onClick={addContactHandeler} icon={<PlusOutlined />} type="primary" disabled={isReadOnly || !formData?.productAttributeDetail}>
+                                                        Add
+                                                    </Button>
+                                                )}
+                                            {formData?.productAttributeDetail && (
+                                                <Button onClick={addContactHandeler} icon={<PlusOutlined />} type="primary" disabled={isReadOnly || !formData?.productAttributeDetail}>
+                                                    Add
+                                                </Button>
+                                            )}
                                         </Col>
                                     </Row>
                                 }

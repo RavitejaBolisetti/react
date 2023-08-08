@@ -115,17 +115,14 @@ const ContactMain = (props) => {
                 fetchContactDetailsList({ setIsLoading: listContactDetailsShowLoading, extraParams });
             }
         }
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedCustomer?.customerId]);
 
     useEffect(() => {
         if (customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id && selectedCustomer?.customerId && customerIndData?.customerContact) {
             setContactData(customerIndData?.customerContact || []);
-            setUploadImgDocId(customerIndData?.customerContact[0].docId);
         } else if (customerData?.customerContact && selectedCustomer?.customerId) {
             setContactData(customerData?.customerContact || []);
-            setUploadImgDocId(customerData?.customerContact[0]['docId']);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [customerData, customerIndData]);
@@ -225,7 +222,11 @@ const ContactMain = (props) => {
     };
 
     const onFinish = () => {
-        let data = { customerId: selectedCustomer?.customerId, customerContact: contactData?.map((el) => ({ ...el, docId: uploadImgDocId || el?.docId })) };
+        if (contactData.findIndex((i) => i?.defaultContactIndicator) === -1) {
+            return showGlobalNotification({ message: 'At least one contact should have default contact' });
+        }
+
+        let data = { customerId: selectedCustomer?.customerId, customerContact: contactData };
 
         const onSuccess = (res) => {
             contactform.resetFields();

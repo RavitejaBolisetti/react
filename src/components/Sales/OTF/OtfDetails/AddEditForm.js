@@ -7,7 +7,7 @@ import React from 'react';
 import { Row, Col, Input, Form, DatePicker, Switch, Card } from 'antd';
 
 import { formattedCalendarDate, dateFormat } from 'utils/formatDateTime';
-import { validateRequiredSelectField, validateRequiredInputField, noWhiteSpaceinBeginning, noWhiteSpaceAtEnd } from 'utils/validation';
+import { validateRequiredSelectField, validateRequiredInputField, noWhiteSpaceinBeginning } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { disablePastDate } from 'utils/disableDate';
 import { customSelectBox } from 'utils/customSelectBox';

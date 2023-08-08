@@ -251,8 +251,6 @@ const CompanyProfileBase = (props) => {
         downloadFileFromList,
         fileList,
         setFileList,
-        uploadedFile,
-        setUploadedFile,
         emptyList,
         setEmptyList,
         uploadedFileName,

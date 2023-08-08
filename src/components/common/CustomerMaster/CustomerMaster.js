@@ -23,7 +23,7 @@ import { CUSTOMER_INDIVIDUAL_SECTION } from 'constants/CustomerIndividualSection
 import { CUSTOMER_CORPORATE_SECTION } from 'constants/CustomerCorporateSection';
 import { CUSTOMER_TYPE } from 'constants/CustomerType';
 import { documentViewDataActions } from 'store/actions/data/customerMaster/documentView';
-
+import { ChangeHistory } from './ChangeHistory';
 import DataTable from 'utils/dataTable/DataTable';
 import { CustomerMainConatiner } from './CustomerMainConatiner';
 import styles from 'components/common/Common.module.css';
@@ -40,6 +40,7 @@ const mapStateToProps = (state) => {
     } = state;
 
     const moduleTitle = 'Customer';
+    const ChangeHistoryTitle = 'Customer Change History ';
 
     let returnValue = {
         userId,
@@ -48,6 +49,7 @@ const mapStateToProps = (state) => {
         totalRecords: data?.totalRecords || [],
         isLoading,
         moduleTitle,
+        ChangeHistoryTitle,
         typeData: typeData && typeData[PARAM_MASTER.CUST_MST.id],
         filterString,
     };
@@ -71,7 +73,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const CustomerMasterMain = (props) => {
     const { data, fetchList, userId, isLoading, listShowLoading, moduleTitle, typeData, resetData, totalRecords } = props;
-    const { filterString, setFilterString } = props;
+    const { filterString, setFilterString, ChangeHistoryTitle } = props;
     const { resetViewData } = props;
 
     const [customerType, setCustomerType] = useState(CUSTOMER_TYPE?.INDIVIDUAL.id);
@@ -90,8 +92,9 @@ const CustomerMasterMain = (props) => {
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [profileCardLoading, setProfileCardLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
+    const [ChangeHistoryVisible, setChangeHistoryVisible] = useState(false);
 
-    const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
+    const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false, changeHistory: true };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
@@ -241,7 +244,6 @@ const CustomerMasterMain = (props) => {
                 record && setSelectedCustomerId(record?.customerId);
                 defaultSection && setCurrentSection(defaultSection);
                 break;
-
             case NEXT_ACTION:
                 const nextSection = Object.values(sectionName)?.find((i) => i.id > currentSection);
                 section && setCurrentSection(nextSection?.id);
@@ -264,7 +266,7 @@ const CustomerMasterMain = (props) => {
         setIsFormVisible(true);
     };
 
-    const onFinish = (values, e) => {};
+    const onFinish = (values, e) => { };
 
     const onFinishFailed = (errorInfo) => {
         console.error(errorInfo);
@@ -286,6 +288,10 @@ const CustomerMasterMain = (props) => {
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
+    };
+
+    const handleChangeHistory = () => {
+        setChangeHistoryVisible(true);
     };
 
     const onCloseAction = () => {
@@ -350,6 +356,7 @@ const CustomerMasterMain = (props) => {
         profileCardLoading,
         setProfileCardLoading,
         resetViewData,
+        handleChangeHistory,
     };
 
     const handleCustomerTypeChange = (id) => {
@@ -395,6 +402,19 @@ const CustomerMasterMain = (props) => {
         handleChange,
     };
 
+    const ChangeHistoryProps = {
+        isVisible: ChangeHistoryVisible,
+        onCloseAction: () => {
+            setChangeHistoryVisible(false);
+        },
+        titleOverride: ChangeHistoryTitle,
+        setIsFormVisible,
+        buttonData,
+        selectedCustomerId,
+        ChangeHistoryTitle,
+        customerType,
+    };
+
     const showAddButton = true;
 
     return (
@@ -403,25 +423,33 @@ const CustomerMasterMain = (props) => {
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.contentHeaderBackground}>
                         <Row gutter={20}>
-                            <Col xs={24} sm={24} md={14} lg={14} xl={14} className={styles.searchAndLabelAlign}>
-                                <div className={`${styles.userManagement} ${styles.headingToggle}`}>
-                                    {Object.values(CUSTOMER_TYPE)?.map((item) => {
-                                        return (
-                                            <Button type={customerType === item?.id ? 'primary' : 'link'} onClick={() => handleCustomerTypeChange(item?.id)}>
-                                                {item?.title}
-                                            </Button>
-                                        );
-                                    })}
-                                </div>
-                                <div className={styles.headerSearchField}>
-                                    <SearchBox {...searchBoxProps} />
-                                </div>
+                            <Col xs={24} sm={24} md={14} lg={14} xl={14}>
+                                <Form autoComplete="off" colon={false} className={styles.masterListSearchForm}>
+                                    <Form.Item>
+                                        <Row gutter={20}>
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.verticallyCentered}>
+                                                <div className={`${styles.userManagement} ${styles.headingToggle}`}>
+                                                    {Object.values(CUSTOMER_TYPE)?.map((item) => {
+                                                        return (
+                                                            <Button type={customerType === item?.id ? 'primary' : 'link'} onClick={() => handleCustomerTypeChange(item?.id)}>
+                                                                {item?.title}
+                                                            </Button>
+                                                        );
+                                                    })}
+                                                </div>
+                                                <div className={styles.fullWidth}>
+                                                    <SearchBox {...searchBoxProps} />
+                                                </div>
+                                            </Col>
+                                        </Row>
+                                    </Form.Item>
+                                </Form>
                             </Col>
-                            <Col xs={24} sm={24} md={10} lg={10} xl={10} className={styles.advanceFilterClear}>
-                                {/* <Button type="primary" icon={<PlusOutlined />} onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
+                            {/* <Col xs={24} sm={24} md={10} lg={10} xl={10} className={styles.advanceFilterClear}>
+                                <Button type="primary" icon={<PlusOutlined />} onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
                                     Add
-                                </Button> */}
-                            </Col>
+                                </Button>
+                            </Col> */}
                         </Row>
                         {filterString && extraParams.find((i) => i.name) && (
                             <Row gutter={20}>
@@ -487,6 +515,7 @@ const CustomerMasterMain = (props) => {
                 </Col>
             </Row>
             <CustomerMainConatiner {...containerProps} />
+            <ChangeHistory {...ChangeHistoryProps} />
         </>
     );
 };

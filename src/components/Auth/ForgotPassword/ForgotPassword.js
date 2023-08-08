@@ -290,12 +290,12 @@ const ForgotPasswordBase = (props) => {
                                                     </div>
 
                                                     <Row gutter={20}>
-                                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} class="textfieldWithPrefix">
-                                                            <Form.Item name="userId" class="textfieldWithPrefix__input" data-testid="userIdInput" rules={[validateRequiredInputField('user id')]} className={`${styles.inputBox} ${styles.marginBottomZero}`}>
+                                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} className="textfieldWithPrefix">
+                                                            <Form.Item name="userId" className="textfieldWithPrefix__input" data-testid="userIdInput" rules={[validateRequiredInputField('user id')]} className={`${styles.inputBox} ${styles.marginBottomZero}`}>
                                                                 {<Input ref={userIdRef} prefix={<BiUser size={18} />} type="text" maxLength={25} onChange={handleFormChange('userId')} />}
                                                             </Form.Item>
                                                             {!fieldData?.userId && (
-                                                                <label class="textfieldWithPrefix__label" onClick={handleFieldFocus(userIdRef)}>
+                                                                <label className="textfieldWithPrefix__label" onClick={handleFieldFocus(userIdRef)}>
                                                                     User ID (MILE ID.Parent ID)
                                                                 </label>
                                                             )}
@@ -354,13 +354,13 @@ const ForgotPasswordBase = (props) => {
                                                             <Checkbox.Group>
                                                                 <Row>
                                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.fielderror}>
-                                                                        <Checkbox className={styles.registered} value="sentOnMobile">
+                                                                        <Checkbox className={styles.registered} name="mobileCheckBox" value="sentOnMobile">
                                                                             Registered Mobile Number
                                                                             <p>{verifiedUserData?.contactNumber}</p>
                                                                         </Checkbox>
                                                                     </Col>
                                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.fielderror}>
-                                                                        <Checkbox className={styles.registered} value="sentOnEmail">
+                                                                        <Checkbox className={styles.registered} name="emailCheckBox" value="sentOnEmail">
                                                                             Registered Email Address
                                                                             <p>{verifiedUserData?.email}</p>
                                                                         </Checkbox>
@@ -452,12 +452,12 @@ const ForgotPasswordBase = (props) => {
                                                     <div className={styles.loginHeading}>
                                                         <h1 className={styles.inputBox}>Create New Password</h1>
                                                         <Row gutter={20}>
-                                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} class="textfieldWithPrefix">
-                                                                <Form.Item name="newPassword" class="textfieldWithPrefix__input" rules={[validateRequiredInputField('new password')]} className={`${styles.inputBox}`}>
+                                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} className="textfieldWithPrefix">
+                                                                <Form.Item name="newPassword" className="textfieldWithPrefix__input" rules={[validateRequiredInputField('new password')]} className={`${styles.inputBox}`}>
                                                                     <Input onChange={handleNewPasswordChange} type={showPassword?.newPassword ? 'text' : 'password'} ref={newPasswordInput} prefix={<FiLock size={18} />} suffix={passwordSuffix('newPassword')} onFocus={() => setTooltipVisible(true)} onBlur={() => setTooltipVisible(false)} />
                                                                 </Form.Item>
                                                                 {!fieldData?.newPassword && (
-                                                                    <label class="textfieldWithPrefix__label" onClick={handleFieldFocus(newPasswordInput)}>
+                                                                    <label className="textfieldWithPrefix__label" onClick={handleFieldFocus(newPasswordInput)}>
                                                                         New password
                                                                     </label>
                                                                 )}
@@ -465,11 +465,11 @@ const ForgotPasswordBase = (props) => {
                                                             </Col>
                                                         </Row>
                                                         <Row gutter={20}>
-                                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} class="textfieldWithPrefix">
+                                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} className="textfieldWithPrefix">
                                                                 <Form.Item
                                                                     name="confirmNewPassword"
                                                                     dependencies={['newPassword']}
-                                                                    class="textfieldWithPrefix__input"
+                                                                    className="textfieldWithPrefix__input"
                                                                     rules={[
                                                                         validateRequiredInputField('confirm password', false),
                                                                         ({ getFieldValue }) => ({
@@ -486,7 +486,7 @@ const ForgotPasswordBase = (props) => {
                                                                     <Input type={showPassword?.confirmNewPassword ? 'text' : 'password'} ref={confirmPasswordInput} prefix={<FiLock size={18} />} onChange={handleFormChange('confirmNewPassword')} suffix={passwordSuffix('confirmNewPassword')} />
                                                                 </Form.Item>
                                                                 {!fieldData?.confirmNewPassword && (
-                                                                    <label class="textfieldWithPrefix__label" onClick={handleFieldFocus(confirmPasswordInput)}>
+                                                                    <label className="textfieldWithPrefix__label" onClick={handleFieldFocus(confirmPasswordInput)}>
                                                                         Confirm password
                                                                     </label>
                                                                 )}
