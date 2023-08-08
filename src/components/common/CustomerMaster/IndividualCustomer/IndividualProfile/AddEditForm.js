@@ -24,7 +24,7 @@ const { Option } = Select;
 const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
-    const { isWhoKnowsWhom, formData, appCategoryData, form, viewDocument, downloadFileFromButton } = props;
+    const { formData, appCategoryData, form, viewDocument, downloadFileFromButton } = props;
     const { isReadOnly = false } = props;
     const { uploadedFile, setUploadedFile, emptyList, setEmptyList, fileList, setFileList, setUploadedFileName, uploadedFileName } = props;
     const { handleFormValueChange, fetchViewDocument, fileConsentList, setFileConsentList, uploadedConsentFile, setUploadedConsentFile, emptyConsentList, setEmptyConsentList, uploadedConsentFileName, setUploadedConsentFileName } = props;
@@ -32,6 +32,7 @@ const AddEditFormMain = (props) => {
     const [customer, setCustomer] = useState(false);
     const [activeKey, setActiveKey] = useState([1]);
     const [isAuthorityMandatory, setIsAuthorityMandatory] = useState(false);
+    const [singleDisabled, setSingleDisabled] = useState(false);
 
     useEffect(() => {
         setCustomer(formData?.customerCategory);
@@ -123,13 +124,7 @@ const AddEditFormMain = (props) => {
 
         uploadButtonName: 'Upload File',
         messageText: <>Upload Your Profile Picture</>,
-        validationText: (
-            <>
-                File type should be .png and .jpg and max file
-                <br />
-                size to be 8Mb
-            </>
-        ),
+        validationText: <>(File type should be .png and .jpg and max file size to be 8Mb)</>,
         supportedFileTypes: ['image/png', 'image/jpeg', 'image/jpg'],
         maxSize: 8,
         single: true,
@@ -150,14 +145,20 @@ const AddEditFormMain = (props) => {
         uploadButtonName: 'Upload File',
         messageText: (
             <>
-                Click or drop your file here to upload the signed and <br />
-                scanned customer form
+                Click or drop your file here
+                <br /> to upload the signed and scanned customer form
             </>
         ),
-        validationText: <>File type should be png, jpg or pdf and max file size to be 5Mb</>,
-        supportedFileTypes: ['image/png', 'image/jpg', 'application/pdf'],
+        validationText: <>(File type should be png, jpg or pdf and max file size to be 5Mb)</>,
+        supportedFileTypes: ['image/png', 'image/jpg', 'image/jpeg', 'application/pdf'],
         maxSize: 5,
         single: true,
+        singleDisabled,
+        setSingleDisabled,
+        onRemove: () => {
+            setFileList([]);
+            setSingleDisabled(false);
+        },
     };
 
     const disabledProps = { disabled: isReadOnly };

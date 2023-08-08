@@ -24,7 +24,6 @@ const props = {
 describe('Qualification Master Test', () => {
     it('should render qualification master page', () => {
         customRender(<QualificationMaster {...props} />);
-        screen.debug();
         const qualificationName = screen.getAllByText('Qualification Name');
         expect(qualificationName).toBeTruthy();
     });

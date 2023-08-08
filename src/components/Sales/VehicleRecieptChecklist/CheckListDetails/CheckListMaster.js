@@ -9,15 +9,14 @@ import { Form, Row, Col } from 'antd';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { productDetailsDataActions } from 'store/actions/data/vehicle/productDetails';
-
 import { showGlobalNotification } from 'store/actions/notification';
 
-import styles from 'components/common/Common.module.css';
 import { AddEditForm } from './AddEditForm';
 import { ViewDetail } from './ViewDetails';
 import { VehicleCheckListbutton } from '../VehicleRecieptFormButton';
 import { tableColumn } from './tableCoulmn';
-// import { PARAM_MASTER } from 'constants/paramMaster';
+
+import styles from 'components/common/Common.module.css';
 
 const mapStateToProps = (state) => {
     const {
@@ -58,8 +57,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const VehicleRecieptCheckListMain = (props) => {
-    const { userId, isDataLoaded, ChecklistData, isLoading, handleButtonClick } = props;
-    const { fetchList, resetData, saveData, listShowLoading, showGlobalNotification, typeData } = props;
+    const { userId, isLoading, handleButtonClick } = props;
+    const { fetchList, resetData, saveData, listShowLoading, showGlobalNotification } = props;
     const { form, selectedCheckListId, section, formActionType, handleFormValueChange, NEXT_ACTION } = props;
 
     const [formData, setformData] = useState({});

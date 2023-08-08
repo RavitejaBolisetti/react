@@ -7,7 +7,6 @@ import React, { useReducer, useState, useEffect, useMemo, Fragment } from 'react
 import { connect } from 'react-redux';
 import { applicationMasterDataActions } from 'store/actions/data/applicationMaster';
 import { Col, Row, Input, AutoComplete, Divider } from 'antd';
-import styles from './../../LeftSideBar/LeftSideBar.module.css';
 import LocationCard from './LocationCard';
 import { bindActionCreators } from 'redux';
 import { showGlobalNotification } from 'store/actions/notification';
