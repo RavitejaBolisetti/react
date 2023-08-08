@@ -107,7 +107,7 @@ const VehicleRecieptCheckListMain = (props) => {
 
     const onFinish = (values) => {
         const data = { ...formData, vehicleIdentificationNumber: selectedCheckListId, aggregates: checkListDataModified?.filter((checkList) => checkList?.isEdited) };
-        Object.values(data) && Object.keys(data) && setvehicleReceiptFinalFormData(data);
+        Object?.values(data)?.length && Object?.keys(data)?.length && setvehicleReceiptFinalFormData({ ...vehicleReceiptFinalFormData, checklistDetails: data });
 
         // const onSuccess = (res) => {
         //     setcheckListDataModified([]);

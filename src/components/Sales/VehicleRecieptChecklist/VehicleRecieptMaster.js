@@ -137,13 +137,9 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         showGlobalNotification({ message });
         setShowDataLoading(false);
     };
-    const handleButtonQuery = (buttonName) => {
+    const handleButtonQuery = (buttonName, keyName) => {
         setbuttonType(buttonName?.key);
-
-        Object.values(QUERY_BUTTONS_CONSTANTS)?.map((item, index) => {
-            item?.id !== buttonName?.id ? (item['active'] = false) : (item['active'] = true);
-        });
-
+        
         const buttonkey = buttonName?.key;
 
         switch (buttonkey) {
@@ -417,7 +413,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         from: listFilterForm,
         onFinish,
         onFinishFailed,
-        title: <QueryButtons items={QUERY_BUTTONS_CONSTANTS} onClick={handleButtonQuery} />,
+        title: <QueryButtons items={QUERY_BUTTONS_CONSTANTS} onClick={handleButtonQuery} currentItem={buttonType} />,
         data,
         typeData,
         otfSearchRules,

@@ -81,6 +81,8 @@ const SupportingDocumentBase = (props) => {
 
     const { checklistNumber = 'CHK169108935' } = props;
 
+    const { vehicleReceiptFinalFormData, setvehicleReceiptFinalFormData } = props;
+
     const [uploadedFile, setUploadedFile] = useState();
     const [uploadedFileList, setUploadedFileList] = useState();
     const [emptyList, setEmptyList] = useState(true);
@@ -155,6 +157,10 @@ const SupportingDocumentBase = (props) => {
         const title = LANGUAGE_EN.GENERAL.CUSTOMER_UPDATE.TITLE;
         const message = LANGUAGE_EN.GENERAL.CUSTOMER_UPDATE.MESSAGE;
 
+        Object?.values(payload)?.length && Object?.keys(payload)?.length && setvehicleReceiptFinalFormData({ ...vehicleReceiptFinalFormData, supportingDocument: payload });
+
+        return;
+        
         if (fileList.length > 0) {
             const onSuccess = (res) => {
                 setFileList([]);
@@ -170,8 +176,6 @@ const SupportingDocumentBase = (props) => {
             const onError = (message) => {
                 showGlobalNotification({ message });
             };
-            console.log('payload', payload);
-            return;
             const requestData = {
                 data: payload,
                 method: 'post',
