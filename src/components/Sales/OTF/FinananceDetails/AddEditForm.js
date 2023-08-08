@@ -16,8 +16,6 @@ import { YES_NO_FLAG } from 'constants/yesNoFlag';
 
 import styles from 'components/common/Common.module.css';
 
-const { Option } = Select;
-
 const AddEditFormMain = (props) => {
     const { formData, FinanceLovData, typeData, form } = props;
     const [doReceived, setDoReceived] = useState();

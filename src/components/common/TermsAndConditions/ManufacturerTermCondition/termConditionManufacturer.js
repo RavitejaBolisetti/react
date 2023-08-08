@@ -346,7 +346,7 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
         isVisible: isHistoryVisible,
         ChangeHistoryTermsConditionsData,
         onCloseAction: changeHistoryClose,
-        isChangeHistoryContainer: true,
+        isChangeHistoryContainer: false,
     };
 
     return (

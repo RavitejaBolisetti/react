@@ -1,20 +1,22 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { Fragment, useEffect } from 'react';
-import { Input, Form, Col, Row, Switch, Select } from 'antd';
+import { Input, Form, Col, Row, Switch, Select, Button } from 'antd';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { LANGUAGE_EN } from 'language/en';
+
+import styles from 'components/common/Common.module.css';
 
 import TreeSelectField from '../TreeSelectField';
 
 const { Option } = Select;
 const sameParentAndChildWarning = LANGUAGE_EN.GENERAL.HIERARCHY_SAME_PARENT_AND_CHILD_WARNING;
 
-const ApplicationDetails = ({ setCanFormSave, form, onFinishFailed = () => {}, parentAppCode, isReadOnly, isFieldDisable, onFinish, setIsRestrictedLocation, setparentAppCode, setIsDocumentToGenerate, finalFormdata, criticalityGroupData, configurableParamData, menuData, setSelectedTreeKey, selectedTreeKey, showGlobalNotification }) => {
+const ApplicationDetails = ({ setCanFormSave, form, onFinishFailed = () => {}, parentAppCode, isReadOnly, isFieldDisable, onFinish, setIsRestrictedLocation, setparentAppCode, setIsDocumentToGenerate, finalFormdata, criticalityGroupData, configurableParamData, menuData, setSelectedTreeKey, selectedTreeKey, showGlobalNotification, isApplicatinoOnSaveLoading, canFormSave, onCloseAction }) => {
     useEffect(() => {
         form?.setFieldsValue({ ...finalFormdata?.applicationDetails });
         setparentAppCode(finalFormdata?.applicationDetails.parentApplicationId);
@@ -53,8 +55,8 @@ const ApplicationDetails = ({ setCanFormSave, form, onFinishFailed = () => {}, p
     };
 
     return (
-        <Fragment>
-            <Form form={form} id="myForm" onFieldsChange={onFieldsChange} autoComplete="off" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed} data-testid="myForm">
+        <>
+            <Form form={form} id="myForm" onFieldsChange={onFieldsChange} autoComplete="off" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item label="Application ID" name="applicationId" rules={[validateRequiredInputField('application ID')]}>
@@ -135,8 +137,20 @@ const ApplicationDetails = ({ setCanFormSave, form, onFinishFailed = () => {}, p
                         </Form.Item>
                     </Col>
                 </Row>
+                <Row gutter={20} className={styles.formFooterNew}>
+                    <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
+                        <Button danger onClick={onCloseAction}>
+                            Cancel
+                        </Button>
+                    </Col>
+                    <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
+                        <Button disabled={isApplicatinoOnSaveLoading || !canFormSave} loading={isApplicatinoOnSaveLoading} htmlType="submit" form="myForm" key="saveBtm" type="primary">
+                            Save
+                        </Button>
+                    </Col>
+                </Row>
             </Form>
-        </Fragment>
+        </>
     );
 };
 
