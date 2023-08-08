@@ -7,11 +7,12 @@ import React, { useState, Fragment, useEffect } from 'react';
 import { Col, Card, Row, Button, Form, Divider, Typography } from 'antd';
 import { FiEdit, FiTrash } from 'react-icons/fi';
 import styles from 'components/common/Common.module.css';
-import { FormProductAttribute } from './FormProductAttribute';
+import FormProductAttribute from './FormProductAttribute';
 
 const { Text } = Typography;
 
 const CardProductAttribute = (props) => {
+    console.log(props, "props")
     const { isVisible, finalFormdata, attributeForm, forceUpdate, skuAttributes, setSKUAttributes, productHierarchyAttributeData, setFormBtnActive, showGlobalNotification, setDisabledEdit } = props;
     const [editForm] = Form.useForm();
     const [formEdit, setFormEdit] = useState(false);
@@ -91,12 +92,16 @@ const CardProductAttribute = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formEdit]);
 
+
+    console.log('finalFormdata---->', formEdit);
+
     return (
         <Card
             style={{
                 backgroundColor: '#BEBEBE1A',
                 marginTop: '12px',
             }}
+            
         >
             <Row align="middle">
                 <Col xs={colLeft} sm={colLeft} md={colLeft} lg={colLeft} xl={colLeft} xxl={colLeft}>
