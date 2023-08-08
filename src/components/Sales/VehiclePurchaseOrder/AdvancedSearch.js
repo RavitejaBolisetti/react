@@ -27,17 +27,17 @@ export const AdvancedSearchFrom = (props) => {
 
     useEffect(() => {
         resetFields();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString]);
 
     const onFinish = (values) => {
+        console.log('values',values);
         setFilterString({
             ...filterString,
             ...values,
             fromDate: formatDate(values?.fromDate),
             toDate: formatDate(values?.toDate),
-            otfStatus: values?.otfStatus,
-            purchaseOrderNo:values?.poNumber,
+            purchaseOrderStatusCode: values?.purchaseOrderStatusCode,
+            purchaseOrderNumber:values?.purchaseOrderNumber,
             advanceFilter: true,
         });
         setAdvanceSearchVisible(false);
@@ -59,18 +59,17 @@ export const AdvancedSearchFrom = (props) => {
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
             <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item initialValue={filterString?.otfStatus} label="Order Type" name="otfStatus" rules={[validateRequiredSelectField('Order Type')]}>
+                    <Form.Item initialValue={filterString?.orderTypeCode} label="Order Type" name="orderTypeCode" rules={[validateRequiredSelectField('Order Type')]}>
                         <Select placeholder={preparePlaceholderSelect('')} fieldNames={{ label: 'value', value: 'key' }} options={typeData['PO_TYPE']} {...selectProps} className={styles.headerSelectField}></Select>
                     </Form.Item> 
-                    {/* otfStatusList */}
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item initialValue={filterString?.orderStatus} label="Order Status" name="orderStatus">
+                    <Form.Item initialValue={filterString?.purchaseOrderStatusCode} label="Order Status" name="purchaseOrderStatusCode">
                         <Select placeholder={preparePlaceholderSelect('')} fieldNames={{ label: 'value', value: 'key' }} options={typeData['PO_STATS']} {...selectProps} className={styles.headerSelectField}></Select>
                     </Form.Item> 
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item name="poNumber" label="Purchase Order Number" initialValue={filterString?.poNumber}>
+                    <Form.Item name="purchaseOrderNumber" label="Purchase Order Number" initialValue={filterString?.purchaseOrderNumber}>
                         <Input maxLength={50}  />
                     </Form.Item>
                 </Col>

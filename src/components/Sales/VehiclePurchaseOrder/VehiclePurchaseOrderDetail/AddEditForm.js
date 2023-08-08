@@ -20,8 +20,7 @@ import { disablePastDate } from 'utils/disableDate';
 const { TextArea, Search } = Input;
 
 const AddEditFormMain = (props) => {
-    // const { formData, otfData, selectedOrder, fieldNames, onFinishOTFCancellation } = props;
-    const { handleButtonClick, buttonData, setButtonData, userId, listShowLoading, showGlobalNotification, formActionType, onFinish, onFinishFailed,productHierarchyList } = props;
+    const { handleButtonClick, buttonData, setButtonData, userId, listShowLoading, showGlobalNotification, formActionType, onFinish, onFinishFailed, productHierarchyList, getDealerlocation, dealerLocationList } = props;
     const { form, formData, typeData, isReadOnly = true, onSearch } = props;
     const disabledProps = { disabled: isReadOnly };
     const [dealerFlag, setDealerFlag] = useState();
@@ -45,15 +44,22 @@ const AddEditFormMain = (props) => {
             setDealerFlag();
         }
     };
-    const getDealerlocation = (value) => {
-        // setDealerLoc(value);
-        form.setFieldValue('dealerLocation', value);
-    };
-
     useEffect(() => {
-        form.setFieldValue('dealerLocation', dealerLoc);
-    }, [dealerLoc]);
+        if (formData?.orderTypeCode == 'CDLR') {
+            setDealerFlag(formData?.orderTypeCode);
+            
+        }
+    }, [formData]);
 
+    // const getDealerlocation = (value) => {
+    //     // setDealerLoc(value);
+    //     console.log('value',value);
+    //     form.setFieldValue('dealerLocation', value.target.value);
+    // };
+
+    // useEffect(() => {
+    //     form.setFieldValue('dealerLocation', dealerLoc);
+    // }, [dealerLoc]);
 
     return (
         <Form form={form} layout="vertical" autocomplete="off" colon="false" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
@@ -63,49 +69,46 @@ const AddEditFormMain = (props) => {
                         <>
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                                    <Form.Item name="orderType" label="Order Type" initialValue={formData?.orderType} rules={[validateRequiredSelectField('Order Type')]}>
+                                    <Form.Item name="orderTypeCode" label="Order Type" initialValue={formData?.orderTypeCode} rules={[validateRequiredSelectField('Order Type')]}>
                                         <Select onChange={handleChangeOrderType} placeholder="Select Order Type" allowClear options={typeData['PO_TYPE']} fieldNames={{ label: 'value', value: 'key' }} />
                                     </Form.Item>
                                 </Col>
+                            </Row>
+                            <Row gutter={20}>
                                 {dealerFlag && (
                                     <>
-                                        {/* <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                                    <Form.Item name="dealerName" label="Dealer Name" initialValue={formData?.dealerName}>
-                                        <Search style={{ width: '100%' }} maxLength={35} allowClear type="text" onSearch={onSearch} />
-                                    </Form.Item>
-                                </Col>   */}
                                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                                            <Form.Item name="dealerName" label="Dealer Name" initialValue={formData?.dealerName}>
-                                                <Select onChange={getDealerlocation} placeholder="Select Dealer" showSearch allowClear options={typeData['CTC_TYP']} fieldNames={{ label: 'value', value: 'key' }} />
+                                            <Form.Item name="dealerParentCode" label="Dealer Code" initialValue={formData?.dealerParentCode}>
+                                                <Search maxLength={50} allowClear onSearch={getDealerlocation} placeholder="Enter Dealer Code" className={styles.headerSearchField} />
                                             </Form.Item>
                                         </Col>
+
                                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
                                             <Form.Item name="dealerLocation" label="Dealer Location" initialValue={formData?.dealerLocation}>
-                                                <Input maxLength={50} {...disabledProps} />
+                                                <Select placeholder="Select Location" showSearch allowClear options={dealerLocationList} fieldNames={{ label: 'dealerLocationName', value: 'id' }} />
                                             </Form.Item>
                                         </Col>
                                     </>
                                 )}
                                 {formActionType?.editMode && (
-                                <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                                    <Form.Item name="purchaseOrderNumber" label="Purchase Order Number" initialValue={formData?.purchaseOrderNumber}>
-                                        <Input maxLength={50} {...disabledProps} />
-                                    </Form.Item>
-                                </Col>
-                                )}
- 
-                                <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
+                                    <>
+                                    <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
+                                        <Form.Item name="purchaseOrderNumber" label="Purchase Order Number" initialValue={formData?.purchaseOrderNumber}>
+                                            <Input maxLength={50} {...disabledProps} />
+                                        </Form.Item>
+                                    </Col>
+                               
+                                    <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
                                     <Form.Item initialValue={convertCalenderDate(formData?.purchaseOrderDate ? formData?.purchaseOrderDate : new Date(), 'YYYY/MM/DD')} label="Purchase Order Date" name="purchaseOrderDate">
-                                        <DatePicker disabledDate={disablePastDate} format="YYYY-MM-DD" style={{ display: 'auto', width: '100%' }} />
+                                        <DatePicker disabledDate={disablePastDate} {...disabledProps}  format="YYYY-MM-DD" style={{ display: 'auto', width: '100%' }} />
                                     </Form.Item>
                                 </Col>
-                                {formActionType?.editMode && (<>
-                                <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                                    <Form.Item name="purchaseOrderStatus" label="Purchase Order Status" initialValue={formData?.purchaseOrderStatus}>
-                                        <Input maxLength={50} {...disabledProps} />
-                                    </Form.Item>
-                                </Col>
-                                </>
+                                        <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
+                                            <Form.Item name="purchaseOrderStatus" label="Purchase Order Status" initialValue={formData?.purchaseOrderStatus}>
+                                                <Input maxLength={50} {...disabledProps} />
+                                            </Form.Item>
+                                        </Col>
+                                    </>
                                 )}
                             </Row>
 
@@ -114,9 +117,9 @@ const AddEditFormMain = (props) => {
                                     <h3> Product Details </h3>
                                 </Col>
                                 <Col xs={24} sm={24} md={14} lg={14} xl={14} xxl={14}>
-                                    <Form.Item name="model" label="Model" initialValue={formData?.model} rules={[validateRequiredSelectField('Model')]}>
+                                    <Form.Item name="modelCode" label="Model" initialValue={formData?.modelCode} rules={[validateRequiredSelectField('Model')]}>
                                         <Select placeholder="Select Model" allowClear options={productHierarchyList} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }} />
-                                    </Form.Item> 
+                                    </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={10} lg={10} xl={10} xxl={10}>
                                     <Form.Item name="quantity" label="Quantity" initialValue={formData?.quantity} rules={[validateOnlyPositiveNumber('Quantity')]}>

@@ -5,7 +5,7 @@
  */
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableCloumn';
 import { VechilePurchaseOrderStatusTag } from './utils/VechilePurchaseOrderStatusTag';
-// import { convertDateMonthYear } from 'utils/formatDateTime';
+import { convertDateMonthYear } from 'utils/formatDateTime';
 
 import styles from 'components/common/Common.module.css';
 
@@ -21,6 +21,7 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             title: 'Purchase Order Date ',
             dataIndex: 'purchaseOrderDate',
             width: '14%',
+            render: (text) => convertDateMonthYear(text),
         }),
 
         tblPrepareColumns({ 
@@ -31,9 +32,9 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
 
         tblPrepareColumns({
             title: 'Status',
-            dataIndex: 'purchaseOrderStatus',
+            dataIndex: 'purchaseOrderStatusCode',
             width: '14%',
-            render: (_, record) => VechilePurchaseOrderStatusTag(record.orderStatus),
+            render: (_, record) => VechilePurchaseOrderStatusTag(record.purchaseOrderStatusCode),
         }),
 
         tblActionColumn({ handleButtonClick, styles, width: '8%' }),

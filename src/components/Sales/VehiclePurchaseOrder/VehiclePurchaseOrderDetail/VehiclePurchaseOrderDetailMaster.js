@@ -15,11 +15,13 @@ import { viewVehicleDetailDataActions } from 'store/actions/data/vehicle/viewVeh
 import { tncProductHierarchyDataActions } from 'store/actions/data/termsConditions/tncProductHierarchy';
 
 import { dealerParentLovDataActions } from 'store/actions/data/dealer/dealerParentsLov';
-
-
+import { viewVPODataActions } from 'store/actions/data/vehicle/viewVPODetails';
 import { showGlobalNotification } from 'store/actions/notification';
 import { ListDataTable } from 'utils/ListDataTable';
 import { tableColumn } from './tableColumn';
+
+import { saveVPODataActions } from 'store/actions/data/vehicle/vehiclePurchaseOrderAction';
+import { dealerLocationDataActions } from 'store/actions/data/vehicle/dealerLocationAction';
 
 import styles from 'components/common/Common.module.css';
 
@@ -32,17 +34,18 @@ const mapStateToProps = (state) => {
                 ProductHierarchyData: { isLoaded: isDataLoaded = false, data: productHierarchyList },
             },
             DealerHierarchy: {
-                DealerParent : {data: dealerParentsLovList}
+                DealerParent: { data: dealerParentsLovList },
             },
             Vehicle: {
-                ViewVehicleDetail: {  isLoading, data: vehicleDetails = {} },
+                ViewVPODetail: { isLoading, data: viewVehiclePODetails = {} },
+                DealerLocationDetail: { data: dealerLocationList = {} },
             },
         },
         common: {
             Header: { data: loginUserData = [] },
         },
     } = state;
-    console.log('state', state);
+    // console.log('view state', state);
 
     const moduleTitle = 'Vehicle Purchase Order';
 
@@ -52,10 +55,12 @@ const mapStateToProps = (state) => {
         isDataLoaded,
         isLoading,
         moduleTitle,
-        vehicleDetails,
+        vehicleDetails: '',
         productHierarchyList,
         userType: loginUserData?.userType || '',
         dealerParentsLovList,
+        viewVehiclePODetails,
+        dealerLocationList,
     };
     return returnValue;
 };
@@ -67,13 +72,18 @@ const mapDispatchToProps = (dispatch) => ({
             fetchProductList: tncProductHierarchyDataActions.fetchList,
             // resetData: tncProductHierarchyDataActions.reset,
             listShowLoading: tncProductHierarchyDataActions.listShowLoading,
-            fetchDealerParentsLovList : dealerParentLovDataActions.fetchList,
+            fetchDealerParentsLovList: dealerParentLovDataActions.fetchList,
             listShowLoadingOnLoad: dealerParentLovDataActions.listShowLoading,
 
+            fetchList: viewVPODataActions.fetchList,
+            saveData: saveVPODataActions.saveData,
+            resetData: saveVPODataActions.reset,
 
-            fetchList: viewVehicleDetailDataActions.fetchList,
-            saveData: viewVehicleDetailDataActions.saveData,
-            resetData: viewVehicleDetailDataActions.reset,
+            fetchDealerLocation: dealerLocationDataActions.fetchList,
+
+            // fetchList: viewVehicleDetailDataActions.fetchList,
+            // saveData: viewVehicleDetailDataActions.saveData,
+            // resetData: viewVehicleDetailDataActions.reset,
             // listShowLoading: viewVehicleDetailDataActions.listShowLoading,
             showGlobalNotification,
         },
@@ -82,11 +92,13 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const VehiclePurchaseOrderDetailMasterBase = (props) => {
-    const { typeData, fetchProductList, productHierarchyList,fetchDealerParentsLovList,dealerParentsLovList,listShowLoadingOnLoad } = props;
+    const { typeData, fetchProductList, productHierarchyList, fetchDealerParentsLovList, dealerParentsLovList, listShowLoadingOnLoad, viewVehiclePODetails, fetchDealerLocation,dealerLocationList } = props;
     const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, saveData, isLoading, vehicleDetails } = props;
-    const { form, selectedRecordId, formActionType, handleFormValueChange, salesConsultantLov, NEXT_ACTION, handleButtonClick } = props;
+    const { form, selectedRecordId, formActionType, handleFormValueChange, salesConsultantLov, NEXT_ACTION,VIEW_ACTION,EDIT_ACTION, handleButtonClick } = props;
     const [activeKey, setactiveKey] = useState([1]);
+    const [dealerParentCode, setDealerParentCode] = useState(null);
 
+console.log('VIEW_ACTION',VIEW_ACTION, EDIT_ACTION);
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
@@ -110,10 +122,10 @@ const VehiclePurchaseOrderDetailMasterBase = (props) => {
 
     const extraParams = [
         {
-            key: 'vin',
-            title: 'vin',
+            key: 'purchaseOrderId',
+            title: 'purchaseOrderId',
             value: selectedRecordId,
-            name: 'VIN Number',
+            name: 'Purchase Order Id',
         },
     ];
     useEffect(() => {
@@ -128,12 +140,44 @@ const VehiclePurchaseOrderDetailMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
+
+    useEffect(() => {
+        if (userId && selectedRecordId) {
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
+        }
+    }, [userId, selectedRecordId]);
+
+    useEffect(() => {
+        if (userId && viewVehiclePODetails.dealerParentCode) {
+            const extraParams = [
+                {
+                    key: 'dealerParentCode',
+                    title: 'dealerParentCode',
+                    value: viewVehiclePODetails.dealerParentCode,
+                    name: 'Dealer Parent Code',
+                },
+            ];
+            fetchDealerLocation({ setIsLoading: listShowLoading, extraParams, onErrorAction });
+        }
+    }, [userId, viewVehiclePODetails]);
+   
+
+
+    const getDealerlocation = (e) => {
+        console.log('e',e);
+        setDealerParentCode(e);
+        const extraParams = [
+            {
+                key: 'dealerParentCode',
+                title: 'dealerParentCode',
+                value: e,
+                name: 'Dealer Parent Code',
+            },
+        ];
+        fetchDealerLocation({ setIsLoading: listShowLoading, extraParams, onErrorAction });
+
+    }
     
-    // useEffect(() => {
-    //     if (userId && selectedRecordId) {
-    //         fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
-    //     }
-    // }, [userId, selectedRecordId]);
 
     const onSearch = (value) => {
         if (!value) {
@@ -142,14 +186,9 @@ const VehiclePurchaseOrderDetailMasterBase = (props) => {
     };
 
     const onFinish = (values) => {
-        const recordId = vehicleDetails.vehicleDetails?.id || '';
-        // const vin = vehicleDetails.vehicleDetails?.vin || '';
-        const orderTypeCode = values?.orderType;
-        const modelCode = values?.model;
+        const recordId = viewVehiclePODetails?.id || '';
 
-        const data = { ...values, id: recordId, purchaseOrderDate: values?.purchaseOrderDate?.format('YYYY-MM-DD'), orderTypeCode: orderTypeCode,modelCode:modelCode };
-        console.log('request',data);
-
+        // const data = { ...values, id: recordId, purchaseOrderDate: values?.purchaseOrderDate?.format('YYYY-MM-DD'),purchaseOrderNumber:purchaseOrderNumber,purchaseOrderStatusCode:purchaseOrderStatusCode,dealerLocationId:values.dealerLocation,cancelRemarksCode:'' };
         const onSuccess = (res) => {
             handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -161,8 +200,19 @@ const VehiclePurchaseOrderDetailMasterBase = (props) => {
         };
 
         const requestData = {
-            data: { vehicleDetails: data },
-            method: 'put',
+            data: {
+                id: recordId,
+                orderTypeCode: values?.orderTypeCode,
+                dealerParentCode: values?.dealerParentCode,
+                modelCode: values?.modelCode,
+                quantity: values?.quantity,
+                purchaseOrderDate: values?.purchaseOrderDate?.format('YYYY-MM-DD'),
+                purchaseOrderNumber: '',
+                purchaseOrderStatusCode: '',
+                dealerLocationId: values?.dealerLocation,
+                cancelRemarksCode: '',
+            },
+            method: 'post',
             setIsLoading: listShowLoading,
             userId,
             onError,
@@ -183,21 +233,21 @@ const VehiclePurchaseOrderDetailMasterBase = (props) => {
         typeData,
         userId,
         isDataLoaded,
-        formData: vehicleDetails?.vehicleDetails,
+        formData: viewVehiclePODetails,
         isLoading,
         salesConsultantLov,
         onChange,
         activeKey,
         setactiveKey,
         productHierarchyList,
-        
+        getDealerlocation,
         
     };
 
     const viewProps = {
         typeData,
         fetchList,
-        formData: vehicleDetails?.vehicleDetails,
+        formData: viewVehiclePODetails,
         styles,
         isLoading,
         salesConsultantLov,
@@ -218,7 +268,6 @@ const VehiclePurchaseOrderDetailMasterBase = (props) => {
                     <AddEditForm {...formProps} />
                 </Col>
             </Row>
-
         </>
     );
 };

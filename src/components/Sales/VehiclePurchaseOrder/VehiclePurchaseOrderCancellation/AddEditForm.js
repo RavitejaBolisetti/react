@@ -53,17 +53,17 @@ const AddEditFormMain = (props) => {
                                     <Select placeholder={preparePlaceholderSelect('Cancellation Reason')} allowClear fieldNames={{ label: 'value', value: 'key' }} options={typeData['PO_CNCL_RSN']}></Select>
                                 </Form.Item>
                             </Col>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                            {/* <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                 <Form.Item name="cancellationReasonType" label="Cancellation Reason Type" rules={[validateRequiredSelectField('Reason Type')]}>
                                     <Select placeholder={preparePlaceholderSelect('Cancellation Reason Type')} onChange={handleCancellationReasonTypeChange} allowClear fieldNames={{ label: 'value', value: 'key' }} options={typeData['']}></Select>
                                 </Form.Item>
-                            </Col>
+                            </Col> */}
 
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                            {/* <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                 <Form.Item name="cancellationRemark" label="Cancellation Remarks" rules={[validateRequiredInputField('Cancellation Remarks')]}>
                                     <TextArea placeholder={preparePlaceholderText('Cancellation Remarks')} />
                                 </Form.Item>
-                            </Col>
+                            </Col> */}
                         </Row>
                     </Col>
                 </Row>

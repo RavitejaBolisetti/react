@@ -62,7 +62,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const PoCancellationMasterBase = (props) => {
-    const { otfData, selectedOrder,typeData } = props;
+    const { otfData, selectedOrder,typeData,onFinishOTFCancellation, } = props;
     const { userId, listShowLoading, onFinishFailed } = props;
     const { fetchProductHierarchyList, productHierarchyData, fetchDealerList, dealerDataList } = props;
 
@@ -74,10 +74,7 @@ const PoCancellationMasterBase = (props) => {
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
-    const onFinishOTFCancellation = (values) => {
-        console.log('req values==>>', values);
-        
-    };
+   
     useEffect(() => {
         if (userId) {
             fetchProductHierarchyList({ setIsLoading: listShowLoading, userId });

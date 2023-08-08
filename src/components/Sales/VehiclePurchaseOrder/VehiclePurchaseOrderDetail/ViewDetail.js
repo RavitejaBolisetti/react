@@ -19,7 +19,7 @@ const { Panel } = Collapse;
 
 const ViewDetailMain = (props) => {
     const { formData, isLoading, activeKey, onChange, userType } = props;
-
+console.log();
     const viewProps = {
         bordered: false,
         colon: false,
@@ -33,30 +33,29 @@ const ViewDetailMain = (props) => {
         <>
             <Card className={styles.ExchangeCard}>
                 <Descriptions {...viewProps}>
-                    <Descriptions.Item label="Order Type">{'Against Stock'}</Descriptions.Item>
-                    <Descriptions.Item label="Purchase Order Number">{'PO10001'}</Descriptions.Item>
-                    <Descriptions.Item label="Purchase Order Date">
-                        {/* {checkAndSetDefaultValue(deliveryDate, isLoading)} */}
-                        {checkAndSetDefaultValue(formData?.deliveryDate, isLoading, DATA_TYPE?.DATE?.key)}
+                    <Descriptions.Item label="Order Type">{checkAndSetDefaultValue(formData?.orderType, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Purchase Order Number">{checkAndSetDefaultValue(formData?.purchaseOrderNumber, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Purchase Order Date"> {checkAndSetDefaultValue(formData?.purchaseOrderDate, isLoading, DATA_TYPE?.DATE?.key)}
                         </Descriptions.Item>
-                    <Descriptions.Item label="Purchase Order Status">{'Open'}</Descriptions.Item>
-                    <Descriptions.Item label="Purchase Cancel Date">
-                        {checkAndSetDefaultValue(formData?.deliveryDate, isLoading)}
-                        {/* {checkAndSetDefaultValue(formData?.deliveryDate, isLoading, DATA_TYPE?.DATE?.key)} */}
-                        </Descriptions.Item>
-                    {/* <Descriptions.Item label="SO Number">{'SO10237'}</Descriptions.Item>
-                                    <Descriptions.Item label="SO Date">{checkAndSetDefaultValue(deliveryDate, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="SO Status">{'Cancel'}</Descriptions.Item> */}
-                </Descriptions>
+                    <Descriptions.Item label="Purchase Order Status">{checkAndSetDefaultValue(formData?.purchaseOrderStatus, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Dealer Code">{checkAndSetDefaultValue(formData?.dealerParentCode, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Dealer Location"> {checkAndSetDefaultValue(formData?.dealerLocation, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Purchase Cancel Date"> {checkAndSetDefaultValue(formData?.purchaseOrderCancelDate, isLoading)}</Descriptions.Item>
 
-                <h4> Product Details</h4>
+                    <Descriptions.Item label="SO Number">{checkAndSetDefaultValue(formData?.soNumber, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="SO Date">{checkAndSetDefaultValue(formData?.soDate, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="SO Status">{checkAndSetDefaultValue(formData?.soStatus, isLoading)}</Descriptions.Item>
+
+                 </Descriptions>
+
+                <h4 className={styles.marB5}> Product Details</h4>
                 <Descriptions {...viewProps}>
-                    <Descriptions.Item label="Model">{'XUV300'}</Descriptions.Item>
-                    <Descriptions.Item label="Quantity">{2}</Descriptions.Item>
+                    <Descriptions.Item label="Model">{checkAndSetDefaultValue(formData?.modelCode, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Quantity">{checkAndSetDefaultValue(formData?.quantity, isLoading)}</Descriptions.Item>
                 </Descriptions>
-                <h4> Cancel Remarks</h4>
+                <h4 className={styles.marB5}> Cancel Remarks</h4>
                 <Descriptions {...viewProps}>
-                    <Descriptions.Item label="">{'Cancel Reason for vehicle purchase order'}</Descriptions.Item>
+                    <Descriptions.Item label="">{checkAndSetDefaultValue(formData?.cancelRemarks, isLoading)}</Descriptions.Item>
                 </Descriptions>
             </Card>
         </>
