@@ -67,7 +67,7 @@ const mapDispatchToProps = (dispatch) => ({
 export const RSMApprovalMasterBase = (props) => {
     const { fetchList, saveData, listShowLoading, userId, data, totalRecords, showGlobalNotification } = props;
     const { typeData } = props;
-    const { filterString, setFilterString, vehicleDetailStatusList } = props;
+    const { filterString, setFilterString } = props;
 
     const [listFilterForm] = Form.useForm();
     const [rejectForm] = Form.useForm();
@@ -100,8 +100,8 @@ export const RSMApprovalMasterBase = (props) => {
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [isRejectModalVisible, setRejectModalVisible] = useState(false);
     const [requestType, setRequestType] = useState('');
-    const [queryButtons, setqueryButtons] = useState({ pending: true, approved: false, rejected: false });
     const [rejectFormButtonActive, setRejectFormButtonActive] = useState(true);
+    const [rsmStatusType, setRsmStatusType] = useState(RSM_APPROVAL_STATUS?.PENDING?.key);
 
     const REQUEST_CONSTANT = {
         Reject: {
@@ -125,28 +125,10 @@ export const RSMApprovalMasterBase = (props) => {
         setShowDataLoading(false);
     };
 
-    const handleButtonQuery = (buttonName) => {
-        switch (buttonName) {
-            case RSM_APPROVAL_STATUS?.PENDING?.key: {
-                setFilterString({ searchParam: RSM_APPROVAL_STATUS?.PENDING?.title });
-                setShowDataLoading(true);
-                break;
-            }
-            case RSM_APPROVAL_STATUS?.APPROVED?.key: {
-                setFilterString({ searchParam: RSM_APPROVAL_STATUS?.APPROVED?.title });
-                setShowDataLoading(true);
-                break;
-            }
-            case RSM_APPROVAL_STATUS?.REJECTED?.key: {
-                setFilterString({ searchParam: RSM_APPROVAL_STATUS?.REJECTED?.title });
-                setShowDataLoading(true);
-                break;
-            }
-            default: {
-                setFilterString({ searchParam: RSM_APPROVAL_STATUS?.PENDING?.title });
-                setShowDataLoading(true);
-            }
-        }
+    const handleButtonQuery = (item) => {
+        setRsmStatusType(item?.key);
+        setFilterString({ searchParam: item?.key });
+        setShowDataLoading(true);
     };
 
     const extraParams = useMemo(() => {
@@ -258,7 +240,7 @@ export const RSMApprovalMasterBase = (props) => {
     const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
         setFormData([]);
-        queryButtons?.pending ? setButtonData({ ...defaultBtnVisiblity }) : setButtonData({ ...defaultBtnVisiblity, cancelBtn: false, reject: false, approve: false });
+        rsmStatusType === RSM_APPROVAL_STATUS?.PENDING?.key ? setButtonData({ ...defaultBtnVisiblity }) : setButtonData({ ...defaultBtnVisiblity, cancelBtn: false, reject: false, approve: false });
         setFormActionType({ viewMode: buttonAction === VIEW_ACTION });
         record && setFormData(record);
         setIsFormVisible(true);
@@ -328,6 +310,7 @@ export const RSMApprovalMasterBase = (props) => {
         showAddButton: false,
         handleButtonClick,
         noMessge: LANGUAGE_EN.GENERAL.LIST_NO_DATA_FOUND.TITLE,
+        rsmStatusType,
     };
 
     const removeFilter = (key) => {
@@ -343,7 +326,6 @@ export const RSMApprovalMasterBase = (props) => {
     const advanceFilterResultProps = {
         extraParams,
         removeFilter,
-        vehicleDetailStatusList,
         advanceFilter: true,
         filter: true,
         filterString,
@@ -353,10 +335,9 @@ export const RSMApprovalMasterBase = (props) => {
         onFinishFailed,
         title: '',
         handleButtonQuery,
-        // title: <QueryButtons queryButtons={queryButtons} setqueryButtons={setqueryButtons} handleButtonQuery={handleButtonQuery} />,
         data,
         typeData,
-
+        rsmStatusType,
         searchForm,
         handleSearchChange,
         handleResetFilter,
@@ -390,7 +371,6 @@ export const RSMApprovalMasterBase = (props) => {
         setRejectRequest,
         formData,
         handleRequest,
-        queryButtons,
     };
 
     const rejectRequestProps = {
