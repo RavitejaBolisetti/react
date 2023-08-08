@@ -2,37 +2,37 @@ import React from "react";
 import { screen, fireEvent, render } from "@testing-library/react";
 import '@testing-library/jest-dom/extend-expect';
 import { ExchangeVehiclesMaster } from "@components/Sales/OTF/ExchangeVehicles/ExchangeVehiclesMaster"
-// import { ViewDetail } from "@components/Sales/OTF/ExchangeVehicles/ViewDetail"
-// import { AddEditForm } from "@components/Sales/OTF/ExchangeVehicles/AddEditForm"
 
 import customRender from "@utils/test-utils";
 import { Provider } from 'react-redux';
 import createMockStore from '__mocks__/store';
 
+const flagProps = {
+    isCustomerLoading:false,
+    isDataCustomerLoaded:false,
+    isDataLoaded:true,
+    isFinanceLovDataLoaded:true,
+    isFinanceLovLoading:false,
+    isLastSection:false,
+    isLoading:false,
+    isMakeDataLoaded:true,
+    isMakeLoading:false,
+    isModelDataLoaded:false,
+    isModelLoading:false,
+    isSchemeLovDataLoaded:true,
+    isSchemeLovLoading:false,
+    isVariantDataLoaded:false,
+    isVariantLoading:false,
+    isVisible:true,
+}
+
 const props = {
     formData:[],
     userId:'123',
-    isCustomerLoading:true,
-    isDataCustomerLoaded:true,
-    isDataLoaded:true,
-    isFinanceLovDataLoaded:true,
-    isFinanceLovLoading:true, // for
-    isLastSection:true,
-    isLoading:true,
-    isMakeDataLoaded:true,
-    isMakeLoading:true, // make
-    isModelDataLoaded:true,
-    isModelLoading:true,    //for modelgroup
-    isSchemeLovDataLoaded:true,
-    isSchemeLovLoading:true, // for
-    isVariantDataLoaded:true,
-    isVariantLoading:true, // variant
-    isVisible:true,
     listCustomerShowLoading:true,
     isConfigLoading:true, // for relation
     typeData:['REL_TYPE'], // later do typeData
     yearsList:[],
-    loading:true
 }
 
 const selectedOrderId='1234'
@@ -45,7 +45,7 @@ const extraParams = [
     },
 ];
 
-const funcMocks={
+const functionMocks={
     handleFormValueChange:jest.fn(),
     setFormData:jest.fn(),
     makeExtraParams:jest.fn(),
@@ -118,23 +118,70 @@ const mockStore = createMockStore({
     auth: { userId: 123 },
     data:{
         OTF:{
-            ExchangeVehicle:{isDataLoaded:true, isLoading:true, exchangeData:[{make:'test', modelGroup:'test1'}]},
-            FinanceLov:{isFinanceLovDataLoaded:true, isLoading:true, financeLovData :[{ label: 'value', value: 'key' }]},
-            SchemeDetail:{isSchemeLovDataLoaded:true, isLoading:true, schemeLovData:[{ label: 'value', value: 'key' }]}
+            ExchangeVehicle:{isDataLoaded:true, isLoading:false, exchangeData:[{make:'test', modelGroup:'test1'}]},
+            FinanceLov:{isFinanceLovDataLoaded:true, isLoading:false, financeLovData :[{ label: 'value', value: 'key' }]},
+            SchemeDetail:{isSchemeLovDataLoaded:true, isLoading:false, schemeLovData:[{ label: 'value', value: 'key' }]}
         },
         ConfigurableParameterEditing: { typeData:[] },
         Vehicle: {
-            MakeVehicleDetails: { isMakeDataLoaded:true, isLoading:true, makeData:[{ label: 'value', value: 'key' }] },
-            ModelVehicleDetails: { isModelDataLoaded:true, isLoading:true, modelData:[{ label: 'value', value: 'key' }] },
-            VariantVehicleDetails: { isVariantDataLoaded:true, isLoading:true, variantData:[{ label: 'value', value: 'key' }] },
+            MakeVehicleDetails: { isMakeDataLoaded:true, isLoading:false, makeData:[{ label: 'value', value: 'key' }] },
+            ModelVehicleDetails: { isModelDataLoaded:false, isLoading:false, modelData:[{ label: 'value', value: 'key' }] },
+            VariantVehicleDetails: { isVariantDataLoaded:false, isLoading:false, variantData:[{ label: 'value', value: 'key' }] },
         },
     },
     customer: {
-        customerDetail: { isDataCustomerLoaded:true, isCustomerLoading:true, customerDetail:[] },
+        customerDetail: { isDataCustomerLoaded:false, isCustomerLoading:false, customerDetail:[] },
     }
 });
 
-const viewMode = true;
+const formActionTypeForEditMode = {
+    addMode:false,
+    editMode:true,
+    viewMode:false,
+}
+
+const formActionTypeForViewMode = {
+    addMode:false,
+    editMode:false,
+    viewMode:true,
+}
+
+const viewProps = {
+    isVisible:true,
+    styles:{},
+    formData:[],
+    isLoading:false,
+    makeData:[{ label: 'value', value: 'key' }],
+    modelData:[
+        {
+            key:"Swift",
+            parentKey:"Maruti",
+            value:"Swift"
+        }
+    ],
+    variantData:[
+        {
+            key:"Swift dezire",
+            parentKey:"swift",
+            value:"Swift dezire"
+        }
+    ],
+    typeData:['REL_TYPE'],
+    schemeLovData:[
+        {
+            key:"9fb8470b-8f50-4587-a3d1-09f1a027a98c",
+            parentKey:null,
+            value:"Name"
+        }
+    ],
+    financeLovData:[
+        {
+            key:"FI002",
+            parentKey:null,
+            value:"HDFC"
+        }
+    ],
+};
 
 describe("ExchangeVehiclesMaster component render",()=>{
     it("should component render", ()=>{
@@ -143,7 +190,7 @@ describe("ExchangeVehiclesMaster component render",()=>{
               <ExchangeVehiclesMaster {...props}
               styles={{}} 
               extraParams={extraParams}
-              {...funcMocks} 
+              {...functionMocks} 
               selectedOrderId={selectedOrderId} 
               defaultExtraParam={defaultExtraParam} 
               mdelData={modelData} 
@@ -153,6 +200,8 @@ describe("ExchangeVehiclesMaster component render",()=>{
               onHandleChange={jest.fn()}
               schemeLovData={schemeLovData}
               financeLovData={financeLovData}
+              {...flagProps}
+              formActionTypeForEditMode={formActionTypeForEditMode}
               />
             </Provider>
         );
@@ -184,4 +233,20 @@ describe("ExchangeVehiclesMaster component render",()=>{
         const hypothecatedTo = screen.getByRole('combobox', { name: 'Hypothecated To', exact: false });
         fireEvent.click(hypothecatedTo)
     })
+
+
+    it("should view details component render", ()=>{
+        const { getByRole } = customRender(
+             <Provider store={mockStore}>
+               <ExchangeVehiclesMaster 
+               {...viewProps}
+               formActionTypeForViewMode={formActionTypeForViewMode}
+               />
+             </Provider>
+        );
+        
+        screen.debug()
+     })
+
+
 })
