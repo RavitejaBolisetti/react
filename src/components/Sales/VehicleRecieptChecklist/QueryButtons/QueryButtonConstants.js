@@ -13,7 +13,7 @@ export const QUERY_BUTTONS = {
     PARTIALLY_COMPLETED: {
         id: 'partially',
         title: 'Partially Completed',
-        key: 'partially',
+        key: 'partiallyCompleted',
         active: false,
     },
     COMPLETED: {
