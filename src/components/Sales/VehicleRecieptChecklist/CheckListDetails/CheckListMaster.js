@@ -58,8 +58,12 @@ const mapDispatchToProps = (dispatch) => ({
 
 const VehicleRecieptCheckListMain = (props) => {
     const { userId, isLoading, handleButtonClick } = props;
+
     const { fetchList, resetData, saveData, listShowLoading, showGlobalNotification } = props;
+
     const { form, selectedCheckListId, section, formActionType, handleFormValueChange, NEXT_ACTION } = props;
+
+    const { vehicleReceiptFinalFormData, setvehicleReceiptFinalFormData } = props;
 
     const [formData, setformData] = useState({});
     const [checkListDataModified, setcheckListDataModified] = useState([
@@ -103,28 +107,30 @@ const VehicleRecieptCheckListMain = (props) => {
 
     const onFinish = (values) => {
         const data = { ...formData, vehicleIdentificationNumber: selectedCheckListId, aggregates: checkListDataModified?.filter((checkList) => checkList?.isEdited) };
-        const onSuccess = (res) => {
-            setcheckListDataModified([]);
-            setformData();
-            setIsReadOnly(false);
-            form.resetFields();
-            handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
-        };
+        Object.values(data) && Object.keys(data) && setvehicleReceiptFinalFormData(data);
 
-        const onError = (message) => {
-            setcheckListDataModified([]);
-        };
+        // const onSuccess = (res) => {
+        //     setcheckListDataModified([]);
+        //     setformData();
+        //     setIsReadOnly(false);
+        //     form.resetFields();
+        //     handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
+        // };
 
-        const requestData = {
-            data: data,
-            method: 'post',
-            setIsLoading: listShowLoading,
-            userId,
-            onError,
-            onSuccess,
-        };
+        // const onError = (message) => {
+        //     setcheckListDataModified([]);
+        // };
 
-        saveData(requestData);
+        // const requestData = {
+        //     data: data,
+        //     method: 'post',
+        //     setIsLoading: listShowLoading,
+        //     userId,
+        //     onError,
+        //     onSuccess,
+        // };
+
+        // saveData(requestData);
     };
     const onFinishFailed = () => {
         form.validateFields()

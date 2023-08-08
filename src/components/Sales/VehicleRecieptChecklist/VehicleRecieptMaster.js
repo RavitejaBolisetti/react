@@ -81,6 +81,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
 
     const [selectedRecord, setSelectedRecord] = useState();
     const [selectedRecordId, setSelectedRecordId] = useState();
+    const [vehicleReceiptFinalFormData, setvehicleReceiptFinalFormData] = useState({ checklistDetails: {}, supportingDocument: {} });
 
     const [section, setSection] = useState();
     const [defaultSection, setDefaultSection] = useState();
@@ -439,7 +440,13 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         }
     }, [formActionType]);
 
+    const vehicleReceiptFormdataProps = {
+        vehicleReceiptFinalFormData,
+        setvehicleReceiptFinalFormData,
+    };
+
     const containerProps = {
+        ...vehicleReceiptFormdataProps,
         record: selectedRecord,
         form,
         formActionType,

@@ -6,12 +6,12 @@
 import { Button } from 'antd';
 import styles from 'components/common/Common.module.css';
 
-export const QueryButtons = ({ items = {}, onClick, currentItem = '' }) => {
+export const QueryButtons = ({ items = {}, onClick }) => {
     return (
         <div className={`${styles.userManagement} ${styles.headingToggle}`}>
             {Object.values(items)?.map((item, index) => {
                 return (
-                    <Button onClick={() => onClick(item)} type={currentItem ? 'primary' : item?.active ? 'primary' : 'link'}>
+                    <Button onClick={() => onClick(item)} type={item?.active ? 'primary' : 'link'}>
                         {item?.title}
                     </Button>
                 );
