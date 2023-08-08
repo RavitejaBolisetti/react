@@ -5,7 +5,7 @@
  */
 
 import {useState} from 'react';
-import { Button, Row, Col, Input, Select } from 'antd';
+import { Form, Button, Row, Col, Input, Select  } from 'antd';
 
 import styles from 'components/common/Common.module.css';
 import { PlusOutlined } from '@ant-design/icons';
@@ -25,8 +25,10 @@ export default function AdvanceFilter(props) {
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.contentHeaderBackground}>
+                        <Form autoComplete="off" colon={false} className={styles.masterListSearchForm}>
+                        <Form.Item>
                         <Row gutter={20}>
-                            <Col xs={24} sm={24} md={5} lg={5} xl={5}>
+                            <Col xs={24} sm={24} md={5} lg={5} xl={5} className={styles.verticallyCentered}>
                                 <div className={`${styles.userManagement} ${styles.headingToggle}`}>
                                     {Object.values(VEHICLE_TYPE)?.map((item) => {
                                         return (
@@ -37,7 +39,7 @@ export default function AdvanceFilter(props) {
                                     })}
                                 </div>
                             </Col>
-                            <Col xs={24} sm={24} md={7} lg={7} xl={7}>
+                            <Col xs={24} sm={24} md={7} lg={7} xl={7} className={styles.fullWidth}>
                                 <div className={styles.selectSearchBg}>
                                     <Search placeholder="Search by VIN No./Chassis No." value={vehicleSearchvalue} onChange={ChangeSearchHandler} allowClear onSearch={onSearchHandle} className={styles.headerSearchField} />
                                 </div>
@@ -52,6 +54,9 @@ export default function AdvanceFilter(props) {
                                 </Button>
                             </Col>
                         </Row>
+                        </Form.Item>
+                    </Form>
+
                     </div>
                 </Col>
             </Row>
