@@ -46,6 +46,7 @@ export const tableColumn = ({ handleButtonClick, page, pageSize, tableIconsVisib
             title: 'Supplier Invoice Date',
             dataIndex: 'supplierInvoiceDate',
             width: '14%',
+            render: (text) => convertDateMonthYear(text),
         }),
 
         tblPrepareColumns({

@@ -47,6 +47,7 @@ export default function AppliedAdvanceFilter(props) {
                             {advanceFilter && (
                                 <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.verticallyCentered}>
                                     <Button
+                                        data-testid="advanceFiltersBtn"
                                         icon={<FilterIcon />}
                                         type="link"
                                         onClick={() => {
@@ -70,7 +71,7 @@ export default function AppliedAdvanceFilter(props) {
                             )}
 
                             {advanceFilter && filterString?.advanceFilter && downloadReport && (
-                                <Button icon={<BsDownload />} onClick={handleDownloadReport} danger>
+                                <Button data-testid="downloadBtn" icon={<BsDownload />} onClick={handleDownloadReport} danger>
                                     Download
                                 </Button>
                             )}
@@ -105,7 +106,7 @@ export default function AppliedAdvanceFilter(props) {
                                         })}
                                 </Col>
                                 <Col xs={24} sm={2} md={2} lg={2} xl={2} className={styles.advanceFilterClear}>
-                                    <Button className={styles.clearBtn} onClick={() => handleResetFilter()} danger>
+                                    <Button data-testid="clearBtn" className={styles.clearBtn} onClick={() => handleResetFilter()} danger>
                                         Clear
                                     </Button>
                                 </Col>

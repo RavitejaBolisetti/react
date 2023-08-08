@@ -5,6 +5,7 @@
  */
 import React from 'react';
 import { withLayoutMaster } from 'components/withLayoutMaster';
+// import EmbeddedReportMaster from 'components/Reports/EmbeddedReportMaster';
 import { EmbeddedReportMaster } from 'components/Reports/EmbeddedReport';
 import { PageHeader } from 'pages/common/PageHeader';
 
