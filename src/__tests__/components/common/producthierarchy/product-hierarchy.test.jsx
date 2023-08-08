@@ -1,8 +1,7 @@
 import '@testing-library/jest-dom/extend-expect';
 import customRender from "@utils/test-utils";
 import { ProductHierarchy } from '@components/common/ProductHierarchy/ProductHierarchy';
-import { render, fireEvent, screen } from "@testing-library/react";
-import { act } from 'react-dom/test-utils';
+import { fireEvent, screen } from "@testing-library/react";
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
 
@@ -187,7 +186,5 @@ describe("Producthierarchy Components", () => {
         fireEvent.click(plus);
 
         expect(getByText(/Hierarchy/)).toBeInTheDocument();
-
-        screen.debug()
     })
 })

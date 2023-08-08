@@ -3,8 +3,7 @@ import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
 import { screen, fireEvent } from '@testing-library/react';
 import FormProductAttribute from '@components/common/ProductHierarchy/ProductAttribute/FormProductAttribute';
-import { Form } from 'antd';
-
+import { Form } from 'antd';s
 
 const productHierarchyAttributeData = [{
     attributeCode: "Model",
@@ -65,7 +64,6 @@ describe('FormProductAttribute component', () => {
         const [editForm, attributeForm] = Form.useForm();
         return <FormProductAttribute onChange={jest.fn()} editForm={editForm} attributeForm={attributeForm} {...props} />
     }
-
 
     it('should render the FormProductAttribute components', () => {
         const { getByRole } = customRender(<FormWrapper

@@ -2,10 +2,7 @@ import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
 import { screen, fireEvent } from '@testing-library/react';
 import ProductAttributeMaster from '@components/common/ProductHierarchy/ProductAttribute/ProductAttributeMaster';
-import CardProductAttribute from '@components/common/ProductHierarchy/ProductAttribute/CardProductAttribute';
 import FormProductAttribute from '@components/common/ProductHierarchy/ProductAttribute/FormProductAttribute';
-
-
 
 const data = [{
     attributeId: "testAttId",
@@ -90,7 +87,6 @@ describe('ProductAttributeMaster component', () => {
         />);
     });
 
-
     it('should render the FormProductAttribute components', () => {
         const { getByRole } = customRender(<FormProductAttribute
             isVisible={true}
@@ -110,7 +106,6 @@ describe('ProductAttributeMaster component', () => {
         fireEvent.click(plusAdd);
 
         const add = getByRole("img", { name: 'plus', exact: false });
-        fireEvent.click(add);
-        
+        fireEvent.click(add);        
     });
 });

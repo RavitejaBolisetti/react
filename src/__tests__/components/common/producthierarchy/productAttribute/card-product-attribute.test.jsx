@@ -7,8 +7,6 @@ const mockSetFormBtnActive = jest.fn();
 const mockSetDisabledEdit = jest.fn();
 const mockForceUpdate = jest.fn();
 
-
-
 const mockProps = {
     isVisible: true,
     finalFormdata: {},
@@ -26,10 +24,7 @@ const mockProps = {
     setDisabledEdit: mockSetDisabledEdit,
 };
 
-
-
 describe('CardProductAttribute', () => {
-
 
     it('removes element with matching attributeId from skuAttributes', () => {
         render(<CardProductAttribute {...mockProps} />);
@@ -37,7 +32,6 @@ describe('CardProductAttribute', () => {
         fireEvent.click(deleteButton);
         expect(mockProps.setSKUAttributes)
     });
-
 
     it('renders correctly in readonly mode', () => {
         render(<CardProductAttribute {...mockProps} />);
@@ -49,8 +43,6 @@ describe('CardProductAttribute', () => {
         expect(screen.queryByTestId('save')).not.toBeInTheDocument();
     });
 
-
-
     it('renders correctly in edit mode', () => {
         render(<CardProductAttribute {...mockProps} />);
         fireEvent.click(screen.getByTestId('edit-button'));
@@ -58,15 +50,11 @@ describe('CardProductAttribute', () => {
         expect(screen.getByTestId('save')).toBeInTheDocument();
     });
 
-
-
     it('calls onAttributeEdit when edit button is clicked', () => {
         render(<CardProductAttribute {...mockProps} />);
         fireEvent.click(screen.getByTestId('edit-button'));
         expect(mockSetFormBtnActive).toHaveBeenCalledWith(true);
     });
-
-
 
     it('calls onAttributeDelete when delete button is clicked', () => {
         render(<CardProductAttribute {...mockProps} />);
@@ -74,8 +62,6 @@ describe('CardProductAttribute', () => {
         expect(mockProps.setSKUAttributes).toHaveBeenCalled();
         expect(mockForceUpdate).toHaveBeenCalled();
     });
-
-
 
     it('calls onAttributeCancel when cancel button is clicked', () => {
         render(<CardProductAttribute {...mockProps} />);
@@ -86,8 +72,6 @@ describe('CardProductAttribute', () => {
         expect(screen.queryByTestId('cancel')).not.toBeInTheDocument();
         expect(screen.queryByTestId('save')).not.toBeInTheDocument();
     });
-
-
 
     it('calls onAttributeSave when save button is clicked', () => {
         render(<CardProductAttribute {...mockProps} />);
