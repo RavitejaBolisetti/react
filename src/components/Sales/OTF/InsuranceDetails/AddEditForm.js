@@ -6,7 +6,6 @@
 import React from 'react';
 import { Col, Input, Form, Row, DatePicker, Space, Card } from 'antd';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
-import styles from 'components/common/Common.module.css';
 import { convertDateToCalender } from 'utils/formatDateTime';
 
 const AddEditFormMain = (props) => {

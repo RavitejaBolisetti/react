@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { Descriptions, Typography, Collapse, Space, Row, Col, Divider } from 'antd';
+import { Descriptions, Typography, Collapse, Divider } from 'antd';
 import { ACCESSIBLE_LOCATION_INDICATOR } from 'constants/modules/applicationMaster';
 
 import CardDocument from './CardDocument';

@@ -7,11 +7,9 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 const mockStore = configureMockStore();
 const initialState = {};
-// Add initial state if required
 const store = mockStore(initialState);
 
 beforeEach(() => {
-    // Reset the store and any necessary mocks before each test
     store.clearActions();
     jest.clearAllMocks();
 });

@@ -2,14 +2,15 @@
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
 import { screen, fireEvent } from '@testing-library/react';
-import { FormProductAttribute } from '@components/common/ProductHierarchy/ProductAttribute/FormProductAttribute';
+import FormProductAttribute from '@components/common/ProductHierarchy/ProductAttribute/FormProductAttribute';
+import { Form } from 'antd';s
 
 const productHierarchyAttributeData = [{
     attributeCode: "Model",
     id: "test"
 },
 {
-    attributeCode: "Model",
+    attributeCode: "Model1",
     id: "test2"
 }]
 
@@ -30,23 +31,47 @@ const data = [{
     value: "test for unit case"
 }]
 
+const selectedTreeData = [{
+    active: true,
+    attributeKey: "test",
+    hierarchyAttribueName: "producgtt",
+    id: "testid",
+    mfgOrgSk: "test",
+    parentName: undefined,
+    parntProdctId: "null",
+    prodctCode: "890",
+    prodctLongName: "testing for unit tset case",
+    prodctShrtName: "test",
+    subProdct: []
+}, {
+    active: true,
+    attributeKey: "test1",
+    hierarchyAttribueName: "producgtt1",
+    id: "testid2",
+    mfgOrgSk: "test11",
+    parentName: undefined,
+    parntProdctId: "null",
+    prodctCode: "890",
+    prodctLongName: "testing for unit tset case",
+    prodctShrtName: "test",
+    subProdct: []
+}]
 
-const props = {
-    attributeForm: jest.fn(),
-    isVisible: true,
-    productHierarchyAttributeData: productHierarchyAttributeData,
-    onAttributeFormFinish: jest.fn(),
-    formEdit: jest.fn(),
-    editForm: false,
-    skuAttributes: data
-}
+
 
 describe('FormProductAttribute component', () => {
+    const FormWrapper = (props) => {
+        const [editForm, attributeForm] = Form.useForm();
+        return <FormProductAttribute onChange={jest.fn()} editForm={editForm} attributeForm={attributeForm} {...props} />
+    }
+
     it('should render the FormProductAttribute components', () => {
-        const { getByRole } = customRender(<FormProductAttribute
+        const { getByRole } = customRender(<FormWrapper
             isVisible={true}
+            formEdit={true}
             onFinishFailed={jest.fn()}
-            onChange={jest.fn()}
+            attributeForm={jest.fn()}
+            productHierarchyAttributeData={productHierarchyAttributeData}
         />);
 
         const attributeName = getByRole("combobox", { name: 'Attribute Name', exact: false });
