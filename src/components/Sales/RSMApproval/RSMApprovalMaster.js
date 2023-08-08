@@ -118,7 +118,7 @@ export const RSMApprovalMasterBase = (props) => {
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
         searchForm.resetFields();
         setShowDataLoading(false);
-        setRejectFormButtonActive(true)
+        setRejectFormButtonActive(true);
     };
 
     const onErrorAction = (message) => {
@@ -145,8 +145,8 @@ export const RSMApprovalMasterBase = (props) => {
             {
                 key: 'searchParam',
                 title: 'Value',
-                value: filterString?.searchParam,
-                name: filterString?.searchParam,
+                value: filterString?.searchParam || rsmStatusType,
+                name: filterString?.searchParam || rsmStatusType,
                 canRemove: true,
                 filter: true,
             },
@@ -200,7 +200,7 @@ export const RSMApprovalMasterBase = (props) => {
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, page]);
+    }, [filterString, rsmStatusType, page]);
 
     useEffect(() => {
         if (userId && extraParams) {
@@ -373,7 +373,7 @@ export const RSMApprovalMasterBase = (props) => {
         handleRequest,
     };
 
-    const requestModuleTitle = ' Co-Dealer Invoice'
+    const requestModuleTitle = ' Co-Dealer Invoice';
 
     const rejectRequestProps = {
         isVisible: isRejectModalVisible,
