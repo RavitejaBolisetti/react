@@ -3,7 +3,7 @@ import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
 import { screen, fireEvent } from '@testing-library/react';
 import FormProductAttribute from '@components/common/ProductHierarchy/ProductAttribute/FormProductAttribute';
-import { Form } from 'antd';s
+import { Form } from 'antd';
 
 const productHierarchyAttributeData = [{
     attributeCode: "Model",
