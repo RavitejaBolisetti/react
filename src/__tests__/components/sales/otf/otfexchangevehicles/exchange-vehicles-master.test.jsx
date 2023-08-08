@@ -7,6 +7,8 @@ import customRender from "@utils/test-utils";
 import { Provider } from 'react-redux';
 import createMockStore from '__mocks__/store';
 
+
+
 const flagProps = {
     isCustomerLoading:false,
     isDataCustomerLoaded:false,
@@ -33,6 +35,8 @@ const props = {
     isConfigLoading:true, // for relation
     typeData:['REL_TYPE'], // later do typeData
     yearsList:[],
+    formActionType:{viewMode:true}
+
 }
 
 const selectedOrderId='1234'
@@ -187,7 +191,8 @@ describe("ExchangeVehiclesMaster component render",()=>{
     it("should component render", ()=>{
        const { getByRole } = customRender(
             <Provider store={mockStore}>
-              <ExchangeVehiclesMaster {...props}
+              <ExchangeVehiclesMaster 
+              {...props}
               styles={{}} 
               extraParams={extraParams}
               {...functionMocks} 
@@ -234,19 +239,15 @@ describe("ExchangeVehiclesMaster component render",()=>{
         fireEvent.click(hypothecatedTo)
     })
 
+    it('should render page',()=>{
+        customRender(<ExchangeVehiclesMaster {...props} {...flagProps} {...functionMocks} {...viewProps} />)
+        const alloted = screen.getByText('Allotted');
+        expect(alloted).toBeTruthy();
 
-    it("should view details component render", ()=>{
-        const { getByRole } = customRender(
-             <Provider store={mockStore}>
-               <ExchangeVehiclesMaster 
-               {...viewProps}
-               formActionTypeForViewMode={formActionTypeForViewMode}
-               />
-             </Provider>
-        );
-        
-        screen.debug()
-     })
+        const booked = screen.getByText('Booked');
+        expect(booked).toBeTruthy();
+        screen.debug();
+    })
 
 
 })
