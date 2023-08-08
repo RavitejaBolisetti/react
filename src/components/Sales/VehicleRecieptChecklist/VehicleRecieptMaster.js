@@ -140,30 +140,26 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         setbuttonType(buttonName?.key);
 
         Object.values(QUERY_BUTTONS_CONSTANTS)?.map((item, index) => {
-            if (item?.id !== buttonName?.id) {
-                item['active'] = false;
-            } else {
-                item['active'] = true;
-            }
+            item?.id !== buttonName?.id ? (item['active'] = false) : (item['active'] = true);
         });
 
         const buttonkey = buttonName?.key;
 
         switch (buttonkey) {
-            case 'pending': {
+            case QUERY_BUTTONS_CONSTANTS?.PENDING?.key: {
                 setactionButtonVisibility({ EditIcon: false, EyeIcon: false, DeleteIcon: false, AddIcon: true });
                 break;
             }
-            case 'partially': {
+            case QUERY_BUTTONS_CONSTANTS?.PARTIALLY_COMPLETED?.key: {
                 setactionButtonVisibility({ EditIcon: true, EyeIcon: true, DeleteIcon: false, AddIcon: false });
                 break;
             }
-            case 'completed': {
+            case QUERY_BUTTONS_CONSTANTS?.COMPLETED?.key: {
                 setactionButtonVisibility({ EditIcon: false, EyeIcon: true, DeleteIcon: false, AddIcon: false });
                 break;
             }
             default: {
-                break;
+                setactionButtonVisibility({ EditIcon: false, EyeIcon: false, DeleteIcon: false, AddIcon: true });
             }
         }
     };
