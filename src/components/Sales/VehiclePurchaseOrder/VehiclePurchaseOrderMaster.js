@@ -183,7 +183,6 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
                 key: 'orderTypeCode',
                 title: 'Order Type',
                 value: filterString?.orderTypeCode,
-                // name: filterString?.orderTypeCode,
                 name: vpoTypeList?.find((i) => i?.key === filterString?.orderTypeCode)?.value,   
                 canRemove: true,
                 filter: true,
@@ -275,12 +274,12 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
                 break;
             case EDIT_ACTION:
                 setSelectedRecord(record);
-                record && setSelectedRecordId(record?.vin || record?.vehicleIdentificationNumber);
+                record && setSelectedRecordId(record?.id);
                 openDefaultSection && setCurrentSection(defaultSection);
                 break;
             case VIEW_ACTION:
                 setSelectedRecord(record);
-                record && setSelectedRecordId(record?.id || record?.vehicleIdentificationNumber);
+                record && setSelectedRecordId(record?.id);
                 defaultSection && setCurrentSection(defaultSection);
                 break;
             case NEXT_ACTION:

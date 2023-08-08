@@ -98,7 +98,7 @@ const VehiclePurchaseOrderDetailMasterBase = (props) => {
     const [activeKey, setactiveKey] = useState([1]);
     const [dealerParentCode, setDealerParentCode] = useState(null);
 
-console.log('VIEW_ACTION',VIEW_ACTION, EDIT_ACTION);
+console.log('_ACTION',selectedRecordId);
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
@@ -146,6 +146,8 @@ console.log('VIEW_ACTION',VIEW_ACTION, EDIT_ACTION);
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
         }
     }, [userId, selectedRecordId]);
+
+ 
 
     useEffect(() => {
         if (userId && viewVehiclePODetails.dealerParentCode) {
