@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
-import { screen, fireEvent, logRoles } from '@testing-library/react';
+import { screen, fireEvent } from '@testing-library/react';
 import AMCForm from 'components/Sales/OTF/AddOnDetails/AMC/AMCForm';
 import { Form } from 'antd';
 

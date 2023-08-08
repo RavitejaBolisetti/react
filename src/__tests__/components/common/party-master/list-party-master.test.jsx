@@ -80,7 +80,7 @@ describe('List party master Components', () => {
         fireEvent.change(inputBox, { target: { value: '' } });
         expect(inputBox.value.includes('')).toBeTruthy();
         fireEvent.click(searchButton);
-        // expect(await screen.findByText('Please enter atleast 3 character to search')).toBeVisible();
+
     });
 
     it('should click on add button', async () => {
@@ -127,16 +127,5 @@ describe('List party master Components', () => {
         const btnClick2 = screen.getByRole('button', { name: 'Edit', exact:false });
         fireEvent.click(btnClick2);
     });
-
-    // it('save button should work', () => {
-    //     customRender(<ListPartyMaster />);
-    //     const btnClick = screen.getByRole('button', { name: 'plus Add', exact:false });
-    //     fireEvent.click(btnClick);
-    //     const inputBox = screen.getByRole('textbox', {name:'Party Code', exact:false});
-    //     fireEvent.change(inputBox, { target: { value: 123 } });
-    //     expect(inputBox.value.includes(123)).toBeTruthy();
-    //     const btnClick2 = screen.getByRole('button', { name: 'Save', exact:false });
-    //     fireEvent.click(btnClick2);
-    // });
 
 });

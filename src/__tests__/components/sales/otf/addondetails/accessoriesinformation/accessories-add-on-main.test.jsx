@@ -1,7 +1,7 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
-import { screen, fireEvent, logRoles } from '@testing-library/react';
+import { screen, fireEvent } from '@testing-library/react';
 import AccessoriesAddonMain from 'components/Sales/OTF/AddOnDetails/AccessoriesInformation/AccessoriesAddonMain';
 import { Form } from 'antd';
 
@@ -61,7 +61,6 @@ describe('Accessories Add On Component', () => {
         customRender(<FormWrapper searchData={searchData} setsearchData={jest.fn()} addButtonDisabled={addButtonDisabled} addOnItemInfo={addOnItemInfo} setisEditing={jest.fn()} setaddButtonDisabled={jest.fn()} />);
         const editBtn=screen.getByRole('button', { name:'Edit' });
         fireEvent.click(editBtn);
-        logRoles(screen.getByTestId('logRole'));
         const saveBtn=screen.getByRole('button', { name:'Save' });
         fireEvent.click(saveBtn);
     });

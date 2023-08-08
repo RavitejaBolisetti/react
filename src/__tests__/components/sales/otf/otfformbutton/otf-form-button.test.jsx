@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
-import { screen, fireEvent, logRoles, act } from '@testing-library/react';
+import { screen, fireEvent, act } from '@testing-library/react';
 import { OTFFormButton } from 'components/Sales/OTF/OTFFormButton';
 
 const buttonData={
