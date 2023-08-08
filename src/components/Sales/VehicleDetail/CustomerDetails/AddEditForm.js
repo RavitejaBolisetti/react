@@ -33,7 +33,7 @@ const AddEditFormBase = (props) => {
     }, [formData]);
     
     const onSearch = (event) => {
-        console.log('THIS IS SEARCH', event?.target?.value);
+        // console.log('THIS IS SEARCH', event?.target?.value);
     };
 
     const handleOnChange = (e) => {

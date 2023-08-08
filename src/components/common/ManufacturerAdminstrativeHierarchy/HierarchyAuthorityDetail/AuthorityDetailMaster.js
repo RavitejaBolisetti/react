@@ -50,6 +50,7 @@ const AuthorityDetailMain = ({ tokenValidationData, handleFormValueChange, viewM
             .then((val) => {
                 setDocumentTypesList((prev) => [...prev, { ...val, effectiveFrom: val?.effectiveFrom, effectiveTo: val?.effectiveTo, isModified: val?.isModified ?? false, employeeName: tokenValidationData?.employeeName }]);
                 actionForm.resetFields();
+                forceUpdate();
                 resetData();
             })
             .catch((err) => console.error(err));

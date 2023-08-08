@@ -162,7 +162,7 @@ export const ListCityMasterBase = (props) => {
                 const keyword = filterString?.code ? filterString?.code : filterString?.keyword;
                 const state = filterString?.stateCode;
                 const district = filterString?.districtCode;
-                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.code) || filterFunction(keyword)(item?.name) : true) && (state ? filterFunction(state)(item?.stateCode) : true) && (district ? filterFunction(district)(item?.districtCode) : true));
+                const filterDataItem = data?.filter((item) => (keyword ? filterFunction(keyword)(item?.name) : true) && (state ? filterFunction(state)(item?.stateCode) : true) && (district ? filterFunction(district)(item?.districtCode) : true));
                 setSearchdata(filterDataItem);
                 setShowDataLoading(false);
             } else {
@@ -255,14 +255,12 @@ export const ListCityMasterBase = (props) => {
     const handleClearInSearch = (e) => {
         if (e.target.value.length > 2) {
             listFilterForm.validateFields(['code']);
-        }
-        else if (e?.target?.value === '') {
+        } else if (e?.target?.value === '') {
             setFilterString();
             listFilterForm.resetFields();
             setShowDataLoading(false);
         }
     };
-
 
     const handleFilterChange =
         (name, type = 'value') =>
@@ -368,11 +366,12 @@ export const ListCityMasterBase = (props) => {
     const onAdvanceSearchCloseAction = () => {
         setAdvanceSearchVisible(false);
         advanceFilterForm.resetFields();
-        // setFilteredDistrictData([]);
+        //  setFilteredDistrictData([]);
     };
 
     const handleResetFilter = () => {
         setFilterString({ countryCode: defaultCountry });
+        setFilteredStateData(stateData?.filter((i) => i?.parentKey === defaultCountry));
         advanceFilterForm.resetFields();
         setShowDataLoading(false);
         setFilteredDistrictData(undefined);

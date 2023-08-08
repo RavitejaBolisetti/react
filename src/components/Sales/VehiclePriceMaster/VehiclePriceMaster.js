@@ -459,15 +459,15 @@ export const VehiclePriceMasterBase = (props) => {
         }
     };
 
-    const handleClearInSearch = (e) => {
-        if (e.target.value.length > 2) {
-            listFilterForm.validateFields(['code']);
-        } else if (e?.target?.value === '') {
-            setFilterString();
-            listFilterForm.resetFields();
-            setShowDataLoading(false);
-        }
-    };
+    // const handleClearInSearch = (e) => {
+    //     if (e.target.value.length > 2) {
+    //         listFilterForm.validateFields(['code']);
+    //     } else if (e?.target?.value === '') {
+    //         setFilterString();
+    //         listFilterForm.resetFields();
+    //         setShowDataLoading(false);
+    //     }
+    // };
 
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,

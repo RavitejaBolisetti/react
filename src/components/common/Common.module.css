@@ -25,6 +25,30 @@
     width: 100%;
 }
 
+.tableTextColor54 {
+    color: #545454;
+}
+
+.tableTextColor85 {
+    color: #858585;
+}
+
+.approvedColor {
+    color: rgba(112, 201, 34, 1);
+}
+
+.rejectedColor {
+    color: #ed302d;
+}
+
+.warningColor {
+    color: #f99c22;
+}
+
+.marT0 {
+    margin-top: 0;
+}
+
 .marT5 {
     margin-top: 5px;
 }
@@ -127,9 +151,9 @@
     top: 39px;
 }
 
-.vechilemodelTooltip svg{
+.vechilemodelTooltip svg {
     color: #2782f9;
-    padding:3px 0 0 3px;
+    padding: 3px 0 0 3px;
 }
 
 .drawerBody {
@@ -141,7 +165,36 @@
     overflow-y: auto;
 }
 
-.drawerBodyGroup {
+.drawerBody .rsmApproval .addGroup {
+    color: #0b0b0c;
+}
+
+.drawerBody .rsmApproval .tableTextColor85 {
+    color: #858585;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 20px;
+}
+
+.drawerBody .rsmApproval .warningColor {
+    color: #f99c22;
+}
+.drawerBody .rsmApproval .rejectedColor {
+    color: #ed302d;
+}
+.drawerBody .rsmApproval .approvedColor {
+    color: rgba(112, 201, 34, 1);
+}
+
+.drawerBody .rsmApproval :global .ant-card .ant-card-body {
+    padding: 12px 16px;
+}
+
+.drawerBody .rsmApproval :global .ant-card .ant-card-body .ant-divider-horizontal {
+    margin: 10px 0;
+}
+
+/* .drawerBodyGroup {
     padding: 30px 20px;
     padding-bottom: 0;
     margin-left: 0 !important;
@@ -149,7 +202,7 @@
     height: calc(100vh - 60px);
     overflow: hidden;
     overflow-y: auto;
-}
+} */
 
 .formFooterGroup {
     position: absolute;
@@ -157,6 +210,7 @@
     bottom: 0;
     width: 100%;
 }
+
 .drawerBodyNew {
     padding: 30px;
     margin-left: 0 !important;
@@ -166,24 +220,34 @@
     overflow-y: auto;
 }
 
-.content :global .ant-tree-show-line .ant-tree-switcher-line-icon svg {
+.drawerBodyApplicationMaster {
+    height: calc(100vh - 120px);
+}
+
+.drawerBodyApplicationMaster :global .ant-collapse:last-child:not(:first-child) {
+    margin-bottom: 60px;
+}
+
+.drawerBodyNew .viewContainer {
+    border: none;
+}
+
+.drawerBodyNew .viewContainer :global .ant-descriptions .ant-descriptions-view {
+    overflow: hidden;
+    height: auto;
+    padding: 0;
+}
+
+/* .content :global .ant-tree-show-line .ant-tree-switcher-line-icon svg {
     width: 1.25em;
     height: 1.25em;
-}
+} */
 
-:global .rc-virtual-list-scrollbar.rc-virtual-list-scrollbar-show {
-    display: block !important;
-}
-
-:global .rc-virtual-list-scrollbar-thumb {
-    background: #c1c1c1 !important;
-}
-
-.changeThemeBorder {
+/* .changeThemeBorder {
     border: 1px solid red;
     border-radius: 4px;
     padding: 5px;
-}
+} */
 
 .contentHeaderBackground {
     background-color: #f2f2f2;
@@ -904,10 +968,7 @@
 }
 
 .viewCardSize :global .ant-card-body {
-    border: 1px solid rgba(62, 62, 62, 0.1);
-    border-radius: 6px;
-    background-color: rgba(190, 190, 190, 0.1);
-    gap: 10px;
+    padding: 16px 20px;
 }
 
 .viewCardSize :global .ant-card-body .ant-btn-link {
@@ -1198,6 +1259,7 @@
 :global .ant-table-wrapper .ant-table .ant-table-content::-webkit-scrollbar {
     background-color: #ffffff;
     width: 8px;
+    height: 8px;
 }
 
 :global .ant-descriptions .ant-descriptions-view::-webkit-scrollbar-thumb,
@@ -1260,7 +1322,7 @@
     border-top-left-radius: 8px !important;
     border-top-right-radius: 8px !important;
     font-size: 14px;
-    color: #342c2c;
+    color: #0b0b0c;
 }
 
 .paddingLeft {
@@ -1275,18 +1337,18 @@
  } */
 
 .allowedTiming {
-    background: #f4f4f4;
+    /* background: #f2f2f2; */
     border-radius: 8px;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 20px 0px 20px 20px;
-    gap: 20px;
-    /* padding-bottom: 0; */
-    /* margin-bottom: 20px; */
+    padding: 20px;
+    padding-bottom: 0;
 }
 
-.allowedTiming :global .ant-space .ant-space-item .ant-form-item {
+/* .allowedTiming :global .ant-space .ant-space-item .ant-form-item {
     margin-bottom: 0;
+} */
+
+.allowedTiming :global .ant-space-item .ant-form-item .ant-picker {
+    width: 167px;
 }
 
 /* .allowedTiming :global .ant-space .ant-space-item .ant-btn span {
@@ -1300,9 +1362,9 @@
     font-size: 14px;
 }
 
-.allowedTiming :global .ant-btn-default.ant-btn-dangerous.ant-btn-icon-only:hover {
+/* .allowedTiming :global .ant-btn-default.ant-btn-dangerous.ant-btn-icon-only:hover {
     color: #ff3e5b !important;
-}
+} */
 
 .deleteBtn :disabled {
     background-color: #ffffff;
@@ -1470,13 +1532,13 @@
     margin-bottom: 0px !important;
 }
 
-/* .alignLeft {
+.alignLeft {
     text-align: left;
 }
 
 .alignRight {
     text-align: right;
-} */
+}
 
 .advanceFilterTop {
     margin-top: 18px;
@@ -1540,7 +1602,7 @@
 } */
 
 .advanceTimingContainer {
-    background-color: #f4f4f4;
+    background-color: #f2f2f2;
     border-bottom-right-radius: 8px;
     border-bottom-left-radius: 8px;
 }
@@ -1551,7 +1613,8 @@
 }
 
 .viewTiming {
-    padding: 0px 20px 10px 20px;
+    padding: 20px;
+    padding-top: 0;
 }
 
 .notViewTiming {
@@ -1569,7 +1632,7 @@
 }
 
 .timingCardItem {
-    margin: 10px 0px;
+    margin-top: 10px;
     background-color: #f2f2f2;
     border: 1px solid #e6e6e6;
     border-radius: 4px;
@@ -2253,22 +2316,29 @@
 }
 
 .drawerBody::-webkit-scrollbar-track,
-.drawerBodyGroup::-webkit-scrollbar-track,
 .drawerBodyNew::-webkit-scrollbar-track,
 .drawerBodyRight::-webkit-scrollbar-track {
     background-color: #ffffff;
 }
 
+.drawerBody :global .ant-table-wrapper .ant-table-fixed-header .ant-table-body::-webkit-scrollbar-track {
+    background-color: #ffffff;
+}
+
 .drawerBody::-webkit-scrollbar,
-.drawerBodyGroup::-webkit-scrollbar,
 .drawerBodyNew::-webkit-scrollbar,
 .drawerBodyRight::-webkit-scrollbar {
     width: 8px;
     background-color: #ffffff;
 }
 
+.drawerBody :global .ant-table-wrapper .ant-table-fixed-header .ant-table-body::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background-color: #ffffff;
+}
+
 .drawerBody::-webkit-scrollbar-thumb,
-.drawerBodyGroup::-webkit-scrollbar-thumb,
 .drawerBodyNew::-webkit-scrollbar-thumb,
 .drawerBodyRight::-webkit-scrollbar-thumb {
     background-color: #c1c1c1;
@@ -2276,10 +2346,19 @@
     border: 2px solid #ffffff;
 }
 
+.drawerBody :global .ant-table-wrapper .ant-table-fixed-header .ant-table-body::-webkit-scrollbar-thumb {
+    background-color: #c1c1c1;
+    border-radius: 10px;
+    border: 2px solid #ffffff;
+}
+
 .drawerBody::-webkit-scrollbar-thumb:hover,
-.drawerBodyGroup::-webkit-scrollbar-thumb:hover,
 .drawerBodyNew::-webkit-scrollbar-thumb:hover,
 .drawerBodyRight::-webkit-scrollbar-thumb:hover {
+    border: 2px solid #c1c1c1;
+}
+
+.drawerBody :global .ant-table-wrapper .ant-table-fixed-header .ant-table-body::-webkit-scrollbar-thumb:hover {
     border: 2px solid #c1c1c1;
 }
 
@@ -2739,9 +2818,9 @@
     margin-left: 12px;
 } */
 
-/* .viewDrawerContainer .viewDocumentStrip :global .ant-card-head .ant-card-head-wrapper .ant-card-extra svg {
+.viewDrawerContainer .viewDocumentStrip :global .ant-card-head .ant-card-head-wrapper .ant-card-extra svg:not(:first-child) {
     margin-left: 10px;
-} */
+}
 
 .viewDrawerContainer .viewDocumentStrip :global .ant-card-body {
     display: none;
@@ -3061,9 +3140,9 @@ li.ant-timeline-item.active .ant-timeline-item-content p {
     padding: 0px 6px 5px 10px !important;
 }
 
-.inputWrapper :global .ant-btn-default {
+/* .inputWrapper :global .ant-btn-default {
     padding: 5px 0;
-}
+} */
 
 /* .inputWrapper :global .ant-input-affix-wrapper {
     padding: 0px 6px 5px 0px;
@@ -3097,6 +3176,7 @@ li.ant-timeline-item.active .ant-timeline-item-content p {
     margin-top: 5px;
     margin-right: 5px;
 }
+
 .contactDays :global .ant-form-item .ant-form-item-control-input .ant-select-multiple .ant-select-selector {
     height: auto;
     min-height: 36px;
@@ -3157,13 +3237,14 @@ li.ant-timeline-item.active .ant-timeline-item-content p {
 
 .changeHistoryToggleBtn {
     border: 1px solid #e6e6e6;
+    width: fit-content;
     border-radius: 4px;
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
     padding: 4px 0;
     display: flex;
     flex-wrap: nowrap;
-    margin-right: 20px;
+    /* margin-right: 20px; */
     margin-bottom: 10px;
 }
 
@@ -3174,10 +3255,17 @@ li.ant-timeline-item.active .ant-timeline-item-content p {
     line-height: 20px;
 }
 
-.changeHistoryContainer {
+/* .changeHistoryContainer {
     padding: 20px 40px 0 !important;
+} */
+
+.advanceFilterBtn {
+    margin-left: 10px;
 }
 
+.advanceFilterIcon {
+    margin-top: 5px;
+}
 
 @media (max-width: 768px) {
     /* For mobile phones: */
