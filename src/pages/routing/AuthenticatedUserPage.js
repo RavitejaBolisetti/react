@@ -39,10 +39,8 @@ import {
     OtfReportsPage,
     LessorCustomerCreationPage,
 } from 'pages/common';
-import { TaxChargesPage, TaxChargesCategoryPage } from 'pages/FinancialAccounting';
-import { VehicleModelTaxChargesCategoryPage } from 'pages/FinancialAccounting';
 
-
+import { TaxChargesPage, TaxChargesCategoryPage, AccountCategoryPage, VehicleModelTaxChargesCategoryPage } from 'pages/FinancialAccounting';
 import { OTFMasterPage, VehicleDetailMasterPage, VehiclePriceMasterPage, VehicleReceiptMasterPage, RSMApprovalPage, VehiclePurchaseOrderMasterPage, VehicleRecieptChecklistMaster } from 'pages/Sales';
 
 import * as routing from 'constants/routing';
@@ -127,8 +125,9 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_VEHICLE_RECEIPT} element={<VehicleReceiptMasterPage />} exact />
             <Route path={routing.ROUTING_REPORT_OTF_REPORTS} element={<OtfReportsPage />} />
 
-            <Route path={routing.ROUTING_TAX_CHARGES} element={<TaxChargesPage />} exact />
-            <Route path={routing.ROUTING_TAX_CHARGES_CATEGORY} element={<TaxChargesCategoryPage />} exact />
+            <Route path={routing.ROUTING_FINANCIAL_ACCOUNTING_TAX_CHARGES} element={<TaxChargesPage />} exact />
+            <Route path={routing.ROUTING_FINANCIAL_ACCOUNTING_TAX_CHARGES_CATEGORY} element={<TaxChargesCategoryPage />} exact />
+            <Route path={routing.ROUTING_FINANCIAL_ACCOUNTING_ACCOUNT_CATEGORY} element={<AccountCategoryPage />} exact />
             <Route path={routing.ROUTING_VEHICLE_MODEL_TAX_CHARGES_CATEGORY} element={<VehicleModelTaxChargesCategoryPage />} exact />
             <Route path={routing.ROUTING_VEHICLE_RECIEPT_CHECKLIST} element={<VehicleRecieptChecklistMaster />} exact />
 

@@ -308,18 +308,23 @@ export const MenuConstant = {
         parentMenuId: 'WEB',
     },
 
-    [getMenyKey('FINA-01.04')]: {
-        key: 'FINA-01.04',
-        link: routing.ROUTING_TAX_CHARGES,
+    [getMenyKey('FINA-01.02')]: {
+        key: 'FINA-01.02',
+        link: routing.ROUTING_FINANCIAL_ACCOUNTING_ACCOUNT_CATEGORY,
         icon: undefined,
         parentMenuId: 'FINA-01',
     },
 
-    //ROUTING_TAX_CHARGES_CATEGORY
+    [getMenyKey('FINA-01.04')]: {
+        key: 'FINA-01.04',
+        link: routing.ROUTING_FINANCIAL_ACCOUNTING_TAX_CHARGES,
+        icon: undefined,
+        parentMenuId: 'FINA-01',
+    },
 
     [getMenyKey('FINA-01.05')]: {
         key: 'FINA-01.05',
-        link: routing.ROUTING_TAX_CHARGES_CATEGORY,
+        link: routing.ROUTING_FINANCIAL_ACCOUNTING_TAX_CHARGES_CATEGORY,
         icon: undefined,
         parentMenuId: 'FINA-01',
     },

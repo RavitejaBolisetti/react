@@ -308,7 +308,7 @@ export const RSMApprovalMasterBase = (props) => {
         tableColumn: tableColumn(handleButtonClick),
         tableData: data,
         showAddButton: false,
-        handleButtonClick,
+        handleAdd: handleButtonClick,
         noMessge: LANGUAGE_EN.GENERAL.LIST_NO_DATA_FOUND.TITLE,
         rsmStatusType,
     };

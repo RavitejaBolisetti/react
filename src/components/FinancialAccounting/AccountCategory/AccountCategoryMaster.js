@@ -8,58 +8,49 @@ import { connect } from 'react-redux';
 import { Col, Form, Row } from 'antd';
 import { bindActionCreators } from 'redux';
 
-import { geoStateDataActions } from 'store/actions/data/geo/states';
-import { taxChargeCategoryTypeDataActions } from 'store/actions/data/financialAccounting/taxChargeType';
-import { taxChargeCategoryDataActions } from 'store/actions/data/financialAccounting/taxChargesCategory';
-import { financialAccTaxChargeCategoryDataActions } from 'store/actions/data/financialAccounting/taxChargesCode';
+import { accountCategoryDataActions } from 'store/actions/data/financialAccounting/accountCategory/accountCategory';
+import { applicationMenuDataActions } from 'store/actions/data/financialAccounting/accountCategory/applicationMenu';
+import { financialAccountHeadDataActions } from 'store/actions/data/financialAccounting/financialAccountHead';
+import { accountCategoryDocumentDescriptionDataActions } from 'store/actions/data/financialAccounting/accountCategory/accountCategoryDocumentDescription';
+
 import { tableColumn } from './tableColumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
-import { BASE_URL_FINANCIAL_ACC_TAX_CHARGE_CATEGORY_SEARCH as customURL } from 'constants/routingApi';
-
+import { BASE_URL_FINANCIAL_ACC_ACCOUNT_CATEGORY_SEARCH as customURL } from 'constants/routingApi';
 import { showGlobalNotification } from 'store/actions/notification';
 
 import { ListDataTable } from 'utils/ListDataTable';
 import { btnVisiblity } from 'utils/btnVisiblity';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
-import { PARAM_MASTER } from 'constants/paramMaster';
 import { AddEditForm } from './AddEditForm';
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ConfigurableParameterEditing: { filteredListData: saleData = [] },
-            Geo: {
-                State: { isLoaded: isStateDataLoaded = false, isLoading: isStateLoading = false, data: stateData = [] },
-            },
             FinancialAccounting: {
-                TaxChargeCategoryType: { isLoaded: isTaxChargeCategoryTypeLoaded = false, isLoading: isTaxChargeCategoryTypeLoading = false, data: taxChargeCategoryTypeData = [] },
-                TaxChargesCategory: { isLoaded: isTaxChargeCategoryLoaded = false, isLoading: isTaxChargeCategoryLoading = false, data: taxChargeCategoryData = [] },
-                TaxChargesCode: { isLoaded: isTaxCategoryCodeLoaded = false, isLoading: isTaxCategoryCodeLoading, data: taxChargeCategoryCodeData = [] },
+                AccountCategory: { isLoaded: isAccountCategoryLoaded = false, isLoading: isAccountCategoryLoading, data: accountCategoryData = [] },
+                ApplicationMenu: { isLoaded: isApplicationMenuLoaded = false, data: applicationMenuData = [] },
+                FinancialAccountHead: { isLoaded: isFinancialAccountHeadLoaded = false, data: financialAccountData = [] },
+                AccountCategoryDocumentDescription: { isLoaded: isAccountCategoryDocumentDescriptionLoaded = false, data: accountCategoryDocumentDescription = [] },
             },
         },
     } = state;
 
-    const moduleTitle = 'Tax & Charges Category';
+    const moduleTitle = 'Account Category';
 
     let returnValue = {
         userId,
-
         moduleTitle,
-        isStateDataLoaded,
-        isStateLoading,
-        stateData,
-        saleData: saleData && saleData[PARAM_MASTER.SALE_TYPE.id],
-        isTaxChargeCategoryTypeLoaded,
-        taxChargeCategoryTypeData,
-        isTaxChargeCategoryTypeLoading,
-        isTaxCategoryCodeLoading,
-        isTaxChargeCategoryLoaded,
-        isTaxCategoryCodeLoaded,
-        isTaxChargeCategoryLoading,
-        taxChargeCategoryData: taxChargeCategoryData?.taxCategoryHeaderListDto,
-        totalRecords: taxChargeCategoryData?.totalRecords,
-        taxChargeCategoryCodeData,
+        isAccountCategoryLoaded,
+        isAccountCategoryLoading,
+        accountCategoryData: accountCategoryData?.paginationData,
+        totalRecords: accountCategoryData?.totalRecords,
+        isApplicationMenuLoaded,
+        applicationMenuData,
+        isFinancialAccountHeadLoaded,
+        financialAccountData,
+        isAccountCategoryDocumentDescriptionLoaded,
+        documentDescriptionData: accountCategoryDocumentDescription,
     };
     return returnValue;
 };
@@ -68,18 +59,18 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchStateList: geoStateDataActions.fetchList,
-            listStateShowLoading: geoStateDataActions.listShowLoading,
+            fetchAccountCategory: accountCategoryDataActions.fetchList,
+            listShowLoadingAccountCategory: accountCategoryDataActions.listShowLoading,
+            saveData: accountCategoryDataActions.saveData,
 
-            fetchTaxChargeCategoryType: taxChargeCategoryTypeDataActions.fetchList,
-            listShowLoadingTaxChargeCategoryType: taxChargeCategoryTypeDataActions.listShowLoading,
+            fetchApplicationMenu: applicationMenuDataActions.fetchList,
+            listShowLoadingApplicationMenu: applicationMenuDataActions.listShowLoading,
 
-            fetchTaxCodeList: financialAccTaxChargeCategoryDataActions.fetchList,
-            listTaxCodeLoading: financialAccTaxChargeCategoryDataActions.listShowLoading,
+            fetchFinancialAccountHead: financialAccountHeadDataActions.fetchList,
+            listShowLoadingFinancialAccountHead: financialAccountHeadDataActions.listShowLoading,
 
-            fetchTaxChargeCategory: taxChargeCategoryDataActions.fetchList,
-            listShowLoadingTaxChargeCategory: taxChargeCategoryDataActions.listShowLoading,
-            saveData: taxChargeCategoryDataActions.saveData,
+            fetchDocumentDescription: accountCategoryDocumentDescriptionDataActions.fetchList,
+            listShowLoadingDocumentDescription: accountCategoryDocumentDescriptionDataActions.listShowLoading,
 
             showGlobalNotification,
         },
@@ -87,8 +78,8 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const TaxChargesCategoryMain = (props) => {
-    const { saveData, userId, showGlobalNotification, taxChargeCategoryCodeData, isStateDataLoaded, fetchStateList, listStateShowLoading, stateData, saleData, fetchTaxCodeList, fetchTaxChargeCategoryType, taxChargeCategoryTypeData, listShowLoadingTaxChargeCategoryType, fetchTaxChargeCategory, listShowLoadingTaxChargeCategory, totalRecords, taxChargeCategoryData, listTaxCodeLoading } = props;
+export const AccountCategoryMain = (props) => {
+    const { moduleTitle, userId, showGlobalNotification, taxChargeCategoryCodeData, totalRecords, fetchAccountCategory, listShowLoadingAccountCategory, saveData, accountCategoryData, fetchApplicationMenu, applicationMenuData, listShowLoadingApplicationMenu, fetchFinancialAccountHead, isFinancialAccountHeadLoaded, listShowLoadingFinancialAccountHead, financialAccountData, isDocumentDescriptionLoaded, documentDescriptionData, fetchDocumentDescription, listShowLoadingDocumentDescription } = props;
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
     const [showDataLoading, setShowDataLoading] = useState(true);
@@ -108,10 +99,13 @@ export const TaxChargesCategoryMain = (props) => {
     const dynamicPagination = true;
 
     const [editForm] = Form.useForm();
-    const [taxChargeCalForm] = Form.useForm();
+    const [accDocMapForm] = Form.useForm();
     const [formEdit, setFormEdit] = useState(false);
-    const [taxChargeCalList, setTaxChargeCalList] = useState([]);
+    const [accountDocumentMaps, setAccountDocumentMaps] = useState([]);
     const [dropdownItems, setDropdownItems] = useState([]);
+    const [userApplicationId, setUserApplicationId] = useState(' No Data ');
+    const [accountCategory, setAccountCategory] = useState(null);
+    const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState(null);
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
@@ -128,8 +122,8 @@ export const TaxChargesCategoryMain = (props) => {
             {
                 key: 'searchType',
                 title: 'Search Type',
-                value: 'taxCategoryCode',
-                name: 'taxCategoryCode',
+                value: 'accountCategoryCode',
+                name: 'accountCategoryCode',
             },
             {
                 key: 'searchParam',
@@ -170,73 +164,75 @@ export const TaxChargesCategoryMain = (props) => {
     }, [filterString, page]);
 
     useEffect(() => {
-        if (userId && !isStateDataLoaded) {
-            fetchStateList({ setIsLoading: listStateShowLoading, userId, onSuccessAction });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isStateDataLoaded]);
-
-    useEffect(() => {
         if (userId) {
-            fetchTaxChargeCategoryType({ setIsLoading: listShowLoadingTaxChargeCategoryType, userId, onSuccessAction });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId]);
-
-    const handleCodeFunction = (value) => {
-        let obj = {
-            chargeCode: null,
-            chargeDescription: null,
-        };
-
-        if (formEdit) {
-            editForm?.setFieldsValue(obj);
-        } else {
-            taxChargeCalForm?.setFieldsValue(obj);
-        }
-
-        const extraParams = [
-            {
-                key: 'taxChargeType',
-                title: 'taxChargeType',
-                value: value ? value : null,
-                name: 'taxChargeType',
-            },
-        ];
-
-        fetchTaxCodeList({ setIsLoading: listTaxCodeLoading, userId, extraParams, onSuccessAction });
-    };
-
-    useEffect(() => {
-        if (userId) {
-            fetchTaxChargeCategory({ setIsLoading: listShowLoadingTaxChargeCategory, userId, customURL, extraParams, onSuccessAction });
+            fetchAccountCategory({ setIsLoading: listShowLoadingAccountCategory, userId, customURL, extraParams, onSuccessAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, refershData, extraParams]);
 
     useEffect(() => {
-        setDropdownItems(() => []);
-        if (taxChargeCalList && taxChargeCalList?.length > 0) {
-            let len1 = taxChargeCalList?.length;
-            let len2 = taxChargeCategoryCodeData?.length;
-            for (let j = 0; j < len2; j++) {
-                let flag = false;
-                for (let i = 0; i < len1; i++) {
-                    if (taxChargeCalList[i]?.chargeCode === taxChargeCategoryCodeData[j]?.taxCode) {
-                        setDropdownItems((item) => [...item, { ...taxChargeCategoryCodeData[j], disabled: true }]);
-                        flag = true;
-                        break;
-                    }
-                }
-                if (!flag) {
-                    setDropdownItems((item) => [...item, { ...taxChargeCategoryCodeData[j], disabled: false }]);
-                }
-            }
-        } else if (taxChargeCategoryCodeData && taxChargeCategoryCodeData?.length) {
-            setDropdownItems(() => [...taxChargeCategoryCodeData]);
+        const extraParams = [
+            {
+                key: 'sid',
+                title: 'sid',
+                value: 'APPMST',
+                name: 'sid',
+            },
+            {
+                key: 'moduleName',
+                title: 'moduleName',
+                value: 'Finance',
+                name: 'moduleName',
+            },
+        ];
+
+        if (userId) {
+            fetchApplicationMenu({ setIsLoading: listShowLoadingApplicationMenu, userId, extraParams });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [taxChargeCategoryCodeData]);
+    }, [userId]);
+
+    useEffect(() => {
+        let extraApplicationParams = [
+            {
+                key: 'applicationId',
+                title: 'applicationId',
+                value: userApplicationId ? userApplicationId : ' No Data ',
+                name: 'applicationId',
+            },
+        ];
+
+        if (!isDocumentDescriptionLoaded && userId) {
+            fetchDocumentDescription({ setIsLoading: listShowLoadingDocumentDescription, userId, extraParams: extraApplicationParams });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, isDocumentDescriptionLoaded, userApplicationId]);
+
+    useEffect(() => {
+        if (formEdit) {
+            fetchDocumentDescription({ setIsLoading: listShowLoadingDocumentDescription, userId, extraParams: [{ key: 'applicationId', title: 'applicationId', value: selectedTreeSelectKey, name: 'applicationId' }] });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formEdit]);
+
+    useEffect(() => {
+        if (!isFinancialAccountHeadLoaded && userId) {
+            fetchFinancialAccountHead({ setIsLoading: listShowLoadingFinancialAccountHead, userId });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isFinancialAccountHeadLoaded, userId]);
+
+    useEffect(() => {
+        if (accountCategory?.[0]?.accountDocumentMaps?.length > 0) {
+            setAccountDocumentMaps(() => []);
+            let len = accountCategory?.[0]?.accountDocumentMaps?.length;
+            for (let i = 0; i < len; i++) {
+                let internalId = Math.floor(Math.random() * 100000000 + 1);
+                setAccountDocumentMaps((item) => [...item, { ...accountCategory?.[0]?.accountDocumentMaps[i], internalId: internalId }]);
+            }
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [accountCategory]);
 
     const handleReferesh = () => {
         setShowDataLoading(true);
@@ -246,8 +242,10 @@ export const TaxChargesCategoryMain = (props) => {
     const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
         setFormData([]);
+
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
         setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
+
         record && setFormData(record);
         setIsFormVisible(true);
     };
@@ -276,13 +274,14 @@ export const TaxChargesCategoryMain = (props) => {
     };
 
     const onFinish = (values) => {
-        let data = { ...values, id: formData?.id || '', taxCategoryDetail: taxChargeCalList };
+        let data = { ...values, id: formData?.id, accountDocumentMaps };
+
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
 
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            fetchTaxChargeCategory({ setIsLoading: listShowLoadingTaxChargeCategory, userId, customURL, extraParams, onSuccessAction });
+            fetchAccountCategory({ setIsLoading: listShowLoadingAccountCategory, userId, customURL, extraParams, onSuccessAction });
 
             setButtonData({ ...buttonData, formBtnActive: false });
             if (buttonData?.saveAndNewBtnClicked) {
@@ -301,7 +300,7 @@ export const TaxChargesCategoryMain = (props) => {
         const requestData = {
             data: data,
             method: formActionType?.editMode ? 'put' : 'post',
-            setIsLoading: listShowLoadingTaxChargeCategory,
+            setIsLoading: listShowLoadingAccountCategory,
             userId,
             onError,
             onSuccess,
@@ -317,10 +316,10 @@ export const TaxChargesCategoryMain = (props) => {
     const onCloseAction = () => {
         setFormEdit(false);
         form.resetFields();
-        taxChargeCalForm.resetFields();
+        accDocMapForm.resetFields();
         setIsFormVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
-        setTaxChargeCalList(() => []);
+        setAccountDocumentMaps(() => []);
         setDropdownItems(() => []);
     };
 
@@ -344,7 +343,7 @@ export const TaxChargesCategoryMain = (props) => {
 
         isVisible: isFormVisible,
         onCloseAction,
-        titleOverride: drawerTitle.concat('Tax & Charges Category'),
+        titleOverride: drawerTitle.concat('Account Category'),
 
         ADD_ACTION,
         EDIT_ACTION,
@@ -353,31 +352,38 @@ export const TaxChargesCategoryMain = (props) => {
 
         setButtonData,
         handleButtonClick,
-        stateData,
-        saleData,
-        taxChargeCategoryTypeData,
         taxChargeCategoryCodeData,
-        handleCodeFunction,
         editForm,
-        taxChargeCalForm,
+        accDocMapForm,
         formEdit,
         setFormEdit,
-        taxChargeCalList,
-        setTaxChargeCalList,
+        accountDocumentMaps,
+        setAccountDocumentMaps,
         dropdownItems,
         setDropdownItems,
+        accountCategoryData,
+        applicationMenuData,
+        financialAccountData,
+        documentDescriptionData,
+        setUserApplicationId,
+        accountCategory,
+        setAccountCategory,
+        selectedTreeSelectKey,
+        setSelectedTreeSelectKey,
     };
 
     const tableProps = {
+        addTitle: moduleTitle,
         dynamicPagination,
         totalRecords,
         setPage,
         isLoading: showDataLoading,
         tableColumn: tableColumn(handleButtonClick),
-        tableData: taxChargeCategoryData,
+        tableData: accountCategoryData,
+        handleButtonClick: () => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD }),
     };
 
-    const title = 'Tax & Charges Category';
+    const title = 'Accounting Category Code';
 
     const advanceFilterResultProps = {
         advanceFilter: false,
@@ -392,14 +398,14 @@ export const TaxChargesCategoryMain = (props) => {
         handleButtonClick,
         title,
     };
-    
+
     return (
         <>
             <AppliedAdvanceFilter {...advanceFilterResultProps} />
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable {...tableProps} handleAdd={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })} />
+                    <ListDataTable {...tableProps} />
                 </Col>
             </Row>
             <AddEditForm {...formProps} />
@@ -407,4 +413,4 @@ export const TaxChargesCategoryMain = (props) => {
     );
 };
 
-export const TaxChargesCategory = connect(mapStateToProps, mapDispatchToProps)(TaxChargesCategoryMain);
+export const AccountCategory = connect(mapStateToProps, mapDispatchToProps)(AccountCategoryMain);
