@@ -13,35 +13,35 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
         tblPrepareColumns({
             title: 'Group Code',
             dataIndex: 'code',
-            width: '10%',
+            width: '12%',
         }),
         tblPrepareColumns({
             title: 'Group Name',
             dataIndex: 'name',
-            width: '10%',
+            width: '16%',
         }),
         tblPrepareColumns({
             title: 'Title',
             dataIndex: 'title',
-            width: '6%',
+            width: '8%',
         }),
         tblPrepareColumns({
             title: 'Owner Name',
             dataIndex: 'ownerName',
-            width: '12%',
+            width: '14%',
         }),
         tblPrepareColumns({
             title: 'Contact Number',
             dataIndex: 'mobileNumber',
-            width: '10%',
+            width: '13%',
         }),
         tblPrepareColumns({
             title: 'Email ID',
             dataIndex: 'emailId',
-            width: '11%',
+            width: '16%',
         }),
 
-        tblStatusColumn({ styles, width: '6%' }),
+        tblStatusColumn({ styles, width: '8%' }),
 
         tblActionColumn({ handleButtonClick, styles, width: '8%', fixed: 'right' })
     );

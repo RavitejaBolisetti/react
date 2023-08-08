@@ -4,10 +4,10 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { React, useEffect, useState } from 'react';
-import { Col, Input, Collapse, Row, Button, Space, Form, Select, Upload, message, Checkbox, Divider, Card } from 'antd';
+import { Col, Input, Collapse, Row, Space, Form, Select, Checkbox, Divider, Card } from 'antd';
 import { validateRequiredInputField, validateLettersWithWhitespaces, validatePanField, validateGSTIN, validatFacebookProfileUrl, validattwitterProfileUrl } from 'utils/validation';
 
-import { FiDownload, FiTrash } from 'react-icons/fi';
+import { FiDownload } from 'react-icons/fi';
 
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { convertToUpperCase } from 'utils/convertToUpperCase';
@@ -18,12 +18,11 @@ import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
 const { Option } = Select;
-const { Dragger } = Upload;
 const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
-    const { appCategoryData, userId, formData, form, handleOnClick } = props;
-    const { handleFormValueChange, fileList, setFileList, uploadedFile, emptyList, setEmptyList, uploadedFileName, setUploadedFileName, uploadListShowLoading, uploadFile, setUploadedFile, setAppCustomerCategory, setAppSubCategory, customerCategory, setCustomerCategory, viewDocument } = props;
+    const { appCategoryData, formData, form, handleOnClick } = props;
+    const { handleFormValueChange, fileList, setFileList, uploadedFile, emptyList, setEmptyList, uploadedFileName, setUploadedFileName, setUploadedFile, setAppCustomerCategory, setAppSubCategory, customerCategory, setCustomerCategory, viewDocument } = props;
 
     const [activeKey, setactiveKey] = useState([1]);
 
@@ -57,10 +56,6 @@ const AddEditFormMain = (props) => {
         } else {
             setactiveKey([...activeKey, values]);
         }
-    };
-
-    const onDrop = (e) => {
-        // console.log('Dropped files', e.dataTransfer.files);
     };
 
     const handleAppCategoryChange = (value) => {
