@@ -2,7 +2,6 @@ import React from 'react';
 import { fireEvent, screen } from '@testing-library/react';
 import { AddEditForm } from '@components/Sales/OTF/OtfDetails/AddEditForm';
 import customRender from '@utils/test-utils';
-import { act } from 'react-dom/test-utils';
 
 const props = {
     formActionType: { editMode: 'true' },
