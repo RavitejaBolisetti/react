@@ -118,6 +118,7 @@ export const RSMApprovalMasterBase = (props) => {
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
         searchForm.resetFields();
         setShowDataLoading(false);
+        setRejectFormButtonActive(true)
     };
 
     const onErrorAction = (message) => {
@@ -225,7 +226,6 @@ export const RSMApprovalMasterBase = (props) => {
 
     const handleRequest = ({ requestType = false }) => {
         setRejectModalVisible(true);
-        setIsFormVisible(false);
         requestType ? setRejectRequest(true) : setRejectRequest(false);
         requestType ? setRequestType(REQUEST_CONSTANT?.Reject?.value) : setRequestType(REQUEST_CONSTANT?.Approve?.value);
     };
@@ -251,7 +251,7 @@ export const RSMApprovalMasterBase = (props) => {
     };
 
     const onFinish = (values) => {
-        if (values?.status) {
+        if (values?.status || requestType === REQUEST_CONSTANT?.Reject?.value) {
             let data = { ...values, request: requestType, id: formData?.id };
             delete data?.status;
             const onSuccess = (res) => {
@@ -373,10 +373,12 @@ export const RSMApprovalMasterBase = (props) => {
         handleRequest,
     };
 
+    const requestModuleTitle = ' Co-Dealer Invoice'
+
     const rejectRequestProps = {
         isVisible: isRejectModalVisible,
         onCloseAction: rejectModalCloseAction,
-        titleOverride: 'Reject Co-Dealer Invoice',
+        titleOverride: requestType === 'Reject' ? REQUEST_CONSTANT?.Reject?.value?.concat(requestModuleTitle) : REQUEST_CONSTANT?.Approve?.value?.concat(requestModuleTitle),
         rejectForm,
         rejectModalCloseAction,
         rejectRequest,
