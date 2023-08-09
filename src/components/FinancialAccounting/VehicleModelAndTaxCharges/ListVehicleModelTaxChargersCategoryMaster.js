@@ -299,6 +299,7 @@ export const VehicleModelAndTaxChargersCategoryMain = (props) => {
     };
 
     const tableProps = {
+        setPage,
         VehicleModelTaxChargesCategoryisLoading,
         tableData: searchData,
         tableColumn: tableColumn(handleButtonClick),

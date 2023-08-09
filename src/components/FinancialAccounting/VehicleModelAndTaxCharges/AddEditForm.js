@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Form, Col, Row } from 'antd';
 
 import { validateRequiredSelectField } from 'utils/validation';
@@ -21,14 +21,14 @@ const AddEditFormMain = (props) => {
         form,
         formData,
         onCloseAction,
-        formActionType: { editMode, viewMode, addMode },
+        formActionType: { editMode, viewMode },
         onFinish,
         onFinishFailed,
     } = props;
 
     const { buttonData, setButtonData, handleButtonClick } = props;
 
-    const { ModelOptions, TaxChargesOptions, AccountDataOptions, selectedModelGroup } = props;
+    const { ModelOptions, TaxChargesOptions, AccountDataOptions } = props;
 
     const isCodePresent = ({ searchkey = 'id', value, options, attibuteName }) => {
         const foundVal = !value || options?.find((element, index) => element[searchkey] === value);
@@ -53,15 +53,6 @@ const AddEditFormMain = (props) => {
             accountCategoryValidation.initialValue = formData?.accountCategoryDescription;
         }
     }
-
-    // useEffect(() => {
-    //     if (editMode) {
-    //         form.setFieldsValue({ ...formData });
-    //     } else if (addMode && selectedModelGroup) {
-    //         form.setFieldsValue({ modelId: selectedModelGroup });
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [editMode, addMode, selectedModelGroup]);
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
