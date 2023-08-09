@@ -183,7 +183,7 @@ Object {
                 </div>
               </div>
               <div
-                class="ant-col addGroup ant-col-xs-24 ant-col-sm-24 ant-col-md-8 ant-col-lg-8 ant-col-xl-8 css-dev-only-do-not-override-14wwjjs"
+                class="ant-col buttonsGroupRight ant-col-xs-24 ant-col-sm-24 ant-col-md-8 ant-col-lg-8 ant-col-xl-8 css-dev-only-do-not-override-14wwjjs"
                 style="padding-left: 10px; padding-right: 10px;"
               >
                 <button
@@ -882,7 +882,7 @@ Object {
               </div>
             </div>
             <div
-              class="ant-col addGroup ant-col-xs-24 ant-col-sm-24 ant-col-md-8 ant-col-lg-8 ant-col-xl-8 css-dev-only-do-not-override-14wwjjs"
+              class="ant-col buttonsGroupRight ant-col-xs-24 ant-col-sm-24 ant-col-md-8 ant-col-lg-8 ant-col-xl-8 css-dev-only-do-not-override-14wwjjs"
               style="padding-left: 10px; padding-right: 10px;"
             >
               <button
