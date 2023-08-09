@@ -10,7 +10,10 @@ import { SupportingDocument } from './SupportingDocument';
 
 import { VehicleReceiptMain } from './VehicleReceiptChecklistMain';
 
+import { VehicleReceiptProfile } from './VehicleReceiptChecklistProfile';
+
 export const VehicleReceiptChecklist = combineReducers({
     SupportingDocument,
     VehicleReceiptMain,
+    VehicleReceiptProfile,
 });

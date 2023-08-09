@@ -7,6 +7,9 @@ import React from 'react';
 import { Collapse, Space } from 'antd';
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
 import styles from 'components/common/Common.module.css';
+import dayjs from 'dayjs';
+import { convertDateTime } from 'utils/formatDateTime';
+
 const { Panel } = Collapse;
 
 const expandIcon = ({ isActive }) =>
@@ -23,9 +26,7 @@ const expandIcon = ({ isActive }) =>
     );
 
 const VehicleDetailCard = (props) => {
-    const { selectedRecord, selectedCheckListNumber = 'CH67667' } = props;
-    // const fullName = selectedRecord?.customerName?.split(' ');
-    // const userAvatar = fullName ? fullName[0]?.slice(0, 1) + (fullName[1] ? fullName[1]?.slice(0, 1) : '') : '';
+    const { selectedRecord, isProfileDataLoaded, ProfileData } = props;
     return (
         <Collapse bordered={true} defaultActiveKey={[1]} expandIcon={expandIcon} collapsible="icon">
             <Panel
@@ -33,36 +34,36 @@ const VehicleDetailCard = (props) => {
                     <Space>
                         <div>
                             <div>
-                                CheckList Number: <span className={styles.floatRight}>{selectedCheckListNumber}</span>
+                                CheckList Number: <span className={styles.floatRight}>{selectedRecord?.checklistNumber}</span>
                             </div>
                         </div>
                     </Space>
                 }
                 key={1}
             >
-                {selectedRecord?.customerCode && (
+                {ProfileData?.checklistDate && (
                     <p>
-                        Checklist Date: <span className={styles.floatRight}>{selectedRecord?.checklistDate}</span>
+                        Checklist Date: <span className={styles.floatRight}>{dayjs(ProfileData?.checklistDate)?.format('DD MM YYYY')}</span>
                     </p>
                 )}
                 <p>
-                    Checklist Status: <span className={styles.floatRight}>{selectedRecord?.mobileNumber || 'NA'}</span>
+                    Checklist Status: <span className={styles.floatRight}>{ProfileData?.checklistStatus || 'NA'}</span>
                 </p>
                 <p>
-                    GRN Number: <span className={styles.floatRight}>{selectedRecord?.model || 'NA'}</span>
+                    GRN Number: <span className={styles.floatRight}>{ProfileData?.grnNumber || 'NA'}</span>
                 </p>
 
                 <p>
-                    GRN Date: <span className={styles.floatRight}>{selectedRecord?.color || 'NA'}</span>
+                    GRN Date: <span className={styles.floatRight}>{dayjs(ProfileData?.grnDate)?.format('DD-MM-YYYY')}</span>
                 </p>
                 <p>
-                    GRN Status: <span className={styles.floatRight}>{selectedRecord?.mfgWarranty || 'NA'}</span>
+                    GRN Status: <span className={styles.floatRight}>{ProfileData?.grnStatus || 'NA'}</span>
                 </p>
                 <p>
-                    VIN: <span className={styles.floatRight}>{selectedRecord?.color || 'NA'}</span>
+                    VIN: <span className={styles.floatRight}>{ProfileData?.vinNumber || 'NA'}</span>
                 </p>
                 <p>
-                    MODEL: <span className={styles.floatRight}>{selectedRecord?.mfgWarranty || 'NA'}</span>
+                    MODEL: <span className={styles.floatRight}>{ProfileData?.model || 'NA'}</span>
                 </p>
             </Panel>
         </Collapse>

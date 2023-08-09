@@ -30,6 +30,7 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import { FilterIcon } from 'Icons';
 import { QueryButtons, QUERY_BUTTONS_CONSTANTS } from './QueryButtons';
 import { vehicleReceiptChecklistdataActions } from 'store/actions/data/VehicleReceiptCheckList/VehicleReceiptChecklistMain';
+import { vehicleReceiptChecklistProfiledataActions } from 'store/actions/data/VehicleReceiptCheckList/VehicleReceiptChecklistProfile';
 
 const mapStateToProps = (state) => {
     const {
@@ -37,13 +38,13 @@ const mapStateToProps = (state) => {
         data: {
             VehicleReceiptChecklist: {
                 VehicleReceiptMain: { isLoaded: isChecklistDataLoaded = false, isLoading: isChecklistDataLoading = true, data, filter: filterString },
+                VehicleReceiptProfile: { isLoaded: isProfileDataLoaded = false, isLoading: isProfileDataLoading = true, data: ProfileData = [] },
             },
             OTF: {
                 VehicleDetailsLov: { isFilteredListLoaded: isModelDataLoaded = false, isLoading: isModelDataLoading, filteredListData: vehicleModelData },
             },
         },
     } = state;
-
     const moduleTitle = 'Vehicle Receipt Checklist';
 
     let returnValue = {
@@ -57,6 +58,9 @@ const mapStateToProps = (state) => {
         isModelDataLoaded,
         isModelDataLoading,
         vehicleModelData,
+        isProfileDataLoaded,
+        isProfileDataLoading,
+        ProfileData,
     };
     return returnValue;
 };
@@ -74,6 +78,9 @@ const mapDispatchToProps = (dispatch) => ({
             fetchModel: otfvehicleDetailsLovDataActions.fetchFilteredList,
             modelLoading: otfvehicleDetailsLovDataActions.listShowLoading,
 
+            fetchProfile: vehicleReceiptChecklistProfiledataActions.fetchList,
+            profileLoading: vehicleReceiptChecklistProfiledataActions.listShowLoading,
+
             showGlobalNotification,
         },
         dispatch
@@ -86,6 +93,8 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
     const { fetchList, listShowLoading, setFilterString, resetData, saveData, showGlobalNotification } = props;
 
     const { fetchModel, isModelDataLoaded, isModelDataLoading, vehicleModelData, modelLoading } = props;
+
+    const { fetchProfile, profileLoading, isProfileDataLoaded, isProfileDataLoading, ProfileData } = props;
 
     const [listFilterForm] = Form.useForm();
 
@@ -319,18 +328,34 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
         form.resetFields();
         form.setFieldsValue(undefined);
+        if (record?.grnNumber && record?.chassisNumber) {
+            const myParams = [
+                {
+                    key: 'grnNumber',
+                    title: 'grnNumber',
+                    value: record?.grnNumber,
+                },
+                {
+                    key: 'chassisNumber',
+                    title: 'chassisNumber',
+                    value: record?.chassisNumber,
+                },
+            ];
+            fetchProfile({ setIsLoading: profileLoading, userId, onSuccessAction, extraParams: myParams });
+        }
+
         switch (buttonAction) {
             case ADD_ACTION:
                 defaultSection && setCurrentSection(defaultSection);
                 break;
             case EDIT_ACTION:
                 setSelectedRecord(record);
-                record && setSelectedRecordId(record?.vin || record?.vehicleIdentificationNumber);
+                record && setSelectedRecordId(record?.grnNumber ?? '');
                 openDefaultSection && setCurrentSection(defaultSection);
                 break;
             case VIEW_ACTION:
                 setSelectedRecord(record);
-                record && setSelectedRecordId(record?.vin || record?.vehicleIdentificationNumber);
+                record && setSelectedRecordId(record?.grnNumber ?? '');
                 defaultSection && setCurrentSection(defaultSection);
                 break;
             case NEXT_ACTION:
@@ -466,6 +491,8 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
 
     const containerProps = {
         ...vehicleReceiptFormdataProps,
+        isProfileDataLoaded,
+        ProfileData,
         record: selectedRecord,
         form,
         formActionType,
