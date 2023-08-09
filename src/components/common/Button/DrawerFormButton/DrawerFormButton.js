@@ -12,7 +12,7 @@ import styles from 'components/common/Common.module.css';
 const DrawerButtons = ({ formData, onCloseAction, buttonData, setButtonData, saveButtonName = 'Save', handleButtonClick, isLoadingOnSave, multipleForm = false }) => {
     return (
         <Row gutter={20} className={multipleForm ? styles.formFooterNew : ''}>
-            <Col xs={24} sm={6} md={6} lg={6} xl={6} className={styles.footerBtnLeft}>
+            <Col xs={24} sm={6} md={6} lg={6} xl={6} className={styles.buttonsGroupLeft}>
                 {buttonData?.closeBtn && (
                     <Button danger onClick={onCloseAction}>
                         Close
@@ -26,7 +26,7 @@ const DrawerButtons = ({ formData, onCloseAction, buttonData, setButtonData, sav
                 )}
             </Col>
 
-            <Col xs={24} sm={18} md={18} lg={18} xl={18} className={styles.footerBtnRight}>
+            <Col xs={24} sm={18} md={18} lg={18} xl={18} className={styles.buttonsGroupRight}>
                 {buttonData?.saveBtn && (
                     <Button loading={isLoadingOnSave} disabled={!buttonData?.formBtnActive} onClick={(e) => setButtonData({ ...buttonData, saveAndNewBtnClicked: false })} htmlType="submit" type="primary">
                         {saveButtonName}

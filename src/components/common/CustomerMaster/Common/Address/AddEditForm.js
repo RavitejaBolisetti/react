@@ -159,7 +159,7 @@ const AddEditForm = (props) => {
                     </Col>
                 </Row>
                 <Row gutter={20}>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.uniqueSearchInput}>
+                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item initialValue={formData?.pinCode} label="Pin Code" name="pinCode" rules={[validateRequiredInputField('Pin Code'), validatePincodeField('Pin Code')]}>
                             <AutoComplete {...disabledProps} maxLength={6} options={options} onSelect={handleOnSelect} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
                                 <Search onSearch={handleOnSearch} onChange={handleOnClear} placeholder="Search" loading={isPinCodeLoading} type="text" allowClear />
@@ -229,11 +229,11 @@ const AddEditForm = (props) => {
                 </Row>
                 {!formActionType?.viewMode && (
                     <Row gutter={20}>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Button className={styles.marR20} onClick={handleSave} type="primary">
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.buttonsGroupLeft}>
+                            <Button onClick={handleSave} type="primary">
                                 Save
                             </Button>
-                            <Button className={styles.marB20} onClick={handleCancelFormEdit} danger>
+                            <Button onClick={handleCancelFormEdit} danger>
                                 Cancel
                             </Button>
                         </Col>

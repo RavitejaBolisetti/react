@@ -142,7 +142,7 @@
     border-radius: 7px;
 }
 
-.contentHeaderBackground .addGroup button {
+.contentHeaderBackground .buttonsGroupRight button {
     margin-bottom: 0px !important;
     margin-left: 10px;
 }
@@ -243,7 +243,7 @@
     background-color: #ffffff;
 }
 
-.addGroup {
+.buttonsGroupRight {
     display: flex;
     justify-content: right;
 }
@@ -275,13 +275,13 @@
 }
 
 :global .ant-picker-time-panel-column::-webkit-scrollbar-thumb {
-    background-color: #c1c1c1 !important;
+    background-color: #b5b5b6 !important;
     border-radius: 10px;
     border: 2px solid #ffffff;
 }
 
 :global .ant-picker-time-panel-column::-webkit-scrollbar-thumb:hover {
-    border: 2px solid #c1c1c1;
+    border: 2px solid #b5b5b6;
 }
 
 :global .ant-picker-time-panel-column::-webkit-scrollbar {

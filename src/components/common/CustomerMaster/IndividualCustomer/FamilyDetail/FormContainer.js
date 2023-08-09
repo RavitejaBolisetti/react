@@ -81,13 +81,13 @@ const FormBase = (props) => {
                     </Form.Item>
                 </Col>
                 {customer ? (
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.noLeftPadding}>
+                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item initialValue={props?.relationCustomerId ? props?.relationCustomerId : ''} label="Customer Id" name="relationCustomerId">
                             <Search placeholder={preparePlaceholderText('Customer Id')} allowClear loading={isSearchLoading} onSearch={onSearch} />
                         </Form.Item>
                     </Col>
                 ) : (
-                    <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0} className={styles.noLeftPadding}>
+                    <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
                         <Form.Item initialValue={props?.relationCustomerId ? props?.relationCustomerId : ''} label="Customer Id" name="relationCustomerId">
                             <Search placeholder={preparePlaceholderText('Customer Id')} allowClear loading={isSearchLoading} onSearch={onSearch} />
                         </Form.Item>
@@ -133,7 +133,7 @@ const FormBase = (props) => {
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item label="Date of Birth" name="dateOfBirth" rules={[validateRequiredInputField('Date of Birth')]}>
-                        <DatePicker format={dateFormat} onChange={onDateChange} disabledDate={disableFutureDate} style={{ display: 'auto', width: '100%' }} disabled={customer} placeholder={preparePlaceholderSelect('Date of Birth')} getPopupContainer={(triggerNode) => triggerNode.parentElement} />
+                        <DatePicker format={dateFormat} onChange={onDateChange} disabledDate={disableFutureDate} disabled={customer} placeholder={preparePlaceholderSelect('Date of Birth')} getPopupContainer={(triggerNode) => triggerNode.parentElement} />
                     </Form.Item>
                 </Col>
 
@@ -165,18 +165,16 @@ const FormBase = (props) => {
             </Row>
 
             <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={`${styles.buttonsGroupLeft} ${styles.marB20}`}>
                     <Button
                         type="primary"
                         onClick={() => {
-                            // form.submit();
                             onSave();
                         }}
-                        className={styles.marR20}
                     >
                         Save
                     </Button>
-                    <Button onClick={onCancel} className={styles.marB20} danger>
+                    <Button onClick={onCancel} danger>
                         Cancel
                     </Button>
                 </Col>

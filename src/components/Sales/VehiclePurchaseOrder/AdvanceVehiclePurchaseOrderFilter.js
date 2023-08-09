@@ -86,7 +86,7 @@ export default function AppliedAdvanceFilter(props) {
                         </Form>
                     </Col>
                     {showAddButton && (
-                        <Col className={styles.addGroup} xs={24} sm={24} md={6} lg={6} xl={6}>
+                        <Col className={styles.buttonsGroupRight} xs={24} sm={24} md={6} lg={6} xl={6}>
                             {/* {showChangeHistoryButton && (
                                         <>
                                             <Button onClick={showChangeHistoryList} className={styles.actionbtn} type="primary" danger>

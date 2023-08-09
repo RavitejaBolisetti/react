@@ -170,7 +170,7 @@
     overflow-y: auto;
 }
 
-.drawerBody .rsmApproval .addGroup {
+.drawerBody .rsmApproval .buttonsGroupRight {
     color: #0b0b0c;
 }
 
@@ -584,9 +584,9 @@
     color: #ffffff !important;
 }
 
-.contactDivider {
+/* .contactDivider {
     margin-bottom: 12px !important;
-}
+} */
 
 /* .drawerFooterButtons button {
     margin-bottom: 0 !important;
@@ -761,12 +761,21 @@
     padding-top: 2px;
 } */
 
-.addGroup {
+.buttonsGroupLeft {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.buttonsGroupLeft button {
+    margin-right: 10px;
+}
+
+.buttonsGroupRight {
     display: flex;
     justify-content: flex-end;
 }
 
-.contentHeaderBackground .addGroup button {
+.buttonsGroupRight button {
     margin-left: 10px;
 }
 
@@ -1290,14 +1299,14 @@
 
 :global .ant-descriptions .ant-descriptions-view::-webkit-scrollbar-thumb,
 :global .ant-table-wrapper .ant-table .ant-table-content::-webkit-scrollbar-thumb {
-    background-color: #c1c1c1;
+    background-color: #b5b5b6;
     border-radius: 10px;
     border: 2px solid #ffffff;
 }
 
 :global .ant-descriptions .ant-descriptions-view::-webkit-scrollbar-thumb:hover,
 :global .ant-table-wrapper .ant-table .ant-table-content::-webkit-scrollbar-thumb:hover {
-    border: 2px solid #c1c1c1;
+    border: 2px solid #b5b5b6;
 }
 
 /* Crticality group allowed timing css*/
@@ -1444,12 +1453,12 @@
     justify-content: flex-start;
 } */
 
-/* .searchContainer .addGroup button {
+/* .searchContainer .buttonsGroupRight button {
     margin-bottom: 0 !important;
     margin-left: 10px;
 } */
 
-/* .searchContainer .addGroup .refreshBtn {
+/* .searchContainer .buttonsGroupRight .refreshBtn {
     background-color: initial;
     font-size: 18px;
     line-height: 18px;
@@ -1515,7 +1524,7 @@
     background: #00a310;
 } */
 
-/* .addGroup button:first-child {
+/* .buttonsGroupRight button:first-child {
     margin-left: 0;
 } */
 
@@ -1753,13 +1762,13 @@
 }
 
 .drawerBodyLeft::-webkit-scrollbar-thumb {
-    background-color: #c1c1c1;
+    background-color: #b5b5b6;
     border-radius: 10px;
     border: 2px solid #f4f4f4;
 }
 
 .drawerBodyLeft::-webkit-scrollbar-thumb:hover {
-    border: 2px solid #c1c1c1;
+    border: 2px solid #b5b5b6;
 }
 
 .drawerBodyLeft :global .ant-collapse {
@@ -1803,6 +1812,7 @@
 
 .drawerBodyLeft :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box {
     padding: 0 16px 12px;
+    margin-bottom: 0;
 }
 
 .drawerBodyLeft :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box .ant-divider-horizontal {
@@ -2010,15 +2020,15 @@
     box-shadow: none;
 } */
 
-.drawerBodyRight .uniqueSearchInput :global .ant-form-item .ant-input-group-wrapper .ant-input-affix-wrapper:hover+.ant-input-group-addon {
+/* .drawerBodyRight .uniqueSearchInput :global .ant-form-item .ant-input-group-wrapper .ant-input-affix-wrapper:hover+.ant-input-group-addon {
     border-color: #0b0b0c !important;
     border-left: none;
     box-shadow: none;
-}
+} */
 
-.drawerBodyRight .uniqueSearchInput :global .ant-form-item .ant-input-group-wrapper .ant-input-affix-wrapper-focused {
+/* .drawerBodyRight .uniqueSearchInput :global .ant-form-item .ant-input-group-wrapper .ant-input-affix-wrapper-focused {
     box-shadow: none;
-}
+} */
 
 /* .drawerBodyRight .uniqueSearchInput :global .ant-form-item .ant-input-group-wrapper .ant-input-affix-wrapper .ant-input {
     padding: 0 !important;
@@ -2037,10 +2047,10 @@
     border-left: none;
 } */
 
-.drawerBodyRight .uniqueSearchInput :global .ant-form-item .ant-input-group-wrapper .ant-input-group-addon .ant-input-search-button {
+/* .drawerBodyRight .uniqueSearchInput :global .ant-form-item .ant-input-group-wrapper .ant-input-group-addon .ant-input-search-button {
     background: #ffffff;
     border: none;
-}
+} */
 
 /* .drawerBodyRight .uniqueSearchInput .searchField :global .ant-select-selector {
     padding: 0 !important;
@@ -2367,13 +2377,13 @@
 .drawerBody::-webkit-scrollbar-thumb,
 .drawerBodyNew::-webkit-scrollbar-thumb,
 .drawerBodyRight::-webkit-scrollbar-thumb {
-    background-color: #c1c1c1;
+    background-color: #b5b5b6;
     border-radius: 10px;
     border: 2px solid #ffffff;
 }
 
 .drawerBody :global .ant-table-wrapper .ant-table-fixed-header .ant-table-body::-webkit-scrollbar-thumb {
-    background-color: #c1c1c1;
+    background-color: #b5b5b6;
     border-radius: 10px;
     border: 2px solid #ffffff;
 }
@@ -2381,11 +2391,11 @@
 .drawerBody::-webkit-scrollbar-thumb:hover,
 .drawerBodyNew::-webkit-scrollbar-thumb:hover,
 .drawerBodyRight::-webkit-scrollbar-thumb:hover {
-    border: 2px solid #c1c1c1;
+    border: 2px solid #b5b5b6;
 }
 
 .drawerBody :global .ant-table-wrapper .ant-table-fixed-header .ant-table-body::-webkit-scrollbar-thumb:hover {
-    border: 2px solid #c1c1c1;
+    border: 2px solid #b5b5b6;
 }
 
 .drawerBodyRight :global .ant-collapse .ant-collapse-content .ant-form-vertical .ant-space-horizontal .ant-btn-primary {
@@ -2424,10 +2434,15 @@
 
 .drawerBodyRight :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box {
     padding: 0 30px;
+    margin-bottom: 0;
 }
 
 .drawerBodyRight :global .ant-card.ant-card-bordered .ant-collapse .ant-collapse-content>.ant-collapse-content-box {
     padding: 0 20px;
+}
+
+.drawerBodyRight :global .ant-card .ant-card-body {
+    margin-bottom: 0;
 }
 
 .drawerBodyRight .accordianContainer :global .ant-collapse>.ant-collapse-item {
@@ -2511,9 +2526,9 @@
     border-color: #E6E6E6 !important;
 } */
 
-.contactDivider {
+/* .contactDivider {
     margin-bottom: 12px !important;
-}
+} */
 
 /* .drawerBodyRight :global .ant-collapse.ant-collapse-icon-position-end>.ant-collapse-item>.ant-collapse-header .ant-collapse-expand-icon {
     color: #FF3E5B;
@@ -3249,9 +3264,9 @@ li.ant-timeline-item.active .ant-timeline-item-content p {
     margin-bottom: 20px;
 }
 
-.noLeftPadding :global .ant-input {
+/* .noLeftPadding :global .ant-input {
     padding-left: 0px !important;
-}
+} */
 
 .customerChooseContainer :global .ant-table .ant-table-content .ant-table-thead .ant-table-selection-column {
     background: #f2f2f2;
@@ -3369,7 +3384,7 @@ li.ant-timeline-item.active .ant-timeline-item-content p {
         padding-right: 0px !important;
     }
 
-    .addGroup {
+    .buttonsGroupRight {
         margin-top: 10px;
     }
 
