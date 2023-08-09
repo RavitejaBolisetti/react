@@ -4,23 +4,21 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect, useState, useMemo } from 'react';
-import { FileOutlined } from '@ant-design/icons';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { tblPrepareColumns } from 'utils/tableCloumn';
-import { convertDateTime } from 'utils/formatDateTime';
+import { Row, Button, Col, Tag } from 'antd';
 import * as IMAGES from 'assets';
 
 import { customerDetailsIndividualDataActions } from 'store/actions/data/customerMaster/customerDetailsIndividual';
-
-import styles from 'components/common/Common.module.css';
-
-import { DataTable } from 'utils/dataTable';
 import { withDrawer } from 'components/withDrawer';
+
+import { tblPrepareColumns } from 'utils/tableColumn';
+import { convertDateTime } from 'utils/formatDateTime';
+import { DataTable } from 'utils/dataTable';
+
 import { BASE_URL_CUSTOMER_MASTER_NAME_CHANGE_HISTORY as customURL } from 'constants/routingApi';
 
-import { Row, Button, Col, Tag } from 'antd';
-
+import styles from 'components/common/Common.module.css';
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -145,7 +143,7 @@ const ChangeHistoryMain = ({ fetchCustomerChangeHistory, onCloseAction, listShow
         tblPrepareColumns({
             title: 'Documents',
             dataIndex: 'supportingDocuments',
-            render: () => <img src={IMAGES.FILE} alt="logo-images" onClick={downloadFileFromButton}/>,
+            render: () => <img src={IMAGES.FILE} alt="logo-images" onClick={downloadFileFromButton} />,
         }),
         tblPrepareColumns({
             title: 'Status',
