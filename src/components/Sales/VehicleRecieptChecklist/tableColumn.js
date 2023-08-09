@@ -5,18 +5,20 @@
  */
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableCloumn';
 import styles from 'components/common/Common.module.css';
+import { convertDateMonthYear } from 'utils/formatDateTime';
 
 export const tableColumn = ({ handleButtonClick, page, pageSize, actionButtonVisibility }) => {
     const tableColumn = [
         tblPrepareColumns({
             title: 'Receipt Number',
-            dataIndex: 'receiptNumber',
+            dataIndex: 'grnNumber',
             width: '14%',
         }),
         tblPrepareColumns({
             title: 'Receipt Date',
             dataIndex: 'receiptDate',
             width: '14%',
+            render: (text) => convertDateMonthYear(text),
         }),
 
         tblPrepareColumns({

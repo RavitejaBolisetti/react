@@ -35,7 +35,7 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             VehicleReceiptChecklist: {
-                VehicleReceiptMain: { data, filter: filterString },
+                VehicleReceiptMain: { isLoaded: isChecklistDataLoaded = false, isLoading: isChecklistDataLoading = true, data, filter: filterString },
             },
         },
     } = state;
@@ -44,14 +44,11 @@ const mapStateToProps = (state) => {
 
     let returnValue = {
         userId,
-        isDataLoaded: true,
-        data: data?.vehicleSearch,
+        isChecklistDataLoaded,
+        isChecklistDataLoading,
+        data: data?.paginationData,
         totalRecords: data?.totalRecords || [],
-        vehicleDetailStatusList: Object.values(VEHICLE_CHECKLIST_STATUS),
-        vehicleDetailData: [],
         moduleTitle,
-        isLoading: false,
-        isDetailLoaded: true,
         filterString,
     };
     return returnValue;
@@ -62,10 +59,10 @@ const mapDispatchToProps = (dispatch) => ({
     ...bindActionCreators(
         {
             fetchList: vehicleReceiptChecklistdataActions.fetchList,
-            fetchDetail: vehicleReceiptChecklistdataActions.fetchDetail,
             listShowLoading: vehicleReceiptChecklistdataActions.listShowLoading,
             setFilterString: vehicleReceiptChecklistdataActions.setFilter,
             resetData: vehicleReceiptChecklistdataActions.reset,
+            saveData: vehicleReceiptChecklistdataActions.saveData,
             showGlobalNotification,
         },
         dispatch
@@ -73,9 +70,9 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const VehicleRecieptChecklistMasterBase = (props) => {
-    const { fetchList, saveData, listShowLoading, userId, data, totalRecords, vehicleDetailData } = props;
-    const { typeData, moduleTitle } = props;
-    const { filterString, setFilterString, vehicleDetailStatusList } = props;
+    const { userId, isChecklistDataLoaded, isChecklistDataLoading, data, totalRecords, moduleTitle, filterString } = props;
+
+    const { fetchList, listShowLoading, setFilterString, resetData, saveData, showGlobalNotification } = props;
 
     const [listFilterForm] = Form.useForm();
 
@@ -137,10 +134,10 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         showGlobalNotification({ message });
         setShowDataLoading(false);
     };
-    const handleButtonQuery = (buttonName, keyName) => {
-        setbuttonType(buttonName?.key);
-        
-        const buttonkey = buttonName?.key;
+    const handleButtonQuery = (item, keyName) => {
+        setbuttonType(item?.key);
+
+        const buttonkey = item?.key;
 
         switch (buttonkey) {
             case QUERY_BUTTONS_CONSTANTS?.PENDING?.key: {
@@ -167,7 +164,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
                 key: 'checklistStatus',
                 title: 'checklistStatus',
                 value: buttonType,
-                name: typeData?.find((i) => i?.key === filterString?.searchType)?.value,
+                name: buttonType,
                 canRemove: false,
                 filter: true,
             },
@@ -386,10 +383,12 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         totalRecords,
         setPage,
         tableColumn: tableColumn({ handleButtonClick, actionButtonVisibility }),
-        tableData: [{}],
+        tableData: data,
         showAddButton: false,
         handleButtonClick,
         noMessge: LANGUAGE_EN.GENERAL.LIST_NO_DATA_FOUND.TITLE,
+        isLoading: showDataLoading,
+        showAddButton: false,
     };
 
     const removeFilter = (key) => {
@@ -405,7 +404,6 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
     const advanceFilterResultProps = {
         extraParams,
         removeFilter,
-        vehicleDetailStatusList,
         advanceFilter: true,
         filter: true,
         filterString,
@@ -415,7 +413,6 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         onFinishFailed,
         title: <QueryButtons items={QUERY_BUTTONS_CONSTANTS} onClick={handleButtonQuery} currentItem={buttonType} />,
         data,
-        typeData,
         otfSearchRules,
         setOtfSearchRules,
         searchForm,
@@ -475,8 +472,6 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         setFormData,
         handleFormValueChange,
         isLastSection,
-        typeData,
-        vehicleDetailData,
         saveButtonName: isLastSection ? 'Submit' : 'Save & Next',
     };
     const advanceFilterProps = {
@@ -491,7 +486,6 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         setFilterString,
         advanceFilterForm,
         setAdvanceSearchVisible,
-        typeData,
         onFinishSearch,
     };
 
@@ -502,7 +496,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable isLoading={showDataLoading} {...tableProps} showAddButton={false} />
+                    <ListDataTable {...tableProps} />
                 </Col>
             </Row>
             <VehicleRecieptMasterMainContainer {...containerProps} />
