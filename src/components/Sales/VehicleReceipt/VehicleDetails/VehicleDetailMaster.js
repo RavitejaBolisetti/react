@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Form, Row, Col } from 'antd';
 
 import { ViewDetail } from './ViewDetail';
@@ -62,7 +62,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const VehicleDetailsMasterBase = (props) => {
     const { typeData, vehicleStatusType, physicalStatusType, shortageType, vehicleDetailData } = props;
-    const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, saveData, isLoading, setIsFormVisible } = props;
+    const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, isLoading } = props;
     const { form, selectedId, finalData, setFinalData, formActionType, handleFormValueChange, onFinish, onFinishFailed } = props;
 
     const [vehicleDetailForm] = Form.useForm();
@@ -70,15 +70,6 @@ const VehicleDetailsMasterBase = (props) => {
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
-
-    const extraParams = [
-        {
-            key: 'supplierInvoiceNumber',
-            title: 'supplierInvoiceNumber',
-            value: selectedId,
-            name: 'Supplier Invoice Number',
-        },
-    ];
 
     useEffect(() => {
         if (userId && selectedId) {

@@ -124,7 +124,6 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
     const [formData, setFormData] = useState([]);
     const [otfSearchRules, setOtfSearchRules] = useState({ rules: [validateRequiredInputField('search parametar')] });
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
-    const [buttonType, setbuttonType] = useState(QUERY_BUTTONS_CONSTANTS?.PENDING?.key);
     const [actionButtonVisibility, setactionButtonVisibility] = useState({ EditIcon: false, EyeIcon: false, DeleteIcon: false, AddIcon: true });
 
     const onSuccessAction = (res) => {

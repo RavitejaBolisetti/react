@@ -503,6 +503,7 @@ export const VehicleReceiptMasterBase = (props) => {
         currentSection,
         sectionName,
         setCurrentSection,
+        formData,
         setFormData,
         handleFormValueChange,
         isLastSection,

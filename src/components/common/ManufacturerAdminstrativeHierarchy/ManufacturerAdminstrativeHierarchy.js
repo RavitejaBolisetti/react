@@ -198,6 +198,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
+
     const makeExtraparms = (Params) => {
         const extraParams = [];
         Params?.map((element) => {
@@ -208,8 +209,8 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
                 value: value,
                 name: name,
             });
+            return undefined;
         });
-
         return extraParams;
     };
     useEffect(() => {
@@ -479,11 +480,6 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         form.resetFields();
         setIsChangeHistoryVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
-    };
-
-    const onCloseAction = () => {
-        form.resetFields();
-        setIsUploadDrawer(false);
     };
 
     const drawerTitle = 'Upload Authority Details';
