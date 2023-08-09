@@ -9,7 +9,6 @@ import CardProductAttribute from './CardProductAttribute';
 import FormProductAttribute from './FormProductAttribute';
 
 function ProductAttributeMaster(props) {
-    console.log('props------->', props)
     const { productHierarchyAttributeData, isVisible, selectedTreeData, setFormBtnActive, showGlobalNotification, skuAttributes, setSKUAttributes, disabledEdit, setDisabledEdit } = props;
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [attributeForm] = Form.useForm();
