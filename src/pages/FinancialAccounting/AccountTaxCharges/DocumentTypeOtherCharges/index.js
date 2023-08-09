@@ -3,8 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { TaxChargesPage } from './TaxCharges';
-import { TaxChargesCategoryPage } from './TaxChargesCategory';
-import { DocumentTypeOtherChargesPage } from './DocumentTypeOtherCharges';
+import { DocumentTypeOtherChargesPage } from './DocumentTypeOtherChargesPage';
 
-export { TaxChargesPage, TaxChargesCategoryPage, DocumentTypeOtherChargesPage };
+export { DocumentTypeOtherChargesPage };
+    

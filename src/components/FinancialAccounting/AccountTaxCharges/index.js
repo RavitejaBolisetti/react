@@ -5,5 +5,6 @@
  */
 import { TaxChargesMaster } from './TaxAndCharges';
 import { TaxChargesCategory } from './TaxAndChargesCategory';
+import { DocumentTypeOtherChargesMaster } from './DocumentTypeOtherCharges';
 
-export { TaxChargesMaster, TaxChargesCategory };
+export { TaxChargesMaster, TaxChargesCategory, DocumentTypeOtherChargesMaster };
