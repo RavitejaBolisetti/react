@@ -155,6 +155,7 @@ export const OtfSoMappingMain = ({
     const [searchValue, setSearchValue] = useState('');
     const [attributeType, setAttributeType] = useState();
     const [calculationType, setCalculationType] = useState();
+    const [soMapKey, setSoMapKey] = useState();
 
     const defaultBtnVisiblity = { editBtn: false, childBtn: false, siblingBtn: false, enable: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -427,8 +428,6 @@ export const OtfSoMappingMain = ({
     const leftCol = taxChargeData?.length > 0 ? 14 : 24;
     const rightCol = taxChargeData?.length > 0 ? 10 : 24;
     const title = 'Hierarchy';
-
-    console.log('productHierarchyData', productHierarchyData);
 
     return (
         <>
