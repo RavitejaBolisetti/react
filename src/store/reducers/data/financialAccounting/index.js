@@ -10,6 +10,9 @@ import { TaxChargesCode } from './taxChargesCode';
 import { FinancialAccountHead } from './financialAccountHead';
 import { DocumentDescription } from './documentDescription';
 import { TaxChargeCategoryType } from './taxChargeType';
+import { AccountCategory } from './accountCategory/accountCategory';
+import { ApplicationMenu } from './accountCategory/appilcationMenu';
+import { AccountCategoryDocumentDescription } from './accountCategory/accountCategoryDocumentDescription';
 
 export const FinancialAccounting = combineReducers({
     TaxCharges,
@@ -18,4 +21,7 @@ export const FinancialAccounting = combineReducers({
     FinancialAccountHead,
     DocumentDescription,
     TaxChargeCategoryType,
+    AccountCategory,
+    ApplicationMenu,
+    AccountCategoryDocumentDescription,
 });
