@@ -68,6 +68,7 @@ const UploadBase = (props) => {
         accept = '',
         handleFormValueChange = () => {},
         multiple = false,
+        flag= false,
         showRemoveIcon = true,
         showDownloadIcon = true,
         showProgress = { strokeWidth: 3, showInfo: true },
@@ -216,6 +217,7 @@ const UploadBase = (props) => {
                 form.validateFields()
                     .then(() => {
                         setFileList(fileList);
+                        if(!flag)
                         handleFormValueChange();
                         const { status } = info.file;
                         setShowStatus(info.file);
@@ -238,7 +240,7 @@ const UploadBase = (props) => {
                 }
 
                 setFileList(fileList);
-
+                if(!flag)
                 handleFormValueChange();
                 const { status } = info.file;
                 setShowStatus(info.file);
