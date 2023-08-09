@@ -11,17 +11,20 @@ import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { dateFormat, formatDate } from 'utils/formatDateTime';
 import { disableFutureDate } from 'utils/disableDate';
 import { ModalButtons } from 'components/common/Button';
+import { customSelectBox } from 'utils/customSelectBox';
 
 import styles from 'components/common/Common.module.css';
 
 export const AdvancedSearchFrom = (props) => {
-    const { setAdvanceSearchVisible } = props;
+    const { setAdvanceSearchVisible, vehicleModelData, isModelDataLoading } = props;
     const {
         filterString,
         setFilterString,
         advanceFilterForm,
         advanceFilterForm: { resetFields },
     } = props;
+
+    console.log('vehicleModelData', vehicleModelData);
 
     const onFinish = (values) => {
         setFilterString({
@@ -59,12 +62,12 @@ export const AdvancedSearchFrom = (props) => {
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item label="Receipt From Date" name="receiptFromDate" className={styles?.datePicker}>
-                        <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} />
+                        <DatePicker placeholder={preparePlaceholderSelect('From Date')} format={dateFormat} className={styles.fullWidth} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item label="Receipt To Date" name="receipttoDate" className={styles?.datePicker}>
-                        <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} />
+                        <DatePicker placeholder={preparePlaceholderSelect('To Date')} format={dateFormat} className={styles.fullWidth} />
                     </Form.Item>
                 </Col>
             </Row>
@@ -72,7 +75,7 @@ export const AdvancedSearchFrom = (props) => {
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form.Item label="Model" name="model">
-                        <Select placeholder={preparePlaceholderSelect('model')} fieldNames={{ label: 'label', value: 'value' }} options={[{ label: 'Shaka', value: 'Shaka' }]} {...selectProps} className={styles.headerSelectField} />
+                        {customSelectBox({ data: vehicleModelData || [], placeholder: preparePlaceholderSelect('model'), fieldNames: { key: 'prodctCode', value: 'prodctShrtName' }, loading: isModelDataLoading })}
                     </Form.Item>
                 </Col>
             </Row>

@@ -29,7 +29,7 @@ export const tableColumn = ({ handleButtonClick, page, pageSize, actionButtonVis
 
         tblPrepareColumns({
             title: 'Chassis No.',
-            dataIndex: 'chassis',
+            dataIndex: 'chassisNumber',
             width: '14%',
         }),
 

@@ -18,8 +18,9 @@ import { VehicleRecieptMasterMainContainer } from './VehicleRecieptMasterMainCon
 import { AdvancedSearch } from './AdvancedSearch';
 import { showGlobalNotification } from 'store/actions/notification';
 
-import { VEHICLE_CHECKLIST_STATUS } from 'constants/VehicleRecieptChecklistStatus';
 import { VEHICLE_RECIEPT_CHECKLIST_SECTION } from 'constants/VehicleRecieptCheckListSection';
+import { otfvehicleDetailsLovDataActions } from 'store/actions/data/otf/vehicleDetailsLov';
+
 import { formatDateToCalenderDate } from 'utils/formatDateTime';
 
 import { validateRequiredInputField } from 'utils/validation';
@@ -37,6 +38,9 @@ const mapStateToProps = (state) => {
             VehicleReceiptChecklist: {
                 VehicleReceiptMain: { isLoaded: isChecklistDataLoaded = false, isLoading: isChecklistDataLoading = true, data, filter: filterString },
             },
+            OTF: {
+                VehicleDetailsLov: { isFilteredListLoaded: isModelDataLoaded = false, isLoading: isModelDataLoading, filteredListData: vehicleModelData },
+            },
         },
     } = state;
 
@@ -50,6 +54,9 @@ const mapStateToProps = (state) => {
         totalRecords: data?.totalRecords || [],
         moduleTitle,
         filterString,
+        isModelDataLoaded,
+        isModelDataLoading,
+        vehicleModelData,
     };
     return returnValue;
 };
@@ -63,6 +70,10 @@ const mapDispatchToProps = (dispatch) => ({
             setFilterString: vehicleReceiptChecklistdataActions.setFilter,
             resetData: vehicleReceiptChecklistdataActions.reset,
             saveData: vehicleReceiptChecklistdataActions.saveData,
+
+            fetchModel: otfvehicleDetailsLovDataActions.fetchFilteredList,
+            modelLoading: otfvehicleDetailsLovDataActions.listShowLoading,
+
             showGlobalNotification,
         },
         dispatch
@@ -73,6 +84,8 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
     const { userId, isChecklistDataLoaded, isChecklistDataLoading, data, totalRecords, moduleTitle, filterString } = props;
 
     const { fetchList, listShowLoading, setFilterString, resetData, saveData, showGlobalNotification } = props;
+
+    const { fetchModel, isModelDataLoaded, isModelDataLoading, vehicleModelData, modelLoading } = props;
 
     const [listFilterForm] = Form.useForm();
 
@@ -134,6 +147,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         showGlobalNotification({ message });
         setShowDataLoading(false);
     };
+
     const handleButtonQuery = (item, keyName) => {
         setbuttonType(item?.key);
 
@@ -169,8 +183,8 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
                 filter: true,
             },
             {
-                key: 'searchParam',
-                title: 'Value',
+                key: 'grnNumber',
+                title: 'grnNumber',
                 value: filterString?.searchParam,
                 name: filterString?.searchParam,
                 canRemove: true,
@@ -230,10 +244,17 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
 
     useEffect(() => {
         if (userId) {
+            setShowDataLoading(true);
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, extraParams]);
+    useEffect(() => {
+        if (userId && !isModelDataLoaded) {
+            fetchModel({ setIsLoading: modelLoading, userId, onErrorAction });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, isModelDataLoaded]);
 
     useEffect(() => {
         return () => {
@@ -280,6 +301,11 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
             return;
         }
         searchForm.resetFields();
+        setFilterString({
+            ...filterString,
+            searchParam: value,
+            advanceFilter: true,
+        });
     };
 
     const handleResetFilter = (e) => {
@@ -487,6 +513,8 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         advanceFilterForm,
         setAdvanceSearchVisible,
         onFinishSearch,
+        vehicleModelData,
+        isModelDataLoading,
     };
 
     return (
