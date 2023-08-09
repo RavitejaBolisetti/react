@@ -15,14 +15,14 @@ const { Search } = Input;
 
 export default function VehicleReceiptFilter(props) {
     const { extraParams, removeFilter, handleResetFilter, advanceFilter = false, vehicleReceiptStatusList, filterString, handleReceiptTypeChange, typeData, setAdvanceSearchVisible, searchForm, handleChange, handleSearch } = props;
-
+    const { currentItem, setCurrentItem } = props;
     return (
         <div className={styles.contentHeaderBackground}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row gutter={20}>
                         <Col xs={24} sm={16} md={16} lg={16} xl={16} className={styles.verticallyCentered}>
-                            <QueryButtons items={vehicleReceiptStatusList} onClick={handleReceiptTypeChange} />
+                            <QueryButtons currentItem={currentItem} items={vehicleReceiptStatusList} onClick={handleReceiptTypeChange} />
 
                             <div className={styles.fullWidth}>
                                 <Search placeholder="Search" onChange={handleChange} onSearch={handleSearch} allowClear className={styles.headerSearchField} />

@@ -60,7 +60,6 @@ const SupplierInvoiceDetailsMasterBase = (props) => {
     const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, supplierInvoiceData, isLoading } = props;
     const { form, selectedId, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick } = props;
     const [exchangeValue, setexchangeValue] = useState(false);
-    const [loyaltyValue, setloyaltyValue] = useState(false);
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
@@ -133,8 +132,6 @@ const SupplierInvoiceDetailsMasterBase = (props) => {
         isLoading,
         exchangeValue,
         setexchangeValue,
-        loyaltyValue,
-        setloyaltyValue,
     };
 
     const viewProps = {
@@ -144,22 +141,8 @@ const SupplierInvoiceDetailsMasterBase = (props) => {
         isLoading,
     };
 
-    const handleFieldsChange = () => {
-        const { loyaltyScheme, exchange } = form.getFieldsValue();
-        if (loyaltyScheme) {
-            setexchangeValue(true);
-            setloyaltyValue(false);
-        } else if (exchange) {
-            setexchangeValue(false);
-            setloyaltyValue(true);
-        } else {
-            setexchangeValue(false);
-            setloyaltyValue(false);
-        }
-    };
-
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFieldsChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>
