@@ -12,14 +12,12 @@ import AdvanceVehiclePurchaseOrderFilter from './AdvanceVehiclePurchaseOrderFilt
 import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION,CANCEL_ACTION, btnVisiblity } from 'utils/btnVisiblity';
 
 import { ListDataTable } from 'utils/ListDataTable';
-import { VehiclePurchaseOrderMainContainer } from './VehiclePurchaseOrderMainContainer';
 import { AdvancedSearch } from './AdvancedSearch';
 import { VEHICLE_DETAIL_STATUS } from 'constants/VehicleDetailStatus';
 import { VEHICLE_PURCHASE_ORDER_SECTION } from 'constants/VehiclePurchaseOrderSection';
 import { validateRequiredInputField } from 'utils/validation';
 
 import { showGlobalNotification } from 'store/actions/notification';
-// import { vehicleDetailDataActions } from 'store/actions/data/vehicle/vehicleDetail';
 import { vehiclePurchaseOrderDataActions } from 'store/actions/data/vehicle/vehiclePurchaseOrderDetails';
 import {BASE_URL_SAVE_VEHICLE_PURCHASE_ORDER_DETAILS as otfCancelURL } from 'constants/routingApi';
 
@@ -27,6 +25,7 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import { FilterIcon } from 'Icons';
 import { PoCancellationMaster } from './VehiclePurchaseOrderCancellation/PoCancellationMaster';
 import { VehiclePurchaseOrderDetailMaster } from './VehiclePurchaseOrderDetail';
+import { saveVPODataActions } from 'store/actions/data/vehicle/vehiclePurchaseOrderAction';
 
 import styles from 'components/common/Common.module.css';
 const { confirm } = Modal;
@@ -68,15 +67,9 @@ const mapDispatchToProps = (dispatch) => ({
         {
             fetchList: vehiclePurchaseOrderDataActions.fetchList,
             listShowLoading: vehiclePurchaseOrderDataActions.listShowLoading,
-
-            resetData: vehiclePurchaseOrderDataActions.reset,
-            setFilterString: vehiclePurchaseOrderDataActions.setFilter,
-            
-
-            // fetchList: vehicleDetailDataActions.fetchList,
-            // fetchDetail: vehicleDetailDataActions.fetchDetail,
-            // listShowLoading: vehicleDetailDataActions.listShowLoading,
-            // resetData: vehicleDetailDataActions.reset,
+            setFilterString: vehiclePurchaseOrderDataActions.setFilter,           
+            saveData: saveVPODataActions.saveData,
+            resetData: saveVPODataActions.reset,          
             showGlobalNotification,
         },
         dispatch
@@ -90,6 +83,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);    
     const [listFilterForm] = Form.useForm();
     const [selectedRecord, setSelectedRecord] = useState();
+
     const [selectedRecordId, setSelectedRecordId] = useState();
 
     const [section, setSection] = useState();
@@ -103,7 +97,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
     const [advanceFilterForm] = Form.useForm();
 
     const [showDataLoading, setShowDataLoading] = useState(true);
-    
+
     const [vpoCancellationForm] = Form.useForm();
     const defaultBtnVisiblity = {
         editBtn: false,
@@ -153,7 +147,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
                 value: filterString?.searchType,
                 name: typeData?.find((i) => i?.key === filterString?.searchType)?.value,
                 canRemove: false,
-                filter: true,
+                filter: false,
             },
             {
                 key: 'searchParam',
@@ -217,23 +211,12 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
                 canRemove: true,
                 filter: false,
             },
-            // {
-            //     key: 'sortBy',
-            //     title: 'Sort by',
-            //     value: 'customerName',
-            //     canRemove: true,
-            //     filter: false,
-            // },
-            // {
-            //     key: 'sortIn',
-            //     title: 'Sort By',
-            //     value: 'ASC',
-            //     canRemove: true,
-            //     filter: false,
-            // },
+             
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString]);
+console.log("extraParams", extraParams);
+
 
     useEffect(() => {
         if (userId) {
@@ -262,7 +245,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentSection, sectionName]);
 
-    const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
+    const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true, }) => {
         form.resetFields();
         form.setFieldsValue(undefined);
         setIsFormVisible(true);
@@ -279,6 +262,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
                 break;
             case VIEW_ACTION:
                 setSelectedRecord(record);
+               
                 record && setSelectedRecordId(record?.id);
                 defaultSection && setCurrentSection(defaultSection);
                 break;
@@ -288,6 +272,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
                 setLastSection(!nextSection?.id);
                 break;
             case CANCEL_ACTION:
+                setSelectedRecord(record);
                 setIsCancelVisible(true); 
                 setIsFormVisible(false);
                 
@@ -309,8 +294,6 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
     const onFinishSearch = (values) => {};
 
     const onFinish = (values) => {
-
-        console.log('advance search',values);
         const recordId = formData?.parentId || form.getFieldValue('parentId');
         let data = { ...values, parentId: recordId };
         const onSuccess = (res) => {
@@ -391,7 +374,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         removeFilter,
         vehicleDetailStatusList,
         advanceFilter: true,
-        otfFilter: true,
+        vpoFilter: true,
         filterString,
         setFilterString,
         from: listFilterForm,
@@ -409,57 +392,45 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         handleResetFilter,    
         
     };
-    const fnOTFTransfer = ({ modalTitle, modalMessage, finalData, callBackMethod, customURL }) => {
+     
+   
+    const onFinishVPOCancellation = (values) => {
+       
+        // const recordId = formData?.parentId || form.getFieldValue('parentId');
+        let data = { ...values, 
+            id:selectedRecord?.id, 
+            purchaseOrderNumber: selectedRecord?.purchaseOrderNumber,
+            cancelRemarksCode: values?.cancelRemarksCode,
+
+            // orderTypeCode: selectedRecord?.orderTypeCode,
+            // dealerParentCode: selectedRecord?.dealerParentCode,
+            // dealerLocationId: selectedRecord?.dealerLocationId,
+            // modelCode: selectedRecord?.modelCode,                            
+            // quantity: selectedRecord?.quantity,                
+            // purchaseOrderStatusCode: selectedRecord?.purchaseOrderStatusCode,
+
+        };
+        console.log('cancel REQ',values);
         const onSuccess = (res) => {
-            // setIsTransferVisible(false);
-            setIsCancelVisible(false);
-            // otfTransferForm.resetFields();
-            // otfCancellationForm.resetFields();
-            // setShowDataLoading(true);
-            // showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            // fetchOTFSearchedList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+            // form.resetFields();
+            setShowDataLoading(true);
+            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            // fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
             // setButtonData({ ...buttonData, formBtnActive: false });
             // setIsFormVisible(false);
         };
-
-        const requestData = {
-            data: finalData,
-            customURL,
-            method: 'put',
-            setIsLoading: () => {},
-            userId,
-            onSuccessAction: onSuccess,
-            onErrorAction,
+        const onError = (message) => {
+            showGlobalNotification({ message });
         };
-
-        confirm({
-            title: modalTitle,
-            icon: '',
-            content: modalMessage,
-            okText: 'Yes',
-            okType: 'danger',
-            cancelText: 'No',
-            wrapClassName: styles.confirmModal,
-            centered: true,
-            closable: true,
-            onOk() {
-                callBackMethod(requestData);
-            },
-            onCancel() {},
-        });
-
-    };
-   
-    const onFinishOTFCancellation = (values) => {
-        fnOTFTransfer({
-            modalTitle: 'OTF Cancel',
-            modalMessage: `Do you want to cancel the Vehicle Purchase Order `, //${otfData?.otfNumber}
-            // finalData: { dealerCode: '', oemCode: '', productCode: '', ...values, id: otfData?.id, otfNumber: otfData?.otfNumber, },
-            finalData: {...values, id: '', otfNumber: '', },
-
-            callBackMethod: otfCancelURL,
-            customURL: otfCancelURL,
-        });
+        const requestData = {
+            data: data,
+            method: 'put', 
+            setIsLoading: listShowLoading,
+            userId,
+            onError,
+            onSuccess,
+        };
+        saveData(requestData);
         
     };
 
@@ -530,6 +501,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         typeData,
         vehicleDetailData,
         saveButtonName: isLastSection ? 'Submit' : 'Save & Next',
+       
     };
     const cancelProps = {
         ...props,
@@ -537,20 +509,25 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         // otfCancellationForm,
         // otfData,
         // selectedOrder,
-        // CANCEL_ACTION,
+        CANCEL_ACTION,
         isVisible: isCancelVisible,
         onCloseAction: onCancelCloseAction,
-        onFinishOTFCancellation,
+        onFinishVPOCancellation, 
+        selectedRecord,
+        setSelectedRecord,
+       
     };
+    
     const fnVPOFCancel = ({ modalTitle, modalMessage, finalData, callBackMethod, customURL }) => {
+        console.log('finalData',finalData);
         const onSuccess = (res) => {
-            // console.log('res',res);
+            console.log('res',res);
             // setIsTransferVisible(false);
             // setIsCancelVisible(false);
             // otfTransferForm.resetFields();
             // otfCancellationForm.resetFields();
             // setShowDataLoading(true);
-            // showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             // fetchOTFSearchedList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
             // setButtonData({ ...buttonData, formBtnActive: false });
             // setIsFormVisible(false);
@@ -580,20 +557,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
             onCancel() {},
         });
     };
-    const onFinishVPOCancellation = (values) => {
-        fnVPOFCancel({
-            modalTitle: 'VPO Cancel',
-            modalMessage: `Do you want to cancel the VPO`,
-            // modalMessage: `Do you want to cancel this ${otfData?.otfNumber}`,
-            finalData: { dealerCode: '', oemCode: '', productCode: '', ...values, id: '', otfNumber: '' },
-            // id: otfData?.id, otfNumber: otfData?.otfNumber
-            // callBackMethod: transferOTF,
-            // customURL: otfCancelURL,
-        });
-    };
-
-    // console.log('typeData=>',typeData);
-
+    
     return (
         <>
             <AdvanceVehiclePurchaseOrderFilter {...advanceFilterResultProps} />
@@ -602,9 +566,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
                     <ListDataTable isLoading={showDataLoading} {...tableProps} showAddButton={false} />
                 </Col>
             </Row>
-            <AdvancedSearch {...advanceFilterProps} />
-            {/* <VehiclePurchaseOrderMainContainer {...containerProps} /> */}
-            
+            <AdvancedSearch {...advanceFilterProps} />            
             <VehiclePurchaseOrderDetailMaster {...containerProps} />
             <PoCancellationMaster {...cancelProps} />
             

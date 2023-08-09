@@ -28,13 +28,25 @@ export const VehiclePurchaseOrderFormButton = ({ record, onCloseAction, buttonDa
                 <Col xs={24} sm={16} md={18} lg={20} xl={20} className={styles.buttonsGroupRight}>
                     {buttonData?.editBtn && (
                         <>
-                            <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record, openDefaultSection: false })} type="primary">
-                                Edit
-                            </Button>
                             <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.CANCEL_OTF, record, openDefaultSection: false })} type="primary">
-                                Cancel PO
+                                Cancel VPO
                             </Button>
+                            {/* <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record, openDefaultSection: false })} type="primary">
+                        Edit
+                    </Button> */}
                         </>
+                    )}
+
+                    {buttonData?.cancelVPOBtn && (
+                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.CANCEL_VEHICLE_PURCHASE_ORDER, record })} type="primary">
+                            Cancel PO
+                        </Button>
+                    )}
+
+                    {buttonData?.cancelOtfBtn && (
+                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.CANCEL_OTF, record })} type="primary">
+                            Cancel OTF
+                        </Button>
                     )}
 
                     {buttonData?.cancelVPOBtn && (

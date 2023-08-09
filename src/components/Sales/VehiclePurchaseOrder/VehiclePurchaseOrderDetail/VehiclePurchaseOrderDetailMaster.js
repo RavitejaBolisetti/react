@@ -92,13 +92,13 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const VehiclePurchaseOrderDetailMasterBase = (props) => {
-    const { typeData, fetchProductList, productHierarchyList, fetchDealerParentsLovList, dealerParentsLovList, listShowLoadingOnLoad, viewVehiclePODetails, fetchDealerLocation,dealerLocationList } = props;
+    const { typeData, fetchProductList, productHierarchyList, fetchDealerParentsLovList, dealerParentsLovList, listShowLoadingOnLoad, viewVehiclePODetails, fetchDealerLocation,dealerLocationList, selectedRecord, setSelectedRecord,} = props;
     const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, saveData, isLoading, vehicleDetails } = props;
     const { form, selectedRecordId, formActionType, handleFormValueChange, salesConsultantLov, NEXT_ACTION,VIEW_ACTION,EDIT_ACTION, handleButtonClick } = props;
     const [activeKey, setactiveKey] = useState([1]);
     const [dealerParentCode, setDealerParentCode] = useState(null);
 
-console.log('_ACTION',selectedRecordId);
+
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
@@ -166,7 +166,6 @@ console.log('_ACTION',selectedRecordId);
 
 
     const getDealerlocation = (e) => {
-        console.log('e',e);
         setDealerParentCode(e);
         const extraParams = [
             {
@@ -243,6 +242,11 @@ console.log('_ACTION',selectedRecordId);
         setactiveKey,
         productHierarchyList,
         getDealerlocation,
+        selectedRecordId,
+        selectedRecord, 
+        setSelectedRecord,
+        viewVehiclePODetails, 
+        
         
     };
 

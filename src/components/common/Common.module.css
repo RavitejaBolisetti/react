@@ -779,6 +779,15 @@
     margin-left: 10px;
 }
 
+.buttonsGroup {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.buttonsGroup button:not(:last-child) {
+    margin-right: 20px;
+}
+
 /* .contentHeaderRightBackground {
     background-color: #f4f4f4;
     padding: 16px 20px;
@@ -2759,15 +2768,15 @@
     line-height: 24px;
 }
 
-.drawerBodyRight .cardInsideBox :global .ant-btn-link,
+/* .drawerBodyRight .cardInsideBox :global .ant-btn-link,
 .viewDrawerContainer .cardInsideBox :global .ant-btn-link {
     padding: 0;
-}
+} */
 
 .drawerBodyRight .cardInsideBox :global .ant-btn-link span:last-child,
 .viewDrawerContainer .cardInsideBox :global .ant-btn-link span:last-child {
     font-weight: 700;
-    font-size: 16px;
+    /* font-size: 16px; */
     line-height: 23px;
     vertical-align: text-bottom;
 }
@@ -2859,7 +2868,7 @@
 }
 
 .cardInsideBox {
-    border: 1px solid #e6e6e6;
+    border: 1px dashed #e6e6e6;
     border-radius: 4px;
     color: #0b0b0c;
     padding: 20px;
@@ -2867,13 +2876,17 @@
     margin-bottom: 20px;
 }
 
-.cardInsideBox .viewHistory {
-    text-align: right;
+.cardInsideBox :global .ant-card .ant-card-body {
+    padding: 0;
 }
 
-.cardInsideBox .viewHistory :global .ant-btn {
+/* .cardInsideBox .viewHistory {
+    text-align: right;
+} */
+
+/* .cardInsideBox .viewHistory :global .ant-btn {
     padding-right: 0px;
-}
+} */
 
 .customerName {
     border: 1px solid #e6e6e6;

@@ -20,9 +20,10 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 const { TextArea, Search } = Input;
 
 const AddEditFormMain = (props) => {
-    const { otfCancellationForm, formData, otfData, selectedOrder, fieldNames, onFinishOTFCancellation, onFinishFailed, cancelationReason } = props;
+    const { otfCancellationForm, formData, otfData, selectedOrder, fieldNames, onFinishVPOCancellation, onFinishFailed, cancelationReason,selectedRecord,setSelectedRecord, } = props;
     const { handleButtonClick, buttonData, setButtonData, onCloseAction, typeData, userId, listShowLoading, showGlobalNotification, setEmptyList } = props;
     const { searchDealerValue, setSearchDealerValue, dealerDataList } = props;
+    console.log('propssss',props);
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
@@ -37,19 +38,19 @@ const AddEditFormMain = (props) => {
         setButtonData,
         handleButtonClick,
     };
-    const handleCancellationReasonTypeChange = (value) => {
-        otfCancellationForm.setFieldsValue({ dealerCode: '', oemCode: '', productCode: '', dealerName: '', reasonForCancellation: '', cancellationRemark: '' });
-    };
+    // const handleCancellationReasonTypeChange = (value) => {
+    //otfCancellationForm.setFieldsValue({ dealerCode: '', oemCode: '', productCode: '', dealerName: '', reasonForCancellation: '', cancellationRemark: '' });
+    // };
     const isLoading = false;
 
     return (
         <>
-            <Form form={otfCancellationForm} onFinish={onFinishOTFCancellation} layout="vertical" autocomplete="off" colon="false" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange}>
+            <Form form={otfCancellationForm} onFinish={onFinishVPOCancellation} layout="vertical" autocomplete="off" colon="false" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange}>
                 <Row gutter={20} className={styles.drawerBody}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                <Form.Item name="cancellationReason" label="Cancellation Reason " rules={[validateRequiredSelectField('Cancellation Reason')]}>
+                                <Form.Item name="cancelRemarksCode" label="Cancellation Reason " rules={[validateRequiredSelectField('Cancellation Reason')]}>
                                     <Select placeholder={preparePlaceholderSelect('Cancellation Reason')} allowClear fieldNames={{ label: 'value', value: 'key' }} options={typeData['PO_CNCL_RSN']}></Select>
                                 </Form.Item>
                             </Col>

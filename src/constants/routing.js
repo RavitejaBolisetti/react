@@ -98,6 +98,7 @@ export const ROUTING_VEHICLE_RECEIPT = ROUTING_SALES.concat('vehicle-receipt');
 export const ROUTING_FINANCIAL_ACCOUNTING_TAX_CHARGES = ROUTING_FINANCIAL_ACCOUNTING.concat('tax-charges');
 export const ROUTING_FINANCIAL_ACCOUNTING_TAX_CHARGES_CATEGORY = ROUTING_FINANCIAL_ACCOUNTING.concat('tax-charges-category');
 export const ROUTING_FINANCIAL_ACCOUNTING_ACCOUNT_CATEGORY = ROUTING_FINANCIAL_ACCOUNTING.concat('account-category');
+export const ROUTING_DOCUMENT_TYPE = ROUTING_FINANCIAL_ACCOUNTING.concat('docment-type-other-charges-ledger-mapping');
 
 export const ROUTING_REPORT_OTF_REPORTS = ROUTING_REPORT.concat('otf-reports');
 

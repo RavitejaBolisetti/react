@@ -5,6 +5,8 @@
  */
 import React, { useState } from 'react';
 import { Typography, Descriptions, Divider, Card, Collapse, Tag, Col, Row, Space, Button } from 'antd';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import { BiTimeFive } from 'react-icons/bi';
 import { FiDownload } from 'react-icons/fi';
 import { BiLockAlt } from 'react-icons/bi';
@@ -12,17 +14,50 @@ import { BiLockAlt } from 'react-icons/bi';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { getCodeValue } from 'utils/getCodeValue';
 import { expandIcon } from 'utils/accordianExpandIcon';
+import { STATUS } from './statusConstant';
 import { NameChangeHistory } from './NameChangeHistory';
+import { nameChangeRequestDataActions } from 'store/actions/data/customerMaster/individual/nameChangeRequest/nameChangeRequest';
 import { RejectionModal } from './RejectionModal';
+import { showGlobalNotification } from 'store/actions/notification';
 
 const { Text } = Typography;
 const { Panel } = Collapse;
 
+const mapStateToProps = (state) => {
+    const {
+        auth: { userId },
+        data: {
+            CustomerMaster: {
+                NameChangeRequest: { isLoaded: isDataLoaded = false, isLoading, data },
+            },
+        },
+    } = state;
+
+    let returnValue = {
+        userId,
+        data,
+        isDataLoaded,
+        isLoading,
+    };
+    return returnValue;
+};
+
+const mapDispatchToProps = (dispatch) => ({
+    dispatch,
+    ...bindActionCreators(
+        {
+            saveNameChangeData: nameChangeRequestDataActions.saveData,
+            listShowNameChangeLoading: nameChangeRequestDataActions.listShowLoading,
+        },
+        dispatch
+    ),
+});
+
 const ViewDetailMain = (props) => {
-    const { styles, formData, isLoading, typeData, corporateLovData, onViewHistoryChange, isHistoryVisible, changeHistoryClose, activeKey, setactiveKey } = props;
+    const { styles, formData, isLoading, typeData, corporateLovData, saveNameChangeData, listShowLoading, selectedCustomerId, downloadFileFromButton, userId, onViewHistoryChange, isHistoryVisible, changeHistoryClose, activeKey, setactiveKey } = props;
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [rejected, setRejected] = useState(false);
-    const [approved, setApproved] = useState(false);
+    const [status, setStatus] = useState('');
+    const [visibility, setVisibility] = useState(true);
 
     const findListedNonListed = () => {
         if (checkAndSetDefaultValue(getCodeValue(typeData?.CORP_TYPE, formData?.corporateType), isLoading) === 'Non-Listed') {
@@ -36,14 +71,13 @@ const ViewDetailMain = (props) => {
     };
 
     const onCloseActionOnContinue = () => {
+        onStatusChange('Rejected');
         setIsModalOpen(false);
-        setactiveKey([]);
-        setRejected(true);
     };
 
     const onRejectionHandled = () => {
         setIsModalOpen(true);
-    }
+    };
 
     const viewProps = {
         bordered: false,
@@ -62,6 +96,8 @@ const ViewDetailMain = (props) => {
     const changeHistoryProps = {
         isVisible: isHistoryVisible,
         onCloseAction: changeHistoryClose,
+        selectedCustomerId,
+        downloadFileFromButton,
     };
 
     const modalProps = {
@@ -75,13 +111,35 @@ const ViewDetailMain = (props) => {
 
     const onCollapseChange = (value) => {
         setactiveKey(1);
-    }
+    };
+    const onStatusChange = (value) => {
+        const data = { id: formData?.pendingNameChangeRequest?.id || '', customerCode: selectedCustomerId, rejectionRemark: 'Name change request', actionStatus: value };
+        const onSuccess = (res) => {
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Customer name change request approved successfully' });
+            if (res?.data?.actionStatus === 'Rejected') setStatus(STATUS?.REJECTED?.title );
+            else setStatus(STATUS?.APPROVED?.title );
 
+            setactiveKey([]);
+            setVisibility(false);
+        };
+
+        const onError = (message) => {
+            showGlobalNotification({ message });
+        };
+        const requestData = {
+            data: data,
+            method: 'post',
+            setIsLoading: listShowLoading,
+            userId,
+            onError,
+            onSuccess,
+        };
+
+        saveNameChangeData(requestData);
+    };
     const onApprovedHandle = () => {
-        setApproved(true);
-        setRejected(false);
-        setactiveKey([])
-    }
+        onStatusChange(STATUS?.APPROVED?.title);
+    };
     return (
         <>
             <div className={styles.viewDrawerContainer}>
@@ -98,67 +156,75 @@ const ViewDetailMain = (props) => {
                                     <Text style={{ fontSize: '16px' }} strong>
                                         Customer Name
                                     </Text>
-
                                 </Col>
-                                <Col xs={24} sm={24} md={6} lg={6} xl={6} >
-                                    {rejected ? (
-                                        <Tag style={{ textAlign: 'right' }} color="error">Rejected</Tag>
-                                    ) : (approved ? (
-                                        <Tag style={{ textAlign: 'right' }} color="success">Approved</Tag>
-                                    ) : (<Tag style={{ textAlign: 'right' }} color="warning">Pending for Approval</Tag>))}
+                                <Col xs={24} sm={24} md={6} lg={6} xl={6}>
+                                    {status === STATUS?.REJECTED?.title  ? (
+                                        <Tag style={{ textAlign: 'right' }} color="error">
+                                            Rejected
+                                        </Tag>
+                                    ) : status === STATUS?.APPROVED?.title  ? (
+                                        <Tag style={{ textAlign: 'right' }} color="success">
+                                            Approved
+                                        </Tag>
+                                    ) : formData?.pendingNameChangeRequest !== null ? (
+                                        <Tag style={{ textAlign: 'right' }} color="warning">
+                                            Pending for Approval
+                                        </Tag>
+                                    ) : null}
                                 </Col>
                                 <Col xs={24} sm={24} md={12} lg={12} xl={12} style={{ textAlign: 'right' }}>
                                     <Button type="link" onClick={onViewHistoryChange} icon={<BiTimeFive />}>
                                         View History
                                     </Button>
                                 </Col>
-
                             </Row>
                             <Divider />
-                            <Collapse expandIcon={expandIcon} activeKey={activeKey} expandIconPosition="end" onChange={() => onCollapseChange(1)} >
-                                <Panel header={
-                                    <>
-                                        <Row type="flex" justify="space-between" align="middle" size="large">
-                                            <Row type="flex" justify="space-around" align="middle">
-                                                <Text>
-                                                    {getCodeValue(typeData?.TITLE, formData?.titleCode)}&nbsp;
-                                                    {(formData?.firstName || '') + ' ' + (formData?.middleName || '') + ' ' + (formData?.lastName || '')}
-                                                </Text>
+                            <Collapse expandIcon={expandIcon} activeKey={activeKey} expandIconPosition="end" onChange={() => onCollapseChange(1)}>
+                                <Panel
+                                    header={
+                                        <>
+                                            <Row type="flex" justify="space-between" align="middle" size="large">
+                                                <Row type="flex" justify="space-around" align="middle">
+                                                    <Text>
+                                                        {getCodeValue(typeData?.TITLE, formData?.titleCode)}&nbsp;
+                                                        {(formData?.firstName || '') + ' ' + (formData?.middleName || '') + ' ' + (formData?.lastName || '')}
+                                                    </Text>
+                                                </Row>
                                             </Row>
-                                        </Row>
-                                    </>
-                                }
-                                    key={1}>
+                                        </>
+                                    }
+                                    key={1}
+                                >
                                     <Descriptions {...nameViewProps}>
                                         <Descriptions.Item label="Title">{checkAndSetDefaultValue(getCodeValue(typeData?.TITLE, formData?.titleCode))}</Descriptions.Item>
-                                        <Descriptions.Item label="First Name" >
-                                            {checkAndSetDefaultValue(formData?.firstName)}
-                                        </Descriptions.Item>
+                                        <Descriptions.Item label="First Name">{checkAndSetDefaultValue(formData?.firstName)}</Descriptions.Item>
                                         <Descriptions.Item label="Middle Name">{checkAndSetDefaultValue(formData?.middleName)}</Descriptions.Item>
                                         <Descriptions.Item label="Last Name">{checkAndSetDefaultValue(formData?.lastName)}</Descriptions.Item>
                                     </Descriptions>
-                                    {formData?.userProfilePicDocId && (
-                                        <Row gutter={16}>
+
+                                    {formData?.supportingDocuments?.map((item) => (
+                                        <Row gutter={20}>
                                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                <Card className={styles.viewDocumentStrip} key={formData?.userProfilePicDocId} title={formData?.customerConsentDocumentName} extra={<FiDownload />}></Card>
+                                                <Card className={styles.viewDocumentStrip} key={item?.documentId} title={item?.documentName} extra={<FiDownload />} onClick={downloadFileFromButton}></Card>
                                             </Col>
                                         </Row>
-                                    )}
-
-                                    <Row gutter={20}>
-                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                            <Button type="primary" className={styles.marR20} onClick={onApprovedHandle} >
-                                                Approved
-                                            </Button>
-                                            <Button className={styles.marB20} onClick={onRejectionHandled} danger>
-                                                Rejected
-                                            </Button>
-                                        </Col>
-                                    </Row>
+                                    ))}
+                                    {formData?.pendingNameChangeRequest !== null && (
+                                        visibility && (
+                                        <Row gutter={20}>
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                <Button type="primary" className={styles.marR20} onClick={onApprovedHandle}>
+                                                    Approved
+                                                </Button>
+                                                <Button className={styles.marB20} onClick={onRejectionHandled} danger>
+                                                    Rejected
+                                                </Button>
+                                            </Col>
+                                        </Row>
+                                    ))}
                                 </Panel>
                             </Collapse>
                         </div>
-
 
                         <Descriptions {...viewProps}>
                             <Descriptions.Item label="Email Id">{checkAndSetDefaultValue(formData?.emailId)}</Descriptions.Item>
@@ -184,10 +250,8 @@ const ViewDetailMain = (props) => {
 
             <NameChangeHistory {...changeHistoryProps} />
             <RejectionModal {...modalProps} />
-
         </>
-
     );
 };
 
-export const ViewDetail = ViewDetailMain;
+export const ViewDetail = connect(mapStateToProps, mapDispatchToProps)(ViewDetailMain);

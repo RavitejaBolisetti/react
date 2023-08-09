@@ -41,7 +41,7 @@ export default function AppliedAdvanceFilter(props) {
         searchForm,
         searchForm: { setFieldsValue },
         setFilterString,
-        otfFilter = false,
+        vpoFilter = false,
         typeData,
     } = props;
 
@@ -63,7 +63,7 @@ export default function AppliedAdvanceFilter(props) {
                         <Form autoComplete="off" colon={false} className={styles.masterListSearchForm}>
                             <Form.Item label={`${title}`}>
                                 <Row gutter={20}>
-                                    {otfFilter && (
+                                    {vpoFilter && (
                                         <Col xs={24} sm={24} md={14} lg={14} xl={14}>
                                             <SearchBox {...searchBoxProps} />
                                         </Col>

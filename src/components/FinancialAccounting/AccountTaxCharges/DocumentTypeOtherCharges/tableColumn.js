@@ -3,28 +3,26 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { tblPrepareColumns, tblActionColumn } from 'utils//tableColumn';
-import { Row, Col } from 'antd';
+import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 
 import styles from 'components/common/Common.module.css';
 
 export const tableColumn = (handleButtonClick, page, pageSize) => {
-    
-    const tableColumn = [
+    const tableColumn = [];
+    tableColumn.push(
         tblPrepareColumns({
-            title: 'Model',
-            dataIndex: 'model',
-            width: '14%',
+            title: 'Application Menu',
+            dataIndex: 'applicationName',
+            width: '15%',
+        }),
+        tblPrepareColumns({
+            title: 'Document Type',
+            dataIndex: 'documentTypeCode',
+            width: '15%',
         }),
 
-        tblPrepareColumns({
-            title: 'Quantity ',
-            dataIndex: 'quantity',
-            width: '14%',
-        }), 
-        
-        tblActionColumn({ handleButtonClick, styles, width: '8%', EditIcon:false, EyeIcon: false, DeleteIcon: true }),
-    ];
+        tblActionColumn({ handleButtonClick, styles })
+    );
 
     return tableColumn;
 };

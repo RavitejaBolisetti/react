@@ -248,4 +248,8 @@ export const PARAM_MASTER = {
         id: 'PHYSICAL_STATUS',
         title: 'Physical Status',
     },
+    ACC_HEAD: {
+        id: 'ACC_HEAD',
+        title: 'Sales Type',
+    },
 };
