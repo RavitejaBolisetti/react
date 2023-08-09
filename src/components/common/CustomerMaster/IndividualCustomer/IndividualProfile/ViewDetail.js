@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Collapse, Descriptions, Card, Divider } from 'antd';
+import { Collapse, Descriptions, Card, Divider, Image } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { FiDownload } from 'react-icons/fi';
 import { getCodeValue } from 'utils/getCodeValue';
@@ -46,7 +46,7 @@ const ViewDetailMain = (props) => {
                 <Panel header="Individual Information" key="1">
                     <Divider />
                     <div>
-                        <mg alt="Uploaded profile picture" width="120" height="100" src={`data:image/png;base64,${viewDocument?.base64}`} />
+                        <Image alt="Uploaded profile picture" width="120" height="100" src={`data:image/png;base64,${viewDocument?.base64}`} />
                     </div>
                     <Divider className={styles.marT20} />
                     <Descriptions {...viewProps}>

@@ -17,7 +17,7 @@
 
 :global .ant-descriptions .ant-descriptions-view::-webkit-scrollbar-thumb,
 :global .ant-table-wrapper .ant-table .ant-table-content::-webkit-scrollbar-thumb {
-    background-color: #c1c1c1;
+    background-color: #b5b5b6;
     border-radius: 10px;
     /* border: 2px solid ; */
 }
@@ -27,7 +27,7 @@
 }
 
 :global .ant-picker-time-panel-column::-webkit-scrollbar-thumb {
-    background-color: #c1c1c1 !important;
+    background-color: #b5b5b6 !important;
     border-radius: 10px;
 }
 
@@ -54,7 +54,7 @@
 }
 
 :global .ant-select-tree-list-holder::-webkit-scrollbar-thumb {
-    background-color: #C1C1C1;
+    background-color: #b5b5b6;
     border-radius: 10px;
 }
 
@@ -70,7 +70,7 @@ body::-webkit-scrollbar {
 }
 
 body::-webkit-scrollbar-thumb {
-    background-color: #C1C1C1;
+    background-color: #b5b5b6;
     border-radius: 10px;
     /* border: 2px solid #FFFFFF; */
 }
@@ -88,14 +88,14 @@ body::-webkit-scrollbar-thumb {
 
 .scrollTreeData::-webkit-scrollbar-thumb,
 .drawerBodyLeft::-webkit-scrollbar-thumb {
-    background-color: #c1c1c1;
+    background-color: #b5b5b6;
     border-radius: 10px;
     border: 2px solid #f4f4f4;
 }
 
 .scrollTreeData::-webkit-scrollbar-thumb:hover,
 .drawerBodyLeft::-webkit-scrollbar-thumb:hover {
-    border: 2px solid #c1c1c1;
+    border: 2px solid #b5b5b6;
 }
 
 .lightThemeScroll::-webkit-scrollbar-track,
@@ -116,7 +116,7 @@ body::-webkit-scrollbar-thumb {
 .lightThemeScroll::-webkit-scrollbar-thumb,
 .drawerBody::-webkit-scrollbar-thumb,
 .drawerBodyRight::-webkit-scrollbar-thumb {
-    background-color: #c1c1c1;
+    background-color: #b5b5b6;
     border-radius: 10px;
     border: 2px solid #ffffff;
 }
@@ -124,7 +124,7 @@ body::-webkit-scrollbar-thumb {
 .lightThemeScroll::-webkit-scrollbar-thumb:hover,
 .drawerBody::-webkit-scrollbar-thumb:hover,
 .drawerBodyRight::-webkit-scrollbar-thumb:hover {
-    border: 2px solid #c1c1c1;
+    border: 2px solid #b5b5b6;
 }
 
 .darkThemeScroll::-webkit-scrollbar-track {
