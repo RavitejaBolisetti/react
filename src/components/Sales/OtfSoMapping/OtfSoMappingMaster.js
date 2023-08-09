@@ -9,11 +9,9 @@ import { bindActionCreators } from 'redux';
 import { Button, Col, Form, Row, Input, Empty } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { HierarchyFormButton } from 'components/common/Button';
-import { financialAccTaxChargeActions } from 'store/actions/data/financialAccounting/taxCharges';
-import { documentDescriptionDataActions } from 'store/actions/data/financialAccounting/documentDescription';
-import { financialAccountHeadDataActions } from 'store/actions/data/financialAccounting/financialAccountHead';
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
-import { hierarchyAttributeMasterDataActions } from 'store/actions/data/hierarchyAttributeMaster';
+import { otfSoMappingActions } from 'store/actions/data/otf/otfSoMapping';
+import { otfSoUserMappingActions } from 'store/actions/data/otf/otfSoUserMapping';
 import TreeSelectField from '../../common/TreeSelectField';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { showGlobalNotification } from 'store/actions/notification';
@@ -24,24 +22,21 @@ import LeftPanel from 'components/common/LeftPanel';
 
 import { LANGUAGE_EN } from 'language/en';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
-import { HIERARCHY_ATTRIBUTES } from 'constants/modules/hierarchyAttributes';
 
 import styles from 'components/common/Common.module.css';
 
-const { Search } = Input;
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [] },
-            FinancialAccounting: {
-                FinancialAccountHead: { isLoaded: isFinancialAccountHeadLoaded = false, data: financialAccount = [] },
-                DocumentDescription: { isLoaded: isDocumentDescriptionLoaded = false, data: documentDescription = [] },
-                TaxCharges: { isLoaded: isTaxChargeLoaded = false, data: taxChargeData = [] },
-            },
             ManufacturerOrgHierarchy: { isLoaded: isDataOrgLoaded = false, data: manufacturerOrgHierarchyData = [] },
             ProductHierarchy: { isLoading, isLoaded: isDataLoaded = false, data: productHierarchyData = [], attributeData: productHierarchyAttributeData = [], organizationId = '' },
+            OTF: {
+                OtfSoMapping: { isLoaded: isDataOtfSoMappingLoaded = false, data: otfSoMappingData = [] },
+                OtfSoUserMapping: { isLoaded: isDataOtfSoUserMappingLoaded = false, data: otfSoUserMappingData = [] },
+            },
         },
         common: {
             LeftSideBar: { collapsed = false },
@@ -55,14 +50,9 @@ const mapStateToProps = (state) => {
         collapsed,
         userId,
         moduleTitle,
-        isFinancialAccountHeadLoaded,
-        financialAccount,
-        isDocumentDescriptionLoaded,
-        documentDescription,
-        taxChargeData,
+
         isDataAttributeLoaded,
         viewTitle,
-        isTaxChargeLoaded,
         attributeData,
         typeData,
         unFilteredAttributeData: attributeData?.filter((i) => i?.status),
@@ -73,6 +63,10 @@ const mapStateToProps = (state) => {
         productHierarchyData,
         productHierarchyAttributeData,
         organizationId,
+        otfSoMappingData,
+        otfSoUserMappingData,
+        isDataOtfSoMappingLoaded,
+        isDataOtfSoUserMappingLoaded,
     };
     return returnValue;
 };
@@ -81,20 +75,19 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            hierarchyAttributeFetchList: hierarchyAttributeMasterDataActions.fetchList,
-            hierarchyAttributeListShowLoading: hierarchyAttributeMasterDataActions.listShowLoading,
-
-            fetchList: financialAccTaxChargeActions.fetchList,
-            saveData: financialAccTaxChargeActions.saveData,
-            listShowLoading: financialAccTaxChargeActions.listShowLoading,
-
-            fetchFinancialAccountHead: financialAccountHeadDataActions.fetchList,
-            fetchDocumentDescriptionHead: documentDescriptionDataActions.fetchList,
-
             fetchOrgList: manufacturerOrgHierarchyDataActions.fetchList,
+            listOrgLoading: manufacturerOrgHierarchyDataActions.listShowLoading,
 
             fetchProductDataList: productHierarchyDataActions.fetchList,
+            listProductLoading: productHierarchyDataActions.listShowLoading,
             setSelectedOrganizationId: productHierarchyDataActions.setSelectedOrganizationId,
+            resetData: productHierarchyDataActions.resetotfSodata,
+
+            fetchOtfList: otfSoMappingActions.fetchList,
+            listOtfSoMappingShowLoading: otfSoMappingActions.listShowLoading,
+
+            fetchOtfUserList: otfSoUserMappingActions.fetchList,
+            listOtfSoUserMappingShowLoading: otfSoUserMappingActions.listShowLoading,
 
             showGlobalNotification,
         },
@@ -105,32 +98,19 @@ const mapDispatchToProps = (dispatch) => ({
 export const OtfSoMappingMain = ({
     typeData,
     moduleTitle,
-    isChangeHistoryVisible,
-    fetchDocumentDescriptionHead,
-    documentDescription,
-    isDocumentDescriptionLoaded,
-    fetchFinancialAccountHead,
-    isFinancialAccountHeadLoaded,
-    financialAccount,
-    fetchChangeHistoryList,
     viewTitle,
     userId,
     changeHistoryModelOpen,
     isDataLoaded,
     fetchList,
-    hierarchyAttributeFetchList,
     saveData,
-    listShowLoading,
+    listOrgLoading,
     isDataAttributeLoaded,
     attributeData,
     hierarchyAttributeListShowLoading,
     taxChargeData,
     showGlobalNotification,
     unFilteredAttributeData,
-    fetchListTaxCharge,
-    saveDataTaxCharge,
-    listShowLoadingTaxCharge,
-    isTaxChargeLoaded,
     manufacturerOrgHierarchyData,
     fetchOrgList,
     isDataOrgLoaded,
@@ -138,13 +118,22 @@ export const OtfSoMappingMain = ({
     setSelectedOrganizationId,
     organizationId,
     fetchProductDataList,
+    fetchOtfList,
+    listOtfSoMappingShowLoading,
+    resetData,
+    otfSoMappingData,
+    otfSoUserMappingData,
+    isDataOtfSoMappingLoaded,
+    isDataOtfSoUserMappingLoaded,
+    fetchOtfUserList,
+    listOtfSoUserMappingShowLoading,
+    listProductLoading,
 }) => {
     const [form] = Form.useForm();
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
 
     const [selectedTreeKey, setSelectedTreeKey] = useState([]);
-    const [calType, setCalType] = useState(null);
     const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState([]);
     const [formActionType, setFormActionType] = useState('');
 
@@ -153,60 +142,59 @@ export const OtfSoMappingMain = ({
 
     const [isFormBtnActive, setFormBtnActive] = useState(false);
     const [searchValue, setSearchValue] = useState('');
-    const [attributeType, setAttributeType] = useState();
-    const [calculationType, setCalculationType] = useState();
-    const [soMapKey, setSoMapKey] = useState();
+    const [soMapKey, setSoMapKey] = useState(null);
 
     const defaultBtnVisiblity = { editBtn: false, childBtn: false, siblingBtn: false, enable: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const organizationFieldNames = { title: 'manufactureOrgShrtName', key: 'id', children: 'subManufactureOrg' };
-    const fieldNames = { title: 'prodctShrtName', key: 'id', children: 'subProdct' };
+    const fieldNames = { title: 'prodctShrtName', key: 'prodctCode', children: 'subProdct' };
 
     const onKeyPressHandler = (e) => {
         e.key === 'Enter' && e.preventDefault();
     };
 
     useEffect(() => {
-        if (!isDataLoaded && userId) {
-            fetchList({ setIsLoading: listShowLoading, userId });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDataLoaded, isDataAttributeLoaded, userId]);
-
-    useEffect(() => {
-        if (!isFinancialAccountHeadLoaded && userId) {
-            fetchFinancialAccountHead({ setIsLoading: listShowLoading, userId });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isFinancialAccountHeadLoaded, userId]);
-
-    useEffect(() => {
-        if (!isDocumentDescriptionLoaded && userId) {
-            fetchDocumentDescriptionHead({ setIsLoading: listShowLoading, userId });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDocumentDescriptionLoaded, userId]);
-
-    useEffect(() => {
-        if (userId) {
-            hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: HIERARCHY_ATTRIBUTES?.TAX_AND_CHARGES?.KEY });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId]);
-
-    useEffect(() => {
         if (!isDataOrgLoaded && userId) {
-            fetchOrgList({ setIsLoading: listShowLoading, userId });
+            fetchOrgList({ setIsLoading: listOrgLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataOrgLoaded, userId]);
 
     useEffect(() => {
         if (organizationId && userId) {
-            fetchProductDataList({ setIsLoading: listShowLoading, userId, id: organizationId });
+            resetData();
+            fetchProductDataList({ setIsLoading: listProductLoading, userId, id: organizationId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, organizationId]);
+
+    useEffect(() => {
+        if (organizationId && soMapKey) {
+            const extraParams = [
+                {
+                    key: 'code',
+                    title: 'code',
+                    value: soMapKey,
+                    name: 'code ID',
+                },
+                {
+                    key: 'manufactureOrdId',
+                    title: 'manufactureOrdId',
+                    value: organizationId,
+                    name: 'manufacture OrdId ID',
+                },
+            ];
+            fetchOtfList({ setIsLoading: listOtfSoMappingShowLoading, userId, extraParams });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [soMapKey]);
+
+    useEffect(() => {
+        if (userId) {
+            fetchOtfUserList({ setIsLoading: listOtfSoUserMappingShowLoading, userId });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId]);
 
     const onChange = (e) => {
         setSearchValue(e.target.value);
@@ -239,6 +227,14 @@ export const OtfSoMappingMain = ({
         form.resetFields();
         setFormData([]);
         setSelectedTreeData([]);
+        setSoMapKey(keys);
+        console.log(keys, 'hey');
+
+        form.setFieldValue({
+            productAttributeCode: keys,
+            productAttributeValue: null,
+            
+        });
 
         if (keys && keys?.length > 0) {
             setFormActionType(FROM_ACTION_TYPE.VIEW);
@@ -247,8 +243,8 @@ export const OtfSoMappingMain = ({
                 const isChildAllowed = unFilteredAttributeData?.find((attribute) => attribute.hierarchyAttribueCode === formData?.data?.attributeTypeCode)?.isChildAllowed;
                 setFormData({ ...formData?.data, isChildAllowed });
 
-                setAttributeType(formData?.data?.attributeTypeCode);
-                setCalculationType(formData?.data?.calculationType);
+                // setAttributeType(formData?.data?.attributeTypeCode);
+                // setCalculationType(formData?.data?.calculationType);
 
                 setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: isChildAllowed, siblingBtn: true });
 
@@ -272,6 +268,7 @@ export const OtfSoMappingMain = ({
     };
 
     const onFinish = (values) => {
+        console.log('VAL', values);
         const recordId = formData?.id || '';
         const codeToBeSaved = selectedTreeSelectKey || '';
         const data = { ...values, id: recordId, parentCode: codeToBeSaved };
@@ -281,12 +278,12 @@ export const OtfSoMappingMain = ({
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
 
             if (res?.data) {
-                setAttributeType(res?.data?.attributeTypeCode);
-                setCalculationType(res?.data?.calculationType);
+                // setAttributeType(res?.data?.attributeTypeCode);
+                // setCalculationType(res?.data?.calculationType);
 
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
 
-                fetchList({ setIsLoading: listShowLoading, userId });
+                // fetchList({ setIsLoading: listShowLoading, userId });
 
                 const hierarchyAttribueName = unFilteredAttributeData?.find((attribute) => attribute.hierarchyAttribueCode === res?.data?.attributeTypeCode)?.hierarchyAttribueName;
                 const attributeParentName = flatternData.find((i) => res?.data?.parentCode === i.key)?.data?.taxChargesTypeCode;
@@ -306,7 +303,7 @@ export const OtfSoMappingMain = ({
         const requestData = {
             data: data,
             method: formData?.attributeTypeCode ? 'put' : 'post',
-            setIsLoading: listShowLoading,
+            // setIsLoading: listShowLoading,
             userId,
             onError,
             onSuccess,
@@ -348,9 +345,9 @@ export const OtfSoMappingMain = ({
         defaultParent: false,
         handleSelectTreeClick: (value) => {
             setSelectedTreeKey();
-            setSelectedTreeSelectKey();
+            resetData();
+            setSoMapKey(null);
             setSelectedOrganizationId(value);
-            // !value && resetData();
         },
         defaultValue: organizationId,
         placeholder: preparePlaceholderSelect('Organization Hierarchy'),
@@ -376,8 +373,6 @@ export const OtfSoMappingMain = ({
         onFinishFailed,
         onCloseAction: () => {
             setIsFormVisible(false);
-            setAttributeType();
-            setCalculationType();
         },
         titleOverride: (formData?.taxChargesTypeCode ? 'Edit ' : 'Add ').concat(moduleTitle),
         onFinish,
@@ -395,38 +390,25 @@ export const OtfSoMappingMain = ({
         setSelectedTreeSelectKey,
         isFormBtnActive,
         setFormBtnActive,
-        attributeType,
-        setAttributeType,
-        calculationType,
-        setCalculationType,
-        financialAccount,
-        documentDescription,
-        calType,
-        setCalType,
+        otfSoUserMappingData,
+        productHierarchyData,
     };
 
     const viewProps = {
         typeData,
         buttonData,
-        attributeData,
         selectedTreeData,
         handleButtonClick,
         styles,
         viewTitle,
-        calType,
-        attributeType,
-        calculationType,
-        setCalType,
-        documentDescription,
-        financialAccount,
     };
 
-    const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
-    const noDataMessage = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', moduleTitle);
+    const noDataTitle = 'Please Select Organization from dropdown';
+    const diffSelection = 'No Product Found';
     const sameParentAndChildWarning = LANGUAGE_EN.GENERAL.HIERARCHY_SAME_PARENT_AND_CHILD_WARNING;
 
-    const leftCol = taxChargeData?.length > 0 ? 14 : 24;
-    const rightCol = taxChargeData?.length > 0 ? 10 : 24;
+    const leftCol = productHierarchyData?.length > 0 ? 14 : 24;
+    const rightCol = productHierarchyData?.length > 0 ? 10 : 24;
     const title = 'Hierarchy';
 
     return (
@@ -470,7 +452,7 @@ export const OtfSoMappingMain = ({
 
             <Row gutter={20} span={24}>
                 <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol}>
-                    {taxChargeData?.length <= 0 ? (
+                    {productHierarchyData?.length <= 0 ? (
                         <div className={styles.emptyContainer}>
                             <Empty
                                 image={Empty.PRESENTED_IMAGE_SIMPLE}
@@ -479,45 +461,62 @@ export const OtfSoMappingMain = ({
                                 }}
                                 description={
                                     <span>
-                                        {noDataTitle} <br /> {noDataMessage}
+                                        {organizationId && productHierarchyData?.length <= 0 ? (
+                                            <>
+                                                {diffSelection} <br /> {noDataTitle}
+                                            </>
+                                        ) : (
+                                            noDataTitle
+                                        )}
                                     </span>
                                 }
-                            >
-                                <Button icon={<PlusOutlined />} type="primary" danger onClick={handleAdd}>
-                                    Add
-                                </Button>
-                            </Empty>
+                            />
                         </div>
                     ) : (
                         <LeftPanel {...myProps} />
                     )}
                 </Col>
 
-                <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol}>
-                    {selectedTreeData && selectedTreeData?.taxChargesTypeCode ? (
-                        <>
-                            <ViewTaxCharges {...viewProps} />
-                            <div className={styles.viewContainerFooter}>
-                                <HierarchyFormButton {...viewProps} />
+                {productHierarchyData?.length >= 0 ? (
+                    <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol}>
+                        {selectedTreeData && selectedTreeData?.taxChargesTypeCode ? (
+                            <>
+                                <ViewTaxCharges {...viewProps} />
+                                <div className={styles.viewContainerFooter}>
+                                    <HierarchyFormButton {...viewProps} />
+                                </div>
+                            </>
+                        ) : (
+                            <div className={styles.emptyContainer}>
+                                <Empty
+                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                    imageStyle={{
+                                        height: 60,
+                                    }}
+                                    description={
+                                        otfSoMappingData?.length <= 0 && soMapKey ? (
+                                            <span>
+                                                No records found <br />
+                                                Please add New "So Map Detail" using below button
+                                            </span>
+                                        ) : (
+                                            <span>
+                                                Please select from left <br />
+                                                side hierarchy to view “Details”
+                                            </span>
+                                        )
+                                    }
+                                >
+                                    {otfSoMappingData?.length <= 0 && soMapKey ? (
+                                        <Button icon={<PlusOutlined />} type="primary" danger onClick={handleAdd}>
+                                            Add
+                                        </Button>
+                                    ) : null}
+                                </Empty>
                             </div>
-                        </>
-                    ) : (
-                        <div className={styles.emptyContainer}>
-                            <Empty
-                                image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                imageStyle={{
-                                    height: 60,
-                                }}
-                                description={
-                                    <span>
-                                        Please select Tax and Charges from left <br />
-                                        side hierarchy to view “Details”
-                                    </span>
-                                }
-                            ></Empty>
-                        </div>
-                    )}
-                </Col>
+                        )}
+                    </Col>
+                ) : null}
             </Row>
             <AddEditForm {...formProps} />
         </>

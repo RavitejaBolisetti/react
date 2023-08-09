@@ -21,7 +21,7 @@ export const PRODUCT_HIERARCHY_ATTRIBUTE_NAME_DROPDOWN = 'PRODUCT_HIERARCHY_ATTR
 export const PRODUCT_HIERARCHY_SELECTED_ORGANIZATION_ID = 'PRODUCT_HIERARCHY_SELECTED_ORGANIZATION_ID';
 export const PRODUCT_HIERARCHY_RESET_DATA = 'PRODUCT_HIERARCHY_RESET_DATA';
 export const PRODUCT_HIERARCHY_FILTERED_DATA_ACTION_CONSTANT = 'PRODUCT_HIERARCHY_FILTERED_DATA_ACTION_CONSTANT';
-
+export const OTF_SO_MAPPING_RESET_DATA = 'OTF_SO_MAPPING_RESET_DATA';
 const receiveProductHierarchyData = (data) => ({
     type: PRODUCT_HIERARCHY_DATA_LOADED,
     isLoaded: true,
@@ -54,6 +54,10 @@ const productHierarchyDataActions = {};
 
 productHierarchyDataActions.resetData = (data) => ({
     type: PRODUCT_HIERARCHY_RESET_DATA,
+    data,
+});
+productHierarchyDataActions.resetotfSodata = (data) => ({
+    type: OTF_SO_MAPPING_RESET_DATA,
     data,
 });
 
