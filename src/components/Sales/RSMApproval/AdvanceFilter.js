@@ -6,39 +6,43 @@
 import React from 'react';
 import { Button, Row, Col, Input, Form } from 'antd';
 import { FilterIcon } from 'Icons';
+import { QueryButtons } from 'components/Sales/VehicleRecieptChecklist/QueryButtons';
+
+import { RSM_APPROVAL_STATUS } from './utils/RSMApprovalStatus';
+
 import styles from 'components/common/Common.module.css';
 const { Search } = Input;
 
 export default function AdvanceFilter(props) {
-    const { extraParams, handleResetFilter, searchValue, handleSearchChange, advanceFilter = false, filter = false, title, filterString, setFilterString, typeData, setAdvanceSearchVisible, searchForm } = props;
+    const { extraParams, handleResetFilter, handleButtonQuery, handleSearchChange, rsmStatusType, advanceFilter = false, filter = false, filterString, setAdvanceSearchVisible, searchForm } = props;
     return (
         <div className={styles.contentHeaderBackground}>
             <Row gutter={20}>
-                <Col xs={24} sm={24} md={14} lg={14} xl={14}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.verticallyCentered}>
+                    <QueryButtons currentItem={rsmStatusType} items={Object.values(RSM_APPROVAL_STATUS)} onClick={handleButtonQuery} />
                     {filter && (
                         <Form form={searchForm} className={styles.masterListSearchForm}>
                             <Form.Item name="Search">
                                 <div className={styles.verticallyCentered}>
-                                    {title}
                                     <Search placeholder="Search by dealer" allowClear onSearch={handleSearchChange} className={styles.headerSearchField} />
                                 </div>
                             </Form.Item>
                         </Form>
                     )}
+                    {advanceFilter && (
+                        <div className={styles.advanceFilterBtn}>
+                            <Button
+                                icon={<FilterIcon className={styles.advanceFilterIcon} />}
+                                type="link"
+                                onClick={() => {
+                                    setAdvanceSearchVisible(true);
+                                }}
+                            >
+                                Advanced Filters
+                            </Button>
+                        </div>
+                    )}
                 </Col>
-                {advanceFilter && (
-                    <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.verticallyCentered}>
-                        <Button
-                            icon={<FilterIcon />}
-                            type="link"
-                            onClick={() => {
-                                setAdvanceSearchVisible(true);
-                            }}
-                        >
-                            Advanced Filters
-                        </Button>
-                    </Col>
-                )}
             </Row>
             {filterString?.advanceFilter && extraParams.find((i) => i.name) && (
                 <Row gutter={20}>

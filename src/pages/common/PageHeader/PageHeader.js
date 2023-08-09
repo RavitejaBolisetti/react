@@ -78,7 +78,7 @@ const PageHeaderMain = ({ pageTitle, menuData, flatternMenuData, fetchList, user
                         <div>
                             <span className={styles.headingGradient}>
                                 {pageTitle}
-                                {canMarkFavourite && <span className={styles.favIconHeading}>{isFavourite ? addToolTip('Remove from favourite')(<TiStarFullOutline size={13} onClick={handleFavouriteClick} />) : addToolTip('Mark as favourite')(<TiStarFullOutline color="#B5B5B6" size={13} onClick={handleFavouriteClick} />)}</span>}
+                                {canMarkFavourite && <span className={styles.favIconHeading}>{isFavourite ? addToolTip('Remove from favourite')(<TiStarFullOutline size={13} onClick={handleFavouriteClick} data-testid="removefav" />) : addToolTip('Mark as favourite')(<TiStarFullOutline color="#B5B5B6" size={13} onClick={handleFavouriteClick} data-testid="addfav" />)}</span>}
                             </span>
                         </div>
                     </Space>

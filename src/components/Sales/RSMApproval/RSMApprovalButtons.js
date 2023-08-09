@@ -4,12 +4,11 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Button, Row, Col } from 'antd';
+import { Row, Col, Button } from 'antd';
 
-import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import styles from 'components/common/Common.module.css';
 
-export const RSMApprovalButtons = ({ record, onCloseAction, buttonData, setButtonData, handleButtonClick, handleReject, handleApprove }) => {
+export const RSMApprovalButtons = ({ record, onCloseAction, buttonData, setButtonData, handleButtonClick, handleRequest }) => {
     return (
         <div className={styles.formFooter}>
             <Row gutter={20}>
@@ -23,13 +22,13 @@ export const RSMApprovalButtons = ({ record, onCloseAction, buttonData, setButto
 
                 <Col xs={24} sm={16} md={18} lg={20} xl={20} className={styles.footerBtnRight}>
                     {buttonData?.reject && (
-                        <Button onClick={handleReject} type="primary">
+                        <Button onClick={() => handleRequest({ requestType: true })} type="primary">
                             Reject
                         </Button>
                     )}
 
                     {buttonData?.approve && (
-                        <Button onClick={handleApprove} type="primary">
+                        <Button onClick={() => handleRequest({ requestType: false })} type="primary">
                             Approve
                         </Button>
                     )}

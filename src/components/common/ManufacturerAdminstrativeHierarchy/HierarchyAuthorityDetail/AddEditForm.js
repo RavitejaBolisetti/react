@@ -10,7 +10,7 @@ import { Input, Form, Col, Row, Button, Select, DatePicker, Typography } from 'a
 import moment from 'moment';
 import { PlusOutlined } from '@ant-design/icons';
 
-import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
+import { dateFormat, formattedCalendarDate, convertDateToCalender } from 'utils/formatDateTime';
 import { validateRequiredInputField, validateRequiredSelectField, duplicateValidator } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { hierarchyAttributeMasterDataActions } from 'store/actions/data/hierarchyAttributeMaster';
@@ -65,7 +65,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const AuthorityFormMin = (props) => {
-    const { isMainForm, handleFormValueChange, tokenValidationData, recordId = '', viewMode, userId, onFinish, form, isEditing, isBtnDisabled, listShowLoading, searchList, setIsBtnDisabled, setDocumentTypesList, documentTypesList, cardBtnDisableAction } = props;
+    const { isMainForm, handleFormValueChange, tokenValidationData, recordId = '', viewMode, userId, onFinish, form, isEditing, isBtnDisabled, listShowLoading, searchList, documentTypesList } = props;
     const { setselectedValueOnUpdate, searchLoading, authTypeDropdownData, errorMessage, setErrorMessage, formType, setFormType, resetData, record } = props;
     const disableAddBtn = { disabled: isBtnDisabled || !tokenValidationData?.employeeName };
     const onFinishFailed = (err) => {
@@ -125,21 +125,28 @@ const AuthorityFormMin = (props) => {
                     </Form.Item>
                 </Col>
             </Row>
-            {!viewMode && formType === !!isMainForm && tokenValidationData?.employeeName && (
+            {!viewMode && formType === !!isMainForm && (
                 <Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.marB20}>
-                        <Text strong>Employee Name : {tokenValidationData?.employeeName} </Text>
-                    </Col>
-                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item label="Effective From" name="effectiveFrom" rules={[validateRequiredSelectField('Date Required')]} initialValue={formattedCalendarDate(record?.effectiveFrom)}>
-                            <DatePicker onChange={() => form.setFieldsValue({ effectiveTo: undefined })} disabledDate={(current) => current.isBefore(moment().subtract(1, 'day'))} format={dateFormat} />
-                        </Form.Item>
-                    </Col>
-                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item label="Effective To" name="effectiveTo" rules={[validateRequiredSelectField('Date Required')]} initialValue={formattedCalendarDate(record?.effectiveTo)}>
-                            <DatePicker disabledDate={(current) => current < form?.getFieldValue('effectiveFrom')} format={dateFormat} />
-                        </Form.Item>
-                    </Col>
+                    {tokenValidationData?.employeeName && (
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.marB20}>
+                            <Text strong>Employee Name : {tokenValidationData?.employeeName} </Text>
+                        </Col>
+                    )}
+
+                    {(record?.effectiveTo || tokenValidationData?.employeeName) && (
+                        <>
+                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                                <Form.Item label="Effective From" name="effectiveFrom" rules={[validateRequiredSelectField('Date Required')]} initialValue={convertDateToCalender(record?.effectiveFrom)}>
+                                    <DatePicker onChange={() => form.setFieldsValue({ effectiveTo: undefined })} disabledDate={(current) => current.isBefore(moment().subtract(1, 'day'))} format={dateFormat} />
+                                </Form.Item>
+                            </Col>
+                            <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                                <Form.Item label="Effective To" name="effectiveTo" rules={[validateRequiredSelectField('Date Required')]} initialValue={formattedCalendarDate(record?.effectiveTo)}>
+                                    <DatePicker disabledDate={(current) => current < form?.getFieldValue('effectiveFrom')} format={dateFormat} />
+                                </Form.Item>
+                            </Col>
+                        </>
+                    )}
                 </Row>
             )}
 

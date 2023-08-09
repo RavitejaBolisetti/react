@@ -3,13 +3,17 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
+import React, { useEffect, useState } from 'react';
+import { models } from 'powerbi-client';
+import { PowerBIEmbed } from 'powerbi-client-react';
 
-import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { reportDataActions } from 'store/actions/data/report/reports';
 import { showGlobalNotification } from 'store/actions/notification';
+
+import styles from './EmbeddedReportMaster.module.css';
 
 const mapStateToProps = (state) => {
     const {
@@ -44,9 +48,16 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const EmbeddedReportMasterMain = (props) => {
-    const { userId, isDataLoaded, reportLink, fetchList, listShowLoading } = props;
-    // const reportLink = process.env.REACT_APP_POWER_BI_EMBEDDED_REPORT;
+export const EmbeddedReportMasterMain = (props) => {
+    const { userId, isDataLoaded, data, fetchList, listShowLoading } = props;
+    const [, setReport] = useState();
+    const [sampleReportConfig, setReportConfig] = useState({
+        type: 'report',
+        embedUrl: undefined,
+        tokenType: models.TokenType.Embed,
+        accessToken: undefined,
+        settings: undefined,
+    });
 
     const onSuccessAction = (res) => {
         // showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'File deleted Successfully' });
@@ -63,13 +74,57 @@ const EmbeddedReportMasterMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isDataLoaded]);
 
+    useEffect(() => {
+        setReportConfig({
+            type: 'report',
+            embedUrl: data?.embedReports?.[0]?.embedUrl,
+            accessToken: data.embedToken,
+            settings: {
+                panes: {
+                    filters: {
+                        expanded: false,
+                        visible: false,
+                    },
+                },
+            },
+        });
+    }, [data]);
+
+    // Map of event handlers to be applied to the embedding report
+    const eventHandlersMap = new Map([
+        [
+            'loaded',
+            function () {
+                console.log('Report has loaded');
+            },
+        ],
+        [
+            'rendered',
+            function () {
+                console.log('Report has rendered');
+            },
+        ],
+        [
+            'error',
+            function (event) {
+                if (event) {
+                    console.error(event.detail);
+                }
+            },
+        ],
+    ]);
+
     return (
-        reportLink && (
-            <object data={reportLink} width="100%" height="90%">
-                <embed src={reportLink} width="100%" height="90%"></embed>
-                Issue with report
-            </object>
-        )
+        <div>
+            <PowerBIEmbed
+                embedConfig={sampleReportConfig}
+                eventHandlers={eventHandlersMap}
+                cssClassName={styles.reportClass}
+                getEmbeddedComponent={(embedObject) => {
+                    setReport(embedObject);
+                }}
+            />
+        </div>
     );
 };
 

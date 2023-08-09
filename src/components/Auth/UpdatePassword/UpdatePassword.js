@@ -141,24 +141,24 @@ const UpdatePasswordBase = ({ showGlobalNotification, preLoginData, authPostLogi
                                                     <div className={styles.loginSubHeading}></div>
                                                 </div>
                                                 <Row gutter={20}>
-                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} class="textfieldWithPrefix">
-                                                        <Form.Item name="oldPassword" class="textfieldWithPrefix__input" rules={[validateRequiredInputField('old password', false)]} className={`${styles.inputBox}`}>
-                                                            <Input type={showPassword?.oldPassword ? 'text' : 'password'} ref={oldPasswordInput} prefix={<FiLock size={18} />} onChange={handleFormChange('oldPassword')} suffix={passwordSuffix('oldPassword')} />
+                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className="textfieldWithPrefix">
+                                                        <Form.Item name="oldPassword" className="textfieldWithPrefix__input" rules={[validateRequiredInputField('old password', false)]} className={`${styles.inputBox}`}>
+                                                            <Input data-testid="oldPasswordInput" type={showPassword?.oldPassword ? 'text' : 'password'} ref={oldPasswordInput} prefix={<FiLock size={18} />} onChange={handleFormChange('oldPassword')} suffix={passwordSuffix('oldPassword')} />
                                                         </Form.Item>
                                                         {!fieldData?.oldPassword && (
-                                                            <label class="textfieldWithPrefix__label" onClick={handleFieldFocus(oldPasswordInput)}>
+                                                            <label className="textfieldWithPrefix__label" onClick={handleFieldFocus(oldPasswordInput)}>
                                                                 Old password
                                                             </label>
                                                         )}
                                                     </Col>
                                                 </Row>
                                                 <Row gutter={20}>
-                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} class="textfieldWithPrefix">
-                                                        <Form.Item name="newPassword" class="textfieldWithPrefix__input" rules={[validateRequiredInputField('new password')]} className={`${styles.inputBox}`}>
-                                                            <Input onChange={handleNewPasswordChange} type={showPassword?.newPassword ? 'text' : 'password'} ref={newPasswordInput} prefix={<FiLock size={18} />} suffix={passwordSuffix('newPassword')} onFocus={() => setTooltipVisible(true)} onBlur={() => setTooltipVisible(false)} />
+                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className="textfieldWithPrefix">
+                                                        <Form.Item name="newPassword" className="textfieldWithPrefix__input" rules={[validateRequiredInputField('new password')]} className={`${styles.inputBox}`}>
+                                                            <Input data-testid="newPasswordInput" onChange={handleNewPasswordChange} type={showPassword?.newPassword ? 'text' : 'password'} ref={newPasswordInput} prefix={<FiLock size={18} />} suffix={passwordSuffix('newPassword')} onFocus={() => setTooltipVisible(true)} onBlur={() => setTooltipVisible(false)} />
                                                         </Form.Item>
                                                         {!fieldData?.newPassword && (
-                                                            <label class="textfieldWithPrefix__label" onClick={handleFieldFocus(newPasswordInput)}>
+                                                            <label className="textfieldWithPrefix__label" onClick={handleFieldFocus(newPasswordInput)}>
                                                                 New password
                                                             </label>
                                                         )}
@@ -166,11 +166,11 @@ const UpdatePasswordBase = ({ showGlobalNotification, preLoginData, authPostLogi
                                                     </Col>
                                                 </Row>
                                                 <Row gutter={20}>
-                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} class="textfieldWithPrefix">
+                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className="textfieldWithPrefix">
                                                         <Form.Item
                                                             name="confirmNewPassword"
                                                             dependencies={['newPassword']}
-                                                            class="textfieldWithPrefix__input"
+                                                            className="textfieldWithPrefix__input"
                                                             rules={[
                                                                 validateRequiredInputField('confirm password', false),
                                                                 ({ getFieldValue }) => ({
@@ -184,10 +184,10 @@ const UpdatePasswordBase = ({ showGlobalNotification, preLoginData, authPostLogi
                                                             ]}
                                                             className={`${styles.inputBox}`}
                                                         >
-                                                            <Input type={showPassword?.confirmNewPassword ? 'text' : 'password'} ref={confirmPasswordInput} prefix={<FiLock size={18} />} onChange={handleFormChange('confirmNewPassword')} suffix={passwordSuffix('confirmNewPassword')} />
+                                                            <Input data-testid="confirmNewPasswordInput" type={showPassword?.confirmNewPassword ? 'text' : 'password'} ref={confirmPasswordInput} prefix={<FiLock size={18} />} onChange={handleFormChange('confirmNewPassword')} suffix={passwordSuffix('confirmNewPassword')} />
                                                         </Form.Item>
                                                         {!fieldData?.confirmNewPassword && (
-                                                            <label class="textfieldWithPrefix__label" onClick={handleFieldFocus(confirmPasswordInput)}>
+                                                            <label className="textfieldWithPrefix__label" onClick={handleFieldFocus(confirmPasswordInput)}>
                                                                 Confirm password
                                                             </label>
                                                         )}
@@ -196,7 +196,7 @@ const UpdatePasswordBase = ({ showGlobalNotification, preLoginData, authPostLogi
 
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <Button className={styles.button} type="primary" htmlType="submit">
+                                                        <Button data-testid="updatePassword" className={styles.button} type="primary" htmlType="submit">
                                                             Update Password
                                                         </Button>
                                                     </Col>

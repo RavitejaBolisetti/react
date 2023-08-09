@@ -7,7 +7,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { Col, Form, Row, Button } from 'antd';
+import { Col, Form, Row } from 'antd';
 
 import { tableColumn } from './tableColumn';
 import AdvanceFilter from './AdvanceFilter';
@@ -20,8 +20,8 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { vehicleDetailDataActions } from 'store/actions/data/vehicle/vehicleDetail';
 
 import { VEHICLE_CHECKLIST_STATUS } from 'constants/VehicleRecieptChecklistStatus';
-import { VEHICLE_RECIEPT_CHECKLIST } from 'constants/VehicleRecieptCheckListConstants';
-import { dateFormat, formatDate, formatDateToCalenderDate } from 'utils/formatDateTime';
+import { VEHICLE_RECIEPT_CHECKLIST_SECTION } from 'constants/VehicleRecieptCheckListSection';
+import { formatDateToCalenderDate } from 'utils/formatDateTime';
 
 import { validateRequiredInputField } from 'utils/validation';
 import { LANGUAGE_EN } from 'language/en';
@@ -36,7 +36,7 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             Vehicle: {
-                VehicleDetail: { isLoaded: isDataLoaded = false, isLoading, isDetailLoaded, detailData: vehicleDetailData = [], data, filter: filterString },
+                VehicleDetail: { data, filter: filterString },
             },
         },
     } = state;
@@ -139,7 +139,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         setShowDataLoading(false);
     };
     const handleButtonQuery = (buttonName) => {
-        setbuttonType(buttonName);
+        // setbuttonType(buttonName);
         switch (buttonName) {
             case 'pending': {
                 setactionButtonVisibility({ EditIcon: false, EyeIcon: false, DeleteIcon: false, AddIcon: true });
@@ -151,6 +151,9 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
             }
             case 'completed': {
                 setactionButtonVisibility({ EditIcon: false, EyeIcon: true, DeleteIcon: false, AddIcon: false });
+                break;
+            }
+            default: {
                 break;
             }
         }
@@ -249,9 +252,9 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
     }, []);
 
     useEffect(() => {
-        const defaultSection = VEHICLE_RECIEPT_CHECKLIST.CHECKLIST_DETAILS.id;
+        const defaultSection = VEHICLE_RECIEPT_CHECKLIST_SECTION.CHECKLIST_DETAILS.id;
         setDefaultSection(defaultSection);
-        setSetionName(VEHICLE_RECIEPT_CHECKLIST);
+        setSetionName(VEHICLE_RECIEPT_CHECKLIST_SECTION);
         setSection(defaultSection);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -391,7 +394,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         tableColumn: tableColumn({ handleButtonClick, actionButtonVisibility }),
         tableData: [{}],
         showAddButton: false,
-        handleButtonClick,
+        handleAdd: handleButtonClick,
         noMessge: LANGUAGE_EN.GENERAL.LIST_NO_DATA_FOUND.TITLE,
     };
 
@@ -416,7 +419,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         from: listFilterForm,
         onFinish,
         onFinishFailed,
-        title: <QueryButtons handleButtonQuery={handleButtonQuery} />,
+        title: <QueryButtons items={QUERY_BUTTONS_CONSTANTS} handleButtonQuery={handleButtonQuery} />,
         data,
         typeData,
         otfSearchRules,
@@ -499,7 +502,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable isLoading={false} {...tableProps} showAddButton={false} />
+                    <ListDataTable isLoading={showDataLoading} {...tableProps} showAddButton={false} />
                 </Col>
             </Row>
             <VehicleRecieptMasterMainContainer {...containerProps} />

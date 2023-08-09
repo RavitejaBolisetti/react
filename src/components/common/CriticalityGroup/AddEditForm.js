@@ -26,14 +26,15 @@ const AddEditFormMain = (props) => {
         setAllowedTimingSave(false);
     };
 
+    
     const handleFormFieldChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
         setAllowedTimingSave(false);
     };
 
     const onCloseAction = () => {
-        form.resetFields();
-        form.setFieldsValue({
+        form?.resetFields();
+        form?.setFieldsValue({
             allowedTimings: [],
         });
         setIsAddTimeVisible(false);
@@ -82,6 +83,7 @@ const AddEditFormMain = (props) => {
         timeData,
     };
 
+    
     const buttonProps = {
         formData,
         onCloseAction,
