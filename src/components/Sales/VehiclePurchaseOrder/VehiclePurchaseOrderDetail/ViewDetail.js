@@ -18,8 +18,8 @@ import { expandIcon } from 'utils/accordianExpandIcon';
 const { Panel } = Collapse;
 
 const ViewDetailMain = (props) => {
-    const { formData, isLoading, activeKey, onChange, userType } = props;
-console.log();
+    const { formData, isLoading, activeKey, onChange, userType, selectedRecord, setSelectedRecord } = props;
+    console.log('viewselectedRecord', selectedRecord);
     const viewProps = {
         bordered: false,
         colon: false,
@@ -31,12 +31,11 @@ console.log();
 
     return (
         <>
-            <Card className={styles.ExchangeCard}>
+            <Card className={styles.ExchangeCard1}>
                 <Descriptions {...viewProps}>
                     <Descriptions.Item label="Order Type">{checkAndSetDefaultValue(formData?.orderType, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="Purchase Order Number">{checkAndSetDefaultValue(formData?.purchaseOrderNumber, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Purchase Order Date"> {checkAndSetDefaultValue(formData?.purchaseOrderDate, isLoading, DATA_TYPE?.DATE?.key)}
-                        </Descriptions.Item>
+                    <Descriptions.Item label="Purchase Order Date"> {checkAndSetDefaultValue(formData?.purchaseOrderDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                     <Descriptions.Item label="Purchase Order Status">{checkAndSetDefaultValue(formData?.purchaseOrderStatus, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="Dealer Code">{checkAndSetDefaultValue(formData?.dealerParentCode, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="Dealer Location"> {checkAndSetDefaultValue(formData?.dealerLocation, isLoading)}</Descriptions.Item>
@@ -45,15 +44,18 @@ console.log();
                     <Descriptions.Item label="SO Number">{checkAndSetDefaultValue(formData?.soNumber, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="SO Date">{checkAndSetDefaultValue(formData?.soDate, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="SO Status">{checkAndSetDefaultValue(formData?.soStatus, isLoading)}</Descriptions.Item>
+                </Descriptions>
+            </Card>
 
-                 </Descriptions>
-
-                <h4 className={styles.marB5}> Product Details</h4>
+            <h4 className={styles.marB5}> Product Details</h4>
+            <Card className={styles.ExchangeCard1}>
                 <Descriptions {...viewProps}>
                     <Descriptions.Item label="Model">{checkAndSetDefaultValue(formData?.modelCode, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="Quantity">{checkAndSetDefaultValue(formData?.quantity, isLoading)}</Descriptions.Item>
                 </Descriptions>
-                <h4 className={styles.marB5}> Cancel Remarks</h4>
+            </Card>
+            <h4 className={styles.marB5}> Cancel Reason</h4>
+            <Card className={styles.ExchangeCard1}>
                 <Descriptions {...viewProps}>
                     <Descriptions.Item label="">{checkAndSetDefaultValue(formData?.cancelRemarks, isLoading)}</Descriptions.Item>
                 </Descriptions>

@@ -10,6 +10,9 @@ import { bindActionCreators } from 'redux';
 
 import { showGlobalNotification } from 'store/actions/notification';
 import { AddEditForm } from './AddEditForm';
+import { ConfirmationModal } from './ConfirmationModal';
+
+
 import { cancellationDataActions } from 'store/actions/data/otf/otfCancellation';
 import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
@@ -62,15 +65,15 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const PoCancellationMasterBase = (props) => {
-    const { otfData, selectedOrder,typeData,onFinishOTFCancellation, } = props;
+    const { otfData, selectedOrder,typeData,onFinishVPOCancellation,selectedRecord, setSelectedRecord,  } = props;
     const { userId, listShowLoading, onFinishFailed } = props;
     const { fetchProductHierarchyList, productHierarchyData, fetchDealerList, dealerDataList } = props;
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: true, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: true, cancelBtn:false, cancelOTFBtn: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
-
     const handleButtonClick = ({ record = null, buttonAction }) => {};
 
+    console.log('selectedRecord',selectedRecord); 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
@@ -96,14 +99,19 @@ const PoCancellationMasterBase = (props) => {
         typeData: typeData,
         productHierarchyData,                
         dealerDataList,  
-        onFinishOTFCancellation,
+        onFinishVPOCancellation,
+        selectedRecord,
+        setSelectedRecord,
+        
         
     };
 
 
    
 
-    return <AddEditForm {...formProps} />;
+    return <ConfirmationModal {...formProps} />;
+    
+    // <AddEditForm {...formProps} />;
 };
 
 export const PoCancellationMaster = connect(mapStateToProps, mapDispatchToProps)(PoCancellationMasterBase);

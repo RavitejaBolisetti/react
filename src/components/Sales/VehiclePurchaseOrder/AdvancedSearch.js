@@ -34,6 +34,7 @@ export const AdvancedSearchFrom = (props) => {
         setFilterString({
             ...filterString,
             ...values,
+            orderTypeCode:values?.orderTypeCode,
             fromDate: formatDate(values?.fromDate),
             toDate: formatDate(values?.toDate),
             purchaseOrderStatusCode: values?.purchaseOrderStatusCode,
