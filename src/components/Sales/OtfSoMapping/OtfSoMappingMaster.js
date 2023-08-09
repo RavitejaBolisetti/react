@@ -232,8 +232,8 @@ export const OtfSoMappingMain = ({
 
         form.setFieldValue({
             productAttributeCode: keys,
-            productAttributeValue: null,
-            
+            productAttributeValue: 'Random',
+            manufactureOrgId: organizationId,
         });
 
         if (keys && keys?.length > 0) {
