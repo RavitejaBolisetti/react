@@ -207,6 +207,7 @@ export const VehicleModelAndTaxChargersCategoryMain = (props) => {
 
     useEffect(() => {
         if (userId && refershData) {
+            setshowDataLoading(true);
             const ModelParams = [
                 {
                     key: 'code',
@@ -243,16 +244,6 @@ export const VehicleModelAndTaxChargersCategoryMain = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, VehicleModelTaxChargesCategoryDataLoaded, VehicleModelTaxChargesCategoryData['vehicleModel'], userId]);
-
-    // const removeFilter = (key) => {
-    //     if (key === 'searchParam') {
-    //         const { searchType, searchParam, ...rest } = filterString;
-    //         setFilterString({ ...rest });
-    //     } else {
-    //         const { [key]: names, ...rest } = filterString;
-    //         setFilterString({ ...rest });
-    //     }
-    // };
 
     const onFinish = (values) => {
         const recordId = formData?.id || '';
