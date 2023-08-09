@@ -6,6 +6,8 @@
 import { OtfMaster } from './OTF';
 import { VehicleDetailMaster } from './VehicleDetail';
 import { VehicleReceiptMaster } from './VehicleReceipt';
+import { VehiclePurchaseOrderMaster } from './VehiclePurchaseOrder';
+
 import { VehicleRecieptChecklistMaster } from './VehicleRecieptChecklist';
 
-export { OtfMaster, VehicleDetailMaster, VehicleReceiptMaster, VehicleRecieptChecklistMaster };
+export { OtfMaster, VehicleDetailMaster, VehicleReceiptMaster, VehiclePurchaseOrderMaster, VehicleRecieptChecklistMaster, };

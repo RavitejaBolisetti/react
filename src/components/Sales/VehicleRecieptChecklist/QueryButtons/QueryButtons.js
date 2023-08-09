@@ -11,7 +11,7 @@ export const QueryButtons = ({ items = {}, onClick, currentItem = '' }) => {
         <div className={`${styles.userManagement} ${styles.headingToggle}`}>
             {Object.values(items)?.map((item, index) => {
                 return (
-                    <Button onClick={() => onClick(item)} type={currentItem ? 'primary' : item?.active ? 'primary' : 'link'}>
+                    <Button onClick={() => onClick(item)} type={currentItem === item?.key ? 'primary' : 'link'}>
                         {item?.title}
                     </Button>
                 );
