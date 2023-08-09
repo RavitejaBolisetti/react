@@ -305,8 +305,5 @@ describe('OTF referrals master render', () => {
 
         const calendar = getByRole("img", { name: 'calendar', exact: false });
         fireEvent.click(calendar);
-
-
-        screen.debug()
     })
 })
