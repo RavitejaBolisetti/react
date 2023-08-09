@@ -7,9 +7,13 @@ import React from 'react';
 import { Row, Col, Card, Divider } from 'antd';
 import { withDrawer } from 'components/withDrawer';
 import { RSMApprovalButtons } from './RSMApprovalButtons';
-import { convertDate } from 'utils/formatDateTime';
 
-const ViewDetailBase = ({ setRejectRequest, formData, styles, handleButtonClick, onCloseAction, buttonData, setButtonData, handleRequest, queryButtons }) => {
+import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
+import { DATA_TYPE } from 'constants/dataType';
+
+import { RSM_APPROVAL_STATUS } from './utils/RSMApprovalStatus';
+
+const ViewDetailBase = ({ setRejectRequest, isLoading = false, formData, styles, handleButtonClick, onCloseAction, buttonData, setButtonData, handleRequest, queryButtons }) => {
     const buttonProps = {
         formData,
         onCloseAction,
@@ -19,6 +23,8 @@ const ViewDetailBase = ({ setRejectRequest, formData, styles, handleButtonClick,
         setRejectRequest,
         handleRequest,
     };
+
+    const statusClassName = RSM_APPROVAL_STATUS?.REJECTED?.key === formData?.status ? styles.rejectedColor : RSM_APPROVAL_STATUS?.APPROVED?.key === formData?.status ? styles.approvedColor : styles.warningColor;
 
     return (
         <>
@@ -34,11 +40,11 @@ const ViewDetailBase = ({ setRejectRequest, formData, styles, handleButtonClick,
                                 </Col>
 
                                 <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12} className={styles.addGroup}>
-                                    {formData?.fromDealerCode}
+                                    {checkAndSetDefaultValue(formData?.fromDealerCode, isLoading)}
                                 </Col>
 
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={`${styles.addGroup} ${styles.tableTextColor85}`}>
-                                    {formData?.fromDealerName}
+                                    {checkAndSetDefaultValue(formData?.fromDealerName, isLoading)}
                                 </Col>
                             </Row>
 
@@ -50,11 +56,11 @@ const ViewDetailBase = ({ setRejectRequest, formData, styles, handleButtonClick,
                                 </Col>
 
                                 <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12} className={styles.addGroup}>
-                                    {formData?.toDealerCode}
+                                    {checkAndSetDefaultValue(formData?.toDealerCode, isLoading)}
                                 </Col>
 
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={`${styles.addGroup} ${styles.tableTextColor85}`}>
-                                    {formData?.toDealerName}
+                                    {checkAndSetDefaultValue(formData?.toDealerName, isLoading)}
                                 </Col>
                             </Row>
 
@@ -66,7 +72,7 @@ const ViewDetailBase = ({ setRejectRequest, formData, styles, handleButtonClick,
                                 </Col>
 
                                 <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12} className={styles.addGroup}>
-                                    {formData?.chassisNumber}
+                                    {checkAndSetDefaultValue(formData?.chassisNumber, isLoading)}
                                 </Col>
                             </Row>
 
@@ -78,7 +84,7 @@ const ViewDetailBase = ({ setRejectRequest, formData, styles, handleButtonClick,
                                 </Col>
 
                                 <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12} className={styles.addGroup}>
-                                    {formData?.vehicleAge}
+                                    {checkAndSetDefaultValue(formData?.vehicleAge, isLoading)}
                                 </Col>
                             </Row>
 
@@ -90,7 +96,7 @@ const ViewDetailBase = ({ setRejectRequest, formData, styles, handleButtonClick,
                                 </Col>
 
                                 <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12} className={styles.addGroup}>
-                                    {convertDate(formData?.requestedDate, 'DD MMM YYYY')}
+                                    {checkAndSetDefaultValue(formData?.requestedDate, isLoading, DATA_TYPE?.DATE?.key)}
                                 </Col>
                             </Row>
 
@@ -101,8 +107,8 @@ const ViewDetailBase = ({ setRejectRequest, formData, styles, handleButtonClick,
                                     Status:
                                 </Col>
 
-                                <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12} className={queryButtons?.pending ? `${styles.addGroup} ${styles.warningColor}` : queryButtons?.approved ? `${styles.addGroup} ${styles.approvedColor}` : `${styles.addGroup} ${styles.rejectedColor}`}>
-                                    {formData?.status}
+                                <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12} className={`${styles.addGroup} ${statusClassName}`}>
+                                    {checkAndSetDefaultValue(formData?.status, isLoading)}
                                 </Col>
                             </Row>
 
@@ -114,7 +120,7 @@ const ViewDetailBase = ({ setRejectRequest, formData, styles, handleButtonClick,
                                 </Col>
 
                                 <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12} className={styles.addGroup}>
-                                    {formData?.modelDescription}
+                                    {checkAndSetDefaultValue(formData?.modelDescription, isLoading)}
                                 </Col>
                             </Row>
                         </>

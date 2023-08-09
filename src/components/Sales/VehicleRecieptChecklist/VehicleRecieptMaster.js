@@ -385,7 +385,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         tableColumn: tableColumn({ handleButtonClick, actionButtonVisibility }),
         tableData: data,
         showAddButton: false,
-        handleButtonClick,
+        handleAdd: handleButtonClick,
         noMessge: LANGUAGE_EN.GENERAL.LIST_NO_DATA_FOUND.TITLE,
         isLoading: showDataLoading,
         showAddButton: false,
