@@ -26,7 +26,7 @@ export const DocTypeAcMappingMaster = (props) => {
                 docTypeHeadMappingForm.resetFields();
                 forceUpdate();
                 setButtonData({ ...buttonData, formBtnActive: true });
-                handleCodeFunction();
+                // handleCodeFunction();
             })
             .catch((error) => console.log(error));
     };
@@ -45,7 +45,6 @@ export const DocTypeAcMappingMaster = (props) => {
         docTypeHeadMappingList,
         setDocTypeHeadMappingList,
         typeData,
-        handleCodeFunction,
         form,
         changeValue,
         setChangeValue,
@@ -96,7 +95,7 @@ export const DocTypeAcMappingMaster = (props) => {
 
             {docTypeHeadMappingList?.length > 0 &&
                 docTypeHeadMappingList?.map((action) => {
-                    return <CardDocTypeAcMapping {...cardAttributeProps} chargeCode={action?.chargeCode} internalId={action?.internalId} id={action?.id} financialAccountHeadId={action?.financialAccountHeadId} financialAccountHeadDesc={action?.financialAccountHeadDesc} chargeCodeDesc={action?.chargeCodeDesc} documentTypeName={action?.documentTypeName} />;
+                    return <CardDocTypeAcMapping {...cardAttributeProps} chargeCode={action?.chargeCode} internalId={action?.internalId} id={action?.id} financialAccountHeadId={action?.financialAccountHeadId} financialAccountHeadDesc={action?.financialAccountHeadDesc} chargeCodeDesc={action?.chargeCodeDesc}  />;
                 })}
         </>
     );
