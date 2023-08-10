@@ -13,7 +13,7 @@ import { DATA_TYPE } from 'constants/dataType';
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
 import { SearchBox } from 'components/utils/SearchBox';
-import { tblPrepareColumns } from 'utils/tableCloumn';
+import { tblPrepareColumns } from 'utils/tableColumn';
 import { DataTable } from 'utils/dataTable';
 import { convertDateMonthYear } from 'utils/formatDateTime';
 import { PARAM_MASTER } from 'constants/paramMaster';
