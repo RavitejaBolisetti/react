@@ -69,11 +69,13 @@ export default function DataTable({ isLoading, rowSelection = undefined, showSiz
                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                         {totalRecords && (
                             <>
-                                Total <span style={{ color: '#0b0b0c' }}> {totalRecords} </span> items
+                                <span className={`${styles.marR20} ${styles.tableTextColor54}`}>
+                                    Total <span style={{ color: '#0b0b0c' }}> {totalRecords} </span> items
+                                </span>
                             </>
                         )}
 
-                        <Select defaultValue={tablePagination?.pageSize} onChange={handleChange} style={{ width: 200 }} options={options} />
+                        <Select defaultValue={tablePagination?.pageSize} onChange={handleChange} options={options} />
                     </Col>
                     <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignRight}>
                         <Pagination {...tablePagination} onChange={handlePageChange} />
