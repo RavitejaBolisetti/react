@@ -8,7 +8,7 @@ import '@testing-library/jest-dom/extend-expect';
 import { Provider } from 'react-redux';
 import customRender from '@utils/test-utils';
 import createMockStore from '__mocks__/store';
-import { screen, fireEvent, logRoles } from '@testing-library/react';
+import { screen, fireEvent } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
 
 import { CriticalityGroup } from '@components/common/CriticalityGroup/CriticalityGroup';
@@ -96,8 +96,7 @@ describe('CriticalityGroup Components', () => {
         fireEvent.click(addBtn);
         const criticalityGroupId=screen.getByRole('textbox', { name: 'Criticality Group Id', exact:false });
         fireEvent.change(criticalityGroupId, { target: { value: '123'}});
-        // const criticalityGroupName=screen.getByRole('textbox', { name: 'Criticality Group Name', exact:false });
-        // fireEvent.change(criticalityGroupName, { target: { value: 'Test'}});
+        
         const defaultGroup=screen.getByRole('switch', { name: 'Default Group', exact:false });
         fireEvent.click(defaultGroup);
         const status=screen.getByRole('switch', { name: 'Status', exact: false});

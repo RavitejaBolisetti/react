@@ -26,6 +26,7 @@ import { LeftSidebar } from './LeftSidebar';
 import styles from 'components/common/Common.module.css';
 
 const OTFMainConatinerMain = (props) => {
+    console.log(props);
     const { currentSection } = props;
 
     const myProps = {
@@ -77,7 +78,7 @@ const OTFMainConatinerMain = (props) => {
     };
 
     return (
-        <Row gutter={0}>
+        <Row gutter={0} data-testid="logRole">
             <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6} className={styles.drawerBodyLeft}>
                 <LeftSidebar {...myProps} />
             </Col>

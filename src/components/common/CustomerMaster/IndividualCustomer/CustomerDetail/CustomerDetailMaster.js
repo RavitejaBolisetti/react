@@ -115,7 +115,7 @@ const CustomerDetailMasterBase = (props) => {
 
     useEffect(() => {
         if (data) {
-            console.log('data', data);
+            // console.log('data', data);
             setCustomerNameList({
                 titleCode: data?.titleCode,
                 firstName: data?.firstName,

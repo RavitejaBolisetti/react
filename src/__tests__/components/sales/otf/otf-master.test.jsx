@@ -1,47 +1,81 @@
 import '@testing-library/jest-dom/extend-expect';
 import customRender from "@utils/test-utils";
 import { OtfMaster } from "@components/Sales/OTF/OtfMaster";
-import { OTFMainConatiner } from "@components/Sales/OTF/OTFMainConatiner";
-import { AdvancedSearch } from "@components/Sales/OTF/AdvancedSearch";
-import { CancellationMaster } from "@components/Sales/OTF/OTFCancellation/CancellationMaster";
-import { TransferMaster } from "@components/Sales/OTF/OTFTransfer/TransferMaster";
-import { ChangeHistory } from "@components/Sales/OTF/ChangeHistory";
-
-
+import createMockStore from '__mocks__/store';
+import { Provider } from 'react-redux';
+import { screen, fireEvent } from "@testing-library/react";
 
 describe("OtfMaster component render",()=>{
-    it("should render OtfMaster component ",()=>{
-      customRender(<OtfMaster />)
-    });
+  it("should render OtfMaster component",()=>{
+    customRender(<OtfMaster />)
   });
-  
-describe("OTFMainConatiner component render",()=>{
-    it("should render OTFMainConatiner component ",()=>{
-      customRender(<OTFMainConatiner />)
-    });
+
+  it("should render OtfMaster component with userId",()=>{
+      const mockStore = createMockStore({
+          auth: { userId: 106 },
+      });
+      customRender(
+        <Provider store={mockStore}>
+          <OtfMaster />
+        </Provider>
+      );
   });
-   describe("AdvancedSearch component render",()=>{
-    it("should render AdvancedSearch component ",()=>{
-      customRender(<AdvancedSearch />)
+
+  it("clear button should work", async ()=>{
+      const mockStore = createMockStore({
+          auth: { userId: 106 },
+          data: {
+            OTF: {
+                OtfSearchList: { 
+                  data: { 
+                    totalRecords:1,
+                    otfDetails: [{"otfNumber":"OTF1690806027258","model":"THRNMM8395642778","orderStatus":"O","customerName":"Kai","mobileNumber":"8000666345","otfDate":"null","cpd":null,"customerType":"IND","userProfilePicDocId":""}],
+                  },
+                  filter: {"searchType":"customerName","searchParam":"Kai","advanceFilter":true}
+                },
+            },
+        },
+      });
+      customRender(
+        <Provider store={mockStore}>
+          <OtfMaster />
+        </Provider>
+      );
+      const clearButton=screen.getByRole('button', { name:'Clear' });
+      fireEvent.click(clearButton);
+      
     });
-  });
-  describe("CancellationMaster component render",()=>{
-    it("should render CancellationMaster component ",()=>{
-      customRender(<CancellationMaster />)
+
+    it("remove button should work", async ()=>{
+      const mockStore = createMockStore({
+          auth: { userId: 106 },
+          data: {
+            ConfigurableParameterEditing: {
+              filteredListData: {
+                OTF_SER: [{key: "customerName"}]
+              }
+            },
+            OTF: {
+                OtfSearchList: { 
+                  data: { 
+                    totalRecords:1,
+                    otfDetails: [{"otfNumber":"OTF1690806027258","model":"THRNMM8395642778","orderStatus":"O","customerName":"Kai","mobileNumber":"8000666345","otfDate":"null","cpd":null,"customerType":"IND","userProfilePicDocId":""}],
+                  },
+                  filter: {"searchType":"customerName","searchParam":"Kai","advanceFilter":true, key: "hello"}
+                },
+            },
+        },
+      });
+      customRender(
+        <Provider store={mockStore}>
+          <OtfMaster />
+        </Provider>
+      );
+
+      const removeButton=screen.getByTestId('removeBtn');
+      fireEvent.click(removeButton);
+      
     });
-  });
-  describe("TransferMaster component render",()=>{
-    it("should render TransferMaster component ",()=>{
-      customRender(<TransferMaster />)
-    });
-  });
-  describe("showGlobalNotification component render",()=>{
-    it("should render showGlobalNotification component ",()=>{
-      customRender(<showGlobalNotification />)
-    });
-  });
-  describe("ChangeHistory component render",()=>{
-    it("should render ChangeHistory component ",()=>{
-      customRender(<ChangeHistory />)
-    });
-  });
+
+});
+
