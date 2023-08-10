@@ -26,7 +26,8 @@ export const VehiclePurchaseOrderFormButton = ({ record, onCloseAction, buttonDa
                 </Col>
 
                 <Col xs={24} sm={16} md={18} lg={20} xl={20} className={styles.buttonsGroupRight}>
-                    {buttonData?.editBtn && (
+                    {/* {buttonData?.editBtn && ( */}
+                    { (record?.purchaseOrderStatus == 'PO Submitted' || record?.purchaseOrderStatus == 'SO Generated') && (
                         <>
                             <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.CANCEL_OTF, record, openDefaultSection: false })} type="primary">
                                 Cancel VPO

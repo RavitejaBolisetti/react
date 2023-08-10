@@ -39,6 +39,12 @@ export const HierarchyFormButton = ({ buttonData, handleButtonClick }) => {
                                 Add Sibling
                             </Button>
                         )}
+
+                        {buttonData?.save && (
+                            <Button type="primary" onClick={() => handleButtonClick(FROM_ACTION_TYPE.SIBLING)}>
+                                Save
+                            </Button>
+                        )}
                     </Col>
                 </Row>
             </div>

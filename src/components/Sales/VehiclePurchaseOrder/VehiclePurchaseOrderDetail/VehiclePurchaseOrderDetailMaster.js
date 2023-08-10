@@ -17,6 +17,9 @@ import { showGlobalNotification } from 'store/actions/notification';
 
 import { saveVPODataActions } from 'store/actions/data/vehicle/vehiclePurchaseOrderAction';
 import { dealerLocationDataActions } from 'store/actions/data/vehicle/dealerLocationAction';
+import { ROLE_MANAGEMENT_SET_FORM_DATA } from 'store/actions/data/roleManagement';
+import { vehiclePurchaseOrderDataActions } from 'store/actions/data/vehicle/vehiclePurchaseOrderDetails';
+
 
 const mapStateToProps = (state) => {
     const {
@@ -66,6 +69,8 @@ const mapDispatchToProps = (dispatch) => ({
             fetchDealerParentsLovList: dealerParentLovDataActions.fetchList,
             listShowLoadingOnLoad: dealerParentLovDataActions.listShowLoading,
             fetchList: viewVPODataActions.fetchList,
+            fetchListView: vehiclePurchaseOrderDataActions.fetchList,
+
             saveData: saveVPODataActions.saveData,
             resetData: saveVPODataActions.reset,
 
@@ -78,10 +83,10 @@ const mapDispatchToProps = (dispatch) => ({
 
 const VehiclePurchaseOrderDetailMasterBase = (props) => {
     const { typeData, fetchProductList, productHierarchyList, fetchDealerParentsLovList, viewVehiclePODetails, fetchDealerLocation, selectedRecord, setSelectedRecord } = props;
-    const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, saveData, isLoading } = props;
-    const { form, selectedRecordId, salesConsultantLov, NEXT_ACTION, handleButtonClick } = props;
+    const { userId,formActionType, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, saveData, isLoading } = props;
+    const { form, selectedRecordId, salesConsultantLov, NEXT_ACTION, handleButtonClick,setFormData,fetchListView,extraParamsAfterSave,} = props;
     const [activeKey, setactiveKey] = useState([1]);
-
+console.log('extraParamsAfterSave',extraParamsAfterSave);
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
@@ -111,6 +116,15 @@ const VehiclePurchaseOrderDetailMasterBase = (props) => {
             name: 'Purchase Order Id',
         },
     ];
+
+    // useEffect(() => {
+    //     if (userId && formActionType?.addMode === 'true') {
+    //         setFormData(undefined);
+    //         form.resetFields();
+    //         form.setFieldsValue();
+    //     }
+    // }, [userId,formActionType?.addMode]);
+
     useEffect(() => {
         if (userId) {
             fetchProductList({ setIsLoading: listShowLoading, userId });
@@ -159,13 +173,17 @@ const VehiclePurchaseOrderDetailMasterBase = (props) => {
     };
 
     const onFinish = (values) => {
+        console.log('save');
         const recordId = viewVehiclePODetails?.id || '';
 
         // const data = { ...values, id: recordId, purchaseOrderDate: values?.purchaseOrderDate?.format('YYYY-MM-DD'),purchaseOrderNumber:purchaseOrderNumber,purchaseOrderStatusCode:purchaseOrderStatusCode,dealerLocationId:values.dealerLocation,cancelRemarksCode:'' };
         const onSuccess = (res) => {
-            handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams });
+
+            fetchListView({ setIsLoading: listShowLoading, userId, extraParams:extraParamsAfterSave, onErrorAction });
+            handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
+           
+
         };
 
         const onError = (message) => {
@@ -206,7 +224,7 @@ const VehiclePurchaseOrderDetailMasterBase = (props) => {
         typeData,
         userId,
         isDataLoaded,
-        formData: viewVehiclePODetails,
+        formData: (formActionType?.addMode === true) ? {} : viewVehiclePODetails,
         isLoading,
         salesConsultantLov,
         onChange,
@@ -217,7 +235,7 @@ const VehiclePurchaseOrderDetailMasterBase = (props) => {
         selectedRecordId,
         selectedRecord,
         setSelectedRecord,
-        viewVehiclePODetails,
+        // viewVehiclePODetails,
     };
 
     return (

@@ -388,6 +388,8 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
 
     const title = 'Hierarchy';
 
+    console.log('productHierarchyData', productHierarchyData);
+
     return (
         <>
             <div className={styles.contentHeaderBackground}>

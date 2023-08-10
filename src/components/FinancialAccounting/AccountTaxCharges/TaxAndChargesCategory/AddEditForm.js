@@ -149,7 +149,7 @@ const AddEditFormMain = (props) => {
                         <ViewDetail {...viewProps} />
                     ) : (
                         <>
-                            <Row gutter={16}>
+                            <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                     <Form.Item label="Code" initialValue={formData?.taxCategoryCode} name="taxCategoryCode" rules={[validateRequiredInputField('Code')]}>
                                         <Input className={styles.inputBox} placeholder={preparePlaceholderText('Code')} maxLength={6} disabled={editMode ? true : false} />

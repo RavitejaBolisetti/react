@@ -371,9 +371,7 @@ export const crudListingBase = ({ advanceFilter = false, handleButtonClick, hand
                                     )
                                 }
                             >
-                                <div className={styles.tableProduct}>
-                                    <DataTable isLoading={this.props.isLoading} {...tableProps} />
-                                </div>
+                                <DataTable isLoading={this.props.isLoading} {...tableProps} />
                             </ConfigProvider>
                         </Col>
                     </Row>
