@@ -537,6 +537,10 @@ p {
     margin-top: -2px;
 }
 
+:global .ant-form-item .ant-form-item-label>label.ant-form-item-no-colon::after {
+    display: none;
+}
+
 :global .ant-select:not(.ant-select-customize-input) .ant-select-selector {
     border: 1px solid #b5b5b6;
     height: auto;
@@ -852,7 +856,7 @@ p {
 :global .ant-card .ant-card-body {
     padding: 20px 30px;
     padding-bottom: 0;
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
 }
 
 :global .ant-card .ant-card-body::before,

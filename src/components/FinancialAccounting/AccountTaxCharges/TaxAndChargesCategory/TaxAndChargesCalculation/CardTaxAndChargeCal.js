@@ -144,7 +144,6 @@ const CardProductAttribute = (props) => {
 
             {formEdit && props?.internalId === uniqueCardEdit && (
                 <>
-                    <Divider />
                     <FormProductAttribute {...FormProductAttributeProp} />
                 </>
             )}

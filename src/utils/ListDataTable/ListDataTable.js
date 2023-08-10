@@ -42,9 +42,7 @@ export default function ListDataTable(props) {
                     </Empty>
                 )}
             >
-                <div className={`${styles.tableProduct} ${styles.datasearh}`}>
-                    <DataTable {...props} />
-                </div>
+                <DataTable {...props} />
             </ConfigProvider>
         </>
     );

@@ -13,7 +13,6 @@ import styles from 'components/common/Common.module.css';
 
 const ViewDetailMain = (props) => {
     const { formData, isLoading, selectedRecord } = props;
-    console.log('viewselectedRecord', selectedRecord);
     const viewProps = {
         bordered: false,
         colon: false,

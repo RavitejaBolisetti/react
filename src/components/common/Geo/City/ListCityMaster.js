@@ -429,11 +429,9 @@ export const ListCityMasterBase = (props) => {
     return (
         <>
             <AppliedAdvanceFilter {...advanceFilterResultProps} />
-            <Row>
+            <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <div className={styles.tableProduct}>
-                        <ListDataTable isLoading={showDataLoading} {...tableProps} handleAdd={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })} />
-                    </div>
+                    <ListDataTable isLoading={showDataLoading} {...tableProps} handleAdd={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })} />
                 </Col>
             </Row>
 
