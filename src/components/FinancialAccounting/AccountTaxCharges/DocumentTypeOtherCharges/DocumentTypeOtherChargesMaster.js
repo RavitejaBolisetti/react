@@ -240,7 +240,7 @@ export const DocumentTypeOtherChargesMain = (props) => {
         setFormActionType,
         onFinish,
         onFinishFailed,
-
+        setFilterString,
         isVisible: isFormVisible,
         onCloseAction,
         titleOverride: drawerTitle.concat(moduleTitle),
@@ -275,8 +275,6 @@ export const DocumentTypeOtherChargesMain = (props) => {
         tableData: docTypeLedgerData,
         showAddButton: false,
     };
-
-    const title = 'Doc Type - charges & ledger mapping';
 
     return (
         <>
