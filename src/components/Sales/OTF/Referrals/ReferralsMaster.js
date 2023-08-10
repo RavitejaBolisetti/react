@@ -168,7 +168,6 @@ const ReferralsMasterBase = (props) => {
 
     const onFinish = (values) => {
         const data = { ...values, otfNumber: selectedOrderId, dob: formatDate(values?.dob), id: referralData?.id };
-
         const onSuccess = (res) => {
             form.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
