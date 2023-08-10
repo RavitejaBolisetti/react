@@ -93,7 +93,6 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, saveData, listOrgLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, showGlobalNotification, manufacturerOrgHierarchyData, fetchOrgList, isDataOrgLoaded, productHierarchyData, setSelectedOrganizationId, organizationId, fetchProductDataList, fetchOtfList, listOtfSoMappingShowLoading, resetData, otfSoMappingData, otfSoUserMappingData, isDataOtfSoMappingLoaded, isDataOtfSoUserMappingLoaded, fetchOtfUserList, listOtfSoUserMappingShowLoading, listProductLoading }) => {
-    console.log('otfSoMappingData', otfSoMappingData);
     const [form] = Form.useForm();
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
@@ -171,29 +170,34 @@ export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, sav
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [viewData]);
 
+    useEffect(() => {
+        if (otfSoMappingData?.orgManufactureId) {
+            form.setFieldsValue({
+                productAttributeCode: otfSoMappingData?.productAttributeCode,
+                productAttributeValue: otfSoMappingData?.productAttributeValue,
+                manufactureOrgId: otfSoMappingData?.orgManufactureId,
+                otfSoMapUnmapBy: otfSoMappingData?.otfSoMapUnmapBy,
+            });
+            setFormActionType(FROM_ACTION_TYPE.EDIT);
+        } else {
+            form.setFieldsValue({
+                productAttributeCode: viewData?.productAttributeCode?.[0],
+                productAttributeValue: viewData?.productAttributeValue,
+                manufactureOrgId: organizationId,
+                otfSoMapUnmapBy: null,
+            });
+            setFormActionType(FROM_ACTION_TYPE.ADD);
+        }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formActionType]);
+
     const onChange = (e) => {
         setSearchValue(e.target.value);
     };
 
     const handleTreeViewVisiblity = () => setTreeViewVisible(!isTreeViewVisible);
 
-    const dataList = [];
-    const generateList = (data) => {
-        for (let i = 0; i < data?.length; i++) {
-            const node = data[i];
-            const { [fieldNames?.key]: key } = node;
-            dataList.push({
-                key,
-                data: node,
-            });
-            if (node[fieldNames?.children]) {
-                generateList(node[fieldNames?.children]);
-            }
-        }
-        return dataList;
-    };
-
-    const flatternData = generateList(productHierarchyData);
     const handleTreeViewClick = (keys, tree) => {
         form.resetFields();
         setFormData([]);
@@ -213,12 +217,7 @@ export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, sav
         if (otfSoMappingData?.orgManufactureId) {
             setViewData(otfSoMappingData);
         } else {
-            setViewData(null);
-            form.setFieldsValue({
-                productAttributeCode: soMapKey?.[0],
-                productAttributeValue: soMapName,
-                manufactureOrgId: organizationId,
-            });
+            setViewData({ productAttributeCode: selectedTreeKey, productAttributeValue: soMapName, manufactureOrgId: organizationId, otfSoMapUnmapBy: 'NA' });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [otfSoMappingData]);
@@ -246,7 +245,7 @@ export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, sav
                 // const attributeParentName = flatternData.find((i) => res?.data?.parentCode === i.key)?.data?.taxChargesTypeCode;
                 // res?.data && setSelectedTreeData({ ...res?.data, hierarchyAttribueName, parentName: attributeParentName });
 
-                setSelectedTreeKey([res?.data?.id || res?.data?.taxChargesTypeCode]);
+                setSelectedTreeKey([res?.data?.id]);
                 setFormActionType(FROM_ACTION_TYPE.VIEW);
                 setFormBtnActive(false);
                 setIsFormVisible(false);
@@ -257,9 +256,11 @@ export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, sav
             showGlobalNotification({ message });
         };
 
+        console.log('formActionType?.editMode ', formActionType);
+
         const requestData = {
             data: data,
-            method: formActionType?.editMode ? 'put' : 'post',
+            method: formActionType === FROM_ACTION_TYPE.EDIT ? 'put' : 'post',
             setIsLoading: listOtfSoMappingShowLoading,
             userId,
             onError,
@@ -277,21 +278,13 @@ export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, sav
     const handleResetBtn = () => {
         form.resetFields();
     };
-    const handleAdd = () => {
-        setFormBtnActive(false);
-        setIsFormVisible(true);
-    };
 
     const handleButtonClick = (type) => {
         setFormData([]);
         form.resetFields();
-        if (type === FROM_ACTION_TYPE.EDIT) {
-            const formData = flatternData.find((i) => selectedTreeKey[0] === i.key);
-            formData && setFormData(formData?.data);
-        }
         setIsFormVisible(true);
         setFormBtnActive(false);
-        setFormActionType(type);
+        // setFormActionType(type);
     };
 
     const treeOrgFieldNames = { ...organizationFieldNames, label: organizationFieldNames?.title, value: organizationFieldNames?.key };
@@ -303,6 +296,7 @@ export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, sav
         defaultParent: false,
         handleSelectTreeClick: (value) => {
             setSelectedTreeKey();
+            setViewData(null);
             resetData();
             setSoMapKey(null);
             setSelectedOrganizationId(value);
@@ -325,14 +319,14 @@ export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, sav
     const formProps = {
         typeData,
         setSelectedTreeKey,
-        flatternData,
         formActionType,
         isVisible: isFormVisible,
         onFinishFailed,
         onCloseAction: () => {
             setIsFormVisible(false);
+            setFormActionType(FROM_ACTION_TYPE.VIEW);
         },
-        titleOverride: (formData?.taxChargesTypeCode ? 'Edit ' : 'Add ').concat(moduleTitle),
+        titleOverride: 'Map '.concat(moduleTitle),
         onFinish,
         isFormBtnActive,
         setFormBtnActive,
@@ -427,7 +421,7 @@ export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, sav
 
                 {productHierarchyData?.length > 0 ? (
                     <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol}>
-                        {viewData ? (
+                        {selectedTreeKey ? (
                             <>
                                 <ViewDetails {...viewProps} />
                                 <div className={styles.viewContainerFooter}>
@@ -442,25 +436,12 @@ export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, sav
                                         height: 60,
                                     }}
                                     description={
-                                        viewData && selectedTreeKey ? (
-                                            <span>
-                                                No records found <br />
-                                                Please add New "So Map Detail" using below button
-                                            </span>
-                                        ) : (
-                                            <span>
-                                                Please select from left <br />
-                                                side hierarchy to view “Details”
-                                            </span>
-                                        )
+                                        <span>
+                                            Please select from left <br />
+                                            side hierarchy to view “Details”
+                                        </span>
                                     }
-                                >
-                                    {viewData && selectedTreeKey ? (
-                                        <Button icon={<PlusOutlined />} type="primary" danger onClick={handleAdd}>
-                                            Add
-                                        </Button>
-                                    ) : null}
-                                </Empty>
+                                />
                             </div>
                         )}
                     </Col>

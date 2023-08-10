@@ -4,8 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect } from 'react';
-import { Col, Input, Form, Row, Switch, Button } from 'antd';
-import TreeSelectField from 'components/common/TreeSelectField';
+import { Col, Input, Form, Row, Button } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { withDrawer } from 'components/withDrawer';
 import styles from 'components/common/Common.module.css';

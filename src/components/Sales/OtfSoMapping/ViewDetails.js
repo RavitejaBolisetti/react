@@ -16,8 +16,6 @@ export const ViewMain = (props) => {
         column: { xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 },
     };
 
-    console.log('otfSoMappingData', otfSoMappingData);
-
     return (
         <div className={styles.viewContainer}>
             <Descriptions {...viewProps}>
