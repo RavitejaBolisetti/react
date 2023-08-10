@@ -100,13 +100,13 @@ export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, sav
     const [selectedTreeKey, setSelectedTreeKey] = useState(null);
     const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState([]);
     const [formActionType, setFormActionType] = useState('');
+    const [change, setChange] = useState(false);
 
     const [formData, setFormData] = useState([]);
     const [selectedTreeData, setSelectedTreeData] = useState([]);
 
     const [isFormBtnActive, setFormBtnActive] = useState(false);
     const [searchValue, setSearchValue] = useState('');
-    const [soMapKey, setSoMapKey] = useState(null);
     const [soMapName, setSoMapName] = useState(null);
     const [viewData, setViewData] = useState(null);
 
@@ -190,7 +190,7 @@ export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, sav
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formActionType]);
+    }, [formActionType, change]);
 
     const onChange = (e) => {
         setSearchValue(e.target.value);
@@ -205,11 +205,6 @@ export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, sav
         setViewData(null);
         let name = tree?.node?.title?.props?.children?.[2];
         setSoMapName(name);
-
-        if (keys && keys?.length > 0) {
-            setFormActionType(FROM_ACTION_TYPE.VIEW);
-        }
-
         setSelectedTreeKey(keys);
     };
 
@@ -246,7 +241,6 @@ export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, sav
                 // res?.data && setSelectedTreeData({ ...res?.data, hierarchyAttribueName, parentName: attributeParentName });
 
                 setSelectedTreeKey([res?.data?.id]);
-                setFormActionType(FROM_ACTION_TYPE.VIEW);
                 setFormBtnActive(false);
                 setIsFormVisible(false);
             }
@@ -256,7 +250,7 @@ export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, sav
             showGlobalNotification({ message });
         };
 
-        console.log('formActionType?.editMode ', formActionType);
+        console.log('formActionType?.editMode ', formActionType?.editMode);
 
         const requestData = {
             data: data,
@@ -284,7 +278,7 @@ export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, sav
         form.resetFields();
         setIsFormVisible(true);
         setFormBtnActive(false);
-        // setFormActionType(type);
+        setChange(() => !change);
     };
 
     const treeOrgFieldNames = { ...organizationFieldNames, label: organizationFieldNames?.title, value: organizationFieldNames?.key };
@@ -298,7 +292,6 @@ export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, sav
             setSelectedTreeKey();
             setViewData(null);
             resetData();
-            setSoMapKey(null);
             setSelectedOrganizationId(value);
         },
         defaultValue: organizationId,
@@ -324,7 +317,6 @@ export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, sav
         onFinishFailed,
         onCloseAction: () => {
             setIsFormVisible(false);
-            setFormActionType(FROM_ACTION_TYPE.VIEW);
         },
         titleOverride: 'Map '.concat(moduleTitle),
         onFinish,
