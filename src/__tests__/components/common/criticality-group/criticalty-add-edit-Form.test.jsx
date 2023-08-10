@@ -41,7 +41,6 @@ const props = {
     setAllowedTimingSave: jest.fn(),
     onCloseAction: jest.fn(),
     buttonData: jest.fn(),
-    // setButtonData,
     handleButtonClick: jest.fn(),
 };
 
