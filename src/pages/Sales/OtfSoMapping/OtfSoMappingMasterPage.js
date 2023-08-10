@@ -4,27 +4,23 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { ListDistrictMaster } from 'components/common/Geo';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
+import { OtfSoMappingMaster } from 'components/Sales';
 
-export const DistrictGeoBase = (props) => {
-    const pageTitle = 'District';
+const OtfSoMappingMasterBase = (props) => {
+    const pageTitle = 'OTF SO Mapping Control Master';
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,
-        showChangeHisoty: true,
-        visibleChangeHistory: false,
     };
 
     return (
         <>
             <PageHeader {...pageHeaderData} />
-            <ListDistrictMaster />
+            <OtfSoMappingMaster />
         </>
     );
 };
 
-const DistrictPage = withLayoutMaster(DistrictGeoBase);
-
-export default DistrictPage;
+export const OtfSoMappingMasterPage = withLayoutMaster(OtfSoMappingMasterBase);

@@ -63,7 +63,7 @@ function FormAccountAndDocumentMapping(props) {
                     </Col>
 
                     {!formEdit && (
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.marB20}>
                             <Button
                                 type="primary"
                                 onClick={() => {
