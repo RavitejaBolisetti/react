@@ -22,13 +22,13 @@ const ViewDetailMain = (props) => {
     };
 
     return (
-        <div className={styles.viewDrawerContainer}>
+        <div className={styles?.viewDrawerContainer}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Space direction="vertical" size="middle" className={styles.accordianContainer}>
+                    <Space direction="vertical" size="middle" className={styles?.accordianContainer}>
                         {schemeData && schemeData?.schemes?.length > 0 ? (
                             schemeData?.schemes?.map((schemeForm, index) => (
-                                <Collapse expandIcon={expandIcon} activeKey={activeKey} expandIconPosition="end" className={styles.collapseContainer}>
+                                <Collapse expandIcon={expandIcon} activeKey={activeKey} expandIconPosition="end" className={styles?.collapseContainer}>
                                     <Panel header={`Scheme ${index + 1}`} key={schemeForm?.id}>
                                         <Descriptions {...viewProps}>
                                             <Descriptions.Item label="Scheme Type">{checkAndSetDefaultValue(schemeForm?.schemeType, isLoading)}</Descriptions.Item>
@@ -43,7 +43,7 @@ const ViewDetailMain = (props) => {
                                 </Collapse>
                             ))
                         ) : (
-                            <Card className={styles.viewCardSize}>No Scheme and Offer Details Available</Card>
+                            <Card className={styles?.viewCardSize}>No Scheme and Offer Details Available</Card>
                         )}
                     </Space>
                 </Col>
