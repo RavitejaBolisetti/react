@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Form, Col, Row } from 'antd';
 
 import { validateRequiredSelectField } from 'utils/validation';
@@ -21,9 +21,10 @@ const AddEditFormMain = (props) => {
         form,
         formData,
         onCloseAction,
-        formActionType: { editMode, viewMode },
+        formActionType: { addMode, editMode, viewMode },
         onFinish,
         onFinishFailed,
+        selectedModelGroup,
     } = props;
 
     const { buttonData, setButtonData, handleButtonClick } = props;
