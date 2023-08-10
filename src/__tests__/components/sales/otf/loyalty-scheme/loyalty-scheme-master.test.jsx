@@ -28,6 +28,7 @@ const LoyaltySchemeData = [{
 }, {
     id: "test1", value: "test1"
 }]
+
 const props = {
     moduleTitle: 'test module title',
     isLoyaltySchemeDataLoaded: true,

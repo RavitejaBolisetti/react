@@ -1,11 +1,14 @@
 import React from 'react';
-import { screen, fireEvent } from '@testing-library/react';
+import { screen, fireEvent, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { ReferralsMaster } from '@components/Sales/OTF/Referrals/ReferralsMaster';
 import customRender from '@utils/test-utils';
 import { Form } from 'antd';
 import createMockStore from '__mocks__/store';
 
+beforeEach(() => {
+    jest.clearAllMocks()
+})
 
 const FormWrapper = (props) => {
     const [form] = Form.useForm();
@@ -152,7 +155,7 @@ const buttonData = {
 
 const filterString = { searchType: 'test', searchParam: 'test' }
 const props = {
-    selectedOrderId: 'selectedOrderId',
+    selectedOrderId: '1231',
     setFilterString: jest.fn(),
     handleButtonClick: jest.fn(),
     fetchList: jest.fn(),
@@ -166,15 +169,17 @@ const props = {
     selectedOrder: selectedOrder,
     sectionName: sectionName,
     referralData: referralData,
-    setViewFormData: jest.fn(),
-    onSuccessAction: jest.fn(),
-    onFinish: jest.fn(),
     onSuccess: jest.fn(),
     ADD_ACTION: "add",
     CANCEL_ACTION: "cancel_otf",
     EDIT_ACTION: "edit",
     NEXT_ACTION: "next",
-    VIEW_ACTION: "view"
+    VIEW_ACTION: "view",
+    setFormActionType: jest.fn(),
+    setSelectedOrder: jest.fn(),
+    setSelectedOrderId: jest.fn(),
+    setCurrentSection: jest.fn(),
+    setButtonData: jest.fn(),
 }
 
 const searchParams = [
@@ -195,115 +200,125 @@ const searchParams = [
 ];
 
 describe('OTF referrals master render', () => {
-    const isDataLoaded = true;
     const mockStore = createMockStore({
         auth: { userId: '1234' },
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData },
             OTF: {
-                Referrals: { isLoaded: isDataLoaded, isLoading: false, data: referralData, filter: filterString },
+                Referrals: { isLoaded: false, isLoading: false, data: referralData, filter: filterString },
             },
         },
         customer: {
-            customerDetail: { isLoaded: false, isLoading: false, data: [] },
-        },
+            customerDetail: {
+                isLoaded: false, 
+                isLoading: false,
+                data: referralData
+            },
+        }
     });
 
-    it('should render referrals view details', () => {
-        const { getByRole } = customRender(
-            <Provider store={mockStore}>
-                <FormWrapper
-                    setFormData={jest.fn()}
-                    {...props}
-                    formActionType={formActionType}
-                    showGlobalNotification={jest.fn()}
-                    handleFormValueChange={jest.fn()}
-                    onFinishFailed={jest.fn()}
-                    onError={jest.fn()}
-                    onSuccess={jest.fn()}
-                    fetchCustomerList={jest.fn()}
-                />
-            </Provider>
-        );
+    it('should render referrals view details', async () => {
+        await waitFor(() => {
+            const { getByRole } = customRender(
+                <Provider store={mockStore}>
+                    <FormWrapper
+                        setFormData={jest.fn()}
+                        {...props}
+                        formActionType={formActionType}
+                        showGlobalNotification={jest.fn()}
+                        handleFormValueChange={jest.fn()}
+                        onFinishFailed={jest.fn()}
+                        onError={jest.fn()}
+                        onSuccess={jest.fn()}
+                        fetchCustomerList={jest.fn()}
+                        onSuccessAction={jest.fn()}
+                    />
+                </Provider>
+            );
 
-        const referralId = getByRole('columnheader', { name: 'Referral ID' });
-        expect(referralId).toBeTruthy();
+            const referralId = getByRole('columnheader', { name: 'Referral ID' });
+            expect(referralId).toBeTruthy();
 
-        const regNumber = getByRole('columnheader', { name: 'Registration Number' });
-        expect(regNumber).toBeTruthy();
+            const regNumber = getByRole('columnheader', { name: 'Registration Number' });
+            expect(regNumber).toBeTruthy();
 
-        const chassisNo = getByRole('columnheader', { name: 'Chassis Number' });
-        expect(chassisNo).toBeTruthy();
+            const chassisNo = getByRole('columnheader', { name: 'Chassis Number' });
+            expect(chassisNo).toBeTruthy();
 
-        const customerId = getByRole('columnheader', { name: 'Customer ID' });
-        expect(customerId).toBeTruthy();
+            const customerId = getByRole('columnheader', { name: 'Customer ID' });
+            expect(customerId).toBeTruthy();
 
-        const customerType = getByRole('columnheader', { name: 'Customer Type' });
-        expect(customerType).toBeTruthy();
+            const customerType = getByRole('columnheader', { name: 'Customer Type' });
+            expect(customerType).toBeTruthy();
 
-        const customerName = getByRole('columnheader', { name: 'Customer Name' });
-        expect(customerName).toBeTruthy();
+            const customerName = getByRole('columnheader', { name: 'Customer Name' });
+            expect(customerName).toBeTruthy();
 
-        const mobileNo = getByRole('columnheader', { name: 'Mobile Number' });
-        expect(mobileNo).toBeTruthy();
+            const mobileNo = getByRole('columnheader', { name: 'Mobile Number' });
+            expect(mobileNo).toBeTruthy();
 
-        const emailId = getByRole('columnheader', { name: 'Email ID' });
-        expect(emailId).toBeTruthy();
+            const emailId = getByRole('columnheader', { name: 'Email ID' });
+            expect(emailId).toBeTruthy();
 
-        const dob = getByRole('columnheader', { name: 'Date of Birth' });
-        expect(dob).toBeTruthy();
+            const dob = getByRole('columnheader', { name: 'Date of Birth' });
+            expect(dob).toBeTruthy();
+        })
     })
 
-    it('should render referrals add edit form', () => {
-        const { getByRole } = customRender(
-            <Provider store={mockStore}>
-                <FormWrapper
-                    setFormData={jest.fn()}
-                    {...props}
-                    formActionType={formActionTypeAdd}
-                    handleFormValueChange={jest.fn()}
-                    fetchCustomerList={jest.fn()}
-                    extraParams={searchParams}
-                    onFinishFailed={jest.fn()}
-                    onError={jest.fn()}
-                    onSuccess={jest.fn()}
-                    buttonData={buttonData}
-                    showGlobalNotification={jest.fn()}
-                />
-            </Provider>
-        );
+    it('should render referrals add edit form', async () => {
+        await waitFor(() => {
+            const { getByRole } = customRender(
+                <Provider store={mockStore}>
+                    <FormWrapper
+                        setFormData={jest.fn()}
+                        {...props}
+                        formActionType={formActionTypeAdd}
+                        handleFormValueChange={jest.fn()}
+                        fetchCustomerList={jest.fn()}
+                        extraParams={searchParams}
+                        onFinish={jest.fn()}
+                        onFinishFailed={jest.fn()}
+                        onError={jest.fn()}
+                        onSuccess={jest.fn()}
+                        buttonData={buttonData}
+                        showGlobalNotification={true}
+                        onSuccessAction={jest.fn()}
+                    />
+                </Provider>
+            );
 
-        const customerType = getByRole("combobox", { name: 'Customer Type', exact: false });
-        fireEvent.change(customerType, { target: { value: 'testType' } });
+            const customerType = getByRole("combobox", { name: 'Customer Type', exact: false });
+            fireEvent.change(customerType, { target: { value: 'testType' } });
 
-        const vehicleReg = getByRole("textbox", { name: 'Vehicle Registration Number', exact: false });
-        fireEvent.change(vehicleReg, { target: { value: 'reg' } });
+            const vehicleReg = getByRole("textbox", { name: 'Vehicle Registration Number', exact: false });
+            fireEvent.change(vehicleReg, { target: { value: 'reg' } });
 
-        const chassisNo = getByRole("textbox", { name: 'Chassis Number', exact: false });
-        fireEvent.change(chassisNo, { target: { value: 'make' } });
+            const chassisNo = getByRole("textbox", { name: 'Chassis Number', exact: false });
+            fireEvent.change(chassisNo, { target: { value: 'make' } });
 
-        const customerCode = getByRole("textbox", { name: 'Customer Code', exact: false });
-        fireEvent.change(customerCode, { target: { value: 'tseCode' } });
+            const customerCode = getByRole("textbox", { name: 'Customer Code', exact: false });
+            fireEvent.change(customerCode, { target: { value: 'tseCode' } });
 
-        const customerName = getByRole("textbox", { name: 'Customer Name', exact: false });
-        fireEvent.change(customerName, { target: { value: 'test' } });
+            const customerName = getByRole("textbox", { name: 'Customer Name', exact: false });
+            fireEvent.change(customerName, { target: { value: 'test' } });
 
-        const mobileNo = getByRole("textbox", { name: 'Mobile Number', exact: false });
-        fireEvent.change(mobileNo, { target: { value: '199999999' } });
+            const mobileNo = getByRole("textbox", { name: 'Mobile Number', exact: false });
+            fireEvent.change(mobileNo, { target: { value: '199934' } });
 
-        const emailId = getByRole("textbox", { name: 'Email Id', exact: false });
-        fireEvent.change(emailId, { target: { value: 'test@gmail.com' } });
+            const emailId = getByRole("textbox", { name: 'Email Id', exact: false });
+            fireEvent.change(emailId, { target: { value: 'test@gmail.com' } });
 
-        const dob = getByRole("textbox", { name: 'Date of Birth', exact: false });
-        fireEvent.change(dob, { target: { value: 'make' } });
+            const dob = getByRole("textbox", { name: 'Date of Birth', exact: false });
+            fireEvent.click(dob, { target: { value: '1997-12-20' } });
 
-        const searchBtn = getByRole("button", { name: 'search', exact: false });
-        fireEvent.click(searchBtn);
+            const searchBtn = getByRole("button", { name: 'search', exact: false });
+            fireEvent.click(searchBtn);
 
-        const searchImg = getByRole("img", { name: 'search', exact: false });
-        fireEvent.click(searchImg);
+            const searchImg = getByRole("img", { name: 'search', exact: false });
+            fireEvent.click(searchImg);
 
-        const calendar = getByRole("img", { name: 'calendar', exact: false });
-        fireEvent.click(calendar);
+            const calendar = getByRole("img", { name: 'calendar', exact: false });
+            fireEvent.click(calendar);
+        })
     })
 })

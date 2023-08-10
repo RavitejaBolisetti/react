@@ -12,7 +12,6 @@ import FormProductAttribute from './FormProductAttribute';
 const { Text } = Typography;
 
 const CardProductAttribute = (props) => {
-    console.log(props, "props")
     const { isVisible, finalFormdata, attributeForm, forceUpdate, skuAttributes, setSKUAttributes, productHierarchyAttributeData, setFormBtnActive, showGlobalNotification, setDisabledEdit } = props;
     const [editForm] = Form.useForm();
     const [formEdit, setFormEdit] = useState(false);
@@ -91,9 +90,6 @@ const CardProductAttribute = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formEdit]);
-
-
-    console.log('finalFormdata---->', formEdit);
 
     return (
         <Card

@@ -228,7 +228,7 @@ const ReferralsMasterBase = (props) => {
 
     return (
         <>
-            <Form form={form} autoComplete="off" layout="vertical" colon={false} onFinish={onFinish} onFinishFailed={onFinishFailed} onValuesChange={handleFormValueChange}>
+            <Form form={form} autoComplete="off" layout="vertical" data-testid="test" colon={false} onFinish={onFinish} onFinishFailed={onFinishFailed} onValuesChange={handleFormValueChange}>
                 <Row gutter={20} className={styles.drawerBodyRight}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Row>
