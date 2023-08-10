@@ -4,30 +4,24 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Input, Form, Select, Card, Descriptions, DatePicker, InputNumber } from 'antd';
+import { Row, Col, Input, Form, Select, DatePicker, InputNumber } from 'antd';
 
-import styles from 'components/common/Common.module.css';
-import { preparePlaceholderText, preparePlaceholderSelect, preparePlaceholderAutoComplete } from 'utils/preparePlaceholder';
-import { validateRequiredSelectField, validateOnlyPositiveNumber, validationNumber } from 'utils/validation';
 import { withDrawer } from 'components/withDrawer';
-import { checkAndSetDefaultValue, getStatus } from 'utils/checkAndSetDefaultValue';
-import { PARAM_MASTER } from 'constants/paramMaster';
-import { VehiclePurchaseOrderFormButton } from '../VehiclePurchaseOrderFormButton';
+import { validateRequiredSelectField, validateOnlyPositiveNumber } from 'utils/validation';
 import { convertCalenderDate } from 'utils/formatDateTime';
+import { VehiclePurchaseOrderFormButton } from '../VehiclePurchaseOrderFormButton';
 import { ViewDetail } from './ViewDetail';
 
 import { disablePastDate } from 'utils/disableDate';
-const { TextArea, Search } = Input;
+import styles from 'components/common/Common.module.css';
+const { Search } = Input;
 
 const AddEditFormMain = (props) => {
-    const { handleButtonClick, buttonData, setButtonData, userId, listShowLoading, showGlobalNotification, formActionType, onFinish, onFinishFailed, productHierarchyList, getDealerlocation, dealerLocationList, selectedRecord, setSelectedRecord } = props;
-    const { form, formData, typeData, isReadOnly = true, onSearch,viewVehiclePODetails } = props;
+    const { buttonData, setButtonData, formActionType, onFinish, onFinishFailed, productHierarchyList, getDealerlocation, dealerLocationList } = props;
+    const { form, formData, typeData, isReadOnly = true } = props;
     const disabledProps = { disabled: isReadOnly };
     const [dealerFlag, setDealerFlag] = useState();
 
-    const [dealerLoc, setDealerLoc] = useState();
-console.log('view formData',viewVehiclePODetails);
- 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
@@ -35,7 +29,6 @@ console.log('view formData',viewVehiclePODetails);
     const handleFormFieldChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
-    const isLoading = false;
 
     const handleChangeOrderType = (value) => {
         if (value === 'CDLR') {
@@ -45,20 +38,10 @@ console.log('view formData',viewVehiclePODetails);
         }
     };
     useEffect(() => {
-        if (formData?.orderTypeCode == 'CDLR') {
+        if (formData?.orderTypeCode === 'CDLR') {
             setDealerFlag(formData?.orderTypeCode);
         }
     }, [formData]);
-
-    // const getDealerlocation = (value) => {
-    //     // setDealerLoc(value);
-    //     console.log('value',value);
-    //     form.setFieldValue('dealerLocation', value.target.value);
-    // };
-
-    // useEffect(() => {
-    //     form.setFieldValue('dealerLocation', dealerLoc);
-    // }, [dealerLoc]);
 
     return (
         <Form form={form} layout="vertical" autocomplete="off" colon="false" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>

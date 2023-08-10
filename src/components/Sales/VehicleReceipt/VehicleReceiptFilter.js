@@ -14,8 +14,8 @@ import styles from 'components/common/Common.module.css';
 const { Search } = Input;
 
 export default function VehicleReceiptFilter(props) {
-    const { extraParams, removeFilter, handleResetFilter, advanceFilter = false, vehicleReceiptStatusList, filterString, handleReceiptTypeChange, typeData, setAdvanceSearchVisible, searchForm, handleChange, handleSearch } = props;
-    const { currentItem, setCurrentItem } = props;
+    const { extraParams, removeFilter, handleResetFilter, advanceFilter = false, vehicleReceiptStatusList, filterString, handleReceiptTypeChange, setAdvanceSearchVisible, handleChange, handleSearch } = props;
+    const { currentItem } = props;
     return (
         <div className={styles.contentHeaderBackground}>
             <Row gutter={20}>

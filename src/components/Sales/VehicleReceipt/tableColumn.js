@@ -3,13 +3,12 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { Button, Space, Tag } from 'antd';
+import { Button, Space } from 'antd';
 import { tblPrepareColumns } from 'utils/tableColumn';
-import { VehicleReceiptStatusTag } from './utils/VehicleReceiptStatusTag';
 import { convertDateMonthYear } from 'utils/formatDateTime';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
-import { FiEdit, FiEye, FiTrash } from 'react-icons/fi';
+import { FiEdit, FiEye } from 'react-icons/fi';
 import { PlusOutlined } from '@ant-design/icons';
 
 import styles from 'components/common/Common.module.css';

@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { Button, Form, Row, Col, Space, Select, Input, Divider, Checkbox } from 'antd';
+import { Button, Form, Row, Col, Select, Input, Divider, Checkbox } from 'antd';
 import { validateLettersWithWhitespaces, validateEmailField, validateRequiredInputField, validateRequiredSelectField, validateMobileNoField, validatInstagramProfileUrl, validatFacebookProfileUrl, validatYoutubeProfileUrl, validattwitterProfileUrl, duplicateValidator } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import UploadUtils from 'components/common/CustomerMaster/Common/UploadUtils';
@@ -13,8 +13,6 @@ import styles from 'components/common/Common.module.css';
 
 const AddEditForm = (props) => {
     const { isReadOnly = false, onSaveFormData, contactform, setShowAddEditForm, isViewModeVisible, setIsEditing, typeData, customerType, uploadImgDocId, formActionType, setUploadImgDocId, handleFormValueChange, setIsAdding, contactData, editingData } = props;
-    // const [isModalOpen, setIsModalOpen] = useState(false);
-    // const [mobileLoader, setmobileLoader] = useState(false);
 
     const disabledProps = { disabled: isReadOnly || formActionType?.viewMode };
 

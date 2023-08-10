@@ -12,7 +12,7 @@ import FormProductAttribute from './FormDocTypeAcMapping';
 const { Text } = Typography;
 
 const CardDocTypeAcMapping = (props) => {
-    const { finalFormdata, docTypeHeadMappingForm, forceUpdate, taxCharges, financialAccount, typeData, productHierarchyAttributeData, docTypeHeadMappingList, setDocTypeHeadMappingList, objTaxCharge, setOpenAccordian, changeValue, setChangeValue, handleCodeFunction, editForm, formEdit, setFormEdit, uniqueCardEdit, setuniqueCardEdit, buttonData, setButtonData, dropdownItems, setDropdownItems, viewMode } = props;
+    const { finalFormdata, docTypeHeadMappingForm, forceUpdate, taxCharges, financialAccount, typeData, productHierarchyAttributeData, docTypeHeadMappingList, setDocTypeHeadMappingList, objTaxCharge, setOpenAccordian, changeValue, setChangeValue, editForm, formEdit, setFormEdit, uniqueCardEdit, setuniqueCardEdit, buttonData, setButtonData, dropdownItems, setDropdownItems, viewMode } = props;
 
     const docTypeHeadMappingEdit = (props) => {
         setuniqueCardEdit(props?.internalId);

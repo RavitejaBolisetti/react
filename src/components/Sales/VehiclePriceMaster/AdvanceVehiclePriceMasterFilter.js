@@ -25,7 +25,6 @@ export default function AdvanceVehiclePriceMasterFilter(props) {
         setAdvanceSearchVisible,
         searchForm,
         searchForm: { setFieldsValue },
-        moduleTitle,
         handleOnClick,
     } = props;
 

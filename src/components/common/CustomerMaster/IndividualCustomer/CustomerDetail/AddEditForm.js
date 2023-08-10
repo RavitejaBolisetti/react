@@ -5,7 +5,7 @@
  */
 
 import { useEffect, useState } from 'react';
-import { Col, Input, Form, Row, Select, Space, Typography, Card, Divider, Switch, Button, Tag, Collapse } from 'antd';
+import { Col, Input, Form, Row, Select, Typography, Card, Divider, Switch, Button, Tag, Collapse } from 'antd';
 import { validateEmailField, validateMobileNoField, validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
@@ -28,26 +28,15 @@ const { Text } = Typography;
 const AddEditFormMain = (props) => {
     const { form, typeData, formData, corporateLovData, formActionType: { editMode } = undefined, customerType } = props;
 
-    const { nameChangeRequestform, editedMode, setCustomerNameList, data, activeKey, setactiveKey, customerNameList, fileList, setFileList, selectedCustomerId, setEditedMode, isHistoryVisible, onViewHistoryChange, downloadFileFromButton, changeHistoryClose, setButtonData, buttonData, status, setStatus, showGlobalNotification } = props;
+    const { nameChangeRequestform, editedMode, setCustomerNameList, data, activeKey, setactiveKey, customerNameList, fileList, setFileList, selectedCustomerId, setEditedMode, isHistoryVisible, onViewHistoryChange, downloadFileFromButton, changeHistoryClose, setButtonData, buttonData,  setStatus, showGlobalNotification } = props;
     const { whatsAppConfiguration, setWhatsAppConfiguration, handleFormFieldChange } = props;
     const { contactOverWhatsApp, contactOverWhatsAppActive, sameMobileNoAsWhatsApp, sameMobileNoAsWhatsAppActive } = whatsAppConfiguration;
 
-    // const [isHistoryVisible, setIsHistoryVisible] = useState(false);
     const [corporateType, setCorporateType] = useState('');
     const [disabled, setDisabled] = useState(false);
     const [onSave, setOnSave] = useState(false);
-    const [showStatus, setShowStatus] = useState('');
     const [singleDisabled, setSingleDisabled] = useState(false);
     const [hasChanges, setHasChanges] = useState(false);
-
-    useEffect(() => {
-        if (showStatus.status === 'done') {
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: `${showStatus.name} file uploaded successfully` });
-        } else if (showStatus.status === 'error') {
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Error' });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [showStatus]);
 
     useEffect(() => {
         setCorporateType(formData?.corporateType);
@@ -76,7 +65,6 @@ const AddEditFormMain = (props) => {
     }, [editedMode]);
 
     const uploadProps = {
-        // supportingDocs: true,
         form: nameChangeRequestform,
         messageText: <>Upload supporting documents</>,
         single: true,
@@ -318,10 +306,10 @@ const AddEditFormMain = (props) => {
                                         <Row type="flex" justify="space-between" align="middle" size="large">
                                             <Row type="flex" justify="space-around" align="middle">
                                                 <div>
-                                                <Typography>
-                                                    {formData?.titleCode} {formData?.firstName} {formData?.middleName} {formData?.lastName}
-                                                </Typography>
-                                                <Text type="secondary">Previous Name</Text>
+                                                    <Typography>
+                                                        {formData?.titleCode} {formData?.firstName} {formData?.middleName} {formData?.lastName}
+                                                    </Typography>
+                                                    <Text type="secondary">Previous Name</Text>
                                                 </div>
                                             </Row>
                                         </Row>
