@@ -66,8 +66,8 @@ const AddEditFormMain = (props) => {
                                         </Col>
 
                                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                                            <Form.Item name="dealerLocation" label="Dealer Location" initialValue={formData?.dealerLocation} rules={[validateRequiredSelectField('Dealer Location')]}>
-                                                <Select placeholder="Select Location" showSearch allowClear options={dealerLocationList} fieldNames={{ label: 'dealerLocationName', value: 'id' }} />
+                                            <Form.Item name="dealerLocation" label="Dealer Location" initialValue={formData?.dealerLocation}>
+                                                <Select placeholder="Select Location" allowClear options={dealerLocationList} fieldNames={{ label: 'dealerLocationName', value: 'id' }} />
                                             </Form.Item>
                                         </Col>
                                     </>
@@ -104,8 +104,8 @@ const AddEditFormMain = (props) => {
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={10} lg={10} xl={10} xxl={10}>
-                                    <Form.Item name="quantity" label="Quantity" initialValue={formData?.quantity} rules={[validateOnlyPositiveNumber('Quantity')]}>
-                                        <InputNumber defaultValue={1} />
+                                    <Form.Item name="quantity" label="Quantity" initialValue={'1'} rules={[validateOnlyPositiveNumber('Quantity')]}>
+                                        <InputNumber />
                                     </Form.Item>
                                 </Col>
                             </Row>

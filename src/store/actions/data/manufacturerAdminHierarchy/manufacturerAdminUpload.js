@@ -28,5 +28,3 @@ export const manufacturerAdminUploadDataActions = dataActions({
     RESET_DATA_ACTION_CONSTANT,
     SAVE_FORM_DATA_LOADING_CONSTANT,
 });
-
-

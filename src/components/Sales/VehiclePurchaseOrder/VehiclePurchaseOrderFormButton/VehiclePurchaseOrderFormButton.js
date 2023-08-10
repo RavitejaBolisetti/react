@@ -6,6 +6,8 @@
 import React from 'react';
 import { Button, Row, Col } from 'antd';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
+import { VEHICLE_PURCHASE_ORDER_STATUS } from 'constants/VehiclePurchaseOrderStatus';
+
 import styles from 'components/common/Common.module.css';
 
 export const VehiclePurchaseOrderFormButton = ({ record, onCloseAction, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection }) => {
@@ -26,7 +28,7 @@ export const VehiclePurchaseOrderFormButton = ({ record, onCloseAction, buttonDa
                 </Col>
 
                 <Col xs={24} sm={16} md={18} lg={20} xl={20} className={styles.buttonsGroupRight}>
-                    {buttonData?.editBtn && (
+                    {(record?.purchaseOrderStatusCode === VEHICLE_PURCHASE_ORDER_STATUS?.PO_SUBMITTED?.key || record?.purchaseOrderStatusCode === VEHICLE_PURCHASE_ORDER_STATUS?.SO_GENERATED?.key) && (
                         <>
                             <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.CANCEL_OTF, record, openDefaultSection: false })} type="primary">
                                 Cancel VPO

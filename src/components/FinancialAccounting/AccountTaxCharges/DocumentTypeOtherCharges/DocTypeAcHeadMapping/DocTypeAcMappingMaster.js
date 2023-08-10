@@ -5,7 +5,7 @@
  */
 import React, { useReducer, useState, useEffect } from 'react';
 import CardDocTypeAcMapping from './CardDocTypeAcMapping';
-import FormProductAttribute from './FormDocTypeAcMapping';
+import FormDocTypeAcMapping from './FormDocTypeAcMapping';
 
 export const DocTypeAcMappingMaster = (props) => {
     const { isVisible, selectedTreeData, showGlobalNotification, taxChargeCategoryTypeData, docTypeLedger, handleCodeFunction, form, editForm, docTypeHeadMappingForm, formEdit, setFormEdit, docTypeHeadMappingList, setDocTypeHeadMappingList, buttonData, setButtonData, viewMode, dropdownItems, setDropdownItems, typeData, financialAccount } = props;
@@ -26,7 +26,7 @@ export const DocTypeAcMappingMaster = (props) => {
                 docTypeHeadMappingForm.resetFields();
                 forceUpdate();
                 setButtonData({ ...buttonData, formBtnActive: true });
-                handleCodeFunction();
+                // handleCodeFunction();
             })
             .catch((error) => console.log(error));
     };
@@ -45,7 +45,6 @@ export const DocTypeAcMappingMaster = (props) => {
         docTypeHeadMappingList,
         setDocTypeHeadMappingList,
         typeData,
-        handleCodeFunction,
         form,
         changeValue,
         setChangeValue,
@@ -73,7 +72,9 @@ export const DocTypeAcMappingMaster = (props) => {
             let len = docTypeLedger?.accountLedgerMappingDtoList?.length;
             for (let i = 0; i < len; i++) {
                 let internalId = Math.floor(Math.random() * 100000000 + 1);
-                setDocTypeHeadMappingList((item) => [...item, { ...docTypeLedger?.accountLedgerMappingDtoList[i], internalId: internalId }]);
+                setDocTypeHeadMappingList((item) => {
+                    return [...item, { ...docTypeLedger?.accountLedgerMappingDtoList[i], internalId: internalId }];
+                });
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -90,11 +91,11 @@ export const DocTypeAcMappingMaster = (props) => {
 
     return (
         <>
-            <FormProductAttribute {...formProductAttributeProps} mainFomEdit={mainFomEdit} />
+            <FormDocTypeAcMapping {...formProductAttributeProps} mainFomEdit={mainFomEdit} />
 
             {docTypeHeadMappingList?.length > 0 &&
                 docTypeHeadMappingList?.map((action) => {
-                    return <CardDocTypeAcMapping {...cardAttributeProps} chargeCode={action?.chargeCode} internalId={action?.internalId} id={action?.id} financialAccountHeadId={action?.financialAccountHeadId} financialAccountHeadDesc={action?.financialAccountHeadDesc} chargeCodeDesc={action?.chargeCodeDesc} />;
+                    return <CardDocTypeAcMapping {...cardAttributeProps} chargeCode={action?.chargeCode} internalId={action?.internalId} id={action?.id} financialAccountHeadId={action?.financialAccountHeadId} financialAccountHeadDesc={action?.financialAccountHeadDesc} chargeCodeDesc={action?.chargeCodeDesc}  />;
                 })}
         </>
     );
