@@ -6,8 +6,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Col, Form, Row, Input, Empty } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
+import { Col, Form, Row, Input, Empty } from 'antd';
 import { HierarchyFormButton } from 'components/common/Button';
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 import { otfSoMappingActions } from 'store/actions/data/otf/otfSoMapping';
@@ -20,7 +19,6 @@ import { AddEditForm } from './AddEditForm';
 import { ViewDetails } from './ViewDetails';
 import LeftPanel from 'components/common/LeftPanel';
 
-import { LANGUAGE_EN } from 'language/en';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 import styles from 'components/common/Common.module.css';
@@ -98,12 +96,10 @@ export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, sav
     const [isFormVisible, setIsFormVisible] = useState(false);
 
     const [selectedTreeKey, setSelectedTreeKey] = useState(null);
-    const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState([]);
     const [formActionType, setFormActionType] = useState('');
     const [change, setChange] = useState(false);
 
     const [formData, setFormData] = useState([]);
-    const [selectedTreeData, setSelectedTreeData] = useState([]);
 
     const [isFormBtnActive, setFormBtnActive] = useState(false);
     const [searchValue, setSearchValue] = useState('');
@@ -114,10 +110,6 @@ export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, sav
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const organizationFieldNames = { title: 'manufactureOrgShrtName', key: 'id', children: 'subManufactureOrg' };
     const fieldNames = { title: 'prodctShrtName', key: 'prodctCode', children: 'subProdct' };
-
-    const onKeyPressHandler = (e) => {
-        e.key === 'Enter' && e.preventDefault();
-    };
 
     useEffect(() => {
         if (!isDataOrgLoaded && userId) {
@@ -199,9 +191,9 @@ export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, sav
     const handleTreeViewVisiblity = () => setTreeViewVisible(!isTreeViewVisible);
 
     const handleTreeViewClick = (keys, tree) => {
+        console.log('keyskeyskeys', keys);
         form.resetFields();
         setFormData([]);
-        setSelectedTreeData([]);
         setViewData(null);
         let name = tree?.node?.title?.props?.children?.[2];
         setSoMapName(name);
@@ -217,14 +209,6 @@ export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, sav
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [otfSoMappingData]);
 
-    const handleSelectTreeClick = (value) => {
-        if (value === selectedTreeKey[0]) {
-            return showGlobalNotification({ notificationType: 'warning', title: sameParentAndChildWarning?.TITLE, message: sameParentAndChildWarning?.MESSAGE, placement: 'bottomRight' });
-        }
-        setSelectedTreeSelectKey(value);
-        setFormBtnActive(true);
-    };
-
     const onFinish = (values) => {
         const recordId = formData?.id || '';
         const data = { ...values, id: recordId };
@@ -236,11 +220,7 @@ export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, sav
             if (res?.data) {
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
                 fetchOtfList({ setIsLoading: listOtfSoMappingShowLoading, userId, extraParams });
-                //const hierarchyAttribueName = unFilteredAttributeData?.find((attribute) => attribute.hierarchyAttribueCode === res?.data?.attributeTypeCode)?.hierarchyAttribueName;
-                // const attributeParentName = flatternData.find((i) => res?.data?.parentCode === i.key)?.data?.taxChargesTypeCode;
-                // res?.data && setSelectedTreeData({ ...res?.data, hierarchyAttribueName, parentName: attributeParentName });
 
-                setSelectedTreeKey([res?.data?.id]);
                 setFormBtnActive(false);
                 setIsFormVisible(false);
             }
@@ -267,10 +247,6 @@ export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, sav
 
     const onFinishFailed = (errorInfo) => {
         form.validateFields().then((values) => {});
-    };
-
-    const handleResetBtn = () => {
-        form.resetFields();
     };
 
     const handleButtonClick = (type) => {
@@ -302,7 +278,6 @@ export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, sav
         isTreeViewVisible,
         handleTreeViewVisiblity,
         selectedTreeKey,
-        selectedTreeSelectKey,
         fieldNames,
         handleTreeViewClick,
         treeData: productHierarchyData,
@@ -335,11 +310,11 @@ export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, sav
         styles,
         viewTitle,
         otfSoMappingData,
+        otfSoUserMappingData,
     };
 
     const noDataTitle = 'Please choose organization hierarchy to view data';
     const diffSelection = 'No Product Found';
-    const sameParentAndChildWarning = LANGUAGE_EN.GENERAL.HIERARCHY_SAME_PARENT_AND_CHILD_WARNING;
 
     const leftCol = productHierarchyData?.length > 0 ? 14 : 24;
     const rightCol = productHierarchyData?.length > 0 ? 10 : 24;
@@ -356,7 +331,7 @@ export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, sav
                                     <Col xs={24} sm={24} md={10} lg={10} xl={10}>
                                         <TreeSelectField {...treeSelectFieldProps} />
                                     </Col>
-                                    {organizationId && (
+                                    {organizationId && productHierarchyData?.length > 0 && (
                                         <Col xs={24} sm={24} md={10} lg={10} xl={10}>
                                             <Search placeholder="Search" allowClear onChange={onChange} className={`${styles.headerSearchField} ${styles.headerSearchInput}`} />
                                         </Col>
@@ -367,22 +342,6 @@ export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, sav
                     </Col>
                 </Row>
             </div>
-
-            {/* <div className={styles.contentHeaderBackground}>
-                <Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Form onKeyPress={onKeyPressHandler} autoComplete="off" colon={false} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                            <Form.Item label={title} name="code" validateTrigger={['onSearch']}>
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                        <Search placeholder="Search" allowClear onChange={onChange} />
-                                    </Col>
-                                </Row>
-                            </Form.Item>
-                        </Form>
-                    </Col>
-                </Row>
-            </div> */}
 
             <Row gutter={20} span={24}>
                 <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol}>

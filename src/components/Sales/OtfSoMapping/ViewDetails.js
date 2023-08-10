@@ -7,7 +7,7 @@ import React from 'react';
 import { Descriptions } from 'antd';
 
 export const ViewMain = (props) => {
-    const { viewTitle, viewData, styles, otfSoMappingData } = props;
+    const { viewTitle, viewData, styles, otfSoUserMappingData } = props;
     const viewProps = {
         bordered: false,
         colon: false,
@@ -16,12 +16,14 @@ export const ViewMain = (props) => {
         column: { xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 },
     };
 
+    const mapName = otfSoUserMappingData?.find((e) => e?.key === viewData?.otfSoMapUnmapBy)?.value;
+
     return (
         <div className={styles.viewContainer}>
             <Descriptions {...viewProps}>
                 <Descriptions.Item label="Variant Code">{viewData?.productAttributeCode}</Descriptions.Item>
                 <Descriptions.Item label="Product Variant">{viewData?.productAttributeValue}</Descriptions.Item>
-                <Descriptions.Item label="User for Mapping/Unmapping">{viewData?.otfSoMapUnmapBy}</Descriptions.Item>
+                <Descriptions.Item label="User for Mapping/Unmapping">{mapName ? mapName : 'NA'}</Descriptions.Item>
             </Descriptions>
         </div>
     );
