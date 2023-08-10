@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { Fragment, useEffect } from 'react';
-import { Card, Row, Button, Divider, Typography, Col, Space } from 'antd';
+import { Card, Row, Button, Divider, Typography, Space } from 'antd';
 import { FiEdit, FiTrash } from 'react-icons/fi';
 import styles from 'components/common/Common.module.css';
 import FormAccountAndDocumentMapping from './FormAccountAndDocumentMapping';
