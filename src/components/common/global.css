@@ -533,7 +533,8 @@ p {
 }
 
 :global .ant-form-item .ant-form-item-label > label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
-    margin-top: -2px;
+    margin-inline-end: 6px;
+    margin-top: -3px;
 }
 
 /* :global .ant-form-item .ant-form-item-label>label.ant-form-item-no-colon::after {
