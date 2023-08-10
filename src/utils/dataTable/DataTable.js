@@ -44,7 +44,7 @@ export default function DataTable({ isLoading, rowSelection = undefined, showSiz
 
     const skeletonData = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
 
-    const tableColumnWithSrl = srl ? [tblSerialNumberColumn({ page: tablePagination?.current, title: srlTitle, pageSize: tablePagination?.pageSize, width: scroll === 'auto' ? '5%' : '50px' }), ...tableColumn] : [...tableColumn];
+    const tableColumnWithSrl = srl ? [tblSerialNumberColumn({ page: tablePagination?.current, title: srlTitle, pageSize: tablePagination?.pageSize, width: scroll === 'auto' ? '5%' : '80px' }), ...tableColumn] : [...tableColumn];
 
     const tableSkeletonColumn = tableColumnWithSrl?.map((item) => {
         return { ...item, render: () => <InputSkeleton height={40} /> };
@@ -52,7 +52,7 @@ export default function DataTable({ isLoading, rowSelection = undefined, showSiz
 
     const optionValue = [1, 2, 5, 10];
     const options = optionValue?.map((i) => {
-        return { ...i, value: i * 10, label: `${i * 10 + '/Page'}` };
+        return { ...i, value: i * 10, label: `${i * 10 + ' / page'}` };
     });
 
     const handleChange = (pageSize) => {
@@ -74,7 +74,6 @@ export default function DataTable({ isLoading, rowSelection = undefined, showSiz
                                 </span>
                             </>
                         )}
-
                         <Select defaultValue={tablePagination?.pageSize} onChange={handleChange} options={options} />
                     </Col>
                     <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignRight}>
