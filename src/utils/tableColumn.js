@@ -95,7 +95,7 @@ export const tblActionColumnCurd =
         };
     };
 
-export const tblActionColumn = ({ title = 'Action', handleButtonClick, width = '8%', fixed = '' }) => {
+export const tblActionColumn = ({ title = 'Action', handleButtonClick, width = '8%', fixed = '', canEdit = true }) => {
     return {
         title: 'Action',
         dataIndex: '',
@@ -106,9 +106,11 @@ export const tblActionColumn = ({ title = 'Action', handleButtonClick, width = '
                 <Button data-testid="view" className={styles.tableIcons} aria-label="ai-view" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.VIEW, record })}>
                     {addToolTip('View')(<FaRegEye />)}
                 </Button>
-                <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.EDIT, record })}>
-                    {addToolTip('Edit')(<FiEdit />)}
-                </Button>
+                {canEdit && (
+                    <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.EDIT, record })}>
+                        {addToolTip('Edit')(<FiEdit />)}
+                    </Button>
+                )}
             </Space>,
         ],
     };

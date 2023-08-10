@@ -16,7 +16,7 @@ import { disableFutureDate } from 'utils/disableDate';
 import styles from 'components/common/Common.module.css';
 
 export const AdvancedSearchFrom = (props) => {
-    const { setAdvanceSearchVisible, otfStatusList,typeData } = props;
+    const { setAdvanceSearchVisible, typeData } = props;
     const {
         filterString,
         setFilterString,
@@ -27,17 +27,19 @@ export const AdvancedSearchFrom = (props) => {
 
     useEffect(() => {
         resetFields();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString]);
 
     const onFinish = (values) => {
-        console.log('values',values);
+        console.log('values', values);
         setFilterString({
             ...filterString,
             ...values,
+            orderTypeCode: values?.orderTypeCode,
             fromDate: formatDate(values?.fromDate),
             toDate: formatDate(values?.toDate),
             purchaseOrderStatusCode: values?.purchaseOrderStatusCode,
-            purchaseOrderNumber:values?.purchaseOrderNumber,
+            purchaseOrderNumber: values?.purchaseOrderNumber,
             advanceFilter: true,
         });
         setAdvanceSearchVisible(false);
@@ -53,28 +55,28 @@ export const AdvancedSearchFrom = (props) => {
         allowClear: true,
         className: styles.headerSelectField,
     };
-    console.log('typeData searchpg=>',typeData);
+    console.log('typeData searchpg=>', typeData);
 
     return (
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
-            <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item initialValue={filterString?.orderTypeCode} label="Order Type" name="orderTypeCode" rules={[validateRequiredSelectField('Order Type')]}>
                         <Select placeholder={preparePlaceholderSelect('')} fieldNames={{ label: 'value', value: 'key' }} options={typeData['PO_TYPE']} {...selectProps} className={styles.headerSelectField}></Select>
-                    </Form.Item> 
+                    </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item initialValue={filterString?.purchaseOrderStatusCode} label="Order Status" name="purchaseOrderStatusCode">
                         <Select placeholder={preparePlaceholderSelect('')} fieldNames={{ label: 'value', value: 'key' }} options={typeData['PO_STATS']} {...selectProps} className={styles.headerSelectField}></Select>
-                    </Form.Item> 
+                    </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item name="purchaseOrderNumber" label="Purchase Order Number" initialValue={filterString?.purchaseOrderNumber}>
-                        <Input maxLength={50}  />
+                        <Input maxLength={50} />
                     </Form.Item>
                 </Col>
-                </Row>
-                <Row gutter={16}>
+            </Row>
+            <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item initialValue={formatDateToCalenderDate(filterString?.fromDate)} label="From Date" name="fromDate" className={styles?.datePicker}>
                         <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} />
@@ -85,8 +87,6 @@ export const AdvancedSearchFrom = (props) => {
                         <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} />
                     </Form.Item>
                 </Col>
-           
-               
             </Row>
 
             <Row gutter={20}>

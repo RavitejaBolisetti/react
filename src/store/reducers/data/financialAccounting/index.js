@@ -13,6 +13,7 @@ import { TaxChargeCategoryType } from './taxChargeType';
 import { AccountCategory } from './accountCategory/accountCategory';
 import { ApplicationMenu } from './accountCategory/appilcationMenu';
 import { AccountCategoryDocumentDescription } from './accountCategory/accountCategoryDocumentDescription';
+import { DocumentTypeLedger } from './documentTypeLedger';
 
 export const FinancialAccounting = combineReducers({
     TaxCharges,
@@ -24,4 +25,5 @@ export const FinancialAccounting = combineReducers({
     AccountCategory,
     ApplicationMenu,
     AccountCategoryDocumentDescription,
+    DocumentTypeLedger,
 });

@@ -4,28 +4,23 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Input, Form, Select, Card, Descriptions, DatePicker, InputNumber } from 'antd';
+import { Row, Col, Input, Form, Select, DatePicker, InputNumber } from 'antd';
 
-import styles from 'components/common/Common.module.css';
-import { preparePlaceholderText, preparePlaceholderSelect, preparePlaceholderAutoComplete } from 'utils/preparePlaceholder';
-import { validateRequiredSelectField, validateOnlyPositiveNumber, validationNumber } from 'utils/validation';
 import { withDrawer } from 'components/withDrawer';
-import { checkAndSetDefaultValue, getStatus } from 'utils/checkAndSetDefaultValue';
-import { PARAM_MASTER } from 'constants/paramMaster';
-import { VehiclePurchaseOrderFormButton } from '../VehiclePurchaseOrderFormButton';
+import { validateRequiredSelectField, validateOnlyPositiveNumber } from 'utils/validation';
 import { convertCalenderDate } from 'utils/formatDateTime';
+import { VehiclePurchaseOrderFormButton } from '../VehiclePurchaseOrderFormButton';
 import { ViewDetail } from './ViewDetail';
 
 import { disablePastDate } from 'utils/disableDate';
-const { TextArea, Search } = Input;
+import styles from 'components/common/Common.module.css';
+const { Search } = Input;
 
 const AddEditFormMain = (props) => {
-    const { handleButtonClick, buttonData, setButtonData, userId, listShowLoading, showGlobalNotification, formActionType, onFinish, onFinishFailed, productHierarchyList, getDealerlocation, dealerLocationList } = props;
-    const { form, formData, typeData, isReadOnly = true, onSearch } = props;
+    const { buttonData, setButtonData, formActionType, onFinish, onFinishFailed, productHierarchyList, getDealerlocation, dealerLocationList } = props;
+    const { form, formData, typeData, isReadOnly = true } = props;
     const disabledProps = { disabled: isReadOnly };
     const [dealerFlag, setDealerFlag] = useState();
-
-    const [dealerLoc, setDealerLoc] = useState();
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
@@ -34,10 +29,8 @@ const AddEditFormMain = (props) => {
     const handleFormFieldChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
-    const isLoading = false;
 
     const handleChangeOrderType = (value) => {
-        console.log('order val', value);
         if (value === 'CDLR') {
             setDealerFlag(value);
         } else {
@@ -45,21 +38,10 @@ const AddEditFormMain = (props) => {
         }
     };
     useEffect(() => {
-        if (formData?.orderTypeCode == 'CDLR') {
+        if (formData?.orderTypeCode === 'CDLR') {
             setDealerFlag(formData?.orderTypeCode);
-            
         }
     }, [formData]);
-
-    // const getDealerlocation = (value) => {
-    //     // setDealerLoc(value);
-    //     console.log('value',value);
-    //     form.setFieldValue('dealerLocation', value.target.value);
-    // };
-
-    // useEffect(() => {
-    //     form.setFieldValue('dealerLocation', dealerLoc);
-    // }, [dealerLoc]);
 
     return (
         <Form form={form} layout="vertical" autocomplete="off" colon="false" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
@@ -78,7 +60,7 @@ const AddEditFormMain = (props) => {
                                 {dealerFlag && (
                                     <>
                                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                                            <Form.Item name="dealerParentCode" label="Dealer Code" initialValue={formData?.dealerParentCode}>
+                                            <Form.Item name="dealerParentCode" label="Dealer Code" initialValue={formData?.dealerParentCode} rules={[validateRequiredSelectField('Dealer Code')]}>
                                                 <Search maxLength={50} allowClear onSearch={getDealerlocation} placeholder="Enter Dealer Code" className={styles.headerSearchField} />
                                             </Form.Item>
                                         </Col>
@@ -92,17 +74,17 @@ const AddEditFormMain = (props) => {
                                 )}
                                 {formActionType?.editMode && (
                                     <>
-                                    <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                                        <Form.Item name="purchaseOrderNumber" label="Purchase Order Number" initialValue={formData?.purchaseOrderNumber}>
-                                            <Input maxLength={50} {...disabledProps} />
-                                        </Form.Item>
-                                    </Col>
-                               
-                                    <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                                    <Form.Item initialValue={convertCalenderDate(formData?.purchaseOrderDate ? formData?.purchaseOrderDate : new Date(), 'YYYY/MM/DD')} label="Purchase Order Date" name="purchaseOrderDate">
-                                        <DatePicker disabledDate={disablePastDate} {...disabledProps}  format="YYYY-MM-DD" style={{ display: 'auto', width: '100%' }} />
-                                    </Form.Item>
-                                </Col>
+                                        <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
+                                            <Form.Item name="purchaseOrderNumber" label="Purchase Order Number" initialValue={formData?.purchaseOrderNumber}>
+                                                <Input maxLength={50} {...disabledProps} />
+                                            </Form.Item>
+                                        </Col>
+
+                                        <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
+                                            <Form.Item initialValue={convertCalenderDate(formData?.purchaseOrderDate ? formData?.purchaseOrderDate : new Date(), 'YYYY/MM/DD')} label="Purchase Order Date" name="purchaseOrderDate">
+                                                <DatePicker disabledDate={disablePastDate} {...disabledProps} format="YYYY-MM-DD" style={{ display: 'auto', width: '100%' }} />
+                                            </Form.Item>
+                                        </Col>
                                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
                                             <Form.Item name="purchaseOrderStatus" label="Purchase Order Status" initialValue={formData?.purchaseOrderStatus}>
                                                 <Input maxLength={50} {...disabledProps} />

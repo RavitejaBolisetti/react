@@ -9,17 +9,17 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { showGlobalNotification } from 'store/actions/notification';
-import { AddEditForm } from './AddEditForm';
+import { ConfirmationModal } from './ConfirmationModal';
+
 import { cancellationDataActions } from 'store/actions/data/otf/otfCancellation';
 import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
-import { BASE_URL_OTF_CANCELLATION_DEALER_SEARCH as customURL } from 'constants/routingApi';
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId, accessToken, token },
         data: {
-            ProductHierarchy: { isLoading: isProductHierarchyLoading = false, isLoaded: isProductHierarchyLoaded = false, data: productHierarchyData = [], attributeData: productHierarchyAttributeData = [] },
+            ProductHierarchy: { isLoading: isProductHierarchyLoading = false, data: productHierarchyData = [] },
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             SupportingDocument: { isLoaded: isDataLoaded = false, isLoading, data: supportingData },
             OTF: {
@@ -62,19 +62,14 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const PoCancellationMasterBase = (props) => {
-    const { otfData, selectedOrder,typeData,onFinishOTFCancellation, } = props;
-    const { userId, listShowLoading, onFinishFailed } = props;
-    const { fetchProductHierarchyList, productHierarchyData, fetchDealerList, dealerDataList } = props;
+    const { otfData, selectedOrder, typeData, onFinishVPOCancellation, selectedRecord, setSelectedRecord } = props;
+    const { userId, listShowLoading } = props;
+    const { fetchProductHierarchyList, productHierarchyData, dealerDataList } = props;
 
-    const defaultBtnVisiblity = { editBtn: false, saveBtn: true, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: true, cancelBtn:false, cancelOTFBtn: false };
+    const defaultBtnVisiblity = { editBtn: false, saveBtn: true, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: true, cancelBtn: false, cancelOTFBtn: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
-
     const handleButtonClick = ({ record = null, buttonAction }) => {};
 
-    const onErrorAction = (message) => {
-        showGlobalNotification({ message });
-    };
-   
     useEffect(() => {
         if (userId) {
             fetchProductHierarchyList({ setIsLoading: listShowLoading, userId });
@@ -82,11 +77,8 @@ const PoCancellationMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
 
-    
-        
     const formProps = {
         ...props,
-        //  titleOverride: moduleTitle,
         titleOverride: 'Vehicle Purchase Order Cancellation',
         otfData,
         selectedOrder,
@@ -94,16 +86,14 @@ const PoCancellationMasterBase = (props) => {
         setButtonData,
         handleButtonClick,
         typeData: typeData,
-        productHierarchyData,                
-        dealerDataList,  
-        onFinishOTFCancellation,
-        
+        productHierarchyData,
+        dealerDataList,
+        onFinishVPOCancellation,
+        selectedRecord,
+        setSelectedRecord,
     };
 
-
-   
-
-    return <AddEditForm {...formProps} />;
+    return <ConfirmationModal {...formProps} />;
 };
 
 export const PoCancellationMaster = connect(mapStateToProps, mapDispatchToProps)(PoCancellationMasterBase);

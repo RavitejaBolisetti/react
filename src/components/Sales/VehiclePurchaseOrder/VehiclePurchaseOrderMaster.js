@@ -6,58 +6,48 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Col, Form, Row, Modal } from 'antd';
+import { Col, Form, Row } from 'antd';
 import { tableColumn } from './tableColumn';
 import AdvanceVehiclePurchaseOrderFilter from './AdvanceVehiclePurchaseOrderFilter';
-import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION,CANCEL_ACTION, btnVisiblity } from 'utils/btnVisiblity';
+import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, CANCEL_ACTION, btnVisiblity } from 'utils/btnVisiblity';
 
 import { ListDataTable } from 'utils/ListDataTable';
-import { VehiclePurchaseOrderMainContainer } from './VehiclePurchaseOrderMainContainer';
 import { AdvancedSearch } from './AdvancedSearch';
-import { VEHICLE_DETAIL_STATUS } from 'constants/VehicleDetailStatus';
 import { VEHICLE_PURCHASE_ORDER_SECTION } from 'constants/VehiclePurchaseOrderSection';
 import { validateRequiredInputField } from 'utils/validation';
 
 import { showGlobalNotification } from 'store/actions/notification';
-// import { vehicleDetailDataActions } from 'store/actions/data/vehicle/vehicleDetail';
 import { vehiclePurchaseOrderDataActions } from 'store/actions/data/vehicle/vehiclePurchaseOrderDetails';
-import {BASE_URL_SAVE_VEHICLE_PURCHASE_ORDER_DETAILS as otfCancelURL } from 'constants/routingApi';
 
-import { PARAM_MASTER } from 'constants/paramMaster';
 import { FilterIcon } from 'Icons';
 import { PoCancellationMaster } from './VehiclePurchaseOrderCancellation/PoCancellationMaster';
 import { VehiclePurchaseOrderDetailMaster } from './VehiclePurchaseOrderDetail';
-
-import styles from 'components/common/Common.module.css';
-const { confirm } = Modal;
+import { saveVPODataActions } from 'store/actions/data/vehicle/vehiclePurchaseOrderAction';
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
-            Vehicle: {  
-                VehiclePurchaseOrderDetail: { isLoaded: isDataLoaded = false, isLoading, isDetailLoaded, data, filter: filterString },
-                
+            Vehicle: {
+                VehiclePurchaseOrderDetail: { data, filter: filterString },
             },
-           
         },
     } = state;
-    // console.log('state',state);
+
     const moduleTitle = 'Vehicle Purchase Order';
     let returnValue = {
         userId,
-        typeData: typeData, 
+        typeData: typeData,
         isDataLoaded: true,
-        data: data.paginationData, 
-        vehicleDetailStatusList:typeData['PO_STATS'],
-        vpoTypeList:typeData['PO_TYPE'],
+        data: data.paginationData,
+        vehicleDetailStatusList: typeData['PO_STATS'],
+        vpoTypeList: typeData['PO_TYPE'],
         vehicleDetailData: [],
         moduleTitle,
         isLoading: false,
         isDetailLoaded: true,
         filterString,
-        
     };
     return returnValue;
 };
@@ -68,28 +58,22 @@ const mapDispatchToProps = (dispatch) => ({
         {
             fetchList: vehiclePurchaseOrderDataActions.fetchList,
             listShowLoading: vehiclePurchaseOrderDataActions.listShowLoading,
-
-            resetData: vehiclePurchaseOrderDataActions.reset,
             setFilterString: vehiclePurchaseOrderDataActions.setFilter,
-            
-
-            // fetchList: vehicleDetailDataActions.fetchList,
-            // fetchDetail: vehicleDetailDataActions.fetchDetail,
-            // listShowLoading: vehicleDetailDataActions.listShowLoading,
-            // resetData: vehicleDetailDataActions.reset,
+            saveData: saveVPODataActions.saveData,
+            resetData: saveVPODataActions.reset,
             showGlobalNotification,
         },
         dispatch
     ),
 });
 export const VehiclePurchaseOrderMasterBase = (props) => {
-
-    const { fetchList, saveData, isLoading, listShowLoading, userId, fetchDetail, data, vehicleDetailData, } = props;
+    const { fetchList, saveData, listShowLoading, userId, data, vehicleDetailData } = props;
     const { typeData, moduleTitle } = props;
-    const { filterString, setFilterString, vehicleDetailStatusList,vpoTypeList } = props;
-    const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);    
+    const { filterString, setFilterString, vehicleDetailStatusList, vpoTypeList } = props;
+    const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [listFilterForm] = Form.useForm();
     const [selectedRecord, setSelectedRecord] = useState();
+
     const [selectedRecordId, setSelectedRecordId] = useState();
 
     const [section, setSection] = useState();
@@ -99,11 +83,11 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
     const [isLastSection, setLastSection] = useState(false);
 
     const [form] = Form.useForm();
-    const [searchForm] = Form.useForm();     
+    const [searchForm] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
 
     const [showDataLoading, setShowDataLoading] = useState(true);
-    
+
     const [vpoCancellationForm] = Form.useForm();
     const defaultBtnVisiblity = {
         editBtn: false,
@@ -118,8 +102,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         unAllotBtn: false,
         invoiceBtn: false,
         deliveryNote: false,
-        cancelOtfBtn: false,                  
-        
+        cancelOtfBtn: false,
     };
 
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -153,7 +136,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
                 value: filterString?.searchType,
                 name: typeData?.find((i) => i?.key === filterString?.searchType)?.value,
                 canRemove: false,
-                filter: true,
+                filter: false,
             },
             {
                 key: 'searchParam',
@@ -183,7 +166,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
                 key: 'orderTypeCode',
                 title: 'Order Type',
                 value: filterString?.orderTypeCode,
-                name: vpoTypeList?.find((i) => i?.key === filterString?.orderTypeCode)?.value,   
+                name: vpoTypeList?.find((i) => i?.key === filterString?.orderTypeCode)?.value,
                 canRemove: true,
                 filter: true,
             },
@@ -199,7 +182,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
                 key: 'purchaseOrderNumber',
                 title: 'Purchase Order Number',
                 value: filterString?.purchaseOrderNumber,
-                name: filterString?.purchaseOrderNumber, 
+                name: filterString?.purchaseOrderNumber,
                 canRemove: true,
                 filter: true,
             },
@@ -217,20 +200,6 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
                 canRemove: true,
                 filter: false,
             },
-            // {
-            //     key: 'sortBy',
-            //     title: 'Sort by',
-            //     value: 'customerName',
-            //     canRemove: true,
-            //     filter: false,
-            // },
-            // {
-            //     key: 'sortIn',
-            //     title: 'Sort By',
-            //     value: 'ASC',
-            //     canRemove: true,
-            //     filter: false,
-            // },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString]);
@@ -239,6 +208,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         if (userId) {
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, extraParams]);
 
     useEffect(() => {
@@ -267,7 +237,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         form.setFieldsValue(undefined);
         setIsFormVisible(true);
         setIsCancelVisible(false);
-       
+
         switch (buttonAction) {
             case ADD_ACTION:
                 defaultSection && setCurrentSection(defaultSection);
@@ -279,6 +249,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
                 break;
             case VIEW_ACTION:
                 setSelectedRecord(record);
+
                 record && setSelectedRecordId(record?.id);
                 defaultSection && setCurrentSection(defaultSection);
                 break;
@@ -288,9 +259,10 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
                 setLastSection(!nextSection?.id);
                 break;
             case CANCEL_ACTION:
-                setIsCancelVisible(true); 
+                setSelectedRecord(record);
+                setIsCancelVisible(true);
                 setIsFormVisible(false);
-                
+
                 break;
             default:
                 break;
@@ -309,8 +281,6 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
     const onFinishSearch = (values) => {};
 
     const onFinish = (values) => {
-
-        console.log('advance search',values);
         const recordId = formData?.parentId || form.getFieldValue('parentId');
         let data = { ...values, parentId: recordId };
         const onSuccess = (res) => {
@@ -355,8 +325,6 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
     };
     const onCancelCloseAction = () => {
         setIsCancelVisible(false);
-        // setIsTransferVisible(false);
-        // otfTransferForm.resetFields();
         vpoCancellationForm.resetFields();
     };
     const tableProps = {
@@ -391,7 +359,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         removeFilter,
         vehicleDetailStatusList,
         advanceFilter: true,
-        otfFilter: true,
+        vpoFilter: true,
         filterString,
         setFilterString,
         from: listFilterForm,
@@ -405,62 +373,36 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         searchForm,
         onFinishSearch,
         setAdvanceSearchVisible,
-        handleButtonClick,    
-        handleResetFilter,    
-        
+        handleButtonClick,
+        handleResetFilter,
     };
-    const fnOTFTransfer = ({ modalTitle, modalMessage, finalData, callBackMethod, customURL }) => {
+
+    const onFinishVPOCancellation = (values) => {
+        let data = {
+            ...values,
+            id: selectedRecord?.id,
+            purchaseOrderNumber: selectedRecord?.purchaseOrderNumber,
+            cancelRemarksCode: values?.cancelRemarksCode,
+        };
+
         const onSuccess = (res) => {
-            // setIsTransferVisible(false);
-            setIsCancelVisible(false);
-            // otfTransferForm.resetFields();
-            // otfCancellationForm.resetFields();
-            // setShowDataLoading(true);
-            // showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            // fetchOTFSearchedList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
-            // setButtonData({ ...buttonData, formBtnActive: false });
-            // setIsFormVisible(false);
+            setShowDataLoading(true);
+            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+        };
+
+        const onError = (message) => {
+            showGlobalNotification({ message });
         };
 
         const requestData = {
-            data: finalData,
-            customURL,
+            data: data,
             method: 'put',
-            setIsLoading: () => {},
+            setIsLoading: listShowLoading,
             userId,
-            onSuccessAction: onSuccess,
-            onErrorAction,
+            onError,
+            onSuccess,
         };
-
-        confirm({
-            title: modalTitle,
-            icon: '',
-            content: modalMessage,
-            okText: 'Yes',
-            okType: 'danger',
-            cancelText: 'No',
-            wrapClassName: styles.confirmModal,
-            centered: true,
-            closable: true,
-            onOk() {
-                callBackMethod(requestData);
-            },
-            onCancel() {},
-        });
-
-    };
-   
-    const onFinishOTFCancellation = (values) => {
-        fnOTFTransfer({
-            modalTitle: 'OTF Cancel',
-            modalMessage: `Do you want to cancel the Vehicle Purchase Order `, //${otfData?.otfNumber}
-            // finalData: { dealerCode: '', oemCode: '', productCode: '', ...values, id: otfData?.id, otfNumber: otfData?.otfNumber, },
-            finalData: {...values, id: '', otfNumber: '', },
-
-            callBackMethod: otfCancelURL,
-            customURL: otfCancelURL,
-        });
-        
+        saveData(requestData);
     };
 
     const onAdvanceSearchCloseAction = () => {
@@ -469,7 +411,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         advanceFilterForm.setFieldsValue();
         setAdvanceSearchVisible(false);
     };
-    const advanceFilterProps = { 
+    const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
         icon: <FilterIcon size={20} />,
         titleOverride: 'Advance Filters',
@@ -480,7 +422,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         advanceFilterForm,
         setAdvanceSearchVisible,
         typeData,
-        
+
         onFinishSearch,
     };
     const drawerTitle = useMemo(() => {
@@ -493,7 +435,6 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         }
     }, [formActionType]);
 
-    
     const containerProps = {
         record: selectedRecord,
         form,
@@ -533,66 +474,14 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
     };
     const cancelProps = {
         ...props,
-        vpoCancellationForm,      
-        // otfCancellationForm,
-        // otfData,
-        // selectedOrder,
-        // CANCEL_ACTION,
+        vpoCancellationForm,
+        CANCEL_ACTION,
         isVisible: isCancelVisible,
         onCloseAction: onCancelCloseAction,
-        onFinishOTFCancellation,
+        onFinishVPOCancellation,
+        selectedRecord,
+        setSelectedRecord,
     };
-    const fnVPOFCancel = ({ modalTitle, modalMessage, finalData, callBackMethod, customURL }) => {
-        const onSuccess = (res) => {
-            // console.log('res',res);
-            // setIsTransferVisible(false);
-            // setIsCancelVisible(false);
-            // otfTransferForm.resetFields();
-            // otfCancellationForm.resetFields();
-            // setShowDataLoading(true);
-            // showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            // fetchOTFSearchedList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
-            // setButtonData({ ...buttonData, formBtnActive: false });
-            // setIsFormVisible(false);
-        };
-        const requestData = {
-            data: finalData,
-            customURL,
-            method: 'put',
-            setIsLoading: () => {},
-            userId,
-            onSuccessAction: onSuccess,
-            onErrorAction,
-        };
-        confirm({
-            title: modalTitle,
-            icon: '',
-            content: modalMessage,
-            okText: 'Yes',
-            okType: 'danger',
-            cancelText: 'No',
-            wrapClassName: styles.confirmModal,
-            centered: true,
-            closable: true,
-            onOk() {
-                callBackMethod(requestData);
-            },
-            onCancel() {},
-        });
-    };
-    const onFinishVPOCancellation = (values) => {
-        fnVPOFCancel({
-            modalTitle: 'VPO Cancel',
-            modalMessage: `Do you want to cancel the VPO`,
-            // modalMessage: `Do you want to cancel this ${otfData?.otfNumber}`,
-            finalData: { dealerCode: '', oemCode: '', productCode: '', ...values, id: '', otfNumber: '' },
-            // id: otfData?.id, otfNumber: otfData?.otfNumber
-            // callBackMethod: transferOTF,
-            // customURL: otfCancelURL,
-        });
-    };
-
-    // console.log('typeData=>',typeData);
 
     return (
         <>
@@ -603,11 +492,8 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
                 </Col>
             </Row>
             <AdvancedSearch {...advanceFilterProps} />
-            {/* <VehiclePurchaseOrderMainContainer {...containerProps} /> */}
-            
             <VehiclePurchaseOrderDetailMaster {...containerProps} />
             <PoCancellationMaster {...cancelProps} />
-            
         </>
     );
 };

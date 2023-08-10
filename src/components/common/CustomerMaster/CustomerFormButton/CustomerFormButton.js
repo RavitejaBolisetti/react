@@ -7,13 +7,13 @@ import React from 'react';
 import { Button, Row, Col } from 'antd';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
-import styles from './CustomerFormButton.module.css';
+import styles from 'components/common/Common.module.css';
 
 export const CustomerFormButton = ({ record, onCloseAction, buttonData, handleChangeHistory, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection }) => {
     return (
         <div className={styles.formFooter}>
             <Row gutter={20}>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
+                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.buttonsGroupLeft}>
                     {buttonData?.closeBtn && (
                         <Button danger onClick={onCloseAction}>
                             Close
@@ -27,17 +27,17 @@ export const CustomerFormButton = ({ record, onCloseAction, buttonData, handleCh
                     )}
                 </Col>
 
-            <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
-                {buttonData?.changeHistory && (
-                    <Button onClick={handleChangeHistory} type="primary">
-                        View History
-                    </Button>
-                )}
-                {buttonData?.editBtn && (
-                    <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record, openDefaultSection: false })} type="primary">
-                        Edit
-                    </Button>
-                )}
+                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.buttonsGroupRight}>
+                    {buttonData?.changeHistory && (
+                        <Button onClick={handleChangeHistory} type="primary">
+                            View History
+                        </Button>
+                    )}
+                    {buttonData?.editBtn && (
+                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record, openDefaultSection: false })} type="primary">
+                            Edit
+                        </Button>
+                    )}
 
                     {buttonData?.nextBtn && !isLastSection && (
                         <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.NEXT, record })} type="primary">

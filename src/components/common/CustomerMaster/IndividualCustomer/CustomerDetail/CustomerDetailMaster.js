@@ -13,6 +13,7 @@ import { corporateDataActions } from 'store/actions/data/customerMaster/corporat
 import { showGlobalNotification } from 'store/actions/notification';
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
+import { STATUS } from './statusConstant';
 import { CustomerFormButton } from '../../CustomerFormButton';
 
 import styles from 'components/common/Common.module.css';
@@ -86,7 +87,7 @@ const CustomerDetailMasterBase = (props) => {
     const [showForm, setShowForm] = useState(false);
     const [status, setStatus] = useState(null);
     const [emptyList, setEmptyList] = useState(true);
-    const [nameChangeHistoryForm] = Form.useForm();
+    const [nameChangeRequestform] = Form.useForm();
     const [fileList, setFileList] = useState([]);
     const [uploadedFileName, setUploadedFileName] = useState('');
     const [editedMode, setEditedMode] = useState(false);
@@ -114,13 +115,19 @@ const CustomerDetailMasterBase = (props) => {
     }, [isDataLoaded]);
 
     useEffect(() => {
-        if (data) {
-            console.log('data', data);
+        if (data?.pendingNameChangeRequest === null) {
             setCustomerNameList({
                 titleCode: data?.titleCode,
                 firstName: data?.firstName,
                 middleName: data?.middleName,
                 lastName: data?.lastName,
+            });
+        } else {
+            setCustomerNameList({
+                titleCode: data?.pendingNameChangeRequest?.newTitleCode,
+                firstName: data?.pendingNameChangeRequest?.newFirstName,
+                middleName: data?.pendingNameChangeRequest?.newMiddleName,
+                lastName: data?.pendingNameChangeRequest?.newLastName,
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -222,10 +229,10 @@ const CustomerDetailMasterBase = (props) => {
         setFileList([]);
         setEmptyList(false);
         setUploadedFile();
-        const data = { ...values, customerId: selectedCustomer?.customerId, status: true, docId: uploadedFile, documentTypeId: form.getFieldValue('documentTypeId'), titleCode: customerNameList?.titleCode, firstName: customerNameList?.firstName, middleName: customerNameList?.middleName, lastName: customerNameList?.lastName };
+        const data = { ...values, customerId: selectedCustomer?.customerId, status: STATUS?.PENDING?.title, supportingDocuments: [{ id: formData?.id || '', documentName: uploadedFileName, documentId: uploadedFile || '' }], titleCode: customerNameList?.titleCode, firstName: customerNameList?.firstName, middleName: customerNameList?.middleName, lastName: customerNameList?.lastName };
 
         const onSuccess = (res) => {
-            setStatus('Approved');
+            setStatus(STATUS?.APPROVED?.title);
             form.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId });
@@ -236,12 +243,21 @@ const CustomerDetailMasterBase = (props) => {
                 handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
                 // setSelectedCustomer({ ...res.data, customerName: res?.data?.firstName + ' ' + res?.data?.middleName + ' ' + res?.data?.lastName });
                 setSelectedCustomerId(res?.data?.customerId);
-                setCustomerNameList({
-                    titleCode: res?.data?.titleCode,
-                    firstName: res?.data?.firstName,
-                    middleName: res?.data?.middleName,
-                    lastName: res?.data?.lastName,
-                });
+                if (res?.data?.pendingNameChangeRequest === null) {
+                    setCustomerNameList({
+                        titleCode: res?.data?.titleCode,
+                        firstName: res?.data?.firstName,
+                        middleName: res?.data?.middleName,
+                        lastName: res?.data?.lastName,
+                    });
+                } else {
+                    setCustomerNameList({
+                        titleCode: res?.data?.pendingNameChangeRequest?.newTitleCode,
+                        firstName: res?.data?.pendingNameChangeRequest?.newFirstName,
+                        middleName: res?.data?.pendingNameChangeRequest?.newMiddleName,
+                        lastName: res?.data?.pendingNameChangeRequest?.newLastName,
+                    });
+                }
             }
         };
         const onError = (message) => {
@@ -312,14 +328,15 @@ const CustomerDetailMasterBase = (props) => {
         uploadImgDocId,
         setButtonData,
         buttonData,
-        nameChangeHistoryForm,
+        nameChangeRequestform,
         typeData,
-        formData,
+        formData: data,
         setFormData,
         isSupportingDocumentDataLoaded,
         supportingData,
         isViewDataLoaded,
         viewDocument,
+        selectedCustomerId,
         setUploadedFile,
         uploadedFile,
         downloadFileFromButton,
@@ -348,6 +365,7 @@ const CustomerDetailMasterBase = (props) => {
         status,
         setStatus,
         activeKey,
+        fetchList,
         setactiveKey,
     };
 

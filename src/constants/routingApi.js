@@ -47,6 +47,7 @@ export const BASE_URL_LESSOR_COMPANY_MASTER = BASE_URL_CUSTOMER_MASTER + '/lesso
 export const BASE_URL_LESSOR_CUSTOMER_CREATION = BASE_URL_CUSTOMER_MASTER + '/lessorcustomer';
 export const BASE_URL_CUSTOMER_MASTER_LIST = BASE_URL + 'customers/search';
 export const BASE_URL_CUSTOMER_MASTER_CHANGE_HISTORY = BASE_URL + 'customers/changehistory';
+export const BASE_URL_CUSTOMER_MASTER_NAME_CHANGE_HISTORY = BASE_URL + 'customers/individual/namechangehistory';
 export const BASE_URL_CUSTOMER_MASTER_VEHICLE_LIST = BASE_URL + 'customers/vehicle/search';
 export const BASE_URL_SUPPORTING_DOCUMENT = BASE_URL_CUSTOMER_MASTER + '/document';
 
@@ -123,7 +124,7 @@ export const BASE_URL_FAMILY_DETAIL_CUSTOMER_MASTER = BASE_URL + 'customers//ind
 export const BASE_URL_CUSTOMER_MASTER_ADDRESS = BASE_URL + 'customers/individual/address';
 export const BASE_URL_CUSTOMER_MASTER_ADDRESS_CORPORATE = BASE_URL + 'customers/corporate/address';
 export const BASE_URL_CUSTOMER_MASTER_INDIVIDUAL_CONTACT = BASE_URL + 'customers/individual/contacts';
-export const BASE_URL_INDIVIDUAL_NAME_CHANGE_HISTORY = BASE_URL + 'customers/individual/name/changehistory';
+export const BASE_URL_INDIVIDUAL_NAME_CHANGE_REQUEST = BASE_URL + 'customers/individual/namechange/approval';
 
 export const BASE_URL_CUSTOMER_MASTER_CORPORATE_PARENT_COMPANY = BASE_URL + 'customers/parent/company';
 export const BASE_URL_CUSTOMER_MASTER_CUSTOMER_DETAILS = BASE_URL + 'customers/corporate';
@@ -194,10 +195,14 @@ export const BASE_URL_DOCUMENT_DESCRIPTION = BASE_URL + 'appmst/documenttypes';
 
 export const BASE_URL_FINANCIAL_ACC_TAX_CHARGE = BASE_URL + 'finance/tax/charges';
 export const BASE_URL_FINANCIAL_ACC_TAX_CHARGE_CATEGORY_SEARCH = BASE_URL + 'finance/tax/chargecategory/search';
+
 export const BASE_URL_FINANCIAL_ACC_TAX_CHARGE_CATEGORY = BASE_URL + 'finance/tax/chargecategory';
 export const BASE_URL_FINANCIAL_ACC_ACCOUNT_CATEGORY_SEARCH = BASE_URL + 'finance/accounts/categories/search';
 export const BASE_URL_FINANCIAL_ACC_ACCOUNT_CATEGORY = BASE_URL + 'finance/accounts/categories';
 export const BASE_URL_FINANCIAL_ACC_APPLICATION_MENU = BASE_URL + 'home/menus';
+
+export const BASE_URL_DOCUMENT_TYPE_LEDGER_SEARCH = BASE_URL + 'appmst/documenttypes/search';
+export const BASE_URL_DOCUMENT_TYPE_LEDGER = BASE_URL + 'finance/ledgermappings';
 
 export const BASE_URL_FINANCIAL_ACC_TAX_CHARGE_TYPE = BASE_URL + 'finance/tax/chargetypes/lov';
 export const BASE_URL_FINANCIAL_ACC_TAX_CHARGE_CODE = BASE_URL + 'finance/tax/charges/lov';

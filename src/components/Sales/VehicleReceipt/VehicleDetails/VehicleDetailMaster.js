@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Form, Row, Col } from 'antd';
 
 import { ViewDetail } from './ViewDetail';
@@ -62,35 +62,14 @@ const mapDispatchToProps = (dispatch) => ({
 
 const VehicleDetailsMasterBase = (props) => {
     const { typeData, vehicleStatusType, physicalStatusType, shortageType, vehicleDetailData } = props;
-    const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, saveData, isLoading, setIsFormVisible } = props;
-    const { form, selectedId, formActionType, handleFormValueChange } = props;
-    const [exchangeValue, setexchangeValue] = useState(false);
-    const [loyaltyValue, setloyaltyValue] = useState(false);
-    const [finalData, setFinalData] = useState([]);
+    const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, isLoading } = props;
+    const { form, selectedId, finalData, setFinalData, formActionType, handleFormValueChange, onFinish, onFinishFailed } = props;
 
     const [vehicleDetailForm] = Form.useForm();
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
-
-    const changeObjtoArr = (data) => {
-        const FinalArr = [];
-        Object?.entries(data)?.map(([key, value]) => {
-            FinalArr.push(value);
-            return undefined;
-        });
-        return FinalArr;
-    };
-
-    const extraParams = [
-        {
-            key: 'supplierInvoiceNumber',
-            title: 'supplierInvoiceNumber',
-            value: selectedId,
-            name: 'Supplier Invoice Number',
-        },
-    ];
 
     useEffect(() => {
         if (userId && selectedId) {
@@ -107,34 +86,6 @@ const VehicleDetailsMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedId]);
 
-    const onFinish = (values) => {
-        const data = { supplierInvoiceNumber: selectedId, vehicleDetails: changeObjtoArr(finalData) };
-        const onSuccess = (res) => {
-            // handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams });
-            form.resetFields();
-            setIsFormVisible(false);
-        };
-
-        const onError = (message) => {
-            showGlobalNotification({ message });
-        };
-
-        const requestData = {
-            data: data,
-            method: 'put',
-            setIsLoading: listShowLoading,
-            userId,
-            onError,
-            onSuccess,
-        };
-
-        saveData(requestData);
-    };
-
-    const onFinishFailed = () => {};
-
     const formProps = {
         ...props,
         form,
@@ -149,10 +100,6 @@ const VehicleDetailsMasterBase = (props) => {
         isDataLoaded,
         formData: vehicleDetailData,
         isLoading,
-        exchangeValue,
-        setexchangeValue,
-        loyaltyValue,
-        setloyaltyValue,
         vehicleDetailForm,
         finalData,
         setFinalData,
@@ -168,22 +115,8 @@ const VehicleDetailsMasterBase = (props) => {
         isLoading,
     };
 
-    const handleFieldsChange = () => {
-        const { loyaltyScheme, exchange } = form.getFieldsValue();
-        if (loyaltyScheme) {
-            setexchangeValue(true);
-            setloyaltyValue(false);
-        } else if (exchange) {
-            setexchangeValue(false);
-            setloyaltyValue(true);
-        } else {
-            setexchangeValue(false);
-            setloyaltyValue(false);
-        }
-    };
-
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFieldsChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>

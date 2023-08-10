@@ -154,12 +154,12 @@ const AddEditFormMain = ({
                 </div>
             </Spin>
             {/* <Row gutter={20} className={style.formFooter}>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={style.footerBtnLeft}>
+                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={style.buttonsGroupLeft}>
                     <Button danger onClick={onCloseAction}>
                         Cancel
                     </Button>
                 </Col>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={style.footerBtnRight}>
+                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={style.buttonsGroupRight}>
                     <Button disabled={isApplicatinoOnSaveLoading || !canFormSave} loading={isApplicatinoOnSaveLoading} htmlType="submit" form="myForm" key="saveBtm" type="primary">
                         Save
                     </Button>

@@ -39,11 +39,11 @@ const ViewDetailBase = ({ setRejectRequest, isLoading = false, formData, styles,
                                     From Dealer Code:
                                 </Col>
 
-                                <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12} className={styles.addGroup}>
+                                <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12} className={styles.buttonsGroupRight}>
                                     {checkAndSetDefaultValue(formData?.fromDealerCode, isLoading)}
                                 </Col>
 
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={`${styles.addGroup} ${styles.tableTextColor85}`}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={`${styles.buttonsGroupRight} ${styles.tableTextColor85}`}>
                                     {checkAndSetDefaultValue(formData?.fromDealerName, isLoading)}
                                 </Col>
                             </Row>
@@ -55,11 +55,11 @@ const ViewDetailBase = ({ setRejectRequest, isLoading = false, formData, styles,
                                     To Dealer Code:
                                 </Col>
 
-                                <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12} className={styles.addGroup}>
+                                <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12} className={styles.buttonsGroupRight}>
                                     {checkAndSetDefaultValue(formData?.toDealerCode, isLoading)}
                                 </Col>
 
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={`${styles.addGroup} ${styles.tableTextColor85}`}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={`${styles.buttonsGroupRight} ${styles.tableTextColor85}`}>
                                     {checkAndSetDefaultValue(formData?.toDealerName, isLoading)}
                                 </Col>
                             </Row>
@@ -71,7 +71,7 @@ const ViewDetailBase = ({ setRejectRequest, isLoading = false, formData, styles,
                                     Chassis Number:
                                 </Col>
 
-                                <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12} className={styles.addGroup}>
+                                <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12} className={styles.buttonsGroupRight}>
                                     {checkAndSetDefaultValue(formData?.chassisNumber, isLoading)}
                                 </Col>
                             </Row>
@@ -83,7 +83,7 @@ const ViewDetailBase = ({ setRejectRequest, isLoading = false, formData, styles,
                                     Vehicle Age:
                                 </Col>
 
-                                <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12} className={styles.addGroup}>
+                                <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12} className={styles.buttonsGroupRight}>
                                     {checkAndSetDefaultValue(formData?.vehicleAge, isLoading)}
                                 </Col>
                             </Row>
@@ -95,7 +95,7 @@ const ViewDetailBase = ({ setRejectRequest, isLoading = false, formData, styles,
                                     Requested Date:
                                 </Col>
 
-                                <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12} className={styles.addGroup}>
+                                <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12} className={styles.buttonsGroupRight}>
                                     {checkAndSetDefaultValue(formData?.requestedDate, isLoading, DATA_TYPE?.DATE?.key)}
                                 </Col>
                             </Row>
@@ -107,7 +107,7 @@ const ViewDetailBase = ({ setRejectRequest, isLoading = false, formData, styles,
                                     Status:
                                 </Col>
 
-                                <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12} className={`${styles.addGroup} ${statusClassName}`}>
+                                <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12} className={`${styles.buttonsGroupRight} ${statusClassName}`}>
                                     {checkAndSetDefaultValue(formData?.status, isLoading)}
                                 </Col>
                             </Row>
@@ -119,7 +119,7 @@ const ViewDetailBase = ({ setRejectRequest, isLoading = false, formData, styles,
                                     Model Description:
                                 </Col>
 
-                                <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12} className={styles.addGroup}>
+                                <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12} className={styles.buttonsGroupRight}>
                                     {checkAndSetDefaultValue(formData?.modelDescription, isLoading)}
                                 </Col>
                             </Row>

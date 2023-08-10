@@ -198,6 +198,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
+
     const makeExtraparms = (Params) => {
         const extraParams = [];
         Params?.map((element) => {
@@ -208,8 +209,8 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
                 value: value,
                 name: name,
             });
+            return undefined;
         });
-
         return extraParams;
     };
     useEffect(() => {
@@ -481,11 +482,6 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         setButtonData({ ...defaultBtnVisiblity });
     };
 
-    const onCloseAction = () => {
-        form.resetFields();
-        setIsUploadDrawer(false);
-    };
-
     const drawerTitle = 'Upload Authority Details';
 
     const uploadProps = {
@@ -598,7 +594,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
                         </Form>
                     </Col>
                     {organizationId && manufacturerAdminHierarchyData?.length > 0 && (
-                        <Col className={styles.addGroup} xs={24} sm={24} md={6} lg={6} xl={6}>
+                        <Col className={styles.buttonsGroupRight} xs={24} sm={24} md={6} lg={6} xl={6}>
                             <Button type="primary" onClick={handleOnClickUpload}>
                                 Upload
                             </Button>
