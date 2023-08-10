@@ -13,7 +13,7 @@ import { PlusOutlined } from '@ant-design/icons';
 
 import styles from 'components/common/Common.module.css';
 
-export const tblActionColumn = ({ styles, handleButtonClick, width = '10%', fixed = '' }) => {
+export const tblActionColumn = ({ styles, handleButtonClick, width = '10%', fixed = '', AddIcon = false, EditIcon = false, EyeIcon = false }) => {
     return {
         title: 'Action',
         dataIndex: '',
@@ -26,12 +26,14 @@ export const tblActionColumn = ({ styles, handleButtonClick, width = '10%', fixe
                         <Button data-testid="view" className={styles.tableIcons} aria-label="ai-view" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.VIEW, record })}>
                             <FiEye />
                         </Button>
-                        <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.EDIT, record, index })}>
-                            <FiEdit />
-                        </Button>
+                        {!EyeIcon && (
+                            <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.EDIT, record, index })}>
+                                <FiEdit />
+                            </Button>
+                        )}
                     </>
                 ) : (
-                    <Button data-testid="add" className={styles.tableIcons} aria-label="fa-add" icon={<PlusOutlined />} onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD, record, index })} />
+                    AddIcon && <Button data-testid="add" className={styles.tableIcons} aria-label="fa-add" icon={<PlusOutlined />} onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD, record, index })} />
                 )}
             </Space>,
         ],
