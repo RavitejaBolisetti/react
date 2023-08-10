@@ -407,9 +407,7 @@ export const ConfigurableParameterEditingBase = ({ saveFormShowLoading, isLoadin
                             </Empty>
                         )}
                     >
-                        <div className={styles.tableProduct}>
-                            <DataTable isLoading={isLoading} {...tableProps} />
-                        </div>
+                        <DataTable isLoading={isLoading} {...tableProps} />
                     </ConfigProvider>
                 </Col>
             </Row>
