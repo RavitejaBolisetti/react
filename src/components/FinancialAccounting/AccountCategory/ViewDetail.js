@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Descriptions, Space, Row, Col, Collapse } from 'antd';
+import { Descriptions, Collapse } from 'antd';
 import CardAccountAndDocumentMapping from './AccountAndDocumentMapping/CardAccountAndDocumentMapping';
 import { PlusBorderedIcon, MinusBorderedIcon } from 'Icons';
 const { Panel } = Collapse;
@@ -24,21 +24,18 @@ const ViewDetailBase = ({ formData, styles, parameterType, accountCategory, setD
                 <Descriptions.Item label="Account Category Code">{accountCategory?.[0]?.accountCategoryCode}</Descriptions.Item>
                 <Descriptions.Item label="Description">{accountCategory?.[0]?.accountCategoryDescription}</Descriptions.Item>
                 <Descriptions.Item label="Status">{accountCategory?.[0]?.status === true ? 'Active' : 'InActive'} </Descriptions.Item>
-                <Space direction="vertical" size="small" className={styles.accordianContainer}>
-                    <Row>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            {accountCategory?.[0]?.accountDocumentMaps?.length > 0 && (
-                                <Collapse expandIcon={expandIcon}>
-                                    <Panel header="Account and Document Mapping" key="2">
-                                        {accountCategory?.[0]?.accountDocumentMaps?.map((item, index) => (
-                                            <CardAccountAndDocumentMapping key={'menu' + item?.menuId} accountDocumentMapId={item?.accountDocumentMapId} applicationId={item?.applicationId} financialAccountHeadCode={item?.financialAccountHeadCode} setDisabledEdit={setDisabledEdit} documentDescription={item?.documentDescription} financialAccountData={financialAccountData} applicationName={item?.applicationName} />
-                                        ))}
-                                    </Panel>
-                                </Collapse>
-                            )}
-                        </Col>
-                    </Row>
-                </Space>
+
+                <div>
+                    {accountCategory?.[0]?.accountDocumentMaps?.length > 0 && (
+                        <Collapse expandIcon={expandIcon}>
+                            <Panel header="Account and Document Mapping" key="2">
+                                {accountCategory?.[0]?.accountDocumentMaps?.map((item, index) => (
+                                    <CardAccountAndDocumentMapping key={'menu' + item?.menuId} accountDocumentMapId={item?.accountDocumentMapId} applicationId={item?.applicationId} financialAccountHeadCode={item?.financialAccountHeadCode} setDisabledEdit={setDisabledEdit} documentDescription={item?.documentDescription} financialAccountData={financialAccountData} applicationName={item?.applicationName} />
+                                ))}
+                            </Panel>
+                        </Collapse>
+                    )}
+                </div>
             </Descriptions>
         </div>
     );

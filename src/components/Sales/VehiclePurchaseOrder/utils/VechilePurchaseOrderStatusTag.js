@@ -5,7 +5,6 @@
  */
 import { Tag } from 'antd';
 import { VEHICLE_PURCHASE_ORDER_STATUS } from 'constants/VehiclePurchaseOrderStatus';
-import styles from 'components/common/Common.module.css';
 
 export const VechilePurchaseOrderStatusTag = (status) => {
     let tag = '';
@@ -30,11 +29,11 @@ export const VechilePurchaseOrderStatusTag = (status) => {
             break;
         case VEHICLE_PURCHASE_ORDER_STATUS.SO_GENERATED.key:
             tag = <Tag color="success">{VEHICLE_PURCHASE_ORDER_STATUS.SO_GENERATED.title}</Tag>;
-            break;           
+            break;
         case VEHICLE_PURCHASE_ORDER_STATUS.INVOICED.key:
             tag = <Tag color="purple">{VEHICLE_PURCHASE_ORDER_STATUS.INVOICED.title}</Tag>;
             break;
- 
+
         default:
     }
     return tag;

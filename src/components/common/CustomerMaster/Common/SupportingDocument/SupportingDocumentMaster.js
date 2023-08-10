@@ -117,6 +117,7 @@ const SupportingDocumentBase = (props) => {
         return () => {
             setUploadedFile(undefined);
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [fileList]);
 
     const onRemove = (file) => {

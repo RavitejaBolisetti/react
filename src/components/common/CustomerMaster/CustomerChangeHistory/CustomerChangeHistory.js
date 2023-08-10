@@ -49,7 +49,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const ChangeHistoryMain = ({ fetchCustomerChangeHistory, onCloseAction, listShowChangeHistoryLoading, customerType, totalRecords, isChangeHistoryLoading, userId, isChangeHistoryLoaded, changeHistoryData, selectedCustomerId }) => {
+const CustomerChangeHistoryMain = ({ fetchCustomerChangeHistory, onCloseAction, listShowChangeHistoryLoading, customerType, totalRecords, isChangeHistoryLoading, userId, isChangeHistoryLoaded, changeHistoryData, selectedCustomerId }) => {
     const [page, setPage] = useState({ pageSize: 10, current: 1 });
     const dynamicPagination = true;
 
@@ -121,27 +121,33 @@ const ChangeHistoryMain = ({ fetchCustomerChangeHistory, onCloseAction, listShow
                 </div>,
             ],
         }),
+
         tblPrepareColumns({
             title: 'Modified By',
             dataIndex: 'modifiedBy',
         }),
+
         tblPrepareColumns({
             title: 'Change Source',
             dataIndex: 'source',
         }),
+
         tblPrepareColumns({
             title: 'Field Name',
             dataIndex: 'fieldName',
         }),
+
         tblPrepareColumns({
             title: 'Old Value',
             dataIndex: 'oldValue',
         }),
+
         tblPrepareColumns({
             title: 'New Value',
             dataIndex: 'newValue',
         }),
     ];
+
     const tableProps = {
         setPage,
         totalRecords,
@@ -172,4 +178,4 @@ const ChangeHistoryMain = ({ fetchCustomerChangeHistory, onCloseAction, listShow
     );
 };
 
-export const ChangeHistory = connect(mapStateToProps, mapDispatchToProps)(withDrawer(ChangeHistoryMain, { title: 'Change History', width: '90%' }));
+export const CustomerChangeHistory = connect(mapStateToProps, mapDispatchToProps)(withDrawer(CustomerChangeHistoryMain, { title: 'Change History', width: '90%' }));

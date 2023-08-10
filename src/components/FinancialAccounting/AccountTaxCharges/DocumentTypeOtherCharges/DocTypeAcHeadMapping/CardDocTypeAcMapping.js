@@ -3,16 +3,16 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { Fragment, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Card, Row, Button, Divider, Typography, Space } from 'antd';
 import { FiEdit, FiTrash } from 'react-icons/fi';
 import styles from 'components/common/Common.module.css';
-import FormProductAttribute from './FormDocTypeAcMapping';
+import FormDocTypeAcMapping from './FormDocTypeAcMapping';
 
 const { Text } = Typography;
 
 const CardDocTypeAcMapping = (props) => {
-    const { finalFormdata, docTypeHeadMappingForm, forceUpdate, taxCharges, financialAccount, typeData, productHierarchyAttributeData, docTypeHeadMappingList, setDocTypeHeadMappingList, objTaxCharge, setOpenAccordian, changeValue, setChangeValue, handleCodeFunction, editForm, formEdit, setFormEdit, uniqueCardEdit, setuniqueCardEdit, buttonData, setButtonData, dropdownItems, setDropdownItems, viewMode } = props;
+    const { finalFormdata, docTypeHeadMappingForm, forceUpdate, taxCharges, financialAccount, typeData, productHierarchyAttributeData, docTypeHeadMappingList, setDocTypeHeadMappingList, objTaxCharge, setOpenAccordian, changeValue, setChangeValue, editForm, formEdit, setFormEdit, uniqueCardEdit, setuniqueCardEdit, buttonData, setButtonData, dropdownItems, setDropdownItems, viewMode } = props;
 
     const docTypeHeadMappingEdit = (props) => {
         setuniqueCardEdit(props?.internalId);
@@ -23,7 +23,6 @@ const CardDocTypeAcMapping = (props) => {
             chargeCode: props?.chargeCode,
             internalId: props?.internalId,
             financialAccountHeadId: props?.financialAccountHeadId,
-            financialAccountHeadDesc: props?.financialAccountHeadDesc,
         });
 
         // handleCodeFunction(props?.financialAccountHead);
@@ -35,9 +34,10 @@ const CardDocTypeAcMapping = (props) => {
         const upd_obj = docTypeHeadMappingList?.map((obj) => {
             if (obj?.internalId === newFormData?.internalId) {
                 obj.chargeCode = newFormData?.chargeCode;
-                obj.internalId = newFormData?.internalId;
                 obj.financialAccountHeadId = newFormData?.financialAccountHeadId;
                 obj.financialAccountHeadDesc = newFormData?.financialAccountHeadDesc;
+                obj.chargeCodeDesc = newFormData?.chargeCodeDesc;
+                obj.financialAccountHeadCode = newFormData?.financialAccountHeadCode;
             }
             return obj;
         });
@@ -141,7 +141,7 @@ const CardDocTypeAcMapping = (props) => {
             {formEdit && props?.internalId === uniqueCardEdit && (
                 <>
                     <Divider />
-                    <FormProductAttribute {...FormProductAttributeProp} />
+                    <FormDocTypeAcMapping {...FormProductAttributeProp} />
                 </>
             )}
         </Card>

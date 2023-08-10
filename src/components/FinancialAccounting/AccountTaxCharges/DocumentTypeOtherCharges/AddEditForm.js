@@ -97,8 +97,6 @@ const AddEditFormMain = (props) => {
                 documentTypeName: docTypeLedger?.documentTypeName,
                 documentTypeCode: docTypeLedger?.documentTypeCode,
             });
-
-            
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [docTypeLedger]);
@@ -130,7 +128,6 @@ const AddEditFormMain = (props) => {
         dropdownItems,
         setDropdownItems,
         financialAccount,
-        typeData,
     };
 
     const buttonProps = {

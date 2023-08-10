@@ -3,18 +3,17 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { Button, Space, Tag } from 'antd';
+import { Button, Space } from 'antd';
 import { tblPrepareColumns } from 'utils/tableColumn';
-import { VehicleReceiptStatusTag } from './utils/VehicleReceiptStatusTag';
 import { convertDateMonthYear } from 'utils/formatDateTime';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
-import { FiEdit, FiEye, FiTrash } from 'react-icons/fi';
+import { FiEdit, FiEye } from 'react-icons/fi';
 import { PlusOutlined } from '@ant-design/icons';
 
 import styles from 'components/common/Common.module.css';
 
-export const tblActionColumn = ({ styles, handleButtonClick, width = '10%', fixed = '' }) => {
+export const tblActionColumn = ({ styles, handleButtonClick, width = '10%', fixed = '', AddIcon = false, EditIcon = false, EyeIcon = false }) => {
     return {
         title: 'Action',
         dataIndex: '',
@@ -27,12 +26,14 @@ export const tblActionColumn = ({ styles, handleButtonClick, width = '10%', fixe
                         <Button data-testid="view" className={styles.tableIcons} aria-label="ai-view" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.VIEW, record })}>
                             <FiEye />
                         </Button>
-                        <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.EDIT, record, index })}>
-                            <FiEdit />
-                        </Button>
+                        {!EyeIcon && (
+                            <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.EDIT, record, index })}>
+                                <FiEdit />
+                            </Button>
+                        )}
                     </>
                 ) : (
-                    <Button data-testid="add" className={styles.tableIcons} aria-label="fa-add" icon={<PlusOutlined />} onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD, record, index })} />
+                    AddIcon && <Button data-testid="add" className={styles.tableIcons} aria-label="fa-add" icon={<PlusOutlined />} onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD, record, index })} />
                 )}
             </Space>,
         ],
