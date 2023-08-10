@@ -532,12 +532,11 @@ p {
     color: #ed302d;
 }
 
-/* :global .ant-form-item .ant-form-item-label>label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
-    margin-inline-end: 8px;
+:global .ant-form-item .ant-form-item-label > label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
     margin-top: -2px;
 }
 
-:global .ant-form-item .ant-form-item-label>label.ant-form-item-no-colon::after {
+/* :global .ant-form-item .ant-form-item-label>label.ant-form-item-no-colon::after {
     display: none;
 } */
 
