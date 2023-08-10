@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Input, Form, Col, Row, Button, Select } from 'antd';
+import { Input, Form, Col, Row, Button, Select, Divider } from 'antd';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { customSelectBox } from 'utils/customSelectBox';
@@ -17,47 +17,49 @@ function FormProductAttribute(props) {
     const fieldNames = { key: 'taxCode', value: 'taxCode' };
 
     return (
-        <Form form={formEdit ? editForm : taxChargeCalForm} id="myForm" autoComplete="off" layout="vertical">
-            <Row gutter={20}>
-                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item label="Tax/Charge Type" name="chargeType" rules={[validateRequiredSelectField('Tax Charge')]}>
-                        {customSelectBox({ disabled: mainFomEdit, data: taxCharges, fieldNames: { key: 'taxType', value: 'taxDescription' }, placeholder: preparePlaceholderSelect('Tax Charge'), onChange: handleCodeFunction })}
-                    </Form.Item>
-                </Col>
-                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item label="Tax/Charge Code" name="chargeCode" initialValue={props?.code} rules={[validateRequiredSelectField('Tax Code')]}>
-                        <Select options={dropdownItems} disabled={mainFomEdit} fieldNames={fieldNames} placeholder={preparePlaceholderSelect('Tax Code')} onChange={handleDescriptionChange} />
-                    </Form.Item>
-                </Col>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <Form.Item labelAlign="left" name="chargeDescription" label="Description" rules={[validateRequiredInputField('Description')]} initialValue={props?.chargeDescription}>
-                        <Input placeholder={preparePlaceholderText('Description')} disabled />
-                    </Form.Item>
-                </Col>
-                <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
-                    <Form.Item name="internalId" label="Internal Id" />
-                </Col>
-                <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
-                    <Form.Item name="taxMasterId" label="taxMasterId" />
-                </Col>
-                <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
-                    <Form.Item name="id" label="Id" />
-                </Col>
-                {!formEdit && (
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Button
-                            type="primary"
-                            className={styles.marB20}
-                            onClick={() => {
-                                addTaxChargeCal();
-                            }}
-                        >
-                            Add
-                        </Button>
+        <>
+            <Divider />
+            <Form form={formEdit ? editForm : taxChargeCalForm} id="myForm" autoComplete="off" layout="vertical">
+                <Row gutter={20}>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item label="Tax/Charge Type" name="chargeType" rules={[validateRequiredSelectField('Tax Charge')]}>
+                            {customSelectBox({ disabled: mainFomEdit, data: taxCharges, fieldNames: { key: 'taxType', value: 'taxDescription' }, placeholder: preparePlaceholderSelect('Tax Charge'), onChange: handleCodeFunction })}
+                        </Form.Item>
                     </Col>
-                )}
-            </Row>
-        </Form>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item label="Tax/Charge Code" name="chargeCode" initialValue={props?.code} rules={[validateRequiredSelectField('Tax Code')]}>
+                            <Select options={dropdownItems} disabled={mainFomEdit} fieldNames={fieldNames} placeholder={preparePlaceholderSelect('Tax Code')} onChange={handleDescriptionChange} />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                        <Form.Item labelAlign="left" name="chargeDescription" label="Description" rules={[validateRequiredInputField('Description')]} initialValue={props?.chargeDescription}>
+                            <Input placeholder={preparePlaceholderText('Description')} disabled />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
+                        <Form.Item name="internalId" label="Internal Id" />
+                    </Col>
+                    <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
+                        <Form.Item name="taxMasterId" label="taxMasterId" />
+                    </Col>
+                    <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
+                        <Form.Item name="id" label="Id" />
+                    </Col>
+                    {!formEdit && (
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.marB20}>
+                            <Button
+                                type="primary"
+                                onClick={() => {
+                                    addTaxChargeCal();
+                                }}
+                            >
+                                Add
+                            </Button>
+                        </Col>
+                    )}
+                </Row>
+            </Form>
+        </>
     );
 }
 

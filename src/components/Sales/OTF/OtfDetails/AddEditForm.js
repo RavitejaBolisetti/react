@@ -55,7 +55,7 @@ const AddEditFormMain = (props) => {
             </Row>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.specialRequest} label="Special Request" name="specialRequest">
+                    <Form.Item rules={[noWhiteSpaceinBeginning()]} initialValue={formData?.specialRequest} label="Special Request" name="specialRequest">
                         <Input maxLength={50} placeholder={preparePlaceholderText('Special Request')} />
                     </Form.Item>
                 </Col>

@@ -50,7 +50,7 @@ const mapStateToProps = (state) => {
         data,
         detailData,
         isLoading,
-        pincodeData,
+        pincodeData: pincodeData?.pinCodeDetails,
         moduleTitle,
     };
     return returnValue;
