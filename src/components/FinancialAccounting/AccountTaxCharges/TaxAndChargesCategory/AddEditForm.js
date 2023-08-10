@@ -144,12 +144,12 @@ const AddEditFormMain = (props) => {
     return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20} className={styles.drawerBody}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     {viewMode ? (
                         <ViewDetail {...viewProps} />
                     ) : (
                         <>
-                            <Row gutter={16}>
+                            <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                     <Form.Item label="Code" initialValue={formData?.taxCategoryCode} name="taxCategoryCode" rules={[validateRequiredInputField('Code')]}>
                                         <Input className={styles.inputBox} placeholder={preparePlaceholderText('Code')} maxLength={6} disabled={editMode ? true : false} />
