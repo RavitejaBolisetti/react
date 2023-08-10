@@ -109,7 +109,11 @@ const ViewDetailMain = (props) => {
                                     <Descriptions.Item label="Vehicle Status">{checkAndSetDefaultValue(getCodeValue(vehicleStatusType, item?.vehicleStatus), isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label="Physical Status">{checkAndSetDefaultValue(getCodeValue(physicalStatusType, item?.physicalStatus), isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label="Shortage">{checkAndSetDefaultValue(getCodeValue(shortageType, item?.shortage), isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Vehicle Receipt Checklist No.">{checkAndSetDefaultValue(item?.vehicleReceiptChecklistNumber, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Vehicle Receipt Checklist No.">
+                                        <a style={{ color: 'ff3e5b' }} href={item?.vehicleReceiptChecklistNumber} target="_blank" rel="noreferrer">
+                                            {checkAndSetDefaultValue(item?.vehicleReceiptChecklistNumber, isLoading)}
+                                        </a>
+                                    </Descriptions.Item>
                                 </Descriptions>
                             </Panel>
                         </Collapse>

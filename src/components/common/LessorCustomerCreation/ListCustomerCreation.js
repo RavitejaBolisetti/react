@@ -297,7 +297,7 @@ export const ListCustomerCreationBase = (props) => {
                             <Form.Item label={`${title}`} name="code" validateTrigger={['onSearch']}></Form.Item>
                         </Form>
                     </Col>
-                    <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.addGroup}>
+                    <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.buttonsGroupRight}>
                         <Button type="primary" onClick={handleOnClick}>
                             Upload
                         </Button>

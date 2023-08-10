@@ -152,7 +152,7 @@ p {
 
 :global .ant-checkbox .ant-checkbox-inner:after {
     top: 44%;
-    inset-inline-start: 30%;
+    inset-inline-start: 28%;
     width: 6px;
     height: 10px;
     border: 1px solid #ff3e5b;
@@ -852,6 +852,7 @@ p {
 :global .ant-card .ant-card-body {
     padding: 20px 30px;
     padding-bottom: 0;
+    margin-bottom: 20px;
 }
 
 :global .ant-card .ant-card-body::before,

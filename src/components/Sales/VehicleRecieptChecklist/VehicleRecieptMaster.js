@@ -124,7 +124,6 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
     const [formData, setFormData] = useState([]);
     const [otfSearchRules, setOtfSearchRules] = useState({ rules: [validateRequiredInputField('search parametar')] });
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
-    const [buttonType, setbuttonType] = useState(QUERY_BUTTONS_CONSTANTS?.PENDING?.key);
     const [actionButtonVisibility, setactionButtonVisibility] = useState({ EditIcon: false, EyeIcon: false, DeleteIcon: false, AddIcon: true });
 
     const onSuccessAction = (res) => {
@@ -394,7 +393,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         tableColumn: tableColumn({ handleButtonClick, actionButtonVisibility }),
         tableData: [{}],
         showAddButton: false,
-        handleButtonClick,
+        handleAdd: handleButtonClick,
         noMessge: LANGUAGE_EN.GENERAL.LIST_NO_DATA_FOUND.TITLE,
     };
 

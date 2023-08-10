@@ -39,10 +39,11 @@ export const RejectRequestForm = (props) => {
             ) : (
                 <>
                     <Row gutter={16}>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.modalCheckBox}>
                             <Form.Item initialValue={false} valuePropName="checked" name="status">
                                 <Checkbox className={styles.registered}>
-                                    <div style={{ fontSize: '16px' }}>I accept that for the Transferred Vehicle , Claim can be generated from the billed Dealer. If more than one transfer happens for the same vehicle then claim is not allowed for any of the dealership. </div>
+                                    I accept that for the Transferred Vehicle , Claim can be generated from the billed Dealer. <br />
+                                    If more than one transfer happens for the same vehicle then claim is not allowed for any of the dealership.
                                 </Checkbox>
                             </Form.Item>
                         </Col>
@@ -51,14 +52,14 @@ export const RejectRequestForm = (props) => {
             )}
 
             <Row gutter={20}>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignLeft}>
-                    <Button onClick={rejectModalCloseAction} danger>
+                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                    <Button onClick={rejectModalCloseAction} danger className={styles.fullWidth}>
                         Cancel
                     </Button>
                 </Col>
 
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignRight}>
-                    <Button disabled={rejectFormButtonActive} htmlType="submit" type="primary">
+                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                    <Button disabled={rejectFormButtonActive} className={styles.fullWidth} htmlType="submit" type="primary">
                         Submit
                     </Button>
                 </Col>

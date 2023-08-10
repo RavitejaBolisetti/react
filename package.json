@@ -15,11 +15,12 @@
         "ckeditor4-react": "^4.2.0",
         "encrypt-storage": "^2.12.14",
         "history": "^5.3.0",
-        "jest": "^27.5.1",
         "jest-sonar": "^0.2.15",
         "jwt-decode": "^3.1.2",
         "moment": "^2.29.4",
+        "msw": "^1.2.2",
         "otp-input-react": "^0.3.0",
+        "powerbi-client-react": "^1.4.0",
         "react": "^18.2.0",
         "react-bootstrap": "^2.7.0",
         "react-checkbox-tree": "^1.8.0",
@@ -33,17 +34,19 @@
         "react-router-dom": "^6.7.0",
         "react-scripts": "5.0.1",
         "redux": "^4.2.0",
+        "redux-test-utils": "^1.0.2",
         "redux-thunk": "^2.4.2",
         "sass": "^1.57.1",
+        "test-utils": "^1.1.1",
         "ts-node": "^10.9.1",
         "web-vitals": "^2.1.4"
     },
     "scripts": {
         "start": "react-scripts start",
         "build": "react-scripts build",
-        "test": "react-scripts test --coverage",
+        "test": "jest",
         "eject": "react-scripts eject",
-        "coverage": "react-scripts test --coverage --watchAll=false  --transformIgnorePatterns \"node_modules/(?!axios)/\"",
+        "test:coverage": "jest --coverage",
         "sonar": "ts-node sonar-scanner.ts"
     },
     "eslintConfig": {
@@ -66,22 +69,17 @@
     },
     "devDependencies": {
         "@babel/preset-env": "^7.20.2",
+        "@testing-library/dom": "^9.3.1",
+        "@testing-library/jest-dom": "^5.16.5",
+        "@testing-library/react": "^14.0.0",
+        "@testing-library/user-event": "^14.4.3",
+        "babel-jest": "^27.5.1",
+        "jest": "^27.5.1",
+        "jest-environment-jsdom": "^27.5.1",
+        "react-app-rewired": "^2.2.1",
+        "react-test-renderer": "^18.2.0",
         "redux-devtools-extension": "^2.13.9",
         "redux-mock-store": "^1.5.4",
         "sonarqube-scanner": "^3.0.1"
-    },
-    "jest": {
-        "coverageThreshold": {
-            "global": {
-                "branches": 3,
-                "functions": 3,
-                "lines": 3,
-                "statements": -10,
-                "isolatedModules": true
-            }
-        },
-        "moduleNameMapper": {
-            "axios": "axios/dist/node/axios.cjs"
-        }
     }
 }

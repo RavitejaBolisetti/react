@@ -53,7 +53,7 @@ const ContentHeader = ({ isAdvanceFilter = false, isTogglePresent = false, isDef
                         </Form>
                     </Col>
                     {organizationId && (
-                        <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.addGroup}>
+                        <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.buttonsGroupRight}>
                             <Button icon={<FaHistory />} type="primary" className={styles.verticallyCentered} onClick={changeHistoryModelOpen}>
                                 Change History
                             </Button>

@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { convertDateTime } from 'utils/formatDateTime';
 
-import { tblPrepareColumns } from 'utils/tableCloumn';
+import { tblPrepareColumns } from 'utils/tableColumn';
 import { customerDetailDataActions } from 'store/actions/customer/customerDetail';
 
 import styles from 'components/common/Common.module.css';

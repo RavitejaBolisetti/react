@@ -192,6 +192,10 @@ export const PARAM_MASTER = {
         id: 'VH_DTLS_SER',
         title: 'Vehicle Detail List',
     },
+    VH_PURCHASE_RORDER_SER: {
+        id: 'VH_PURCHASE_RORDER_SER',
+        title: 'Vehicle Purchase Order List', 
+    },
     YES_NO_FLG: {
         id: 'YES_NO_FLG',
         title: 'Yes No Flag',
@@ -243,5 +247,9 @@ export const PARAM_MASTER = {
     PHYSICAL_STATUS: {
         id: 'PHYSICAL_STATUS',
         title: 'Physical Status',
+    },
+    ACC_HEAD: {
+        id: 'ACC_HEAD',
+        title: 'Sales Type',
     },
 };

@@ -39,11 +39,11 @@ import {
     OtfReportsPage,
     LessorCustomerCreationPage,
 } from 'pages/common';
-import { TaxChargesPage, TaxChargesCategoryPage } from 'pages/FinancialAccounting';
-import { VehicleModelTaxChargesCategoryPage } from 'pages/FinancialAccounting';
+
+import { TaxChargesPage, TaxChargesCategoryPage, AccountCategoryPage, VehicleModelTaxChargesCategoryPage, DocumentTypeOtherChargesPage } from 'pages/FinancialAccounting';
+import { OTFMasterPage, VehicleDetailMasterPage, VehiclePriceMasterPage, VehicleReceiptMasterPage, RSMApprovalPage, VehiclePurchaseOrderMasterPage, VehicleRecieptChecklistMaster, VehicleAllotmentMasterPage } from 'pages/Sales';
 
 
-import { OTFMasterPage, VehicleDetailMasterPage, VehiclePriceMasterPage, VehicleReceiptMasterPage, RSMApprovalPage, VehicleRecieptChecklistMaster, VehicleAllotmentMasterPage } from 'pages/Sales';
 import * as routing from 'constants/routing';
 import { SplashPage } from 'pages/splash';
 
@@ -117,16 +117,21 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_USER_DISCLAIMER} element={<CMSPage />} exact />
             <Route path={routing.ROUTING_USER_CONTACT} element={<CMSPage />} exact />
             <Route path={routing.ROUTING_OTF} element={<OTFMasterPage />} exact />
+            {/* <Route path={routing.ROUTING_VECHILE_DETAILS} element={<VehicleDetailMasterPage />} exact /> */}
+            <Route path={routing.ROUTING_VECHILE_PURCHASE_ORDER_DETAILS} element={<VehiclePurchaseOrderMasterPage />} exact />
+
             <Route path={routing.ROUTING_RSM_APPROVAL} element={<RSMApprovalPage />} exact />
             <Route path={routing.ROUTING_VEHICLE_DETAILS} element={<VehicleDetailMasterPage />} exact />
             <Route path={routing.ROUTING_VEHICLE_PRICE_MASTER} element={<VehiclePriceMasterPage />} exact />
             <Route path={routing.ROUTING_VEHICLE_RECEIPT} element={<VehicleReceiptMasterPage />} exact />
             <Route path={routing.ROUTING_REPORT_OTF_REPORTS} element={<OtfReportsPage />} />
 
-            <Route path={routing.ROUTING_TAX_CHARGES} element={<TaxChargesPage />} exact />
-            <Route path={routing.ROUTING_TAX_CHARGES_CATEGORY} element={<TaxChargesCategoryPage />} exact />
+            <Route path={routing.ROUTING_FINANCIAL_ACCOUNTING_TAX_CHARGES} element={<TaxChargesPage />} exact />
+            <Route path={routing.ROUTING_FINANCIAL_ACCOUNTING_TAX_CHARGES_CATEGORY} element={<TaxChargesCategoryPage />} exact />
+            <Route path={routing.ROUTING_FINANCIAL_ACCOUNTING_ACCOUNT_CATEGORY} element={<AccountCategoryPage />} exact />
             <Route path={routing.ROUTING_VEHICLE_ALLOTMENT} element={<VehicleAllotmentMasterPage />} exact />
             <Route path={routing.ROUTING_VEHICLE_MODEL_TAX_CHARGES_CATEGORY} element={<VehicleModelTaxChargesCategoryPage />} exact />
+            <Route path={routing.ROUTING_DOCUMENT_TYPE} element={<DocumentTypeOtherChargesPage />} exact />
             <Route path={routing.ROUTING_VEHICLE_RECIEPT_CHECKLIST} element={<VehicleRecieptChecklistMaster />} exact />
 
             {/* <Route path="*" element={<LoginPage />} exact /> */}
