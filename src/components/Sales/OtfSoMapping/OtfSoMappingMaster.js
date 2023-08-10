@@ -17,7 +17,7 @@ import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { showGlobalNotification } from 'store/actions/notification';
 import { manufacturerOrgHierarchyDataActions } from 'store/actions/data/manufacturerOrgHierarchy';
 import { AddEditForm } from './AddEditForm';
-import { ViewTaxCharges } from './ViewTaxCharges';
+import { ViewDetails } from './ViewDetails';
 import LeftPanel from 'components/common/LeftPanel';
 
 import { LANGUAGE_EN } from 'language/en';
@@ -29,12 +29,10 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ConfigurableParameterEditing: { filteredListData: typeData = [] },
-            HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [] },
             ManufacturerOrgHierarchy: { isLoaded: isDataOrgLoaded = false, data: manufacturerOrgHierarchyData = [] },
-            ProductHierarchy: { isLoading, isLoaded: isDataLoaded = false, data: productHierarchyData = [], attributeData: productHierarchyAttributeData = [], organizationId = '' },
+            ProductHierarchy: { isLoading, isLoaded: isDataLoaded = false, data: productHierarchyData = [], organizationId = '' },
             OTF: {
-                OtfSoMapping: { isLoaded: isDataOtfSoMappingLoaded = false, data: otfSoMappingData = [] },
+                OtfSoMapping: { isLoaded: isDataOtfSoMappingLoaded = false, data: otfSoMappingData = {} },
                 OtfSoUserMapping: { isLoaded: isDataOtfSoUserMappingLoaded = false, data: otfSoUserMappingData = [] },
             },
         },
@@ -51,17 +49,13 @@ const mapStateToProps = (state) => {
         userId,
         moduleTitle,
 
-        isDataAttributeLoaded,
         viewTitle,
-        attributeData,
-        typeData,
-        unFilteredAttributeData: attributeData?.filter((i) => i?.status),
+
         isDataOrgLoaded,
         manufacturerOrgHierarchyData,
         isLoading,
         isDataLoaded,
         productHierarchyData,
-        productHierarchyAttributeData,
         organizationId,
         otfSoMappingData,
         otfSoUserMappingData,
@@ -85,6 +79,7 @@ const mapDispatchToProps = (dispatch) => ({
 
             fetchOtfList: otfSoMappingActions.fetchList,
             listOtfSoMappingShowLoading: otfSoMappingActions.listShowLoading,
+            saveData: otfSoMappingActions.saveData,
 
             fetchOtfUserList: otfSoUserMappingActions.fetchList,
             listOtfSoUserMappingShowLoading: otfSoUserMappingActions.listShowLoading,
@@ -95,45 +90,13 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const OtfSoMappingMain = ({
-    typeData,
-    moduleTitle,
-    viewTitle,
-    userId,
-    changeHistoryModelOpen,
-    isDataLoaded,
-    fetchList,
-    saveData,
-    listOrgLoading,
-    isDataAttributeLoaded,
-    attributeData,
-    hierarchyAttributeListShowLoading,
-    taxChargeData,
-    showGlobalNotification,
-    unFilteredAttributeData,
-    manufacturerOrgHierarchyData,
-    fetchOrgList,
-    isDataOrgLoaded,
-    productHierarchyData,
-    setSelectedOrganizationId,
-    organizationId,
-    fetchProductDataList,
-    fetchOtfList,
-    listOtfSoMappingShowLoading,
-    resetData,
-    otfSoMappingData,
-    otfSoUserMappingData,
-    isDataOtfSoMappingLoaded,
-    isDataOtfSoUserMappingLoaded,
-    fetchOtfUserList,
-    listOtfSoUserMappingShowLoading,
-    listProductLoading,
-}) => {
+export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, saveData, listOrgLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, showGlobalNotification, manufacturerOrgHierarchyData, fetchOrgList, isDataOrgLoaded, productHierarchyData, setSelectedOrganizationId, organizationId, fetchProductDataList, fetchOtfList, listOtfSoMappingShowLoading, resetData, otfSoMappingData, otfSoUserMappingData, isDataOtfSoMappingLoaded, isDataOtfSoUserMappingLoaded, fetchOtfUserList, listOtfSoUserMappingShowLoading, listProductLoading }) => {
+    console.log('otfSoMappingData', otfSoMappingData);
     const [form] = Form.useForm();
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
 
-    const [selectedTreeKey, setSelectedTreeKey] = useState([]);
+    const [selectedTreeKey, setSelectedTreeKey] = useState(null);
     const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState([]);
     const [formActionType, setFormActionType] = useState('');
 
@@ -143,8 +106,10 @@ export const OtfSoMappingMain = ({
     const [isFormBtnActive, setFormBtnActive] = useState(false);
     const [searchValue, setSearchValue] = useState('');
     const [soMapKey, setSoMapKey] = useState(null);
+    const [soMapName, setSoMapName] = useState(null);
+    const [viewData, setViewData] = useState(null);
 
-    const defaultBtnVisiblity = { editBtn: false, childBtn: false, siblingBtn: false, enable: false };
+    const defaultBtnVisiblity = { editBtn: false, childBtn: false, siblingBtn: false, enable: false, save: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const organizationFieldNames = { title: 'manufactureOrgShrtName', key: 'id', children: 'subManufactureOrg' };
     const fieldNames = { title: 'prodctShrtName', key: 'prodctCode', children: 'subProdct' };
@@ -168,26 +133,27 @@ export const OtfSoMappingMain = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, organizationId]);
 
+    const extraParams = [
+        {
+            key: 'code',
+            title: 'code',
+            value: selectedTreeKey,
+            name: 'code ID',
+        },
+        {
+            key: 'manufactureOrdId',
+            title: 'manufactureOrdId',
+            value: organizationId,
+            name: 'manufacture OrdId ID',
+        },
+    ];
+
     useEffect(() => {
-        if (organizationId && soMapKey) {
-            const extraParams = [
-                {
-                    key: 'code',
-                    title: 'code',
-                    value: soMapKey,
-                    name: 'code ID',
-                },
-                {
-                    key: 'manufactureOrdId',
-                    title: 'manufactureOrdId',
-                    value: organizationId,
-                    name: 'manufacture OrdId ID',
-                },
-            ];
+        if (organizationId && selectedTreeKey) {
             fetchOtfList({ setIsLoading: listOtfSoMappingShowLoading, userId, extraParams });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [soMapKey]);
+    }, [selectedTreeKey]);
 
     useEffect(() => {
         if (userId) {
@@ -196,13 +162,16 @@ export const OtfSoMappingMain = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
 
+    useEffect(() => {
+        if (viewData) {
+            setButtonData({ ...defaultBtnVisiblity, editBtn: true, save: true });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [viewData]);
+
     const onChange = (e) => {
         setSearchValue(e.target.value);
     };
-
-    const finalTaxAndChargesData = taxChargeData?.map((i) => {
-        return { ...i, taxAndChargesParentData: attributeData?.find((a) => i.attributeTypeCode === a.hierarchyAttribueId) };
-    });
 
     const handleTreeViewVisiblity = () => setTreeViewVisible(!isTreeViewVisible);
 
@@ -222,42 +191,35 @@ export const OtfSoMappingMain = ({
         return dataList;
     };
 
-    const flatternData = generateList(finalTaxAndChargesData);
-    const handleTreeViewClick = (keys) => {
+    const flatternData = generateList(productHierarchyData);
+    const handleTreeViewClick = (keys, tree) => {
         form.resetFields();
         setFormData([]);
         setSelectedTreeData([]);
-        setSoMapKey(keys);
-        console.log(keys, 'hey');
-
-        form.setFieldValue({
-            productAttributeCode: keys,
-            productAttributeValue: 'Random',
-            manufactureOrgId: organizationId,
-        });
+        setViewData(null);
+        let name = tree?.node?.title?.props?.children?.[2];
+        setSoMapName(name);
 
         if (keys && keys?.length > 0) {
             setFormActionType(FROM_ACTION_TYPE.VIEW);
-            const formData = flatternData.find((i) => keys?.[0] === i?.key);
-            if (formData) {
-                const isChildAllowed = unFilteredAttributeData?.find((attribute) => attribute.hierarchyAttribueCode === formData?.data?.attributeTypeCode)?.isChildAllowed;
-                setFormData({ ...formData?.data, isChildAllowed });
-
-                // setAttributeType(formData?.data?.attributeTypeCode);
-                // setCalculationType(formData?.data?.calculationType);
-
-                setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: isChildAllowed, siblingBtn: true });
-
-                const hierarchyAttribueName = unFilteredAttributeData?.find((attribute) => attribute?.hierarchyAttribueCode === formData?.data?.attributeTypeCode)?.hierarchyAttribueName;
-                const attributeParentName = flatternData.find((i) => formData?.data?.parentCode === i.key)?.data?.taxChargesTypeCode;
-                setSelectedTreeData({ ...formData?.data, hierarchyAttribueName, parentName: attributeParentName });
-            } else {
-                setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
-            }
         }
 
         setSelectedTreeKey(keys);
     };
+
+    useEffect(() => {
+        if (otfSoMappingData?.orgManufactureId) {
+            setViewData(otfSoMappingData);
+        } else {
+            setViewData(null);
+            form.setFieldsValue({
+                productAttributeCode: soMapKey?.[0],
+                productAttributeValue: soMapName,
+                manufactureOrgId: organizationId,
+            });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [otfSoMappingData]);
 
     const handleSelectTreeClick = (value) => {
         if (value === selectedTreeKey[0]) {
@@ -268,26 +230,19 @@ export const OtfSoMappingMain = ({
     };
 
     const onFinish = (values) => {
-        console.log('VAL', values);
         const recordId = formData?.id || '';
-        const codeToBeSaved = selectedTreeSelectKey || '';
-        const data = { ...values, id: recordId, parentCode: codeToBeSaved };
+        const data = { ...values, id: recordId };
 
         const onSuccess = (res) => {
             form.resetFields();
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
 
             if (res?.data) {
-                // setAttributeType(res?.data?.attributeTypeCode);
-                // setCalculationType(res?.data?.calculationType);
-
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-
-                // fetchList({ setIsLoading: listShowLoading, userId });
-
-                const hierarchyAttribueName = unFilteredAttributeData?.find((attribute) => attribute.hierarchyAttribueCode === res?.data?.attributeTypeCode)?.hierarchyAttribueName;
-                const attributeParentName = flatternData.find((i) => res?.data?.parentCode === i.key)?.data?.taxChargesTypeCode;
-                res?.data && setSelectedTreeData({ ...res?.data, hierarchyAttribueName, parentName: attributeParentName });
+                fetchOtfList({ setIsLoading: listOtfSoMappingShowLoading, userId, extraParams });
+                //const hierarchyAttribueName = unFilteredAttributeData?.find((attribute) => attribute.hierarchyAttribueCode === res?.data?.attributeTypeCode)?.hierarchyAttribueName;
+                // const attributeParentName = flatternData.find((i) => res?.data?.parentCode === i.key)?.data?.taxChargesTypeCode;
+                // res?.data && setSelectedTreeData({ ...res?.data, hierarchyAttribueName, parentName: attributeParentName });
 
                 setSelectedTreeKey([res?.data?.id || res?.data?.taxChargesTypeCode]);
                 setFormActionType(FROM_ACTION_TYPE.VIEW);
@@ -302,13 +257,14 @@ export const OtfSoMappingMain = ({
 
         const requestData = {
             data: data,
-            method: formData?.attributeTypeCode ? 'put' : 'post',
-            // setIsLoading: listShowLoading,
+            method: formActionType?.editMode ? 'put' : 'post',
+            setIsLoading: listOtfSoMappingShowLoading,
             userId,
             onError,
             onSuccess,
         };
 
+        console.log('_DATA_', data);
         saveData(requestData);
     };
 
@@ -376,31 +332,21 @@ export const OtfSoMappingMain = ({
         },
         titleOverride: (formData?.taxChargesTypeCode ? 'Edit ' : 'Add ').concat(moduleTitle),
         onFinish,
-        selectedTreeKey,
-        selectedTreeData,
-        unFilteredAttributeData,
-        selectedTreeSelectKey,
-        handleResetBtn,
-        formData,
-        taxChargeData,
-        handleSelectTreeClick,
-        isDataAttributeLoaded,
-        attributeData,
-        fieldNames,
-        setSelectedTreeSelectKey,
         isFormBtnActive,
         setFormBtnActive,
         otfSoUserMappingData,
         productHierarchyData,
+        form,
     };
 
     const viewProps = {
         typeData,
         buttonData,
-        selectedTreeData,
+        viewData,
         handleButtonClick,
         styles,
         viewTitle,
+        otfSoMappingData,
     };
 
     const noDataTitle = 'Please Select Organization from dropdown';
@@ -477,11 +423,11 @@ export const OtfSoMappingMain = ({
                     )}
                 </Col>
 
-                {productHierarchyData?.length >= 0 ? (
+                {productHierarchyData?.length > 0 ? (
                     <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol}>
-                        {selectedTreeData && selectedTreeData?.taxChargesTypeCode ? (
+                        {viewData ? (
                             <>
-                                <ViewTaxCharges {...viewProps} />
+                                <ViewDetails {...viewProps} />
                                 <div className={styles.viewContainerFooter}>
                                     <HierarchyFormButton {...viewProps} />
                                 </div>
@@ -494,7 +440,7 @@ export const OtfSoMappingMain = ({
                                         height: 60,
                                     }}
                                     description={
-                                        otfSoMappingData?.length <= 0 && soMapKey ? (
+                                        viewData && selectedTreeKey ? (
                                             <span>
                                                 No records found <br />
                                                 Please add New "So Map Detail" using below button
@@ -507,7 +453,7 @@ export const OtfSoMappingMain = ({
                                         )
                                     }
                                 >
-                                    {otfSoMappingData?.length <= 0 && soMapKey ? (
+                                    {viewData && selectedTreeKey ? (
                                         <Button icon={<PlusOutlined />} type="primary" danger onClick={handleAdd}>
                                             Add
                                         </Button>
