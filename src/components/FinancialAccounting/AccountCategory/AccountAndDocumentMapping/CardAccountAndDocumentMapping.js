@@ -13,13 +13,9 @@ const { Text } = Typography;
 
 const CardAccountAndDocumentMapping = (props) => {
     const { finalFormdata, accDocMapForm, forceUpdate, setOpenAccordian, changeValue, setChangeValue, handleCodeFunction, editForm, formEdit, setFormEdit, uniqueCardEdit, setuniqueCardEdit, handleDescriptionChange, buttonData, setButtonData, dropdownItems, setDropdownItems, accountDocumentMaps, setAccountDocumentMaps, accountCategoryData, applicationMenuData, financialAccountData, setSelectedTreeSelectKey, setUserApplicationId, viewMode, selectedTreeSelectKey, handleSelectTreeClick, documentDescriptionData, appSelectName } = props;
-
-    console.log('props?.applicationName ', props?.applicationName);
     const appName = props?.applicationName ? props?.applicationName : appSelectName;
     const docName = props?.documentDescription ? props?.documentDescription : documentDescriptionData?.find((e) => e?.key === props?.documentTypeCode)?.value;
     const financeName = financialAccountData?.find((e) => e?.key === props?.financialAccountHeadCode)?.value;
-
-    console.log('props?.applicationName', props?.applicationName);
 
     const accDocMapEdit = (props) => {
         setuniqueCardEdit(props?.internalId);

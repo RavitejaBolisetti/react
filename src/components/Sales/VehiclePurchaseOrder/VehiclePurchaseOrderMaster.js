@@ -69,7 +69,7 @@ const mapDispatchToProps = (dispatch) => ({
 export const VehiclePurchaseOrderMasterBase = (props) => {
     const { fetchList, saveData, listShowLoading, userId, data, vehicleDetailData } = props;
     const { typeData, moduleTitle, showGlobalNotification } = props;
-    const { filterString, setFilterString, vehicleDetailStatusList, vpoTypeList, extraParamsAfterSave } = props;
+    const { filterString, setFilterString, vehicleDetailStatusList, vpoTypeList } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [listFilterForm] = Form.useForm();
     const [selectedRecord, setSelectedRecord] = useState();
