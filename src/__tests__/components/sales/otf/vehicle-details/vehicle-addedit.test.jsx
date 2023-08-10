@@ -13,15 +13,19 @@ const typeDataMock = {
 
 const FormWrapper = (props) => {
     const [form] = Form.useForm();
-    return <AddEditForm form={form} {...props} />;
+    const myFormMock={
+        ...form,
+        getFieldValue: jest.fn().mockResolvedValue(true),
+    }
+    return <AddEditForm form={myFormMock} {...props} />;
 };
 describe('OTF Vehicle Details Component render', () => {
     it('should render addedit form', async () => {
-        customRender(<FormWrapper typeData={typeDataMock} formData={'taxDetails'} setOpenAccordian={jest.fn()} />);
+        customRender(<FormWrapper typeData={typeDataMock} formData={'taxDetails'} setOpenAccordian={jest.fn()} toolTipContent={true} />);
     });
 
     it('should render screen text ', async () => {
-        customRender(<FormWrapper typeData={typeDataMock} formData={'taxDetails'} setOpenAccordian={jest.fn()} setIsReadOnly={jest.fn()} isReadOnly={false} />);
+        customRender(<FormWrapper typeData={typeDataMock} formData={'taxDetails'} setOpenAccordian={jest.fn()} toolTipContent={true} setIsReadOnly={jest.fn()} isReadOnly={false} />);
 
         const editBtn = screen.getByRole('button', { name: /edit vehicle information/i });
         fireEvent.click(editBtn);
@@ -124,7 +128,7 @@ describe('OTF Vehicle Details Component render', () => {
     });
 
     it('should render screen text when readonly is true', async () => {
-        customRender(<FormWrapper typeData={typeDataMock} formData={'taxDetails'} setOpenAccordian={jest.fn()} setIsReadOnly={jest.fn()} isReadOnly={true} />);
+        customRender(<FormWrapper typeData={typeDataMock} formData={'taxDetails'} setOpenAccordian={jest.fn()} toolTipContent={true} setIsReadOnly={jest.fn()} isReadOnly={true} />);
 
         const editBtn = screen.getByRole('button', { name: /edit vehicle information/i });
         fireEvent.click(editBtn);
