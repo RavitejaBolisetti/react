@@ -7,7 +7,7 @@ import React, { Fragment, useEffect } from 'react';
 import { Card, Row, Button, Divider, Typography, Space } from 'antd';
 import { FiEdit, FiTrash } from 'react-icons/fi';
 import styles from 'components/common/Common.module.css';
-import FormProductAttribute from './FormDocTypeAcMapping';
+import FormDocTypeAcMapping from './FormDocTypeAcMapping';
 
 const { Text } = Typography;
 
@@ -35,9 +35,10 @@ const CardDocTypeAcMapping = (props) => {
         const upd_obj = docTypeHeadMappingList?.map((obj) => {
             if (obj?.internalId === newFormData?.internalId) {
                 obj.chargeCode = newFormData?.chargeCode;
-                obj.internalId = newFormData?.internalId;
                 obj.financialAccountHeadId = newFormData?.financialAccountHeadId;
                 obj.financialAccountHeadDesc = newFormData?.financialAccountHeadDesc;
+                obj.chargeCodeDesc = newFormData?.chargeCodeDesc;
+                obj.financialAccountHeadCode = newFormData?.financialAccountHeadCode;
             }
             return obj;
         });
@@ -141,7 +142,7 @@ const CardDocTypeAcMapping = (props) => {
             {formEdit && props?.internalId === uniqueCardEdit && (
                 <>
                     <Divider />
-                    <FormProductAttribute {...FormProductAttributeProp} />
+                    <FormDocTypeAcMapping {...FormProductAttributeProp} />
                 </>
             )}
         </Card>
