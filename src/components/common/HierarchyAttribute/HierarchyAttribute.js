@@ -336,9 +336,7 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, resetData, isDataL
                 </Row>
             </div>
 
-            <div className={styles.tableProduct}>
-                <ListDataTable isLoading={showDataLoading} {...tableProps} handleAdd={handleAdd} addTitle={title} />
-            </div>
+            <ListDataTable isLoading={showDataLoading} {...tableProps} handleAdd={handleAdd} addTitle={title} />
             <AddEditForm {...formProps} />
         </>
     );

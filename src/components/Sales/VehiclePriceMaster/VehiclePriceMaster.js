@@ -614,9 +614,7 @@ export const VehiclePriceMasterBase = (props) => {
             <AdvanceVehiclePriceMasterFilter {...advanceFilterResultProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <div className={styles.tableProduct}>
-                        <ListDataTable showAddButton={false} isLoading={false} {...tableProps} />
-                    </div>
+                    <ListDataTable showAddButton={false} isLoading={false} {...tableProps} />
                 </Col>
             </Row>
             <AdvancedSearch {...advanceFilterProps} />
