@@ -10,10 +10,6 @@ import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/prepareP
 import { validateRequiredInputField, validateRequiredSelectField, duplicateProductValidator } from 'utils/validation';
 
 function FormProductAttribute(props) {
-<<<<<<< HEAD
-=======
-
->>>>>>> otf-unit-test-case
     const { attributeForm, isVisible, productHierarchyAttributeData, onAttributeFormFinish, formEdit, editForm, skuAttributes } = props;
     const [changeValue, setChangeValue] = useState(null);
 

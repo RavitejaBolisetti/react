@@ -1,10 +1,6 @@
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
-<<<<<<< HEAD
-import { screen, fireEvent, logRoles, act, render } from '@testing-library/react';
-=======
 import { screen, fireEvent, act } from '@testing-library/react';
->>>>>>> otf-unit-test-case
 import { OTFStatusTag } from 'components/Sales/OTF/utils/OTFStatusTag';
 
 describe('OTF Form Button Component', () => {
