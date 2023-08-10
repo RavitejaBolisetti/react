@@ -3,18 +3,12 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-/*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
- *   All rights reserved.
- *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
- */
 import { useState, useEffect } from 'react';
 import { Table, Row, Col, Select, Pagination } from 'antd';
 import { InputSkeleton } from 'components/common/Skeleton';
 import { tblSerialNumberColumn } from 'utils/tableColumn';
-import styles from 'components/common/Common.module.css';
 
-const { Option } = Select;
+import styles from 'components/common/Common.module.css';
 
 export default function DataTable({ isLoading, rowSelection = undefined, showSizeChanger = true, dynamicPagination = false, totalRecords = '10', pagination = true, removePagination = false, srl = true, srlTitle = '#', tableColumn, scroll = 'auto', tableData, rowKey = 'index', setPage = () => {} }) {
     useEffect(() => {
@@ -24,17 +18,9 @@ export default function DataTable({ isLoading, rowSelection = undefined, showSiz
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dynamicPagination, totalRecords]);
 
-    const showTotal = (total) =>
-        total && (
-            <>
-                Total <span style={{ color: '#0b0b0c' }}> {total} </span> items
-            </>
-        );
-
     const [tablePagination, setPagination] = useState({
         pageSize: 10,
         current: 1,
-        position: ['bottomRight'],
         showSizeChanger: false,
         hideOnSinglePage: false,
         showTotal: false,
@@ -52,15 +38,8 @@ export default function DataTable({ isLoading, rowSelection = undefined, showSiz
     };
 
     const handlePageChange = (page, pageSize) => {
-        // if (dynamicPagination) {
-        //     const sortBy = sorter?.column?.dataIndex || undefined;
-        //     const sortType = sorter && sorter.order ? (sorter.order === 'descend' ? 'DESC' : 'ASC') : undefined;
-        //     setPage({ ...pagination, sortBy, sortType });
-        // } else {
-        //     setPage({ ...pagination });
-        // }
-        setPagination({ ...pagination, current: page, pageSize });
-        setPage({ ...pagination, current: page, pageSize });
+        setPagination({ ...tablePagination, current: page, pageSize });
+        setPage({ ...tablePagination, current: page, pageSize });
     };
 
     const skeletonData = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
@@ -71,35 +50,36 @@ export default function DataTable({ isLoading, rowSelection = undefined, showSiz
         return { ...item, render: () => <InputSkeleton height={40} /> };
     });
 
-    const options = [];
-    for (let i = 1; i < 5; i++) {
-        options.push({
-            value: i * 10,
-            label: `${i * 10 + '/Page'}`,
-        });
-    }
+    const optionValue = [1, 2, 5, 10];
+    const options = optionValue?.map((i) => {
+        return { ...i, value: i * 10, label: `${i * 10 + '/Page'}` };
+    });
 
-    const handleChange = (value) => {
-        console.log(`Selected: ${value}`);
+    const handleChange = (pageSize) => {
+        setPagination({ ...tablePagination, current: 1, pageSize });
+        setPage({ ...tablePagination, current: 1, pageSize });
     };
 
     return (
         <div className={styles.marB20}>
-            {/* <Table rowSelection={rowSelection} columns={isLoading ? tableSkeletonColumn : tableColumnWithSrl} dataSource={isLoading ? skeletonData : tableData} onChange={handleTableChange} pagination={pagination ? !isLoading && tablePagination : false} rowKey={rowKey} scroll={scroll} /> */}
             <Table rowSelection={rowSelection} columns={isLoading ? tableSkeletonColumn : tableColumnWithSrl} dataSource={isLoading ? skeletonData : tableData} onChange={handleTableChange} pagination={false} rowKey={rowKey} scroll={scroll} />
-            <Row gutter={20}>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                    {totalRecords && (
-                        <>
-                            Total <span style={{ color: '#0b0b0c' }}> {totalRecords} </span> items
-                        </>
-                    )}
-                    <Select defaultValue="10/Page" onChange={handleChange} style={{ width: 200 }} options={options} />
-                </Col>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignRight}>
-                    <Pagination {...tablePagination} onChange={handlePageChange} />
-                </Col>
-            </Row>
+
+            {!isLoading && tablePagination && (
+                <Row gutter={20} className={styles.marT20}>
+                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                        {totalRecords && (
+                            <>
+                                Total <span style={{ color: '#0b0b0c' }}> {totalRecords} </span> items
+                            </>
+                        )}
+
+                        <Select defaultValue={tablePagination?.pageSize} onChange={handleChange} style={{ width: 200 }} options={options} />
+                    </Col>
+                    <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignRight}>
+                        <Pagination {...tablePagination} onChange={handlePageChange} />
+                    </Col>
+                </Row>
+            )}
         </div>
     );
 }
