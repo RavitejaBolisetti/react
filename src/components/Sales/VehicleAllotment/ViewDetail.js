@@ -4,8 +4,9 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Card, Descriptions, Col, Row } from 'antd';
+import { Card, Descriptions, Col, Row, Divider } from 'antd';
 import styles from 'components/common/Common.module.css';
+import style from 'components/utils/SearchBox/SearchBox.module.css';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { getCodeValue } from 'utils/getCodeValue';
 import { DATA_TYPE } from 'constants/dataType';
@@ -14,10 +15,13 @@ import { DrawerFormButton } from 'components/common/Button';
 import { SearchBox } from 'components/utils/SearchBox';
 import { tblPrepareColumns } from 'utils/tableCloumn';
 import { DataTable } from 'utils/dataTable';
+import { convertDateMonthYear } from 'utils/formatDateTime';
+import { PARAM_MASTER } from 'constants/paramMaster';
 
 const ViewDetailMain = (props) => {
-    const { formData, isLoading, typeData, salesConsultantLov } = props;
-    const { handleButtonClick, buttonData, setButtonData, onCloseAction } = props;
+    const { formData, isLoading, typeData, salesConsultantLov, searchForm, filterString, setFilterString } = props;
+    const { handleButtonClick, buttonData, setButtonData, onCloseAction, handleSearchParamSearch } = props;
+
 
     const viewProps = {
         bordered: false,
@@ -35,35 +39,44 @@ const ViewDetailMain = (props) => {
     };
 
     const serachBoxProps = {
-        // searchForm,
-        // filterString,
-        // optionType: typeData?.[PARAM_MASTER.OTF_SER.id],
-        // setFilterString,
+        searchForm,
+        filterString,
+        optionType: typeData?.[PARAM_MASTER.OTF_SER.id].filter(searchType => searchType.key != 'mobileNumber'),
+        setFilterString,
+        handleSearchParamSearch,
     };
 
     const tableColumn = [
         tblPrepareColumns({
+            title: '',
+
+        }),
+        tblPrepareColumns({
             title: 'OTF No.',
-            dataIndex: 'source',
+            dataIndex: 'otfNumber',
         }),
         tblPrepareColumns({
             title: 'OTF Date',
-            dataIndex: 'fieldName',
+            dataIndex: 'otfDate',
+            render: (text) => convertDateMonthYear(text),
         }),
         tblPrepareColumns({
             title: 'Cust. Name',
-            dataIndex: 'oldValue',
+            dataIndex: 'custName',
         }),
         tblPrepareColumns({
             title: 'CPD',
-            dataIndex: 'newValue',
+            dataIndex: 'custCd',
         }),
     ];
 
     const tableProps = {
         //isChangeHistoryLoading,
         tableColumn,
-        //tableData: changeHistoryData?.otfChangeHistoryListResponse || [],
+        tableData: [formData?.vehicleOTFDetails] || [],
+        pagination: false,
+        srl: false,
+        rowSelection: true,
     };
 
     return (
@@ -71,22 +84,22 @@ const ViewDetailMain = (props) => {
             <Row gutter={20} className={styles.drawerBody}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <h4>Vehicle Summary</h4>
-                    <Card className={styles.ExchangeCard}>
+                    <Card>
                         <Descriptions {...viewProps}>
-                            <Descriptions.Item label="VIN/Chassis">{checkAndSetDefaultValue(formData?.initialPromiseDeliveryDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                            <Descriptions.Item label="Age In Days">{checkAndSetDefaultValue(formData?.custExpectedDeliveryDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                            <Descriptions.Item label="PDI Done?">{checkAndSetDefaultValue(getCodeValue(typeData?.SALE_TYP, formData?.saleType), isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Vehicle Status">{checkAndSetDefaultValue(getCodeValue(typeData?.PRC_TYP, formData?.priceType), isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="M&M Invoices Date">{checkAndSetDefaultValue(formData?.bookingAmount, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="M&M Invoices No.">{checkAndSetDefaultValue(formData?.loyaltyScheme ? <span className={styles.activeText}>Yes</span> : 'No', isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Model Description">{checkAndSetDefaultValue(formData?.loyaltyScheme ? <span className={styles.activeText}>Yes</span> : 'No', isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="VIN/Chassis">{checkAndSetDefaultValue(formData?.vehicleIdentificationNumber, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Age In Days">{checkAndSetDefaultValue(formData?.ageInDays, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="PDI Done?">{checkAndSetDefaultValue(getCodeValue(typeData?.SALE_TYP, formData?.pdiDone), isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Vehicle Status">{checkAndSetDefaultValue(getCodeValue(typeData?.PRC_TYP, formData?.status), isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="M&M Invoices Date">{checkAndSetDefaultValue(formData?.mnmInvoiceDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                            <Descriptions.Item label="M&M Invoices No.">{checkAndSetDefaultValue(formData?.mnmInvoiceNo, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Model Description">{checkAndSetDefaultValue(formData?.modelDescription, isLoading)}</Descriptions.Item>
                         </Descriptions>
                     </Card>
-
+                    <Divider className={styles.marT20} />
                     <h4>Allot OTF</h4>
                     <Card>
                         <Row gutter={20}>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.marB20}>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24} className={`${styles.marB20} ${style.viewAllotment}`}>
                                 <SearchBox {...serachBoxProps} />
                             </Col>
                         </Row>
