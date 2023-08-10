@@ -12,8 +12,11 @@ import { VehicleReceiptMain } from './VehicleReceiptChecklistMain';
 
 import { VehicleReceiptProfile } from './VehicleReceiptChecklistProfile';
 
+import { VehicleReceiptMaster } from './VehicleReceiptCheckListMaster';
+
 export const VehicleReceiptChecklist = combineReducers({
     SupportingDocument,
     VehicleReceiptMain,
     VehicleReceiptProfile,
+    VehicleReceiptMaster,
 });

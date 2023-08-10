@@ -158,9 +158,8 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
     };
 
     const handleButtonQuery = (item, keyName) => {
-        setbuttonType(item?.key);
-
         const buttonkey = item?.key;
+        setbuttonType(buttonkey);
 
         switch (buttonkey) {
             case QUERY_BUTTONS_CONSTANTS?.PENDING?.key: {
@@ -189,13 +188,13 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
                 value: buttonType,
                 name: buttonType,
                 canRemove: false,
-                filter: true,
+                filter: false,
             },
             {
                 key: 'grnNumber',
                 title: 'grnNumber',
-                value: filterString?.searchParam,
-                name: filterString?.searchParam,
+                value: filterString?.grnNumber,
+                name: filterString?.grnNumber,
                 canRemove: true,
                 filter: true,
             },
@@ -312,7 +311,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         searchForm.resetFields();
         setFilterString({
             ...filterString,
-            searchParam: value,
+            grnNumber: value,
             advanceFilter: true,
         });
     };
@@ -347,6 +346,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         switch (buttonAction) {
             case ADD_ACTION:
                 defaultSection && setCurrentSection(defaultSection);
+                setSelectedRecord(record);
                 break;
             case EDIT_ACTION:
                 setSelectedRecord(record);
@@ -441,14 +441,15 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         isLoading: showDataLoading,
         showAddButton: false,
     };
-
+    console.log('filterString', filterString);
     const removeFilter = (key) => {
         if (key === 'searchParam') {
             const { searchType, searchParam, ...rest } = filterString;
             setFilterString({ ...rest });
         } else {
             const { [key]: names, ...rest } = filterString;
-            setFilterString({ ...rest });
+            if (Object.keys(rest)?.length === 1) setFilterString();
+            else setFilterString({ ...rest });
         }
     };
 

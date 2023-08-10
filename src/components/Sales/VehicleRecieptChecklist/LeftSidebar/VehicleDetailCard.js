@@ -34,7 +34,7 @@ const VehicleDetailCard = (props) => {
                     <Space>
                         <div>
                             <div>
-                                CheckList Number: <span className={styles.floatRight}>{selectedRecord?.checklistNumber}</span>
+                                CheckList Number: <span className={styles.floatRight}>{ProfileData?.checklistNumber}</span>
                             </div>
                         </div>
                     </Space>

@@ -5,7 +5,8 @@
  */
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableCloumn';
 import styles from 'components/common/Common.module.css';
-import { convertDateMonthYear } from 'utils/formatDateTime';
+import { convertDateMonthYearDayjs } from 'utils/formatDateTime';
+import dayjs from 'dayjs';
 
 export const tableColumn = ({ handleButtonClick, page, pageSize, actionButtonVisibility }) => {
     const tableColumn = [
@@ -16,9 +17,9 @@ export const tableColumn = ({ handleButtonClick, page, pageSize, actionButtonVis
         }),
         tblPrepareColumns({
             title: 'Receipt Date',
-            dataIndex: 'receiptDate',
+            dataIndex: 'grnDate',
             width: '14%',
-            render: (text) => convertDateMonthYear(text),
+            render: (text) => convertDateMonthYearDayjs(text),
         }),
 
         tblPrepareColumns({

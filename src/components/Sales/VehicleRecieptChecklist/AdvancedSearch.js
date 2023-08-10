@@ -24,16 +24,21 @@ export const AdvancedSearchFrom = (props) => {
         advanceFilterForm: { resetFields },
     } = props;
 
-    console.log('vehicleModelData', vehicleModelData);
-
     const onFinish = (values) => {
         setFilterString({
             ...filterString,
             receiptFromDate: formatDate(values?.receiptFromDate),
             receipttoDate: formatDate(values?.receipttoDate),
-            model: values?.model,
             advanceFilter: true,
         });
+        const { receiptFromDate, receipttoDate, ...rest } = values;
+        for (const key in rest) {
+            rest?.[key] &&
+                setFilterString({
+                    ...filterString,
+                    [key]: rest?.[key],
+                });
+        }
         setAdvanceSearchVisible(false);
     };
 
