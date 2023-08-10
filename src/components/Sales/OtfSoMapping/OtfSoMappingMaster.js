@@ -48,9 +48,7 @@ const mapStateToProps = (state) => {
         collapsed,
         userId,
         moduleTitle,
-
         viewTitle,
-
         isDataOrgLoaded,
         manufacturerOrgHierarchyData,
         isLoading,
@@ -180,7 +178,6 @@ export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, sav
             });
             setFormActionType(FROM_ACTION_TYPE.ADD);
         }
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formActionType, change]);
 
@@ -191,7 +188,6 @@ export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, sav
     const handleTreeViewVisiblity = () => setTreeViewVisible(!isTreeViewVisible);
 
     const handleTreeViewClick = (keys, tree) => {
-        console.log('keyskeyskeys', keys);
         form.resetFields();
         setFormData([]);
         setViewData(null);
@@ -230,8 +226,6 @@ export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, sav
             showGlobalNotification({ message });
         };
 
-        console.log('formActionType?.editMode ', formActionType?.editMode);
-
         const requestData = {
             data: data,
             method: formActionType === FROM_ACTION_TYPE.EDIT ? 'put' : 'post',
@@ -240,8 +234,6 @@ export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, sav
             onError,
             onSuccess,
         };
-
-        console.log('_DATA_', data);
         saveData(requestData);
     };
 
