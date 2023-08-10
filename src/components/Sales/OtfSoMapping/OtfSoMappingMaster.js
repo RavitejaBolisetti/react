@@ -25,6 +25,8 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 import styles from 'components/common/Common.module.css';
 
+const { Search } = Input;
+
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -164,7 +166,7 @@ export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, sav
 
     useEffect(() => {
         if (viewData) {
-            setButtonData({ ...defaultBtnVisiblity, editBtn: true, save: true });
+            setButtonData({ ...defaultBtnVisiblity, editBtn: true });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [viewData]);
@@ -235,7 +237,7 @@ export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, sav
 
         const onSuccess = (res) => {
             form.resetFields();
-            setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
+            setButtonData({ ...defaultBtnVisiblity, editBtn: true });
 
             if (res?.data) {
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -349,7 +351,7 @@ export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, sav
         otfSoMappingData,
     };
 
-    const noDataTitle = 'Please Select Organization from dropdown';
+    const noDataTitle = 'Please choose organization hierarchy to view data';
     const diffSelection = 'No Product Found';
     const sameParentAndChildWarning = LANGUAGE_EN.GENERAL.HIERARCHY_SAME_PARENT_AND_CHILD_WARNING;
 
@@ -368,11 +370,11 @@ export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, sav
                                     <Col xs={24} sm={24} md={10} lg={10} xl={10}>
                                         <TreeSelectField {...treeSelectFieldProps} />
                                     </Col>
-                                    {/* {organizationId && (
+                                    {organizationId && (
                                         <Col xs={24} sm={24} md={10} lg={10} xl={10}>
                                             <Search placeholder="Search" allowClear onChange={onChange} className={`${styles.headerSearchField} ${styles.headerSearchInput}`} />
                                         </Col>
-                                    )} */}
+                                    )}
                                 </Row>
                             </Form.Item>
                         </Form>
