@@ -57,7 +57,6 @@ describe('OTF Invoice Details render', () => {
         expect(deliveredText).toBeTruthy();
 
         const nextBtn = screen.getAllByRole('button', { name: 'Next' });
-        // fireEvent.click(nextBtn);
         expect(nextBtn).toBeTruthy();
     });
 });
