@@ -6,7 +6,6 @@
 import React, { useState } from 'react';
 import { Descriptions, Divider } from 'antd';
 import AddEditForm from './AddEditForm';
-import UploadUtils from './../UploadUtils';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { getCodeValue } from 'utils/getCodeValue';
 

@@ -4,8 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { Space, Collapse, Typography, Descriptions, Card, Divider } from 'antd';
-import { FiDownload } from 'react-icons/fi';
+import { Space, Collapse,  Descriptions,  Divider } from 'antd';
 
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { expandIcon } from 'utils/accordianExpandIcon';
@@ -14,10 +13,9 @@ import { getCodeValue } from 'utils/getCodeValue';
 import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
-const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
-    const { formData, handleOnClick, isLoading, appCategoryData, viewDocument } = props;
+    const { formData,  isLoading, appCategoryData } = props;
     const [activeKey, setactiveKey] = useState([1]);
 
     const viewProps = {

@@ -5,7 +5,7 @@
  */
 import { React, useEffect, useState } from 'react';
 import { Col, Input, Collapse, Row, Space, Form, Select, Divider } from 'antd';
-import { validateRequiredInputField, validateLettersWithWhitespaces, validatePanField, validateGSTIN, validatFacebookProfileUrl, validattwitterProfileUrl } from 'utils/validation';
+import { validateRequiredInputField, validatePanField, validateGSTIN } from 'utils/validation';
 
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { convertToUpperCase } from 'utils/convertToUpperCase';
@@ -15,7 +15,6 @@ import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
 const { Option } = Select;
-const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
     const { appCategoryData, formData, form } = props;
