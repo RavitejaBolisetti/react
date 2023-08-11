@@ -52,8 +52,8 @@ export default function AppliedAdvanceFilter(props) {
                         </Form>
                     </Col>
                     {showAddButton && (
-                        <Col className={styles.addGroup} xs={24} sm={24} md={6} lg={6} xl={6}>
-                            <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
+                        <Col className={styles.buttonsGroupRight} xs={24} sm={24} md={6} lg={6} xl={6}>
+                            <Button icon={<PlusOutlined />} type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
                                 Add
                             </Button>
                         </Col>

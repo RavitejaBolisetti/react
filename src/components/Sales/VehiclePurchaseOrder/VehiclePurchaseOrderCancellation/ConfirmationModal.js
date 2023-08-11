@@ -13,9 +13,9 @@ import { validateRequiredSelectField } from 'utils/validation';
 import styles from 'components/common/Common.module.css';
 
 export const ConfirmationModalFrom = (props) => {
-    const { handleCloseModal } = props;
+    // const { handleCloseModal } = props;
     const { otfCancellationForm, onFinishVPOCancellation } = props;
-    const { buttonData, setButtonData, typeData } = props;
+    const { buttonData, setButtonData, typeData,setIsCancelVisible } = props;
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
@@ -24,7 +24,11 @@ export const ConfirmationModalFrom = (props) => {
     const handleFormFieldChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
-
+    const handleCloseModal = () => {
+        setIsCancelVisible(false);  
+         
+   };
+     
     return (
         <Form form={otfCancellationForm} onFinish={onFinishVPOCancellation} layout="vertical" autocomplete="off" colon="false" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange}>
             <Row gutter={16}>

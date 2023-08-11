@@ -68,7 +68,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 export const VehiclePurchaseOrderMasterBase = (props) => {
     const { fetchList, saveData, listShowLoading, userId, data, vehicleDetailData } = props;
-    const { typeData, moduleTitle } = props;
+    const { typeData, moduleTitle, showGlobalNotification } = props;
     const { filterString, setFilterString, vehicleDetailStatusList, vpoTypeList } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [listFilterForm] = Form.useForm();
@@ -163,7 +163,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
                 filter: true,
             },
             {
-                key: 'orderTypeCode',
+                key: 'orderType',
                 title: 'Order Type',
                 value: filterString?.orderTypeCode,
                 name: vpoTypeList?.find((i) => i?.key === filterString?.orderTypeCode)?.value,
@@ -171,7 +171,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
                 filter: true,
             },
             {
-                key: 'purchaseOrderStatusCode',
+                key: 'status',
                 title: 'Vehicle Purchase Status',
                 value: filterString?.purchaseOrderStatusCode,
                 name: vehicleDetailStatusList?.find((i) => i?.key === filterString?.purchaseOrderStatusCode)?.value,
@@ -386,8 +386,13 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         };
 
         const onSuccess = (res) => {
-            setShowDataLoading(true);
+            // setShowDataLoading(true);
+            // showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            setShowDataLoading(true);
+            setIsCancelVisible(false);
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+            setButtonData({ ...buttonData, formBtnActive: false });
         };
 
         const onError = (message) => {
@@ -471,6 +476,8 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         typeData,
         vehicleDetailData,
         saveButtonName: isLastSection ? 'Submit' : 'Save & Next',
+        setIsCancelVisible,
+        extraParamsAfterSave: extraParams,
     };
     const cancelProps = {
         ...props,
