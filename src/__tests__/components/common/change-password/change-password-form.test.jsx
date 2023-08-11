@@ -9,12 +9,10 @@ import { act } from 'react-dom/test-utils'
 import { ChangePasswordForm } from "@components/common/ChangePassword/ChangePasswordForm";
 import customRender from "@utils/test-utils";
 
- 
 afterEach(cleanup);
 const setFieldData = () =>{}
 const setPassword = () =>{}
 
-// wrap the root component in a Provider
 describe("ChangePasswordForm Components", () => {
   const handler = jest.fn(() => Promise.resolve());
     it("should render ChangePasswordForm components", ()=> {
