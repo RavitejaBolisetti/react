@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom/extend-expect';
-import { fireEvent, logRoles, screen, act, waitFor } from '@testing-library/react';
+import { fireEvent, screen, act } from '@testing-library/react';
 import customRender from '@utils/test-utils';
 import AllowedTimingList from '@components/common/CriticalityGroup/AllowedTimings/AllowedTimingList';
 
@@ -7,29 +7,6 @@ describe('AllowedTimingList Components', () => {
     it('should render AllowedTimingList components', () => {
         customRender(<AllowedTimingList />);
     });
-
-    // jest.setTimeout(120000);
-    // it('should check add time form field event 1st solution', async () => {
-    //     const onFinish=jest.fn();
-    //     const onTimingFormFinish=jest.fn();
-    //     customRender(<AllowedTimingList formActionType={formActionType} isAddTimeVisible={true} onFinish={onFinish} onTimingFormFinish={onTimingFormFinish}/>);
-
-    //     const timeInput = screen.getAllByRole('img', {name: 'clock-circle', exact: false});
-
-    //     fireEvent.click(timeInput[0]);
-    //     const nowBtn=screen.getByText('Now');
-    //     fireEvent.click(nowBtn);
-    //     await waitFor(() => new Promise(resolve => setTimeout(resolve, 70000)), { timeout: 80000 });
-    //     fireEvent.click(timeInput[1]);
-    //     const nowBtn1=screen.getAllByText('Now');
-    //     fireEvent.click(nowBtn1[1]);
-      
-    //     const saveButton = screen.getByRole('button', { name: 'Save', exact: false });
-    //     await act(() => {
-    //         fireEvent.click(saveButton);
-    //     });
-    //     logRoles(screen.getByTestId('logRole'));
-    // });
 
     it('should check add time form field event', async () => {
 

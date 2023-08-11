@@ -8,7 +8,7 @@ import '@testing-library/jest-dom/extend-expect';
 import { Provider } from 'react-redux';
 import customRender from '@utils/test-utils';
 import createMockStore from '__mocks__/store';
-import { screen, fireEvent, logRoles } from '@testing-library/react';
+import { screen, fireEvent } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
 
 import { CriticalityGroup } from '@components/common/CriticalityGroup/CriticalityGroup';
@@ -41,7 +41,7 @@ describe('CriticalityGroup Components', () => {
                 <CriticalityGroup onSuccessAction={jest.fn()} errorAction={jest.fn()} />
             </Provider>
         );
-        const refreshBtn=screen.getByRole('button', { name:'', exact:false })
+        const refreshBtn = screen.getByRole('button', { name: '', exact: false });
         fireEvent.click(refreshBtn);
     });
 
@@ -54,9 +54,9 @@ describe('CriticalityGroup Components', () => {
                 <CriticalityGroup onCloseAction={jest.fn()} />
             </Provider>
         );
-        const addBtn=screen.getByRole('button', { name:'plus Add', exact:false })
+        const addBtn = screen.getByRole('button', { name: 'plus Add', exact: false });
         fireEvent.click(addBtn);
-        const cancelBtn=screen.getByRole('button', { name:'Cancel', exact:false })
+        const cancelBtn = screen.getByRole('button', { name: 'Cancel', exact: false });
         fireEvent.click(cancelBtn);
     });
 
@@ -66,20 +66,20 @@ describe('CriticalityGroup Components', () => {
         });
         customRender(
             <Provider store={mockStore}>
-                <CriticalityGroup onCloseAction={jest.fn()} onSuccess={jest.fn()}  handleFormValueChange={jest.fn()} handleFormFieldChange={jest.fn()} onFinish={jest.fn()} onFinishFailed={jest.fn()} />
+                <CriticalityGroup onCloseAction={jest.fn()} onSuccess={jest.fn()} handleFormValueChange={jest.fn()} handleFormFieldChange={jest.fn()} onFinish={jest.fn()} onFinishFailed={jest.fn()} />
             </Provider>
         );
-        const addBtn=screen.getByRole('button', { name:'plus Add', exact:false })
+        const addBtn = screen.getByRole('button', { name: 'plus Add', exact: false });
         fireEvent.click(addBtn);
-        const criticalityGroupId=screen.getByRole('textbox', { name: 'Criticality Group Id', exact:false });
-        fireEvent.change(criticalityGroupId, { target: { value: '123'}});
-        const criticalityGroupName=screen.getByRole('textbox', { name: 'Criticality Group Name', exact:false });
-        fireEvent.change(criticalityGroupName, { target: { value: 'Test'}});
-        const defaultGroup=screen.getByRole('switch', { name: 'Default Group', exact:false });
+        const criticalityGroupId = screen.getByRole('textbox', { name: 'Criticality Group Id', exact: false });
+        fireEvent.change(criticalityGroupId, { target: { value: '123' } });
+        const criticalityGroupName = screen.getByRole('textbox', { name: 'Criticality Group Name', exact: false });
+        fireEvent.change(criticalityGroupName, { target: { value: 'Test' } });
+        const defaultGroup = screen.getByRole('switch', { name: 'Default Group', exact: false });
         fireEvent.click(defaultGroup);
-        const status=screen.getByRole('switch', { name: 'Status', exact: false});
+        const status = screen.getByRole('switch', { name: 'Status', exact: false });
         fireEvent.click(status);
-        const saveBtn=screen.getByRole('button', { name: 'Save', exact:false });
+        const saveBtn = screen.getByRole('button', { name: 'Save', exact: false });
         fireEvent.click(saveBtn);
     });
 
@@ -92,27 +92,26 @@ describe('CriticalityGroup Components', () => {
                 <CriticalityGroup onCloseAction={jest.fn()} onSuccess={jest.fn()} handleFormValueChange={jest.fn()} handleFormFieldChange={jest.fn()} onFinish={jest.fn()} onFinishFailed={jest.fn()} />
             </Provider>
         );
-        const addBtn=screen.getByRole('button', { name:'plus Add', exact:false })
+        const addBtn = screen.getByRole('button', { name: 'plus Add', exact: false });
         fireEvent.click(addBtn);
-        const criticalityGroupId=screen.getByRole('textbox', { name: 'Criticality Group Id', exact:false });
-        fireEvent.change(criticalityGroupId, { target: { value: '123'}});
-        // const criticalityGroupName=screen.getByRole('textbox', { name: 'Criticality Group Name', exact:false });
-        // fireEvent.change(criticalityGroupName, { target: { value: 'Test'}});
-        const defaultGroup=screen.getByRole('switch', { name: 'Default Group', exact:false });
+        const criticalityGroupId = screen.getByRole('textbox', { name: 'Criticality Group Id', exact: false });
+        fireEvent.change(criticalityGroupId, { target: { value: '123' } });
+
+        const defaultGroup = screen.getByRole('switch', { name: 'Default Group', exact: false });
         fireEvent.click(defaultGroup);
-        const status=screen.getByRole('switch', { name: 'Status', exact: false});
+        const status = screen.getByRole('switch', { name: 'Status', exact: false });
         fireEvent.click(status);
-        const saveBtn=screen.getByRole('button', { name: 'Save', exact:false });
+        const saveBtn = screen.getByRole('button', { name: 'Save', exact: false });
         fireEvent.click(saveBtn);
     });
 
     it('should validate search', async () => {
         const mockStore = createMockStore({
             auth: { userId: 123 },
-            data:{
+            data: {
                 CriticalityGroup: {
-                    isLoaded:true,
-                    data: [{id:1, name:'test', criticalityGroupName: 'Alice'}]
+                    isLoaded: true,
+                    data: [{ id: 1, name: 'test', criticalityGroupName: 'Alice' }],
                 },
             },
         });
