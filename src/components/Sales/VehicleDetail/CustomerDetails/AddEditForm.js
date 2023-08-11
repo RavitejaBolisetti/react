@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect, useState } from 'react';
-import { Col, Row, Space, Collapse, AutoComplete, Divider } from 'antd';
+import { Col, Row, Space, Collapse, AutoComplete, Divider, Card } from 'antd';
 import { FiEdit } from 'react-icons/fi';
 import { AddressCommonForm } from './AddressCommonForm';
 import { KeyAccountDetails } from './KeyAccountDetails';
@@ -31,7 +31,7 @@ const AddEditFormBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
-    
+
     const onSearch = (event) => {
         console.log('THIS IS SEARCH', event?.target?.value);
     };
@@ -102,38 +102,36 @@ const AddEditFormBase = (props) => {
         <>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Space style={{ display: 'flex' }} size="middle" direction="vertical">
-                        <Collapse onChange={(e) => handleCollapse(1)} activeKey={activeKey} expandIcon={({ isActive }) => expandIconWithText(isActive, <FiEdit />, <FiEdit style={{ color: '#B5B5B6' }} />)} expandIconPosition="end">
-                            <Panel header=" Owner Details" key="1">
-                                <Divider />
-                                <AddressCommonForm key="1" {...ownerCustomerProps} isBillingCustmrForm={false} />
-                            </Panel>
-                        </Collapse>
-                        <Collapse onChange={() => handleCollapse(2)} activeKey={activeKey} expandIcon={({ isActive }) => expandIconWithText(isActive, <FiEdit />, <FiEdit style={{ color: '#B5B5B6' }} />)} expandIconPosition="end">
-                            <Panel header=" Billing Customer Details" key="2">
-                                <Divider />
-                                <AddressCommonForm key="2" {...bilingCustomerProps} isBillingCustmrForm={true} />
-                            </Panel>
-                        </Collapse>
-                        <Collapse onChange={() => handleCollapse(3)} activeKey={activeKey} expandIcon={({ isActive }) => expandIconWithText(isActive, <FiEdit />, <FiEdit style={{ color: '#B5B5B6' }} />)} expandIconPosition="end">
-                            <Panel header=" Key Account Details" key="3">
-                                <Divider />
-                                <KeyAccountDetails key="3" {...keyAccountDetailsProps} />
-                            </Panel>
-                        </Collapse>
-                        <Collapse expandIcon={({ isActive }) => expandIconWithText(isActive, <FiEdit />, <FiEdit style={{ color: '#B5B5B6' }} />)} expandIconPosition="end" onChange={() => handleCollapse(4)} activeKey={activeKey}>
-                            <Panel header=" Loyalty Details" key="4">
-                                <Divider />
-                                <LoyalityDetails key="4" {...loyaltyProps} />
-                            </Panel>
-                        </Collapse>
-                        <Collapse expandIcon={({ isActive }) => expandIconWithText(isActive, <FiEdit />, <FiEdit style={{ color: '#B5B5B6' }} />)} expandIconPosition="end" onChange={() => handleCollapse(5)} activeKey={activeKey}>
-                            <Panel header=" Ownership Change Request" key="5">
-                                <Divider />
-                                <div className={styles.viewNoDataFound}>Coming Soon</div>
-                            </Panel>
-                        </Collapse>
-                    </Space>
+                    <Collapse onChange={(e) => handleCollapse(1)} activeKey={activeKey} expandIcon={({ isActive }) => expandIconWithText(isActive, <FiEdit />, <FiEdit style={{ color: '#B5B5B6' }} />)} expandIconPosition="end">
+                        <Panel header=" Owner Details" key="1">
+                            <Divider />
+                            <AddressCommonForm key="1" {...ownerCustomerProps} isBillingCustmrForm={false} />
+                        </Panel>
+                    </Collapse>
+                    <Collapse onChange={() => handleCollapse(2)} activeKey={activeKey} expandIcon={({ isActive }) => expandIconWithText(isActive, <FiEdit />, <FiEdit style={{ color: '#B5B5B6' }} />)} expandIconPosition="end">
+                        <Panel header=" Billing Customer Details" key="2">
+                            <Divider />
+                            <AddressCommonForm key="2" {...bilingCustomerProps} isBillingCustmrForm={true} />
+                        </Panel>
+                    </Collapse>
+                    <Collapse onChange={() => handleCollapse(3)} activeKey={activeKey} expandIcon={({ isActive }) => expandIconWithText(isActive, <FiEdit />, <FiEdit style={{ color: '#B5B5B6' }} />)} expandIconPosition="end">
+                        <Panel header=" Key Account Details" key="3">
+                            <Divider />
+                            <KeyAccountDetails key="3" {...keyAccountDetailsProps} />
+                        </Panel>
+                    </Collapse>
+                    <Collapse expandIcon={({ isActive }) => expandIconWithText(isActive, <FiEdit />, <FiEdit style={{ color: '#B5B5B6' }} />)} expandIconPosition="end" onChange={() => handleCollapse(4)} activeKey={activeKey}>
+                        <Panel header=" Loyalty Details" key="4">
+                            <Divider />
+                            <LoyalityDetails key="4" {...loyaltyProps} />
+                        </Panel>
+                    </Collapse>
+                    <Collapse expandIcon={({ isActive }) => expandIconWithText(isActive, <FiEdit />, <FiEdit style={{ color: '#B5B5B6' }} />)} expandIconPosition="end" onChange={() => handleCollapse(5)} activeKey={activeKey}>
+                        <Panel header=" Ownership Change Request" key="5">
+                            <Divider />
+                            <Card>Coming Soon</Card>
+                        </Panel>
+                    </Collapse>
                 </Col>
             </Row>
             <VehicleCustomerSearch {...modalProps} />
