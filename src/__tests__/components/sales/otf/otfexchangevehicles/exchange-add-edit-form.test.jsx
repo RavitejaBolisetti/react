@@ -4,7 +4,6 @@ import '@testing-library/jest-dom/extend-expect';
 
 import { AddEditForm } from "@components/Sales/OTF/ExchangeVehicles/AddEditForm"
 import { Form } from 'antd';
-import { act } from 'react-dom/test-utils';
 
 const FormWrapper = (props) => {
     const [form]=Form.useForm();

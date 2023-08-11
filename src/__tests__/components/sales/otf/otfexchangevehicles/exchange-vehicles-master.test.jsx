@@ -403,7 +403,7 @@ describe("ExchangeVehiclesMaster component render",()=>{
         await act(async () => {
             fireEvent.click(saveNext);
         }) 
-    },60_000);
+    });
 
     it('cancel button should work', async () => {
         const mockStore = createMockStore({
@@ -419,7 +419,7 @@ describe("ExchangeVehiclesMaster component render",()=>{
         await act(async () => {
             fireEvent.click(cancelBtn);
         })
-    },60_000);
+    },);
 
     it('should validate fields on finish failed', async () => {
         const mockStore = createMockStore({
@@ -441,14 +441,6 @@ describe("ExchangeVehiclesMaster component render",()=>{
             </Provider>
         );
 
-        // screen.getAllByRole('exchage-master');
-        // screen.debug();
-
-        const closeCircle = screen.getByRole('img', { name: 'close-circle', exact: false });
-        await act(async () => {
-            fireEvent.click(closeCircle);
-        })
-
         const addBtn = screen.getByRole('button', { name: 'Edit', exact: false });
         await act(async () => {
             fireEvent.click(addBtn);
@@ -460,7 +452,7 @@ describe("ExchangeVehiclesMaster component render",()=>{
         })
     });
 
-    it("handleFilterChange",async()=>{
+    it("should validate handleFilterChange on dropdown",async()=>{
         const name='make';
         const value='Maruti';
         const selectobj={
