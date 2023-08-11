@@ -488,6 +488,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         onFinishVPOCancellation,
         selectedRecord,
         setSelectedRecord,
+        setIsCancelVisible,
     };
 
     return (
