@@ -37,10 +37,9 @@ describe('OTF Invoice Details render', () => {
         });
         customRender(
             <Provider store={mockStore}>
-                <InvoiceDetailsMaster NEXT_ACTION={jest.fn()} selectedOrder={true} onChange={jest.fn()} />
+                <InvoiceDetailsMaster NEXT_ACTION={jest.fn()} selectedOrder={true} onChange={jest.fn()} {...props} />
             </Provider>
         );
-        customRender(<InvoiceDetailsMaster {...props} NEXT_ACTION={jest.fn()} selectedOrder={true} />);
 
         const screenText = screen.getByText('Invoice Information');
         expect(screenText).toBeTruthy();
