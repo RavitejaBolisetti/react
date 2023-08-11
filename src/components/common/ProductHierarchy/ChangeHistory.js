@@ -99,6 +99,7 @@ const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, i
         tableColumn,
         tableData: changeHistoryData,
     };
+
     return (
         <>
             <Row gutter={20} className={styles.drawerBody}>

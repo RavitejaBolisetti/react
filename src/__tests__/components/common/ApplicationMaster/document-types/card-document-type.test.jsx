@@ -52,13 +52,6 @@ describe('Card Document Type Component', () => {
         });
 
         expect(setfinalFormdata).toHaveBeenCalledWith(expect.any(Function));
-        // const setFinalFormdataFunction=setfinalFormdata.mock.calls[0][0];
-        // const prev={
-        //     documentType: [
-        //         {termAndConRequired:true, digitalSignatureRequired:true, documentTypeDescription:'Test', documentTypeCode:'Test'},
-        //     ]
-        // }
-        // setFinalFormdataFunction(prev);
     });
     
 });
