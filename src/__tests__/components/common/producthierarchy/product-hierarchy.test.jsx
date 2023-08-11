@@ -1,8 +1,7 @@
 import '@testing-library/jest-dom/extend-expect';
 import customRender from "@utils/test-utils";
 import { ProductHierarchy } from '@components/common/ProductHierarchy/ProductHierarchy';
-import { render, fireEvent, screen } from "@testing-library/react";
-import { act } from 'react-dom/test-utils';
+import { fireEvent, screen } from "@testing-library/react";
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
 
@@ -30,6 +29,26 @@ const productHierarchyData = [{
     subProdct: []
 }]
 
+const d = [{
+    duplicateAllowedAtAttributerLevelInd: false,
+    duplicateAllowedAtOtherParent: false,
+    hierarchyAttribueCode: "09090",
+    hierarchyAttribueName: "noida1",
+    hierarchyAttribueType: "Product Hierarchy",
+    id: "testid",
+    isChildAllowed: false,
+    status: true
+},{
+    duplicateAllowedAtAttributerLevelInd: false,
+    duplicateAllowedAtOtherParent: false,
+    hierarchyAttribueCode: "09090",
+    hierarchyAttribueName: "noida1",
+    hierarchyAttribueType: "Product Hierarchy",
+    id: "testid",
+    isChildAllowed: false,
+    status: true
+}]
+
 
 const props = {
     moduleTitle: "testTitle",
@@ -55,10 +74,10 @@ const props = {
     fetchOrgList: jest.fn(),
     isDataOrgLoaded: false,
     manufacturerOrgHierarchyData: {},
-    organizationId: "dmatestid",
+    organizationId: undefined,
     setSelectedOrganizationId: 'dmatestid',
     resetData: {},
-    onCloseAction: jest.fn()
+    setIsLoading: false
 }
 
 const treeSelectFieldProps = {
@@ -121,7 +140,7 @@ describe("Producthierarchy Components", () => {
     const mockStore = createMockStore({
         auth: { userId: 123456 },
         data: {
-            ProductHierarchy: { isLoading: false, isLoaded: true, data: [], changeHistoryVisible: false, attributeData: [], organizationId: 'testid' },
+            ProductHierarchy: { isLoading: false, isLoaded: true, data: productHierarchyData, changeHistoryVisible: false, attributeData: [], organizationId: 'testid' },
             HierarchyAttributeMaster: { isLoaded: false, data: [] },
             ManufacturerOrgHierarchy: { isLoaded: false, data: [] },
         },
@@ -132,13 +151,18 @@ describe("Producthierarchy Components", () => {
 
 
     it("should render producthierarchy search and other components", () => {
-        const { getByRole, getAllByText } = customRender(
+        const { getByRole, getByText } = customRender(
             <Provider store={mockStore}>
                 <ProductHierarchy {...props}
                     isVisible={true}
                     onChange={jest.fn()}
                     onFinish={jest.fn()}
                     treeSelectFieldProps={treeSelectFieldProps}
+                    handleTreeViewClick={jest.fn()}
+                    handleSelectTreeClick={jest.fn()}
+                    handleAttributeChange={jest.fn()}
+                    organizationId={"testId"}
+                    onCloseAction={jest.fn()}
                 />
             </Provider>
         );
@@ -160,5 +184,7 @@ describe("Producthierarchy Components", () => {
 
         const plus = getByRole('img', { name: 'plus', exact: false });
         fireEvent.click(plus);
+
+        expect(getByText(/Hierarchy/)).toBeInTheDocument();
     })
 })

@@ -9,7 +9,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, validateRequiredSelectField, duplicateProductValidator } from 'utils/validation';
 
-function FormProductAttributeComp(props) {
+function FormProductAttribute(props) {
     const { attributeForm, isVisible, productHierarchyAttributeData, onAttributeFormFinish, formEdit, editForm, skuAttributes } = props;
     const [changeValue, setChangeValue] = useState(null);
 
@@ -61,4 +61,4 @@ function FormProductAttributeComp(props) {
     );
 }
 
-export const FormProductAttribute = FormProductAttributeComp;
+export default FormProductAttribute;
