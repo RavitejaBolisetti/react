@@ -61,7 +61,7 @@ const VehicleRecieptCheckListMain = (props) => {
 
     const { isChecklistDataLoaded, isChecklistDataLoading, ChecklistData } = props;
 
-    const { fetchList, resetData, saveData, listShowLoading, showGlobalNotification } = props;
+    const { fetchList, resetData, VehicelReceiptChecklistOnfinish, saveData, listShowLoading, showGlobalNotification } = props;
 
     const { form, selectedCheckListId, section, formActionType, handleFormValueChange, NEXT_ACTION } = props;
 
@@ -71,68 +71,7 @@ const VehicleRecieptCheckListMain = (props) => {
 
     const [formData, setformData] = useState({});
 
-    const [checkListDataModified, setcheckListDataModified] = useState([
-        {
-            id: '',
-            group: 'Mirrors',
-            subGroup: 'Side Mirror L',
-            ansMasterId: '',
-            checkPoint: 'Detail about checklist Group/Sub-Group',
-            checklistType: 'Date',
-            fromDate: '12-06-2020',
-            toDate: '12-06-2021',
-            fromNumber: '',
-            toNumber: '',
-            text: '',
-            boolean: false,
-            remarks: '',
-        },
-        {
-            id: '',
-            group: 'Mirrors',
-            subGroup: 'Side Mirror R',
-            ansMasterId: '',
-            checkPoint: 'Detail about checklist Group/Sub-Group',
-            checklistType: 'Input',
-            fromDate: '',
-            toDate: '',
-            fromNumber: '',
-            toNumber: '',
-            text: 'shaka',
-            boolean: false,
-            remarks: '',
-        },
-        {
-            id: '',
-            group: 'Mirrors',
-            subGroup: 'Side Mirror B',
-            ansMasterId: '',
-            checkPoint: 'Detail about checklist Group/Sub-Group',
-            checklistType: 'Number',
-            fromDate: '',
-            toDate: '',
-            fromNumber: '699',
-            toNumber: '699',
-            text: '',
-            boolean: false,
-            remarks: '',
-        },
-        {
-            id: '',
-            group: 'Mirrors',
-            subGroup: 'Side Mirror F',
-            ansMasterId: '',
-            checkPoint: 'Detail about checklist Group/Sub-Group',
-            checklistType: 'Boolean',
-            fromDate: '12-06-2020',
-            toDate: '12-06-2021',
-            fromNumber: '',
-            toNumber: '',
-            text: '',
-            boolean: false,
-            remarks: '',
-        },
-    ]);
+    const [checkListDataModified, setcheckListDataModified] = useState([]);
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [aggregateForm] = Form.useForm();
     const [AdvanceformData, setAdvanceformData] = useState([]);
@@ -158,18 +97,24 @@ const VehicleRecieptCheckListMain = (props) => {
     };
 
     useEffect(() => {
-        if (userId && selectedCheckListId && !isChecklistDataLoaded) {
-            // fetchList({ setIsLoading: listShowLoading, userId, extraParams: makeExtraParams({ key: 'chassisNumber', title: 'chassisNumber', value: chassisNumber, name: 'Chassis Number' }), onErrorAction, onSuccessAction });
+        if (userId && chassisNumber && !isChecklistDataLoaded) {
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams: makeExtraParams({ key: 'chassisNumber', title: 'chassisNumber', value: chassisNumber, name: 'Chassis Number' }), onErrorAction, onSuccessAction });
         }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, chassisNumber, isChecklistDataLoaded]);
+
+    useEffect(() => {
         return () => {
             resetData();
         };
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedCheckListId, isChecklistDataLoaded]);
+    }, []);
     useEffect(() => {
         if (isChecklistDataLoaded && ChecklistData) {
             setcheckListDataModified(
-                ChecklistData?.map((element, index) => {
+                ChecklistData['checklistDetailList']?.map((element, index) => {
                     return { ...element, ismodified: false };
                 })
             );
@@ -179,10 +124,9 @@ const VehicleRecieptCheckListMain = (props) => {
     }, [isChecklistDataLoaded, ChecklistData]);
 
     const onFinish = (values) => {
-        // const data = { ...formData, vehicleIdentificationNumber: selectedCheckListId, aggregates: checkListDataModified?.filter((checkList) => checkList?.isEdited) };
         if (checkListDataModified?.length) {
-            setvehicleReceiptFinalFormData({ ...vehicleReceiptFinalFormData, checklistDetails: checkListDataModified });
-            // handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
+            VehicelReceiptChecklistOnfinish({ type: 'checklist', data: checkListDataModified?.filter((element, index) => element?.ismodified) });
+            handleButtonClick({ buttonAction: NEXT_ACTION });
         }
 
         // const onSuccess = (res) => {

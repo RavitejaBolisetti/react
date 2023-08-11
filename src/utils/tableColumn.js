@@ -13,6 +13,8 @@ import { tableColumnActions } from './tableColumnActions';
 import { DEFAULT_PAGE_SIZE } from 'constants/constants';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { DisableItemComponent } from 'utils/disableItemComponent';
+import { PlusOutlined } from '@ant-design/icons';
+
 // import { handleEdit, handleCustomEdit } from 'components/crud/crudListingPage/tableColumnActionEdit';
 import styles from './tableColumn.module.css';
 
@@ -95,20 +97,28 @@ export const tblActionColumnCurd =
         };
     };
 
-export const tblActionColumn = ({ title = 'Action', handleButtonClick, width = '8%', fixed = '', canEdit = true }) => {
+export const tblActionColumn = ({ title = 'Action', handleButtonClick, width = '8%', fixed = '', canEdit = true, canView = true, canAdd = false }) => {
     return {
         title: 'Action',
         dataIndex: '',
         width,
         fixed: fixed,
-        render: (record) => [
+        render: (text, record, index) => [
             <Space wrap>
-                <Button data-testid="view" className={styles.tableIcons} aria-label="ai-view" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.VIEW, record })}>
-                    {addToolTip('View')(<FaRegEye />)}
-                </Button>
+                {canView && (
+                    <Button data-testid="view" className={styles.tableIcons} aria-label="ai-view" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.VIEW, record, index })}>
+                        {addToolTip('View')(<FaRegEye />)}
+                    </Button>
+                )}
+
                 {canEdit && (
-                    <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.EDIT, record })}>
+                    <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.EDIT, record, index })}>
                         {addToolTip('Edit')(<FiEdit />)}
+                    </Button>
+                )}
+                {canAdd && (
+                    <Button data-testid="add" className={styles.tableIcons} aria-label="fa-add" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD, record, index })}>
+                        {addToolTip('Edit')(<PlusOutlined />)}
                     </Button>
                 )}
             </Space>,

@@ -75,6 +75,8 @@ const mapDispatchToProps = (dispatch) => ({
 const SupportingDocumentBase = (props) => {
     const { isViewDataLoaded, uploadDocumentFile, accessToken, token, onFinishFailed, form } = props;
 
+    const { VehicelReceiptChecklistOnfinish } = props;
+
     const { userId, showGlobalNotification, section, listShowLoading, typeData, saveData, fetchList, supportingData, fetchViewDocument, setIsFormVisible } = props;
     const { buttonData, setButtonData, formActionType, handleFormValueChange } = props;
     const { selectedCustomerId, viewDocument, viewListShowLoading, downloadFile } = props;
@@ -117,7 +119,7 @@ const SupportingDocumentBase = (props) => {
         if (fileList.length === 0) {
             setMandatoryFields(false);
         }
-        uploadedFile && setPayload([...payload, { customerId: selectedCustomerId, status: true, docId: uploadedFile, documentTypeId: form.getFieldValue('documentTypeId'), id: '', documentName: form.getFieldValue('documentName') }]);
+        uploadedFile && setPayload([...payload, { docId: uploadedFile, documentDescription: form.getFieldValue('documentDescription'), id: '', fileName: form.getFieldValue('fileName') }]);
 
         uploadedFile && form.resetFields();
 
@@ -156,44 +158,42 @@ const SupportingDocumentBase = (props) => {
     const onFinish = () => {
         const title = LANGUAGE_EN.GENERAL.CUSTOMER_UPDATE.TITLE;
         const message = LANGUAGE_EN.GENERAL.CUSTOMER_UPDATE.MESSAGE;
-
-        Object?.values(payload)?.length && Object?.keys(payload)?.length && setvehicleReceiptFinalFormData({ ...vehicleReceiptFinalFormData, supportingDocument: payload });
-
+        VehicelReceiptChecklistOnfinish({ type: 'document', data: payload });
         return;
-        
-        if (fileList.length > 0) {
-            const onSuccess = (res) => {
-                setFileList([]);
-                setEmptyList(false);
-                setUploadedFile();
-                form.resetFields();
-                showGlobalNotification({ notificationType: 'success', title, message });
 
-                fetchList({ setIsLoading: listShowLoading, userId, extraParams });
-                setIsFormVisible(false);
-            };
+        // if (fileList.length > 0) {
+        //     const onSuccess = (res) => {
+        //         setFileList([]);
+        //         setEmptyList(false);
+        //         setUploadedFile();
+        //         form.resetFields();
+        //         showGlobalNotification({ notificationType: 'success', title, message });
 
-            const onError = (message) => {
-                showGlobalNotification({ message });
-            };
-            const requestData = {
-                data: payload,
-                method: 'post',
-                setIsLoading: listShowLoading,
-                userId,
-                onError,
-                onSuccess,
-            };
+        //         fetchList({ setIsLoading: listShowLoading, userId, extraParams });
+        //         setIsFormVisible(false);
+        //     };
 
-            saveData(requestData);
-        } else {
-            showGlobalNotification({ notificationType: 'success', title, message });
-            setFileList([]);
-            setEmptyList(false);
-            setUploadedFile();
-            form.resetFields();
-            setIsFormVisible(false);
-        }
+        //     const onError = (message) => {
+        //         showGlobalNotification({ message });
+        //     };
+        //     const requestData = {
+        //         data: payload,
+        //         method: 'post',
+        //         setIsLoading: listShowLoading,
+        //         userId,
+        //         onError,
+        //         onSuccess,
+        //     };
+
+        //     saveData(requestData);
+        // } else {
+        //     showGlobalNotification({ notificationType: 'success', title, message });
+        //     setFileList([]);
+        //     setEmptyList(false);
+        //     setUploadedFile();
+        //     form.resetFields();
+        //     setIsFormVisible(false);
+        // }
     };
 
     const viewProps = {
