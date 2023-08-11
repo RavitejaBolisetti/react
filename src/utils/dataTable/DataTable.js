@@ -14,9 +14,11 @@ export default function DataTable({ isLoading, rowSelection = undefined, showSiz
     useEffect(() => {
         if (dynamicPagination) {
             setPagination({ ...tablePagination, total: totalRecords });
+        } else {
+            setPagination({ ...tablePagination, total: tableData?.length });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [dynamicPagination, totalRecords]);
+    }, [dynamicPagination, totalRecords, tableData]);
 
     const [tablePagination, setPagination] = useState({
         pageSize: 10,
@@ -62,15 +64,16 @@ export default function DataTable({ isLoading, rowSelection = undefined, showSiz
 
     return (
         <div className={styles.marB20}>
-            <Table rowSelection={rowSelection} columns={isLoading ? tableSkeletonColumn : tableColumnWithSrl} dataSource={isLoading ? skeletonData : tableData} onChange={handleTableChange} pagination={false} rowKey={rowKey} scroll={scroll} />
-
+            <div className={styles.mainDataTable}>
+                <Table rowSelection={rowSelection} pagination={{ ...tablePagination }} columns={isLoading ? tableSkeletonColumn : tableColumnWithSrl} dataSource={isLoading ? skeletonData : tableData} onChange={handleTableChange} rowKey={rowKey} scroll={scroll} />
+            </div>
             {!isLoading && tablePagination && (
                 <Row gutter={20} className={styles.marT20}>
                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                        {totalRecords && (
+                        {tablePagination?.total && (
                             <>
                                 <span className={`${styles.marR20} ${styles.tableTextColor54}`}>
-                                    Total <span style={{ color: '#0b0b0c' }}> {totalRecords} </span> items
+                                    Total <span style={{ color: '#0b0b0c' }}> {tablePagination?.total} </span> items
                                 </span>
                             </>
                         )}

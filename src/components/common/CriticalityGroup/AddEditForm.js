@@ -26,7 +26,6 @@ const AddEditFormMain = (props) => {
         setAllowedTimingSave(false);
     };
 
-    
     const handleFormFieldChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
         setAllowedTimingSave(false);
@@ -83,7 +82,6 @@ const AddEditFormMain = (props) => {
         timeData,
     };
 
-    
     const buttonProps = {
         formData,
         onCloseAction,
@@ -113,13 +111,13 @@ const AddEditFormMain = (props) => {
                             </Row>
                             <Row gutter={20}>
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                    <Form.Item initialValue={formActionType?.editMode ? formData?.criticalityDefaultGroup : false} valuePropName="checked" label="Default Group" name="criticalityDefaultGroup" rules={[validateRequiredInputField('Default Group')]}>
+                                    <Form.Item data-testid="default-toggle" initialValue={formActionType?.editMode ? formData?.criticalityDefaultGroup : false} valuePropName="checked" label="Default Group" name="criticalityDefaultGroup" rules={[validateRequiredInputField('Default Group')]}>
                                         <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} />
                                     </Form.Item>
                                 </Col>
 
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                    <Form.Item initialValue={formActionType?.editMode ? formData?.activeIndicator : false} valuePropName="checked" label="Status" name="activeIndicator" rules={[validateRequiredInputField('Status')]}>
+                                    <Form.Item data-testid="toggle" initialValue={formActionType?.editMode ? formData?.activeIndicator : false} valuePropName="checked" label="Status" name="activeIndicator" rules={[validateRequiredInputField('Status')]}>
                                         <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} />
                                     </Form.Item>
                                 </Col>

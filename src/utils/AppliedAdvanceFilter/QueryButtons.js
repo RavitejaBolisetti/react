@@ -7,7 +7,7 @@ import { Button } from 'antd';
 import styles from 'components/common/Common.module.css';
 
 export const QueryButtons = ({ items = {}, onClick, currentItem = '' }) => {
-    console.log('🚀 ~ file: QueryButtons.js:10 ~ QueryButtons ~ items:', currentItem);
+   // console.log('🚀 ~ file: QueryButtons.js:10 ~ QueryButtons ~ items:', currentItem);
     return (
         <div className={`${styles.userManagement} ${styles.headingToggle}`}>
             {Object.values(items)?.map((item, index) => {
