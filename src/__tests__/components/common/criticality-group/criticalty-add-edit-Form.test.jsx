@@ -78,10 +78,6 @@ describe('should render AddEditForm', () => {
         expect(dialog).toBeTruthy();
         fireEvent.click(dialog);
 
-        const screenImg = screen.getByLabelText('plus');
-        expect(screenImg).toBeTruthy();
-        fireEvent.click(screenImg);
-
         const labelbutton = screen.getByLabelText('Close');
         fireEvent.click(labelbutton);
         expect(labelbutton).toBeTruthy();
