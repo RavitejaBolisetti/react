@@ -41,6 +41,12 @@ describe('Qualification Master Test', () => {
     it('refresh button should work', async () => {
         const mockStore = createMockStore({
             auth: { userId: 123 },
+            data: {
+                QualificationMaster: {
+                    isLoaded: true,
+                    data: [{ id: 1, name: 'test', criticalityGroupName: 'Alice' }],
+                },
+            },
         });
         customRender(
             <Provider store={mockStore}>
@@ -54,6 +60,12 @@ describe('Qualification Master Test', () => {
     it('cancel button should work', async () => {
         const mockStore = createMockStore({
             auth: { userId: 123 },
+            data: {
+                QualificationMaster: {
+                    isLoaded: true,
+                    data: [{ id: 1, name: 'test', criticalityGroupName: 'Alice' }],
+                },
+            },
         });
         customRender(
             <Provider store={mockStore}>
@@ -81,7 +93,7 @@ describe('Qualification Master Test', () => {
         const mockStore = createMockStore({
             auth: { userId: 123 },
             data: {
-                CriticalityGroup: {
+                QualificationMaster: {
                     isLoaded: true,
                     data: [{ id: 1, name: 'test', criticalityGroupName: 'Alice' }],
                 },
@@ -109,6 +121,12 @@ describe('Qualification Master Test', () => {
     it('save button should work with on finish', async () => {
         const mockStore = createMockStore({
             auth: { userId: 123 },
+            data: {
+                QualificationMaster: {
+                    isLoaded: true,
+                    data: [{ id: 1, name: 'test', criticalityGroupName: 'Alice' }],
+                },
+            },
         });
         customRender(
             <Provider store={mockStore}>
