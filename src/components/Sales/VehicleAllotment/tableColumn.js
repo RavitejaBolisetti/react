@@ -4,40 +4,38 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
-
-import { convertDateMonthYear } from 'utils/formatDateTime';
-
+import { vehicleAllotmentStatusTag } from 'components/Sales/OTF/utils/VehicleAllotmentStatusTag';
+//import { vehicleAllotmentStatusTag } from 'components/sales/OTF/utils/VehicleAllotmentStatusTag';
 import styles from 'components/common/Common.module.css';
 
 export const tableColumn = (handleButtonClick, page, pageSize) => {
     const tableColumn = [
         tblPrepareColumns({
             title: 'VIN/Chasis no.',
-            dataIndex: 'chasisNumber',
+            dataIndex: 'vehicleIdentificationNumber',
             width: '14%',
         }),
 
         tblPrepareColumns({
             title: 'Model Description',
-            dataIndex: 'modelDescription',
+            dataIndex: 'modelCode',
             width: '20%',
-            render: (text) => convertDateMonthYear(text),
         }),
         tblPrepareColumns({
             title: 'Age in Days',
-            dataIndex: 'age',
+            dataIndex: 'ageInDays',
             width: '8%',
         }),
 
         tblPrepareColumns({
             title: 'PDI Done',
-            dataIndex: 'pdi',
+            dataIndex: 'pdiIndicator',
             width: '14%',
         }),
 
         tblPrepareColumns({
             title: 'M&M Invoice',
-            dataIndex: 'invoice',
+            dataIndex: 'invoiceId',
             width: '14%',
         }),
 
@@ -45,9 +43,10 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             title: 'Vehicle Status',
             dataIndex: 'vehicleStatus',
             width: '14%',
+           render: (_, record) => vehicleAllotmentStatusTag(record.vehicleStatus),
         }),
 
-        tblActionColumn({ handleButtonClick, styles, width: '8%', EyeIcon: true, EditIcon: false }),
+        tblActionColumn({ handleButtonClick, styles, width: '8%', EyeIcon: true, canEdit: false }),
     ];
 
     return tableColumn;

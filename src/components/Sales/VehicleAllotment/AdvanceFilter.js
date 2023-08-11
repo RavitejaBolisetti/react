@@ -17,8 +17,7 @@ const { Option } = Select;
 
 
 export default function AdvanceFilter(props) {
-    const { vehicleSearchvalue, ChangeSearchHandler, onSearchHandle, handleChange, FROM_ACTION_TYPE, setAdvanceSearchVisible } = props;
-    const [toggleButton, settoggleButton] = useState(VEHICLE_TYPE?.UNALLOTED.id);
+    const { vehicleSearchvalue, ChangeSearchHandler, onSearchHandle, setAdvanceSearchVisible, toggleButton, settoggleButton, } = props;
 
     return (
         <>
