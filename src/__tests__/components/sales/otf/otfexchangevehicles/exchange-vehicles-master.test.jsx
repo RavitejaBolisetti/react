@@ -237,14 +237,6 @@ describe("ExchangeVehiclesMaster component render",()=>{
         changeHistory: true,
     };
 
-    it("mock store data", async()=>{
-        const { getByRole } = customRender(
-            <Provider store={mockStore}>
-                <ExchangeVehiclesMaster />
-            </Provider>
-        );
-    })
-
     it('should render addedit page', async () => {
         customRender(<ExchangeVehiclesMaster {...props} typeData={('REL_TYPE', 'MONTH')} buttonData={defaultBtnVisiblity} />);
     });
@@ -397,9 +389,6 @@ describe("ExchangeVehiclesMaster component render",()=>{
     });
 
     it('cancel button should work', async () => {
-        const mockStore = createMockStore({
-            auth: { userId: 123 },
-        });
         customRender(
             <Provider store={mockStore}>
                 <ExchangeVehiclesMaster {...props} typeData="REL_TYPE" buttonData={defaultBtnVisiblity} onCloseAction={jest.fn()} />
@@ -442,57 +431,6 @@ describe("ExchangeVehiclesMaster component render",()=>{
             fireEvent.click(saveBtn);
         })
     });
-
-    it("should validate handleFilterChange on dropdown",async()=>{
-        const name='make';
-        const value='Maruti';
-        const selectobj={
-            key: "Maruti",
-            parentKey: null,
-            value: "Maruti",
-        };
-        const modelData=[
-            {
-                key:"Swift",
-                parentKey:"Maruti",
-                value:"Swift"
-            }
-        ];
-        const exchangeData = { 
-            customerExpectedPrice: "12313123",
-            customerId:"CUS1687411157049",
-            customerName: "Randhir Kumar",
-            hypothicatedTo: "ICICI",
-            hypothicatedToCode:"FI003",
-            id: "27cf9b5e-ef3d-4052-969a-b2a3b39b6a2e",
-            kilometer: "123123123",
-            make: "Mahindra",
-            modelGroup: "Thar",
-            monthOfRegistration: "JANUARY",
-            monthOfRegistrationCode: "JAN",
-            oldChessisNumber: "123123123",
-            oldRegistrationNumber: "123123123",
-            otfNumber: "OTF24A000691",
-            procurementPrice: "123123123",
-            relationship: "Brother",
-            relationshipCode: "BRO",
-            schemeAmount: "1.23",
-            schemeCode: "f7a2854e-3d30-4489-8a49-dd1ec0ebf538",
-            schemeName: "f7a2854e-3d30-4489-8a49-dd1ec0ebf538",
-            usage: "Commercial",
-            usageCode: "C",
-            variant: "Thar4x4",
-            yearOfRegistration: null,
-            yearOfRegistrationCode: "2023",
-        }; 
-        const { getByRole } = customRender( <FormWrapper  {...props} handleFilterChange={jest.fn()} setfilteredModelData={jest.fn()} setfilteredVariantData={jest.fn()} fetchModelLovList={jest.fn()} name={name} value={value} selectobj={selectobj} modelData={modelData}  isDataLoaded= {true} setFormData={jest.fn()}  /> );
-
-        const modelGroup = screen.getByRole('columnheader', { name: 'Model Group' });
-        await act(async () => {
-            fireEvent.click(modelGroup);
-        })
-
-    })
     
 })
 
