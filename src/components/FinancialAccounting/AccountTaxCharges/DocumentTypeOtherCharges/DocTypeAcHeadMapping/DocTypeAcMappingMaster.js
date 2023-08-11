@@ -5,10 +5,10 @@
  */
 import React, { useReducer, useState, useEffect } from 'react';
 import CardDocTypeAcMapping from './CardDocTypeAcMapping';
-import FormProductAttribute from './FormDocTypeAcMapping';
+import FormDocTypeAcMapping from './FormDocTypeAcMapping';
 
 export const DocTypeAcMappingMaster = (props) => {
-    const { isVisible, selectedTreeData, showGlobalNotification, taxChargeCategoryTypeData, docTypeLedger, handleCodeFunction, form, editForm, docTypeHeadMappingForm, formEdit, setFormEdit, docTypeHeadMappingList, setDocTypeHeadMappingList, buttonData, setButtonData, viewMode, dropdownItems, setDropdownItems, typeData, financialAccount } = props;
+    const { isVisible, selectedTreeData, showGlobalNotification, taxChargeCategoryTypeData, docTypeLedger, form, editForm, docTypeHeadMappingForm, formEdit, setFormEdit, docTypeHeadMappingList, setDocTypeHeadMappingList, buttonData, setButtonData, viewMode, dropdownItems, setDropdownItems, typeData, financialAccount } = props;
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [disableSaveButton, setDisableSaveButton] = useState(false);
     const [changeValue, setChangeValue] = useState(null);
@@ -26,7 +26,7 @@ export const DocTypeAcMappingMaster = (props) => {
                 docTypeHeadMappingForm.resetFields();
                 forceUpdate();
                 setButtonData({ ...buttonData, formBtnActive: true });
-                handleCodeFunction();
+                // handleCodeFunction();
             })
             .catch((error) => console.log(error));
     };
@@ -45,7 +45,6 @@ export const DocTypeAcMappingMaster = (props) => {
         docTypeHeadMappingList,
         setDocTypeHeadMappingList,
         typeData,
-        handleCodeFunction,
         form,
         changeValue,
         setChangeValue,
@@ -60,7 +59,6 @@ export const DocTypeAcMappingMaster = (props) => {
         dropdownItems,
         setDropdownItems,
         financialAccount,
-        typeData,
     };
 
     const formProductAttributeProps = {
@@ -73,7 +71,9 @@ export const DocTypeAcMappingMaster = (props) => {
             let len = docTypeLedger?.accountLedgerMappingDtoList?.length;
             for (let i = 0; i < len; i++) {
                 let internalId = Math.floor(Math.random() * 100000000 + 1);
-                setDocTypeHeadMappingList((item) => [...item, { ...docTypeLedger?.accountLedgerMappingDtoList[i], internalId: internalId }]);
+                setDocTypeHeadMappingList((item) => {
+                    return [...item, { ...docTypeLedger?.accountLedgerMappingDtoList[i], internalId: internalId }];
+                });
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -90,7 +90,7 @@ export const DocTypeAcMappingMaster = (props) => {
 
     return (
         <>
-            <FormProductAttribute {...formProductAttributeProps} mainFomEdit={mainFomEdit} />
+            <FormDocTypeAcMapping {...formProductAttributeProps} mainFomEdit={mainFomEdit} />
 
             {docTypeHeadMappingList?.length > 0 &&
                 docTypeHeadMappingList?.map((action) => {

@@ -416,9 +416,7 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
                             </Empty>
                         )}
                     >
-                        <div className={styles.tableProduct}>
-                            <DataTable isLoading={isLoading} tableData={searchData} tableColumn={tableColumn} />
-                        </div>
+                        <DataTable isLoading={isLoading} tableData={searchData} tableColumn={tableColumn} />
                     </ConfigProvider>
                 </Col>
             </Row>

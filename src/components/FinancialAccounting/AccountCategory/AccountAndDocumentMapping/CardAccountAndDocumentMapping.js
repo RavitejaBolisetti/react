@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { Fragment, useEffect } from 'react';
-import { Card, Row, Button, Divider, Typography, Col } from 'antd';
+import { Card, Row, Button, Divider, Typography, Space } from 'antd';
 import { FiEdit, FiTrash } from 'react-icons/fi';
 import styles from 'components/common/Common.module.css';
 import FormAccountAndDocumentMapping from './FormAccountAndDocumentMapping';
@@ -13,13 +13,9 @@ const { Text } = Typography;
 
 const CardAccountAndDocumentMapping = (props) => {
     const { finalFormdata, accDocMapForm, forceUpdate, setOpenAccordian, changeValue, setChangeValue, handleCodeFunction, editForm, formEdit, setFormEdit, uniqueCardEdit, setuniqueCardEdit, handleDescriptionChange, buttonData, setButtonData, dropdownItems, setDropdownItems, accountDocumentMaps, setAccountDocumentMaps, accountCategoryData, applicationMenuData, financialAccountData, setSelectedTreeSelectKey, setUserApplicationId, viewMode, selectedTreeSelectKey, handleSelectTreeClick, documentDescriptionData, appSelectName } = props;
-
-    console.log('props?.applicationName ',props?.applicationName );
     const appName = props?.applicationName ? props?.applicationName : appSelectName;
     const docName = props?.documentDescription ? props?.documentDescription : documentDescriptionData?.find((e) => e?.key === props?.documentTypeCode)?.value;
     const financeName = financialAccountData?.find((e) => e?.key === props?.financialAccountHeadCode)?.value;
-
-    console.log('props?.applicationName', props?.applicationName);
 
     const accDocMapEdit = (props) => {
         setuniqueCardEdit(props?.internalId);
@@ -105,27 +101,18 @@ const CardAccountAndDocumentMapping = (props) => {
     }, [formEdit]);
 
     return (
-        <Card
-            style={{
-                backgroundColor: '#BEBEBE1A',
-                marginTop: '12px',
-            }}
-        >
-            <Row align="middle" justify="space-between">
-                <Col>
-                    <Row align="center">
-                        <div>
-                            <Text>{appName}</Text>
-                        </div>
+        <Card>
+            <Row align="middle" justify="space-between" className={styles.marB20}>
+                <Space direction="vertical">
+                    <Space>
+                        <Text>{appName}</Text>
+
                         <Divider type="vertical" />
-                        <div>
-                            <Text>{docName}</Text>
-                        </div>
-                    </Row>
-                    <Text className={styles.marB20} type="secondary">
-                        {financeName}
-                    </Text>
-                </Col>
+
+                        <Text>{docName}</Text>
+                    </Space>
+                    <Text type="secondary">{financeName}</Text>
+                </Space>
 
                 {viewMode === false ? (
                     <Row>

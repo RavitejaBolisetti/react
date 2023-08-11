@@ -104,8 +104,8 @@ const AddEditFormMain = (props) => {
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={10} lg={10} xl={10} xxl={10}>
-                                    <Form.Item name="quantity" label="Quantity" initialValue={formData?.quantity} rules={[validateOnlyPositiveNumber('Quantity')]}>
-                                        <InputNumber defaultValue={1} />
+                                    <Form.Item name="quantity" label="Quantity" initialValue={'1'} rules={[validateOnlyPositiveNumber('Quantity')]}>
+                                        <InputNumber />
                                     </Form.Item>
                                 </Col>
                             </Row>

@@ -44,6 +44,4 @@ export const VEHICLE_PURCHASE_ORDER_STATUS = {
         key: 'INV',
         title: 'Invoiced',
     },
-
-    
 };

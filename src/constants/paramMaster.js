@@ -194,7 +194,7 @@ export const PARAM_MASTER = {
     },
     VH_PURCHASE_RORDER_SER: {
         id: 'VH_PURCHASE_RORDER_SER',
-        title: 'Vehicle Purchase Order List', 
+        title: 'Vehicle Purchase Order List',
     },
     YES_NO_FLG: {
         id: 'YES_NO_FLG',
@@ -243,6 +243,10 @@ export const PARAM_MASTER = {
     GRN_TYPE: {
         id: 'GRN_TYPE',
         title: 'GRN Type',
+    },
+    VEHCL_STATS: {
+        id: 'VEHCL_STATS',
+        title: 'Vehicle Status',
     },
     PHYSICAL_STATUS: {
         id: 'PHYSICAL_STATUS',

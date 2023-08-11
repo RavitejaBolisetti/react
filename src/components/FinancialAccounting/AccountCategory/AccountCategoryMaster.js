@@ -383,7 +383,7 @@ export const AccountCategoryMain = (props) => {
         handleButtonClick: () => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD }),
     };
 
-    const title = 'Accounting Category Code';
+    const title = 'Account Category Code';
 
     const advanceFilterResultProps = {
         advanceFilter: false,

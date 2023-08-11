@@ -11,7 +11,7 @@ import { customSelectBox } from 'utils/customSelectBox';
 
 import styles from 'components/common/Common.module.css';
 
-function FormProductAttribute(props) {
+function FormDocTypeAcMapping(props) {
     const { docTypeHeadMappingForm, typeData, addDocHeadMapping, formEdit, editForm, financialAccount } = props;
     const fieldNames = { key: 'id', id: 'key', value: 'value' };
     return (
@@ -55,4 +55,4 @@ function FormProductAttribute(props) {
     );
 }
 
-export default FormProductAttribute;
+export default FormDocTypeAcMapping;

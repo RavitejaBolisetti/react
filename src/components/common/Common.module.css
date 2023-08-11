@@ -355,7 +355,7 @@
     line-height: 20px;
 }
 
-.autoCompleteContent :global .ant-input-search .ant-input:hover,
+/* .autoCompleteContent :global .ant-input-search .ant-input:hover,
 .autoCompleteContent :global .ant-input-search .ant-input:focus {
     border-color: transparent;
 }
@@ -363,7 +363,7 @@
 .autoCompleteContent :global .ant-btn-default {
     border-color: transparent;
     background-color: #fff;
-}
+} */
 
 /* .contentHeaderBackground :global .ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
     height: 36px;
@@ -373,14 +373,14 @@
     background: #E6E6E6 !important;
 } */
 
-.autoCompleteContent :global .ant-btn-default:not(:disabled):hover {
+/* .autoCompleteContent :global .ant-btn-default:not(:disabled):hover {
     border-color: transparent;
-}
+} */
 
-.tableProduct {
+/* .tableProduct {
     margin-bottom: 20px;
     padding: 0;
-}
+} */
 
 /* .datasearh :global .ant-table-wrapper .ant-table-expanded-row-fixed {
     width: 100% !important;
@@ -1423,11 +1423,9 @@
 } */
 
 .tableIcons {
-    border: none !important;
-    padding: 0px !important;
-    box-shadow: none;
-    width: 20px !important;
-    margin-right: 8px;
+    border: none;
+    padding: 0;
+    width: 20px;
 }
 
 /* .searchContainer {
@@ -3309,6 +3307,10 @@ li.ant-timeline-item.active .ant-timeline-item-content p {
 
 .advanceFilterIcon {
     margin-top: 5px;
+}
+
+.mainDataTable :global .ant-pagination {
+    display: none;
 }
 
 @media (max-width: 768px) {
