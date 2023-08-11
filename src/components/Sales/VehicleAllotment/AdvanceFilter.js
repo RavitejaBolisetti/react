@@ -10,6 +10,7 @@ import { Form, Button, Row, Col, Input, Select  } from 'antd';
 import styles from 'components/common/Common.module.css';
 import { PlusOutlined } from '@ant-design/icons';
 import { FilterIcon } from 'Icons';
+import { RxCross2 } from 'react-icons/rx';
 import { VEHICLE_TYPE } from 'constants/VehicleType';
 
 const { Search } = Input;
@@ -17,13 +18,15 @@ const { Option } = Select;
 
 
 export default function AdvanceFilter(props) {
-    const { vehicleSearchvalue, ChangeSearchHandler, onSearchHandle, setAdvanceSearchVisible, toggleButton, settoggleButton, } = props;
+    const { vehicleSearchvalue, ChangeSearchHandler, onSearchHandle, setAdvanceSearchVisible, handleResetFilter, 
+        toggleButton, settoggleButton, advanceFilter, removeFilter, filterString, extraParams} = props;
 
     return (
         <>
+        <div className={styles.contentHeaderBackground}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <div className={styles.contentHeaderBackground}>
+                    {/* <div className={styles.contentHeaderBackground}> */}
                         <Form autoComplete="off" colon={false} className={styles.masterListSearchForm}>
                         <Form.Item>
                         <Row gutter={20}>
@@ -56,9 +59,42 @@ export default function AdvanceFilter(props) {
                         </Form.Item>
                     </Form>
 
-                    </div>
+                    {/* </div> */}
                 </Col>
             </Row>
+
+            {advanceFilter && filterString?.advanceFilter && extraParams.find((i) => i.name) && (
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.advanceFilterTop}>
+                        <Row gutter={20}>
+                            <Col xs={24} sm={24} md={24} lg={22} xl={22} className={styles.advanceFilterContainer}>
+                                <div className={styles.advanceFilterTitle}>Applied Advance Filters : </div>
+                                {extraParams?.map((filter) => {
+                                    return (
+                                        filter?.value &&
+                                        filter?.filter && (
+                                            <div className={styles.advanceFilterItem} key={filter?.key}>
+                                                {filter?.name}
+                                                {filter?.canRemove && (
+                                                    <span>
+                                                        <RxCross2 onClick={() => removeFilter(filter?.key)} />
+                                                    </span>
+                                                )}
+                                            </div>
+                                        )
+                                    );
+                                })}
+                            </Col>
+                            <Col xs={24} sm={2} md={2} lg={2} xl={2} className={styles.advanceFilterClear}>
+                                <Button className={styles.clearBtn} onClick={() => handleResetFilter()} danger>
+                                    Clear
+                                </Button>
+                            </Col>
+                        </Row>
+                    </Col>
+                </Row>
+            )}
+        </div>
         </>
     );
 }

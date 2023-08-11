@@ -33,10 +33,10 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             OTF: {
-                OtfSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isOTFSearchLoading, data, filter: filterString, isDetailLoaded, detailData: otfData = [] },
+                OtfSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isOTFSearchLoading, data, isDetailLoaded, detailData: otfData = [] },
             },
             vehicleAllotmentData: {
-                vehicleAllotment: { isLoaded, isLoading, detailData: allotmentSummaryDetails, data: allotmentSearchedList },
+                vehicleAllotment: { isLoaded, isLoading, detailData: allotmentSummaryDetails, data: allotmentSearchedList, filter: filterString, },
             },
         },
     } = state;
@@ -142,7 +142,8 @@ export const VehicleAllotmentMasterBase = (props) => {
                 key: 'searchType',
                 title: 'Type',
                 value: toggleButton,
-                name: typeData?.[PARAM_MASTER.OTF_SER.id]?.find((i) => i?.key === toggleButton)?.value,
+                //name: typeData?.[PARAM_MASTER.VECH_ALLOT_SER.id]?.find((i) => i?.key === toggleButton)?.value,
+                name: toggleButton,
                 canRemove: false,
                 filter: true,
             },
@@ -188,6 +189,15 @@ export const VehicleAllotmentMasterBase = (props) => {
         }
     };
 
+    const onSearchHandle = (value) => {
+        if (value.length > 2) {
+            setSearchParamValue(value);
+            setFilterString({...value, toggleButton, advanceFilter: true} );
+        } else if (value === '') {
+            
+        }
+    };
+
     useEffect(() => {
         if (userId) {
             fetchVehicleAllotmentSearchedList({ customURL:customURL+'/search', setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
@@ -195,15 +205,14 @@ export const VehicleAllotmentMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, searchParamValue, toggleButton]);
 
-
-
     const searchOTFExtraParams = useMemo(() => {
         return [
             {
                 key: 'searchType',
                 title: 'Type',
                 value: filterStringOTFSearch?.searchType,
-                name: typeData?.[PARAM_MASTER.OTF_SER.id]?.find((i) => i?.key === filterString?.searchType)?.value
+                //name: typeData?.[PARAM_MASTER.VECH_ALLOT_SER.id]?.find((i) => i?.key === filterString?.searchType)?.value
+                name: toggleButton
             },
             {
                 key: 'searchParam',
@@ -292,6 +301,16 @@ export const VehicleAllotmentMasterBase = (props) => {
         setAdvanceSearchVisible(false);
     };
 
+    const removeFilter = (key) => {
+        if (key === 'searchParam') {
+            const { searchType, searchParam, ...rest } = filterString;
+            setFilterString({ ...rest });
+        } else {
+            const { [key]: names, ...rest } = filterString;
+            setFilterString({ ...rest });
+        }
+    };
+
     const onFinish = (values) => {
         const recordId = formData?.parentId || form.getFieldValue('parentId');
         let data = { ...values, parentId: recordId };
@@ -358,16 +377,6 @@ export const VehicleAllotmentMasterBase = (props) => {
         setAdvanceSearchVisible(false);
     };
 
-    const removeFilter = (key) => {
-        if (key === 'searchParam') {
-            const { searchType, searchParam, ...rest } = filterString;
-            setFilterString({ ...rest });
-        } else {
-            const { [key]: names, ...rest } = filterString;
-            setFilterString({ ...rest });
-        }
-    };
-
     const title = 'Search OTF';
 
     const advanceFilterResultProps = {
@@ -385,14 +394,14 @@ export const VehicleAllotmentMasterBase = (props) => {
         onFinishFailed,
         handleResetFilter,
         advanceFilterForm,
-
+        ChangeSearchHandler,
+        onSearchHandle,
         title,
         data,
         setAdvanceSearchVisible,
         typeData,
         searchForm,
         onFinishSearch,
-        
     };
 
     const advanceFilterProps = {
@@ -402,7 +411,6 @@ export const VehicleAllotmentMasterBase = (props) => {
         titleOverride: 'Advance Filters',
 
         onCloseAction: onAdvanceSearchCloseAction,
-        handleResetFilter,
         filterString,
         setFilterString,
         advanceFilterForm,
@@ -435,7 +443,6 @@ export const VehicleAllotmentMasterBase = (props) => {
         onCloseAction,
         titleOverride: drawerTitle.concat('Allotment Details'),
         tableData: data,
-        ChangeSearchHandler,
         ADD_ACTION,
         EDIT_ACTION,
         VIEW_ACTION,

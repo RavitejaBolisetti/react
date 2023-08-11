@@ -252,4 +252,8 @@ export const PARAM_MASTER = {
         id: 'ACC_HEAD',
         title: 'Sales Type',
     },
+    VECH_ALLOT_SER: {
+        id: 'VECH_ALLOT_SER',
+        title: 'Vehicle Allotment Search',
+    },
 };
