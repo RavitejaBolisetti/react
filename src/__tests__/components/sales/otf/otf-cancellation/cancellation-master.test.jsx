@@ -5,6 +5,8 @@ import { CancellationMaster } from '@components/Sales/OTF/OTFCancellation/Cancel
 import customRender from '@utils/test-utils';
 import { Form } from 'antd';
 import createMockStore from '__mocks__/store';
+import { showGlobalNotification } from '@store/actions/notification';
+import { act } from 'react-dom/test-utils'
 
 beforeEach(() => {
     jest.clearAllMocks()
@@ -149,57 +151,134 @@ const data = [
 
 const dealerDataList = [
     {
-        dealerName: "testName"
+        dealerName: "testName",
+        key: 1
     },
     {
-        dealerName: "testName"
+        dealerName: "test DMS user",
+        key: 2
     },
     {
-        dealerName: "testName"
+        dealerName: "testName DMS user",
+        key: 3
     }
 ]
 
+const buttonData = {
+    allotBtn: true,
+    cancelBtn: true,
+    cancelOTFBtn: true,
+    changeHistory: true,
+    closeBtn: false,
+    deliveryNote: false,
+    editBtn: false,
+    formBtnActive: true,
+    invoiceBtn: false,
+    saveAndNewBtn: false,
+    saveAndNewBtnClicked: false,
+    saveBtn: true,
+    transferOTFBtn: true,
+    unAllotBtn: false,
+}
+
+const otfStatusList = [
+    {
+        desc: "Booked",
+        displayOnView: true,
+        id: 1,
+        key: "O"
+    },
+    {
+        desc: "Booked1",
+        displayOnView: true,
+        id: 2,
+        key: "2"
+    },
+    {
+        desc: "Booked2",
+        displayOnView: true,
+        id: 3,
+        key: "3"
+    }
+]
+
+
 const props = {
+    CANCEL_ACTION: "cancel_otf",
     otfData: otfData,
     selectedOrder: "",
-    userId: 123,
-    listShowLoading: true,
+    userId: "123",
+    listShowLoading: false,
     uploadDocumentFile: jest.fn(),
     moduleTitle: 'title',
     setUploadedFile: jest.fn(),
     uploadedFile: undefined,
     fetchProductHierarchyList: jest.fn(),
+    fetchOTFSearchedList: jest.fn(),
+    fetchOTFDetail: jest.fn(),
     productHierarchyData: productHierarchyData,
     fetchDealerList: jest.fn(),
     dealerDataList: dealerDataList,
-    searchDealerValue: dealerDataList
+    searchDealerValue: dealerDataList,
+    buttonData: buttonData,
+    handleButtonClick: jest.fn(),
+    isChangeHistoryData: [],
+    onCloseAction: jest.fn(),
+    titleOverride: "Cancel OTF",
+    otfStatusList: otfStatusList,
+    onErrorAction: jest.fn(),
 }
 
 describe('OTF cancellation master render', () => {
     const mockStore = createMockStore({
-        auth: { userId: 132, accessToken: "tetsT", token: "testToken" },
+        auth: { userId: 132, accessToken: "testaccesstoken", token: "testToken" },
         data: {
-            ProductHierarchy: { isLoading: false, isLoaded: false, data: productHierarchyData, attributeData: productHierarchyData },
-            ConfigurableParameterEditing: { filteredListData: [] },
-            SupportingDocument: { isLoaded: false, isLoading: false, data: data },
+            ProductHierarchy: {
+                isLoading: false,
+                isLoaded: false,
+                data: data,
+            },
+            ConfigurableParameterEditing: {
+                filteredListData: {
+                    OTF_SER: [{ key: "customerName" }]
+                }
+            },
+            SupportingDocument: {
+                isLoaded: false,
+                isLoading: false,
+                data: data
+            },
             OTF: {
-                OtfCancellation: { detailData: dealerDataList },
+                OtfCancellation: data,
             },
         },
+        notification: {
+            message: null,
+            notificationType: "error",
+            placement: null,
+            showTitle: true,
+            title: "ERROR",
+            visible: false
+        },
     });
+    it('should render cancellation master add edit form', async () => {
 
-    it('should render cancellation master add edit form', () => {
+        const handleCancellationReasonTypeChange = jest.fn();
+
         const { getByRole } = customRender(
             <Provider store={mockStore}>
                 <FormWrapper
                     {...props}
                     isVisible={true}
                     onFinishOTFCancellation={jest.fn()}
-                    handleCancellationReasonTypeChange={jest.fn()}
                     handleSelectTreeClick={jest.fn()}
                     showGlobalNotification={jest.fn()}
-                    onDownload ={jest.fn()}
                     handleSelect={jest.fn()}
+                    handleFormValueChange={jest.fn()}
+                    onClick={jest.fn()}
+                    onDownload={jest.fn()}
+                    onSearchDealer={jest.fn()}
+                    onChange={(e) => handleCancellationReasonTypeChange(e)}
                 />
             </Provider>
         );
@@ -209,17 +288,16 @@ describe('OTF cancellation master render', () => {
         fireEvent.click(close);
 
         const uploadCancell = getByRole("button", { name: 'Upload Cancellation Letter (File type should be png, jpg or pdf and max file size to be 5Mb) Upload File', exact: false });
-        fireEvent.click(uploadCancell); 
+        fireEvent.click(uploadCancell);
 
         const uploadFile = getByRole("button", { name: 'Upload File', exact: false });
-        fireEvent.click(uploadFile);
+        fireEvent.change(uploadFile);
 
         const cancelOtf = getByRole("button", { name: 'Cancel OTF', exact: false });
         fireEvent.click(cancelOtf);
 
         const cancel = getByRole("button", { name: 'Cancel', exact: false });
         fireEvent.click(cancel);
-
 
         const closeImg = getByRole("img", { name: 'close', exact: false });
         expect(closeImg).toBeTruthy();
@@ -243,16 +321,16 @@ describe('OTF cancellation master render', () => {
         expect(order).toBeTruthy();
 
         const reasonType = getByRole("combobox", { name: 'Cancellation Reason Type', exact: false });
-        fireEvent.change(reasonType, { target: { value: 'cancellation reasion type' } });
+        fireEvent.change(reasonType, { target: { value: 'LOMMD' } });
 
         const reasonCancell = getByRole("combobox", { name: 'Reason For Cancellation', exact: false });
         fireEvent.change(reasonCancell, { target: { value: 'testing for reason cancel' } });
 
         const cancelRemark = getByRole("textbox", { name: 'Cancellation Remarks', exact: false });
-        fireEvent.change(cancelRemark, { target: { value: 'noida' } });
+        fireEvent.change(cancelRemark, { target: { value: 'tset' } });
 
         const uploadLetter = getByRole("heading", { name: 'Upload Cancellation Letter', exact: false });
         expect(uploadLetter).toBeTruthy();
-    })
 
+    })
 })

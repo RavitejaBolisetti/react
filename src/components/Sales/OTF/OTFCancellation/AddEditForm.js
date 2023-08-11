@@ -24,6 +24,7 @@ import { FiEye, FiTrash } from 'react-icons/fi';
 const { TextArea, Search } = Input;
 
 const AddEditFormMain = (props) => {
+    console.log('dealerDataList===>', props.dealerDataList)
     const { otfCancellationForm, formData, selectedOrder, fieldNames, onFinishOTFCancellation } = props;
     const { handleButtonClick, buttonData, setButtonData, onCloseAction, handleFormValueChange, typeData, setUploadedFile, showGlobalNotification, viewDocument, setEmptyList } = props;
     const { searchDealerValue, setSearchDealerValue, dealerDataList } = props;
@@ -35,7 +36,7 @@ const AddEditFormMain = (props) => {
     const [dealerList, setDealerList] = useState([]);
     const [fileList, setFileList] = useState([]);
 
-    const onDrop = (e) => {};
+    const onDrop = (e) => { };
     const onDownload = (file) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Your download will start soon' });
 
@@ -71,14 +72,14 @@ const AddEditFormMain = (props) => {
         setUploadedFileName,
     };
 
-    useEffect(() => {
-        if (showStatus.status === 'done') {
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: `${showStatus.name + ' file uploaded successfully'}` });
-        } else if (showStatus.status === 'error') {
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Error' });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [showStatus]);
+    // useEffect(() => {
+    //     if (showStatus.status === 'done') {
+    //         showGlobalNotification({ notificationType: 'success', title: 'Success', message: `${showStatus.name + ' file uploaded successfully'}` });
+    //     } else if (showStatus.status === 'error') {
+    //         showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Error' });
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [showStatus]);
 
     const handleCancellationReasonTypeChange = (value) => {
         setReasonTypeChange(value);
@@ -173,6 +174,9 @@ const AddEditFormMain = (props) => {
         placeholder: preparePlaceholderSelect('Parent'),
     };
 
+    console.log('reasonTypeChange===>', reasonTypeChange);
+    
+    
     const isLoading = false;
     return (
         <>
