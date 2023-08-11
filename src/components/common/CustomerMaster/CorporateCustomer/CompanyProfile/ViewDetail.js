@@ -73,7 +73,7 @@ const ViewDetailMain = (props) => {
                     </Panel>
                 </Collapse>
 
-                <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
+                {/* <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
                     <Panel header="Social Profiles" key="2">
                         <Divider />
                         <Descriptions {...viewProps}>
@@ -82,7 +82,7 @@ const ViewDetailMain = (props) => {
                             <Descriptions.Item label="Twitter Link">{checkAndSetDefaultValue(formData?.twitterLink, isLoading)}</Descriptions.Item>
                         </Descriptions>
                     </Panel>
-                </Collapse>
+                </Collapse> */}
 
                 <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(3)} expandIconPosition="end">
                     <Panel header="Key Account Details" key="3">
@@ -99,7 +99,7 @@ const ViewDetailMain = (props) => {
                     </Panel>
                 </Collapse>
 
-                <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(4)} expandIconPosition="end">
+                {/* <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(4)} expandIconPosition="end">
                     <Panel header="Authority Details(Who Knows Whom)" key="4">
                         <Divider />
                         {formData?.authorityDetails && (
@@ -111,13 +111,14 @@ const ViewDetailMain = (props) => {
                             </Descriptions>
                         )}
                     </Panel>
-                </Collapse>
+                </Collapse> */}
+                {/* DON"T REMOVE COMMENTED CODE
                 <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(5)} expandIconPosition="end">
                     <Panel header="Upload Customer Form" key="5">
                         <Divider />
                         {viewDocument?.fileName && <Card className={styles.viewDocumentStrip} key={viewDocument?.fileName} title={viewDocument?.fileName} extra={<FiDownload />} onClick={handleOnClick}></Card>}
                     </Panel>
-                </Collapse>
+                </Collapse> */}
             </Space>
         </div>
     );

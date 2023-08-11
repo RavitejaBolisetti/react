@@ -6,13 +6,12 @@
 import { Button, Form, Row, Col, Select, Input, Divider, Checkbox } from 'antd';
 import { validateLettersWithWhitespaces, validateEmailField, validateRequiredInputField, validateRequiredSelectField, validateMobileNoField, validatInstagramProfileUrl, validatFacebookProfileUrl, validatYoutubeProfileUrl, validattwitterProfileUrl, duplicateValidator } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
-import UploadUtils from 'components/common/CustomerMaster/Common/UploadUtils';
 import { CUSTOMER_TYPE } from 'constants/CustomerType';
 
 import styles from 'components/common/Common.module.css';
 
 const AddEditForm = (props) => {
-    const { isReadOnly = false, onSaveFormData, contactform, setShowAddEditForm, isViewModeVisible, setIsEditing, typeData, customerType, uploadImgDocId, formActionType, setUploadImgDocId, handleFormValueChange, setIsAdding, contactData, editingData } = props;
+    const { isReadOnly = false, onSaveFormData, contactform, setShowAddEditForm, setIsEditing, typeData, customerType, uploadImgDocId, formActionType, handleFormValueChange, setIsAdding, contactData, editingData } = props;
 
     const disabledProps = { disabled: isReadOnly || formActionType?.viewMode };
 
@@ -61,8 +60,8 @@ const AddEditForm = (props) => {
     return (
         <>
             <Form form={contactform} autoComplete="off" onFinish={onSaveFormData} onFieldsChange={handleFormValueChange} layout="vertical">
-                <UploadUtils {...props} isViewModeVisible={isViewModeVisible} setUploadImgDocId={setUploadImgDocId} formActionType={formActionType} />
-                <Divider />
+                {/* <UploadUtils {...props} isViewModeVisible={isViewModeVisible} setUploadImgDocId={setUploadImgDocId} formActionType={formActionType} /> */}
+                {/* <Divider /> */}
                 <Row gutter={20}>
                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                         <Form.Item label="Purpose of Contact" name="purposeOfContact" rules={[validateRequiredSelectField('purpose of contact'), { validator: (rule, value) => duplicateValidator(value, 'purposeOfContact', contactData, editingData?.purposeOfContact) }]}>
@@ -157,10 +156,9 @@ const AddEditForm = (props) => {
                         </Form.Item>
                     </Col>
 
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    {/* <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Divider />
-                    </Col>
-
+                    </Col> 
                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                         <Form.Item initialValue={''} label="Facebook Link" name="facebookId" rules={[validatFacebookProfileUrl('facebook')]}>
                             <Input placeholder={preparePlaceholderText('facebook link')} {...disabledProps} />
@@ -185,7 +183,7 @@ const AddEditForm = (props) => {
                         <Form.Item initialValue={''} label="Team BHP Link" name="teamBhp">
                             <Input placeholder={preparePlaceholderText('team BHP link')} {...disabledProps} />
                         </Form.Item>
-                    </Col>
+                    </Col> */}
 
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Form.Item initialValue={false} valuePropName="checked" name="defaultContactIndicator">

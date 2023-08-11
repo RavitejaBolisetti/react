@@ -116,8 +116,8 @@ const ViewDetailMain = (props) => {
         const data = { id: formData?.pendingNameChangeRequest?.id || '', customerCode: selectedCustomerId, rejectionRemark: 'Name change request', actionStatus: value };
         const onSuccess = (res) => {
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Customer name change request approved successfully' });
-            if (res?.data?.actionStatus === 'Rejected') setStatus(STATUS?.REJECTED?.title );
-            else setStatus(STATUS?.APPROVED?.title );
+            if (res?.data?.actionStatus === 'Rejected') setStatus(STATUS?.REJECTED?.title);
+            else setStatus(STATUS?.APPROVED?.title);
 
             setactiveKey([]);
             setVisibility(false);
@@ -158,11 +158,11 @@ const ViewDetailMain = (props) => {
                                     </Text>
                                 </Col>
                                 <Col xs={24} sm={24} md={6} lg={6} xl={6}>
-                                    {status === STATUS?.REJECTED?.title  ? (
+                                    {status === STATUS?.REJECTED?.title ? (
                                         <Tag style={{ textAlign: 'right' }} color="error">
                                             Rejected
                                         </Tag>
-                                    ) : status === STATUS?.APPROVED?.title  ? (
+                                    ) : status === STATUS?.APPROVED?.title ? (
                                         <Tag style={{ textAlign: 'right' }} color="success">
                                             Approved
                                         </Tag>
@@ -209,8 +209,7 @@ const ViewDetailMain = (props) => {
                                             </Col>
                                         </Row>
                                     ))}
-                                    {formData?.pendingNameChangeRequest !== null && (
-                                        visibility && (
+                                    {formData?.pendingNameChangeRequest !== null && visibility && (
                                         <Row gutter={20}>
                                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                 <Button type="primary" className={styles.marR20} onClick={onApprovedHandle}>
@@ -221,7 +220,7 @@ const ViewDetailMain = (props) => {
                                                 </Button>
                                             </Col>
                                         </Row>
-                                    ))}
+                                    )}
                                 </Panel>
                             </Collapse>
                         </div>
@@ -242,12 +241,11 @@ const ViewDetailMain = (props) => {
                             <Descriptions.Item label="Corporate Name">{findListedNonListed()}</Descriptions.Item>
                             {formData?.corporateCode && <Descriptions.Item label="Corporate Code">{checkAndSetDefaultValue(formData?.corporateCode)}</Descriptions.Item>}
                             <Descriptions.Item label="Corporate Category">{checkAndSetDefaultValue(getCodeValue(typeData?.CORP_CATE, formData?.corporateCategory), isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Membership Type">{checkAndSetDefaultValue(getCodeValue(typeData?.MEM_TYPE, formData?.membershipType), isLoading)}</Descriptions.Item>
+                            {/* <Descriptions.Item label="Membership Type">{checkAndSetDefaultValue(getCodeValue(typeData?.MEM_TYPE, formData?.membershipType), isLoading)}</Descriptions.Item> */}
                         </Descriptions>
                     </Card>
                 </Space>
             </div>
-
             <NameChangeHistory {...changeHistoryProps} />
             <RejectionModal {...modalProps} />
         </>

@@ -28,7 +28,7 @@ const { Text } = Typography;
 const AddEditFormMain = (props) => {
     const { form, typeData, formData, corporateLovData, formActionType: { editMode } = undefined, customerType } = props;
 
-    const { nameChangeRequestform, editedMode, setCustomerNameList, data, activeKey, setactiveKey, customerNameList, fileList, setFileList, selectedCustomerId, setEditedMode, isHistoryVisible, onViewHistoryChange, downloadFileFromButton, changeHistoryClose, setButtonData, buttonData,  setStatus, showGlobalNotification } = props;
+    const { nameChangeRequestform, editedMode, setCustomerNameList, data, activeKey, setactiveKey, customerNameList, fileList, setFileList, selectedCustomerId, setEditedMode, isHistoryVisible, onViewHistoryChange, downloadFileFromButton, changeHistoryClose, setButtonData, buttonData, setStatus, showGlobalNotification } = props;
     const { whatsAppConfiguration, setWhatsAppConfiguration, handleFormFieldChange } = props;
     const { contactOverWhatsApp, contactOverWhatsAppActive, sameMobileNoAsWhatsApp, sameMobileNoAsWhatsAppActive } = whatsAppConfiguration;
 
@@ -387,11 +387,11 @@ const AddEditFormMain = (props) => {
                             <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} placeholder={preparePlaceholderSelect('corporate category')} disabled={editMode} loading={false} allowClear fieldNames={{ label: 'value', value: 'key' }} options={typeData['CORP_CATE']}></Select>
                         </Form.Item>
                     </Col>
-                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                    {/* <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                         <Form.Item label="Membership Type" initialValue={formData?.membershipType} name="membershipType" data-testid="membershipType" rules={[validateRequiredSelectField('membership type')]}>
                             <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} placeholder={preparePlaceholderSelect('membership type')} loading={false} allowClear fieldNames={{ label: 'value', value: 'key' }} options={typeData['MEM_TYPE']}></Select>
                         </Form.Item>
-                    </Col>
+                    </Col> */}
                 </Row>
             </Card>
             <NameChangeHistory {...changeHistoryProps} />

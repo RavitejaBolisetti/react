@@ -38,11 +38,11 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             width: '14%',
         }),
 
-        tblPrepareColumns({
-            title: 'Membership Type',
-            dataIndex: 'membershipTypeName',
-            width: '14%',
-        }),
+        // tblPrepareColumns({
+        //     title: 'Membership Type',
+        //     dataIndex: 'membershipTypeName',
+        //     width: '14%',
+        // }),
 
         tblActionColumn({ styles, handleButtonClick, width: '12%' })
     );

@@ -4,15 +4,12 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { React, useEffect, useState } from 'react';
-import { Col, Input, Collapse, Row, Space, Form, Select, Checkbox, Divider, Card } from 'antd';
+import { Col, Input, Collapse, Row, Space, Form, Select, Divider } from 'antd';
 import { validateRequiredInputField, validateLettersWithWhitespaces, validatePanField, validateGSTIN, validatFacebookProfileUrl, validattwitterProfileUrl } from 'utils/validation';
-
-import { FiDownload } from 'react-icons/fi';
 
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { convertToUpperCase } from 'utils/convertToUpperCase';
 import { expandIcon } from 'utils/accordianExpandIcon';
-import { UploadUtil } from 'utils/Upload';
 
 import styles from 'components/common/Common.module.css';
 
@@ -21,8 +18,8 @@ const { Option } = Select;
 const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
-    const { appCategoryData, formData, form, handleOnClick } = props;
-    const { handleFormValueChange, fileList, setFileList, uploadedFile, emptyList, setEmptyList, uploadedFileName, setUploadedFileName, setUploadedFile, setAppCustomerCategory, setAppSubCategory, customerCategory, setCustomerCategory, viewDocument } = props;
+    const { appCategoryData, formData, form } = props;
+    const { setAppCustomerCategory, setAppSubCategory, customerCategory, setCustomerCategory } = props;
 
     const [activeKey, setactiveKey] = useState([1]);
 
@@ -70,30 +67,30 @@ const AddEditFormMain = (props) => {
         setCustomerCategory(value);
     };
 
-    const consentFormProps = {
-        isReplaceEnabled: false,
-        fileList,
-        setFileList,
-        setUploadedFile,
-        uploadedFile,
-        emptyList,
-        setEmptyList,
-        uploadedFileName,
-        setUploadedFileName,
-        handleFormValueChange,
+    // const consentFormProps = {
+    //     isReplaceEnabled: false,
+    //     fileList,
+    //     setFileList,
+    //     setUploadedFile,
+    //     uploadedFile,
+    //     emptyList,
+    //     setEmptyList,
+    //     uploadedFileName,
+    //     setUploadedFileName,
+    //     handleFormValueChange,
 
-        uploadButtonName: 'Upload File',
-        messageText: (
-            <>
-                Click or drop your file here to upload the signed and <br />
-                scanned customer form
-            </>
-        ),
-        validationText: <>File type should be png, jpg or pdf and max file size to be 5Mb</>,
-        supportedFileTypes: ['image/png', 'image/jpg', 'image/jpeg', 'application/pdf'],
-        maxSize: 5,
-        single: true,
-    };
+    //     uploadButtonName: 'Upload File',
+    //     messageText: (
+    //         <>
+    //             Click or drop your file here to upload the signed and <br />
+    //             scanned customer form
+    //         </>
+    //     ),
+    //     validationText: <>File type should be png, jpg or pdf and max file size to be 5Mb</>,
+    //     supportedFileTypes: ['image/png', 'image/jpg', 'image/jpeg', 'application/pdf'],
+    //     maxSize: 5,
+    //     single: true,
+    // };
 
     return (
         <>
@@ -184,11 +181,10 @@ const AddEditFormMain = (props) => {
                                         </Row>
                                     </>
                                 )}
-                                {/* </Form> */}
                             </Panel>
                         </Collapse>
 
-                        <Collapse defaultActiveKey={['2']} expandIcon={expandIcon} expandIconPosition="end">
+                        {/* <Collapse defaultActiveKey={['2']} expandIcon={expandIcon} expandIconPosition="end">
                             <Panel key="2" header="Social Profiles">
                                 <Divider />
                                 <Row gutter={20}>
@@ -210,9 +206,8 @@ const AddEditFormMain = (props) => {
                                         </Form.Item>
                                     </Col>
                                 </Row>
-                                {/* </Form> */}
                             </Panel>
-                        </Collapse>
+                        </Collapse> */}
 
                         <Collapse defaultActiveKey={['3']} expandIcon={expandIcon} expandIconPosition="end">
                             <Panel key="3" header="Key Account Details">
@@ -248,11 +243,10 @@ const AddEditFormMain = (props) => {
                                         </Form.Item>
                                     </Col>
                                 </Row>
-                                {/* </Form> */}
                             </Panel>
                         </Collapse>
 
-                        <Collapse defaultActiveKey={['4']} expandIcon={expandIcon} expandIconPosition="end">
+                        {/* <Collapse defaultActiveKey={['4']} expandIcon={expandIcon} expandIconPosition="end">
                             <Panel key="4" header="Authority Details(Who Knows Whom)">
                                 <Divider />
                                 <Row gutter={20}>
@@ -281,10 +275,10 @@ const AddEditFormMain = (props) => {
                                         </Form.Item>
                                     </Col>
                                 </Row>
-                                {/* </Form> */}
                             </Panel>
-                        </Collapse>
+                        </Collapse> */}
 
+                        {/*  DON'T REMOVE BELOW COMMENTED CODE
                         <Collapse defaultActiveKey={['5']} expandIcon={expandIcon} expandIconPosition="end">
                             <Panel key="5" header="Upload Customer Form">
                                 <Divider />
@@ -297,22 +291,12 @@ const AddEditFormMain = (props) => {
                                 {formData?.customerFormDocId && (
                                     <>
                                         <div className={styles.viewDrawerContainer}>
-                                            <Card
-                                                className={styles.viewDocumentStrip}
-                                                key={viewDocument?.fileName}
-                                                title={viewDocument?.fileName}
-                                                extra={
-                                                    <>
-                                                        <FiDownload onClick={handleOnClick} />
-                                                        {/* {!viewMode && <FiTrash onClick={() => deleteFile(uploadData)} />} */}
-                                                    </>
-                                                }
-                                            ></Card>
+                                            <Card className={styles.viewDocumentStrip} key={viewDocument?.fileName} title={viewDocument?.fileName} extra={<FiDownload onClick={handleOnClick} />}></Card>
                                         </div>
                                     </>
                                 )}
                             </Panel>
-                        </Collapse>
+                        </Collapse> */}
                     </Space>
                 </Col>
             </Row>
