@@ -52,7 +52,7 @@ describe('OTF finance view Details render', () => {
         changeHistory: true,
     };
 
-    it('amc form input should work', () => {
+    it('finance form input should work', () => {
         const prop2 = { formActionType: { viewMode: false } };
         customRender(<FormWrapper setFormData={jest.fn} {...prop2} />);
 

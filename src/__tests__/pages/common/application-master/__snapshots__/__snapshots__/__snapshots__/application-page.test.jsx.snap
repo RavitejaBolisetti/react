@@ -642,7 +642,7 @@ Object {
                 style="margin-left: -10px; margin-right: -10px;"
               >
                 <div
-                  class="ant-col verticallyCentered ant-col-xs-16 ant-col-sm-16 ant-col-md-16 ant-col-lg-16 ant-col-xl-16 css-dev-only-do-not-override-14wwjjs"
+                  class="ant-col verticallyCentered ant-col-xs-24 ant-col-sm-24 ant-col-md-14 ant-col-lg-14 ant-col-xl-14 css-dev-only-do-not-override-14wwjjs"
                   style="padding-left: 10px; padding-right: 10px;"
                 >
                   <div
@@ -1554,7 +1554,7 @@ Object {
               style="margin-left: -10px; margin-right: -10px;"
             >
               <div
-                class="ant-col verticallyCentered ant-col-xs-16 ant-col-sm-16 ant-col-md-16 ant-col-lg-16 ant-col-xl-16 css-dev-only-do-not-override-14wwjjs"
+                class="ant-col verticallyCentered ant-col-xs-24 ant-col-sm-24 ant-col-md-14 ant-col-lg-14 ant-col-xl-14 css-dev-only-do-not-override-14wwjjs"
                 style="padding-left: 10px; padding-right: 10px;"
               >
                 <div

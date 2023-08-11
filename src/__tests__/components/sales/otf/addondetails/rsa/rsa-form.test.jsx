@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
-import { screen, fireEvent, logRoles } from '@testing-library/react';
+import { screen, fireEvent } from '@testing-library/react';
 import RSAForm from 'components/Sales/OTF/AddOnDetails/RSA/RSAForm';
 import { Form } from 'antd';
 

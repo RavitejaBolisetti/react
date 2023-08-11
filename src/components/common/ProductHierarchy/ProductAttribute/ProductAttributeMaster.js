@@ -6,7 +6,7 @@
 import React, { useReducer, useState } from 'react';
 import { Form } from 'antd';
 import CardProductAttribute from './CardProductAttribute';
-import { FormProductAttribute } from './FormProductAttribute';
+import FormProductAttribute from './FormProductAttribute';
 
 function ProductAttributeMaster(props) {
     const { productHierarchyAttributeData, isVisible, selectedTreeData, setFormBtnActive, showGlobalNotification, skuAttributes, setSKUAttributes, disabledEdit, setDisabledEdit } = props;

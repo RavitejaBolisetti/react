@@ -65,9 +65,9 @@ export const AdvanceForm = (props) => {
                     setAdvanceSearchVisible(false);
                 } else {
                     const data = { ...values };
-                    console.log('data', data);
+                    //console.log('data', data);
                     const newarr = [...optionsServiceModified];
-                    console.log('newarr', newarr);
+                    //console.log('newarr', newarr);
 
                     newarr[AdvanceformData?.index] = data;
                     setoptionsServiceModified(newarr);

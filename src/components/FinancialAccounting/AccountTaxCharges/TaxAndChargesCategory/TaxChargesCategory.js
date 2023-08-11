@@ -88,7 +88,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const TaxChargesCategoryMain = (props) => {
-    const { saveData, userId, showGlobalNotification, taxChargeCategoryCodeData, isStateDataLoaded, fetchStateList, listStateShowLoading, stateData, saleData, fetchTaxCodeList, fetchTaxChargeCategoryType, taxChargeCategoryTypeData, listShowLoadingTaxChargeCategoryType, fetchTaxChargeCategory, listShowLoadingTaxChargeCategory, totalRecords, taxChargeCategoryData } = props;
+    const { saveData, userId, showGlobalNotification, taxChargeCategoryCodeData, isStateDataLoaded, fetchStateList, listStateShowLoading, stateData, saleData, fetchTaxCodeList, fetchTaxChargeCategoryType, taxChargeCategoryTypeData, listShowLoadingTaxChargeCategoryType, fetchTaxChargeCategory, listShowLoadingTaxChargeCategory, totalRecords, taxChargeCategoryData, listTaxCodeLoading } = props;
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
     const [showDataLoading, setShowDataLoading] = useState(true);
@@ -204,7 +204,7 @@ export const TaxChargesCategoryMain = (props) => {
             },
         ];
 
-        fetchTaxCodeList({ setIsLoading: listShowLoadingTaxChargeCategory, userId, extraParams, onSuccessAction });
+        fetchTaxCodeList({ setIsLoading: listTaxCodeLoading, userId, extraParams, onSuccessAction });
     };
 
     useEffect(() => {
@@ -392,7 +392,7 @@ export const TaxChargesCategoryMain = (props) => {
         handleButtonClick,
         title,
     };
-
+    
     return (
         <>
             <AppliedAdvanceFilter {...advanceFilterResultProps} />
