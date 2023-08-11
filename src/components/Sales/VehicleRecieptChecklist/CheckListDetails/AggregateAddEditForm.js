@@ -15,6 +15,7 @@ import { customSelectBox } from 'utils/customSelectBox';
 
 import moment from 'moment';
 import styles from 'components/common/Common.module.css';
+import { MakeCheckResult } from './CheckListUtils';
 
 export const AdvanceForm = (props) => {
     const { AdvanceformData, setAdvanceformData } = props;
@@ -26,7 +27,7 @@ export const AdvanceForm = (props) => {
 
     const BindFormItems = (props) => {
         const { checklistType } = props;
-        switch (checklistType) { 
+        switch (checklistType) {
             case 'Input': {
                 return (
                     <Row gutter={20}>
@@ -43,12 +44,12 @@ export const AdvanceForm = (props) => {
                     <Row gutter={20}>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item label="Min Range" name="fromNumber" rules={[validateRequiredInputField('min range')]}>
-                                <InputNumber min={1} max={10} placeholder={preparePlaceholderText('Min Range')} />
+                                <InputNumber className={styles.fullWidth} min={1} max={10} placeholder={preparePlaceholderText('Min Range')} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <Form.Item label="Max Range" name="toNumber" rules={[validateRequiredInputField('max range')]}>
-                                <InputNumber placeholder={preparePlaceholderText('Max Range')} min={1} max={10} />
+                                <InputNumber className={styles.fullWidth} placeholder={preparePlaceholderText('Max Range')} min={1} max={10} />
                             </Form.Item>
                         </Col>
                     </Row>
@@ -70,7 +71,7 @@ export const AdvanceForm = (props) => {
                     </Row>
                 );
             }
-            case 'boolean': {
+            case 'Boolean': {
                 return (
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -94,7 +95,6 @@ export const AdvanceForm = (props) => {
         }
     };
     useEffect(() => {
-        console.log('AdvanceformData', AdvanceformData);
         if (AdvanceformData && isVisible) {
             aggregateForm.setFieldsValue({
                 checkResult: AdvanceformData?.checkResult ?? '',
@@ -106,11 +106,13 @@ export const AdvanceForm = (props) => {
     }, [AdvanceformData]);
 
     const onFinish = () => {
+        console.log('index', AdvanceformData?.index);
         aggregateForm
             .validateFields()
             .then(() => {
                 const values = aggregateForm.getFieldsValue();
-                const data = { ...AdvanceformData, ...values, isEdited: true };
+                debugger;
+                const data = { ...AdvanceformData, ...values, isEdited: true, checkResult: MakeCheckResult({ type: AdvanceformData?.checklistType, data: values }) };
                 const newarr = [...checkListDataModified];
                 newarr[AdvanceformData?.index] = data;
                 setcheckListDataModified(newarr);
@@ -143,7 +145,7 @@ export const AdvanceForm = (props) => {
             </Row>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <Form.Item label="Remarks" name="Remarks" rules={[validateRequiredInputField('Remarks')]}>
+                    <Form.Item label="Remarks" name="remarks" rules={[validateRequiredInputField('Remarks')]}>
                         <TextArea placeholder={preparePlaceholderText('Remarks')} autoSize={{ minRows: 3, maxRows: 5 }} />
                     </Form.Item>
                     <Form.Item name="id" hidden></Form.Item>

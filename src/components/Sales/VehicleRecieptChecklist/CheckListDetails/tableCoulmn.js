@@ -4,6 +4,8 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableCloumn';
+import { MakeCheckResult } from './CheckListUtils';
+
 import styles from 'components/common/Common.module.css';
 
 export const tableColumn = (props) => {
@@ -29,10 +31,11 @@ export const tableColumn = (props) => {
             title: 'Check Result ',
             dataIndex: 'checkResult',
             width: '20%',
+            render: (text, record, index) => MakeCheckResult({ type: record?.checklistType, data: record }),
         }),
         tblPrepareColumns({
             title: 'Remarks',
-            dataIndex: 'Remarks',
+            dataIndex: 'remarks',
             width: '20%',
         }),
     ];

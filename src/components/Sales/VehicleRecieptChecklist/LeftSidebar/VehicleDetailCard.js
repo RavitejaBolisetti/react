@@ -54,7 +54,7 @@ const VehicleDetailCard = (props) => {
                 </p>
 
                 <p>
-                    GRN Date: <span className={styles.floatRight}>{dayjs(ProfileData?.grnDate)?.format('DD-MM-YYYY')}</span>
+                    GRN Date: <span className={styles.floatRight}>{ProfileData?.grnDate ? dayjs(ProfileData?.grnDate)?.format('DD-MM-YYYY') : 'NA'}</span>
                 </p>
                 <p>
                     GRN Status: <span className={styles.floatRight}>{ProfileData?.grnStatus || 'NA'}</span>

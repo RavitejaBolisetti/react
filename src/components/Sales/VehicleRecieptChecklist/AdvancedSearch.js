@@ -12,6 +12,7 @@ import { dateFormat, formatDate } from 'utils/formatDateTime';
 import { disableFutureDate } from 'utils/disableDate';
 import { ModalButtons } from 'components/common/Button';
 import { customSelectBox } from 'utils/customSelectBox';
+import { validateRequiredSelectField } from 'utils/validation';
 
 import styles from 'components/common/Common.module.css';
 
@@ -27,18 +28,12 @@ export const AdvancedSearchFrom = (props) => {
     const onFinish = (values) => {
         setFilterString({
             ...filterString,
-            receiptFromDate: formatDate(values?.receiptFromDate),
-            receipttoDate: formatDate(values?.receipttoDate),
+            fromDate: formatDate(values?.fromDate),
+            toDate: formatDate(values?.toDate),
+            model: values?.model,
             advanceFilter: true,
         });
-        const { receiptFromDate, receipttoDate, ...rest } = values;
-        for (const key in rest) {
-            rest?.[key] &&
-                setFilterString({
-                    ...filterString,
-                    [key]: rest?.[key],
-                });
-        }
+
         setAdvanceSearchVisible(false);
     };
 
@@ -50,11 +45,6 @@ export const AdvancedSearchFrom = (props) => {
         return;
     };
 
-    const selectProps = {
-        optionFilterProp: 'children',
-        showSearch: true,
-        allowClear: true,
-    };
     const modalProps = {
         reset: true,
         submit: true,
@@ -66,12 +56,12 @@ export const AdvancedSearchFrom = (props) => {
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item label="Receipt From Date" name="receiptFromDate" className={styles?.datePicker}>
+                    <Form.Item label="Receipt From Date" name="fromDate" className={styles?.datePicker} rules={[validateRequiredSelectField('From Date')]}>
                         <DatePicker placeholder={preparePlaceholderSelect('From Date')} format={dateFormat} className={styles.fullWidth} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item label="Receipt To Date" name="receipttoDate" className={styles?.datePicker}>
+                    <Form.Item label="Receipt To Date" name="toDate" className={styles?.datePicker} rules={[validateRequiredSelectField('To Date')]}>
                         <DatePicker placeholder={preparePlaceholderSelect('To Date')} format={dateFormat} className={styles.fullWidth} />
                     </Form.Item>
                 </Col>

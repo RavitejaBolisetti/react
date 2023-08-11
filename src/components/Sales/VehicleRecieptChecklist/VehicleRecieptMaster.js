@@ -80,6 +80,7 @@ const mapDispatchToProps = (dispatch) => ({
 
             fetchProfile: vehicleReceiptChecklistProfiledataActions.fetchList,
             profileLoading: vehicleReceiptChecklistProfiledataActions.listShowLoading,
+            resetProfile: vehicleReceiptChecklistProfiledataActions.reset,
 
             showGlobalNotification,
         },
@@ -94,7 +95,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
 
     const { fetchModel, isModelDataLoaded, isModelDataLoading, vehicleModelData, modelLoading } = props;
 
-    const { fetchProfile, profileLoading, isProfileDataLoaded, isProfileDataLoading, ProfileData } = props;
+    const { fetchProfile, profileLoading, isProfileDataLoaded, isProfileDataLoading, ProfileData, resetProfile } = props;
 
     const [listFilterForm] = Form.useForm();
 
@@ -199,19 +200,19 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
                 filter: true,
             },
             {
-                key: 'receiptFromDate',
+                key: 'fromDate',
                 title: 'Reciept From Date',
-                value: filterString?.receiptFromDate,
-                name: filterString?.receiptFromDate,
+                value: filterString?.fromDate,
+                name: filterString?.fromDate,
                 canRemove: true,
                 filter: true,
             },
             {
-                key: 'receipttoDate',
+                key: 'toDate',
                 title: 'Reciept To Date',
-                value: filterString?.receipttoDate,
-                name: filterString?.receipttoDate,
-                canRemove: true,
+                value: filterString?.toDate,
+                name: filterString?.toDate,
+                canRemove: false,
                 filter: true,
             },
             {
@@ -293,10 +294,15 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
     }, [currentSection, sectionName]);
 
     useEffect(() => {
+        console.log('filterString', filterString);
         if (isAdvanceSearchVisible && filterString) {
-            const { receiptFromDate, receipttoDate } = filterString;
-            advanceFilterForm.setFieldsValue({ ...filterString, receiptFromDate: formatDateToCalenderDate(receiptFromDate), receipttoDate: formatDateToCalenderDate(receipttoDate) });
+            advanceFilterForm.resetFields();
+            const { toDate, fromDate } = filterString;
+            advanceFilterForm.setFieldsValue({ ...filterString, fromDate: formatDateToCalenderDate(fromDate), toDate: formatDateToCalenderDate(toDate) });
+        } else {
+            advanceFilterForm.setFieldsValue({ ...filterString, fromDate: undefined, toDate: undefined });
         }
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isAdvanceSearchVisible, filterString]);
 
@@ -327,6 +333,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
         form.resetFields();
         form.setFieldsValue(undefined);
+        resetProfile();
         if (record?.grnNumber && record?.chassisNumber) {
             const myParams = [
                 {
@@ -340,7 +347,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
                     value: record?.chassisNumber,
                 },
             ];
-            fetchProfile({ setIsLoading: profileLoading, userId, onSuccessAction, extraParams: myParams });
+            fetchProfile({ setIsLoading: profileLoading, userId, onErrorAction, extraParams: myParams });
         }
 
         switch (buttonAction) {
@@ -441,11 +448,12 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         isLoading: showDataLoading,
         showAddButton: false,
     };
-    console.log('filterString', filterString);
     const removeFilter = (key) => {
-        if (key === 'searchParam') {
-            const { searchType, searchParam, ...rest } = filterString;
-            setFilterString({ ...rest });
+        if (key === 'fromDate') {
+            const { fromDate, toDate, ...rest } = filterString;
+            console.log('fromDate', key);
+            if (Object.keys(rest)?.length === 1) setFilterString();
+            else setFilterString({ ...rest });
         } else {
             const { [key]: names, ...rest } = filterString;
             if (Object.keys(rest)?.length === 1) setFilterString();
