@@ -23,7 +23,7 @@ import { CUSTOMER_INDIVIDUAL_SECTION } from 'constants/CustomerIndividualSection
 import { CUSTOMER_CORPORATE_SECTION } from 'constants/CustomerCorporateSection';
 import { CUSTOMER_TYPE } from 'constants/CustomerType';
 import { documentViewDataActions } from 'store/actions/data/customerMaster/documentView';
-import { ChangeHistory } from './ChangeHistory';
+import { CustomerChangeHistory } from './CustomerChangeHistory';
 import DataTable from 'utils/dataTable/DataTable';
 import { CustomerMainConatiner } from './CustomerMainConatiner';
 import styles from 'components/common/Common.module.css';
@@ -266,7 +266,7 @@ const CustomerMasterMain = (props) => {
         setIsFormVisible(true);
     };
 
-    const onFinish = (values, e) => { };
+    const onFinish = (values, e) => {};
 
     const onFinishFailed = (errorInfo) => {
         console.error(errorInfo);
@@ -515,7 +515,7 @@ const CustomerMasterMain = (props) => {
                 </Col>
             </Row>
             <CustomerMainConatiner {...containerProps} />
-            <ChangeHistory {...ChangeHistoryProps} />
+            <CustomerChangeHistory {...ChangeHistoryProps} />
         </>
     );
 };

@@ -261,7 +261,7 @@ p {
 }
 
 :global .ant-picker-time-panel-column::-webkit-scrollbar-thumb {
-    background-color: #C1C1C1 !important;
+    background-color: #b5b5b6 !important;
     border-radius: 10px;
 }
 

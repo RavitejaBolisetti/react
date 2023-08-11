@@ -138,12 +138,12 @@ const ApplicationDetails = ({ setCanFormSave, form, onFinishFailed = () => {}, p
                     </Col>
                 </Row>
                 <Row gutter={20} className={styles.formFooterNew}>
-                    <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
+                    <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.buttonsGroupLeft}>
                         <Button danger onClick={onCloseAction}>
                             Cancel
                         </Button>
                     </Col>
-                    <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
+                    <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.buttonsGroupRight}>
                         <Button disabled={isApplicatinoOnSaveLoading || !canFormSave} loading={isApplicatinoOnSaveLoading} htmlType="submit" form="myForm" key="saveBtm" type="primary">
                             Save
                         </Button>

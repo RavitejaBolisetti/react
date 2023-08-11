@@ -24,7 +24,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { doLogoutAPI } from 'store/actions/auth';
 import { headerDataActions } from 'store/actions/common/header';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { HeaderSkeleton } from './HeaderSkeleton';
 import { ChangePassword } from '../ChangePassword';
 import IMG_ICON from 'assets/img/icon.png';
@@ -81,8 +81,6 @@ const HeaderMain = (props) => {
     const { fetchEditConfigDataList, fetchConfigList, listConfigShowLoading, isTypeDataLoaded, isTypeDataLoading } = props;
 
     const navigate = useNavigate();
-    const location = useLocation();
-    const pagePath = location.pathname;
 
     const [isChangePasswordModalOpen, setChangePasswordModalOpen] = useState(false);
     const [confirms, setConfirm] = useState(false);
@@ -97,6 +95,7 @@ const HeaderMain = (props) => {
         } else {
             document.body.style.overflow = 'overlay';
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [confirms, isChangePasswordModalOpen]);
 
     useEffect(() => {

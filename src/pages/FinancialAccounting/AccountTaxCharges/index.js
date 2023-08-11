@@ -5,5 +5,6 @@
  */
 import { TaxChargesPage } from './TaxCharges';
 import { TaxChargesCategoryPage } from './TaxChargesCategory';
+import { DocumentTypeOtherChargesPage } from './DocumentTypeOtherCharges';
 
-export { TaxChargesPage, TaxChargesCategoryPage };
+export { TaxChargesPage, TaxChargesCategoryPage, DocumentTypeOtherChargesPage };

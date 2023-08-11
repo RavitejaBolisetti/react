@@ -4,7 +4,6 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { AccountCategoryPage } from './AccountCategory';
-import { TaxChargesPage, TaxChargesCategoryPage } from './AccountTaxCharges';
+import { TaxChargesPage, TaxChargesCategoryPage, DocumentTypeOtherChargesPage } from './AccountTaxCharges';
 import { VehicleModelTaxChargesCategoryPage } from './VehicleModelTaxChargesCategory';
-
-export { AccountCategoryPage, TaxChargesPage, TaxChargesCategoryPage, VehicleModelTaxChargesCategoryPage };
+export { TaxChargesPage, TaxChargesCategoryPage, VehicleModelTaxChargesCategoryPage, AccountCategoryPage, DocumentTypeOtherChargesPage };

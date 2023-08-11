@@ -3,57 +3,23 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { Button, Row, Col, Form, Input } from 'antd';
-import { searchValidator } from 'utils/validation';
+import { Button, Row, Col, Form } from 'antd';
 import { RxCross2 } from 'react-icons/rx';
 import { FilterIcon } from 'Icons';
-import styles from 'components/common/Common.module.css';
-
-import { TfiReload } from 'react-icons/tfi';
-import { BsDownload } from 'react-icons/bs';
 import { PlusOutlined } from '@ant-design/icons';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { SearchBox } from 'components/utils/SearchBox';
 
-const { Search } = Input;
-export default function AppliedAdvanceFilter(props) {
-    const {
-        showAddButton = true,
-        advanceFilter = false,
-        title,
-        filterString,
-        from,
-        onFinish,
-        onFinishFailed,
-        extraParams,
-        removeFilter,
-        handleResetFilter,
-        handleClearInSearch,
-        onSearchHandle,
-        setAdvanceSearchVisible,
-        handleReferesh,
-        handleButtonClick,
-        validator = searchValidator,
-        downloadReport = false,
-        handleDownloadReport = false,
-        showChangeHistoryList,
-        searchForm,
-        searchForm: { setFieldsValue },
-        setFilterString,
-        otfFilter = false,
-        typeData,
-    } = props;
+import styles from 'components/common/Common.module.css';
 
-    const onKeyPressHandler = (e) => {
-        e.key === 'Enter' && e.preventDefault();
-    };
+export default function AppliedAdvanceFilter(props) {
+    const { showAddButton = true, advanceFilter = false, title, handleButtonClick, filterString, extraParams, removeFilter, handleResetFilter, setAdvanceSearchVisible, setFilterString, vpoFilter = false, typeData } = props;
+
     const searchBoxProps = {
-        searchForm,
         filterString,
         setFilterString,
         optionType: typeData['PO_MST'],
-        // handleChange,
     };
     return (
         <>
@@ -63,7 +29,7 @@ export default function AppliedAdvanceFilter(props) {
                         <Form autoComplete="off" colon={false} className={styles.masterListSearchForm}>
                             <Form.Item label={`${title}`}>
                                 <Row gutter={20}>
-                                    {otfFilter && (
+                                    {vpoFilter && (
                                         <Col xs={24} sm={24} md={14} lg={14} xl={14}>
                                             <SearchBox {...searchBoxProps} />
                                         </Col>
@@ -86,22 +52,8 @@ export default function AppliedAdvanceFilter(props) {
                         </Form>
                     </Col>
                     {showAddButton && (
-                        <Col className={styles.addGroup} xs={24} sm={24} md={6} lg={6} xl={6}>
-                            {/* {showChangeHistoryButton && (
-                                        <>
-                                            <Button onClick={showChangeHistoryList} className={styles.actionbtn} type="primary" danger>
-                                                Change History
-                                            </Button>
-                                        </>
-                                    )} */}
-
-                            {/* {advanceFilter && filterString?.advanceFilter && downloadReport && (
-                                <Button icon={<BsDownload />} className={styles.refreshBtn} onClick={handleDownloadReport} danger>
-                                    Download
-                                </Button>
-                            )} */}
-                            {/* <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger /> */}
-                            <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
+                        <Col className={styles.buttonsGroupRight} xs={24} sm={24} md={6} lg={6} xl={6}>
+                            <Button icon={<PlusOutlined />} type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
                                 Add
                             </Button>
                         </Col>
@@ -117,7 +69,7 @@ export default function AppliedAdvanceFilter(props) {
                                     {extraParams?.map((filter) => {
                                         return (
                                             filter?.value &&
-                                        filter?.filter && (
+                                            filter?.filter && (
                                                 <div className={styles.advanceFilterItem} key={filter?.key}>
                                                     {filter?.name}
                                                     {filter?.canRemove && (

@@ -92,7 +92,7 @@ const AllowedTimingList = (props) => {
                             <p className={styles.allowedTimingAlignment}>Allowed Timings</p>
                         </Col>
                         {!formActionType?.viewMode && (
-                            <Col xs={24} sm={24} md={12} lg={12} xl={12} className={styles.addGroup}>
+                            <Col xs={24} sm={24} md={12} lg={12} xl={12} className={styles.buttonsGroupRight}>
                                 <Button
                                     type="link"
                                     onClick={() => {

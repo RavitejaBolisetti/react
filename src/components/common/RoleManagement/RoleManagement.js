@@ -368,7 +368,7 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
                             </Col>
                             {/*code to be changed once API is integrated */}
                             {true ? (
-                                <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
+                                <Col className={styles.buttonsGroupRight} xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleRefresh} danger aria-label="fa-ref" />
 
                                     <Button icon={<PlusOutlined />} type="primary" onClick={handleAdd}>
@@ -416,9 +416,7 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
                             </Empty>
                         )}
                     >
-                        <div className={styles.tableProduct}>
-                            <DataTable isLoading={isLoading} tableData={searchData} tableColumn={tableColumn} />
-                        </div>
+                        <DataTable isLoading={isLoading} tableData={searchData} tableColumn={tableColumn} />
                     </ConfigProvider>
                 </Col>
             </Row>

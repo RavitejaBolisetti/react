@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -16,7 +16,8 @@ export const RECEIVE_FILTERED_DATA_ACTION_CONSTANT = PREFIX + 'FILTERED_LIST_REC
 export const RECIEVE_DATA_DETAIL_ACTION_CONSTANT = PREFIX + 'RECIEVE_DETAIL_DATA';
 export const SAVE_DATA_ACTION_CONSTANT = PREFIX + 'SAVE_DATA';
 export const RESET_DATA_ACTION_CONSTANT = PREFIX + 'RESET_DATA';
-
+export const RECEIVE_CHANGE_HISTORY_DATA_ACTION_CONSTANT = PREFIX + 'CHANGE_HISTORY_RECIEVE_DATA';
+export const RECEIVE_CHANGE_HISTORY_DATA_LOADING_ACTION_CONSTANT = PREFIX + 'CHANGE_HISTORY_LOADING_DATA';
 export const customerDetailsIndividualDataActions = dataActions({
     baseURL,
     moduleName,
@@ -26,4 +27,6 @@ export const customerDetailsIndividualDataActions = dataActions({
     RECIEVE_DATA_DETAIL_ACTION_CONSTANT,
     SAVE_DATA_ACTION_CONSTANT,
     RESET_DATA_ACTION_CONSTANT,
+    RECEIVE_CHANGE_HISTORY_DATA_ACTION_CONSTANT,
+    RECEIVE_CHANGE_HISTORY_DATA_LOADING_ACTION_CONSTANT,
 });

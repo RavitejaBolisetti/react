@@ -14,19 +14,19 @@ export const ModalButtons = ({ buttonData, reset, submit, handleResetFilter, sub
     return (
         <div className={styles.modalFooter}>
             <Row gutter={20}>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
+                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.buttonsGroupLeft}>
                     <Button danger onClick={handleResetFilter}>
                         {BUTTON_CONSTANTS?.RESET?.name}
                     </Button>
                 </Col>
                 {htmltype ? (
-                    <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
+                    <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.buttonsGroupRight}>
                         <Button htmlType="submit" type="primary">
                             {BUTTON_CONSTANTS?.SUBMIT?.name}
                         </Button>
                     </Col>
                 ) : (
-                    <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
+                    <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.buttonsGroupRight}>
                         <Button onClick={onClickAction} type="primary">
                             {BUTTON_CONSTANTS?.SUBMIT?.name}
                         </Button>

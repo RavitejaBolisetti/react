@@ -342,14 +342,12 @@ export const ListDistrictBase = (props) => {
     const handleClearInSearch = (e) => {
         if (e.target.value.length > 2) {
             listFilterForm.validateFields(['code']);
-        }
-        else if (e?.target?.value === '') {
+        } else if (e?.target?.value === '') {
             setFilterString();
             listFilterForm.resetFields();
             setShowDataLoading(false);
         }
     };
-
 
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
@@ -417,9 +415,7 @@ export const ListDistrictBase = (props) => {
             <AppliedAdvanceFilter {...advanceFilterResultProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <div className={styles.tableProduct}>
-                        <ListDataTable isLoading={showDataLoading} {...tableProps} handleAdd={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })} />
-                    </div>
+                    <ListDataTable isLoading={showDataLoading} {...tableProps} handleAdd={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })} />
                 </Col>
             </Row>
             <AdvancedSearch {...advanceFilterProps} />

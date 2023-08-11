@@ -270,7 +270,7 @@ export const crudListingBase = ({ advanceFilter = false, handleButtonClick, hand
                                         </Row>
                                     </Col>
 
-                                    <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Col className={styles.buttonsGroupRight} xs={24} sm={24} md={8} lg={8} xl={8}>
                                         <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
                                         <Button icon={<PlusOutlined />} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
                                             Add
@@ -328,7 +328,7 @@ export const crudListingBase = ({ advanceFilter = false, handleButtonClick, hand
                                         </Row>
                                     </Col>
 
-                                    <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Col className={styles.buttonsGroupRight} xs={24} sm={24} md={8} lg={8} xl={8}>
                                         <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
                                         {addButtonOption}
                                     </Col>
@@ -371,9 +371,7 @@ export const crudListingBase = ({ advanceFilter = false, handleButtonClick, hand
                                     )
                                 }
                             >
-                                <div className={styles.tableProduct}>
-                                    <DataTable isLoading={this.props.isLoading} {...tableProps} />
-                                </div>
+                                <DataTable isLoading={this.props.isLoading} {...tableProps} />
                             </ConfigProvider>
                         </Col>
                     </Row>

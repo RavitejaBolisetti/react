@@ -179,13 +179,13 @@ const AddEditFormMain = (props) => {
             )}
 
             <Row gutter={20} className={styles.formFooter}>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
+                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.buttonsGroupLeft}>
                     <Button danger onClick={onCloseAction}>
                         {footerEdit ? 'Close' : 'Cancel'}
                     </Button>
                 </Col>
 
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
+                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.buttonsGroupRight}>
                     {!footerEdit && showSaveBtn && (
                         <Button disabled={!isFormBtnActive} onClick={() => setSaveAndAddNewBtnClicked(false)} htmlType="submit" type="primary">
                             Save

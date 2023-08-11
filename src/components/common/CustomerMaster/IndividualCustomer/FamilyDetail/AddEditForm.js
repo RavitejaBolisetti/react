@@ -159,6 +159,7 @@ const AddEditFormMain = (props) => {
                                                     <Button
                                                         type="link"
                                                         icon={<FiEdit />}
+                                                        className={styles.verticallyCentered}
                                                         onClick={() => {
                                                             onEdit(item, index);
                                                         }}
@@ -169,11 +170,7 @@ const AddEditFormMain = (props) => {
                                                     </Button>
                                                 )}
                                             </Row>
-                                            {
-                                                <Text type="secondary" style={{ fontWeight: '400', fontSize: '14px' }}>
-                                                    {item?.mnmCustomer === 'Yes' ? 'M&M user' : item?.mnmCustomer === 'No' ? 'Non-M&M user' : ''}
-                                                </Text>
-                                            }
+                                            {<Text type="secondary">{item?.mnmCustomer === 'Yes' ? 'M&M user' : item?.mnmCustomer === 'No' ? 'Non-M&M user' : ''}</Text>}
                                         </Row>
                                     }
                                     key={index}

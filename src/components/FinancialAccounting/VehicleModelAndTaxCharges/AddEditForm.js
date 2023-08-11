@@ -21,14 +21,15 @@ const AddEditFormMain = (props) => {
         form,
         formData,
         onCloseAction,
-        formActionType: { editMode, viewMode, addMode },
+        formActionType: { addMode, editMode, viewMode },
         onFinish,
         onFinishFailed,
+        selectedModelGroup,
     } = props;
 
     const { buttonData, setButtonData, handleButtonClick } = props;
 
-    const { ModelOptions, TaxChargesOptions, AccountDataOptions, selectedModelGroup } = props;
+    const { ModelOptions, TaxChargesOptions, AccountDataOptions } = props;
 
     useEffect(() => {
         if (editMode) {
