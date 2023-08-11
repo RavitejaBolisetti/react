@@ -760,12 +760,21 @@
     padding-top: 2px;
 } */
 
+.buttonsGroup {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.buttonsGroup button:not(:last-child) {
+    margin-right: 20px;
+}
+
 .buttonsGroupLeft {
     display: flex;
     justify-content: flex-start;
 }
 
-.buttonsGroupLeft button {
+.buttonsGroupLeft button:not(:last-child) {
     margin-right: 10px;
 }
 
@@ -774,17 +783,8 @@
     justify-content: flex-end;
 }
 
-.buttonsGroupRight button {
+.buttonsGroupRight button:not(:first-child) {
     margin-left: 10px;
-}
-
-.buttonsGroup {
-    display: flex;
-    justify-content: flex-start;
-}
-
-.buttonsGroup button:not(:last-child) {
-    margin-right: 20px;
 }
 
 /* .contentHeaderRightBackground {
@@ -2181,10 +2181,10 @@
     border: 1px solid #B5B5B6;
 } */
 
-.drawerBodyRight :global .ant-collapse .ant-form-item .ant-form-item-control-input .ant-input-textarea-affix-wrapper:hover,
+/* .drawerBodyRight :global .ant-collapse .ant-form-item .ant-form-item-control-input .ant-input-textarea-affix-wrapper:hover,
 .drawerBodyRight :global .ant-card .ant-form-item .ant-form-item-control-input .ant-input-textarea-affix-wrapper:hover {
     border: 1px solid #0b0b0c;
-}
+} */
 
 /* .drawerBodyRight :global .ant-collapse .ant-form-item .ant-form-item-control-input .ant-input-textarea-show-count>.ant-input,
 .drawerBodyRight :global .ant-card .ant-form-item .ant-form-item-control-input .ant-input-textarea-show-count>.ant-input {
@@ -2243,11 +2243,11 @@
     line-height: 34px;
 } */
 
-.drawerBodyRight .blockSection {
+/* .drawerBodyRight .blockSection {
     margin-top: 0px !important;
     margin-bottom: 20px;
     border-bottom: #e6e6e6 1px solid;
-}
+} */
 
 /* .drawerBodyRight :global .ant-card .ant-card-body .ant-divider-horizontal {
     margin-top: 0;
@@ -2424,23 +2424,23 @@
     border: 1px solid #E6E6E6 !important;
 } */
 
-/* .drawerBodyRight :global .ant-collapse>.ant-collapse-item>.ant-collapse-header,
+.drawerBodyRight :global .ant-collapse>.ant-collapse-item>.ant-collapse-header,
 .drawerBodyRight :global .ant-collapse>.ant-collapse-item-active>.ant-collapse-header {
     padding: 20px 30px;
-} */
+}
 
 .drawerBodyRight :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box {
     padding: 0 30px;
     margin-bottom: 0;
 }
 
-.drawerBodyRight :global .ant-card.ant-card-bordered .ant-collapse .ant-collapse-content>.ant-collapse-content-box {
+/* .drawerBodyRight :global .ant-card.ant-card-bordered .ant-collapse .ant-collapse-content>.ant-collapse-content-box {
     padding: 0 20px;
-}
+} */
 
-.drawerBodyRight :global .ant-card .ant-card-body {
+/* .drawerBodyRight :global .ant-card .ant-card-body {
     margin-bottom: 20px;
-}
+} */
 
 /* .drawerBodyRight .accordianContainer :global .ant-collapse>.ant-collapse-item {
     border-bottom: none !important;
@@ -2701,10 +2701,10 @@
      border-bottom: 1px solid #E6E6E6;
  } */
 
-.viewDrawerContainer :global .ant-card .ant-card-body .ant-descriptions:not(:first-child) {
+/* .viewDrawerContainer :global .ant-card .ant-card-body .ant-descriptions:not(:first-child) {
     border-top: 1px solid #e6e6e6;
     padding-top: 20px;
-}
+} */
 
 /* .viewDrawerContainer :global .ant-descriptions .ant-descriptions-view table {
     border-spacing: 0;
@@ -2765,6 +2765,11 @@
     line-height: 24px;
 }
 
+.viewDrawerContainer .cardInsideBox :global .ant-collapse .ant-collapse-content-box .ant-form-item .ant-form-item-label {
+    padding-bottom: 0;
+    pointer-events: none;
+}
+
 /* .drawerBodyRight .cardInsideBox :global .ant-btn-link,
 .viewDrawerContainer .cardInsideBox :global .ant-btn-link {
     padding: 0;
@@ -2778,10 +2783,10 @@
     vertical-align: text-bottom;
 }
 
-.viewDrawerContainer .cardInsideBox :global .ant-divider-horizontal {
+/* .viewDrawerContainer .cardInsideBox :global .ant-divider-horizontal {
     margin-top: 2px !important;
     margin-bottom: 12px !important;
-}
+} */
 
 .viewDrawerContainer .cardInsideBox .customerName :global .ant-tag-success {
     margin-left: 22px;
@@ -2832,7 +2837,7 @@
 }
 
 .viewDrawerContainer .cardInsideBox {
-    padding-bottom: 20px;
+    /* padding-bottom: 20px; */
     margin-top: 20px;
 }
 
@@ -2902,6 +2907,10 @@
 .viewDocumentStrip {
     box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.15);
     margin-bottom: 20px !important;
+}
+
+.viewDocumentStrip :global .ant-card-body {
+    padding: 0;
 }
 
 .userCircle {
