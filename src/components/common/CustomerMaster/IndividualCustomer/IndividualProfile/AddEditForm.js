@@ -230,7 +230,7 @@ const AddEditFormMain = (props) => {
                             <Row gutter={20}>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                     <Form.Item label="Driving License No" name="drivingLicenseNumber" initialValue={formData?.drivingLicenseNumber} rules={[validateDrivingLicenseNo('driving license no ')]}>
-                                        <Input maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('driving license no')} {...disabledProps} />
+                                        <Input maxLength={15} onInput={convertToUpperCase} className={styles.inputBox} placeholder={preparePlaceholderText('driving license no')} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -240,7 +240,7 @@ const AddEditFormMain = (props) => {
                                 </Col>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                     <Form.Item label="Voter ID" name="voterId" initialValue={formData?.voterId} rules={[validateVoterId('voter id')]}>
-                                        <Input maxLength={10} className={styles.inputBox} placeholder={preparePlaceholderText('voter id')} {...disabledProps} />
+                                        <Input maxLength={10} onInput={convertToUpperCase} className={styles.inputBox} placeholder={preparePlaceholderText('voter id')} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
                             </Row>
