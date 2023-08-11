@@ -1,10 +1,9 @@
 import { screen, fireEvent } from "@testing-library/react";
 import '@testing-library/jest-dom/extend-expect';
 import customRender from "@utils/test-utils";
-
 import { ViewDetail } from "@components/Sales/OTF/ExchangeVehicles/ViewDetail"
 
-describe("ViewDetail component render", ()=>{
+describe("All Fields Render for OTF-View File", ()=>{
 
     it("should veiw detail main component rendr", ()=>{
         customRender(<ViewDetail/>)
