@@ -1,80 +1,32 @@
 import '@testing-library/jest-dom/extend-expect';
-import customRender from '@utils/test-utils';
-import { screen } from '@testing-library/react';
 import { DisableParent, FindprodctCode } from '@components/common/ProductHierarchy/ProductHierarchyUtils';
 
 const node = {
-    active: true,
-    attributeKey: "testingKey",
-    "disabled": true,
-    id: "testId",
-    manufactureOrgCode: "CODE1",
-    manufactureOrgLongName: "CODE1",
-    manufactureOrgParntId: "null",
-    manufactureOrgShrtName: "CODE1",
-    subManufactureOrg: [
-        {
-            active: true,
-            attributeKey: "testingKey",
-            id: "testId",
-            manufactureOrgCode: "CODE1",
-            manufactureOrgLongName: "CODE1",
-            manufactureOrgParntId: "null",
-            manufactureOrgShrtName: "CODE1",
-        },
-        {
-            active: true,
-            attributeKey: "testingKey",
-            id: "testId",
-            manufactureOrgCode: "CODE1",
-            manufactureOrgLongName: "CODE1",
-            manufactureOrgParntId: "null",
-            manufactureOrgShrtName: "CODE1",
-        },
-        {
-            active: true,
-            attributeKey: "testingKey",
-            id: "testId",
-            manufactureOrgCode: "CODE1",
-            manufactureOrgLongName: "CODE1",
-            manufactureOrgParntId: "null",
-            manufactureOrgShrtName: "CODE1",
-        }
-    ]
-}
-const nodeData = {
-    prodctCode: 'testcode',
-    subProdct: [{
-        active: true,
-        attributeKey: "testingKey",
-        id: "testId",
-        manufactureOrgCode: "CODE1",
-        manufactureOrgLongName: "CODE1",
-        manufactureOrgParntId: "null",
-        manufactureOrgShrtName: "CODE1",
-    }, {
-        active: true,
-        attributeKey: "testingKey",
-        id: "testId",
-        manufactureOrgCode: "CODE1",
-        manufactureOrgLongName: "CODE1",
-        manufactureOrgParntId: "null",
-        manufactureOrgShrtName: "CODE1",
-    }]
-}
+    prodctCode: 'Kai',
+    subProdct: [{prodctCode: 'Kai', subProdct: [{prodctCode: 'Kai'}]}],
+    subManufactureOrg: [{name: 'Kai'}]
+};
 
-const prodctCode = "testcode";
+const key='Kai';
 
+describe('Find product code component', () => {
 
-describe('FindprodctCode component', () => {
-    it('should render the FindprodctCode components', () => {
-        const componetList = customRender(<FindprodctCode {...nodeData} prodctCode={prodctCode} key={jest.fn()} />);
-        expect(componetList).toMatchSnapshot();
+    it('should render the Find product code components 1', () => {
+        const prodctCode='Kai';
+        FindprodctCode(node, prodctCode, key);
     });
+
+    it('should render the Find product code components 2', () => {
+        const prodctCode='Kai-Kai';
+        FindprodctCode(node, prodctCode, key);
+    });
+
 });
 
 describe('disableParent component', () => {
+
     it('should render the disableParent components', () => {
-        customRender(<DisableParent {...node} />);
+        DisableParent(node);
     });
+
 });

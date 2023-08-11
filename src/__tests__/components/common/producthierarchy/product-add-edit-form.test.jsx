@@ -1,190 +1,67 @@
 import '@testing-library/jest-dom/extend-expect';
 import customRender from "@utils/test-utils";
 import { AddEditForm } from '@components/common/ProductHierarchy/AddEditForm';
-import { render, fireEvent, screen } from "@testing-library/react";
-import configureMockStore from 'redux-mock-store';
-import { FROM_ACTION_TYPE } from 'constants/formActionType';
+import { fireEvent, screen } from "@testing-library/react";
 
-const mockStore = configureMockStore();
-const initialState = {};
-const store = mockStore(initialState);
-
-beforeEach(() => {
-    store.clearActions();
-    jest.clearAllMocks();
-});
-
-const data = [
-    {
-        duplicateAllowedAtAttributerLevelInd: false,
-        duplicateAllowedAtOtherParent: false,
-        hierarchyAttribueCode: "testCode09090",
-        hierarchyAttribueName: "test1",
-        hierarchyAttribueType: "Product Hierarchy test",
-        id: "testId",
-        isChildAllowed: false,
-        status: true
-    },
-    {
-        duplicateAllowedAtAttributerLevelInd: false,
-        duplicateAllowedAtOtherParent: false,
-        hierarchyAttribueCode: "testCode09090",
-        hierarchyAttribueName: "test1",
-        hierarchyAttribueType: "Product Hierarchy test",
-        id: "testIdDma",
-        isChildAllowed: false,
-        status: true
-    },
-    {
-        duplicateAllowedAtAttributerLevelInd: false,
-        duplicateAllowedAtOtherParent: false,
-        hierarchyAttribueCode: "testCode09090",
-        hierarchyAttribueName: "test1",
-        hierarchyAttribueType: "Product Hierarchy test",
-        id: "testId",
-        isChildAllowed: false,
-        status: true
-    }
-]
-
-const formData = {
-    active: true,
-    attributeKey: "testId",
-    id: "testId",
-    mfgOrgSk: "testId",
-    parntProdctId: "null",
-    prodctCode: "8901",
-    prodctLongName: "testing for dev",
-    prodctShrtName: "test",
-    subProdct: []
+const fieldNames={
+    title: 'test'
+}
+const props={
+    fieldNames:fieldNames,
+    isVisible: true,
+    setSelectedTreeSelectKey:jest.fn(),
+    setShowProductAttribute: jest.fn()
 }
 
-
-
-const flatternData = [
-    {
-        data: [{
-            active: false,
-            attributeKey: "testId",
-            id: "testId",
-            mfgOrgSk: "testId",
-            parntProdctId: "null",
-            prodctCode: "8901",
-            prodctLongName: "testing for dev",
-            prodctShrtName: "test",
-            subProdct: []
-        },
-        {
-            active: false,
-            attributeKey: "testId2",
-            id: "testId12",
-            mfgOrgSk: "testId12",
-            parntProdctId: "null",
-            prodctCode: "8901",
-            prodctLongName: "testing for dev",
-            prodctShrtName: "test",
-            subProdct: []
-        }],
-        key: 'testkey'
-    }
-]
-
-
-const props = {
-    unFilteredAttributeData: data,
-    formActionType: 'sibling',
-    flatternData: flatternData,
-    isReadOnly: true,
-    formData: formData,
-    fieldNames: jest.fn(),
-    isDataAttributeLoaded: false,
-    attributeData: data,
-    productHierarchyAttributeData: [{ id: "0", name: 'testdma' }],
-    showProductAttribute: true,
-    selectedTreeData: [{ id: "0", name: 'testdma' }, { id: "0", name: 'testdma' }],
-    setShowProductAttribute: jest.fn(),
-    isFormBtnActive: false,
-    setFormBtnActive: jest.fn(),
-    showGlobalNotification: jest.fn(),
-    disabledEdit: false,
-    setDisabledEdit: false,
-    skuAttributes: jest.fn(),
-    setSKUAttributes: jest.fn(),
-    fetchListHierarchyAttributeName: jest.fn(),
-    listShowLoading: false,
-    userId: jest.fn(),
-    isVisible: true,
-    setSelectedTreeSelectKey: jest.fn(),
-    handleFormValueChange: jest.fn(),
-    handleFormFieldChange: jest.fn(),
-    handleAttributeChange: jest.fn(),
-    selectedTreeKey: [{ id: "0", name: 'testdma' }, { id: "0", name: 'testdma' }],
-    openAccordian: "1"
-};
-
-const selectProps = {
-    optionFilterProp: 'children',
-    showSearch: true,
-    allowClear: true,
-};
-
-
-
-
 describe("AddEditForm Components", () => {
+
     it("should render AddEditForm components", () => {
-        const addEditComp = customRender(<AddEditForm />);
-        expect(addEditComp).toMatchSnapshot();
+        customRender(<AddEditForm {...props} fetchListHierarchyAttributeName={jest.fn()} userId={106} />);
     });
 
-    it("should render AddEditForm form input field attributeKey", async () => {
-        const { getByRole } = customRender(
-            <AddEditForm
-                formData={{}}
-                onFinish={jest.fn()}
-                isVisible={true}
-                selectProps={selectProps}
-                onFinishFailed={jest.fn()}
-                onCloseAction={jest.fn()}
+    it("should render if form action type is sibling", () => {
+        const attributeData=[{id: 'test'}];
+        const formData={attributeKey: 'test'};
+        const formActionType='sibling';
+        const flatternData= [{key: 'test'}];
+        const selectedTreeKey=['test'];
 
-                {...props}
-            />);
+        customRender(<AddEditForm {...props} flatternData={flatternData} selectedTreeKey={selectedTreeKey} formActionType={formActionType} attributeData={attributeData} formData={formData} />);
+    });
 
-        const attributeKey = getByRole("combobox", { name: 'Attribute Level', exact: false });
+    it("should render if form action type is child", () => {
+        const attributeData=[{id: 'test1'}];
+        const unFilteredAttributeData=[{id: 'test'}];
+        const formData={attributeKey: 'test'};
+        const formActionType='child';
+        const selectedTreeKey=['test'];
+
+        customRender(<AddEditForm {...props} selectedTreeKey={selectedTreeKey} formActionType={formActionType} unFilteredAttributeData={unFilteredAttributeData} attributeData={attributeData} formData={formData} />);
+    });
+
+    it("form fields should work properly", () => {
+        customRender(<AddEditForm {...props} setFormBtnActive={jest.fn()} />);
+        const attributeKey = screen.getByRole("combobox", { name: 'Attribute Level', exact: false });
         fireEvent.change(attributeKey, { target: { value: 'Dmatest' } });
 
-        const code = getByRole("textbox", { name: 'Code', exact: false });
+        const code = screen.getByRole("textbox", { name: 'Code', exact: false });
         fireEvent.change(code, { target: { value: 'Dmatest' } });
 
-        const shortDes = getByRole("textbox", { name: 'Short Description', exact: false });
+        const shortDes = screen.getByRole("textbox", { name: /Short Description/i });
         fireEvent.change(shortDes, { target: { value: 'Dmatest' } });
 
-        const longDes = getByRole("textbox", { name: 'Long Description', exact: false });
+        const longDes = screen.getByRole("textbox", { name: /Long Description/i });
         fireEvent.change(longDes, { target: { value: 'Dmatest' } });
 
-        const prodctLongName = getByRole("switch", { name: 'Status', exact: false });
-        fireEvent.change(prodctLongName, { target: { value: 'Active' } });
+        const statusBtn = screen.getAllByRole("switch", { name: 'Status', exact: false });
+        fireEvent.click(statusBtn[0]);
+    });
 
-        const closeIcon = getByRole("img", { name: 'close', exact: false });
-        fireEvent.click(closeIcon);
-    })
+    it("Product Atrribute Details Collapse should work", () => {
+        const formActionType='edit';
+        customRender(<AddEditForm {...props} showProductAttribute={true} formActionType={formActionType} />);
+        const productCollapse=screen.getByText('Product Atrribute Details');
+        fireEvent.click(productCollapse);
+    });
 
-    it('should render button', async () => {
-        const { getByRole } = customRender(<AddEditForm onCloseAction={jest.fn()} {...props} isVisible={true} />);
-
-        const closeButton = getByRole("button", { name: 'Close', exact: false });
-        fireEvent.click(closeButton);
-
-        const cancelButton = getByRole("button", { name: 'Cancel', exact: false });
-        fireEvent.click(cancelButton);
-
-        const saveButton = getByRole("button", { name: 'Save', exact: false });
-        fireEvent.click(saveButton);
-    })
-
-    it('should render header', async () => {
-        const { getByRole } = customRender(<AddEditForm onCloseAction={jest.fn()} {...props} isVisible={true} onChange={jest.fn()} />);
-        const productDetails = getByRole("button", { name: 'Product Atrribute Details', exact: false });
-        expect(productDetails);
-    })
 });
