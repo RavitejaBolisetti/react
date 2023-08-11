@@ -140,15 +140,6 @@ const props = {
         yearOfRegistration: null,
         yearOfRegistrationCode: "2023"
     }
-    
-    // extraParams:[
-    //     {
-    //         key: 'otfNumber',
-    //         title: 'otfNumber',
-    //         value: 'OTF1690806304088',
-    //         name: 'OTF Number',
-    //     },
-    // ],
 };
 
 const mockStore = createMockStore({
