@@ -684,7 +684,7 @@ Object {
                                   class="ant-form-item-control-input-content"
                                 >
                                   <span
-                                    class="ant-input-group-wrapper ant-input-search headerSearchField css-dev-only-do-not-override-14wwjjs"
+                                    class="ant-input-group-wrapper ant-input-search css-dev-only-do-not-override-14wwjjs"
                                   >
                                     <span
                                       class="ant-input-wrapper ant-input-group css-dev-only-do-not-override-14wwjjs"
@@ -777,7 +777,7 @@ Object {
                   style="padding-left: 10px; padding-right: 10px;"
                 >
                   <button
-                    class="ant-btn css-dev-only-do-not-override-14wwjjs ant-btn-default ant-btn-icon-only ant-btn-dangerous refreshBtn"
+                    class="ant-btn css-dev-only-do-not-override-14wwjjs ant-btn-default ant-btn-icon-only ant-btn-dangerous"
                     type="button"
                   >
                     <span
@@ -2662,7 +2662,7 @@ Object {
                                 class="ant-form-item-control-input-content"
                               >
                                 <span
-                                  class="ant-input-group-wrapper ant-input-search headerSearchField css-dev-only-do-not-override-14wwjjs"
+                                  class="ant-input-group-wrapper ant-input-search css-dev-only-do-not-override-14wwjjs"
                                 >
                                   <span
                                     class="ant-input-wrapper ant-input-group css-dev-only-do-not-override-14wwjjs"
@@ -2755,7 +2755,7 @@ Object {
                 style="padding-left: 10px; padding-right: 10px;"
               >
                 <button
-                  class="ant-btn css-dev-only-do-not-override-14wwjjs ant-btn-default ant-btn-icon-only ant-btn-dangerous refreshBtn"
+                  class="ant-btn css-dev-only-do-not-override-14wwjjs ant-btn-default ant-btn-icon-only ant-btn-dangerous"
                   type="button"
                 >
                   <span

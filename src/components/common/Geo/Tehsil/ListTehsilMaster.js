@@ -129,7 +129,7 @@ export const ListTehsilBase = (props) => {
         setRefershData(false);
         setShowDataLoading(false);
     };
-    console.log('tehsilCategoryData', tehsilCategoryData);
+    // console.log('tehsilCategoryData', tehsilCategoryData);
 
     useEffect(() => {
         if (userId) {

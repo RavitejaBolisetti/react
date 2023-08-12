@@ -23,7 +23,7 @@ import TreeSelectField from '../TreeSelectField';
 import { FaHistory } from 'react-icons/fa';
 import { ViewProductDetail } from './ViewProductDetail';
 import { LANGUAGE_EN } from 'language/en';
-import { disableParent } from './ProductHierarchyUtils';
+import { DisableParent } from './ProductHierarchyUtils';
 
 const { Search } = Input;
 
@@ -109,7 +109,6 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     const [disabledEdit, setDisabledEdit] = useState(false);
     const organizationFieldNames = { title: 'manufactureOrgShrtName', key: 'id', children: 'subManufactureOrg' };
     const fieldNames = { title: 'prodctShrtName', key: 'id', children: 'subProdct' };
-
     const onCloseAction = () => {
         form.resetFields();
         setIsFormVisible(false);
@@ -150,7 +149,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     }, [userId, organizationId]);
 
     useEffect(() => {
-        manufacturerOrgHierarchyData?.map((i) => disableParent(i));
+        manufacturerOrgHierarchyData?.map((i) => DisableParent(i));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [manufacturerOrgHierarchyData]);
 
@@ -387,20 +386,17 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     const sameParentAndChildWarning = LANGUAGE_EN.GENERAL.HIERARCHY_SAME_PARENT_AND_CHILD_WARNING;
 
     const title = 'Hierarchy';
-
-    console.log('productHierarchyData', productHierarchyData);
-
     return (
         <>
             <div className={styles.contentHeaderBackground}>
                 <Row gutter={20}>
-                    <Col xs={24} sm={24} md={16} lg={16} xl={16}>
-                        <Form autoComplete="off" colon={false} className={styles.masterListSearchForm}>
+                    <Col xs={24} sm={24} md={18} lg={18} xl={18}>
+                        <Form autoComplete="off" colon={false} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                             <Form.Item label={`${title}`} name="code">
                                 <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={10} lg={10} xl={10}>
+                                    <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                                         <TreeSelectField {...treeSelectFieldProps} />
-                                    </Col>
+                                    </Col>''
                                     {organizationId && (
                                         <Col xs={24} sm={24} md={10} lg={10} xl={10}>
                                             <Search placeholder="Search" allowClear onChange={onChange} />
@@ -421,7 +417,6 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
             </div>
             <Row gutter={20} span={24}>
                 <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol}>
-                    {/* <div className={styles.content}> */}
                     {productHierarchyData.length <= 0 ? (
                         <div className={styles.emptyContainer}>
                             <Empty
@@ -453,7 +448,6 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
                     ) : (
                         <LeftPanel {...myProps} />
                     )}
-                    {/* </div> */}
                 </Col>
 
                 {productHierarchyData.length > 0 && (

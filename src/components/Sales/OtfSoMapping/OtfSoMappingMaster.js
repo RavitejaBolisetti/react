@@ -88,7 +88,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, saveData, listOrgLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, showGlobalNotification, manufacturerOrgHierarchyData, fetchOrgList, isDataOrgLoaded, productHierarchyData, setSelectedOrganizationId, organizationId, fetchProductDataList, fetchOtfList, listOtfSoMappingShowLoading, resetData, otfSoMappingData, otfSoUserMappingData, isDataOtfSoMappingLoaded, isDataOtfSoUserMappingLoaded, fetchOtfUserList, listOtfSoUserMappingShowLoading, listProductLoading }) => {
+export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, saveData, listOrgLoading, showGlobalNotification, manufacturerOrgHierarchyData, fetchOrgList, isDataOrgLoaded, productHierarchyData, setSelectedOrganizationId, organizationId, fetchProductDataList, fetchOtfList, listOtfSoMappingShowLoading, resetData, otfSoMappingData, otfSoUserMappingData, isDataOtfSoMappingLoaded, isDataOtfSoUserMappingLoaded, fetchOtfUserList, listOtfSoUserMappingShowLoading, listProductLoading }) => {
     const [form] = Form.useForm();
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
@@ -103,6 +103,8 @@ export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, sav
     const [searchValue, setSearchValue] = useState('');
     const [soMapName, setSoMapName] = useState(null);
     const [viewData, setViewData] = useState(null);
+    const [finalManufacturerOrgHierarchyData, setFinalManufacturerOrgHierarchyData] = useState(null);
+    const [finalProductHierarchyData, setFinalProductHierarchyData] = useState(null);
 
     const defaultBtnVisiblity = { editBtn: false, childBtn: false, siblingBtn: false, enable: false, save: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -180,6 +182,31 @@ export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, sav
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formActionType, change]);
+
+    const disableParent = (node, key) => {
+        function datas(node) {
+            if (node?.[key] && node?.[key].length) {
+                node['disabled'] = true;
+                node?.[key]?.forEach((child) => {
+                    datas(child);
+                });
+            } else {
+                return;
+            }
+        }
+        datas(node);
+        return node;
+    };
+
+    useEffect(() => {
+        setFinalManufacturerOrgHierarchyData(manufacturerOrgHierarchyData?.map((i) => disableParent(i, 'subManufactureOrg')));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [manufacturerOrgHierarchyData]);
+
+    useEffect(() => {
+        setFinalProductHierarchyData(productHierarchyData?.map((i) => disableParent(i, 'subProdct')));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [productHierarchyData]);
 
     const onChange = (e) => {
         setSearchValue(e.target.value);
@@ -272,7 +299,7 @@ export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, sav
         selectedTreeKey,
         fieldNames,
         handleTreeViewClick,
-        treeData: productHierarchyData,
+        treeData: finalProductHierarchyData,
         searchValue,
         setSearchValue,
     };
@@ -311,6 +338,9 @@ export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, sav
     const leftCol = productHierarchyData?.length > 0 ? 14 : 24;
     const rightCol = productHierarchyData?.length > 0 ? 10 : 24;
     const title = 'Hierarchy';
+
+    console.log('finalManufacturerOrgHierarchyData', finalManufacturerOrgHierarchyData);
+    console.log('finalProductHierarchyData', finalProductHierarchyData);
 
     return (
         <>

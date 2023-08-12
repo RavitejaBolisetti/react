@@ -168,7 +168,6 @@ const ReferralsMasterBase = (props) => {
 
     const onFinish = (values) => {
         const data = { ...values, otfNumber: selectedOrderId, dob: formatDate(values?.dob), id: referralData?.id };
-
         const onSuccess = (res) => {
             form.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
@@ -229,7 +228,7 @@ const ReferralsMasterBase = (props) => {
 
     return (
         <>
-            <Form form={form} autoComplete="off" layout="vertical" colon={false} onFinish={onFinish} onFinishFailed={onFinishFailed} onValuesChange={handleFormValueChange}>
+            <Form form={form} autoComplete="off" layout="vertical" data-testid="test" colon={false} onFinish={onFinish} onFinishFailed={onFinishFailed} onValuesChange={handleFormValueChange}>
                 <Row gutter={20} className={styles.drawerBodyRight}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Row>

@@ -38,7 +38,7 @@ const mapStateToProps = (state) => {
             LeftSideBar: { collapsed = false },
         },
     } = state;
-    console.log(manufacturerOrgHierarchyData, 'manufacturerOrgHierarchyData');
+    //console.log(manufacturerOrgHierarchyData, 'manufacturerOrgHierarchyData');
     const moduleTitle = 'Manufacturer Organisation Detail';
     const viewTitle = 'Hierarchy Details';
 
