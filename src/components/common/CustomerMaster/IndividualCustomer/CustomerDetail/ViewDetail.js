@@ -15,7 +15,7 @@ import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { getCodeValue } from 'utils/getCodeValue';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { STATUS } from './statusConstant';
-import { NameChangeHistory } from './NameChangeHistory';
+import { CustomerNameChangeMaster } from './CustomerNameChange';
 import { nameChangeRequestDataActions } from 'store/actions/data/customerMaster/individual/nameChangeRequest/nameChangeRequest';
 import { RejectionModal } from './RejectionModal';
 import { showGlobalNotification } from 'store/actions/notification';
@@ -54,7 +54,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ViewDetailMain = (props) => {
-    const { styles, formData, isLoading, typeData, corporateLovData, saveNameChangeData, listShowLoading, selectedCustomerId, downloadFileFromButton, userId, onViewHistoryChange, isHistoryVisible, changeHistoryClose, activeKey, setactiveKey } = props;
+    const { styles, formData, formActionType, isLoading, typeData, corporateLovData, saveNameChangeData, listShowLoading, selectedCustomerId, downloadFileFromButton, userId, onViewHistoryChange, isHistoryVisible, changeHistoryClose, activeKey, setactiveKey } = props;
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [status, setStatus] = useState('');
     const [visibility, setVisibility] = useState(true);
@@ -91,13 +91,6 @@ const ViewDetailMain = (props) => {
         colon: false,
         layout: 'vertical',
         column: { xs: 1, sm: 4, lg: 4, xl: 4, xxl: 4 },
-    };
-
-    const changeHistoryProps = {
-        isVisible: isHistoryVisible,
-        onCloseAction: changeHistoryClose,
-        selectedCustomerId,
-        downloadFileFromButton,
     };
 
     const modalProps = {
@@ -137,6 +130,7 @@ const ViewDetailMain = (props) => {
 
         saveNameChangeData(requestData);
     };
+
     const onApprovedHandle = () => {
         onStatusChange(STATUS?.APPROVED?.title);
     };
@@ -150,81 +144,11 @@ const ViewDetailMain = (props) => {
                             <Descriptions.Item label="Customer Type">{checkAndSetDefaultValue(getCodeValue(typeData?.CUST_TYPE, formData?.customerType), isLoading)}</Descriptions.Item>
                         </Descriptions>
                         <Divider />
-                        <div className={styles.cardInsideBox}>
-                            <Row>
-                                <Col xs={24} sm={24} md={6} lg={6} xl={6}>
-                                    <Text style={{ fontSize: '16px' }} strong>
-                                        Customer Name
-                                    </Text>
-                                </Col>
-                                <Col xs={24} sm={24} md={6} lg={6} xl={6}>
-                                    {status === STATUS?.REJECTED?.title ? (
-                                        <Tag style={{ textAlign: 'right' }} color="error">
-                                            Rejected
-                                        </Tag>
-                                    ) : status === STATUS?.APPROVED?.title ? (
-                                        <Tag style={{ textAlign: 'right' }} color="success">
-                                            Approved
-                                        </Tag>
-                                    ) : formData?.pendingNameChangeRequest !== null ? (
-                                        <Tag style={{ textAlign: 'right' }} color="warning">
-                                            Pending for Approval
-                                        </Tag>
-                                    ) : null}
-                                </Col>
-                                <Col xs={24} sm={24} md={12} lg={12} xl={12} style={{ textAlign: 'right' }}>
-                                    <Button type="link" onClick={onViewHistoryChange} icon={<BiTimeFive />}>
-                                        View History
-                                    </Button>
-                                </Col>
-                            </Row>
-                            <Divider />
-                            <Collapse expandIcon={expandIcon} activeKey={activeKey} expandIconPosition="end" onChange={() => onCollapseChange(1)}>
-                                <Panel
-                                    header={
-                                        <>
-                                            <Row type="flex" justify="space-between" align="middle" size="large">
-                                                <Row type="flex" justify="space-around" align="middle">
-                                                    <Text>
-                                                        {getCodeValue(typeData?.TITLE, formData?.titleCode)}&nbsp;
-                                                        {(formData?.firstName || '') + ' ' + (formData?.middleName || '') + ' ' + (formData?.lastName || '')}
-                                                    </Text>
-                                                </Row>
-                                            </Row>
-                                        </>
-                                    }
-                                    key={1}
-                                >
-                                    <Descriptions {...nameViewProps}>
-                                        <Descriptions.Item label="Title">{checkAndSetDefaultValue(getCodeValue(typeData?.TITLE, formData?.titleCode))}</Descriptions.Item>
-                                        <Descriptions.Item label="First Name">{checkAndSetDefaultValue(formData?.firstName)}</Descriptions.Item>
-                                        <Descriptions.Item label="Middle Name">{checkAndSetDefaultValue(formData?.middleName)}</Descriptions.Item>
-                                        <Descriptions.Item label="Last Name">{checkAndSetDefaultValue(formData?.lastName)}</Descriptions.Item>
-                                    </Descriptions>
-
-                                    {formData?.supportingDocuments?.map((item) => (
-                                        <Row gutter={20}>
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                <Card className={styles.viewDocumentStrip} key={item?.documentId} title={item?.documentName} extra={<FiDownload />} onClick={downloadFileFromButton}></Card>
-                                            </Col>
-                                        </Row>
-                                    ))}
-                                    {formData?.pendingNameChangeRequest !== null && visibility && (
-                                        <Row gutter={20}>
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                <Button type="primary" className={styles.marR20} onClick={onApprovedHandle}>
-                                                    Approved
-                                                </Button>
-                                                <Button className={styles.marB20} onClick={onRejectionHandled} danger>
-                                                    Rejected
-                                                </Button>
-                                            </Col>
-                                        </Row>
-                                    )}
-                                </Panel>
-                            </Collapse>
-                        </div>
-
+                        <Row>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                <CustomerNameChangeMaster {...props} />
+                            </Col>
+                        </Row>
                         <Descriptions {...viewProps}>
                             <Descriptions.Item label="Email Id">{checkAndSetDefaultValue(formData?.emailId)}</Descriptions.Item>
                             <Descriptions.Item label="Do you want to contact over whatsapp?" className={formData?.whatsappCommunicationIndicator ? styles.yesText : styles.noText}>
@@ -246,7 +170,6 @@ const ViewDetailMain = (props) => {
                     </Card>
                 </Space>
             </div>
-            <NameChangeHistory {...changeHistoryProps} />
             <RejectionModal {...modalProps} />
         </>
     );

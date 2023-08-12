@@ -183,4 +183,4 @@ const ChangeHistoryMain = ({ fetchCustomerChangeHistory, onCloseAction, listShow
     );
 };
 
-export const NameChangeHistory = connect(mapStateToProps, mapDispatchToProps)(withDrawer(ChangeHistoryMain, { title: 'Name Change History', width: '90%' }));
+export const CustomerNameChangeHistory = connect(mapStateToProps, mapDispatchToProps)(withDrawer(ChangeHistoryMain, { title: 'Name Change History', width: '90%' }));

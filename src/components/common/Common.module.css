@@ -3315,6 +3315,12 @@ li.ant-timeline-item.active .ant-timeline-item-content p {
     display: none;
 }
 
+.verticallyCenteredAndAlignRight {
+    display: flex;
+    align-items: center;
+    float: right;
+}
+
 @media (max-width: 768px) {
     /* For mobile phones: */
     .headerSearchField {

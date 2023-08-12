@@ -13,9 +13,7 @@ import { corporateDataActions } from 'store/actions/data/customerMaster/corporat
 import { showGlobalNotification } from 'store/actions/notification';
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
-import { STATUS } from './statusConstant';
-import { CustomerFormButton } from '../../CustomerFormButton';
-import { CustomerNameChangeHistory } from './CustomerNameChange';
+import { STATUS } from '../statusConstant';
 
 import styles from 'components/common/Common.module.css';
 import { documentViewDataActions } from 'store/actions/data/customerMaster/documentView';
@@ -27,7 +25,6 @@ const mapStateToProps = (state) => {
         data: {
             CustomerMaster: {
                 CustomerDetailsIndividual: { isLoaded: isDataLoaded = false, isLoading, data },
-                Corporate: { isFilteredListLoaded: isCorporateLovDataLoaded = false, isLoading: isCorporateLovLoading, filteredListData: corporateLovData },
                 ViewDocument: { isLoaded: isViewDataLoaded = false, data: viewDocument },
             },
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
@@ -46,9 +43,6 @@ const mapStateToProps = (state) => {
         supportingData,
         isViewDataLoaded,
         viewDocument,
-        isCorporateLovDataLoaded,
-        isCorporateLovLoading,
-        corporateLovData,
     };
     return returnValue;
 };
@@ -78,9 +72,9 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const CustomerDetailMasterBase = (props) => {
-    const { setRefreshCustomerList, typeData, fetchCorporateLovList, isCorporateLovDataLoaded, listCorporateLovShowLoading, corporateLovData } = props;
-    const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, data, saveData, isLoading, resetData, form, handleFormValueChange, onFinishFailed } = props;
+const CustomerNameChangeMasterBase = (props) => {
+    const { setRefreshCustomerList, typeData } = props;
+    const { formData, userId, showGlobalNotification, fetchList, listShowLoading, data, saveData, isLoading, resetData, form, handleFormValueChange, onFinishFailed } = props;
     const { selectedCustomer, selectedCustomerId, setSelectedCustomerId } = props;
     const { buttonData, setButtonData, formActionType, setFormActionType, handleButtonClick, NEXT_ACTION } = props;
     const { fetchViewDocument, viewListShowLoading, listSupportingDocumentShowLoading, isSupportingDocumentDataLoaded, supportingData, isViewDataLoaded, viewDocument } = props;
@@ -93,27 +87,15 @@ const CustomerDetailMasterBase = (props) => {
     const [uploadedFileName, setUploadedFileName] = useState('');
     const [editedMode, setEditedMode] = useState(false);
     const [uploadedFile, setUploadedFile] = useState();
-    const [formData, setFormData] = useState();
     const [uploadImgDocId, setUploadImgDocId] = useState('');
     const [customerNameList, setCustomerNameList] = useState({});
     const [supportingDataView, setSupportingDataView] = useState();
     const [isHistoryVisible, setIsHistoryVisible] = useState(false);
-    const [activeKey, setactiveKey] = useState([]);
-
-    const [whatsAppConfiguration, setWhatsAppConfiguration] = useState({ contactOverWhatsApp: null, contactOverWhatsAppActive: null, sameMobileNoAsWhatsApp: null, sameMobileNoAsWhatsAppActive: null });
+    const [activeKey, setActiveKey] = useState([]);
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
-
-    useEffect(() => {
-        if (isDataLoaded) {
-            form.setFieldsValue({ ...data });
-            setFormData(data);
-            // setWhatsAppConfiguration({ contactOverWhatsApp: data?.whatsappCommunicationIndicator, sameMobileNoAsWhatsApp: data?.mobileNumberAsWhatsappNumber });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDataLoaded]);
 
     useEffect(() => {
         if (data?.pendingNameChangeRequest === null) {
@@ -141,13 +123,6 @@ const CustomerDetailMasterBase = (props) => {
     }, []);
 
     useEffect(() => {
-        if (userId && !isCorporateLovDataLoaded) {
-            fetchCorporateLovList({ setIsLoading: listCorporateLovShowLoading, userId });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isCorporateLovDataLoaded]);
-
-    useEffect(() => {
         if (userId && selectedCustomerId) {
             const extraParams = [
                 {
@@ -161,6 +136,7 @@ const CustomerDetailMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedCustomerId]);
+
     useEffect(() => {
         if (viewDocument && isViewDataLoaded) {
             let a = document.createElement('a');
@@ -170,6 +146,7 @@ const CustomerDetailMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isViewDataLoaded, viewDocument]);
+
     const downloadFileFromButton = (uploadData) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Your download will start soon' });
         const extraParams = [
@@ -183,6 +160,7 @@ const CustomerDetailMasterBase = (props) => {
         const supportingDocument = uploadData?.documentName;
         fetchViewDocument({ setIsLoading: viewListShowLoading, userId, extraParams, supportingDocument });
     };
+
     const deleteFile = (uploadData) => {
         const data = { customerId: uploadData?.customerId, status: false, docId: uploadData?.docId, documentTypeId: uploadData?.documentType, id: uploadData?.id, documentName: uploadData?.documentName };
         const onSuccess = (res) => {
@@ -242,7 +220,6 @@ const CustomerDetailMasterBase = (props) => {
 
             if (res.data) {
                 handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
-                // setSelectedCustomer({ ...res.data, customerName: res?.data?.firstName + ' ' + res?.data?.middleName + ' ' + res?.data?.lastName });
                 setSelectedCustomerId(res?.data?.customerId);
                 if (res?.data?.pendingNameChangeRequest === null) {
                     setCustomerNameList({
@@ -289,41 +266,17 @@ const CustomerDetailMasterBase = (props) => {
         fetchViewDocument({ setIsLoading: viewListShowLoading, userId, extraParams, selectedDocument });
         setSupportingDataView(supportingData);
     };
-    const handleFormFieldChange = (data = undefined) => {
-        const { whatsappCommunicationIndicator, mobileNumberAsWhatsappNumber, whatsAppNumber, mobileNumber } = form.getFieldsValue();
-
-        if (whatsappCommunicationIndicator) {
-            if (whatsappCommunicationIndicator && mobileNumberAsWhatsappNumber) {
-                form.setFieldsValue({ whatsAppNumber: mobileNumber });
-                setWhatsAppConfiguration({ contactOverWhatsAppActive: true, sameMobileNoAsWhatsApp: true, contactOverWhatsApp: true });
-            } else {
-                form.setFieldsValue({ whatsAppNumber: whatsAppNumber });
-                setWhatsAppConfiguration({ contactOverWhatsAppActive: false, sameMobileNoAsWhatsAppActive: false, contactOverWhatsApp: true });
-            }
-        } else if (!whatsappCommunicationIndicator) {
-            if (mobileNumberAsWhatsappNumber) {
-                form.setFieldsValue({ mobileNumberAsWhatsappNumber: null });
-                setWhatsAppConfiguration({ contactOverWhatsAppActive: true, sameMobileNoAsWhatsApp: false });
-            } else {
-                setWhatsAppConfiguration({ contactOverWhatsAppActive: true, sameMobileNoAsWhatsApp: false, sameMobileNoAsWhatsAppActive: true });
-                form.setFieldsValue({ whatsAppNumber: null });
-            }
-        }
-    };
 
     const formProps = {
         ...props,
-        formActionType,
         form,
         onFinish,
         saveData,
         data,
-        corporateLovData,
         setFormActionType,
         onFinishFailed,
         handleButtonClick,
         showForm,
-        fetchCorporateLovList,
         setShowForm,
         setUploadImgDocId,
         uploadImgDocId,
@@ -331,8 +284,7 @@ const CustomerDetailMasterBase = (props) => {
         buttonData,
         nameChangeRequestform,
         typeData,
-        formData: data,
-        setFormData,
+        formData,
         isSupportingDocumentDataLoaded,
         supportingData,
         isViewDataLoaded,
@@ -355,9 +307,6 @@ const CustomerDetailMasterBase = (props) => {
         handlePreview,
         supportingDataView,
         setSupportingDataView,
-        whatsAppConfiguration,
-        setWhatsAppConfiguration,
-        handleFormFieldChange,
         setCustomerNameList,
         onViewHistoryChange,
         changeHistoryClose,
@@ -367,7 +316,7 @@ const CustomerDetailMasterBase = (props) => {
         setStatus,
         activeKey,
         fetchList,
-        setactiveKey,
+        setActiveKey,
     };
 
     const viewProps = {
@@ -378,30 +327,6 @@ const CustomerDetailMasterBase = (props) => {
         isLoading,
     };
 
-    const nameChangeHistoryProps = {
-        isVisible: isHistoryVisible,
-        onCloseAction: changeHistoryClose,
-        selectedCustomerId,
-        downloadFileFromButton,
-    };
-
-    return (
-        <>
-            <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                <Row gutter={20} className={styles.drawerBodyRight}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <h2>{section?.title}</h2>
-                        {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
-                    </Col>
-                </Row>
-                <Row>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <CustomerFormButton {...props} />
-                    </Col>
-                </Row>
-            </Form>
-            <CustomerNameChangeHistory {...nameChangeHistoryProps} />
-        </>
-    );
+    return formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />;
 };
-export const CustomerDetailMaster = connect(mapStateToProps, mapDispatchToProps)(CustomerDetailMasterBase);
+export const CustomerNameChangeMaster = connect(mapStateToProps, mapDispatchToProps)(CustomerNameChangeMasterBase);

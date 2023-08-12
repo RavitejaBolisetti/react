@@ -18,7 +18,7 @@ import { BiTimeFive } from 'react-icons/bi';
 
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { STATUS } from './statusConstant';
-import { NameChangeHistory } from './NameChangeHistory';
+import { CustomerNameChangeMaster, CustomerNameChangeHistory } from './CustomerNameChange';
 
 import styles from 'components/common/Common.module.css';
 
@@ -26,7 +26,7 @@ const { Panel } = Collapse;
 const { Text } = Typography;
 
 const AddEditFormMain = (props) => {
-    const { form, typeData, formData, corporateLovData, formActionType: { editMode } = undefined, customerType } = props;
+    const { form, typeData, formData, corporateLovData, formActionType: { editMode } = undefined, formActionType, customerType } = props;
 
     const { nameChangeRequestform, editedMode, setCustomerNameList, data, activeKey, setactiveKey, customerNameList, fileList, setFileList, selectedCustomerId, setEditedMode, isHistoryVisible, onViewHistoryChange, downloadFileFromButton, changeHistoryClose, setButtonData, buttonData, setStatus, showGlobalNotification } = props;
     const { whatsAppConfiguration, setWhatsAppConfiguration, handleFormFieldChange } = props;
@@ -203,122 +203,11 @@ const AddEditFormMain = (props) => {
                         </Col>
                     </Row>
                 </div>
-                <Form form={nameChangeRequestform} id="myNameForm" autoComplete="off" layout="vertical">
-                    <div className={styles.cardInsideBox}>
-                        <Row gutter={20}>
-                            <Col xs={24} sm={24} md={12} lg={12} xl={12} className={styles.verticallyCentered}>
-                                <Text style={{ fontSize: '16px' }} strong>
-                                    Customer Name
-                                </Text>
-                            </Col>
-                            <Col xs={24} sm={24} md={12} lg={12} xl={12} className={styles.addGroup}>
-                                <Button type="link" className={styles.verticallyCentered} onClick={onViewHistoryChange} icon={<BiTimeFive />}>
-                                    View History
-                                </Button>
-                            </Col>
-                        </Row>
-                        <Divider />
-                        <Collapse expandIcon={expandIcon} activeKey={activeKey} expandIconPosition="end" onChange={() => onCollapseChange(1)}>
-                            <Panel
-                                header={
-                                    <>
-                                        <Row type="flex" justify="space-between" align="middle" size="large">
-                                            <Row type="flex" justify="space-around" align="middle">
-                                                <div>
-                                                    <Typography>
-                                                        {customerNameList?.titleCode} {customerNameList?.firstName} {customerNameList?.middleName} {customerNameList?.lastName}
-                                                    </Typography>
-                                                    {editedMode || onSave || formData?.pendingNameChangeRequest?.status === STATUS?.PENDING?.title ? <Text type="secondary">Current Name</Text> : null}
-                                                </div>
-                                                <Button
-                                                    type="link"
-                                                    icon={<FiEdit />}
-                                                    className={styles.verticallyCentered}
-                                                    onClick={() => {
-                                                        onEdit();
-                                                    }}
-                                                    disabled={disabled}
-                                                    style={{ color: disabled ? 'grey' : 'red' }}
-                                                >
-                                                    Edit
-                                                </Button>
-                                            </Row>
-                                            {formData?.pendingNameChangeRequest?.status === STATUS?.PENDING?.title ? (
-                                                <Tag style={{ textAlign: 'right' }} color="warning">
-                                                    Pending
-                                                </Tag>
-                                            ) : null}
-                                        </Row>
-                                    </>
-                                }
-                                key={1}
-                            >
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={4} lg={4} xl={4}>
-                                        <Form.Item label="Title" initialValue={customerNameList?.titleCode} name="titleCode" data-testid="title" rules={[validateRequiredSelectField('title')]}>
-                                            <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} placeholder={preparePlaceholderSelect('title')} fieldNames={{ label: 'value', value: 'key' }} options={typeData['TITLE']}></Select>
-                                        </Form.Item>
-                                    </Col>
-                                    <Col xs={24} sm={24} md={6} lg={6} xl={6}>
-                                        <Form.Item label="First Name" initialValue={customerNameList?.firstName} name="firstName" data-testid="firstName" rules={[validateRequiredInputField('first name')]}>
-                                            <Input placeholder={preparePlaceholderText('first name')} />
-                                        </Form.Item>
-                                    </Col>
-                                    <Col xs={24} sm={24} md={7} lg={7} xl={7}>
-                                        <Form.Item label="Middle Name" initialValue={customerNameList?.middleName} name="middleName" data-testid="middleName">
-                                            <Input placeholder={preparePlaceholderText('middle name')} />
-                                        </Form.Item>
-                                    </Col>
-                                    <Col xs={24} sm={24} md={7} lg={7} xl={7}>
-                                        <Form.Item label="Last Name" initialValue={customerNameList?.lastName} name="lastName" data-testid="lastName" rules={[validateRequiredInputField('last name')]}>
-                                            <Input placeholder={preparePlaceholderText('last name')} />
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <UploadUtil {...uploadProps} />
-                                    </Col>
-                                </Row>
-                                {formData?.supportingDocuments?.map((item) => (
-                                    <Row gutter={20}>
-                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                            <Card className={styles.viewDocumentStrip} key={item?.documentId} title={item?.documentName} extra={<FiDownload />} onClick={downloadFileFromButton}></Card>
-                                        </Col>
-                                    </Row>
-                                ))}
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonsGroup}>
-                                        <Button type="primary" form="myNameForm" onClick={onHandleSave}>
-                                            Save
-                                        </Button>
-                                        <Button onClick={handleResetChange} danger>
-                                            Reset
-                                        </Button>
-                                    </Col>
-                                </Row>
-                            </Panel>
-                        </Collapse>
-                        {(formData?.pendingNameChangeRequest?.status === STATUS?.PENDING?.title || onSave) && (
-                            <Card
-                                title={
-                                    <>
-                                        <Row type="flex" justify="space-between" align="middle" size="large">
-                                            <Row type="flex" justify="space-around" align="middle">
-                                                <div>
-                                                    <Typography>
-                                                        {formData?.titleCode} {formData?.firstName} {formData?.middleName} {formData?.lastName}
-                                                    </Typography>
-                                                    <Text type="secondary">Previous Name</Text>
-                                                </div>
-                                            </Row>
-                                        </Row>
-                                    </>
-                                }
-                            />
-                        )}
-                    </div>
-                </Form>
+                <Row>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <CustomerNameChangeMaster formActionType={formActionType} />
+                    </Col>
+                </Row>
                 <Divider />
                 <div className={styles.blockSection}>
                     <Row gutter={20}>
@@ -394,7 +283,7 @@ const AddEditFormMain = (props) => {
                     </Col> */}
                 </Row>
             </Card>
-            <NameChangeHistory {...changeHistoryProps} />
+
         </>
     );
 };
