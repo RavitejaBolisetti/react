@@ -6,7 +6,7 @@
 export const PARAM_MASTER = {
     CFG_PARAM: {
         id: 'CFG_PARAM',
-        title: 'CFG_PARAM',
+        title: 'CFG_PARAM', 
     },
     CFG_PARAM_TYPE: {
         id: 'CFG_PARAM_TYPE',
@@ -256,4 +256,17 @@ export const PARAM_MASTER = {
         id: 'ACC_HEAD',
         title: 'Sales Type',
     },
+    CRDR_SEARCH_PARAM: {
+        id: 'CRDR_SEARCH_PARAM',
+        title: 'Credit Debit Note Search',
+    },
+    PARTY_CATEG: {
+        id: 'PARTY_CATEG',
+        title: 'Party Category',
+    },
+    VOUCHR_TYPE: {
+        id: 'VOUCHR_TYPE',
+        title: 'Voucher type',
+    },
+   
 };
