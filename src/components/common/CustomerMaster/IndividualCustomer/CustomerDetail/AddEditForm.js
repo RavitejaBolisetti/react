@@ -5,38 +5,21 @@
  */
 
 import { useEffect, useState } from 'react';
-import { Col, Input, Form, Row, Select, Typography, Card, Divider, Switch, Button, Tag, Collapse } from 'antd';
+import { Col, Input, Form, Row, Select, Card, Divider, Switch } from 'antd';
 import { validateEmailField, validateMobileNoField, validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
-import { expandIcon } from 'utils/accordianExpandIcon';
-import { UploadUtil } from 'utils/Upload';
-
-import { FiDownload } from 'react-icons/fi';
-import { FiEdit } from 'react-icons/fi';
-import { BiTimeFive } from 'react-icons/bi';
-
+import { CustomerNameChangeMaster } from './CustomerNameChange';
 import { PARAM_MASTER } from 'constants/paramMaster';
-import { STATUS } from './statusConstant';
-import { CustomerNameChangeMaster, CustomerNameChangeHistory } from './CustomerNameChange';
 
 import styles from 'components/common/Common.module.css';
 
-const { Panel } = Collapse;
-const { Text } = Typography;
-
 const AddEditFormMain = (props) => {
-    const { form, typeData, formData, corporateLovData, formActionType: { editMode } = undefined, formActionType, customerType } = props;
-
-    const { nameChangeRequestform, editedMode, setCustomerNameList, data, activeKey, setactiveKey, customerNameList, fileList, setFileList, selectedCustomerId, setEditedMode, isHistoryVisible, onViewHistoryChange, downloadFileFromButton, changeHistoryClose, setButtonData, buttonData, setStatus, showGlobalNotification } = props;
     const { whatsAppConfiguration, setWhatsAppConfiguration, handleFormFieldChange } = props;
+    const { form, typeData, formData, corporateLovData, formActionType: { editMode } = undefined, data, customerType } = props;
     const { contactOverWhatsApp, contactOverWhatsAppActive, sameMobileNoAsWhatsApp, sameMobileNoAsWhatsAppActive } = whatsAppConfiguration;
 
     const [corporateType, setCorporateType] = useState('');
-    const [disabled, setDisabled] = useState(false);
-    const [onSave, setOnSave] = useState(false);
-    const [singleDisabled, setSingleDisabled] = useState(false);
-    const [hasChanges, setHasChanges] = useState(false);
 
     useEffect(() => {
         setCorporateType(formData?.corporateType);
@@ -54,72 +37,6 @@ const AddEditFormMain = (props) => {
         handleFormFieldChange();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
-
-    useEffect(() => {
-        if (editedMode) {
-            setDisabled(true);
-        } else {
-            setDisabled(false);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [editedMode]);
-
-    const uploadProps = {
-        form: nameChangeRequestform,
-        messageText: <>Upload supporting documents</>,
-        single: true,
-        singleDisabled,
-        setSingleDisabled,
-        flag: true,
-        ...props,
-    };
-
-    const onEdit = () => {
-        setEditedMode(true);
-        setactiveKey(1);
-    };
-
-    const onChange = () => {
-        const key1 = Object.keys(formData);
-        const key2 = Object.keys(nameChangeRequestform.getFieldsValue());
-
-        if (key1.some((key) => key2.includes(key))) {
-            setHasChanges(true);
-        }
-    };
-
-    const onHandleSave = () => {
-        nameChangeRequestform
-            .validateFields()
-            .then(() => {
-                if (fileList.length === 0 && formData?.supportingDocuments === null) {
-                    showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Kindly Upload Document' });
-                } else {
-                    onChange();
-                    if (hasChanges) {
-                        setHasChanges(false);
-                        setCustomerNameList(nameChangeRequestform.getFieldsValue());
-                        setStatus(STATUS?.PENDING?.title);
-                        setactiveKey([]);
-                        setEditedMode(false);
-                        setOnSave(true);
-                        setButtonData({ ...buttonData, formBtnActive: true });
-                    } else {
-                        showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Current and Previous Name cannot be same' });
-                    }
-                }
-            })
-            .catch((err) => console.error(err));
-    };
-
-    const handleResetChange = () => {
-        nameChangeRequestform.setFieldsValue({ titleCode: null });
-        nameChangeRequestform.setFieldsValue({ middleName: null });
-        nameChangeRequestform.setFieldsValue({ firstName: null });
-        nameChangeRequestform.setFieldsValue({ lastName: null });
-        setFileList([]);
-        setSingleDisabled(false);
-    };
 
     const handleCorporateChange = (value) => {
         setCorporateType(value);
@@ -139,17 +56,6 @@ const AddEditFormMain = (props) => {
         form.setFieldsValue({
             corporateCode: value,
         });
-    };
-
-    const onCollapseChange = (value) => {
-        setactiveKey(1);
-        setEditedMode(true);
-    };
-    const changeHistoryProps = {
-        isVisible: isHistoryVisible,
-        onCloseAction: changeHistoryClose,
-        selectedCustomerId,
-        downloadFileFromButton,
     };
 
     const validateSameNumber = (_, value) => {
@@ -205,7 +111,7 @@ const AddEditFormMain = (props) => {
                 </div>
                 <Row>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <CustomerNameChangeMaster formActionType={formActionType} />
+                        <CustomerNameChangeMaster {...props} />
                     </Col>
                 </Row>
                 <Divider />
@@ -283,7 +189,6 @@ const AddEditFormMain = (props) => {
                     </Col> */}
                 </Row>
             </Card>
-
         </>
     );
 };

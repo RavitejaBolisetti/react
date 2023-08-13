@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { Typography, Descriptions, Divider, Card, Collapse, Tag, Col, Row, Space, Button } from 'antd';
+import { Typography, Descriptions, Divider, Card, Collapse, Tag, Col, Row, Modal, Button } from 'antd';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { BiTimeFive } from 'react-icons/bi';
@@ -15,13 +15,13 @@ import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { getCodeValue } from 'utils/getCodeValue';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { STATUS } from '../statusConstant';
-import { CustomerNameChangeHistory } from './CustomerNameChangeHistory';
 import { nameChangeRequestDataActions } from 'store/actions/data/customerMaster/individual/nameChangeRequest/nameChangeRequest';
 import { RejectionModal } from '../RejectionModal';
 import { showGlobalNotification } from 'store/actions/notification';
 
 const { Text } = Typography;
 const { Panel } = Collapse;
+const { confirm } = Modal;
 
 const mapStateToProps = (state) => {
     const {
@@ -54,12 +54,11 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ViewDetailMain = (props) => {
-    const { styles, formData, isLoading, typeData, saveNameChangeData, listShowLoading, selectedCustomerId, downloadFileFromButton, userId, onViewHistoryChange, isHistoryVisible, changeHistoryClose } = props;
+    const { styles, formData, typeData, saveNameChangeData, listShowLoading, selectedCustomerId, downloadFileFromButton, userId, onViewHistoryChange, setRefreshCustomerList } = props;
     const { activeKey, setActiveKey } = props;
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [status, setStatus] = useState('');
-    const [visibility, setVisibility] = useState(true);
 
     const handleCancel = () => {
         setIsModalOpen(false);
@@ -70,15 +69,8 @@ const ViewDetailMain = (props) => {
         setIsModalOpen(false);
     };
 
-    const onRejectionHandled = () => {
+    const handleReject = () => {
         setIsModalOpen(true);
-    };
-
-    const viewProps = {
-        bordered: false,
-        colon: false,
-        layout: 'vertical',
-        column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
     };
 
     const nameViewProps = {
@@ -86,13 +78,6 @@ const ViewDetailMain = (props) => {
         colon: false,
         layout: 'vertical',
         column: { xs: 1, sm: 4, lg: 4, xl: 4, xxl: 4 },
-    };
-
-    const changeHistoryProps = {
-        isVisible: isHistoryVisible,
-        onCloseAction: changeHistoryClose,
-        selectedCustomerId,
-        downloadFileFromButton,
     };
 
     const modalProps = {
@@ -104,19 +89,17 @@ const ViewDetailMain = (props) => {
         onCloseActionOnContinue,
     };
 
-    const onCollapseChange = (value) => {
-        setActiveKey(1);
-    };
-
     const onStatusChange = (value) => {
         const data = { id: formData?.pendingNameChangeRequest?.id || '', customerCode: selectedCustomerId, rejectionRemark: 'Name change request', actionStatus: value };
         const onSuccess = (res) => {
+            setRefreshCustomerList(true);
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Customer name change request approved successfully' });
-            if (res?.data?.actionStatus === 'Rejected') setStatus(STATUS?.REJECTED?.title);
-            else setStatus(STATUS?.APPROVED?.title);
-
+            if (res?.data?.actionStatus === 'Rejected') {
+                setStatus(STATUS?.REJECTED?.title);
+            } else {
+                setStatus(STATUS?.APPROVED?.title);
+            }
             setActiveKey([]);
-            setVisibility(false);
         };
 
         const onError = (message) => {
@@ -134,40 +117,107 @@ const ViewDetailMain = (props) => {
         saveNameChangeData(requestData);
     };
 
-    const onApprovedHandle = () => {
-        onStatusChange(STATUS?.APPROVED?.title);
+    const handleApprove = () => {
+        confirm({
+            title: 'Confirmation',
+            icon: false,
+            content: 'Do you want to approved request?',
+            okText: 'Yes',
+            okType: 'danger',
+            cancelText: 'No',
+            wrapClassName: styles.confirmModal,
+            centered: true,
+            closable: true,
+            onOk() {
+                onStatusChange(STATUS?.APPROVED?.title);
+            },
+        });
+    };
+
+    const canApproveNameChangeRequest = true;
+    const pendingNameChangeRequest = formData?.pendingNameChangeRequest;
+
+    const pendignRequest = pendingNameChangeRequest && {
+        titleCode: pendingNameChangeRequest?.newTitleCode,
+        firstName: pendingNameChangeRequest?.newFirstName,
+        middleName: pendingNameChangeRequest?.newMiddleName,
+        lastName: pendingNameChangeRequest?.newLastName,
+        supportingDocuments: formData?.supportingDocuments,
     };
     return (
         <>
             <div className={styles.cardInsideBox}>
-                <Row>
-                    <Col xs={24} sm={24} md={6} lg={6} xl={6}>
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={12} lg={12} xl={12} className={styles.verticallyCentered}>
                         <Text style={{ fontSize: '16px' }} strong>
                             Customer Name
                         </Text>
                     </Col>
-                    <Col xs={24} sm={24} md={6} lg={6} xl={6}>
-                        {status === STATUS?.REJECTED?.title ? (
-                            <Tag style={{ textAlign: 'right' }} color="error">
-                                Rejected
-                            </Tag>
-                        ) : status === STATUS?.APPROVED?.title ? (
-                            <Tag style={{ textAlign: 'right' }} color="success">
-                                Approved
-                            </Tag>
-                        ) : formData?.pendingNameChangeRequest !== null ? (
-                            <Tag style={{ textAlign: 'right' }} color="warning">
-                                Pending for Approval
-                            </Tag>
-                        ) : null}
-                    </Col>
-                    <Col xs={24} sm={24} md={12} lg={12} xl={12} style={{ textAlign: 'right' }}>
-                        <Button type="link" onClick={onViewHistoryChange} icon={<BiTimeFive />}>
+
+                    <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                        <Button type="link" onClick={onViewHistoryChange} icon={<BiTimeFive />} className={styles.verticallyCenteredAndAlignRight}>
                             View History
                         </Button>
                     </Col>
                 </Row>
                 <Divider />
+                {pendingNameChangeRequest && (
+                    <Collapse
+                        expandIcon={expandIcon}
+                        activeKey={activeKey}
+                        onChange={(value) => {
+                            setActiveKey(value);
+                        }}
+                        expandIconPosition="end"
+                    >
+                        <Panel
+                            header={
+                                <Row>
+                                    <Col xs={24} sm={24} md={18} lg={20} xl={20}>
+                                        <Typography>
+                                            {getCodeValue(typeData?.TITLE, pendignRequest?.titleCode)}&nbsp;
+                                            {(pendignRequest?.firstName || '') + ' ' + (pendignRequest?.middleName || '') + ' ' + (pendignRequest?.lastName || '')}
+                                        </Typography>
+                                        <Text type="secondary" style={{ fontSize: '12px', fontWeight: 'normal' }}>
+                                            Current Name
+                                        </Text>{' '}
+                                    </Col>
+                                    <Col xs={24} sm={24} md={6} lg={4} xl={4} className={styles.verticallyCentered}>
+                                        {status === STATUS?.REJECTED?.title ? <Tag color="error">Rejected</Tag> : status === STATUS?.APPROVED?.title ? <Tag color="success">Approved</Tag> : <Tag color="warning">Pending for Approval</Tag>}
+                                    </Col>
+                                </Row>
+                            }
+                            key={1}
+                        >
+                            <Descriptions {...nameViewProps} style={{ padding: '10px' }}>
+                                <Descriptions.Item label="Title">{checkAndSetDefaultValue(getCodeValue(typeData?.TITLE, pendignRequest?.titleCode))}</Descriptions.Item>
+                                <Descriptions.Item label="First Name">{checkAndSetDefaultValue(pendignRequest?.firstName)}</Descriptions.Item>
+                                <Descriptions.Item label="Middle Name">{checkAndSetDefaultValue(pendignRequest?.middleName)}</Descriptions.Item>
+                                <Descriptions.Item label="Last Name">{checkAndSetDefaultValue(pendignRequest?.lastName)}</Descriptions.Item>
+                            </Descriptions>
+
+                            {pendignRequest?.supportingDocuments?.map((item) => (
+                                <Row gutter={20}>
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                        <Card className={styles.viewDocumentStrip} key={item?.documentId} title={item?.documentName} extra={<FiDownload />} onClick={downloadFileFromButton}></Card>
+                                    </Col>
+                                </Row>
+                            ))}
+                            {canApproveNameChangeRequest && pendingNameChangeRequest !== null && (
+                                <Row gutter={20}>
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                        <Button type="primary" className={styles.marR20} onClick={handleApprove}>
+                                            Approved
+                                        </Button>
+                                        <Button className={styles.marB20} onClick={handleReject} danger>
+                                            Rejected
+                                        </Button>
+                                    </Col>
+                                </Row>
+                            )}
+                        </Panel>
+                    </Collapse>
+                )}
                 <Collapse
                     expandIcon={expandIcon}
                     activeKey={activeKey}
@@ -178,45 +228,28 @@ const ViewDetailMain = (props) => {
                 >
                     <Panel
                         header={
-                            <>
-                                <Row type="flex" justify="space-between" align="middle" size="large">
-                                    <Row type="flex" justify="space-around" align="middle">
-                                        <Text>
-                                            {getCodeValue(typeData?.TITLE, formData?.titleCode)}&nbsp;
-                                            {(formData?.firstName || '') + ' ' + (formData?.middleName || '') + ' ' + (formData?.lastName || '')}hfhfhf
+                            <Row>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                    <Typography>
+                                        {getCodeValue(typeData?.TITLE, formData?.titleCode)}&nbsp;
+                                        {(formData?.firstName || '') + ' ' + (formData?.middleName || '') + ' ' + (formData?.lastName || '')}
+                                    </Typography>
+                                    {pendingNameChangeRequest && (
+                                        <Text type="secondary" style={{ fontSize: '12px', fontWeight: 'normal' }}>
+                                            Previous Name
                                         </Text>
-                                    </Row>
-                                </Row>
-                            </>
+                                    )}
+                                </Col>
+                            </Row>
                         }
-                        key={1}
+                        key={2}
                     >
-                        <Descriptions {...nameViewProps}>
+                        <Descriptions {...nameViewProps} style={{ padding: '10px' }}>
                             <Descriptions.Item label="Title">{checkAndSetDefaultValue(getCodeValue(typeData?.TITLE, formData?.titleCode))}</Descriptions.Item>
                             <Descriptions.Item label="First Name">{checkAndSetDefaultValue(formData?.firstName)}</Descriptions.Item>
                             <Descriptions.Item label="Middle Name">{checkAndSetDefaultValue(formData?.middleName)}</Descriptions.Item>
                             <Descriptions.Item label="Last Name">{checkAndSetDefaultValue(formData?.lastName)}</Descriptions.Item>
                         </Descriptions>
-
-                        {formData?.supportingDocuments?.map((item) => (
-                            <Row gutter={20}>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    <Card className={styles.viewDocumentStrip} key={item?.documentId} title={item?.documentName} extra={<FiDownload />} onClick={downloadFileFromButton}></Card>
-                                </Col>
-                            </Row>
-                        ))}
-                        {formData?.pendingNameChangeRequest !== null && visibility && (
-                            <Row gutter={20}>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    <Button type="primary" className={styles.marR20} onClick={onApprovedHandle}>
-                                        Approved
-                                    </Button>
-                                    <Button className={styles.marB20} onClick={onRejectionHandled} danger>
-                                        Rejected
-                                    </Button>
-                                </Col>
-                            </Row>
-                        )}
                     </Panel>
                 </Collapse>
             </div>

@@ -140,11 +140,13 @@ const ChangeHistoryMain = ({ fetchCustomerChangeHistory, onCloseAction, listShow
             title: 'Remarks',
             dataIndex: 'remarks',
         }),
+
         tblPrepareColumns({
             title: 'Documents',
             dataIndex: 'supportingDocuments',
             render: () => <img src={IMAGES.FILE} alt="logo-images" onClick={downloadFileFromButton} />,
         }),
+
         tblPrepareColumns({
             title: 'Status',
             dataIndex: 'status',
