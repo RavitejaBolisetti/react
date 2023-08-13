@@ -204,6 +204,7 @@ export const RSMApprovalMasterBase = (props) => {
 
     useEffect(() => {
         if (userId && extraParams) {
+            setShowDataLoading(true);
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps

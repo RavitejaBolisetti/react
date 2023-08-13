@@ -176,6 +176,7 @@ export const BASE_URL_OTF_CUSTOMER = BASE_URL + 'otf/customerdetails';
 export const BASE_URL_INVOICE = BASE_URL + 'invoice/';
 export const BASE_URL_RSM_APPROVAL = BASE_URL_INVOICE + 'rsm';
 export const BASE_URL_RSM_APPROVAL_SEARCH = BASE_URL_RSM_APPROVAL + '/search';
+export const BASE_URL_INVOICE_DETAILS = BASE_URL_INVOICE + 'details';
 
 export const BASE_URL_VEHICLE = BASE_URL + 'vehicle/';
 export const BASE_URL_VEHICLE_SEARCH = BASE_URL_VEHICLE + 'search';
@@ -207,6 +208,12 @@ export const BASE_URL_DOCUMENT_TYPE_LEDGER = BASE_URL + 'finance/ledgermappings'
 export const BASE_URL_FINANCIAL_ACC_TAX_CHARGE_TYPE = BASE_URL + 'finance/tax/chargetypes/lov';
 export const BASE_URL_FINANCIAL_ACC_TAX_CHARGE_CODE = BASE_URL + 'finance/tax/charges/lov';
 export const BASE_URL_FINANCIAL_ACC_ACCOUNT_CATEGORY_DOCUMENT_DESCRIPTION = BASE_URL + 'application/documenttypes/lov';
+export const BASE_URL_FINANCIAL_ACCOUNTING = BASE_URL + 'finance/';
+export const BASE_URL_VOUCHER = BASE_URL_FINANCIAL_ACCOUNTING + 'voucher/';
+export const BASE_URL_CREDIT_DEBIT_NOTE = BASE_URL_VOUCHER + 'creditanddebit/';
+export const BASE_URL_CREDIT_DEBIT_NOTE_SEARCH = BASE_URL_CREDIT_DEBIT_NOTE + 'search';
+export const BASE_URL_CREDIT_DEBIT_NOTE_DETAILS = BASE_URL_CREDIT_DEBIT_NOTE + 'details';
+
 
 export const BASE_URL_VEHICLE_PRICE_MASTER = BASE_URL_VEHICLE + 'pricemaster';
 export const BASE_URL_VEHICLE_PRICE_MASTER_SEARCH = BASE_URL_VEHICLE + 'pricemaster/search';
