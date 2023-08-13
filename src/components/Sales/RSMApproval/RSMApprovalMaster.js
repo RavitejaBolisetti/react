@@ -200,10 +200,10 @@ export const RSMApprovalMasterBase = (props) => {
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, rsmStatusType, page]);
+    }, [filterString, page]);
 
     useEffect(() => {
-        if (userId && extraParams) {
+        if (userId) {
             setShowDataLoading(true);
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
@@ -211,6 +211,7 @@ export const RSMApprovalMasterBase = (props) => {
     }, [userId, extraParams]);
 
     useEffect(() => {
+        console.log('filter');
         setFilterString({ ...filterString, searchParam: RSM_APPROVAL_STATUS?.PENDING?.title });
         return () => {
             setFilterString();
