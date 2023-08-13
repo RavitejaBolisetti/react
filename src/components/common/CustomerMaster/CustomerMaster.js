@@ -317,48 +317,6 @@ const CustomerMasterMain = (props) => {
         }
     }, [formActionType]);
 
-    const containerProps = {
-        record: selectedCustomer,
-        form,
-        formActionType,
-        setFormActionType,
-        onFinish,
-        onFinishFailed,
-        isVisible: isFormVisible,
-        onCloseAction,
-        titleOverride: drawerTitle.concat(moduleTitle),
-        tableData: data,
-        customerType,
-        ADD_ACTION,
-        EDIT_ACTION,
-        VIEW_ACTION,
-        NEXT_ACTION,
-        buttonData,
-
-        setButtonData,
-        handleButtonClick,
-        defaultFormActionType,
-        defaultBtnVisiblity,
-        selectedCustomerId,
-        setSelectedCustomerId,
-        selectedCustomer,
-        setSelectedCustomer,
-        section,
-        currentSection,
-        sectionName,
-        setCurrentSection,
-        shouldResetForm,
-        handleFormValueChange,
-        isLastSection,
-        saveButtonName: !selectedCustomerId ? 'Create Customer ID' : isLastSection ? 'Submit' : 'Save & Next',
-        setIsFormVisible,
-        setRefreshCustomerList,
-        profileCardLoading,
-        setProfileCardLoading,
-        resetViewData,
-        handleChangeHistory,
-    };
-
     const handleCustomerTypeChange = (id) => {
         setCustomerType(id);
         searchForm.resetFields();
@@ -413,6 +371,49 @@ const CustomerMasterMain = (props) => {
         selectedCustomerId,
         ChangeHistoryTitle,
         customerType,
+    };
+
+    const containerProps = {
+        record: selectedCustomer,
+        form,
+        formActionType,
+        setFormActionType,
+        onFinish,
+        onFinishFailed,
+        isVisible: isFormVisible,
+        onCloseAction,
+        titleOverride: drawerTitle.concat(moduleTitle),
+        tableData: data,
+        customerType,
+        ADD_ACTION,
+        EDIT_ACTION,
+        VIEW_ACTION,
+        NEXT_ACTION,
+        buttonData,
+
+        setButtonData,
+        handleButtonClick,
+        defaultFormActionType,
+        defaultBtnVisiblity,
+        selectedCustomerId,
+        setSelectedCustomerId,
+        selectedCustomer,
+        setSelectedCustomer,
+        section,
+        currentSection,
+        sectionName,
+        setCurrentSection,
+        shouldResetForm,
+        handleFormValueChange,
+        isLastSection,
+        saveButtonName: !selectedCustomerId ? 'Create Customer ID' : isLastSection ? 'Submit' : 'Save & Next',
+        setIsFormVisible,
+        setRefreshCustomerList,
+        profileCardLoading,
+        setProfileCardLoading,
+        resetViewData,
+        handleChangeHistory,
+        handleResetFilter,
     };
 
     const showAddButton = true;
