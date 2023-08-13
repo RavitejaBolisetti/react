@@ -335,6 +335,12 @@ export const MenuConstant = {
         icon: undefined,
         parentMenuId: 'FINA-01',
     },
+    [getMenyKey('FINA-02.05')]: {
+        key: 'FINA-02.05',
+        link: routing.ROUTING_CREDIT_DEBIT_NOTE,
+        icon: undefined,
+        parentMenuId: 'FINA-02',
+    },
 
     [getMenyKey('HR')]: {
         link: undefined,
