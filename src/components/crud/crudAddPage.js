@@ -32,20 +32,19 @@ export const crudAddPage = ({ dataActions, addActions, showGlobalNotification, m
         const { showGlobalNotification } = props;
         const [shouldReset, setShouldReset] = useState(false);
         const [form] = Form.useForm();
-
-        const { validateFields, resetFields } = form;
-
+        const { resetFields } = form;
+        // validateFields
         const defaultBtnVisiblity = { editBtn: false, saveBtn: true, saveAndNewBtn: true, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: true, formBtnActive: false };
         const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
-        const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
-        const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
+        // const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
+        // const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
-        const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
+        // const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
         const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
         const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
-        const [formData, setFormData] = useState([]);
+        // const [formData, setFormData] = useState([]);
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -67,56 +66,58 @@ export const crudAddPage = ({ dataActions, addActions, showGlobalNotification, m
 
         const handleButtonClick = ({ record = null, buttonAction }) => {
             resetFields();
-            setFormData([]);
+            // setFormData([]);
 
-            setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
+            // setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
             setButtonData(buttonAction === VIEW_ACTION ? { ...defaultBtnVisiblity, closeBtn: true, editBtn: true } : buttonAction === EDIT_ACTION ? { ...defaultBtnVisiblity, saveBtn: true, cancelBtn: true } : { ...defaultBtnVisiblity, saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
 
-            record && setFormData(record);
+            // record && setFormData(record);
             // setIsFormVisible(true);
         };
 
-        const onSaveNew = (isFieldReset) => (e) => {
-            const { doAddAction, addActionShowLoading, addActionSuccess, addActionError, userId, filterString = undefined, filterParams = undefined, additionalFilter = {} } = props;
-            e.preventDefault();
+        // const onSaveNew = (isFieldReset) => (e) => {
+        //     const { doAddAction, addActionShowLoading, addActionError, userId, filterString = undefined, filterParams = undefined, additionalFilter = {} } = props;
+        //     e.preventDefault();
 
-            const doReset = () => {
-                setShouldReset(true);
-                resetFields();
-            };
+        //     // addActionSuccess
 
-            validateFields((err, values) => {
-                if (!err) {
-                    const finalValues = customDataTransformer(values);
-                    const keyword = filterString ? 'keyword=' + filterString : undefined;
-                    doAddAction({
-                        data: finalValues,
-                        isFormShown: isFieldReset,
-                        setIsLoading: addActionShowLoading,
-                        errorAction: addActionError,
-                        onWarning: (errorMessage) => antMessage.error(errorMessage),
-                        warningAction: (errorMessage) => antMessage.error(errorMessage),
-                        onSuccess,
-                        onError,
-                        // successAction: (...rest) => {
-                        //     addActionSuccess(...rest);
-                        //     doReset();
-                        //     if (isFieldReset) {
-                        //         setShouldReset(false);
-                        //     }
-                        //     customSuccessAction && customSuccessAction(props);
-                        // },
-                        userId,
-                        extraParams: keyword,
-                        filterParams,
-                        additionalFilter,
-                    });
-                }
-            });
-        };
+        //     // const doReset = () => {
+        //     //     setShouldReset(true);
+        //     //     resetFields();
+        //     // };
 
-        const onSave = onSaveNew(false);
-        const onSaveAndNew = onSaveNew(true);
+        //     validateFields((err, values) => {
+        //         if (!err) {
+        //             const finalValues = customDataTransformer(values);
+        //             const keyword = filterString ? 'keyword=' + filterString : undefined;
+        //             doAddAction({
+        //                 data: finalValues,
+        //                 isFormShown: isFieldReset,
+        //                 setIsLoading: addActionShowLoading,
+        //                 errorAction: addActionError,
+        //                 onWarning: (errorMessage) => antMessage.error(errorMessage),
+        //                 warningAction: (errorMessage) => antMessage.error(errorMessage),
+        //                 onSuccess,
+        //                 onError,
+        //                 // successAction: (...rest) => {
+        //                 //     addActionSuccess(...rest);
+        //                 //     doReset();
+        //                 //     if (isFieldReset) {
+        //                 //         setShouldReset(false);
+        //                 //     }
+        //                 //     customSuccessAction && customSuccessAction(props);
+        //                 // },
+        //                 userId,
+        //                 extraParams: keyword,
+        //                 filterParams,
+        //                 additionalFilter,
+        //             });
+        //         }
+        //     });
+        // };
+
+        // const onSave = onSaveNew(false);
+        // const onSaveAndNew = onSaveNew(true);
 
         const { isError, isAdded, message, onCloseAction, isVisible } = props;
 
@@ -134,12 +135,12 @@ export const crudAddPage = ({ dataActions, addActions, showGlobalNotification, m
         const onFinish = (values) => {
             let finalValues = { ...values };
             const isFieldReset = buttonData?.saveAndNewBtnClicked;
-            const { doAddAction, addActionShowLoading, addActionSuccess, addActionError, userId, filterString = undefined, filterParams = undefined, additionalFilter = {} } = props;
-
-            const doReset = () => {
-                setShouldReset(true);
-                resetFields();
-            };
+            const { doAddAction, addActionShowLoading, addActionError, userId, filterString = undefined, filterParams = undefined, additionalFilter = {} } = props;
+            // addActionSuccess
+            // const doReset = () => {
+            //     setShouldReset(true);
+            //     resetFields();
+            // };
 
             // const finalValues = customDataTransformer(values);
             const keyword = filterString ? 'keyword=' + filterString : undefined;
