@@ -53,7 +53,7 @@ export const ViewDetail = (props) => {
                     })}
                 </>
             ) : (
-                viewMode && <div className={styles.viewNoDataFound}>No Supporting Document Available</div>
+                viewMode && <Card>No Supporting Document Available</Card>
             )}
         </div>
     );

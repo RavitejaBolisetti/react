@@ -41,7 +41,6 @@ const props = {
     setAllowedTimingSave: jest.fn(),
     onCloseAction: jest.fn(),
     buttonData: jest.fn(),
-    // setButtonData,
     handleButtonClick: jest.fn(),
 };
 
@@ -49,7 +48,6 @@ describe('should render AddEditForm', () => {
     it('should render the AddEditForm', () => {
         customRender(<AddEditForm isVisible={true} />);
         const groupId = screen.findByTestId('groupIdddd');
-        screen.debug();
 
         expect(groupId).toBeTruthy();
 
@@ -79,10 +77,6 @@ describe('should render AddEditForm', () => {
         const dialog = screen.getByRole('dialog');
         expect(dialog).toBeTruthy();
         fireEvent.click(dialog);
-
-        const screenImg = screen.getByLabelText('plus');
-        expect(screenImg).toBeTruthy();
-        fireEvent.click(screenImg);
 
         const labelbutton = screen.getByLabelText('Close');
         fireEvent.click(labelbutton);

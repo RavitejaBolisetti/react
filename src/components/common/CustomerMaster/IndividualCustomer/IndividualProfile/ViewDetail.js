@@ -106,6 +106,7 @@ const ViewDetailMain = (props) => {
                  </Collapse> */}
             {/* <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
                 <Panel header="Authority Details (Who Knows Whom)" key="2">
+                    <Divider />
                     <Descriptions {...viewProps}>
                         <Descriptions.Item label="Name Of Person">{checkAndSetDefaultValue(formData?.authorityDetails?.personName, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Position">{checkAndSetDefaultValue(formData?.authorityDetails?.postion, isLoading)}</Descriptions.Item>

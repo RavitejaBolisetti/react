@@ -27,7 +27,6 @@ const mapStateToProps = (state) => {
             },
         },
     } = state;
-
     const moduleTitle = 'Cancel OTF';
 
     let returnValue = {

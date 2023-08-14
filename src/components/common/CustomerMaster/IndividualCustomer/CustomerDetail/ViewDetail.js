@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { Typography, Descriptions, Divider, Card, Collapse, Tag, Col, Row, Space, Button } from 'antd';
+import { Typography, Descriptions, Divider, Card, Collapse, Tag, Col, Row, Button, Form } from 'antd';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { BiTimeFive } from 'react-icons/bi';
@@ -86,12 +86,12 @@ const ViewDetailMain = (props) => {
         column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
     };
 
-    const nameViewProps = {
-        bordered: false,
-        colon: false,
-        layout: 'vertical',
-        column: { xs: 1, sm: 4, lg: 4, xl: 4, xxl: 4 },
-    };
+    // const nameViewProps = {
+    //     bordered: false,
+    //     colon: false,
+    //     layout: 'vertical',
+    //     column: { xs: 1, sm: 4, lg: 4, xl: 4, xxl: 4 },
+    // };
 
     const modalProps = {
         isVisible: isModalOpen,
@@ -137,38 +137,36 @@ const ViewDetailMain = (props) => {
     return (
         <>
             <div className={styles.viewDrawerContainer}>
-                <Space style={{ display: 'flex' }} direction="vertical" size="middle">
-                    <Card header="Customer Information">
-                        <Descriptions {...viewProps}>
-                            <Descriptions.Item label="Mobile Number">{checkAndSetDefaultValue(formData?.mobileNumber, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Customer Type">{checkAndSetDefaultValue(getCodeValue(typeData?.CUST_TYPE, formData?.customerType), isLoading)}</Descriptions.Item>
-                        </Descriptions>
-                        <Divider />
-                        <Row>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <CustomerNameChangeMaster {...props} />
-                            </Col>
-                        </Row>
-                        <Descriptions {...viewProps}>
-                            <Descriptions.Item label="Email Id">{checkAndSetDefaultValue(formData?.emailId)}</Descriptions.Item>
-                            <Descriptions.Item label="Do you want to contact over whatsapp?" className={formData?.whatsappCommunicationIndicator ? styles.yesText : styles.noText}>
-                                {checkAndSetDefaultValue(formData?.whatsappCommunicationIndicator ? 'Yes' : 'No')}
-                            </Descriptions.Item>
-                            <Descriptions />
-                            <Descriptions.Item label="Want to use Mobile no as whatsapp no?" className={formData?.mobileNumberAsWhatsappNumber ? styles.yesText : styles.noText}>
-                                {checkAndSetDefaultValue(formData?.mobileNumberAsWhatsappNumber ? 'Yes' : 'No')}
-                            </Descriptions.Item>
-                            <Descriptions.Item label="Whatsapp Number">{checkAndSetDefaultValue(formData?.whatsAppNumber)}</Descriptions.Item>
-                        </Descriptions>
-                        <Descriptions {...viewProps}>
-                            <Descriptions.Item label="Corporate Type">{checkAndSetDefaultValue(getCodeValue(typeData?.CORP_TYPE, formData?.corporateType), isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Corporate Name">{findListedNonListed()}</Descriptions.Item>
-                            {formData?.corporateCode && <Descriptions.Item label="Corporate Code">{checkAndSetDefaultValue(formData?.corporateCode)}</Descriptions.Item>}
-                            <Descriptions.Item label="Corporate Category">{checkAndSetDefaultValue(getCodeValue(typeData?.CORP_CATE, formData?.corporateCategory), isLoading)}</Descriptions.Item>
-                            {/* <Descriptions.Item label="Membership Type">{checkAndSetDefaultValue(getCodeValue(typeData?.MEM_TYPE, formData?.membershipType), isLoading)}</Descriptions.Item> */}
-                        </Descriptions>
-                    </Card>
-                </Space>
+                <Card header="Customer Information">
+                    <Descriptions {...viewProps}>
+                        <Descriptions.Item label="Mobile Number">{checkAndSetDefaultValue(formData?.mobileNumber, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Customer Type">{checkAndSetDefaultValue(getCodeValue(typeData?.CUST_TYPE, formData?.customerType), isLoading)}</Descriptions.Item>
+                    </Descriptions>
+                    <Divider />
+                    <Row>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <CustomerNameChangeMaster {...props} />
+                        </Col>
+                    </Row>
+                    <Descriptions {...viewProps}>
+                        <Descriptions.Item label="Email Id">{checkAndSetDefaultValue(formData?.emailId)}</Descriptions.Item>
+                        <Descriptions.Item label="Do you want to contact over whatsapp?" className={formData?.whatsappCommunicationIndicator ? styles.yesText : styles.noText}>
+                            {checkAndSetDefaultValue(formData?.whatsappCommunicationIndicator ? 'Yes' : 'No')}
+                        </Descriptions.Item>
+                        <Descriptions />
+                        <Descriptions.Item label="Want to use Mobile no as whatsapp no?" className={formData?.mobileNumberAsWhatsappNumber ? styles.yesText : styles.noText}>
+                            {checkAndSetDefaultValue(formData?.mobileNumberAsWhatsappNumber ? 'Yes' : 'No')}
+                        </Descriptions.Item>
+                        <Descriptions.Item label="Whatsapp Number">{checkAndSetDefaultValue(formData?.whatsAppNumber)}</Descriptions.Item>
+                    </Descriptions>
+                    <Descriptions {...viewProps}>
+                        <Descriptions.Item label="Corporate Type">{checkAndSetDefaultValue(getCodeValue(typeData?.CORP_TYPE, formData?.corporateType), isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Corporate Name">{findListedNonListed()}</Descriptions.Item>
+                        {formData?.corporateCode && <Descriptions.Item label="Corporate Code">{checkAndSetDefaultValue(formData?.corporateCode)}</Descriptions.Item>}
+                        <Descriptions.Item label="Corporate Category">{checkAndSetDefaultValue(getCodeValue(typeData?.CORP_CATE, formData?.corporateCategory), isLoading)}</Descriptions.Item>
+                        {/* <Descriptions.Item label="Membership Type">{checkAndSetDefaultValue(getCodeValue(typeData?.MEM_TYPE, formData?.membershipType), isLoading)}</Descriptions.Item> */}
+                    </Descriptions>
+                </Card>
             </div>
             <RejectionModal {...modalProps} />
         </>

@@ -6,4 +6,6 @@
 import { AccountCategoryPage } from './AccountCategory';
 import { TaxChargesPage, TaxChargesCategoryPage, DocumentTypeOtherChargesPage } from './AccountTaxCharges';
 import { VehicleModelTaxChargesCategoryPage } from './VehicleModelTaxChargesCategory';
-export { TaxChargesPage, TaxChargesCategoryPage, VehicleModelTaxChargesCategoryPage, AccountCategoryPage, DocumentTypeOtherChargesPage };
+import CreditDebitNoteMasterPage from './CreditDebitNote';
+
+export { TaxChargesPage, TaxChargesCategoryPage, VehicleModelTaxChargesCategoryPage, AccountCategoryPage, DocumentTypeOtherChargesPage, CreditDebitNoteMasterPage };

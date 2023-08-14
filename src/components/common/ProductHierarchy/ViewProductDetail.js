@@ -12,6 +12,7 @@ import { PlusBorderedIcon, MinusBorderedIcon } from 'Icons';
 const { Panel } = Collapse;
 
 const expandIcon = ({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />);
+
 export const ViewProductDetailMain = ({ form, skuAttributes, setSKUAttributes, isAddBtnDisabled, setAddBtnDisabled, onActionFormFinish, viewTitle, buttonData, attributeData, selectedTreeData, handleEditBtn, handleRootChildBtn, handleChildBtn, handleSiblingBtn, setClosePanels, styles, setDisabledEdit }) => {
     const viewProps = {
         bordered: false,
@@ -44,7 +45,7 @@ export const ViewProductDetailMain = ({ form, skuAttributes, setSKUAttributes, i
                             {selectedTreeData?.skuAttributes?.length > 0 && (
                                 <Collapse expandIcon={expandIcon}>
                                     <Panel header="Product SKU" key="2">
-                                        {skuAttributes?.map((item, index) => (
+                                        {skuAttributes?.map((item) => (
                                             <CardProductAttribute key={'sku' + item?.code} code={item?.code} value={item?.value} id={item?.id} setDisabledEdit={setDisabledEdit} />
                                         ))}
                                     </Panel>

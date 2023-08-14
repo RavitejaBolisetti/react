@@ -21,7 +21,7 @@ export const ViewSupportingDocDetail = (props) => {
                     })}
                 </div>
             ) : (
-                <div className={styles.viewNoDataFound}>No Supporting Document Available</div>
+                <Card>No Supporting Document Available</Card>
             )}
         </div>
     );
