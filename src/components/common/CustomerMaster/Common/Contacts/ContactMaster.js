@@ -246,7 +246,7 @@ const ContactMain = (props) => {
 
         const requestData = {
             data: data,
-            method: 'post',
+            method: customerData?.customerContact ? 'put' : 'post',
             setIsLoading: listContactDetailsShowLoading,
             userId,
             onError,

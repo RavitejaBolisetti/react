@@ -6,7 +6,6 @@
 import React, { useState } from 'react';
 import { Descriptions, Divider } from 'antd';
 import AddEditForm from './AddEditForm';
-import UploadUtils from './../UploadUtils';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { getCodeValue } from 'utils/getCodeValue';
 
@@ -44,7 +43,7 @@ const ViewDetailBase = (props) => {
             {!isEditing ? (
                 <>
                     <Divider />
-                    <UploadUtils {...formProps} />
+                    {/* <UploadUtils {...formProps} /> */}
                     <Descriptions {...viewProps}>
                         <Descriptions.Item label="Purpose of Contact">{checkAndSetDefaultValue(getCodeValue(typeData?.PURPOSE, formData?.purposeOfContact), isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Mobile Number">{checkAndSetDefaultValue(formData?.mobileNumber, isLoading)}</Descriptions.Item>
@@ -59,12 +58,12 @@ const ViewDetailBase = (props) => {
                         <Descriptions.Item label="E-mail">{checkAndSetDefaultValue(formData?.contactEmailId, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Alternate Email ID">{checkAndSetDefaultValue(formData?.alternateEmailId, isLoading)}</Descriptions.Item>
 
-                        <Descriptions.Item label="Facebook Link">{checkAndSetDefaultValue(formData?.facebookId, isLoading)}</Descriptions.Item>
+                        {/* <Descriptions.Item label="Facebook Link">{checkAndSetDefaultValue(formData?.facebookId, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Twitter Link">{checkAndSetDefaultValue(formData?.twitterId, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Instagram Link">{checkAndSetDefaultValue(formData?.instagramId, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Youtube Channel">{checkAndSetDefaultValue(formData?.youTubeChannel, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Team BHP Link">{checkAndSetDefaultValue(formData?.teamBhp, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Mark As Default">{checkAndSetDefaultValue(formData?.defaultContactIndicator ? 'Yes' : 'No', isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Mark As Default">{checkAndSetDefaultValue(formData?.defaultContactIndicator ? 'Yes' : 'No', isLoading)}</Descriptions.Item> */}
                     </Descriptions>
                 </>
             ) : (

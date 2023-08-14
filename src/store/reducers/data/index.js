@@ -34,6 +34,7 @@ import { CustomerMaster } from './customerMaster';
 import { SupportingDocument } from './supportingDocument';
 import { FinancialAccounting } from './financialAccounting';
 import { VehiclePriceMaster } from './vehiclePriceMaster';
+import { RoleManagementData } from './roleManagementData';
 import { ManufacturerAdmin } from './ManufacturerAdmin';
 import { ManufacturerOrg } from './ManufacturerOrg';
 import { VehicleReceipt } from './vehicleReceipt';
@@ -46,7 +47,6 @@ export const data = combineReducers({
     HierarchyAttributeMaster,
     CriticalityGroup,
     RoleManagement,
-    // ManufacturerAdminHierarchy,
     ManufacturerOrgHierarchy,
     ForgotPassword,
     ChangePassword,
@@ -70,6 +70,7 @@ export const data = combineReducers({
     SupportingDocument,
     Vehicle,
     FinancialAccounting,
+    RoleManagementData,
     ManufacturerAdmin,
     ManufacturerOrg,
     VehicleReceipt,

@@ -194,11 +194,11 @@ const IndividualProfileBase = (props) => {
             customerId: selectedCustomerId,
             dateOfBirth: formatDate(values?.dateOfBirth),
             weddingAnniversary: formatDate(values?.weddingAnniversary),
-            keyAccountDetails: { customerId: selectedCustomerId, accountCode: values?.accountCode || '', accountName: values?.accountName || '', accountSegment: values?.accountSegment || '', accountClientName: values?.accountClientName || '', accountMappingDate: values?.accountMappingDate || '' },
-            authorityRequest: { customerId: selectedCustomerId, personName: values.personName || '', postion: values.postion || '', companyName: values.companyName || '', remarks: values.remarks || '', id: recordId },
+            // keyAccountDetails: { customerId: selectedCustomerId, accountCode: values?.accountCode || '', accountName: values?.accountName || '', accountSegment: values?.accountSegment || '', accountClientName: values?.accountClientName || '', accountMappingDate: values?.accountMappingDate || '' },
+            // authorityRequest: { customerId: selectedCustomerId, personName: values.personName || '', postion: values.postion || '', companyName: values.companyName || '', remarks: values.remarks || '', id: recordId },
             id: recordId,
-            profileFileDocId: uploadedFile ? uploadedFile : '',
-            customerFormDocId: uploadedConsentFile ? uploadedConsentFile : '',
+            // profileFileDocId: uploadedFile ? uploadedFile : '',
+            // customerFormDocId: uploadedConsentFile ? uploadedConsentFile : '',
         };
 
         const onSuccess = (res) => {
