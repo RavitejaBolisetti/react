@@ -11,10 +11,8 @@ import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/prepareP
 
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { ModalButtons } from 'components/common/Button';
-import { customSelectBox } from 'utils/customSelectBox';
 
-import moment from 'moment';
-import styles from 'components/common/Common.module.css';
+
 import { MakeCheckResult, setCheckresultValue, BindFormItems } from './CheckListUtils';
 
 export const AdvanceForm = (props) => {

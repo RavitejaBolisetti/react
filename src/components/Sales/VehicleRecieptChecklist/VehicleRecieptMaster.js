@@ -40,6 +40,7 @@ const mapStateToProps = (state) => {
             VehicleReceiptChecklist: {
                 VehicleReceiptMain: { isLoaded: isChecklistDataLoaded = false, isLoading: isChecklistDataLoading = true, data, filter: filterString },
                 VehicleReceiptProfile: { isLoaded: isProfileDataLoaded = false, isLoading: isProfileDataLoading = true, data: ProfileData = [] },
+                VehicleReceiptMaster: { data: ChecklistData = [] },
             },
             OTF: {
                 VehicleDetailsLov: { isFilteredListLoaded: isModelDataLoaded = false, isLoading: isModelDataLoading, filteredListData: vehicleModelData },
@@ -62,6 +63,7 @@ const mapStateToProps = (state) => {
         isProfileDataLoaded,
         isProfileDataLoading,
         ProfileData,
+        ChecklistData: ChecklistData['supportingDocumentList'],
     };
     return returnValue;
 };
@@ -75,6 +77,7 @@ const mapDispatchToProps = (dispatch) => ({
             setFilterString: vehicleReceiptChecklistdataActions.setFilter,
             resetData: vehicleReceiptChecklistdataActions.reset,
             saveData: VehicleCheclistDetailsdataActions.saveData,
+            resetCheckListData: VehicleCheclistDetailsdataActions.reset,
 
             fetchModel: otfvehicleDetailsLovDataActions.fetchFilteredList,
             modelLoading: otfvehicleDetailsLovDataActions.listShowLoading,
@@ -92,17 +95,17 @@ const mapDispatchToProps = (dispatch) => ({
 export const VehicleRecieptChecklistMasterBase = (props) => {
     const { userId, isChecklistDataLoaded, isChecklistDataLoading, data, totalRecords, moduleTitle, filterString } = props;
 
-    const { fetchList, listShowLoading, setFilterString, resetData, saveData, showGlobalNotification } = props;
+    const { fetchList, listShowLoading, setFilterString, resetCheckListData, saveData, showGlobalNotification } = props;
 
     const { fetchModel, isModelDataLoaded, isModelDataLoading, vehicleModelData, modelLoading } = props;
 
-    const { fetchProfile, profileLoading, isProfileDataLoaded, isProfileDataLoading, ProfileData, resetProfile } = props;
+    const { fetchProfile, profileLoading, isProfileDataLoaded, isProfileDataLoading, ProfileData, resetProfile, ChecklistData } = props;
 
     const [listFilterForm] = Form.useForm();
 
     const [selectedRecord, setSelectedRecord] = useState();
     const [selectedRecordId, setSelectedRecordId] = useState();
-    const [vehicleReceiptFinalFormData, setvehicleReceiptFinalFormData] = useState({ checklistDetails: {}, supportingDocument: {} });
+    const [vehicleReceiptFinalFormData, setvehicleReceiptFinalFormData] = useState({ checklistDetails: [], supportingDocument: [] });
 
     const [section, setSection] = useState();
     const [defaultSection, setDefaultSection] = useState();
@@ -160,6 +163,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
     };
 
     const handleButtonQuery = (item, keyName) => {
+        handleResetFilter();
         const buttonkey = item?.key;
         setbuttonType(buttonkey);
 
@@ -355,6 +359,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
 
         switch (buttonAction) {
             case ADD_ACTION:
+                setvehicleReceiptFinalFormData({ checklistDetails: [], supportingDocument: [] });
                 defaultSection && setCurrentSection(defaultSection);
                 setSelectedRecord(record);
                 break;
@@ -415,22 +420,26 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
                     checklistNumber: checklistNumber,
                     chassisNumber: chassisNumber,
                 };
-                console.log('data', data);
 
                 const onSuccess = (res) => {
                     form.resetFields();
-                    setShowDataLoading(true);
 
+                    setShowDataLoading(true);
+                    resetCheckListData();
+                    
                     showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-                    fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+
+                    fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
 
                     setButtonData({ ...buttonData, formBtnActive: false });
 
                     setIsFormVisible(false);
+                    setvehicleReceiptFinalFormData({ checklistDetails: [], supportingDocument: [] });
                 };
 
                 const onError = (message) => {
                     showGlobalNotification({ message });
+                    setvehicleReceiptFinalFormData({ checklistDetails: [], supportingDocument: [] });
                 };
 
                 const requestData = {
@@ -460,6 +469,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         form.setFieldsValue();
         setSelectedRecord();
         setIsFormVisible(false);
+        resetCheckListData();
         setButtonData({ ...defaultBtnVisiblity });
     };
 
@@ -562,6 +572,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         isLastSection,
         saveButtonName: isLastSection ? 'Submit' : 'Save & Next',
         VehicelReceiptChecklistOnfinish: onFinish,
+        supportingData: ChecklistData,
     };
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,

@@ -17,20 +17,10 @@ export const ViewDetail = (props) => {
         formActionType: { viewMode },
         supportingData,
         deleteFile,
-        downloadFile,
+        downloadFileFromButton,
     } = props;
 
-    const downloadFileFromButton = (uploadData) => {
-        const extraParams = [
-            {
-                key: 'docId',
-                title: 'docId',
-                value: uploadData?.docId,
-                name: 'docId',
-            },
-        ];
-        downloadFile({ setIsLoading: viewListShowLoading, userId, extraParams });
-    };
+   
 
     return (
         <div className={styles.viewDrawerContainer}>
@@ -40,8 +30,8 @@ export const ViewDetail = (props) => {
                         return (
                             <Card
                                 className={styles.viewDocumentStrip}
-                                key={uploadData.id}
-                                title={uploadData?.documentName}
+                                key={uploadData?.id}
+                                title={uploadData?.fileName}
                                 extra={
                                     <>
                                         <FiDownload onClick={() => downloadFileFromButton(uploadData)} />

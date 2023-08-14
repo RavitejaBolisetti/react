@@ -10,7 +10,7 @@ import { LANGUAGE_EN } from 'language/en';
 import { bindActionCreators } from 'redux';
 import { Row, Col, Form, Card } from 'antd';
 
-import { ChecklistSupportingDocumentdataActions } from 'store/actions/data/VehicleReceiptCheckList/SupportingDocument';
+import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
 import { documentViewDataActions } from 'store/actions/data/customerMaster/documentView';
 import { showGlobalNotification } from 'store/actions/notification';
 import { PARAM_MASTER } from 'constants/paramMaster';
@@ -28,9 +28,6 @@ const mapStateToProps = (state) => {
         auth: { userId, accessToken, token },
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
-            VehicleReceiptChecklist: {
-                SupportingDocument: { isLoaded: isDataLoaded = false, isLoading, data: supportingData },
-            },
             CustomerMaster: {
                 ViewDocument: { isLoaded: isViewDataLoaded = false, data: viewDocument },
             },
@@ -42,9 +39,6 @@ const mapStateToProps = (state) => {
         accessToken,
         token,
         typeData: typeData && typeData[PARAM_MASTER.CUST_FILES.id],
-        isDataLoaded,
-        isLoading,
-        supportingData,
         isViewDataLoaded,
         viewDocument,
     };
@@ -59,12 +53,8 @@ const mapDispatchToProps = (dispatch) => ({
             viewListShowLoading: documentViewDataActions.listShowLoading,
             resetViewData: documentViewDataActions.reset,
 
-            fetchList: ChecklistSupportingDocumentdataActions.fetchList,
-            saveData: ChecklistSupportingDocumentdataActions.saveData,
-            uploadDocumentFile: ChecklistSupportingDocumentdataActions.uploadFile,
-            downloadFile: ChecklistSupportingDocumentdataActions.downloadFile,
-            listShowLoading: ChecklistSupportingDocumentdataActions.listShowLoading,
-            resetData: ChecklistSupportingDocumentdataActions.resetData,
+            uploadDocumentFile: supportingDocumentDataActions.uploadFile,
+            downloadFile: supportingDocumentDataActions.downloadFile,
 
             showGlobalNotification,
         },
@@ -77,15 +67,13 @@ const SupportingDocumentBase = (props) => {
 
     const { VehicelReceiptChecklistOnfinish } = props;
 
-    const { userId, showGlobalNotification, section, listShowLoading, typeData, saveData, fetchList, supportingData, fetchViewDocument, setIsFormVisible } = props;
+    const { userId, showGlobalNotification, section, listShowLoading, typeData, supportingData, fetchViewDocument } = props;
     const { buttonData, setButtonData, formActionType, handleFormValueChange } = props;
-    const { selectedCustomerId, viewDocument, viewListShowLoading, downloadFile } = props;
-
-    const { checklistNumber = 'CHK169108935' } = props;
-
-    const { vehicleReceiptFinalFormData, setvehicleReceiptFinalFormData } = props;
+    const { viewDocument, viewListShowLoading, downloadFile } = props;
 
     const [uploadedFile, setUploadedFile] = useState();
+    const [deletedUpload, setdeletedUpload] = useState([]);
+    const [viewSupportingData, setviewSupportingData] = useState([]);
     const [uploadedFileList, setUploadedFileList] = useState();
     const [emptyList, setEmptyList] = useState(true);
 
@@ -100,26 +88,18 @@ const SupportingDocumentBase = (props) => {
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
-
-    const extraParams = [
-        {
-            key: 'checklistNumber',
-            value: checklistNumber ?? 'CHK169108935',
-        },
-    ];
-
     useEffect(() => {
-        if (!formActionType?.addMode && checklistNumber) {
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams });
+        if (supportingData && supportingData?.length) {
+            setviewSupportingData(supportingData);
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, checklistNumber]);
+    }, [supportingData]);
+    console.log('viewSupportingData', viewSupportingData);
 
     useEffect(() => {
         if (fileList.length === 0) {
             setMandatoryFields(false);
         }
-        uploadedFile && setPayload([...payload, { docId: uploadedFile, documentDescription: form.getFieldValue('documentDescription'), id: '', fileName: form.getFieldValue('fileName') }]);
+        uploadedFile && setPayload([...payload, { documentId: uploadedFile, documentDescription: form.getFieldValue('documentDescription'), id: '', fileName: form.getFieldValue('fileName'), documentStatus: true }]);
 
         uploadedFile && form.resetFields();
 
@@ -129,76 +109,42 @@ const SupportingDocumentBase = (props) => {
     }, [fileList]);
 
     const onRemove = (file) => {
-        const index = payload.findIndex((payload) => payload.docId === file.response.docId);
+        const index = payload.findIndex((payload) => payload.documentId === file.response.docId);
         payload.splice(index, 1);
     };
 
     const deleteFile = (uploadData) => {
-        const data = { customerId: uploadData?.customerId, status: false, docId: uploadData?.docId, documentTypeId: uploadData?.documentType, id: uploadData?.id, documentName: uploadData?.documentName };
-        const onSuccess = (res) => {
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'File deleted Successfully' });
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams });
-        };
-
-        const onError = (message) => {
-            showGlobalNotification({ message });
-        };
-        const requestData = {
-            data: data,
-            method: 'post',
-            setIsLoading: listShowLoading,
-            userId,
-            onError,
-            onSuccess,
-        };
-
-        saveData(requestData);
+        setviewSupportingData(
+            viewSupportingData?.filter((element, index) => {
+                if (element?.documentId === uploadData?.documentId) {
+                    setdeletedUpload([...deletedUpload, { ...element, documentStatus: false }]);
+                    return false;
+                }
+                return element;
+            })
+        );
+    };
+    const downloadFileFromButton = (uploadData) => {
+        const extraParams = [
+            {
+                key: 'docId',
+                title: 'docId',
+                value: uploadData?.documentId,
+                name: 'docId',
+            },
+        ];
+        downloadFile({ setIsLoading: viewListShowLoading, userId, extraParams });
     };
 
     const onFinish = () => {
         const title = LANGUAGE_EN.GENERAL.CUSTOMER_UPDATE.TITLE;
         const message = LANGUAGE_EN.GENERAL.CUSTOMER_UPDATE.MESSAGE;
-        VehicelReceiptChecklistOnfinish({ type: 'document', data: payload });
-        return;
-
-        // if (fileList.length > 0) {
-        //     const onSuccess = (res) => {
-        //         setFileList([]);
-        //         setEmptyList(false);
-        //         setUploadedFile();
-        //         form.resetFields();
-        //         showGlobalNotification({ notificationType: 'success', title, message });
-
-        //         fetchList({ setIsLoading: listShowLoading, userId, extraParams });
-        //         setIsFormVisible(false);
-        //     };
-
-        //     const onError = (message) => {
-        //         showGlobalNotification({ message });
-        //     };
-        //     const requestData = {
-        //         data: payload,
-        //         method: 'post',
-        //         setIsLoading: listShowLoading,
-        //         userId,
-        //         onError,
-        //         onSuccess,
-        //     };
-
-        //     saveData(requestData);
-        // } else {
-        //     showGlobalNotification({ notificationType: 'success', title, message });
-        //     setFileList([]);
-        //     setEmptyList(false);
-        //     setUploadedFile();
-        //     form.resetFields();
-        //     setIsFormVisible(false);
-        // }
+        VehicelReceiptChecklistOnfinish({ type: 'document', data: [...payload, ...deletedUpload] });
     };
 
     const viewProps = {
         isViewDataLoaded,
-        supportingData,
+        supportingData: viewSupportingData,
         supportingDataView,
         setSupportingDataView,
         deleteFile,
@@ -207,11 +153,10 @@ const SupportingDocumentBase = (props) => {
         showGlobalNotification,
         formActionType,
         listShowLoading,
-        saveData,
         userId,
         fetchViewDocument,
         viewListShowLoading,
-        downloadFile,
+        downloadFileFromButton,
     };
 
     const formProps = {
@@ -221,7 +166,6 @@ const SupportingDocumentBase = (props) => {
         userId,
         accessToken,
         token,
-        saveData,
         onFinish,
         uploadedFileName,
         setUploadedFileName,
@@ -230,7 +174,7 @@ const SupportingDocumentBase = (props) => {
         showGlobalNotification,
         viewDocument,
         downloadFile,
-        // downloadFileFromButton,
+        downloadFileFromButton,
         viewListShowLoading,
 
         ADD_ACTION,

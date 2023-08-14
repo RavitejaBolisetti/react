@@ -57,12 +57,12 @@ export const AdvancedSearchFrom = (props) => {
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item label="Receipt From Date" name="fromDate" className={styles?.datePicker} rules={[validateRequiredSelectField('From Date')]}>
-                        <DatePicker placeholder={preparePlaceholderSelect('From Date')} format={dateFormat} className={styles.fullWidth} />
+                        <DatePicker placeholder={preparePlaceholderSelect('From Date')} format={dateFormat} className={styles.fullWidth} onChange={() => advanceFilterForm.setFieldsValue({ toDate: undefined })} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item label="Receipt To Date" name="toDate" className={styles?.datePicker} rules={[validateRequiredSelectField('To Date')]}>
-                        <DatePicker placeholder={preparePlaceholderSelect('To Date')} format={dateFormat} className={styles.fullWidth} />
+                        <DatePicker placeholder={preparePlaceholderSelect('To Date')} format={dateFormat} className={styles.fullWidth} disabledDate={(current) => current < advanceFilterForm?.getFieldValue('fromDate')} />
                     </Form.Item>
                 </Col>
             </Row>
@@ -70,7 +70,7 @@ export const AdvancedSearchFrom = (props) => {
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form.Item label="Model" name="model">
-                        {customSelectBox({ data: vehicleModelData || [], placeholder: preparePlaceholderSelect('model'), fieldNames: { key: 'prodctCode', value: 'prodctShrtName' }, loading: isModelDataLoading })}
+                        <Select optionFilterProp="children" options={vehicleModelData || []} placeholder={preparePlaceholderSelect('model')} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }} loading={isModelDataLoading} allowClear showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
                     </Form.Item>
                 </Col>
             </Row>

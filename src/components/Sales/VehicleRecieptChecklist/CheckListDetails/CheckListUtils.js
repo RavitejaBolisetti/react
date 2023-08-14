@@ -5,12 +5,11 @@
  */
 import React from 'react';
 import { convertDateMonthYearDayjs, formatDateToCalenderDate } from 'utils/formatDateTime';
-import { Col, Input, Form, Row, DatePicker, InputNumber } from 'antd';
+import { Col, Input, Form, Row, DatePicker, InputNumber, Select } from 'antd';
 
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
 import { validateRequiredInputField, validateRequiredSelectField, validateNegativeNumber } from 'utils/validation';
-import { customSelectBox } from 'utils/customSelectBox';
 
 import moment from 'moment';
 import styles from 'components/common/Common.module.css';
@@ -37,30 +36,41 @@ export const MakeCheckResult = (props) => {
     let checkResult = '';
     switch (type) {
         case FORMTYPE_CONSTANTS?.DATE?.id: {
-            checkResult = checkResult.concat(convertDateMonthYearDayjs(data?.answerFromDate));
-            checkResult = checkResult.concat('-');
-            checkResult = checkResult.concat(convertDateMonthYearDayjs(data?.answerToDate));
-            return checkResult;
+            if (data?.answerFromNumber && data?.answerToNumber) {
+                checkResult = checkResult.concat(data?.answerFromDate ? convertDateMonthYearDayjs(data?.answerFromDate) : 'NA');
+                checkResult = checkResult.concat('-');
+                checkResult = checkResult.concat(data?.answerToDate ? convertDateMonthYearDayjs(data?.answerToDate) : 'NA');
+                return checkResult;
+            } else return 'NA';
+
+            break;
         }
 
         case FORMTYPE_CONSTANTS?.BOOLEAN?.id: {
-            if (data?.answerBoolean) return 'Yes';
+            if (data?.answerBoolean === undefined || data?.answerBoolean === null || data?.answerBoolean === '') return 'NA';
+            else if (data?.answerBoolean) return 'Yes';
             return 'No';
+            break;
         }
         case FORMTYPE_CONSTANTS?.NUMBER?.id: {
-            checkResult = checkResult.concat(data?.answerFromNumber);
-            checkResult = checkResult.concat('-');
-            checkResult = checkResult.concat(data?.answerToNumber);
-            return checkResult;
+            if (data?.answerFromNumber && data?.answerToNumber) {
+                checkResult = checkResult.concat(data?.answerFromNumber ?? 'NA');
+                checkResult = checkResult.concat('-');
+                checkResult = checkResult.concat(data?.answerToNumber ?? 'NA');
+                return checkResult;
+            } else return 'NA';
+
+            break;
         }
         case FORMTYPE_CONSTANTS?.INPUT?.id: {
-            return data?.answerText;
+            return data?.answerText ?? 'NA';
+            break;
         }
     }
 };
 export const setCheckresultValue = (props) => {
     const { form, type, data } = props;
-    form.setFieldsValue({ ...data, answerFromDate: formatDateToCalenderDate(data?.answerFromDate), answerToDate: formatDateToCalenderDate(data?.answerToDate) });
+    form.setFieldsValue({ ...data, answerFromDate: formatDateToCalenderDate(data?.answerFromDate), answerToDate: formatDateToCalenderDate(data?.answerToDate), answerBoolean: data?.answerBoolean });
 };
 export const BindFormItems = ({ AdvanceformData, aggregateForm }) => {
     const { answerType } = AdvanceformData;
@@ -129,14 +139,18 @@ export const BindFormItems = ({ AdvanceformData, aggregateForm }) => {
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Form.Item label="Check Result" name="answerBoolean" rules={[validateRequiredInputField('checkResult')]}>
-                            {customSelectBox({
-                                data: [
-                                    { key: true, value: 'Yes' },
-                                    { key: false, value: 'No' },
-                                ],
-                                placeholder: preparePlaceholderSelect('Check Result'),
-                                fieldNames: { key: 'key', value: 'value' },
-                            })}
+                            <Select
+                                optionFilterProp="children"
+                                options={[
+                                    { value: true, label: 'Yes' },
+                                    { value: false, label: 'No' },
+                                ]}
+                                placeholder={preparePlaceholderSelect('Check Result')}
+                                fieldNames={{ label: 'label', value: 'value' }}
+                                allowClear
+                                showSearch
+                                filterOption={(input, option) => (option?.label ?? '').toLowerCase().includes(input.toLowerCase())}
+                            />
                         </Form.Item>
                     </Col>
                 </Row>

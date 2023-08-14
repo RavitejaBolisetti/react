@@ -12,7 +12,7 @@ import { AggregateAddEditForm } from './AggregateAddEditForm';
 
 const AddEditFormMain = (props) => {
     const { isEditing, setIsReadOnly, isReadOnly } = props;
-    const { aggregateForm, CheckListModuletitle = 'CheckList Details' } = props;
+    const { aggregateForm, CheckListModuletitle = 'Checklist Details' } = props;
     const { tableProps } = props;
 
     const AdvanceFilterProps = {

@@ -68,6 +68,7 @@ const VehicleRecieptCheckListMain = (props) => {
     const { vehicleReceiptFinalFormData, setvehicleReceiptFinalFormData } = props;
 
     const { chassisNumber } = selectedRecord;
+    console.log('chassisNumber', chassisNumber);
 
     const [formData, setformData] = useState({});
 
@@ -105,13 +106,6 @@ const VehicleRecieptCheckListMain = (props) => {
     }, [userId, chassisNumber, isChecklistDataLoaded]);
 
     useEffect(() => {
-        return () => {
-            resetData();
-        };
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-    useEffect(() => {
         if (isChecklistDataLoaded && ChecklistData) {
             setcheckListDataModified(
                 ChecklistData['checklistDetailList']?.map((element, index) => {
@@ -128,29 +122,6 @@ const VehicleRecieptCheckListMain = (props) => {
             VehicelReceiptChecklistOnfinish({ type: 'checklist', data: checkListDataModified?.filter((element, index) => element?.ismodified) });
             handleButtonClick({ buttonAction: NEXT_ACTION });
         }
-
-        // const onSuccess = (res) => {
-        //     setcheckListDataModified([]);
-        //     setformData();
-        //     setIsReadOnly(false);
-        //     form.resetFields();
-        //     handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
-        // };
-
-        // const onError = (message) => {
-        //     setcheckListDataModified([]);
-        // };
-
-        // const requestData = {
-        //     data: data,
-        //     method: 'post',
-        //     setIsLoading: listShowLoading,
-        //     userId,
-        //     onError,
-        //     onSuccess,
-        // };
-
-        // saveData(requestData);
     };
     const onFinishFailed = () => {
         form.validateFields()
@@ -165,8 +136,7 @@ const VehicleRecieptCheckListMain = (props) => {
     };
 
     const tableProps = {
-        isLoading: false,
-        //isChecklistDataLoading
+        isLoading: isChecklistDataLoading,
         tableColumn: tableColumn({ handleButtonClick: handleCheckListClick, formActionType }),
         tableData: checkListDataModified,
     };

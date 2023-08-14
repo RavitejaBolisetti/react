@@ -28,14 +28,14 @@ const AddEditForm = (uploadProps) => {
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form.Item label="File Name" name="fileName" rules={mandatoryFields ? [validateRequiredInputField('fileName')] : ''} placeholder={preparePlaceholderSelect('fileName')}>
-                        <Input placeholder={preparePlaceholderText('fileName')} allowClear />
+                        <Input placeholder={preparePlaceholderText('file name')} allowClear />
                     </Form.Item>
                 </Col>
             </Row>
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form.Item label="Document Description" name="documentDescription" rules={mandatoryFields ? [validateRequiredInputField('document description')] : ''}>
-                        <TextArea placeholder={preparePlaceholderText('Document Description')} allowClear maxLength={50} />
+                        <TextArea placeholder={preparePlaceholderText('document description')} allowClear maxLength={50} />
                     </Form.Item>
                 </Col>
             </Row>
