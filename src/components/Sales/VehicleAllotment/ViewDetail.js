@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, Descriptions, Col, Row, Divider } from 'antd';
 import styles from 'components/common/Common.module.css';
 import style from 'components/utils/SearchBox/SearchBox.module.css';
@@ -11,17 +11,16 @@ import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { getCodeValue } from 'utils/getCodeValue';
 import { DATA_TYPE } from 'constants/dataType';
 import { withDrawer } from 'components/withDrawer';
-import { DrawerFormButton } from 'components/common/Button';
+import { VehicleDetailFormButton } from 'components/Sales/VehicleDetail/VehicleDetailFormButton';
 import { SearchBox } from 'components/utils/SearchBox';
-import { tblPrepareColumns } from 'utils/tableColumn';
 import { DataTable } from 'utils/dataTable';
-import { convertDateMonthYear } from 'utils/formatDateTime';
 import { PARAM_MASTER } from 'constants/paramMaster';
+import { tableColumnSearchOTF } from './tableColumnSearchOTF';
 
 const ViewDetailMain = (props) => {
-    const { formData, isLoading, typeData, salesConsultantLov, searchForm, filterString, setFilterString } = props;
-    const { handleButtonClick, buttonData, setButtonData, onCloseAction, handleSearchParamSearch } = props;
-
+    const { formData, isLoading, typeData, setFilterStringOTFSearch, searchForm, tableData } = props;
+    const { handleButtonClick, buttonData, setButtonData, onCloseAction } = props;
+    const [ filterString, setFilterString ] = useState('');
 
     const viewProps = {
         bordered: false,
@@ -38,42 +37,27 @@ const ViewDetailMain = (props) => {
         handleButtonClick,
     };
 
+    useEffect(() => {
+        setButtonData(formData?.vehicleOTFDetails?.allotmentStatus === 'UnaLLOT' ? ({cancelBtn: true, allotBtn: true}) : ({cancelBtn: true, unAllot:true}) )
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {
+        setFilterStringOTFSearch({...filterString});
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [filterString]);
+
     const serachBoxProps = {
         searchForm,
         filterString,
         optionType: typeData?.[PARAM_MASTER.OTF_SER.id].filter(searchType => searchType.key !== 'mobileNumber'),
         setFilterString,
-        handleSearchParamSearch,
     };
-
-    const tableColumn = [
-        tblPrepareColumns({
-            title: '',
-
-        }),
-        tblPrepareColumns({
-            title: 'OTF No.',
-            dataIndex: 'otfNumber',
-        }),
-        tblPrepareColumns({
-            title: 'OTF Date',
-            dataIndex: 'otfDate',
-            render: (text) => convertDateMonthYear(text),
-        }),
-        tblPrepareColumns({
-            title: 'Cust. Name',
-            dataIndex: 'custName',
-        }),
-        tblPrepareColumns({
-            title: 'CPD',
-            dataIndex: 'custCd',
-        }),
-    ];
 
     const tableProps = {
         //isChangeHistoryLoading,
-        tableColumn,
-        tableData: [formData?.vehicleOTFDetails] || [],
+        tableColumn : tableColumnSearchOTF(handleButtonClick),
+        tableData: tableData || [formData?.vehicleOTFDetails] || [],
         pagination: false,
         srl: false,
         rowSelection: true,
@@ -88,7 +72,8 @@ const ViewDetailMain = (props) => {
                         <Descriptions {...viewProps}>
                             <Descriptions.Item label="VIN/Chassis">{checkAndSetDefaultValue(formData?.vehicleIdentificationNumber, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Age In Days">{checkAndSetDefaultValue(formData?.ageInDays, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="PDI Done?">{checkAndSetDefaultValue(getCodeValue(typeData?.SALE_TYP, formData?.pdiDone), isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="PDI Done?">{checkAndSetDefaultValue(formData?.pdiDone === true ? 'Yes' : 'No', isLoading)}</Descriptions.Item>
+
                             <Descriptions.Item label="Vehicle Status">{checkAndSetDefaultValue(getCodeValue(typeData?.PRC_TYP, formData?.status), isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="M&M Invoices Date">{checkAndSetDefaultValue(formData?.mnmInvoiceDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                             <Descriptions.Item label="M&M Invoices No.">{checkAndSetDefaultValue(formData?.mnmInvoiceNo, isLoading)}</Descriptions.Item>
@@ -107,7 +92,7 @@ const ViewDetailMain = (props) => {
                     </Card>
                 </Col>
             </Row>
-            <DrawerFormButton {...buttonProps} />
+            <VehicleDetailFormButton {...buttonProps} />
         </>
     );
 };
