@@ -20,7 +20,7 @@ export const FindprodctCode = (node, prodctCode, key) => {
     return foundduplicate;
 };
 
-export const disableParent = (node) => {
+export const DisableParent = (node) => {
     function datas(node) {
         if (node?.subManufactureOrg && node?.subManufactureOrg.length) {
             node['disabled'] = true;

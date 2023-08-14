@@ -9,7 +9,7 @@ import { FiEdit, FiTrash } from 'react-icons/fi';
 
 import ApplicationActionsForm from './ApplicationActionsForms';
 
-import styles from './../../Common.module.css';
+import styles from 'components/common/Common.module.css';
 
 const { Text } = Typography;
 

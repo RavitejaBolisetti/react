@@ -20,10 +20,9 @@ import { VEHICLE_RECEIPT_SECTION } from 'constants/VehicleReceiptSection';
 
 import { showGlobalNotification } from 'store/actions/notification';
 import { vehicleReceiptDataActions } from 'store/actions/data/vehicleReceipt/vehicleReceipt';
-// import { otfSearchListAction } from 'store/actions/data/otf/otfSearchAction';
+import { vehicleDetailDataActions } from 'store/actions/data/vehicleReceipt/vehicleDetails';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
-// import { validateVehicleReceiptMenu } from './utils/validateVehicleReceiptMenu';
 import { FilterIcon } from 'Icons';
 
 const mapStateToProps = (state) => {
@@ -33,19 +32,18 @@ const mapStateToProps = (state) => {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             VehicleReceipt: {
                 VehicleReceiptSearch: { isLoaded: isSearchDataLoaded = false, isLoading: isOTFSearchLoading, data, filter: filterString },
-                // VehicleReceiptDetails: { isLoaded: isDataLoaded = false, isLoading, data: otfData = [] },
             },
         },
     } = state;
+
     const moduleTitle = 'Vehicle Receipt';
     let returnValue = {
         userId,
-        typeData,
-        // isDataLoaded,
-        data: data?.otfDetails,
+        typeData: typeData[PARAM_MASTER.GRN_STATS.id],
+        grnTypeData: typeData[PARAM_MASTER.GRN_TYPE.id],
+        data: data?.paginationData,
+        totalRecords: data?.totalRecords || [],
         vehicleReceiptStatusList: Object.values(VEHICLE_RECEIPT_STATUS),
-        // otfData,
-        // isLoading,
         moduleTitle,
         isOTFSearchLoading,
         isSearchDataLoaded,
@@ -58,11 +56,10 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchOTFSearchedList: vehicleReceiptDataActions.fetchList,
+            fetchVehicleReceiptList: vehicleReceiptDataActions.fetchList,
             setFilterString: vehicleReceiptDataActions.setFilter,
             resetData: vehicleReceiptDataActions.reset,
-            // fetchList: vehicleReceiptDataActions.fetchList,
-            saveData: vehicleReceiptDataActions.saveData,
+            saveData: vehicleDetailDataActions.saveData,
             listShowLoading: vehicleReceiptDataActions.listShowLoading,
             showGlobalNotification,
         },
@@ -71,15 +68,23 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const VehicleReceiptMasterBase = (props) => {
-    const { fetchList, saveData, listShowLoading, userId, fetchOTFSearchedList, data, otfData, resetData } = props;
-    const { typeData, moduleTitle } = props;
+    const { fetchVehicleReceiptList, saveData, listShowLoading, userId, data, totalRecords, resetData } = props;
+    const { typeData, grnTypeData, moduleTitle } = props;
     const { filterString, setFilterString, vehicleReceiptStatusList } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
 
     const [listFilterForm] = Form.useForm();
+    const [receiptType, setReceiptType] = useState(VEHICLE_RECEIPT_STATUS.IN_TRANSIT.key);
+    const [searchValue, setSearchValue] = useState();
 
-    const [selectedOrder, setSelectedOrder] = useState();
-    const [selectedOrderId, setSelectedOrderId] = useState();
+    const tableActions = { EyeIcon: false, EditIcon: false, DeleteIcon: false, AddIcon: true };
+    const tableActionsFalse = { EyeIcon: false, EditIcon: false, DeleteIcon: false, AddIcon: false };
+
+    const [tableIconsVisibility, setTableIconsVisibility] = useState({ ...tableActions });
+
+    const [selectedRecord, setSelectedRecord] = useState();
+    const [selectedId, setSelectedId] = useState();
+    const [finalData, setFinalData] = useState([]);
 
     const [section, setSection] = useState();
     const [defaultSection, setDefaultSection] = useState();
@@ -94,6 +99,9 @@ export const VehicleReceiptMasterBase = (props) => {
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
 
+    const [page, setPage] = useState({ pageSize: 10, current: 1 });
+    const dynamicPagination = true;
+
     const defaultBtnVisiblity = {
         editBtn: false,
         saveBtn: false,
@@ -106,6 +114,7 @@ export const VehicleReceiptMasterBase = (props) => {
     };
 
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
+    const [currentItem, setCurrentItem] = useState(VEHICLE_RECEIPT_STATUS?.IN_TRANSIT?.key);
 
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
@@ -129,75 +138,90 @@ export const VehicleReceiptMasterBase = (props) => {
             {
                 key: 'searchType',
                 title: 'Type',
-                value: filterString?.searchType,
-                name: typeData?.[PARAM_MASTER.OTF_SER.id]?.find((i) => i?.key === filterString?.searchType)?.value,
-                canRemove: false,
-                filter: true,
+                value: 'status',
+                name: 'status',
             },
             {
                 key: 'searchParam',
                 title: 'Value',
-                value: filterString?.searchParam,
-                name: filterString?.searchParam,
-                canRemove: true,
-                filter: true,
+                value: receiptType,
+                name: typeData?.[PARAM_MASTER?.GRN_STATS?.id]?.find((i) => i?.key === receiptType)?.value,
             },
             {
-                key: 'fromDate',
-                title: 'Start Date',
-                value: filterString?.fromDate,
-                name: filterString?.fromDate,
-                canRemove: true,
-                filter: true,
-            },
-            {
-                key: 'toDate',
-                title: 'End Date',
-                value: filterString?.toDate,
-                name: filterString?.toDate,
-                canRemove: true,
-                filter: true,
-            },
-            {
-                key: 'otfStatus',
-                title: 'OTF Status',
-                value: filterString?.otfStatus,
-                name: vehicleReceiptStatusList?.find((i) => i?.key === filterString?.otfStatus)?.desc,
-                canRemove: true,
-                filter: true,
-            },
-            {
-                key: 'pageSize',
-                title: 'Value',
-                value: 1000,
-                canRemove: true,
-                filter: false,
+                key: 'grnNumber',
+                title: 'grnNumber',
+                value: searchValue,
+                name: 'grnNumber',
             },
             {
                 key: 'pageNumber',
                 title: 'Value',
-                value: 1,
+                value: page?.current,
+                canRemove: true,
+                filter: false,
+            },
+            {
+                key: 'pageSize',
+                title: 'Value',
+                value: page?.pageSize,
+                canRemove: true,
+                filter: false,
+            },
+            {
+                key: 'grnFromDate',
+                title: 'Start Date',
+                value: filterString?.grnFromDate,
+                name: filterString?.grnFromDate,
+                canRemove: true,
+                filter: true,
+            },
+            {
+                key: 'grnToDate',
+                title: 'End Date',
+                value: filterString?.grnToDate,
+                name: filterString?.grnToDate,
+                canRemove: true,
+                filter: true,
+            },
+            {
+                key: 'grnType',
+                title: 'GRN Type',
+                value: filterString?.grnType,
+                name: grnTypeData?.find((i) => i?.key === filterString?.grnType)?.value,
+                canRemove: true,
+                filter: true,
+            },
+            {
+                key: 'sortBy',
+                title: 'Sort By',
+                value: page?.sortBy,
+                canRemove: true,
+                filter: false,
+            },
+            {
+                key: 'sortIn',
+                title: 'Sort Type',
+                value: page?.sortType,
                 canRemove: true,
                 filter: false,
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString]);
+    }, [receiptType, searchValue, filterString, page]);
 
     useEffect(() => {
         return () => {
             resetData();
-            setFilterString();
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
         if (userId) {
-            fetchOTFSearchedList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+            fetchVehicleReceiptList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, extraParams]);
+    }, [userId, receiptType, filterString, page]);
 
     useEffect(() => {
         const defaultSection = VEHICLE_RECEIPT_SECTION.SUPPLIER_INVOICE_DETAILS.id;
@@ -226,20 +250,20 @@ export const VehicleReceiptMasterBase = (props) => {
         switch (buttonAction) {
             case ADD_ACTION:
                 defaultSection && setCurrentSection(defaultSection);
+                record && setSelectedId(record?.supplierInvoiceNumber);
                 break;
             case EDIT_ACTION:
-                setSelectedOrder(record);
-                record && setSelectedOrderId(record?.otfNumber);
+                setSelectedRecord(record);
+                record && setSelectedId(record?.supplierInvoiceNumber);
                 openDefaultSection && setCurrentSection(defaultSection);
                 break;
             case VIEW_ACTION:
-                setSelectedOrder(record);
-                record && setSelectedOrderId(record?.otfNumber);
+                setSelectedRecord(record);
+                record && setSelectedId(record?.supplierInvoiceNumber);
                 defaultSection && setCurrentSection(defaultSection);
                 break;
             case NEXT_ACTION:
                 const nextSection = Object.values(sectionName)?.find((i) => i.id > currentSection);
-                // validateVehicleReceiptMenu({ item: i, status: selectedOrder?.orderStatus, otfData }) &&
                 section && setCurrentSection(nextSection?.id);
                 setLastSection(!nextSection?.id);
                 break;
@@ -265,19 +289,26 @@ export const VehicleReceiptMasterBase = (props) => {
         setShowDataLoading(true);
         setFilterString();
         advanceFilterForm.resetFields();
-        setAdvanceSearchVisible(false);
+    };
+
+    const changeObjtoArr = (data) => {
+        const FinalArr = [];
+        Object?.entries(data)?.map(([key, value]) => {
+            FinalArr.push(value);
+            return undefined;
+        });
+        return FinalArr;
     };
 
     const onFinish = (values) => {
-        const recordId = formData?.parentId || form.getFieldValue('parentId');
-        let data = { ...values, parentId: recordId };
+        const data = { supplierInvoiceNumber: selectedId, vehicleDetails: changeObjtoArr(finalData) };
 
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
 
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+            fetchVehicleReceiptList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
 
             setButtonData({ ...buttonData, formBtnActive: false });
 
@@ -290,7 +321,7 @@ export const VehicleReceiptMasterBase = (props) => {
 
         const requestData = {
             data: data,
-            method: formActionType?.editMode ? 'put' : 'post',
+            method: 'put',
             setIsLoading: listShowLoading,
             userId,
             onError,
@@ -316,15 +347,20 @@ export const VehicleReceiptMasterBase = (props) => {
         advanceFilterForm.setFieldsValue();
         setAdvanceSearchVisible(false);
 
-        setSelectedOrder();
+        setSelectedRecord();
         setIsFormVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
     };
 
     const tableProps = {
-        tableColumn: tableColumn(handleButtonClick),
+        dynamicPagination,
+        totalRecords,
+        setPage,
+        tableColumn: tableColumn({ handleButtonClick, tableIconsVisibility }),
         tableData: data,
         showAddButton: false,
+        handleAdd: handleButtonClick,
+        receiptType,
     };
 
     const onAdvanceSearchCloseAction = () => {
@@ -334,38 +370,79 @@ export const VehicleReceiptMasterBase = (props) => {
         setAdvanceSearchVisible(false);
     };
 
-    // const removeFilter = (key) => {
-    //     if (key === 'searchParam') {
-    //         const { searchType, searchParam, ...rest } = filterString;
-    //         setFilterString({ ...rest });
-    //     } else {
-    //         const { [key]: names, ...rest } = filterString;
-    //         setFilterString({ ...rest });
-    //     }
-    // };
+    const removeFilter = (key) => {
+        if (key === 'searchParam') {
+            const { searchType, searchParam, ...rest } = filterString;
+            setFilterString({ ...rest });
+        } else {
+            const { [key]: names, ...rest } = filterString;
+            setFilterString({ ...rest });
+        }
+    };
 
-    const title = 'Search OTF';
+    const handleReceiptTypeChange = (buttonName) => {
+        setCurrentItem(buttonName?.key);
+
+        const buttonkey = buttonName?.key;
+
+        switch (buttonkey) {
+            case VEHICLE_RECEIPT_STATUS?.IN_TRANSIT?.key: {
+                setTableIconsVisibility({ ...tableActionsFalse, AddIcon: true, EyeIcon: false });
+                break;
+            }
+            case VEHICLE_RECEIPT_STATUS?.PARTIALLY_RECEIVED?.key: {
+                setTableIconsVisibility({ ...tableActionsFalse, EyeIcon: false });
+                break;
+            }
+            case VEHICLE_RECEIPT_STATUS?.RECEIVED?.key: {
+                setTableIconsVisibility({ ...tableActionsFalse, EyeIcon: true });
+                break;
+            }
+            case VEHICLE_RECEIPT_STATUS?.RETURNED?.key: {
+                setTableIconsVisibility({ ...tableActionsFalse, EyeIcon: true });
+                break;
+            }
+            default: {
+                break;
+            }
+        }
+        setReceiptType(buttonkey);
+        searchForm.resetFields();
+    };
+
+    const handleChange = (e) => {
+        setSearchValue(e.target.value);
+    };
+
+    const handleSearch = (value) => {
+        setFilterString({ ...filterString, grnNumber: value });
+        setSearchValue(value);
+    };
 
     const advanceFilterResultProps = {
         extraParams,
-        // removeFilter,
-        vehicleReceiptStatusList,
+        removeFilter,
+        vehicleReceiptStatusList: VEHICLE_RECEIPT_STATUS,
         advanceFilter: true,
         otfFilter: true,
-        // filterString,
+        filterString,
         setFilterString,
         from: listFilterForm,
         onFinish,
         onFinishFailed,
         handleResetFilter,
         advanceFilterForm,
-
-        title,
         data,
         setAdvanceSearchVisible,
         typeData,
         searchForm,
         onFinishSearch,
+        receiptType,
+        handleReceiptTypeChange,
+        handleChange,
+        handleSearch,
+        currentItem,
+        setCurrentItem,
     };
 
     const advanceFilterProps = {
@@ -376,12 +453,12 @@ export const VehicleReceiptMasterBase = (props) => {
 
         onCloseAction: onAdvanceSearchCloseAction,
         handleResetFilter,
-        // filterString,
+        filterString,
         setFilterString,
         advanceFilterForm,
         setAdvanceSearchVisible,
         vehicleReceiptStatusList,
-        typeData,
+        grnTypeData,
         onFinishSearch,
     };
 
@@ -396,7 +473,7 @@ export const VehicleReceiptMasterBase = (props) => {
     }, [formActionType]);
 
     const containerProps = {
-        record: selectedOrder,
+        record: selectedRecord,
         form,
         formActionType,
         setFormActionType,
@@ -411,25 +488,28 @@ export const VehicleReceiptMasterBase = (props) => {
         VIEW_ACTION,
         NEXT_ACTION,
         buttonData,
+        setIsFormVisible,
+        finalData,
+        setFinalData,
 
         setButtonData,
         handleButtonClick,
         defaultFormActionType,
         defaultBtnVisiblity,
-        selectedOrderId,
-        setSelectedOrderId,
-        selectedOrder,
-        setSelectedOrder,
+        selectedId,
+        setSelectedId,
+        selectedRecord,
+        setSelectedRecord,
         section,
         currentSection,
         sectionName,
         setCurrentSection,
+        formData,
         setFormData,
         handleFormValueChange,
         isLastSection,
         typeData,
-        otfData,
-        saveButtonName: !selectedOrderId ? 'Create Customer ID' : isLastSection ? 'Submit' : 'Save & Next',
+        saveButtonName: isLastSection ? 'Submit' : 'Next',
     };
 
     return (
@@ -437,7 +517,7 @@ export const VehicleReceiptMasterBase = (props) => {
             <VehicleReceiptFilter {...advanceFilterResultProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable handleAdd={handleButtonClick} isLoading={showDataLoading} {...tableProps} showAddButton={true} />
+                    <ListDataTable isLoading={showDataLoading} {...tableProps} showAddButton={false} />
                 </Col>
             </Row>
             <AdvancedSearch {...advanceFilterProps} />

@@ -4,9 +4,8 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Collapse, Descriptions, Card, Divider } from 'antd';
+import { Collapse, Descriptions, Divider } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
-import { FiDownload } from 'react-icons/fi';
 import { getCodeValue } from 'utils/getCodeValue';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { DATA_TYPE } from 'constants/dataType';
@@ -15,7 +14,7 @@ import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
 const ViewDetailMain = (props) => {
-    const { downloadFileFromButton, setActiveKey, activeKey, formData, viewDocument, handleOnClickCustomerForm, isLoading, appCategoryData } = props;
+    const { setActiveKey, activeKey, formData, isLoading, appCategoryData } = props;
 
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
@@ -44,10 +43,10 @@ const ViewDetailMain = (props) => {
         <div className={styles.viewDrawerContainer}>
             <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
                 <Panel header="Individual Information" key="1">
-                    <Divider />
+                    {/* <Divider />
                     <div>
-                        <img alt="Uploaded profile picture" width="120" height="100" src={`data:image/png;base64,${viewDocument?.base64}`} />
-                    </div>
+                        <Image alt="Uploaded profile picture" width="120" height="100" src={`data:image/png;base64,${viewDocument?.base64}`} />
+                    </div> */}
                     <Divider className={styles.marT20} />
                     <Descriptions {...viewProps}>
                         <Descriptions.Item label="Date of Birth">{checkAndSetDefaultValue(formData?.dateOfBirth, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
@@ -81,7 +80,7 @@ const ViewDetailMain = (props) => {
                     ) : null}
                 </Panel>
             </Collapse>
-            <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(5)} expandIconPosition="end">
+            {/* <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(5)} expandIconPosition="end">
                 <Panel header="Social Profile" key="5">
                     <Divider />
                     <Descriptions {...viewProps}>
@@ -93,7 +92,7 @@ const ViewDetailMain = (props) => {
                         <Descriptions.Item label="Team BHP Link">{checkAndSetDefaultValue(formData?.teamBhpLink, isLoading, '-', true, formData?.teamBhpLink)}</Descriptions.Item>
                     </Descriptions>
                 </Panel>
-            </Collapse>
+            </Collapse> */}
             {/* <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
                      <Panel header="Key Account Details" key="2">
                          <Descriptions {...viewProps}>
@@ -105,8 +104,9 @@ const ViewDetailMain = (props) => {
                          </Descriptions>
 	                     </Panel>
                  </Collapse> */}
-            <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
+            {/* <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
                 <Panel header="Authority Details (Who Knows Whom)" key="2">
+                    <Divider />
                     <Descriptions {...viewProps}>
                         <Descriptions.Item label="Name Of Person">{checkAndSetDefaultValue(formData?.authorityDetails?.personName, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Position">{checkAndSetDefaultValue(formData?.authorityDetails?.postion, isLoading)}</Descriptions.Item>
@@ -114,13 +114,13 @@ const ViewDetailMain = (props) => {
                         <Descriptions.Item label="Remarks">{checkAndSetDefaultValue(formData?.authorityDetails?.remarks, isLoading)}</Descriptions.Item>
                     </Descriptions>
                 </Panel>
-            </Collapse>
-            <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(3)} expandIconPosition="end">
+            </Collapse> */}
+            {/* <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(3)} expandIconPosition="end">
                 <Panel header="Upload Customer Form" key="3">
                     <Divider />
                     <Card className={styles.viewDocumentStrip} key={viewDocument?.fileName} title={viewDocument?.fileName} extra={<FiDownload />} onClick={downloadFileFromButton}></Card>
                 </Panel>
-            </Collapse>
+            </Collapse> */}
         </div>
     );
 };

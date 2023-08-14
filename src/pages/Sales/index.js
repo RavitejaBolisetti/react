@@ -5,7 +5,14 @@
  */
 import OTFMasterPage from './OTF';
 import VehicleDetailMasterPage from './VehicleDetail';
+import VehiclePurchaseOrderMasterPage from './VehiclePurchaseOrder';
+
 import VehicleReceiptMasterPage from './VehicleReceipt';
 import VehiclePriceMasterPage from './VehiclePriceMaster';
 import VehicleRecieptChecklistMaster from './VehicleRecieptMaster';
-export { OTFMasterPage, VehicleDetailMasterPage, VehicleReceiptMasterPage, VehiclePriceMasterPage, VehicleRecieptChecklistMaster };
+import OtfSoMappingMasterPage from './OtfSoMapping';
+import RSMApprovalPage from './RSMApproval';
+
+
+export { OTFMasterPage, VehicleDetailMasterPage, VehicleReceiptMasterPage, VehiclePriceMasterPage, VehicleRecieptChecklistMaster, RSMApprovalPage, VehiclePurchaseOrderMasterPage,OtfSoMappingMasterPage };
+

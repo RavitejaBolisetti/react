@@ -129,7 +129,7 @@ export const ListTehsilBase = (props) => {
         setRefershData(false);
         setShowDataLoading(false);
     };
-    console.log('tehsilCategoryData', tehsilCategoryData);
+    // console.log('tehsilCategoryData', tehsilCategoryData);
 
     useEffect(() => {
         if (userId) {
@@ -351,13 +351,14 @@ export const ListTehsilBase = (props) => {
     const onAdvanceSearchCloseAction = () => {
         setAdvanceSearchVisible(false);
         advanceFilterForm.resetFields();
-        setFilteredDistrictData([]);
+        // setFilteredDistrictData([]);
     };
 
     const handleResetFilter = () => {
         setFilterString();
         advanceFilterForm.resetFields();
         setShowDataLoading(false);
+        setFilteredStateData(stateData?.filter((i) => i?.parentKey === defaultCountry));
         setFilteredDistrictData(undefined);
     };
 

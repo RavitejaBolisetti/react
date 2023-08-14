@@ -3,8 +3,8 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect } from 'react';
-import { Col, Input, Form, Row, Collapse, Switch, Divider } from 'antd';
+import React, { useState, useEffect, createContext } from 'react';
+import { Col, Input, Form, Row, Collapse, Switch } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { ViewDetail } from './ViewDetail';
@@ -50,6 +50,8 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch
     ),
 });
+
+export const ViewEditContext = createContext(null);
 
 const AddEditFormMain = (props) => {
     const { form, formData, onCloseAction, formActionType, formActionType: { editMode, viewMode } = undefined, isVisible, fetchTaxChargeCategoryDetail, userId, handleCodeFunction, taxChargeCategoryCodeData, onFinish, onFinishFailed, stateData, saleData, taxChargeCategoryTypeData, editForm, taxChargeCalForm, dropdownItems, setDropdownItems } = props;
@@ -147,15 +149,15 @@ const AddEditFormMain = (props) => {
                         <ViewDetail {...viewProps} />
                     ) : (
                         <>
-                            <Row gutter={16}>
+                            <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                     <Form.Item label="Code" initialValue={formData?.taxCategoryCode} name="taxCategoryCode" rules={[validateRequiredInputField('Code')]}>
-                                        <Input placeholder={preparePlaceholderText('Code')} maxLength={6} disabled={editMode ? true : false} />
+                                        <Input className={styles.inputBox} placeholder={preparePlaceholderText('Code')} maxLength={6} disabled={editMode ? true : false} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                     <Form.Item label="Description" initialValue={formData?.taxCategoryDescription} rules={[validateRequiredInputField('Description')]} name="taxCategoryDescription">
-                                        <Input placeholder={preparePlaceholderText('Description')} maxLength={50} />
+                                        <Input className={styles.inputBox} placeholder={preparePlaceholderText('Description')} maxLength={50} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
@@ -176,8 +178,9 @@ const AddEditFormMain = (props) => {
                             </Row>
                             <Collapse className={openAccordian === 1 ? styles.accordianHeader : ''} onChange={() => handleCollapse(1)} expandIcon={accordianExpandIcon}>
                                 <Panel header="Tax & Charges Calculation" key="1">
-                                    <Divider />
-                                    <TaxAndChargesCalculationMaster {...masterTaxChargeCalProp} />
+                                    <ViewEditContext.Provider value={viewMode}>
+                                        <TaxAndChargesCalculationMaster {...masterTaxChargeCalProp} />
+                                    </ViewEditContext.Provider>
                                 </Panel>
                             </Collapse>
                         </>

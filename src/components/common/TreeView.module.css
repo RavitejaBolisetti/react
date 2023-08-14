@@ -78,13 +78,13 @@
 }
 
 .scrollTreeData::-webkit-scrollbar-thumb {
-    background-color: #c1c1c1;
+    background-color: #b5b5b6;
     border-radius: 10px;
     border: 2px solid #ffffff;
 }
 
 .scrollTreeData::-webkit-scrollbar-thumb:hover {
-    border: 2px solid #c1c1c1;
+    border: 2px solid #b5b5b6;
 }
 
 .scrollTreeDataInner {
@@ -112,7 +112,6 @@
 .scrollTreeDataInner::-webkit-scrollbar-thumb:hover {
     border: 2px solid #c1c1c1;
 }
-
 /* .modalView .scrollTreeData::-webkit-scrollbar-track {
     background-color: #fff;
 }

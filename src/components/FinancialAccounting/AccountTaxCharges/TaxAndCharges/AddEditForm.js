@@ -21,7 +21,7 @@ import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/prepareP
 const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
-    const { typeData, onCloseAction, unFilteredAttributeData, documentDescription, setSelectedTreeSelectKey, financialAccount, flatternData, fieldNames, formActionType, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, handleSelectTreeClick, taxChargeData, attributeType, setAttributeType, calType, setCalType, calculationType, setCalculationType } = props;
+    const { typeData, onCloseAction, unFilteredAttributeData, documentDescription, setSelectedTreeSelectKey, financialAccount, flatternData, fieldNames, formActionType, isReadOnly, formData, selectedTreeKey, selectedTreeSelectKey, isDataAttributeLoaded, attributeData, handleSelectTreeClick, taxChargeData, attributeType, setAttributeType, setCalType, calculationType, setCalculationType } = props;
     const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed } = props;
 
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
@@ -127,7 +127,6 @@ const AddEditFormMain = (props) => {
                                 </Form.Item>
                             </Col>
                         </Row>
-
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <Form.Item initialValue={formData?.taxChargesTypeCode} label="Tax/Charge Type Code" name="taxChargesTypeCode" rules={[validateRequiredInputField('Tax/Charge Type Code')]}>
@@ -198,13 +197,13 @@ const AddEditFormMain = (props) => {
 
                 <div className={styles.formFooter}>
                     <Row gutter={20}>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.buttonsGroupLeft}>
                             <Button danger onClick={onCloseAction}>
                                 Cancel
                             </Button>
                         </Col>
 
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.buttonsGroupRight}>
                             <Button data-testid="isFormBtnActive" htmlType="submit" danger disabled={!isFormBtnActive}>
                                 Save
                             </Button>

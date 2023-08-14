@@ -459,15 +459,15 @@ export const VehiclePriceMasterBase = (props) => {
         }
     };
 
-    const handleClearInSearch = (e) => {
-        if (e.target.value.length > 2) {
-            listFilterForm.validateFields(['code']);
-        } else if (e?.target?.value === '') {
-            setFilterString();
-            listFilterForm.resetFields();
-            setShowDataLoading(false);
-        }
-    };
+    // const handleClearInSearch = (e) => {
+    //     if (e.target.value.length > 2) {
+    //         listFilterForm.validateFields(['code']);
+    //     } else if (e?.target?.value === '') {
+    //         setFilterString();
+    //         listFilterForm.resetFields();
+    //         setShowDataLoading(false);
+    //     }
+    // };
 
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
@@ -614,9 +614,7 @@ export const VehiclePriceMasterBase = (props) => {
             <AdvanceVehiclePriceMasterFilter {...advanceFilterResultProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <div className={styles.tableProduct}>
-                        <ListDataTable showAddButton={false} isLoading={false} {...tableProps} />
-                    </div>
+                    <ListDataTable showAddButton={false} isLoading={false} {...tableProps} />
                 </Col>
             </Row>
             <AdvancedSearch {...advanceFilterProps} />

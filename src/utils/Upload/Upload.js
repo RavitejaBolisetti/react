@@ -10,9 +10,7 @@ import { Button, Typography, Upload, Image, Space, Avatar } from 'antd';
 import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
 import { documentViewDataActions } from 'store/actions/data/customerMaster/documentView';
 import { showGlobalNotification } from 'store/actions/notification';
-import { FiDownload } from 'react-icons/fi';
-import { AiOutlineCloseCircle } from 'react-icons/ai';
-import { BsTrash3 } from 'react-icons/bs';
+import { AiOutlineCloseCircle, AiOutlineClose, AiOutlineEye } from 'react-icons/ai';
 import { HiCheck } from 'react-icons/hi';
 import { UploadBoxIcon } from 'Icons';
 import styles from './UploadUtil.module.css';
@@ -70,6 +68,7 @@ const UploadBase = (props) => {
         accept = '',
         handleFormValueChange = () => {},
         multiple = false,
+        flag = false,
         showRemoveIcon = true,
         showDownloadIcon = true,
         showProgress = { strokeWidth: 3, showInfo: true },
@@ -94,10 +93,10 @@ const UploadBase = (props) => {
         supportedFileTypes = [],
         messageText = (
             <>
-                Click or drop your file here to upload the signed and <br /> scanned customer form.
+                Click or drop your file here <br /> to upload the signed and scanned customer form.
             </>
         ),
-        validationText = <>File type should be png, jpg or pdf and max file size to be 5Mb</>,
+        validationText = <>(File type should be png, jpg or pdf and max file size to be 5Mb)</>,
         maxSize = 5,
         downloadFile,
         formActionType,
@@ -106,6 +105,9 @@ const UploadBase = (props) => {
         single = false,
         supportingDocs = false,
         setMandatoryFields,
+        singleDisabled,
+        setSingleDisabled,
+        setUploadedFileInformation = undefined,
     } = props;
 
     const [showStatus, setShowStatus] = useState('');
@@ -114,7 +116,7 @@ const UploadBase = (props) => {
     const [base64Img, setBase64Img] = useState('');
     const [uploadTime, setUploadTime] = useState(false);
 
-    const removeIcon = uploadTime ? <AiOutlineCloseCircle /> : <BsTrash3 />;
+    const removeIcon = uploadTime ? <AiOutlineCloseCircle className={styles.iconSize} /> : <AiOutlineClose className={styles.iconSize} />;
 
     const onReplaceClick = () => {
         setIsReplacing(true);
@@ -124,6 +126,10 @@ const UploadBase = (props) => {
         e.stopPropagation();
         setIsReplacing(false);
     };
+    // const formValues = form.getFieldsValue();
+    // useEffect(() => {
+    //     setUploadTime(false);
+    // }, [formValues]);
 
     useEffect(() => {
         if (isReplaceEnabled && viewDocument?.base64) {
@@ -194,35 +200,39 @@ const UploadBase = (props) => {
         multiple,
         accept,
         listType,
+        onDownload,
         showUploadList: {
             showRemoveIcon,
             showDownloadIcon,
             removeIcon: removeIcon,
-            downloadIcon: <FiDownload style={{ color: '#ff3e5b' }} />,
+            downloadIcon: <AiOutlineEye className={styles.iconSize} />,
             showProgress,
             showPreviewIcon,
         },
         onRemove,
-        progress: { strokeWidth: 3, showInfo: true },
+        progress: { strokeWidth: 3, showInfo: true, format: (percent) => percent && `${parseFloat(percent.toFixed(2))}%` },
         onDrop,
-        onDownload,
         onChange: (info) => {
             let fileList = [...info.fileList];
             if (supportingDocs) {
                 form.validateFields()
                     .then(() => {
                         setFileList(fileList);
-
-                        handleFormValueChange();
+                        if (!flag) handleFormValueChange();
                         const { status } = info.file;
                         setShowStatus(info.file);
                         if (status === 'done') {
+                            setTimeout(() => {
+                                setUploadTime(false);
+                            }, 2500);
+                            setUploadedFileInformation && setUploadedFileInformation(info?.file?.response);
                             setUploadedFile(info?.file?.response?.docId);
                             setUploadedFileName(info?.file?.response?.documentName);
                         }
                         setMandatoryFields(false);
                     })
                     .catch((err) => {
+                        setUploadTime(false);
                         return;
                     });
             } else {
@@ -231,11 +241,14 @@ const UploadBase = (props) => {
                 }
 
                 setFileList(fileList);
-
-                handleFormValueChange();
+                if (!flag) handleFormValueChange();
                 const { status } = info.file;
                 setShowStatus(info.file);
                 if (status === 'done') {
+                    setTimeout(() => {
+                        setUploadTime(false);
+                    }, 2700);
+                    setUploadedFileInformation && setUploadedFileInformation(info?.file?.response);
                     setUploadedFile(info?.file?.response?.docId);
                     setUploadedFileName(info?.file?.response?.documentName);
                 }
@@ -255,6 +268,10 @@ const UploadBase = (props) => {
     const handleUpload = (options) => {
         const { file, onSuccess, onError } = options;
         setEmptyList(true);
+        setUploadTime(true);
+        if (single) {
+            setSingleDisabled(true);
+        }
 
         const data = new FormData();
         data.append('applicationId', 'app');
@@ -307,7 +324,7 @@ const UploadBase = (props) => {
                     </>
                 ) : (
                     <>
-                        <Dragger key={key} className={uploadTime ? styles.uploadDraggerStrip : ''} fileList={fileList} customRequest={handleUpload} {...uploadProps}>
+                        <Dragger key={key} className={fileList.length === 0 ? '' : uploadTime ? styles.uploadDraggerStrip : styles.uploadDraggerBox} fileList={fileList} customRequest={handleUpload} {...uploadProps}>
                             <Space direction="vertical">
                                 <UploadBoxIcon />
                                 <div>
@@ -315,7 +332,7 @@ const UploadBase = (props) => {
                                     <Text>{validationText}</Text>
                                 </div>
                                 <Space>
-                                    <Button disabled={uploadTime} type="primary">
+                                    <Button disabled={uploadTime || singleDisabled} type="primary">
                                         {uploadButtonName}
                                     </Button>
                                     {isReplacing && (

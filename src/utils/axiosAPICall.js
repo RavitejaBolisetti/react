@@ -13,7 +13,7 @@ export const AXIOS_ERROR_NO_RESPONSE = 'AXIOS_ERROR_NO_RESPONSE';
 export const AXIOS_ERROR_INTERNAL = 'AXIOS_ERROR_INTERNAL';
 
 const baseAPICall = (params) => {
-    const { method, url, data, onSuccess, displayErrorTitle = false, onError, onTimeout, postRequest, token, accessToken, userId, deviceType } = params;
+    const { method, url, data, onSuccess, displayErrorTitle = false, onError, tempRespone = false, onTimeout, postRequest, token, accessToken, userId, deviceType } = params;
     let axiosConfig = {
         timeout: process.env.REACT_APP_API_CALL_TIMEOUT,
         method,
@@ -52,6 +52,10 @@ const baseAPICall = (params) => {
         axios
             .request(axiosConfig)
             .then((response) => {
+                if (tempRespone && response) {
+                    onSuccess(response);
+                    return false;
+                }
                 if (response.status === 200) {
                     if (response?.data?.status) {
                         if (response?.data?.statusCode === 200) {

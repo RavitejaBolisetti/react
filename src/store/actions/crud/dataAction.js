@@ -58,7 +58,7 @@ export const dataActions = (params) => {
 
     const innerDataActions = {
         fetchList: withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-            const { customURL = '', setIsLoading, data, type = '', mytype = '', onSuccessAction = undefined, onErrorAction = undefined, extraParams = [] } = params;
+            const { customURL = '', setIsLoading, data, type = '', mytype = '', tempRespone = false, onSuccessAction = undefined, onErrorAction = undefined, extraParams = [] } = params;
             setIsLoading(true);
 
             const onError = (message) => {
@@ -84,6 +84,7 @@ export const dataActions = (params) => {
             sExtraParamsString = sExtraParamsString.substring(0, sExtraParamsString.length - 1);
 
             const apiCallParams = {
+                tempRespone,
                 data,
                 method: 'get',
                 url: (customURL || inBaseURL) + (type ? '?type=' + type : '') + (mytype ? mytype : '') + (sExtraParamsString ? sExtraParamsString : ''),
@@ -182,7 +183,7 @@ export const dataActions = (params) => {
         }),
 
         saveData: withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-            const { setIsLoading, onError, data, userId, onSuccess, method = 'post', customURL, extraParams } = params;
+            const { setIsLoading, onError, data, userId, onSuccess, method = 'post', customURL } = params;
             setIsLoading(true);
 
             const onSuccessAction = (res) => {

@@ -32,8 +32,8 @@ const AddEditFormMain = (props) => {
     };
 
     const onCloseAction = () => {
-        form.resetFields();
-        form.setFieldsValue({
+        form?.resetFields();
+        form?.setFieldsValue({
             allowedTimings: [],
         });
         setIsAddTimeVisible(false);
@@ -88,50 +88,49 @@ const AddEditFormMain = (props) => {
         buttonData,
         setButtonData,
         handleButtonClick,
+        multipleForm: true,
     };
 
     return (
         <>
-            <Form form={form} id="myForm" autoComplete="off" layout="vertical" colon={false} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                <Row gutter={20} className={styles.drawerBody}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        {!formActionType?.viewMode ? (
-                            <>
-                                <Row gutter={20}>
-                                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                        <Form.Item name="criticalityGroupCode" label="Criticality Group Id" initialValue={formData?.criticalityGroupCode} rules={[validateRequiredInputField('id'), validationFieldLetterAndNumber('id')]}>
-                                            <Input className={styles.marT5} maxLength={6} placeholder={preparePlaceholderText('id')} disabled={formActionType?.editMode ? true : false} />
-                                        </Form.Item>
-                                    </Col>
-                                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                        <Form.Item name="criticalityGroupName" label="Criticality Group Name" initialValue={formData?.criticalityGroupName} rules={[validateRequiredInputField('name'), validateAlphanumericWithSpace('name')]}>
-                                            <Input className={styles.marT5} placeholder={preparePlaceholderText('name')} maxLength={50} />
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
-                                <Row gutter={20}>
-                                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                        <Form.Item initialValue={formActionType?.editMode ? formData?.criticalityDefaultGroup : false} valuePropName="checked" label="Default Group" name="criticalityDefaultGroup" rules={[validateRequiredInputField('Default Group')]}>
-                                            <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} />
-                                        </Form.Item>
-                                    </Col>
+            <div className={styles.drawerBodyNew}>
+                <Form form={form} id="myForm" autoComplete="off" layout="vertical" colon={false} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                    {!formActionType?.viewMode ? (
+                        <>
+                            <Row gutter={20}>
+                                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                                    <Form.Item name="criticalityGroupCode" label="Criticality Group Id" initialValue={formData?.criticalityGroupCode} rules={[validateRequiredInputField('id'), validationFieldLetterAndNumber('id')]}>
+                                        <Input maxLength={6} placeholder={preparePlaceholderText('id')} disabled={formActionType?.editMode ? true : false} />
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                                    <Form.Item name="criticalityGroupName" label="Criticality Group Name" initialValue={formData?.criticalityGroupName} rules={[validateRequiredInputField('name'), validateAlphanumericWithSpace('name')]}>
+                                        <Input placeholder={preparePlaceholderText('name')} maxLength={50} />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                            <Row gutter={20}>
+                                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                                    <Form.Item data-testid="default-toggle" initialValue={formActionType?.editMode ? formData?.criticalityDefaultGroup : false} valuePropName="checked" label="Default Group" name="criticalityDefaultGroup" rules={[validateRequiredInputField('Default Group')]}>
+                                        <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} />
+                                    </Form.Item>
+                                </Col>
 
-                                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                        <Form.Item initialValue={formActionType?.editMode ? formData?.activeIndicator : false} valuePropName="checked" label="Status" name="activeIndicator" rules={[validateRequiredInputField('Status')]}>
-                                            <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} />
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
-                            </>
-                        ) : (
-                            <ViewCriticalityGroup {...viewProps} {...cardProps} />
-                        )}
-                    </Col>
-                </Row>
-                <DrawerFormButton {...buttonProps} isLoadingOnSave={isLoadingOnSave} />
-            </Form>
+                                <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                                    <Form.Item data-testid="toggle" initialValue={formActionType?.editMode ? formData?.activeIndicator : false} valuePropName="checked" label="Status" name="activeIndicator" rules={[validateRequiredInputField('Status')]}>
+                                        <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                        </>
+                    ) : (
+                        <ViewCriticalityGroup {...viewProps} {...cardProps} />
+                    )}
+                    <DrawerFormButton {...buttonProps} isLoadingOnSave={isLoadingOnSave} />
+                </Form>
 
-            <AllowedTimingList {...listProps} />
+                <AllowedTimingList {...listProps} />
+            </div>
         </>
     );
 };

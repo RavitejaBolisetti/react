@@ -4,11 +4,11 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState, useEffect } from 'react';
-import { Button, Typography, Upload, Image, Space, Avatar, message } from 'antd';
+import { Button, Typography, Upload, Image, Space, Avatar, message, Col, Skeleton } from 'antd';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
-import { documentViewDataActions } from 'store/actions/data/customerMaster/documentView';
+
+import { axiosAPICall } from 'utils/axiosAPICall';
+import { BASE_URL_DOCUMENT_UPLOAD as baseUploadURL, BASE_URL_DOCUMENT_VIEW_URL as baseDownloadUrl } from 'constants/routingApi';
 
 import { FiEye } from 'react-icons/fi';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
@@ -22,47 +22,41 @@ const { Text, Title } = Typography;
 const mapStateToProps = (state) => {
     const {
         auth: { userId, accessToken, token },
-        data: {
-            SupportingDocument: { isLoaded: isDataLoaded = false, isLoading },
-            CustomerMaster: {
-                ViewDocument: { data: viewDocument },
-            },
-        },
     } = state;
 
     let returnValue = {
         userId,
         accessToken,
         token,
-        isDataLoaded,
-        isLoading,
-        viewDocument,
     };
     return returnValue;
 };
 
-const mapDispatchToProps = (dispatch) => ({
-    dispatch,
-    ...bindActionCreators(
-        {
-            saveData: supportingDocumentDataActions.saveData,
-            uploadFile: supportingDocumentDataActions.uploadFile,
-            listShowLoading: supportingDocumentDataActions.listShowLoading,
-
-            fecthViewDocument: documentViewDataActions.fetchList,
-            listShowLoadingOnLoad: documentViewDataActions.listShowLoading,
-            resetData: documentViewDataActions.reset,
-        },
-        dispatch
-    ),
-});
-
+const imageUploadSkeleton = (
+    <>
+        <Col span={16}>
+            <Skeleton
+                avatar
+                paragraph={{
+                    rows: 2,
+                }}
+            />
+        </Col>
+    </>
+);
 const UploadUtilsMain = (props) => {
-    const { uploadTitle, uploadDescription, uploadBtnName, uploadImgTitle, viewDocument, formData, setButtonData = () => {}, buttonData, resetData } = props;
-    const { formActionType, listShowLoading, userId, uploadFile, fecthViewDocument, listShowLoadingOnLoad, setUploadImgDocId, uploadImgDocId, fileList, setFileList } = props;
-    const [uploadedFile, setUploadedFile] = useState();
+    const { uploadTitle, uploadDescription, uploadBtnName, uploadImgTitle, formData } = props;
+    const { formActionType, isAdding, setUploadImgDocId } = props;
+    const { uploadedFile, setUploadedFile, base64Img, setBase64Img } = props;
+    const { userId, accessToken, token } = props;
+
     const [visible, setVisible] = useState(false);
     const [isReplacing, setIsReplacing] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+
+    const onError = (msg) => {
+        setIsLoading(false);
+    };
 
     const onDrop = (e) => {
         // console.log('Dropped files', e.dataTransfer.files);
@@ -77,24 +71,35 @@ const UploadUtilsMain = (props) => {
     };
 
     useEffect(() => {
+        if ((!isReplacing && base64Img) || (!isAdding && base64Img)) return;
         if (uploadedFile || formData?.docId) {
-            setUploadImgDocId(uploadedFile);
-            const extraParams = [
-                {
-                    key: 'docId',
-                    title: 'docId',
-                    value: uploadedFile || formData?.docId,
-                    name: 'docId',
-                },
-            ];
-            fecthViewDocument({ setIsLoading: listShowLoadingOnLoad, userId, extraParams });
+            downloadImage(uploadedFile, formData?.docId);
         }
-
-        return () => {
-            resetData();
-        };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [uploadedFile, formData?.docId]);
+
+    const downloadImage = (uploadedFile, docId) => {
+        setIsLoading(true);
+
+        const onSuccess = (res) => {
+            setBase64Img(res?.data?.base64);
+            setIsLoading(false);
+        };
+
+        const apiCallParams = {
+            method: 'get',
+            url: baseDownloadUrl + '?docId=' + (uploadedFile || formData?.docId),
+            token,
+            accessToken,
+            userId,
+            onSuccess,
+            onError,
+            onTimeout: () => onError('Request timed out, Please try again'),
+            postRequest: () => setIsLoading(false),
+        };
+
+        axiosAPICall(apiCallParams);
+    };
 
     const uploadProps = {
         showUploadList: {
@@ -112,109 +117,118 @@ const UploadUtilsMain = (props) => {
             }
             return isPNG || isJPG || Upload.LIST_IGNORE;
         },
-        progress: { strokeWidth: 3, showInfo: true },
+        progress: { size: 3, showInfo: true },
         accept: 'image/png, image/jpeg',
         onDrop,
-        onChange: (info, event) => {
-            let fileList = [...info.fileList];
-            fileList = fileList.slice(-1);
-            setFileList(fileList);
+        onChange: (info) => {
             const { status } = info.file;
             if (status === 'uploading') {
-                setButtonData({ ...buttonData, formBtnActive: false });
+                // setButtonData({ ...buttonData, formBtnActive: false });
             } else if (status === 'done') {
                 setUploadedFile(info?.file?.response?.docId);
+                setUploadImgDocId(info?.file?.response?.docId);
                 message.success(`${info.file.name} file uploaded successfully.`);
-                setButtonData({ ...buttonData, formBtnActive: true });
+                // setButtonData({ ...buttonData, formBtnActive: true });
                 setIsReplacing(false);
             } else if (status === 'error') {
                 message.error(`${info.file.name} file upload failed.`);
-                setButtonData({ ...buttonData, formBtnActive: true });
+                // setButtonData({ ...buttonData, formBtnActive: true });
             }
         },
     };
 
     const handleUpload = (options) => {
+        if (!userId) return;
         const { file, onSuccess, onError } = options;
 
         const data = new FormData();
         data.append('applicationId', 'app');
         data.append('file', file);
 
-        const requestData = {
-            data: data,
+        const apiCallParams = {
+            data,
             method: 'post',
-            setIsLoading: listShowLoading,
+            url: baseUploadURL,
+            token,
+            accessToken,
             userId,
-            onError,
             onSuccess,
+            // onSuccess: (data) => {
+            //     setUploadedFile(data?.data?.docId);
+            //     setUploadImgDocId(data?.data?.docId);
+            //     setIsLoading(false);
+            //     setIsReplacing(false);
+            // },
+            onError,
+            onTimeout: () => onError('Request timed out, Please try again'),
+            postRequest: () => {},
         };
 
-        uploadFile(requestData);
+        axiosAPICall(apiCallParams);
     };
 
     return (
         <>
-            <div className={styles.uploadDragger}>
-                {(!isReplacing && uploadImgDocId) || formActionType?.viewMode ? (
-                    <>
-                        <Space direction="vertical" className={styles.viewDragger}>
-                            <Space>
-                                <Avatar size={24} icon={<HiCheck />} />
-                                <Title level={5}>{uploadImgTitle || 'Contact Picture'}</Title>
-                                {/* <div>
-                                        <Title level={5}>{uploadImgTitle || 'Profile Picture'}</Title>
-                                        <Text>File type should be .png and .jpg and max file size to be 5Mb</Text>
-                                    </div> */}
-                            </Space>
-                            <Space>
-                                <Image
-                                    style={{ borderRadius: '6px' }}
-                                    width={80}
-                                    preview={{
-                                        visible,
-                                        scaleStep: 0.5,
-                                        src: `data:image/png;base64,${viewDocument?.base64}`,
-                                        onVisibleChange: (value) => {
-                                            setVisible(value);
-                                        },
-                                    }}
-                                    placeholder={<Image preview={false} src={`data:image/png;base64,${viewDocument?.base64}`} width={80} />}
-                                    src={`data:image/png;base64,${viewDocument?.base64}`}
-                                />
-                                {!formActionType?.viewMode && (
-                                    <Button onClick={onReplaceClick} type="link">
-                                        Replace Image
-                                    </Button>
-                                )}
-                            </Space>
-                        </Space>
-                    </>
-                ) : (
-                    <>
-                        <Dragger fileList={fileList} customRequest={handleUpload} {...uploadProps} multiple={false}>
-                            <Space direction="vertical">
-                                <UploadBoxIcon />
-                                <div>
-                                    <Title level={5}>{uploadTitle || 'Upload your contact picture '}</Title>
-                                    <Text>{uploadDescription || '(File type should be png, jpg or pdf and max file size to be 5Mb)'}</Text>
-                                </div>
+            {isLoading && imageUploadSkeleton}
+            {!isLoading && (
+                <div className={styles.uploadDragger}>
+                    {((formActionType?.viewMode && !isReplacing) || (base64Img && !isReplacing)) && (
+                        <>
+                            <Space direction="vertical" className={styles.viewDragger}>
                                 <Space>
-                                    <Button type="primary">{uploadBtnName || 'Upload File'}</Button>
-                                    {isReplacing && (
-                                        <Button onClick={onCancelReplac} danger>
-                                            Cancel
+                                    <Avatar size={24} icon={<HiCheck />} />
+                                    <Title level={5}>{uploadImgTitle || 'Contact Picture'}</Title>
+                                </Space>
+                                <Space>
+                                    <Image
+                                        style={{ borderRadius: '6px' }}
+                                        width={80}
+                                        preview={{
+                                            visible,
+                                            scaleStep: 0.5,
+                                            src: `data:image/png;base64,${base64Img}`,
+                                            onVisibleChange: (value) => {
+                                                setVisible(value);
+                                            },
+                                        }}
+                                        placeholder={<Image preview={false} src={`data:image/png;base64,${base64Img}`} width={80} />}
+                                        src={`data:image/png;base64,${base64Img}`}
+                                    />
+                                    {!formActionType?.viewMode && (
+                                        <Button onClick={onReplaceClick} type="link">
+                                            Replace Image
                                         </Button>
                                     )}
                                 </Space>
                             </Space>
-                        </Dragger>
-                    </>
-                )}
-            </div>
+                        </>
+                    )}
+                    {(isReplacing || (isAdding && !base64Img) || formActionType?.addMode) && (
+                        <>
+                            <Dragger {...uploadProps} customRequest={handleUpload} multiple={false}>
+                                <Space direction="vertical">
+                                    <UploadBoxIcon />
+                                    <div>
+                                        <Title level={5}>{uploadTitle || 'Upload your contact picture '}</Title>
+                                        <Text>{uploadDescription || '(File type should be png, jpg or pdf and max file size to be 5Mb)'}</Text>
+                                    </div>
+                                    <Space>
+                                        <Button type="primary">{uploadBtnName || 'Upload File'}</Button>
+                                        {isReplacing && (
+                                            <Button onClick={onCancelReplac} danger>
+                                                Cancel
+                                            </Button>
+                                        )}
+                                    </Space>
+                                </Space>
+                            </Dragger>
+                        </>
+                    )}
+                </div>
+            )}
         </>
     );
 };
-const UploadUtils = connect(mapStateToProps, mapDispatchToProps)(UploadUtilsMain);
+const UploadUtils = connect(mapStateToProps, null)(UploadUtilsMain);
 
 export default UploadUtils;

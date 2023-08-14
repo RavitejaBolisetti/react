@@ -23,6 +23,9 @@ import { VehicleDetailsLov } from './vehicleDetailsLov';
 import { AddonDetails } from './addOnDetails';
 import { AddonParts } from './addonParts';
 
+import { OtfSoMapping } from './otfSoMapping';
+import { OtfSoUserMapping } from './otfSoUserMapping';
+
 export const OTF = combineReducers({
     InvoiceDetail,
     FinanceDetail,
@@ -40,4 +43,6 @@ export const OTF = combineReducers({
     VehicleDetailsLov,
     AddonDetails,
     AddonParts,
+    OtfSoMapping,
+    OtfSoUserMapping,
 });

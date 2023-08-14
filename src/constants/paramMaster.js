@@ -6,7 +6,7 @@
 export const PARAM_MASTER = {
     CFG_PARAM: {
         id: 'CFG_PARAM',
-        title: 'CFG_PARAM',
+        title: 'CFG_PARAM', 
     },
     CFG_PARAM_TYPE: {
         id: 'CFG_PARAM_TYPE',
@@ -192,6 +192,10 @@ export const PARAM_MASTER = {
         id: 'VH_DTLS_SER',
         title: 'Vehicle Detail List',
     },
+    VH_PURCHASE_RORDER_SER: {
+        id: 'VH_PURCHASE_RORDER_SER',
+        title: 'Vehicle Purchase Order List',
+    },
     YES_NO_FLG: {
         id: 'YES_NO_FLG',
         title: 'Yes No Flag',
@@ -232,4 +236,37 @@ export const PARAM_MASTER = {
         id: 'VH_RECEIT_SER',
         title: 'Vehicle Receipt checklist',
     },
+    GRN_STATS: {
+        id: 'GRN_STATS',
+        title: 'Vehicle Receipt Type',
+    },
+    GRN_TYPE: {
+        id: 'GRN_TYPE',
+        title: 'GRN Type',
+    },
+    VEHCL_STATS: {
+        id: 'VEHCL_STATS',
+        title: 'Vehicle Status',
+    },
+    PHYSICAL_STATUS: {
+        id: 'PHYSICAL_STATUS',
+        title: 'Physical Status',
+    },
+    ACC_HEAD: {
+        id: 'ACC_HEAD',
+        title: 'Sales Type',
+    },
+    CRDR_SEARCH_PARAM: {
+        id: 'CRDR_SEARCH_PARAM',
+        title: 'Credit Debit Note Search',
+    },
+    PARTY_CATEG: {
+        id: 'PARTY_CATEG',
+        title: 'Party Category',
+    },
+    VOUCHR_TYPE: {
+        id: 'VOUCHR_TYPE',
+        title: 'Voucher type',
+    },
+   
 };

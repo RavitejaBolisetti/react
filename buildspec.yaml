@@ -2,14 +2,14 @@ version: 0.2
 phases:
     pre_build:
         commands:
-           # - n 18
-           # - node -v
-           # - npm -v
+            # - n 18
+            # - node -v
+            # - npm -v
             - npm install -g sonarqube-scanner
-            - npm i          
+            - npm i --force
     build:
         commands:
-            - npm run build .env.production
+            - npm run build .env.development
     post_build:
         commands:
             - echo Build completed on `date`

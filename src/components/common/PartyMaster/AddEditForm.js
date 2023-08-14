@@ -61,7 +61,7 @@ const AddEditFormMain = (props) => {
                 ...detailData[0],
             });
         } else {
-            form.resetFields();
+            form?.resetFields();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [detailData]);
@@ -100,7 +100,7 @@ const AddEditFormMain = (props) => {
         }
 
         if (value.length <= 6) {
-            form.validateFields(['pinCode']).then(() => {
+            form?.validateFields(['pinCode']).then(() => {
                 const extraParams = [
                     {
                         key: 'pincode',

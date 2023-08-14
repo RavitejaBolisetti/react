@@ -21,7 +21,7 @@
 }
 
 .dashboardContainer .svgIcon {
-    vertical-align: sub;
+    vertical-align: top;
     margin-right: 6px;
 }
 
@@ -37,8 +37,9 @@
 
 .dashboardContainer :global .ant-card .ant-card-body {
     padding: 0;
+    margin-bottom: 0;
     border-radius: 0 0 8px 8px;
-    height: 219px;
+    height: 220px;
 }
 
 .dashboardPageHeading {
@@ -74,8 +75,8 @@
 }
 
 .dashboardCard {
-    margin-top: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 20px !important;
+    background: #ffffff !important;
 }
 
 .headingGradient {
@@ -177,7 +178,7 @@
 }
 
 .buttonHolder {
-    margin-top: 12px;
+    margin-top: 10px;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -240,7 +241,7 @@
 .scrollbar::-webkit-scrollbar-thumb {
     border-radius: 10px;
     /* -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3); */
-    background-color: #C1C1C1 !important;
+    background-color: #b5b5b6 !important;
 }
 
 .newsCard {

@@ -362,7 +362,7 @@ export const ConfigurableParameterEditingBase = ({ saveFormShowLoading, isLoadin
                     </Col>
 
                     {configData?.length ? (
-                        <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
+                        <Col className={styles.buttonsGroupRight} xs={24} sm={24} md={8} lg={8} xl={8}>
                             <Button icon={<TfiReload />} onClick={handleReferesh} danger />
                             <Button icon={<PlusOutlined />} type="primary" onClick={handleAdd}>
                                 Add
@@ -407,9 +407,7 @@ export const ConfigurableParameterEditingBase = ({ saveFormShowLoading, isLoadin
                             </Empty>
                         )}
                     >
-                        <div className={styles.tableProduct}>
-                            <DataTable isLoading={isLoading} {...tableProps} />
-                        </div>
+                        <DataTable isLoading={isLoading} {...tableProps} />
                     </ConfigProvider>
                 </Col>
             </Row>

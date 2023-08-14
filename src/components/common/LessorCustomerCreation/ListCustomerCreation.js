@@ -86,7 +86,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const ListCustomerCreationBase = (props) => {
-    const { stateData, resetData, resetViewData, fetchStateLovList, isStateDataLoaded, listStateShowLoading, detailData, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
+    const { stateData, resetData, resetViewData, fetchStateLovList, isStateDataLoaded, listStateShowLoading, userId, isDataLoaded, listShowLoading, showGlobalNotification, moduleTitle } = props;
     const { listLessorShowLoading, isSupportingDataLoaded, isSupportingDataLoading, supportingData, accessToken, token } = props;
 
     const { typeData, saveData, fetchList, lessorData } = props;
@@ -297,7 +297,7 @@ export const ListCustomerCreationBase = (props) => {
                             <Form.Item label={`${title}`} name="code" validateTrigger={['onSearch']}></Form.Item>
                         </Form>
                     </Col>
-                    <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.addGroup}>
+                    <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.buttonsGroupRight}>
                         <Button type="primary" onClick={handleOnClick}>
                             Upload
                         </Button>

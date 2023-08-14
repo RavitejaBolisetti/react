@@ -31,7 +31,7 @@ const AddEditFormMain = (props) => {
         <Card>
             <CustomerListMaster fnSetData={fnSetData} />
             <Row gutter={20} className={styles.marT20}>
-                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.uniqueSearchInput}>
+                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name="registrationNumber" label="Vehicle Registration Number" initialValue={formData?.registrationNumber}>
                         <Input disabled={true} maxLength={30} placeholder={preparePlaceholderText('Vehicle Registration Number')} />
                     </Form.Item>
@@ -63,7 +63,7 @@ const AddEditFormMain = (props) => {
                     </Form.Item>
                 </Col>
 
-                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.uniqueSearchInput}>
+                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name="mobileNumber" label="Mobile Number" initialValue={formData?.mobileNumber} rules={[validateRequiredInputField('Mobile Number'), validateMobileNoField('Mobile Number'), { min: 10, message: 'Phone number must be minimum 10 digits Long.' }]}>
                         <Input disabled={true} maxLength={6} placeholder={preparePlaceholderText('Vehicle Registration Number')} />
                     </Form.Item>
@@ -78,7 +78,7 @@ const AddEditFormMain = (props) => {
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name="dob" label="Date of Birth">
-                        <DatePicker disabled={true} format={dateFormat} placeholder={preparePlaceholderText('Date of Birth')} style={{ width: '250px' }} />
+                        <DatePicker disabled={true} format={dateFormat} placeholder={preparePlaceholderText('Date of Birth')} />
                     </Form.Item>
                 </Col>
             </Row>

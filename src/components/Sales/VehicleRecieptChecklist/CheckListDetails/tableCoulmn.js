@@ -5,8 +5,6 @@
  */
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import styles from 'components/common/Common.module.css';
-import { Button } from 'antd';
-import { FiEdit, FiTrash } from 'react-icons/fi';
 
 export const tableColumn = (props) => {
     const { handleButtonClick, formActionType } = props;

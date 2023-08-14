@@ -13,7 +13,7 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import styles from 'components/common/Common.module.css';
 
 export default function AdvanceOTFFilter(props) {
-    const { extraParams, removeFilter, handleResetFilter, advanceFilter = false, otfFilter = false, title, filterString, setFilterString, typeData, setAdvanceSearchVisible, searchForm, moduleTitle, handleOnClick } = props;
+    const { extraParams, removeFilter, handleResetFilter, advanceFilter = false, otfFilter = false, title, filterString, setFilterString, typeData, setAdvanceSearchVisible, searchForm } = props;
 
     const serachBoxProps = {
         searchForm,
@@ -25,7 +25,6 @@ export default function AdvanceOTFFilter(props) {
     return (
         <div className={styles.contentHeaderBackground}>
             <Row gutter={20}>
-                {/* <span className={styles.headerText}>{title}</span> */}
                 <Col xs={24} sm={24} md={18} lg={18} xl={18}>
                     <Form autoComplete="off" colon={false} className={styles.masterListSearchForm}>
                         <Form.Item label={`${title}`}>
@@ -52,13 +51,6 @@ export default function AdvanceOTFFilter(props) {
                         </Form.Item>
                     </Form>
                 </Col>
-                {/* {moduleTitle === 'Vehicle Price Master' && (
-                    <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.addGroup}>
-                        <Button type="primary" onClick={handleOnClick}>
-                            Upload
-                        </Button>
-                    </Col>
-                )} */}
             </Row>
             {advanceFilter && filterString?.advanceFilter && extraParams.find((i) => i.name) && (
                 <Row gutter={20}>
@@ -74,7 +66,7 @@ export default function AdvanceOTFFilter(props) {
                                                 {filter?.name}
                                                 {filter?.canRemove && (
                                                     <span>
-                                                        <RxCross2 onClick={() => removeFilter(filter?.key)} />
+                                                        <RxCross2 onClick={() => removeFilter(filter?.key)} data-testid="removeBtn" />
                                                     </span>
                                                 )}
                                             </div>

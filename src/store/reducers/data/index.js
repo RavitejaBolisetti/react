@@ -19,6 +19,7 @@ import { QualificationMaster } from './qualificationMaster';
 import { UserManagement } from './userManagement';
 import { UserManagementManufacturer } from './UserManagementManufacturer';
 import { Geo } from './geo';
+import { Sales } from './sales';
 import { DealerManpower } from './dealerManpower';
 import { PartyMaster } from './partyMaster';
 import { TermCondition } from './termsConditions';
@@ -37,6 +38,8 @@ import { RoleManagementData } from './roleManagementData';
 import { ManufacturerAdmin } from './ManufacturerAdmin';
 import { ManufacturerOrg } from './ManufacturerOrg';
 import { VehicleReceipt } from './vehicleReceipt';
+import { VehicleModelandTaxChargesCategory } from './VehicleModelTaxChargesCategory';
+import { Report } from './report';
 
 export const data = combineReducers({
     Menu,
@@ -53,6 +56,7 @@ export const data = combineReducers({
     UserManagement,
     UserManagementManufacturer,
     Geo,
+    Sales,
     DealerManpower,
     PartyMaster,
     TermCondition,
@@ -71,4 +75,6 @@ export const data = combineReducers({
     ManufacturerOrg,
     VehicleReceipt,
     VehiclePriceMaster,
+    VehicleModelandTaxChargesCategory,
+    Report,
 });

@@ -206,6 +206,13 @@ export const MenuConstant = {
         parentMenuId: 'SACT-03',
     },
 
+    [getMenyKey('SACT-04.05')]: {
+        key: 'SACT-04.05',
+        link: routing.ROUTING_RSM_APPROVAL,
+        icon: undefined,
+        parentMenuId: 'SACT-04',
+    },
+
     [getMenyKey('MILE-01.04')]: {
         key: 'MILE-01.04',
         link: routing.ROUTING_MILE_DEALER_MANPOWER_LOCATION_TYPE_MASTER,
@@ -301,20 +308,38 @@ export const MenuConstant = {
         parentMenuId: 'WEB',
     },
 
-    [getMenyKey('FINA-01.04')]: {
-        key: 'FINA-01.04',
-        link: routing.ROUTING_TAX_CHARGES,
+    [getMenyKey('FINA-01.02')]: {
+        key: 'FINA-01.02',
+        link: routing.ROUTING_FINANCIAL_ACCOUNTING_ACCOUNT_CATEGORY,
         icon: undefined,
         parentMenuId: 'FINA-01',
     },
 
-    //ROUTING_TAX_CHARGES_CATEGORY
+    [getMenyKey('FINA-01.03')]: {
+        key: 'FINA-01.03',
+        link: routing.ROUTING_DOCUMENT_TYPE,
+        icon: undefined,
+        parentMenuId: 'FINA-01',
+    },
+
+    [getMenyKey('FINA-01.04')]: {
+        key: 'FINA-01.04',
+        link: routing.ROUTING_FINANCIAL_ACCOUNTING_TAX_CHARGES,
+        icon: undefined,
+        parentMenuId: 'FINA-01',
+    },
 
     [getMenyKey('FINA-01.05')]: {
         key: 'FINA-01.05',
-        link: routing.ROUTING_TAX_CHARGES_CATEGORY,
+        link: routing.ROUTING_FINANCIAL_ACCOUNTING_TAX_CHARGES_CATEGORY,
         icon: undefined,
         parentMenuId: 'FINA-01',
+    },
+    [getMenyKey('FINA-02.05')]: {
+        key: 'FINA-02.05',
+        link: routing.ROUTING_CREDIT_DEBIT_NOTE,
+        icon: undefined,
+        parentMenuId: 'FINA-02',
     },
 
     [getMenyKey('HR')]: {
@@ -406,5 +431,12 @@ export const MenuConstant = {
         link: routing.ROUTING_COMMON_APPLICATION_MASTER,
         icon: undefined,
         parentMenuId: 'ADMN',
+    },
+
+    [getMenyKey('SACT-04.08')]: {
+        key: 'SACT-04.08',
+        link: routing.ROUTING_VEHICLE_RECEIPT,
+        icon: undefined,
+        parentMenuId: 'SACT-04',
     },
 };

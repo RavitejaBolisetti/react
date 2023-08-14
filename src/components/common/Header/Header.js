@@ -24,7 +24,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { doLogoutAPI } from 'store/actions/auth';
 import { headerDataActions } from 'store/actions/common/header';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { HeaderSkeleton } from './HeaderSkeleton';
 import { ChangePassword } from '../ChangePassword';
 import IMG_ICON from 'assets/img/icon.png';
@@ -81,8 +81,6 @@ const HeaderMain = (props) => {
     const { fetchEditConfigDataList, fetchConfigList, listConfigShowLoading, isTypeDataLoaded, isTypeDataLoading } = props;
 
     const navigate = useNavigate();
-    const location = useLocation();
-    const pagePath = location.pathname;
 
     const [isChangePasswordModalOpen, setChangePasswordModalOpen] = useState(false);
     const [confirms, setConfirm] = useState(false);
@@ -97,6 +95,7 @@ const HeaderMain = (props) => {
         } else {
             document.body.style.overflow = 'overlay';
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [confirms, isChangePasswordModalOpen]);
 
     useEffect(() => {
@@ -188,25 +187,6 @@ const HeaderMain = (props) => {
             link: routing.ROUTING_USER_SETTING,
             icon: <FiSettings size={18} />,
         }),
-        // customMenuLink({
-        //     key: '3',
-        //     title: 'FAQ',
-        //     link: routing.ROUTING_USER_FAQ,
-        //     icon: <TbFileReport />,
-        // }),
-        // customMenuLink({
-        //     key: '4',
-        //     title: 'Training/Help',
-        //     link: routing.ROUTING_USER_TRAINING,
-        //     icon: <FaUserMd />,
-        // }),
-
-        // customMenuLink({
-        //     key: '6',
-        //     title: 'Update Your Password',
-        //     icon: <AiFillSetting />,
-        //     onClick: () => setUpdatePasswordModalOpen(true),
-        // }),
     ];
 
     userType === USER_TYPE?.DEALER?.key &&
@@ -248,7 +228,7 @@ const HeaderMain = (props) => {
                                 <div className={styles.headerLeft}>
                                     <Space>
                                         <div className={`${styles.floatLeft} ${styles.mrt6} ${styles.menuIcon}`} style={{ paddingLeft: '10px' }} onClick={handleCollapse}>
-                                            <img width={20} src={IMG_ICON} alt="" className={styles.brandImage} /> <Icon component={MenuArrow} />
+                                            <img width={20} src={IMG_ICON} alt="brandImage" className={styles.brandImage} /> <Icon component={MenuArrow} />
                                         </div>
                                         <div className={styles.userText}>
                                             <div className={styles.dealerName}>{dealerName}</div>

@@ -70,11 +70,11 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const SupportingDocumentBase = (props) => {
-    const { isViewDataLoaded, resetViewData, uploadDocumentFile, accessToken, token, onFinishFailed, form } = props;
+    const { isViewDataLoaded, uploadDocumentFile, accessToken, token, onFinishFailed, form } = props;
 
     const { userId, showGlobalNotification, section, listShowLoading, typeData, saveData, fetchList, supportingData, fetchViewDocument, setIsFormVisible } = props;
     const { buttonData, setButtonData, formActionType, handleFormValueChange } = props;
-    const { selectedCustomerId, viewDocument, viewListShowLoading, downloadFile, resetData } = props;
+    const { selectedCustomerId, viewDocument, viewListShowLoading, downloadFile } = props;
 
     const [uploadedFile, setUploadedFile] = useState();
     const [uploadedFileList, setUploadedFileList] = useState();
@@ -117,6 +117,7 @@ const SupportingDocumentBase = (props) => {
         return () => {
             setUploadedFile(undefined);
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [fileList]);
 
     const onRemove = (file) => {
@@ -124,21 +125,21 @@ const SupportingDocumentBase = (props) => {
         payload.splice(index, 1);
     };
 
-    const downloadFileFromButton = (uploadData) => {
-        const onSuccessAction = (res) => {
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res.responseMessage });
-        };
-        const extraParams = [
-            {
-                key: 'docId',
-                title: 'docId',
-                value: uploadData?.docId,
-                name: 'docId',
-            },
-        ];
-        const supportingDocument = uploadData?.documentName;
-        downloadFile({ setIsLoading: viewListShowLoading, userId, extraParams, onSuccessAction });
-    };
+    // const downloadFileFromButton = (uploadData) => {
+    //     const onSuccessAction = (res) => {
+    //         showGlobalNotification({ notificationType: 'success', title: 'Success', message: res.responseMessage });
+    //     };
+    //     const extraParams = [
+    //         {
+    //             key: 'docId',
+    //             title: 'docId',
+    //             value: uploadData?.docId,
+    //             name: 'docId',
+    //         },
+    //     ];
+    //     const supportingDocument = uploadData?.documentName;
+    //     downloadFile({ setIsLoading: viewListShowLoading, userId, extraParams, onSuccessAction });
+    // };
 
     const deleteFile = (uploadData) => {
         const data = { customerId: uploadData?.customerId, status: false, docId: uploadData?.docId, documentTypeId: uploadData?.documentType, id: uploadData?.id, documentName: uploadData?.documentName };
@@ -201,8 +202,8 @@ const SupportingDocumentBase = (props) => {
             setIsFormVisible(false);
         }
     };
+
     const viewProps = {
-        // downloadFileFromButton,
         isViewDataLoaded,
         supportingData,
         supportingDataView,
@@ -217,10 +218,6 @@ const SupportingDocumentBase = (props) => {
         userId,
         fetchViewDocument,
         viewListShowLoading,
-        showGlobalNotification,
-        fetchViewDocument,
-        viewListShowLoading,
-        userId,
         downloadFile,
     };
 

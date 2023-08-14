@@ -3,10 +3,9 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React from 'react';
+import React, { useState } from 'react';
 import { Descriptions, Divider } from 'antd';
 import AddEditForm from './AddEditForm';
-import UploadUtils from './../UploadUtils';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { getCodeValue } from 'utils/getCodeValue';
 
@@ -16,6 +15,9 @@ const ViewDetailBase = (props) => {
     const { formData, styles } = props;
     const { setShowAddEditForm, setContactData, onFinish, form, isEditing, isLoading, typeData } = props;
     const { customerType } = props;
+
+    const [uploadedFile, setUploadedFile] = useState();
+    const [base64Img, setBase64Img] = useState('');
 
     const viewProps = {
         bordered: false,
@@ -29,6 +31,10 @@ const ViewDetailBase = (props) => {
         setContactData,
         onFinish,
         form,
+        uploadedFile,
+        setUploadedFile,
+        base64Img,
+        setBase64Img,
         ...props,
     };
 
@@ -37,7 +43,7 @@ const ViewDetailBase = (props) => {
             {!isEditing ? (
                 <>
                     <Divider />
-                    <UploadUtils {...formProps} />
+                    {/* <UploadUtils {...formProps} /> */}
                     <Descriptions {...viewProps}>
                         <Descriptions.Item label="Purpose of Contact">{checkAndSetDefaultValue(getCodeValue(typeData?.PURPOSE, formData?.purposeOfContact), isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Mobile Number">{checkAndSetDefaultValue(formData?.mobileNumber, isLoading)}</Descriptions.Item>
@@ -52,12 +58,12 @@ const ViewDetailBase = (props) => {
                         <Descriptions.Item label="E-mail">{checkAndSetDefaultValue(formData?.contactEmailId, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Alternate Email ID">{checkAndSetDefaultValue(formData?.alternateEmailId, isLoading)}</Descriptions.Item>
 
-                        <Descriptions.Item label="Facebook Link">{checkAndSetDefaultValue(formData?.facebookId, isLoading)}</Descriptions.Item>
+                        {/* <Descriptions.Item label="Facebook Link">{checkAndSetDefaultValue(formData?.facebookId, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Twitter Link">{checkAndSetDefaultValue(formData?.twitterId, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Instagram Link">{checkAndSetDefaultValue(formData?.instagramId, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Youtube Channel">{checkAndSetDefaultValue(formData?.youTubeChannel, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Team BHP Link">{checkAndSetDefaultValue(formData?.teamBhp, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Mark As Default">{checkAndSetDefaultValue(formData?.defaultContactIndicator ? 'Yes' : 'No', isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Mark As Default">{checkAndSetDefaultValue(formData?.defaultContactIndicator ? 'Yes' : 'No', isLoading)}</Descriptions.Item> */}
                     </Descriptions>
                 </>
             ) : (

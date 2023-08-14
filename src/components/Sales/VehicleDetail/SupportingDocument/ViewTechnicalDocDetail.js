@@ -38,7 +38,7 @@ export const ViewTechnicalDocDetail = (props) => {
                     );
                 })} */}
             </Card>
-            {/* // ) : ( // <div className={styles.viewNoDataFound}>No Technical Document Available</div>
+            {/* // ) : ( // <Card>No Technical Document Available</Card>
             // )} */}
         </div>
     );

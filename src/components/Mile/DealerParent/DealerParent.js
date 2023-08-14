@@ -8,8 +8,6 @@ import { connect } from 'react-redux';
 import { Col, Form, Row } from 'antd';
 import { bindActionCreators } from 'redux';
 import { dealerParentDataActions } from 'store/actions/data/dealer/dealerParent';
-import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
-
 import { tableColumn } from './tableColumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { showGlobalNotification } from 'store/actions/notification';

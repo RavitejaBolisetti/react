@@ -18,7 +18,7 @@ const ContentHeader = ({ isAdvanceFilter = false, isTogglePresent = false, isDef
         return (
             <div className={styles.contentHeaderBackground}>
                 <Row gutter={20}>
-                    <Col xs={16} sm={16} md={16} lg={16} xl={16} className={styles.verticallyCentered}>
+                    <Col xs={24} sm={24} md={14} lg={14} xl={14} className={styles.verticallyCentered}>
                         <div className={`${styles.userManagement} ${styles.headingToggle}`}>
                             <Button className={styles.marR5} type={menuType === 'W' ? 'primary' : 'link'} onClick={() => handleTypeClick('W')}>
                                 {toggleFirst}
@@ -36,7 +36,7 @@ const ContentHeader = ({ isAdvanceFilter = false, isTogglePresent = false, isDef
         return (
             <div className={styles.contentHeaderBackground}>
                 <Row gutter={20}>
-                    <Col xs={24} sm={24} md={18} lg={18} xl={18}>
+                    <Col xs={24} sm={24} md={16} lg={16} xl={16}>
                         <Form autoComplete="off" colon={false} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                             <Form.Item label={`${title}`} name="code" validateTrigger={validateTriggervalue}>
                                 <Row gutter={20}>
@@ -53,9 +53,8 @@ const ContentHeader = ({ isAdvanceFilter = false, isTogglePresent = false, isDef
                         </Form>
                     </Col>
                     {organizationId && (
-                        <Col className={styles.buttonHeadingContainer} xs={24} sm={24} md={6} lg={6} xl={6}>
-                            <Button type="primary" className={`${styles.changeHistoryModelOpen} ${styles.floatRight}`} onClick={changeHistoryModelOpen}>
-                                <FaHistory className={styles.buttonIcon} />
+                        <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.buttonsGroupRight}>
+                            <Button icon={<FaHistory />} type="primary" className={styles.verticallyCentered} onClick={changeHistoryModelOpen}>
                                 Change History
                             </Button>
                         </Col>

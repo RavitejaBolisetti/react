@@ -11,10 +11,11 @@ import styles from 'components/common/Common.module.css';
 
 import { TfiReload } from 'react-icons/tfi';
 import { BsDownload } from 'react-icons/bs';
+import { FaHistory } from 'react-icons/fa';
 
 const { Search } = Input;
 const CurdSearchBox = (props) => {
-    const { addButtonOption, showAddButton = true, advanceFilter = false, title, filterString, listSetFilterString, form, onFinish, onFinishFailed, extraParams, removeFilter, handleClearInSearch, onSearchHandle, setAdvanceSearchVisible, handleReferesh, handleButtonClick, validator = searchValidator, downloadReport = false, handleDownloadReport = false, showChangeHistoryButton = false, showChangeHistoryList } = props;
+    const { addButtonOption, showAddButton = true, advanceFilter = false, title, filterString, listSetFilterString, form, onFinish, onFinishFailed, extraParams, removeFilter, handleClearInSearch, onSearchHandle, setAdvanceSearchVisible, handleReferesh, validator = searchValidator, downloadReport = false, handleDownloadReport = false, showChangeHistoryButton = false, showChangeHistoryList } = props;
     const onKeyPressHandler = (e) => {
         e.key === 'Enter' && e.preventDefault();
     };
@@ -64,21 +65,21 @@ const CurdSearchBox = (props) => {
                         </Row>
                     </Col>
                     {(showChangeHistoryButton || showAddButton) && (
-                        <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
+                        <Col className={styles.buttonsGroupRight} xs={24} sm={24} md={8} lg={8} xl={8}>
                             {showChangeHistoryButton && (
                                 <>
-                                    <Button onClick={showChangeHistoryList} type="primary" danger>
+                                    <Button icon={<FaHistory />} onClick={showChangeHistoryList} type="primary">
                                         Change History
                                     </Button>
                                 </>
                             )}
 
                             {advanceFilter && filterString?.advanceFilter && downloadReport && (
-                                <Button icon={<BsDownload />} className={styles.refreshBtn} onClick={handleDownloadReport} danger>
+                                <Button icon={<BsDownload />} onClick={handleDownloadReport} danger>
                                     Download
                                 </Button>
                             )}
-                            <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleReferesh} danger />
+                            <Button icon={<TfiReload />} onClick={handleReferesh} danger />
                             {addButtonOption}
                         </Col>
                     )}
