@@ -386,12 +386,11 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         };
 
         const onSuccess = (res) => {
-            // setShowDataLoading(true);
-            // showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             setShowDataLoading(true);
             setIsCancelVisible(false);
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+            vpoCancellationForm.resetFields();  
             setButtonData({ ...buttonData, formBtnActive: false });
         };
 
@@ -488,6 +487,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         onFinishVPOCancellation,
         selectedRecord,
         setSelectedRecord,
+        setIsCancelVisible,
     };
 
     return (

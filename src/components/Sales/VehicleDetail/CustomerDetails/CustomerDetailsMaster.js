@@ -41,7 +41,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    console.log(state, 'state');
+    // console.log(state, 'state');
 
     const moduleTitle = 'Customer Details';
 
@@ -99,7 +99,7 @@ export const CustomerDetailsMain = (props) => {
     const [sameAsBookingCustomer, setSameAsBookingCustomer] = useState(false);
 
     const handleCollapse = (key) => {
-        console.log('key', key);
+        // console.log('key', key);
         !activeKey?.includes(key) ? setActiveKey([key]) : setActiveKey([]);
     };
 

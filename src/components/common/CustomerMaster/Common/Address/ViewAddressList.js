@@ -63,12 +63,12 @@ const ViewAddressList = (props) => {
             {addressData?.length > 0 &&
                 addressData?.map((data, i) => {
                     return (
-                        <Collapse className={styles.innerCollapse} key={data?.addressType + data?.addressType} onChange={() => handleCollapse(i)} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian} collapsible="icon">
+                        <Collapse className={styles.marB20} key={data?.addressType + data?.addressType} onChange={() => handleCollapse(i)} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian} collapsible="icon">
                             <Panel
                                 key={i}
                                 header={
                                     <Row justify="space-between">
-                                        <Col xs={14} sm={14} md={14} lg={14} xl={14}>
+                                        <Col xs={14} sm={14} md={14} lg={14} xl={14} className={styles.verticallyCentered}>
                                             <Text strong>{getCodeValue(addData, data?.addressType)}</Text>
                                             {!formActionType?.viewMode && (
                                                 <Button onClick={(e) => editContactHandeler(e, data, i)} type="link" icon={<FiEdit />} disabled={isEditing || isAdding} className={styles.verticallyCentered}>

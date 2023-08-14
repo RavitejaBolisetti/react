@@ -12,7 +12,7 @@ const { Option } = Select;
 
 export const OTFConfirmationModalFrom = (props) => {
     const { information, form, handleCloseModal } = props;
-    console.log('msg'.msg);
+    // console.log('msg'.msg);
 
     return (
         <Form autoComplete="off" layout="vertical" form={form}>

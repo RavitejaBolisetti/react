@@ -9,7 +9,7 @@ import CardProductAttribute from './CardProductAttribute';
 import FormProductAttribute from './FormProductAttribute';
 
 const ProductAttributeMaster = (props) => {
-    const { productHierarchyAttributeData, isVisible, selectedTreeData, setFormBtnActive, showGlobalNotification, skuAttributes, setSKUAttributes,disabledEdit, setDisabledEdit } = props;
+    const { productHierarchyAttributeData, isVisible, selectedTreeData, setFormBtnActive, showGlobalNotification, skuAttributes, setSKUAttributes, disabledEdit, setDisabledEdit } = props;
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [attributeForm] = Form.useForm();
     const [disableSaveButton, setDisableSaveButton] = useState(false);
@@ -18,7 +18,7 @@ const ProductAttributeMaster = (props) => {
         let data = { ...val, code: val?.attributeName?.label, attributeId: val?.attributeName?.key };
         delete data.attributeName;
         setSKUAttributes((item) => [data, ...item]);
-        attributeForm.resetFields();
+        attributeForm?.resetFields();
         forceUpdate();
         setFormBtnActive(true);
     };
@@ -43,7 +43,6 @@ const ProductAttributeMaster = (props) => {
     const formProductAttributeProps = {
         ...cardAttributeProps,
     };
-
 
     return (
         <>

@@ -35,7 +35,7 @@ const AddEditFormMain = (props) => {
     const [dealerList, setDealerList] = useState([]);
     const [fileList, setFileList] = useState([]);
 
-    const onDrop = (e) => {};
+    const onDrop = (e) => { };
     const onDownload = (file) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Your download will start soon' });
 
@@ -71,14 +71,14 @@ const AddEditFormMain = (props) => {
         setUploadedFileName,
     };
 
-    useEffect(() => {
-        if (showStatus.status === 'done') {
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: `${showStatus.name + ' file uploaded successfully'}` });
-        } else if (showStatus.status === 'error') {
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Error' });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [showStatus]);
+    // useEffect(() => {
+    //     if (showStatus.status === 'done') {
+    //         showGlobalNotification({ notificationType: 'success', title: 'Success', message: `${showStatus.name + ' file uploaded successfully'}` });
+    //     } else if (showStatus.status === 'error') {
+    //         showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Error' });
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [showStatus]);
 
     const handleCancellationReasonTypeChange = (value) => {
         setReasonTypeChange(value);
@@ -173,10 +173,13 @@ const AddEditFormMain = (props) => {
         placeholder: preparePlaceholderSelect('Parent'),
     };
 
+    console.log('reasonTypeChange===>', reasonTypeChange);
+    
+    
     const isLoading = false;
     return (
         <>
-            <Form form={otfCancellationForm} onFinish={onFinishOTFCancellation} layout="vertical" autocomplete="off" colon="false">
+            <Form form={otfCancellationForm} data-testid="test" onFinish={onFinishOTFCancellation} layout="vertical" autocomplete="off" colon="false">
                 <Row gutter={20} className={styles.drawerBody}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Card className={styles.ExchangeCard}>

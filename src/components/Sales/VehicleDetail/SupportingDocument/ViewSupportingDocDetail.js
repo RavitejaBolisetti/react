@@ -11,10 +11,7 @@ import { FiDownload, FiTrash } from 'react-icons/fi';
 import styles from 'components/common/Common.module.css';
 
 export const ViewSupportingDocDetail = (props) => {
-    const {
-        downloadFileFromButton,
-        documentData,
-    } = props;
+    const { downloadFileFromButton, documentData } = props;
 
     return (
         <div className={styles.viewDrawerContainer}>
@@ -38,7 +35,7 @@ export const ViewSupportingDocDetail = (props) => {
                 </div>
             ) : (
                 // viewMode &&
-                <div className={styles.viewNoDataFound}>No Supporting Document Available</div>
+                <Card>No Supporting Document Available</Card>
             )}
         </div>
     );

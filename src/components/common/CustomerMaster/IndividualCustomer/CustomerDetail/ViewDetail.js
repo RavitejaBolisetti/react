@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { Typography, Descriptions, Divider, Card, Collapse, Tag, Col, Row, Space, Button } from 'antd';
+import { Typography, Descriptions, Divider, Card, Collapse, Tag, Col, Row, Button, Form } from 'antd';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { BiTimeFive } from 'react-icons/bi';
@@ -86,12 +86,12 @@ const ViewDetailMain = (props) => {
         column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
     };
 
-    const nameViewProps = {
-        bordered: false,
-        colon: false,
-        layout: 'vertical',
-        column: { xs: 1, sm: 4, lg: 4, xl: 4, xxl: 4 },
-    };
+    // const nameViewProps = {
+    //     bordered: false,
+    //     colon: false,
+    //     layout: 'vertical',
+    //     column: { xs: 1, sm: 4, lg: 4, xl: 4, xxl: 4 },
+    // };
 
     const changeHistoryProps = {
         isVisible: isHistoryVisible,
@@ -116,8 +116,8 @@ const ViewDetailMain = (props) => {
         const data = { id: formData?.pendingNameChangeRequest?.id || '', customerCode: selectedCustomerId, rejectionRemark: 'Name change request', actionStatus: value };
         const onSuccess = (res) => {
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Customer name change request approved successfully' });
-            if (res?.data?.actionStatus === 'Rejected') setStatus(STATUS?.REJECTED?.title );
-            else setStatus(STATUS?.APPROVED?.title );
+            if (res?.data?.actionStatus === 'Rejected') setStatus(STATUS?.REJECTED?.title);
+            else setStatus(STATUS?.APPROVED?.title);
 
             setactiveKey([]);
             setVisibility(false);
@@ -143,109 +143,108 @@ const ViewDetailMain = (props) => {
     return (
         <>
             <div className={styles.viewDrawerContainer}>
-                <Space style={{ display: 'flex' }} direction="vertical" size="middle">
-                    <Card header="Customer Information">
-                        <Descriptions {...viewProps}>
-                            <Descriptions.Item label="Mobile Number">{checkAndSetDefaultValue(formData?.mobileNumber, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Customer Type">{checkAndSetDefaultValue(getCodeValue(typeData?.CUST_TYPE, formData?.customerType), isLoading)}</Descriptions.Item>
-                        </Descriptions>
-                        <Divider />
-                        <div className={styles.cardInsideBox}>
-                            <Row>
-                                <Col xs={24} sm={24} md={6} lg={6} xl={6}>
-                                    <Text style={{ fontSize: '16px' }} strong>
-                                        Customer Name
-                                    </Text>
-                                </Col>
-                                <Col xs={24} sm={24} md={6} lg={6} xl={6}>
-                                    {status === STATUS?.REJECTED?.title  ? (
-                                        <Tag style={{ textAlign: 'right' }} color="error">
-                                            Rejected
-                                        </Tag>
-                                    ) : status === STATUS?.APPROVED?.title  ? (
-                                        <Tag style={{ textAlign: 'right' }} color="success">
-                                            Approved
-                                        </Tag>
-                                    ) : formData?.pendingNameChangeRequest !== null ? (
-                                        <Tag style={{ textAlign: 'right' }} color="warning">
-                                            Pending for Approval
-                                        </Tag>
-                                    ) : null}
-                                </Col>
-                                <Col xs={24} sm={24} md={12} lg={12} xl={12} style={{ textAlign: 'right' }}>
-                                    <Button type="link" onClick={onViewHistoryChange} icon={<BiTimeFive />}>
-                                        View History
-                                    </Button>
-                                </Col>
-                            </Row>
-                            <Divider />
-                            <Collapse expandIcon={expandIcon} activeKey={activeKey} expandIconPosition="end" onChange={() => onCollapseChange(1)}>
-                                <Panel
-                                    header={
-                                        <>
-                                            <Row type="flex" justify="space-between" align="middle" size="large">
-                                                <Row type="flex" justify="space-around" align="middle">
-                                                    <Text>
-                                                        {getCodeValue(typeData?.TITLE, formData?.titleCode)}&nbsp;
-                                                        {(formData?.firstName || '') + ' ' + (formData?.middleName || '') + ' ' + (formData?.lastName || '')}
-                                                    </Text>
-                                                </Row>
+                <Card header="Customer Information">
+                    <Descriptions {...viewProps}>
+                        <Descriptions.Item label="Mobile Number">{checkAndSetDefaultValue(formData?.mobileNumber, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Customer Type">{checkAndSetDefaultValue(getCodeValue(typeData?.CUST_TYPE, formData?.customerType), isLoading)}</Descriptions.Item>
+                    </Descriptions>
+                    <Divider />
+                    <div className={styles.cardInsideBox}>
+                        <Row>
+                            <Col xs={24} sm={24} md={12} lg={12} xl={12} className={styles.verticallyCentered}>
+                                <Text style={{ fontSize: '16px' }} strong>
+                                    Customer Name
+                                </Text>
+                                {status === STATUS?.REJECTED?.title ? <Tag color="error">Rejected</Tag> : status === STATUS?.APPROVED?.title ? <Tag color="success">Approved</Tag> : formData?.pendingNameChangeRequest !== null ? <Tag color="warning">Pending for Approval</Tag> : null}
+                            </Col>
+                            <Col xs={24} sm={24} md={12} lg={12} xl={12} className={styles.buttonsGroupRight}>
+                                <Button type="link" className={styles.verticallyCentered} onClick={onViewHistoryChange} icon={<BiTimeFive />}>
+                                    View History
+                                </Button>
+                            </Col>
+                        </Row>
+                        <Divider className={styles.marT20} />
+                        <Collapse expandIcon={expandIcon} activeKey={activeKey} expandIconPosition="end" onChange={() => onCollapseChange(1)}>
+                            <Panel
+                                header={
+                                    <>
+                                        <Row type="flex" justify="space-between" align="middle" size="large">
+                                            <Row type="flex" justify="space-around" align="middle">
+                                                <Text>
+                                                    {getCodeValue(typeData?.TITLE, formData?.titleCode)}&nbsp;
+                                                    {(formData?.firstName || '') + ' ' + (formData?.middleName || '') + ' ' + (formData?.lastName || '')}
+                                                </Text>
                                             </Row>
-                                        </>
-                                    }
-                                    key={1}
-                                >
-                                    <Descriptions {...nameViewProps}>
-                                        <Descriptions.Item label="Title">{checkAndSetDefaultValue(getCodeValue(typeData?.TITLE, formData?.titleCode))}</Descriptions.Item>
-                                        <Descriptions.Item label="First Name">{checkAndSetDefaultValue(formData?.firstName)}</Descriptions.Item>
-                                        <Descriptions.Item label="Middle Name">{checkAndSetDefaultValue(formData?.middleName)}</Descriptions.Item>
-                                        <Descriptions.Item label="Last Name">{checkAndSetDefaultValue(formData?.lastName)}</Descriptions.Item>
-                                    </Descriptions>
-
-                                    {formData?.supportingDocuments?.map((item) => (
-                                        <Row gutter={20}>
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                <Card className={styles.viewDocumentStrip} key={item?.documentId} title={item?.documentName} extra={<FiDownload />} onClick={downloadFileFromButton}></Card>
-                                            </Col>
                                         </Row>
-                                    ))}
-                                    {formData?.pendingNameChangeRequest !== null && (
-                                        visibility && (
-                                        <Row gutter={20}>
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                <Button type="primary" className={styles.marR20} onClick={onApprovedHandle}>
-                                                    Approved
-                                                </Button>
-                                                <Button className={styles.marB20} onClick={onRejectionHandled} danger>
-                                                    Rejected
-                                                </Button>
-                                            </Col>
-                                        </Row>
-                                    ))}
-                                </Panel>
-                            </Collapse>
-                        </div>
+                                    </>
+                                }
+                                key={1}
+                            >
+                                <Divider />
+                                <Row gutter={20}>
+                                    <Col xs={24} sm={24} md={4} lg={4} xl={4}>
+                                        <Form.Item label="Title">{checkAndSetDefaultValue(getCodeValue(typeData?.TITLE, formData?.titleCode))}</Form.Item>
+                                    </Col>
+                                    <Col xs={24} sm={24} md={7} lg={7} xl={7}>
+                                        <Form.Item label="First Name">{checkAndSetDefaultValue(formData?.firstName)}</Form.Item>
+                                    </Col>
+                                    <Col xs={24} sm={24} md={6} lg={6} xl={6}>
+                                        <Form.Item label="Middle Name">{checkAndSetDefaultValue(formData?.middleName)}</Form.Item>
+                                    </Col>
+                                    <Col xs={24} sm={24} md={7} lg={7} xl={7}>
+                                        <Form.Item label="Last Name">{checkAndSetDefaultValue(formData?.lastName)}</Form.Item>
+                                    </Col>
+                                </Row>
+                                {/* <Descriptions {...nameViewProps}>
+                                    <Descriptions.Item label="Title">{checkAndSetDefaultValue(getCodeValue(typeData?.TITLE, formData?.titleCode))}</Descriptions.Item>
+                                    <Descriptions.Item label="First Name">{checkAndSetDefaultValue(formData?.firstName)}</Descriptions.Item>
+                                    <Descriptions.Item label="Middle Name">{checkAndSetDefaultValue(formData?.middleName)}</Descriptions.Item>
+                                    <Descriptions.Item label="Last Name">{checkAndSetDefaultValue(formData?.lastName)}</Descriptions.Item>
+                                </Descriptions> */}
 
-                        <Descriptions {...viewProps}>
-                            <Descriptions.Item label="Email Id">{checkAndSetDefaultValue(formData?.emailId)}</Descriptions.Item>
-                            <Descriptions.Item label="Do you want to contact over whatsapp?" className={formData?.whatsappCommunicationIndicator ? styles.yesText : styles.noText}>
-                                {checkAndSetDefaultValue(formData?.whatsappCommunicationIndicator ? 'Yes' : 'No')}
-                            </Descriptions.Item>
-                            <Descriptions />
-                            <Descriptions.Item label="Want to use Mobile no as whatsapp no?" className={formData?.mobileNumberAsWhatsappNumber ? styles.yesText : styles.noText}>
-                                {checkAndSetDefaultValue(formData?.mobileNumberAsWhatsappNumber ? 'Yes' : 'No')}
-                            </Descriptions.Item>
-                            <Descriptions.Item label="Whatsapp Number">{checkAndSetDefaultValue(formData?.whatsAppNumber)}</Descriptions.Item>
-                        </Descriptions>
-                        <Descriptions {...viewProps}>
-                            <Descriptions.Item label="Corporate Type">{checkAndSetDefaultValue(getCodeValue(typeData?.CORP_TYPE, formData?.corporateType), isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Corporate Name">{findListedNonListed()}</Descriptions.Item>
-                            {formData?.corporateCode && <Descriptions.Item label="Corporate Code">{checkAndSetDefaultValue(formData?.corporateCode)}</Descriptions.Item>}
-                            <Descriptions.Item label="Corporate Category">{checkAndSetDefaultValue(getCodeValue(typeData?.CORP_CATE, formData?.corporateCategory), isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Membership Type">{checkAndSetDefaultValue(getCodeValue(typeData?.MEM_TYPE, formData?.membershipType), isLoading)}</Descriptions.Item>
-                        </Descriptions>
-                    </Card>
-                </Space>
+                                {formData?.supportingDocuments?.map((item) => (
+                                    <Row gutter={20}>
+                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                            <Card className={styles.viewDocumentStrip} key={item?.documentId} title={item?.documentName} extra={<FiDownload />} onClick={downloadFileFromButton}></Card>
+                                        </Col>
+                                    </Row>
+                                ))}
+                                {formData?.pendingNameChangeRequest !== null && visibility && (
+                                    <Row gutter={20}>
+                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                            <Button type="primary" className={styles.marR20} onClick={onApprovedHandle}>
+                                                Approved
+                                            </Button>
+                                            <Button className={styles.marB20} onClick={onRejectionHandled} danger>
+                                                Rejected
+                                            </Button>
+                                        </Col>
+                                    </Row>
+                                )}
+                            </Panel>
+                        </Collapse>
+                    </div>
+                    <Divider />
+                    <Descriptions {...viewProps}>
+                        <Descriptions.Item label="Email Id">{checkAndSetDefaultValue(formData?.emailId)}</Descriptions.Item>
+                        <Descriptions.Item label="Do you want to contact over whatsapp?" className={formData?.whatsappCommunicationIndicator ? styles.yesText : styles.noText}>
+                            {checkAndSetDefaultValue(formData?.whatsappCommunicationIndicator ? 'Yes' : 'No')}
+                        </Descriptions.Item>
+                        <Descriptions />
+                        <Descriptions.Item label="Want to use Mobile no as whatsapp no?" className={formData?.mobileNumberAsWhatsappNumber ? styles.yesText : styles.noText}>
+                            {checkAndSetDefaultValue(formData?.mobileNumberAsWhatsappNumber ? 'Yes' : 'No')}
+                        </Descriptions.Item>
+                        <Descriptions.Item label="Whatsapp Number">{checkAndSetDefaultValue(formData?.whatsAppNumber)}</Descriptions.Item>
+                    </Descriptions>
+                    <Divider />
+                    <Descriptions {...viewProps}>
+                        <Descriptions.Item label="Corporate Type">{checkAndSetDefaultValue(getCodeValue(typeData?.CORP_TYPE, formData?.corporateType), isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Corporate Name">{findListedNonListed()}</Descriptions.Item>
+                        {formData?.corporateCode && <Descriptions.Item label="Corporate Code">{checkAndSetDefaultValue(formData?.corporateCode)}</Descriptions.Item>}
+                        <Descriptions.Item label="Corporate Category">{checkAndSetDefaultValue(getCodeValue(typeData?.CORP_CATE, formData?.corporateCategory), isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Membership Type">{checkAndSetDefaultValue(getCodeValue(typeData?.MEM_TYPE, formData?.membershipType), isLoading)}</Descriptions.Item>
+                    </Descriptions>
+                </Card>
             </div>
 
             <NameChangeHistory {...changeHistoryProps} />

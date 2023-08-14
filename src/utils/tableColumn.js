@@ -4,7 +4,8 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { Button, Space, Tag, Switch } from 'antd';
-import { FiEdit } from 'react-icons/fi';
+import { FiEdit, FiTrash } from 'react-icons/fi';
+
 import { FaRegEye } from 'react-icons/fa';
 
 import { addToolTip } from 'utils/addToolTip';
@@ -95,20 +96,33 @@ export const tblActionColumnCurd =
         };
     };
 
-export const tblActionColumn = ({ title = 'Action', handleButtonClick, width = '8%', fixed = '', canEdit = true }) => {
+export const tblActionColumn = ({ title = 'Action', handleButtonClick, width = '8%', fixed = '', canEdit = true, canView = true, canDelete = false, canServerDataEdit = false }) => {
     return {
         title: 'Action',
         dataIndex: '',
         width,
         fixed: fixed,
-        render: (record) => [
+        render: (text, record, index) => [
             <Space wrap>
-                <Button data-testid="view" className={styles.tableIcons} aria-label="ai-view" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.VIEW, record })}>
-                    {addToolTip('View')(<FaRegEye />)}
-                </Button>
+                {canView && (
+                    <Button data-testid="view" className={styles.tableIcons} aria-label="ai-view" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.VIEW, record, index })}>
+                        {addToolTip('View')(<FaRegEye />)}
+                    </Button>
+                )}
                 {canEdit && (
-                    <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.EDIT, record })}>
+                    <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.EDIT, record, index })}>
                         {addToolTip('Edit')(<FiEdit />)}
+                    </Button>
+                )}
+
+                {canServerDataEdit && !record?.id && (
+                    <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.EDIT, record, index })}>
+                        {addToolTip('Edit')(<FiEdit />)}
+                    </Button>
+                )}
+                {canDelete && !record?.id && (
+                    <Button data-testid="delete" className={styles.tableIcons} aria-label="fa-trash" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.DELETE, record, index })}>
+                        {addToolTip('Delete')(<FiTrash />)}
                     </Button>
                 )}
             </Space>,

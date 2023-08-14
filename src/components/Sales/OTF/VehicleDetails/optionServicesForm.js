@@ -14,6 +14,7 @@ const OptionServicesFormMain = (props) => {
     const { typeData, handleCancel, handleFormValueChange, optionsServicesMapping, setoptionsServicesMapping, optionsServiceModified, setoptionsServiceModified, showGlobalNotification, formData, optionForm } = props;
     const [serviceOptions, setserviceOptions] = useState(typeData['OPT_SRV']);
     const [includedOption, setincludedOption] = useState([]);
+    // console.log("Type Data: "+JSON.stringify(typeData['OPT_SRV']))
     useEffect(() => {
         if (serviceOptions && serviceOptions?.length) {
             const arr = [];
@@ -67,7 +68,7 @@ const OptionServicesFormMain = (props) => {
         <>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Form autoComplete="off" layout="vertical" form={optionForm} onFinish={onFinish}>
+                    <Form autoComplete="off" layout="vertical" form={optionForm} onFinish={onFinish} data-testid="logRole">
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8} xxl={8}>
                                 <Form.Item name="serviceName" label="Service Name" initialValue={formData?.serviceName} rules={[validateRequiredSelectField('Service Name')]}>

@@ -315,6 +315,13 @@ export const MenuConstant = {
         parentMenuId: 'FINA-01',
     },
 
+    [getMenyKey('FINA-01.03')]: {
+        key: 'FINA-01.03',
+        link: routing.ROUTING_DOCUMENT_TYPE,
+        icon: undefined,
+        parentMenuId: 'FINA-01',
+    },
+
     [getMenyKey('FINA-01.04')]: {
         key: 'FINA-01.04',
         link: routing.ROUTING_FINANCIAL_ACCOUNTING_TAX_CHARGES,
@@ -327,6 +334,12 @@ export const MenuConstant = {
         link: routing.ROUTING_FINANCIAL_ACCOUNTING_TAX_CHARGES_CATEGORY,
         icon: undefined,
         parentMenuId: 'FINA-01',
+    },
+    [getMenyKey('FINA-02.05')]: {
+        key: 'FINA-02.05',
+        link: routing.ROUTING_CREDIT_DEBIT_NOTE,
+        icon: undefined,
+        parentMenuId: 'FINA-02',
     },
 
     [getMenyKey('HR')]: {

@@ -66,8 +66,8 @@ const AddEditFormMain = (props) => {
                                         </Col>
 
                                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                                            <Form.Item name="dealerLocation" label="Dealer Location" initialValue={formData?.dealerLocation}>
-                                                <Select placeholder="Select Location" allowClear options={dealerLocationList} fieldNames={{ label: 'dealerLocationName', value: 'id' }} />
+                                            <Form.Item name="dealerLocation" label="Dealer Location" initialValue={formData?.dealerLocation} rules={[validateRequiredSelectField('Dealer Location')]}>
+                                                <Select placeholder="Select Location" showSearch allowClear options={dealerLocationList} fieldNames={{ label: 'dealerLocationName', value: 'id' }} />
                                             </Form.Item>
                                         </Col>
                                     </>

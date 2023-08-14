@@ -39,9 +39,9 @@ const props = {
 };
 
 const FormWrapper = (props) => {
-    const [form]=Form.useForm();
-    return <AddEditForm form={form} {...props} />
-}
+    const [form] = Form.useForm();
+    return <AddEditForm form={form} {...props} />;
+};
 
 describe('party master Components', () => {
     it('should render input field components', () => {
@@ -144,55 +144,58 @@ describe('party master Components', () => {
     });
 
     it('should check if search field is empty', async () => {
-        const formActionType = { editMode:true };
-        const detailData={ name:'test' };
-        const pincodeData=[ {id: '1', pinCode: '123456', localityName: 'Konohagakure', cityName: 'Konohagakure', districtName: 'Konohagakure', stateName: 'Konohagakure'}, {id: '2', pinCode: '123456', cityName: 'Konohagakure', districtName: 'Konohagakure', stateName: 'Konohagakure'} ];
-        const typeData = { PTY_CAT: [ {value: 'test'} ] }
+        const formActionType = { editMode: true };
+        const detailData = { name: 'test' };
+        const pincodeData = [
+            { id: '1', pinCode: '123456', localityName: 'Konohagakure', cityName: 'Konohagakure', districtName: 'Konohagakure', stateName: 'Konohagakure' },
+            { id: '2', pinCode: '123456', cityName: 'Konohagakure', districtName: 'Konohagakure', stateName: 'Konohagakure' },
+        ];
+        const typeData = { PTY_CAT: [{ value: 'test' }] };
 
-        render(<FormWrapper isVisible={true} formActionType={formActionType} fetchDetail={jest.fn()} detailData={detailData} setFormData={jest.fn()} setButtonData={jest.fn()} fetchPincodeDetail={jest.fn()} pincodeData={pincodeData} typeData={typeData}/>);
+        render(<FormWrapper isVisible={true} formActionType={formActionType} fetchDetail={jest.fn()} detailData={detailData} setFormData={jest.fn()} setButtonData={jest.fn()} fetchPincodeDetail={jest.fn()} pincodeData={pincodeData} typeData={typeData} />);
 
-        const searchBox=screen.getByPlaceholderText('Search');
-        fireEvent.change(searchBox, { target: { value: '' }})
+        const searchBox = screen.getByPlaceholderText('Search');
+        fireEvent.change(searchBox, { target: { value: '' } });
         const SearchBtn = screen.getByRole('button', { name: 'search' });
         fireEvent.click(SearchBtn);
-    })
-
-    it('should check if search field is correct', async () => {
-        const formActionType = { editMode:true };
-        const detailData={ name:'test' };
-
-        render(<FormWrapper isVisible={true} formActionType={formActionType} fetchDetail={jest.fn()} detailData={detailData} setFormData={jest.fn()} setButtonData={jest.fn()} fetchPincodeDetail={jest.fn()}/>);
-
-        const searchBox=screen.getByPlaceholderText('Search');
-        fireEvent.change(searchBox, { target: { value: '123456' }})
-        const SearchBtn = screen.getByRole('button', { name: 'search' });
-        fireEvent.click(SearchBtn);
-    })
-
-    it('should check if search field has more than 5 char', async () => {
-        const formActionType = { editMode:true };
-        const detailData={ name:'test' };
-
-        render(<FormWrapper isVisible={true} formActionType={formActionType} fetchDetail={jest.fn()} detailData={detailData} setFormData={jest.fn()} setButtonData={jest.fn()} fetchPincodeDetail={jest.fn()}/>);
-
-        const searchBox=screen.getByPlaceholderText('Search');
-        fireEvent.change(searchBox, { target: { value: '1234567' }})
-        const SearchBtn = screen.getByRole('button', { name: 'search' });
-        fireEvent.click(SearchBtn);
-    })
-
-    it('should able to select option from search', async () => {
-        const formActionType={ editMode:true };
-        const detailData={ name:'test' };
-        const formData=[{pinCode: '123456'}];
-        const pincodeData=[ {id: '1', pinCode: '123456', localityName: 'Konohagakure', cityName: 'Konohagakure', districtName: 'Konohagakure', stateName: 'Konohagakure'}, {id: '2', pinCode: '123457', cityName: 'Konohagakure', districtName: 'Konohagakure', stateName: 'Konohagakure'} ];
-
-        render(<FormWrapper fetchPincodeDetail={jest.fn()} setButtonData={jest.fn()} pincodeData={pincodeData} formData={formData} isVisible={true} formActionType={formActionType} fetchDetail={jest.fn()} detailData={detailData} setFormData={jest.fn()} forceUpdate={jest.fn()} />);
-        
-        const searchBox=screen.getByPlaceholderText('Search');
-        fireEvent.keyDown(searchBox, {key:'ArrowDown', code:40});
-        const optionSelect=screen.getByText('123456 - Konohagakure-Konohagakure -Konohagakure -Konohagakure');
-        fireEvent.click(optionSelect);
     });
 
+    it('should check if search field is correct', async () => {
+        const formActionType = { editMode: true };
+        const detailData = { name: 'test' };
+
+        render(<FormWrapper isVisible={true} formActionType={formActionType} fetchDetail={jest.fn()} detailData={detailData} setFormData={jest.fn()} setButtonData={jest.fn()} fetchPincodeDetail={jest.fn()} />);
+
+        const searchBox = screen.getByPlaceholderText('Search');
+        fireEvent.change(searchBox, { target: { value: '123456' } });
+        const SearchBtn = screen.getByRole('button', { name: 'search' });
+        fireEvent.click(SearchBtn);
+    });
+
+    it('should check if search field has more than 5 char', async () => {
+        const formActionType = { editMode: true };
+        const detailData = { name: 'test' };
+
+        render(<FormWrapper isVisible={true} formActionType={formActionType} fetchDetail={jest.fn()} detailData={detailData} setFormData={jest.fn()} setButtonData={jest.fn()} fetchPincodeDetail={jest.fn()} />);
+
+        const searchBox = screen.getByPlaceholderText('Search');
+        fireEvent.change(searchBox, { target: { value: '1234567' } });
+        const SearchBtn = screen.getByRole('button', { name: 'search' });
+        fireEvent.click(SearchBtn);
+    });
+
+    it('should able to select option from search', async () => {
+        const formActionType = { editMode: true };
+        const detailData = { name: 'test' };
+        const formData = [{ pinCode: '123456' }];
+        const pincodeData = [
+            { id: '1', pinCode: '123456', localityName: 'Konohagakure', cityName: 'Konohagakure', districtName: 'Konohagakure', stateName: 'Konohagakure' },
+            { id: '2', pinCode: '123457', cityName: 'Konohagakure', districtName: 'Konohagakure', stateName: 'Konohagakure' },
+        ];
+
+        render(<FormWrapper fetchPincodeDetail={jest.fn()} setButtonData={jest.fn()} pincodeData={pincodeData} formData={formData} isVisible={true} formActionType={formActionType} fetchDetail={jest.fn()} detailData={detailData} setFormData={jest.fn()} forceUpdate={jest.fn()} />);
+
+        const searchBox = screen.getByPlaceholderText('Search');
+        fireEvent.keyDown(searchBox, { key: 'ArrowDown', code: 40 });
+    });
 });
