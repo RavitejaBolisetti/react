@@ -24,6 +24,8 @@ const expandIcon = ({ isActive }) =>
 
 const VehicleDetailCard = (props) => {
     const { selectedRecord, selectedRecordId } = props;
+    // const fullName = selectedRecord?.customerName?.split(' ');
+    // const userAvatar = fullName ? fullName[0]?.slice(0, 1) + (fullName[1] ? fullName[1]?.slice(0, 1) : '') : '';
     return (
         <Collapse bordered={true} defaultActiveKey={[1]} expandIcon={expandIcon} collapsible="icon">
             <Panel

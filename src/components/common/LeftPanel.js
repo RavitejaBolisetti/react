@@ -8,13 +8,14 @@ import { useMemo, useState, useEffect } from 'react';
 import styles from './TreeView.module.css';
 
 const LeftPanel = (props) => {
-    const { callOnForm = false, treeData, fieldNames, handleTreeViewClick, isOpenInModal, checkedKeys, expendedKeys: defaultExpandedKeys = [] } = props;
+    const { selectedTreeKey, callOnForm = false, treeData, fieldNames, handleTreeViewClick, isOpenInModal, checkedKeys, expendedKeys: defaultExpandedKeys = [] } = props;
     const { isTreeViewVisible, checkable, onCheck = () => {} } = props;
-    const { searchValue, setSearchValue } = props;
-    const { defaultCheckedKeys = [], defaultSelectedKeys = [], disableCheckbox = false, noLeftRightPadding = false } = props;
+    const { searchValue, setSearchValue, disableCheckbox = false } = props;
+    // const { defaultCheckedKeys = [], defaultSelectedKeys = [], noLeftRightPadding = false } = props;
 
     const [expandedKeys, setExpandedKeys] = useState([]);
     const [autoExpandParent, setAutoExpandParent] = useState(true);
+    console.log('🚀 ~ file: LeftPanel.js:12 ~ LeftPanel ~ defaultExpandedKeys:', selectedTreeKey, defaultExpandedKeys, expandedKeys, autoExpandParent);
 
     const onExpand = (newExpandedKeys) => {
         setExpandedKeys(newExpandedKeys);
