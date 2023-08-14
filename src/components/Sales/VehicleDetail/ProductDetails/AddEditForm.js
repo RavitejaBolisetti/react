@@ -51,6 +51,7 @@ const AddEditFormMain = (props) => {
         if (formData?.connectedVehicle?.length) {
             formData?.connectedVehicle?.map((element, index) => {
                 connectedForm.setFieldsValue({ [index]: { ...element, esimStatus: bindStatus(element, 'esimStatus', { active: 'Active', inactive: 'Inctive' }), kycStatus: bindStatus(element, 'kycStatus', { active: 'Recieved', inactive: 'Not Recieved' }) } });
+                return undefined;
             });
         }
 
@@ -91,9 +92,6 @@ const AddEditFormMain = (props) => {
         aggregateForm,
         isVisible: isReadOnly,
         titleOverride: (isEditing ? 'Edit ' : 'Add  ') + AggregateModuleTitle,
-        onCloseAction: () => {
-            setIsReadOnly(false);
-        },
         setAdvanceSearchVisible: setIsReadOnly,
         isEditing,
         setisEditing,

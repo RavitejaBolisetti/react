@@ -22,7 +22,7 @@ export const AdvanceForm = (props) => {
     const { handleCancel, handleFormValueChange, apportionForm } = props;
     const { setAdvanceSearchVisible } = props;
     const { isVisible, setisEditing, isEditing } = props;
-    const { showGlobalNotification, fetchInvoiceList, listInvoiceShowLoading, userId, apportionTableData, setApportionTableData, documentTypeData, isDocumentTypeLoading, documentTypeOptions, setDocumentTypeOptions } = props;
+    const { showGlobalNotification, fetchInvoiceList, listInvoiceShowLoading, userId, apportionTableData, setApportionTableData, isDocumentTypeLoading, documentTypeOptions, setDocumentTypeOptions } = props;
 
     useEffect(() => {
         if (apportionTableFormData && isVisible) {
@@ -47,6 +47,7 @@ export const AdvanceForm = (props) => {
         if (documentTypeOptions && documentTypeOptions?.length) {
             apportionTableData?.map((element) => {
                 arr.push(element?.documentType);
+                return undefined;
             });
 
             setDocumentTypeOptions(

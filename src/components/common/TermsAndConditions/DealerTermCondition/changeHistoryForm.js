@@ -22,42 +22,49 @@ const ChangeHistoryMain = (props) => {
             title: 'Product Hierarchy',
             dataIndex: 'productName',
             width: '15%',
+            sorter: false,
         }),
 
         tblPrepareColumns({
             title: 'Document Type',
             dataIndex: 'documentTypeCode',
             width: '15%',
+            sorter: false,
         }),
 
         tblPrepareColumns({
             title: 'Language',
             dataIndex: 'languageDesc',
             width: '15%',
+            sorter: false,
         }),
 
         tblPrepareColumns({
             title: 'Effective From',
-            dataIndex: 'effectiveFrom',
+            dataIndex: 'effectivefrom',
             width: '15%',
             render: (text) => convertDateMonthYear(text),
+            sorter: false,
         }),
         tblPrepareColumns({
             title: 'Effective To',
-            dataIndex: 'effectiveTo',
+            dataIndex: 'effectiveto',
             width: '15%',
             render: (text) => convertDateMonthYear(text),
+            sorter: false,
         }),
         tblPrepareColumns({
             title: 'Version',
             dataIndex: 'version',
             width: '15%',
+            sorter: false,
         }),
 
         tblPrepareColumns({
             title: 'Description',
             dataIndex: 'termsconditiondescription',
             width: '15%',
+            sorter: false,
         })
     );
 

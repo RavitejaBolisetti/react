@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect, useState } from 'react';
-import { Col, Row, Space, Collapse, AutoComplete, Divider, Card } from 'antd';
+import { Col, Row, Collapse, AutoComplete, Divider, Card } from 'antd';
 import { FiEdit } from 'react-icons/fi';
 import { AddressCommonForm } from './AddressCommonForm';
 import { KeyAccountDetails } from './KeyAccountDetails';
@@ -12,10 +12,7 @@ import { LoyalityDetails } from './LoyalityDetails';
 import { expandIconWithText } from 'utils/accordianExpandIcon';
 import { VehicleCustomerSearch } from './VehicleCustomerSearch';
 
-import styles from 'components/common/Common.module.css';
-
 const { Panel } = Collapse;
-
 const AddEditFormBase = (props) => {
     const { form, sameAsBookingCustomer, formData, setSameAsBookingCustomer, fnSetData } = props;
     const { typeData, activeKey, handleCollapse, searchForm } = props;

@@ -64,6 +64,7 @@ export const AdvanceForm = (props) => {
         if (itemOptions && itemOptions?.length) {
             voucherTableData?.map((element) => {
                 arr.push(element?.item);
+                return undefined;
             });
             setitemOptions(
                 itemOptions?.map((element) => {
