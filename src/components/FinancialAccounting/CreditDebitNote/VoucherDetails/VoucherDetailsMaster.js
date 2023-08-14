@@ -5,22 +5,19 @@
  */
 
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
 import { Row, Col, Form } from 'antd';
-
+import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+
+import { financialAccountHeadDataActions } from 'store/actions/data/financialAccounting/financialAccountHead';
 import { showGlobalNotification } from 'store/actions/notification';
 
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
 
-import styles from 'components/common/Common.module.css';
 import { CreditDebitNoteFormButton } from '../CreditDebitFormButton';
 
-import { vehicleCustomerDetailsDataAction } from 'store/actions/data/vehicle/customerDetails';
-import { financialAccountHeadDataActions } from 'store/actions/data/financialAccounting/financialAccountHead';
-import { customerDetailDataActions } from 'store/actions/customer/customerDetail';
-import { customerDetailsIndividualDataActions } from 'store/actions/data/customerMaster/customerDetailsIndividual';
+import styles from 'components/common/Common.module.css';
 
 const mapStateToProps = (state) => {
     const {

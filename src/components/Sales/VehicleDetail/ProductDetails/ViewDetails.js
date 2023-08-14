@@ -5,24 +5,21 @@
  */
 
 import React, { useState } from 'react';
-import { Space, Collapse, Typography, Descriptions, Card, Divider } from 'antd';
+import { Space, Collapse, Descriptions, Divider } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { DataTable } from 'utils/dataTable';
-import { aggregatesCoulmn } from './tableCoulmn';
 import { InputSkeleton } from 'components/common/Skeleton';
 import { addToolTip } from 'utils/customMenuLink';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { tableColumn } from './tableCoulmn';
 
 import { expandIcon } from 'utils/accordianExpandIcon';
-import { convertDateToCalender } from 'utils/formatDateTime';
 import { NoDataFound } from 'utils/noDataFound';
 
 const { Panel } = Collapse;
-const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
-    const { styles, bindCodeValue, bindStatus, formData, collapseProps, disabledProps, tooltTipText, isLoading, optionsServiceModified, formActionType } = props;
+    const { styles, bindCodeValue, bindStatus, formData, collapseProps, tooltTipText, isLoading, optionsServiceModified, formActionType } = props;
     const [openAccordian, setOpenAccordian] = useState([]);
     const [InnerCollapse, setInnerCollapse] = useState([]);
 

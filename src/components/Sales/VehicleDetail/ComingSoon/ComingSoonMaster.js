@@ -12,8 +12,8 @@ import { VehicleDetailFormButton } from '../VehicleDetailFormButton';
 import styles from 'components/common/Common.module.css';
 
 export const ComingSoonMasterBase = (props) => {
-    const { form, fetchList, userId, isDataLoaded, entitelmentData, listShowLoading, showGlobalNotification, handleButtonClick, NEXT_ACTION } = props;
-    const { section, selectedRecordId, selectedOrder: { orderStatus = false } = {} } = props;
+    const { form, fetchList, userId, isDataLoaded,  listShowLoading, showGlobalNotification, handleButtonClick, NEXT_ACTION } = props;
+    const { section, selectedRecordId  } = props;
 
     const extraParams = [
         {
