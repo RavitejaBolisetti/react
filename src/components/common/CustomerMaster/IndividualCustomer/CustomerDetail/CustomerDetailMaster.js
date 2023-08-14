@@ -160,15 +160,7 @@ const CustomerDetailMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedCustomerId]);
-    useEffect(() => {
-        if (viewDocument && isViewDataLoaded) {
-            let a = document.createElement('a');
-            a.href = `data:image/png;base64,${viewDocument?.base64}`;
-            a.download = viewDocument?.fileName;
-            a.click();
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isViewDataLoaded, viewDocument]);
+ 
     const downloadFileFromButton = (uploadData) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Your download will start soon' });
         const extraParams = [
