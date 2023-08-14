@@ -28,6 +28,7 @@ export const findParentName = (data, key) => {
         if (node?.key === key) {
             return node?.data?.manufactureAdminLongName;
         }
+        return false;
     });
     return foundParent;
 };

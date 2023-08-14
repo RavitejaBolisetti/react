@@ -10,8 +10,6 @@ import { expandIcon } from 'utils/accordianExpandIcon';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 
 const { Panel } = Collapse;
-const { Text } = Typography;
-
 const ViewDetailMain = (props) => {
     const { activeKey, styles, schemeData, isLoading } = props;
     const viewProps = {
