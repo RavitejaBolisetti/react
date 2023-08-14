@@ -18,6 +18,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { ViewDetail } from './ViewDetail';
 import { RejectRequest } from './RejectRequest';
 import { RSM_APPROVAL_STATUS } from './utils/RSMApprovalStatus';
+import { monthDateFormat, convertDate } from 'utils/formatDateTime';
 
 import { LANGUAGE_EN } from 'language/en';
 import { FilterIcon } from 'Icons';
@@ -154,7 +155,7 @@ export const RSMApprovalMasterBase = (props) => {
                 key: 'fromDate',
                 title: 'From Date',
                 value: filterString?.fromDate,
-                name: filterString?.fromDate,
+                name: convertDate(filterString?.fromDate, monthDateFormat),
                 canRemove: true,
                 filter: true,
             },
@@ -162,7 +163,7 @@ export const RSMApprovalMasterBase = (props) => {
                 key: 'toDate',
                 title: 'To Date',
                 value: filterString?.toDate,
-                name: filterString?.toDate,
+                name: convertDate(filterString?.toDate, monthDateFormat),
                 canRemove: true,
                 filter: true,
             },
@@ -200,10 +201,11 @@ export const RSMApprovalMasterBase = (props) => {
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, rsmStatusType, page]);
+    }, [filterString, page]);
 
     useEffect(() => {
-        if (userId && extraParams) {
+        if (userId) {
+            setShowDataLoading(true);
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -247,7 +249,11 @@ export const RSMApprovalMasterBase = (props) => {
     };
 
     const handleSearchChange = (value) => {
-        setFilterString({ ...filterString, advanceFilter: true, dealerName: `${value}` });
+        const searchValue = value.trim();
+        if (!searchValue) {
+            return;
+        }
+        setFilterString({ ...filterString, advanceFilter: true, dealerName: `${searchValue}` });
     };
 
     const onFinish = (values) => {

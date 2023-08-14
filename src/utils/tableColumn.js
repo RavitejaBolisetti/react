@@ -4,7 +4,8 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { Button, Space, Tag, Switch } from 'antd';
-import { FiEdit } from 'react-icons/fi';
+import { FiEdit, FiTrash } from 'react-icons/fi';
+
 import { FaRegEye } from 'react-icons/fa';
 
 import { addToolTip } from 'utils/addToolTip';
@@ -97,7 +98,7 @@ export const tblActionColumnCurd =
         };
     };
 
-export const tblActionColumn = ({ title = 'Action', handleButtonClick, width = '8%', fixed = '', canEdit = true, canView = true, canAdd = false }) => {
+export const tblActionColumn = ({ title = 'Action', handleButtonClick, width = '8%', fixed = '', canEdit = true, canView = true, canDelete = false, canServerDataEdit = false, canAdd = false }) => {
     return {
         title: 'Action',
         dataIndex: '',
@@ -110,7 +111,6 @@ export const tblActionColumn = ({ title = 'Action', handleButtonClick, width = '
                         {addToolTip('View')(<FaRegEye />)}
                     </Button>
                 )}
-
                 {canEdit && (
                     <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.EDIT, record, index })}>
                         {addToolTip('Edit')(<FiEdit />)}
@@ -119,6 +119,17 @@ export const tblActionColumn = ({ title = 'Action', handleButtonClick, width = '
                 {canAdd && (
                     <Button data-testid="add" className={styles.tableIcons} aria-label="fa-add" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD, record, index })}>
                         {addToolTip('Edit')(<PlusOutlined />)}
+                    </Button>
+                )}
+
+                {canServerDataEdit && !record?.id && (
+                    <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.EDIT, record, index })}>
+                        {addToolTip('Edit')(<FiEdit />)}
+                    </Button>
+                )}
+                {canDelete && !record?.id && (
+                    <Button data-testid="delete" className={styles.tableIcons} aria-label="fa-trash" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.DELETE, record, index })}>
+                        {addToolTip('Delete')(<FiTrash />)}
                     </Button>
                 )}
             </Space>,

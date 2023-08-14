@@ -13,8 +13,6 @@ import { BASE_URL_CUSTOMER_MASTER_VEHICLE_LIST as customURL } from 'constants/ro
 import { otfReferralsDataActions } from 'store/actions/data/otf/referrals';
 import { showGlobalNotification } from 'store/actions/notification';
 
-import { formattedCalendarDate } from 'utils/formatDateTime';
-
 import { AddEditForm } from './AddEditForm';
 import { ViewDetail } from './ViewDetail';
 
@@ -76,10 +74,8 @@ const ReferralsMasterBase = (props) => {
     const [searchForm] = Form.useForm();
     const [formData, setFormData] = useState();
     const [viewFormData, setViewFormData] = useState();
-    const [resetField, setResetField] = useState(false);
     const { filterString, setFilterString } = props;
 
-    const [isCusomerSearchVisible, setCusomerSearchVisible] = useState(false);
     const [customerList, setCustomerList] = useState();
 
     useEffect(() => {
@@ -152,7 +148,6 @@ const ReferralsMasterBase = (props) => {
                 extraParams: searchParams,
                 onSuccessAction: (res) => {
                     if (res?.data?.customerMasterDetails?.length > 0) {
-                        setCusomerSearchVisible(true);
                         setCustomerList(res?.data?.customerMasterDetails);
                     } else {
                         res?.data?.customerMasterDetails && setFormData(res?.data?.customerMasterDetails?.[0]);
@@ -210,7 +205,7 @@ const ReferralsMasterBase = (props) => {
         formData,
         onFinish,
         onFinishFailed,
-        resetField,
+        customerList,
         optionType: typeData[PARAM_MASTER?.CUST_VEH_SEARCH?.id],
         filterString,
         setFilterString,

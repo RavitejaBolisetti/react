@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { Collapse, Space, Typography, Row, Col, Checkbox, Divider, Button } from 'antd';
+import { Collapse, Typography, Row, Col, Checkbox, Divider, Button } from 'antd';
 import { FiEdit } from 'react-icons/fi';
 
 import { expandIcon } from 'utils/accordianExpandIcon';
@@ -55,7 +55,7 @@ const ViewContactList = (props) => {
             {contactData?.length > 0 &&
                 contactData?.map((data, i) => {
                     return (
-                        <Collapse key={data?.purposeOfContact + data?.contactNameFirstName} onChange={() => handleCollapse(i)} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian} collapsible="icon">
+                        <Collapse className={styles.marB20} key={data?.purposeOfContact + data?.contactNameFirstName} onChange={() => handleCollapse(i)} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian} collapsible="icon">
                             <Panel
                                 key={i}
                                 header={

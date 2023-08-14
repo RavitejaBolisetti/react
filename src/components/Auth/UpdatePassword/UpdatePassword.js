@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -140,9 +140,10 @@ const UpdatePasswordBase = ({ showGlobalNotification, preLoginData, authPostLogi
                                                     <h1>Update Your Password</h1>
                                                     <div className={styles.loginSubHeading}></div>
                                                 </div>
+                                                {/* className={`${styles.inputBox}`} */}
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className="textfieldWithPrefix">
-                                                        <Form.Item name="oldPassword" className="textfieldWithPrefix__input" rules={[validateRequiredInputField('old password', false)]} className={`${styles.inputBox}`}>
+                                                        <Form.Item name="oldPassword" className="textfieldWithPrefix__input" rules={[validateRequiredInputField('old password', false)]}>
                                                             <Input data-testid="oldPasswordInput" type={showPassword?.oldPassword ? 'text' : 'password'} ref={oldPasswordInput} prefix={<FiLock size={18} />} onChange={handleFormChange('oldPassword')} suffix={passwordSuffix('oldPassword')} />
                                                         </Form.Item>
                                                         {!fieldData?.oldPassword && (
@@ -154,7 +155,7 @@ const UpdatePasswordBase = ({ showGlobalNotification, preLoginData, authPostLogi
                                                 </Row>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className="textfieldWithPrefix">
-                                                        <Form.Item name="newPassword" className="textfieldWithPrefix__input" rules={[validateRequiredInputField('new password')]} className={`${styles.inputBox}`}>
+                                                        <Form.Item name="newPassword" className="textfieldWithPrefix__input" rules={[validateRequiredInputField('new password')]}>
                                                             <Input data-testid="newPasswordInput" onChange={handleNewPasswordChange} type={showPassword?.newPassword ? 'text' : 'password'} ref={newPasswordInput} prefix={<FiLock size={18} />} suffix={passwordSuffix('newPassword')} onFocus={() => setTooltipVisible(true)} onBlur={() => setTooltipVisible(false)} />
                                                         </Form.Item>
                                                         {!fieldData?.newPassword && (
@@ -182,7 +183,6 @@ const UpdatePasswordBase = ({ showGlobalNotification, preLoginData, authPostLogi
                                                                     },
                                                                 }),
                                                             ]}
-                                                            className={`${styles.inputBox}`}
                                                         >
                                                             <Input data-testid="confirmNewPasswordInput" type={showPassword?.confirmNewPassword ? 'text' : 'password'} ref={confirmPasswordInput} prefix={<FiLock size={18} />} onChange={handleFormChange('confirmNewPassword')} suffix={passwordSuffix('confirmNewPassword')} />
                                                         </Form.Item>

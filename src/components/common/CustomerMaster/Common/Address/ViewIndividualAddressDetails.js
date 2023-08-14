@@ -30,8 +30,8 @@ const ViewIndividualAddressDetailsBase = (props) => {
                     <Descriptions.Item label="City">{checkAndSetDefaultValue(formData?.cityName, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="District">{checkAndSetDefaultValue(formData?.districtName, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="State">{checkAndSetDefaultValue(formData?.stateName, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Contact Name">{checkAndSetDefaultValue(formData?.contactName, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Contact Mobile">{checkAndSetDefaultValue(formData?.mobileNumber, isLoading)}</Descriptions.Item>
+                    {/* <Descriptions.Item label="Contact Name">{checkAndSetDefaultValue(formData?.contactName, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Contact Mobile">{checkAndSetDefaultValue(formData?.mobileNumber, isLoading)}</Descriptions.Item> */}
                     <Descriptions.Item>{formData?.deafultAddressIndicator}</Descriptions.Item>
                 </Descriptions>
             </>

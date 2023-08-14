@@ -40,7 +40,7 @@ const mapStateToProps = (state) => {
         userId,
         typeData: typeData,
         isDataLoaded: true,
-        data: data.paginationData,
+        data: data?.paginationData,
         vehicleDetailStatusList: typeData['PO_STATS'],
         vpoTypeList: typeData['PO_TYPE'],
         vehicleDetailData: [],
@@ -60,16 +60,16 @@ const mapDispatchToProps = (dispatch) => ({
             listShowLoading: vehiclePurchaseOrderDataActions.listShowLoading,
             setFilterString: vehiclePurchaseOrderDataActions.setFilter,
             saveData: saveVPODataActions.saveData,
-            resetData: saveVPODataActions.reset,
+            resetData: vehiclePurchaseOrderDataActions.reset,
             showGlobalNotification,
         },
         dispatch
     ),
 });
 export const VehiclePurchaseOrderMasterBase = (props) => {
-    const { fetchList, saveData, listShowLoading, userId, data, vehicleDetailData } = props;
+    const { fetchList, saveData, listShowLoading, userId, data, vehicleDetailData, } = props;
     const { typeData, moduleTitle, showGlobalNotification } = props;
-    const { filterString, setFilterString, vehicleDetailStatusList, vpoTypeList } = props;
+    const { filterString, setFilterString, vehicleDetailStatusList, vpoTypeList,resetData } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [listFilterForm] = Form.useForm();
     const [selectedRecord, setSelectedRecord] = useState();
@@ -127,7 +127,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         showGlobalNotification({ message });
         setShowDataLoading(false);
     };
-
+     
     const extraParams = useMemo(() => {
         return [
             {
@@ -203,6 +203,13 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString]);
+
+    useEffect(() => {
+        return () => {
+            resetData();
+            setFilterString();
+        };
+    }, []);
 
     useEffect(() => {
         if (userId) {
@@ -332,8 +339,9 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         tableData: data,
         showAddButton: false,
     };
-
+console.log('filterString',filterString);
     const removeFilter = (key) => {
+        console.log('key',key);
         if (key === 'searchParam') {
             const { searchType, searchParam, ...rest } = filterString;
             setFilterString({ ...rest });
@@ -352,6 +360,15 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         advanceFilterForm.resetFields();
         setAdvanceSearchVisible(false);
     };
+    const handleCancelFilter = (e) => {          
+        if (filterString) {
+            setShowDataLoading(true);
+        }
+        setFilterString();
+        advanceFilterForm.resetFields();
+         
+    };
+    
     const title = 'Search VPO';
 
     const advanceFilterResultProps = {
@@ -375,6 +392,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         setAdvanceSearchVisible,
         handleButtonClick,
         handleResetFilter,
+        handleCancelFilter,
     };
 
     const onFinishVPOCancellation = (values) => {
@@ -386,12 +404,11 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         };
 
         const onSuccess = (res) => {
-            // setShowDataLoading(true);
-            // showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             setShowDataLoading(true);
             setIsCancelVisible(false);
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+            vpoCancellationForm.resetFields();  
             setButtonData({ ...buttonData, formBtnActive: false });
         };
 
@@ -427,7 +444,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         advanceFilterForm,
         setAdvanceSearchVisible,
         typeData,
-
+        handleCancelFilter,
         onFinishSearch,
     };
     const drawerTitle = useMemo(() => {
@@ -488,6 +505,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         onFinishVPOCancellation,
         selectedRecord,
         setSelectedRecord,
+        setIsCancelVisible,
     };
 
     return (

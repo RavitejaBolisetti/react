@@ -362,6 +362,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
 
         switch (buttonAction) {
             case ADD_ACTION:
+                resetProfile();
                 setvehicleReceiptFinalFormData({ checklistDetails: [], supportingDocument: [] });
                 defaultSection && setCurrentSection(defaultSection);
                 setSelectedRecord(record);
