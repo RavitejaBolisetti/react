@@ -18,6 +18,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { ViewDetail } from './ViewDetail';
 import { RejectRequest } from './RejectRequest';
 import { RSM_APPROVAL_STATUS } from './utils/RSMApprovalStatus';
+import { monthDateFormat, convertDate } from 'utils/formatDateTime';
 
 import { LANGUAGE_EN } from 'language/en';
 import { FilterIcon } from 'Icons';
@@ -154,7 +155,7 @@ export const RSMApprovalMasterBase = (props) => {
                 key: 'fromDate',
                 title: 'From Date',
                 value: filterString?.fromDate,
-                name: filterString?.fromDate,
+                name: convertDate(filterString?.fromDate, monthDateFormat),
                 canRemove: true,
                 filter: true,
             },
@@ -162,7 +163,7 @@ export const RSMApprovalMasterBase = (props) => {
                 key: 'toDate',
                 title: 'To Date',
                 value: filterString?.toDate,
-                name: filterString?.toDate,
+                name: convertDate(filterString?.toDate, monthDateFormat),
                 canRemove: true,
                 filter: true,
             },
@@ -211,7 +212,6 @@ export const RSMApprovalMasterBase = (props) => {
     }, [userId, extraParams]);
 
     useEffect(() => {
-        console.log('filter');
         setFilterString({ ...filterString, searchParam: RSM_APPROVAL_STATUS?.PENDING?.title });
         return () => {
             setFilterString();
@@ -249,7 +249,11 @@ export const RSMApprovalMasterBase = (props) => {
     };
 
     const handleSearchChange = (value) => {
-        setFilterString({ ...filterString, advanceFilter: true, dealerName: `${value}` });
+        const searchValue = value.trim();
+        if (!searchValue) {
+            return;
+        }
+        setFilterString({ ...filterString, advanceFilter: true, dealerName: `${searchValue}` });
     };
 
     const onFinish = (values) => {

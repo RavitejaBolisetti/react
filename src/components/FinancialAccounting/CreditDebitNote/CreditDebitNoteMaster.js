@@ -18,8 +18,10 @@ import { getCodeValue } from 'utils/getCodeValue';
 import { CreditDebitNoteMainContainer } from './CreditDebitNoteMainContainer';
 import { AdvancedSearch } from './AdvancedSearch';
 import { showGlobalNotification } from 'store/actions/notification';
+import { BASE_URL_CREDIT_DEBIT_NOTE_SEARCH as customURL } from 'constants/routingApi';
+import { BASE_URL_CREDIT_DEBIT_NOTE_DETAILS as customVoucherUrl } from 'constants/routingApi';
+
 import { creditDebitNoteSearchDataAction } from 'store/actions/data/financialAccounting/creditDebitNoteSearch';
-import { creditDebitNoteDataAction } from 'store/actions/data/financialAccounting/creditDebitNote';
 
 import { CREDIT_DEBIT_SECTION } from 'constants/CreditDebitSection';
 import { LANGUAGE_EN } from 'language/en';
@@ -33,12 +35,10 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             FinancialAccounting: {
-                CreditDebitNoteSearch: { isLoaded: isDataLoaded = false, isLoading, data, filter: filterString },
-                CreditDebitNote: { isLoaded: isCreditDebitDataLoaded = false, isLoading: isDataLoading = false, data: creditDebitData },
+                CreditDebitNoteSearch: { isLoaded: isDataLoaded = false, isDetailLoaded = false, data, detailData: creditDebitData = [], filter: filterString },
             },
         },
     } = state;
-
     const moduleTitle = ' Note';
 
     let returnValue = {
@@ -46,11 +46,10 @@ const mapStateToProps = (state) => {
         typeData,
         data: data?.paginationData,
         isDataLoaded,
+        isDetailLoaded,
         totalRecords: data?.totalRecords || [],
         moduleTitle,
         filterString,
-        isCreditDebitDataLoaded,
-        isDataLoading,
         creditDebitData,
     };
     return returnValue;
@@ -66,10 +65,7 @@ const mapDispatchToProps = (dispatch) => ({
             setFilterString: creditDebitNoteSearchDataAction.setFilter,
             resetData: creditDebitNoteSearchDataAction.reset,
 
-            fetchVoucherList: creditDebitNoteDataAction.fetchList,
-            resetVoucherData: creditDebitNoteDataAction.reset,
-            listVoucherShowLoading: creditDebitNoteDataAction.listShowLoading,
-            saveData: creditDebitNoteDataAction.saveData,
+            saveData: creditDebitNoteSearchDataAction.saveData,
             showGlobalNotification,
         },
         dispatch
@@ -77,9 +73,9 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const CreditDebitNoteMasterBase = (props) => {
-    const { fetchList, saveData, listShowLoading, userId, data, totalRecords } = props;
+    const { fetchList, saveData, listShowLoading, userId, data, totalRecords, isDataLoaded, isDetailLoaded } = props;
     const { typeData, moduleTitle } = props;
-    const { filterString, setFilterString, isCreditDebitDataLoaded, creditDebitData, fetchVoucherList, listVoucherShowLoading } = props;
+    const { fetchDetail, filterString, setFilterString, creditDebitData } = props;
 
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
@@ -131,15 +127,15 @@ export const CreditDebitNoteMasterBase = (props) => {
     const [selectedVoucher, setSelectedVoucher] = useState('');
 
     useEffect(() => {
-        if (creditDebitData && isCreditDebitDataLoaded && formActionType?.addMode) {
+        if (creditDebitData && isDetailLoaded && formActionType?.addMode) {
             setVoucherTableData([]);
             setApportionTableData([]);
-        } else if (creditDebitData && isCreditDebitDataLoaded) {
+        } else if (creditDebitData && isDetailLoaded) {
             setVoucherTableData(creditDebitData?.voucherAccountHeadDetailsDto);
             setApportionTableData(creditDebitData?.apportionDetailsDto);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [creditDebitData, isCreditDebitDataLoaded, formActionType?.addMode]);
+    }, [creditDebitData, isDetailLoaded, formActionType?.addMode]);
 
     const onSuccessAction = (res) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -236,7 +232,7 @@ export const CreditDebitNoteMasterBase = (props) => {
     useEffect(() => {
         if (userId && extraParams) {
             setShowDataLoading(true);
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+            fetchList({ setIsLoading: listShowLoading, customURL, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, extraParams]);
@@ -249,11 +245,12 @@ export const CreditDebitNoteMasterBase = (props) => {
                 value: selectedRecord?.id,
             },
         ];
+        const customURL = customVoucherUrl;
         const onSuccessAction = (res) => {
             setSelectedVoucher(res);
         };
         if (userId && extraParams && selectedRecord) {
-            fetchVoucherList({ setIsLoading: listVoucherShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+            fetchDetail({ setIsLoading: listShowLoading, userId, customURL, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedRecord]);
@@ -302,8 +299,9 @@ export const CreditDebitNoteMasterBase = (props) => {
                 defaultSection && setCurrentSection(defaultSection);
                 transactionType === 'debit' ? setTransactionType(TRANSACTION_TYPE?.Debit?.value) : setTransactionType(TRANSACTION_TYPE?.Credit?.value);
                 setRequestPayload({ ...requestPayload, voucherType: transactionType === 'debit' ? TRANSACTION_TYPE?.Debit?.value.concat(' Note') : TRANSACTION_TYPE?.Credit?.value.concat(' Note') });
-                setSelectedRecord();
-
+                setSelectedRecord({
+                    voucherType: transactionType === 'debit' ? TRANSACTION_TYPE?.Debit?.value.concat(' Note') : TRANSACTION_TYPE?.Credit?.value.concat(' Note'),
+                });
                 break;
             case EDIT_ACTION:
                 setSelectedRecord(record);
@@ -345,7 +343,7 @@ export const CreditDebitNoteMasterBase = (props) => {
             form.resetFields();
             setShowDataLoading(true);
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
+            fetchList({ setIsLoading: listShowLoading, userId, customURL, onSuccessAction, extraParams });
             setButtonData({ ...buttonData, formBtnActive: false });
             setIsFormVisible(false);
         };
@@ -464,7 +462,8 @@ export const CreditDebitNoteMasterBase = (props) => {
     const containerProps = {
         record: selectedRecord,
         creditDebitData: formActionType?.addMode ? requestPayload : creditDebitData,
-        isCreditDebitDataLoaded,
+        isDataLoaded,
+        isDetailLoaded,
         form,
         formActionType,
         setFormActionType,
