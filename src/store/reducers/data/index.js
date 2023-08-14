@@ -40,6 +40,7 @@ import { ManufacturerOrg } from './ManufacturerOrg';
 import { VehicleReceipt } from './vehicleReceipt';
 import { VehicleModelandTaxChargesCategory } from './VehicleModelTaxChargesCategory';
 import { Report } from './report';
+import { VehicleReceiptChecklist } from './VehicleReceiptCheckList';
 
 export const data = combineReducers({
     Menu,
@@ -77,4 +78,5 @@ export const data = combineReducers({
     VehiclePriceMaster,
     VehicleModelandTaxChargesCategory,
     Report,
+    VehicleReceiptChecklist,
 });

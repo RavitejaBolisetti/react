@@ -6,11 +6,12 @@
 import React from 'react';
 import { Button, Row, Col, Input, Form } from 'antd';
 import { FilterIcon } from 'Icons';
+import { RxCross2 } from 'react-icons/rx';
 import styles from 'components/common/Common.module.css';
 const { Search } = Input;
 
 export default function AdvanceFilter(props) {
-    const { extraParams, handleResetFilter, handleSearchChange, advanceFilter = false, filter = false, title, filterString, setAdvanceSearchVisible, searchForm } = props;
+    const { extraParams, removeFilter, handleResetFilter, handleSearchChange, advanceFilter = false, filter = false, title, filterString, setAdvanceSearchVisible, searchForm } = props;
     return (
         <div className={styles.contentHeaderBackground}>
             <Row gutter={20}>
@@ -53,6 +54,11 @@ export default function AdvanceFilter(props) {
                                         filter?.filter && (
                                             <div className={styles.advanceFilterItem} key={filter?.key}>
                                                 {filter?.name}
+                                                {filter?.canRemove && (
+                                                    <span>
+                                                        <RxCross2 onClick={() => removeFilter(filter?.key)} />
+                                                    </span>
+                                                )}
                                             </div>
                                         )
                                     );
