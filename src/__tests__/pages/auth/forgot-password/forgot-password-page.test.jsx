@@ -3,7 +3,7 @@ import customRender from '@utils/test-utils';
 import ForgotPasswordPage from '@pages/auth/ForgotPassword/ForgotPasswordPage';
 
 describe('ForgotPasswordPageBase Components', () => {
-    it('should render ForgotPasswordPageBase components', () => {
+    it('should render ForgotPasswordPage components', () => {
         const ForgotpasswordPage = customRender(<ForgotPasswordPage />);
         expect(ForgotpasswordPage).toMatchSnapshot();
     });
