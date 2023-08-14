@@ -67,9 +67,9 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 export const VehiclePurchaseOrderMasterBase = (props) => {
-    const { fetchList, saveData, listShowLoading, userId, data, vehicleDetailData, } = props;
+    const { fetchList, saveData, listShowLoading, userId, data, vehicleDetailData } = props;
     const { typeData, moduleTitle, showGlobalNotification } = props;
-    const { filterString, setFilterString, vehicleDetailStatusList, vpoTypeList,resetData } = props;
+    const { filterString, setFilterString, vehicleDetailStatusList, vpoTypeList, resetData } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [listFilterForm] = Form.useForm();
     const [selectedRecord, setSelectedRecord] = useState();
@@ -127,7 +127,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         showGlobalNotification({ message });
         setShowDataLoading(false);
     };
-     
+
     const extraParams = useMemo(() => {
         return [
             {
@@ -209,6 +209,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
             resetData();
             setFilterString();
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
@@ -339,9 +340,9 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         tableData: data,
         showAddButton: false,
     };
-console.log('filterString',filterString);
+    console.log('filterString', filterString);
     const removeFilter = (key) => {
-        console.log('key',key);
+        console.log('key', key);
         if (key === 'searchParam') {
             const { searchType, searchParam, ...rest } = filterString;
             setFilterString({ ...rest });
@@ -360,15 +361,14 @@ console.log('filterString',filterString);
         advanceFilterForm.resetFields();
         setAdvanceSearchVisible(false);
     };
-    const handleCancelFilter = (e) => {          
+    const handleCancelFilter = (e) => {
         if (filterString) {
             setShowDataLoading(true);
         }
         setFilterString();
         advanceFilterForm.resetFields();
-         
     };
-    
+
     const title = 'Search VPO';
 
     const advanceFilterResultProps = {
@@ -408,7 +408,7 @@ console.log('filterString',filterString);
             setShowDataLoading(true);
             setIsCancelVisible(false);
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
-            vpoCancellationForm.resetFields();  
+            vpoCancellationForm.resetFields();
             setButtonData({ ...buttonData, formBtnActive: false });
         };
 
