@@ -142,28 +142,28 @@ const ViewDetailMain = (props) => {
     };
     return (
         <>
-            <div className={styles.viewDrawerContainer}>
+            <div className={styles?.viewDrawerContainer}>
                 <Card header="Customer Information">
                     <Descriptions {...viewProps}>
                         <Descriptions.Item label="Mobile Number">{checkAndSetDefaultValue(formData?.mobileNumber, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Customer Type">{checkAndSetDefaultValue(getCodeValue(typeData?.CUST_TYPE, formData?.customerType), isLoading)}</Descriptions.Item>
                     </Descriptions>
                     <Divider />
-                    <div className={styles.cardInsideBox}>
+                    <div className={styles?.cardInsideBox}>
                         <Row>
-                            <Col xs={24} sm={24} md={12} lg={12} xl={12} className={styles.verticallyCentered}>
+                            <Col xs={24} sm={24} md={12} lg={12} xl={12} className={styles?.verticallyCentered}>
                                 <Text style={{ fontSize: '16px' }} strong>
                                     Customer Name
                                 </Text>
                                 {status === STATUS?.REJECTED?.title ? <Tag color="error">Rejected</Tag> : status === STATUS?.APPROVED?.title ? <Tag color="success">Approved</Tag> : formData?.pendingNameChangeRequest !== null ? <Tag color="warning">Pending for Approval</Tag> : null}
                             </Col>
-                            <Col xs={24} sm={24} md={12} lg={12} xl={12} className={styles.buttonsGroupRight}>
-                                <Button type="link" className={styles.verticallyCentered} onClick={onViewHistoryChange} icon={<BiTimeFive />}>
+                            <Col xs={24} sm={24} md={12} lg={12} xl={12} className={styles?.buttonsGroupRight}>
+                                <Button type="link" className={styles?.verticallyCentered} onClick={onViewHistoryChange} icon={<BiTimeFive />}>
                                     View History
                                 </Button>
                             </Col>
                         </Row>
-                        <Divider className={styles.marT20} />
+                        <Divider className={styles?.marT20} />
                         <Collapse expandIcon={expandIcon} activeKey={activeKey} expandIconPosition="end" onChange={() => onCollapseChange(1)}>
                             <Panel
                                 header={
@@ -205,17 +205,17 @@ const ViewDetailMain = (props) => {
                                 {formData?.supportingDocuments?.map((item) => (
                                     <Row gutter={20}>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                            <Card className={styles.viewDocumentStrip} key={item?.documentId} title={item?.documentName} extra={<FiDownload />} onClick={downloadFileFromButton}></Card>
+                                            <Card className={styles?.viewDocumentStrip} key={item?.documentId} title={item?.documentName} extra={<FiDownload />} onClick={downloadFileFromButton}></Card>
                                         </Col>
                                     </Row>
                                 ))}
                                 {formData?.pendingNameChangeRequest !== null && visibility && (
                                     <Row gutter={20}>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                            <Button type="primary" className={styles.marR20} onClick={onApprovedHandle}>
+                                            <Button type="primary" className={styles?.marR20} onClick={onApprovedHandle}>
                                                 Approved
                                             </Button>
-                                            <Button className={styles.marB20} onClick={onRejectionHandled} danger>
+                                            <Button className={styles?.marB20} onClick={onRejectionHandled} danger>
                                                 Rejected
                                             </Button>
                                         </Col>
@@ -227,11 +227,11 @@ const ViewDetailMain = (props) => {
                     <Divider />
                     <Descriptions {...viewProps}>
                         <Descriptions.Item label="Email Id">{checkAndSetDefaultValue(formData?.emailId)}</Descriptions.Item>
-                        <Descriptions.Item label="Do you want to contact over whatsapp?" className={formData?.whatsappCommunicationIndicator ? styles.yesText : styles.noText}>
+                        <Descriptions.Item label="Do you want to contact over whatsapp?" className={formData?.whatsappCommunicationIndicator ? styles.yesText : styles?.noText}>
                             {checkAndSetDefaultValue(formData?.whatsappCommunicationIndicator ? 'Yes' : 'No')}
                         </Descriptions.Item>
                         <Descriptions />
-                        <Descriptions.Item label="Want to use Mobile no as whatsapp no?" className={formData?.mobileNumberAsWhatsappNumber ? styles.yesText : styles.noText}>
+                        <Descriptions.Item label="Want to use Mobile no as whatsapp no?" className={formData?.mobileNumberAsWhatsappNumber ? styles.yesText : styles?.noText}>
                             {checkAndSetDefaultValue(formData?.mobileNumberAsWhatsappNumber ? 'Yes' : 'No')}
                         </Descriptions.Item>
                         <Descriptions.Item label="Whatsapp Number">{checkAndSetDefaultValue(formData?.whatsAppNumber)}</Descriptions.Item>
