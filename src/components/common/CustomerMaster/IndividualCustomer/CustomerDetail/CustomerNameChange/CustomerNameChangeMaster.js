@@ -6,20 +6,17 @@
 import React, { useEffect, useState } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Row, Col, Form } from 'antd';
 
 import { customerDetailsIndividualDataActions } from 'store/actions/data/customerMaster/customerDetailsIndividual';
-import { documentViewDataActions } from 'store/actions/data/customerMaster/documentView';
-import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
 import { corporateDataActions } from 'store/actions/data/customerMaster/corporate';
 import { showGlobalNotification } from 'store/actions/notification';
-
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
-import { CustomerFormButton } from '../../CustomerFormButton';
-import { CustomerNameChangeHistory } from './CustomerNameChange';
+import { CustomerNameChangeHistory } from './CustomerNameChangeHistory';
 
 import styles from 'components/common/Common.module.css';
+import { documentViewDataActions } from 'store/actions/data/customerMaster/documentView';
+import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
 
 const mapStateToProps = (state) => {
     const {
@@ -27,7 +24,6 @@ const mapStateToProps = (state) => {
         data: {
             CustomerMaster: {
                 CustomerDetailsIndividual: { isLoaded: isDataLoaded = false, isLoading, data },
-                Corporate: { isFilteredListLoaded: isCorporateLovDataLoaded = false, isLoading: isCorporateLovLoading, filteredListData: corporateLovData },
                 ViewDocument: { isLoaded: isViewDataLoaded = false, data: viewDocument },
             },
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
@@ -46,9 +42,6 @@ const mapStateToProps = (state) => {
         supportingData,
         isViewDataLoaded,
         viewDocument,
-        isCorporateLovDataLoaded,
-        isCorporateLovLoading,
-        corporateLovData,
     };
     return returnValue;
 };
@@ -78,56 +71,45 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const CustomerDetailMasterBase = (props) => {
-    const { setRefreshCustomerList, handleResetFilter, typeData, fetchCorporateLovList, isCorporateLovDataLoaded, listCorporateLovShowLoading, corporateLovData } = props;
-    const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, data, saveData, isLoading, resetData, form, handleFormValueChange, onFinishFailed } = props;
-    const { selectedCustomer, selectedCustomerId, setSelectedCustomerId } = props;
-    const { buttonData, setButtonData, formActionType, setFormActionType, handleButtonClick, NEXT_ACTION } = props;
+const CustomerNameChangeMasterBase = (props) => {
+    const { typeData, setCustomerNameList } = props;
+    const { formData, userId, showGlobalNotification, fetchList, listShowLoading, data, saveData, isLoading, form, handleFormValueChange } = props;
+    const { selectedCustomerId } = props;
+    const { buttonData, setButtonData, formActionType, setFormActionType, handleButtonClick } = props;
     const { fetchViewDocument, viewListShowLoading, listSupportingDocumentShowLoading, isSupportingDocumentDataLoaded, supportingData, isViewDataLoaded, viewDocument } = props;
 
-    const [showForm, setShowForm] = useState(false);
-    const [status, setStatus] = useState(null);
     const [emptyList, setEmptyList] = useState(true);
-    const [nameChangeRequestform] = Form.useForm();
     const [fileList, setFileList] = useState([]);
     const [uploadedFileName, setUploadedFileName] = useState('');
     const [editedMode, setEditedMode] = useState(false);
     const [uploadedFile, setUploadedFile] = useState();
-    const [formData, setFormData] = useState();
     const [uploadImgDocId, setUploadImgDocId] = useState('');
-    const [customerNameList, setCustomerNameList] = useState({});
     const [supportingDataView, setSupportingDataView] = useState();
     const [isHistoryVisible, setIsHistoryVisible] = useState(false);
-    const [activeKey, setactiveKey] = useState([]);
-    const [nameChangeRequested, setNameChangeRequested] = useState(false);
-    const [whatsAppConfiguration, setWhatsAppConfiguration] = useState({ contactOverWhatsApp: null, contactOverWhatsAppActive: null, sameMobileNoAsWhatsApp: null, sameMobileNoAsWhatsAppActive: null });
+    const [activeKey, setActiveKey] = useState(false);
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
 
     useEffect(() => {
-        if (isDataLoaded) {
-            form.setFieldsValue({ ...data });
-            setFormData(data);
-            // setWhatsAppConfiguration({ contactOverWhatsApp: data?.whatsappCommunicationIndicator, sameMobileNoAsWhatsApp: data?.mobileNumberAsWhatsappNumber });
+        if (data?.pendingNameChangeRequest === null) {
+            setCustomerNameList({
+                titleCode: data?.titleCode,
+                firstName: data?.firstName,
+                middleName: data?.middleName,
+                lastName: data?.lastName,
+            });
+        } else {
+            setCustomerNameList({
+                titleCode: data?.pendingNameChangeRequest?.newTitleCode,
+                firstName: data?.pendingNameChangeRequest?.newFirstName,
+                middleName: data?.pendingNameChangeRequest?.newMiddleName,
+                lastName: data?.pendingNameChangeRequest?.newLastName,
+            });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDataLoaded]);
-
-    useEffect(() => {
-        return () => {
-            resetData();
-        };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    useEffect(() => {
-        if (userId && !isCorporateLovDataLoaded) {
-            fetchCorporateLovList({ setIsLoading: listCorporateLovShowLoading, userId });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isCorporateLovDataLoaded]);
+    }, [data]);
 
     useEffect(() => {
         if (userId && selectedCustomerId) {
@@ -143,6 +125,7 @@ const CustomerDetailMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedCustomerId]);
+
     useEffect(() => {
         if (viewDocument && isViewDataLoaded) {
             let a = document.createElement('a');
@@ -188,7 +171,6 @@ const CustomerDetailMasterBase = (props) => {
 
         saveData(requestData);
     };
-
     const downloadFileFromList = () => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Your download will start soon' });
         const extraParams = [
@@ -203,75 +185,6 @@ const CustomerDetailMasterBase = (props) => {
         fetchViewDocument({ setIsLoading: viewListShowLoading, userId, extraParams, supportingDocument });
     };
 
-    const changeHistoryClose = () => {
-        setIsHistoryVisible(false);
-    };
-
-    const onViewHistoryChange = () => {
-        setIsHistoryVisible(true);
-    };
-
-    const onFinish = (values) => {
-        setFileList([]);
-        setEmptyList(false);
-        setUploadedFile();
-
-        let data = { ...values, customerId: selectedCustomer?.customerId };
-        console.log(nameChangeRequested, 'nameChangeRequested');
-        if (formActionType?.editMode && nameChangeRequested) {
-            data = { ...data, ...customerNameList };
-            delete data.titleCodeNew;
-            delete data.firstNameNew;
-            delete data.middleNameNew;
-            delete data.lastNameNew;
-        } else if (formActionType?.editMode) {
-            data = { ...data, titleCode: formData?.titleCode, firstName: formData?.firstName, middleName: formData?.middleName, lastName: formData?.lastName };
-        }
-
-        const onSuccess = (res) => {
-            form.resetFields();
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, userId });
-            setButtonData({ ...buttonData, formBtnActive: false });
-            setRefreshCustomerList(true);
-            handleResetFilter();
-
-            if (res.data) {
-                handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
-                setSelectedCustomerId(res?.data?.customerId);
-                if (res?.data?.pendingNameChangeRequest === null) {
-                    setCustomerNameList({
-                        titleCode: res?.data?.titleCode,
-                        firstName: res?.data?.firstName,
-                        middleName: res?.data?.middleName,
-                        lastName: res?.data?.lastName,
-                    });
-                } else {
-                    setCustomerNameList({
-                        titleCode: res?.data?.pendingNameChangeRequest?.newTitleCode,
-                        firstName: res?.data?.pendingNameChangeRequest?.newFirstName,
-                        middleName: res?.data?.pendingNameChangeRequest?.newMiddleName,
-                        lastName: res?.data?.pendingNameChangeRequest?.newLastName,
-                    });
-                }
-            }
-        };
-        const onError = (message) => {
-            showGlobalNotification({ message });
-        };
-
-        const requestData = {
-            data: data,
-            method: formActionType?.editMode ? 'put' : 'post',
-            setIsLoading: listShowLoading,
-            userId,
-            onError,
-            onSuccess,
-        };
-
-        saveData(requestData);
-    };
-
     const handlePreview = (selectedDocument) => {
         const extraParams = [
             {
@@ -284,50 +197,27 @@ const CustomerDetailMasterBase = (props) => {
         fetchViewDocument({ setIsLoading: viewListShowLoading, userId, extraParams, selectedDocument });
         setSupportingDataView(supportingData);
     };
-    const handleFormFieldChange = (data = undefined) => {
-        const { whatsappCommunicationIndicator, mobileNumberAsWhatsappNumber, whatsAppNumber, mobileNumber } = form.getFieldsValue();
 
-        if (whatsappCommunicationIndicator) {
-            if (whatsappCommunicationIndicator && mobileNumberAsWhatsappNumber) {
-                form.setFieldsValue({ whatsAppNumber: mobileNumber });
-                setWhatsAppConfiguration({ contactOverWhatsAppActive: true, sameMobileNoAsWhatsApp: true, contactOverWhatsApp: true });
-            } else {
-                form.setFieldsValue({ whatsAppNumber: whatsAppNumber });
-                setWhatsAppConfiguration({ contactOverWhatsAppActive: false, sameMobileNoAsWhatsAppActive: false, contactOverWhatsApp: true });
-            }
-        } else if (!whatsappCommunicationIndicator) {
-            if (mobileNumberAsWhatsappNumber) {
-                form.setFieldsValue({ mobileNumberAsWhatsappNumber: null });
-                setWhatsAppConfiguration({ contactOverWhatsAppActive: true, sameMobileNoAsWhatsApp: false });
-            } else {
-                setWhatsAppConfiguration({ contactOverWhatsAppActive: true, sameMobileNoAsWhatsApp: false, sameMobileNoAsWhatsAppActive: true });
-                form.setFieldsValue({ whatsAppNumber: null });
-            }
-        }
+    const changeHistoryClose = () => {
+        setIsHistoryVisible(false);
+    };
+
+    const onViewHistoryChange = () => {
+        setIsHistoryVisible(true);
     };
 
     const formProps = {
         ...props,
-        formActionType,
         form,
-        onFinish,
-        saveData,
         data,
-        corporateLovData,
         setFormActionType,
-        onFinishFailed,
         handleButtonClick,
-        showForm,
-        fetchCorporateLovList,
-        setShowForm,
         setUploadImgDocId,
         uploadImgDocId,
         setButtonData,
         buttonData,
-        nameChangeRequestform,
         typeData,
-        formData: data,
-        setFormData,
+        formData,
         isSupportingDocumentDataLoaded,
         supportingData,
         isViewDataLoaded,
@@ -350,21 +240,9 @@ const CustomerDetailMasterBase = (props) => {
         handlePreview,
         supportingDataView,
         setSupportingDataView,
-        whatsAppConfiguration,
-        setWhatsAppConfiguration,
-        handleFormFieldChange,
-        setCustomerNameList,
-        onViewHistoryChange,
-        changeHistoryClose,
-        isHistoryVisible,
-        customerNameList,
-        status,
-        setStatus,
         activeKey,
-        fetchList,
-        setactiveKey,
-        nameChangeRequested,
-        setNameChangeRequested,
+        setActiveKey,
+        onViewHistoryChange,
     };
 
     const viewProps = {
@@ -381,24 +259,11 @@ const CustomerDetailMasterBase = (props) => {
         selectedCustomerId,
         downloadFileFromButton,
     };
-
     return (
         <>
-            <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                <Row gutter={20} className={styles.drawerBodyRight}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <h2>{section?.title}</h2>
-                        {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
-                    </Col>
-                </Row>
-                <Row>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <CustomerFormButton {...props} />
-                    </Col>
-                </Row>
-            </Form>
+            {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
             <CustomerNameChangeHistory {...nameChangeHistoryProps} />
         </>
     );
 };
-export const CustomerDetailMaster = connect(mapStateToProps, mapDispatchToProps)(CustomerDetailMasterBase);
+export const CustomerNameChangeMaster = connect(mapStateToProps, mapDispatchToProps)(CustomerNameChangeMasterBase);

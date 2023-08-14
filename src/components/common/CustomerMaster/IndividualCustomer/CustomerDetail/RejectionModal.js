@@ -13,7 +13,6 @@ const { TextArea } = Input;
 
 const { Text } = Typography;
 
-
 const RejectionModalMain = (props) => {
     const { onCloseAction, onCloseActionOnContinue } = props;
 
@@ -23,10 +22,9 @@ const RejectionModalMain = (props) => {
                 <Text type="secondary" style={{ fontWeight: '400', fontSize: '14px' }}>
                     Reason for Rejection
                 </Text>
-
             </Row>
-            <Row >
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} >
+            <Row>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <TextArea showCount maxLength={300} placeholder={preparePlaceholderText('Description')} />
                 </Col>
             </Row>
