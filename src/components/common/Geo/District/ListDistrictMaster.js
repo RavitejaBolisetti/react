@@ -25,7 +25,6 @@ import { geoCountryDataActions } from 'store/actions/data/geo/countries';
 
 import { AddEditForm } from './AddEditForm';
 import { FilterIcon } from 'Icons';
-import styles from 'components/common/Common.module.css';
 
 const mapStateToProps = (state) => {
     const {

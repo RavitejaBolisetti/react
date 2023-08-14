@@ -69,7 +69,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            listShowLoading: vehicleCustomerDetailsDataAction.listShowLoading,
             fetchList: vehicleCustomerDetailsDataAction.fetchList,
             saveData: vehicleCustomerDetailsDataAction.saveData,
             resetData: vehicleCustomerDetailsDataAction.reset,
@@ -352,6 +351,7 @@ export const CustomerDetailsMain = (props) => {
         isLoading,
         activeKey,
         setActiveKey,
+        viewFormData,
     };
 
     const handleFormValueChange = () => {

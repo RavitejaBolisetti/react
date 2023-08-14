@@ -22,7 +22,6 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { BASE_URL_VEHICLE_PRICE_MASTER_SEARCH as customURL } from 'constants/routingApi';
 
 import { FilterIcon } from 'Icons';
-import styles from 'components/common/Common.module.css';
 import { ViewDetail } from './ViewDetail';
 import { VehiclePriceMasterUpload } from './VehiclePriceMasterUpload';
 

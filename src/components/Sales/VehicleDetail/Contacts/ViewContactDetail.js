@@ -8,12 +8,10 @@ import { Descriptions } from 'antd';
 import AddEditForm from './AddEditForm';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { getCodeValue } from 'utils/getCodeValue';
-import moment from 'moment';
-import { formatTime } from 'utils/formatDateTime';
 
 const ViewContactDetailBase = (props) => {
     const { formData, styles } = props;
-    const { setShowAddEditForm, setContactData, onFinish, form, preferredContactTimeFrom, preferredContactTimeTo, isEditing, isLoading, typeData } = props;
+    const { setShowAddEditForm, setContactData, onFinish, form, isEditing, isLoading, typeData } = props;
 
     const viewProps = {
         bordered: false,

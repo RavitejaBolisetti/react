@@ -33,7 +33,7 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             FinancialAccounting: {
-                CreditDebitNoteSearch: { isLoaded: isDataLoaded = false, isLoading, data, filter: filterString },
+                CreditDebitNoteSearch: { isLoaded: isDataLoaded = false, data, filter: filterString },
                 CreditDebitNote: { isLoaded: isCreditDebitDataLoaded = false, isLoading: isDataLoading = false, data: creditDebitData },
             },
         },
