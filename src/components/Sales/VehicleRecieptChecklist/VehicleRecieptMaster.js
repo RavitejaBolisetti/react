@@ -144,12 +144,11 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
 
     const [page, setPage] = useState({ pageSize: 10, current: 1 });
     const dynamicPagination = true;
-
     const [formData, setFormData] = useState([]);
     const [otfSearchRules, setOtfSearchRules] = useState({ rules: [validateRequiredInputField('search parametar')] });
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [actionButtonVisibility, setactionButtonVisibility] = useState({ canEdit: false, canView: false, DeleteIcon: false, canAdd: true });
-
+    const [rules, setrules] = useState({ fromdate: false, todate: false });
     const onSuccessAction = (res) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
@@ -224,7 +223,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
                 key: 'model',
                 title: 'Model',
                 value: filterString?.model,
-                name: filterString?.model,
+                name: vehicleModelData?.find((element, index) => filterString?.model === element?.prodctCode)?.prodctShrtName,
                 canRemove: true,
                 filter: true,
             },
@@ -255,6 +254,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, page, buttonType]);
+    console.log('filterString', filterString);
 
     useEffect(() => {
         if (userId) {
@@ -303,8 +303,10 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         if (isAdvanceSearchVisible && filterString) {
             advanceFilterForm.resetFields();
             const { toDate, fromDate } = filterString;
+            setrules({ fromdate: true, todate: true });
             advanceFilterForm.setFieldsValue({ ...filterString, fromDate: formatDateToCalenderDate(fromDate), toDate: formatDateToCalenderDate(toDate) });
         } else {
+            setrules({ fromdate: false, todate: false });
             advanceFilterForm.setFieldsValue({ ...filterString, fromDate: undefined, toDate: undefined, model: undefined });
         }
 
@@ -313,6 +315,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
 
     const onAdvanceSearchCloseAction = () => {
         setAdvanceSearchVisible(false);
+        setrules({ fromdate: false, todate: false });
     };
     const handleSearchChange = (value) => {
         const searchValue = value?.trim();
@@ -426,7 +429,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
 
                     setShowDataLoading(true);
                     resetCheckListData();
-                    
+
                     showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
 
                     fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
@@ -589,6 +592,8 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         onFinishSearch,
         vehicleModelData,
         isModelDataLoading,
+        rules,
+        setrules,
     };
 
     return (
