@@ -1308,13 +1308,27 @@
     border: 2px solid #b5b5b6;
 }
 
-/* Crticality group allowed timing css*/
-
 .subTitle {
     margin-bottom: 20px;
     font-size: 16px;
     line-height: 24px;
     font-weight: 700;
+}
+
+.subTitle {
+    margin-bottom: 20px;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 500;
+}
+.subTitleSec {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+.subTitleSec .mandatory {
+    color: #ff3e5b;
 }
 
 .allowedTimingAlignment {
@@ -3282,6 +3296,45 @@ li.ant-timeline-item.active .ant-timeline-item-content p {
     height: 34px;
 }
 
+.roleDescription {
+    border-bottom: 1px solid #e6e6e6;
+    margin-bottom: 20px;
+}
+.roleMangementSearch :global .ant-form-item {
+    margin-bottom: 0px;
+}
+.rolemanagmentContaner :global .ant-collapse,
+.rolemanagmentContaner :global .ant-collapse:last-child {
+    margin-bottom: 0px;
+}
+.rolemanagmentContaner :global .ant-collapse .ant-collapse-content > .ant-collapse-content-box {
+    padding-top: 0px;
+}
+.rolemanagmentContaner :global .ant-space-vertical {
+    border-top: 1px solid #e6e6e6;
+}
+.allowAccess {
+    padding: 0px 5px;
+    color: #ff3e5b;
+    border: solid 1px #b5b5b6;
+    margin-left: 10px;
+    font-size: 12px;
+}
+
+.rollTree {
+    height: calc(100vh - 280px);
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+.rollTree::-webkit-scrollbar-track {
+    background-color: #f4f4f4;
+}
+
+.rollTree::-webkit-scrollbar {
+    background-color: #f4f4f4;
+    width: 8px;
+}
+
 .tokenField :global .ant-input-affix-wrapper {
     height: 34px;
 }
@@ -3321,6 +3374,13 @@ li.ant-timeline-item.active .ant-timeline-item-content p {
 .mainDataTable :global .ant-pagination {
     display: none;
 }
+
+.verticallyCenteredAndAlignRight {
+    display: flex;
+    align-items: center;
+    float: right;
+}
+
 
 @media (max-width: 768px) {
     /* For mobile phones: */

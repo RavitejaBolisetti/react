@@ -662,10 +662,10 @@ p {
     margin-top: 12px;
 }
 
-:global .ant-tree .ant-tree-list-holder-inner {
+/* :global .ant-tree .ant-tree-list-holder-inner {
     align-items: flex-start;
     margin-bottom: 50px;
-}
+} */
 
 /* AntD Tree & Tree Select Design End*/
 
