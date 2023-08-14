@@ -11,14 +11,13 @@ import { validateRequiredSelectField, validateOnlyPositiveNumber } from 'utils/v
 import { convertCalenderDate } from 'utils/formatDateTime';
 import { VehiclePurchaseOrderFormButton } from '../VehiclePurchaseOrderFormButton';
 import { ViewDetail } from './ViewDetail';
-import { customSelectBox } from 'utils/customSelectBox';
-
 import { disablePastDate } from 'utils/disableDate';
-import styles from 'components/common/Common.module.css';
-const { Search } = Input;
 
+import styles from 'components/common/Common.module.css';
+
+const { Search } = Input;
 const AddEditFormMain = (props) => {
-    const { buttonData, setButtonData, formActionType, onFinish, onFinishFailed, productHierarchyList, getDealerlocation, dealerLocationList, } = props;
+    const { buttonData, setButtonData, formActionType, onFinish, onFinishFailed, productHierarchyList, getDealerlocation, dealerLocationList } = props;
     const { form, formData, typeData, isReadOnly = true } = props;
     const disabledProps = { disabled: isReadOnly };
     const [dealerFlag, setDealerFlag] = useState();
@@ -44,11 +43,11 @@ const AddEditFormMain = (props) => {
         }
     }, [formData]);
 
-    const handleOnClear =(e)=>{
-        if(!e.target.value){
-            form.resetFields(); 
-        } 
-    }
+    const handleOnClear = (e) => {
+        if (!e.target.value) {
+            form.resetFields();
+        }
+    };
 
     return (
         <Form form={form} layout="vertical" autocomplete="off" colon="false" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
