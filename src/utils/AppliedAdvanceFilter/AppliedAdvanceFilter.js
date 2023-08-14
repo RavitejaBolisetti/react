@@ -49,6 +49,7 @@ export default function AppliedAdvanceFilter(props) {
                                     <Button
                                         data-testid="advanceFiltersBtn"
                                         icon={<FilterIcon />}
+                                        className={styles.verticallyCentered}
                                         type="link"
                                         onClick={() => {
                                             setAdvanceSearchVisible(true);

@@ -31,6 +31,7 @@ export default function AdvanceFilter(props) {
                         <Button
                             icon={<FilterIcon />}
                             type="link"
+                            className={styles.verticallyCentered}
                             onClick={() => {
                                 setAdvanceSearchVisible(true);
                             }}

@@ -40,6 +40,7 @@ export default function AppliedAdvanceFilter(props) {
                                             <Button
                                                 icon={<FilterIcon />}
                                                 type="link"
+                                                className={styles.verticallyCentered}
                                                 onClick={() => {
                                                     setAdvanceSearchVisible(true);
                                                 }}

@@ -32,7 +32,7 @@ export default function VehicleReceiptFilter(props) {
                             <Button
                                 icon={<FilterIcon />}
                                 type="link"
-                                className={styles.filterBtn}
+                                className={styles.verticallyCentered}
                                 onClick={() => {
                                     setAdvanceSearchVisible(true);
                                 }}

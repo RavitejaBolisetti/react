@@ -390,7 +390,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         <>
             <div className={styles.contentHeaderBackground}>
                 <Row gutter={20}>
-                    <Col xs={24} sm={24} md={18} lg={18} xl={18}>
+                    <Col xs={24} sm={24} md={16} lg={16} xl={16}>
                         <Form autoComplete="off" colon={false} className={styles.masterListSearchForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                             <Form.Item label={`${title}`} name="code">
                                 <Row gutter={20}>
@@ -398,7 +398,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
                                         <TreeSelectField {...treeSelectFieldProps} />
                                     </Col>
                                     {organizationId && (
-                                        <Col xs={24} sm={24} md={10} lg={10} xl={10}>
+                                        <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                                             <Search placeholder="Search" allowClear onChange={onChange} />
                                         </Col>
                                     )}
