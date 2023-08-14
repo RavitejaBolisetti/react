@@ -8,9 +8,10 @@ import { useMemo, useState, useEffect } from 'react';
 import styles from './TreeView.module.css';
 
 const LeftPanel = (props) => {
-    const { selectedTreeKey, treeData, fieldNames, handleTreeViewClick, isOpenInModal } = props;
-    const { isTreeViewVisible } = props;
+    const { callOnForm = false, treeData, fieldNames, handleTreeViewClick, isOpenInModal, checkedKeys, expendedKeys: defaultExpandedKeys = [] } = props;
+    const { isTreeViewVisible, checkable, onCheck = () => {} } = props;
     const { searchValue, setSearchValue } = props;
+    const { defaultCheckedKeys = [], defaultSelectedKeys = [], disableCheckbox = false, noLeftRightPadding = false } = props;
 
     const [expandedKeys, setExpandedKeys] = useState([]);
     const [autoExpandParent, setAutoExpandParent] = useState(true);
@@ -92,24 +93,28 @@ const LeftPanel = (props) => {
                 if (item[fieldNames?.children]) {
                     return {
                         title,
+                        disableCheckbox,
                         key: item[fieldNames?.key],
                         children: loop(item[fieldNames?.children]),
                     };
                 }
                 return {
                     title,
+                    disableCheckbox,
                     key: item[fieldNames?.key],
                 };
             });
         return loop(treeData);
-    }, [searchValue, fieldNames, treeData]);
+    }, [searchValue, fieldNames, treeData, disableCheckbox]);
+
+    const mainClass = callOnForm ? styles.scrollTreeDataInner : styles.scrollTreeData;
 
     return (
         <div>
             {isTreeViewVisible ? (
                 <div className={isOpenInModal ? styles.modalView : ''}>
-                    <div className={styles.scrollTreeData}>
-                        <Tree expandedKeys={expandedKeys} selectedKeys={selectedTreeKey} onSelect={handleTreeViewClick} showLine={true} showIcon={true} onExpand={onExpand} autoExpandParent={autoExpandParent} treeData={finalTreeData} />
+                    <div className={mainClass}>
+                        <Tree onCheck={onCheck} checkedKeys={checkedKeys} checkable={checkable} onSelect={handleTreeViewClick} showLine={true} showIcon={true} onExpand={onExpand} treeData={finalTreeData} />
                     </div>
                 </div>
             ) : undefined}

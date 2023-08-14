@@ -8,7 +8,7 @@ import React, { useState, useEffect } from 'react';
 
 import { Row, Col, Checkbox, Button, Form, Input, Select, AutoComplete } from 'antd';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
-import { validateRequiredInputField, validateRequiredSelectField, validatePincodeField, validateMobileNoField, validateLettersWithWhitespaces, duplicateValidator } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField, validatePincodeField, duplicateValidator } from 'utils/validation';
 
 import styles from 'components/common/Common.module.css';
 
@@ -36,7 +36,6 @@ const AddEditForm = (props) => {
             key: item?.id,
         }));
         setOptions(pinOption);
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pincodeData]);
 
@@ -203,20 +202,20 @@ const AddEditForm = (props) => {
                         </Form.Item>
                     </Col>
 
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                    {/* <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item label="Contact Name" name="contactName" rules={[validateRequiredInputField('contact name'), validateLettersWithWhitespaces('contact name')]}>
                             <Input maxLength={50} placeholder={preparePlaceholderText('contact name')} />
                         </Form.Item>
-                    </Col>
+                    </Col> */}
                 </Row>
 
-                <Row gutter={20}>
+                {/* <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item label="Contact Mobile" name="mobileNumber" rules={[validateRequiredInputField('contact number'), validateMobileNoField('mobile number')]}>
                             <Input maxLength={10} placeholder={preparePlaceholderText('mobile number')} />
                         </Form.Item>
                     </Col>
-                </Row>
+                </Row> */}
                 <Form.Item hidden name="id" initialValue={''}>
                     <Input />
                 </Form.Item>

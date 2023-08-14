@@ -52,7 +52,7 @@ const mapStateToProps = (state) => {
         addData: addData && addData[PARAM_MASTER.ADD_TYPE.id],
         isPinCodeDataLoaded,
         isPinCodeLoading,
-        pincodeData,
+        pincodeData: pincodeData?.pinCodeDetails,
     };
     return returnValue;
 };
@@ -166,7 +166,7 @@ const AddressMasterBase = (props) => {
 
         const requestData = {
             data: data,
-            method: formActionType?.editMode ? 'put' : 'post',
+            method: addressIndData?.customerAddress ? 'put' : 'post',
             setIsLoading: listShowLoading,
             userId,
             onError,

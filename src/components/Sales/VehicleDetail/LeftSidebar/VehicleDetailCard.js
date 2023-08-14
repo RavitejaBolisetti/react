@@ -4,11 +4,10 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Collapse, Space, Avatar, Typography } from 'antd';
+import { Collapse, Space } from 'antd';
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
 import styles from 'components/common/Common.module.css';
 const { Panel } = Collapse;
-const { Title } = Typography;
 
 const expandIcon = ({ isActive }) =>
     isActive ? (
@@ -25,8 +24,6 @@ const expandIcon = ({ isActive }) =>
 
 const VehicleDetailCard = (props) => {
     const { selectedRecord, selectedRecordId } = props;
-    const fullName = selectedRecord?.customerName?.split(' ');
-    const userAvatar = fullName ? fullName[0]?.slice(0, 1) + (fullName[1] ? fullName[1]?.slice(0, 1) : '') : '';
     return (
         <Collapse bordered={true} defaultActiveKey={[1]} expandIcon={expandIcon} collapsible="icon">
             <Panel

@@ -217,7 +217,6 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         if (!isDataLoaded && userId) {
             hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: 'Manufacturer Administration', onErrorAction });
         }
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, isDataAttributeLoaded, userId]);
     useEffect(() => {
@@ -260,7 +259,9 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
             fetchOrgList({ setIsLoading: listShowLoading, userId, errorAction: onErrorAction });
             authorityDropDownfetchList({ setIsLoading: authorityDropDownlistShowLoading, userId, errorAction: onErrorAction, extraParams: makeExtraparms([{ key: 'parameterType', title: 'parameterType', value: 'AUTH_TYPE', name: 'parameterType' }]) });
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataOrgLoaded, userId]);
+
     useEffect(() => {
         manufacturerOrgHierarchyData?.map((i) => DisableParent(i));
         // eslint-disable-next-line react-hooks/exhaustive-deps
