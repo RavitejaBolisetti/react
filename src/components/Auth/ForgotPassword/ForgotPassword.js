@@ -291,7 +291,7 @@ const ForgotPasswordBase = (props) => {
 
                                                     <Row gutter={20}>
                                                         <Col xs={24} sm={24} md={24} lg={24} xl={24} className="textfieldWithPrefix">
-                                                            <Form.Item name="userId" className="textfieldWithPrefix__input" data-testid="userIdInput" rules={[validateRequiredInputField('user id')]} className={`${styles.inputBox} ${styles.marginBottomZero}`}>
+                                                            <Form.Item name="userId" data-testid="userIdInput" rules={[validateRequiredInputField('user id')]} className={`${styles.inputBox} ${styles.marginBottomZero} 'textfieldWithPrefix__input'`}>
                                                                 {<Input ref={userIdRef} prefix={<BiUser size={18} />} type="text" maxLength={25} onChange={handleFormChange('userId')} />}
                                                             </Form.Item>
                                                             {!fieldData?.userId && (
@@ -453,7 +453,7 @@ const ForgotPasswordBase = (props) => {
                                                         <h1 className={styles.inputBox}>Create New Password</h1>
                                                         <Row gutter={20}>
                                                             <Col xs={24} sm={24} md={24} lg={24} xl={24} className="textfieldWithPrefix">
-                                                                <Form.Item name="newPassword" className="textfieldWithPrefix__input" rules={[validateRequiredInputField('new password')]} className={`${styles.inputBox}`}>
+                                                                <Form.Item name="newPassword" className="textfieldWithPrefix__input" rules={[validateRequiredInputField('new password')]}>
                                                                     <Input onChange={handleNewPasswordChange} type={showPassword?.newPassword ? 'text' : 'password'} ref={newPasswordInput} prefix={<FiLock size={18} />} suffix={passwordSuffix('newPassword')} onFocus={() => setTooltipVisible(true)} onBlur={() => setTooltipVisible(false)} />
                                                                 </Form.Item>
                                                                 {!fieldData?.newPassword && (
@@ -481,7 +481,6 @@ const ForgotPasswordBase = (props) => {
                                                                             },
                                                                         }),
                                                                     ]}
-                                                                    className={`${styles.inputBox}`}
                                                                 >
                                                                     <Input type={showPassword?.confirmNewPassword ? 'text' : 'password'} ref={confirmPasswordInput} prefix={<FiLock size={18} />} onChange={handleFormChange('confirmNewPassword')} suffix={passwordSuffix('confirmNewPassword')} />
                                                                 </Form.Item>

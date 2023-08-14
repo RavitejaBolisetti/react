@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Form, message as antMessage } from 'antd';
@@ -26,14 +31,14 @@ export const crudEditPage = ({ mapStateToProps, dataActions, showGlobalNotificat
         const defaultBtnVisiblity = { editBtn: false, saveBtn: true, saveAndNewBtn: true, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: true, formBtnActive: false };
         const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
-        const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
-        const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
+        // const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
+        // const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
-        const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
+        // const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
         const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
         const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
-        const [formData, setFormData] = useState([]);
+        // const [formData, setFormData] = useState([]);
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -54,12 +59,12 @@ export const crudEditPage = ({ mapStateToProps, dataActions, showGlobalNotificat
 
         const handleButtonClick = ({ record = null, buttonAction }) => {
             resetFields();
-            setFormData([]);
+            // setFormData([]);
 
-            setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
+            // setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
             setButtonData(buttonAction === VIEW_ACTION ? { ...defaultBtnVisiblity, closeBtn: true, editBtn: true } : buttonAction === EDIT_ACTION ? { ...defaultBtnVisiblity, saveBtn: true, cancelBtn: true } : { ...defaultBtnVisiblity, saveBtn: true, saveAndNewBtn: true, cancelBtn: true });
 
-            record && setFormData(record);
+            // record && setFormData(record);
             // setIsFormVisible(true);
         };
 
@@ -72,8 +77,8 @@ export const crudEditPage = ({ mapStateToProps, dataActions, showGlobalNotificat
             let finalValues = { ...values };
             // const finalValues = customDataTransformer(values);
 
-            const { update, data, editSuccess, editError, editShowLoading, userId } = props;
-            const { filterString = undefined, filterParams = undefined, additionalFilter = {} } = props;
+            const { update, data, editError, editShowLoading, userId } = props;
+            const { filterParams = undefined, additionalFilter = {} } = props;
             update({
                 data: finalValues,
                 setIsLoading: editShowLoading,

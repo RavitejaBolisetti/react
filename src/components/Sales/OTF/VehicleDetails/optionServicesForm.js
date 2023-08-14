@@ -3,23 +3,23 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Col, Input, Form, Row, Select, Button } from 'antd';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
-import styles from 'components/common/Common.module.css';
-
 import { validateRequiredInputField, validateNumberWithTwoDecimalPlaces, validateRequiredSelectField } from 'utils/validation';
 
+import styles from 'components/common/Common.module.css';
 const OptionServicesFormMain = (props) => {
     const { typeData, handleCancel, handleFormValueChange, optionsServicesMapping, setoptionsServicesMapping, optionsServiceModified, setoptionsServiceModified, showGlobalNotification, formData, optionForm } = props;
     const [serviceOptions, setserviceOptions] = useState(typeData['OPT_SRV']);
     const [includedOption, setincludedOption] = useState([]);
-    // console.log("Type Data: "+JSON.stringify(typeData['OPT_SRV']))
+
     useEffect(() => {
         if (serviceOptions && serviceOptions?.length) {
             const arr = [];
             optionsServiceModified?.map((element) => {
                 arr.push(element?.serviceName);
+                return undefined;
             });
             setincludedOption(arr);
 
@@ -35,17 +35,20 @@ const OptionServicesFormMain = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [serviceOptions, optionsServiceModified]);
+
     const isServiceNamePresent = (serviceName) => {
         let found = false;
         optionsServiceModified?.find((element, index) => {
             if (element?.serviceName?.trim()?.toLowerCase() === serviceName?.trim()?.toLowerCase()) {
                 showGlobalNotification({ notificationType: 'error', title: 'ERROR', message: 'Duplicate service Name' });
                 found = true;
-                return;
+                return false;
             }
+            return false;
         });
         return found;
     };
+
     const onFinish = () => {
         optionForm
             .validateFields()

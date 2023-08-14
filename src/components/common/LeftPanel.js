@@ -9,14 +9,13 @@ import styles from './TreeView.module.css';
 
 const LeftPanel = (props) => {
     const { selectedTreeKey, callOnForm = false, treeData, fieldNames, handleTreeViewClick, isOpenInModal, checkedKeys, expendedKeys: defaultExpandedKeys = [] } = props;
-    console.log('🚀 ~ file: LeftPanel.js:12 ~ LeftPanel ~ defaultExpandedKeys:', defaultExpandedKeys);
     const { isTreeViewVisible, checkable, onCheck = () => {} } = props;
-    const { searchValue, setSearchValue } = props;
-    const { defaultCheckedKeys = [], defaultSelectedKeys = [], disableCheckbox = false, noLeftRightPadding = false } = props;
+    const { searchValue, setSearchValue, disableCheckbox = false } = props;
+    // const { defaultCheckedKeys = [], defaultSelectedKeys = [], noLeftRightPadding = false } = props;
 
     const [expandedKeys, setExpandedKeys] = useState([]);
     const [autoExpandParent, setAutoExpandParent] = useState(true);
-    console.log('🚀 ~ file: LeftPanel.js:19 ~ LeftPanel ~ autoExpandParent:', autoExpandParent);
+    console.log('🚀 ~ file: LeftPanel.js:12 ~ LeftPanel ~ defaultExpandedKeys:', selectedTreeKey, defaultExpandedKeys, expandedKeys, autoExpandParent);
 
     const onExpand = (newExpandedKeys) => {
         setExpandedKeys(newExpandedKeys);

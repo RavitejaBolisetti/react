@@ -30,8 +30,6 @@ import { geoCityDataActions } from 'store/actions/data/geo/cities';
 import { geoPinCodeDataActions } from 'store/actions/data/geo/pincodes';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
-import styles from 'components/common/Common.module.css';
-
 const mapStateToProps = (state) => {
     const {
         auth: { userId, token },
