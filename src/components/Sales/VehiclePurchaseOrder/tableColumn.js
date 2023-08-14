@@ -12,7 +12,7 @@ import styles from 'components/common/Common.module.css';
 export const tableColumn = (handleButtonClick, page, pageSize) => {
     const tableColumn = [
         tblPrepareColumns({
-            title: 'Purchase Order ID',
+            title: 'Purchase Order Number',
             dataIndex: 'purchaseOrderNumber',
             width: '14%',
         }),
