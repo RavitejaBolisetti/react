@@ -317,7 +317,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         isTreeViewVisible,
         handleTreeViewVisiblity,
         selectedTreeKey,
-        selectedTreeSelectKey,
+        //selectedTreeSelectKey,
         fieldNames,
         handleTreeViewClick,
         treeData: productHierarchyData,
@@ -396,7 +396,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                                         <TreeSelectField {...treeSelectFieldProps} />
-                                    </Col>''
+                                    </Col>
                                     {organizationId && (
                                         <Col xs={24} sm={24} md={10} lg={10} xl={10}>
                                             <Search placeholder="Search" allowClear onChange={onChange} />
