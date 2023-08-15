@@ -268,13 +268,21 @@ export const ListCityMasterBase = (props) => {
             const filterValue = type === 'text' ? value.target.value : value;
 
             if (name === 'countryCode') {
-                setFilteredStateData(stateData?.filter((i) => i?.parentKey === filterValue));
-                advanceFilterForm.setFieldsValue({ stateCode: undefined, districtCode: undefined, cityCode: undefined, tehsilCode: undefined });
+                if (typeof filterValue === 'undefined') {
+                    advanceFilterForm.setFieldsValue({ stateCode: undefined, districtCode: undefined, cityCode: undefined, tehsilCode: undefined });
+                } else {
+                    setFilteredStateData(stateData?.filter((i) => i?.parentKey === filterValue));
+                    advanceFilterForm.setFieldsValue({ stateCode: undefined, districtCode: undefined, cityCode: undefined, tehsilCode: undefined });
+                }
             }
 
             if (name === 'stateCode') {
-                setFilteredDistrictData(districtData?.filter((i) => i?.parentKey === filterValue));
-                advanceFilterForm.setFieldsValue({ districtCode: undefined, cityCode: undefined, tehsilCode: undefined });
+                if (typeof filterValue === 'undefined') {
+                    advanceFilterForm.setFieldsValue({ districtCode: undefined, cityCode: undefined, tehsilCode: undefined });
+                } else {
+                    setFilteredDistrictData(districtData?.filter((i) => i?.parentKey === filterValue));
+                    advanceFilterForm.setFieldsValue({ districtCode: undefined, cityCode: undefined, tehsilCode: undefined });
+                }
             }
         };
 
