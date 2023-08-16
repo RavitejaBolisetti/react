@@ -4,10 +4,9 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Space, Collapse, Typography, Button, Divider } from 'antd';
+import { Row, Col, Collapse, Typography, Button, Divider } from 'antd';
 
 import { PlusOutlined } from '@ant-design/icons';
-import styles from 'components/common/Common.module.css';
 import AccessoriesAddonMain from './AccessoriesInformation/AccessoriesAddonMain';
 import ShieldForm from './Shield/ShieldForm';
 import AMCForm from './AMC/AMCForm';

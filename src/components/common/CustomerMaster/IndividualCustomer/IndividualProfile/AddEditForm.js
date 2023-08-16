@@ -15,8 +15,6 @@ import { convertToUpperCase } from 'utils/convertToUpperCase';
 import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
 // import { UploadUtil } from 'utils/Upload';
 
-import styles from 'components/common/Common.module.css';
-
 const { Panel } = Collapse;
 const { Option } = Select;
 

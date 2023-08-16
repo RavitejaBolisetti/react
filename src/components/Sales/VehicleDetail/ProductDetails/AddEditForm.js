@@ -5,7 +5,7 @@
  */
 
 import React, { useEffect, useState } from 'react';
-import { Button, Collapse, Form, Typography, Row, Col, Space, Input, Divider, DatePicker } from 'antd';
+import { Button, Collapse, Form, Typography, Row, Col, Input, Divider, DatePicker } from 'antd';
 
 import { PlusOutlined } from '@ant-design/icons';
 import { DataTable } from 'utils/dataTable';

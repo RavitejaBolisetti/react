@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Descriptions, Divider, Card, Col, Row, Space } from 'antd';
+import { Descriptions, Divider, Card, Col, Row } from 'antd';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 

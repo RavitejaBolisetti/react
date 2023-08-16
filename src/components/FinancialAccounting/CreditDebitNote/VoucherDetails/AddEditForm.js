@@ -5,7 +5,7 @@
  */
 
 import React, { useState } from 'react';
-import { Button, Collapse, Form, Typography, Row, Col, Space } from 'antd';
+import { Button, Collapse, Form, Typography, Row, Col } from 'antd';
 
 import { PlusOutlined } from '@ant-design/icons';
 import { DataTable } from 'utils/dataTable';
@@ -13,8 +13,6 @@ import { DataTable } from 'utils/dataTable';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { VoucherAddEditForm } from './VoucherAddEditForm';
 import { tableColumn } from './tableColumn';
-
-import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
 const { Text } = Typography;

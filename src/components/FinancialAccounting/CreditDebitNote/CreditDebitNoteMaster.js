@@ -350,7 +350,6 @@ export const CreditDebitNoteMasterBase = (props) => {
         };
 
         const onError = (message) => {
-            console.log('hello', message);
             showGlobalNotification({ message });
         };
 

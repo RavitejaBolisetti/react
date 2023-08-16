@@ -86,6 +86,26 @@ export const VoucherAndPartyDetailsMasterMain = (props) => {
         totalBalancedAmount: 0,
     };
 
+    useEffect(() => {
+        if (formActionType?.addMode && isDetailLoaded) {
+            form.resetFields(['partyDetails']);
+            setFormData();
+        } else if (isDetailLoaded && creditDebitData) {
+            setFormData(creditDebitData);
+            handleFormValueChange();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formActionType?.addMode, isDetailLoaded, creditDebitData, formActionType?.editMode]);
+
+    useEffect(() => {
+        if (formActionType?.addMode) {
+            form.setFieldsValue({
+                voucherDetails: voucherDetailsInitial,
+            });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formActionType?.addMode]);
+
     const handlePartyIdChange = () => {
         form.setFieldsValue({
             partyDetails: {
@@ -142,26 +162,6 @@ export const VoucherAndPartyDetailsMasterMain = (props) => {
         ];
         form.getFieldsValue()?.partyDetails?.partySegment === constomerContant ? fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction, onSuccessAction: onSuccessCustomerAction }) : fetchDetail({ setIsLoading: listPartyShowLoading, userId, partyCode: value, onErrorAction, onSuccessAction });
     };
-
-    useEffect(() => {
-        if (formActionType?.addMode && isDetailLoaded) {
-            form.resetFields(['partyDetails']);
-            setFormData();
-        } else if (isDetailLoaded && creditDebitData) {
-            setFormData(creditDebitData);
-            handleFormValueChange();
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formActionType?.addMode, isDetailLoaded, creditDebitData]);
-
-    useEffect(() => {
-        if (formActionType?.addMode) {
-            form.setFieldsValue({
-                voucherDetails: voucherDetailsInitial,
-            });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formActionType?.addMode]);
 
     const handleCollapse = (key) => {
         !activeKey?.includes(key) ? setActiveKey([key]) : setActiveKey([]);

@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Space, Collapse, Form } from 'antd';
+import { Row, Col, Collapse, Form } from 'antd';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
