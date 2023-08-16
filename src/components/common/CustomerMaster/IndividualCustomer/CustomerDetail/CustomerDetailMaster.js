@@ -143,7 +143,7 @@ const CustomerDetailMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedCustomerId]);
- 
+
     const downloadFileFromButton = (uploadData) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Your download will start soon' });
         const extraParams = [
@@ -230,7 +230,7 @@ const CustomerDetailMasterBase = (props) => {
             if (res.data) {
                 handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
                 setSelectedCustomerId(res?.data?.customerId);
-                if (res?.data?.pendingNameChangeRequest === null) {
+                if (res?.data?.customerNameChangeRequest === null) {
                     setCustomerNameList({
                         titleCode: res?.data?.titleCode,
                         firstName: res?.data?.firstName,
@@ -239,10 +239,10 @@ const CustomerDetailMasterBase = (props) => {
                     });
                 } else {
                     setCustomerNameList({
-                        titleCode: res?.data?.pendingNameChangeRequest?.newTitleCode,
-                        firstName: res?.data?.pendingNameChangeRequest?.newFirstName,
-                        middleName: res?.data?.pendingNameChangeRequest?.newMiddleName,
-                        lastName: res?.data?.pendingNameChangeRequest?.newLastName,
+                        titleCode: res?.data?.customerNameChangeRequest?.newTitleCode,
+                        firstName: res?.data?.customerNameChangeRequest?.newFirstName,
+                        middleName: res?.data?.customerNameChangeRequest?.newMiddleName,
+                        lastName: res?.data?.customerNameChangeRequest?.newLastName,
                     });
                 }
             }
