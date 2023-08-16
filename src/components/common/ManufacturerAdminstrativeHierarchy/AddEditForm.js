@@ -110,13 +110,13 @@ const AddEditFormMain = (props) => {
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item name="manufactureAdminCode" label="Code" initialValue={formData?.manufactureAdminCode} rules={[validateRequiredInputField('code'), validationFieldLetterAndNumber('code')]}>
-                                <Input placeholder={preparePlaceholderText('Code')} maxLength={6} className={styles.inputBox} {...disabledProps} />
+                                <Input placeholder={preparePlaceholderText('Code')} maxLength={6} {...disabledProps} />
                             </Form.Item>
                         </Col>
 
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item name="manufactureAdminShortName" label="Short Description" initialValue={formData?.manufactureAdminShortName} rules={[validateRequiredInputField('short description')]}>
-                                <Input className={styles.inputBox} placeholder={preparePlaceholderText('short description')} {...disabledProps} />
+                                <Input placeholder={preparePlaceholderText('short description')} {...disabledProps} />
                             </Form.Item>
                         </Col>
                     </Row>
@@ -128,7 +128,7 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
 
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padLeft10}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item initialValue={typeof formData?.status === 'boolean' ? formData?.status : true} label="Status" name="status">
                                 <Switch checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={typeof formData?.status === 'boolean' ? formData?.status : true} onChange={(checked) => (checked ? 1 : 0)} />
                             </Form.Item>

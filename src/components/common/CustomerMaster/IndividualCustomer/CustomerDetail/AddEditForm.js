@@ -70,10 +70,9 @@ const AddEditFormMain = (props) => {
     return (
         <>
             <Card>
-                <div className={styles.blockSection}>
-                    <Row gutter={20}>
-                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                            {/* {editMode ? (
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                        {/* {editMode ? (
                                 <Form.Item label="Mobile Number" initialValue={formData?.mobileNumber} name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField('mobile number')]}>
                                     <Input
                                         placeholder={preparePlaceholderText('mobile number')}
@@ -97,64 +96,60 @@ const AddEditFormMain = (props) => {
                             ) : (
                                
                             )} */}
-                            <Form.Item label="Mobile Number" initialValue={formData?.mobileNumber} name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField('mobile number'), validateRequiredInputField('mobile number')]}>
-                                <Input placeholder={preparePlaceholderText('mobile number')} maxLength={10} size="small" />
-                            </Form.Item>
-                        </Col>
-
-                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                            <Form.Item initialValue={customerType} label="Customer Type" name="customerType" data-testid="customerType" rules={[validateRequiredSelectField('customer Type')]}>
-                                <Select disabled={true} placeholder={preparePlaceholderSelect('customer type')} fieldNames={{ label: 'value', value: 'key' }} options={typeData?.[PARAM_MASTER?.CUST_TYPE?.id]} allowClear></Select>
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                </div>
+                        <Form.Item label="Mobile Number" initialValue={formData?.mobileNumber} name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField('mobile number'), validateRequiredInputField('mobile number')]}>
+                            <Input placeholder={preparePlaceholderText('mobile number')} maxLength={10} size="small" />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                        <Form.Item initialValue={customerType} label="Customer Type" name="customerType" data-testid="customerType" rules={[validateRequiredSelectField('customer Type')]}>
+                            <Select disabled={true} placeholder={preparePlaceholderSelect('customer type')} fieldNames={{ label: 'value', value: 'key' }} options={typeData?.[PARAM_MASTER?.CUST_TYPE?.id]} allowClear></Select>
+                        </Form.Item>
+                    </Col>
+                </Row>
                 <Row>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <CustomerNameChangeMaster {...props} />
                     </Col>
                 </Row>
                 <Divider />
-                <div className={styles.blockSection}>
-                    <Row gutter={20}>
-                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                            <Form.Item label="Email ID" initialValue={formData?.emailId} name="emailId" data-testid="emailId" rules={[validateEmailField('email id'), validateRequiredInputField('email id')]}>
-                                <Input placeholder={preparePlaceholderText('email id')} />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                            <Form.Item label="Contact over WhatsApp?" initialValue={formData?.whatsappCommunicationIndicator} name="whatsappCommunicationIndicator" data-testid="contactedOverWhatsapp">
-                                <Switch
-                                    onChange={(prev) => {
-                                        if (!prev) {
-                                            form.setFieldsValue({ whatsAppNumber: null });
-                                            setWhatsAppConfiguration({ contactOverWhatsAppActive: true, sameMobileNoAsWhatsApp: false, sameMobileNoAsWhatsAppActive: true });
-                                        }
-                                    }}
-                                    checked={contactOverWhatsApp}
-                                />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                            <Form.Item label="Want to use mobile no as WhatsApp no?" initialValue={formData?.mobileNumberAsWhatsappNumber} name="mobileNumberAsWhatsappNumber" data-testid="useMobileNumber">
-                                <Switch
-                                    disabled={sameMobileNoAsWhatsAppActive}
-                                    onChange={() => {
-                                        form.validateFields(['whatsAppNumber']);
-                                    }}
-                                    checked={sameMobileNoAsWhatsApp}
-                                />
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                    <Row gutter={20}>
-                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                            <Form.Item label="Whatsapp Number" initialValue={formData?.whatsAppNumber} name="whatsAppNumber" data-testid="whatsAppNumber" rules={[validateMobileNoField('whatsapp number'), { validator: validateSameNumber }]}>
-                                <Input placeholder={preparePlaceholderText('WhatsApp Number')} disabled={contactOverWhatsAppActive} maxLength={10} />
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                </div>
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                        <Form.Item label="Email ID" initialValue={formData?.emailId} name="emailId" data-testid="emailId" rules={[validateEmailField('email id'), validateRequiredInputField('email id')]}>
+                            <Input placeholder={preparePlaceholderText('email id')} />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                        <Form.Item label="Contact over WhatsApp?" initialValue={formData?.whatsappCommunicationIndicator} name="whatsappCommunicationIndicator" data-testid="contactedOverWhatsapp">
+                            <Switch
+                                onChange={(prev) => {
+                                    if (!prev) {
+                                        form.setFieldsValue({ whatsAppNumber: null });
+                                        setWhatsAppConfiguration({ contactOverWhatsAppActive: true, sameMobileNoAsWhatsApp: false, sameMobileNoAsWhatsAppActive: true });
+                                    }
+                                }}
+                                checked={contactOverWhatsApp}
+                            />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                        <Form.Item label="Want to use mobile no as WhatsApp no?" initialValue={formData?.mobileNumberAsWhatsappNumber} name="mobileNumberAsWhatsappNumber" data-testid="useMobileNumber">
+                            <Switch
+                                disabled={sameMobileNoAsWhatsAppActive}
+                                onChange={() => {
+                                    form.validateFields(['whatsAppNumber']);
+                                }}
+                                checked={sameMobileNoAsWhatsApp}
+                            />
+                        </Form.Item>
+                    </Col>
+                </Row>
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                        <Form.Item label="Whatsapp Number" initialValue={formData?.whatsAppNumber} name="whatsAppNumber" data-testid="whatsAppNumber" rules={[validateMobileNoField('whatsapp number'), { validator: validateSameNumber }]}>
+                            <Input placeholder={preparePlaceholderText('WhatsApp Number')} disabled={contactOverWhatsAppActive} maxLength={10} />
+                        </Form.Item>
+                    </Col>
+                </Row>
                 {/* <Divider /> */}
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>

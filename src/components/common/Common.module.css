@@ -2853,10 +2853,10 @@
     margin-bottom: 20px !important;
 }
 
-.viewDrawerContainer .cardInsideBox {
-    /* padding-bottom: 20px; */
+/* .viewDrawerContainer .cardInsideBox {
+    padding-bottom: 20px;
     margin-top: 20px;
-}
+} */
 
 /* .viewDrawerContainer .viewDocumentStrip :global .ant-card-head {
     padding: 0 20px;
@@ -3152,11 +3152,6 @@
     margin-bottom: 20px !important;
 }
 
-.viewDrawerContainer .innerCollapseBorder {
-    border: 1px solid #b5b5b6 !important;
-    margin-bottom: 20px !important;
-}
-
 li.ant-timeline-item.active .ant-timeline-item-content p {
     background-color: rgb(255, 62, 91) !important;
     font-size: 30px !important;
@@ -3173,7 +3168,7 @@ li.ant-timeline-item.active .ant-timeline-item-content p {
     border-color: #B5B5B6;
 } */
 
-.supportingDocument :global .ant-input-affix-wrapper {
+/* .supportingDocument :global .ant-input-affix-wrapper {
     padding: 0px 6px;
     border-color: #b5b5b6;
     height: 38px;
@@ -3183,7 +3178,7 @@ li.ant-timeline-item.active .ant-timeline-item-content p {
     padding: 5px 6px;
     border: 1px solid #0b0b0c !important;
     border-right: 1px solid !important;
-}
+} */
 
 /* .referralSearch :global .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover {
     border: none;
@@ -3458,10 +3453,10 @@ li.ant-timeline-item.active .ant-timeline-item-content p {
         padding: 10px;
     } */
 
-    .padLeft10 {
+    /* .padLeft10 {
         padding-left: 10px !important;
         padding-right: 0px !important;
-    }
+    } */
 
     .buttonsGroupRight {
         margin-top: 10px;
@@ -3523,10 +3518,10 @@ li.ant-timeline-item.active .ant-timeline-item-content p {
         padding: 10px;
     } */
 
-    .padLeft10 {
+    /* .padLeft10 {
         padding-left: 10px !important;
         padding-right: 0px !important;
-    }
+    } */
 
     .padRight0 {
         padding-right: 0px !important;

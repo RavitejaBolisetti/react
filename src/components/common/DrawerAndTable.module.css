@@ -389,9 +389,9 @@
     padding: 10px 20px;
 } */
 
-.accordianHeader {
+/* .accordianHeader {
     color: #e31837 !important;
-}
+} */
 
 :global .ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-collapse-header-texts {
     font-weight: 600;
