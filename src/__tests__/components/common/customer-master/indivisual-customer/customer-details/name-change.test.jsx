@@ -6,8 +6,8 @@ import { fireEvent, screen } from '@testing-library/react';
 
 import { NameChangeHistory } from '@components/common/CustomerMaster/IndividualCustomer/CustomerDetail/NameChangeHistory';
 
-describe('Common Footer Button component', () => {
-    it('should render the common footer button component', () => {
+describe('Common component', () => {
+    it('should render the nameChangeHistory component', () => {
         customRender(<NameChangeHistory isVisible={true} fetchCustomerChangeHistory={jest.fn()} />);
     });
 
