@@ -19,7 +19,7 @@ import { tableColumnSearchOTF } from './tableColumnSearchOTF';
 
 const ViewDetailMain = (props) => {
     const { formData, isLoading, typeData, setFilterStringOTFSearch, searchForm, tableData } = props;
-    const { handleButtonClick, buttonData, setButtonData, onCloseAction } = props;
+    const { handleButtonClick, buttonData, setButtonData, onCloseAction, setSelectedOrderOTFDetails } = props;
     const [ filterString, setFilterString ] = useState('');
 
     const viewProps = {
@@ -54,13 +54,23 @@ const ViewDetailMain = (props) => {
         setFilterString,
     };
 
+    const rowSelection = {
+        onChange: (selectedRowKeys, selectedRows) => {
+            setSelectedOrderOTFDetails(selectedRows[0]);
+          console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+        },
+        getCheckboxProps: (record) => ({}),
+    };
+
     const tableProps = {
         //isChangeHistoryLoading,
         tableColumn : tableColumnSearchOTF(handleButtonClick),
         tableData: tableData || [formData?.vehicleOTFDetails] || [],
         pagination: false,
         srl: false,
-        rowSelection: true,
+        rowSelection: {
+          ...rowSelection,
+        },
     };
 
     return (

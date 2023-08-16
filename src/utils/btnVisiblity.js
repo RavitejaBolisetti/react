@@ -13,6 +13,8 @@ export const VIEW_ONLY_ACTION = FROM_ACTION_TYPE?.VIEW_ONLY;
 export const NEXT_ACTION = FROM_ACTION_TYPE?.NEXT;
 export const CANCEL_ACTION = FROM_ACTION_TYPE?.CANCEL_OTF;
 export const TRANSFER_ACTION = FROM_ACTION_TYPE?.TRANSFER_OTF;
+export const ALLOT = FROM_ACTION_TYPE?.ALLOT;
+export const UNALLOT = FROM_ACTION_TYPE?.UNALLOT;
 
 export const btnVisiblity = ({ defaultBtnVisiblity, buttonAction, saveAndNewBtn = true, orderStatus = false }) => {
     let btnVisibility = defaultBtnVisiblity;

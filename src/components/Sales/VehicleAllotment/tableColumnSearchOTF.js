@@ -9,10 +9,6 @@ import { convertDateMonthYear } from 'utils/formatDateTime';
 export const tableColumnSearchOTF = (handleButtonClick, page, pageSize) => {
     const tableColumn = [
         tblPrepareColumns({
-            title: '',
-
-        }),
-        tblPrepareColumns({
             title: 'OTF No.',
             dataIndex: 'otfNumber',
         }),
