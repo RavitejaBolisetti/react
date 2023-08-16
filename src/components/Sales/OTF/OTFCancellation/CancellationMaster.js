@@ -19,7 +19,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId, accessToken, token },
         data: {
-            ProductHierarchy: { isLoading: isProductHierarchyLoading = false, isLoaded: isProductHierarchyLoaded = false, data: productHierarchyData = [], attributeData: productHierarchyAttributeData = [] },
+            ProductHierarchy: { isLoading: isProductHierarchyLoading = false, data: productHierarchyData = [] },
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             SupportingDocument: { isLoaded: isDataLoaded = false, isLoading, data: supportingData },
             OTF: {
@@ -27,7 +27,6 @@ const mapStateToProps = (state) => {
             },
         },
     } = state;
-
     const moduleTitle = 'Cancel OTF';
 
     let returnValue = {
@@ -67,7 +66,7 @@ const CancellationMasterBase = (props) => {
     const { moduleTitle, setUploadedFile, uploadedFile } = props;
     const { fetchProductHierarchyList, productHierarchyData, onFinishOTFCancellation, fetchDealerList, dealerDataList } = props;
 
-    const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn:true, cancelOTFBtn: true };
+    const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: true, cancelOTFBtn: true };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const [emptyList, setEmptyList] = useState(true);
     const [searchDealerValue, setSearchDealerValue] = useState('');

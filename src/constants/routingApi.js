@@ -39,7 +39,6 @@ export const BASE_URL_DEALER_MANPOWER_DIVISION_MASTER = BASE_URL_DEALER_MANPOWER
 export const BASE_URL_DEALER_MANPOWER_DESIGNATION = BASE_URL_DEALER_MANPOWER + '/designations';
 
 export const BASE_URL_DEALER_MANPOWER_EMPLOYEE_DEPARTMENT = BASE_URL_DEALER_MANPOWER + '/employee/departments';
-export const BASE_URL_ROLE = BASE_URL_DEALER_MANPOWER + '/roles';
 
 export const BASE_URL_CUSTOMER_MASTER = BASE_URL + 'customers';
 export const BASE_URL_PARTY_MASTER = BASE_URL_CUSTOMER_MASTER + '/partymaster';
@@ -52,8 +51,11 @@ export const BASE_URL_CUSTOMER_MASTER_VEHICLE_LIST = BASE_URL + 'customers/vehic
 export const BASE_URL_SUPPORTING_DOCUMENT = BASE_URL_CUSTOMER_MASTER + '/document';
 
 export const BASE_URL_GEO_GRAPHY_CHANGE_HISTORY = BASE_URL + 'geochangehistory';
-export const BASE_URL_ROLE_MANAGEMENT = BASE_URL + 'application/roles';
+
+export const BASE_URL_ROLE = BASE_URL_DEALER_MANPOWER + '/roles';
 export const BASE_URL_ROLE_MANAGEMENT_ROLES = BASE_URL + 'application/rolemanagement';
+export const BASE_URL_ROLE_MANAGEMENT = BASE_URL + 'application/rolemaster';
+export const BASE_URL_ROLE_MANAGEMENT_ROLES_MENU = BASE_URL + 'application/roles';
 
 export const BASE_URL_PRODUCT_HIERARCHY = BASE_URL + 'product';
 export const BASE_URL_PRODUCT_HIERARCHY_SAVE = BASE_URL + 'product';
@@ -159,6 +161,8 @@ export const BASE_URL_OTF_FINANCE_LOV = BASE_URL + 'otf/financiers/lov';
 export const BASE_URL_OTF_SCHEMES = BASE_URL_OTF + 'schemes';
 export const BASE_URL_OTF_EXCHANGE_VEHICLE = BASE_URL_OTF + 'exchangevehicle';
 export const BASE_URL_OTF_CHANGE_HISTORY = BASE_URL_OTF + 'changehistory';
+export const BASE_URL_OTF_SO_MAPPING = BASE_URL_OTF + 'somapping';
+export const BASE_URL_OTF_SO_USER_MAPPING = BASE_URL_OTF + 'somapping/users';
 
 export const BASE_URL_OTF_TRANSFER = BASE_URL_OTF + 'transfer';
 export const BASE_URL_OTF_CANCELLATION = BASE_URL_OTF + 'request/cancel';
@@ -174,6 +178,7 @@ export const BASE_URL_OTF_CUSTOMER = BASE_URL + 'otf/customerdetails';
 export const BASE_URL_INVOICE = BASE_URL + 'invoice/';
 export const BASE_URL_RSM_APPROVAL = BASE_URL_INVOICE + 'rsm';
 export const BASE_URL_RSM_APPROVAL_SEARCH = BASE_URL_RSM_APPROVAL + '/search';
+export const BASE_URL_INVOICE_DETAILS = BASE_URL_INVOICE + 'details';
 
 export const BASE_URL_VEHICLE = BASE_URL + 'vehicle/';
 export const BASE_URL_VEHICLE_SEARCH = BASE_URL_VEHICLE + 'search';
@@ -205,6 +210,12 @@ export const BASE_URL_DOCUMENT_TYPE_LEDGER = BASE_URL + 'finance/ledgermappings'
 export const BASE_URL_FINANCIAL_ACC_TAX_CHARGE_TYPE = BASE_URL + 'finance/tax/chargetypes/lov';
 export const BASE_URL_FINANCIAL_ACC_TAX_CHARGE_CODE = BASE_URL + 'finance/tax/charges/lov';
 export const BASE_URL_FINANCIAL_ACC_ACCOUNT_CATEGORY_DOCUMENT_DESCRIPTION = BASE_URL + 'application/documenttypes/lov';
+export const BASE_URL_FINANCIAL_ACCOUNTING = BASE_URL + 'finance/';
+export const BASE_URL_VOUCHER = BASE_URL_FINANCIAL_ACCOUNTING + 'voucher/';
+export const BASE_URL_CREDIT_DEBIT_NOTE = BASE_URL_VOUCHER + 'creditanddebit';
+export const BASE_URL_CREDIT_DEBIT_NOTE_SEARCH = BASE_URL_CREDIT_DEBIT_NOTE + '/search';
+export const BASE_URL_CREDIT_DEBIT_NOTE_DETAILS = BASE_URL_CREDIT_DEBIT_NOTE + '/details';
+
 
 export const BASE_URL_VEHICLE_PRICE_MASTER = BASE_URL_VEHICLE + 'pricemaster';
 export const BASE_URL_VEHICLE_PRICE_MASTER_SEARCH = BASE_URL_VEHICLE + 'pricemaster/search';
@@ -225,4 +236,9 @@ export const BASE_URL_VEHICLE_MODEL_AND_TAX_CHARGE_CATEGORY = BASE_URL_FINANCE +
 export const BASE_URL_VEHICLE_MODEL_AND_TAX_CHARGE_CATEGORY_PRODUCT_MODEL_GROUP = BASE_URL_PRODUCT_HIERARCHY + '/groups';
 export const BASE_URL_VEHICLE_MODEL_AND_TAX_CHARGE_CATEGORY_ACCOUNT_CATEGORY = BASE_URL_FINANCE + 'accounts/categories';
 export const BASE_URL_VEHICLE_MODEL_AND_TAX_CHARGE_CATEGORY_TAX_CHARGES = BASE_URL_FINANCE + 'tax/chargecategory';
+
+export const BASE_URL_VEHICLE_RECEIPT_CHECKLIST_SUPPORTING_DOCUMENT = BASE_URL_VEHICLE + 'receiptchecklist/documents';
+export const BASE_URL_VEHICLE_RECEIPT_CHECKLIST_MAIN = BASE_URL_VEHICLE + 'receiptchecklist/search';
+export const BASE_URL_VEHICLE_RECEIPT_CHECKLIST_PROFILE = BASE_URL_VEHICLE + 'receiptchecklist/profile';
+export const BASE_URL_VEHICLE_RECEIPT_CHECKLIST_MASTER = BASE_URL_VEHICLE + 'receiptchecklist/detail';
 export const BASE_URL_VEHICLE_ALLOTMENT = BASE_URL + 'vehicle/allotments';

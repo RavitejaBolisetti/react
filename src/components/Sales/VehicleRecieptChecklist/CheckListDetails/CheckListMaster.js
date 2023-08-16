@@ -8,8 +8,8 @@ import { Form, Row, Col } from 'antd';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { productDetailsDataActions } from 'store/actions/data/vehicle/productDetails';
 import { showGlobalNotification } from 'store/actions/notification';
+import { VehicleCheclistDetailsdataActions } from 'store/actions/data/VehicleReceiptCheckList/VehicleReceiptChecklistMaster';
 
 import { AddEditForm } from './AddEditForm';
 import { ViewDetail } from './ViewDetails';
@@ -22,21 +22,21 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            Vehicle: {
-                ProductDetails: { isLoaded: isDataLoaded = false, isLoading, data: ChecklistData = [] },
+            VehicleReceiptChecklist: {
+                VehicleReceiptMaster: { isLoaded: isChecklistDataLoaded = false, isLoading: isChecklistDataLoading = true, data: ChecklistData = [] },
             },
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
         },
     } = state;
 
-    const moduleTitle = 'Product Details';
+    const moduleTitle = 'Checklist Details';
 
     let returnValue = {
         userId,
-        isDataLoaded,
-        typeData,
+        isChecklistDataLoaded,
+        isChecklistDataLoading,
         ChecklistData,
-        isLoading,
+        typeData,
         moduleTitle,
     };
     return returnValue;
@@ -46,10 +46,10 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchList: productDetailsDataActions.fetchList,
-            saveData: productDetailsDataActions.saveData,
-            listShowLoading: productDetailsDataActions.listShowLoading,
-            resetData: productDetailsDataActions.reset,
+            fetchList: VehicleCheclistDetailsdataActions.fetchList,
+            saveData: VehicleCheclistDetailsdataActions.saveData,
+            listShowLoading: VehicleCheclistDetailsdataActions.listShowLoading,
+            resetData: VehicleCheclistDetailsdataActions.reset,
             showGlobalNotification,
         },
         dispatch
@@ -57,16 +57,14 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const VehicleRecieptCheckListMain = (props) => {
-    const { userId, isLoading, handleButtonClick } = props;
-    const { fetchList, resetData, saveData, listShowLoading, showGlobalNotification } = props;
+    const { userId, handleButtonClick, selectedRecord } = props;
+    const { isChecklistDataLoaded, isChecklistDataLoading, ChecklistData } = props;
+    const { fetchList, VehicelReceiptChecklistOnfinish, listShowLoading, showGlobalNotification } = props;
     const { form, selectedCheckListId, section, formActionType, handleFormValueChange, NEXT_ACTION } = props;
 
-    const [formData, setformData] = useState({});
-    const [checkListDataModified, setcheckListDataModified] = useState([
-        { group: 'Mirrors', subGroup: 'Mirrors-L', checkPoint: 'NA', checkResult: 'This is the dummy text', Remarks: 'Side mirrors', formItemType: 'input' },
-        { group: 'Digital Meter', subGroup: 'Odometer Reading', checkPoint: 'NA', checkResult: '12/06/2020-12/06/2020', Remarks: 'Odometer', formItemType: 'numberRange' },
-        { group: 'Mirrors', subGroup: 'Mirrors-R', checkPoint: 'NA', checkResult: 200 - 220, Remarks: 'Side mirrors', formItemType: 'datePicker' },
-    ]);
+    const { chassisNumber } = selectedRecord;
+
+    const [checkListDataModified, setcheckListDataModified] = useState([]);
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [aggregateForm] = Form.useForm();
     const [AdvanceformData, setAdvanceformData] = useState([]);
@@ -92,39 +90,30 @@ const VehicleRecieptCheckListMain = (props) => {
     };
 
     useEffect(() => {
-        if (userId && selectedCheckListId) {
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams: makeExtraParams({ key: 'vin', title: 'vin', value: selectedCheckListId, name: 'vin Number' }), onErrorAction, onSuccessAction });
+        if (userId && chassisNumber && !isChecklistDataLoaded) {
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams: makeExtraParams({ key: 'chassisNumber', title: 'chassisNumber', value: chassisNumber, name: 'Chassis Number' }), onErrorAction, onSuccessAction });
         }
-        return () => {
-            resetData();
-        };
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedCheckListId]);
+    }, [userId, chassisNumber, isChecklistDataLoaded]);
+
+    useEffect(() => {
+        if (isChecklistDataLoaded && ChecklistData) {
+            setcheckListDataModified(
+                ChecklistData['checklistDetailList']?.map((element, index) => {
+                    return { ...element, ismodified: false };
+                })
+            );
+        }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isChecklistDataLoaded, ChecklistData]);
 
     const onFinish = (values) => {
-        const data = { ...formData, vehicleIdentificationNumber: selectedCheckListId, aggregates: checkListDataModified?.filter((checkList) => checkList?.isEdited) };
-        const onSuccess = (res) => {
-            setcheckListDataModified([]);
-            setformData();
-            setIsReadOnly(false);
-            form.resetFields();
-            handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
-        };
-
-        const onError = (message) => {
-            setcheckListDataModified([]);
-        };
-
-        const requestData = {
-            data: data,
-            method: 'post',
-            setIsLoading: listShowLoading,
-            userId,
-            onError,
-            onSuccess,
-        };
-
-        saveData(requestData);
+        if (checkListDataModified?.length) {
+            VehicelReceiptChecklistOnfinish({ type: 'checklist', data: checkListDataModified?.filter((element, index) => element?.ismodified) });
+            handleButtonClick({ buttonAction: NEXT_ACTION });
+        }
     };
     const onFinishFailed = () => {
         form.validateFields()
@@ -139,13 +128,12 @@ const VehicleRecieptCheckListMain = (props) => {
     };
 
     const tableProps = {
-        isLoading: isLoading,
+        isLoading: isChecklistDataLoading,
         tableColumn: tableColumn({ handleButtonClick: handleCheckListClick, formActionType }),
         tableData: checkListDataModified,
     };
 
     const formProps = {
-        formData,
         formActionType,
         showGlobalNotification,
         selectedCheckListId,
@@ -165,8 +153,7 @@ const VehicleRecieptCheckListMain = (props) => {
 
     const viewProps = {
         styles,
-        formData,
-        isLoading,
+        isChecklistDataLoading,
         checkListDataModified,
         setcheckListDataModified,
         formActionType,

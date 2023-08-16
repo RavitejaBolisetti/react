@@ -17,16 +17,16 @@ const ViewCriticalityGroupMain = (props) => {
     };
 
     return (
-        <div className={styles.viewContainer}>
+        <div className={styles?.viewContainer}>
             <>
                 <Descriptions {...viewProps}>
                     <Descriptions.Item label="Criticality Group Id">{formData?.criticalityGroupCode}</Descriptions.Item>
                     <Descriptions.Item label="Criticality Group Name">{formData?.criticalityGroupName}</Descriptions.Item>
                     <Descriptions.Item label="Default Group">
-                        <span className={formData?.criticalityDefaultGroup ? styles.activeText : styles.inactiveText}>{formData?.criticalityDefaultGroup ? 'Active' : 'Inactive'}</span>
+                        <span className={formData?.criticalityDefaultGroup ? styles.activeText : styles?.inactiveText}>{formData?.criticalityDefaultGroup ? 'Active' : 'Inactive'}</span>
                     </Descriptions.Item>
                     <Descriptions.Item label="Status">
-                        <span className={formData?.activeIndicator ? styles.activeText : styles.inactiveText}>{formData?.activeIndicator ? 'Active' : 'Inactive'}</span>
+                        <span className={formData?.activeIndicator ? styles.activeText : styles?.inactiveText}>{formData?.activeIndicator ? 'Active' : 'Inactive'}</span>
                     </Descriptions.Item>
                 </Descriptions>
             </>

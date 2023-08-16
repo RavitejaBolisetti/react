@@ -16,15 +16,15 @@ import { filterFunction } from 'utils/filterFunction';
 import { btnVisiblity } from 'utils/btnVisiblity';
 
 import { showGlobalNotification } from 'store/actions/notification';
-import { AddEditForm } from './AddEditForm';
+import { geoDistrictDataActions } from 'store/actions/data/geo/districts';
 import { geoStateDataActions } from 'store/actions/data/geo/states';
 import { geoCityDataActions } from 'store/actions/data/geo/cities';
+
+import { AddEditForm } from './AddEditForm';
 import { AdvancedSearch } from './AdvancedSearch';
+
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 import { FilterIcon } from 'Icons';
-
-import styles from 'components/common/Common.module.css';
-import { geoDistrictDataActions } from 'store/actions/data/geo/districts';
 
 const mapStateToProps = (state) => {
     const {
@@ -429,11 +429,9 @@ export const ListCityMasterBase = (props) => {
     return (
         <>
             <AppliedAdvanceFilter {...advanceFilterResultProps} />
-            <Row>
+            <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <div className={styles.tableProduct}>
-                        <ListDataTable isLoading={showDataLoading} {...tableProps} handleAdd={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })} />
-                    </div>
+                    <ListDataTable isLoading={showDataLoading} {...tableProps} handleAdd={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })} />
                 </Col>
             </Row>
 

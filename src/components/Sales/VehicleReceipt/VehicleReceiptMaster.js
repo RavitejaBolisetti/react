@@ -218,6 +218,7 @@ export const VehicleReceiptMasterBase = (props) => {
 
     useEffect(() => {
         if (userId) {
+            setShowDataLoading(true);
             fetchVehicleReceiptList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -360,6 +361,7 @@ export const VehicleReceiptMasterBase = (props) => {
         tableData: data,
         showAddButton: false,
         handleAdd: handleButtonClick,
+        receiptType,
     };
 
     const onAdvanceSearchCloseAction = () => {
@@ -386,11 +388,11 @@ export const VehicleReceiptMasterBase = (props) => {
 
         switch (buttonkey) {
             case VEHICLE_RECEIPT_STATUS?.IN_TRANSIT?.key: {
-                setTableIconsVisibility({ ...tableActionsFalse, AddIcon: true });
+                setTableIconsVisibility({ ...tableActionsFalse, AddIcon: true, EyeIcon: false });
                 break;
             }
             case VEHICLE_RECEIPT_STATUS?.PARTIALLY_RECEIVED?.key: {
-                setTableIconsVisibility({ ...tableActionsFalse, EyeIcon: true, EditIcon: true });
+                setTableIconsVisibility({ ...tableActionsFalse, EyeIcon: false });
                 break;
             }
             case VEHICLE_RECEIPT_STATUS?.RECEIVED?.key: {

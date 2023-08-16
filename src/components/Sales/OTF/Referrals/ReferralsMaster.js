@@ -13,8 +13,6 @@ import { BASE_URL_CUSTOMER_MASTER_VEHICLE_LIST as customURL } from 'constants/ro
 import { otfReferralsDataActions } from 'store/actions/data/otf/referrals';
 import { showGlobalNotification } from 'store/actions/notification';
 
-import { formattedCalendarDate } from 'utils/formatDateTime';
-
 import { AddEditForm } from './AddEditForm';
 import { ViewDetail } from './ViewDetail';
 
@@ -76,10 +74,8 @@ const ReferralsMasterBase = (props) => {
     const [searchForm] = Form.useForm();
     const [formData, setFormData] = useState();
     const [viewFormData, setViewFormData] = useState();
-    const [resetField, setResetField] = useState(false);
     const { filterString, setFilterString } = props;
 
-    const [isCusomerSearchVisible, setCusomerSearchVisible] = useState(false);
     const [customerList, setCustomerList] = useState();
 
     useEffect(() => {
@@ -152,7 +148,6 @@ const ReferralsMasterBase = (props) => {
                 extraParams: searchParams,
                 onSuccessAction: (res) => {
                     if (res?.data?.customerMasterDetails?.length > 0) {
-                        setCusomerSearchVisible(true);
                         setCustomerList(res?.data?.customerMasterDetails);
                     } else {
                         res?.data?.customerMasterDetails && setFormData(res?.data?.customerMasterDetails?.[0]);
@@ -168,7 +163,6 @@ const ReferralsMasterBase = (props) => {
 
     const onFinish = (values) => {
         const data = { ...values, otfNumber: selectedOrderId, dob: formatDate(values?.dob), id: referralData?.id };
-
         const onSuccess = (res) => {
             form.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
@@ -211,7 +205,7 @@ const ReferralsMasterBase = (props) => {
         formData,
         onFinish,
         onFinishFailed,
-        resetField,
+        customerList,
         optionType: typeData[PARAM_MASTER?.CUST_VEH_SEARCH?.id],
         filterString,
         setFilterString,
@@ -229,7 +223,7 @@ const ReferralsMasterBase = (props) => {
 
     return (
         <>
-            <Form form={form} autoComplete="off" layout="vertical" colon={false} onFinish={onFinish} onFinishFailed={onFinishFailed} onValuesChange={handleFormValueChange}>
+            <Form form={form} autoComplete="off" layout="vertical" data-testid="test" colon={false} onFinish={onFinish} onFinishFailed={onFinishFailed} onValuesChange={handleFormValueChange}>
                 <Row gutter={20} className={styles.drawerBodyRight}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Row>

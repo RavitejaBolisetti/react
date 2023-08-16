@@ -33,7 +33,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Doc Type and Ledger Mapping';
+    const moduleTitle = 'Doc Type - Charges & Ledger Mapping';
 
     let returnValue = {
         userId,
@@ -148,30 +148,6 @@ export const DocumentTypeOtherChargesMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, page]);
 
-    // const handleCodeFunction = (value) => {
-    //     let obj = {
-    //         // financialAccountHeadCode: null,
-    //         chargeDescription: null,
-    //     };
-
-    //     if (formEdit) {
-    //         editForm?.setFieldsValue(obj);
-    //     } else {
-    //         docTypeHeadMappingForm?.setFieldsValue(obj);
-    //     }
-
-    //     const extraParams = [
-    //         {
-    //             key: 'taxChargeType',
-    //             title: 'taxChargeType',
-    //             value: value ? value : null,
-    //             name: 'taxChargeType',
-    //         },
-    //     ];
-
-    //     // fetchTaxCodeList({ setIsLoading: listShowLoadingDocTypeLedger, userId, extraParams, onSuccessAction });
-    // };
-
     useEffect(() => {
         if (userId) {
             fetchDocTypeLedger({ setIsLoading: listShowLoadingDocTypeLedger, userId, customURL, extraParams, onSuccessAction });
@@ -186,30 +162,6 @@ export const DocumentTypeOtherChargesMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isFinancialAccountHeadLoaded, userId]);
 
-    // useEffect(() => {
-    //     setDropdownItems(() => []);
-    //     if (docTypeHeadMappingList && docTypeHeadMappingList?.length > 0) {
-    //         let len1 = docTypeHeadMappingList?.length;
-    //         let len2 = typeData?.length;
-    //         for (let j = 0; j < len2; j++) {
-    //             let flag = false;
-    //             for (let i = 0; i < len1; i++) {
-    //                 if (docTypeHeadMappingList[i]?.chargeCode === typeData[j]?.taxCode) {
-    //                     setDropdownItems((item) => [...item, { ...typeData[j], disabled: true }]);
-    //                     flag = true;
-    //                     break;
-    //                 }
-    //             }
-    //             if (!flag) {
-    //                 setDropdownItems((item) => [...item, { ...typeData[j], disabled: false }]);
-    //             }
-    //         }
-    //     } else if (typeData && typeData?.length) {
-    //         setDropdownItems(() => [...typeData]);
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [typeData]);
-
     const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
         setFormData([]);
@@ -223,6 +175,7 @@ export const DocumentTypeOtherChargesMain = (props) => {
     const onFinish = (values) => {
         const tempdata = { ...values, id: formData?.documentTypeId || '', accountLedgerMappingDtoList: docTypeHeadMappingList };
         const { applicationName, documentTypeName, documentTypeCode, ...data } = tempdata;
+
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
@@ -287,7 +240,7 @@ export const DocumentTypeOtherChargesMain = (props) => {
         setFormActionType,
         onFinish,
         onFinishFailed,
-
+        setFilterString,
         isVisible: isFormVisible,
         onCloseAction,
         titleOverride: drawerTitle.concat(moduleTitle),
@@ -300,7 +253,6 @@ export const DocumentTypeOtherChargesMain = (props) => {
         setButtonData,
         handleButtonClick,
         taxChargeCategoryTypeData,
-        // handleCodeFunction,
         editForm,
         docTypeHeadMappingForm,
         formEdit,
@@ -323,8 +275,6 @@ export const DocumentTypeOtherChargesMain = (props) => {
         tableData: docTypeLedgerData,
         showAddButton: false,
     };
-
-    const title = 'Doc Type - charges & ledger mapping';
 
     return (
         <>

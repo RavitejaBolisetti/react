@@ -23,7 +23,7 @@ import { CUSTOMER_INDIVIDUAL_SECTION } from 'constants/CustomerIndividualSection
 import { CUSTOMER_CORPORATE_SECTION } from 'constants/CustomerCorporateSection';
 import { CUSTOMER_TYPE } from 'constants/CustomerType';
 import { documentViewDataActions } from 'store/actions/data/customerMaster/documentView';
-import { ChangeHistory } from './ChangeHistory';
+import { CustomerChangeHistory } from './CustomerChangeHistory';
 import DataTable from 'utils/dataTable/DataTable';
 import { CustomerMainConatiner } from './CustomerMainConatiner';
 import styles from 'components/common/Common.module.css';
@@ -222,7 +222,7 @@ const CustomerMasterMain = (props) => {
     useEffect(() => {
         if (userId && customerType && extraParams) {
             setShowDataLoading(true);
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams: extraParams || defaultExtraParam, onSuccessAction, onErrorAction });
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams: refreshCustomerList ? defaultExtraParam : extraParams || defaultExtraParam, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, customerType, extraParams, refreshCustomerList]);
@@ -266,7 +266,7 @@ const CustomerMasterMain = (props) => {
         setIsFormVisible(true);
     };
 
-    const onFinish = (values, e) => { };
+    const onFinish = (values, e) => {};
 
     const onFinishFailed = (errorInfo) => {
         console.error(errorInfo);
@@ -316,48 +316,6 @@ const CustomerMasterMain = (props) => {
             return 'Add New ';
         }
     }, [formActionType]);
-
-    const containerProps = {
-        record: selectedCustomer,
-        form,
-        formActionType,
-        setFormActionType,
-        onFinish,
-        onFinishFailed,
-        isVisible: isFormVisible,
-        onCloseAction,
-        titleOverride: drawerTitle.concat(moduleTitle),
-        tableData: data,
-        customerType,
-        ADD_ACTION,
-        EDIT_ACTION,
-        VIEW_ACTION,
-        NEXT_ACTION,
-        buttonData,
-
-        setButtonData,
-        handleButtonClick,
-        defaultFormActionType,
-        defaultBtnVisiblity,
-        selectedCustomerId,
-        setSelectedCustomerId,
-        selectedCustomer,
-        setSelectedCustomer,
-        section,
-        currentSection,
-        sectionName,
-        setCurrentSection,
-        shouldResetForm,
-        handleFormValueChange,
-        isLastSection,
-        saveButtonName: !selectedCustomerId ? 'Create Customer ID' : isLastSection ? 'Submit' : 'Save & Next',
-        setIsFormVisible,
-        setRefreshCustomerList,
-        profileCardLoading,
-        setProfileCardLoading,
-        resetViewData,
-        handleChangeHistory,
-    };
 
     const handleCustomerTypeChange = (id) => {
         setCustomerType(id);
@@ -413,6 +371,49 @@ const CustomerMasterMain = (props) => {
         selectedCustomerId,
         ChangeHistoryTitle,
         customerType,
+    };
+
+    const containerProps = {
+        record: selectedCustomer,
+        form,
+        formActionType,
+        setFormActionType,
+        onFinish,
+        onFinishFailed,
+        isVisible: isFormVisible,
+        onCloseAction,
+        titleOverride: drawerTitle.concat(moduleTitle),
+        tableData: data,
+        customerType,
+        ADD_ACTION,
+        EDIT_ACTION,
+        VIEW_ACTION,
+        NEXT_ACTION,
+        buttonData,
+
+        setButtonData,
+        handleButtonClick,
+        defaultFormActionType,
+        defaultBtnVisiblity,
+        selectedCustomerId,
+        setSelectedCustomerId,
+        selectedCustomer,
+        setSelectedCustomer,
+        section,
+        currentSection,
+        sectionName,
+        setCurrentSection,
+        shouldResetForm,
+        handleFormValueChange,
+        isLastSection,
+        saveButtonName: !selectedCustomerId ? 'Create Customer ID' : isLastSection ? 'Submit' : 'Save & Next',
+        setIsFormVisible,
+        setRefreshCustomerList,
+        profileCardLoading,
+        setProfileCardLoading,
+        resetViewData,
+        handleChangeHistory,
+        handleResetFilter,
     };
 
     const showAddButton = true;
@@ -515,7 +516,7 @@ const CustomerMasterMain = (props) => {
                 </Col>
             </Row>
             <CustomerMainConatiner {...containerProps} />
-            <ChangeHistory {...ChangeHistoryProps} />
+            <CustomerChangeHistory {...ChangeHistoryProps} />
         </>
     );
 };

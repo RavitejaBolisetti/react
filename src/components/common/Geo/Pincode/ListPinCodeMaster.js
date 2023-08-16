@@ -30,8 +30,6 @@ import { geoCityDataActions } from 'store/actions/data/geo/cities';
 import { geoPinCodeDataActions } from 'store/actions/data/geo/pincodes';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
-import styles from 'components/common/Common.module.css';
-
 const mapStateToProps = (state) => {
     const {
         auth: { userId, token },
@@ -655,9 +653,7 @@ const ListPinCodeMasterBase = (props) => {
             <AppliedAdvanceFilter {...advanceFilterResultProps} />
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <div className={styles.tableProduct}>
-                        <ListDataTable {...tableProps} handleAdd={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })} addTitle={title} />
-                    </div>
+                    <ListDataTable {...tableProps} handleAdd={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })} addTitle={title} />
                 </Col>
             </Row>
 

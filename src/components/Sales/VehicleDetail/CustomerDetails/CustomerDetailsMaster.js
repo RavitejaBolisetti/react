@@ -41,7 +41,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    console.log(state, 'state');
+    // console.log(state, 'state');
 
     const moduleTitle = 'Customer Details';
 
@@ -69,7 +69,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            listShowLoading: vehicleCustomerDetailsDataAction.listShowLoading,
             fetchList: vehicleCustomerDetailsDataAction.fetchList,
             saveData: vehicleCustomerDetailsDataAction.saveData,
             resetData: vehicleCustomerDetailsDataAction.reset,
@@ -99,7 +98,7 @@ export const CustomerDetailsMain = (props) => {
     const [sameAsBookingCustomer, setSameAsBookingCustomer] = useState(false);
 
     const handleCollapse = (key) => {
-        console.log('key', key);
+        // console.log('key', key);
         !activeKey?.includes(key) ? setActiveKey([key]) : setActiveKey([]);
     };
 
@@ -352,6 +351,7 @@ export const CustomerDetailsMain = (props) => {
         isLoading,
         activeKey,
         setActiveKey,
+        viewFormData,
     };
 
     const handleFormValueChange = () => {

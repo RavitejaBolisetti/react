@@ -38,20 +38,20 @@ function FormAccountAndDocumentMapping(props) {
                             <TreeSelectField {...treeSelectFieldProps} />
                         </Form.Item>
                     </Col>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item label="Document Description" name="documentTypeCode" initialValue={props?.code} rules={[validateRequiredSelectField('Document Description')]}>
                             {customSelectBox({ disabled: mainFomEdit, data: documentDescriptionData, placeholder: preparePlaceholderSelect('Document Description') })}
                         </Form.Item>
                     </Col>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item label="Financial Account Head" name="financialAccountHeadCode" initialValue={props?.chargeDescription} rules={[validateRequiredInputField('Financial Account Head')]}>
                             {customSelectBox({ disabled: mainFomEdit, data: financialAccountData, placeholder: preparePlaceholderSelect('Financial Account Head') })}
                         </Form.Item>
                     </Col>
+
                     <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
                         <Form.Item name="internalId" label="Internal Id" />
                     </Col>
-
                     <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
                         <Form.Item label="Application Menu" name="applicationName" />
                     </Col>
@@ -61,9 +61,12 @@ function FormAccountAndDocumentMapping(props) {
                     <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
                         <Form.Item label="Financial Account Head" name="financialAccountHead" />
                     </Col>
+                    <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
+                        <Form.Item label="accountDocumentMap Id" name="accountDocumentMapId" />
+                    </Col>
 
                     {!formEdit && (
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.marB20}>
                             <Button
                                 type="primary"
                                 onClick={() => {

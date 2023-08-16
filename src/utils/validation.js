@@ -227,3 +227,7 @@ export const noWhiteSpaceinBeginning = (fieldName) => ({
     pattern: /^[^\s]+(\s+[^\s]+)*$/,
     message: 'Please dont enter spaces ',
 });
+export const validateNegativeNumber = (fieldName) => ({
+    pattern: /^\d+$/,
+    message: fieldName + ' Does not accept negative numbers',
+});

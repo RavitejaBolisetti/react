@@ -14,7 +14,6 @@ import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 
 
 import { ListDataTable } from 'utils/ListDataTable';
 import { VehicleDetailMainContainer } from './VehicleDetailMainContainer';
-// import { AdvancedSearch } from './AdvancedSearch';
 import { showGlobalNotification } from 'store/actions/notification';
 import { vehicleDetailDataActions } from 'store/actions/data/vehicle/vehicleDetail';
 
@@ -31,7 +30,7 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             Vehicle: {
-                VehicleDetail: { isLoaded: isDataLoaded = false, isLoading, isDetailLoaded, detailData: vehicleDetailData = [], data, filter: filterString },
+                VehicleDetail: { data, filter: filterString },
             },
         },
     } = state;

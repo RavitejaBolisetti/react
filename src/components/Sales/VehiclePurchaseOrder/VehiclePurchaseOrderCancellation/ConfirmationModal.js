@@ -13,9 +13,9 @@ import { validateRequiredSelectField } from 'utils/validation';
 import styles from 'components/common/Common.module.css';
 
 export const ConfirmationModalFrom = (props) => {
-    const { handleCloseModal } = props;
-    const { otfCancellationForm, onFinishVPOCancellation } = props;
-    const { buttonData, setButtonData, typeData } = props;
+    // const { handleCloseModal } = props;
+    const { vpoCancellationForm, onFinishVPOCancellation } = props;
+    const { buttonData, setButtonData, typeData,setIsCancelVisible } = props;
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
@@ -24,9 +24,13 @@ export const ConfirmationModalFrom = (props) => {
     const handleFormFieldChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
-
+    const handleCloseModal = () => {
+        setIsCancelVisible(false);  
+        vpoCancellationForm.resetFields(); 
+    };
+     
     return (
-        <Form form={otfCancellationForm} onFinish={onFinishVPOCancellation} layout="vertical" autocomplete="off" colon="false" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange}>
+        <Form form={vpoCancellationForm} onFinish={onFinishVPOCancellation} layout="vertical" autocomplete="off" colon="false" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange}>
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item name="cancelRemarksCode" label="Cancellation Reason " rules={[validateRequiredSelectField('Cancellation Reason')]}>

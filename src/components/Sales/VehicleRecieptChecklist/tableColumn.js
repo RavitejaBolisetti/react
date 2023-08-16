@@ -4,25 +4,22 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
+import { convertDateMonthYearDayjs } from 'utils/formatDateTime';
+
 import styles from 'components/common/Common.module.css';
 
 export const tableColumn = ({ handleButtonClick, page, pageSize, actionButtonVisibility }) => {
     const tableColumn = [
         tblPrepareColumns({
             title: 'Receipt Number',
-            dataIndex: 'receiptNumber',
+            dataIndex: 'grnNumber',
             width: '14%',
         }),
         tblPrepareColumns({
             title: 'Receipt Date',
-            dataIndex: 'receiptDate',
+            dataIndex: 'grnDate',
             width: '14%',
-        }),
-
-        tblPrepareColumns({
-            title: 'Customer Name',
-            dataIndex: 'customerName',
-            width: '14%',
+            render: (text) => convertDateMonthYearDayjs(text),
         }),
 
         tblPrepareColumns({
@@ -33,7 +30,7 @@ export const tableColumn = ({ handleButtonClick, page, pageSize, actionButtonVis
 
         tblPrepareColumns({
             title: 'Chassis No.',
-            dataIndex: 'chassis',
+            dataIndex: 'chassisNumber',
             width: '14%',
         }),
 

@@ -15,8 +15,9 @@ import styles from 'components/common/Common.module.css';
 
 export default function AppliedAdvanceFilter(props) {
     const { showAddButton = true, advanceFilter = false, title, handleButtonClick, filterString, extraParams, removeFilter, handleResetFilter, setAdvanceSearchVisible, setFilterString, vpoFilter = false, typeData } = props;
-
+    const [searchForm] = Form.useForm();
     const searchBoxProps = {
+        searchForm,
         filterString,
         setFilterString,
         optionType: typeData['PO_MST'],
@@ -39,6 +40,7 @@ export default function AppliedAdvanceFilter(props) {
                                             <Button
                                                 icon={<FilterIcon />}
                                                 type="link"
+                                                className={styles.verticallyCentered}
                                                 onClick={() => {
                                                     setAdvanceSearchVisible(true);
                                                 }}
@@ -52,15 +54,15 @@ export default function AppliedAdvanceFilter(props) {
                         </Form>
                     </Col>
                     {showAddButton && (
-                        <Col className={styles.addGroup} xs={24} sm={24} md={6} lg={6} xl={6}>
-                            <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
+                        <Col className={styles.buttonsGroupRight} xs={24} sm={24} md={6} lg={6} xl={6}>
+                            <Button icon={<PlusOutlined />} type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
                                 Add
                             </Button>
                         </Col>
                     )}
                 </Row>
 
-                {advanceFilter && filterString?.advanceFilter && (
+                {advanceFilter && filterString?.advanceFilter && extraParams.find((i) => i.name) && (
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.advanceFilterTop}>
                             <Row gutter={20}>
@@ -74,7 +76,7 @@ export default function AppliedAdvanceFilter(props) {
                                                     {filter?.name}
                                                     {filter?.canRemove && (
                                                         <span>
-                                                            <RxCross2 onClick={() => removeFilter(filter?.key)} />
+                                                            <RxCross2 onClick={() => removeFilter(filter?.key)} data-testid="removeBtn" />
                                                         </span>
                                                     )}
                                                 </div>

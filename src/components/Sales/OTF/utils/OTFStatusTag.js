@@ -5,7 +5,6 @@
  */
 import { Tag } from 'antd';
 import { OTF_STATUS } from 'constants/OTFStatus';
-import styles from 'components/common/Common.module.css';
 
 export const OTFStatusTag = (status) => {
     let tag = '';

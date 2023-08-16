@@ -11,7 +11,7 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
     const tableColumn = [];
     tableColumn.push(
         tblPrepareColumns({
-            title: 'Accounting Category Code',
+            title: 'Account Category Code',
             dataIndex: 'accountCategoryCode',
             width: '15%',
         }),

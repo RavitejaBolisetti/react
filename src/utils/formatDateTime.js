@@ -8,6 +8,7 @@ import moment from 'moment';
 import dayjs from 'dayjs';
 
 export const dateFormat = 'DD/MM/YYYY';
+export const monthDateFormat = 'DD MMM YYYY';
 
 export const formattedCalendarDate = (dateToConvert = '', dateFormat = 'YYYY-MM-DD') => {
     return dateToConvert ? dayjs(moment(dateToConvert).format(dateFormat), dateFormat) : null;
@@ -21,6 +22,8 @@ export const convertDateTime = (dateToConvert = '', defaultFormat = 'YYYY-MM-DD 
 export const convertDateAndTime = (dateToConvert = '', defaultFormat = 'DD MMM YYYY  h:MM A') => (dateToConvert ? moment(dateToConvert).format(defaultFormat) : 'NA');
 
 export const convertDateMonthYear = (dateToConvert = moment(), defaultFormat = 'DD MMM YYYY') => moment(dateToConvert).format(defaultFormat);
+
+export const convertDateMonthYearDayjs = (dateToConvert = dayjs(), defaultFormat = 'DD MMM YYYY') => dayjs(dateToConvert).format(defaultFormat);
 
 export const convertDateToCalender = (dateToConvert) => (dateToConvert ? dayjs(dateToConvert, dateFormat) : null);
 

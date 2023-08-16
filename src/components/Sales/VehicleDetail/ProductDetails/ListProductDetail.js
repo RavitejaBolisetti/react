@@ -98,6 +98,7 @@ const ProductDetailMasterMain = (props) => {
                     if (element?.value === value || element?.key === value) {
                         return element;
                     }
+                    return false;
                 });
                 if (codeVal) return codeVal?.value;
                 return 'NA';
@@ -107,6 +108,7 @@ const ProductDetailMasterMain = (props) => {
                     if (element?.value === value || element?.key === value) {
                         return element;
                     }
+                    return false;
                 });
 
                 if (codeVal) return codeVal?.value;
@@ -260,8 +262,6 @@ const ProductDetailMasterMain = (props) => {
         tooltTipText,
         settooltTipText,
         isLoading,
-        openAccordian,
-        setOpenAccordian,
         optionsServiceModified,
         formActionType,
         typeData,

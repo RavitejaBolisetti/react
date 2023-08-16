@@ -32,7 +32,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 
 import { ChangeHistory } from './ChangeHistory';
 
-import { disableParent } from 'components/common/ProductHierarchy/ProductHierarchyUtils';
+import { DisableParent } from 'components/common/ProductHierarchy/ProductHierarchyUtils';
 
 import LeftPanel from '../LeftPanel';
 import styles from 'components/common/Common.module.css';
@@ -217,7 +217,6 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         if (!isDataLoaded && userId) {
             hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: 'Manufacturer Administration', onErrorAction });
         }
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, isDataAttributeLoaded, userId]);
     useEffect(() => {
@@ -262,8 +261,9 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataOrgLoaded, userId]);
+
     useEffect(() => {
-        manufacturerOrgHierarchyData?.map((i) => disableParent(i));
+        manufacturerOrgHierarchyData?.map((i) => DisableParent(i));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [manufacturerOrgHierarchyData]);
 
