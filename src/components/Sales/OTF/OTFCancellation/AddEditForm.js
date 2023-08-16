@@ -73,6 +73,7 @@ const AddEditFormMain = (props) => {
         single: true,
         singleDisabled,
         setSingleDisabled,
+        isReplaceEnabled: false,
     };
 
     // useEffect(() => {
