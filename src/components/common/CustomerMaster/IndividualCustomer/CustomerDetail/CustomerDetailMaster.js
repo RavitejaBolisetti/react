@@ -115,7 +115,8 @@ const CustomerDetailMasterBase = (props) => {
     }, [isDataLoaded]);
 
     useEffect(() => {
-        if (data?.pendingNameChangeRequest === null) {
+        if (data) {
+            // console.log('data', data);
             setCustomerNameList({
                 titleCode: data?.titleCode,
                 firstName: data?.firstName,

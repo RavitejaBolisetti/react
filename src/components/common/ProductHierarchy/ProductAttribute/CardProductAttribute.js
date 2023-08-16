@@ -63,7 +63,7 @@ const CardProductAttribute = (props) => {
         });
 
         setFormEdit(false);
-        attributeForm?.resetFields();
+        // attributeForm?.resetFields();
         forceUpdate();
     };
 

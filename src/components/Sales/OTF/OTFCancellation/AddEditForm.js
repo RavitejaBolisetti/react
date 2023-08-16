@@ -24,6 +24,7 @@ import { FiEye, FiTrash } from 'react-icons/fi';
 const { TextArea, Search } = Input;
 
 const AddEditFormMain = (props) => {
+    console.log('dealerDataList===>', props.dealerDataList)
     const { otfCancellationForm, formData, selectedOrder, fieldNames, onFinishOTFCancellation } = props;
     const { handleButtonClick, buttonData, setButtonData, onCloseAction, handleFormValueChange, typeData, setUploadedFile, showGlobalNotification, viewDocument, setEmptyList } = props;
     const { searchDealerValue, setSearchDealerValue, dealerDataList } = props;
