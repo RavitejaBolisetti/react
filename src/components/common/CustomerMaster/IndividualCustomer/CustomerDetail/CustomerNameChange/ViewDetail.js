@@ -90,7 +90,7 @@ const ViewDetailMain = (props) => {
     };
 
     const onStatusChange = (value) => {
-        const data = { id: formData?.pendingNameChangeRequest?.id || '', customerCode: selectedCustomerId, rejectionRemark: 'Name change request', actionStatus: value };
+        const data = { id: formData?.customerNameChangeRequest?.id || '', customerCode: selectedCustomerId, rejectionRemark: 'Name change request', actionStatus: value };
         const onSuccess = (res) => {
             setRefreshCustomerList(true);
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Customer name change request approved successfully' });
@@ -135,15 +135,7 @@ const ViewDetailMain = (props) => {
     };
 
     const canApproveNameChangeRequest = true;
-    const pendingNameChangeRequest = formData?.pendingNameChangeRequest;
-
-    const pendignRequest = pendingNameChangeRequest && {
-        titleCode: pendingNameChangeRequest?.newTitleCode,
-        firstName: pendingNameChangeRequest?.newFirstName,
-        middleName: pendingNameChangeRequest?.newMiddleName,
-        lastName: pendingNameChangeRequest?.newLastName,
-        supportingDocuments: formData?.supportingDocuments,
-    };
+    const customerNameChangeRequest = formData?.customerNameChangeRequest;
     return (
         <>
             <div className={styles.cardInsideBox}>
@@ -161,7 +153,7 @@ const ViewDetailMain = (props) => {
                     </Col>
                 </Row>
                 <Divider />
-                {pendingNameChangeRequest && (
+                {customerNameChangeRequest && (
                     <Collapse
                         expandIcon={expandIcon}
                         activeKey={activeKey}
@@ -175,8 +167,8 @@ const ViewDetailMain = (props) => {
                                 <Row>
                                     <Col xs={24} sm={24} md={18} lg={20} xl={20}>
                                         <Typography>
-                                            {getCodeValue(typeData?.TITLE, pendignRequest?.titleCode)}&nbsp;
-                                            {(pendignRequest?.firstName || '') + ' ' + (pendignRequest?.middleName || '') + ' ' + (pendignRequest?.lastName || '')}
+                                            {getCodeValue(typeData?.TITLE, customerNameChangeRequest?.titleCode)}&nbsp;
+                                            {(customerNameChangeRequest?.firstName || '') + ' ' + (customerNameChangeRequest?.middleName || '') + ' ' + (customerNameChangeRequest?.lastName || '')}
                                         </Typography>
                                         <Text type="secondary" style={{ fontSize: '12px', fontWeight: 'normal' }}>
                                             Current Name
@@ -190,20 +182,20 @@ const ViewDetailMain = (props) => {
                             key={1}
                         >
                             <Descriptions {...nameViewProps} style={{ padding: '10px' }}>
-                                <Descriptions.Item label="Title">{checkAndSetDefaultValue(getCodeValue(typeData?.TITLE, pendignRequest?.titleCode))}</Descriptions.Item>
-                                <Descriptions.Item label="First Name">{checkAndSetDefaultValue(pendignRequest?.firstName)}</Descriptions.Item>
-                                <Descriptions.Item label="Middle Name">{checkAndSetDefaultValue(pendignRequest?.middleName)}</Descriptions.Item>
-                                <Descriptions.Item label="Last Name">{checkAndSetDefaultValue(pendignRequest?.lastName)}</Descriptions.Item>
+                                <Descriptions.Item label="Title">{checkAndSetDefaultValue(getCodeValue(typeData?.TITLE, customerNameChangeRequest?.titleCode))}</Descriptions.Item>
+                                <Descriptions.Item label="First Name">{checkAndSetDefaultValue(customerNameChangeRequest?.firstName)}</Descriptions.Item>
+                                <Descriptions.Item label="Middle Name">{checkAndSetDefaultValue(customerNameChangeRequest?.middleName)}</Descriptions.Item>
+                                <Descriptions.Item label="Last Name">{checkAndSetDefaultValue(customerNameChangeRequest?.lastName)}</Descriptions.Item>
                             </Descriptions>
 
-                            {pendignRequest?.supportingDocuments?.map((item) => (
+                            {customerNameChangeRequest?.supportingDocuments?.map((item) => (
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                         <Card className={styles.viewDocumentStrip} key={item?.documentId} title={item?.documentName} extra={<FiDownload />} onClick={downloadFileFromButton}></Card>
                                     </Col>
                                 </Row>
                             ))}
-                            {canApproveNameChangeRequest && pendingNameChangeRequest !== null && (
+                            {canApproveNameChangeRequest && customerNameChangeRequest !== null && (
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                         <Button type="primary" className={styles.marR20} onClick={handleApprove}>
@@ -234,7 +226,7 @@ const ViewDetailMain = (props) => {
                                         {getCodeValue(typeData?.TITLE, formData?.titleCode)}&nbsp;
                                         {(formData?.firstName || '') + ' ' + (formData?.middleName || '') + ' ' + (formData?.lastName || '')}
                                     </Typography>
-                                    {pendingNameChangeRequest && (
+                                    {customerNameChangeRequest && (
                                         <Text type="secondary" style={{ fontSize: '12px', fontWeight: 'normal' }}>
                                             Previous Name
                                         </Text>
