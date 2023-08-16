@@ -11,7 +11,7 @@ import { Col, Form, Row } from 'antd';
 import { tableColumn } from './tableColumn';
 import AdvanceFilter from './AdvanceFilter';
 import { AdvancedSearch } from './AdvancedSearch';
-import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 'utils/btnVisiblity';
+import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, ALLOT, UNALLOT, btnVisiblity } from 'utils/btnVisiblity';
 
 import { ViewDetail } from './ViewDetail';
 import { ListDataTable } from 'utils/ListDataTable';
@@ -24,6 +24,7 @@ import { vehicleAllotment } from 'store/actions/data/vehicleAllotment/VehicleAll
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { VEHICLE_TYPE } from 'constants/VehicleType';
 import { BASE_URL_VEHICLE_ALLOTMENT as customURL } from 'constants/routingApi';
+import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 import { FilterIcon } from 'Icons';
 
@@ -40,7 +41,6 @@ const mapStateToProps = (state) => {
             },
         },
     } = state;
-    console.log("🚀 ~ file: VehicleAllotmentMaster.js:43 ~ mapStateToProps ~ state:", state)
     
     const moduleTitle = 'Vehicle Receipt';
     let returnValue = {
@@ -71,7 +71,7 @@ const mapDispatchToProps = (dispatch) => ({
             setFilterString: vehicleAllotment.setFilter,
             resetData: vehicleAllotment.reset,
             fetchVehicleAllotmentDetails: vehicleAllotment.fetchDetail,
-            //saveData: vehicleAllotment.saveData,
+            saveData: vehicleAllotment.saveData,
             listShowLoading: vehicleAllotment.listShowLoading,
             showGlobalNotification,
         },
@@ -92,6 +92,7 @@ export const VehicleAllotmentMasterBase = (props) => {
 
     const [selectedOrder, setSelectedOrder] = useState();
     const [selectedOrderId, setSelectedOrderId] = useState();
+    const [selectedOTFDetails, setSelectedOrderOTFDetails] = useState();
 
     const [section, setSection] = useState();
     const [defaultSection, setDefaultSection] = useState();
@@ -274,9 +275,11 @@ export const VehicleAllotmentMasterBase = (props) => {
         form.resetFields();
         form.setFieldsValue(undefined);
         switch (buttonAction) {
-            case ADD_ACTION:
+            case ALLOT:
+                handleVehicleAllotment(record, buttonAction);
                 break;
-            case EDIT_ACTION:
+            case UNALLOT:
+                handleVehicleAllotment(record, buttonAction);
                 break;
             case VIEW_ACTION:
                 resetOTFSearchedList();
@@ -297,7 +300,7 @@ export const VehicleAllotmentMasterBase = (props) => {
                 break;
         }
         
-        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction, orderStatus: record?.orderStatus }));
+        //setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction, orderStatus: record?.orderStatus }));
     };
 
     const onFinishSearch = (values) => {};
@@ -318,6 +321,37 @@ export const VehicleAllotmentMasterBase = (props) => {
             const { [key]: names, ...rest } = filterString;
             setFilterString({ ...rest });
         }
+    };
+
+    const handleVehicleAllotment = (req, buttonAction) => {
+        let data = { ...req , vehicleOTFDetails: selectedOTFDetails };
+
+        const onSuccess = (res) => {
+            form.resetFields();
+            setShowDataLoading(true);
+
+            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+
+            setButtonData({ ...buttonData, formBtnActive: false });
+
+            setIsFormVisible(false);
+        };
+
+        const onError = (message) => {
+            showGlobalNotification({ message });
+        };
+
+        const requestData = {
+            data: data,
+            method: (buttonAction === FROM_ACTION_TYPE?.ALLOT) ? 'post' : 'put',
+            setIsLoading: listShowLoading,
+            userId,
+            onError,
+            onSuccess,
+        };
+
+        saveData(requestData);
     };
 
     const onFinish = (values) => {
@@ -457,7 +491,7 @@ export const VehicleAllotmentMasterBase = (props) => {
         VIEW_ACTION,
         NEXT_ACTION,
         buttonData,
-
+        setSelectedOrderOTFDetails, 
         setButtonData,
         handleButtonClick,
         defaultFormActionType,
