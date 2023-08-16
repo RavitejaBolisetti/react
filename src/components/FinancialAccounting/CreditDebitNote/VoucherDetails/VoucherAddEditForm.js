@@ -31,11 +31,16 @@ export const AdvanceForm = (props) => {
                 title: 'Code',
                 value: values,
             },
+            {
+                key: 'onlyActive',
+                title: 'onlyActive',
+                value: 'YES',
+            },
         ];
         const onErrorAction = (message) => {
             showGlobalNotification({ message });
         };
-        // message english has to be verified and made constant
+
         const onSuccessAction = (res) => {
             if (res.data) {
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Account Head validated successfully ' });
@@ -104,9 +109,7 @@ export const AdvanceForm = (props) => {
                 }
                 setVoucherTableFormData();
             })
-            .catch((err) => {
-               
-            });
+            .catch((err) => {});
     };
     const onFinishFailed = () => {
         return;
