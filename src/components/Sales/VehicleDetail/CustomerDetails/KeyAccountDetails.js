@@ -4,19 +4,18 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Col, Input, Form, Row, DatePicker } from 'antd';
+import { Col, Input, Form, Row } from 'antd';
 
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 export const KeyAccountDetails = (props) => {
     const { formType, formData } = props;
 
-
     return (
         <>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name={[formType, 'keyAccountCode']} label="Key Account Code" initialValue={formData?.keyAccountCode} >
+                    <Form.Item name={[formType, 'keyAccountCode']} label="Key Account Code" initialValue={formData?.keyAccountCode}>
                         <Input maxLength={6} placeholder={preparePlaceholderText('Key Account Code')} disabled={true} />
                     </Form.Item>
                 </Col>

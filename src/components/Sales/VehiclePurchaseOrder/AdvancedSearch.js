@@ -8,7 +8,7 @@ import { Col, Form, Row, Select, Button, DatePicker, Input } from 'antd';
 
 import { withModal } from 'components/withModal';
 import { validateRequiredSelectField } from 'utils/validation';
-import { preparePlaceholderSelect,preparePlaceholderText } from 'utils/preparePlaceholder';
+import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import { dateFormat, formatDate, formatDateToCalenderDate } from 'utils/formatDateTime';
 import { disableFutureDate } from 'utils/disableDate';
@@ -23,7 +23,6 @@ export const AdvancedSearchFrom = (props) => {
         setFilterString,
         advanceFilterForm,
         advanceFilterForm: { resetFields },
-        handleResetFilter,
         handleCancelFilter,
     } = props;
 
@@ -50,13 +49,6 @@ export const AdvancedSearchFrom = (props) => {
         return;
     };
 
-    const selectProps = {
-        optionFilterProp: 'children',
-        showSearch: true,
-        allowClear: true,
-        className: styles.headerSelectField,
-    };
- 
     return (
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
@@ -73,7 +65,7 @@ export const AdvancedSearchFrom = (props) => {
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item name="purchaseOrderNumber" label="Purchase Order Number" initialValue={filterString?.purchaseOrderNumber}>
-                        <Input maxLength={50} placeholder={preparePlaceholderText('Purchase Order Number')}/>
+                        <Input maxLength={50} placeholder={preparePlaceholderText('Purchase Order Number')} />
                     </Form.Item>
                 </Col>
             </Row>

@@ -10,10 +10,9 @@ import { convertDateToCalender } from 'utils/formatDateTime';
 
 const AddEditFormMain = (props) => {
     const { form, onFinishFailed, insuranceData, onFinish } = props;
-    const { buttonData, setButtonData } = props;
+    const [customerForm] = Form.useForm();
 
     const toDateInitialValue = { initialValue: convertDateToCalender(insuranceData?.insuranceDate) };
-    const [customerForm] = Form.useForm();
 
     return (
         <Form layout="vertical" autoComplete="off" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>

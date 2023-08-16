@@ -47,6 +47,7 @@ export const tableColumn = (handleButtonClick) => {
             title: 'Model Description',
             dataIndex: 'modelDescription',
             width: '16%',
+            sorter: false,
         }),
 
         tblPrepareColumns({
@@ -59,7 +60,7 @@ export const tableColumn = (handleButtonClick) => {
             dataIndex: 'requestedDate',
             width: '12%',
             render: (value) => {
-                return convertDate(value?.requestedDate, 'DD MMM YYYY');
+                return convertDate(value, 'DD MMM YYYY');
             },
         }),
 

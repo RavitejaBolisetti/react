@@ -9,7 +9,7 @@ import { PageHeader } from 'pages/common/PageHeader';
 import { RSMApprovalMaster } from 'components/Sales/RSMApproval';
 
 const RSMApprovalBase = (props) => {
-    const pageTitle = 'RSM Approval';
+    const pageTitle = 'RSM Approval for Co-Dealer Invoice';
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,

@@ -67,9 +67,9 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 export const VehiclePurchaseOrderMasterBase = (props) => {
-    const { fetchList, saveData, listShowLoading, userId, data, vehicleDetailData, } = props;
+    const { fetchList, saveData, listShowLoading, userId, data, vehicleDetailData } = props;
     const { typeData, moduleTitle, showGlobalNotification } = props;
-    const { filterString, setFilterString, vehicleDetailStatusList, vpoTypeList,resetData } = props;
+    const { filterString, setFilterString, vehicleDetailStatusList, vpoTypeList, resetData } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [listFilterForm] = Form.useForm();
     const [selectedRecord, setSelectedRecord] = useState();
@@ -224,6 +224,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
             resetData();
             setFilterString();
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
@@ -374,15 +375,14 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         advanceFilterForm.resetFields();
         setAdvanceSearchVisible(false);
     };
-    const handleCancelFilter = (e) => {          
+    const handleCancelFilter = (e) => {
         if (filterString) {
             setShowDataLoading(true);
         }
         setFilterString();
         advanceFilterForm.resetFields();
-         
     };
-    
+
     const title = 'Search VPO';
 
     const advanceFilterResultProps = {
@@ -422,7 +422,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
             setShowDataLoading(true);
             setIsCancelVisible(false);
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
-            vpoCancellationForm.resetFields();  
+            vpoCancellationForm.resetFields();
             setButtonData({ ...buttonData, formBtnActive: false });
         };
 

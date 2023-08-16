@@ -119,6 +119,7 @@ const AddEditFormMain = (props) => {
         styles,
         accountCategory,
         financialAccountData,
+        formActionType,
     };
 
     const buttonProps = {

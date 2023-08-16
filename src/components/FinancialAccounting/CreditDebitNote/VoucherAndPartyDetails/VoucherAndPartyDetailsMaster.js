@@ -23,7 +23,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            PartyMaster: { isLoaded: isDataLoaded = false, isLoading, data, detailData },
+            PartyMaster: { isLoading, data, detailData },
             Vehicle: {
                 CustomerCommonDetails: { isLoaded: isPartyDataLoaded = false, isPartyDataLoading, data: partyData = [] },
             },
@@ -38,6 +38,7 @@ const mapStateToProps = (state) => {
     let returnValue = {
         collapsed,
         userId,
+
         isPartyDataLoaded,
         isPartyDataLoading,
         partyData,
@@ -45,7 +46,6 @@ const mapStateToProps = (state) => {
         data,
         detailData,
         isLoading,
-        isDataLoaded,
 
         moduleTitle,
     };
@@ -71,7 +71,7 @@ const mapDispatchToProps = (dispatch) => ({
 export const VoucherAndPartyDetailsMasterMain = (props) => {
     const { onFinishFailed } = props;
     const { formActionType, NEXT_ACTION, handleButtonClick } = props;
-    const { handleFormValueChange, creditDebitData, isCreditDebitDataLoaded } = props;
+    const { handleFormValueChange, creditDebitData, isDetailLoaded } = props;
     const { fetchList, listShowLoading, listPartyShowLoading, fetchDetail, requestPayload, setRequestPayload, typeData } = props;
 
     const [form] = Form.useForm();
@@ -87,15 +87,15 @@ export const VoucherAndPartyDetailsMasterMain = (props) => {
     };
 
     useEffect(() => {
-        if (formActionType?.addMode && isCreditDebitDataLoaded) {
+        if (formActionType?.addMode && isDetailLoaded) {
             form.resetFields();
             setFormData();
-        } else if (isCreditDebitDataLoaded) {
+        } else if (isDetailLoaded) {
             setFormData(creditDebitData);
             handleFormValueChange();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formActionType?.addMode, isCreditDebitDataLoaded]);
+    }, [formActionType?.addMode, isDetailLoaded]);
 
     useEffect(() => {
         if (formActionType?.addMode) {

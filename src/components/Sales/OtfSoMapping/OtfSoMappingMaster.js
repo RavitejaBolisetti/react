@@ -243,7 +243,6 @@ export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, sav
             if (res?.data) {
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
                 fetchOtfList({ setIsLoading: listOtfSoMappingShowLoading, userId, extraParams });
-
                 setFormBtnActive(false);
                 setIsFormVisible(false);
             }
@@ -280,7 +279,7 @@ export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, sav
 
     const treeSelectFieldProps = {
         treeFieldNames: treeOrgFieldNames,
-        treeData: manufacturerOrgHierarchyData,
+        treeData: finalManufacturerOrgHierarchyData,
         selectedTreeSelectKey: organizationId,
         defaultParent: false,
         handleSelectTreeClick: (value) => {
@@ -303,6 +302,7 @@ export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, sav
         searchValue,
         setSearchValue,
     };
+
     const formProps = {
         typeData,
         setSelectedTreeKey,
@@ -338,9 +338,6 @@ export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, sav
     const leftCol = productHierarchyData?.length > 0 ? 14 : 24;
     const rightCol = productHierarchyData?.length > 0 ? 10 : 24;
     const title = 'Hierarchy';
-
-    console.log('finalManufacturerOrgHierarchyData', finalManufacturerOrgHierarchyData);
-    console.log('finalProductHierarchyData', finalProductHierarchyData);
 
     return (
         <>
@@ -394,7 +391,7 @@ export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, sav
 
                 {productHierarchyData?.length > 0 ? (
                     <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol}>
-                        {selectedTreeKey ? (
+                        {selectedTreeKey?.length > 0 ? (
                             <>
                                 <ViewDetails {...viewProps} />
                                 <div className={styles.viewContainerFooter}>

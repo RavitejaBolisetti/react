@@ -17,44 +17,52 @@ import { ListDataTable } from 'utils/ListDataTable';
 import { VehicleRecieptMasterMainContainer } from './VehicleRecieptMasterMainContainer';
 import { AdvancedSearch } from './AdvancedSearch';
 import { showGlobalNotification } from 'store/actions/notification';
-import { vehicleDetailDataActions } from 'store/actions/data/vehicle/vehicleDetail';
 
-import { VEHICLE_CHECKLIST_STATUS } from 'constants/VehicleRecieptChecklistStatus';
 import { VEHICLE_RECIEPT_CHECKLIST_SECTION } from 'constants/VehicleRecieptCheckListSection';
+import { otfvehicleDetailsLovDataActions } from 'store/actions/data/otf/vehicleDetailsLov';
+
 import { formatDateToCalenderDate } from 'utils/formatDateTime';
 
 import { validateRequiredInputField } from 'utils/validation';
 import { LANGUAGE_EN } from 'language/en';
 
-import { PARAM_MASTER } from 'constants/paramMaster';
 import { FilterIcon } from 'Icons';
 import { QueryButtons, QUERY_BUTTONS_CONSTANTS } from './QueryButtons';
+import { vehicleReceiptChecklistdataActions } from 'store/actions/data/VehicleReceiptCheckList/VehicleReceiptChecklistMain';
+import { vehicleReceiptChecklistProfiledataActions } from 'store/actions/data/VehicleReceiptCheckList/VehicleReceiptChecklistProfile';
+import { VehicleCheclistDetailsdataActions } from 'store/actions/data/VehicleReceiptCheckList/VehicleReceiptChecklistMaster';
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ConfigurableParameterEditing: { filteredListData: typeData = [] },
-            Vehicle: {
-                VehicleDetail: { data, filter: filterString },
+            VehicleReceiptChecklist: {
+                VehicleReceiptMain: { isLoaded: isChecklistDataLoaded = false, isLoading: isChecklistDataLoading = true, data, filter: filterString },
+                VehicleReceiptProfile: { isLoaded: isProfileDataLoaded = false, isLoading: isProfileDataLoading = true, data: ProfileData = [] },
+                VehicleReceiptMaster: { data: ChecklistData = [] },
+            },
+            OTF: {
+                VehicleDetailsLov: { isFilteredListLoaded: isModelDataLoaded = false, isLoading: isModelDataLoading, filteredListData: vehicleModelData },
             },
         },
     } = state;
-
     const moduleTitle = 'Vehicle Receipt Checklist';
 
     let returnValue = {
         userId,
-        typeData: typeData[PARAM_MASTER.VH_RECEIT_SER.id],
-        isDataLoaded: true,
-        data: data?.vehicleSearch,
+        isChecklistDataLoaded,
+        isChecklistDataLoading,
+        data: data?.paginationData,
         totalRecords: data?.totalRecords || [],
-        vehicleDetailStatusList: Object.values(VEHICLE_CHECKLIST_STATUS),
-        vehicleDetailData: [],
         moduleTitle,
-        isLoading: false,
-        isDetailLoaded: true,
         filterString,
+        isModelDataLoaded,
+        isModelDataLoading,
+        vehicleModelData,
+        isProfileDataLoaded,
+        isProfileDataLoading,
+        ProfileData,
+        ChecklistData: ChecklistData['supportingDocumentList'],
     };
     return returnValue;
 };
@@ -63,11 +71,20 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchList: vehicleDetailDataActions.fetchList,
-            fetchDetail: vehicleDetailDataActions.fetchDetail,
-            listShowLoading: vehicleDetailDataActions.listShowLoading,
-            setFilterString: vehicleDetailDataActions.setFilter,
-            resetData: vehicleDetailDataActions.reset,
+            fetchList: vehicleReceiptChecklistdataActions.fetchList,
+            listShowLoading: vehicleReceiptChecklistdataActions.listShowLoading,
+            setFilterString: vehicleReceiptChecklistdataActions.setFilter,
+            resetData: vehicleReceiptChecklistdataActions.reset,
+            saveData: VehicleCheclistDetailsdataActions.saveData,
+            resetCheckListData: VehicleCheclistDetailsdataActions.reset,
+
+            fetchModel: otfvehicleDetailsLovDataActions.fetchFilteredList,
+            modelLoading: otfvehicleDetailsLovDataActions.listShowLoading,
+
+            fetchProfile: vehicleReceiptChecklistProfiledataActions.fetchList,
+            profileLoading: vehicleReceiptChecklistProfiledataActions.listShowLoading,
+            resetProfile: vehicleReceiptChecklistProfiledataActions.reset,
+
             showGlobalNotification,
         },
         dispatch
@@ -75,14 +92,16 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const VehicleRecieptChecklistMasterBase = (props) => {
-    const { fetchList, saveData, listShowLoading, userId, data, totalRecords, vehicleDetailData } = props;
-    const { typeData, moduleTitle } = props;
-    const { filterString, setFilterString, vehicleDetailStatusList } = props;
+    const { userId, data, totalRecords, moduleTitle, filterString } = props;
+    const { fetchList, listShowLoading, setFilterString, resetCheckListData, saveData, showGlobalNotification } = props;
+    const { fetchModel, isModelDataLoaded, isModelDataLoading, vehicleModelData, modelLoading } = props;
+    const { fetchProfile, profileLoading, isProfileDataLoaded, ProfileData, resetProfile, ChecklistData } = props;
 
     const [listFilterForm] = Form.useForm();
 
     const [selectedRecord, setSelectedRecord] = useState();
     const [selectedRecordId, setSelectedRecordId] = useState();
+    const [vehicleReceiptFinalFormData, setvehicleReceiptFinalFormData] = useState({ checklistDetails: [], supportingDocument: [] });
 
     const [section, setSection] = useState();
     const [defaultSection, setDefaultSection] = useState();
@@ -117,15 +136,15 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
 
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
+    const [buttonType, setbuttonType] = useState(QUERY_BUTTONS_CONSTANTS?.PENDING?.key);
 
     const [page, setPage] = useState({ pageSize: 10, current: 1 });
     const dynamicPagination = true;
-
     const [formData, setFormData] = useState([]);
     const [otfSearchRules, setOtfSearchRules] = useState({ rules: [validateRequiredInputField('search parametar')] });
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
-    const [actionButtonVisibility, setactionButtonVisibility] = useState({ EditIcon: false, EyeIcon: false, DeleteIcon: false, AddIcon: true });
-
+    const [actionButtonVisibility, setactionButtonVisibility] = useState({ canEdit: false, canView: false, DeleteIcon: false, canAdd: true });
+    const [rules, setrules] = useState({ fromdate: false, todate: false });
     const onSuccessAction = (res) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
@@ -137,23 +156,27 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         showGlobalNotification({ message });
         setShowDataLoading(false);
     };
-    const handleButtonQuery = (buttonName) => {
-        // setbuttonType(buttonName);
-        switch (buttonName) {
-            case 'pending': {
-                setactionButtonVisibility({ EditIcon: false, EyeIcon: false, DeleteIcon: false, AddIcon: true });
+
+    const handleButtonQuery = (item, keyName) => {
+        handleResetFilter();
+        const buttonkey = item?.key;
+        setbuttonType(buttonkey);
+
+        switch (buttonkey) {
+            case QUERY_BUTTONS_CONSTANTS?.PENDING?.key: {
+                setactionButtonVisibility({ canEdit: false, canView: false, canAdd: true });
                 break;
             }
-            case 'partially': {
-                setactionButtonVisibility({ EditIcon: true, EyeIcon: true, DeleteIcon: false, AddIcon: false });
+            case QUERY_BUTTONS_CONSTANTS?.PARTIALLY_COMPLETED?.key: {
+                setactionButtonVisibility({ canEdit: true, canView: true, canAdd: false });
                 break;
             }
-            case 'completed': {
-                setactionButtonVisibility({ EditIcon: false, EyeIcon: true, DeleteIcon: false, AddIcon: false });
+            case QUERY_BUTTONS_CONSTANTS?.COMPLETED?.key: {
+                setactionButtonVisibility({ canEdit: false, canView: true, canAdd: false });
                 break;
             }
             default: {
-                break;
+                setactionButtonVisibility({ canEdit: false, canView: false, canAdd: true });
             }
         }
     };
@@ -161,50 +184,42 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
     const extraParams = useMemo(() => {
         return [
             {
-                key: 'searchType',
-                title: 'Type',
-                value: filterString?.searchType,
-                name: typeData?.find((i) => i?.key === filterString?.searchType)?.value,
+                key: 'checklistStatus',
+                title: 'checklistStatus',
+                value: buttonType,
+                name: buttonType,
                 canRemove: false,
-                filter: true,
+                filter: false,
             },
             {
-                key: 'searchParam',
-                title: 'Value',
-                value: filterString?.searchParam,
-                name: filterString?.searchParam,
+                key: 'grnNumber',
+                title: 'grnNumber',
+                value: filterString?.grnNumber,
+                name: filterString?.grnNumber,
                 canRemove: true,
                 filter: true,
             },
             {
-                key: 'receiptFromDate',
+                key: 'fromDate',
                 title: 'Reciept From Date',
-                value: filterString?.receiptFromDate,
-                name: filterString?.receiptFromDate,
+                value: filterString?.fromDate,
+                name: filterString?.fromDate,
                 canRemove: true,
                 filter: true,
             },
             {
-                key: 'receipttoDate',
+                key: 'toDate',
                 title: 'Reciept To Date',
-                value: filterString?.receipttoDate,
-                name: filterString?.receipttoDate,
-                canRemove: true,
-                filter: true,
-            },
-            {
-                key: 'status',
-                title: 'Status',
-                value: filterString?.status,
-                name: vehicleDetailStatusList?.find((i) => i?.title === filterString?.status)?.desc,
-                canRemove: true,
+                value: filterString?.toDate,
+                name: filterString?.toDate,
+                canRemove: false,
                 filter: true,
             },
             {
                 key: 'model',
                 title: 'Model',
                 value: filterString?.model,
-                name: filterString?.model,
+                name: vehicleModelData?.find((element, index) => filterString?.model === element?.prodctCode)?.prodctShrtName,
                 canRemove: true,
                 filter: true,
             },
@@ -234,14 +249,23 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, page]);
+    }, [filterString, page, buttonType]);
+    console.log('filterString', filterString);
 
     useEffect(() => {
         if (userId) {
+            setShowDataLoading(true);
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, extraParams]);
+
+    useEffect(() => {
+        if (userId && !isModelDataLoaded) {
+            fetchModel({ setIsLoading: modelLoading, userId, onErrorAction });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, isModelDataLoaded]);
 
     useEffect(() => {
         return () => {
@@ -273,14 +297,21 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
 
     useEffect(() => {
         if (isAdvanceSearchVisible && filterString) {
-            const { receiptFromDate, receipttoDate } = filterString;
-            advanceFilterForm.setFieldsValue({ ...filterString, receiptFromDate: formatDateToCalenderDate(receiptFromDate), receipttoDate: formatDateToCalenderDate(receipttoDate) });
+            advanceFilterForm.resetFields();
+            const { toDate, fromDate } = filterString;
+            setrules({ fromdate: true, todate: true });
+            advanceFilterForm.setFieldsValue({ ...filterString, fromDate: formatDateToCalenderDate(fromDate), toDate: formatDateToCalenderDate(toDate) });
+        } else {
+            setrules({ fromdate: false, todate: false });
+            advanceFilterForm.setFieldsValue({ ...filterString, fromDate: undefined, toDate: undefined, model: undefined });
         }
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isAdvanceSearchVisible, filterString]);
 
     const onAdvanceSearchCloseAction = () => {
         setAdvanceSearchVisible(false);
+        setrules({ fromdate: false, todate: false });
     };
     const handleSearchChange = (value) => {
         const searchValue = value?.trim();
@@ -288,6 +319,11 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
             return;
         }
         searchForm.resetFields();
+        setFilterString({
+            ...filterString,
+            grnNumber: value,
+            advanceFilter: true,
+        });
     };
 
     const handleResetFilter = (e) => {
@@ -301,19 +337,43 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
         form.resetFields();
         form.setFieldsValue(undefined);
+        const handleProfile = () => {
+            resetProfile();
+            if (record?.grnNumber && record?.chassisNumber) {
+                const myParams = [
+                    {
+                        key: 'grnNumber',
+                        title: 'grnNumber',
+                        value: record?.grnNumber,
+                    },
+                    {
+                        key: 'chassisNumber',
+                        title: 'chassisNumber',
+                        value: record?.chassisNumber,
+                    },
+                ];
+                fetchProfile({ setIsLoading: profileLoading, userId, onErrorAction, extraParams: myParams });
+            }
+        };
+
         switch (buttonAction) {
             case ADD_ACTION:
+                resetProfile();
+                setvehicleReceiptFinalFormData({ checklistDetails: [], supportingDocument: [] });
                 defaultSection && setCurrentSection(defaultSection);
+                setSelectedRecord(record);
                 break;
             case EDIT_ACTION:
                 setSelectedRecord(record);
-                record && setSelectedRecordId(record?.vin || record?.vehicleIdentificationNumber);
+                record && setSelectedRecordId(record?.grnNumber ?? '');
                 openDefaultSection && setCurrentSection(defaultSection);
+                handleProfile();
                 break;
             case VIEW_ACTION:
                 setSelectedRecord(record);
-                record && setSelectedRecordId(record?.vin || record?.vehicleIdentificationNumber);
+                record && setSelectedRecordId(record?.grnNumber ?? '');
                 defaultSection && setCurrentSection(defaultSection);
+                handleProfile();
                 break;
             case NEXT_ACTION:
                 const nextSection = Object.values(sectionName)?.find((i) => i.id > currentSection);
@@ -338,36 +398,61 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
 
     const onFinishSearch = (values) => {};
 
-    const onFinish = (values) => {
-        const recordId = formData?.parentId || form.getFieldValue('parentId');
-        let data = { ...values, parentId: recordId };
+    const onFinish = (onfinishProps) => {
+        const { type, data: finalData } = onfinishProps;
+        const checklistNumber = ProfileData?.checklistNumber ?? '';
+        const chassisNumber = selectedRecord?.chassisNumber ?? '';
+        switch (type) {
+            case 'checklist': {
+                setvehicleReceiptFinalFormData({
+                    ...vehicleReceiptFinalFormData,
+                    checklistDetails: finalData?.map((element) => {
+                        const { ismodified, index, ...rest } = element;
+                        return rest;
+                    }),
+                });
+                break;
+            }
+            case 'document': {
+                let data = {
+                    checklistDetailList: vehicleReceiptFinalFormData?.checklistDetails,
+                    supportingDocumentList: finalData,
+                    checklistNumber: checklistNumber,
+                    chassisNumber: chassisNumber,
+                };
 
-        const onSuccess = (res) => {
-            form.resetFields();
-            setShowDataLoading(true);
+                const onSuccess = (res) => {
+                    form.resetFields();
+                    setShowDataLoading(true);
+                    resetCheckListData();
+                    showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+                    fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+                    setButtonData({ ...buttonData, formBtnActive: false });
+                    setIsFormVisible(false);
+                    setvehicleReceiptFinalFormData({ checklistDetails: [], supportingDocument: [] });
+                };
 
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+                const onError = (message) => {
+                    showGlobalNotification({ message });
+                    setvehicleReceiptFinalFormData({ checklistDetails: [], supportingDocument: [] });
+                };
 
-            setButtonData({ ...buttonData, formBtnActive: false });
+                const requestData = {
+                    data: data,
+                    method: formActionType?.editMode ? 'put' : 'post',
+                    setIsLoading: listShowLoading,
+                    userId,
+                    onError,
+                    onSuccess,
+                };
 
-            setIsFormVisible(false);
-        };
-
-        const onError = (message) => {
-            showGlobalNotification({ message });
-        };
-
-        const requestData = {
-            data: data,
-            method: formActionType?.editMode ? 'put' : 'post',
-            setIsLoading: listShowLoading,
-            userId,
-            onError,
-            onSuccess,
-        };
-
-        saveData(requestData);
+                saveData(requestData);
+                break;
+            }
+            default: {
+                break;
+            }
+        }
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -383,6 +468,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         form.setFieldsValue();
         setSelectedRecord();
         setIsFormVisible(false);
+        resetCheckListData();
         setButtonData({ ...defaultBtnVisiblity });
     };
 
@@ -391,26 +477,27 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         totalRecords,
         setPage,
         tableColumn: tableColumn({ handleButtonClick, actionButtonVisibility }),
-        tableData: [{}],
+        tableData: data,
         showAddButton: false,
         handleAdd: handleButtonClick,
         noMessge: LANGUAGE_EN.GENERAL.LIST_NO_DATA_FOUND.TITLE,
+        isLoading: showDataLoading,
     };
-
     const removeFilter = (key) => {
-        if (key === 'searchParam') {
-            const { searchType, searchParam, ...rest } = filterString;
-            setFilterString({ ...rest });
+        if (key === 'fromDate') {
+            const { fromDate, toDate, ...rest } = filterString;
+            if (Object.keys(rest)?.length === 1) setFilterString();
+            else setFilterString({ ...rest });
         } else {
             const { [key]: names, ...rest } = filterString;
-            setFilterString({ ...rest });
+            if (Object.keys(rest)?.length === 1) setFilterString();
+            else setFilterString({ ...rest });
         }
     };
 
     const advanceFilterResultProps = {
         extraParams,
         removeFilter,
-        vehicleDetailStatusList,
         advanceFilter: true,
         filter: true,
         filterString,
@@ -418,9 +505,8 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         from: listFilterForm,
         onFinish,
         onFinishFailed,
-        title: <QueryButtons items={QUERY_BUTTONS_CONSTANTS} handleButtonQuery={handleButtonQuery} />,
+        title: <QueryButtons items={QUERY_BUTTONS_CONSTANTS} onClick={handleButtonQuery} currentItem={buttonType} />,
         data,
-        typeData,
         otfSearchRules,
         setOtfSearchRules,
         searchForm,
@@ -441,7 +527,15 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         }
     }, [formActionType]);
 
+    const vehicleReceiptFormdataProps = {
+        vehicleReceiptFinalFormData,
+        setvehicleReceiptFinalFormData,
+    };
+
     const containerProps = {
+        ...vehicleReceiptFormdataProps,
+        isProfileDataLoaded,
+        ProfileData,
         record: selectedRecord,
         form,
         formActionType,
@@ -471,12 +565,13 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         currentSection,
         sectionName,
         setCurrentSection,
+        formData,
         setFormData,
         handleFormValueChange,
         isLastSection,
-        typeData,
-        vehicleDetailData,
         saveButtonName: isLastSection ? 'Submit' : 'Save & Next',
+        VehicelReceiptChecklistOnfinish: onFinish,
+        supportingData: ChecklistData,
     };
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
@@ -490,8 +585,11 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         setFilterString,
         advanceFilterForm,
         setAdvanceSearchVisible,
-        typeData,
         onFinishSearch,
+        vehicleModelData,
+        isModelDataLoading,
+        rules,
+        setrules,
     };
 
     return (
@@ -501,7 +599,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
 
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable isLoading={showDataLoading} {...tableProps} showAddButton={false} />
+                    <ListDataTable {...tableProps} />
                 </Col>
             </Row>
             <VehicleRecieptMasterMainContainer {...containerProps} />

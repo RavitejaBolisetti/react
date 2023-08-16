@@ -146,16 +146,16 @@
     padding-bottom: 0px;
 }
 
-:global .ant-tree-show-line .ant-tree-switcher-line-icon {
+/* :global .ant-tree-show-line .ant-tree-switcher-line-icon {
     vertical-align: -0.28em;
-}
+} */
 
 :global .ant-tree .ant-tree-node-content-wrapper.ant-tree-node-selected,
 :global .ant-tree .ant-tree-checkbox + span.ant-tree-node-selected {
     background-color: transparent;
     color: #ff3e5b;
     border-radius: 4px;
-    padding: 0px 17px 0px 4px;
+    /* padding: 0px 17px 0px 4px; */
     font-weight: 500;
 }
 
@@ -196,16 +196,9 @@
     /* margin-left: 10px; */
 }
 
-:global .ant-tree .ant-tree-switcher {
-    position: relative;
-    flex: none;
-    align-self: stretch;
-    width: 24px;
-    margin: 0;
-    line-height: 24px;
-    text-align: center;
-    cursor: pointer;
-    user-select: none;
+:global .ant-tree .ant-tree-switcher .anticon svg {
+    height: 16px;
+    width: 16px;
 }
 
 @media (max-width: 576px) {
