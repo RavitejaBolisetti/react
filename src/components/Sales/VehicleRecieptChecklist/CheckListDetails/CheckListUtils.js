@@ -41,16 +41,19 @@ export const MakeCheckResult = (props) => {
                 checkResult = checkResult.concat('-');
                 checkResult = checkResult.concat(data?.answerToDate ? convertDateMonthYearDayjs(data?.answerToDate) : 'NA');
                 return checkResult;
-            } else return 'NA';
-
-            break;
+            } else {
+                return 'NA';
+            }
         }
 
         case FORMTYPE_CONSTANTS?.BOOLEAN?.id: {
-            if (data?.answerBoolean === undefined || data?.answerBoolean === null || data?.answerBoolean === '') return 'NA';
-            else if (data?.answerBoolean) return 'Yes';
-            return 'No';
-            break;
+            if (data?.answerBoolean === undefined || data?.answerBoolean === null || data?.answerBoolean === '') {
+                return 'NA';
+            } else if (data?.answerBoolean) {
+                return 'Yes';
+            } else {
+                return 'No';
+            }
         }
         case FORMTYPE_CONSTANTS?.NUMBER?.id: {
             if (data?.answerFromNumber && data?.answerToNumber) {
@@ -58,18 +61,20 @@ export const MakeCheckResult = (props) => {
                 checkResult = checkResult.concat('-');
                 checkResult = checkResult.concat(data?.answerToNumber ?? 'NA');
                 return checkResult;
-            } else return 'NA';
-
-            break;
+            } else {
+                return 'NA';
+            }
         }
         case FORMTYPE_CONSTANTS?.INPUT?.id: {
             return data?.answerText ?? 'NA';
+        }
+        default: {
             break;
         }
     }
 };
 export const setCheckresultValue = (props) => {
-    const { form, type, data } = props;
+    const { form, data } = props;
     form.setFieldsValue({ ...data, answerFromDate: formatDateToCalenderDate(data?.answerFromDate), answerToDate: formatDateToCalenderDate(data?.answerToDate), answerBoolean: data?.answerBoolean });
 };
 export const BindFormItems = ({ AdvanceformData, aggregateForm }) => {

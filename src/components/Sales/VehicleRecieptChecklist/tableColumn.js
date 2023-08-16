@@ -4,9 +4,9 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
-import styles from 'components/common/Common.module.css';
 import { convertDateMonthYearDayjs } from 'utils/formatDateTime';
-import dayjs from 'dayjs';
+
+import styles from 'components/common/Common.module.css';
 
 export const tableColumn = ({ handleButtonClick, page, pageSize, actionButtonVisibility }) => {
     const tableColumn = [

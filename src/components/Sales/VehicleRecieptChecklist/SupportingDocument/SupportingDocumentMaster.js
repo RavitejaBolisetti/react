@@ -5,7 +5,7 @@
  */
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { LANGUAGE_EN } from 'language/en';
+// import { LANGUAGE_EN } from 'language/en';
 
 import { bindActionCreators } from 'redux';
 import { Row, Col, Form, Card } from 'antd';
@@ -93,19 +93,17 @@ const SupportingDocumentBase = (props) => {
             setviewSupportingData(supportingData);
         }
     }, [supportingData]);
-    console.log('viewSupportingData', viewSupportingData);
 
     useEffect(() => {
         if (fileList.length === 0) {
             setMandatoryFields(false);
         }
         uploadedFile && setPayload([...payload, { documentId: uploadedFile, documentDescription: form.getFieldValue('documentDescription'), id: '', fileName: form.getFieldValue('fileName'), documentStatus: true }]);
-
         uploadedFile && form.resetFields();
-
         return () => {
             setUploadedFile(undefined);
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [fileList]);
 
     const onRemove = (file) => {
@@ -137,8 +135,8 @@ const SupportingDocumentBase = (props) => {
     };
 
     const onFinish = () => {
-        const title = LANGUAGE_EN.GENERAL.CUSTOMER_UPDATE.TITLE;
-        const message = LANGUAGE_EN.GENERAL.CUSTOMER_UPDATE.MESSAGE;
+        // const title = LANGUAGE_EN.GENERAL.CUSTOMER_UPDATE.TITLE;
+        // const message = LANGUAGE_EN.GENERAL.CUSTOMER_UPDATE.MESSAGE;
         VehicelReceiptChecklistOnfinish({ type: 'document', data: [...payload, ...deletedUpload] });
     };
 

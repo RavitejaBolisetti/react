@@ -4,24 +4,16 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Row, Col, Form, Select, Input } from 'antd';
+import { Row, Col, Form, Input } from 'antd';
 
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { validateRequiredInputField } from 'utils/validation';
 import { UploadUtil } from 'utils/Upload';
 
-const { Option } = Select;
 const { TextArea } = Input;
 
 const AddEditForm = (uploadProps) => {
-    const { typeData, mandatoryFields } = uploadProps;
-
-    const selectProps = {
-        optionFilterProp: 'children',
-        showSearch: true,
-        allowClear: true,
-        // className: styles.headerSelectField,
-    };
+    const { mandatoryFields } = uploadProps;
 
     return (
         <>

@@ -4,7 +4,6 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-
 import { Card } from 'antd';
 import { FiDownload, FiTrash } from 'react-icons/fi';
 
@@ -12,15 +11,11 @@ import styles from 'components/common/Common.module.css';
 
 export const ViewDetail = (props) => {
     const {
-        viewListShowLoading,
-        userId,
         formActionType: { viewMode },
         supportingData,
         deleteFile,
         downloadFileFromButton,
     } = props;
-
-   
 
     return (
         <div className={styles.viewDrawerContainer}>

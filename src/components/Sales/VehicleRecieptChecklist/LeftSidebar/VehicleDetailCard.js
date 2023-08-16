@@ -6,9 +6,9 @@
 import React from 'react';
 import { Collapse, Space } from 'antd';
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
-import styles from 'components/common/Common.module.css';
 import dayjs from 'dayjs';
-import { convertDateTime } from 'utils/formatDateTime';
+
+import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
 
@@ -26,7 +26,7 @@ const expandIcon = ({ isActive }) =>
     );
 
 const VehicleDetailCard = (props) => {
-    const { selectedRecord, isProfileDataLoaded, ProfileData } = props;
+    const { ProfileData } = props;
     return (
         <Collapse bordered={true} defaultActiveKey={[1]} expandIcon={expandIcon} collapsible="icon">
             <Panel

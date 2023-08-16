@@ -23,7 +23,7 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             VehicleReceiptChecklist: {
-                VehicleReceiptMaster: { isLoaded: isChecklistDataLoaded = false, isLoading: isChecklistDataLoading = true, data: ChecklistData = [], filter: filterString },
+                VehicleReceiptMaster: { isLoaded: isChecklistDataLoaded = false, isLoading: isChecklistDataLoading = true, data: ChecklistData = [] },
             },
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
         },
@@ -58,19 +58,11 @@ const mapDispatchToProps = (dispatch) => ({
 
 const VehicleRecieptCheckListMain = (props) => {
     const { userId, handleButtonClick, selectedRecord } = props;
-
     const { isChecklistDataLoaded, isChecklistDataLoading, ChecklistData } = props;
-
-    const { fetchList, resetData, VehicelReceiptChecklistOnfinish, saveData, listShowLoading, showGlobalNotification } = props;
-
+    const { fetchList, VehicelReceiptChecklistOnfinish, listShowLoading, showGlobalNotification } = props;
     const { form, selectedCheckListId, section, formActionType, handleFormValueChange, NEXT_ACTION } = props;
 
-    const { vehicleReceiptFinalFormData, setvehicleReceiptFinalFormData } = props;
-
     const { chassisNumber } = selectedRecord;
-    console.log('chassisNumber', chassisNumber);
-
-    const [formData, setformData] = useState({});
 
     const [checkListDataModified, setcheckListDataModified] = useState([]);
     const [isReadOnly, setIsReadOnly] = useState(false);
@@ -142,7 +134,6 @@ const VehicleRecieptCheckListMain = (props) => {
     };
 
     const formProps = {
-        formData,
         formActionType,
         showGlobalNotification,
         selectedCheckListId,
@@ -162,7 +153,6 @@ const VehicleRecieptCheckListMain = (props) => {
 
     const viewProps = {
         styles,
-        formData,
         isChecklistDataLoading,
         checkListDataModified,
         setcheckListDataModified,

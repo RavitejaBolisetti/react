@@ -26,7 +26,6 @@ import { formatDateToCalenderDate } from 'utils/formatDateTime';
 import { validateRequiredInputField } from 'utils/validation';
 import { LANGUAGE_EN } from 'language/en';
 
-import { PARAM_MASTER } from 'constants/paramMaster';
 import { FilterIcon } from 'Icons';
 import { QueryButtons, QUERY_BUTTONS_CONSTANTS } from './QueryButtons';
 import { vehicleReceiptChecklistdataActions } from 'store/actions/data/VehicleReceiptCheckList/VehicleReceiptChecklistMain';
@@ -93,13 +92,10 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const VehicleRecieptChecklistMasterBase = (props) => {
-    const { userId, isChecklistDataLoaded, isChecklistDataLoading, data, totalRecords, moduleTitle, filterString } = props;
-
+    const { userId, data, totalRecords, moduleTitle, filterString } = props;
     const { fetchList, listShowLoading, setFilterString, resetCheckListData, saveData, showGlobalNotification } = props;
-
     const { fetchModel, isModelDataLoaded, isModelDataLoading, vehicleModelData, modelLoading } = props;
-
-    const { fetchProfile, profileLoading, isProfileDataLoaded, isProfileDataLoading, ProfileData, resetProfile, ChecklistData } = props;
+    const { fetchProfile, profileLoading, isProfileDataLoaded, ProfileData, resetProfile, ChecklistData } = props;
 
     const [listFilterForm] = Form.useForm();
 
@@ -427,16 +423,11 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
 
                 const onSuccess = (res) => {
                     form.resetFields();
-
                     setShowDataLoading(true);
                     resetCheckListData();
-
                     showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-
                     fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
-
                     setButtonData({ ...buttonData, formBtnActive: false });
-
                     setIsFormVisible(false);
                     setvehicleReceiptFinalFormData({ checklistDetails: [], supportingDocument: [] });
                 };
@@ -456,6 +447,10 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
                 };
 
                 saveData(requestData);
+                break;
+            }
+            default: {
+                break;
             }
         }
     };
@@ -487,7 +482,6 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         handleAdd: handleButtonClick,
         noMessge: LANGUAGE_EN.GENERAL.LIST_NO_DATA_FOUND.TITLE,
         isLoading: showDataLoading,
-        showAddButton: false,
     };
     const removeFilter = (key) => {
         if (key === 'fromDate') {
@@ -571,6 +565,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         currentSection,
         sectionName,
         setCurrentSection,
+        formData,
         setFormData,
         handleFormValueChange,
         isLastSection,

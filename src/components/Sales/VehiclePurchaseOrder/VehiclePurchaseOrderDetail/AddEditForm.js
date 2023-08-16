@@ -67,7 +67,7 @@ const AddEditFormMain = (props) => {
                                     <>
                                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
                                             <Form.Item name="dealerParentCode" label="Dealer Code" initialValue={formData?.dealerParentCode} rules={[validateRequiredSelectField('Dealer Code')]}>
-                                                <Search maxLength={50} allowClear onChange={handleOnClear} onSearch={getDealerlocation} placeholder="Enter Dealer Code" className={styles.headerSearchField} />
+                                                <Search maxLength={50} allowClear onSearch={getDealerlocation} placeholder="Enter Dealer Code" />
                                             </Form.Item>
                                         </Col>
 
@@ -91,7 +91,7 @@ const AddEditFormMain = (props) => {
 
                                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
                                             <Form.Item initialValue={convertCalenderDate(formData?.purchaseOrderDate ? formData?.purchaseOrderDate : new Date(), 'YYYY/MM/DD')} label="Purchase Order Date" name="purchaseOrderDate">
-                                                <DatePicker disabledDate={disablePastDate} {...disabledProps} format="YYYY-MM-DD" style={{ display: 'auto', width: '100%' }} />
+                                                <DatePicker disabledDate={disablePastDate} {...disabledProps} format="YYYY-MM-DD" />
                                             </Form.Item>
                                         </Col>
                                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>

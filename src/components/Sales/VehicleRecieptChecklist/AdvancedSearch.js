@@ -9,7 +9,6 @@ import { Col, Form, Row, Select, DatePicker } from 'antd';
 import { withModal } from 'components/withModal';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { dateFormat, formatDate } from 'utils/formatDateTime';
-import { disableFutureDate } from 'utils/disableDate';
 import { ModalButtons } from 'components/common/Button';
 import { customSelectBox } from 'utils/customSelectBox';
 import { validateRequiredSelectField } from 'utils/validation';
