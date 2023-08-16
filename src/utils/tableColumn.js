@@ -118,7 +118,7 @@ export const tblActionColumn = ({ title = 'Action', handleButtonClick, width = '
                 )}
                 {canAdd && (
                     <Button data-testid="add" className={styles.tableIcons} aria-label="fa-add" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD, record, index })}>
-                        {addToolTip('Edit')(<PlusOutlined />)}
+                        {addToolTip('Add')(<PlusOutlined />)}
                     </Button>
                 )}
 
