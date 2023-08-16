@@ -129,7 +129,7 @@ export const AccountCategoryMain = (props) => {
                 key: 'searchParam',
                 title: 'Search Param',
                 value: filterString?.keyword,
-                name: 'TAX',
+                name: 'Search',
             },
             {
                 key: 'pageSize',
@@ -213,7 +213,7 @@ export const AccountCategoryMain = (props) => {
             fetchDocumentDescription({ setIsLoading: listShowLoadingDocumentDescription, userId, extraParams: [{ key: 'applicationId', title: 'applicationId', value: selectedTreeSelectKey, name: 'applicationId' }] });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formEdit]);
+    }, [selectedTreeSelectKey]);
 
     useEffect(() => {
         if (!isFinancialAccountHeadLoaded && userId) {

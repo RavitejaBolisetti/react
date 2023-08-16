@@ -4,14 +4,12 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Row, Col, Space, Card, Collapse, Typography, Descriptions, Divider } from 'antd';
+import { Row, Col, Card, Collapse, Descriptions, Divider } from 'antd';
 
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 
 const { Panel } = Collapse;
-const { Text } = Typography;
-
 const ViewDetailMain = (props) => {
     const { activeKey, styles, schemeData, isLoading } = props;
     const viewProps = {

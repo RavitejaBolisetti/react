@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Typography, Space, Collapse, Form } from 'antd';
+import { Row, Col, Space, Collapse, Form } from 'antd';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -12,19 +12,17 @@ import { bindActionCreators } from 'redux';
 import { otfInvoiceDetailDataActions } from 'store/actions/data/otf/invoiceDetail';
 import { showGlobalNotification } from 'store/actions/notification';
 import { dynamicExpandIcon } from 'utils/accordianExpandIcon';
-import { DataTable } from 'utils/dataTable';
 
+import { DataTable } from 'utils/dataTable';
 import { OTFStatusBar } from '../utils/OTFStatusBar';
 import { OTFFormButton } from '../OTFFormButton';
 
 import { tableColumnInvoice, tableColumnDelivery } from './tableColumn';
+import { OTF_STATUS } from 'constants/OTFStatus';
 
 import styles from 'components/common/Common.module.css';
 
-import { OTF_STATUS } from 'constants/OTFStatus';
-
 const { Panel } = Collapse;
-const { Text } = Typography;
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -61,7 +59,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const InvoiceDetailsMasterBase = (props) => {
-    const { form, invoiceData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, handleButtonClick, NEXT_ACTION } = props;
+    const { form, invoiceData, fetchList, userId, isDataLoaded, listShowLoading, handleButtonClick, NEXT_ACTION } = props;
     const { section, selectedOrderId, selectedOrder: { orderStatus = false } = {} } = props;
 
     const [activeKey, setactiveKey] = useState([1]);

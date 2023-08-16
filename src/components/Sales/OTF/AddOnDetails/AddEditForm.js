@@ -13,7 +13,7 @@ import ShieldForm from './Shield/ShieldForm';
 import AMCForm from './AMC/AMCForm';
 import FMSForm from './FMS/FMSForm';
 import RSAForm from './RSA/RSAForm';
-import { dynamicExpandIcon } from 'utils/accordianExpandIcon';
+
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { OTF_ADDON_SECTION } from 'constants/OTFAddonSection';
 

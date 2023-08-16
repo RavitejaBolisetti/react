@@ -3,8 +3,8 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect } from 'react';
-import { Col, Input, Form, Row, DatePicker } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Col, Input, Form, Row } from 'antd';
 
 import { withModal } from 'components/withModal';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
@@ -12,60 +12,20 @@ import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validateRequiredInputField } from 'utils/validation';
 import { ModalButtons } from 'components/common/Button';
 
+import { MakeCheckResult, setCheckresultValue, BindFormItems } from './CheckListUtils';
+
 export const AdvanceForm = (props) => {
     const { AdvanceformData, setAdvanceformData } = props;
     const { onCloseAction, handleFormValueChange, checkListDataModified, setcheckListDataModified, aggregateForm } = props;
     const { setAdvanceSearchVisible } = props;
     const { isVisible, setisEditing } = props;
-    const InputGroup = Input.Group;
-    const { RangePicker } = DatePicker;
+    const [saveDisabled, setsaveDisabled] = useState(true);
+
     const { TextArea } = Input;
 
-    const bindFormItems = (props) => {
-        const { formItemType } = props;
-        switch (formItemType) {
-            case 'input': {
-                return (
-                    <Form.Item label="Check Result" name="checkResult" rules={[validateRequiredInputField('checkResult')]}>
-                        <Input maxLength={30} placeholder={preparePlaceholderText('Check Result')} />
-                    </Form.Item>
-                );
-            }
-            case 'numberRange': {
-                return (
-                    <Form.Item label="Check Result" name="checkResult" rules={[validateRequiredInputField('checkResult')]}>
-                        <InputGroup compact>
-                            <Input placeholder="Minimum" />
-                            <Input placeholder="~" disabled />
-                            <Input placeholder="Maximum" />
-                        </InputGroup>
-                    </Form.Item>
-                );
-            }
-            case 'datePicker': {
-                return (
-                    <Form.Item label="Check Result" name="checkResult" rules={[validateRequiredInputField('checkResult')]}>
-                        <RangePicker
-                            showTime={{
-                                format: 'HH:mm',
-                            }}
-                            format="YYYY-MM-DD HH:mm"
-                        />
-                    </Form.Item>
-                );
-            }
-            default: {
-                return false;
-            }
-        }
-    };
     useEffect(() => {
         if (AdvanceformData && isVisible) {
-            aggregateForm.setFieldsValue({
-                checkResult: AdvanceformData?.checkResult ?? '',
-                Remarks: AdvanceformData?.Remarks ?? '',
-                id: AdvanceformData?.id ?? '',
-            });
+            setCheckresultValue({ form: aggregateForm, type: AdvanceformData?.answerType, data: AdvanceformData });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [AdvanceformData]);
@@ -75,7 +35,7 @@ export const AdvanceForm = (props) => {
             .validateFields()
             .then(() => {
                 const values = aggregateForm.getFieldsValue();
-                const data = { ...AdvanceformData, ...values, isEdited: true };
+                const data = { ...AdvanceformData, ...values, ismodified: true, checkResult: MakeCheckResult({ type: AdvanceformData?.checklistType, data: values }) };
                 const newarr = [...checkListDataModified];
                 newarr[AdvanceformData?.index] = data;
                 setcheckListDataModified(newarr);
@@ -89,6 +49,9 @@ export const AdvanceForm = (props) => {
     const onFinishFailed = () => {
         return;
     };
+    const handleValuesChange = () => {
+        setsaveDisabled(false);
+    };
     const modalProps = {
         reset: true,
         submit: true,
@@ -97,28 +60,25 @@ export const AdvanceForm = (props) => {
         handleResetFilter: onCloseAction,
         htmltype: false,
         onClickAction: onFinish,
+        saveDisabled: saveDisabled,
     };
 
     return (
-        <Form autoComplete="off" layout="vertical" form={aggregateForm} onFinishFailed={onFinishFailed}>
+        <Form autoComplete="off" layout="vertical" form={aggregateForm} onValuesChange={handleValuesChange} onFinishFailed={onFinishFailed}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Row gutter={20}>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            {bindFormItems(AdvanceformData)}
-                        </Col>
-                    </Row>
-                    <Row gutter={20}>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Form.Item label="Remarks" name="Remarks" rules={[validateRequiredInputField('Remarks')]}>
-                                <TextArea placeholder={preparePlaceholderText('Remarks')} autoSize={{ minRows: 3, maxRows: 5 }} />
-                            </Form.Item>
-                            <Form.Item name="id" hidden></Form.Item>
-                        </Col>
-                    </Row>
-                    <ModalButtons {...modalProps} />
+                    {BindFormItems({ AdvanceformData, aggregateForm })}
                 </Col>
             </Row>
+            <Row gutter={20}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                    <Form.Item label="Remarks" name="checklistDescription" rules={[validateRequiredInputField('Remarks')]}>
+                        <TextArea placeholder={preparePlaceholderText('Remarks')} autoSize={{ minRows: 3, maxRows: 5 }} />
+                    </Form.Item>
+                    <Form.Item name="id" hidden></Form.Item>
+                </Col>
+            </Row>
+            <ModalButtons {...modalProps} />
         </Form>
     );
 };

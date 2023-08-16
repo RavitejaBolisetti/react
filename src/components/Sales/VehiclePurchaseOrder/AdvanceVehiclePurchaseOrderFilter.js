@@ -15,8 +15,9 @@ import styles from 'components/common/Common.module.css';
 
 export default function AppliedAdvanceFilter(props) {
     const { showAddButton = true, advanceFilter = false, title, handleButtonClick, filterString, extraParams, removeFilter, handleResetFilter, setAdvanceSearchVisible, setFilterString, vpoFilter = false, typeData } = props;
-
+    const [searchForm] = Form.useForm();
     const searchBoxProps = {
+        searchForm,
         filterString,
         setFilterString,
         optionType: typeData['PO_MST'],
@@ -39,6 +40,7 @@ export default function AppliedAdvanceFilter(props) {
                                             <Button
                                                 icon={<FilterIcon />}
                                                 type="link"
+                                                className={styles.verticallyCentered}
                                                 onClick={() => {
                                                     setAdvanceSearchVisible(true);
                                                 }}
@@ -74,7 +76,7 @@ export default function AppliedAdvanceFilter(props) {
                                                     {filter?.name}
                                                     {filter?.canRemove && (
                                                         <span>
-                                                            <RxCross2 onClick={() => removeFilter(filter?.key)} />
+                                                            <RxCross2 onClick={() => removeFilter(filter?.key)} data-testid="removeBtn" />
                                                         </span>
                                                     )}
                                                 </div>

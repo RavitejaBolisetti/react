@@ -5,12 +5,10 @@
  */
 import React from 'react';
 import { Descriptions, Card, Checkbox } from 'antd';
-import { CheckSquareOutlined } from '@ant-design/icons';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 
 const ViewDetailBase = (props) => {
-    const { styles, formData, isLoading, formActionType } = props;
-    const disableProp = { disabled: formActionType?.viewMode };
+    const { styles, formData, isLoading } = props;
     const viewProps = {
         bordered: false,
         colon: false,
