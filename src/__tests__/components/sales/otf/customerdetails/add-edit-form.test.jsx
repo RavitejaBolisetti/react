@@ -15,7 +15,6 @@ const bookingCustomer = true;
 describe('Add Edit Form Components', () => {
     it('should Add Edit Form Component', () => {
         customRender(<AddEditForm />);
-        screen.debug();
     });
 
     it('should check panel title available', () => {
@@ -43,7 +42,6 @@ describe('Add Edit Form Components', () => {
     it('check enter mobile number is valid or not', () => {
         customRender(<AddEditForm formType="billingCustomer" activeKey={[1, 2]} setActiveKey={jest.fn()} setSameAsBookingCustomer={jest.fn()} />);
         const mobilenumber = screen.getAllByRole('textbox', { Name: 'Mobile Number' });
-
         fireEvent.change(mobilenumber[0], { target: { value: '7068000000' } });
         fireEvent.change(mobilenumber[1], { target: { value: '7068000000' } });
     });
