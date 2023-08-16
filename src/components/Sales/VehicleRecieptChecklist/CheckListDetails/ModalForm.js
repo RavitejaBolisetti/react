@@ -7,9 +7,9 @@ import React, { useEffect, useState } from 'react';
 import { Col, Input, Form, Row } from 'antd';
 
 import { withModal } from 'components/withModal';
-import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
+import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
-import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
+import { validateRequiredInputField } from 'utils/validation';
 import { ModalButtons } from 'components/common/Button';
 
 import { MakeCheckResult, setCheckresultValue, BindFormItems } from './CheckListUtils';
