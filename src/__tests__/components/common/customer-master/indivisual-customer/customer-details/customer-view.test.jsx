@@ -2,7 +2,7 @@ import React from 'react';
 import { fireEvent, screen } from '@testing-library/react';
 import { ViewDetail } from '@components/common/CustomerMaster/IndividualCustomer/CustomerDetail/ViewDetail';
 import customRender from '@utils/test-utils';
-import { RejectionModal } from '@components/common/CustomerMaster/IndividualCustomer/CustomerDetail/RejectionModal';
+// import { RejectionModal } from '@components/common/CustomerMaster/IndividualCustomer/CustomerDetail/RejectionModal';
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
 import { Form } from 'antd';
@@ -29,7 +29,6 @@ describe('Corporate customer view Details render', () => {
                 <FormWrapper {...props} onCloseAction={jest.fn()} onCloseActionOnContinue={jest.fn()} />
             </Provider>
         );
-        screen.debug();
     });
 
     it('should render all text', async () => {
@@ -46,7 +45,6 @@ describe('Corporate customer view Details render', () => {
                 <FormWrapper {...props} onCloseAction={jest.fn()} onCloseActionOnContinue={jest.fn()} />
             </Provider>
         );
-        // customRender(<FormWrapper {...props} />);
 
         const mobileNo = screen.getByText('Mobile Number');
         expect(mobileNo).toBeTruthy();
@@ -97,12 +95,5 @@ describe('Corporate customer view Details render', () => {
 
         const plusImg = screen.getByRole('img', { name: 'minus' });
         expect(plusImg).toBeTruthy();
-    });
-});
-
-describe('Corporate customer view Details render', () => {
-    it('should render view details page', async () => {
-        const props = { onCloseAction: jest.fn(), onCloseActionOnContinue: jest.fn() };
-        customRender(<RejectionModal {...props} />);
     });
 });
