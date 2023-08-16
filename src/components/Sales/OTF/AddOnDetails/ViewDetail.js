@@ -28,64 +28,62 @@ const ViewDetailMain = (props) => {
         <div className={styles.viewDrawerContainer}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Space className={styles.ViewCardCollapse} style={{ display: 'flex' }} direction="vertical" size="large">
-                        <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse('ci')} expandIconPosition="end">
-                            <Panel header="Accessories Information" key={'ci'}>
-                                <Divider />
-                                {formData?.partDetailsResponses?.map((element, i) => {
-                                    return (
-                                        <div className={styles.accessInfo}>
-                                            <Collapse expandIcon={expandIcon} activeKey={myActiveKey} onChange={() => handleCollapses(i)} expandIconPosition="end" className={styles.innerCollapseBorder}>
-                                                <Panel
-                                                    header={
-                                                        <Row justify="space-between">
-                                                            <Col xs={14} sm={14} md={14} lg={14} xl={14}>
-                                                                <Space>
-                                                                    <Text className={styles.headText}> {`${element?.partDescription ? element?.partDescription : 'NA'} `}</Text>
-                                                                    <Text className={styles.headText}> {`|`}</Text>
-                                                                    <Text className={styles.headText}> {`${element?.partNumber ? element?.partNumber : 'NA'} `}</Text>
-                                                                </Space>
-                                                                <Row>
-                                                                    <Text className={styles.subSection}> {`Required Quantity: ${element?.requiredQuantity ? element?.requiredQuantity : 'NA'} `}</Text>
-                                                                </Row>
-                                                            </Col>
-                                                        </Row>
-                                                    }
-                                                    key={i}
-                                                >
-                                                    <AccessoriesInformationCard formData={element} />
-                                                </Panel>
-                                            </Collapse>
-                                        </div>
-                                    );
-                                })}
-                            </Panel>
-                        </Collapse>
-                        <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse('shield')} expandIconPosition="end">
-                            <Panel header="Shield" key="shield">
-                                <Divider />
-                                <ShieldForm formActionType={formActionType} formData={formData} shieldForm={shieldForm} />
-                            </Panel>
-                        </Collapse>
-                        <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse('Amc')} expandIconPosition="end">
-                            <Panel header="Amc" key={'Amc'}>
-                                <Divider />
-                                <AMCForm formActionType={formActionType} formData={formData} amcForm={amcForm} />
-                            </Panel>
-                        </Collapse>
-                        <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse('Rsa')} expandIconPosition="end">
-                            <Panel header="RSA" key={'Rsa'}>
-                                <Divider />
-                                <RSAForm formActionType={formActionType} formData={formData} rsaForm={rsaForm} />
-                            </Panel>
-                        </Collapse>
-                        <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse('fMS')} expandIconPosition="end">
-                            <Panel header="FMS" key={'fMS'}>
-                                <Divider />
-                                <FMSForm formActionType={formActionType} formData={formData} fmsForm={fmsForm} />
-                            </Panel>
-                        </Collapse>
-                    </Space>
+                    <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse('ci')} expandIconPosition="end">
+                        <Panel header="Accessories Information" key={'ci'}>
+                            <Divider />
+                            {formData?.partDetailsResponses?.map((element, i) => {
+                                return (
+                                    <div className={styles.accessInfo}>
+                                        <Collapse expandIcon={expandIcon} activeKey={myActiveKey} onChange={() => handleCollapses(i)} expandIconPosition="end" className={styles.innerCollapseBorder}>
+                                            <Panel
+                                                header={
+                                                    <Row justify="space-between">
+                                                        <Col xs={14} sm={14} md={14} lg={14} xl={14}>
+                                                            <Space>
+                                                                <Text className={styles.headText}> {`${element?.partDescription ? element?.partDescription : 'NA'} `}</Text>
+                                                                <Text className={styles.headText}> {`|`}</Text>
+                                                                <Text className={styles.headText}> {`${element?.partNumber ? element?.partNumber : 'NA'} `}</Text>
+                                                            </Space>
+                                                            <Row>
+                                                                <Text className={styles.subSection}> {`Required Quantity: ${element?.requiredQuantity ? element?.requiredQuantity : 'NA'} `}</Text>
+                                                            </Row>
+                                                        </Col>
+                                                    </Row>
+                                                }
+                                                key={i}
+                                            >
+                                                <AccessoriesInformationCard formData={element} />
+                                            </Panel>
+                                        </Collapse>
+                                    </div>
+                                );
+                            })}
+                        </Panel>
+                    </Collapse>
+                    <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse('shield')} expandIconPosition="end">
+                        <Panel header="Shield" key="shield">
+                            <Divider />
+                            <ShieldForm formActionType={formActionType} formData={formData} shieldForm={shieldForm} />
+                        </Panel>
+                    </Collapse>
+                    <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse('Amc')} expandIconPosition="end">
+                        <Panel header="Amc" key={'Amc'}>
+                            <Divider />
+                            <AMCForm formActionType={formActionType} formData={formData} amcForm={amcForm} />
+                        </Panel>
+                    </Collapse>
+                    <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse('Rsa')} expandIconPosition="end">
+                        <Panel header="RSA" key={'Rsa'}>
+                            <Divider />
+                            <RSAForm formActionType={formActionType} formData={formData} rsaForm={rsaForm} />
+                        </Panel>
+                    </Collapse>
+                    <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse('fMS')} expandIconPosition="end">
+                        <Panel header="FMS" key={'fMS'}>
+                            <Divider />
+                            <FMSForm formActionType={formActionType} formData={formData} fmsForm={fmsForm} />
+                        </Panel>
+                    </Collapse>
                 </Col>
             </Row>
         </div>

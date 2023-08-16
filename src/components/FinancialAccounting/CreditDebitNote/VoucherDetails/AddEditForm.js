@@ -117,28 +117,23 @@ const AddEditFormMain = (props) => {
         <>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Space direction="vertical" size="small" className={styles.accordianContainer}>
-                        <Collapse collapsible="icon" onChange={() => handleCollapse('voucher')} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian} {...collapseProps}>
-                            <Panel
-                                header={
-                                    <Row>
-                                        <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                            <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                                Voucher Details
-                                            </Text>
-
-                                            <Button onClick={addContactHandeler} icon={<PlusOutlined />} type="primary">
-                                                Add
-                                            </Button>
-                                        </Col>
-                                    </Row>
-                                }
-                                key="voucher"
-                            >
-                                <DataTable tableColumn={tableColumn({ handleButtonClick, formActionType, bindCodeValue })} tableData={voucherTableData} pagination={false} />
-                            </Panel>
-                        </Collapse>
-                    </Space>
+                    <Collapse collapsible="icon" onChange={() => handleCollapse('voucher')} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian} {...collapseProps}>
+                        <Panel
+                            header={
+                                <Row>
+                                    <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                                        <Text strong>Voucher Details</Text>
+                                        <Button onClick={addContactHandeler} icon={<PlusOutlined />} type="primary">
+                                            Add
+                                        </Button>
+                                    </Col>
+                                </Row>
+                            }
+                            key="voucher"
+                        >
+                            <DataTable tableColumn={tableColumn({ handleButtonClick, formActionType, bindCodeValue })} tableData={voucherTableData} pagination={false} />
+                        </Panel>
+                    </Collapse>
                 </Col>
             </Row>
             <VoucherAddEditForm {...advanceFilterProps} />

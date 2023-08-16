@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Form, Space, Typography, Button, Empty, Card, Divider } from 'antd';
+import { Row, Col, Form, Typography, Button, Empty, Card, Divider } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 
 import { bindActionCreators } from 'redux';
@@ -244,28 +244,26 @@ const ContactMasterMain = (props) => {
                                         )}
                                     </Row>
                                     <Divider className={styles.marT20} />
-                                    <Space direction="vertical" className={styles.accordianContainer}>
-                                        <div className={styles.headerBox}>
-                                            {!formActionType?.viewMode && showAddEditForm && <AddEditForm {...formProps} />}
-                                            {!contactData?.length && !isAdding ? (
-                                                <>
-                                                    <Empty
-                                                        image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                                        imageStyle={{
-                                                            height: 60,
-                                                        }}
-                                                        description={
-                                                            <span>
-                                                                {noDataTitle} <br />
-                                                            </span>
-                                                        }
-                                                    ></Empty>
-                                                </>
-                                            ) : (
-                                                <ViewList {...formProps} />
-                                            )}
-                                        </div>
-                                    </Space>
+                                    <div className={styles.headerBox}>
+                                        {!formActionType?.viewMode && showAddEditForm && <AddEditForm {...formProps} />}
+                                        {!contactData?.length && !isAdding ? (
+                                            <>
+                                                <Empty
+                                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                                    imageStyle={{
+                                                        height: 60,
+                                                    }}
+                                                    description={
+                                                        <span>
+                                                            {noDataTitle} <br />
+                                                        </span>
+                                                    }
+                                                ></Empty>
+                                            </>
+                                        ) : (
+                                            <ViewList {...formProps} />
+                                        )}
+                                    </div>
                                 </>
                             )}
                         </Card>

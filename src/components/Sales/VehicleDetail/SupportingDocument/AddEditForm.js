@@ -49,7 +49,7 @@ const AddEditForm = (props) => {
     };
 
     return (
-        <Space style={{ display: 'flex' }} direction="vertical" size="middle" className={styles.accordianContainer}>
+        <>
             <Collapse defaultActiveKey={['1']} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
                 <Panel header="Supporting/Reference Documents" key="1">
                     {!formActionType?.viewMode && (
@@ -90,7 +90,7 @@ const AddEditForm = (props) => {
                     </Row>
                 </Panel>
             </Collapse>
-        </Space>
+        </>
     );
 };
 

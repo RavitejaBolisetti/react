@@ -39,21 +39,17 @@ export const ViewProductDetailMain = ({ form, skuAttributes, setSKUAttributes, i
                 <Descriptions.Item label="Short Description">{selectedTreeData?.prodctShrtName}</Descriptions.Item>
                 <Descriptions.Item label="Long Description">{selectedTreeData?.prodctLongName}</Descriptions.Item>
                 <Descriptions.Item label="Status">{selectedTreeData?.active === true ? 'Active' : 'InActive'}</Descriptions.Item>
-                <Space direction="vertical" size="small" className={styles.accordianContainer}>
-                    <Row>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            {selectedTreeData?.skuAttributes?.length > 0 && (
-                                <Collapse expandIcon={expandIcon}>
-                                    <Panel header="Product SKU" key="2">
-                                        {skuAttributes?.map((item) => (
-                                            <CardProductAttribute key={'sku' + item?.code} code={item?.code} value={item?.value} id={item?.id} setDisabledEdit={setDisabledEdit} />
-                                        ))}
-                                    </Panel>
-                                </Collapse>
-                            )}
-                        </Col>
-                    </Row>
-                </Space>
+                <div>
+                    {selectedTreeData?.skuAttributes?.length > 0 && (
+                        <Collapse expandIcon={expandIcon}>
+                            <Panel header="Product SKU" key="2">
+                                {skuAttributes?.map((item) => (
+                                    <CardProductAttribute key={'sku' + item?.code} code={item?.code} value={item?.value} id={item?.id} setDisabledEdit={setDisabledEdit} />
+                                ))}
+                            </Panel>
+                        </Collapse>
+                    )}
+                </div>
             </Descriptions>
         </div>
     );

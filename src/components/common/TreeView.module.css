@@ -21,14 +21,14 @@
     background: none;
 }
 
-.treemenu {
+/* .treemenu {
     padding-left: 0px;
     padding-bottom: 0px;
     line-height: 2em;
     list-style: none;
     background-color: transparent;
     color: #0b0b0c;
-}
+} */
 
 /* .treeCollapsibleButton {
     border: 1px solid #ff3e5b;
@@ -112,6 +112,7 @@
 .scrollTreeDataInner::-webkit-scrollbar-thumb:hover {
     border: 2px solid #c1c1c1;
 }
+
 /* .modalView .scrollTreeData::-webkit-scrollbar-track {
     background-color: #fff;
 }
@@ -151,7 +152,7 @@
 } */
 
 :global .ant-tree .ant-tree-node-content-wrapper.ant-tree-node-selected,
-:global .ant-tree .ant-tree-checkbox + span.ant-tree-node-selected {
+:global .ant-tree .ant-tree-checkbox+span.ant-tree-node-selected {
     background-color: transparent;
     color: #ff3e5b;
     border-radius: 4px;
@@ -164,7 +165,7 @@
     color: #FF3E5B;} */
 
 :global .ant-tree .ant-tree-node-content-wrapper,
-:global .ant-tree .ant-tree-checkbox + span {
+:global .ant-tree .ant-tree-checkbox+span {
     position: relative;
     z-index: auto;
     min-height: 24px;
@@ -176,7 +177,7 @@
 }
 
 :global .ant-tree .ant-tree-node-content-wrapper:hover,
-:global .ant-tree .ant-tree-checkbox + span:hover {
+:global .ant-tree .ant-tree-checkbox+span:hover {
     background-color: transparent;
     color: #ff3e5b;
     border-radius: 4px;
@@ -184,7 +185,7 @@
 }
 
 :global .ant-tree .ant-tree-node-content-wrapper:hover .site-tree-search-value,
-:global .ant-tree .ant-tree-checkbox + span:hover .site-tree-search-value {
+:global .ant-tree .ant-tree-checkbox+span:hover .site-tree-search-value {
     color: #ff3e5b !important;
 }
 
