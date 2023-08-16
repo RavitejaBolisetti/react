@@ -57,7 +57,7 @@ const AddEditFormMain = (props) => {
         setActiveKey(1);
     };
 
-    const formType = 'New';
+    const formType = 'customerNameChangeRequest';
     const customerNameChangeField = ['titleCode' + formType, 'firstName' + formType, 'middleName' + formType, 'lastName' + formType];
     const onHandleSave = () => {
         setNameChangeRequested(false);
@@ -75,14 +75,6 @@ const AddEditFormMain = (props) => {
                     setActiveKey([]);
                     setButtonData({ ...buttonData, formBtnActive: true });
                     setNameChangeRequested(true);
-                    console.log('uploadedFileInformation - customerNewName', uploadedFileInformation, customerNewName, {
-                        titleCode: customerNewName?.['titleCode' + formType],
-                        firstName: customerNewName?.['firstName' + formType],
-                        middleName: customerNewName?.['middleName' + formType],
-                        lastName: customerNewName?.['lastName' + formType],
-                        status: STATUS?.PENDING?.title,
-                        supportingDocuments: uploadedFileInformation ? [{ id: formData?.id || '', documentName: uploadedFileInformation?.documentName, documentId: uploadedFileInformation?.docId || '' }] : [],
-                    });
                     setCustomerNameList({
                         titleCode: customerNewName?.['titleCode' + formType],
                         firstName: customerNewName?.['firstName' + formType],
@@ -191,7 +183,7 @@ const AddEditFormMain = (props) => {
                                             <Typography>
                                                 {customerNameList?.titleCode} {customerNameList?.firstName} {customerNameList?.middleName} {customerNameList?.lastName}
                                             </Typography>
-                                            {editedMode || formData?.pendingNameChangeRequest?.status === STATUS?.PENDING?.title ? <Text type="secondary">Current Name</Text> : null}
+                                            {editedMode || formData?.customerNameChangeRequest?.status === STATUS?.PENDING?.title ? <Text type="secondary">Current Name</Text> : null}
                                         </div>
                                         {editMode && (
                                             <Button
@@ -208,7 +200,7 @@ const AddEditFormMain = (props) => {
                                             </Button>
                                         )}
                                     </Row>
-                                    {formData?.pendingNameChangeRequest?.status === STATUS?.PENDING?.title ? (
+                                    {formData?.customerNameChangeRequest?.status === STATUS?.PENDING?.title ? (
                                         <Tag style={{ textAlign: 'right' }} color="warning">
                                             Pending for Approval
                                         </Tag>
@@ -250,7 +242,7 @@ const AddEditFormMain = (props) => {
             ) : (
                 AddEditFormItem()
             )}
-            {formData?.pendingNameChangeRequest?.status === STATUS?.PENDING?.title && (
+            {formData?.customerNameChangeRequest?.status === STATUS?.PENDING?.title && (
                 <Card
                     title={
                         <>
