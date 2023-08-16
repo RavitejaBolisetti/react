@@ -33,14 +33,13 @@ export const AdvancedSearchFrom = (props) => {
     }, [filterString]);
 
     const onFinish = (values) => {
-        console.log('values', values);
         setFilterString({
             ...filterString,
             ...values,
-            orderType: values?.orderTypeCode,
+            orderType: values?.orderType,
             fromDate: formatDate(values?.fromDate),
             toDate: formatDate(values?.toDate),
-            purchaseOrderStatusCode: values?.purchaseOrderStatusCode,
+            purchaseOrderStatusCode: values?.status,
             purchaseOrderNumber: values?.purchaseOrderNumber,
             advanceFilter: true,
         });
@@ -62,13 +61,13 @@ export const AdvancedSearchFrom = (props) => {
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item initialValue={filterString?.orderTypeCode} label="Order Type" name="orderTypeCode" rules={[validateRequiredSelectField('Order Type')]}>
+                    <Form.Item initialValue={filterString?.orderType} label="Order Type" name="orderType" rules={[validateRequiredSelectField('Order Type')]}>
                         <Select placeholder={preparePlaceholderSelect('')} fieldNames={{ label: 'value', value: 'key' }} options={typeData['PO_TYPE']} className={styles.headerSelectField}></Select>
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                     
-                     <Form.Item initialValue={filterString?.purchaseOrderStatusCode} name="purchaseOrderStatusCode" label="Order Status" >
+                     <Form.Item initialValue={filterString?.status} name="status" label="Order Status" >
                         {customSelectBox({ data: typeData['PO_STATS'] })}
                     </Form.Item>
                 </Col>
