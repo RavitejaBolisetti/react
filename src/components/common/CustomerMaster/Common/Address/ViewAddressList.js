@@ -82,7 +82,7 @@ const ViewAddressList = (props) => {
                                                     <Checkbox valuePropName="checked" checked={data?.deafultAddressIndicator} defaultChecked={data?.deafultAddressIndicator} onClick={(e) => onCheckdefaultAddClick(e, data)} {...disableProp}>
                                                         Mark As Default
                                                     </Checkbox>
-                                                    <Divider type="vertical" />
+                                                    {/* <Divider type="vertical" /> */}
                                                     {/* <Text type="secondary">{getCodeValue(addData, data?.addressType)}</Text> */}
                                                 </div>
                                             )}

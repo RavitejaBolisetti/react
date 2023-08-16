@@ -9,7 +9,7 @@ describe('OTF Form Button Component', () => {
     });
 
     it('if status is booked', () => {
-        render(<OTFStatusTag status="O"/>);
+        customRender(<OTFStatusTag status="O"/>);
     });
 
     it('if status is alloted', () => {

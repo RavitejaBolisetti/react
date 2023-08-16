@@ -48,10 +48,10 @@ function FormAccountAndDocumentMapping(props) {
                             {customSelectBox({ disabled: mainFomEdit, data: financialAccountData, placeholder: preparePlaceholderSelect('Financial Account Head') })}
                         </Form.Item>
                     </Col>
+
                     <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
                         <Form.Item name="internalId" label="Internal Id" />
                     </Col>
-
                     <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
                         <Form.Item label="Application Menu" name="applicationName" />
                     </Col>
@@ -60,6 +60,9 @@ function FormAccountAndDocumentMapping(props) {
                     </Col>
                     <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
                         <Form.Item label="Financial Account Head" name="financialAccountHead" />
+                    </Col>
+                    <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
+                        <Form.Item label="accountDocumentMap Id" name="accountDocumentMapId" />
                     </Col>
 
                     {!formEdit && (

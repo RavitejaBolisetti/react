@@ -8,7 +8,7 @@ import CardAccountAndDocumentMapping from './CardAccountAndDocumentMapping';
 import FormAccountAndDocumentMapping from './FormAccountAndDocumentMapping';
 
 export const AccountAndDocumentMappingMaster = (props) => {
-    const { isVisible, showGlobalNotification, handleCodeFunction, form, editForm, accDocMapForm, formEdit, setFormEdit, buttonData, setButtonData, viewMode, dropdownItems, setDropdownItems, accountDocumentMaps, setAccountDocumentMaps, accountCategory, applicationMenuData, financialAccountData, documentDescriptionData, setUserApplicationId, selectedTreeSelectKey, setSelectedTreeSelectKey } = props;
+    const { isVisible, showGlobalNotification, handleCodeFunction, form, editForm, accDocMapForm, formEdit, setFormEdit, buttonData, setButtonData, viewMode, dropdownItems, setDropdownItems, accountDocumentMaps, setAccountDocumentMaps, accountCategory, applicationMenuData, financialAccountData, documentDescriptionData, setUserApplicationId, selectedTreeSelectKey, setSelectedTreeSelectKey, formActionType } = props;
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [disableSaveButton, setDisableSaveButton] = useState(false);
     const [changeValue, setChangeValue] = useState(null);
@@ -35,13 +35,17 @@ export const AccountAndDocumentMappingMaster = (props) => {
         setUserApplicationId(value);
         setAppSelectName(treeObj?.[0]);
 
+        let obj = {
+            applicationId: value,
+            applicationName: treeObj?.[0],
+            documentTypeCode: null,
+        };
+
         if (formEdit) {
-            editForm.setFieldValue('applicationId', value);
-            editForm.setFieldValue('applicationName', treeObj?.[0]);
+            editForm.setFieldsValue(obj);
             setSelectedTreeSelectKey(value);
         } else {
-            accDocMapForm.setFieldValue('applicationId', value);
-            accDocMapForm.setFieldValue('applicationName', treeObj?.[0]);
+            accDocMapForm.setFieldsValue(obj);
             setMainSelectedKey(value);
         }
     };
@@ -78,6 +82,7 @@ export const AccountAndDocumentMappingMaster = (props) => {
         documentDescriptionData,
         handleSelectTreeClick,
         appSelectName,
+        formActionType,
     };
 
     const formProductAttributeProps = {

@@ -206,28 +206,6 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                     </Row>
-
-                    <Row gutter={20}>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Form.Item name="prodctLongName" data-testid="prodctLongName" label="Long Description" initialValue={formData?.prodctLongName} rules={[validateRequiredInputField('long description')]}>
-                                <TextArea rows={1} placeholder={preparePlaceholderText('long description')} maxLength={300} disabled={formData?.id || isReadOnly} />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.padLeft10}>
-                            <Form.Item initialValue={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.active ? true : false} label="Status" name=" b" data-testid="default-toggle">
-                                <Switch value={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.active ? true : false} checkedChildren="Active" unCheckedChildren="Inactive" defaultChecked={formActionType === 'child' || formActionType === 'sibling' ? true : formData?.active === true || null || undefined ? true : false} {...disabledProps} />
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                    {showProductAttribute && (
-                        <Row gutter={20}>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <Form.Item hidden name={'adAmHirchyAttrbtMstSk'} sinitialValue={formData?.attributeKey}>
-                                    <Input />
-                                </Form.Item>
-                            </Col>
-                        </Row>
-                    )}
                 </Form>
                 {showProductAttribute && (
                     <Collapse className={openAccordian === 1 ? styles.accordianHeader : ''} onChange={() => handleCollapse(1)} expandIcon={accordianExpandIcon}>

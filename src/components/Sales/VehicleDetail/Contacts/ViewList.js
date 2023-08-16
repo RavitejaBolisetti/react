@@ -21,7 +21,6 @@ const ViewList = (props) => {
     const { isAdding, setShowAddEditForm, showAddEditForm, setContactData, contactform, isEditing, setIsEditing, formActionType } = props;
 
     const [openAccordian, setOpenAccordian] = useState('');
-    const disableProp = { disabled: formActionType?.viewMode };
     const [timingForm] = Form.useForm();
 
     const editContactHandeler = (e, data, i) => {

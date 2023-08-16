@@ -8,10 +8,11 @@ import { Col, Form, Row, Select, Button, DatePicker, Input } from 'antd';
 
 import { withModal } from 'components/withModal';
 import { validateRequiredSelectField } from 'utils/validation';
-import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
+import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import { dateFormat, formatDate, formatDateToCalenderDate } from 'utils/formatDateTime';
 import { disableFutureDate } from 'utils/disableDate';
+import { customSelectBox } from 'utils/customSelectBox';
 
 import styles from 'components/common/Common.module.css';
 
@@ -22,7 +23,7 @@ export const AdvancedSearchFrom = (props) => {
         setFilterString,
         advanceFilterForm,
         advanceFilterForm: { resetFields },
-        handleResetFilter,
+        handleCancelFilter,
     } = props;
 
     useEffect(() => {
@@ -31,11 +32,10 @@ export const AdvancedSearchFrom = (props) => {
     }, [filterString]);
 
     const onFinish = (values) => {
-        console.log('values', values);
         setFilterString({
             ...filterString,
             ...values,
-            orderTypeCode: values?.orderTypeCode,
+            orderType: values?.orderTypeCode,
             fromDate: formatDate(values?.fromDate),
             toDate: formatDate(values?.toDate),
             purchaseOrderStatusCode: values?.purchaseOrderStatusCode,
@@ -49,30 +49,22 @@ export const AdvancedSearchFrom = (props) => {
         return;
     };
 
-    const selectProps = {
-        optionFilterProp: 'children',
-        showSearch: true,
-        allowClear: true,
-        className: styles.headerSelectField,
-    };
-    console.log('typeData searchpg=>', typeData);
-
     return (
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item initialValue={filterString?.orderTypeCode} label="Order Type" name="orderTypeCode" rules={[validateRequiredSelectField('Order Type')]}>
-                        <Select placeholder={preparePlaceholderSelect('')} fieldNames={{ label: 'value', value: 'key' }} options={typeData['PO_TYPE']} {...selectProps} className={styles.headerSelectField}></Select>
+                        <Select placeholder={preparePlaceholderSelect('')} fieldNames={{ label: 'value', value: 'key' }} options={typeData['PO_TYPE']} className={styles.headerSelectField}></Select>
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item initialValue={filterString?.purchaseOrderStatusCode} label="Order Status" name="purchaseOrderStatusCode">
-                        <Select placeholder={preparePlaceholderSelect('')} fieldNames={{ label: 'value', value: 'key' }} options={typeData['PO_STATS']} {...selectProps} className={styles.headerSelectField}></Select>
+                    <Form.Item initialValue={filterString?.purchaseOrderStatusCode} name="purchaseOrderStatusCode" label="Order Status">
+                        {customSelectBox({ data: typeData['PO_STATS'] })}
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item name="purchaseOrderNumber" label="Purchase Order Number" initialValue={filterString?.purchaseOrderNumber}>
-                        <Input maxLength={50} />
+                        <Input maxLength={50} placeholder={preparePlaceholderText('Purchase Order Number')} />
                     </Form.Item>
                 </Col>
             </Row>
@@ -91,7 +83,7 @@ export const AdvancedSearchFrom = (props) => {
 
             <Row gutter={20}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignLeft}>
-                    <Button onClick={handleResetFilter} danger>
+                    <Button onClick={handleCancelFilter} danger>
                         Reset
                     </Button>
                 </Col>

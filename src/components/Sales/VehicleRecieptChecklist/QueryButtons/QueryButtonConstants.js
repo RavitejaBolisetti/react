@@ -8,18 +8,15 @@ export const QUERY_BUTTONS = {
         id: 'pending',
         title: 'Pending',
         key: 'pending',
-        active: true,
     },
     PARTIALLY_COMPLETED: {
         id: 'partially',
         title: 'Partially Completed',
-        key: 'partially',
-        active: false,
+        key: 'partiallyCompleted',
     },
     COMPLETED: {
         id: 'completed',
         title: 'Completed',
         key: 'completed',
-        active: false,
     },
 };
