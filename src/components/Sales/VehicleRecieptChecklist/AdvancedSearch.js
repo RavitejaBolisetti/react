@@ -10,8 +10,6 @@ import { withModal } from 'components/withModal';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { dateFormat, formatDate } from 'utils/formatDateTime';
 import { ModalButtons } from 'components/common/Button';
-import { customSelectBox } from 'utils/customSelectBox';
-import { validateRequiredSelectField } from 'utils/validation';
 
 import styles from 'components/common/Common.module.css';
 
@@ -26,9 +24,8 @@ export const AdvancedSearchFrom = (props) => {
         setrules,
     } = props;
 
-    console.log('rules', rules);
-
     const onFinish = (values) => {
+        console.log('onfinisValues', values);
         if (values?.fromDate && values?.toDate && !values?.model) {
             setFilterString({
                 ...filterString,
@@ -44,12 +41,16 @@ export const AdvancedSearchFrom = (props) => {
                 model: values?.model,
                 advanceFilter: true,
             });
-        } else {
+        } else if (values?.model) {
             setFilterString({
                 ...filterString,
                 model: values?.model,
                 advanceFilter: true,
             });
+        } else {
+            const { fromDate, toDate, model, ...rest } = filterString;
+            if (Object.keys(rest)?.length === 1) setFilterString();
+            else setFilterString({ ...rest });
         }
 
         setAdvanceSearchVisible(false);
