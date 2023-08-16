@@ -6,6 +6,7 @@
 import React, { useState, useReducer, useEffect } from 'react';
 import { Row, Col, Form, Space, Typography, Button, Empty, Card, Divider } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
+import { UploadBoxIcon } from 'Icons';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -246,7 +247,7 @@ const ContactMain = (props) => {
 
         const requestData = {
             data: data,
-            method: 'post',
+            method: customerData?.customerContact ? 'put' : 'post',
             setIsLoading: listContactDetailsShowLoading,
             userId,
             onError,
@@ -297,28 +298,25 @@ const ContactMain = (props) => {
                                         )}
                                     </Row>
                                     <Divider className={styles.marT20} />
-                                    <Space direction="vertical" className={styles.accordianContainer}>
-                                        <div className={styles.headerBox}>
-                                            {!formActionType?.viewMode && showAddEditForm && <AddEditForm {...formProps} />}
-                                            {!contactData?.length && !isAdding ? (
-                                                <>
-                                                    <Empty
-                                                        image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                                        imageStyle={{
-                                                            height: 60,
-                                                        }}
-                                                        description={
-                                                            <span>
-                                                                {noDataTitle} <br />
-                                                            </span>
-                                                        }
-                                                    ></Empty>
-                                                </>
-                                            ) : (
-                                                <ViewContactList {...formProps} />
-                                            )}
-                                        </div>
-                                    </Space>
+                                    {!formActionType?.viewMode && showAddEditForm && <AddEditForm {...formProps} />}
+                                    {!contactData?.length && !isAdding ? (
+                                        <>
+                                            <Space direction="vertical" className={styles.verticallyCentered}>
+                                                <UploadBoxIcon />
+                                                <div className={styles.marB20}>
+                                                    {formActionType?.viewMode ? (
+                                                        <p className={styles.textCenter}>No records found</p>
+                                                    ) : (
+                                                        <p className={styles.textCenter}>
+                                                            Please add new contact using <br /> <strong>“Add”</strong> button at top
+                                                        </p>
+                                                    )}
+                                                </div>
+                                            </Space>
+                                        </>
+                                    ) : (
+                                        <ViewContactList {...formProps} />
+                                    )}
                                 </>
                             )}
                         </Card>

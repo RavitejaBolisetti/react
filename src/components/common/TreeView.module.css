@@ -3,17 +3,15 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-/* Tree panel CSS */
-/* .leftpanel { */
-/* padding: 0.2em; */
-/* padding: 4px; */
-/* width: 100%; */
-/* border-radius: 3px; */
-/* border-top-left-radius: 0; */
-/* margin-bottom: 20px; */
-/* white-space: nowrap; */
-/* margin-top: 4px; */
-/* } */
+
+.leftpanel {
+    width: 100%;
+    white-space: nowrap;
+}
+
+.noLeftRightParentPadding {
+    height: auto !important;
+}
 
 .panelVisible {
     height: calc(100vh - 280px);
@@ -21,25 +19,16 @@
 
 .panelHidden {
     background: none;
-    /* box-shadow: none; */
 }
 
-/* .treeViewContainer {
-    clear: both;
-    margin-bottom: 10px;
-} */
-
-/* .treemenu { */
-/* margin-bottom: 10px; */
-/* margin-top: 10px; */
-/* padding-left: 25px; */
-/* padding-left: 0px;
+.treemenu {
+    padding-left: 0px;
     padding-bottom: 0px;
     line-height: 2em;
     list-style: none;
     background-color: transparent;
-    color: #0B0B0C;
-} */
+    color: #0b0b0c;
+}
 
 /* .treeCollapsibleButton {
     border: 1px solid #ff3e5b;
@@ -65,6 +54,10 @@
 /* .bigblue {
     color: red;
 } */
+
+.noLeftRightPadding {
+    padding: 16px 0px !important;
+}
 
 .scrollTreeData {
     width: 100%;
@@ -94,6 +87,31 @@
     border: 2px solid #b5b5b6;
 }
 
+.scrollTreeDataInner {
+    margin-top: 10px;
+    width: 100%;
+    max-height: calc(100vh - 246px);
+    overflow: auto;
+}
+
+.scrollTreeDataInner::-webkit-scrollbar-track {
+    background-color: #ffffff;
+    border-radius: 10px;
+}
+
+.scrollTreeDataInner::-webkit-scrollbar {
+    width: 8px;
+}
+
+.scrollTreeDataInner::-webkit-scrollbar-thumb {
+    background-color: #c1c1c1;
+    border-radius: 10px;
+    border: 2px solid #ffffff;
+}
+
+.scrollTreeDataInner::-webkit-scrollbar-thumb:hover {
+    border: 2px solid #c1c1c1;
+}
 /* .modalView .scrollTreeData::-webkit-scrollbar-track {
     background-color: #fff;
 }
@@ -128,16 +146,16 @@
     padding-bottom: 0px;
 }
 
-:global .ant-tree-show-line .ant-tree-switcher-line-icon {
+/* :global .ant-tree-show-line .ant-tree-switcher-line-icon {
     vertical-align: -0.28em;
-}
+} */
 
 :global .ant-tree .ant-tree-node-content-wrapper.ant-tree-node-selected,
-:global .ant-tree .ant-tree-checkbox+span.ant-tree-node-selected {
+:global .ant-tree .ant-tree-checkbox + span.ant-tree-node-selected {
     background-color: transparent;
-    color: #FF3E5B;
+    color: #ff3e5b;
     border-radius: 4px;
-    padding: 0px 17px 0px 4px;
+    /* padding: 0px 17px 0px 4px; */
     font-weight: 500;
 }
 
@@ -146,7 +164,7 @@
     color: #FF3E5B;} */
 
 :global .ant-tree .ant-tree-node-content-wrapper,
-:global .ant-tree .ant-tree-checkbox+span {
+:global .ant-tree .ant-tree-checkbox + span {
     position: relative;
     z-index: auto;
     min-height: 24px;
@@ -158,15 +176,15 @@
 }
 
 :global .ant-tree .ant-tree-node-content-wrapper:hover,
-:global .ant-tree .ant-tree-checkbox+span:hover {
+:global .ant-tree .ant-tree-checkbox + span:hover {
     background-color: transparent;
-    color: #FF3E5B;
+    color: #ff3e5b;
     border-radius: 4px;
     padding: 0px 17px 0px 4px;
 }
 
 :global .ant-tree .ant-tree-node-content-wrapper:hover .site-tree-search-value,
-:global .ant-tree .ant-tree-checkbox+span:hover .site-tree-search-value {
+:global .ant-tree .ant-tree-checkbox + span:hover .site-tree-search-value {
     color: #ff3e5b !important;
 }
 
@@ -178,31 +196,24 @@
     /* margin-left: 10px; */
 }
 
-:global .ant-tree .ant-tree-switcher {
-    position: relative;
-    flex: none;
-    align-self: stretch;
-    width: 24px;
-    margin: 0;
-    line-height: 24px;
-    text-align: center;
-    cursor: pointer;
-    user-select: none;
+:global .ant-tree .ant-tree-switcher .anticon svg {
+    height: 16px;
+    width: 16px;
 }
-
-
 
 @media (max-width: 576px) {
     .scrollTreeData {
         width: 100%;
         overflow: scroll;
-        /* height: 12vh; */
         height: calc(100vh - 350px);
-        /* border:1px solid red; */
     }
 
     .panelVisible {
         height: calc(100vh - 368px);
+    }
+
+    .noLeftRightParentPadding {
+        height: auto !important;
     }
 
     :global .ant-input {

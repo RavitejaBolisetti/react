@@ -25,7 +25,6 @@ const ViewDetailBase = ({ setRejectRequest, isLoading = false, formData, styles,
     };
 
     const statusClassName = RSM_APPROVAL_STATUS?.REJECTED?.key === formData?.status ? styles.rejectedColor : RSM_APPROVAL_STATUS?.APPROVED?.key === formData?.status ? styles.approvedColor : styles.warningColor;
-
     return (
         <>
             <Row gutter={20} className={styles.drawerBody}>

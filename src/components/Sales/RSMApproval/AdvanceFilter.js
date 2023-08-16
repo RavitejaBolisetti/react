@@ -32,8 +32,9 @@ export default function AdvanceFilter(props) {
                     {advanceFilter && (
                         <div className={styles.advanceFilterBtn}>
                             <Button
-                                icon={<FilterIcon className={styles.advanceFilterIcon} />}
+                                icon={<FilterIcon />}
                                 type="link"
+                                className={styles.verticallyCentered}
                                 onClick={() => {
                                     setAdvanceSearchVisible(true);
                                 }}

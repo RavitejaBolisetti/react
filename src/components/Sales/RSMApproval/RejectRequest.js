@@ -26,6 +26,14 @@ export const RejectRequestForm = (props) => {
         setRejectFormButtonActive(false);
     };
 
+    const handleCheckboxChange = (e) => {
+        if (e.target.checked) {
+            setRejectFormButtonActive(false);
+        } else {
+            setRejectFormButtonActive(true);
+        }
+    };
+
     return (
         <Form autoComplete="off" layout="vertical" form={rejectForm} onFinish={onFinish} onFinishFailed={onFinishFailed} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange}>
             {rejectRequest ? (
@@ -41,7 +49,7 @@ export const RejectRequestForm = (props) => {
                     <Row gutter={16}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.modalCheckBox}>
                             <Form.Item initialValue={false} valuePropName="checked" name="status">
-                                <Checkbox className={styles.registered}>
+                                <Checkbox className={styles.registered} onChange={handleCheckboxChange}>
                                     I accept that for the Transferred Vehicle , Claim can be generated from the billed Dealer. <br />
                                     If more than one transfer happens for the same vehicle then claim is not allowed for any of the dealership.
                                 </Checkbox>

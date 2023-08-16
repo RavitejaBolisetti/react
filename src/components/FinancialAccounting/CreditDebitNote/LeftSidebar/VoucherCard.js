@@ -7,6 +7,7 @@ import React from 'react';
 import { Collapse, Space } from 'antd';
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
 import { convertDate, monthDateFormat } from 'utils/formatDateTime';
+import dayjs from 'dayjs';
 import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
@@ -37,7 +38,7 @@ const VoucherCard = (props) => {
                                     Voucher Number: <span className={styles.floatRight}>{selectedRecord?.voucherNumber}</span>
                                 </div>
                                 <div>
-                                    Voucher Date: <span className={styles.floatRight}>{selectedRecord?.voucherDate ? convertDate(selectedRecord?.voucherDate, monthDateFormat) : null}</span>
+                                    Voucher Date: <span className={styles.floatRight}>{selectedRecord?.voucherDate ? convertDate(selectedRecord?.voucherDate, monthDateFormat) : dayjs().format(monthDateFormat)}</span>
                                 </div>
                             </div>
                         </Space>

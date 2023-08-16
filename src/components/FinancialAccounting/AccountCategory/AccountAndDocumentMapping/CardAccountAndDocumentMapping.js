@@ -14,7 +14,7 @@ const { Text } = Typography;
 const CardAccountAndDocumentMapping = (props) => {
     const { finalFormdata, accDocMapForm, forceUpdate, setOpenAccordian, changeValue, setChangeValue, handleCodeFunction, editForm, formEdit, setFormEdit, uniqueCardEdit, setuniqueCardEdit, handleDescriptionChange, buttonData, setButtonData, dropdownItems, setDropdownItems, accountDocumentMaps, setAccountDocumentMaps, accountCategoryData, applicationMenuData, financialAccountData, setSelectedTreeSelectKey, setUserApplicationId, viewMode, selectedTreeSelectKey, handleSelectTreeClick, documentDescriptionData, appSelectName } = props;
     const appName = props?.applicationName ? props?.applicationName : appSelectName;
-    const docName = props?.documentDescription ? props?.documentDescription : documentDescriptionData?.find((e) => e?.key === props?.documentTypeCode)?.value;
+    const docName = props?.documentDescription;
     const financeName = financialAccountData?.find((e) => e?.key === props?.financialAccountHeadCode)?.value;
 
     const accDocMapEdit = (props) => {
@@ -24,32 +24,45 @@ const CardAccountAndDocumentMapping = (props) => {
         setSelectedTreeSelectKey(() => props?.applicationId);
 
         editForm.setFieldsValue({
+            applicationId: props?.applicationId,
             documentTypeCode: props?.documentTypeCode,
             financialAccountHeadCode: props?.financialAccountHeadCode,
             internalId: props?.internalId,
-            financialAccountHead: financeName,
+            accountDocumentMapId: props?.accountDocumentMapId,
+            applicationName: props?.applicationName,
+            documentDescription: props?.documentDescription,
+            financialAccountHead: props?.financialAccountHead,
         });
     };
 
     const onAccountDocumentMapsSave = () => {
-        let newFormData = editForm?.getFieldsValue();
-
-        const upd_obj = accountDocumentMaps?.map((obj) => {
-            if (obj?.internalId === newFormData?.internalId) {
-                obj.documentTypeCode = newFormData?.documentTypeCode;
-                obj.financialAccountHeadCode = newFormData?.financialAccountHeadCode;
-                obj.applicationMenu = newFormData?.applicationMenu;
-                obj.internalId = newFormData?.internalId;
-                obj.documentDescription = newFormData?.documentDescription;
-                obj.financialAccountHead = newFormData?.financialAccountHead;
-            }
-            return obj;
+        let formData = editForm?.getFieldsValue();
+        let documentDescription = documentDescriptionData?.find((e) => e?.key === formData?.documentTypeCode)?.value;
+        editForm.setFieldsValue({
+            documentDescription: documentDescription,
         });
+        editForm
+            .validateFields()
+            .then(() => {
+                let newFormData = editForm?.getFieldsValue();
+                const upd_obj = accountDocumentMaps?.map((obj) => {
+                    if (obj?.internalId === newFormData?.internalId) {
+                        obj.applicationId = newFormData?.applicationId;
+                        obj.documentTypeCode = newFormData?.documentTypeCode;
+                        obj.financialAccountHeadCode = newFormData?.financialAccountHeadCode;
+                        obj.applicationName = newFormData?.applicationName;
+                        obj.documentDescription = newFormData?.documentDescription;
+                        obj.financialAccountHead = newFormData?.financialAccountHead;
+                    }
+                    return obj;
+                });
 
-        setAccountDocumentMaps([...upd_obj]);
-        setDropdownItems(() => []);
-        setFormEdit(false);
-        forceUpdate();
+                setAccountDocumentMaps([...upd_obj]);
+                setDropdownItems(() => []);
+                setFormEdit(false);
+                forceUpdate();
+            })
+            .catch((err) => console.log(err));
     };
 
     const onAccAndMapDelete = (val) => {
