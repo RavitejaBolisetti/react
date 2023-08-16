@@ -122,23 +122,21 @@ export const InvoiceDetailsMasterBase = (props) => {
                             <OTFStatusBar status={orderStatus} />
                         </Col>
                     </Row>
-                    <Space size="middle" direction="vertical" className={styles.accordianContainer}>
-                        {displaySection?.invoiceInformation && (
-                            <Collapse onChange={() => onChange(1)} expandIconPosition="end" expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={activeKey}>
-                                <Panel header="Invoice Information" key={1}>
-                                    <DataTable srlTitle={'#'} pagination={false} tableColumn={tableColumnInvoice()} tableData={invoiceData?.invoiceDetails} />
-                                </Panel>
-                            </Collapse>
-                        )}
+                    {displaySection?.invoiceInformation && (
+                        <Collapse onChange={() => onChange(1)} expandIconPosition="end" expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={activeKey}>
+                            <Panel header="Invoice Information" key={1}>
+                                <DataTable srlTitle={'#'} pagination={false} tableColumn={tableColumnInvoice()} tableData={invoiceData?.invoiceDetails} />
+                            </Panel>
+                        </Collapse>
+                    )}
 
-                        {displaySection?.deliveryInformation && (
-                            <Collapse onChange={() => onChange(2)} expandIconPosition="end" expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={activeKey}>
-                                <Panel header="Delivery Information" key={2}>
-                                    <DataTable srlTitle={'#'} pagination={false} tableColumn={tableColumnDelivery()} tableData={invoiceData?.deliveryDetails} />
-                                </Panel>
-                            </Collapse>
-                        )}
-                    </Space>
+                    {displaySection?.deliveryInformation && (
+                        <Collapse onChange={() => onChange(2)} expandIconPosition="end" expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={activeKey}>
+                            <Panel header="Delivery Information" key={2}>
+                                <DataTable srlTitle={'#'} pagination={false} tableColumn={tableColumnDelivery()} tableData={invoiceData?.deliveryDetails} />
+                            </Panel>
+                        </Collapse>
+                    )}
                 </Col>
             </Row>
             <Row>
