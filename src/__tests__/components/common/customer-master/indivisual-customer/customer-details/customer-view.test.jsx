@@ -2,7 +2,6 @@ import React from 'react';
 import { fireEvent, screen } from '@testing-library/react';
 import { ViewDetail } from '@components/common/CustomerMaster/IndividualCustomer/CustomerDetail/ViewDetail';
 import customRender from '@utils/test-utils';
-// import { RejectionModal } from '@components/common/CustomerMaster/IndividualCustomer/CustomerDetail/RejectionModal';
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
 import { Form } from 'antd';
