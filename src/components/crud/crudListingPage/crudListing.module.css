@@ -197,13 +197,13 @@
   color: #8e8585;
 }
 
-.container {
+/* .container {
   padding: 20px;
-}
+} */
 
-.mb10 {
+/* .mb10 {
   margin-bottom: 20px;
-}
+} */
 
 .inputBox {
   border-radius: 4px;
@@ -223,7 +223,7 @@
   text-align: center;
 }
 
-.buttonHeadingContainer {
+/* .buttonHeadingContainer {
   margin-top: 0px;
   display: inline-block;
   width: 100%;
@@ -235,14 +235,14 @@
   margin-right: 6px;
   padding-top: 2px;
   float: none;
-}
+} */
 
-.hyrbuttonContainer {
+/* .hyrbuttonContainer {
   border: 1px solid #e8e8e8;
   border-top: 0px solid #e8e8e8;
-}
+} */
 
-.buttonContainer {
+/* .buttonContainer {
   margin-top: 10px;
   display: inline-block;
   width: 100%;
@@ -271,13 +271,13 @@
 .buttonContainer :global .ant-btn-default.ant-btn-dangerous:not(:disabled):hover {
   background-color: #ff3e5b;
   color: #ffffff !important;
-}
+} */
 
-.ant-row {
+/* .ant-row {
   display: flex;
   flex-flow: row wrap;
   min-width: 0;
-  /* margin-right: 0px !important; */
+  margin-right: 0px !important;
 }
 
 .formContainer {
@@ -286,7 +286,7 @@
 
 .pad10 {
   padding: 0px;
-}
+} */
 
 .padRight18 {
   padding-right: 18px;
@@ -305,20 +305,20 @@
   border-color: transparent !important;
 }
 
-.container {
+/* .container {
   padding: 20px;
-}
+} */
 
-.mb10 {
+/* .mb10 {
   margin-bottom: 20px;
-}
+} */
 
 .inputBox {
   border-radius: 4px;
   height: 36px;
 }
 
-.treemenu {
+/* .treemenu {
   margin: 24px 0px;
   padding-left: 0px;
   padding-bottom: 0px;
@@ -326,7 +326,7 @@
   list-style: none;
   background-color: transparent;
   color: #0b0b0c;
-}
+} */
 
 .floatRight {
   float: right;
@@ -508,7 +508,7 @@
   line-height: 24px;
 }
 
-.deleteBtn :disabled {
+/* .deleteBtn :disabled {
   background-color: #ffffff;
   color: #b5b5b6;
   border-color: white;
@@ -519,7 +519,7 @@
   color: #b5b5b6;
   border-color: none !important;
   border: none !important;
-}
+} */
 
 
 @media (max-width: 768px) {
@@ -538,14 +538,14 @@
     width: 100%;
   }
 
-  .buttonHeadingContainer {
+  /* .buttonHeadingContainer {
     margin-top: 10px;
     display: inline-block;
     width: 100%;
     padding: 0;
     text-align: center;
     padding-right: 0px !important;
-  }
+  } */
 
   .hierarchyRightContaner {
     margin-top: 10px;
@@ -555,36 +555,36 @@
     margin-top: 10px;
   }
 
-  .buttonHeadingContainer .buttonIcon {
+  /* .buttonHeadingContainer .buttonIcon {
     margin-right: 6px;
     padding-top: 2px;
     float: none;
-  }
+  } */
 
   .leftpanel {
     height: auto;
     margin-left: 4px;
   }
 
-  .buttonContainer {
+  /* .buttonContainer {
     margin-top: 4px;
-  }
+  } */
 
-  .exitButton {
+  /* .exitButton {
     padding: 10px 15px;
     margin: 0;
     margin-top: 4px;
     font-size: 12px;
     line-height: 2px;
-  }
+  } */
 
   .formContainer {
     padding: 10px;
   }
 
-  .pad10 {
+  /* .pad10 {
     padding: 10px;
-  }
+  } */
 
   .padLeft10 {
     padding-left: 10px !important;
@@ -631,25 +631,25 @@
     margin-left: 4px;
   }
 
-  .buttonContainer {
+  /* .buttonContainer {
     margin-top: 4px;
-  }
+  } */
 
-  .exitButton {
+  /* .exitButton {
     padding: 10px 15px;
     margin: 0;
     margin-top: 4px;
     font-size: 12px;
     line-height: 2px;
-  }
+  } */
 
-  .formContainer {
+  /* .formContainer {
     padding: 10px;
   }
 
   .pad10 {
     padding: 10px;
-  }
+  } */
 
   .padLeft10 {
     padding-left: 10px !important;

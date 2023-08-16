@@ -3,9 +3,9 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-.container {
+/* .container {
     padding: 20px;
-}
+} */
 
 .headerContainer {
     clear: both;
@@ -41,31 +41,31 @@
     margin: 0 0 36px 0 !important;
 }
 
-.mb10 {
+/* .mb10 {
     margin-bottom: 20px;
-}
+} */
 
 .inputBox {
     border-radius: 4px;
     height: 36px;
 }
 
-.treemenu {
+/* .treemenu {
     margin: 24px 0 0;
-    /* padding-left: 25px; */
+    padding-left: 25px;
     padding-left: 0px;
     padding-bottom: 0px;
     line-height: 2em;
     list-style: none;
     background-color: transparent;
     color: #342c2c;
-}
+} */
 
 .floatRight {
     float: right;
 }
 
-.exitButton {
+/* .exitButton {
     border: 1px solid #ff3e5b;
     border-radius: 3px;
     position: relative;
@@ -90,12 +90,12 @@
 .exitButton.active:hover {
     background-color: #ff3e5b;
     color: #ffffff !important;
-}
+} */
 
-.treeViewContainer {
+/* .treeViewContainer {
     clear: both;
     margin-bottom: 10px;
-}
+} */
 
 /* .treeCollapsibleButton {
     border: 1px solid #ff3e5b;
@@ -127,7 +127,7 @@
     color: #ffffff !important;
 } */
 
-.buttonContainer {
+/* .buttonContainer {
     text-align: right;
     padding: 0px !important;
 }
@@ -139,7 +139,7 @@
 .buttonContainer .buttonIcon {
     margin-right: 6px;
     padding-top: 2px;
-}
+} */
 
 /* .leftpanel {
     padding: 0.2em;
@@ -156,12 +156,12 @@
     margin-top: 5px;
 } */
 
-.treeMenuLeft {
+/* .treeMenuLeft {
     padding-left: 0 !important;
     margin-left: -10px;
-}
+} */
 
-.ant-input-group-wrapper {
+/* .ant-input-group-wrapper {
     vertical-align: inherit;
     margin-top: 13px;
 }
@@ -174,16 +174,16 @@
     display: flex;
     flex-flow: row wrap;
     min-width: 0;
-    /* margin-right: 0px !important; */
+    margin-right: 0px !important;
 }
 
 .formContainer {
     padding: 0px;
-}
+} */
 
-.pad10 {
+/* .pad10 {
     padding: 0px;
-}
+} */
 
 .padLeft10 :global .ant-form {
     margin: 0px 0px 0px 46px;
@@ -270,25 +270,25 @@
         height: auto;
     }
 
-    .buttonContainer {
+    /* .buttonContainer {
         margin-top: 4px;
-    }
+    } */
 
-    .exitButton {
+    /* .exitButton {
         padding: 10px 15px;
         margin: 0;
         margin-top: 4px;
         font-size: 12px;
         line-height: 2px;
-    }
+    } */
 
     .formContainer {
         padding: 10px;
     }
 
-    .pad10 {
+    /* .pad10 {
         padding: 10px;
-    }
+    } */
 
     .padLeft10 {
         padding-left: 10px !important;
