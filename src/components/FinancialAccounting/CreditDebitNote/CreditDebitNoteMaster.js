@@ -15,6 +15,7 @@ import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 
 
 import { ListDataTable } from 'utils/ListDataTable';
 import { getCodeValue } from 'utils/getCodeValue';
+import { monthDateFormat, convertDate } from 'utils/formatDateTime';
 import { CreditDebitNoteMainContainer } from './CreditDebitNoteMainContainer';
 import { AdvancedSearch } from './AdvancedSearch';
 import { showGlobalNotification } from 'store/actions/notification';
@@ -40,7 +41,6 @@ const mapStateToProps = (state) => {
         },
     } = state;
     const moduleTitle = ' Note';
-
     let returnValue = {
         userId,
         typeData,
@@ -73,7 +73,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const CreditDebitNoteMasterBase = (props) => {
-    const { fetchList, saveData, listShowLoading, userId, data, totalRecords, isDataLoaded, isDetailLoaded } = props;
+    const { fetchList, saveData, listShowLoading, userId, data, totalRecords, isDataLoaded, isDetailLoaded, showGlobalNotification } = props;
     const { typeData, moduleTitle } = props;
     const { fetchDetail, filterString, setFilterString, creditDebitData } = props;
 
@@ -188,7 +188,7 @@ export const CreditDebitNoteMasterBase = (props) => {
                 key: 'fromDate',
                 title: 'Start Date',
                 value: filterString?.fromDate,
-                name: filterString?.fromDate,
+                name: convertDate(filterString?.fromDate, monthDateFormat),
                 canRemove: true,
                 filter: true,
             },
@@ -196,7 +196,8 @@ export const CreditDebitNoteMasterBase = (props) => {
                 key: 'toDate',
                 title: 'End Date',
                 value: filterString?.toDate,
-                name: filterString?.toDate,
+                name: convertDate(filterString?.toDate, monthDateFormat),
+
                 canRemove: true,
                 filter: true,
             },
@@ -249,7 +250,7 @@ export const CreditDebitNoteMasterBase = (props) => {
         const onSuccessAction = (res) => {
             setSelectedVoucher(res);
         };
-        if (userId && extraParams && selectedRecord) {
+        if (userId && extraParams && selectedRecord && !formActionType?.addMode) {
             fetchDetail({ setIsLoading: listShowLoading, userId, customURL, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -349,6 +350,7 @@ export const CreditDebitNoteMasterBase = (props) => {
         };
 
         const onError = (message) => {
+            console.log('hello', message);
             showGlobalNotification({ message });
         };
 

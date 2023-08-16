@@ -105,8 +105,7 @@ export const AdvanceForm = (props) => {
                 setVoucherTableFormData();
             })
             .catch((err) => {
-                console.log('err', err);
-                console.log('voucherTableData', voucherTableData);
+               
             });
     };
     const onFinishFailed = () => {
