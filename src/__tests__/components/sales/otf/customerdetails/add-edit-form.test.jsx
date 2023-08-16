@@ -45,9 +45,7 @@ describe('Add Edit Form Components', () => {
         const mobilenumber = screen.getAllByRole('textbox', { Name: 'Mobile Number' });
 
         fireEvent.change(mobilenumber[0], { target: { value: '7068000000' } });
-        // expect(mobilenumber.value).toBe('7068951510');
         fireEvent.change(mobilenumber[1], { target: { value: '7068000000' } });
-        // expect(mobilenumber.value).toBe('7068951510');
     });
 
     it('should render form input field components', () => {

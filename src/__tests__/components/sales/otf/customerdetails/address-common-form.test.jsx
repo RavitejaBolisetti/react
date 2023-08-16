@@ -83,10 +83,4 @@ describe('address common form Components', () => {
         fireEvent.change(birthdate, { target: { value: 'Dmsbirthdate' } });
         expect(birthdate.value.includes('Dmsbirthdate'));
     });
-    // it('it should click on checkbox when user click', () => {
-    //     customRender(<AddEditForm formType="billingCustomer" activeKey={[1, 2]} setActiveKey={jest.fn()} setSameAsBookingCustomer={jest.fn()} />);
-    //     const checkbox = screen.getByRole('checkbox', { name: 'Same as Booking Customer' });
-    //     fireEvent.click(checkbox);
-    //     expect(checkbox).toBeChecked();
-    // });
 });
