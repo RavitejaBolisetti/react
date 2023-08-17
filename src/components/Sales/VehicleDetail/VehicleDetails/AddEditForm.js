@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Form, Select, DatePicker, Input, Checkbox, Switch, Collapse, Divider, Space } from 'antd';
+import { Row, Col, Form, Select, DatePicker, Input, Checkbox, Switch, Collapse, Divider } from 'antd';
 import { expandIcon } from 'utils/accordianExpandIcon';
 
 import { validateRequiredSelectField } from 'utils/validation';
@@ -52,24 +52,24 @@ const AddEditFormMain = (props) => {
     };
 
     return (
-        <Space style={{ display: 'flex' }} direction="vertical" size="middle" className={styles.accordianContainer}>
+        <>
             <Collapse defaultActiveKey={['1']} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
                 <Panel header="Vehicle Details" key="1">
                     <Divider />
                     <Row gutter={20}>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item initialValue={formattedCalendarDate(formData?.mnfcWarrEndDate)} label="Manufacturer Warranty End Date" name="mnfcWarrEndDate">
-                                <DatePicker disabledDate={disablePastDate} format={dateFormat} {...disabledProps} style={{ display: 'auto', width: '100%' }} />
+                                <DatePicker disabledDate={disablePastDate} format={dateFormat} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item initialValue={formattedCalendarDate(formData?.deliveryDate)} label="Delivery Date" name="deliveryDate">
-                                <DatePicker disabledDate={disablePastDate} format={dateFormat} {...disabledProps} style={{ display: 'auto', width: '100%' }} />
+                                <DatePicker disabledDate={disablePastDate} format={dateFormat} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item initialValue={formattedCalendarDate(formData?.saleDate)} label="Sale Date" name="saleDate">
-                                <DatePicker disabledDate={disablePastDate} format={dateFormat} {...disabledProps} style={{ display: 'auto', width: '100%' }} />
+                                <DatePicker disabledDate={disablePastDate} format={dateFormat} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -100,18 +100,18 @@ const AddEditFormMain = (props) => {
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item initialValue={formattedCalendarDate(formData?.nextServiceDueDate)} label="Next Service Due Date" name="nextServiceDueDate">
-                                <DatePicker disabledDate={disablePastDate} format={dateFormat} {...disabledProps} style={{ display: 'auto', width: '100%' }} />
+                                <DatePicker disabledDate={disablePastDate} format={dateFormat} {...disabledProps} />
                             </Form.Item>
                         </Col>
 
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item initialValue={formattedCalendarDate(formData?.pucExpiryDate)} label="PUC Expiry Date" name="pucExpiryDate">
-                                <DatePicker disabledDate={disablePastDate} format={dateFormat} {...disabledProps} style={{ display: 'auto', width: '100%' }} />
+                                <DatePicker disabledDate={disablePastDate} format={dateFormat} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item initialValue={formattedCalendarDate(formData?.insuranceExpiryDate)} label="Insurance Expiry Date" name="insuranceExpiryDate">
-                                <DatePicker disabledDate={disablePastDate} format={dateFormat} {...disabledProps} style={{ display: 'auto', width: '100%' }} />
+                                <DatePicker disabledDate={disablePastDate} format={dateFormat} {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -131,10 +131,10 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                         {/* <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name="taxiOrNonTaxi" label="Taxi/Non Taxi" initialValue={formData?.taxiOrNonTaxi}>
-                        <Input maxLength={50} {...disabledProps} />
-                    </Form.Item>
-                </Col> */}
+                            <Form.Item name="taxiOrNonTaxi" label="Taxi/Non Taxi" initialValue={formData?.taxiOrNonTaxi}>
+                                <Input maxLength={50} {...disabledProps} />
+                            </Form.Item>
+                        </Col> */}
 
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item initialValue={formData?.taxiOrNonTaxiKey} name="taxiOrNonTaxiKey" label="Taxi/Non Taxi">
@@ -226,7 +226,7 @@ const AddEditFormMain = (props) => {
                     <div>Coming Soon</div>
                 </Panel>
             </Collapse>
-        </Space>
+        </>
     );
 };
 

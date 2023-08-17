@@ -20,20 +20,20 @@ export const tblActionColumn = ({ styles, handleButtonClick, width = '10%', fixe
         width,
         fixed: fixed,
         render: (text, record, index) => [
-            <Space wrap>
+            <Space size="middle">
                 {record?.grnNumber ? (
                     <>
-                        <Button data-testid="view" className={styles.tableIcons} aria-label="ai-view" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.VIEW, record })}>
+                        <Button data-testid="view" type="link" aria-label="ai-view" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.VIEW, record })}>
                             <FiEye />
                         </Button>
                         {!EyeIcon && (
-                            <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.EDIT, record, index })}>
+                            <Button data-testid="edit" type="link" aria-label="fa-edit" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.EDIT, record, index })}>
                                 <FiEdit />
                             </Button>
                         )}
                     </>
                 ) : (
-                    AddIcon && <Button data-testid="add" className={styles.tableIcons} aria-label="fa-add" icon={<PlusOutlined />} onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD, record, index })} />
+                    AddIcon && <Button data-testid="add" type="link" aria-label="fa-add" icon={<PlusOutlined />} onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD, record, index })} />
                 )}
             </Space>,
         ],

@@ -24,6 +24,7 @@ import { CUSTOMER_CORPORATE_SECTION } from 'constants/CustomerCorporateSection';
 import { CUSTOMER_TYPE } from 'constants/CustomerType';
 import { documentViewDataActions } from 'store/actions/data/customerMaster/documentView';
 import { CustomerChangeHistory } from './CustomerChangeHistory';
+import { CustomerNameChangeHistory } from 'components/common/CustomerMaster/IndividualCustomer/CustomerDetail/CustomerNameChange';
 import DataTable from 'utils/dataTable/DataTable';
 import { CustomerMainConatiner } from './CustomerMainConatiner';
 import styles from 'components/common/Common.module.css';
@@ -40,7 +41,6 @@ const mapStateToProps = (state) => {
     } = state;
 
     const moduleTitle = 'Customer';
-    const ChangeHistoryTitle = 'Customer Change History ';
 
     let returnValue = {
         userId,
@@ -49,7 +49,6 @@ const mapStateToProps = (state) => {
         totalRecords: data?.totalRecords || [],
         isLoading,
         moduleTitle,
-        ChangeHistoryTitle,
         typeData: typeData && typeData[PARAM_MASTER.CUST_MST.id],
         filterString,
     };
@@ -93,6 +92,7 @@ const CustomerMasterMain = (props) => {
     const [profileCardLoading, setProfileCardLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [ChangeHistoryVisible, setChangeHistoryVisible] = useState(false);
+    const [showNameChangeHistory, setShowNameChangeHistory] = useState(false);
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false, changeHistory: true };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -360,16 +360,26 @@ const CustomerMasterMain = (props) => {
         handleChange,
     };
 
-    const ChangeHistoryProps = {
+    const changeHistoryProps = {
         isVisible: ChangeHistoryVisible,
         onCloseAction: () => {
             setChangeHistoryVisible(false);
         },
-        titleOverride: ChangeHistoryTitle,
+        titleOverride: 'Customer Change History',
         setIsFormVisible,
         buttonData,
         selectedCustomerId,
         ChangeHistoryTitle,
+        customerType,
+    };
+
+    const nameChangeHistoryProps = {
+        isVisible: showNameChangeHistory,
+        titleOverride: 'Name Change History',
+        onCloseAction: () => {
+            setShowNameChangeHistory(false);
+        },
+        selectedCustomerId,
         customerType,
     };
 
@@ -414,6 +424,7 @@ const CustomerMasterMain = (props) => {
         resetViewData,
         handleChangeHistory,
         handleResetFilter,
+        setShowNameChangeHistory,
     };
 
     const showAddButton = true;
@@ -516,7 +527,8 @@ const CustomerMasterMain = (props) => {
                 </Col>
             </Row>
             <CustomerMainConatiner {...containerProps} />
-            <CustomerChangeHistory {...ChangeHistoryProps} />
+            <CustomerChangeHistory {...changeHistoryProps} />
+            <CustomerNameChangeHistory {...nameChangeHistoryProps} />
         </>
     );
 };

@@ -86,11 +86,11 @@ export const tblActionColumnCurd =
             width,
             fixed: fixed,
             render: (record) => [
-                <Space wrap>
-                    <Button data-testid="view" className={styles.tableIcons} aria-label="ai-view" onClick={(record) => onEditAction(record?.code)}>
+                <Space size="middle">
+                    <Button data-testid="view" type="link" aria-label="ai-view" onClick={(record) => onEditAction(record?.code)}>
                         {addToolTip('View')(<FaRegEye />)}
                     </Button>
-                    <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={(record) => onEditAction(record?.code)}>
+                    <Button data-testid="edit" type="link" aria-label="fa-edit" onClick={(record) => onEditAction(record?.code)}>
                         {addToolTip('Edit')(<FiEdit />)}
                     </Button>
                 </Space>,
@@ -105,30 +105,30 @@ export const tblActionColumn = ({ title = 'Action', handleButtonClick, width = '
         width,
         fixed: fixed,
         render: (text, record, index) => [
-            <Space wrap>
+            <Space size="middle">
                 {canView && (
-                    <Button data-testid="view" className={styles.tableIcons} aria-label="ai-view" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.VIEW, record, index })}>
+                    <Button data-testid="view" type="link" aria-label="ai-view" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.VIEW, record, index })}>
                         {addToolTip('View')(<FaRegEye />)}
                     </Button>
                 )}
                 {canEdit && (
-                    <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.EDIT, record, index })}>
+                    <Button data-testid="edit" type="link" aria-label="fa-edit" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.EDIT, record, index })}>
                         {addToolTip('Edit')(<FiEdit />)}
                     </Button>
                 )}
                 {canAdd && (
-                    <Button data-testid="add" className={styles.tableIcons} aria-label="fa-add" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD, record, index })}>
-                        {addToolTip('Edit')(<PlusOutlined />)}
+                    <Button data-testid="add" type="link" aria-label="fa-add" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD, record, index })}>
+                        {addToolTip('Add')(<PlusOutlined />)}
                     </Button>
                 )}
 
                 {canServerDataEdit && !record?.id && (
-                    <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.EDIT, record, index })}>
+                    <Button data-testid="edit" type="link" aria-label="fa-edit" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.EDIT, record, index })}>
                         {addToolTip('Edit')(<FiEdit />)}
                     </Button>
                 )}
                 {canDelete && !record?.id && (
-                    <Button data-testid="delete" className={styles.tableIcons} aria-label="fa-trash" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.DELETE, record, index })}>
+                    <Button data-testid="delete" type="link" aria-label="fa-trash" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.DELETE, record, index })}>
                         {addToolTip('Delete')(<FiTrash />)}
                     </Button>
                 )}
@@ -155,11 +155,11 @@ export const tableColumnActionsEditDelete =
         title,
         dataIndex,
         render: (record) => [
-            <Space wrap>
-                <Button data-testid="view" className={styles.tableIcons} aria-label="ai-view" onClick={(e) => onEditAction(record?.code)}>
+            <Space size="middle">
+                <Button data-testid="view" type="link" aria-label="ai-view" onClick={(e) => onEditAction(record?.code)}>
                     {addToolTip('View')(<FaRegEye />)}
                 </Button>
-                <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={(e) => onEditAction(record?.code)}>
+                <Button data-testid="edit" type="link" aria-label="fa-edit" onClick={(e) => onEditAction(record?.code)}>
                     {addToolTip('Edit')(<FiEdit />)}
                 </Button>
             </Space>,
