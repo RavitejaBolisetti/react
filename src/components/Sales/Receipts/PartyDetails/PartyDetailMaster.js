@@ -57,7 +57,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const PartyDetailMasterBase = (props) => {
-    const { typeData, partySegmentType, receiptDetailData, partyDetailData } = props;
+    const { setReceipt, typeData, partySegmentType, receiptDetailData, partyDetailData } = props;
     const { userId, showGlobalNotification, section, fetchCustomerDetail, fetchPartyDetail, resetData, listShowLoading, isDataLoaded, isLoading } = props;
     const { form, partyDetailForm, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick } = props;
     const { requestPayload, setRequestPayload } = props;
@@ -75,6 +75,7 @@ const PartyDetailMasterBase = (props) => {
         if (receiptDetailData.partyDetails) {
             setRequestPayload({ ...requestPayload, partyDetails: receiptDetailData.partyDetails });
         }
+        setReceipt(receiptDetailData?.receiptsDetails?.receiptType);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, receiptDetailData.partyDetails]);
 

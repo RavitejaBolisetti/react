@@ -25,7 +25,7 @@ const PaymentAddEdit = (props) => {
 
     const handleChange = (value) => {
         setReceipt(value);
-        value === 'A' && setLastSection(true);
+        value === 'A' ? setLastSection(true) : setLastSection(false);
     };
 
     return (
