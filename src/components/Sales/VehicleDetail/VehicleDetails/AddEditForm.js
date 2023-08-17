@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Form, Select, DatePicker, Input, Checkbox, Switch, Collapse, Divider, Space } from 'antd';
+import { Row, Col, Form, Select, DatePicker, Input, Checkbox, Switch, Collapse, Divider } from 'antd';
 import { expandIcon } from 'utils/accordianExpandIcon';
 
 import { validateRequiredSelectField } from 'utils/validation';

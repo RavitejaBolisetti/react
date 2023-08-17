@@ -173,8 +173,6 @@ const AddEditFormMain = (props) => {
         placeholder: preparePlaceholderSelect('Parent'),
     };
 
-    console.log('reasonTypeChange===>', reasonTypeChange);
-
     const isLoading = false;
     return (
         <>

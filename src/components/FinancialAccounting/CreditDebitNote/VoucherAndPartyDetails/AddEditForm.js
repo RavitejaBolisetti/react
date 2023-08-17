@@ -15,11 +15,11 @@ import { PartyDetailsForm } from './PartyDetailsForm';
 const { Panel } = Collapse;
 
 const AddEditFormBase = (props) => {
-    const { form, formData} = props;
-    const { activeKey, handleCollapse } = props;
- 
+    const { form, formData } = props;
+    const { activeKey, handleCollapse, handlePartySegmentChange, handleSearchParamSearch, handlePartyIdChange } = props;
+
     const voucherDetailsProp = { ...props, form, formType: 'voucherDetails', formData: formData?.voucherDetailsDto };
-    const partyDetailsProp = { ...props, form, formType: 'partyDetails', formData: formData?.partyDetailsDto };
+    const partyDetailsProp = { ...props, form, formType: 'partyDetails', formData: formData?.partyDetailsDto, handlePartySegmentChange, handleSearchParamSearch, handlePartyIdChange };
 
     return (
         <>

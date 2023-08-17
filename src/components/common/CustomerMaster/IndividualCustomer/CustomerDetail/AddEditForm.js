@@ -12,8 +12,6 @@ import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/prepareP
 import { CustomerNameChangeMaster } from './CustomerNameChange';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
-import styles from 'components/common/Common.module.css';
-
 const AddEditFormMain = (props) => {
     const { whatsAppConfiguration, setWhatsAppConfiguration, handleFormFieldChange } = props;
     const { form, typeData, formData, corporateLovData, formActionType: { editMode } = undefined, data, customerType } = props;

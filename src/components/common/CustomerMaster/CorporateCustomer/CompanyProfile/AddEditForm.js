@@ -4,14 +4,12 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { React, useEffect, useState } from 'react';
-import { Col, Input, Collapse, Row, Space, Form, Select, Divider } from 'antd';
+import { Col, Input, Collapse, Row, Form, Select, Divider } from 'antd';
 import { validateRequiredInputField, validatePanField, validateGSTIN } from 'utils/validation';
 
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { convertToUpperCase } from 'utils/convertToUpperCase';
 import { expandIcon } from 'utils/accordianExpandIcon';
-
-import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
 const { Option } = Select;

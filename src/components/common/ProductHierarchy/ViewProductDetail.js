@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect } from 'react';
-import { Descriptions, Space, Row, Col, Collapse } from 'antd';
+import { Descriptions, Collapse } from 'antd';
 import { HIERARCHY_DEFAULT_PARENT } from 'constants/constants';
 import CardProductAttribute from './ProductAttribute/CardProductAttribute';
 import { PlusBorderedIcon, MinusBorderedIcon } from 'Icons';
