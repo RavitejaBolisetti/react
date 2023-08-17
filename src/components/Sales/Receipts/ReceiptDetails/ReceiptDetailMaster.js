@@ -143,10 +143,15 @@ const ReceiptDetailMasterBase = (props) => {
     const onFinish = () => {
         receiptForm.validateFields().then((data) => {
             let finaldata = { ...data, paymentDetails: paymentDataList };
-            setRequestPayload({ ...requestPayload, receiptsDetails: finaldata });
+            // setRequestPayload((requestPayload) => ({
+            //     ...requestPayload,
+            //     receiptsDetails: finaldata,
+            // }));
+
             if (receipt === 'A') {
-                receiptOnFinish();
+                requestPayload && receiptOnFinish(finaldata);
             } else {
+                setRequestPayload({ ...requestPayload, receiptsDetails: finaldata });
                 handleButtonClick({ buttonAction: NEXT_ACTION });
             }
         });

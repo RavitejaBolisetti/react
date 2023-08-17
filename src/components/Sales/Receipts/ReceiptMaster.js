@@ -18,7 +18,7 @@ import { AdvancedSearch } from './AdvancedSearch';
 import { CancelReceipt } from './CancelReceipt';
 import { QUERY_BUTTONS_CONSTANTS } from './QueryButtons';
 import { RECEIPT_SECTION } from 'constants/ReceiptSection';
-import { convertDateMonthYear } from 'utils/formatDateTime';
+import { extraParamsCovertDate } from 'utils/formatDateTime';
 
 import { showGlobalNotification } from 'store/actions/notification';
 import { receiptDataActions } from 'store/actions/data/receipt/receipt';
@@ -166,7 +166,6 @@ export const ReceiptMasterBase = (props) => {
                 key: 'searchType',
                 title: 'Value',
                 value: 'receiptNumber',
-                name: 'searchType',
                 canRemove: false,
                 filter: false,
             },
@@ -182,7 +181,7 @@ export const ReceiptMasterBase = (props) => {
                 key: 'fromDate',
                 title: 'Start Date',
                 value: filterString?.fromDate,
-                name: convertDateMonthYear(filterString?.fromDate),
+                name: extraParamsCovertDate(filterString?.fromDate),
                 canRemove: true,
                 filter: true,
             },
@@ -190,7 +189,7 @@ export const ReceiptMasterBase = (props) => {
                 key: 'toDate',
                 title: 'End Date',
                 value: filterString?.toDate,
-                name: convertDateMonthYear(filterString?.toDate),
+                name: extraParamsCovertDate(filterString?.toDate),
                 canRemove: true,
                 filter: true,
             },
@@ -198,7 +197,7 @@ export const ReceiptMasterBase = (props) => {
                 key: 'receiptStatus',
                 title: 'Receipt Status',
                 value: receiptStatus,
-                name: typeData?.[PARAM_MASTER.INDNT_STATS.id]?.find((i) => i?.key === receiptStatus)?.value,
+                // name: typeData?.[PARAM_MASTER.INDNT_STATS.id]?.find((i) => i?.key === receiptStatus)?.value,
                 canRemove: false,
                 filter: false,
             },
@@ -358,8 +357,8 @@ export const ReceiptMasterBase = (props) => {
         setAdvanceSearchVisible(false);
     };
 
-    const onFinish = () => {
-        const data = { ...requestPayload, apportionDetails: apportionList };
+    const onFinish = (receiptData) => {
+        const data = { ...requestPayload, apportionDetails: apportionList, receiptsDetails: receiptData.hasOwnProperty('receiptType') ? receiptData : requestPayload?.receiptsDetails };
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -583,8 +582,7 @@ export const ReceiptMasterBase = (props) => {
         documentType,
         onCancelReceipt,
         saveButtonName: isLastSection ? 'Submit' : 'Save & Next',
-        setLastSection
-
+        setLastSection,
     };
 
     const cancelReceiptProps = {
