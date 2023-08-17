@@ -1,5 +1,5 @@
 import React from 'react';
-import { screen, fireEvent } from '@testing-library/react';
+import { screen, fireEvent, act } from '@testing-library/react';
 import customRender from '@utils/test-utils';
 import { AddEditForm } from '@components/common/CustomerMaster/IndividualCustomer/IndividualProfile/AddEditForm';
 import createMockStore from '__mocks__/store';
@@ -134,5 +134,47 @@ describe('Indivisual addedit Master  Component', () => {
         fireEvent.click(panelHeader);
 
         expect(setActiveKey).toHaveBeenCalledWith([1]);
+    });
+
+    it('test1', async () => {
+
+        const appCategoryData={
+            MARITAL_STATUS: [
+                {key: 'S', value: 'Single'}
+            ]
+        }
+
+        customRender(<FormWrapper appCategoryData={appCategoryData} />);
+
+        const maritalstatus = screen.getByRole('combobox', { name: 'Maritial Status' });
+        // fireEvent.change(maritalstatus, { target: { value: 106 } });
+
+        act(()=> {
+            fireEvent.change(maritalstatus, { target: { value: 'S' } });
+            const kai=screen.getByText('Single');
+            fireEvent.click(kai);
+        })
+        
+    });
+
+    it('test2', async () => {
+
+        const appCategoryData={
+            MARITAL_STATUS: [
+                {key: 'M', value: 'Married'}
+            ]
+        }
+
+        customRender(<FormWrapper appCategoryData={appCategoryData} />);
+
+        const maritalstatus = screen.getByRole('combobox', { name: 'Maritial Status' });
+        // fireEvent.change(maritalstatus, { target: { value: 106 } });
+
+        act(()=> {
+            fireEvent.change(maritalstatus, { target: { value: 'M' } });
+            const kai=screen.getByText('Married');
+            fireEvent.click(kai);
+        })
+        
     });
 });

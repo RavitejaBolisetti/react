@@ -103,7 +103,7 @@ describe('Indivisual Master  Component', () => {
         });
         customRender(
             <Provider store={mockStore}>
-                <FormWrapper {...props2} setButtonData={jest.fn()} onSuccessAction={jest.fn()} showGlobalNotification={jest.fn()} onError={jest.fn()} buttonData={defaultBtnVisiblity} onCloseAction={jest.fn()} resetData={jest.fn()} onSuccess={jest.fn()} handleFormValueChange={jest.fn()} handleFieldsChange={jest.fn()} onFinish={jest.fn()} onFinishFailed={jest.fn()} />
+                <FormWrapper {...props2} selectedCustomerId={'kai'} setButtonData={jest.fn()} onSuccessAction={jest.fn()} showGlobalNotification={jest.fn()} onError={jest.fn()} buttonData={defaultBtnVisiblity} onCloseAction={jest.fn()} resetData={jest.fn()} onSuccess={jest.fn()} handleFormValueChange={jest.fn()} handleFieldsChange={jest.fn()} onFinish={jest.fn()} onFinishFailed={jest.fn()} />
             </Provider>
         );
         const pan = screen.getByRole('textbox', { name: 'PAN' });
