@@ -25,13 +25,13 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             TermCondition: {
-                ProductHierarchyData: { isLoaded: isDataLoaded = false, data: productHierarchyList },
+                ProductHierarchyData: { data: productHierarchyList },
             },
             DealerHierarchy: {
                 DealerParent: { data: dealerParentsLovList },
             },
             Vehicle: {
-                ViewVPODetail: { isLoading, data: viewVehiclePODetails = {} },
+                ViewVPODetail: { isLoaded: isDataLoaded = false, isLoading, data: viewVehiclePODetails = {} },
                 DealerLocationDetail: { data: dealerLocationList = {} },
             },
         },
@@ -80,7 +80,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const VehiclePurchaseOrderDetailMasterBase = (props) => {
-    const { typeData, fetchProductList, productHierarchyList, fetchDealerParentsLovList, viewVehiclePODetails, fetchDealerLocation, selectedRecord, setSelectedRecord,setIsFormVisible, } = props;
+    const { typeData, fetchProductList, productHierarchyList, fetchDealerParentsLovList, viewVehiclePODetails, fetchDealerLocation, selectedRecord, setSelectedRecord,setIsFormVisible,showDataLoading, } = props;
     const { userId, formActionType, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, saveData, isLoading } = props;
     const { form, selectedRecordId, salesConsultantLov, NEXT_ACTION, handleButtonClick, fetchListView, extraParamsAfterSave } = props;
     const [activeKey, setactiveKey] = useState([1]);
@@ -224,6 +224,7 @@ const VehiclePurchaseOrderDetailMasterBase = (props) => {
         selectedRecordId,
         selectedRecord,
         setSelectedRecord,
+        showDataLoading,
         // viewVehiclePODetails,
     };
 

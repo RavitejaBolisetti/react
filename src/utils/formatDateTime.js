@@ -18,13 +18,10 @@ export const convertCalenderDate = (dateToConvert = '', defaultFormat = 'DD/MM/Y
     return dateToConvert || currentDate ? dayjs(moment(dateToConvert || moment()).format('YYYY/MM/DD'), defaultFormat) : null;
 };
 export const convertDate = (dateToConvert = moment(), defaultFormat = 'YYYY-MM-DD') => moment(dateToConvert).format(defaultFormat);
-export const convertDateTime = (dateToConvert = '', defaultFormat = 'YYYY-MM-DD HH:mm:ss') => (dateToConvert ? moment(dateToConvert).format(defaultFormat) : 'NA');
+export const convertDateTime = (dateToConvert = '', defaultFormat = 'YYYY-MM-DD HH:mm:ss', UnavalaibleText = '') => (dateToConvert ? moment(dateToConvert).format(defaultFormat) : UnavalaibleText ? null : 'NA');
 export const convertDateAndTime = (dateToConvert = '', defaultFormat = 'DD MMM YYYY  h:MM A') => (dateToConvert ? moment(dateToConvert).format(defaultFormat) : 'NA');
 
 export const convertDateMonthYear = (dateToConvert = moment(), defaultFormat = 'DD MMM YYYY') => moment(dateToConvert).format(defaultFormat);
-
-export const convertDateMonthYearDayjs = (dateToConvert= dayjs(), defaultFormat = 'DD MMM YYYY') => dayjs(dateToConvert).format(defaultFormat);
-export const extraParamsCovertDate = (dateToConvert, defaultFormat = 'DD MMM YYYY') => dateToConvert && dayjs(dateToConvert).format(defaultFormat);
 
 export const convertDateToCalender = (dateToConvert) => (dateToConvert ? dayjs(dateToConvert, dateFormat) : null);
 export const converDateDayjs = (dateToConvert, dateFormat = 'DD MMM YYYY') => (dateToConvert ? dayjs(dateToConvert).format(dateFormat) : null);

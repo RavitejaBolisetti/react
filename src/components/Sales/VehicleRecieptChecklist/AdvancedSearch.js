@@ -25,33 +25,13 @@ export const AdvancedSearchFrom = (props) => {
     } = props;
 
     const onFinish = (values) => {
-        console.log('onfinisValues', values);
-        if (values?.fromDate && values?.toDate && !values?.model) {
-            setFilterString({
-                ...filterString,
-                fromDate: formatDate(values?.fromDate),
-                toDate: formatDate(values?.toDate),
-                advanceFilter: true,
-            });
-        } else if (values?.fromDate && values?.toDate && values?.model) {
-            setFilterString({
-                ...filterString,
-                fromDate: formatDate(values?.fromDate),
-                toDate: formatDate(values?.toDate),
-                model: values?.model,
-                advanceFilter: true,
-            });
-        } else if (values?.model) {
-            setFilterString({
-                ...filterString,
-                model: values?.model,
-                advanceFilter: true,
-            });
-        } else {
-            const { fromDate, toDate, model, ...rest } = filterString;
-            if (Object.keys(rest)?.length === 1) setFilterString();
-            else setFilterString({ ...rest });
-        }
+        setFilterString({
+            ...filterString,
+            ...values,
+            fromDate: formatDate(values?.fromDate),
+            toDate: formatDate(values?.toDate),
+            advanceFilter: true,
+        });
 
         setAdvanceSearchVisible(false);
     };

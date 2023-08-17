@@ -90,7 +90,7 @@ export default function AppliedAdvanceFilter(props) {
                                 <Col xs={24} sm={24} md={24} lg={22} xl={22} className={styles.advanceFilterContainer}>
                                     <div className={styles.advanceFilterTitle}>Applied Advance Filters : </div>
                                     {extraParams
-                                        ?.filter((item, index) => index < 5)
+                                        ?.filter((item, index) => index <=5)
                                         ?.map((filter) => {
                                             return (
                                                 filter?.value && (
