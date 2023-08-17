@@ -215,14 +215,14 @@ export const ConfigurableParameterEditingBase = ({ saveFormShowLoading, isLoadin
             dataIndex: '',
             width: '10%',
             render: (record) => [
-                <Space wrap>
+                <Space size="middle">
                     {
-                        <Button className={styles.tableIcons} aria-label="ai-view" onClick={() => handleView(record)}>
+                        <Button type="link" aria-label="ai-view" onClick={() => handleView(record)}>
                             <FaRegEye />
                         </Button>
                     }
                     {
-                        <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={() => handleEditBtn(record)}>
+                        <Button data-testid="edit" type="link" aria-label="fa-edit" onClick={() => handleEditBtn(record)}>
                             <FiEdit />
                         </Button>
                     }

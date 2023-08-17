@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Form } from 'antd';
+import { Divider, Form } from 'antd';
 
 import CardMapping from './CardMapping';
 import AddEditForm from './AddEditForm';
@@ -88,6 +88,7 @@ const AccessoriesAddonMain = ({ setIsBtnDisabled, openAccordian, setOpenAccordia
     };
     return (
         <div>
+            <Divider />
             <Space size="large" direction="vertical">
                 {addButtonDisabled?.partDetailsResponses && <AddEditForm {...AddEditFormProps} />}
 

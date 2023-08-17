@@ -15,7 +15,7 @@ export const tableColumn = (props) => {
         tblPrepareColumns({
             title: 'Document Type',
             dataIndex: 'documentType',
-            width: '10%',
+            width: '15%',
         }),
 
         tblPrepareColumns({

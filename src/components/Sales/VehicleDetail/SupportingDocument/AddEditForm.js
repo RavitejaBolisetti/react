@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { Row, Col, Form, Select, Input, Divider, Space, Collapse } from 'antd';
+import { Row, Col, Form, Select, Input, Divider, Collapse } from 'antd';
 
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
@@ -49,7 +49,7 @@ const AddEditForm = (props) => {
     };
 
     return (
-        <Space style={{ display: 'flex' }} direction="vertical" size="middle" className={styles.accordianContainer}>
+        <>
             <Collapse defaultActiveKey={['1']} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
                 <Panel header="Supporting/Reference Documents" key="1">
                     {!formActionType?.viewMode && (
@@ -90,7 +90,7 @@ const AddEditForm = (props) => {
                     </Row>
                 </Panel>
             </Collapse>
-        </Space>
+        </>
     );
 };
 
