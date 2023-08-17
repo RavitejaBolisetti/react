@@ -1168,6 +1168,10 @@ p {
 /* AntD Space Design End*/
 
 /* Miscellaneous CSS Design Start*/
+:global .ant-tooltip {
+    pointer-events: none;
+}
+
 :global .rc-virtual-list-scrollbar.rc-virtual-list-scrollbar-show {
     display: block !important;
 }

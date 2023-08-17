@@ -104,6 +104,7 @@ const AddEditFormMain = (props) => {
                         </Form.Item>
                     </Col>
                 </Row>
+                <Divider />
                 <Row>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <CustomerNameChangeMaster {...props} />
