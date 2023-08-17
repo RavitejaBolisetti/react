@@ -21,7 +21,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { VEHICLE_RECIEPT_CHECKLIST_SECTION } from 'constants/VehicleRecieptCheckListSection';
 import { otfvehicleDetailsLovDataActions } from 'store/actions/data/otf/vehicleDetailsLov';
 
-import { formatDateToCalenderDate, convertDateMonthYearDayjs } from 'utils/formatDateTime';
+import { formatDateToCalenderDate, convertDateTime } from 'utils/formatDateTime';
 
 import { validateRequiredInputField } from 'utils/validation';
 import { LANGUAGE_EN } from 'language/en';
@@ -211,7 +211,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
                 key: 'fromDate',
                 title: 'Reciept From Date',
                 value: filterString?.fromDate,
-                name: convertDateMonthYearDayjs(filterString?.fromDate),
+                name: convertDateTime(filterString?.fromDate, 'DD MMM YYYY', 'fromDate'),
                 canRemove: true,
                 filter: true,
             },
@@ -219,7 +219,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
                 key: 'toDate',
                 title: 'Reciept To Date',
                 value: filterString?.toDate,
-                name: convertDateMonthYearDayjs(filterString?.toDate),
+                name: convertDateTime(filterString?.toDate, 'DD MMM YYYY', 'toDate'),
                 canRemove: false,
                 filter: true,
             },
@@ -258,7 +258,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, page, buttonType]);
-    console.log('filterString', filterString);
+    console.log('filterString', extraParams);
 
     useEffect(() => {
         if (userId) {

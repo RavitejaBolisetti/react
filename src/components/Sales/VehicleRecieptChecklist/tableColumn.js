@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
-import { convertDateMonthYearDayjs } from 'utils/formatDateTime';
+import { convertDateTime } from 'utils/formatDateTime';
 
 import styles from 'components/common/Common.module.css';
 
@@ -19,7 +19,7 @@ export const tableColumn = ({ handleButtonClick, page, pageSize, actionButtonVis
             title: 'Receipt Date',
             dataIndex: 'grnDate',
             width: '14%',
-            render: (text) => (text ? convertDateMonthYearDayjs(text) : 'NA'),
+            render: (text) => (text ? convertDateTime(text, 'DD MMM YYYY') : 'NA'),
         }),
 
         tblPrepareColumns({
