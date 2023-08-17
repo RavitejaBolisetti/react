@@ -18,7 +18,7 @@ import { AdvancedSearch } from './AdvancedSearch';
 import { CancelReceipt } from './CancelReceipt';
 import { QUERY_BUTTONS_CONSTANTS } from './QueryButtons';
 import { RECEIPT_SECTION } from 'constants/ReceiptSection';
-import { extraParamsCovertDate } from 'utils/formatDateTime';
+import { convertDateTime, monthDateFormat } from 'utils/formatDateTime';
 
 import { showGlobalNotification } from 'store/actions/notification';
 import { receiptDataActions } from 'store/actions/data/receipt/receipt';
@@ -182,7 +182,7 @@ export const ReceiptMasterBase = (props) => {
                 key: 'fromDate',
                 title: 'Start Date',
                 value: filterString?.fromDate,
-                name: extraParamsCovertDate(filterString?.fromDate),
+                name: convertDateTime(filterString?.fromDate, monthDateFormat),
                 canRemove: true,
                 filter: true,
             },
@@ -190,7 +190,7 @@ export const ReceiptMasterBase = (props) => {
                 key: 'toDate',
                 title: 'End Date',
                 value: filterString?.toDate,
-                name: extraParamsCovertDate(filterString?.toDate),
+                name: convertDateTime(filterString?.toDate, monthDateFormat),
                 canRemove: true,
                 filter: true,
             },
