@@ -72,7 +72,7 @@ export const VoucherAndPartyDetailsMasterMain = (props) => {
     const { onFinishFailed } = props;
     const { formActionType, NEXT_ACTION, handleButtonClick } = props;
     const { handleFormValueChange, creditDebitData, isDetailLoaded } = props;
-    const { fetchList, listShowLoading, listPartyShowLoading, fetchDetail, requestPayload, setRequestPayload, typeData } = props;
+    const { showGlobalNotification, userId, setButtonData, buttonData, fetchList, listShowLoading, listPartyShowLoading, fetchDetail, requestPayload, setRequestPayload, typeData } = props;
 
     const [form] = Form.useForm();
     const [formData, setFormData] = useState('');
@@ -88,14 +88,14 @@ export const VoucherAndPartyDetailsMasterMain = (props) => {
 
     useEffect(() => {
         if (formActionType?.addMode && isDetailLoaded) {
-            form.resetFields();
+            form.resetFields(['partyDetails']);
             setFormData();
-        } else if (isDetailLoaded) {
+        } else if (isDetailLoaded && creditDebitData) {
             setFormData(creditDebitData);
             handleFormValueChange();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formActionType?.addMode, isDetailLoaded]);
+    }, [formActionType?.addMode, isDetailLoaded, creditDebitData, formActionType?.editMode]);
 
     useEffect(() => {
         if (formActionType?.addMode) {
@@ -104,7 +104,64 @@ export const VoucherAndPartyDetailsMasterMain = (props) => {
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formActionType]);
+    }, [formActionType?.addMode]);
+
+    const handlePartyIdChange = () => {
+        form.setFieldsValue({
+            partyDetails: {
+                ...form.getFieldsValue()?.partyDetails,
+                address: null,
+                phoneNo: null,
+                state: null,
+                city: null,
+                partyName: null,
+            },
+        });
+        setButtonData({ ...buttonData, formBtnActive: false });
+    };
+
+    const handlePartySegmentChange = () => {
+        form.setFieldsValue({
+            partyDetails: {
+                ...form.getFieldsValue()?.partyDetails,
+                address: null,
+                phoneNo: null,
+                state: null,
+                city: null,
+                partyId: null,
+                partyName: null,
+            },
+        });
+        setButtonData({ ...buttonData, formBtnActive: false });
+    };
+
+    const constomerContant = 'CUS';
+
+    const handleSearchParamSearch = (value) => {
+        const onSuccessAction = (res) => {
+            if (form.getFieldsValue()?.partyDetails?.partySegment === res?.data[0]?.partyCategory) {
+                form.setFieldsValue({ partyDetails: res?.data[0] });
+                setButtonData({ ...buttonData, formBtnActive: true });
+            } else {
+                showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Party ID doesnt match with the party segment' });
+            }
+        };
+        const onSuccessCustomerAction = (res) => {
+            form.setFieldsValue({ partyDetails: { ...res?.data, partyName: res?.data?.customerName } });
+            setButtonData({ ...buttonData, formBtnActive: true });
+        };
+        const onErrorAction = (message) => {
+            showGlobalNotification({ message });
+        };
+
+        const extraParams = [
+            {
+                key: 'customerId',
+                value: value,
+            },
+        ];
+        form.getFieldsValue()?.partyDetails?.partySegment === constomerContant ? fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction, onSuccessAction: onSuccessCustomerAction }) : fetchDetail({ setIsLoading: listPartyShowLoading, userId, partyCode: value, onErrorAction, onSuccessAction });
+    };
 
     const handleCollapse = (key) => {
         !activeKey?.includes(key) ? setActiveKey([key]) : setActiveKey([]);
@@ -129,6 +186,9 @@ export const VoucherAndPartyDetailsMasterMain = (props) => {
         handleCollapse,
         formData,
         creditDebitData,
+        handlePartySegmentChange,
+        handleSearchParamSearch,
+        handlePartyIdChange,
     };
 
     const viewProps = {
@@ -140,7 +200,7 @@ export const VoucherAndPartyDetailsMasterMain = (props) => {
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}

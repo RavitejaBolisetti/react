@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect } from 'react';
-import { Descriptions, Space, Row, Col, Collapse } from 'antd';
+import { Descriptions, Collapse } from 'antd';
 import { HIERARCHY_DEFAULT_PARENT } from 'constants/constants';
 import CardProductAttribute from './ProductAttribute/CardProductAttribute';
 import { PlusBorderedIcon, MinusBorderedIcon } from 'Icons';
@@ -40,21 +40,17 @@ export const ViewProductDetailMain = ({ form, skuAttributes, setSKUAttributes, i
                 <Descriptions.Item label="Short Description">{selectedTreeData?.prodctShrtName}</Descriptions.Item>
                 <Descriptions.Item label="Long Description">{selectedTreeData?.prodctLongName}</Descriptions.Item>
                 <Descriptions.Item label="Status">{selectedTreeData?.active === true ? 'Active' : 'InActive'}</Descriptions.Item>
-                <Space direction="vertical" size="small" className={styles.accordianContainer}>
-                    <Row>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            {selectedTreeData?.skuAttributes?.length > 0 && (
-                                <Collapse expandIcon={expandIcon}>
-                                    <Panel header="Product SKU" key="2">
-                                        {skuAttributes?.map((item) => (
-                                            <CardProductAttribute key={'sku' + item?.code} code={item?.code} value={item?.value} id={item?.id} setDisabledEdit={setDisabledEdit} />
-                                        ))}
-                                    </Panel>
-                                </Collapse>
-                            )}
-                        </Col>
-                    </Row>
-                </Space>
+                <div>
+                    {selectedTreeData?.skuAttributes?.length > 0 && (
+                        <Collapse expandIcon={expandIcon}>
+                            <Panel header="Product SKU" key="2">
+                                {skuAttributes?.map((item) => (
+                                    <CardProductAttribute key={'sku' + item?.code} code={item?.code} value={item?.value} id={item?.id} setDisabledEdit={setDisabledEdit} />
+                                ))}
+                            </Panel>
+                        </Collapse>
+                    )}
+                </div>
             </Descriptions>
         </div>
     );

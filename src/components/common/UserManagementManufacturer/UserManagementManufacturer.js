@@ -264,12 +264,12 @@ export const UserManagementManufacturerMain = ({ moduleTitle, saveData, userId, 
                 return (
                     <Space>
                         {
-                            <Button className={style.tableIcons} danger ghost aria-label="fa-edit" onClick={() => handleUpdate(record)}>
+                            <Button type="link" ghost aria-label="fa-edit" onClick={() => handleUpdate(record)}>
                                 <EditIcon />
                             </Button>
                         }
                         {
-                            <Button className={style.tableIcons} danger ghost aria-label="ai-view" onClick={() => handleView(record)}>
+                            <Button type="link" ghost aria-label="ai-view" onClick={() => handleView(record)}>
                                 <ViewEyeIcon />
                             </Button>
                         }
@@ -486,25 +486,25 @@ export const UserManagementManufacturerMain = ({ moduleTitle, saveData, userId, 
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={4} lg={4} xl={4}>
                                                         <div className={styles.contentHeading}>User Name</div>
-                                                        <div className={`${styles.contentData} ${styles.txtEllipsis}`}>{DealerData?.employeeName}</div>
+                                                        <div className={`${styles.contentData} ${styles.textEllipsis}`}>{DealerData?.employeeName}</div>
                                                     </Col>
 
                                                     <Col xs={24} sm={24} md={4} lg={4} xl={4}>
                                                         <div className={styles.contentHeading}>Token No.</div>
-                                                        <div className={`${styles.contentData} ${styles.txtEllipsis}`}>{DealerSearchvalue}</div>
+                                                        <div className={`${styles.contentData} ${styles.textEllipsis}`}>{DealerSearchvalue}</div>
                                                     </Col>
 
                                                     <Col xs={24} sm={24} md={4} lg={4} xl={4}>
                                                         <div className={styles.contentHeading}>Designation</div>
-                                                        <div className={`${styles.contentData} ${styles.txtEllipsis}`}>{DealerData?.designation}</div>
+                                                        <div className={`${styles.contentData} ${styles.textEllipsis}`}>{DealerData?.designation}</div>
                                                     </Col>
                                                     <Col xs={24} sm={24} md={4} lg={3} xl={3}>
                                                         <div className={styles.contentHeading}>Mobile Number</div>
-                                                        <div className={`${styles.contentData} ${styles.txtEllipsis}`}>{DealerData?.contactMobileNumber}</div>
+                                                        <div className={`${styles.contentData} ${styles.textEllipsis}`}>{DealerData?.contactMobileNumber}</div>
                                                     </Col>
                                                     <Col xs={24} sm={24} md={4} lg={5} xl={5}>
                                                         <div className={styles.contentHeading}>Email ID</div>
-                                                        <div className={`${styles.contentData} ${styles.txtEllipsis}`}>{DealerData?.contactEmail}</div>
+                                                        <div className={`${styles.contentData} ${styles.textEllipsis}`}>{DealerData?.contactEmail}</div>
                                                     </Col>
                                                 </Row>
                                             </Col>

@@ -68,15 +68,15 @@ Object {
         </div>
       </div>
       <div
-        class="ant-row css-dev-only-do-not-override-14wwjjs"
-        style="margin-left: -10px; margin-right: -10px;"
+        class="contentHeaderBackground"
       >
         <div
-          class="ant-col ant-col-xs-24 ant-col-sm-24 ant-col-md-24 ant-col-lg-24 ant-col-xl-24 css-dev-only-do-not-override-14wwjjs"
-          style="padding-left: 10px; padding-right: 10px;"
+          class="ant-row css-dev-only-do-not-override-14wwjjs"
+          style="margin-left: -10px; margin-right: -10px;"
         >
           <div
-            class="contentHeaderBackground"
+            class="ant-col ant-col-xs-24 ant-col-sm-24 ant-col-md-16 ant-col-lg-16 ant-col-xl-16 css-dev-only-do-not-override-14wwjjs"
+            style="padding-left: 10px; padding-right: 10px;"
           >
             <div
               class="ant-row css-dev-only-do-not-override-14wwjjs"
@@ -86,170 +86,190 @@ Object {
                 class="ant-col ant-col-xs-24 ant-col-sm-24 ant-col-md-16 ant-col-lg-16 ant-col-xl-16 css-dev-only-do-not-override-14wwjjs"
                 style="padding-left: 10px; padding-right: 10px;"
               >
-                <div
-                  class="ant-row css-dev-only-do-not-override-14wwjjs"
-                  style="margin-left: -10px; margin-right: -10px;"
+                <form
+                  autocomplete="off"
+                  class="ant-form ant-form-horizontal css-dev-only-do-not-override-14wwjjs masterListSearchForm"
                 >
                   <div
-                    class="ant-col lineHeight33 ant-col-xs-24 ant-col-sm-24 ant-col-md-8 ant-col-lg-5 ant-col-xl-5 css-dev-only-do-not-override-14wwjjs"
-                    style="padding-left: 10px; padding-right: 10px;"
+                    class="ant-form-item css-dev-only-do-not-override-14wwjjs"
                   >
-                    Role List
-                  </div>
-                  <div
-                    class="ant-col ant-col-xs-24 ant-col-sm-24 ant-col-md-12 ant-col-lg-19 ant-col-xl-19 css-dev-only-do-not-override-14wwjjs"
-                    style="padding-left: 10px; padding-right: 10px;"
-                  >
-                    <span
-                      class="ant-input-group-wrapper ant-input-search headerSearchField css-dev-only-do-not-override-14wwjjs"
+                    <div
+                      class="ant-row ant-form-item-row css-dev-only-do-not-override-14wwjjs"
                     >
-                      <span
-                        class="ant-input-wrapper ant-input-group css-dev-only-do-not-override-14wwjjs"
+                      <div
+                        class="ant-col ant-form-item-label css-dev-only-do-not-override-14wwjjs"
                       >
-                        <span
-                          class="ant-input-affix-wrapper css-dev-only-do-not-override-14wwjjs"
+                        <label
+                          class="ant-form-item-no-colon"
+                          for="code"
+                          title="Role Management"
                         >
-                          <input
-                            class="ant-input css-dev-only-do-not-override-14wwjjs"
-                            placeholder="Search"
-                            type="text"
-                            value=""
-                          />
-                          <span
-                            class="ant-input-suffix"
+                          Role Management
+                        </label>
+                      </div>
+                      <div
+                        class="ant-col ant-form-item-control css-dev-only-do-not-override-14wwjjs"
+                      >
+                        <div
+                          class="ant-form-item-control-input"
+                        >
+                          <div
+                            class="ant-form-item-control-input-content"
                           >
                             <span
-                              class="ant-input-clear-icon ant-input-clear-icon-hidden"
-                              role="button"
-                              tabindex="-1"
+                              class="ant-input-group-wrapper ant-input-search css-dev-only-do-not-override-14wwjjs"
                             >
                               <span
-                                aria-label="close-circle"
-                                class="anticon anticon-close-circle"
-                                role="img"
+                                class="ant-input-wrapper ant-input-group css-dev-only-do-not-override-14wwjjs"
                               >
-                                <svg
-                                  aria-hidden="true"
-                                  data-icon="close-circle"
-                                  fill="currentColor"
-                                  focusable="false"
-                                  height="1em"
-                                  viewBox="64 64 896 896"
-                                  width="1em"
+                                <span
+                                  class="ant-input-affix-wrapper css-dev-only-do-not-override-14wwjjs"
                                 >
-                                  <path
-                                    d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm165.4 618.2l-66-.3L512 563.4l-99.3 118.4-66.1.3c-4.4 0-8-3.5-8-8 0-1.9.7-3.7 1.9-5.2l130.1-155L340.5 359a8.32 8.32 0 01-1.9-5.2c0-4.4 3.6-8 8-8l66.1.3L512 464.6l99.3-118.4 66-.3c4.4 0 8 3.5 8 8 0 1.9-.7 3.7-1.9 5.2L553.5 514l130 155c1.2 1.5 1.9 3.3 1.9 5.2 0 4.4-3.6 8-8 8z"
+                                  <input
+                                    class="ant-input css-dev-only-do-not-override-14wwjjs"
+                                    id="code"
+                                    placeholder="Search"
+                                    type="text"
+                                    value=""
                                   />
-                                </svg>
+                                  <span
+                                    class="ant-input-suffix"
+                                  >
+                                    <span
+                                      class="ant-input-clear-icon ant-input-clear-icon-hidden"
+                                      role="button"
+                                      tabindex="-1"
+                                    >
+                                      <span
+                                        aria-label="close-circle"
+                                        class="anticon anticon-close-circle"
+                                        role="img"
+                                      >
+                                        <svg
+                                          aria-hidden="true"
+                                          data-icon="close-circle"
+                                          fill="currentColor"
+                                          focusable="false"
+                                          height="1em"
+                                          viewBox="64 64 896 896"
+                                          width="1em"
+                                        >
+                                          <path
+                                            d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm165.4 618.2l-66-.3L512 563.4l-99.3 118.4-66.1.3c-4.4 0-8-3.5-8-8 0-1.9.7-3.7 1.9-5.2l130.1-155L340.5 359a8.32 8.32 0 01-1.9-5.2c0-4.4 3.6-8 8-8l66.1.3L512 464.6l99.3-118.4 66-.3c4.4 0 8 3.5 8 8 0 1.9-.7 3.7-1.9 5.2L553.5 514l130 155c1.2 1.5 1.9 3.3 1.9 5.2 0 4.4-3.6 8-8 8z"
+                                          />
+                                        </svg>
+                                      </span>
+                                    </span>
+                                  </span>
+                                </span>
+                                <span
+                                  class="ant-input-group-addon"
+                                >
+                                  <button
+                                    class="ant-btn css-dev-only-do-not-override-14wwjjs ant-btn-default ant-btn-icon-only ant-input-search-button"
+                                    type="button"
+                                  >
+                                    <span
+                                      class="ant-btn-icon"
+                                    >
+                                      <span
+                                        aria-label="search"
+                                        class="anticon anticon-search"
+                                        role="img"
+                                      >
+                                        <svg
+                                          aria-hidden="true"
+                                          data-icon="search"
+                                          fill="currentColor"
+                                          focusable="false"
+                                          height="1em"
+                                          viewBox="64 64 896 896"
+                                          width="1em"
+                                        >
+                                          <path
+                                            d="M909.6 854.5L649.9 594.8C690.2 542.7 712 479 712 412c0-80.2-31.3-155.4-87.9-212.1-56.6-56.7-132-87.9-212.1-87.9s-155.5 31.3-212.1 87.9C143.2 256.5 112 331.8 112 412c0 80.1 31.3 155.5 87.9 212.1C256.5 680.8 331.8 712 412 712c67 0 130.6-21.8 182.7-62l259.7 259.6a8.2 8.2 0 0011.6 0l43.6-43.5a8.2 8.2 0 000-11.6zM570.4 570.4C528 612.7 471.8 636 412 636s-116-23.3-158.4-65.6C211.3 528 188 471.8 188 412s23.3-116.1 65.6-158.4C296 211.3 352.2 188 412 188s116.1 23.2 158.4 65.6S636 352.2 636 412s-23.3 116.1-65.6 158.4z"
+                                          />
+                                        </svg>
+                                      </span>
+                                    </span>
+                                  </button>
+                                </span>
                               </span>
                             </span>
-                          </span>
-                        </span>
-                        <span
-                          class="ant-input-group-addon"
-                        >
-                          <button
-                            class="ant-btn css-dev-only-do-not-override-14wwjjs ant-btn-default ant-btn-icon-only ant-input-search-button"
-                            type="button"
-                          >
-                            <span
-                              class="ant-btn-icon"
-                            >
-                              <span
-                                aria-label="search"
-                                class="anticon anticon-search"
-                                role="img"
-                              >
-                                <svg
-                                  aria-hidden="true"
-                                  data-icon="search"
-                                  fill="currentColor"
-                                  focusable="false"
-                                  height="1em"
-                                  viewBox="64 64 896 896"
-                                  width="1em"
-                                >
-                                  <path
-                                    d="M909.6 854.5L649.9 594.8C690.2 542.7 712 479 712 412c0-80.2-31.3-155.4-87.9-212.1-56.6-56.7-132-87.9-212.1-87.9s-155.5 31.3-212.1 87.9C143.2 256.5 112 331.8 112 412c0 80.1 31.3 155.5 87.9 212.1C256.5 680.8 331.8 712 412 712c67 0 130.6-21.8 182.7-62l259.7 259.6a8.2 8.2 0 0011.6 0l43.6-43.5a8.2 8.2 0 000-11.6zM570.4 570.4C528 612.7 471.8 636 412 636s-116-23.3-158.4-65.6C211.3 528 188 471.8 188 412s23.3-116.1 65.6-158.4C296 211.3 352.2 188 412 188s116.1 23.2 158.4 65.6S636 352.2 636 412s-23.3 116.1-65.6 158.4z"
-                                  />
-                                </svg>
-                              </span>
-                            </span>
-                          </button>
-                        </span>
-                      </span>
-                    </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-              <div
-                class="ant-col buttonsGroupRight ant-col-xs-24 ant-col-sm-24 ant-col-md-8 ant-col-lg-8 ant-col-xl-8 css-dev-only-do-not-override-14wwjjs"
-                style="padding-left: 10px; padding-right: 10px;"
-              >
-                <button
-                  aria-label="fa-ref"
-                  class="ant-btn css-dev-only-do-not-override-14wwjjs ant-btn-default ant-btn-icon-only ant-btn-dangerous refreshBtn"
-                  type="button"
-                >
-                  <span
-                    class="ant-btn-icon"
-                  >
-                    <svg
-                      fill="currentColor"
-                      height="1em"
-                      stroke="currentColor"
-                      stroke-width="0"
-                      version="1.1"
-                      viewBox="0 0 17 17"
-                      width="1em"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <g />
-                      <path
-                        d="M6 8h-6v-6h1v4.109c1.013-3.193 4.036-5.484 7.5-5.484 3.506 0 6.621 2.36 7.574 5.739l-0.963 0.271c-0.832-2.95-3.551-5.011-6.611-5.011-3.226 0.001-6.016 2.276-6.708 5.376h4.208v1zM11 9v1h4.208c-0.693 3.101-3.479 5.375-6.708 5.375-3.062 0-5.78-2.061-6.611-5.011l-0.963 0.271c0.952 3.379 4.067 5.739 7.574 5.739 3.459 0 6.475-2.28 7.5-5.482v4.108h1v-6h-6z"
-                      />
-                    </svg>
-                  </span>
-                </button>
-                <button
-                  class="ant-btn css-dev-only-do-not-override-14wwjjs ant-btn-primary"
-                  type="button"
-                >
-                  <span
-                    class="ant-btn-icon"
-                  >
-                    <span
-                      aria-label="plus"
-                      class="anticon anticon-plus"
-                      role="img"
-                    >
-                      <svg
-                        aria-hidden="true"
-                        data-icon="plus"
-                        fill="currentColor"
-                        focusable="false"
-                        height="1em"
-                        viewBox="64 64 896 896"
-                        width="1em"
-                      >
-                        <defs>
-                          <style />
-                        </defs>
-                        <path
-                          d="M482 152h60q8 0 8 8v704q0 8-8 8h-60q-8 0-8-8V160q0-8 8-8z"
-                        />
-                        <path
-                          d="M176 474h672q8 0 8 8v60q0 8-8 8H176q-8 0-8-8v-60q0-8 8-8z"
-                        />
-                      </svg>
-                    </span>
-                  </span>
-                  <span>
-                    Add New Role
-                  </span>
-                </button>
+                </form>
               </div>
             </div>
+          </div>
+          <div
+            class="ant-col buttonsGroupRight ant-col-xs-24 ant-col-sm-24 ant-col-md-8 ant-col-lg-8 ant-col-xl-8 css-dev-only-do-not-override-14wwjjs"
+            style="padding-left: 10px; padding-right: 10px;"
+          >
+            <button
+              class="ant-btn css-dev-only-do-not-override-14wwjjs ant-btn-default ant-btn-icon-only ant-btn-dangerous"
+              type="button"
+            >
+              <span
+                class="ant-btn-icon"
+              >
+                <svg
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  version="1.1"
+                  viewBox="0 0 17 17"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g />
+                  <path
+                    d="M6 8h-6v-6h1v4.109c1.013-3.193 4.036-5.484 7.5-5.484 3.506 0 6.621 2.36 7.574 5.739l-0.963 0.271c-0.832-2.95-3.551-5.011-6.611-5.011-3.226 0.001-6.016 2.276-6.708 5.376h4.208v1zM11 9v1h4.208c-0.693 3.101-3.479 5.375-6.708 5.375-3.062 0-5.78-2.061-6.611-5.011l-0.963 0.271c0.952 3.379 4.067 5.739 7.574 5.739 3.459 0 6.475-2.28 7.5-5.482v4.108h1v-6h-6z"
+                  />
+                </svg>
+              </span>
+            </button>
+            <button
+              class="ant-btn css-dev-only-do-not-override-14wwjjs ant-btn-primary"
+              type="button"
+            >
+              <span
+                class="ant-btn-icon"
+              >
+                <span
+                  aria-label="plus"
+                  class="anticon anticon-plus"
+                  role="img"
+                >
+                  <svg
+                    aria-hidden="true"
+                    data-icon="plus"
+                    fill="currentColor"
+                    focusable="false"
+                    height="1em"
+                    viewBox="64 64 896 896"
+                    width="1em"
+                  >
+                    <defs>
+                      <style />
+                    </defs>
+                    <path
+                      d="M482 152h60q8 0 8 8v704q0 8-8 8h-60q-8 0-8-8V160q0-8 8-8z"
+                    />
+                    <path
+                      d="M176 474h672q8 0 8 8v60q0 8-8 8H176q-8 0-8-8v-60q0-8 8-8z"
+                    />
+                  </svg>
+                </span>
+              </span>
+              <span>
+                Add
+              </span>
+            </button>
           </div>
         </div>
       </div>
@@ -277,7 +297,7 @@ Object {
                     class="ant-spin-container"
                   >
                     <div
-                      class="ant-table ant-table-empty"
+                      class="ant-table"
                     >
                       <div
                         class="ant-table-container"
@@ -293,16 +313,16 @@ Object {
                                 style="width: 5%;"
                               />
                               <col
-                                style="width: 20%;"
+                                style="width: 15%;"
                               />
                               <col
                                 style="width: 20%;"
                               />
                               <col
-                                style="width: 100px;"
+                                style="width: 20%;"
                               />
                               <col
-                                style="width: 10%;"
+                                style="width: 15%;"
                               />
                               <col
                                 style="width: 10%;"
@@ -575,7 +595,7 @@ Object {
                                   class="ant-table-cell"
                                   scope="col"
                                 >
-                                  Actions
+                                  Action
                                 </th>
                               </tr>
                             </thead>
@@ -583,111 +603,1003 @@ Object {
                               class="ant-table-tbody"
                             >
                               <tr
-                                class="ant-table-placeholder"
+                                class="ant-table-row ant-table-row-level-0"
                               >
                                 <td
                                   class="ant-table-cell"
-                                  colspan="6"
                                 >
-                                  <div
-                                    class="css-dev-only-do-not-override-14wwjjs ant-empty ant-empty-normal"
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
                                   >
-                                    <div
-                                      class="ant-empty-image"
-                                      style="height: 60px;"
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
                                     >
-                                      <svg
-                                        height="41"
-                                        viewBox="0 0 64 41"
-                                        width="64"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                      >
-                                        <g
-                                          fill="none"
-                                          fill-rule="evenodd"
-                                          transform="translate(0 1)"
-                                        >
-                                          <ellipse
-                                            cx="32"
-                                            cy="33"
-                                            fill="#f5f5f5"
-                                            rx="32"
-                                            ry="7"
-                                          />
-                                          <g
-                                            fill-rule="nonzero"
-                                            stroke="#d9d9d9"
-                                          >
-                                            <path
-                                              d="M55 12.76L44.854 1.258C44.367.474 43.656 0 42.907 0H21.093c-.749 0-1.46.474-1.947 1.257L9 12.761V22h46v-9.24z"
-                                            />
-                                            <path
-                                              d="M41.613 15.931c0-1.605.994-2.93 2.227-2.931H55v18.137C55 33.26 53.68 35 52.05 35h-40.1C10.32 35 9 33.259 9 31.137V13h11.16c1.233 0 2.227 1.323 2.227 2.928v.022c0 1.605 1.005 2.901 2.237 2.901h14.752c1.232 0 2.237-1.308 2.237-2.913v-.007z"
-                                              fill="#fafafa"
-                                            />
-                                          </g>
-                                        </g>
-                                      </svg>
-                                    </div>
-                                    <div
-                                      class="ant-empty-description"
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
+                                </td>
+                                <td
+                                  class="ant-table-cell"
+                                >
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
+                                  >
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
                                     >
-                                      <span>
-                                        No records found. Please add new Role 
-                                        <br />
-                                        using below button
-                                      </span>
-                                    </div>
-                                    <div
-                                      class="ant-empty-footer"
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
+                                </td>
+                                <td
+                                  class="ant-table-cell"
+                                >
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
+                                  >
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
                                     >
-                                      <div
-                                        class="ant-row css-dev-only-do-not-override-14wwjjs"
-                                      >
-                                        <div
-                                          class="ant-col ant-col-xs-24 ant-col-sm-24 ant-col-md-24 ant-col-lg-24 ant-col-xl-24 css-dev-only-do-not-override-14wwjjs"
-                                        >
-                                          <button
-                                            class="ant-btn css-dev-only-do-not-override-14wwjjs ant-btn-primary"
-                                            type="button"
-                                          >
-                                            <span
-                                              class="ant-btn-icon"
-                                            >
-                                              <span
-                                                aria-label="plus"
-                                                class="anticon anticon-plus"
-                                                role="img"
-                                              >
-                                                <svg
-                                                  aria-hidden="true"
-                                                  data-icon="plus"
-                                                  fill="currentColor"
-                                                  focusable="false"
-                                                  height="1em"
-                                                  viewBox="64 64 896 896"
-                                                  width="1em"
-                                                >
-                                                  <defs>
-                                                    <style />
-                                                  </defs>
-                                                  <path
-                                                    d="M482 152h60q8 0 8 8v704q0 8-8 8h-60q-8 0-8-8V160q0-8 8-8z"
-                                                  />
-                                                  <path
-                                                    d="M176 474h672q8 0 8 8v60q0 8-8 8H176q-8 0-8-8v-60q0-8 8-8z"
-                                                  />
-                                                </svg>
-                                              </span>
-                                            </span>
-                                            <span>
-                                              Add Role
-                                            </span>
-                                          </button>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
+                                </td>
+                                <td
+                                  class="ant-table-cell ant-table-cell-ellipsis"
+                                >
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
+                                  >
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                    >
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
+                                </td>
+                                <td
+                                  class="ant-table-cell"
+                                >
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
+                                  >
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                    >
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
+                                </td>
+                                <td
+                                  class="ant-table-cell"
+                                >
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
+                                  >
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                    >
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
+                                </td>
+                              </tr>
+                              <tr
+                                class="ant-table-row ant-table-row-level-0"
+                              >
+                                <td
+                                  class="ant-table-cell"
+                                >
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
+                                  >
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                    >
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
+                                </td>
+                                <td
+                                  class="ant-table-cell"
+                                >
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
+                                  >
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                    >
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
+                                </td>
+                                <td
+                                  class="ant-table-cell"
+                                >
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
+                                  >
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                    >
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
+                                </td>
+                                <td
+                                  class="ant-table-cell ant-table-cell-ellipsis"
+                                >
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
+                                  >
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                    >
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
+                                </td>
+                                <td
+                                  class="ant-table-cell"
+                                >
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
+                                  >
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                    >
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
+                                </td>
+                                <td
+                                  class="ant-table-cell"
+                                >
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
+                                  >
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                    >
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
+                                </td>
+                              </tr>
+                              <tr
+                                class="ant-table-row ant-table-row-level-0"
+                              >
+                                <td
+                                  class="ant-table-cell"
+                                >
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
+                                  >
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                    >
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
+                                </td>
+                                <td
+                                  class="ant-table-cell"
+                                >
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
+                                  >
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                    >
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
+                                </td>
+                                <td
+                                  class="ant-table-cell"
+                                >
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
+                                  >
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                    >
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
+                                </td>
+                                <td
+                                  class="ant-table-cell ant-table-cell-ellipsis"
+                                >
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
+                                  >
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                    >
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
+                                </td>
+                                <td
+                                  class="ant-table-cell"
+                                >
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
+                                  >
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                    >
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
+                                </td>
+                                <td
+                                  class="ant-table-cell"
+                                >
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
+                                  >
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                    >
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
+                                </td>
+                              </tr>
+                              <tr
+                                class="ant-table-row ant-table-row-level-0"
+                              >
+                                <td
+                                  class="ant-table-cell"
+                                >
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
+                                  >
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                    >
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
+                                </td>
+                                <td
+                                  class="ant-table-cell"
+                                >
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
+                                  >
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                    >
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
+                                </td>
+                                <td
+                                  class="ant-table-cell"
+                                >
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
+                                  >
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                    >
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
+                                </td>
+                                <td
+                                  class="ant-table-cell ant-table-cell-ellipsis"
+                                >
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
+                                  >
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                    >
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
+                                </td>
+                                <td
+                                  class="ant-table-cell"
+                                >
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
+                                  >
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                    >
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
+                                </td>
+                                <td
+                                  class="ant-table-cell"
+                                >
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
+                                  >
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                    >
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
+                                </td>
+                              </tr>
+                              <tr
+                                class="ant-table-row ant-table-row-level-0"
+                              >
+                                <td
+                                  class="ant-table-cell"
+                                >
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
+                                  >
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                    >
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
+                                </td>
+                                <td
+                                  class="ant-table-cell"
+                                >
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
+                                  >
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                    >
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
+                                </td>
+                                <td
+                                  class="ant-table-cell"
+                                >
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
+                                  >
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                    >
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
+                                </td>
+                                <td
+                                  class="ant-table-cell ant-table-cell-ellipsis"
+                                >
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
+                                  >
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                    >
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
+                                </td>
+                                <td
+                                  class="ant-table-cell"
+                                >
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
+                                  >
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                    >
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
+                                </td>
+                                <td
+                                  class="ant-table-cell"
+                                >
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
+                                  >
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                    >
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
+                                </td>
+                              </tr>
+                              <tr
+                                class="ant-table-row ant-table-row-level-0"
+                              >
+                                <td
+                                  class="ant-table-cell"
+                                >
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
+                                  >
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                    >
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
+                                </td>
+                                <td
+                                  class="ant-table-cell"
+                                >
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
+                                  >
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                    >
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
+                                </td>
+                                <td
+                                  class="ant-table-cell"
+                                >
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
+                                  >
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                    >
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
+                                </td>
+                                <td
+                                  class="ant-table-cell ant-table-cell-ellipsis"
+                                >
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
+                                  >
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                    >
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
+                                </td>
+                                <td
+                                  class="ant-table-cell"
+                                >
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
+                                  >
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                    >
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
+                                </td>
+                                <td
+                                  class="ant-table-cell"
+                                >
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
+                                  >
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                    >
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
+                                </td>
+                              </tr>
+                              <tr
+                                class="ant-table-row ant-table-row-level-0"
+                              >
+                                <td
+                                  class="ant-table-cell"
+                                >
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
+                                  >
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                    >
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
+                                </td>
+                                <td
+                                  class="ant-table-cell"
+                                >
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
+                                  >
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                    >
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
+                                </td>
+                                <td
+                                  class="ant-table-cell"
+                                >
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
+                                  >
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                    >
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
+                                </td>
+                                <td
+                                  class="ant-table-cell ant-table-cell-ellipsis"
+                                >
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
+                                  >
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                    >
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
+                                </td>
+                                <td
+                                  class="ant-table-cell"
+                                >
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
+                                  >
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                    >
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
+                                </td>
+                                <td
+                                  class="ant-table-cell"
+                                >
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
+                                  >
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                    >
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
+                                </td>
+                              </tr>
+                              <tr
+                                class="ant-table-row ant-table-row-level-0"
+                              >
+                                <td
+                                  class="ant-table-cell"
+                                >
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
+                                  >
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                    >
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
+                                </td>
+                                <td
+                                  class="ant-table-cell"
+                                >
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
+                                  >
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                    >
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
+                                </td>
+                                <td
+                                  class="ant-table-cell"
+                                >
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
+                                  >
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                    >
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
+                                </td>
+                                <td
+                                  class="ant-table-cell ant-table-cell-ellipsis"
+                                >
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
+                                  >
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                    >
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
+                                </td>
+                                <td
+                                  class="ant-table-cell"
+                                >
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
+                                  >
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                    >
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
+                                </td>
+                                <td
+                                  class="ant-table-cell"
+                                >
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
+                                  >
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                    >
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
+                                </td>
+                              </tr>
+                              <tr
+                                class="ant-table-row ant-table-row-level-0"
+                              >
+                                <td
+                                  class="ant-table-cell"
+                                >
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
+                                  >
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                    >
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
+                                </td>
+                                <td
+                                  class="ant-table-cell"
+                                >
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
+                                  >
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                    >
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
+                                </td>
+                                <td
+                                  class="ant-table-cell"
+                                >
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
+                                  >
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                    >
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
+                                </td>
+                                <td
+                                  class="ant-table-cell ant-table-cell-ellipsis"
+                                >
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
+                                  >
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                    >
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
+                                </td>
+                                <td
+                                  class="ant-table-cell"
+                                >
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
+                                  >
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                    >
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
+                                </td>
+                                <td
+                                  class="ant-table-cell"
+                                >
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
+                                  >
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                    >
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
+                                </td>
+                              </tr>
+                              <tr
+                                class="ant-table-row ant-table-row-level-0"
+                              >
+                                <td
+                                  class="ant-table-cell"
+                                >
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
+                                  >
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                    >
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
+                                </td>
+                                <td
+                                  class="ant-table-cell"
+                                >
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
+                                  >
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                    >
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
+                                </td>
+                                <td
+                                  class="ant-table-cell"
+                                >
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
+                                  >
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                    >
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
+                                </td>
+                                <td
+                                  class="ant-table-cell ant-table-cell-ellipsis"
+                                >
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
+                                  >
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                    >
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
+                                </td>
+                                <td
+                                  class="ant-table-cell"
+                                >
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
+                                  >
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                    >
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
+                                </td>
+                                <td
+                                  class="ant-table-cell"
+                                >
+                                  <span
+                                    aria-busy="true"
+                                    aria-live="polite"
+                                  >
+                                    <span
+                                      class="react-loading-skeleton"
+                                      style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                    >
+                                      ‌
+                                    </span>
+                                    <br />
+                                  </span>
                                 </td>
                               </tr>
                             </tbody>
@@ -695,164 +1607,87 @@ Object {
                         </div>
                       </div>
                     </div>
+                    <ul
+                      class="ant-pagination ant-table-pagination ant-table-pagination-right css-dev-only-do-not-override-14wwjjs"
+                    >
+                      <li
+                        aria-disabled="true"
+                        class="ant-pagination-prev ant-pagination-disabled"
+                        title="Previous Page"
+                      >
+                        <button
+                          class="ant-pagination-item-link"
+                          disabled=""
+                          tabindex="-1"
+                          type="button"
+                        >
+                          <span
+                            aria-label="left"
+                            class="anticon anticon-left"
+                            role="img"
+                          >
+                            <svg
+                              aria-hidden="true"
+                              data-icon="left"
+                              fill="currentColor"
+                              focusable="false"
+                              height="1em"
+                              viewBox="64 64 896 896"
+                              width="1em"
+                            >
+                              <path
+                                d="M724 218.3V141c0-6.7-7.7-10.4-12.9-6.3L260.3 486.8a31.86 31.86 0 000 50.3l450.8 352.1c5.3 4.1 12.9.4 12.9-6.3v-77.3c0-4.9-2.3-9.6-6.1-12.6l-360-281 360-281.1c3.8-3 6.1-7.7 6.1-12.6z"
+                              />
+                            </svg>
+                          </span>
+                        </button>
+                      </li>
+                      <li
+                        class="ant-pagination-item ant-pagination-item-1 ant-pagination-item-active"
+                        tabindex="0"
+                        title="1"
+                      >
+                        <a
+                          rel="nofollow"
+                        >
+                          1
+                        </a>
+                      </li>
+                      <li
+                        aria-disabled="true"
+                        class="ant-pagination-next ant-pagination-disabled"
+                        title="Next Page"
+                      >
+                        <button
+                          class="ant-pagination-item-link"
+                          disabled=""
+                          tabindex="-1"
+                          type="button"
+                        >
+                          <span
+                            aria-label="right"
+                            class="anticon anticon-right"
+                            role="img"
+                          >
+                            <svg
+                              aria-hidden="true"
+                              data-icon="right"
+                              fill="currentColor"
+                              focusable="false"
+                              height="1em"
+                              viewBox="64 64 896 896"
+                              width="1em"
+                            >
+                              <path
+                                d="M765.7 486.8L314.9 134.7A7.97 7.97 0 00302 141v77.3c0 4.9 2.3 9.6 6.1 12.6l360 281.1-360 281.1c-3.9 3-6.1 7.7-6.1 12.6V883c0 6.7 7.7 10.4 12.9 6.3l450.8-352.1a31.96 31.96 0 000-50.4z"
+                              />
+                            </svg>
+                          </span>
+                        </button>
+                      </li>
+                    </ul>
                   </div>
                 </div>
-              </div>
-            </div>
-            <div
-              class="ant-row marT20 css-dev-only-do-not-override-14wwjjs"
-              style="margin-left: -10px; margin-right: -10px;"
-            >
-              <div
-                class="ant-col ant-col-xs-24 ant-col-sm-12 ant-col-md-12 ant-col-lg-12 ant-col-xl-12 css-dev-only-do-not-override-14wwjjs"
-                style="padding-left: 10px; padding-right: 10px;"
-              >
-                0
-                <div
-                  class="ant-select css-dev-only-do-not-override-14wwjjs ant-select-single ant-select-show-arrow"
-                >
-                  <div
-                    class="ant-select-selector"
-                  >
-                    <span
-                      class="ant-select-selection-search"
-                    >
-                      <input
-                        aria-activedescendant="rc_select_TEST_OR_SSR_list_0"
-                        aria-autocomplete="list"
-                        aria-controls="rc_select_TEST_OR_SSR_list"
-                        aria-expanded="false"
-                        aria-haspopup="listbox"
-                        aria-owns="rc_select_TEST_OR_SSR_list"
-                        autocomplete="off"
-                        class="ant-select-selection-search-input"
-                        id="rc_select_TEST_OR_SSR"
-                        readonly=""
-                        role="combobox"
-                        style="opacity: 0;"
-                        type="search"
-                        unselectable="on"
-                        value=""
-                      />
-                    </span>
-                    <span
-                      class="ant-select-selection-item"
-                      title="10 / page"
-                    >
-                      10 / page
-                    </span>
-                  </div>
-                  <span
-                    aria-hidden="true"
-                    class="ant-select-arrow"
-                    style="user-select: none;"
-                    unselectable="on"
-                  >
-                    <span
-                      aria-label="down"
-                      class="anticon anticon-down ant-select-suffix"
-                      role="img"
-                    >
-                      <svg
-                        aria-hidden="true"
-                        data-icon="down"
-                        fill="currentColor"
-                        focusable="false"
-                        height="1em"
-                        viewBox="64 64 896 896"
-                        width="1em"
-                      >
-                        <path
-                          d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
-                        />
-                      </svg>
-                    </span>
-                  </span>
-                </div>
-              </div>
-              <div
-                class="ant-col alignRight ant-col-xs-24 ant-col-sm-12 ant-col-md-12 ant-col-lg-12 ant-col-xl-12 css-dev-only-do-not-override-14wwjjs"
-                style="padding-left: 10px; padding-right: 10px;"
-              >
-                <ul
-                  class="ant-pagination css-dev-only-do-not-override-14wwjjs"
-                >
-                  <li
-                    aria-disabled="true"
-                    class="ant-pagination-prev ant-pagination-disabled"
-                    title="Previous Page"
-                  >
-                    <button
-                      class="ant-pagination-item-link"
-                      disabled=""
-                      tabindex="-1"
-                      type="button"
-                    >
-                      <span
-                        aria-label="left"
-                        class="anticon anticon-left"
-                        role="img"
-                      >
-                        <svg
-                          aria-hidden="true"
-                          data-icon="left"
-                          fill="currentColor"
-                          focusable="false"
-                          height="1em"
-                          viewBox="64 64 896 896"
-                          width="1em"
-                        >
-                          <path
-                            d="M724 218.3V141c0-6.7-7.7-10.4-12.9-6.3L260.3 486.8a31.86 31.86 0 000 50.3l450.8 352.1c5.3 4.1 12.9.4 12.9-6.3v-77.3c0-4.9-2.3-9.6-6.1-12.6l-360-281 360-281.1c3.8-3 6.1-7.7 6.1-12.6z"
-                          />
-                        </svg>
-                      </span>
-                    </button>
-                  </li>
-                  <li
-                    class="ant-pagination-item ant-pagination-item-1 ant-pagination-item-disabled"
-                    tabindex="0"
-                    title="1"
-                  >
-                    <a
-                      rel="nofollow"
-                    >
-                      1
-                    </a>
-                  </li>
-                  <li
-                    aria-disabled="true"
-                    class="ant-pagination-next ant-pagination-disabled"
-                    title="Next Page"
-                  >
-                    <button
-                      class="ant-pagination-item-link"
-                      disabled=""
-                      tabindex="-1"
-                      type="button"
-                    >
-                      <span
-                        aria-label="right"
-                        class="anticon anticon-right"
-                        role="img"
-                      >
-                        <svg
-                          aria-hidden="true"
-                          data-icon="right"
-                          fill="currentColor"
-                          focusable="false"
-                          height="1em"
-                          viewBox="64 64 896 896"
-                          width="1em"
-                        >
-                          <path
-                            d="M765.7 486.8L314.9 134.7A7.97 7.97 0 00302 141v77.3c0 4.9 2.3 9.6 6.1 12.6l360 281.1-360 281.1c-3.9 3-6.1 7.7-6.1 12.6V883c0 6.7 7.7 10.4 12.9 6.3l450.8-352.1a31.96 31.96 0 000-50.4z"
-                          />
-                        </svg>
-                      </span>
-                    </button>
-                  </li>
-                </ul>
               </div>
             </div>
           </div>
@@ -923,15 +1758,15 @@ Object {
       </div>
     </div>
     <div
-      class="ant-row css-dev-only-do-not-override-14wwjjs"
-      style="margin-left: -10px; margin-right: -10px;"
+      class="contentHeaderBackground"
     >
       <div
-        class="ant-col ant-col-xs-24 ant-col-sm-24 ant-col-md-24 ant-col-lg-24 ant-col-xl-24 css-dev-only-do-not-override-14wwjjs"
-        style="padding-left: 10px; padding-right: 10px;"
+        class="ant-row css-dev-only-do-not-override-14wwjjs"
+        style="margin-left: -10px; margin-right: -10px;"
       >
         <div
-          class="contentHeaderBackground"
+          class="ant-col ant-col-xs-24 ant-col-sm-24 ant-col-md-16 ant-col-lg-16 ant-col-xl-16 css-dev-only-do-not-override-14wwjjs"
+          style="padding-left: 10px; padding-right: 10px;"
         >
           <div
             class="ant-row css-dev-only-do-not-override-14wwjjs"
@@ -941,170 +1776,190 @@ Object {
               class="ant-col ant-col-xs-24 ant-col-sm-24 ant-col-md-16 ant-col-lg-16 ant-col-xl-16 css-dev-only-do-not-override-14wwjjs"
               style="padding-left: 10px; padding-right: 10px;"
             >
-              <div
-                class="ant-row css-dev-only-do-not-override-14wwjjs"
-                style="margin-left: -10px; margin-right: -10px;"
+              <form
+                autocomplete="off"
+                class="ant-form ant-form-horizontal css-dev-only-do-not-override-14wwjjs masterListSearchForm"
               >
                 <div
-                  class="ant-col lineHeight33 ant-col-xs-24 ant-col-sm-24 ant-col-md-8 ant-col-lg-5 ant-col-xl-5 css-dev-only-do-not-override-14wwjjs"
-                  style="padding-left: 10px; padding-right: 10px;"
+                  class="ant-form-item css-dev-only-do-not-override-14wwjjs"
                 >
-                  Role List
-                </div>
-                <div
-                  class="ant-col ant-col-xs-24 ant-col-sm-24 ant-col-md-12 ant-col-lg-19 ant-col-xl-19 css-dev-only-do-not-override-14wwjjs"
-                  style="padding-left: 10px; padding-right: 10px;"
-                >
-                  <span
-                    class="ant-input-group-wrapper ant-input-search headerSearchField css-dev-only-do-not-override-14wwjjs"
+                  <div
+                    class="ant-row ant-form-item-row css-dev-only-do-not-override-14wwjjs"
                   >
-                    <span
-                      class="ant-input-wrapper ant-input-group css-dev-only-do-not-override-14wwjjs"
+                    <div
+                      class="ant-col ant-form-item-label css-dev-only-do-not-override-14wwjjs"
                     >
-                      <span
-                        class="ant-input-affix-wrapper css-dev-only-do-not-override-14wwjjs"
+                      <label
+                        class="ant-form-item-no-colon"
+                        for="code"
+                        title="Role Management"
                       >
-                        <input
-                          class="ant-input css-dev-only-do-not-override-14wwjjs"
-                          placeholder="Search"
-                          type="text"
-                          value=""
-                        />
-                        <span
-                          class="ant-input-suffix"
+                        Role Management
+                      </label>
+                    </div>
+                    <div
+                      class="ant-col ant-form-item-control css-dev-only-do-not-override-14wwjjs"
+                    >
+                      <div
+                        class="ant-form-item-control-input"
+                      >
+                        <div
+                          class="ant-form-item-control-input-content"
                         >
                           <span
-                            class="ant-input-clear-icon ant-input-clear-icon-hidden"
-                            role="button"
-                            tabindex="-1"
+                            class="ant-input-group-wrapper ant-input-search css-dev-only-do-not-override-14wwjjs"
                           >
                             <span
-                              aria-label="close-circle"
-                              class="anticon anticon-close-circle"
-                              role="img"
+                              class="ant-input-wrapper ant-input-group css-dev-only-do-not-override-14wwjjs"
                             >
-                              <svg
-                                aria-hidden="true"
-                                data-icon="close-circle"
-                                fill="currentColor"
-                                focusable="false"
-                                height="1em"
-                                viewBox="64 64 896 896"
-                                width="1em"
+                              <span
+                                class="ant-input-affix-wrapper css-dev-only-do-not-override-14wwjjs"
                               >
-                                <path
-                                  d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm165.4 618.2l-66-.3L512 563.4l-99.3 118.4-66.1.3c-4.4 0-8-3.5-8-8 0-1.9.7-3.7 1.9-5.2l130.1-155L340.5 359a8.32 8.32 0 01-1.9-5.2c0-4.4 3.6-8 8-8l66.1.3L512 464.6l99.3-118.4 66-.3c4.4 0 8 3.5 8 8 0 1.9-.7 3.7-1.9 5.2L553.5 514l130 155c1.2 1.5 1.9 3.3 1.9 5.2 0 4.4-3.6 8-8 8z"
+                                <input
+                                  class="ant-input css-dev-only-do-not-override-14wwjjs"
+                                  id="code"
+                                  placeholder="Search"
+                                  type="text"
+                                  value=""
                                 />
-                              </svg>
+                                <span
+                                  class="ant-input-suffix"
+                                >
+                                  <span
+                                    class="ant-input-clear-icon ant-input-clear-icon-hidden"
+                                    role="button"
+                                    tabindex="-1"
+                                  >
+                                    <span
+                                      aria-label="close-circle"
+                                      class="anticon anticon-close-circle"
+                                      role="img"
+                                    >
+                                      <svg
+                                        aria-hidden="true"
+                                        data-icon="close-circle"
+                                        fill="currentColor"
+                                        focusable="false"
+                                        height="1em"
+                                        viewBox="64 64 896 896"
+                                        width="1em"
+                                      >
+                                        <path
+                                          d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm165.4 618.2l-66-.3L512 563.4l-99.3 118.4-66.1.3c-4.4 0-8-3.5-8-8 0-1.9.7-3.7 1.9-5.2l130.1-155L340.5 359a8.32 8.32 0 01-1.9-5.2c0-4.4 3.6-8 8-8l66.1.3L512 464.6l99.3-118.4 66-.3c4.4 0 8 3.5 8 8 0 1.9-.7 3.7-1.9 5.2L553.5 514l130 155c1.2 1.5 1.9 3.3 1.9 5.2 0 4.4-3.6 8-8 8z"
+                                        />
+                                      </svg>
+                                    </span>
+                                  </span>
+                                </span>
+                              </span>
+                              <span
+                                class="ant-input-group-addon"
+                              >
+                                <button
+                                  class="ant-btn css-dev-only-do-not-override-14wwjjs ant-btn-default ant-btn-icon-only ant-input-search-button"
+                                  type="button"
+                                >
+                                  <span
+                                    class="ant-btn-icon"
+                                  >
+                                    <span
+                                      aria-label="search"
+                                      class="anticon anticon-search"
+                                      role="img"
+                                    >
+                                      <svg
+                                        aria-hidden="true"
+                                        data-icon="search"
+                                        fill="currentColor"
+                                        focusable="false"
+                                        height="1em"
+                                        viewBox="64 64 896 896"
+                                        width="1em"
+                                      >
+                                        <path
+                                          d="M909.6 854.5L649.9 594.8C690.2 542.7 712 479 712 412c0-80.2-31.3-155.4-87.9-212.1-56.6-56.7-132-87.9-212.1-87.9s-155.5 31.3-212.1 87.9C143.2 256.5 112 331.8 112 412c0 80.1 31.3 155.5 87.9 212.1C256.5 680.8 331.8 712 412 712c67 0 130.6-21.8 182.7-62l259.7 259.6a8.2 8.2 0 0011.6 0l43.6-43.5a8.2 8.2 0 000-11.6zM570.4 570.4C528 612.7 471.8 636 412 636s-116-23.3-158.4-65.6C211.3 528 188 471.8 188 412s23.3-116.1 65.6-158.4C296 211.3 352.2 188 412 188s116.1 23.2 158.4 65.6S636 352.2 636 412s-23.3 116.1-65.6 158.4z"
+                                        />
+                                      </svg>
+                                    </span>
+                                  </span>
+                                </button>
+                              </span>
                             </span>
                           </span>
-                        </span>
-                      </span>
-                      <span
-                        class="ant-input-group-addon"
-                      >
-                        <button
-                          class="ant-btn css-dev-only-do-not-override-14wwjjs ant-btn-default ant-btn-icon-only ant-input-search-button"
-                          type="button"
-                        >
-                          <span
-                            class="ant-btn-icon"
-                          >
-                            <span
-                              aria-label="search"
-                              class="anticon anticon-search"
-                              role="img"
-                            >
-                              <svg
-                                aria-hidden="true"
-                                data-icon="search"
-                                fill="currentColor"
-                                focusable="false"
-                                height="1em"
-                                viewBox="64 64 896 896"
-                                width="1em"
-                              >
-                                <path
-                                  d="M909.6 854.5L649.9 594.8C690.2 542.7 712 479 712 412c0-80.2-31.3-155.4-87.9-212.1-56.6-56.7-132-87.9-212.1-87.9s-155.5 31.3-212.1 87.9C143.2 256.5 112 331.8 112 412c0 80.1 31.3 155.5 87.9 212.1C256.5 680.8 331.8 712 412 712c67 0 130.6-21.8 182.7-62l259.7 259.6a8.2 8.2 0 0011.6 0l43.6-43.5a8.2 8.2 0 000-11.6zM570.4 570.4C528 612.7 471.8 636 412 636s-116-23.3-158.4-65.6C211.3 528 188 471.8 188 412s23.3-116.1 65.6-158.4C296 211.3 352.2 188 412 188s116.1 23.2 158.4 65.6S636 352.2 636 412s-23.3 116.1-65.6 158.4z"
-                                />
-                              </svg>
-                            </span>
-                          </span>
-                        </button>
-                      </span>
-                    </span>
-                  </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-            <div
-              class="ant-col buttonsGroupRight ant-col-xs-24 ant-col-sm-24 ant-col-md-8 ant-col-lg-8 ant-col-xl-8 css-dev-only-do-not-override-14wwjjs"
-              style="padding-left: 10px; padding-right: 10px;"
-            >
-              <button
-                aria-label="fa-ref"
-                class="ant-btn css-dev-only-do-not-override-14wwjjs ant-btn-default ant-btn-icon-only ant-btn-dangerous refreshBtn"
-                type="button"
-              >
-                <span
-                  class="ant-btn-icon"
-                >
-                  <svg
-                    fill="currentColor"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    version="1.1"
-                    viewBox="0 0 17 17"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <g />
-                    <path
-                      d="M6 8h-6v-6h1v4.109c1.013-3.193 4.036-5.484 7.5-5.484 3.506 0 6.621 2.36 7.574 5.739l-0.963 0.271c-0.832-2.95-3.551-5.011-6.611-5.011-3.226 0.001-6.016 2.276-6.708 5.376h4.208v1zM11 9v1h4.208c-0.693 3.101-3.479 5.375-6.708 5.375-3.062 0-5.78-2.061-6.611-5.011l-0.963 0.271c0.952 3.379 4.067 5.739 7.574 5.739 3.459 0 6.475-2.28 7.5-5.482v4.108h1v-6h-6z"
-                    />
-                  </svg>
-                </span>
-              </button>
-              <button
-                class="ant-btn css-dev-only-do-not-override-14wwjjs ant-btn-primary"
-                type="button"
-              >
-                <span
-                  class="ant-btn-icon"
-                >
-                  <span
-                    aria-label="plus"
-                    class="anticon anticon-plus"
-                    role="img"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      data-icon="plus"
-                      fill="currentColor"
-                      focusable="false"
-                      height="1em"
-                      viewBox="64 64 896 896"
-                      width="1em"
-                    >
-                      <defs>
-                        <style />
-                      </defs>
-                      <path
-                        d="M482 152h60q8 0 8 8v704q0 8-8 8h-60q-8 0-8-8V160q0-8 8-8z"
-                      />
-                      <path
-                        d="M176 474h672q8 0 8 8v60q0 8-8 8H176q-8 0-8-8v-60q0-8 8-8z"
-                      />
-                    </svg>
-                  </span>
-                </span>
-                <span>
-                  Add New Role
-                </span>
-              </button>
+              </form>
             </div>
           </div>
+        </div>
+        <div
+          class="ant-col buttonsGroupRight ant-col-xs-24 ant-col-sm-24 ant-col-md-8 ant-col-lg-8 ant-col-xl-8 css-dev-only-do-not-override-14wwjjs"
+          style="padding-left: 10px; padding-right: 10px;"
+        >
+          <button
+            class="ant-btn css-dev-only-do-not-override-14wwjjs ant-btn-default ant-btn-icon-only ant-btn-dangerous"
+            type="button"
+          >
+            <span
+              class="ant-btn-icon"
+            >
+              <svg
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                version="1.1"
+                viewBox="0 0 17 17"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g />
+                <path
+                  d="M6 8h-6v-6h1v4.109c1.013-3.193 4.036-5.484 7.5-5.484 3.506 0 6.621 2.36 7.574 5.739l-0.963 0.271c-0.832-2.95-3.551-5.011-6.611-5.011-3.226 0.001-6.016 2.276-6.708 5.376h4.208v1zM11 9v1h4.208c-0.693 3.101-3.479 5.375-6.708 5.375-3.062 0-5.78-2.061-6.611-5.011l-0.963 0.271c0.952 3.379 4.067 5.739 7.574 5.739 3.459 0 6.475-2.28 7.5-5.482v4.108h1v-6h-6z"
+                />
+              </svg>
+            </span>
+          </button>
+          <button
+            class="ant-btn css-dev-only-do-not-override-14wwjjs ant-btn-primary"
+            type="button"
+          >
+            <span
+              class="ant-btn-icon"
+            >
+              <span
+                aria-label="plus"
+                class="anticon anticon-plus"
+                role="img"
+              >
+                <svg
+                  aria-hidden="true"
+                  data-icon="plus"
+                  fill="currentColor"
+                  focusable="false"
+                  height="1em"
+                  viewBox="64 64 896 896"
+                  width="1em"
+                >
+                  <defs>
+                    <style />
+                  </defs>
+                  <path
+                    d="M482 152h60q8 0 8 8v704q0 8-8 8h-60q-8 0-8-8V160q0-8 8-8z"
+                  />
+                  <path
+                    d="M176 474h672q8 0 8 8v60q0 8-8 8H176q-8 0-8-8v-60q0-8 8-8z"
+                  />
+                </svg>
+              </span>
+            </span>
+            <span>
+              Add
+            </span>
+          </button>
         </div>
       </div>
     </div>
@@ -1132,7 +1987,7 @@ Object {
                   class="ant-spin-container"
                 >
                   <div
-                    class="ant-table ant-table-empty"
+                    class="ant-table"
                   >
                     <div
                       class="ant-table-container"
@@ -1148,16 +2003,16 @@ Object {
                               style="width: 5%;"
                             />
                             <col
-                              style="width: 20%;"
+                              style="width: 15%;"
                             />
                             <col
                               style="width: 20%;"
                             />
                             <col
-                              style="width: 100px;"
+                              style="width: 20%;"
                             />
                             <col
-                              style="width: 10%;"
+                              style="width: 15%;"
                             />
                             <col
                               style="width: 10%;"
@@ -1430,7 +2285,7 @@ Object {
                                 class="ant-table-cell"
                                 scope="col"
                               >
-                                Actions
+                                Action
                               </th>
                             </tr>
                           </thead>
@@ -1438,111 +2293,1003 @@ Object {
                             class="ant-table-tbody"
                           >
                             <tr
-                              class="ant-table-placeholder"
+                              class="ant-table-row ant-table-row-level-0"
                             >
                               <td
                                 class="ant-table-cell"
-                                colspan="6"
                               >
-                                <div
-                                  class="css-dev-only-do-not-override-14wwjjs ant-empty ant-empty-normal"
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
                                 >
-                                  <div
-                                    class="ant-empty-image"
-                                    style="height: 60px;"
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
                                   >
-                                    <svg
-                                      height="41"
-                                      viewBox="0 0 64 41"
-                                      width="64"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      <g
-                                        fill="none"
-                                        fill-rule="evenodd"
-                                        transform="translate(0 1)"
-                                      >
-                                        <ellipse
-                                          cx="32"
-                                          cy="33"
-                                          fill="#f5f5f5"
-                                          rx="32"
-                                          ry="7"
-                                        />
-                                        <g
-                                          fill-rule="nonzero"
-                                          stroke="#d9d9d9"
-                                        >
-                                          <path
-                                            d="M55 12.76L44.854 1.258C44.367.474 43.656 0 42.907 0H21.093c-.749 0-1.46.474-1.947 1.257L9 12.761V22h46v-9.24z"
-                                          />
-                                          <path
-                                            d="M41.613 15.931c0-1.605.994-2.93 2.227-2.931H55v18.137C55 33.26 53.68 35 52.05 35h-40.1C10.32 35 9 33.259 9 31.137V13h11.16c1.233 0 2.227 1.323 2.227 2.928v.022c0 1.605 1.005 2.901 2.237 2.901h14.752c1.232 0 2.237-1.308 2.237-2.913v-.007z"
-                                            fill="#fafafa"
-                                          />
-                                        </g>
-                                      </g>
-                                    </svg>
-                                  </div>
-                                  <div
-                                    class="ant-empty-description"
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
+                              </td>
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
+                                >
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
                                   >
-                                    <span>
-                                      No records found. Please add new Role 
-                                      <br />
-                                      using below button
-                                    </span>
-                                  </div>
-                                  <div
-                                    class="ant-empty-footer"
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
+                              </td>
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
+                                >
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
                                   >
-                                    <div
-                                      class="ant-row css-dev-only-do-not-override-14wwjjs"
-                                    >
-                                      <div
-                                        class="ant-col ant-col-xs-24 ant-col-sm-24 ant-col-md-24 ant-col-lg-24 ant-col-xl-24 css-dev-only-do-not-override-14wwjjs"
-                                      >
-                                        <button
-                                          class="ant-btn css-dev-only-do-not-override-14wwjjs ant-btn-primary"
-                                          type="button"
-                                        >
-                                          <span
-                                            class="ant-btn-icon"
-                                          >
-                                            <span
-                                              aria-label="plus"
-                                              class="anticon anticon-plus"
-                                              role="img"
-                                            >
-                                              <svg
-                                                aria-hidden="true"
-                                                data-icon="plus"
-                                                fill="currentColor"
-                                                focusable="false"
-                                                height="1em"
-                                                viewBox="64 64 896 896"
-                                                width="1em"
-                                              >
-                                                <defs>
-                                                  <style />
-                                                </defs>
-                                                <path
-                                                  d="M482 152h60q8 0 8 8v704q0 8-8 8h-60q-8 0-8-8V160q0-8 8-8z"
-                                                />
-                                                <path
-                                                  d="M176 474h672q8 0 8 8v60q0 8-8 8H176q-8 0-8-8v-60q0-8 8-8z"
-                                                />
-                                              </svg>
-                                            </span>
-                                          </span>
-                                          <span>
-                                            Add Role
-                                          </span>
-                                        </button>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
+                              </td>
+                              <td
+                                class="ant-table-cell ant-table-cell-ellipsis"
+                              >
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
+                                >
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                  >
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
+                              </td>
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
+                                >
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                  >
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
+                              </td>
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
+                                >
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                  >
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
+                              </td>
+                            </tr>
+                            <tr
+                              class="ant-table-row ant-table-row-level-0"
+                            >
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
+                                >
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                  >
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
+                              </td>
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
+                                >
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                  >
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
+                              </td>
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
+                                >
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                  >
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
+                              </td>
+                              <td
+                                class="ant-table-cell ant-table-cell-ellipsis"
+                              >
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
+                                >
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                  >
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
+                              </td>
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
+                                >
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                  >
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
+                              </td>
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
+                                >
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                  >
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
+                              </td>
+                            </tr>
+                            <tr
+                              class="ant-table-row ant-table-row-level-0"
+                            >
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
+                                >
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                  >
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
+                              </td>
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
+                                >
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                  >
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
+                              </td>
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
+                                >
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                  >
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
+                              </td>
+                              <td
+                                class="ant-table-cell ant-table-cell-ellipsis"
+                              >
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
+                                >
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                  >
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
+                              </td>
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
+                                >
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                  >
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
+                              </td>
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
+                                >
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                  >
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
+                              </td>
+                            </tr>
+                            <tr
+                              class="ant-table-row ant-table-row-level-0"
+                            >
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
+                                >
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                  >
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
+                              </td>
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
+                                >
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                  >
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
+                              </td>
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
+                                >
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                  >
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
+                              </td>
+                              <td
+                                class="ant-table-cell ant-table-cell-ellipsis"
+                              >
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
+                                >
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                  >
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
+                              </td>
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
+                                >
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                  >
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
+                              </td>
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
+                                >
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                  >
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
+                              </td>
+                            </tr>
+                            <tr
+                              class="ant-table-row ant-table-row-level-0"
+                            >
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
+                                >
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                  >
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
+                              </td>
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
+                                >
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                  >
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
+                              </td>
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
+                                >
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                  >
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
+                              </td>
+                              <td
+                                class="ant-table-cell ant-table-cell-ellipsis"
+                              >
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
+                                >
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                  >
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
+                              </td>
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
+                                >
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                  >
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
+                              </td>
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
+                                >
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                  >
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
+                              </td>
+                            </tr>
+                            <tr
+                              class="ant-table-row ant-table-row-level-0"
+                            >
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
+                                >
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                  >
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
+                              </td>
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
+                                >
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                  >
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
+                              </td>
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
+                                >
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                  >
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
+                              </td>
+                              <td
+                                class="ant-table-cell ant-table-cell-ellipsis"
+                              >
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
+                                >
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                  >
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
+                              </td>
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
+                                >
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                  >
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
+                              </td>
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
+                                >
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                  >
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
+                              </td>
+                            </tr>
+                            <tr
+                              class="ant-table-row ant-table-row-level-0"
+                            >
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
+                                >
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                  >
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
+                              </td>
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
+                                >
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                  >
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
+                              </td>
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
+                                >
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                  >
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
+                              </td>
+                              <td
+                                class="ant-table-cell ant-table-cell-ellipsis"
+                              >
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
+                                >
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                  >
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
+                              </td>
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
+                                >
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                  >
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
+                              </td>
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
+                                >
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                  >
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
+                              </td>
+                            </tr>
+                            <tr
+                              class="ant-table-row ant-table-row-level-0"
+                            >
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
+                                >
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                  >
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
+                              </td>
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
+                                >
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                  >
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
+                              </td>
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
+                                >
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                  >
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
+                              </td>
+                              <td
+                                class="ant-table-cell ant-table-cell-ellipsis"
+                              >
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
+                                >
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                  >
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
+                              </td>
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
+                                >
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                  >
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
+                              </td>
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
+                                >
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                  >
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
+                              </td>
+                            </tr>
+                            <tr
+                              class="ant-table-row ant-table-row-level-0"
+                            >
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
+                                >
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                  >
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
+                              </td>
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
+                                >
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                  >
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
+                              </td>
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
+                                >
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                  >
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
+                              </td>
+                              <td
+                                class="ant-table-cell ant-table-cell-ellipsis"
+                              >
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
+                                >
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                  >
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
+                              </td>
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
+                                >
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                  >
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
+                              </td>
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
+                                >
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                  >
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
+                              </td>
+                            </tr>
+                            <tr
+                              class="ant-table-row ant-table-row-level-0"
+                            >
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
+                                >
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                  >
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
+                              </td>
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
+                                >
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                  >
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
+                              </td>
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
+                                >
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                  >
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
+                              </td>
+                              <td
+                                class="ant-table-cell ant-table-cell-ellipsis"
+                              >
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
+                                >
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                  >
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
+                              </td>
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
+                                >
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                  >
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
+                              </td>
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <span
+                                  aria-busy="true"
+                                  aria-live="polite"
+                                >
+                                  <span
+                                    class="react-loading-skeleton"
+                                    style="width: 100%; height: 40px; --base-color: #f5f5f5; --highlight-color: #ebebeb;"
+                                  >
+                                    ‌
+                                  </span>
+                                  <br />
+                                </span>
                               </td>
                             </tr>
                           </tbody>
@@ -1550,164 +3297,87 @@ Object {
                       </div>
                     </div>
                   </div>
+                  <ul
+                    class="ant-pagination ant-table-pagination ant-table-pagination-right css-dev-only-do-not-override-14wwjjs"
+                  >
+                    <li
+                      aria-disabled="true"
+                      class="ant-pagination-prev ant-pagination-disabled"
+                      title="Previous Page"
+                    >
+                      <button
+                        class="ant-pagination-item-link"
+                        disabled=""
+                        tabindex="-1"
+                        type="button"
+                      >
+                        <span
+                          aria-label="left"
+                          class="anticon anticon-left"
+                          role="img"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            data-icon="left"
+                            fill="currentColor"
+                            focusable="false"
+                            height="1em"
+                            viewBox="64 64 896 896"
+                            width="1em"
+                          >
+                            <path
+                              d="M724 218.3V141c0-6.7-7.7-10.4-12.9-6.3L260.3 486.8a31.86 31.86 0 000 50.3l450.8 352.1c5.3 4.1 12.9.4 12.9-6.3v-77.3c0-4.9-2.3-9.6-6.1-12.6l-360-281 360-281.1c3.8-3 6.1-7.7 6.1-12.6z"
+                            />
+                          </svg>
+                        </span>
+                      </button>
+                    </li>
+                    <li
+                      class="ant-pagination-item ant-pagination-item-1 ant-pagination-item-active"
+                      tabindex="0"
+                      title="1"
+                    >
+                      <a
+                        rel="nofollow"
+                      >
+                        1
+                      </a>
+                    </li>
+                    <li
+                      aria-disabled="true"
+                      class="ant-pagination-next ant-pagination-disabled"
+                      title="Next Page"
+                    >
+                      <button
+                        class="ant-pagination-item-link"
+                        disabled=""
+                        tabindex="-1"
+                        type="button"
+                      >
+                        <span
+                          aria-label="right"
+                          class="anticon anticon-right"
+                          role="img"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            data-icon="right"
+                            fill="currentColor"
+                            focusable="false"
+                            height="1em"
+                            viewBox="64 64 896 896"
+                            width="1em"
+                          >
+                            <path
+                              d="M765.7 486.8L314.9 134.7A7.97 7.97 0 00302 141v77.3c0 4.9 2.3 9.6 6.1 12.6l360 281.1-360 281.1c-3.9 3-6.1 7.7-6.1 12.6V883c0 6.7 7.7 10.4 12.9 6.3l450.8-352.1a31.96 31.96 0 000-50.4z"
+                            />
+                          </svg>
+                        </span>
+                      </button>
+                    </li>
+                  </ul>
                 </div>
               </div>
-            </div>
-          </div>
-          <div
-            class="ant-row marT20 css-dev-only-do-not-override-14wwjjs"
-            style="margin-left: -10px; margin-right: -10px;"
-          >
-            <div
-              class="ant-col ant-col-xs-24 ant-col-sm-12 ant-col-md-12 ant-col-lg-12 ant-col-xl-12 css-dev-only-do-not-override-14wwjjs"
-              style="padding-left: 10px; padding-right: 10px;"
-            >
-              0
-              <div
-                class="ant-select css-dev-only-do-not-override-14wwjjs ant-select-single ant-select-show-arrow"
-              >
-                <div
-                  class="ant-select-selector"
-                >
-                  <span
-                    class="ant-select-selection-search"
-                  >
-                    <input
-                      aria-activedescendant="rc_select_TEST_OR_SSR_list_0"
-                      aria-autocomplete="list"
-                      aria-controls="rc_select_TEST_OR_SSR_list"
-                      aria-expanded="false"
-                      aria-haspopup="listbox"
-                      aria-owns="rc_select_TEST_OR_SSR_list"
-                      autocomplete="off"
-                      class="ant-select-selection-search-input"
-                      id="rc_select_TEST_OR_SSR"
-                      readonly=""
-                      role="combobox"
-                      style="opacity: 0;"
-                      type="search"
-                      unselectable="on"
-                      value=""
-                    />
-                  </span>
-                  <span
-                    class="ant-select-selection-item"
-                    title="10 / page"
-                  >
-                    10 / page
-                  </span>
-                </div>
-                <span
-                  aria-hidden="true"
-                  class="ant-select-arrow"
-                  style="user-select: none;"
-                  unselectable="on"
-                >
-                  <span
-                    aria-label="down"
-                    class="anticon anticon-down ant-select-suffix"
-                    role="img"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      data-icon="down"
-                      fill="currentColor"
-                      focusable="false"
-                      height="1em"
-                      viewBox="64 64 896 896"
-                      width="1em"
-                    >
-                      <path
-                        d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
-                      />
-                    </svg>
-                  </span>
-                </span>
-              </div>
-            </div>
-            <div
-              class="ant-col alignRight ant-col-xs-24 ant-col-sm-12 ant-col-md-12 ant-col-lg-12 ant-col-xl-12 css-dev-only-do-not-override-14wwjjs"
-              style="padding-left: 10px; padding-right: 10px;"
-            >
-              <ul
-                class="ant-pagination css-dev-only-do-not-override-14wwjjs"
-              >
-                <li
-                  aria-disabled="true"
-                  class="ant-pagination-prev ant-pagination-disabled"
-                  title="Previous Page"
-                >
-                  <button
-                    class="ant-pagination-item-link"
-                    disabled=""
-                    tabindex="-1"
-                    type="button"
-                  >
-                    <span
-                      aria-label="left"
-                      class="anticon anticon-left"
-                      role="img"
-                    >
-                      <svg
-                        aria-hidden="true"
-                        data-icon="left"
-                        fill="currentColor"
-                        focusable="false"
-                        height="1em"
-                        viewBox="64 64 896 896"
-                        width="1em"
-                      >
-                        <path
-                          d="M724 218.3V141c0-6.7-7.7-10.4-12.9-6.3L260.3 486.8a31.86 31.86 0 000 50.3l450.8 352.1c5.3 4.1 12.9.4 12.9-6.3v-77.3c0-4.9-2.3-9.6-6.1-12.6l-360-281 360-281.1c3.8-3 6.1-7.7 6.1-12.6z"
-                        />
-                      </svg>
-                    </span>
-                  </button>
-                </li>
-                <li
-                  class="ant-pagination-item ant-pagination-item-1 ant-pagination-item-disabled"
-                  tabindex="0"
-                  title="1"
-                >
-                  <a
-                    rel="nofollow"
-                  >
-                    1
-                  </a>
-                </li>
-                <li
-                  aria-disabled="true"
-                  class="ant-pagination-next ant-pagination-disabled"
-                  title="Next Page"
-                >
-                  <button
-                    class="ant-pagination-item-link"
-                    disabled=""
-                    tabindex="-1"
-                    type="button"
-                  >
-                    <span
-                      aria-label="right"
-                      class="anticon anticon-right"
-                      role="img"
-                    >
-                      <svg
-                        aria-hidden="true"
-                        data-icon="right"
-                        fill="currentColor"
-                        focusable="false"
-                        height="1em"
-                        viewBox="64 64 896 896"
-                        width="1em"
-                      >
-                        <path
-                          d="M765.7 486.8L314.9 134.7A7.97 7.97 0 00302 141v77.3c0 4.9 2.3 9.6 6.1 12.6l360 281.1-360 281.1c-3.9 3-6.1 7.7-6.1 12.6V883c0 6.7 7.7 10.4 12.9 6.3l450.8-352.1a31.96 31.96 0 000-50.4z"
-                        />
-                      </svg>
-                    </span>
-                  </button>
-                </li>
-              </ul>
             </div>
           </div>
         </div>
