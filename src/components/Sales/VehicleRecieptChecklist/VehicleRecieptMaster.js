@@ -196,7 +196,6 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
                 key: 'checklistStatus',
                 title: 'checklistStatus',
                 value: buttonType,
-                name: buttonType,
                 canRemove: false,
                 filter: false,
             },
@@ -204,7 +203,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
                 key: 'grnNumber',
                 title: 'grnNumber',
                 value: filterString?.grnNumber,
-                name: filterString?.grnNumber,
+                name: filterString?.grnNumber ?? null,
                 canRemove: true,
                 filter: true,
             },
@@ -496,12 +495,10 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         if (key === 'fromDate') {
             const { fromDate, toDate, ...rest } = filterString;
             setrules({ ...rulesIntialstate });
-            if (Object.keys(rest)?.length === 1) setFilterString();
-            else setFilterString({ ...rest });
+            setFilterString({ ...rest });
         } else {
             const { [key]: names, ...rest } = filterString;
-            if (Object.keys(rest)?.length === 1) setFilterString();
-            else setFilterString({ ...rest });
+            setFilterString({ ...rest });
         }
     };
 

@@ -19,7 +19,7 @@ export const tableColumn = ({ handleButtonClick, page, pageSize, actionButtonVis
             title: 'Receipt Date',
             dataIndex: 'grnDate',
             width: '14%',
-            render: (text) => convertDateMonthYearDayjs(text),
+            render: (text) => (text ? convertDateMonthYearDayjs(text) : 'NA'),
         }),
 
         tblPrepareColumns({
