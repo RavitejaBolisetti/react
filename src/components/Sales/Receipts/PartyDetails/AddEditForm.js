@@ -14,7 +14,7 @@ import styles from 'components/common/Common.module.css';
 const { Search } = Input;
 
 const AddEditFormMain = (props) => {
-    const { formData, partySegmentType, setPartySegment, handleChange, handleSearch, partyDetailForm, formActionType } = props;
+    const { formData, buttonData, setButtonData, partySegmentType, setPartySegment, handleChange, handleSearch, partyDetailForm, formActionType } = props;
 
     useEffect(() => {
         partyDetailForm.setFieldsValue({
@@ -40,6 +40,7 @@ const AddEditFormMain = (props) => {
 
     const handleCustomer = (value) => {
         setPartySegment(value);
+        setButtonData({ ...buttonData, formBtnActive: false });
     };
 
     // const handleSave = () => {};
