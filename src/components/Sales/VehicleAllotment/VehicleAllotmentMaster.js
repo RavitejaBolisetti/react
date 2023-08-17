@@ -21,6 +21,7 @@ import { VEHICLE_RECEIPT_SECTION } from 'constants/VehicleReceiptSection';
 import { showGlobalNotification } from 'store/actions/notification';
 import { otfDataActions } from 'store/actions/data/otf/otf';
 import { vehicleAllotment } from 'store/actions/data/vehicleAllotment/VehicleAllotment';
+import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { VEHICLE_TYPE } from 'constants/VehicleType';
 import { BASE_URL_VEHICLE_ALLOTMENT as customURL } from 'constants/routingApi';
@@ -33,6 +34,7 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
+            ProductHierarchy: {  isLoaded: isDataLoaded = false, data: productHierarchyData = [] },
             OTF: {
                 OtfSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isOTFSearchLoading, data, isDetailLoaded, detailData: otfData = [] },
             },
@@ -56,7 +58,8 @@ const mapStateToProps = (state) => {
         isSearchDataLoaded,
         filterString,
         allotmentSummaryDetails,
-        allotmentSearchedList
+        allotmentSearchedList,
+        productHierarchyData
     };
     return returnValue;
 };
@@ -73,6 +76,7 @@ const mapDispatchToProps = (dispatch) => ({
             fetchVehicleAllotmentDetails: vehicleAllotment.fetchDetail,
             saveData: vehicleAllotment.saveData,
             listShowLoading: vehicleAllotment.listShowLoading,
+            fetchModelList: productHierarchyDataActions.fetchList,
             showGlobalNotification,
         },
         dispatch
@@ -81,7 +85,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const VehicleAllotmentMasterBase = (props) => {
     const { fetchList, saveData, listShowLoading, userId, fetchVehicleAllotmentDetails, allotmentSummaryDetails, data, otfData, resetData } = props;
-    const { fetchOTFSearchedList, fetchVehicleAllotmentSearchedList, allotmentSearchedList, resetOTFSearchedList } = props;
+    const { fetchOTFSearchedList, fetchVehicleAllotmentSearchedList, allotmentSearchedList, resetOTFSearchedList, fetchModelList, productHierarchyData } = props;
     const { typeData, moduleTitle } = props;
     const { filterString, setFilterString, otfStatusList } = props;
     const [ filterStringOTFSearch, setFilterStringOTFSearch ] = useState('');
@@ -137,6 +141,14 @@ export const VehicleAllotmentMasterBase = (props) => {
         setShowDataLoading(false);
     };
 
+    useEffect(() => {
+        if (userId) {
+            fetchModelList({setIsLoading: listShowLoading, userId, onSuccessAction, onErrorAction });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    
     const extraParams = useMemo(() => {
         return [
             {
@@ -482,6 +494,7 @@ export const VehicleAllotmentMasterBase = (props) => {
         otfStatusList,
         typeData,
         onFinishSearch,
+        productHierarchyData
     };
 
     const drawerTitle = useMemo(() => {

@@ -13,7 +13,7 @@ import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import styles from 'components/common/Common.module.css';
 
 export const AdvancedSearchFrom = (props) => {
-    const { setAdvanceSearchVisible, otfStatusList, typeData } = props;
+    const { setAdvanceSearchVisible, otfStatusList, typeData, productHierarchyData } = props;
     const {
         filterString,
         setFilterString,
@@ -57,7 +57,7 @@ export const AdvancedSearchFrom = (props) => {
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item initialValue={filterString?.otfStatus} label="Model" name="model">
-                        <Select placeholder={preparePlaceholderSelect('')} fieldNames={{ label: 'desc', value: 'key' }} options={otfStatusList} {...selectProps} className={styles.headerSelectField}></Select>
+                        <Select placeholder={preparePlaceholderSelect('')} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }} options={productHierarchyData} {...selectProps} className={styles.headerSelectField}></Select>
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
