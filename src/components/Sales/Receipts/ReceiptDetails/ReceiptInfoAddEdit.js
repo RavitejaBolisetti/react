@@ -7,6 +7,7 @@ import React, { useEffect } from 'react';
 import { Row, Col, Form, Select, DatePicker, Collapse, Divider } from 'antd';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { formattedCalendarDate, dateFormat } from 'utils/formatDateTime';
+import { validateRequiredSelectField, validateRequiredInputField } from 'utils/validation';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { ReceiptTypeForm } from './ReceiptInformation/ReceiptTypeForm';
 
@@ -34,12 +35,12 @@ const PaymentAddEdit = (props) => {
                     <Divider />
                     <Row gutter={16}>
                         <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={formattedCalendarDate(receiptData?.receiptDate)} label="Actual Receipt Date" name="receiptDate">
+                            <Form.Item initialValue={formattedCalendarDate(receiptData?.receiptDate)} label="Actual Receipt Date" name="receiptDate" rules={[validateRequiredInputField('Actual Receipt Date')]}>
                                 <DatePicker format={dateFormat} placeholder={preparePlaceholderText('actual receipt date')} style={{ display: 'auto', width: '100%' }} disabled={formActionType?.editMode} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                            <Form.Item initialValue={receiptData?.receiptType} label="Receipt Type" name="receiptType">
+                            <Form.Item initialValue={receiptData?.receiptType} label="Receipt Type" name="receiptType" rules={[validateRequiredSelectField('Receipt Type')]}>
                                 <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} onChange={handleChange} showSearch disabled={formActionType?.editMode}>
                                     {receiptType?.map((item) => (
                                         <Option key={'dv' + item.key} value={item.key}>
