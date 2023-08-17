@@ -6,7 +6,7 @@
 import React from 'react';
 import { Input, DatePicker, Row, Col, Form } from 'antd';
 
-import { validationNumber } from 'utils/validation';
+import { validateRequiredInputField, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { dateFormat } from 'utils/formatDateTime';
 
@@ -17,7 +17,7 @@ const CashFormBase = (props) => {
         <>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.receivedAmount} label="Receive Amount" name="receivedAmount" rules={[validationNumber('received amount')]}>
+                    <Form.Item initialValue={formData?.receivedAmount} label="Receive Amount" name="receivedAmount" rules={[validateRequiredInputField('received amount'), validateNumberWithTwoDecimalPlaces('received amount')]}>
                         <Input placeholder={preparePlaceholderText('received amount')} />
                     </Form.Item>
                 </Col>

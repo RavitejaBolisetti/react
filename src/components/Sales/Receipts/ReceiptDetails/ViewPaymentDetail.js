@@ -59,8 +59,8 @@ const ViewPaymentDetailBase = (props) => {
                                 <Descriptions.Item label="Bank Name">{checkAndSetDefaultValue(formData?.bankName, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Bank Location">{checkAndSetDefaultValue(formData?.bankLocationName, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Payment Bank Party ID">{checkAndSetDefaultValue(formData?.paymentBankPartyId, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Payment Bank Name">{checkAndSetDefaultValue(formData?.paymentBankName, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Payment Bank Location">{checkAndSetDefaultValue(formData?.paymentBankLocation, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Payment Bank Name">{checkAndSetDefaultValue(formData?.partyName, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Payment Bank Location">{checkAndSetDefaultValue(formData?.partyLocationCode, isLoading)}</Descriptions.Item>
                             </>
                         )}
 
@@ -69,8 +69,8 @@ const ViewPaymentDetailBase = (props) => {
                                 <Descriptions.Item label="Transaction No.">{checkAndSetDefaultValue(formData?.transactionNumber, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Transaction Date">{checkAndSetDefaultValue(formData?.transactionDate, isLoading, DATA_TYPE?.DAYJS?.key)}</Descriptions.Item>
                                 <Descriptions.Item label="Payment Bank Party ID">{checkAndSetDefaultValue(formData?.paymentBankPartyId, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Payment Bank Name">{checkAndSetDefaultValue(formData?.paymentBankName, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Payment Bank Location">{checkAndSetDefaultValue(formData?.paymentBankLocation, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Payment Bank Name">{checkAndSetDefaultValue(formData?.partyName, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Payment Bank Location">{checkAndSetDefaultValue(formData?.partyLocationCode, isLoading)}</Descriptions.Item>
                             </>
                         )}
                     </Descriptions>
