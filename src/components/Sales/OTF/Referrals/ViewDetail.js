@@ -5,10 +5,11 @@
  */
 import React from 'react';
 import { Card, Descriptions } from 'antd';
-import styles from 'components/common/Common.module.css';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { getCodeValue } from 'utils/getCodeValue';
 import { DATA_TYPE } from 'constants/dataType';
+
+import styles from 'components/common/Common.module.css';
 
 const ViewDetailMain = (props) => {
     const { formData, isLoading, typeData } = props;
@@ -21,7 +22,7 @@ const ViewDetailMain = (props) => {
     };
 
     return (
-        <Card className={styles.drawerCardView} style={{ backgroundColor: '#F2F2F2', borderRadius: '8px' }}>
+        <Card className={styles.drawerCardView}>
             <Descriptions {...viewProps}>
                 <Descriptions.Item label="Referral ID">{checkAndSetDefaultValue(formData?.referralId, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Registration Number">{checkAndSetDefaultValue(formData?.registrationNumber, isLoading)}</Descriptions.Item>
