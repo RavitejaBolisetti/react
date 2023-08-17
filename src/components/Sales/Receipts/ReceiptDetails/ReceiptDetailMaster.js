@@ -88,9 +88,18 @@ const ReceiptDetailMasterBase = (props) => {
             setPaymentDataList(receiptDetailData.receiptsDetails.paymentDetails);
             setRequestPayload({ ...requestPayload, receiptsDetails: receiptDetailData.receiptsDetails });
             setReceipt(receiptDetailData.receiptsDetails?.receiptType);
+            receiptDetailData?.receiptsDetails?.receiptType === 'A' && !formActionType?.editMode && setButtonData({ ...buttonData, nextBtn: false, saveBtn: false });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, receiptDetailData.receiptsDetails]);
+    }, [userId, receiptDetailData?.receiptsDetails]);
+    useEffect(() => {
+        if (formActionType?.editMode && receiptDetailData?.receiptsDetails?.receiptType === 'A') {
+            setButtonData({ ...buttonData, cancelReceiptBtn: true, editBtn: false, nextBtn: false });
+        } else if (formActionType?.editMode) {
+            setButtonData({ ...buttonData, cancelReceiptBtn: true, editBtn: false, nextBtn: true });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formActionType, receiptDetailData?.receiptsDetails]);
 
     const handleSave = () => {
         //save receipt information

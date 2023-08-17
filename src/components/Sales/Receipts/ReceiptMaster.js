@@ -125,6 +125,7 @@ export const ReceiptMasterBase = (props) => {
         formBtnActive: false,
         deliveryNote: false,
         nextBtn: false,
+        cancelReceiptBtn: false,
     };
 
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -262,7 +263,6 @@ export const ReceiptMasterBase = (props) => {
                 },
             ];
             fetchReceiptDetails({ setIsLoading: listShowLoading, userId, extraParams });
-            setReceipt(receiptDetailData?.receiptsDetails?.receiptType);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedOrderId]);
@@ -342,7 +342,10 @@ export const ReceiptMasterBase = (props) => {
             if (buttonAction === EDIT_ACTION) {
                 setButtonData({ ...buttonData, nextBtn: true, editBtn: false, saveBtn: true });
             } else {
-                setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
+                const Visibility = btnVisiblity({ defaultBtnVisiblity, buttonAction });
+                setButtonData(Visibility);
+                setButtonData({ ...Visibility, cancelReceiptBtn: true });
+                buttonAction === VIEW_ACTION ? setButtonData({ ...Visibility, cancelReceiptBtn: true }) : setButtonData({ ...Visibility });
             }
         }
         setIsFormVisible(true);
