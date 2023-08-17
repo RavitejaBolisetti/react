@@ -34,6 +34,7 @@ const AddEditFormMain = (props) => {
     const [reasonTypeChange, setReasonTypeChange] = useState('');
     const [dealerList, setDealerList] = useState([]);
     const [fileList, setFileList] = useState([]);
+    const [singleDisabled, setSingleDisabled] = useState(false);
 
     const onDrop = (e) => {};
     const onDownload = (file) => {
@@ -69,6 +70,10 @@ const AddEditFormMain = (props) => {
         setUploadedFile,
         uploadedFileName,
         setUploadedFileName,
+        single: true,
+        singleDisabled,
+        setSingleDisabled,
+        isReplaceEnabled: false,
     };
 
     // useEffect(() => {
