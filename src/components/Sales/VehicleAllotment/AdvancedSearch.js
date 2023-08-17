@@ -13,7 +13,7 @@ import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import styles from 'components/common/Common.module.css';
 
 export const AdvancedSearchFrom = (props) => {
-    const { setAdvanceSearchVisible, otfStatusList } = props;
+    const { setAdvanceSearchVisible, otfStatusList, typeData } = props;
     const {
         filterString,
         setFilterString,
@@ -30,7 +30,9 @@ export const AdvancedSearchFrom = (props) => {
         setFilterString({
             ...filterString,
             ...values,
-            otfStatus: values?.otfStatus,
+            model: values?.model,
+            vehicleStatus: values?.vehicleStatus,
+            pdDone: values?.pdDone,
             advanceFilter: true,
         });
         setAdvanceSearchVisible(false);
@@ -59,16 +61,19 @@ export const AdvancedSearchFrom = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={filterString?.otfStatus} label="Vehicle Status" name="vehicleStatus">
-                        <Select placeholder={preparePlaceholderSelect('')} fieldNames={{ label: 'desc', value: 'key' }} options={otfStatusList} {...selectProps} className={styles.headerSelectField}></Select>
+                    <Form.Item initialValue={filterString?.vehicleStatus} label="Vehicle Status" name="vehicleStatus">
+                        <Select placeholder={preparePlaceholderSelect('')} fieldNames={{ label: 'value', value: 'key' }} options={typeData['ALT_ACTN']} {...selectProps} className={styles.headerSelectField}></Select>
                     </Form.Item>
+                    {/* <Form.Item name="oemCode" label="OEM Name" rules={[validateRequiredSelectField('OEM Name')]}>
+                        <Select {...selectProps} fieldNames={{ label: 'value', value: 'key' }} options={typeData['COMPTR_MFG']} placeholder={preparePlaceholderSelect('OEM Name')} />
+                    </Form.Item> */}
                 </Col>
             </Row>
 
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Form.Item initialValue={filterString?.otfStatus} label="PDI Done" name="otfStatus">
-                        <Select placeholder={preparePlaceholderSelect('')} fieldNames={{ label: 'desc', value: 'key' }} options={otfStatusList} {...selectProps} className={styles.headerSelectField}></Select>
+                    <Form.Item initialValue={filterString?.otfStatus} label="PDI Done" name="pdDone">
+                        <Select placeholder={preparePlaceholderSelect('')} fieldNames={{ label: 'value', value: 'key' }} options={typeData['PD_DONE']} {...selectProps} className={styles.headerSelectField}></Select>
                     </Form.Item>
                 </Col>
             </Row>

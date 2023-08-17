@@ -155,6 +155,27 @@ export const VehicleAllotmentMasterBase = (props) => {
                 name: searchParamValue,
                 canRemove: true,
                 filter: true,
+            },{
+                key: 'model',
+                title: 'Model',
+                value: filterString?.model,
+                name: filterString?.model,
+                canRemove: true,
+                filter: true,
+            },{
+                key: 'vehicleStatus',
+                title: 'Vehicle Status',
+                value: filterString?.vehicleStatus,
+                name: filterString?.vehicleStatus,
+                canRemove: true,
+                filter: true,
+            },{
+                key: 'pdDone',
+                title: 'PD Done',
+                value: filterString?.pdDone,
+                name: filterString?.pdDone,
+                canRemove: true,
+                filter: true,
             },
             {
                 key: 'pageSize',
@@ -324,7 +345,7 @@ export const VehicleAllotmentMasterBase = (props) => {
     };
 
     const handleVehicleAllotment = (req, buttonAction) => {
-        let data = { ...req , vehicleOTFDetails: selectedOTFDetails };
+        let data = { ...selectedOrder , vehicleOTFDetails: selectedOTFDetails };
 
         const onSuccess = (res) => {
             form.resetFields();
