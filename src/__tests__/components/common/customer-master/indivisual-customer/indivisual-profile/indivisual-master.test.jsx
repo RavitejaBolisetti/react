@@ -112,4 +112,8 @@ describe('Indivisual Master  Component', () => {
         const saveBtn = screen.getByRole('button', { name: /save & next/i });
         fireEvent.click(saveBtn);
     });
+    test('should check view details', () => {
+        const prop = { formActionType: { viewMode: true } };
+        customRender(<FormWrapper {...prop} />);
+    });
 });
