@@ -10,7 +10,7 @@ import { Row, Col, Button } from 'antd';
 
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 import { convertDateTime } from 'utils/formatDateTime';
-import { tblPrepareColumns, tblStatusColumn } from 'utils/tableCloumn';
+import { tblPrepareColumns, tblStatusColumn } from 'utils/tableColumn';
 import { withDrawer } from 'components/withDrawer';
 import { DataTable } from 'utils/dataTable';
 import styles from 'components/common/Common.module.css';
