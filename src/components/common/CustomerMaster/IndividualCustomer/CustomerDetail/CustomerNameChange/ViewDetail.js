@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { Typography, Descriptions, Divider, Card, Collapse, Tag, Col, Row, Modal, Button } from 'antd';
+import { Typography, Descriptions, Divider, Card, Collapse, Tag, Col, Row, Form, Modal, Button } from 'antd';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { BiTimeFive } from 'react-icons/bi';
@@ -145,14 +145,13 @@ const ViewDetailMain = (props) => {
                             Customer Name
                         </Text>
                     </Col>
-
-                    <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                        <Button type="link" onClick={onViewHistoryChange} icon={<BiTimeFive />} className={styles.verticallyCenteredAndAlignRight}>
+                    <Col xs={24} sm={24} md={12} lg={12} xl={12} className={styles.buttonsGroupRight}>
+                        <Button type="link" onClick={onViewHistoryChange} icon={<BiTimeFive />} className={styles.verticallyCentered}>
                             View History
                         </Button>
                     </Col>
                 </Row>
-                <Divider />
+                <Divider className={styles.marT20} />
                 {customerNameChangeRequest && (
                     <Collapse
                         expandIcon={expandIcon}
@@ -181,7 +180,22 @@ const ViewDetailMain = (props) => {
                             }
                             key={1}
                         >
-                            <Descriptions {...nameViewProps} style={{ padding: '10px' }}>
+                            <Divider />
+                            <Row gutter={20}>
+                                <Col xs={24} sm={24} md={4} lg={4} xl={4}>
+                                    <Form.Item label="Title">{checkAndSetDefaultValue(getCodeValue(typeData?.TITLE, customerNameChangeRequest?.titleCode))}</Form.Item>
+                                </Col>
+                                <Col xs={24} sm={24} md={7} lg={7} xl={7}>
+                                    <Form.Item label="First Name">{checkAndSetDefaultValue(customerNameChangeRequest?.firstName)}</Form.Item>
+                                </Col>
+                                <Col xs={24} sm={24} md={6} lg={6} xl={6}>
+                                    <Form.Item label="Middle Name">{checkAndSetDefaultValue(customerNameChangeRequest?.middleName)}</Form.Item>
+                                </Col>
+                                <Col xs={24} sm={24} md={7} lg={7} xl={7}>
+                                    <Form.Item label="Last Name">{checkAndSetDefaultValue(customerNameChangeRequest?.lastName)}</Form.Item>
+                                </Col>
+                            </Row>
+                            <Descriptions {...nameViewProps}>
                                 <Descriptions.Item label="Title">{checkAndSetDefaultValue(getCodeValue(typeData?.TITLE, customerNameChangeRequest?.titleCode))}</Descriptions.Item>
                                 <Descriptions.Item label="First Name">{checkAndSetDefaultValue(customerNameChangeRequest?.firstName)}</Descriptions.Item>
                                 <Descriptions.Item label="Middle Name">{checkAndSetDefaultValue(customerNameChangeRequest?.middleName)}</Descriptions.Item>
@@ -236,12 +250,21 @@ const ViewDetailMain = (props) => {
                         }
                         key={2}
                     >
-                        <Descriptions {...nameViewProps} style={{ padding: '10px' }}>
-                            <Descriptions.Item label="Title">{checkAndSetDefaultValue(getCodeValue(typeData?.TITLE, formData?.titleCode))}</Descriptions.Item>
-                            <Descriptions.Item label="First Name">{checkAndSetDefaultValue(formData?.firstName)}</Descriptions.Item>
-                            <Descriptions.Item label="Middle Name">{checkAndSetDefaultValue(formData?.middleName)}</Descriptions.Item>
-                            <Descriptions.Item label="Last Name">{checkAndSetDefaultValue(formData?.lastName)}</Descriptions.Item>
-                        </Descriptions>
+                        <Divider />
+                        <Row gutter={20}>
+                            <Col xs={24} sm={24} md={4} lg={4} xl={4}>
+                                <Form.Item label="Title">{checkAndSetDefaultValue(getCodeValue(typeData?.TITLE, formData?.titleCode))}</Form.Item>
+                            </Col>
+                            <Col xs={24} sm={24} md={7} lg={7} xl={7}>
+                                <Form.Item label="First Name">{checkAndSetDefaultValue(formData?.firstName)}</Form.Item>
+                            </Col>
+                            <Col xs={24} sm={24} md={6} lg={6} xl={6}>
+                                <Form.Item label="Middle Name">{checkAndSetDefaultValue(formData?.middleName)}</Form.Item>
+                            </Col>
+                            <Col xs={24} sm={24} md={7} lg={7} xl={7}>
+                                <Form.Item label="Last Name">{checkAndSetDefaultValue(formData?.lastName)}</Form.Item>
+                            </Col>
+                        </Row>
                     </Panel>
                 </Collapse>
             </div>

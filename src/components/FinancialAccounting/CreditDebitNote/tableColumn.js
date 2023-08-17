@@ -11,32 +11,32 @@ export const tableColumn = (handleButtonClick) => {
         tblPrepareColumns({
             title: 'Voucher Number',
             dataIndex: 'voucherNumber',
-            width: '14%',
+            width: '18%',
         }),
         tblPrepareColumns({
             title: 'Voucher Type',
             dataIndex: 'voucherType',
-            width: '14%',
+            width: '18%',
         }),
 
         tblPrepareColumns({
             title: 'Party Segment',
             dataIndex: 'partySegment',
-            width: '14%',
+            width: '15%',
         }),
 
         tblPrepareColumns({
             title: 'Customer Name',
             dataIndex: 'customerName',
-            width: '14%',
+            width: '18%',
         }),
         tblPrepareColumns({
             title: 'Paid Amount',
             dataIndex: 'paidAmount',
-            width: '14%',
+            width: '16%',
         }),
 
-        tblActionColumn({ handleButtonClick, styles, width: '8%' }),
+        tblActionColumn({ handleButtonClick, styles, width: '15%' }),
     ];
 
     return tableColumn;

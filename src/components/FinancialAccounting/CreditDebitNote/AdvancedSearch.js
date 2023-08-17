@@ -85,19 +85,21 @@ export const AdvancedSearchFrom = (props) => {
 
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.fromDate, dateFormat)} label="From Date" name="fromDate" rules={[validateRequiredSelectField('From Date')]} className={styles?.datePicker}>
-                        <DatePicker format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} />
+                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.fromDate)} label="From Date" name="fromDate" rules={[validateRequiredSelectField('From Date')]} className={styles?.datePicker}>
+                        <DatePicker format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} onChange={() => advanceFilterForm.setFieldsValue({ toDate: undefined })} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
-                        initialValue={formatDateToCalenderDate(filterString?.toDate, dateFormat)}
+                        initialValue={formatDateToCalenderDate(filterString?.toDate)}
                         label="To Date"
                         name="toDate"
                         rules={[
                             validateRequiredSelectField('To Date'),
                             {
-                                validator: (_, value) => CheckDateEffectiveTo(value, advanceFilterForm?.getFieldValue('fromDate')),
+                                validator: (_, value) => {
+                                    return advanceFilterForm.getFieldValue('fromDate') ? CheckDateEffectiveTo(value, advanceFilterForm?.getFieldValue('fromDate')) : null;
+                                },
                             },
                         ]}
                         className={styles?.datePicker}

@@ -41,13 +41,13 @@ const ViewDetailMain = (props) => {
 
     return (
         <div className={styles.viewDrawerContainer}>
-            <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
+            <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
                 <Panel header="Individual Information" key="1">
-                    {/* <Divider />
-                    <div>
+                    <Divider />
+                    {/* <div>
                         <Image alt="Uploaded profile picture" width="120" height="100" src={`data:image/png;base64,${viewDocument?.base64}`} />
-                    </div> */}
-                    <Divider className={styles.marT20} />
+                    </div>
+                    <Divider className={styles.marT20} /> */}
                     <Descriptions {...viewProps}>
                         <Descriptions.Item label="Date of Birth">{checkAndSetDefaultValue(formData?.dateOfBirth, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                         <Descriptions.Item label="Gender">{checkAndSetDefaultValue(getCodeValue(appCategoryData?.GENDER_CD, formData?.gender), isLoading)}</Descriptions.Item>
@@ -60,7 +60,7 @@ const ViewDetailMain = (props) => {
                         <Descriptions.Item label="Voter ID">{checkAndSetDefaultValue(formData?.voterId, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Vehicle Used">{checkAndSetDefaultValue(getCodeValue(appCategoryData?.Vehicle_Used, formData?.vehicleUsed), isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Mother Tongue">{checkAndSetDefaultValue(getCodeValue(appCategoryData?.MOTHER_TOUNGE, formData?.motherTongue), isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Religion">{checkAndSetDefaultValue(getCodeValue(appCategoryData?.RELGION, formData?.religion), isLoading)}</Descriptions.Item>
+                        {/* <Descriptions.Item label="Religion">{checkAndSetDefaultValue(getCodeValue(appCategoryData?.RELGION, formData?.religion), isLoading)}</Descriptions.Item> */}
                         <Descriptions.Item label="PAN">{checkAndSetDefaultValue(formData?.panNumber, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="GSTIN">{checkAndSetDefaultValue(formData?.gstin, isLoading)}</Descriptions.Item>
                     </Descriptions>
