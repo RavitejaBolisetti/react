@@ -154,7 +154,7 @@ const CustomerChangeHistoryMain = ({ fetchCustomerChangeHistory, onCloseAction, 
         dynamicPagination,
         isChangeHistoryLoading,
         tableColumn,
-        tableData: changeHistoryData?.dataList,
+        tableData: changeHistoryData?.paginationResponse,
         scroll: { x: '100%', y: 'calc(100vh - 320px)' },
     };
 

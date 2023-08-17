@@ -5,15 +5,15 @@
  */
 
 import React, { useEffect } from 'react';
-import { Row, Col, Space, Form, Card } from 'antd';
+import { Row, Col, Form, Card } from 'antd';
 
 import { VehicleDetailFormButton } from '../VehicleDetailFormButton';
 
 import styles from 'components/common/Common.module.css';
 
 export const ComingSoonMasterBase = (props) => {
-    const { form, fetchList, userId, isDataLoaded,  listShowLoading, showGlobalNotification, handleButtonClick, NEXT_ACTION } = props;
-    const { section, selectedRecordId  } = props;
+    const { form, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, handleButtonClick, NEXT_ACTION } = props;
+    const { section, selectedRecordId } = props;
 
     const extraParams = [
         {
@@ -57,9 +57,7 @@ export const ComingSoonMasterBase = (props) => {
                             <h2>{section?.title}</h2>
                         </Col>
                     </Row>
-                    <Space size="middle" direction="vertical" className={styles.accordianContainer}>
-                        <Card>Coming Soon</Card>
-                    </Space>
+                    <Card>Coming Soon</Card>
                 </Col>
             </Row>
             <Row>

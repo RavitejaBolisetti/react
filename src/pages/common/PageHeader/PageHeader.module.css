@@ -3,10 +3,11 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-.buttonContainer :global .ant-btn-default.ant-btn-dangerous:not(:disabled):hover {
+
+/* .buttonContainer :global .ant-btn-default.ant-btn-dangerous:not(:disabled):hover {
     background-color: #ff3e5b;
     color: #ffffff !important;
-}
+} */
 
 .pageHeader :global .ant-btn {
     height: 34px;
@@ -58,7 +59,7 @@
     margin-bottom: 20px;
 }
 
-.pageHeader .buttonContainer {
+/* .pageHeader .buttonContainer {
     text-align: right;
 }
 
@@ -69,7 +70,7 @@
 .pageHeader .buttonContainer .buttonIcon {
     margin-right: 6px;
     padding-top: 2px;
-}
+} */
 
 /* Modal Content */
 
@@ -129,7 +130,7 @@
         /* width: 68vw; */
     }
 
-    .pageHeader .buttonContainer {
+    /* .pageHeader .buttonContainer {
         margin-top: 6px;
     }
 
@@ -149,5 +150,5 @@
 
     .buttonContainer button {
         margin-left: 0px;
-    }
+    } */
 }

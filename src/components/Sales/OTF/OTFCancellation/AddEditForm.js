@@ -34,6 +34,7 @@ const AddEditFormMain = (props) => {
     const [reasonTypeChange, setReasonTypeChange] = useState('');
     const [dealerList, setDealerList] = useState([]);
     const [fileList, setFileList] = useState([]);
+    const [singleDisabled, setSingleDisabled] = useState(false);
 
     const onDrop = (e) => {};
     const onDownload = (file) => {
@@ -69,6 +70,10 @@ const AddEditFormMain = (props) => {
         setUploadedFile,
         uploadedFileName,
         setUploadedFileName,
+        single: true,
+        singleDisabled,
+        setSingleDisabled,
+        isReplaceEnabled: false,
     };
 
     // useEffect(() => {
@@ -97,15 +102,20 @@ const AddEditFormMain = (props) => {
     };
 
     useEffect(() => {
-        if (!(searchDealerValue?.length > 2)) {
-            setDealerList([]);
+        if ((searchDealerValue?.length > 2)) {
+            if(dealerDataList?.length == 0){
+                setDealerList([{
+                    value: '',
+                    label: "No Dealer Found",
+                    disabled: true // disable this option
+                }]);
+            }else
+                setDealerList(highlightFinalLocatonList(dealerDataList) || []);
         } else {
-            setDealerList(highlightFinalLocatonList(dealerDataList) || []);
+            setDealerList([]);
         }
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dealerDataList, searchDealerValue]);
-
     const highlightFinalLocatonList = useMemo(
         () => (data) => {
             if (data?.length < 1) return [];
@@ -173,8 +183,6 @@ const AddEditFormMain = (props) => {
         placeholder: preparePlaceholderSelect('Parent'),
     };
 
-    console.log('reasonTypeChange===>', reasonTypeChange);
-
     const isLoading = false;
     return (
         <>
@@ -225,7 +233,7 @@ const AddEditFormMain = (props) => {
                             <Row>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.inputAutFillWrapper}>
                                     <Form.Item name="dealerName" label="Find Dealer Name" rules={[validateRequiredSelectField('Dealer Name')]}>
-                                        <AutoComplete label="Find Dealer Name" options={dealerList} backfill={false} onSelect={handleSelect} onSearch={onSearchDealer} allowSearch notFoundContent="No Dealer found">
+                                        <AutoComplete label="Find Dealer Name" options={dealerList} backfill={false} onSelect={handleSelect} onSearch={onSearchDealer} allowSearch >
                                             <Search allowClear placeholder={preparePlaceholderAutoComplete(' / Search Dealer Name')} />
                                         </AutoComplete>
                                     </Form.Item>
