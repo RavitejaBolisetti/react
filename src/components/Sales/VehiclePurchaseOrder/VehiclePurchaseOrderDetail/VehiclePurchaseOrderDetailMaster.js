@@ -80,7 +80,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const VehiclePurchaseOrderDetailMasterBase = (props) => {
-    const { typeData, fetchProductList, productHierarchyList, fetchDealerParentsLovList, viewVehiclePODetails, fetchDealerLocation, selectedRecord, setSelectedRecord,setIsFormVisible,showDataLoading, } = props;
+    const { typeData, fetchProductList, productHierarchyList, fetchDealerParentsLovList, viewVehiclePODetails, fetchDealerLocation, selectedRecord, setSelectedRecord, setIsFormVisible, showDataLoading } = props;
     const { userId, formActionType, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, saveData, isLoading } = props;
     const { form, selectedRecordId, salesConsultantLov, NEXT_ACTION, handleButtonClick, fetchListView, extraParamsAfterSave } = props;
     const [activeKey, setactiveKey] = useState([1]);

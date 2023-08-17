@@ -68,7 +68,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 export const VehiclePurchaseOrderMasterBase = (props) => {
-    const { fetchList, saveData, listShowLoading, userId, data, vehicleDetailData,totalRecords, } = props;
+    const { fetchList, saveData, listShowLoading, userId, data, vehicleDetailData, totalRecords } = props;
     const { typeData, moduleTitle, showGlobalNotification } = props;
     const { filterString, setFilterString, vehicleDetailStatusList, vpoTypeList, resetData } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
@@ -130,7 +130,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         showGlobalNotification({ message });
         setShowDataLoading(false);
     };
-    
+
     const extraParams = useMemo(() => {
         return [
             {
@@ -219,7 +219,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString,page]);
+    }, [filterString, page]);
 
     useEffect(() => {
         return () => {
@@ -360,19 +360,18 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         showAddButton: false,
         setPage,
     };
-     const removeFilter = (key) => {
-         if (key === 'searchParam') {
+    const removeFilter = (key) => {
+        if (key === 'searchParam') {
             const { searchType, searchParam, ...rest } = filterString;
             setFilterString({ ...rest });
         } else {
             const { [key]: names, ...rest } = filterString;
             setFilterString({ ...rest });
-            
         }
     };
 
     const handleResetFilter = (e) => {
-         if (filterString) {
+        if (filterString) {
             setShowDataLoading(true);
         }
         setFilterString();
@@ -514,7 +513,6 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         setIsCancelVisible,
         extraParamsAfterSave: extraParams,
         showDataLoading,
-        
     };
     const cancelProps = {
         ...props,
