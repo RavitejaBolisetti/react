@@ -41,7 +41,9 @@ const ViewDetailMain = (props) => {
                             </Collapse>
                         ))
                     ) : (
-                        <Card>No Scheme and Offer Details Available</Card>
+                        <Card>
+                            <div className={styles.marB20}>No Scheme and Offer Details Available</div>
+                        </Card>
                     )}
                 </Col>
             </Row>

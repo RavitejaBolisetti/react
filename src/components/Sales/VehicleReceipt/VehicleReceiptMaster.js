@@ -68,7 +68,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const VehicleReceiptMasterBase = (props) => {
-    const { fetchVehicleReceiptList, saveData, listShowLoading, userId, data, totalRecords, resetData } = props;
+    const { fetchVehicleReceiptList, saveData, listShowLoading, userId, data, totalRecords, resetData, showGlobalNotification } = props;
     const { typeData, grnTypeData, moduleTitle } = props;
     const { filterString, setFilterString, vehicleReceiptStatusList } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);

@@ -4,13 +4,14 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState, useEffect } from 'react';
-import { Collapse, Card, Typography, Button, Row, Empty, Divider } from 'antd';
+import { Collapse, Card, Typography, Button, Row, Empty, Divider, Space } from 'antd';
 
 import { PlusOutlined } from '@ant-design/icons';
 import { FiEdit } from 'react-icons/fi';
 
 import { ViewDetail } from './ViewDetail';
 import { FormContainer } from './FormContainer';
+import { UploadBoxIcon } from 'Icons';
 
 import dayjs from 'dayjs';
 import { LANGUAGE_EN } from 'language/en';
@@ -182,13 +183,25 @@ const AddEditFormMain = (props) => {
                         ))
                     ) : !showForm && !editedMode ? (
                         <>
-                            <Empty
+                            {/* <Empty
                                 image={Empty.PRESENTED_IMAGE_SIMPLE}
                                 imageStyle={{
                                     height: 60,
                                 }}
                                 description={<span>{noDataTitle}</span>}
-                            ></Empty>
+                            ></Empty> */}
+                            <Space direction="vertical" className={styles.verticallyCentered}>
+                                <UploadBoxIcon />
+                                <div className={styles.marB20}>
+                                    {!familyDetailList?.length > 0 ? (
+                                        <p className={styles.textCenter}>{noDataTitle}</p>
+                                    ) : (
+                                        <p className={styles.textCenter}>
+                                            Please add new family details using <br /> <strong>“Add”</strong> button at top
+                                        </p>
+                                    )}
+                                </div>
+                            </Space>
                         </>
                     ) : null}
                 </Card>
