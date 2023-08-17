@@ -80,7 +80,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const VehiclePurchaseOrderDetailMasterBase = (props) => {
-    const { typeData, fetchProductList, productHierarchyList, fetchDealerParentsLovList, viewVehiclePODetails, fetchDealerLocation, selectedRecord, setSelectedRecord } = props;
+    const { typeData, fetchProductList, productHierarchyList, fetchDealerParentsLovList, viewVehiclePODetails, fetchDealerLocation, selectedRecord, setSelectedRecord,setIsFormVisible, } = props;
     const { userId, formActionType, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, saveData, isLoading } = props;
     const { form, selectedRecordId, salesConsultantLov, NEXT_ACTION, handleButtonClick, fetchListView, extraParamsAfterSave } = props;
     const [activeKey, setactiveKey] = useState([1]);
@@ -172,6 +172,7 @@ const VehiclePurchaseOrderDetailMasterBase = (props) => {
 
             fetchListView({ setIsLoading: listShowLoading, userId, extraParams: extraParamsAfterSave, onErrorAction });
             handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
+            setIsFormVisible(false);
         };
 
         const onError = (message) => {

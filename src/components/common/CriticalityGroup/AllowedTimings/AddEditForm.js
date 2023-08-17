@@ -19,10 +19,10 @@ const AddEditForm = (props) => {
                     <div className={styles.allowedTiming}>
                         <Space size="large">
                             <Form.Item name={'timeSlotFrom'} rules={[validateRequiredInputField('start time')]}>
-                                <TimePicker placeholder={'Start time*'} use12Hours size="large" format="h:mm A" />
+                                <TimePicker placeholder={'Start time*'} use12Hours format="h:mm A" />
                             </Form.Item>
                             <Form.Item name={'timeSlotTo'} rules={[validateRequiredInputField('end time')]}>
-                                <TimePicker placeholder={'End time*'} use12Hours size="large" format="h:mm A" />
+                                <TimePicker placeholder={'End time*'} use12Hours format="h:mm A" />
                             </Form.Item>
                             <Button disabled={allowedTimingSave} type="link" htmlType="submit" className={styles.marB20}>
                                 Save

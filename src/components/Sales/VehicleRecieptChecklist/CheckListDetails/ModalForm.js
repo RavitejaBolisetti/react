@@ -14,7 +14,7 @@ import { ModalButtons } from 'components/common/Button';
 
 import { MakeCheckResult, setCheckresultValue, BindFormItems } from './CheckListUtils';
 
-export const AdvanceForm = (props) => {
+export const ChecklistModalForms = (props) => {
     const { AdvanceformData, setAdvanceformData } = props;
     const { onCloseAction, handleFormValueChange, checkListDataModified, setcheckListDataModified, aggregateForm } = props;
     const { setAdvanceSearchVisible } = props;
@@ -83,4 +83,4 @@ export const AdvanceForm = (props) => {
     );
 };
 
-export const AggregateAddEditForm = withModal(AdvanceForm, {});
+export const ModalForm = withModal(ChecklistModalForms, {});

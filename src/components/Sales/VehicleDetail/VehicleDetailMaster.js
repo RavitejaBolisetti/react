@@ -69,7 +69,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const VehicleDetailMasterBase = (props) => {
-    const { fetchList, saveData, listShowLoading, userId, data, totalRecords, vehicleDetailData } = props;
+    const { showGlobalNotification, fetchList, saveData, listShowLoading, userId, data, totalRecords, vehicleDetailData } = props;
     const { typeData, moduleTitle } = props;
     const { filterString, setFilterString, vehicleDetailStatusList } = props;
 

@@ -35,6 +35,7 @@ const AddEditFormMain = (props) => {
     const [reasonTypeChange, setReasonTypeChange] = useState('');
     const [dealerList, setDealerList] = useState([]);
     const [fileList, setFileList] = useState([]);
+    const [singleDisabled, setSingleDisabled] = useState(false);
 
     const onDrop = (e) => {};
     const onDownload = (file) => {
@@ -70,6 +71,10 @@ const AddEditFormMain = (props) => {
         setUploadedFile,
         uploadedFileName,
         setUploadedFileName,
+        single: true,
+        singleDisabled,
+        setSingleDisabled,
+        isReplaceEnabled: false,
     };
 
     // useEffect(() => {
@@ -173,8 +178,6 @@ const AddEditFormMain = (props) => {
         //defaultValue: treeCodeId,
         placeholder: preparePlaceholderSelect('Parent'),
     };
-
-    console.log('reasonTypeChange===>', reasonTypeChange);
 
     const isLoading = false;
     return (

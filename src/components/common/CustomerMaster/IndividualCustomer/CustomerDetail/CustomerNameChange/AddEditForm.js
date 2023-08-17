@@ -149,118 +149,122 @@ const AddEditFormMain = (props) => {
     );
 
     return (
-        <div className={styles.cardInsideBox}>
-            <Row gutter={20}>
-                <Col xs={24} sm={24} md={12} lg={12} xl={12} className={styles.verticallyCentered}>
-                    <Text style={{ fontSize: '16px' }} strong>
-                        Customer Name
-                    </Text>
-                </Col>
-                {!addMode && (
-                    <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                        <Button type="link" onClick={onViewHistoryChange} icon={<BiTimeFive />} className={styles.verticallyCenteredAndAlignRight}>
-                            View History
-                        </Button>
-                    </Col>
-                )}
-            </Row>
+        <>
             <Divider />
-            {editMode ? (
-                <Collapse
-                    expandIcon={expandIcon}
-                    activeKey={activeKey}
-                    onChange={(value) => {
-                        setActiveKey(value);
-                    }}
-                    expandIconPosition="end"
-                >
-                    <Panel
-                        header={
+            <div className={styles.cardInsideBox}>
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={12} lg={12} xl={12} className={styles.verticallyCentered}>
+                        <Text style={{ fontSize: '16px' }} strong>
+                            Customer Name
+                        </Text>
+                    </Col>
+                    {!addMode && (
+                        <Col xs={24} sm={24} md={12} lg={12} xl={12} className={styles.buttonsGroupRight}>
+                            <Button type="link" onClick={onViewHistoryChange} icon={<BiTimeFive />} className={styles.verticallyCentered}>
+                                View History
+                            </Button>
+                        </Col>
+                    )}
+                </Row>
+                <Divider className={styles.marT20} />
+                {editMode ? (
+                    <Collapse
+                        expandIcon={expandIcon}
+                        activeKey={activeKey}
+                        onChange={(value) => {
+                            setActiveKey(value);
+                        }}
+                        expandIconPosition="end"
+                    >
+                        <Panel
+                            header={
+                                <>
+                                    <Row type="flex" justify="space-between" align="middle" size="large">
+                                        <Row type="flex" justify="space-around" align="middle">
+                                            <div>
+                                                <Typography>
+                                                    {customerNameList?.titleCode} {customerNameList?.firstName} {customerNameList?.middleName} {customerNameList?.lastName}
+                                                </Typography>
+                                                {editedMode || formData?.customerNameChangeRequest?.status === STATUS?.PENDING?.title ? <Text type="secondary">Current Name</Text> : null}
+                                            </div>
+                                            {editMode && (
+                                                <Button
+                                                    type="link"
+                                                    icon={<FiEdit />}
+                                                    className={styles.verticallyCentered}
+                                                    onClick={() => {
+                                                        onEdit();
+                                                    }}
+                                                    disabled={disabled}
+                                                    style={{ color: activeKey ? 'red' : 'grey' }}
+                                                >
+                                                    Edit
+                                                </Button>
+                                            )}
+                                        </Row>
+                                        {formData?.customerNameChangeRequest?.status === STATUS?.PENDING?.title ? (
+                                            <Tag style={{ textAlign: 'right' }} color="warning">
+                                                Pending for Approval
+                                            </Tag>
+                                        ) : null}
+                                    </Row>
+                                </>
+                            }
+                            key={1}
+                        >
+                            <Divider />
+                            {AddEditFormItem(formType)}
+                            {editMode && (
+                                <>
+                                    <Row gutter={20}>
+                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                            <UploadUtil {...uploadProps} />
+                                        </Col>
+                                    </Row>
+                                    {formData?.supportingDocuments?.map((item) => (
+                                        <Row gutter={20}>
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                <Card className={styles.viewDocumentStrip} key={item?.documentId} title={item?.documentName} extra={<FiDownload />} onClick={downloadFileFromButton}></Card>
+                                            </Col>
+                                        </Row>
+                                    ))}
+                                </>
+                            )}
+                            <Row gutter={20}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={`${styles.buttonsGroup} ${styles.marB20}`}>
+                                    <Button type="primary" form="myNameForm" onClick={onHandleSave}>
+                                        Save
+                                    </Button>
+                                    <Button onClick={() => handleCollapse(formType)} danger>
+                                        Cancel
+                                    </Button>
+                                </Col>
+                            </Row>
+                        </Panel>
+                    </Collapse>
+                ) : (
+                    AddEditFormItem()
+                )}
+                {formData?.customerNameChangeRequest?.status === STATUS?.PENDING?.title && (
+                    <Card
+                        title={
                             <>
                                 <Row type="flex" justify="space-between" align="middle" size="large">
                                     <Row type="flex" justify="space-around" align="middle">
                                         <div>
                                             <Typography>
-                                                {customerNameList?.titleCode} {customerNameList?.firstName} {customerNameList?.middleName} {customerNameList?.lastName}
+                                                {formData?.titleCode} {formData?.firstName} {formData?.middleName} {formData?.lastName}
                                             </Typography>
-                                            {editedMode || formData?.customerNameChangeRequest?.status === STATUS?.PENDING?.title ? <Text type="secondary">Current Name</Text> : null}
+                                            <Text type="secondary">Previous Name</Text>
                                         </div>
-                                        {editMode && (
-                                            <Button
-                                                type="link"
-                                                icon={<FiEdit />}
-                                                className={styles.verticallyCentered}
-                                                onClick={() => {
-                                                    onEdit();
-                                                }}
-                                                disabled={disabled}
-                                                style={{ color: activeKey ? 'red' : 'grey' }}
-                                            >
-                                                Edit
-                                            </Button>
-                                        )}
                                     </Row>
-                                    {formData?.customerNameChangeRequest?.status === STATUS?.PENDING?.title ? (
-                                        <Tag style={{ textAlign: 'right' }} color="warning">
-                                            Pending for Approval
-                                        </Tag>
-                                    ) : null}
                                 </Row>
                             </>
                         }
-                        key={1}
-                    >
-                        {AddEditFormItem(formType)}
-                        {editMode && (
-                            <>
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <UploadUtil {...uploadProps} />
-                                    </Col>
-                                </Row>
-                                {formData?.supportingDocuments?.map((item) => (
-                                    <Row gutter={20}>
-                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                            <Card className={styles.viewDocumentStrip} key={item?.documentId} title={item?.documentName} extra={<FiDownload />} onClick={downloadFileFromButton}></Card>
-                                        </Col>
-                                    </Row>
-                                ))}
-                            </>
-                        )}
-                        <Row gutter={20}>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonsGroup}>
-                                <Button type="primary" form="myNameForm" onClick={onHandleSave}>
-                                    Save
-                                </Button>
-                                <Button onClick={() => handleCollapse(formType)} danger>
-                                    Cancel
-                                </Button>
-                            </Col>
-                        </Row>
-                    </Panel>
-                </Collapse>
-            ) : (
-                AddEditFormItem()
-            )}
-            {formData?.customerNameChangeRequest?.status === STATUS?.PENDING?.title && (
-                <Card
-                    title={
-                        <>
-                            <Row type="flex" justify="space-between" align="middle" size="large">
-                                <Row type="flex" justify="space-around" align="middle">
-                                    <div>
-                                        <Typography>
-                                            {formData?.titleCode} {formData?.firstName} {formData?.middleName} {formData?.lastName}
-                                        </Typography>
-                                        <Text type="secondary">Previous Name</Text>
-                                    </div>
-                                </Row>
-                            </Row>
-                        </>
-                    }
-                />
-            )}
-        </div>
+                    />
+                )}
+            </div>
+        </>
     );
 };
 
