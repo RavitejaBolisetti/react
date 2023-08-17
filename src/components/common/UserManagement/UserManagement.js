@@ -342,11 +342,11 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
             sorter: false,
             render: (text, record, index) => {
                 return (
-                    <Space>
-                        <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={() => handleUpdate(record)}>
+                    <Space size="middle">
+                        <Button data-testid="edit" type="link" aria-label="fa-edit" onClick={() => handleUpdate(record)}>
                             <FiEdit />
                         </Button>
-                        <Button className={styles.tableIcons} aria-label="ai-view" onClick={() => handleView(record)}>
+                        <Button type="link" aria-label="ai-view" onClick={() => handleView(record)}>
                             <FaRegEye />
                         </Button>
                     </Space>
@@ -591,28 +591,28 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={4} lg={4} xl={4}>
                                                         <div className={styles.contentHeading}>Employee Code</div>
-                                                        <div className={`${styles.contentData} ${styles.txtEllipsis}`}>{DealerData?.employeeCode}</div>
+                                                        <div className={`${styles.contentData} ${styles.textEllipsis}`}>{DealerData?.employeeCode}</div>
                                                     </Col>
 
                                                     <Col xs={24} sm={24} md={4} lg={4} xl={4}>
                                                         <div className={styles.contentHeading}>Dealer Name</div>
-                                                        <div className={`${styles.contentData} ${styles.txtEllipsis}`}>{DealerSelected}</div>
+                                                        <div className={`${styles.contentData} ${styles.textEllipsis}`}>{DealerSelected}</div>
                                                     </Col>
                                                     <Col xs={24} sm={24} md={4} lg={4} xl={4}>
                                                         <div className={styles.contentHeading}>User Name</div>
-                                                        <div className={`${styles.contentData} ${styles.txtEllipsis}`}>{DealerData?.employeeName}</div>
+                                                        <div className={`${styles.contentData} ${styles.textEllipsis}`}>{DealerData?.employeeName}</div>
                                                     </Col>
                                                     <Col xs={24} sm={24} md={4} lg={4} xl={4}>
                                                         <div className={styles.contentHeading}>Designation</div>
-                                                        <div className={`${styles.contentData} ${styles.txtEllipsis}`}>{DealerData?.employeeDesignation}</div>
+                                                        <div className={`${styles.contentData} ${styles.textEllipsis}`}>{DealerData?.employeeDesignation}</div>
                                                     </Col>
                                                     <Col xs={24} sm={24} md={4} lg={3} xl={3}>
                                                         <div className={styles.contentHeading}>Mobile Number</div>
-                                                        <div className={`${styles.contentData} ${styles.txtEllipsis}`}>{DealerData?.employeeMobileNumber}</div>
+                                                        <div className={`${styles.contentData} ${styles.textEllipsis}`}>{DealerData?.employeeMobileNumber}</div>
                                                     </Col>
                                                     <Col xs={24} sm={24} md={4} lg={5} xl={5}>
                                                         <div className={styles.contentHeading}>Email ID</div>
-                                                        <div className={`${styles.contentData} ${styles.txtEllipsis}`}>{DealerData?.employeeEmail}</div>
+                                                        <div className={`${styles.contentData} ${styles.textEllipsis}`}>{DealerData?.employeeEmail}</div>
                                                     </Col>
                                                 </Row>
                                             </Col>

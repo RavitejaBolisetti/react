@@ -15,8 +15,6 @@ import { convertToUpperCase } from 'utils/convertToUpperCase';
 import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
 // import { UploadUtil } from 'utils/Upload';
 
-import styles from 'components/common/Common.module.css';
-
 const { Panel } = Collapse;
 const { Option } = Select;
 
@@ -172,7 +170,7 @@ const AddEditFormMain = (props) => {
                             <Row gutter={20}>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                     <Form.Item label="Date of Birth" name="dateOfBirth">
-                                        <DatePicker format={dateFormat} disabledDate={disableFutureDate} disabled={isReadOnly} className={styles.datepicker} placeholder={prepareDatePickerText(dateFormat)} />
+                                        <DatePicker format={dateFormat} disabledDate={disableFutureDate} disabled={isReadOnly} placeholder={prepareDatePickerText(dateFormat)} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -201,7 +199,7 @@ const AddEditFormMain = (props) => {
                             <Row gutter={20}>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                     <Form.Item label="Wedding Anniversary Date" name="weddingAnniversary">
-                                        <DatePicker format={dateFormat} disabledDate={disableFutureDate} className={styles.datepicker} disabled={isRead} placeholder={prepareDatePickerText(dateFormat)} />
+                                        <DatePicker format={dateFormat} disabledDate={disableFutureDate} disabled={isRead} placeholder={prepareDatePickerText(dateFormat)} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -230,17 +228,17 @@ const AddEditFormMain = (props) => {
                             <Row gutter={20}>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                     <Form.Item label="Driving License No" name="drivingLicenseNumber" initialValue={formData?.drivingLicenseNumber} rules={[validateDrivingLicenseNo('driving license no ')]}>
-                                        <Input maxLength={15} onInput={convertToUpperCase} className={styles.inputBox} placeholder={preparePlaceholderText('driving license no')} {...disabledProps} />
+                                        <Input maxLength={15} onInput={convertToUpperCase} placeholder={preparePlaceholderText('driving license no')} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                     <Form.Item label="Aadhar No." name="adharNumber" initialValue={formData?.adharNumber} rules={[validateAadhar('aadhar'), validateRequiredInputField('aadhar')]}>
-                                        <Input maxLength={12} className={styles.inputBox} placeholder={preparePlaceholderText('aadhar number')} {...disabledProps} />
+                                        <Input maxLength={12} placeholder={preparePlaceholderText('aadhar number')} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                     <Form.Item label="Voter ID" name="voterId" initialValue={formData?.voterId} rules={[validateVoterId('voter id')]}>
-                                        <Input maxLength={10} onInput={convertToUpperCase} className={styles.inputBox} placeholder={preparePlaceholderText('voter id')} {...disabledProps} />
+                                        <Input maxLength={10} onInput={convertToUpperCase} placeholder={preparePlaceholderText('voter id')} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
                             </Row>
@@ -278,59 +276,56 @@ const AddEditFormMain = (props) => {
                                         </Select>
                                     </Form.Item>
                                 </Col> */}
-                            </Row>
-                            <div className={styles.sectionborder}>
-                                <Row gutter={20}>
-                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="PAN" name="panNumber" initialValue={formData?.panNumber} rules={[validatePanField('pan'), validateRequiredInputField('pan')]}>
-                                            <Input maxLength={10} onInput={convertToUpperCase} className={styles.inputBox} placeholder={preparePlaceholderText('pan')} {...disabledProps} />
-                                        </Form.Item>
-                                    </Col>
+                                {/* </Row>
+                            <Row gutter={20}> */}
+                                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                    <Form.Item label="PAN" name="panNumber" initialValue={formData?.panNumber} rules={[validatePanField('pan'), validateRequiredInputField('pan')]}>
+                                        <Input maxLength={10} onInput={convertToUpperCase} placeholder={preparePlaceholderText('pan')} {...disabledProps} />
+                                    </Form.Item>
+                                </Col>
 
-                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="GSTIN" name="gstin" initialValue={formData?.gstin} rules={[validateGSTIN('gstin')]}>
-                                            <Input value={null} onInput={convertToUpperCase} className={styles.inputBox} placeholder={preparePlaceholderText('gstin')} {...disabledProps} />
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
-                            </div>
-                            <div className={styles.sectionborder}>
-                                <Row gutter={20}>
-                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Usage/Application Categorization" initialValue={formData?.applicationCategorization} name="applicationCategorization">
-                                            <Select placeholder={preparePlaceholderSelect('usage/application category')} {...disabledProps}>
-                                                {appCategoryData?.APP_CAT?.map((item) => (
-                                                    <Option key={'ct' + item.key} value={item.key}>
-                                                        {item.value}
-                                                    </Option>
-                                                ))}
-                                            </Select>
-                                        </Form.Item>
-                                    </Col>
-                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Usage/Application Sub-Category" initialValue={formData?.applicationSubCategory} name="applicationSubCategory">
-                                            <Select placeholder={preparePlaceholderSelect('annual income')} {...disabledProps}>
-                                                {appCategoryData?.APP_SUB_CAT?.map((item) => (
-                                                    <Option key={'ct' + item.key} value={item.key}>
-                                                        {item.value}
-                                                    </Option>
-                                                ))}
-                                            </Select>
-                                        </Form.Item>
-                                    </Col>
-                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Customer Category" initialValue={formData?.customerCategory} name="customerCategory">
-                                            <Select placeholder={preparePlaceholderSelect('annual income')} {...disabledProps} onChange={onCustomerCategoryChange}>
-                                                {appCategoryData?.CUS_CAT?.map((item) => (
-                                                    <Option key={'ct' + item.key} value={item.key}>
-                                                        {item.value}
-                                                    </Option>
-                                                ))}
-                                            </Select>
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
-                            </div>
+                                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                    <Form.Item label="GSTIN" name="gstin" initialValue={formData?.gstin} rules={[validateGSTIN('gstin')]}>
+                                        <Input value={null} onInput={convertToUpperCase} placeholder={preparePlaceholderText('gstin')} {...disabledProps} />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                            <Divider />
+                            <Row gutter={20}>
+                                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                    <Form.Item label="Usage/Application Categorization" initialValue={formData?.applicationCategorization} name="applicationCategorization">
+                                        <Select placeholder={preparePlaceholderSelect('usage/application category')} {...disabledProps}>
+                                            {appCategoryData?.APP_CAT?.map((item) => (
+                                                <Option key={'ct' + item.key} value={item.key}>
+                                                    {item.value}
+                                                </Option>
+                                            ))}
+                                        </Select>
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                    <Form.Item label="Usage/Application Sub-Category" initialValue={formData?.applicationSubCategory} name="applicationSubCategory">
+                                        <Select placeholder={preparePlaceholderSelect('annual income')} {...disabledProps}>
+                                            {appCategoryData?.APP_SUB_CAT?.map((item) => (
+                                                <Option key={'ct' + item.key} value={item.key}>
+                                                    {item.value}
+                                                </Option>
+                                            ))}
+                                        </Select>
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                    <Form.Item label="Customer Category" initialValue={formData?.customerCategory} name="customerCategory">
+                                        <Select placeholder={preparePlaceholderSelect('annual income')} {...disabledProps} onChange={onCustomerCategoryChange}>
+                                            {appCategoryData?.CUS_CAT?.map((item) => (
+                                                <Option key={'ct' + item.key} value={item.key}>
+                                                    {item.value}
+                                                </Option>
+                                            ))}
+                                        </Select>
+                                    </Form.Item>
+                                </Col>
+                            </Row>
 
                             {customer === 'CUS_CAT_2' && (
                                 <>
@@ -338,24 +333,24 @@ const AddEditFormMain = (props) => {
                                     <Row gutter={20}>
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                             <Form.Item label="Business Details" initialValue={formData?.businessDetails} name="businessDetails">
-                                                <Input maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('business details')} {...disabledProps} />
+                                                <Input maxLength={15} placeholder={preparePlaceholderText('business details')} {...disabledProps} />
                                             </Form.Item>
                                         </Col>
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                             <Form.Item label="Vehicle Deployment Details" initialValue={formData?.vehicleDeploymentDetails} name="vehicleDeploymentDetails">
-                                                <Input maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('vehicle deployment details')} {...disabledProps} />
+                                                <Input maxLength={15} placeholder={preparePlaceholderText('vehicle deployment details')} {...disabledProps} />
                                             </Form.Item>
                                         </Col>
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                             <Form.Item label="Key Role Details" initialValue={formData?.keyRolesDetails} name="keyRolesDetails">
-                                                <Input maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('key role details')} {...disabledProps} />
+                                                <Input maxLength={15} placeholder={preparePlaceholderText('key role details')} {...disabledProps} />
                                             </Form.Item>
                                         </Col>
                                     </Row>
                                     <Row gutter={20}>
                                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                             <Form.Item label="Major Route Details" initialValue={formData?.majorRouteDetails} name="majorRouteDetails">
-                                                <Input maxLength={15} className={styles.inputBox} placeholder={preparePlaceholderText('major route details')} {...disabledProps} />
+                                                <Input maxLength={15} placeholder={preparePlaceholderText('major route details')} {...disabledProps} />
                                             </Form.Item>
                                         </Col>
                                     </Row>

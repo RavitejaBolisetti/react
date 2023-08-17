@@ -94,6 +94,7 @@ export const ROUTING_RSM_APPROVAL = ROUTING_SALES.concat('rsm-approval');
 export const ROUTING_VEHICLE_DETAILS = ROUTING_SALES.concat('vehicle-details');
 export const ROUTING_VEHICLE_PRICE_MASTER = ROUTING_SALES.concat('vehicle-price-master');
 export const ROUTING_VEHICLE_RECEIPT = ROUTING_SALES.concat('vehicle-receipt');
+export const ROUTING_RECEIPTS = ROUTING_SALES.concat('receipts');
 export const ROUTING_OTF_SO_MAPPING_CONTROL_MASTER = ROUTING_SALES.concat('otf-so-mapping-control-master');
 
 export const ROUTING_FINANCIAL_ACCOUNTING_TAX_CHARGES = ROUTING_FINANCIAL_ACCOUNTING.concat('tax-charges');

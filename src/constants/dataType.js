@@ -14,4 +14,9 @@ export const DATA_TYPE = {
         key: 'date',
         title: 'Date',
     },
+    DAYJS: {
+        id: 3,
+        key: 'dayjs',
+        title: 'Dayjs',
+    },
 };
