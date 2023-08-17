@@ -22,7 +22,7 @@ const ViewDetailBase = ({ formData, styles, parameterType }) => {
                     <Descriptions.Item label="Party Name">{formData?.partyName}</Descriptions.Item>
                     <Descriptions.Item label="Contact Person Name">{formData?.contactPersonName}</Descriptions.Item>
                     <Descriptions.Item label="Designation">{formData?.designation}</Descriptions.Item>
-                    <Descriptions.Item label="Mobile Number">{formData?.mobileNumber}</Descriptions.Item>
+                    {/* <Descriptions.Item label="Mobile Number">{formData?.mobileNumber}</Descriptions.Item> */}
                     <Descriptions.Item label="Address">{formData?.address}</Descriptions.Item>
                     <Descriptions.Item label="Pin Code">{formData?.pinCode}</Descriptions.Item>
                     <Descriptions.Item label="City">{formData?.city}</Descriptions.Item>
