@@ -8,7 +8,7 @@ import { Descriptions } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { getCodeValue } from 'utils/getCodeValue';
 import { DATA_TYPE } from 'constants/dataType';
-import { PAYMENT_MODE } from 'constants/modules/receiptDetailsPaymentMode';
+import { PAYMENT_MODE } from 'components/Sales/Receipts/utils/receiptDetailsPaymentMode';
 
 import PaymentFormContainer from './PaymentDetails/PaymentFormContainer';
 

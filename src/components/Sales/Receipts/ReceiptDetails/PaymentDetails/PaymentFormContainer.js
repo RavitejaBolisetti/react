@@ -10,7 +10,7 @@ import { validateRequiredSelectField } from 'utils/validation';
 
 import styles from 'components/common/Common.module.css';
 
-import { PAYMENT_MODE } from 'constants/modules/receiptDetailsPaymentMode';
+import { PAYMENT_MODE } from 'components/Sales/Receipts/utils/receiptDetailsPaymentMode';
 import { CashForm } from './CashForm';
 import { ChequeForm } from './ChequeForm';
 import { CreditForm } from './CreditForm';
