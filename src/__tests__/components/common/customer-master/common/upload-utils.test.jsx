@@ -1,15 +1,20 @@
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
-import { fireEvent, screen, act, logRoles } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 import UploadUtils from 'components/common/CustomerMaster/Common/UploadUtils';
+import createMockStore from '__mocks__/store';
+import { Provider } from 'react-redux';
 
-describe('Customer Change History component', () => {
+describe('Upload Utils Component', () => {
 
-    it('should render the customer change history component', () => {
-        customRender(<UploadUtils />);
+    it('should render the upload utils component', () => {
+        const formData={
+            docId: 'test106'
+        }
+        customRender(<UploadUtils uploadedFile={true} formData={formData}/>);
     });
 
-    it('test1', () => {
+    it('replace image button should work', () => {
         const formData={
             docId: 'test106'
         }
@@ -20,21 +25,54 @@ describe('Customer Change History component', () => {
         fireEvent.click(replaceImageBtn);
     });
 
-    it('test2', () => {
-        const formData={
-            docId: 'test106'
+    it('uploading the image should work correctly with id', async () => {
+
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+        });
+
+        const formActionType={
+            viewMode: true
         }
-        customRender(<UploadUtils uploadedFile={true} formData={formData}/>);
+
+        const file = new File(['(⌐□_□)'], 'kai.png', { type: 'image/png' });
+        
+        customRender(
+            <Provider store={mockStore}>
+                <UploadUtils handleUpload={jest.fn()} isReplacing={false} isAdding={true} base64Img={false} isLoading={false} formActionType={formActionType} />
+            </Provider>
+        );
+
+        const uploadFile = screen.getByRole('button', { name: 'Upload File' });
+
+        fireEvent.drop(uploadFile, {
+            dataTransfer: { files: [file] },
+        });
+
+        const cancelBtn= screen.getByRole('img', { name: '' });
+        fireEvent.click(cancelBtn);
+
+        const cancelBtn1= screen.getByRole('img', { name: 'eye' });
+        fireEvent.click(cancelBtn1);
+
     });
 
-    // it('test3', () => {
-    //     const formActionType={
-    //         viewMode: true
-    //     }
-    //     const file = new File(['hello'], 'hello.png', { type: 'image/png' });
-    //     customRender(<UploadUtils isReplacing={false} isAdding={true} base64Img={false} isLoading={false} formActionType={formActionType} />);
-    //     const uploadFile=screen.getByRole('button', { name: 'Upload your contact picture (File type should be png, jpg or pdf and max file size to be 5Mb) Upload File' });
-    //     fireEvent.change(uploadFile, { target: { files: [file] } });
-    // });
+    it('uploading the image should not work without id', async () => {
+
+        const formActionType={
+            viewMode: true
+        }
+
+        const file = new File(['(⌐□_□)'], 'kai.png', { type: 'image/png' });
+        
+        customRender( <UploadUtils handleUpload={jest.fn()} isReplacing={false} isAdding={true} base64Img={false} isLoading={false} formActionType={formActionType} /> );
+
+        const uploadFile = screen.getByRole('button', { name: 'Upload File' });
+
+        fireEvent.drop(uploadFile, {
+            dataTransfer: { files: [file] },
+        });
+
+    });
 
 });
