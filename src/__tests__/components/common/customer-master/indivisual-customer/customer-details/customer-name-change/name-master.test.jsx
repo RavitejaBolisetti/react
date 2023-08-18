@@ -20,7 +20,7 @@ describe('Corporate customer addedit Details render', () => {
             data: {
                 CustomerMaster: {
                     CustomerDetailsIndividual: { isLoaded: true },
-                    ViewDocument: { isLoaded: true },
+                    ViewDocument: { isLoaded: true, data: [{id: 106}] },
                 },
                 ConfigurableParameterEditing: { filteredListData: [{ id: '1', value: 'kai' }] },
                 SupportingDocument: { isLoaded: true },
@@ -31,6 +31,7 @@ describe('Corporate customer addedit Details render', () => {
                 <FormWrapper {...props} selectedCustomerId={'kai'} setCustomerNameList={jest.fn()} />
             </Provider>
         );
+        
     });
     it('test2', async () => {
         const prop2 = { formActionType: { viewMode: false } };
