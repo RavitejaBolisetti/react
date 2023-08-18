@@ -4,8 +4,9 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { useEffect } from 'react';
-import { Button, Form, Row, Col, Input, Select, Divider } from 'antd';
+import { Button, Form, Row, Col, Select, Divider } from 'antd';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
+import { validateRequiredSelectField } from 'utils/validation';
 
 import styles from 'components/common/Common.module.css';
 
@@ -59,7 +60,7 @@ const PaymentFormContainer = (props) => {
             <Form form={paymentForm} autoComplete="off" onFinish={handleSavepaymenttForm} onFieldsChange={handleFormValueChange} layout="vertical">
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Payment Mode" name="paymentMode">
+                        <Form.Item label="Payment Mode" name="paymentMode" rules={[validateRequiredSelectField('Payment Mode')]}>
                             <Select allowClear maxLength={50} placeholder={preparePlaceholderSelect('Select')} onChange={handlePayment} showSearch>
                                 {paymentModeType?.map((item) => (
                                     <Option key={'dv' + item.key} value={item.key}>

@@ -187,22 +187,40 @@ const AddEditFormMain = (props) => {
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form.Item label="Contact Person Name" initialValue={formData?.contactPersonName} rules={[validateRequiredInputField('contact person name')]} name="contactPersonName">
+                                        <Form.Item
+                                            label="Contact Person Name"
+                                            initialValue={formData?.contactPersonName}
+                                            // rules={[validateRequiredInputField('contact person name')]}
+                                            name="contactPersonName"
+                                        >
                                             <Input {...disabledProps} placeholder={preparePlaceholderText('contact person name')} maxLength={50} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={16}>
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form.Item initialValue={formData?.designation} label="Designation" name="designation" rules={[validateRequiredInputField('designation')]}>
+                                        <Form.Item
+                                            initialValue={formData?.designation}
+                                            label="Designation"
+                                            name="designation"
+                                            // rules={[validateRequiredInputField('designation')]}
+                                        >
                                             <Input {...disabledProps} placeholder={preparePlaceholderText('designation')} maxLength={50} />
                                         </Form.Item>
                                     </Col>
-                                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form.Item label="Mobile Number" initialValue={formData?.mobileNumber} rules={[validateRequiredInputField('mobile number'), validateMobileNoField('mobile number')]} name="mobileNumber">
+                                    {/* <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                        <Form.Item
+                                            label="Mobile Number"
+                                            initialValue={formData?.mobileNumber}
+                                            rules={[
+                                                // validateRequiredInputField('mobile number'),
+                                                validateMobileNoField('mobile number'),
+                                            ]}
+                                            name="mobileNumber"
+                                        >
                                             <Input {...disabledProps} placeholder={preparePlaceholderText('mobile number')} maxLength={10} />
                                         </Form.Item>
-                                    </Col>
+                                    </Col> */}
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.subTitle}>
@@ -223,7 +241,7 @@ const AddEditFormMain = (props) => {
                                             label="Pin Code"
                                             name="pinCode"
                                             rules={[
-                                                // validateRequiredInputField('Pin Code'),
+                                                validateRequiredInputField('pincode'),
                                                 {
                                                     validator: searchValidatorPincode,
                                                 },
@@ -237,37 +255,73 @@ const AddEditFormMain = (props) => {
                                 </Row>
                                 <Row gutter={16}>
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form.Item label="City" initialValue={formData?.city} rules={[validateRequiredInputField('city')]} name="city">
+                                        <Form.Item
+                                            label="City"
+                                            initialValue={formData?.city}
+                                            //  rules={[validateRequiredInputField('city')]}
+                                            name="city"
+                                        >
                                             <Input disabled={true} placeholder={preparePlaceholderText('city')} maxLength={50} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form.Item initialValue={formData?.tehsil} label="Tehsil" name="tehsil" rules={[validateRequiredInputField('tehsil')]}>
+                                        <Form.Item
+                                            initialValue={formData?.tehsil}
+                                            label="Tehsil"
+                                            name="tehsil"
+                                            //  rules={[validateRequiredInputField('tehsil')]}
+                                        >
                                             <Input disabled={true} placeholder={preparePlaceholderText('tehsil')} maxLength={6} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={16}>
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form.Item label="District" initialValue={formData?.district} rules={[validateRequiredInputField('district')]} name="district">
+                                        <Form.Item
+                                            label="District"
+                                            initialValue={formData?.district}
+                                            // rules={[validateRequiredInputField('district')]}
+                                            name="district"
+                                        >
                                             <Input disabled={true} placeholder={preparePlaceholderText('district')} maxLength={50} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form.Item initialValue={formData?.state} label="State" name="state" rules={[validateRequiredInputField('state')]}>
+                                        <Form.Item
+                                            initialValue={formData?.state}
+                                            label="State"
+                                            name="state"
+                                            // rules={[validateRequiredInputField('state')]}
+                                        >
                                             <Input disabled={true} placeholder={preparePlaceholderText('state')} maxLength={50} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={16}>
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form.Item label="Mobile Number" initialValue={formData?.mobileNumber1} rules={[validateRequiredInputField('mobile number'), validateMobileNoField('mobile number')]} name="mobileNumber1">
+                                        <Form.Item
+                                            label="Mobile Number"
+                                            initialValue={formData?.mobileNumber1}
+                                            rules={[
+                                                // validateRequiredInputField('party mobile number'),
+                                                validateMobileNoField('mobile number'),
+                                            ]}
+                                            name="mobileNumber1"
+                                        >
                                             <Input {...disabledProps} placeholder={preparePlaceholderText('mobile number')} maxLength={10} />
                                         </Form.Item>
                                     </Col>
 
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form.Item label="Alternate Mobile Number" initialValue={formData?.alternateMobileNumber} rules={[validateRequiredInputField('alternate mobile number'), validateMobileNoField('alternate mobile number')]} name="alternateMobileNumber">
+                                        <Form.Item
+                                            label="Alternate Mobile Number"
+                                            initialValue={formData?.alternateMobileNumber}
+                                            rules={[
+                                                // validateRequiredInputField('alternate mobile number'),
+                                                validateMobileNoField('alternate mobile number'),
+                                            ]}
+                                            name="alternateMobileNumber"
+                                        >
                                             <Input {...disabledProps} placeholder={preparePlaceholderText('alternate mobile number')} maxLength={10} />
                                         </Form.Item>
                                     </Col>
@@ -279,36 +333,82 @@ const AddEditFormMain = (props) => {
                                 </Row>
                                 <Row gutter={16}>
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form.Item initialValue={formData?.gstInNumber} label="GSTIN number" name="gstInNumber" rules={[validateRequiredInputField('GSTIN number'), validateGSTIN('GSTIN number')]}>
+                                        <Form.Item
+                                            initialValue={formData?.gstInNumber}
+                                            label="GSTIN number"
+                                            name="gstInNumber"
+                                            rules={[
+                                                // validateRequiredInputField('GSTIN number'),
+                                                validateGSTIN('GSTIN number'),
+                                            ]}
+                                        >
                                             <Input {...disabledProps} placeholder={preparePlaceholderText('GSTIN number')} maxLength={15} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form.Item label="PAN" initialValue={formData?.panNumber} rules={[validateRequiredInputField('PAN'), validatePanField('PAN')]} name="panNumber">
+                                        <Form.Item
+                                            label="PAN"
+                                            initialValue={formData?.panNumber}
+                                            rules={[
+                                                // validateRequiredInputField('PAN'),
+                                                validatePanField('PAN'),
+                                            ]}
+                                            name="panNumber"
+                                        >
                                             <Input {...disabledProps} placeholder={preparePlaceholderText('PAN')} maxLength={10} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={16}>
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form.Item initialValue={formData?.partsDiscount} label="Parts Discount(%)" name="partsDiscount" rules={[validateRequiredInputField('part discount'), validationNumber('part discount'), valueBetween0to100('part discount')]}>
+                                        <Form.Item
+                                            initialValue={formData?.partsDiscount}
+                                            label="Parts Discount(%)"
+                                            name="partsDiscount"
+                                            rules={[
+                                                // validateRequiredInputField('part discount'),
+                                                validationNumber('part discount'),
+                                                valueBetween0to100('part discount'),
+                                            ]}
+                                        >
                                             <Input {...disabledProps} placeholder={preparePlaceholderText('part discount')} maxLength={3} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form.Item label="Credit Limit" initialValue={formData?.creditLimit} rules={[validateRequiredInputField('credit limit'), validateOnlyPositiveNumber('credit limit')]} name="creditLimit">
+                                        <Form.Item
+                                            label="Credit Limit"
+                                            initialValue={formData?.creditLimit}
+                                            rules={[
+                                                // validateRequiredInputField('credit limit'),
+                                                validateOnlyPositiveNumber('credit limit'),
+                                            ]}
+                                            name="creditLimit"
+                                        >
                                             <Input {...disabledProps} placeholder={preparePlaceholderText('credit limit')} maxLength={15} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={16}>
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form.Item label="Credit Days" initialValue={formData?.creditDays} rules={[validateRequiredInputField('credit days'), validationNumber('credit days')]} name="creditDays">
+                                        <Form.Item
+                                            label="Credit Days"
+                                            initialValue={formData?.creditDays}
+                                            rules={[
+                                                // validateRequiredInputField('credit days'),
+                                                validationNumber('credit days'),
+                                            ]}
+                                            name="creditDays"
+                                        >
                                             <Input {...disabledProps} placeholder={preparePlaceholderText('credit days')} maxLength={4} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form.Item label="Remarks" initialValue={formData?.remarks} rules={[validateRequiredInputField('remarks')]} name="remarks">
+                                        <Form.Item
+                                            label="Remarks"
+                                            initialValue={formData?.remarks}
+                                            // rules={[validateRequiredInputField('remarks')]}
+                                            name="remarks"
+                                        >
                                             <Input {...disabledProps} placeholder={preparePlaceholderText('remarks')} maxLength={50} />
                                         </Form.Item>
                                     </Col>

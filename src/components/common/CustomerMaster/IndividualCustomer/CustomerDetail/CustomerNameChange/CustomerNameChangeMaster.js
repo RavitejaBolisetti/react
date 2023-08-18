@@ -3,20 +3,33 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect, useState } from 'react';
+import React, { useMemo, useEffect, useState } from 'react';
+import { Typography, Divider, Collapse, Tag, Col, Row, Button } from 'antd';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { customerDetailsIndividualDataActions } from 'store/actions/data/customerMaster/customerDetailsIndividual';
-import { corporateDataActions } from 'store/actions/data/customerMaster/corporate';
-import { showGlobalNotification } from 'store/actions/notification';
-import { ViewDetail } from './ViewDetail';
-import { AddEditForm } from './AddEditForm';
-import { CustomerNameChangeHistory } from './CustomerNameChangeHistory';
+import { BiTimeFive } from 'react-icons/bi';
+import { FiEdit } from 'react-icons/fi';
 
-import styles from 'components/common/Common.module.css';
+import { nameChangeRequestDataActions } from 'store/actions/data/customerMaster/individual/nameChangeRequest/nameChangeRequest';
+import { customerDetailsIndividualDataActions } from 'store/actions/data/customerMaster/customerDetailsIndividual';
 import { documentViewDataActions } from 'store/actions/data/customerMaster/documentView';
 import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
+import { corporateDataActions } from 'store/actions/data/customerMaster/corporate';
+import { showGlobalNotification } from 'store/actions/notification';
+
+import { AddEditForm } from './AddEditForm';
+import { ViewDetail } from './ViewDetail';
+import { STATUS } from '../statusConstant';
+
+import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
+import { expandIcon } from 'utils/accordianExpandIcon';
+import { getCodeValue } from 'utils/getCodeValue';
+
+import styles from 'components/common/Common.module.css';
+
+const { Text } = Typography;
+const { Panel } = Collapse;
 
 const mapStateToProps = (state) => {
     const {
@@ -65,6 +78,9 @@ const mapDispatchToProps = (dispatch) => ({
             saveData: customerDetailsIndividualDataActions.saveData,
             resetData: customerDetailsIndividualDataActions.reset,
 
+            saveNameChangeData: nameChangeRequestDataActions.saveData,
+            listShowNameChangeLoading: nameChangeRequestDataActions.listShowLoading,
+
             showGlobalNotification,
         },
         dispatch
@@ -72,10 +88,21 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const CustomerNameChangeMasterBase = (props) => {
-    const { typeData, setCustomerNameList } = props;
-    const { formData, userId, showGlobalNotification, fetchList, listShowLoading, data, saveData, isLoading, form, handleFormValueChange } = props;
+    const { typeData, setCustomerNameList, status, setShowNameChangeHistory } = props;
+    const {
+        formActionType: { addMode, editMode },
+        formData,
+        userId,
+        showGlobalNotification,
+        fetchList,
+        listShowLoading,
+        data,
+        saveData,
+        isLoading,
+    } = props;
+
     const { selectedCustomerId } = props;
-    const { buttonData, setButtonData, formActionType, setFormActionType, handleButtonClick } = props;
+    const customerNameChangeRequest = formData?.customerNameChangeRequest;
     const { fetchViewDocument, viewListShowLoading, listSupportingDocumentShowLoading, isSupportingDocumentDataLoaded, supportingData, isViewDataLoaded, viewDocument } = props;
 
     const [emptyList, setEmptyList] = useState(true);
@@ -85,12 +112,41 @@ const CustomerNameChangeMasterBase = (props) => {
     const [uploadedFile, setUploadedFile] = useState();
     const [uploadImgDocId, setUploadImgDocId] = useState('');
     const [supportingDataView, setSupportingDataView] = useState();
-    const [isHistoryVisible, setIsHistoryVisible] = useState(false);
-    const [activeKey, setActiveKey] = useState(false);
+    const [activeKey, setActiveKey] = useState([]);
+    const [changeNameAllowed, setChangeNameAllowed] = useState(false);
+    const [nameChangeHistoryItemList, setNameChangeHistoryItemList] = useState([]);
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
+
+    const nameChangeHistoryItem = useMemo(() => {
+        const changeHistoryItem = [
+            {
+                id: 1,
+                formData,
+                canEdit: editMode && !customerNameChangeRequest,
+                pending: false,
+                changeAllowed: false,
+            },
+        ];
+        if (customerNameChangeRequest) {
+            changeHistoryItem.push({
+                id: 2,
+                formData: customerNameChangeRequest,
+                canEdit: editMode && customerNameChangeRequest,
+                pending: true,
+                changeAllowed: false,
+            });
+        }
+        changeHistoryItem.reverse();
+        return changeHistoryItem;
+    }, [formData, editMode, customerNameChangeRequest]);
+
+    useEffect(() => {
+        setNameChangeHistoryItemList(nameChangeHistoryItem);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [nameChangeHistoryItem]);
 
     useEffect(() => {
         if (data?.customerNameChangeRequest === null) {
@@ -125,16 +181,6 @@ const CustomerNameChangeMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedCustomerId]);
-
-    useEffect(() => {
-        if (viewDocument && isViewDataLoaded) {
-            let a = document.createElement('a');
-            a.href = `data:image/png;base64,${viewDocument?.base64}`;
-            a.download = viewDocument?.fileName;
-            a.click();
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isViewDataLoaded, viewDocument]);
 
     const downloadFileFromButton = (uploadData) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Your download will start soon' });
@@ -198,26 +244,16 @@ const CustomerNameChangeMasterBase = (props) => {
         setSupportingDataView(supportingData);
     };
 
-    const changeHistoryClose = () => {
-        setIsHistoryVisible(false);
-    };
-
     const onViewHistoryChange = () => {
-        setIsHistoryVisible(true);
+        setShowNameChangeHistory(true);
     };
 
     const formProps = {
         ...props,
-        form,
         data,
-        setFormActionType,
-        handleButtonClick,
         setUploadImgDocId,
         uploadImgDocId,
-        setButtonData,
-        buttonData,
         typeData,
-        formData,
         isSupportingDocumentDataLoaded,
         supportingData,
         isViewDataLoaded,
@@ -226,7 +262,6 @@ const CustomerNameChangeMasterBase = (props) => {
         setUploadedFile,
         uploadedFile,
         downloadFileFromButton,
-        handleFormValueChange,
         deleteFile,
         editedMode,
         setEditedMode,
@@ -243,26 +278,94 @@ const CustomerNameChangeMasterBase = (props) => {
         activeKey,
         setActiveKey,
         onViewHistoryChange,
+        setChangeNameAllowed,
+        customerNameChangeRequest,
+        nameChangeHistoryItemList,
+        setNameChangeHistoryItemList,
     };
 
     const viewProps = {
         ...formProps,
-        formActionType,
-        formData,
         styles,
         isLoading,
+        editedMode,
+        setEditedMode,
     };
 
-    const nameChangeHistoryProps = {
-        isVisible: isHistoryVisible,
-        onCloseAction: changeHistoryClose,
-        selectedCustomerId,
-        downloadFileFromButton,
+    const onEdit = (currentKey) => (e) => {
+        setNameChangeHistoryItemList(nameChangeHistoryItem?.map((i) => ({ ...i, changeAllowed: i?.id === currentKey ? true : false })));
+        setActiveKey(currentKey);
     };
+
+    const customerName = ({ currentKey, formData, requestPending, changeAllowed, canEdit }) => {
+        return checkAndSetDefaultValue(
+            <>
+                <Typography className={styles.verticallyCentered}>
+                    {getCodeValue(typeData?.TITLE, formData?.titleCode) + ' ' + (formData?.firstName || '') + ' ' + (formData?.middleName || '') + ' ' + (formData?.lastName || '')}
+                    {canEdit && (
+                        <Button className={styles.marL20} disabled={changeNameAllowed} type="link" icon={<FiEdit />} onClick={onEdit(currentKey)}>
+                            Edit
+                        </Button>
+                    )}
+                </Typography>
+                {customerNameChangeRequest && (
+                    <Text type="secondary" style={{ fontSize: '12px', fontWeight: 'normal' }}>
+                        {requestPending ? 'Current' : 'Previous'} Name
+                    </Text>
+                )}
+            </>,
+            isLoading
+        );
+    };
+
     return (
         <>
-            {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
-            <CustomerNameChangeHistory {...nameChangeHistoryProps} />
+            <div className={styles.cardInsideBox}>
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={12} lg={12} xl={12} className={styles.verticallyCentered}>
+                        <Text style={{ fontSize: '16px' }} strong>
+                            Customer Name
+                        </Text>
+                    </Col>
+                    {!addMode && (
+                        <Col xs={24} sm={24} md={12} lg={12} xl={12} className={styles.buttonsGroupRight}>
+                            <Button type="link" onClick={onViewHistoryChange} icon={<BiTimeFive />} className={styles.verticallyCentered}>
+                                View History
+                            </Button>
+                        </Col>
+                    )}
+                </Row>
+                <Divider className={styles.marT20} />
+                {addMode ? (
+                    <AddEditForm {...formProps} />
+                ) : (
+                    nameChangeHistoryItemList?.map((item) => {
+                        return (
+                            <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={(value) => setActiveKey(value)} expandIconPosition="end" collapsible="icon">
+                                <Panel
+                                    header={
+                                        <Row justify="space-between">
+                                            <Col xs={24} sm={24} md={18} lg={20} xl={20}>
+                                                {customerName({ currentKey: item?.id, formData: item?.formData, requestPending: item?.pending, changeAllowed: item?.changeAllowed, canEdit: item?.canEdit })}
+                                            </Col>
+
+                                            {item?.pending && (
+                                                <Col xs={24} sm={24} md={6} lg={4} xl={4} className={styles.verticallyCentered}>
+                                                    {status === STATUS?.REJECTED?.title ? <Tag color="error">Rejected</Tag> : status === STATUS?.APPROVED?.title ? <Tag color="success">Approved</Tag> : <Tag color="warning">Pending for Approval</Tag>}
+                                                </Col>
+                                            )}
+                                        </Row>
+                                    }
+                                    key={item?.id}
+                                >
+                                    <Divider />
+                                    {item?.changeAllowed ? <AddEditForm {...formProps} /> : <ViewDetail {...viewProps} showApproveNameChangeRequestBtn={item?.pending} />}
+                                </Panel>
+                            </Collapse>
+                        );
+                    })
+                )}
+            </div>
         </>
     );
 };

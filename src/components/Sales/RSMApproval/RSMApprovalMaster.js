@@ -141,15 +141,14 @@ export const RSMApprovalMasterBase = (props) => {
                 value: 'invoiceActionStatus',
                 name: 'Status',
                 canRemove: false,
-                filter: true,
+                filter: false,
             },
             {
                 key: 'searchParam',
                 title: 'Value',
                 value: filterString?.searchParam || rsmStatusType,
-                name: filterString?.searchParam || rsmStatusType,
                 canRemove: true,
-                filter: true,
+                filter: false,
             },
             {
                 key: 'fromDate',
@@ -212,7 +211,7 @@ export const RSMApprovalMasterBase = (props) => {
     }, [userId, extraParams]);
 
     useEffect(() => {
-        setFilterString({ ...filterString, searchParam: RSM_APPROVAL_STATUS?.PENDING?.title });
+        setFilterString({ ...filterString, searchParam: RSM_APPROVAL_STATUS?.PENDING?.key });
         return () => {
             setFilterString();
         };

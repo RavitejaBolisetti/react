@@ -6,16 +6,16 @@
 
 import React from 'react';
 import { Row, Col, Button, Space, Typography, Input } from 'antd';
-import { withModal } from '../../../../withModal/withModal';
-import styles from '../../CustomertMaster.module.css';
-import { preparePlaceholderText } from 'utils/preparePlaceholder';
-const { TextArea } = Input;
+import { withModal } from 'components/withModal';
 
+import { preparePlaceholderText } from 'utils/preparePlaceholder';
+import styles from '../../../CustomertMaster.module.css';
+
+const { TextArea } = Input;
 const { Text } = Typography;
 
-const RejectionModalMain = (props) => {
-    const { onCloseAction, onCloseActionOnContinue } = props;
-
+const RejectNameChangeRequestMain = (props) => {
+    const { onCloseAction, onContinueAction } = props;
     return (
         <>
             <Row>
@@ -34,7 +34,7 @@ const RejectionModalMain = (props) => {
                         <Button onClick={onCloseAction} htmlType="submit" danger className={styles.modalButton}>
                             Cancel
                         </Button>
-                        <Button onClick={onCloseActionOnContinue} htmlType="submit" type="primary" className={styles.modalButton}>
+                        <Button onClick={onContinueAction} htmlType="submit" type="primary" className={styles.modalButton}>
                             Submit
                         </Button>
                     </Space>
@@ -44,4 +44,4 @@ const RejectionModalMain = (props) => {
     );
 };
 
-export const RejectionModal = withModal(RejectionModalMain, { width: 400 });
+export const RejectNameChangeRequest = withModal(RejectNameChangeRequestMain, { width: 400 });

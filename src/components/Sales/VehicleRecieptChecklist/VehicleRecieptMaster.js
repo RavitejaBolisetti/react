@@ -21,7 +21,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { VEHICLE_RECIEPT_CHECKLIST_SECTION } from 'constants/VehicleRecieptCheckListSection';
 import { otfvehicleDetailsLovDataActions } from 'store/actions/data/otf/vehicleDetailsLov';
 
-import { formatDateToCalenderDate, convertDateMonthYearDayjs } from 'utils/formatDateTime';
+import { formatDateToCalenderDate, convertDateTime } from 'utils/formatDateTime';
 
 import { validateRequiredInputField } from 'utils/validation';
 import { LANGUAGE_EN } from 'language/en';
@@ -196,7 +196,6 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
                 key: 'checklistStatus',
                 title: 'checklistStatus',
                 value: buttonType,
-                name: buttonType,
                 canRemove: false,
                 filter: false,
             },
@@ -204,7 +203,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
                 key: 'grnNumber',
                 title: 'grnNumber',
                 value: filterString?.grnNumber,
-                name: filterString?.grnNumber,
+                name: filterString?.grnNumber ?? null,
                 canRemove: true,
                 filter: true,
             },
@@ -212,7 +211,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
                 key: 'fromDate',
                 title: 'Reciept From Date',
                 value: filterString?.fromDate,
-                name: convertDateMonthYearDayjs(filterString?.fromDate),
+                name: convertDateTime(filterString?.fromDate, 'DD MMM YYYY', 'fromDate'),
                 canRemove: true,
                 filter: true,
             },
@@ -220,7 +219,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
                 key: 'toDate',
                 title: 'Reciept To Date',
                 value: filterString?.toDate,
-                name: convertDateMonthYearDayjs(filterString?.toDate),
+                name: convertDateTime(filterString?.toDate, 'DD MMM YYYY', 'toDate'),
                 canRemove: false,
                 filter: true,
             },
@@ -259,7 +258,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, page, buttonType]);
-    console.log('filterString', filterString);
+    console.log('filterString', extraParams);
 
     useEffect(() => {
         if (userId) {
@@ -496,12 +495,10 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         if (key === 'fromDate') {
             const { fromDate, toDate, ...rest } = filterString;
             setrules({ ...rulesIntialstate });
-            if (Object.keys(rest)?.length === 1) setFilterString();
-            else setFilterString({ ...rest });
+            setFilterString({ ...rest });
         } else {
             const { [key]: names, ...rest } = filterString;
-            if (Object.keys(rest)?.length === 1) setFilterString();
-            else setFilterString({ ...rest });
+            setFilterString({ ...rest });
         }
     };
 
