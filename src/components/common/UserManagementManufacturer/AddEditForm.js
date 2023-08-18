@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -25,15 +25,12 @@ const AddEditFormMain = (props) => {
         setFormBtnActive(true);
     };
 
-
     const handleFormFieldChange = () => {
         setFormBtnActive(true);
     };
 
-    const onChangeCollapse = (collapse) => {
+    const onChangeCollapse = (collapse) => {};
 
-    };
-    
     const viewProps = {
         isVisible: isViewModeVisible,
         setClosePanels,
@@ -123,13 +120,13 @@ const AddEditFormMain = (props) => {
                 <ViewUserManagementDealer {...viewProps} />
             )}
             <Row gutter={20} className={styles.formFooter}>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
+                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.buttonsGroupLeft}>
                     <Button danger onClick={onCloseAction}>
                         Cancel
                     </Button>
                 </Col>
 
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
+                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.buttonsGroupRight}>
                     <Button htmlType="submit" type="primary" disabled={!isFormBtnActive}>
                         Save
                     </Button>

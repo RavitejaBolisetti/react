@@ -53,11 +53,11 @@
     border-color: white;
 }
 
-.deleteBtn :disabled {
+/* .deleteBtn :disabled {
     background-color: #ffffff;
     color: #b5b5b6;
     border-color: white;
-    /* text-align: right !important; */
+    text-align: right !important;
 }
 
 .deleteBtn {
@@ -65,7 +65,7 @@
     color: #b5b5b6;
     border-color: none !important;
     border: none !important;
-}
+} */
 
 .allowedTiming :global .ant-btn-default.ant-btn-dangerous.ant-btn-icon-only:hover {
     color: #ff3e5b !important;
@@ -142,7 +142,7 @@
     border-radius: 7px;
 }
 
-.contentHeaderBackground .addGroup button {
+.contentHeaderBackground .buttonsGroupRight button {
     margin-bottom: 0px !important;
     margin-left: 10px;
 }
@@ -156,12 +156,12 @@
     border-left: #ff3e5b;
 }
 
-.tableIcons {
+/* .tableIcons {
     border: none;
     padding: 0px;
     box-shadow: transparent !important;
     width: 18px !important;
-}
+} */
 
 .drawerCriticalityGrp :global .ant-btn-default.ant-btn-dangerous:disabled {
     background-color: transparent !important;
@@ -243,7 +243,7 @@
     background-color: #ffffff;
 }
 
-.addGroup {
+.buttonsGroupRight {
     display: flex;
     justify-content: right;
 }
@@ -275,13 +275,13 @@
 }
 
 :global .ant-picker-time-panel-column::-webkit-scrollbar-thumb {
-    background-color: #c1c1c1 !important;
+    background-color: #b5b5b6 !important;
     border-radius: 10px;
     border: 2px solid #ffffff;
 }
 
 :global .ant-picker-time-panel-column::-webkit-scrollbar-thumb:hover {
-    border: 2px solid #c1c1c1;
+    border: 2px solid #b5b5b6;
 }
 
 :global .ant-picker-time-panel-column::-webkit-scrollbar {
@@ -389,9 +389,9 @@
     padding: 10px 20px;
 } */
 
-.accordianHeader {
+/* .accordianHeader {
     color: #e31837 !important;
-}
+} */
 
 :global .ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-collapse-header-texts {
     font-weight: 600;

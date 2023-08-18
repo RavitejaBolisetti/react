@@ -53,7 +53,7 @@ const CurdSearchBox = (props) => {
                                     <Button
                                         icon={<FilterIcon />}
                                         type="link"
-                                        className={styles.filterBtn}
+                                        className={styles.verticallyCentered}
                                         onClick={() => {
                                             setAdvanceSearchVisible(true);
                                         }}
@@ -65,7 +65,7 @@ const CurdSearchBox = (props) => {
                         </Row>
                     </Col>
                     {(showChangeHistoryButton || showAddButton) && (
-                        <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
+                        <Col className={styles.buttonsGroupRight} xs={24} sm={24} md={8} lg={8} xl={8}>
                             {showChangeHistoryButton && (
                                 <>
                                     <Button icon={<FaHistory />} onClick={showChangeHistoryList} type="primary">

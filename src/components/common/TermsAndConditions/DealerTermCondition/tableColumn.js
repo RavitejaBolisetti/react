@@ -63,7 +63,7 @@ export const tableColumn = (handleButtonClick, handleManufacturerButtonClick, pa
                 return (
                     <Space>
                         {record?.manufracturerTnCId !== 'NA' ? (
-                            <Button data-testid="view" className={styles.tableIcons} aria-label="ai-view" onClick={(e) => handleManufacturerButtonClick({ buttonAction: FROM_ACTION_TYPE?.VIEW, record })}>
+                            <Button data-testid="view" type="link" aria-label="ai-view" onClick={(e) => handleManufacturerButtonClick({ buttonAction: FROM_ACTION_TYPE?.VIEW, record })}>
                                 <FiEye />
                             </Button>
                         ) : null}

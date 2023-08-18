@@ -37,8 +37,9 @@ export default function AdvanceOTFFilter(props) {
                                 {advanceFilter && (
                                     <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.verticallyCentered}>
                                         <Button
-                                            icon={<FilterIcon />}
                                             type="link"
+                                            icon={<FilterIcon />}
+                                            className={styles.verticallyCentered}
                                             onClick={() => {
                                                 setAdvanceSearchVisible(true);
                                             }}
@@ -66,7 +67,7 @@ export default function AdvanceOTFFilter(props) {
                                                 {filter?.name}
                                                 {filter?.canRemove && (
                                                     <span>
-                                                        <RxCross2 onClick={() => removeFilter(filter?.key)} />
+                                                        <RxCross2 onClick={() => removeFilter(filter?.key)} data-testid="removeBtn" />
                                                     </span>
                                                 )}
                                             </div>

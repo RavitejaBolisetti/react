@@ -7,6 +7,7 @@ import React, { useState, useReducer, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Form, Space, Row, Col, Typography, Button, Empty, Card, Divider } from 'antd';
 
+import { UploadBoxIcon } from 'Icons';
 import { PlusOutlined } from '@ant-design/icons';
 
 import { geoPinCodeDataActions } from 'store/actions/data/geo/pincodes';
@@ -52,7 +53,7 @@ const mapStateToProps = (state) => {
         addData: addData && addData[PARAM_MASTER.ADD_TYPE.id],
         isPinCodeDataLoaded,
         isPinCodeLoading,
-        pincodeData,
+        pincodeData: pincodeData?.pinCodeDetails,
     };
     return returnValue;
 };
@@ -166,7 +167,7 @@ const AddressMasterBase = (props) => {
 
         const requestData = {
             data: data,
-            method: formActionType?.editMode ? 'put' : 'post',
+            method: addressIndData?.customerAddress ? 'put' : 'post',
             setIsLoading: listShowLoading,
             userId,
             onError,
@@ -271,28 +272,25 @@ const AddressMasterBase = (props) => {
                                         )}
                                     </Row>
                                     <Divider className={styles.marT20} />
-                                    <Space direction="vertical">
-                                        <div className={styles.headerBox}>
-                                            {!formActionType?.viewMode && showAddEditForm && <AddEditForm {...formProps} />}
-                                            {!addressData?.length && !isAdding ? (
-                                                <>
-                                                    <Empty
-                                                        image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                                        imageStyle={{
-                                                            height: 60,
-                                                        }}
-                                                        description={
-                                                            <span>
-                                                                {noDataTitle} <br />
-                                                            </span>
-                                                        }
-                                                    ></Empty>
-                                                </>
-                                            ) : (
-                                                <ViewAddressList {...formProps} />
-                                            )}
-                                        </div>
-                                    </Space>
+                                    {!formActionType?.viewMode && showAddEditForm && <AddEditForm {...formProps} />}
+                                    {!addressData?.length && !isAdding ? (
+                                        <>
+                                            <Space direction="vertical" className={styles.verticallyCentered}>
+                                                <UploadBoxIcon />
+                                                <div className={styles.marB20}>
+                                                    {formActionType?.viewMode ? (
+                                                        <p className={styles.textCenter}>No records found</p>
+                                                    ) : (
+                                                        <p className={styles.textCenter}>
+                                                            Please add new address using <br /> <strong>“Add”</strong> button at top
+                                                        </p>
+                                                    )}
+                                                </div>
+                                            </Space>
+                                        </>
+                                    ) : (
+                                        <ViewAddressList {...formProps} />
+                                    )}
                                 </>
                             )}
                         </Card>

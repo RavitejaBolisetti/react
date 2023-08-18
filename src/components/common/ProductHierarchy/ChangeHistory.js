@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -10,11 +10,10 @@ import { Row, Col, Button } from 'antd';
 
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 import { convertDateTime } from 'utils/formatDateTime';
-import { tblPrepareColumns, tblStatusColumn } from 'utils/tableCloumn';
+import { tblPrepareColumns, tblStatusColumn } from 'utils/tableColumn';
 import { withDrawer } from 'components/withDrawer';
 import { DataTable } from 'utils/dataTable';
 import styles from 'components/common/Common.module.css';
-
 
 const mapStateToProps = (state) => {
     const {
@@ -95,7 +94,6 @@ const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, i
         tableData: changeHistoryData,
     };
 
-    
     return (
         <>
             <Row gutter={20} className={styles.drawerBody}>

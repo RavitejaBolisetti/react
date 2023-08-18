@@ -14,7 +14,7 @@ export const HierarchyFormButton = ({ buttonData, handleButtonClick }) => {
         <>
             <div className={styles.formFooter}>
                 <Row gutter={20}>
-                    <Col xs={24} sm={6} md={6} lg={6} xl={6} className={styles.footerBtnLeft}>
+                    <Col xs={24} sm={6} md={6} lg={6} xl={6} className={styles.buttonsGroupLeft}>
                         {buttonData?.editBtn && (
                             <Button
                                 danger
@@ -27,7 +27,7 @@ export const HierarchyFormButton = ({ buttonData, handleButtonClick }) => {
                         )}
                     </Col>
 
-                    <Col xs={24} sm={18} md={18} lg={18} xl={18} className={styles.footerBtnRight}>
+                    <Col xs={24} sm={18} md={18} lg={18} xl={18} className={styles.buttonsGroupRight}>
                         {buttonData?.childBtn && (
                             <Button type="primary" onClick={() => handleButtonClick(FROM_ACTION_TYPE.CHILD)}>
                                 Add Child
@@ -37,6 +37,12 @@ export const HierarchyFormButton = ({ buttonData, handleButtonClick }) => {
                         {buttonData?.siblingBtn && (
                             <Button type="primary" onClick={() => handleButtonClick(FROM_ACTION_TYPE.SIBLING)}>
                                 Add Sibling
+                            </Button>
+                        )}
+
+                        {buttonData?.save && (
+                            <Button type="primary" onClick={() => handleButtonClick(FROM_ACTION_TYPE.SIBLING)}>
+                                Save
                             </Button>
                         )}
                     </Col>

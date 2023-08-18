@@ -78,7 +78,10 @@ const mapDispatchToProps = (dispatch) => ({
             listShowLoading: financialAccTaxChargeActions.listShowLoading,
 
             fetchFinancialAccountHead: financialAccountHeadDataActions.fetchList,
-            fetchDocumentDescriptionHead: documentDescriptionDataActions.fetchList,
+            listShowLoadingFinancialAccountHead: financialAccountHeadDataActions.listShowLoading,
+
+            fetchDocumentDescription: documentDescriptionDataActions.fetchList,
+            listShowLoadingDocumentDescription: documentDescriptionDataActions.listShowLoading,
 
             showGlobalNotification,
         },
@@ -90,7 +93,7 @@ export const TaxChargesMain = ({
     typeData,
     moduleTitle,
     isChangeHistoryVisible,
-    fetchDocumentDescriptionHead,
+    fetchDocumentDescription,
     documentDescription,
     isDocumentDescriptionLoaded,
     fetchFinancialAccountHead,
@@ -115,6 +118,8 @@ export const TaxChargesMain = ({
     saveDataTaxCharge,
     listShowLoadingTaxCharge,
     isTaxChargeLoaded,
+    listShowLoadingFinancialAccountHead,
+    listShowLoadingDocumentDescription,
 }) => {
     const [form] = Form.useForm();
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
@@ -151,14 +156,14 @@ export const TaxChargesMain = ({
 
     useEffect(() => {
         if (!isFinancialAccountHeadLoaded && userId) {
-            fetchFinancialAccountHead({ setIsLoading: listShowLoading, userId });
+            fetchFinancialAccountHead({ setIsLoading: listShowLoadingFinancialAccountHead, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isFinancialAccountHeadLoaded, userId]);
 
     useEffect(() => {
         if (!isDocumentDescriptionLoaded && userId) {
-            fetchDocumentDescriptionHead({ setIsLoading: listShowLoading, userId });
+            fetchDocumentDescription({ setIsLoading: listShowLoadingDocumentDescription, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDocumentDescriptionLoaded, userId]);

@@ -66,13 +66,13 @@ const ProductDetail = (props) => {
             </Row>
 
             <Row gutter={20} className={styles.formFooter}>
-                <Col xs={12} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
+                <Col xs={12} sm={12} md={12} lg={12} xl={12} className={styles.buttonsGroupLeft}>
                     <Button danger onClick={onCloseAction}>
                         Cancel
                     </Button>
                 </Col>
 
-                <Col xs={12} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
+                <Col xs={12} sm={12} md={12} lg={12} xl={12} className={styles.buttonsGroupRight}>
                     <Button htmlType="submit" form="myForm" disabled={!isFormBtnActive} type="primary">
                         Save
                     </Button>

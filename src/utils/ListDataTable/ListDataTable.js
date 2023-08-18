@@ -9,12 +9,13 @@ import { PlusOutlined } from '@ant-design/icons';
 import { LANGUAGE_EN } from 'language/en';
 
 export default function ListDataTable(props) {
-    const { tableData, handleButtonClick, addTitle = 'Group', showAddButton = true, noDataMessage = '', addButtonOption = false, styles = '' } = props;
+    const { tableData, handleButtonClick, handleAdd, addTitle = 'Record', showAddButton = true, noDataMessage = '' } = props;
+    // addButtonOption = false,
     const noDataExistTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
     const noDataExistMessage = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', addTitle);
     const noDataInformation = (
         <>
-            {noDataExistTitle} <br /> {noDataExistMessage}{' '}
+            {noDataExistTitle} <br /> {showAddButton && noDataExistMessage}
         </>
     );
 
@@ -33,7 +34,7 @@ export default function ListDataTable(props) {
                             ? // ? addButtonOption
                               // : addButtonOption
                               showAddButton && (
-                                  <Button icon={<PlusOutlined />} type="primary" danger onClick={handleButtonClick}>
+                                  <Button icon={<PlusOutlined />} type="primary" danger onClick={handleButtonClick || handleAdd}>
                                       {`Add`}
                                   </Button>
                               )
@@ -41,9 +42,7 @@ export default function ListDataTable(props) {
                     </Empty>
                 )}
             >
-                <div className={`${styles.tableProduct} ${styles.datasearh}`}>
-                    <DataTable {...props} />
-                </div>
+                <DataTable {...props} />
             </ConfigProvider>
         </>
     );

@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState, useEffect } from 'react';
-import { Collapse, Card, Typography, Button, Row, Empty, Divider } from 'antd';
+import { Collapse, Card, Typography, Button, Row, Empty, Divider, Space } from 'antd';
 
 import { PlusOutlined } from '@ant-design/icons';
 import { FiEdit } from 'react-icons/fi';
@@ -159,6 +159,7 @@ const AddEditFormMain = (props) => {
                                                     <Button
                                                         type="link"
                                                         icon={<FiEdit />}
+                                                        className={styles.verticallyCentered}
                                                         onClick={() => {
                                                             onEdit(item, index);
                                                         }}
@@ -169,11 +170,7 @@ const AddEditFormMain = (props) => {
                                                     </Button>
                                                 )}
                                             </Row>
-                                            {
-                                                <Text type="secondary" style={{ fontWeight: '400', fontSize: '14px' }}>
-                                                    {item?.mnmCustomer === 'Yes' ? 'M&M user' : item?.mnmCustomer === 'No' ? 'Non-M&M user' : ''}
-                                                </Text>
-                                            }
+                                            {<Text type="secondary">{item?.mnmCustomer === 'Yes' ? 'M&M user' : item?.mnmCustomer === 'No' ? 'Non-M&M user' : ''}</Text>}
                                         </Row>
                                     }
                                     key={index}

@@ -24,7 +24,7 @@ export default function AdvanceFilter(props) {
                                     <Button className={styles.marR5} type={toggleButton === 'Individual' ? 'primary' : 'link'} onClick={() => settoggleButton('Individual')}>
                                         Individual
                                     </Button>
-                                    <Button type={toggleButton === 'Firm/Company' ? 'primary' : 'link'} onClick={() => settoggleButton('Firm/Company')}>
+                                    <Button type={toggleButton === 'Company' ? 'primary' : 'link'} onClick={() => settoggleButton('Company')}>
                                         Corporate
                                     </Button>
                                 </div>

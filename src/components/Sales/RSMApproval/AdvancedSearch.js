@@ -9,7 +9,7 @@ import dayjs from 'dayjs';
 
 import { withModal } from 'components/withModal';
 import { validateRequiredSelectField } from 'utils/validation';
-import { dateFormat} from 'utils/formatDateTime';
+import { dateFormat, formatDateToCalenderDate } from 'utils/formatDateTime';
 import { disableFutureDate } from 'utils/disableDate';
 import { ModalButtons } from 'components/common/Button';
 
@@ -33,8 +33,8 @@ export const AdvancedSearchFrom = (props) => {
         setFilterString({
             ...filterString,
             ...values,
-            fromDate: values?.fromDate.format('DD-MM-YYYY'),
-            toDate: values?.toDate.format('DD-MM-YYYY'),
+            fromDate: values?.fromDate.format('YYYY-MM-DD'),
+            toDate: values?.toDate.format('YYYY-MM-DD'),
             advanceFilter: true,
         });
         setAdvanceSearchVisible(false);
@@ -49,7 +49,6 @@ export const AdvancedSearchFrom = (props) => {
         return;
     };
 
-  
     const modalProps = {
         reset: true,
         submit: true,
@@ -70,13 +69,13 @@ export const AdvancedSearchFrom = (props) => {
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={filterString?.fromDate ? dayjs(filterString?.fromDate, dateFormat) : null} label="From Date" name="fromDate" rules={[validateRequiredSelectField('From Date')]} className={styles?.datePicker}>
-                        <DatePicker format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} />
+                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.fromDate)} label="From Date" name="fromDate" rules={[validateRequiredSelectField('From Date')]} className={styles?.datePicker}>
+                        <DatePicker format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} onChange={() => advanceFilterForm.setFieldsValue({ toDate: undefined })} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
-                        initialValue={filterString?.toDate ? dayjs(filterString?.toDate, dateFormat) : null}
+                        initialValue={formatDateToCalenderDate(filterString?.toDate)}
                         label="To Date"
                         name="toDate"
                         rules={[

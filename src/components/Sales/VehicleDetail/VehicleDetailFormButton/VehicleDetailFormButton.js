@@ -13,7 +13,7 @@ export const VehicleDetailFormButton = ({ record, onCloseAction, buttonData, set
     return (
         <div className={styles.formFooter}>
             <Row gutter={20}>
-                <Col xs={24} sm={8} md={6} lg={4} xl={4} className={styles.footerBtnLeft}>
+                <Col xs={24} sm={8} md={6} lg={4} xl={4} className={styles.buttonsGroupLeft}>
                     {buttonData?.closeBtn && (
                         <Button danger onClick={onCloseAction}>
                             Close
@@ -27,7 +27,7 @@ export const VehicleDetailFormButton = ({ record, onCloseAction, buttonData, set
                     )}
                 </Col>
 
-                <Col xs={24} sm={16} md={18} lg={20} xl={20} className={styles.footerBtnRight}>
+                <Col xs={24} sm={16} md={18} lg={20} xl={20} className={styles.buttonsGroupRight}>
                     {buttonData?.editBtn && (
                         <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record, openDefaultSection: false })} type="primary">
                             Edit

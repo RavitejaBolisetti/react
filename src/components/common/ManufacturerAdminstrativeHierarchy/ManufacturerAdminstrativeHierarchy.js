@@ -198,6 +198,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
+
     const makeExtraparms = (Params) => {
         const extraParams = [];
         Params?.map((element) => {
@@ -208,15 +209,14 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
                 value: value,
                 name: name,
             });
+            return undefined;
         });
-
         return extraParams;
     };
     useEffect(() => {
         if (!isDataLoaded && userId) {
             hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: 'Manufacturer Administration', onErrorAction });
         }
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, isDataAttributeLoaded, userId]);
     useEffect(() => {
@@ -259,7 +259,9 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
             fetchOrgList({ setIsLoading: listShowLoading, userId, errorAction: onErrorAction });
             authorityDropDownfetchList({ setIsLoading: authorityDropDownlistShowLoading, userId, errorAction: onErrorAction, extraParams: makeExtraparms([{ key: 'parameterType', title: 'parameterType', value: 'AUTH_TYPE', name: 'parameterType' }]) });
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataOrgLoaded, userId]);
+
     useEffect(() => {
         manufacturerOrgHierarchyData?.map((i) => DisableParent(i));
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -480,11 +482,6 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         setButtonData({ ...defaultBtnVisiblity });
     };
 
-    const onCloseAction = () => {
-        form.resetFields();
-        setIsUploadDrawer(false);
-    };
-
     const drawerTitle = 'Upload Authority Details';
 
     const uploadProps = {
@@ -597,7 +594,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
                         </Form>
                     </Col>
                     {organizationId && manufacturerAdminHierarchyData?.length > 0 && (
-                        <Col className={styles.addGroup} xs={24} sm={24} md={6} lg={6} xl={6}>
+                        <Col className={styles.buttonsGroupRight} xs={24} sm={24} md={6} lg={6} xl={6}>
                             <Button type="primary" onClick={handleOnClickUpload}>
                                 Upload
                             </Button>

@@ -227,3 +227,15 @@ export const noWhiteSpaceinBeginning = (fieldName) => ({
     pattern: /^[^\s]+(\s+[^\s]+)*$/,
     message: 'Please dont enter spaces ',
 });
+
+export const compareAmountValidator = (amount1, amount2, fieldName) => {
+    if (parseFloat(amount1) < parseFloat(amount2)) {
+        return Promise.reject(fieldName + ' should not be greater than ' + amount1);
+    } else {
+        return Promise.resolve('');
+    }
+};
+export const validateNegativeNumber = (fieldName) => ({
+    pattern: /^\d+$/,
+    message: fieldName + ' Does not accept negative numbers',
+});

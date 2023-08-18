@@ -5,7 +5,7 @@
  */
 
 import React, { useEffect, useState } from 'react';
-import { Button, Collapse, Form, Typography, Row, Col, Space, Input, Divider, DatePicker } from 'antd';
+import { Button, Collapse, Form, Typography, Row, Col, Input, Divider, DatePicker } from 'antd';
 
 import { PlusOutlined } from '@ant-design/icons';
 import { DataTable } from 'utils/dataTable';
@@ -51,6 +51,7 @@ const AddEditFormMain = (props) => {
         if (formData?.connectedVehicle?.length) {
             formData?.connectedVehicle?.map((element, index) => {
                 connectedForm.setFieldsValue({ [index]: { ...element, esimStatus: bindStatus(element, 'esimStatus', { active: 'Active', inactive: 'Inctive' }), kycStatus: bindStatus(element, 'kycStatus', { active: 'Recieved', inactive: 'Not Recieved' }) } });
+                return undefined;
             });
         }
 
@@ -91,9 +92,6 @@ const AddEditFormMain = (props) => {
         aggregateForm,
         isVisible: isReadOnly,
         titleOverride: (isEditing ? 'Edit ' : 'Add  ') + AggregateModuleTitle,
-        onCloseAction: () => {
-            setIsReadOnly(false);
-        },
         setAdvanceSearchVisible: setIsReadOnly,
         isEditing,
         setisEditing,
@@ -139,140 +137,136 @@ const AddEditFormMain = (props) => {
         <>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Space direction="vertical" size="small" className={styles.accordianContainer}>
-                        <Collapse onChange={() => handleCollapse('Attribute')} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian} {...collapseProps}>
-                            <Panel header="Product Attribute Details" key="Attribute">
+                    <Collapse onChange={() => handleCollapse('Attribute')} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian} {...collapseProps}>
+                        <Panel header="Product Attribute Details" key="Attribute">
+                            <Divider />
+                            <Row gutter={20}>
+                                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                    <Form.Item label="Product Division" name="productDivision">
+                                        <Input maxLength={15} placeholder={preparePlaceholderText('product division')} {...disabledProps} />
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                    <Form.Item label="Model Group" name="modelGroup">
+                                        <Input maxLength={15} placeholder={preparePlaceholderText('model group')} {...disabledProps} />
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                    <Form.Item label="Model Family" name="modelFamily">
+                                        <Input maxLength={15} placeholder={preparePlaceholderText('model familiy')} {...disabledProps} />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                            <Row gutter={20}>
+                                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                    <Form.Item label="Model Variant" name="modelVariant">
+                                        <Input maxLength={15} placeholder={preparePlaceholderText('model variant')} {...disabledProps} />
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.modelTooltip}>
+                                    {addToolTip(tooltTipText, 'bottom', '#D3EDFE', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}
+                                    <Form.Item label="Model" name="model">
+                                        <Input maxLength={15} placeholder={preparePlaceholderText('model ')} {...disabledProps} />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                            <Row gutter={20}>
+                                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                    <Form.Item label="Manufacturer Invoice Date" name="manufacturerInvoiceDate">
+                                        <DatePicker format={dateFormat} {...disabledProps} />
+                                    </Form.Item>
+                                </Col>
+                                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                    <Form.Item label="Manufacturer Warranty Start Date" name="manufacturerWarrantyStartDate">
+                                        <DatePicker format={dateFormat} {...disabledProps} />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                        </Panel>
+                    </Collapse>
+                    <Form layout="vertical" autoComplete="off" form={connectedForm}>
+                        <Collapse onChange={() => handleCollapse('Vehicle')} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian} {...collapseProps}>
+                            <Panel header="Connected Vehicle" key="Vehicle">
                                 <Divider />
-                                <Row gutter={20}>
-                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Product Division" name="productDivision">
-                                            <Input maxLength={15} placeholder={preparePlaceholderText('product division')} {...disabledProps} />
-                                        </Form.Item>
-                                    </Col>
-                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Model Group" name="modelGroup">
-                                            <Input maxLength={15} placeholder={preparePlaceholderText('model group')} {...disabledProps} />
-                                        </Form.Item>
-                                    </Col>
-                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Model Family" name="modelFamily">
-                                            <Input maxLength={15} placeholder={preparePlaceholderText('model familiy')} {...disabledProps} />
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
-                                <Row gutter={20}>
-                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Model Variant" name="modelVariant">
-                                            <Input maxLength={15} placeholder={preparePlaceholderText('model variant')} {...disabledProps} />
-                                        </Form.Item>
-                                    </Col>
-                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.modelTooltip}>
-                                        {addToolTip(tooltTipText, 'bottom', '#D3EDFE', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}
-                                        <Form.Item label="Model" name="model">
-                                            <Input maxLength={15} placeholder={preparePlaceholderText('model ')} {...disabledProps} />
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
-                                <Row gutter={20}>
-                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Manufacturer Invoice Date" name="manufacturerInvoiceDate">
-                                            <DatePicker format={dateFormat} style={{ display: 'auto', width: '100%' }} {...disabledProps} />
-                                        </Form.Item>
-                                    </Col>
-                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item label="Manufacturer Warranty Start Date" name="manufacturerWarrantyStartDate">
-                                            <DatePicker format={dateFormat} style={{ display: 'auto', width: '100%' }} {...disabledProps} />
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
+                                {formData?.connectedVehicle?.map((element, index) => {
+                                    return (
+                                        <Collapse onChange={() => handleInnerCollapse(index)} expandIconPosition="end" expandIcon={expandIcon} activeKey={InnerCollapse} {...collapseProps}>
+                                            <Panel header={`${element?.tcuId} | ${element?.esimNo}`} key={index}>
+                                                <Divider />
+                                                <Row gutter={20}>
+                                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                        <Form.Item label="TCU ID" name={[index, 'tcuId']}>
+                                                            <Input maxLength={15} placeholder={preparePlaceholderText('tcu id')} {...disabledProps} />
+                                                        </Form.Item>
+                                                    </Col>
+
+                                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                        <Form.Item label="E-Sim No" name={[index, 'esimNo']}>
+                                                            <Input maxLength={15} placeholder={preparePlaceholderText('Sim no.')} {...disabledProps} />
+                                                        </Form.Item>
+                                                    </Col>
+
+                                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                        <Form.Item label="E-Sim Status" name={[index, 'esimStatus']}>
+                                                            <Input maxLength={15} placeholder={preparePlaceholderText('Sim status')} {...disabledProps} />
+                                                        </Form.Item>
+                                                    </Col>
+                                                </Row>
+                                                <Row gutter={20}>
+                                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                        <Form.Item label="Preffered Mobile No 1" name={[index, 'preferredMobileNo1']}>
+                                                            <Input maxLength={15} placeholder={preparePlaceholderText('mobile no')} {...disabledProps} />
+                                                        </Form.Item>
+                                                    </Col>
+
+                                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                        <Form.Item label="Preffered Mobile No 2" name={[index, 'preferredMobileNo2']}>
+                                                            <Input maxLength={15} placeholder={preparePlaceholderText('mobile no')} {...disabledProps} />
+                                                        </Form.Item>
+                                                    </Col>
+
+                                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                                        <Form.Item label="KYC Status" name={[index, 'kycStatus']}>
+                                                            <Input maxLength={15} placeholder={preparePlaceholderText('kyc status')} {...disabledProps} />
+                                                        </Form.Item>
+                                                    </Col>
+                                                </Row>
+                                            </Panel>
+                                        </Collapse>
+                                    );
+                                })}
+                                {!formData?.connectedVehicle?.length && <NoDataFound informtion={'No connected Vehicle Data'} />}
                             </Panel>
                         </Collapse>
-                        <Form layout="vertical" autoComplete="off" form={connectedForm}>
-                            <Collapse onChange={() => handleCollapse('Vehicle')} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian} {...collapseProps}>
-                                <Panel header="Connected Vehicle" key="Vehicle">
-                                    <Divider />
-                                    {formData?.connectedVehicle?.map((element, index) => {
-                                        return (
-                                            <Collapse onChange={() => handleInnerCollapse(index)} expandIconPosition="end" expandIcon={expandIcon} activeKey={InnerCollapse} {...collapseProps}>
-                                                <Panel header={`${element?.tcuId} | ${element?.esimNo}`} key={index}>
-                                                    <Divider />
-                                                    <Row gutter={20}>
-                                                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                            <Form.Item label="TCU ID" name={[index, 'tcuId']}>
-                                                                <Input maxLength={15} placeholder={preparePlaceholderText('tcu id')} {...disabledProps} />
-                                                            </Form.Item>
-                                                        </Col>
-
-                                                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                            <Form.Item label="E-Sim No" name={[index, 'esimNo']}>
-                                                                <Input maxLength={15} placeholder={preparePlaceholderText('Sim no.')} {...disabledProps} />
-                                                            </Form.Item>
-                                                        </Col>
-
-                                                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                            <Form.Item label="E-Sim Status" name={[index, 'esimStatus']}>
-                                                                <Input maxLength={15} placeholder={preparePlaceholderText('Sim status')} {...disabledProps} />
-                                                            </Form.Item>
-                                                        </Col>
-                                                    </Row>
-                                                    <Row gutter={20}>
-                                                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                            <Form.Item label="Preffered Mobile No 1" name={[index, 'preferredMobileNo1']}>
-                                                                <Input maxLength={15} placeholder={preparePlaceholderText('mobile no')} {...disabledProps} />
-                                                            </Form.Item>
-                                                        </Col>
-
-                                                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                            <Form.Item label="Preffered Mobile No 2" name={[index, 'preferredMobileNo2']}>
-                                                                <Input maxLength={15} placeholder={preparePlaceholderText('mobile no')} {...disabledProps} />
-                                                            </Form.Item>
-                                                        </Col>
-
-                                                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                            <Form.Item label="KYC Status" name={[index, 'kycStatus']}>
-                                                                <Input maxLength={15} placeholder={preparePlaceholderText('kyc status')} {...disabledProps} />
-                                                            </Form.Item>
-                                                        </Col>
-                                                    </Row>
-                                                </Panel>
-                                            </Collapse>
-                                        );
-                                    })}
-                                    {!formData?.connectedVehicle?.length && <NoDataFound informtion={'No connected Vehicle Data'} />}
-                                </Panel>
-                            </Collapse>
-                        </Form>
-                        <Collapse onChange={() => handleCollapse('Aggregates')} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian} {...collapseProps}>
-                            <Panel
-                                header={
-                                    <Row>
-                                        <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                            <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                                Aggregates
-                                            </Text>
-                                            {!formData?.productAttributeDetail &&
-                                                addToolTip(
-                                                    'No product Attribute Details Present',
-                                                    'bottom'
-                                                )(
-                                                    <Button onClick={addContactHandeler} icon={<PlusOutlined />} type="primary" disabled={isReadOnly || !formData?.productAttributeDetail}>
-                                                        Add
-                                                    </Button>
-                                                )}
-                                            {formData?.productAttributeDetail && (
+                    </Form>
+                    <Collapse onChange={() => handleCollapse('Aggregates')} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian} {...collapseProps}>
+                        <Panel
+                            header={
+                                <Row>
+                                    <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                                        <Text strong>Aggregates</Text>
+                                        {!formData?.productAttributeDetail &&
+                                            addToolTip(
+                                                'No product Attribute Details Present',
+                                                'bottom'
+                                            )(
                                                 <Button onClick={addContactHandeler} icon={<PlusOutlined />} type="primary" disabled={isReadOnly || !formData?.productAttributeDetail}>
                                                     Add
                                                 </Button>
                                             )}
-                                        </Col>
-                                    </Row>
-                                }
-                                key="Aggregates"
-                            >
-                                <DataTable tableColumn={tableColumn({ handleButtonClick, formActionType, bindCodeValue })} tableData={optionsServiceModified} pagination={false} />
-                            </Panel>
-                        </Collapse>
-                    </Space>
+                                        {formData?.productAttributeDetail && (
+                                            <Button onClick={addContactHandeler} icon={<PlusOutlined />} type="primary" disabled={isReadOnly || !formData?.productAttributeDetail}>
+                                                Add
+                                            </Button>
+                                        )}
+                                    </Col>
+                                </Row>
+                            }
+                            key="Aggregates"
+                        >
+                            <DataTable tableColumn={tableColumn({ handleButtonClick, formActionType, bindCodeValue })} tableData={optionsServiceModified} pagination={false} />
+                        </Panel>
+                    </Collapse>
                 </Col>
             </Row>
             <AggregateAddEditForm {...advanceFilterProps} />

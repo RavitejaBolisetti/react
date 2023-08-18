@@ -215,14 +215,14 @@ export const ConfigurableParameterEditingBase = ({ saveFormShowLoading, isLoadin
             dataIndex: '',
             width: '10%',
             render: (record) => [
-                <Space wrap>
+                <Space size="middle">
                     {
-                        <Button className={styles.tableIcons} aria-label="ai-view" onClick={() => handleView(record)}>
+                        <Button type="link" aria-label="ai-view" onClick={() => handleView(record)}>
                             <FaRegEye />
                         </Button>
                     }
                     {
-                        <Button data-testid="edit" className={styles.tableIcons} aria-label="fa-edit" onClick={() => handleEditBtn(record)}>
+                        <Button data-testid="edit" type="link" aria-label="fa-edit" onClick={() => handleEditBtn(record)}>
                             <FiEdit />
                         </Button>
                     }
@@ -362,7 +362,7 @@ export const ConfigurableParameterEditingBase = ({ saveFormShowLoading, isLoadin
                     </Col>
 
                     {configData?.length ? (
-                        <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
+                        <Col className={styles.buttonsGroupRight} xs={24} sm={24} md={8} lg={8} xl={8}>
                             <Button icon={<TfiReload />} onClick={handleReferesh} danger />
                             <Button icon={<PlusOutlined />} type="primary" onClick={handleAdd}>
                                 Add
@@ -407,9 +407,7 @@ export const ConfigurableParameterEditingBase = ({ saveFormShowLoading, isLoadin
                             </Empty>
                         )}
                     >
-                        <div className={styles.tableProduct}>
-                            <DataTable isLoading={isLoading} {...tableProps} />
-                        </div>
+                        <DataTable isLoading={isLoading} {...tableProps} />
                     </ConfigProvider>
                 </Col>
             </Row>

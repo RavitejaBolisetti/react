@@ -11,7 +11,7 @@ export const VEHICLE_RECIEPT_CHECKLIST_SECTION = {
     },
     DOCUMENTS: {
         id: 2,
-        title: 'Documents',
+        title: 'Supporting Documents',
         displayOnList: true,
     },
 };

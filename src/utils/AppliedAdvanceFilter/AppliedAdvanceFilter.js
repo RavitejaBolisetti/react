@@ -49,6 +49,7 @@ export default function AppliedAdvanceFilter(props) {
                                     <Button
                                         data-testid="advanceFiltersBtn"
                                         icon={<FilterIcon />}
+                                        className={styles.verticallyCentered}
                                         type="link"
                                         onClick={() => {
                                             setAdvanceSearchVisible(true);
@@ -61,7 +62,7 @@ export default function AppliedAdvanceFilter(props) {
                         </Row>
                     </Col>
                     {(showChangeHistoryButton || showAddButton) && (
-                        <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
+                        <Col className={styles.buttonsGroupRight} xs={24} sm={24} md={8} lg={8} xl={8}>
                             {showChangeHistoryButton && (
                                 <>
                                     <Button icon={<FaHistory />} className={styles.verticallyCentered} onClick={showChangeHistoryList} type="primary">

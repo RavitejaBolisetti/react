@@ -9,25 +9,25 @@ import { Row, Col, Button } from 'antd';
 import { ModalConstants } from './ButtonConstants';
 import styles from 'components/common/Common.module.css';
 
-export const ModalButtons = ({ buttonData, reset, submit, handleResetFilter, submitName, resetName, htmltype = true, onClickAction }) => {
+export const ModalButtons = ({ buttonData, reset, submit, handleResetFilter, submitName, resetName, htmltype = true, onClickAction, resetDisabled = false, saveDisabled = false }) => {
     const BUTTON_CONSTANTS = ModalConstants({ reset, submit, submitName, resetName });
     return (
         <div className={styles.modalFooter}>
             <Row gutter={20}>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
-                    <Button danger onClick={handleResetFilter}>
+                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.buttonsGroupLeft}>
+                    <Button disabled={resetDisabled} danger onClick={handleResetFilter}>
                         {BUTTON_CONSTANTS?.RESET?.name}
                     </Button>
                 </Col>
                 {htmltype ? (
-                    <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
-                        <Button htmlType="submit" type="primary">
+                    <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.buttonsGroupRight}>
+                        <Button disabled={saveDisabled} htmlType="submit" type="primary">
                             {BUTTON_CONSTANTS?.SUBMIT?.name}
                         </Button>
                     </Col>
                 ) : (
-                    <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
-                        <Button onClick={onClickAction} type="primary">
+                    <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.buttonsGroupRight}>
+                        <Button disabled={saveDisabled} onClick={onClickAction} type="primary">
                             {BUTTON_CONSTANTS?.SUBMIT?.name}
                         </Button>
                     </Col>
