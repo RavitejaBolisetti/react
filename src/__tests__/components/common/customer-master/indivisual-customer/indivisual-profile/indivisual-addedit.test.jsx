@@ -41,7 +41,6 @@ describe('Indivisual addedit Master  Component', () => {
     };
     it('should render indiviual Master ', async () => {
         customRender(<FormWrapper {...props2} appCategoryData={appCategoryData} />);
-        screen.debug();
     });
     it('should render text fields', async () => {
         const mockStore = createMockStore({
@@ -143,7 +142,7 @@ describe('Indivisual addedit Master  Component', () => {
         expect(setActiveKey).toHaveBeenCalledWith([1]);
     });
 
-    it('test1', async () => {
+    it('should select marital status value for single', async () => {
         const appCategoryData = {
             MARITAL_STATUS: [{ key: 'S', value: 'Single' }],
         };
@@ -151,7 +150,7 @@ describe('Indivisual addedit Master  Component', () => {
         customRender(<FormWrapper appCategoryData={appCategoryData} />);
 
         const maritalstatus = screen.getByRole('combobox', { name: 'Maritial Status' });
-        // fireEvent.change(maritalstatus, { target: { value: 106 } });
+        fireEvent.change(maritalstatus, { target: { value: 106 } });
 
         act(() => {
             fireEvent.change(maritalstatus, { target: { value: 'S' } });
@@ -160,7 +159,7 @@ describe('Indivisual addedit Master  Component', () => {
         });
     });
 
-    it('test2', async () => {
+    it('should select marital status value for married', async () => {
         const appCategoryData = {
             MARITAL_STATUS: [{ key: 'M', value: 'Married' }],
         };
@@ -168,7 +167,7 @@ describe('Indivisual addedit Master  Component', () => {
         customRender(<FormWrapper appCategoryData={appCategoryData} />);
 
         const maritalstatus = screen.getByRole('combobox', { name: 'Maritial Status' });
-        // fireEvent.change(maritalstatus, { target: { value: 106 } });
+        fireEvent.change(maritalstatus, { target: { value: 106 } });
 
         act(() => {
             fireEvent.change(maritalstatus, { target: { value: 'M' } });

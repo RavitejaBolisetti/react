@@ -3,16 +3,16 @@ import customRender from '@utils/test-utils';
 import { fireEvent, screen, act } from '@testing-library/react';
 import { ViewDetail } from '@components/common/CustomerMaster/IndividualCustomer/CustomerDetail/CustomerNameChange/ViewDetail';
 
-describe('Add Edit Form component', () => {
+describe('View Form component', () => {
 
-    it('should render the add edit form component', () => {
+    it('should render view form component', () => {
         const styles={
             cardInsideBox: ''
         }
         customRender(<ViewDetail styles={styles} />);
     });
 
-    it('test1', async () => {
+    it('should click on buttons', async () => {
 
         const formData={
             customerNameChangeRequest: {id: 1, supportingDocuments: [{id:106}]}
@@ -37,7 +37,7 @@ describe('Add Edit Form component', () => {
         fireEvent.click(plusBtn[1]);
     });
 
-    it('test2', async () => {
+    it('should click on rejection model  Cancel buttons', async () => {
 
         const formData={
             customerNameChangeRequest: {id: 1, supportingDocuments: [{id:106}]}
@@ -58,7 +58,7 @@ describe('Add Edit Form component', () => {
 
     });
 
-    it('test3', async () => {
+    it('should click on rejection model Sun=bmit button', async () => {
 
         const formData={
             customerNameChangeRequest: {id: 1, supportingDocuments: [{id:106}]}

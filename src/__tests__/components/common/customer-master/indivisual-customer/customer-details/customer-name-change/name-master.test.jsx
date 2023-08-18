@@ -13,14 +13,14 @@ const FormWrapper = (props) => {
     return <CustomerNameChangeMaster form={form} {...props} />;
 };
 
-describe('Corporate customer addedit Details render', () => {
-    it('should render addedit details page', async () => {
+describe('Corporate nameChnage master Details render', () => {
+    it('should render nameChnage details page', async () => {
         const mockStore = createMockStore({
             auth: { userId: 123 },
             data: {
                 CustomerMaster: {
                     CustomerDetailsIndividual: { isLoaded: true },
-                    ViewDocument: { isLoaded: true, data: [{id: 106}] },
+                    ViewDocument: { isLoaded: true, data: [{ id: 106 }] },
                 },
                 ConfigurableParameterEditing: { filteredListData: [{ id: '1', value: 'kai' }] },
                 SupportingDocument: { isLoaded: true },
@@ -31,9 +31,8 @@ describe('Corporate customer addedit Details render', () => {
                 <FormWrapper {...props} selectedCustomerId={'kai'} setCustomerNameList={jest.fn()} />
             </Provider>
         );
-        
     });
-    it('test2', async () => {
+    it('should render all fields', async () => {
         const prop2 = { formActionType: { viewMode: false } };
         const mockStore = createMockStore({
             auth: { userId: 123 },
@@ -65,7 +64,7 @@ describe('Corporate customer addedit Details render', () => {
         const closeImg = screen.getByRole('img', { name: 'close' });
         fireEvent.click(closeImg);
     });
-    it('test3', async () => {
+    it('should be able to close history', async () => {
         const prop2 = { formActionType: { viewMode: false } };
         const mockStore = createMockStore({
             auth: { userId: 123 },

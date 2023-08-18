@@ -13,8 +13,8 @@ const FormWrapper = (props) => {
     return <CustomerDetailMaster form={form} {...props} />;
 };
 
-describe('Corporate customer addedit Details render', () => {
-    it('should render addedit details page', async () => {
+describe('Corporate customer  Details render', () => {
+    it('should render  details page', async () => {
         const mockStore = createMockStore({
             auth: { userId: 123 },
             data: {
@@ -32,7 +32,7 @@ describe('Corporate customer addedit Details render', () => {
         );
     });
 
-    it('test1', async () => {
+    it('should render all fields', async () => {
         customRender(<FormWrapper {...props} setIsHistoryVisible={jest.fn()} />);
         const mobileNumber = screen.getByRole('textbox', { name: 'Mobile Number' });
         fireEvent.change(mobileNumber, { target: { value: '1234567890' } });
