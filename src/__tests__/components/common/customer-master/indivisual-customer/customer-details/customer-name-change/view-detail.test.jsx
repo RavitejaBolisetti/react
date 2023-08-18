@@ -78,7 +78,4 @@ describe('View Form component', () => {
         fireEvent.click(submitBtn);
 
     });
-
-
-
 });

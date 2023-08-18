@@ -70,4 +70,8 @@ describe('Corporate customer  Details render', () => {
         const viewHistory = screen.getByRole('button', { name: 'View History' });
         fireEvent.click(viewHistory);
     });
+    test('should check view details', () => {
+        const prop = { formActionType: { viewMode: true } };
+        customRender(<FormWrapper {...prop} />);
+    });
 });
