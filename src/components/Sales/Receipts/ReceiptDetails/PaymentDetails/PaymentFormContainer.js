@@ -10,6 +10,7 @@ import { validateRequiredSelectField } from 'utils/validation';
 
 import styles from 'components/common/Common.module.css';
 
+import { PAYMENT_MODE } from 'components/Sales/Receipts/utils/receiptDetailsPaymentMode';
 import { CashForm } from './CashForm';
 import { ChequeForm } from './ChequeForm';
 import { CreditForm } from './CreditForm';
@@ -38,16 +39,16 @@ const PaymentFormContainer = (props) => {
     const RenderPaymentForm = (formInstance) => {
         // if (!formInstance) return undefined;
         switch (formInstance) {
-            case 'C': {
+            case PAYMENT_MODE?.CASH?.KEY: {
                 return <CashForm />;
             }
-            case 'D': {
+            case PAYMENT_MODE?.CHEQUE_DD?.KEY: {
                 return <ChequeForm {...props} />;
             }
-            case 'O': {
+            case PAYMENT_MODE?.RTGS?.KEY: {
                 return <NeftForm {...props} />;
             }
-            case 'R': {
+            case PAYMENT_MODE?.CREDIT_CARD?.KEY: {
                 return <CreditForm />;
             }
             default:
