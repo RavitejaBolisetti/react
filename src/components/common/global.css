@@ -1167,7 +1167,22 @@ p {
 
 /* AntD Space Design End*/
 
+/* AntD Descriptions Design Start*/
+:global .ant-descriptions .ant-descriptions-view .ant-descriptions-row:nth-child(odd) .ant-descriptions-item {
+    padding-bottom: 0;
+}
+
+:global .ant-descriptions .ant-descriptions-view .ant-descriptions-row:nth-child(even) .ant-descriptions-item {
+    padding-bottom: 20px;
+}
+
+/* AntD Descriptions Design End*/
+
 /* Miscellaneous CSS Design Start*/
+:global .ant-tooltip {
+    pointer-events: none;
+}
+
 :global .rc-virtual-list-scrollbar.rc-virtual-list-scrollbar-show {
     display: block !important;
 }

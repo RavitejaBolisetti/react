@@ -42,6 +42,7 @@ import { Receipt } from './receipt';
 import { VehicleModelandTaxChargesCategory } from './VehicleModelTaxChargesCategory';
 import { Report } from './report';
 import { VehicleReceiptChecklist } from './VehicleReceiptCheckList';
+import { vehicleAllotmentData } from './vehicleAllotment';
 
 export const data = combineReducers({
     Menu,
@@ -81,4 +82,5 @@ export const data = combineReducers({
     VehicleModelandTaxChargesCategory,
     Report,
     VehicleReceiptChecklist,
+    vehicleAllotmentData,
 });

@@ -33,6 +33,10 @@
     margin-top: -26px;
 } */
 
+.viewAllotment .selectSearchBg :global .ant-form-vertical .ant-form-item:last-child {
+    margin-top: -26px;
+}
+
 .selectSearchBg :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) {
     margin-top: -4px;
     background-color: #ffffff;
@@ -79,6 +83,7 @@
 
 .selectSearchBg :global .ant-form-vertical .ant-form-item:last-child .ant-form-item-explain .ant-form-item-explain-error {
     position: absolute;
+    z-index: 99;
     left: 140px;
     background: #fee3d4;
     color: #ed302d;

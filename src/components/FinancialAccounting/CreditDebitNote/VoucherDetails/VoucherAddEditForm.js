@@ -9,7 +9,7 @@ import { Col, Input, Form, Row, Button } from 'antd';
 import { withModal } from 'components/withModal';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
-import { validateRequiredInputField, validateRequiredSelectField, validationNumber } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
 
 import styles from 'components/common/Common.module.css';
 
@@ -133,7 +133,7 @@ export const AdvanceForm = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Form.Item label="Amount" name="amount" rules={[validateRequiredInputField('Amount'), validationNumber('amount')]}>
+                            <Form.Item label="Amount" name="amount" rules={[validateRequiredInputField('Amount'),validateNumberWithTwoDecimalPlaces('Amount')]}>
                                 <Input maxLength={30} placeholder={preparePlaceholderText('Amount')} />
                             </Form.Item>
                             <Form.Item name="id" hidden></Form.Item>

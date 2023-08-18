@@ -35,9 +35,9 @@ const ReceiptMainConatinerMain = (props) => {
             case RECEIPT_SECTION.APPORTION_DETAILS.id: {
                 return <ApportionDetailMaster {...myProps} />;
             }
-            case RECEIPT_SECTION.THANK_YOU_PAGE.id: {
-                return <ThankYouMaster {...myProps} />;
-            }
+            // case RECEIPT_SECTION.THANK_YOU_PAGE.id: {
+            //     return <ThankYouMaster {...myProps} />;
+            // }
             default: {
                 return <PartyDetailMaster {...myProps} />;
             }

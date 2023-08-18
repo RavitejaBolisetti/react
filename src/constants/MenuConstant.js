@@ -453,4 +453,11 @@ export const MenuConstant = {
         icon: undefined,
         parentMenuId: 'FINA-01',
     },
+
+    [getMenyKey('FINA-02.01')]: {
+        key: 'FINA-02.01',
+        link: routing.ROUTING_RECEIPTS,
+        icon: undefined,
+        parentMenuId: 'FINA-02',
+    },
 };
