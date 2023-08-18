@@ -36,7 +36,13 @@ describe("Render AddEditForm Component",()=>{
 
     it('load AddEditForm component', ()=>{
         
-        customRender(<FormWrapper {...props} onCloseAction={jest.fn()} setSaveAndAddNewBtnClicked={jest.fn()} />)
+        customRender(<FormWrapper {...props} 
+            onCloseAction={jest.fn()} 
+            setIsFormVisible={jest.fn()} 
+            setFormBtnActive={jest.fn()} 
+            setFormData={jest.fn()} 
+            setSaveAndAddNewBtnClicked={jest.fn()} 
+        />)
 
         const closeBtn = screen.getByRole('button', {name:'Close'})
         fireEvent.click(closeBtn)
