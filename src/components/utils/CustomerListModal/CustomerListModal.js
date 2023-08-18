@@ -14,6 +14,7 @@ import { tableColumn } from './tableColumn';
 import styles from 'components/common/Common.module.css';
 
 export const CustomerListBase = (props) => {
+    console.log('setSelectedRowData---->', props)
     const { data, handleSelectedData, setSelectedRowData } = props;
     const [formBtnActive, setFormBtnActive] = useState(false);
     const [selectedRows, setSelectedRows] = useState([]);
@@ -57,7 +58,7 @@ export const CustomerListBase = (props) => {
             <Row gutter={20}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignLeft}></Col>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignRight}>
-                    <Button htmlType="submit" type="primary" onClick={handleViewDetail} disabled={!formBtnActive}>
+                    <Button data-testid="counter-text" htmlType="submit" type="primary" onClick={handleViewDetail} disabled={!formBtnActive}>
                         View Details
                     </Button>
                 </Col>

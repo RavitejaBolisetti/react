@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Row, Col, Collapse, Descriptions, Divider } from 'antd';
+import { Row, Col, Collapse, Descriptions, Divider,Space } from 'antd';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
