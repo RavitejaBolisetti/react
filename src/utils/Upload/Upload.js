@@ -324,7 +324,7 @@ const UploadBase = (props) => {
                     </>
                 ) : (
                     <>
-                        <Dragger key={key} className={fileList.length === 0 ? '' : uploadTime ? styles.uploadDraggerStrip : styles.uploadDraggerBox} fileList={fileList} customRequest={handleUpload} {...uploadProps}>
+                        <Dragger key={key} className={fileList?.length === 0 ? '' : uploadTime ? styles.uploadDraggerStrip : styles.uploadDraggerBox} fileList={fileList} customRequest={handleUpload} {...uploadProps}>
                             <Space direction="vertical">
                                 <UploadBoxIcon />
                                 <div>
