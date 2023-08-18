@@ -71,6 +71,8 @@ const SupportingDocumentBase = (props) => {
     const { buttonData, setButtonData, formActionType, handleFormValueChange } = props;
     const { viewDocument, viewListShowLoading, downloadFile } = props;
 
+    const { payload, setPayload } = props;
+
     const [uploadedFile, setUploadedFile] = useState();
     const [deletedUpload, setdeletedUpload] = useState([]);
     const [viewSupportingData, setviewSupportingData] = useState([]);
@@ -80,7 +82,6 @@ const SupportingDocumentBase = (props) => {
     const [supportingDataView, setSupportingDataView] = useState();
     const [fileList, setFileList] = useState([]);
     const [uploadedFileName, setUploadedFileName] = useState('');
-    const [payload, setPayload] = useState([]);
     const [mandatoryFields, setMandatoryFields] = useState(false);
 
     const supportedFileTypes = ['image/png', 'image/jpg', 'image/jpeg', 'application/pdf'];
@@ -89,10 +90,10 @@ const SupportingDocumentBase = (props) => {
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
     useEffect(() => {
-        if (supportingData && supportingData?.length) {
-            setviewSupportingData(supportingData);
+        if ((supportingData && supportingData?.length) || payload?.length) {
+            setviewSupportingData([...payload, ...supportingData]);
         }
-    }, [supportingData]);
+    }, [supportingData]);   
 
     useEffect(() => {
         if (fileList.length === 0) {

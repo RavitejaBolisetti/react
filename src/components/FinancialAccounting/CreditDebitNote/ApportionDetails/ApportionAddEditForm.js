@@ -11,7 +11,7 @@ import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/prepareP
 import { dateFormat, formatDateToCalenderDate } from 'utils/formatDateTime';
 import { disableFutureDate } from 'utils/disableDate';
 
-import { validateRequiredInputField, validateRequiredSelectField, validationNumber } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
 
 import styles from 'components/common/Common.module.css';
 
@@ -168,12 +168,12 @@ export const AdvanceForm = (props) => {
                     </Row>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                            <Form.Item label="Write-Off Amount" name="writeOffAmount" rules={[validateRequiredInputField('Write-Off Amount'), validationNumber('write-off amount')]}>
+                            <Form.Item label="Write-Off Amount" name="writeOffAmount" rules={[validateRequiredInputField('Write-Off Amount'), validateNumberWithTwoDecimalPlaces('write-off amount')]}>
                                 <Input maxLength={30} placeholder={preparePlaceholderText('Write-Off Amount')} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                            <Form.Item label="Apportion Amount" name="apportionAmount" rules={[validateRequiredInputField('Apportion Amount'), validationNumber('apportion amount')]}>
+                            <Form.Item label="Apportion Amount" name="apportionAmount" rules={[validateRequiredInputField('Apportion Amount'), validateNumberWithTwoDecimalPlaces('apportion amount')]}>
                                 <Input maxLength={30} placeholder={preparePlaceholderText('Apportion Amount')} />
                             </Form.Item>
                         </Col>

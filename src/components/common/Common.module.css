@@ -486,6 +486,10 @@
 .floatRight {
     float: right;
 }
+.NewChecklist {
+    float: right;
+    color: #ff3e5b !important;
+}
 
 .textRight {
     text-align: right;
