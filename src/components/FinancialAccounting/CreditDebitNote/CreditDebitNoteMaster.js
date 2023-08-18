@@ -373,6 +373,8 @@ export const CreditDebitNoteMasterBase = (props) => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
 
+    
+
     const onCloseAction = () => {
         form.resetFields();
         form.setFieldsValue();
@@ -420,7 +422,7 @@ export const CreditDebitNoteMasterBase = (props) => {
         title,
         data,
         typeData,
-
+        
         searchForm,
         onFinishSearch,
         handleResetFilter,
@@ -450,7 +452,6 @@ export const CreditDebitNoteMasterBase = (props) => {
 
         icon: <FilterIcon size={20} />,
         titleOverride: 'Advance Filters',
-
         onCloseAction: onAdvanceSearchCloseAction,
         handleResetFilter,
         filterString,

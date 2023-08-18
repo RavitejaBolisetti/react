@@ -63,8 +63,8 @@ const VehicleRecieptCheckListMain = (props) => {
     const { form, selectedCheckListId, section, formActionType, handleFormValueChange, NEXT_ACTION } = props;
 
     const { chassisNumber } = selectedRecord;
+    const { checkListDataModified, setcheckListDataModified } = props;
 
-    const [checkListDataModified, setcheckListDataModified] = useState([]);
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [aggregateForm] = Form.useForm();
     const [AdvanceformData, setAdvanceformData] = useState([]);
@@ -98,16 +98,27 @@ const VehicleRecieptCheckListMain = (props) => {
     }, [userId, chassisNumber, isChecklistDataLoaded]);
 
     useEffect(() => {
+        console.log('called');
         if (isChecklistDataLoaded && ChecklistData) {
-            setcheckListDataModified(
-                ChecklistData['checklistDetailList']?.map((element, index) => {
-                    return { ...element, ismodified: false };
-                })
-            );
+            if (checkListDataModified?.length > 0) {
+                setcheckListDataModified(
+                    ChecklistData['checklistDetailList']?.map((element, index) => {
+                        const foundData = checkListDataModified?.find((item) => item?.ansMstId === element?.ansMstId);
+                        if (!foundData) return { ...element, ismodified: false };
+                        else return { ...foundData };
+                    })
+                );
+            } else {
+                setcheckListDataModified(
+                    ChecklistData['checklistDetailList']?.map((element, index) => {
+                        return { ...element, ismodified: false };
+                    })
+                );
+            }
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isChecklistDataLoaded, ChecklistData]);
+    }, [isChecklistDataLoaded, ChecklistData, formActionType]);
 
     const onFinish = (values) => {
         if (checkListDataModified?.length) {

@@ -4,16 +4,15 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect } from 'react';
-import { Col, Form, Row, Select, Button, DatePicker } from 'antd';
+import { Col, Form, Row, Select, Button } from 'antd';
 
 import { withModal } from 'components/withModal';
-import { validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
 import styles from 'components/common/Common.module.css';
 
 export const AdvancedSearchFrom = (props) => {
-    const { setAdvanceSearchVisible, otfStatusList, typeData, productHierarchyData } = props;
+    const { setAdvanceSearchVisible, typeData, productHierarchyData } = props;
     const {
         filterString,
         setFilterString,
