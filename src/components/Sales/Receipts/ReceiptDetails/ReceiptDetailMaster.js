@@ -143,6 +143,7 @@ const ReceiptDetailMasterBase = (props) => {
                 setIsListEditing(false);
                 setEditingListData({});
                 paymentForm.resetFields();
+                setButtonData({ ...buttonData, formBtnActive: true });
             })
             .catch((err) => {
                 console.error('err', err);
@@ -163,11 +164,12 @@ const ReceiptDetailMasterBase = (props) => {
                 setRequestPayload({ ...requestPayload, receiptsDetails: finaldata });
                 handleButtonClick({ buttonAction: NEXT_ACTION });
             }
+            setButtonData({ ...buttonData, formBtnActive: false });
         });
     };
 
     const handleFormValueChange = () => {
-        setButtonData({ ...buttonData, formBtnActive: true });
+        // setButtonData({ ...buttonData, formBtnActive: true });
     };
 
     const onFinishFailed = () => {};

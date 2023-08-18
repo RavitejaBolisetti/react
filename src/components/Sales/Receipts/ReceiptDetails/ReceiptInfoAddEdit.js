@@ -30,7 +30,7 @@ const PaymentAddEdit = (props) => {
 
     return (
         <>
-            <Collapse onChange={() => handleCollapse(1)} expandIcon={expandIcon} expandIconPosition="end" collapsible="icon" activeKey={openAccordian}>
+            <Collapse onChange={() => handleCollapse(1)} expandIcon={expandIcon} expandIconPosition="end" collapsible="icon" activeKey={[1]}>
                 <Panel header="Receipt Information" key="1">
                     <Divider />
                     <Row gutter={16}>
