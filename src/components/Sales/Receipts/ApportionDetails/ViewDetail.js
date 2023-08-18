@@ -7,10 +7,12 @@ import React from 'react';
 import { Row, Col, Card, Descriptions } from 'antd';
 import styles from 'components/common/Common.module.css';
 
-import { ListDataTable } from 'utils/ListDataTable';
+import { DataTable } from 'utils/dataTable';
+
+import { tableColumnApportion } from './tableColumnApportion';
 
 const ViewDetailMain = (props) => {
-    const { formData, isLoading, typeData, ...viewProps } = props;
+    const { formData, isLoading, typeData, formActionType, tableData, bindCodeValue, ...viewProps } = props;
 
     // const viewProps = {
     //     bordered: false,
@@ -23,7 +25,8 @@ const ViewDetailMain = (props) => {
         <Card className={styles.drawerCardView}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable {...viewProps} showAddButton={false} />
+                    <DataTable tableColumn={tableColumnApportion({ formActionType, bindCodeValue })} scroll={{ x: 1000 }} tableData={tableData} pagination={false} />
+                    {/* <ListDataTable {...viewProps} showAddButton={false} /> */}
                 </Col>
             </Row>
         </Card>

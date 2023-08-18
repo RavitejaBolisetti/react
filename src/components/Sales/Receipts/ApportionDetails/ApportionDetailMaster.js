@@ -119,7 +119,7 @@ const ApportionDetailMasterBase = (props) => {
 
         const onSuccessAction = (res) => {
             const apportionValues = res?.data[0];
-            setShowApportionForm(values);
+            setShowApportionForm(apportionValues);
             apportionForm.setFieldsValue({
                 documentDate: formatDateToCalenderDate(apportionValues?.invoiceDate),
                 documentAmount: apportionValues?.invoiceAmount,

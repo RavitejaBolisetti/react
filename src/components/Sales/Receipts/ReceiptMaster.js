@@ -348,7 +348,6 @@ export const ReceiptMasterBase = (props) => {
                 if (buttonAction === VIEW_ACTION) {
                     receiptStatus === QUERY_BUTTONS_CONSTANTS.CANCELLED.key ? setButtonData({ ...Visibility, editBtn: false, cancelReceiptBtn: false }) : receiptStatus === QUERY_BUTTONS_CONSTANTS.APPORTION.key ? setButtonData({ ...Visibility, editBtn: false, cancelReceiptBtn: true }) : setButtonData({ ...Visibility, editBtn: true, cancelReceiptBtn: true });
                 }
-                // (buttonAction === VIEW_ACTION && receiptStatus === QUERY_BUTTONS_CONSTANTS.OPENED.key) || receiptStatus === QUERY_BUTTONS_CONSTANTS.APPORTION.key ? setButtonData({ ...Visibility, cancelReceiptBtn: true }) : setButtonData({ ...Visibility });
             }
         }
         setIsFormVisible(true);
@@ -435,6 +434,11 @@ export const ReceiptMasterBase = (props) => {
         setAdvanceSearchVisible(false);
     };
 
+    const onCancelCloseAction = () => {
+        setCancelReceiptVisible(false);
+        cancelReceiptForm.resetFields();
+    };
+
     const removeFilter = (key) => {
         if (key === 'searchParam') {
             const { searchType, searchParam, ...rest } = filterString;
@@ -451,6 +455,7 @@ export const ReceiptMasterBase = (props) => {
 
     const handleCloseReceipt = () => {
         setCancelReceiptVisible(false);
+        cancelReceiptForm.resetFields();
     };
 
     const handleCancelReceipt = () => {
@@ -565,6 +570,7 @@ export const ReceiptMasterBase = (props) => {
         setRequestPayload,
         receipt,
         setReceipt,
+        receiptStatus,
 
         setButtonData,
         handleButtonClick,
@@ -597,7 +603,7 @@ export const ReceiptMasterBase = (props) => {
         handleCloseReceipt,
         handleCancelReceipt,
         cancelReceiptForm,
-        onCloseAction,
+        onCloseAction: onCancelCloseAction,
     };
 
     return (

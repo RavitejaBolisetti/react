@@ -9,6 +9,7 @@ import { Col, Form, Row, Select, DatePicker } from 'antd';
 import { withModal } from 'components/withModal';
 import { validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
+import { customSelectBox } from 'utils/customSelectBox';
 
 import { dateFormat, formatDate, formatDateToCalenderDate } from 'utils/formatDateTime';
 import { disableFutureDate } from 'utils/disableDate';
@@ -80,7 +81,7 @@ export const AdvancedSearchFrom = (props) => {
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form.Item initialValue={filterString?.grnType} label="GRN Type" name="grnType">
-                        <Select placeholder={preparePlaceholderSelect('')} fieldNames={{ label: 'value', value: 'key' }} options={grnTypeData} {...selectProps} className={styles.headerSelectField}></Select>
+                        {customSelectBox({ data: grnTypeData, placeholder: preparePlaceholderSelect('GRN Type') })}
                     </Form.Item>
                 </Col>
             </Row>

@@ -7,7 +7,7 @@ import React, { useEffect } from 'react';
 import { Col, Form, Row, Select, Button, DatePicker } from 'antd';
 
 import { withModal } from 'components/withModal';
-import { validateRequiredSelectField } from 'utils/validation';
+import { customSelectBox } from 'utils/customSelectBox';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
 import { dateFormat, formatDate, formatDateToCalenderDate } from 'utils/formatDateTime';
@@ -72,12 +72,14 @@ export const AdvancedSearchFrom = (props) => {
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item initialValue={filterString?.receiptType} label="Receipt Type" name="receiptType">
-                        <Select placeholder={preparePlaceholderSelect('Receipt Type')} fieldNames={{ label: 'value', value: 'key' }} options={receiptType} {...selectProps} className={styles.headerSelectField}></Select>
+                        {customSelectBox({ data: receiptType, placeholder: preparePlaceholderSelect('Receipt Type') })}
+                        {/* <Select placeholder={preparePlaceholderSelect('Receipt Type')} fieldNames={{ label: 'value', value: 'key' }} options={receiptType} {...selectProps} className={styles.headerSelectField}></Select> */}
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item initialValue={filterString?.partySegment} label="Party Segment" name="partySegment">
-                        <Select placeholder={preparePlaceholderSelect('Party Segment')} fieldNames={{ label: 'value', value: 'key' }} options={partySegmentType} {...selectProps} className={styles.headerSelectField}></Select>
+                        {customSelectBox({ data: partySegmentType, placeholder: preparePlaceholderSelect('Party Segment') })}
+                        {/* <Select placeholder={preparePlaceholderSelect('Party Segment')} fieldNames={{ label: 'value', value: 'key' }} options={partySegmentType} {...selectProps} className={styles.headerSelectField}></Select> */}
                     </Form.Item>
                 </Col>
             </Row>
