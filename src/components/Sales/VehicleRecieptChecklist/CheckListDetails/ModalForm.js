@@ -11,6 +11,7 @@ import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import { validateRequiredInputField } from 'utils/validation';
 import { ModalButtons } from 'components/common/Button';
+import { convertDateTimedayjs } from 'utils/formatDateTime';
 
 import { MakeCheckResult, setCheckresultValue, BindFormItems } from './CheckListUtils';
 
@@ -35,7 +36,8 @@ export const ChecklistModalForms = (props) => {
             .validateFields()
             .then(() => {
                 const values = aggregateForm.getFieldsValue();
-                const data = { ...AdvanceformData, ...values, ismodified: true, checkResult: MakeCheckResult({ type: AdvanceformData?.checklistType, data: values }) };
+                console.log('valuesDate', convertDateTimedayjs(values?.answerToDate), convertDateTimedayjs(values?.answerFromDate));
+                const data = { ...AdvanceformData, ...values, ismodified: true, checkResult: MakeCheckResult({ type: AdvanceformData?.checklistType, data: { ...values, answerToDate: convertDateTimedayjs(values?.answerToDate), answerFromDate: convertDateTimedayjs(values?.answerFromDate) } }) };
                 const newarr = [...checkListDataModified];
                 newarr[AdvanceformData?.index] = data;
                 setcheckListDataModified(newarr);
