@@ -120,6 +120,13 @@ describe('Indivisual addedit Master  Component', () => {
         const appCategoryData = {
             GENDER_CD: [{ key: 'MALE', value: 'Male' }],
             MARITAL_STATUS: [{ key: 'MARRIED', value: 'Married' }],
+            OCC_TYPE: [{ key: 'BUISNESS', value: 'Buisness' }],
+            Annual_Income: [{ key: 'ANNUAL', value: '15-20 lakhs' }],
+            Vehicle_Used: [{ key: 'TAXI', value: 'TAXI' }],
+            MOTHER_TOUNGE: [{ key: 'HINDI', value: 'Hindi' }],
+            APP_CAT: [{ key: 'APP CAT', value: 'APP CAT 2' }],
+            APP_SUB_CAT: [{ key: 'APP SUB CAT', value: 'APP SUB CAT 2' }],
+            CUS_CAT: [{ key: 'COMMON', value: 'Common' }],
         };
 
         customRender(<FormWrapper setActiveKey={setActiveKey} activeKey={activeKey} formData={formData} isLoading={isLoading} appCategoryData={appCategoryData} />);
@@ -137,44 +144,36 @@ describe('Indivisual addedit Master  Component', () => {
     });
 
     it('test1', async () => {
-
-        const appCategoryData={
-            MARITAL_STATUS: [
-                {key: 'S', value: 'Single'}
-            ]
-        }
+        const appCategoryData = {
+            MARITAL_STATUS: [{ key: 'S', value: 'Single' }],
+        };
 
         customRender(<FormWrapper appCategoryData={appCategoryData} />);
 
         const maritalstatus = screen.getByRole('combobox', { name: 'Maritial Status' });
         // fireEvent.change(maritalstatus, { target: { value: 106 } });
 
-        act(()=> {
+        act(() => {
             fireEvent.change(maritalstatus, { target: { value: 'S' } });
-            const kai=screen.getByText('Single');
+            const kai = screen.getByText('Single');
             fireEvent.click(kai);
-        })
-        
+        });
     });
 
     it('test2', async () => {
-
-        const appCategoryData={
-            MARITAL_STATUS: [
-                {key: 'M', value: 'Married'}
-            ]
-        }
+        const appCategoryData = {
+            MARITAL_STATUS: [{ key: 'M', value: 'Married' }],
+        };
 
         customRender(<FormWrapper appCategoryData={appCategoryData} />);
 
         const maritalstatus = screen.getByRole('combobox', { name: 'Maritial Status' });
         // fireEvent.change(maritalstatus, { target: { value: 106 } });
 
-        act(()=> {
+        act(() => {
             fireEvent.change(maritalstatus, { target: { value: 'M' } });
-            const kai=screen.getByText('Married');
+            const kai = screen.getByText('Married');
             fireEvent.click(kai);
-        })
-        
+        });
     });
 });

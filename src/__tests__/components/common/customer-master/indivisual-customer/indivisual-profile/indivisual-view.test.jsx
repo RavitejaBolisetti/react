@@ -31,10 +31,9 @@ describe('ViewDetailMain Component', () => {
 
         expect(setActiveKey).toHaveBeenCalledWith([1]);
     });
-
-    it('test1', () => {
+    it('should toggle Collapse panel on header click', () => {
         const setActiveKey = jest.fn();
-        const activeKey = [1, 2 ,3];
+        const activeKey = [1, 2, 3];
         const formData = {
             dateOfBirth: '1990-01-01',
             gender: 'MALE',
