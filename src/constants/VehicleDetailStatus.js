@@ -57,5 +57,5 @@ export const VEHICLE_DETAIL_STATUS = {
         title: 'Rejected',
         desc: 'Rejected',
         displayOnView: false,
-    },
+    }
 };

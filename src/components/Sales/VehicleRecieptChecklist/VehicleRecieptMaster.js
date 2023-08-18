@@ -21,7 +21,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { VEHICLE_RECIEPT_CHECKLIST_SECTION } from 'constants/VehicleRecieptCheckListSection';
 import { otfvehicleDetailsLovDataActions } from 'store/actions/data/otf/vehicleDetailsLov';
 
-import { formatDateToCalenderDate } from 'utils/formatDateTime';
+import { formatDateToCalenderDate, convertDateTime } from 'utils/formatDateTime';
 
 import { validateRequiredInputField } from 'utils/validation';
 import { LANGUAGE_EN } from 'language/en';
@@ -131,6 +131,14 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         deliveryNote: false,
         cancelOtfBtn: false,
     };
+    const pageIntialState = {
+        pageSize: 10,
+        current: 1,
+    };
+    const rulesIntialstate = {
+        fromdate: false,
+        todate: false,
+    };
 
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
@@ -138,13 +146,13 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
     const [buttonType, setbuttonType] = useState(QUERY_BUTTONS_CONSTANTS?.PENDING?.key);
 
-    const [page, setPage] = useState({ pageSize: 10, current: 1 });
+    const [page, setPage] = useState({ ...pageIntialState });
     const dynamicPagination = true;
     const [formData, setFormData] = useState([]);
     const [otfSearchRules, setOtfSearchRules] = useState({ rules: [validateRequiredInputField('search parametar')] });
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [actionButtonVisibility, setactionButtonVisibility] = useState({ canEdit: false, canView: false, DeleteIcon: false, canAdd: true });
-    const [rules, setrules] = useState({ fromdate: false, todate: false });
+    const [rules, setrules] = useState({ ...rulesIntialstate });
     const onSuccessAction = (res) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
@@ -159,6 +167,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
 
     const handleButtonQuery = (item, keyName) => {
         handleResetFilter();
+        setPage({ ...pageIntialState });
         const buttonkey = item?.key;
         setbuttonType(buttonkey);
 
@@ -187,7 +196,6 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
                 key: 'checklistStatus',
                 title: 'checklistStatus',
                 value: buttonType,
-                name: buttonType,
                 canRemove: false,
                 filter: false,
             },
@@ -195,7 +203,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
                 key: 'grnNumber',
                 title: 'grnNumber',
                 value: filterString?.grnNumber,
-                name: filterString?.grnNumber,
+                name: filterString?.grnNumber ?? null,
                 canRemove: true,
                 filter: true,
             },
@@ -203,7 +211,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
                 key: 'fromDate',
                 title: 'Reciept From Date',
                 value: filterString?.fromDate,
-                name: filterString?.fromDate,
+                name: convertDateTime(filterString?.fromDate, 'DD MMM YYYY', 'fromDate'),
                 canRemove: true,
                 filter: true,
             },
@@ -211,7 +219,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
                 key: 'toDate',
                 title: 'Reciept To Date',
                 value: filterString?.toDate,
-                name: filterString?.toDate,
+                name: convertDateTime(filterString?.toDate, 'DD MMM YYYY', 'toDate'),
                 canRemove: false,
                 filter: true,
             },
@@ -250,7 +258,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, page, buttonType]);
-    console.log('filterString', filterString);
+    console.log('filterString', extraParams);
 
     useEffect(() => {
         if (userId) {
@@ -286,7 +294,6 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         if (currentSection && sectionName) {
             const section = Object.values(sectionName)?.find((i) => i.id === currentSection);
             setSection(section);
-
             const nextSection = Object.values(sectionName)?.find((i) => i?.displayOnList && i.id > currentSection);
             setLastSection(!nextSection?.id);
         }
@@ -299,7 +306,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         if (isAdvanceSearchVisible && filterString) {
             advanceFilterForm.resetFields();
             const { toDate, fromDate } = filterString;
-            setrules({ fromdate: true, todate: true });
+            if (fromDate && toDate) setrules({ fromdate: true, todate: true });
             advanceFilterForm.setFieldsValue({ ...filterString, fromDate: formatDateToCalenderDate(fromDate), toDate: formatDateToCalenderDate(toDate) });
         } else {
             setrules({ fromdate: false, todate: false });
@@ -331,6 +338,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
             setShowDataLoading(true);
         }
         setFilterString();
+        setrules({ ...rulesIntialstate });
         advanceFilterForm.resetFields();
     };
 
@@ -486,12 +494,11 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
     const removeFilter = (key) => {
         if (key === 'fromDate') {
             const { fromDate, toDate, ...rest } = filterString;
-            if (Object.keys(rest)?.length === 1) setFilterString();
-            else setFilterString({ ...rest });
+            setrules({ ...rulesIntialstate });
+            setFilterString({ ...rest });
         } else {
             const { [key]: names, ...rest } = filterString;
-            if (Object.keys(rest)?.length === 1) setFilterString();
-            else setFilterString({ ...rest });
+            setFilterString({ ...rest });
         }
     };
 
@@ -572,6 +579,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         saveButtonName: isLastSection ? 'Submit' : 'Save & Next',
         VehicelReceiptChecklistOnfinish: onFinish,
         supportingData: ChecklistData,
+        buttonType: buttonType === QUERY_BUTTONS_CONSTANTS?.COMPLETED?.key ? true : false,
     };
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,

@@ -67,7 +67,7 @@ export default function DataTable({ isLoading, rowSelection = undefined, showSiz
             <div className={styles.mainDataTable}>
                 <Table rowSelection={rowSelection} pagination={{ ...tablePagination }} columns={isLoading ? tableSkeletonColumn : tableColumnWithSrl} dataSource={isLoading ? skeletonData : tableData} onChange={handleTableChange} rowKey={rowKey} scroll={scroll} />
             </div>
-            {!isLoading && tablePagination && (
+            {!isLoading && tablePagination && tableData?.length > 0 && (
                 <Row gutter={20} className={styles.marT20}>
                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                         {tablePagination?.total && (

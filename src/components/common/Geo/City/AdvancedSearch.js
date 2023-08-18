@@ -16,11 +16,7 @@ export const AdvancedSearchFrom = (props) => {
     const { isDataCountryLoaded, countryData, defaultCountry, handleFilterChange, filteredStateData, filteredDistrictData } = props;
     const { filterString, setFilterString, advanceFilterForm, handleResetFilter, setAdvanceSearchVisible } = props;
 
-    useEffect(() => {
-        advanceFilterForm.resetFields();
-        advanceFilterForm.setFieldsValue({ code: filterString?.code });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString]);
+   
 
     const onFinish = (values) => {
         setFilterString({ ...values, advanceFilter: true });

@@ -530,6 +530,10 @@ const ListPinCodeMasterBase = (props) => {
     const onAdvanceSearchCloseAction = () => {
         setAdvanceSearchVisible(false);
         advanceFilterForm.resetFields();
+        filterString?.countryCode && setFilteredStateData(stateData?.filter((i) => i?.parentKey === filterString?.countryCode));
+        filterString?.stateCode && setFilteredDistrictData(districtData?.filter((i) => i?.parentKey === filterString?.stateCode));
+        filterString?.districtCode && setFilteredCityData(cityData?.filter((i) => i?.parentKey === filterString?.districtCode));
+        filterString?.districtCode && setFilteredTehsilData(tehsilData?.filter((i) => i?.parentKey === filterString?.districtCode));
     };
 
     const handleResetFilter = () => {

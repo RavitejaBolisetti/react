@@ -47,7 +47,8 @@ const AddEditFormMain = (props) => {
     const APPLICATION_MOBILE = APPLICATION_DEVICE_TYPE?.MOBILE?.key;
 
     const [searchValue, setSearchValue] = useState();
-    const [activeKey, setActiveKey] = useState([]);
+    const [activeKey, setActiveKey] = useState();
+    console.log('🚀 ~ kuldeep file: AddEditForm.js:51 ~ AddEditFormMain ~ activeKey:', activeKey);
 
     const [searchItem] = Form.useForm();
 
@@ -69,22 +70,22 @@ const AddEditFormMain = (props) => {
         setDeviceType(newActiveKey);
     };
 
-    const onChange = (values) => {
+    const onCollapseChange = (key) => {
         setSearchValue('');
         searchItem.setFieldValue('search', '');
-        const isPresent = activeKey.includes(values);
-        if (isPresent) {
-            const newActivekeys = [];
-
-            activeKey.forEach((item) => {
-                if (item !== values) {
-                    newActivekeys.push(item);
-                }
-            });
-            setActiveKey(newActivekeys);
-        } else {
-            setActiveKey([...activeKey, values]);
-        }
+        setActiveKey(key.pop());
+        // const isPresent = activeKey.includes(values);
+        // if (isPresent) {
+        //     const newActivekeys = [];
+        //     activeKey.forEach((item) => {
+        //         if (item !== values) {
+        //             newActivekeys.push(item);
+        //         }
+        //     });
+        //     setActiveKey(newActivekeys);
+        // } else {
+        //     setActiveKey([...activeKey, values]);
+        // }
     };
 
     const onCheck =
@@ -143,7 +144,7 @@ const AddEditFormMain = (props) => {
 
                     return (
                         <div className={`${styles.accordianContainer} ${styles.rolemanagmentContaner}`}>
-                            <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(i)} expandIconPosition="end">
+                            <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={onCollapseChange} expandIconPosition="end">
                                 <Panel
                                     header={
                                         <Row>

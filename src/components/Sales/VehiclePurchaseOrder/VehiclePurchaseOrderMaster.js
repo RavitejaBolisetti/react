@@ -41,6 +41,7 @@ const mapStateToProps = (state) => {
         typeData: typeData,
         isDataLoaded: true,
         data: data?.paginationData,
+        totalRecords: data?.totalRecords || [],
         vehicleDetailStatusList: typeData['PO_STATS'],
         vpoTypeList: typeData['PO_TYPE'],
         vehicleDetailData: [],
@@ -67,7 +68,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 export const VehiclePurchaseOrderMasterBase = (props) => {
-    const { fetchList, saveData, listShowLoading, userId, data, vehicleDetailData } = props;
+    const { fetchList, saveData, listShowLoading, userId, data, vehicleDetailData, totalRecords } = props;
     const { typeData, moduleTitle, showGlobalNotification } = props;
     const { filterString, setFilterString, vehicleDetailStatusList, vpoTypeList, resetData } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
@@ -81,6 +82,8 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
     const [currentSection, setCurrentSection] = useState();
     const [sectionName, setSetionName] = useState();
     const [isLastSection, setLastSection] = useState(false);
+    const [page, setPage] = useState({ pageSize: 10, current: 1 });
+    const dynamicPagination = true;
 
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
@@ -165,16 +168,16 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
             {
                 key: 'orderType',
                 title: 'Order Type',
-                value: filterString?.orderTypeCode,
-                name: vpoTypeList?.find((i) => i?.key === filterString?.orderTypeCode)?.value,
+                value: filterString?.orderType,
+                name: vpoTypeList?.find((i) => i?.key === filterString?.orderType)?.value,
                 canRemove: true,
                 filter: true,
             },
             {
                 key: 'status',
                 title: 'Vehicle Purchase Status',
-                value: filterString?.purchaseOrderStatusCode,
-                name: vehicleDetailStatusList?.find((i) => i?.key === filterString?.purchaseOrderStatusCode)?.value,
+                value: filterString?.status,
+                name: vehicleDetailStatusList?.find((i) => i?.key === filterString?.status)?.value,
                 canRemove: true,
                 filter: true,
             },
@@ -189,20 +192,34 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
             {
                 key: 'pageSize',
                 title: 'Value',
-                value: 1000,
+                value: page?.pageSize,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'pageNumber',
                 title: 'Value',
-                value: 1,
+                value: page?.current,
+                canRemove: true,
+                filter: false,
+            },
+            {
+                key: 'sortBy',
+                title: 'Sort By',
+                value: page?.sortBy,
+                canRemove: true,
+                filter: false,
+            },
+            {
+                key: 'sortIn',
+                title: 'Sort Type',
+                value: page?.sortType,
                 canRemove: true,
                 filter: false,
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString]);
+    }, [filterString, page]);
 
     useEffect(() => {
         return () => {
@@ -336,13 +353,14 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         vpoCancellationForm.resetFields();
     };
     const tableProps = {
+        dynamicPagination,
+        totalRecords,
         tableColumn: tableColumn(handleButtonClick),
         tableData: data,
         showAddButton: false,
+        setPage,
     };
-    console.log('filterString', filterString);
     const removeFilter = (key) => {
-        console.log('key', key);
         if (key === 'searchParam') {
             const { searchType, searchParam, ...rest } = filterString;
             setFilterString({ ...rest });
@@ -353,7 +371,6 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
     };
 
     const handleResetFilter = (e) => {
-        // setShowDataLoading(true);
         if (filterString) {
             setShowDataLoading(true);
         }
@@ -495,6 +512,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         saveButtonName: isLastSection ? 'Submit' : 'Save & Next',
         setIsCancelVisible,
         extraParamsAfterSave: extraParams,
+        showDataLoading,
     };
     const cancelProps = {
         ...props,

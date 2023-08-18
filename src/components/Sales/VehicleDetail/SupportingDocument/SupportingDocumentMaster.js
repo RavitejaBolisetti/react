@@ -265,7 +265,7 @@ const SupportingDocumentBase = (props) => {
 
         uploadButtonName: 'Upload File',
         messageText: 'Click or drop your file here to upload',
-        validationText: 'File type should be .xlxs and max file size to be 8Mb',
+        validationText: 'File type should be png, jpg or pdf and max file size to be 8Mb',
         supportedFileTypes: ['image/png', 'image/jpeg', 'application/pdf'],
         maxSize: 8,
         supportingDocs: true,
