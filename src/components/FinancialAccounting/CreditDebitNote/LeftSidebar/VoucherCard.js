@@ -35,7 +35,7 @@ const VoucherCard = (props) => {
                         <Space>
                             <div>
                                 <div>
-                                    Voucher Number: <span className={styles.floatRight}>{selectedRecord?.voucherNumber}</span>
+                                    Voucher No: <span className={`${styles.floatRight} ${styles.textEllipsis}`} style={{width:138, textAlign: 'right'}} >{selectedRecord?.voucherNumber}</span>
                                 </div>
                                 <div>
                                     Voucher Date: <span className={styles.floatRight}>{selectedRecord?.voucherDate ? convertDate(selectedRecord?.voucherDate, monthDateFormat) : dayjs().format(monthDateFormat)}</span>
