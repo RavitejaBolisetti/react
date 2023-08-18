@@ -74,7 +74,7 @@ const AddEditFormMain = (props) => {
                     apportionForm.resetFields();
                     setModalApportionVisible(false);
                 } else {
-                    const data = { ...values, id:'' };
+                    const data = { ...values, id: '' };
                     const newarr = [...apportionList];
 
                     newarr[apportionTableFormData?.index] = data;

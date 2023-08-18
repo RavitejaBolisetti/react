@@ -28,7 +28,8 @@ const onFilterFn = (value, record) => {
     }
 };
 
-export const tblPrepareColumns = ({ title, dataIndex, render = undefined, ellipsis = false, filters = undefined, filterMode = 'tree', filterSearch = true, sortFn = undefined, width, sorter = true }) => {
+export const tblPrepareColumns = ({ title, dataIndex, localSort = true, render = undefined, ellipsis = false, filters = undefined, filterMode = 'tree', filterSearch = true, sortFn = undefined, width, sorter = true }) => {
+    const sortingFn = (a, b) => (a && b ? String(a[dataIndex]).localeCompare(String(b[dataIndex]), undefined, { sensitivity: 'base' }) : a);
     return {
         title,
         dataIndex,
@@ -39,7 +40,7 @@ export const tblPrepareColumns = ({ title, dataIndex, render = undefined, ellips
         filterMode,
         filterSearch,
         onFilter: onFilterFn,
-        sorter: sorter && ((a, b) => (a && b ? String(a[dataIndex]).localeCompare(String(b[dataIndex]), undefined, { sensitivity: 'base' }) : a)),
+        sorter: sorter ? (localSort ? sortingFn : true) : false,
         sortDirections: ['descend', 'ascend'],
     };
 };

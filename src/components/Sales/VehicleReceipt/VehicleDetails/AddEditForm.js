@@ -21,7 +21,7 @@ const { Text } = Typography;
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { formData, setFinalData, vehicleStatusType, physicalStatusType, shortageType, vehicleDetailForm } = props;
+    const { formData, setFinalData, buttonData, setButtonData, vehicleStatusType, physicalStatusType, shortageType, vehicleDetailForm } = props;
 
     const [activeKey, setactiveKey] = useState([]);
     // const [vehicleDetailList, setVehicleDetailList] = useState([]);
@@ -34,7 +34,7 @@ const AddEditFormMain = (props) => {
     }, [formData]);
 
     const onChange = (values) => {
-        const isPresent = activeKey.includes(values);
+        const isPresent = activeKey?.includes(values);
 
         if (isPresent) {
             const newActivekeys = [];
@@ -60,6 +60,7 @@ const AddEditFormMain = (props) => {
             const filteredFormData = formData?.filter((element, i) => i !== indexId);
             const finalData = { ...filteredFormData, ...vehicleDetailData };
             setFinalData(finalData);
+            setButtonData({ ...buttonData, formBtnActive: true });
             setactiveKey([]);
         });
     };

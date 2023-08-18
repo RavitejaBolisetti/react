@@ -8,6 +8,7 @@ import { Col, Form, Row, Button, Input } from 'antd';
 
 import { withModal } from 'components/withModal';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
+import { validateRequiredInputField } from 'utils/validation';
 
 import styles from 'components/common/Common.module.css';
 
@@ -19,10 +20,10 @@ export const CancelReceiptForm = ({ handleCloseReceipt, handleCancelReceipt, can
     };
 
     return (
-        <Form autoComplete="off" form={cancelReceiptForm} layout="vertical" onFinishFailed={onFinishFailed}>
+        <Form autoComplete="off" form={cancelReceiptForm} onFinish={handleCancelReceipt} layout="vertical" onFinishFailed={onFinishFailed}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <Form.Item label="Cancellation Remark" name="cancelRemarks">
+                    <Form.Item label="Cancellation Remark" name="cancelRemarks" rules={[validateRequiredInputField('Cancel Remarks')]}>
                         <TextArea showCount maxLength={300} placeholder={preparePlaceholderText('Remarks')} />
                     </Form.Item>
                 </Col>
@@ -35,7 +36,7 @@ export const CancelReceiptForm = ({ handleCloseReceipt, handleCancelReceipt, can
                 </Col>
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignRight}>
-                    <Button onClick={handleCancelReceipt} type="primary">
+                    <Button htmlType="submit" type="primary">
                         Submit
                     </Button>
                 </Col>

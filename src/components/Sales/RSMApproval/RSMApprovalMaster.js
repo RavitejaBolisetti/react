@@ -261,6 +261,7 @@ export const RSMApprovalMasterBase = (props) => {
             delete data?.status;
             const onSuccess = (res) => {
                 form.resetFields();
+                rejectForm.resetFields();
                 setShowDataLoading(true);
                 showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
                 fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });

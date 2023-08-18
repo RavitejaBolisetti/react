@@ -121,6 +121,7 @@ const PartyDetailMasterBase = (props) => {
         const partyDetails = { ...values, id: '' };
         setRequestPayload({ ...requestPayload, partyDetails: partyDetails });
         handleButtonClick({ buttonAction: NEXT_ACTION });
+        setButtonData({ ...buttonData, formBtnActive: false });
     };
 
     const onFinishFailed = () => {};

@@ -41,21 +41,26 @@ export const tblActionColumn = ({ styles, handleButtonClick, width = '10%', fixe
 };
 
 export const tableColumn = ({ handleButtonClick, page, pageSize, tableIconsVisibility }) => {
+    const localSort = false;
     const tableColumn = [
         tblPrepareColumns({
+            ...localSort,
             title: 'GRN Type',
             dataIndex: 'grnType',
             width: '12%',
         }),
 
         tblPrepareColumns({
+            ...localSort,
             title: 'GRN Number',
             dataIndex: 'grnNumber',
             width: '12%',
             render: (text) => text ?? 'NA',
+            localSort: false,
         }),
 
         tblPrepareColumns({
+            ...localSort,
             title: 'GRN Date',
             dataIndex: 'grnDate',
             width: '12%',
@@ -63,12 +68,14 @@ export const tableColumn = ({ handleButtonClick, page, pageSize, tableIconsVisib
         }),
 
         tblPrepareColumns({
+            ...localSort,
             title: 'Supplier Name',
             dataIndex: 'supplierName',
             width: '20%',
         }),
 
         tblPrepareColumns({
+            ...localSort,
             title: 'Supplier Invoice Number',
             dataIndex: 'supplierInvoiceNumber',
             width: '16%',
@@ -78,7 +85,8 @@ export const tableColumn = ({ handleButtonClick, page, pageSize, tableIconsVisib
             title: 'Supplier Invoice Date',
             dataIndex: 'supplierInvoiceDate',
             width: '14%',
-            render: (text) => convertDateMonthYear(text),
+            render: (text) => (text ? convertDateMonthYear(text) : 'NA'),
+            localSort: false,
         }),
 
         tblActionColumn({ handleButtonClick, styles, width: '12%', ...tableIconsVisibility }),
