@@ -16,39 +16,21 @@ import styles from 'components/common/Common.module.css';
 const { Search } = Input;
 
 export const PartyDetailsForm = (props) => {
-    const { showGlobalNotification, form, formType, formData, typeData, fetchList, listShowLoading, listPartyShowLoading, fetchDetail, userId, formActionType } = props;
-    const constomerContant = 'CUS';
+    const { handlePartyIdChange, handlePartySegmentChange, formType, formData, typeData, formActionType, handleSearchParamSearch } = props;
 
     const disabledProps = { disabled: formActionType?.editMode };
-
-    const handleSearchParamSearch = (value) => {
-        const onSuccessAction = (res) => {
-            form.setFieldsValue({ partyDetails: res?.data[0] });
-        };
-        const onErrorAction = (message) => {
-            showGlobalNotification({ message });
-        };
-
-        const extraParams = [
-            {
-                key: 'customerId',
-                value: value,
-            },
-        ];
-        form.getFieldsValue()?.partyDetails?.partySegment === constomerContant ? fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction, onSuccessAction }) : fetchDetail({ setIsLoading: listPartyShowLoading, userId, partyCode: value, onErrorAction, onSuccessAction });
-    };
 
     return (
         <>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name={[formType, 'partySegment']} label="Party Segment" initialValue={formData?.partySegment} rules={[validateRequiredInputField('Party Segment')]}>
-                        {customSelectBox({ disabled: formActionType?.editMode, data: typeData[PARAM_MASTER?.PARTY_CATEG?.id], placeholder: preparePlaceholderSelect('Party Segment') })}
+                        {customSelectBox({ disabled: formActionType?.editMode, data: typeData[PARAM_MASTER?.PARTY_CATEG?.id], placeholder: preparePlaceholderSelect('Party Segment'), onChange: handlePartySegmentChange })}
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name={[formType, 'partyId']} label="Party ID" initialValue={formData?.partyId} rules={[validateRequiredSelectField('parameter')]} validateTrigger={['onSearch']}>
-                        {formActionType?.editMode ? <Input {...disabledProps} placeholder={preparePlaceholderText('Party ID')} /> : <Search {...disabledProps} placeholder="Search" maxLength={25} allowClear onSearch={handleSearchParamSearch} className={styles.headerSearchField} />}
+                        {formActionType?.editMode ? <Input {...disabledProps} placeholder={preparePlaceholderText('Party ID')} /> : <Search {...disabledProps} placeholder="Search" maxLength={25} allowClear onSearch={handleSearchParamSearch} onChange={handlePartyIdChange} className={styles.headerSearchField} />}
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>

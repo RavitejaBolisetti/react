@@ -68,7 +68,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const VehicleReceiptMasterBase = (props) => {
-    const { fetchVehicleReceiptList, saveData, listShowLoading, userId, data, totalRecords, resetData } = props;
+    const { fetchVehicleReceiptList, saveData, listShowLoading, userId, data, totalRecords, resetData, showGlobalNotification } = props;
     const { typeData, grnTypeData, moduleTitle } = props;
     const { filterString, setFilterString, vehicleReceiptStatusList } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
@@ -139,19 +139,24 @@ export const VehicleReceiptMasterBase = (props) => {
                 key: 'searchType',
                 title: 'Type',
                 value: 'status',
-                name: 'status',
+                canRemove: false,
+                filter: false,
             },
             {
                 key: 'searchParam',
                 title: 'Value',
                 value: receiptType,
                 name: typeData?.[PARAM_MASTER?.GRN_STATS?.id]?.find((i) => i?.key === receiptType)?.value,
+                canRemove: false,
+                filter: false,
             },
             {
                 key: 'grnNumber',
                 title: 'grnNumber',
                 value: searchValue,
-                name: 'grnNumber',
+                name: searchValue,
+                canRemove: false,
+                filter: false,
             },
             {
                 key: 'pageNumber',

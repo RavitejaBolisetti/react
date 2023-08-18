@@ -143,7 +143,7 @@ const CustomerDetailMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedCustomerId]);
- 
+
     const downloadFileFromButton = (uploadData) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Your download will start soon' });
         const extraParams = [
@@ -206,17 +206,24 @@ const CustomerDetailMasterBase = (props) => {
         setFileList([]);
         setEmptyList(false);
         setUploadedFile();
-
         let data = { ...values, customerId: selectedCustomer?.customerId };
-        console.log(nameChangeRequested, 'nameChangeRequested');
-        if (formActionType?.editMode && nameChangeRequested) {
-            data = { ...data, ...customerNameList };
-            delete data.titleCodeNew;
-            delete data.firstNameNew;
-            delete data.middleNameNew;
-            delete data.lastNameNew;
-        } else if (formActionType?.editMode) {
-            data = { ...data, titleCode: formData?.titleCode, firstName: formData?.firstName, middleName: formData?.middleName, lastName: formData?.lastName };
+
+        if (formActionType?.editMode) {
+            const customerCurrentName = {
+                titleCode: formData?.titleCode,
+                firstName: formData?.firstName,
+                middleName: formData?.middleName,
+                lastName: formData?.lastName,
+            };
+            data = { ...data, ...customerCurrentName, editMode: formActionType?.editMode };
+
+            if (nameChangeRequested) {
+                data = { ...data, customerNameChangeRequest: customerNameList };
+                delete data.titleCodeNew;
+                delete data.firstNameNew;
+                delete data.middleNameNew;
+                delete data.lastNameNew;
+            }
         }
 
         const onSuccess = (res) => {
@@ -230,7 +237,7 @@ const CustomerDetailMasterBase = (props) => {
             if (res.data) {
                 handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
                 setSelectedCustomerId(res?.data?.customerId);
-                if (res?.data?.pendingNameChangeRequest === null) {
+                if (res?.data?.customerNameChangeRequest === null) {
                     setCustomerNameList({
                         titleCode: res?.data?.titleCode,
                         firstName: res?.data?.firstName,
@@ -239,21 +246,22 @@ const CustomerDetailMasterBase = (props) => {
                     });
                 } else {
                     setCustomerNameList({
-                        titleCode: res?.data?.pendingNameChangeRequest?.newTitleCode,
-                        firstName: res?.data?.pendingNameChangeRequest?.newFirstName,
-                        middleName: res?.data?.pendingNameChangeRequest?.newMiddleName,
-                        lastName: res?.data?.pendingNameChangeRequest?.newLastName,
+                        titleCode: res?.data?.customerNameChangeRequest?.titleCode,
+                        firstName: res?.data?.customerNameChangeRequest?.firstName,
+                        middleName: res?.data?.customerNameChangeRequest?.middleName,
+                        lastName: res?.data?.customerNameChangeRequest?.lastName,
                     });
                 }
             }
         };
+
         const onError = (message) => {
             showGlobalNotification({ message });
         };
 
         const requestData = {
             data: data,
-            method: formActionType?.editMode ? 'put' : 'post',
+            method: selectedCustomerId ? 'put' : 'post',
             setIsLoading: listShowLoading,
             userId,
             onError,

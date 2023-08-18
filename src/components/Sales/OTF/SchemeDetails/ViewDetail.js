@@ -20,7 +20,7 @@ const ViewDetailMain = (props) => {
     };
 
     return (
-        <div className={styles.viewDrawerContainer}>
+        <div className={styles?.viewDrawerContainer}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     {schemeData && schemeData?.schemes?.length > 0 ? (
@@ -41,7 +41,9 @@ const ViewDetailMain = (props) => {
                             </Collapse>
                         ))
                     ) : (
-                        <Card>No Scheme and Offer Details Available</Card>
+                        <Card>
+                            <div className={styles.marB20}>No Scheme and Offer Details Available</div>
+                        </Card>
                     )}
                 </Col>
             </Row>

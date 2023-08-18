@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -19,6 +19,6 @@ describe('view details Components', () => {
         customRender(<ViewDetail formData={bookingCustomer} />);
         const plusicon = screen.getAllByRole('img', { name: 'plus' });
         fireEvent.click(plusicon[0]);
-        fireEvent.click(plusicon[1]);   
+        fireEvent.click(plusicon[1]);
     });
 });

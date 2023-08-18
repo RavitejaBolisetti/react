@@ -8,14 +8,14 @@ import React from 'react';
 import { Row, Col } from 'antd';
 
 import { DataTable } from 'utils/dataTable';
-import { AggregateAddEditForm } from './AggregateAddEditForm';
+import { ModalForm } from './ModalForm';
 
 const AddEditFormMain = (props) => {
     const { isEditing, setIsReadOnly, isReadOnly } = props;
     const { aggregateForm, CheckListModuletitle = 'Checklist Details' } = props;
     const { tableProps } = props;
 
-    const AdvanceFilterProps = {
+    const ModalFormProps = {
         ...props,
         isVisible: isReadOnly,
         setAdvanceSearchVisible: setIsReadOnly,
@@ -33,7 +33,7 @@ const AddEditFormMain = (props) => {
                     <DataTable {...tableProps} />
                 </Col>
             </Row>
-            <AggregateAddEditForm {...AdvanceFilterProps} />
+            <ModalForm {...ModalFormProps} />
         </>
     );
 };
