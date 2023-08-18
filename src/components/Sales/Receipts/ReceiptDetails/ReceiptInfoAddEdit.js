@@ -10,6 +10,7 @@ import { formattedCalendarDate, dateFormat } from 'utils/formatDateTime';
 import { validateRequiredSelectField, validateRequiredInputField } from 'utils/validation';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { ReceiptTypeForm } from './ReceiptInformation/ReceiptTypeForm';
+import { ReceiptType } from 'components/Sales/Receipts/utils/ReceiptType';
 
 const { Panel } = Collapse;
 const { Option } = Select;
@@ -25,12 +26,12 @@ const PaymentAddEdit = (props) => {
 
     const handleChange = (value) => {
         setReceipt(value);
-        value === 'A' ? setLastSection(true) : setLastSection(false);
+        value === ReceiptType?.ADVANCE?.key ? setLastSection(true) : setLastSection(false);
     };
 
     return (
         <>
-            <Collapse onChange={() => handleCollapse(1)} expandIcon={expandIcon} expandIconPosition="end" collapsible="icon" activeKey={openAccordian}>
+            <Collapse onChange={() => handleCollapse(1)} expandIcon={expandIcon} expandIconPosition="end" collapsible="icon" activeKey={[1]}>
                 <Panel header="Receipt Information" key="1">
                     <Divider />
                     <Row gutter={16}>

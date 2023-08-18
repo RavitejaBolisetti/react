@@ -107,11 +107,11 @@ export const RSMApprovalMasterBase = (props) => {
     const REQUEST_CONSTANT = {
         Reject: {
             key: 'Reject',
-            value: 'Reject',
+            value: 'R',
         },
         Approve: {
             key: 'Approve',
-            value: 'Approve',
+            value: 'A',
         },
     };
 
@@ -383,7 +383,7 @@ export const RSMApprovalMasterBase = (props) => {
     const rejectRequestProps = {
         isVisible: isRejectModalVisible,
         onCloseAction: rejectModalCloseAction,
-        titleOverride: requestType === 'Reject' ? REQUEST_CONSTANT?.Reject?.value?.concat(requestModuleTitle) : REQUEST_CONSTANT?.Approve?.value?.concat(requestModuleTitle),
+        titleOverride: requestType === 'R' ? REQUEST_CONSTANT?.Reject?.key?.concat(requestModuleTitle) : REQUEST_CONSTANT?.Approve?.key?.concat(requestModuleTitle),
         rejectForm,
         rejectModalCloseAction,
         rejectRequest,

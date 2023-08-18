@@ -42,8 +42,8 @@ export const VehicleReceiptFormButton = ({ record, onCloseAction, buttonData, se
 
                     {buttonData?.saveBtn && (
                         <Button loading={isLoadingOnSave} onClick={(e) => setButtonData({ ...buttonData, saveAndNewBtnClicked: false })} htmlType="submit" type="primary">
-                            {/* disabled={!buttonData?.formBtnActive} */}
                             {saveButtonName}
+                            {/* disabled={!buttonData?.formBtnActive}  */}
                         </Button>
                     )}
 

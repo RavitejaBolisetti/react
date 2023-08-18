@@ -16,7 +16,7 @@ export const QUERY_BUTTONS = {
         key: 'A',
         active: false,
     },
-    COMPLETED: {
+    CANCELLED: {
         id: 'cancelled',
         title: 'Cancelled',
         key: 'C',

@@ -11,6 +11,7 @@ import { Col, Form, Row } from 'antd';
 import { tableColumn } from './tableColumn';
 import VehicleReceiptFilter from './VehicleReceiptFilter';
 import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 'utils/btnVisiblity';
+import { convertDateTime, monthDateFormat } from 'utils/formatDateTime';
 
 import { VehicleReceiptMainConatiner } from './VehicleReceiptMainConatiner';
 import { ListDataTable } from 'utils/ListDataTable';
@@ -122,7 +123,7 @@ export const VehicleReceiptMasterBase = (props) => {
     const [formData, setFormData] = useState([]);
 
     const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
         searchForm.resetFields();
         setShowDataLoading(false);
@@ -176,7 +177,7 @@ export const VehicleReceiptMasterBase = (props) => {
                 key: 'grnFromDate',
                 title: 'Start Date',
                 value: filterString?.grnFromDate,
-                name: filterString?.grnFromDate,
+                name: filterString?.grnFromDate ? convertDateTime(filterString?.grnFromDate, monthDateFormat) : '',
                 canRemove: true,
                 filter: true,
             },
@@ -184,7 +185,7 @@ export const VehicleReceiptMasterBase = (props) => {
                 key: 'grnToDate',
                 title: 'End Date',
                 value: filterString?.grnToDate,
-                name: filterString?.grnToDate,
+                name: filterString?.grnToDate ? convertDateTime(filterString?.grnToDate, monthDateFormat) : '',
                 canRemove: true,
                 filter: true,
             },

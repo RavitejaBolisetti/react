@@ -34,18 +34,16 @@ const VehicleDetailCard = (props) => {
                     <Space>
                         <div>
                             <div>
-                                CheckList Number: <span className={styles.floatRight}>{ProfileData?.checklistNumber}</span>
+                                CheckList Number: <span className={ProfileData?.checklistNumber ? styles.floatRight : styles.NewChecklist}>{ProfileData?.checklistNumber || 'New'}</span>
                             </div>
                         </div>
                     </Space>
                 }
                 key={1}
             >
-                {ProfileData?.checklistDate && (
-                    <p>
-                        Checklist Date: <span className={styles.floatRight}>{dayjs(ProfileData?.checklistDate)?.format('DD MM YYYY')}</span>
-                    </p>
-                )}
+                <p>
+                    Checklist Date: <span className={styles.floatRight}>{ProfileData?.checklistDate ? dayjs(ProfileData?.checklistDate)?.format('DD MM YYYY') : 'NA'}</span>
+                </p>
                 <p>
                     Checklist Status: <span className={styles.floatRight}>{ProfileData?.checklistStatus || 'NA'}</span>
                 </p>

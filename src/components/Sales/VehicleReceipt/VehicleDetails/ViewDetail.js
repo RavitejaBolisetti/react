@@ -20,7 +20,7 @@ const { Text } = Typography;
 const ViewDetailMain = (props) => {
     const { formData, isLoading, physicalStatusType, vehicleStatusType, shortageType } = props;
 
-    const [activeKey, setactiveKey] = useState([1]);
+    const [activeKey, setactiveKey] = useState([]);
 
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
@@ -48,10 +48,10 @@ const ViewDetailMain = (props) => {
 
     return (
         <>
-            {formData?.map((item) => (
+            {formData?.map((item, index) => (
                 <div className={styles.accessInfo}>
                     <div className={styles.drawerCardView}>
-                        <Collapse defaultActiveKey={['1']} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
+                        <Collapse defaultActiveKey={index} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(index)} expandIconPosition="end">
                             <Panel
                                 header={
                                     <Space direction="vertical">
@@ -63,7 +63,7 @@ const ViewDetailMain = (props) => {
                                         <Text className={styles.subSection}> Vehicle Status: {checkAndSetDefaultValue(getCodeValue(vehicleStatusType, item?.vehicleStatus), isLoading)}</Text>
                                     </Space>
                                 }
-                                key="1"
+                                key={index}
                             >
                                 <Divider />
                                 <Descriptions {...viewProps}>
@@ -110,9 +110,9 @@ const ViewDetailMain = (props) => {
                                     <Descriptions.Item label="Physical Status">{checkAndSetDefaultValue(getCodeValue(physicalStatusType, item?.physicalStatus), isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label="Shortage">{checkAndSetDefaultValue(getCodeValue(shortageType, item?.shortage), isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label="Vehicle Receipt Checklist No.">
-                                        <a style={{ color: 'ff3e5b' }} href={item?.vehicleReceiptChecklistNumber} target="_blank" rel="noreferrer">
-                                            {checkAndSetDefaultValue(item?.vehicleReceiptChecklistNumber, isLoading)}
-                                        </a>
+                                        {/* <a style={{ color: 'ff3e5b' }} href={item?.vehicleReceiptChecklistNumber} target="_blank" rel="noreferrer"> */}
+                                        {checkAndSetDefaultValue(item?.vehicleReceiptChecklistNumber, isLoading)}
+                                        {/* </a> */}
                                     </Descriptions.Item>
                                 </Descriptions>
                             </Panel>

@@ -102,6 +102,8 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
     const [selectedRecord, setSelectedRecord] = useState();
     const [selectedRecordId, setSelectedRecordId] = useState();
     const [vehicleReceiptFinalFormData, setvehicleReceiptFinalFormData] = useState({ checklistDetails: [], supportingDocument: [] });
+    const [checkListDataModified, setcheckListDataModified] = useState([]);
+    const [payload, setPayload] = useState([]);
 
     const [section, setSection] = useState();
     const [defaultSection, setDefaultSection] = useState();
@@ -370,18 +372,27 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
                 setvehicleReceiptFinalFormData({ checklistDetails: [], supportingDocument: [] });
                 defaultSection && setCurrentSection(defaultSection);
                 setSelectedRecord(record);
+                setcheckListDataModified([]);
+                setPayload([]);
+                handleProfile();
                 break;
             case EDIT_ACTION:
                 setSelectedRecord(record);
                 record && setSelectedRecordId(record?.grnNumber ?? '');
                 openDefaultSection && setCurrentSection(defaultSection);
                 handleProfile();
+                setcheckListDataModified([]);
+                setPayload([]);
+
                 break;
             case VIEW_ACTION:
                 setSelectedRecord(record);
                 record && setSelectedRecordId(record?.grnNumber ?? '');
                 defaultSection && setCurrentSection(defaultSection);
                 handleProfile();
+                setcheckListDataModified([]);
+                setPayload([]);
+
                 break;
             case NEXT_ACTION:
                 const nextSection = Object.values(sectionName)?.find((i) => i.id > currentSection);
@@ -438,6 +449,8 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
                     setButtonData({ ...buttonData, formBtnActive: false });
                     setIsFormVisible(false);
                     setvehicleReceiptFinalFormData({ checklistDetails: [], supportingDocument: [] });
+                    setcheckListDataModified([]);
+                    setPayload([]);
                 };
 
                 const onError = (message) => {
@@ -580,6 +593,12 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         VehicelReceiptChecklistOnfinish: onFinish,
         supportingData: ChecklistData,
         buttonType: buttonType === QUERY_BUTTONS_CONSTANTS?.COMPLETED?.key ? true : false,
+        checkListDataModified,
+        setcheckListDataModified,
+        addMode: formActionType?.addMode,
+        editMode: formActionType?.editMode,
+        payload,
+        setPayload,
     };
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,

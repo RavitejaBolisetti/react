@@ -20,6 +20,7 @@ import { VehicleReceiptFormButton } from '../VehicleReceiptFormButton';
 import styles from 'components/common/Common.module.css';
 import PaymentAddEdit from './PaymentAddEdit';
 import ReceiptInfoAddEdit from './ReceiptInfoAddEdit';
+import { ReceiptType } from 'components/Sales/Receipts/utils/ReceiptType';
 
 const mapStateToProps = (state) => {
     const {
@@ -88,12 +89,12 @@ const ReceiptDetailMasterBase = (props) => {
             setPaymentDataList(receiptDetailData.receiptsDetails.paymentDetails);
             setRequestPayload({ ...requestPayload, receiptsDetails: receiptDetailData.receiptsDetails });
             setReceipt(receiptDetailData.receiptsDetails?.receiptType);
-            receiptDetailData?.receiptsDetails?.receiptType === 'A' && !formActionType?.editMode && setButtonData({ ...buttonData, nextBtn: false, saveBtn: false });
+            receiptDetailData?.receiptsDetails?.receiptType === ReceiptType?.ADVANCE?.key && !formActionType?.editMode && setButtonData({ ...buttonData, nextBtn: false, saveBtn: false });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, receiptDetailData?.receiptsDetails]);
     useEffect(() => {
-        if (formActionType?.editMode && receiptDetailData?.receiptsDetails?.receiptType === 'A') {
+        if (formActionType?.editMode && receiptDetailData?.receiptsDetails?.receiptType === ReceiptType?.ADVANCE?.key) {
             setButtonData({ ...buttonData, cancelReceiptBtn: true, editBtn: false, nextBtn: false });
         } else if (formActionType?.editMode) {
             setButtonData({ ...buttonData, cancelReceiptBtn: true, editBtn: false, nextBtn: true });
@@ -143,6 +144,7 @@ const ReceiptDetailMasterBase = (props) => {
                 setIsListEditing(false);
                 setEditingListData({});
                 paymentForm.resetFields();
+                setButtonData({ ...buttonData, formBtnActive: true });
             })
             .catch((err) => {
                 console.error('err', err);
@@ -157,17 +159,18 @@ const ReceiptDetailMasterBase = (props) => {
             //     receiptsDetails: finaldata,
             // }));
 
-            if (receipt === 'A') {
+            if (receipt === ReceiptType?.ADVANCE?.key) {
                 requestPayload && receiptOnFinish(finaldata);
             } else {
                 setRequestPayload({ ...requestPayload, receiptsDetails: finaldata });
                 handleButtonClick({ buttonAction: NEXT_ACTION });
             }
+            setButtonData({ ...buttonData, formBtnActive: false });
         });
     };
 
     const handleFormValueChange = () => {
-        setButtonData({ ...buttonData, formBtnActive: true });
+        // setButtonData({ ...buttonData, formBtnActive: true });
     };
 
     const onFinishFailed = () => {};

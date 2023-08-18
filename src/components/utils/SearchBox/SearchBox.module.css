@@ -12,7 +12,10 @@
     border: 1px solid #b5b5b6;
     border-radius: 4px;
 }
-
+.noBorder {
+    padding: 0px !important;
+    border: none !important;
+}
 .contentHeaderBackground .selectSearchBg {
     width: 410px;
 }
@@ -37,7 +40,7 @@
     margin-top: -26px;
 }
 
-.selectSearchBg :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) {
+.selectSearchBg :global .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) {
     margin-top: -4px;
     background-color: #ffffff;
 }
@@ -227,4 +230,45 @@
 
 .selectSearchBg :global .ant-card .ant-card-body .ant-form-item .ant-select .ant-select-selector .ant-select-selection-placeholder {
     line-height: 23px !important;
+}
+
+.masterListSearchForm :global .ant-form-item {
+    margin-bottom: 0px;
+}
+
+.masterListSearchForm :global .ant-form-item .ant-form-item-label > label {
+    margin-right: 20px;
+    height: 36px;
+    color: #0b0b0c;
+}
+
+.masterListSearchForm :global .ant-form-item .ant-form-item-explain-error {
+    /* margin-bottom: -18px;
+    margin-top: -3px; */
+    position: absolute;
+    left: 0px;
+    background: #fee3d4;
+    color: #ed302d;
+    font-size: 13px;
+    text-align: center;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.masterListSearchForm :global .ant-form-item .ant-form-item-explain-error:after {
+    content: '';
+    position: absolute;
+    display: block;
+    width: 0;
+    z-index: 99;
+    border-style: solid;
+    border-color: #fee3d4 transparent;
+    border-width: 0 10px 10px;
+    top: -10px;
+    left: 50%;
+    margin-left: -10px;
+}
+
+.masterListSearchForm :global .ant-form-item .ant-form-item-label > label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
+    display: none;
 }
