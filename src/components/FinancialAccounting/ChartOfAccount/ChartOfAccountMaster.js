@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Col, Form, Row, Input, Empty, Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
+import { ExportCOA } from './ExportCOA';
 import { HierarchyFormButton } from 'components/common/Button';
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 import { otfSoMappingActions } from 'store/actions/data/otf/otfSoMapping';
@@ -91,6 +92,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, saveData, listOrgLoading, showGlobalNotification, manufacturerOrgHierarchyData, fetchOrgList, isDataOrgLoaded, productHierarchyData, setSelectedOrganizationId, organizationId, fetchProductDataList, fetchOtfList, listOtfSoMappingShowLoading, resetData, otfSoMappingData, otfSoUserMappingData, isDataOtfSoMappingLoaded, isDataOtfSoUserMappingLoaded, fetchOtfUserList, listOtfSoUserMappingShowLoading, listProductLoading }) => {
     const [form] = Form.useForm();
+    const [exportCoaForm] = Form.useForm();
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
 
@@ -109,6 +111,7 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
 
     const defaultBtnVisiblity = { editBtn: false, childBtn: false, siblingBtn: false, enable: false, save: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
+    const [modalOpen, setModalOpen] = useState(false);
     const organizationFieldNames = { title: 'manufactureOrgShrtName', key: 'id', children: 'subManufactureOrg' };
     const fieldNames = { title: 'prodctShrtName', key: 'prodctCode', children: 'subProdct' };
 
@@ -158,7 +161,7 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
 
     useEffect(() => {
         if (viewData) {
-            setButtonData({ ...defaultBtnVisiblity, editBtn: true });
+            setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [viewData]);
@@ -238,6 +241,11 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
         setFormBtnActive(false);
     };
 
+    const onCoaModelOpen = () => {
+        exportCoaForm.resetFields();
+        setModalOpen(true);
+    };
+
     const onFinish = (values) => {
         const recordId = formData?.id || '';
         const data = { ...values, id: recordId };
@@ -267,6 +275,16 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
             onSuccess,
         };
         saveData(requestData);
+    };
+
+    const onCoaFinish = () => {
+        exportCoaForm
+            .validateFields()
+            .then(() => {
+                let data = exportCoaForm.getFieldsValue();
+                setModalOpen(false);
+            })
+            .catch((error) => console.log(error));
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -377,6 +395,14 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
         // setrules,
     };
 
+    const modalProps = {
+        modalOpen,
+        setModalOpen,
+        exportCoaForm,
+        onCoaFinish,
+        onFinishFailed,
+    };
+
     const noDataTitle = 'Please choose Financial Company to view data';
     const diffSelection = 'No Record Found';
 
@@ -404,6 +430,14 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
                             </Form.Item>
                         </Form>
                     </Col>
+
+                    <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.buttonsGroupRight}>
+                        <Button type="primary" className={styles.verticallyCentered} onClick={onCoaModelOpen}>
+                            Export COA
+                        </Button>
+                    </Col>
+
+                    <ExportCOA {...modalProps} />
                 </Row>
             </div>
 
