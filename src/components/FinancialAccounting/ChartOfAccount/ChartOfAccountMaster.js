@@ -299,6 +299,11 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
         setChange(() => !change);
     };
 
+    const onCloseAction = () => {
+        setIsFormVisible(false);
+        form.resetFields();
+    };
+
     const treeOrgFieldNames = { ...organizationFieldNames, label: organizationFieldNames?.title, value: organizationFieldNames?.key };
 
     const treeSelectFieldProps = {
@@ -333,9 +338,7 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
         formActionType,
         isVisible: isFormVisible,
         onFinishFailed,
-        onCloseAction: () => {
-            setIsFormVisible(false);
-        },
+        onCloseAction,
         titleOverride: (formData?.code ? 'Edit ' : 'Add ').concat(moduleTitle),
         onFinish,
         isFormBtnActive,
