@@ -59,7 +59,7 @@ describe("Render AddEditForm Component",()=>{
 
     it('load form',()=>{
         const formData = {
-            ooleanValue: null,
+            booleanValue: null,
             configurableParameterType: "N",
             controlDescription: "Days after which password needs to be updated",
             controlGroup: "CMN",
