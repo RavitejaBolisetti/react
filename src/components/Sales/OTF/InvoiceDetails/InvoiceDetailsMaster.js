@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Space, Collapse, Form } from 'antd';
+import { Row, Col, Collapse, Form } from 'antd';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -122,23 +122,21 @@ export const InvoiceDetailsMasterBase = (props) => {
                             <OTFStatusBar status={orderStatus} />
                         </Col>
                     </Row>
-                    <Space size="middle" direction="vertical" className={styles.accordianContainer}>
-                        {displaySection?.invoiceInformation && (
-                            <Collapse onChange={() => onChange(1)} expandIconPosition="end" expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={activeKey}>
-                                <Panel header="Invoice Information" key={1}>
-                                    <DataTable srlTitle={'#'} pagination={false} tableColumn={tableColumnInvoice()} tableData={invoiceData?.invoiceDetails} />
-                                </Panel>
-                            </Collapse>
-                        )}
+                    {displaySection?.invoiceInformation && (
+                        <Collapse onChange={() => onChange(1)} expandIconPosition="end" expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={activeKey}>
+                            <Panel header="Invoice Information" key={1}>
+                                <DataTable srlTitle={'#'} pagination={false} tableColumn={tableColumnInvoice()} tableData={invoiceData?.invoiceDetails} />
+                            </Panel>
+                        </Collapse>
+                    )}
 
-                        {displaySection?.deliveryInformation && (
-                            <Collapse onChange={() => onChange(2)} expandIconPosition="end" expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={activeKey}>
-                                <Panel header="Delivery Information" key={2}>
-                                    <DataTable srlTitle={'#'} pagination={false} tableColumn={tableColumnDelivery()} tableData={invoiceData?.deliveryDetails} />
-                                </Panel>
-                            </Collapse>
-                        )}
-                    </Space>
+                    {displaySection?.deliveryInformation && (
+                        <Collapse onChange={() => onChange(2)} expandIconPosition="end" expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={activeKey}>
+                            <Panel header="Delivery Information" key={2}>
+                                <DataTable srlTitle={'#'} pagination={false} tableColumn={tableColumnDelivery()} tableData={invoiceData?.deliveryDetails} />
+                            </Panel>
+                        </Collapse>
+                    )}
                 </Col>
             </Row>
             <Row>

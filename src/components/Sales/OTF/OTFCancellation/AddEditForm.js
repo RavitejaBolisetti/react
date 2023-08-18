@@ -25,6 +25,7 @@ import styles from 'components/common/Common.module.css';
 const { TextArea, Search } = Input;
 
 const AddEditFormMain = (props) => {
+    console.log('dealerDataList===>', props.dealerDataList)
     const { otfCancellationForm, formData, selectedOrder, fieldNames, onFinishOTFCancellation } = props;
     const { handleButtonClick, buttonData, setButtonData, onCloseAction, handleFormValueChange, typeData, setUploadedFile, showGlobalNotification, viewDocument, setEmptyList } = props;
     const { searchDealerValue, setSearchDealerValue, dealerDataList } = props;
@@ -34,6 +35,7 @@ const AddEditFormMain = (props) => {
     const [reasonTypeChange, setReasonTypeChange] = useState('');
     const [dealerList, setDealerList] = useState([]);
     const [fileList, setFileList] = useState([]);
+    const [singleDisabled, setSingleDisabled] = useState(false);
 
     const onDrop = (e) => {};
     const onDownload = (file) => {
@@ -69,6 +71,10 @@ const AddEditFormMain = (props) => {
         setUploadedFile,
         uploadedFileName,
         setUploadedFileName,
+        single: true,
+        singleDisabled,
+        setSingleDisabled,
+        isReplaceEnabled: false,
     };
 
     // useEffect(() => {
@@ -172,8 +178,6 @@ const AddEditFormMain = (props) => {
         //defaultValue: treeCodeId,
         placeholder: preparePlaceholderSelect('Parent'),
     };
-
-    console.log('reasonTypeChange===>', reasonTypeChange);
 
     const isLoading = false;
     return (

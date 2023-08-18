@@ -7,7 +7,7 @@ import { RoleManagement } from '@components/common/RoleManagement/RoleManagement
 describe('RoleManagement Components', () => {
     it('should render RoleManagement components', () => {
         customRender(<RoleManagement />);
-        const text = screen.getByText('Role List');
+        const text = screen.getByText('Role Management');
         expect(text).toBeTruthy();
         const textSearch = screen.findByPlaceholderText('Search');
         expect(textSearch).toBeTruthy();

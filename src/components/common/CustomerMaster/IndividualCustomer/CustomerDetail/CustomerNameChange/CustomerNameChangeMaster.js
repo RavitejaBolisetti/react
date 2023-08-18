@@ -93,7 +93,7 @@ const CustomerNameChangeMasterBase = (props) => {
     };
 
     useEffect(() => {
-        if (data?.pendingNameChangeRequest === null) {
+        if (data?.customerNameChangeRequest === null) {
             setCustomerNameList({
                 titleCode: data?.titleCode,
                 firstName: data?.firstName,
@@ -102,10 +102,10 @@ const CustomerNameChangeMasterBase = (props) => {
             });
         } else {
             setCustomerNameList({
-                titleCode: data?.pendingNameChangeRequest?.newTitleCode,
-                firstName: data?.pendingNameChangeRequest?.newFirstName,
-                middleName: data?.pendingNameChangeRequest?.newMiddleName,
-                lastName: data?.pendingNameChangeRequest?.newLastName,
+                titleCode: data?.customerNameChangeRequest?.titleCode,
+                firstName: data?.customerNameChangeRequest?.firstName,
+                middleName: data?.customerNameChangeRequest?.middleName,
+                lastName: data?.customerNameChangeRequest?.lastName,
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -252,9 +252,29 @@ export const PARAM_MASTER = {
         id: 'PHYSICAL_STATUS',
         title: 'Physical Status',
     },
+    RECPT_TYPE: {
+        id: 'RECPT_TYPE',
+        title: 'Receipt Type',
+    },
+    PARTY_CATEG: {
+        id: 'PARTY_CATEG',
+        title: 'Party Segment',
+    },
+    INDNT_STATS: {
+        id: 'INDNT_STATS',
+        title: 'Party Segment',
+    },
     ACC_HEAD: {
         id: 'ACC_HEAD',
         title: 'Sales Type',
+    },
+    RECPT_PAYMNT_MODE: {
+        id: 'RECPT_PAYMNT_MODE',
+        title: 'Payment Mode',
+    },
+    RECPT_DOC_TYPE: {
+        id: 'RECPT_DOC_TYPE',
+        title: 'Document Type',
     },
     CRDR_SEARCH_PARAM: {
         id: 'CRDR_SEARCH_PARAM',

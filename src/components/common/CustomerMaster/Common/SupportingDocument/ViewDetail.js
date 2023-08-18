@@ -44,8 +44,8 @@ export const ViewDetail = (props) => {
                                 title={uploadData?.documentName}
                                 extra={
                                     <>
-                                        <FiDownload onClick={() => downloadFileFromButton(uploadData)} />
-                                        {!viewMode && <FiTrash onClick={() => deleteFile(uploadData)} />}
+                                        <FiDownload onClick={() => downloadFileFromButton(uploadData)} data-testid="downloadBtn" />
+                                        {!viewMode && <FiTrash onClick={() => deleteFile(uploadData)} data-testid="deleteFileBtn" />}
                                     </>
                                 }
                             ></Card>
@@ -53,7 +53,7 @@ export const ViewDetail = (props) => {
                     })}
                 </>
             ) : (
-                viewMode && <Card>No Supporting Document Available</Card>
+                viewMode && <div className={styles.marB20}>No Supporting Document Available</div>
             )}
         </div>
     );

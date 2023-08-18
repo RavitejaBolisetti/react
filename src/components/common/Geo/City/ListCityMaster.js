@@ -268,12 +268,12 @@ export const ListCityMasterBase = (props) => {
             const filterValue = type === 'text' ? value.target.value : value;
 
             if (name === 'countryCode') {
-                setFilteredStateData(stateData?.filter((i) => i?.parentKey === filterValue));
+                filterValue && setFilteredStateData(stateData?.filter((i) => i?.parentKey === filterValue));
                 advanceFilterForm.setFieldsValue({ stateCode: undefined, districtCode: undefined, cityCode: undefined, tehsilCode: undefined });
             }
 
             if (name === 'stateCode') {
-                setFilteredDistrictData(districtData?.filter((i) => i?.parentKey === filterValue));
+                filterValue && setFilteredDistrictData(districtData?.filter((i) => i?.parentKey === filterValue));
                 advanceFilterForm.setFieldsValue({ districtCode: undefined, cityCode: undefined, tehsilCode: undefined });
             }
         };

@@ -62,7 +62,7 @@ export default function AppliedAdvanceFilter(props) {
                     )}
                 </Row>
 
-                {advanceFilter && filterString?.advanceFilter && (
+                {advanceFilter && filterString?.advanceFilter && extraParams.find((i) => i.name) && (
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.advanceFilterTop}>
                             <Row gutter={20}>
