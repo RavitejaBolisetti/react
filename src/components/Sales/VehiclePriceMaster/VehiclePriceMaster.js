@@ -22,7 +22,6 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { BASE_URL_VEHICLE_PRICE_MASTER_SEARCH as customURL } from 'constants/routingApi';
 
 import { FilterIcon } from 'Icons';
-import styles from 'components/common/Common.module.css';
 import { ViewDetail } from './ViewDetail';
 import { VehiclePriceMasterUpload } from './VehiclePriceMasterUpload';
 
@@ -614,9 +613,7 @@ export const VehiclePriceMasterBase = (props) => {
             <AdvanceVehiclePriceMasterFilter {...advanceFilterResultProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <div className={styles.tableProduct}>
-                        <ListDataTable showAddButton={false} isLoading={false} {...tableProps} />
-                    </div>
+                    <ListDataTable showAddButton={false} isLoading={false} {...tableProps} />
                 </Col>
             </Row>
             <AdvancedSearch {...advanceFilterProps} />

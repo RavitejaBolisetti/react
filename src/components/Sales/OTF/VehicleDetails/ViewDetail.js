@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Row, Col, Space, Collapse, Descriptions, Divider } from 'antd';
+import { Row, Col, Collapse, Descriptions, Divider } from 'antd';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
@@ -28,11 +28,11 @@ const ViewDetailMain = (props) => {
     };
 
     return (
-        <div className={styles.viewDrawerContainer}>
+        <div className={styles?.viewDrawerContainer}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Space direction="vertical" size="middle" className={styles.accordianContainer}>
-                        <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end" className={styles.collapseContainer}>
+                    <Space direction="vertical" size="middle" className={styles?.accordianContainer}>
+                        <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end" className={styles?.collapseContainer}>
                             <Panel header="Vehicle Information" key="1">
                                 <Descriptions {...viewProps}>
                                     <Descriptions.Item label="Vehicle Usage Type ">{checkAndSetDefaultValue(formData?.vehicleUsageType, isLoading)}</Descriptions.Item>
@@ -40,9 +40,9 @@ const ViewDetailMain = (props) => {
                                         {isLoading ? (
                                             <InputSkeleton width={'100px'} height={20} theme={'card'} />
                                         ) : (
-                                            <div className={styles.tooltipAlign}>
+                                            <div className={styles?.tooltipAlign}>
                                                 {formData?.model}
-                                                {!formData?.model ? 'NA' : addToolTip(tooltTipText, 'bottom', '#D3EDFE', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}
+                                                {!formData?.model ? 'NA' : addToolTip(tooltTipText, 'bottom', '#D3EDFE', styles.toolTip)(<AiOutlineInfoCircle className={styles?.infoIconColor} size={13} />)}
                                             </div>
                                         )}
                                     </Descriptions.Item>
@@ -63,14 +63,14 @@ const ViewDetailMain = (props) => {
                             </Panel>
                         </Collapse>
 
-                        <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end" className={styles.collapseContainer}>
+                        <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end" className={styles?.collapseContainer}>
                             <Panel header="Tax Details" key="2">
                                 <Divider />
                                 <DataTable tableColumn={taxDetailsColumn} tableData={formData['taxDetails']} pagination={false} />
                             </Panel>
                         </Collapse>
 
-                        <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(3)} expandIconPosition="end" className={styles.collapseContainer}>
+                        <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(3)} expandIconPosition="end" className={styles?.collapseContainer}>
                             <Panel header="Charges" key="3">
                                 <Divider />
                                 <DataTable tableColumn={optionalServicesColumns} tableData={formData['optionalServices']} pagination={false} />

@@ -63,16 +63,16 @@ const ViewAddressList = (props) => {
             {addressData?.length > 0 &&
                 addressData?.map((data, i) => {
                     return (
-                        <Collapse className={styles.innerCollapse} key={data?.addressType + data?.addressType} onChange={() => handleCollapse(i)} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian} collapsible="icon">
+                        <Collapse className={styles.marB20} key={data?.addressType + data?.addressType} onChange={() => handleCollapse(i)} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian} collapsible="icon">
                             <Panel
                                 key={i}
                                 header={
                                     <Row justify="space-between">
-                                        <Col xs={14} sm={14} md={14} lg={14} xl={14}>
-                                            <Text strong> {getCodeValue(addData, data?.addressType)}</Text>
+                                        <Col xs={14} sm={14} md={14} lg={14} xl={14} className={styles.verticallyCentered}>
+                                            <Text strong>{getCodeValue(addData, data?.addressType)}</Text>
                                             {!formActionType?.viewMode && (
-                                                <Button onClick={(e) => editContactHandeler(e, data, i)} type="link" icon={<FiEdit />} disabled={isEditing || isAdding} className={styles.buttonEdit}>
-                                                    Edit{' '}
+                                                <Button onClick={(e) => editContactHandeler(e, data, i)} type="link" icon={<FiEdit />} disabled={isEditing || isAdding} className={styles.verticallyCentered}>
+                                                    Edit
                                                 </Button>
                                             )}
                                         </Col>
@@ -82,8 +82,8 @@ const ViewAddressList = (props) => {
                                                     <Checkbox valuePropName="checked" checked={data?.deafultAddressIndicator} defaultChecked={data?.deafultAddressIndicator} onClick={(e) => onCheckdefaultAddClick(e, data)} {...disableProp}>
                                                         Mark As Default
                                                     </Checkbox>
-                                                    <Divider type="vertical" />
-                                                    <Text type="secondary">{getCodeValue(addData, data?.addressType)}</Text>
+                                                    {/* <Divider type="vertical" /> */}
+                                                    {/* <Text type="secondary">{getCodeValue(addData, data?.addressType)}</Text> */}
                                                 </div>
                                             )}
                                         </Col>

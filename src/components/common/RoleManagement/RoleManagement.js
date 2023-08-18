@@ -3,49 +3,50 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
+import { Col, Form, Row } from 'antd';
 import { bindActionCreators } from 'redux';
-import { Button, Empty, ConfigProvider, Col, Form, Row, Input, Space } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
-import { TfiReload } from 'react-icons/tfi';
-import { showGlobalNotification } from 'store/actions/notification';
-import { EditIcon, ViewEyeIcon } from 'Icons';
-import { AddEditForm } from './AddEditForm';
-import { rolemanagementDataActions } from 'store/actions/data/roleManagement';
-import styles from 'components/common/Common.module.css';
-import { escapeRegExp } from 'utils/escapeRegExp';
-import { tblPrepareColumns } from 'utils/tableColumn';
-import { DataTable } from 'utils/dataTable';
 
-const { Search } = Input;
+import { RoleListDataActions } from 'store/actions/data/roleManagement/roleList';
+import { RoleManagementMenuDataActions } from 'store/actions/data/roleManagement/roleMenu';
+
+import { tableColumn } from './tableColumn';
+import { FROM_ACTION_TYPE } from 'constants/formActionType';
+
+import { showGlobalNotification } from 'store/actions/notification';
+
+import { ListDataTable } from 'utils/ListDataTable';
+import { filterFunction } from 'utils/filterFunction';
+import { btnVisiblity } from 'utils/btnVisiblity';
+import { APPLICATION_DEVICE_TYPE } from 'utils/applicationDeviceType';
+import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
+
+import { AddEditForm } from './AddEditForm';
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            RoleManagement: { MenuTreeData = [], RoleData = [], isLoaded: isDataLoaded = false, isLoadingOnSave, data: RoleManagementData = [], isLoading, isFormDataLoaded },
-            HierarchyAttributeMaster: { data: attributeData = [] },
-        },
-        common: {
-            LeftSideBar: { collapsed = false },
+            RoleManagementData: {
+                RoleList: { isLoaded: isDataLoaded = false, isLoading: isDataLoading = false, data: roleManagementData = [] },
+                RoleMenu: { isLoaded: isMenuLoaded = false, isLoading: isMenuLoading = false, data: rolemenuData = [] },
+            },
         },
     } = state;
 
     const moduleTitle = 'Role Management';
-
     let returnValue = {
-        collapsed,
         userId,
-        isLoading,
-        isDataLoaded,
-        RoleManagementData,
-        isLoadingOnSave,
         moduleTitle,
-        MenuTreeData,
-        RoleData,
-        attributeData: attributeData?.filter((i) => i),
-        isFormDataLoaded,
+        menuTreeData: rolemenuData,
+        // menuTreeData: rolemenuData?.filter((i) => i?.value?.toLowerCase() === 'finac'),
+        isDataLoading,
+        isMenuLoading,
+        isDataLoaded,
+        isMenuLoaded,
+        roleManagementData,
+        rolemenuData,
     };
     return returnValue;
 };
@@ -54,147 +55,123 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchList: rolemanagementDataActions.fetchList,
-            fetchMenuList: rolemanagementDataActions.fetchMenuList,
-            fetchRole: rolemanagementDataActions.fetchRole,
-            saveData: rolemanagementDataActions.saveData,
-            listShowLoading: rolemanagementDataActions.listShowLoading,
-            onSaveShowLoading: rolemanagementDataActions.onSaveShowLoading,
+            fetchList: RoleListDataActions.fetchList,
+            saveData: RoleManagementMenuDataActions.saveData,
+            listShowLoading: RoleListDataActions.listShowLoading,
+            fetchMenuList: RoleManagementMenuDataActions.fetchList,
             showGlobalNotification,
         },
         dispatch
     ),
 });
 
-export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotification, MenuTreeData, RoleData, fetchRole, fetchMenuList, isLoadingOnSave, onSaveShowLoading, userId, isDataLoaded, RoleManagementData, fetchList, hierarchyAttributeFetchList, saveData, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading }) => {
+export const RoleManagementMain = (props) => {
+    const { saveData, fetchList, userId, isDataLoaded, listShowLoading, menuTreeData, showGlobalNotification, roleManagementData, fetchMenuList } = props;
+
     const [form] = Form.useForm();
+    const [listFilterForm] = Form.useForm();
 
-    const [filterString, setFilterString] = useState();
-    const [searchData, setSearchdata] = useState(RoleManagementData);
-    const [refreshData, setRefreshData] = useState(false);
-    const [footerEdit, setFooterEdit] = useState(false);
-    const [selectedRecord, setSelectedRecord] = useState(null);
-    const [formBtnDisable, setFormBtnDisable] = useState(false);
-    const [isReadOnly, setIsReadOnly] = useState(false);
-    const [showSaveAndAddNewBtn, setShowSaveAndAddNewBtn] = useState(false);
-    const [showSaveBtn, setShowSaveBtn] = useState(true);
-    // const [RowData, setRowData] = useState();
-    // const [saveClick, setSaveClick] = useState();
-    const [isFormVisible, setIsFormVisible] = useState(false);
-    const [isViewModeVisible, setIsViewModeVisible] = useState(false);
+    const APPLICATION_WEB = APPLICATION_DEVICE_TYPE?.WEB?.key;
+    const APPLICATION_MOBILE = APPLICATION_DEVICE_TYPE?.MOBILE?.key;
+
+    const [showDataLoading, setShowDataLoading] = useState(true);
+    const [searchData, setSearchdata] = useState('');
+    const [refershData, setRefershData] = useState(false);
+
     const [formData, setFormData] = useState([]);
-    const [isFormBtnActive, setFormBtnActive] = useState(false);
+    const [filterString, setFilterString] = useState();
+    const [isFormVisible, setIsFormVisible] = useState(false);
+    const [saveAndAddNewBtnClicked, setSaveAndAddNewBtnClicked] = useState(false);
+    const [deviceType, setDeviceType] = useState(APPLICATION_WEB);
+
+    const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
+    const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
+
+    const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
+    const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
+    const [unFilteredMenuData, setUnFilteredMenuData] = useState([]);
+    console.log('🚀 ~ file: RoleManagement.js:93 ~ RoleManagementMain ~ unFilteredMenuData:', unFilteredMenuData);
+
+    const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
+    const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
+    const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
+
+    const onSuccessAction = (res) => {
+        refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        setRefershData(false);
+        setShowDataLoading(false);
+    };
+
+    const onErrorAction = (message) => {
+        showGlobalNotification({ message });
+        setShowDataLoading(false);
+    };
 
     useEffect(() => {
-        if (!isDataLoaded && userId) {
-            fetchList({ setIsLoading: listShowLoading, userId });
-            fetchMenuList({ setIsLoading: listShowLoading, userId });
+        if (userId && (!isDataLoaded || refershData)) {
+            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDataLoaded, userId]);
+    }, [userId, isDataLoaded, refershData]);
+
+    // useEffect(() => {
+    //     if (userId && refershData) {
+    //         fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [userId, refershData]);
 
     useEffect(() => {
-        if (!isDataLoaded && userId) {
-            fetchList({ setIsLoading: listShowLoading, userId });
+        if (deviceType === APPLICATION_WEB && menuTreeData) {
+            setUnFilteredMenuData({ ...unFilteredMenuData, [deviceType]: menuTreeData });
+        } else if (deviceType === APPLICATION_MOBILE && menuTreeData) {
+            setUnFilteredMenuData({ ...unFilteredMenuData, [deviceType]: menuTreeData });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDataLoaded, userId]);
+    }, [deviceType, menuTreeData]);
 
     useEffect(() => {
-        setSearchdata(RoleManagementData);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [RoleManagementData]);
-
-    useEffect(() => {
-        if (userId) {
-            fetchList({ setIsLoading: listShowLoading, userId });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [refreshData, userId]);
-
-    useEffect(() => {
-        if (isDataLoaded && RoleManagementData) {
+        if (isDataLoaded && roleManagementData && userId) {
             if (filterString) {
-                const filterDataItem = RoleManagementData?.filter((item) => filterFunction(filterString)(item?.roleId) || filterFunction(filterString)(item?.roleName) || filterFunction(filterString)(item?.roleDesceription));
+                const keyword = filterString?.keyword;
+                const filterDataItem = roleManagementData?.filter((item) => filterFunction(keyword)(item?.roleId) || filterFunction(keyword)(item?.roleName) || filterFunction(keyword)(item?.roleDesceription));
                 setSearchdata(filterDataItem);
             } else {
-                setSearchdata(RoleManagementData);
+                setSearchdata(roleManagementData);
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, isDataLoaded, RoleManagementData]);
+    }, [filterString, isDataLoaded, roleManagementData]);
 
     const onFinish = (values) => {
-        const recordId = selectedRecord?.id || '';
+        const recordId = formData?.id || '';
+
         const data = {
             ...values,
-            id: '1',
-            webRoleApplicationMapping: [
-                {
-                    id: '',
-                    activeIndicator: true,
-                    applicationId: '4af77de8-363e-480e-bdac-e6c836c8467c',
-                    subApplication: [
-                        {
-                            id: '',
-
-                            activeIndicator: true,
-
-                            applicationId: '8f4d4288-6862-48eb-ab5e-c089972cf0e8',
-                            subApplication: [],
-
-                            roleActionMapping: [
-                                {
-                                    id: '',
-
-                                    actionId: 'e8e4493a-07fb-4fdc-9908-038ff8818173',
-
-                                    activeIndicator: true,
-                                },
-                            ],
-                        },
-                    ],
-                    roleActionMapping: [
-                        {
-                            id: '',
-
-                            actionId: 'e8e4493a-07fb-4fdc-9908-038ff8818173',
-
-                            activeIndicator: true,
-                        },
-                    ],
-                },
-            ],
-            mobileRoleApplicationMapping: [
-                {
-                    id: '',
-
-                    activeIndicator: true,
-
-                    applicationId: 'a0fc205b-6fcf-4dd3-86dc-f382ac924335',
-
-                    subApplication: [],
-
-                    roleActionMapping: [
-                        {
-                            id: '',
-
-                            actionId: 'e8e4493a-07fb-4fdc-9908-038ff8818173',
-
-                            activeIndicator: true,
-                        },
-                    ],
-                },
-            ],
+            id: recordId,
+            webRoleManagementRequest: unFilteredMenuData?.[APPLICATION_WEB]?.filter((i) => i?.checked) || [],
+            mobileRoleManagementRequest: unFilteredMenuData?.[APPLICATION_MOBILE]?.filter((i) => i?.checked) || [],
+            // webRoleManagementRequest: unFilteredMenuData?.[APPLICATION_WEB]?.filter((i) => checkedWebParentKeys?.includes(i?.value)) || [],
+            // mobileRoleManagementRequest: unFilteredMenuData?.[APPLICATION_MOBILE]?.filter((i) => checkedMobileParentKeys?.includes(i?.value)) || [],
         };
+
+        // const checkedWebParentKeys = checkedMenuKeys?.[APPLICATION_WEB] ? Object.keys(checkedMenuKeys?.[APPLICATION_WEB]) : [];
+        // const checkedMobileParentKeys = checkedMenuKeys?.[APPLICATION_MOBILE] ? Object.keys(checkedMenuKeys?.[APPLICATION_MOBILE]) : [];
+
+        // const data = {
+        //     ...values,
+        //     id: recordId,
+        //     webRoleManagementRequest: unFilteredMenuData?.[APPLICATION_WEB]?.filter((i) => checkedWebParentKeys?.includes(i?.value)) || [],
+        //     mobileRoleManagementRequest: unFilteredMenuData?.[APPLICATION_MOBILE]?.filter((i) => checkedMobileParentKeys?.includes(i?.value)) || [],
+        // };
 
         const onSuccess = (res) => {
             form.resetFields();
-            setSelectedRecord({});
             fetchList({ setIsLoading: listShowLoading, userId });
-            if (showSaveAndAddNewBtn === true || recordId) {
+            if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(false);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+                setUnFilteredMenuData([]);
             } else {
                 setIsFormVisible(true);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
@@ -202,13 +179,14 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
         };
 
         const onError = (message) => {
-            onSaveShowLoading(false);
+            listShowLoading(false);
             showGlobalNotification({ notificationType: 'error', title: 'Error', message, placement: 'bottomRight' });
         };
 
         const requestData = {
-            data: [data],
-            setIsLoading: onSaveShowLoading,
+            data: data,
+            method: formActionType?.editMode ? 'put' : 'post',
+            setIsLoading: listShowLoading,
             userId,
             onError,
             onSuccess,
@@ -217,212 +195,150 @@ export const RoleManagementMain = ({ moduleTitle, isLoading, showGlobalNotificat
         saveData(requestData);
     };
 
-    const handleEditData = (record) => {
-        setIsViewModeVisible(false);
-        setShowSaveAndAddNewBtn(false);
-        setFooterEdit(false);
-        setShowSaveBtn(true);
+    useEffect(() => {
+        if (userId && deviceType && !unFilteredMenuData?.[deviceType]) {
+            console.log(deviceType, unFilteredMenuData);
+            const extraParams = [
+                {
+                    key: 'menuType',
+                    title: 'menuType',
+                    value: deviceType,
+                    name: 'menuType',
+                },
+                {
+                    key: 'roleId',
+                    title: 'roleId',
+                    value: formData?.id,
+                    name: 'roleId',
+                },
+            ];
+            fetchMenuList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, deviceType]);
 
-        setIsReadOnly(false);
+    const handleReferesh = () => {
+        setShowDataLoading(true);
+        setRefershData(!refershData);
     };
 
-    const handleAdd = () => {
+    const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
-        setIsViewModeVisible(false);
         setFormData([]);
-        setShowSaveAndAddNewBtn(true);
-        setFooterEdit(false);
-        setShowSaveBtn(true);
-        setIsFormVisible(true);
-        setIsReadOnly(false);
-    };
 
-    const handleEditBtn = (record) => {
-        setShowSaveAndAddNewBtn(false);
-        setFooterEdit(false);
-        setIsReadOnly(false);
-        setShowSaveBtn(true);
-        setFormData(record);
-        setIsViewModeVisible(false);
-        setIsFormVisible(true);
-    };
-    const handleView = (record) => {
-        setShowSaveAndAddNewBtn(false);
-        setShowSaveBtn(false);
-        setFooterEdit(true);
-        setFormData(record);
-        setIsFormVisible(true);
-        setIsViewModeVisible(true);
-    };
+        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
+        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
 
-    const handleRefresh = () => {
-        setRefreshData(!refreshData);
-    };
-
-    const filterFunction = (filterString) => (title) => {
-        return title && title.match(new RegExp(escapeRegExp(filterString), 'i'));
+        record && setFormData(record);
+        setIsFormVisible(true);
     };
 
     const onSearchHandle = (value) => {
-        setFilterString(value);
+        if (value?.trim()?.length >= 3) {
+            setFilterString({ ...filterString, advanceFilter: false, keyword: value });
+        }
     };
 
-    const onChangeHandle = (e) => {
-        setFilterString(e.target.value);
+    const handleResetFilter = (e) => {
+        setFilterString();
+        listFilterForm.resetFields();
+        setShowDataLoading(false);
     };
 
-    const tableColumn = [
-        tblPrepareColumns({
-            title: 'Role ID',
-            dataIndex: 'roleId',
-            width: '20%',
-        }),
-        tblPrepareColumns({
-            title: 'Role Name',
-            dataIndex: 'roleName',
-            width: '20%',
-        }),
-        tblPrepareColumns({
-            title: 'Role Description',
-            dataIndex: 'roleDesceription',
-            ellipsis: true,
-            width: 100,
-        }),
-        tblPrepareColumns({
-            title: 'Status',
-            dataIndex: 'activeIndicator',
-            render: (text, record) => <>{text === 1 ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>}</>,
-            width: '10%',
-        }),
-        tblPrepareColumns({
-            title: 'Actions',
-            sorter: false,
-            render: (text, record, index) => {
-                return (
-                    <Space>
-                        {<Button icon={<EditIcon />} className={styles.tableIcons} danger ghost aria-label="fa-edit" onClick={() => handleEditBtn(record)} />}
-                        {<Button icon={<ViewEyeIcon />} className={styles.tableIcons} danger ghost aria-label="ai-view" onClick={() => handleView(record)} />}
-                    </Space>
-                );
-            },
-            width: '10%',
-        }),
-    ];
+    const handleClearInSearch = (e) => {
+        if (e.target.value.length > 2) {
+            listFilterForm.validateFields(['code']);
+        } else if (e?.target?.value === '') {
+            setFilterString();
+            listFilterForm.resetFields();
+            setShowDataLoading(false);
+        }
+    };
+
+    const onFinishFailed = (errorInfo) => {
+        form.validateFields().then((values) => {});
+    };
 
     const drawerTitle = useMemo(() => {
-        if (isViewModeVisible) {
+        if (formActionType?.viewMode) {
             return 'View ';
-        } else if (formData?.id) {
+        } else if (formActionType?.editMode) {
             return 'Edit ';
         } else {
             return 'Add ';
         }
-    }, [isViewModeVisible, formData]);
+    }, [formActionType]);
 
     const formProps = {
-        moduleTitle,
-        setIsViewModeVisible,
-        isViewModeVisible,
-        //RowData,
-        RoleData,
-        //setSaveClick,
+        unFilteredMenuData,
+        setUnFilteredMenuData,
+        saveAndAddNewBtnClicked,
+        setSaveAndAddNewBtnClicked,
+        listShowLoading,
+        fetchMenuList,
+        onErrorAction,
+        userId,
         form,
-        setFormBtnDisable,
-        formBtnDisable,
-        isLoadingOnSave,
-        showSaveBtn,
-        showSaveAndAddNewBtn,
+        setDeviceType,
         isVisible: isFormVisible,
-        titleOverride: drawerTitle.concat(moduleTitle),
+        titleOverride: drawerTitle.concat('Role'),
         onCloseAction: () => {
             form.resetFields();
             setIsFormVisible(false);
             setFormData([]);
-            setFormBtnActive(false);
+            setUnFilteredMenuData([]);
         },
-        isReadOnly,
         formData,
-        setIsReadOnly,
-        handleEditData,
-        isFormBtnActive,
-        setFormBtnActive,
         onFinish,
-        footerEdit,
+        deviceType,
+
+        formActionType,
+        setFormActionType,
+        onFinishFailed,
+
+        tableData: searchData,
+
+        ADD_ACTION,
+        EDIT_ACTION,
+        VIEW_ACTION,
+        buttonData,
+
+        setButtonData,
+        handleButtonClick,
+
+        APPLICATION_WEB,
+        APPLICATION_MOBILE,
+    };
+
+    const tableProps = {
+        tableColumn: tableColumn(handleButtonClick),
+        tableData: searchData,
+    };
+
+    const title = 'Role Management';
+
+    const advanceFilterResultProps = {
+        advanceFilter: false,
+        filterString,
+        from: listFilterForm,
+        onFinish,
+        onFinishFailed,
+        onSearchHandle,
+        handleResetFilter,
+        handleClearInSearch,
+        handleReferesh,
+        handleButtonClick,
+        title,
     };
 
     return (
         <>
-            <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <div className={styles.contentHeaderBackground}>
-                        <Row gutter={20}>
-                            <Col xs={24} sm={24} md={16} lg={16} xl={16}>
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={8} lg={5} xl={5} className={styles.lineHeight33}>
-                                        Role List
-                                    </Col>
-                                    <Col xs={24} sm={24} md={12} lg={19} xl={19}>
-                                        <Search placeholder="Search" allowClear onSearch={onSearchHandle} onChange={onChangeHandle} className={styles.headerSearchField} />
-                                    </Col>
-                                </Row>
-                            </Col>
-                            {/*code to be changed once API is integrated */}
-                            {true ? (
-                                <Col className={styles.addGroup} xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Button icon={<TfiReload />} className={styles.refreshBtn} onClick={handleRefresh} danger aria-label="fa-ref" />
-
-                                    <Button icon={<PlusOutlined />} type="primary" onClick={handleAdd}>
-                                        Add New Role
-                                    </Button>
-                                </Col>
-                            ) : (
-                                ''
-                            )}
-                        </Row>
-                    </div>
-                </Col>
-            </Row>
+            <AppliedAdvanceFilter {...advanceFilterResultProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ConfigProvider
-                        renderEmpty={() => (
-                            <Empty
-                                image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                imageStyle={{
-                                    height: 60,
-                                }}
-                                description={
-                                    !RoleManagementData?.length ? (
-                                        <span>
-                                            No records found. Please add new Role <br />
-                                            using below button
-                                        </span>
-                                    ) : (
-                                        <span> No records found.</span>
-                                    )
-                                }
-                            >
-                                {!RoleManagementData?.length ? (
-                                    <Row>
-                                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                            <Button icon={<PlusOutlined />} type="primary" onClick={handleAdd}>
-                                                Add Role
-                                            </Button>
-                                        </Col>
-                                    </Row>
-                                ) : (
-                                    ''
-                                )}
-                            </Empty>
-                        )}
-                    >
-                        <div className={styles.tableProduct}>
-                            <DataTable isLoading={isLoading} tableData={searchData} tableColumn={tableColumn} />
-                        </div>
-                    </ConfigProvider>
+                    <ListDataTable isLoading={showDataLoading} {...tableProps} handleAdd={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })} />
                 </Col>
             </Row>
-
             <AddEditForm {...formProps} />
         </>
     );

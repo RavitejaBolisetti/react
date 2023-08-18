@@ -21,29 +21,24 @@ const AddEditFormMain = (props) => {
         form,
         formData,
         onCloseAction,
-        formActionType: { editMode, viewMode },
+        formActionType: { addMode, editMode, viewMode },
         onFinish,
         onFinishFailed,
+        selectedModelGroup,
     } = props;
 
     const { buttonData, setButtonData, handleButtonClick } = props;
 
     const { ModelOptions, TaxChargesOptions, AccountDataOptions } = props;
-    // const findModelId = (data, name) => {
-    //     const foundData = data?.find((element, index) => {
-    //         if (element?.value === name) {
-    //             return element;
-    //         }
-    //     });
-    //     return foundData?.id ?? 'NA';
-    // };
 
     useEffect(() => {
         if (editMode) {
             form.setFieldsValue({ ...formData });
+        } else if (addMode && selectedModelGroup) {
+            form.setFieldsValue({ modelId: selectedModelGroup });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [editMode]);
+    }, [editMode, addMode, selectedModelGroup]);
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });

@@ -58,13 +58,7 @@ const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, i
         tblPrepareColumns({
             title: 'Changed/Modified Date ',
             dataIndex: 'changedDate',
-            render: (text) => [
-                <div>
-                    {convertDateTime(text, 'DD MMM YYYY')}
-                    <br />
-                    {convertDateTime(text, 'HH:mm a')}
-                </div>,
-            ],
+            render: (text) => convertDateTime(text),
         }),
         tblPrepareColumns({
             title: 'Changed By',
@@ -99,6 +93,7 @@ const ChangeHistoryMain = ({ fetchChangeHistoryList, changeHistoryShowLoading, i
         tableColumn,
         tableData: changeHistoryData,
     };
+
     return (
         <>
             <Row gutter={20} className={styles.drawerBody}>

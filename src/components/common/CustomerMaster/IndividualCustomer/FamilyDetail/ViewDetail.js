@@ -6,7 +6,6 @@
 import React from 'react';
 import { Descriptions } from 'antd';
 import { DATA_TYPE } from 'constants/dataType';
-import dayjs from 'dayjs';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 
 import styles from 'components/common/Common.module.css';

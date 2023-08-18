@@ -9,15 +9,17 @@ import { connect } from 'react-redux';
 import { Row, Col, Form } from 'antd';
 
 import { customerDetailsIndividualDataActions } from 'store/actions/data/customerMaster/customerDetailsIndividual';
+import { documentViewDataActions } from 'store/actions/data/customerMaster/documentView';
+import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
 import { corporateDataActions } from 'store/actions/data/customerMaster/corporate';
 import { showGlobalNotification } from 'store/actions/notification';
+
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
 import { CustomerFormButton } from '../../CustomerFormButton';
+import { CustomerNameChangeHistory } from './CustomerNameChange';
 
 import styles from 'components/common/Common.module.css';
-import { documentViewDataActions } from 'store/actions/data/customerMaster/documentView';
-import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
 
 const mapStateToProps = (state) => {
     const {
@@ -77,7 +79,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const CustomerDetailMasterBase = (props) => {
-    const { setRefreshCustomerList, typeData, fetchCorporateLovList, isCorporateLovDataLoaded, listCorporateLovShowLoading, corporateLovData } = props;
+    const { setRefreshCustomerList, handleResetFilter, typeData, fetchCorporateLovList, isCorporateLovDataLoaded, listCorporateLovShowLoading, corporateLovData } = props;
     const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, data, saveData, isLoading, resetData, form, handleFormValueChange, onFinishFailed } = props;
     const { selectedCustomer, selectedCustomerId, setSelectedCustomerId } = props;
     const { buttonData, setButtonData, formActionType, setFormActionType, handleButtonClick, NEXT_ACTION } = props;
@@ -86,7 +88,7 @@ const CustomerDetailMasterBase = (props) => {
     const [showForm, setShowForm] = useState(false);
     const [status, setStatus] = useState(null);
     const [emptyList, setEmptyList] = useState(true);
-    const [nameChangeHistoryForm] = Form.useForm();
+    const [nameChangeRequestform] = Form.useForm();
     const [fileList, setFileList] = useState([]);
     const [uploadedFileName, setUploadedFileName] = useState('');
     const [editedMode, setEditedMode] = useState(false);
@@ -97,7 +99,7 @@ const CustomerDetailMasterBase = (props) => {
     const [supportingDataView, setSupportingDataView] = useState();
     const [isHistoryVisible, setIsHistoryVisible] = useState(false);
     const [activeKey, setactiveKey] = useState([]);
-
+    const [nameChangeRequested, setNameChangeRequested] = useState(false);
     const [whatsAppConfiguration, setWhatsAppConfiguration] = useState({ contactOverWhatsApp: null, contactOverWhatsAppActive: null, sameMobileNoAsWhatsApp: null, sameMobileNoAsWhatsAppActive: null });
 
     const onErrorAction = (message) => {
@@ -113,18 +115,6 @@ const CustomerDetailMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded]);
 
-    useEffect(() => {
-        if (data) {
-            console.log('data', data);
-            setCustomerNameList({
-                titleCode: data?.titleCode,
-                firstName: data?.firstName,
-                middleName: data?.middleName,
-                lastName: data?.lastName,
-            });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [data]);
     useEffect(() => {
         return () => {
             resetData();
@@ -153,15 +143,7 @@ const CustomerDetailMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedCustomerId]);
-    useEffect(() => {
-        if (viewDocument && isViewDataLoaded) {
-            let a = document.createElement('a');
-            a.href = `data:image/png;base64,${viewDocument?.base64}`;
-            a.download = viewDocument?.fileName;
-            a.click();
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isViewDataLoaded, viewDocument]);
+
     const downloadFileFromButton = (uploadData) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Your download will start soon' });
         const extraParams = [
@@ -175,6 +157,7 @@ const CustomerDetailMasterBase = (props) => {
         const supportingDocument = uploadData?.documentName;
         fetchViewDocument({ setIsLoading: viewListShowLoading, userId, extraParams, supportingDocument });
     };
+
     const deleteFile = (uploadData) => {
         const data = { customerId: uploadData?.customerId, status: false, docId: uploadData?.docId, documentTypeId: uploadData?.documentType, id: uploadData?.id, documentName: uploadData?.documentName };
         const onSuccess = (res) => {
@@ -196,6 +179,7 @@ const CustomerDetailMasterBase = (props) => {
 
         saveData(requestData);
     };
+
     const downloadFileFromList = () => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Your download will start soon' });
         const extraParams = [
@@ -222,26 +206,45 @@ const CustomerDetailMasterBase = (props) => {
         setFileList([]);
         setEmptyList(false);
         setUploadedFile();
-        const data = { ...values, customerId: selectedCustomer?.customerId, status: true, docId: uploadedFile, documentTypeId: form.getFieldValue('documentTypeId'), titleCode: customerNameList?.titleCode, firstName: customerNameList?.firstName, middleName: customerNameList?.middleName, lastName: customerNameList?.lastName };
+
+        let data = { ...values, customerId: selectedCustomer?.customerId };
+        console.log(nameChangeRequested, 'nameChangeRequested');
+        if (formActionType?.editMode && nameChangeRequested) {
+            data = { ...data, ...customerNameList };
+            delete data.titleCodeNew;
+            delete data.firstNameNew;
+            delete data.middleNameNew;
+            delete data.lastNameNew;
+        } else if (formActionType?.editMode) {
+            data = { ...data, titleCode: formData?.titleCode, firstName: formData?.firstName, middleName: formData?.middleName, lastName: formData?.lastName };
+        }
 
         const onSuccess = (res) => {
-            setStatus('Approved');
             form.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId });
             setButtonData({ ...buttonData, formBtnActive: false });
             setRefreshCustomerList(true);
+            handleResetFilter();
 
             if (res.data) {
                 handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
-                // setSelectedCustomer({ ...res.data, customerName: res?.data?.firstName + ' ' + res?.data?.middleName + ' ' + res?.data?.lastName });
                 setSelectedCustomerId(res?.data?.customerId);
-                setCustomerNameList({
-                    titleCode: res?.data?.titleCode,
-                    firstName: res?.data?.firstName,
-                    middleName: res?.data?.middleName,
-                    lastName: res?.data?.lastName,
-                });
+                if (res?.data?.customerNameChangeRequest === null) {
+                    setCustomerNameList({
+                        titleCode: res?.data?.titleCode,
+                        firstName: res?.data?.firstName,
+                        middleName: res?.data?.middleName,
+                        lastName: res?.data?.lastName,
+                    });
+                } else {
+                    setCustomerNameList({
+                        titleCode: res?.data?.customerNameChangeRequest?.newTitleCode,
+                        firstName: res?.data?.customerNameChangeRequest?.newFirstName,
+                        middleName: res?.data?.customerNameChangeRequest?.newMiddleName,
+                        lastName: res?.data?.customerNameChangeRequest?.newLastName,
+                    });
+                }
             }
         };
         const onError = (message) => {
@@ -312,14 +315,15 @@ const CustomerDetailMasterBase = (props) => {
         uploadImgDocId,
         setButtonData,
         buttonData,
-        nameChangeHistoryForm,
+        nameChangeRequestform,
         typeData,
-        formData,
+        formData: data,
         setFormData,
         isSupportingDocumentDataLoaded,
         supportingData,
         isViewDataLoaded,
         viewDocument,
+        selectedCustomerId,
         setUploadedFile,
         uploadedFile,
         downloadFileFromButton,
@@ -348,7 +352,10 @@ const CustomerDetailMasterBase = (props) => {
         status,
         setStatus,
         activeKey,
+        fetchList,
         setactiveKey,
+        nameChangeRequested,
+        setNameChangeRequested,
     };
 
     const viewProps = {
@@ -359,20 +366,30 @@ const CustomerDetailMasterBase = (props) => {
         isLoading,
     };
 
+    const nameChangeHistoryProps = {
+        isVisible: isHistoryVisible,
+        onCloseAction: changeHistoryClose,
+        selectedCustomerId,
+        downloadFileFromButton,
+    };
+
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-            <Row gutter={20} className={styles.drawerBodyRight}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <h2>{section?.title}</h2>
-                    {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
-                </Col>
-            </Row>
-            <Row>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <CustomerFormButton {...props} />
-                </Col>
-            </Row>
-        </Form>
+        <>
+            <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                <Row gutter={20} className={styles.drawerBodyRight}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <h2>{section?.title}</h2>
+                        {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
+                    </Col>
+                </Row>
+                <Row>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                        <CustomerFormButton {...props} />
+                    </Col>
+                </Row>
+            </Form>
+            <CustomerNameChangeHistory {...nameChangeHistoryProps} />
+        </>
     );
 };
 export const CustomerDetailMaster = connect(mapStateToProps, mapDispatchToProps)(CustomerDetailMasterBase);

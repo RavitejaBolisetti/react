@@ -152,7 +152,7 @@ p {
 
 :global .ant-checkbox .ant-checkbox-inner:after {
     top: 44%;
-    inset-inline-start: 30%;
+    inset-inline-start: 28%;
     width: 6px;
     height: 10px;
     border: 1px solid #ff3e5b;
@@ -533,9 +533,18 @@ p {
 }
 
 :global .ant-form-item .ant-form-item-label>label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
-    margin-inline-end: 8px;
-    margin-top: -2px;
+    margin-top: -3px;
+    margin-inline-end: 6px;
 }
+
+:global .ant-form-item .ant-form-item-label>label::after {
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+
+/* :global .ant-form-item .ant-form-item-label>label.ant-form-item-no-colon::after {
+    display: none;
+} */
 
 :global .ant-select:not(.ant-select-customize-input) .ant-select-selector {
     border: 1px solid #b5b5b6;
@@ -653,10 +662,10 @@ p {
     margin-top: 12px;
 }
 
-:global .ant-tree .ant-tree-list-holder-inner {
+/* :global .ant-tree .ant-tree-list-holder-inner {
     align-items: flex-start;
     margin-bottom: 50px;
-}
+} */
 
 /* AntD Tree & Tree Select Design End*/
 
@@ -852,6 +861,7 @@ p {
 :global .ant-card .ant-card-body {
     padding: 20px 30px;
     padding-bottom: 0;
+    /* margin-bottom: 20px; */
 }
 
 :global .ant-card .ant-card-body::before,
@@ -915,6 +925,51 @@ p {
 
 /* AntD Collapse Design End*/
 
+/* AntD Descriptions Design Start*/
+:global .ant-descriptions .ant-descriptions-view table {
+    border-spacing: 0;
+}
+
+:global .ant-descriptions .ant-descriptions-view .ant-descriptions-row:nth-child(odd) .ant-descriptions-item {
+    padding: 0;
+}
+
+:global .ant-descriptions .ant-descriptions-view .ant-descriptions-row:nth-child(even) .ant-descriptions-item {
+    padding: 0;
+    padding-bottom: 20px;
+}
+
+:global .ant-descriptions .ant-descriptions-view .ant-descriptions-row .ant-descriptions-item:first-child {
+    padding-right: 16px !important;
+}
+
+:global .ant-descriptions .ant-descriptions-view .ant-descriptions-row .ant-descriptions-item:nth-child(2) {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+}
+
+:global .ant-descriptions .ant-descriptions-view .ant-descriptions-row .ant-descriptions-item:nth-child(3) {
+    padding-left: 16px !important;
+}
+
+:global .ant-descriptions .ant-descriptions-view .ant-descriptions-row .ant-descriptions-item .ant-descriptions-item-container .ant-descriptions-item-content {
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #0b0b0c;
+    font-weight: 400;
+    line-height: 23px;
+    align-items: center;
+}
+
+:global .ant-descriptions .ant-descriptions-view .ant-descriptions-row .ant-descriptions-item .ant-descriptions-item-container .ant-descriptions-item-content a {
+    color: #0b0b0c;
+    text-decoration: underline;
+}
+
+/* AntD Descriptions Design End*/
+
 /* :global(.ant-card.ant-card-actions) {
     height: 40px;
 } */
@@ -930,13 +985,13 @@ p {
 :global .ant-menu-light.ant-menu-root.ant-menu-vertical {
     border-inline-end: none;
     overflow-y: overlay;
-    max-height: calc(100vh - 170px);
+    height: calc(100vh - 170px);
     /* padding: 0 24px; */
     padding: 0 14px;
 }
 
 :global .ant-menu-light.ant-menu-inline-collapsed.ant-menu-vertical {
-    max-height: calc(100vh - 153px);
+    height: calc(100vh - 153px);
 }
 
 :global .ant-menu-item:not(.ant-menu-item-selected):hover {

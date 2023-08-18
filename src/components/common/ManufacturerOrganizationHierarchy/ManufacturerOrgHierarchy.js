@@ -38,7 +38,7 @@ const mapStateToProps = (state) => {
             LeftSideBar: { collapsed = false },
         },
     } = state;
-    console.log(manufacturerOrgHierarchyData, 'manufacturerOrgHierarchyData');
+    //console.log(manufacturerOrgHierarchyData, 'manufacturerOrgHierarchyData');
     const moduleTitle = 'Manufacturer Organisation Detail';
     const viewTitle = 'Hierarchy Details';
 
@@ -306,7 +306,7 @@ export const ManufacturerOrgHierarchyMain = ({ moduleTitle, isChangeHistoryVisib
                         </Form>
                     </Col>
                     {manufacturerOrgHierarchyData?.length > 0 && (
-                        <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.addGroup}>
+                        <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.buttonsGroupRight}>
                             <Button icon={<FaHistory />} type="primary" className={styles.verticallyCentered} onClick={changeHistoryModelOpen}>
                                 Change History
                             </Button>

@@ -14,3 +14,4 @@ export const loginPageIsLoading = (isLoading = true) => ({
 export const loginPageClear = () => ({
     type: LOGIN_PAGE_CLEAR,
 });
+

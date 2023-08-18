@@ -95,6 +95,9 @@ export const VehicleModelAndTaxChargersCategoryMain = (props) => {
     const { isAccountDataLoaded, AccountData, listAccountCategoryLovLoading } = props;
     const { isTaxCategoryDataLoaded, TaxCategoryData } = props;
     const { fetchList, listShowLoading, fetchModelList, listModelShowLoading, showGlobalNotification, saveData, fetchAccountCategoryLov, fetchTaxCategoryLov, listTaxCategoryLovLoading } = props;
+
+    const { resetData } = props;
+
     const [form] = Form.useForm();
 
     const [formData, setFormData] = useState({});
@@ -113,7 +116,7 @@ export const VehicleModelAndTaxChargersCategoryMain = (props) => {
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
-    const [showDataLoading, setshowDataLoading] = useState(false);
+    const [showDataLoading, setshowDataLoading] = useState(true);
 
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
@@ -124,6 +127,11 @@ export const VehicleModelAndTaxChargersCategoryMain = (props) => {
 
     const errorAction = (message) => {
         showGlobalNotification(message);
+    };
+    const onErrorAction = () => {
+        resetData();
+        setSearchdata([]);
+        setshowDataLoading(false);
     };
 
     const onSuccessAction = (res) => {
@@ -163,7 +171,7 @@ export const VehicleModelAndTaxChargersCategoryMain = (props) => {
         if (userId) {
             if (!VehicleModelTaxChargesCategoryDataLoaded) {
                 setshowDataLoading(true);
-                fetchList({ setIsLoading: listShowLoading, errorAction, extraParams, userId, onSuccessAction });
+                fetchList({ setIsLoading: listShowLoading, onErrorAction, extraParams, userId, onSuccessAction });
             } else if (!isProductHierarchyDataLoaded) {
                 const extraParams = [
                     {
@@ -199,6 +207,7 @@ export const VehicleModelAndTaxChargersCategoryMain = (props) => {
 
     useEffect(() => {
         if (userId && refershData) {
+            setshowDataLoading(true);
             const ModelParams = [
                 {
                     key: 'code',
@@ -206,7 +215,7 @@ export const VehicleModelAndTaxChargersCategoryMain = (props) => {
                     value: 'MG',
                 },
             ];
-            fetchList({ setIsLoading: listShowLoading, errorAction, userId, onSuccessAction, extraParams });
+            fetchList({ setIsLoading: listShowLoading, onErrorAction, userId, onSuccessAction, extraParams });
             fetchModelList({ setIsLoading: listModelShowLoading, errorAction, userId, extraParams: ModelParams });
             fetchAccountCategoryLov({ setIsLoading: listAccountCategoryLovLoading, errorAction, userId });
             fetchTaxCategoryLov({ setIsLoading: listTaxCategoryLovLoading, errorAction, userId });
@@ -217,7 +226,7 @@ export const VehicleModelAndTaxChargersCategoryMain = (props) => {
     useEffect(() => {
         if (userId) {
             setshowDataLoading(true);
-            fetchList({ setIsLoading: listShowLoading, errorAction, extraParams, userId, onSuccessAction });
+            fetchList({ setIsLoading: listShowLoading, onErrorAction, extraParams, userId, onSuccessAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedModelGroup]);
@@ -235,16 +244,6 @@ export const VehicleModelAndTaxChargersCategoryMain = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, VehicleModelTaxChargesCategoryDataLoaded, VehicleModelTaxChargesCategoryData['vehicleModel'], userId]);
-
-    // const removeFilter = (key) => {
-    //     if (key === 'searchParam') {
-    //         const { searchType, searchParam, ...rest } = filterString;
-    //         setFilterString({ ...rest });
-    //     } else {
-    //         const { [key]: names, ...rest } = filterString;
-    //         setFilterString({ ...rest });
-    //     }
-    // };
 
     const onFinish = (values) => {
         const recordId = formData?.id || '';
@@ -300,6 +299,7 @@ export const VehicleModelAndTaxChargersCategoryMain = (props) => {
     };
 
     const tableProps = {
+        setPage,
         VehicleModelTaxChargesCategoryisLoading,
         tableData: searchData,
         tableColumn: tableColumn(handleButtonClick),
@@ -346,6 +346,7 @@ export const VehicleModelAndTaxChargersCategoryMain = (props) => {
         ModelOptions: (ModelOptions?.hasOwnProperty('keyValue') && ModelOptions['keyValue']) || [{}],
         TaxChargesOptions,
         AccountDataOptions,
+        selectedModelGroup,
     };
 
     const handleClearInSearch = (e) => {
@@ -383,12 +384,13 @@ export const VehicleModelAndTaxChargersCategoryMain = (props) => {
         onSearchHandle,
         onChangeHandle: handleClearInSearch,
     };
+
+    const listNotableData = !showDataLoading && !VehicleModelTaxChargesCategoryData['vehicleModel']?.length;
+
     const ListDataTableProps = {
         ...tableProps,
         handleButtonClick: handleAdd,
-        addTitle: 'Model Group',
-        showAddButton: false,
-        noDataMessage: 'Select Model Group from above',
+        showAddButton: listNotableData,
         isLoading: showDataLoading,
     };
     return (

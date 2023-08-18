@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { tblPrepareColumns, tblActionColumn } from 'utils/tableCloumn';
+import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import { convertDate } from 'utils/formatDateTime';
 
 import styles from 'components/common/Common.module.css';
@@ -47,6 +47,7 @@ export const tableColumn = (handleButtonClick) => {
             title: 'Model Description',
             dataIndex: 'modelDescription',
             width: '16%',
+            sorter: false,
         }),
 
         tblPrepareColumns({
@@ -59,11 +60,11 @@ export const tableColumn = (handleButtonClick) => {
             dataIndex: 'requestedDate',
             width: '12%',
             render: (value) => {
-                return convertDate(value?.requestedDate, 'DD MMM YYYY');
+                return convertDate(value, 'DD MMM YYYY');
             },
         }),
 
-        tblActionColumn({ handleButtonClick, styles, width: '8%', EditIcon: false }),
+        tblActionColumn({ handleButtonClick, styles, width: '8%', canEdit: false, EditIcon: false }),
     ];
 
     return tableColumn;

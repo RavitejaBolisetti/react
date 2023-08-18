@@ -14,13 +14,12 @@ import styles from 'components/common/Common.module.css';
 const { Search } = Input;
 
 export default function AdvanceFilter(props) {
-    const { extraParams, handleResetFilter, handleButtonQuery, handleSearchChange, advanceFilter = false, filter = false, filterString, setAdvanceSearchVisible, searchForm } = props;
+    const { extraParams, handleResetFilter, handleButtonQuery, handleSearchChange, rsmStatusType, advanceFilter = false, filter = false, filterString, setAdvanceSearchVisible, searchForm } = props;
     return (
         <div className={styles.contentHeaderBackground}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.verticallyCentered}>
-                    {/* <QueryButtons queryButtons={queryButtons} setqueryButtons={setqueryButtons} handleButtonQuery={handleButtonQuery} /> */}
-                    <QueryButtons items={Object.values(RSM_APPROVAL_STATUS)} onClick={handleButtonQuery} />
+                    <QueryButtons currentItem={rsmStatusType} items={Object.values(RSM_APPROVAL_STATUS)} onClick={handleButtonQuery} />
                     {filter && (
                         <Form form={searchForm} className={styles.masterListSearchForm}>
                             <Form.Item name="Search">
@@ -33,8 +32,9 @@ export default function AdvanceFilter(props) {
                     {advanceFilter && (
                         <div className={styles.advanceFilterBtn}>
                             <Button
-                                icon={<FilterIcon className={styles.advanceFilterIcon} />}
+                                icon={<FilterIcon />}
                                 type="link"
+                                className={styles.verticallyCentered}
                                 onClick={() => {
                                     setAdvanceSearchVisible(true);
                                 }}

@@ -194,16 +194,16 @@ const AddEditFormMain = (props) => {
                     )}
 
                     <Row gutter={20} className={styles.formFooterNew}>
-                        <Col xs={12} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnLeft}>
+                        <Col xs={12} sm={12} md={12} lg={12} xl={12} className={styles.buttonsGroupLeft}>
                             <Button danger onClick={onCloseAction}>
                                 Cancel
                             </Button>
                         </Col>
 
-                        <Col xs={12} sm={12} md={12} lg={12} xl={12} className={styles.footerBtnRight}>
-                            <Button htmlType="submit" form="myForm" disabled={!isFormBtnActive} type="primary">
-                                Save
-                            </Button>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <Form.Item name="prodctShrtName" label="Short Description" initialValue={formData?.prodctShrtName} rules={[validateRequiredInputField('short description')]}>
+                                <Input data-testid="prodctShrtName" className={styles.inputBox} placeholder={preparePlaceholderText('short description')} maxLength={50} disabled={formData?.id || isReadOnly} />
+                            </Form.Item>
                         </Col>
                     </Row>
                 </Form>

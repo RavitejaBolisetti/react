@@ -4,14 +4,12 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Row, Col, Space, Card, Collapse, Typography, Descriptions } from 'antd';
+import { Row, Col, Card, Collapse, Descriptions, Divider } from 'antd';
 
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 
 const { Panel } = Collapse;
-const { Text } = Typography;
-
 const ViewDetailMain = (props) => {
     const { activeKey, styles, schemeData, isLoading } = props;
     const viewProps = {
@@ -25,27 +23,28 @@ const ViewDetailMain = (props) => {
         <div className={styles.viewDrawerContainer}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Space direction="vertical" size="middle" className={styles.accordianContainer}>
-                        {schemeData && schemeData?.schemes?.length > 0 ? (
-                            schemeData?.schemes?.map((schemeForm, index) => (
-                                <Collapse expandIcon={expandIcon} activeKey={activeKey} expandIconPosition="end" className={styles.collapseContainer}>
-                                    <Panel header={`Scheme ${index + 1}`} key={schemeForm?.id}>
-                                        <Descriptions {...viewProps}>
-                                            <Descriptions.Item label="Scheme Type">{checkAndSetDefaultValue(schemeForm?.schemeType, isLoading)}</Descriptions.Item>
-                                            <Descriptions.Item label="Scheme Category">{checkAndSetDefaultValue(schemeForm?.schemeCategory, isLoading)}</Descriptions.Item>
-                                            <Descriptions.Item label="Amount">{checkAndSetDefaultValue(schemeForm?.amount, isLoading)}</Descriptions.Item>
-                                            <Descriptions.Item label="Valid From">{checkAndSetDefaultValue(schemeForm?.validFrom, isLoading)}</Descriptions.Item>
-                                            <Descriptions.Item label="Valid To">{checkAndSetDefaultValue(schemeForm?.validTo, isLoading)}</Descriptions.Item>
-                                            <Descriptions.Item label="" />
-                                            <Descriptions.Item label="Description">{checkAndSetDefaultValue(schemeForm?.description, isLoading)}</Descriptions.Item>
-                                        </Descriptions>
-                                    </Panel>
-                                </Collapse>
-                            ))
-                        ) : (
-                            <Card className={styles.viewCardSize}>No Scheme and Offer Details Available</Card>
-                        )}
-                    </Space>
+                    {schemeData && schemeData?.schemes?.length > 0 ? (
+                        schemeData?.schemes?.map((schemeForm, index) => (
+                            <Collapse expandIcon={expandIcon} activeKey={activeKey} expandIconPosition="end">
+                                <Panel header={`Scheme ${index + 1}`} key={schemeForm?.id}>
+                                    <Divider />
+                                    <Descriptions {...viewProps}>
+                                        <Descriptions.Item label="Scheme Type">{checkAndSetDefaultValue(schemeForm?.schemeType, isLoading)}</Descriptions.Item>
+                                        <Descriptions.Item label="Scheme Category">{checkAndSetDefaultValue(schemeForm?.schemeCategory, isLoading)}</Descriptions.Item>
+                                        <Descriptions.Item label="Amount">{checkAndSetDefaultValue(schemeForm?.amount, isLoading)}</Descriptions.Item>
+                                        <Descriptions.Item label="Valid From">{checkAndSetDefaultValue(schemeForm?.validFrom, isLoading)}</Descriptions.Item>
+                                        <Descriptions.Item label="Valid To">{checkAndSetDefaultValue(schemeForm?.validTo, isLoading)}</Descriptions.Item>
+                                        <Descriptions.Item label="" />
+                                        <Descriptions.Item label="Description">{checkAndSetDefaultValue(schemeForm?.description, isLoading)}</Descriptions.Item>
+                                    </Descriptions>
+                                </Panel>
+                            </Collapse>
+                        ))
+                    ) : (
+                        <Card>
+                            <div className={styles.marB20}>No Scheme and Offer Details Available</div>
+                        </Card>
+                    )}
                 </Col>
             </Row>
         </div>

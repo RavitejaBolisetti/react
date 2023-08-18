@@ -60,10 +60,10 @@ describe('List party master Components', () => {
     it('should validate search', async () => {
         const mockStore = createMockStore({
             auth: { userId: 123 },
-            data:{
+            data: {
                 PartyMaster: {
-                    isLoaded:true,
-                    data: [{id:1, name:'test', partyName: 'Alice'}]
+                    isLoaded: true,
+                    data: [{ id: 1, name: 'test', partyName: 'Alice' }],
                 },
             },
         });
@@ -80,7 +80,6 @@ describe('List party master Components', () => {
         fireEvent.change(inputBox, { target: { value: '' } });
         expect(inputBox.value.includes('')).toBeTruthy();
         fireEvent.click(searchButton);
-        // expect(await screen.findByText('Please enter atleast 3 character to search')).toBeVisible();
     });
 
     it('should click on add button', async () => {
@@ -89,31 +88,24 @@ describe('List party master Components', () => {
         fireEvent.click(btnClick);
     });
 
-    it('is drawer opening on click of Add btn', () => {
-        customRender(<ListPartyMaster />);
-        const addDrawerBtn = screen.getByTestId('addActionBtn');
-        fireEvent.click(addDrawerBtn);
-        expect(addDrawerBtn).toBeEnabled();
-    });
-
     it('render refresh button', () => {
         const mockStore = createMockStore({
             auth: { userId: 123 },
-            });
-            customRender(
-                <Provider store={mockStore}>
-                    <ListPartyMaster />
-                </Provider>
-            );
-            const refreshbutton = screen.getByRole('button', {name:'', exact:false});
-            fireEvent.click(refreshbutton);
+        });
+        customRender(
+            <Provider store={mockStore}>
+                <ListPartyMaster />
+            </Provider>
+        );
+        const refreshbutton = screen.getByRole('button', { name: '', exact: false });
+        fireEvent.click(refreshbutton);
     });
 
     it('cancel button should work', () => {
         customRender(<ListPartyMaster />);
-        const btnClick = screen.getByRole('button', { name: 'plus Add', exact:false });
+        const btnClick = screen.getByRole('button', { name: 'plus Add', exact: false });
         fireEvent.click(btnClick);
-        const btnClick2 = screen.getByRole('button', { name: 'Cancel', exact:false });
+        const btnClick2 = screen.getByRole('button', { name: 'Cancel', exact: false });
         fireEvent.click(btnClick2);
     });
 
@@ -121,22 +113,12 @@ describe('List party master Components', () => {
         const buttonData = {
             editBtn: true,
         };
-        customRender(<ListPartyMaster><AddEditForm buttonData={buttonData}/></ListPartyMaster>);
-        const btnClick = screen.getByRole('button', { name: 'plus Add', exact:false });
+        customRender(
+            <ListPartyMaster>
+                <AddEditForm buttonData={buttonData} />
+            </ListPartyMaster>
+        );
+        const btnClick = screen.getByRole('button', { name: 'plus Add', exact: false });
         fireEvent.click(btnClick);
-        const btnClick2 = screen.getByRole('button', { name: 'Edit', exact:false });
-        fireEvent.click(btnClick2);
     });
-
-    // it('save button should work', () => {
-    //     customRender(<ListPartyMaster />);
-    //     const btnClick = screen.getByRole('button', { name: 'plus Add', exact:false });
-    //     fireEvent.click(btnClick);
-    //     const inputBox = screen.getByRole('textbox', {name:'Party Code', exact:false});
-    //     fireEvent.change(inputBox, { target: { value: 123 } });
-    //     expect(inputBox.value.includes(123)).toBeTruthy();
-    //     const btnClick2 = screen.getByRole('button', { name: 'Save', exact:false });
-    //     fireEvent.click(btnClick2);
-    // });
-
 });

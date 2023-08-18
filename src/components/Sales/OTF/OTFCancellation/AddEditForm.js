@@ -5,35 +5,37 @@
  */
 import React, { useEffect, useState, useMemo } from 'react';
 import { Row, Col, Input, Form, Select, Card, Descriptions, AutoComplete } from 'antd';
+import { FiEye, FiTrash } from 'react-icons/fi';
 
-import styles from 'components/common/Common.module.css';
-import { convertDateTime } from 'utils/formatDateTime';
-import { preparePlaceholderText, preparePlaceholderSelect, preparePlaceholderAutoComplete } from 'utils/preparePlaceholder';
-import { validateRequiredSelectField, validateRequiredInputField } from 'utils/validation';
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
-import { checkAndSetDefaultValue, getStatus } from 'utils/checkAndSetDefaultValue';
 import TreeSelectField from 'components/common/TreeSelectField';
-import { debounce } from 'utils/debounce';
 import { productHierarchyData } from './ProductHierarchyJSON';
-import { UploadUtil } from 'utils/Upload';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
-import { FiEye, FiTrash } from 'react-icons/fi';
+import { preparePlaceholderText, preparePlaceholderSelect, preparePlaceholderAutoComplete } from 'utils/preparePlaceholder';
+import { validateRequiredSelectField, validateRequiredInputField } from 'utils/validation';
+import { checkAndSetDefaultValue, getStatus } from 'utils/checkAndSetDefaultValue';
+import { convertDateTime } from 'utils/formatDateTime';
+import { debounce } from 'utils/debounce';
+import { UploadUtil } from 'utils/Upload';
+
+import styles from 'components/common/Common.module.css';
 
 const { TextArea, Search } = Input;
 
 const AddEditFormMain = (props) => {
+    console.log('dealerDataList===>', props.dealerDataList)
     const { otfCancellationForm, formData, selectedOrder, fieldNames, onFinishOTFCancellation } = props;
     const { handleButtonClick, buttonData, setButtonData, onCloseAction, handleFormValueChange, typeData, setUploadedFile, showGlobalNotification, viewDocument, setEmptyList } = props;
     const { searchDealerValue, setSearchDealerValue, dealerDataList } = props;
     const { uploadedFileName, setUploadedFileName, uploadedFile, parentAppCode, setparentAppCode } = props;
 
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
-    const [showStatus, setShowStatus] = useState('');
     const [reasonTypeChange, setReasonTypeChange] = useState('');
     const [dealerList, setDealerList] = useState([]);
     const [fileList, setFileList] = useState([]);
+    const [singleDisabled, setSingleDisabled] = useState(false);
 
     const onDrop = (e) => {};
     const onDownload = (file) => {
@@ -69,16 +71,20 @@ const AddEditFormMain = (props) => {
         setUploadedFile,
         uploadedFileName,
         setUploadedFileName,
+        single: true,
+        singleDisabled,
+        setSingleDisabled,
+        isReplaceEnabled: false,
     };
 
-    useEffect(() => {
-        if (showStatus.status === 'done') {
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: `${showStatus.name + ' file uploaded successfully'}` });
-        } else if (showStatus.status === 'error') {
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Error' });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [showStatus]);
+    // useEffect(() => {
+    //     if (showStatus.status === 'done') {
+    //         showGlobalNotification({ notificationType: 'success', title: 'Success', message: `${showStatus.name + ' file uploaded successfully'}` });
+    //     } else if (showStatus.status === 'error') {
+    //         showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Error' });
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [showStatus]);
 
     const handleCancellationReasonTypeChange = (value) => {
         setReasonTypeChange(value);
@@ -110,22 +116,22 @@ const AddEditFormMain = (props) => {
         () => (data) => {
             if (data?.length < 1) return [];
             let finalLocations = data?.map((item) => {
-                const index = item?.dealerName?.toLowerCase().indexOf(searchDealerValue);
-                const beforeStr = item?.dealerName?.substring(0, index);
-                const afterStr = item?.dealerName?.slice(index + searchDealerValue?.length);
-                let locatonName =
-                    index > -1 ? (
-                        <span>
-                            {beforeStr}
-                            <span className="site-tree-search-value" style={{ color: 'red' }}>
-                                {/* {searchString} */}
-                                {item?.dealerName?.substring(index, index + searchDealerValue?.length)}
-                            </span>
-                            {afterStr}
-                        </span>
-                    ) : (
-                        <span>{item?.dealerName}</span>
-                    );
+                // const index = item?.dealerName?.toLowerCase().indexOf(searchDealerValue);
+                // const beforeStr = item?.dealerName?.substring(0, index);
+                // const afterStr = item?.dealerName?.slice(index + searchDealerValue?.length);
+                // let locatonName =
+                //     index > -1 ? (
+                //         <span>
+                //             {beforeStr}
+                //             <span className="site-tree-search-value" style={{ color: 'red' }}>
+                //                 {/* {searchString} */}
+                //                 {item?.dealerName?.substring(index, index + searchDealerValue?.length)}
+                //             </span>
+                //             {afterStr}
+                //         </span>
+                //     ) : (
+                //         <span>{item?.dealerName}</span>
+                //     );
                 return {
                     label: item?.dealerName,
                     value: item?.dealerName,
@@ -133,7 +139,7 @@ const AddEditFormMain = (props) => {
             });
             return finalLocations;
         },
-        [searchDealerValue]
+        []
     );
 
     const handleSelectTreeClick = (value) => {
@@ -176,7 +182,7 @@ const AddEditFormMain = (props) => {
     const isLoading = false;
     return (
         <>
-            <Form form={otfCancellationForm} onFinish={onFinishOTFCancellation} layout="vertical" autocomplete="off" colon="false">
+            <Form form={otfCancellationForm} data-testid="test" onFinish={onFinishOTFCancellation} layout="vertical" autocomplete="off" colon="false">
                 <Row gutter={20} className={styles.drawerBody}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Card className={styles.ExchangeCard}>

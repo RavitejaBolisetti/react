@@ -68,6 +68,7 @@ const UploadBase = (props) => {
         accept = '',
         handleFormValueChange = () => {},
         multiple = false,
+        flag = false,
         showRemoveIcon = true,
         showDownloadIcon = true,
         showProgress = { strokeWidth: 3, showInfo: true },
@@ -106,6 +107,7 @@ const UploadBase = (props) => {
         setMandatoryFields,
         singleDisabled,
         setSingleDisabled,
+        setUploadedFileInformation = undefined,
     } = props;
 
     const [showStatus, setShowStatus] = useState('');
@@ -216,13 +218,14 @@ const UploadBase = (props) => {
                 form.validateFields()
                     .then(() => {
                         setFileList(fileList);
-                        handleFormValueChange();
+                        if (!flag) handleFormValueChange();
                         const { status } = info.file;
                         setShowStatus(info.file);
                         if (status === 'done') {
                             setTimeout(() => {
                                 setUploadTime(false);
                             }, 2500);
+                            setUploadedFileInformation && setUploadedFileInformation(info?.file?.response);
                             setUploadedFile(info?.file?.response?.docId);
                             setUploadedFileName(info?.file?.response?.documentName);
                         }
@@ -238,14 +241,14 @@ const UploadBase = (props) => {
                 }
 
                 setFileList(fileList);
-
-                handleFormValueChange();
+                if (!flag) handleFormValueChange();
                 const { status } = info.file;
                 setShowStatus(info.file);
                 if (status === 'done') {
                     setTimeout(() => {
                         setUploadTime(false);
                     }, 2700);
+                    setUploadedFileInformation && setUploadedFileInformation(info?.file?.response);
                     setUploadedFile(info?.file?.response?.docId);
                     setUploadedFileName(info?.file?.response?.documentName);
                 }

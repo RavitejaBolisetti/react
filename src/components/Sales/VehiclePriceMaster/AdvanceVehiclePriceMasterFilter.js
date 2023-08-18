@@ -25,7 +25,6 @@ export default function AdvanceVehiclePriceMasterFilter(props) {
         setAdvanceSearchVisible,
         searchForm,
         searchForm: { setFieldsValue },
-        moduleTitle,
         handleOnClick,
     } = props;
 
@@ -73,7 +72,7 @@ export default function AdvanceVehiclePriceMasterFilter(props) {
                     </Form>
                 </Col>
 
-                <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.addGroup}>
+                <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.buttonsGroupRight}>
                     <Button type="primary" onClick={handleOnClick}>
                         Upload
                     </Button>

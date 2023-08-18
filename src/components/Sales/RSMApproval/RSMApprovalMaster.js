@@ -18,6 +18,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { ViewDetail } from './ViewDetail';
 import { RejectRequest } from './RejectRequest';
 import { RSM_APPROVAL_STATUS } from './utils/RSMApprovalStatus';
+import { monthDateFormat, convertDate } from 'utils/formatDateTime';
 
 import { LANGUAGE_EN } from 'language/en';
 import { FilterIcon } from 'Icons';
@@ -67,7 +68,7 @@ const mapDispatchToProps = (dispatch) => ({
 export const RSMApprovalMasterBase = (props) => {
     const { fetchList, saveData, listShowLoading, userId, data, totalRecords, showGlobalNotification } = props;
     const { typeData } = props;
-    const { filterString, setFilterString, vehicleDetailStatusList } = props;
+    const { filterString, setFilterString } = props;
 
     const [listFilterForm] = Form.useForm();
     const [rejectForm] = Form.useForm();
@@ -100,8 +101,8 @@ export const RSMApprovalMasterBase = (props) => {
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [isRejectModalVisible, setRejectModalVisible] = useState(false);
     const [requestType, setRequestType] = useState('');
-    const [queryButtons, setqueryButtons] = useState({ pending: true, approved: false, rejected: false });
     const [rejectFormButtonActive, setRejectFormButtonActive] = useState(true);
+    const [rsmStatusType, setRsmStatusType] = useState(RSM_APPROVAL_STATUS?.PENDING?.key);
 
     const REQUEST_CONSTANT = {
         Reject: {
@@ -118,6 +119,7 @@ export const RSMApprovalMasterBase = (props) => {
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
         searchForm.resetFields();
         setShowDataLoading(false);
+        setRejectFormButtonActive(true);
     };
 
     const onErrorAction = (message) => {
@@ -125,28 +127,10 @@ export const RSMApprovalMasterBase = (props) => {
         setShowDataLoading(false);
     };
 
-    const handleButtonQuery = (buttonName) => {
-        switch (buttonName) {
-            case RSM_APPROVAL_STATUS?.PENDING?.key: {
-                setFilterString({ searchParam: RSM_APPROVAL_STATUS?.PENDING?.title });
-                setShowDataLoading(true);
-                break;
-            }
-            case RSM_APPROVAL_STATUS?.APPROVED?.key: {
-                setFilterString({ searchParam: RSM_APPROVAL_STATUS?.APPROVED?.title });
-                setShowDataLoading(true);
-                break;
-            }
-            case RSM_APPROVAL_STATUS?.REJECTED?.key: {
-                setFilterString({ searchParam: RSM_APPROVAL_STATUS?.REJECTED?.title });
-                setShowDataLoading(true);
-                break;
-            }
-            default: {
-                setFilterString({ searchParam: RSM_APPROVAL_STATUS?.PENDING?.title });
-                setShowDataLoading(true);
-            }
-        }
+    const handleButtonQuery = (item) => {
+        setRsmStatusType(item?.key);
+        setFilterString({ searchParam: item?.key });
+        setShowDataLoading(true);
     };
 
     const extraParams = useMemo(() => {
@@ -162,8 +146,8 @@ export const RSMApprovalMasterBase = (props) => {
             {
                 key: 'searchParam',
                 title: 'Value',
-                value: filterString?.searchParam,
-                name: filterString?.searchParam,
+                value: filterString?.searchParam || rsmStatusType,
+                name: filterString?.searchParam || rsmStatusType,
                 canRemove: true,
                 filter: true,
             },
@@ -171,7 +155,7 @@ export const RSMApprovalMasterBase = (props) => {
                 key: 'fromDate',
                 title: 'From Date',
                 value: filterString?.fromDate,
-                name: filterString?.fromDate,
+                name: convertDate(filterString?.fromDate, monthDateFormat),
                 canRemove: true,
                 filter: true,
             },
@@ -179,7 +163,7 @@ export const RSMApprovalMasterBase = (props) => {
                 key: 'toDate',
                 title: 'To Date',
                 value: filterString?.toDate,
-                name: filterString?.toDate,
+                name: convertDate(filterString?.toDate, monthDateFormat),
                 canRemove: true,
                 filter: true,
             },
@@ -220,7 +204,8 @@ export const RSMApprovalMasterBase = (props) => {
     }, [filterString, page]);
 
     useEffect(() => {
-        if (userId && extraParams) {
+        if (userId) {
+            setShowDataLoading(true);
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -243,7 +228,6 @@ export const RSMApprovalMasterBase = (props) => {
 
     const handleRequest = ({ requestType = false }) => {
         setRejectModalVisible(true);
-        setIsFormVisible(false);
         requestType ? setRejectRequest(true) : setRejectRequest(false);
         requestType ? setRequestType(REQUEST_CONSTANT?.Reject?.value) : setRequestType(REQUEST_CONSTANT?.Approve?.value);
     };
@@ -258,18 +242,22 @@ export const RSMApprovalMasterBase = (props) => {
     const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
         setFormData([]);
-        queryButtons?.pending ? setButtonData({ ...defaultBtnVisiblity }) : setButtonData({ ...defaultBtnVisiblity, cancelBtn: false, reject: false, approve: false });
+        rsmStatusType === RSM_APPROVAL_STATUS?.PENDING?.key ? setButtonData({ ...defaultBtnVisiblity }) : setButtonData({ ...defaultBtnVisiblity, cancelBtn: false, reject: false, approve: false });
         setFormActionType({ viewMode: buttonAction === VIEW_ACTION });
         record && setFormData(record);
         setIsFormVisible(true);
     };
 
     const handleSearchChange = (value) => {
-        setFilterString({ ...filterString, advanceFilter: true, dealerName: `${value}` });
+        const searchValue = value.trim();
+        if (!searchValue) {
+            return;
+        }
+        setFilterString({ ...filterString, advanceFilter: true, dealerName: `${searchValue}` });
     };
 
     const onFinish = (values) => {
-        if (values?.status) {
+        if (values?.status || requestType === REQUEST_CONSTANT?.Reject?.value) {
             let data = { ...values, request: requestType, id: formData?.id };
             delete data?.status;
             const onSuccess = (res) => {
@@ -326,8 +314,9 @@ export const RSMApprovalMasterBase = (props) => {
         tableColumn: tableColumn(handleButtonClick),
         tableData: data,
         showAddButton: false,
-        handleButtonClick,
+        handleAdd: handleButtonClick,
         noMessge: LANGUAGE_EN.GENERAL.LIST_NO_DATA_FOUND.TITLE,
+        rsmStatusType,
     };
 
     const removeFilter = (key) => {
@@ -343,7 +332,6 @@ export const RSMApprovalMasterBase = (props) => {
     const advanceFilterResultProps = {
         extraParams,
         removeFilter,
-        vehicleDetailStatusList,
         advanceFilter: true,
         filter: true,
         filterString,
@@ -353,10 +341,9 @@ export const RSMApprovalMasterBase = (props) => {
         onFinishFailed,
         title: '',
         handleButtonQuery,
-        // title: <QueryButtons queryButtons={queryButtons} setqueryButtons={setqueryButtons} handleButtonQuery={handleButtonQuery} />,
         data,
         typeData,
-
+        rsmStatusType,
         searchForm,
         handleSearchChange,
         handleResetFilter,
@@ -390,13 +377,14 @@ export const RSMApprovalMasterBase = (props) => {
         setRejectRequest,
         formData,
         handleRequest,
-        queryButtons,
     };
+
+    const requestModuleTitle = ' Co-Dealer Invoice';
 
     const rejectRequestProps = {
         isVisible: isRejectModalVisible,
         onCloseAction: rejectModalCloseAction,
-        titleOverride: 'Reject Co-Dealer Invoice',
+        titleOverride: requestType === 'Reject' ? REQUEST_CONSTANT?.Reject?.value?.concat(requestModuleTitle) : REQUEST_CONSTANT?.Approve?.value?.concat(requestModuleTitle),
         rejectForm,
         rejectModalCloseAction,
         rejectRequest,

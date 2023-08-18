@@ -6,23 +6,37 @@
 import React from 'react';
 import { Descriptions } from 'antd';
 
-const ViewRoleManagementMain = ({ formData, viewStyle }) => {
+const ViewRoleManagementMain = ({ formData, styles, menuTreeData, onTabChange, AccordianTreePanel }) => {
     const viewProps = {
         bordered: false,
         colon: false,
         layout: 'vertical',
-        // title: <div className={viewStyle.contentHeaderRightBackground}>{viewTitle}</div>,
+    };
+
+    const viewTwoColProps = {
+        ...viewProps,
+        column: { xxl: 2, xl: 2, lg: 2, md: 2, sm: 2, xs: 1 },
+    };
+    const viewOneColProps = {
+        ...viewProps,
         column: { xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 },
     };
     return (
-        <div className={`${viewStyle.viewContainer} ${viewStyle.hierarchyRightContainers}`}>
+        <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
             <>
-                <Descriptions {...viewProps}>
-                    <Descriptions.Item label="Role ID">{formData?.roleId}</Descriptions.Item>
-                    <Descriptions.Item label="Role Name">{formData?.roleName}</Descriptions.Item>
-                    <Descriptions.Item label="Role Description">{formData?.roleDesceription}</Descriptions.Item>
-                    <Descriptions.Item label="Status">{formData?.active === '1' ? 'Active' : 'InActive'}</Descriptions.Item>
-                </Descriptions>
+                <div className={`${styles.roleDescription} ${styles.padB20}`}>
+                    <Descriptions {...viewTwoColProps}>
+                        <Descriptions.Item label="Role ID">{formData?.roleId}</Descriptions.Item>
+                        <Descriptions.Item label="Role Name">{formData?.roleName}</Descriptions.Item>
+                    </Descriptions>
+
+                    <Descriptions {...viewOneColProps}>
+                        <Descriptions.Item label="Role Description">{formData?.roleDesceription}</Descriptions.Item>
+                        <Descriptions.Item label="Status">{formData?.active === '1' ? 'Active' : 'InActive'}</Descriptions.Item>
+                    </Descriptions>
+                </div>
+                <div className={styles.subTitleSec}>Application Access</div>
+                {AccordianTreePanel({ viewMode: true, menuTreeData })}
             </>
         </div>
     );

@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { Fragment, useEffect } from 'react';
-import { Card, Row, Button, Divider, Typography } from 'antd';
+import { Card, Row, Button, Divider, Typography, Space } from 'antd';
 import { FiEdit, FiTrash } from 'react-icons/fi';
 import styles from 'components/common/Common.module.css';
 import FormProductAttribute from './FormTaxAndChargeCal';
@@ -101,15 +101,13 @@ const CardProductAttribute = (props) => {
             }}
         >
             <Row align="middle" justify="space-between" className={styles.marB20}>
-                <Row align="center">
-                    <div>
-                        <Text>{taxChargeDesc}</Text>
-                    </div>
+                <Space>
+                    <Text>{taxChargeDesc}</Text>
+
                     <Divider type="vertical" />
-                    <div>
-                        <Text>{props?.chargeCode}</Text>
-                    </div>
-                </Row>
+
+                    <Text>{props?.chargeCode}</Text>
+                </Space>
 
                 {viewMode === false ? (
                     <Row>
@@ -144,7 +142,6 @@ const CardProductAttribute = (props) => {
 
             {formEdit && props?.internalId === uniqueCardEdit && (
                 <>
-                    <Divider />
                     <FormProductAttribute {...FormProductAttributeProp} />
                 </>
             )}

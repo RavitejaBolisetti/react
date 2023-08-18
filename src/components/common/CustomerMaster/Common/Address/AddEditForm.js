@@ -8,7 +8,7 @@ import React, { useState, useEffect } from 'react';
 
 import { Row, Col, Checkbox, Button, Form, Input, Select, AutoComplete } from 'antd';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
-import { validateRequiredInputField, validateRequiredSelectField, validatePincodeField, validateMobileNoField, validateLettersWithWhitespaces, duplicateValidator } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField, validatePincodeField, duplicateValidator } from 'utils/validation';
 
 import styles from 'components/common/Common.module.css';
 
@@ -36,7 +36,6 @@ const AddEditForm = (props) => {
             key: item?.id,
         }));
         setOptions(pinOption);
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pincodeData]);
 
@@ -159,7 +158,7 @@ const AddEditForm = (props) => {
                     </Col>
                 </Row>
                 <Row gutter={20}>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.uniqueSearchInput}>
+                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item initialValue={formData?.pinCode} label="Pin Code" name="pinCode" rules={[validateRequiredInputField('Pin Code'), validatePincodeField('Pin Code')]}>
                             <AutoComplete {...disabledProps} maxLength={6} options={options} onSelect={handleOnSelect} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
                                 <Search onSearch={handleOnSearch} onChange={handleOnClear} placeholder="Search" loading={isPinCodeLoading} type="text" allowClear />
@@ -203,20 +202,20 @@ const AddEditForm = (props) => {
                         </Form.Item>
                     </Col>
 
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                    {/* <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item label="Contact Name" name="contactName" rules={[validateRequiredInputField('contact name'), validateLettersWithWhitespaces('contact name')]}>
                             <Input maxLength={50} placeholder={preparePlaceholderText('contact name')} />
                         </Form.Item>
-                    </Col>
+                    </Col> */}
                 </Row>
 
-                <Row gutter={20}>
+                {/* <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item label="Contact Mobile" name="mobileNumber" rules={[validateRequiredInputField('contact number'), validateMobileNoField('mobile number')]}>
                             <Input maxLength={10} placeholder={preparePlaceholderText('mobile number')} />
                         </Form.Item>
                     </Col>
-                </Row>
+                </Row> */}
                 <Form.Item hidden name="id" initialValue={''}>
                     <Input />
                 </Form.Item>
@@ -228,12 +227,12 @@ const AddEditForm = (props) => {
                     </Col>
                 </Row>
                 {!formActionType?.viewMode && (
-                    <Row gutter={20}>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Button className={styles.marR20} onClick={handleSave} type="primary">
+                    <Row gutter={20} className={styles.marB20}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.buttonsGroupLeft}>
+                            <Button onClick={handleSave} type="primary">
                                 Save
                             </Button>
-                            <Button className={styles.marB20} onClick={handleCancelFormEdit} danger>
+                            <Button onClick={handleCancelFormEdit} danger>
                                 Cancel
                             </Button>
                         </Col>

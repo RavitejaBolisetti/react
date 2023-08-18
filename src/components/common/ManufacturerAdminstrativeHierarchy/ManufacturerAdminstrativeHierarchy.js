@@ -32,7 +32,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 
 import { ChangeHistory } from './ChangeHistory';
 
-import { disableParent } from 'components/common/ProductHierarchy/ProductHierarchyUtils';
+import { DisableParent } from 'components/common/ProductHierarchy/ProductHierarchyUtils';
 
 import LeftPanel from '../LeftPanel';
 import styles from 'components/common/Common.module.css';
@@ -198,6 +198,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
+
     const makeExtraparms = (Params) => {
         const extraParams = [];
         Params?.map((element) => {
@@ -208,15 +209,14 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
                 value: value,
                 name: name,
             });
+            return undefined;
         });
-
         return extraParams;
     };
     useEffect(() => {
         if (!isDataLoaded && userId) {
             hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: 'Manufacturer Administration', onErrorAction });
         }
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, isDataAttributeLoaded, userId]);
     useEffect(() => {
@@ -261,8 +261,9 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataOrgLoaded, userId]);
+
     useEffect(() => {
-        manufacturerOrgHierarchyData?.map((i) => disableParent(i));
+        manufacturerOrgHierarchyData?.map((i) => DisableParent(i));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [manufacturerOrgHierarchyData]);
 
@@ -481,11 +482,6 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         setButtonData({ ...defaultBtnVisiblity });
     };
 
-    const onCloseAction = () => {
-        form.resetFields();
-        setIsUploadDrawer(false);
-    };
-
     const drawerTitle = 'Upload Authority Details';
 
     const uploadProps = {
@@ -598,7 +594,7 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
                         </Form>
                     </Col>
                     {organizationId && manufacturerAdminHierarchyData?.length > 0 && (
-                        <Col className={styles.addGroup} xs={24} sm={24} md={6} lg={6} xl={6}>
+                        <Col className={styles.buttonsGroupRight} xs={24} sm={24} md={6} lg={6} xl={6}>
                             <Button type="primary" onClick={handleOnClickUpload}>
                                 Upload
                             </Button>

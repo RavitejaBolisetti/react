@@ -9,7 +9,7 @@ import { PageHeader } from 'pages/common/PageHeader';
 import { VehicleModelAndTaxChargersCategory } from 'components/FinancialAccounting';
 
 const VehicleModelTaxChargesCategoryBase = (props) => {
-    const pageTitle = 'Vehicle Model and Tax Charges Category';
+    const pageTitle = 'Vehicle Model with Accounts and Tax & Charges Mapping';
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,
