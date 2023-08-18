@@ -44,8 +44,8 @@ export const ViewDetail = (props) => {
                                 title={uploadData?.documentName}
                                 extra={
                                     <>
-                                        <FiDownload onClick={() => downloadFileFromButton(uploadData)} />
-                                        {!viewMode && <FiTrash onClick={() => deleteFile(uploadData)} />}
+                                        <FiDownload onClick={() => downloadFileFromButton(uploadData)} data-testid="downloadBtn" />
+                                        {!viewMode && <FiTrash onClick={() => deleteFile(uploadData)} data-testid="deleteFileBtn" />}
                                     </>
                                 }
                             ></Card>
