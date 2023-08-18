@@ -1,7 +1,7 @@
 import React from "react";
-import { screen, fireEvent, render } from "@testing-library/react";
+import { screen, fireEvent } from "@testing-library/react";
 import '@testing-library/jest-dom/extend-expect';
-
+import customRender from "@utils/test-utils";
 import { AddEditForm } from "@components/Sales/OTF/ExchangeVehicles/AddEditForm"
 import { Form } from 'antd';
 
@@ -28,7 +28,6 @@ const props = {
     typeData:['REL_TYPE'],
     isConfigLoading:true,
     isSchemeLovLoading:false,
-    isSchemeLovLoading: false,
     isVariantLoading:false,
     showGlobalNotification:jest.fn(),
     formData:[{
@@ -97,7 +96,7 @@ const props = {
 
 describe("AddEditForm component render", ()=>{
     it("All Fields Render for OTF-Edit File", async()=>{
-        render(<FormWrapper  {...props} />)
+        customRender(<FormWrapper {...props} />)
 
         const custId = screen.getByRole('textbox', { name: 'Customer ID', exact: false });
         fireEvent.change(custId, { target: { value: 'custIdTest'}});
@@ -114,7 +113,7 @@ describe("AddEditForm component render", ()=>{
         const schemeAmount = screen.getByRole('textbox', { name: 'Scheme Amount', exact: false });
         fireEvent.change(schemeAmount, { target: { value: 'schemeAmountTest'}});
         
-        const km = screen.getByRole('textbox', { name: 'KM', exact: false });
+        const km = screen.getByRole('textbox', { name: 'KMS', exact: false });
         fireEvent.change(km, { target: { value: 'kmTest'}});
 
         const customerExpectedPrice = screen.getByRole('textbox', { name: 'Customer Expected Price', exact: false });
