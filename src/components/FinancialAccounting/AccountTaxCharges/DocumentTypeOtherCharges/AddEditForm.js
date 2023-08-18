@@ -153,7 +153,7 @@ const AddEditFormMain = (props) => {
                                     </Form.Item>
                                 </Col>
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item label="Document Name" initialValue={formData?.documentTypeName} name="documentTypeName">
+                                    <Form.Item label="Document Name" initialValue={docTypeLedger?.documentTypeName} name="documentTypeName">
                                         <Input placeholder={preparePlaceholderText('document name')} maxLength={50} disabled={true} />
                                     </Form.Item>
                                 </Col>

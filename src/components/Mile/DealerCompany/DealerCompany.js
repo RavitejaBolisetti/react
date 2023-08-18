@@ -43,7 +43,7 @@ const mapStateToProps = (state) => {
         dealerParentData,
 
         isPinCodeDataLoaded,
-        pincodeData,
+        pincodeData: pincodeData?.pinCodeDetails,
         isLoading,
         moduleTitle,
         isPinCodeLoading,

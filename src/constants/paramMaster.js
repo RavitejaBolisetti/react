@@ -289,4 +289,8 @@ export const PARAM_MASTER = {
         title: 'Voucher type',
     },
    
+    VECH_ALLOT_SER: {
+        id: 'VECH_ALLOT_SER',
+        title: 'Vehicle Allotment Search',
+    },
 };

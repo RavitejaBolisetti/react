@@ -33,7 +33,7 @@ export const VehicleReceiptFormButton = ({ formActionType, record, onCloseAction
                         Edit
                     </Button>
                 )}
-                {buttonData?.editBtn && (
+                {buttonData?.cancelReceiptBtn && (
                     <Button onClick={onCancelReceipt} type="primary">
                         Cancel Receipt
                     </Button>

@@ -18,7 +18,7 @@ const ViewDetailMain = (props) => {
         column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
     };
     return (
-        <Card className={styles?.drawerCardView} style={{ backgroundColor: '#F2F2F2', borderRadius: '8px' }}>
+        <Card className={styles?.drawerCardView}>
             <Descriptions {...viewProps}>
                 <Descriptions.Item label="Financier">{checkAndSetDefaultValue(formData?.financier, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Branch">{checkAndSetDefaultValue(formData?.branch, isLoading)}</Descriptions.Item>

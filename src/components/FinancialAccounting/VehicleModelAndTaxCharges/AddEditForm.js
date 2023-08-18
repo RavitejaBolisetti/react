@@ -31,14 +31,38 @@ const AddEditFormMain = (props) => {
 
     const { ModelOptions, TaxChargesOptions, AccountDataOptions } = props;
 
-    useEffect(() => {
-        if (editMode) {
-            form.setFieldsValue({ ...formData });
-        } else if (addMode && selectedModelGroup) {
-            form.setFieldsValue({ modelId: selectedModelGroup });
+    const isCodePresent = ({ searchkey = 'id', value, options, attibuteName }) => {
+        const foundVal = !value || options?.find((element, index) => element[searchkey] === value);
+        if (foundVal) return Promise.resolve();
+        return Promise.reject(new Error(`${attibuteName} is not active anymore`));
+    };
+
+    const taxChargesValidation = {};
+    const accountCategoryValidation = {};
+
+    if (TaxChargesOptions && formData?.taxCategoryId) {
+        if (TaxChargesOptions.find((data) => data.id === formData?.taxCategoryId)) {
+            taxChargesValidation.initialValue = formData?.taxCategoryId;
+        } else {
+            taxChargesValidation.initialValue = formData?.taxCategoryDescription;
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [editMode, addMode, selectedModelGroup]);
+    }
+    if (AccountDataOptions && formData?.accountCategoryCode) {
+        if (AccountDataOptions.find((data) => data.key === formData?.accountCategoryCode)) {
+            accountCategoryValidation.initialValue = formData?.accountCategoryCode;
+        } else {
+            accountCategoryValidation.initialValue = formData?.accountCategoryDescription;
+        }
+    }
+
+    // useEffect(() => {
+    //     if (editMode) {
+    //         form.setFieldsValue({ ...formData });
+    //     } else if (addMode && selectedModelGroup) {
+    //         form.setFieldsValue({ modelId: selectedModelGroup });
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [editMode, addMode, selectedModelGroup]);
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
@@ -70,19 +94,19 @@ const AddEditFormMain = (props) => {
                         <>
                             <Row gutter={20}>
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                    <Form.Item name="modelId" label="Model Group (Product Hierarchy)" rules={[validateRequiredSelectField('Model Group')]}>
+                                    <Form.Item initialValue={formData?.modelId} name="modelId" label="Model Group (Product Hierarchy)" rules={[validateRequiredSelectField('Model Group')]}>
                                         {customSelectBox({ data: ModelOptions, placeholder: preparePlaceholderSelect('Model Group'), fieldNames: { key: 'id', value: 'value' }, disabled: editMode })}
                                     </Form.Item>
                                 </Col>
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                    <Form.Item name="taxCategoryId" label="Tax/Charge Category" rules={[validateRequiredSelectField('Tax/Charge Category')]}>
+                                    <Form.Item {...taxChargesValidation} name="taxCategoryId" label="Tax/Charge Category" rules={[validateRequiredSelectField('Tax/Charge Category'), { validator: (rule, value) => isCodePresent({ searchkey: 'id', value, options: TaxChargesOptions, attibuteName: 'Tax/Charge Category' }) }]}>
                                         {customSelectBox({ data: TaxChargesOptions, placeholder: preparePlaceholderSelect('Tax/Charge Category'), fieldNames: { key: 'id', value: 'value' }, disabled: editMode })}
                                     </Form.Item>
                                 </Col>
                             </Row>
                             <Row gutter={20}>
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                    <Form.Item label="Account category" name="accountCategoryCode" rules={[validateRequiredSelectField('Account category')]}>
+                                    <Form.Item {...accountCategoryValidation} label="Account category" name="accountCategoryCode" rules={[validateRequiredSelectField('Account category'), { validator: (rule, value) => isCodePresent({ searchkey: 'key', value, options: AccountDataOptions, attibuteName: 'Account Category' }) }]}>
                                         {customSelectBox({ data: AccountDataOptions, placeholder: preparePlaceholderSelect('Account Category') })}
                                     </Form.Item>
                                 </Col>
