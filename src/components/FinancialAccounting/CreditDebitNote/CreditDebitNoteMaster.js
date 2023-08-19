@@ -287,8 +287,8 @@ export const CreditDebitNoteMasterBase = (props) => {
     const handleResetFilter = (e) => {
         if (filterString) {
             setShowDataLoading(true);
+            setFilterString();
         }
-        setFilterString();
         advanceFilterForm.resetFields();
     };
 

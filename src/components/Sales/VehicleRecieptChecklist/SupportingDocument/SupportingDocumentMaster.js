@@ -93,7 +93,7 @@ const SupportingDocumentBase = (props) => {
         if ((supportingData && supportingData?.length) || payload?.length) {
             setviewSupportingData([...payload, ...supportingData]);
         }
-    }, [supportingData]);   
+    }, [supportingData]);
 
     useEffect(() => {
         if (fileList.length === 0) {
@@ -197,6 +197,7 @@ const SupportingDocumentBase = (props) => {
         mandatoryFields,
         setMandatoryFields,
         supportingDocs: true,
+        listType: 'picture-card',
     };
 
     const myProps = {
