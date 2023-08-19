@@ -197,7 +197,6 @@ const SupportingDocumentBase = (props) => {
         mandatoryFields,
         setMandatoryFields,
         supportingDocs: true,
-        listType: 'picture-card',
     };
 
     const myProps = {
