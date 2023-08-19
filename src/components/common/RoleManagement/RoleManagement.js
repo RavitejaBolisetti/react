@@ -8,21 +8,20 @@ import { connect } from 'react-redux';
 import { Col, Form, Row } from 'antd';
 import { bindActionCreators } from 'redux';
 
-import { RoleListDataActions } from 'store/actions/data/roleManagement/roleList';
 import { RoleManagementMenuDataActions } from 'store/actions/data/roleManagement/roleMenu';
-
-import { tableColumn } from './tableColumn';
-import { FROM_ACTION_TYPE } from 'constants/formActionType';
-
+import { RoleListDataActions } from 'store/actions/data/roleManagement/roleList';
 import { showGlobalNotification } from 'store/actions/notification';
 
+import { tableColumn } from './tableColumn';
+import { AddEditForm } from './AddEditForm';
+// import { AddEditForm } from './AddEditFormTempBck';
+
+import { FROM_ACTION_TYPE } from 'constants/formActionType';
+import { APPLICATION_DEVICE_TYPE } from 'utils/applicationDeviceType';
+import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
 import { ListDataTable } from 'utils/ListDataTable';
 import { filterFunction } from 'utils/filterFunction';
 import { btnVisiblity } from 'utils/btnVisiblity';
-import { APPLICATION_DEVICE_TYPE } from 'utils/applicationDeviceType';
-import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
-
-import { AddEditForm } from './AddEditForm';
 
 const mapStateToProps = (state) => {
     const {
@@ -75,6 +74,7 @@ export const RoleManagementMain = (props) => {
     const APPLICATION_MOBILE = APPLICATION_DEVICE_TYPE?.MOBILE?.key;
 
     const [showDataLoading, setShowDataLoading] = useState(true);
+    const [showApplicationDataLoading, setShowApplicationDataLoading] = useState(true);
     const [searchData, setSearchdata] = useState('');
     const [refershData, setRefershData] = useState(false);
 
@@ -82,7 +82,7 @@ export const RoleManagementMain = (props) => {
     const [filterString, setFilterString] = useState();
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [saveAndAddNewBtnClicked, setSaveAndAddNewBtnClicked] = useState(false);
-    const [deviceType, setDeviceType] = useState(APPLICATION_WEB);
+    const [deviceType, setDeviceType] = useState();
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -90,14 +90,13 @@ export const RoleManagementMain = (props) => {
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
     const [unFilteredMenuData, setUnFilteredMenuData] = useState([]);
-    console.log('🚀 ~ file: RoleManagement.js:93 ~ RoleManagementMain ~ unFilteredMenuData:', unFilteredMenuData);
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
-    const onSuccessAction = (res) => {
-        refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+    const onSuccessAction = () => {
+        // refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         setRefershData(false);
         setShowDataLoading(false);
     };
@@ -114,12 +113,10 @@ export const RoleManagementMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isDataLoaded, refershData]);
 
-    // useEffect(() => {
-    //     if (userId && refershData) {
-    //         fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [userId, refershData]);
+    useEffect(() => {
+        setDeviceType(APPLICATION_WEB);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formActionType]);
 
     useEffect(() => {
         if (deviceType === APPLICATION_WEB && menuTreeData) {
@@ -151,30 +148,18 @@ export const RoleManagementMain = (props) => {
             id: recordId,
             webRoleManagementRequest: unFilteredMenuData?.[APPLICATION_WEB]?.filter((i) => i?.checked) || [],
             mobileRoleManagementRequest: unFilteredMenuData?.[APPLICATION_MOBILE]?.filter((i) => i?.checked) || [],
-            // webRoleManagementRequest: unFilteredMenuData?.[APPLICATION_WEB]?.filter((i) => checkedWebParentKeys?.includes(i?.value)) || [],
-            // mobileRoleManagementRequest: unFilteredMenuData?.[APPLICATION_MOBILE]?.filter((i) => checkedMobileParentKeys?.includes(i?.value)) || [],
         };
-
-        // const checkedWebParentKeys = checkedMenuKeys?.[APPLICATION_WEB] ? Object.keys(checkedMenuKeys?.[APPLICATION_WEB]) : [];
-        // const checkedMobileParentKeys = checkedMenuKeys?.[APPLICATION_MOBILE] ? Object.keys(checkedMenuKeys?.[APPLICATION_MOBILE]) : [];
-
-        // const data = {
-        //     ...values,
-        //     id: recordId,
-        //     webRoleManagementRequest: unFilteredMenuData?.[APPLICATION_WEB]?.filter((i) => checkedWebParentKeys?.includes(i?.value)) || [],
-        //     mobileRoleManagementRequest: unFilteredMenuData?.[APPLICATION_MOBILE]?.filter((i) => checkedMobileParentKeys?.includes(i?.value)) || [],
-        // };
 
         const onSuccess = (res) => {
             form.resetFields();
             fetchList({ setIsLoading: listShowLoading, userId });
             if (buttonData?.saveAndNewBtnClicked) {
+                setIsFormVisible(true);
+                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+            } else {
                 setIsFormVisible(false);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
                 setUnFilteredMenuData([]);
-            } else {
-                setIsFormVisible(true);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
             }
         };
 
@@ -196,8 +181,9 @@ export const RoleManagementMain = (props) => {
     };
 
     useEffect(() => {
-        if (userId && deviceType && !unFilteredMenuData?.[deviceType]) {
-            console.log(deviceType, unFilteredMenuData);
+        // if (userId && deviceType && !unFilteredMenuData?.[deviceType]) {
+        if (userId && deviceType && formData) {
+            setShowApplicationDataLoading(true);
             const extraParams = [
                 {
                     key: 'menuType',
@@ -212,10 +198,19 @@ export const RoleManagementMain = (props) => {
                     name: 'roleId',
                 },
             ];
-            fetchMenuList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
+
+            fetchMenuList({
+                setIsLoading: listShowLoading,
+                userId,
+                extraParams,
+                onErrorAction,
+                onSuccessAction: () => {
+                    setShowApplicationDataLoading(false);
+                },
+            });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, deviceType]);
+    }, [userId, deviceType, formData]);
 
     const handleReferesh = () => {
         setShowDataLoading(true);
@@ -308,6 +303,9 @@ export const RoleManagementMain = (props) => {
 
         APPLICATION_WEB,
         APPLICATION_MOBILE,
+
+        showApplicationDataLoading,
+        setShowApplicationDataLoading,
     };
 
     const tableProps = {

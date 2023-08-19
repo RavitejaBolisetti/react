@@ -7,7 +7,7 @@ import React from 'react';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 
-export const InputSkeleton = ({ width = '100%', height = 35, theme = 'light' }) => {
+export const InputSkeleton = ({ width = '100%', height = 35, theme = 'light', count = 1 }) => {
     let baseColor = '';
     let highlightColor = '';
 
@@ -29,9 +29,11 @@ export const InputSkeleton = ({ width = '100%', height = 35, theme = 'light' }) 
             highlightColor = '#50535a';
             break;
     }
-    return (
-        <SkeletonTheme baseColor={baseColor} highlightColor={highlightColor}>
-            <Skeleton width={width} height={height} />
-        </SkeletonTheme>
-    );
+    return [...Array(count)].map((e, i) => (
+        <div key={'list-skeleton-' + i} style={{ marginTop: i > 0 ? '10px' : '0px' }}>
+            <SkeletonTheme baseColor={baseColor} highlightColor={highlightColor} p>
+                <Skeleton width={width} height={height} />
+            </SkeletonTheme>
+        </div>
+    ));
 };
