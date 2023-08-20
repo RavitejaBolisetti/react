@@ -4,21 +4,21 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState, useEffect } from 'react';
-import { Col, Form, Row, Input, Select, Button, DatePicker, Divider } from 'antd';
+import { Col, Form, Row, Input, Button, DatePicker, Divider } from 'antd';
 
 import { withModal } from 'components/withModal';
+import { customSelectBox } from 'utils/customSelectBox';
 import { validateRequiredInputField, validateRequiredSelectField, validateNumberWithTwoDecimalPlaces, compareAmountValidator } from 'utils/validation';
 import { preparePlaceholderText, preparePlaceholderSelect, prepareDatePickerText } from 'utils/preparePlaceholder';
 
-import { dateFormat, formatDate, formatDateToCalenderDate } from 'utils/formatDateTime';
+import { dateFormat, formatDateToCalenderDate } from 'utils/formatDateTime';
 
 import styles from 'components/common/Common.module.css';
 
 const { Search } = Input;
-const { Option } = Select;
 
 export const ApportionDetailForm = (props) => {
-    const { handleCancel, handleAddApportion, apportionTableFormData, showApportionForm, apportionForm, totalApportionAmount, documentAmount, setDocumentAmount, receivedAmount, setReceivedAmount, documentDescriptionList, handleDocumentNumberSearch } = props;
+    const { handleCancel, handleAddApportion, apportionTableFormData, showApportionForm, apportionForm, documentAmount, setDocumentAmount, receivedAmount, setReceivedAmount, documentDescriptionList, handleDocumentNumberSearch } = props;
 
     const [apportionedAmount, setApportionedAmount] = useState();
     const [writeOffAmount, setWriteOffAmount] = useState();
@@ -56,13 +56,14 @@ export const ApportionDetailForm = (props) => {
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                     <Form.Item label="Document Type" name="documentType" rules={[validateRequiredSelectField('Document Type')]}>
-                        <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} showSearch>
+                        {customSelectBox({ data: documentDescriptionList, placeholder: preparePlaceholderSelect('Document Type'), fieldNames: { key: 'documentCode', value: 'documentDescription' } })}
+                        {/* <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} showSearch>
                             {documentDescriptionList?.map((item) => (
                                 <Option key={'dv' + item.documentCode} value={item.documentCode}>
                                     {item.documentDescription}
                                 </Option>
                             ))}
-                        </Select>
+                        </Select> */}
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
@@ -95,7 +96,7 @@ export const ApportionDetailForm = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item label="Apportioned Amount" name="apportionedAmount" rules={[validateRequiredInputField('Apportion Amount'), validateNumberWithTwoDecimalPlaces('Apportioned Amount'), { validator: () => compareAmountValidator(parseFloat(documentAmount) - parseFloat(receivedAmount) - parseFloat(writeOffAmount), parseFloat(apportionedAmount), 'Total Amount') }]}>
+                            <Form.Item label="Apportioned Amount" name="apportionedAmount" rules={[validateRequiredInputField('Apportion Amount'), validateNumberWithTwoDecimalPlaces('Apportioned Amount'), { validator: () => compareAmountValidator(parseFloat(documentAmount) - parseFloat(receivedAmount) - parseFloat(writeOffAmount), parseFloat(apportionedAmount), 'Apportion Amount') }]}>
                                 <Input onChange={(e) => setApportionedAmount(e.target.value)} placeholder={preparePlaceholderText('apportioned amount')} />
                             </Form.Item>
                             {/* { validator: () => compareAmountValidator(documentAmount, totalApportionAmount + parseFloat(apportionedAmount), 'Total Amount') */}
@@ -104,7 +105,7 @@ export const ApportionDetailForm = (props) => {
 
                     <Row gutter={16}>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item label="Write Off Amount" name="writeOffAmount" rules={[validateRequiredInputField('Write-Off Amount'), validateNumberWithTwoDecimalPlaces('Write Off Amount')]}>
+                            <Form.Item label="Write Off Amount" name="writeOffAmount" rules={[validateRequiredInputField('Write-Off Amount'), validateNumberWithTwoDecimalPlaces('Write Off Amount'), { validator: () => compareAmountValidator(parseFloat(documentAmount) - parseFloat(receivedAmount) - parseFloat(apportionedAmount), parseFloat(writeOffAmount), 'Write Off Amount') }]}>
                                 <Input onChange={(e) => setWriteOffAmount(e.target.value)} placeholder={preparePlaceholderText('write off amount')} />
                             </Form.Item>
                         </Col>

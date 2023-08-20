@@ -126,6 +126,8 @@ const SupplierInvoiceDetailsMasterBase = (props) => {
         onFinishFailed,
         fetchList,
         typeData,
+        buttonData,
+        setButtonData,
 
         userId,
         isDataLoaded,
