@@ -32,13 +32,12 @@ const recieveDataCF = (state, action) => ({
     updatedAt: moment().toDate(),
 });
 
-const recieveChangeHistoryDataCF = (state, action) =>
-    console.log('action', action) || {
-        ...state,
-        isChangeHistoryLoaded: true,
-        changeHistoryData: action.data,
-        extraParam: action.extraParam,
-    };
+const recieveChangeHistoryDataCF = (state, action) => ({
+    ...state,
+    isChangeHistoryLoaded: true,
+    changeHistoryData: action.data,
+    extraParam: action.extraParam,
+});
 
 const recieveChangeHistoryDataLoadingCF = (state, action) => ({
     ...state,

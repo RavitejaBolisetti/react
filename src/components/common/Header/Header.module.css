@@ -156,7 +156,7 @@
     padding-top: 10px;
 } */
 
-:global .ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-title-content>a:hover {
+:global .ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-title-content > a:hover {
     text-decoration: none;
 }
 
@@ -261,9 +261,9 @@
 }
 
 .welcomeUser .userAvatar .userAvatarInside {
-    background-color: #E6E6E6;
+    background-color: #e6e6e6;
     border-color: #b5b5b6;
-    color: #0B0B0C;
+    color: #0b0b0c;
     font-size: 16px;
     font-weight: 500;
     line-height: 30px;
@@ -279,7 +279,7 @@
 .headerContainer :global .ant-dropdown-menu-submenu .ant-dropdown-menu .ant-dropdown-menu-item,
 .headerContainer :global .ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-submenu-title,
 .headerContainer :global .ant-dropdown-menu-submenu .ant-dropdown-menu .ant-dropdown-menu-submenu-title {
-    color: #342C2C;
+    color: #342c2c;
     font-size: 14px;
     font-weight: 400;
     line-height: 32px;
@@ -352,7 +352,7 @@
 :global .ant-dropdown.ant-dropdown-placement-bottomRight .ant-dropdown-menu {
     /* padding: 10px; */
     padding: 4px 3px;
-    border: 1px solid #0B0B0C;
+    border: 1px solid #0b0b0c;
     border-radius: 6px;
     margin-top: 16px;
     box-shadow: none;
@@ -364,7 +364,7 @@
 
 :global .ant-dropdown.ant-dropdown-placement-bottomRight .ant-dropdown-menu .ant-dropdown-menu-item:hover {
     color: #ff3e5b;
-    background-color: #FFD8DE;
+    background-color: #ffd8de;
 }
 
 :global .ant-dropdown.ant-dropdown-placement-bottomRight .ant-dropdown-menu .ant-dropdown-menu-item .ant-dropdown-menu-title-content svg {
