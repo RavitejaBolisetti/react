@@ -54,10 +54,6 @@ const mapDispatchToProps = (dispatch) => ({
             listDocumentTypeShowLoading: documentDescriptionDataActions.listShowLoading,
             fetchInvoiceList: invoiceDetailsDataAction.fetchList,
             listInvoiceShowLoading: invoiceDetailsDataAction.listShowLoading,
-            // fetchList: otfDataActions.fetchList,
-            // saveData: otfDataActions.saveData,
-            // resetData: otfDataActions.reset,
-            // listShowLoading: documentDescriptionDataActions.listShowLoading,
             showGlobalNotification,
         },
         dispatch
@@ -65,7 +61,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ApportionDetailMasterBase = (props) => {
-    const { userId, documentDescriptionList, showGlobalNotification, section, isDocumentTypesLoaded, listDocumentTypeShowLoading, listInvoiceShowLoading, fetchDocumentTypeList, fetchInvoiceList, fetchList, listShowLoading, saveData, isLoading } = props;
+    const { userId, documentDescriptionList, showGlobalNotification, section, isDocumentTypesLoaded, listDocumentTypeShowLoading, listInvoiceShowLoading, fetchDocumentTypeList, fetchInvoiceList, fetchList, isLoading } = props;
     const { form, formActionType, handleFormValueChange, handleButtonClick, receiptOnFinish } = props;
     const { apportionList, setApportionList, receiptDetailData } = props;
 
@@ -97,10 +93,6 @@ const ApportionDetailMasterBase = (props) => {
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDocumentTypesLoaded]);
-
-    const onErrorAction = (message) => {
-        showGlobalNotification({ message });
-    };
 
     const handleFieldsChange = () => {};
 

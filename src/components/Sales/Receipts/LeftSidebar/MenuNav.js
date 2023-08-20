@@ -14,14 +14,8 @@ import { validateReceiptMenu } from '../utils/validateReceiptMenu';
 import styles from 'components/common/Common.module.css';
 
 const MenuNav = (props) => {
-    const { currentSection, setCurrentSection, receipt, selectedOrderId, formActionType: { addMode } = undefined, selectedOrder: { orderStatus = false } = {} } = props;
+    const { currentSection, receipt, formActionType: { addMode } = undefined, selectedOrder: { orderStatus = false } = {} } = props;
     const receiptSectionList = Object.values(RECEIPT_SECTION);
-
-    const onHandle = (key) => {
-        // if (selectedOrderId) {
-        setCurrentSection(key);
-        // }
-    };
 
     const items = receiptSectionList
         ?.filter((i) => i?.displayOnList)
@@ -29,7 +23,7 @@ const MenuNav = (props) => {
             (item) =>
                 validateReceiptMenu({ item, receipt }) && {
                     dot: item?.id === currentSection ? <BsRecordCircleFill className={styles.activeForm} /> : <FaCheckCircle />,
-                    children: <p onClick={() => onHandle(item?.id)}>{item?.title}</p>,
+                    children: <div>{item?.title}</div>,
                     className: item?.id === currentSection ? 'active' : 'noactive',
                 }
         );
