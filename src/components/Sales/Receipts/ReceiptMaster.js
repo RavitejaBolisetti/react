@@ -356,10 +356,9 @@ export const ReceiptMasterBase = (props) => {
     const onFinishSearch = (values) => {};
 
     const handleResetFilter = (e) => {
-        setShowDataLoading(true);
+        setShowDataLoading(false);
         setFilterString();
         advanceFilterForm.resetFields();
-        setAdvanceSearchVisible(false);
     };
 
     const onFinish = (receiptData) => {

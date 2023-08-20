@@ -93,7 +93,7 @@ const PartyDetailMasterBase = (props) => {
             const onSuccessAction = (res) => {
                 setButtonData({ ...buttonData, formBtnActive: true });
             };
-            if (partySegment == 'CUS') {
+            if (partySegment === 'CUS') {
                 const extraParams = [
                     {
                         key: 'customerId',

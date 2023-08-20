@@ -162,7 +162,7 @@ const UploadBase = (props) => {
 
     const onDownload = (file) => {
         const onSuccessAction = (res) => {
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage || 'Your download will start soon' });
         };
         const extraParams = [
             {

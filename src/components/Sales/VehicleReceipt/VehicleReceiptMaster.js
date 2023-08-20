@@ -293,7 +293,7 @@ export const VehicleReceiptMasterBase = (props) => {
     const onFinishSearch = (values) => {};
 
     const handleResetFilter = (e) => {
-        setShowDataLoading(true);
+        setShowDataLoading(false);
         setFilterString();
         advanceFilterForm.resetFields();
     };

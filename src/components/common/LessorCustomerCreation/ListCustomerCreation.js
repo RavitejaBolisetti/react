@@ -123,7 +123,7 @@ export const ListCustomerCreationBase = (props) => {
 
     const downloadReport = (documentId) => {
         const onSuccessAction = (res) => {
-            setFileList();
+            setFileList([]);
             setUploadedFile();
             setUploadedFileName();
             resetData();
@@ -186,11 +186,11 @@ export const ListCustomerCreationBase = (props) => {
     };
 
     const onCloseAction = () => {
-        form.resetFields();
         setIsFormVisible(false);
+        form.resetFields();
         resetData();
         resetViewData();
-        setFileList();
+        setFileList([]);
     };
     const drawerTitle = downloadForm ? 'Download ' : 'Upload ';
 
