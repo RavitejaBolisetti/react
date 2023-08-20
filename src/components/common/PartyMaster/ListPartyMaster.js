@@ -281,6 +281,7 @@ export const ListPartyMasterBase = (props) => {
         handleReferesh,
         handleButtonClick,
         title,
+        tableData: searchData,
     };
 
     return (

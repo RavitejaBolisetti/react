@@ -30,7 +30,7 @@ const mapStateToProps = (state) => {
             DealerManpower: {
                 DealerLocationTypeMaster: { isLoaded: isDataLoaded = false, isLoading, data },
             },
-            ConfigurableParameterEditing: {filteredListData: typeData = [] },
+            ConfigurableParameterEditing: { filteredListData: typeData = [] },
         },
     } = state;
 
@@ -150,8 +150,7 @@ export const ListDealerLocationTypeMasterBase = (props) => {
     const handleClearInSearch = (e) => {
         if (e.target.value.length > 2) {
             listFilterForm.validateFields(['code']);
-        }
-        else if (e?.target?.value === '') {
+        } else if (e?.target?.value === '') {
             setFilterString();
             listFilterForm.resetFields();
             setShowDataLoading(false);
@@ -257,6 +256,7 @@ export const ListDealerLocationTypeMasterBase = (props) => {
         handleReferesh,
         handleButtonClick,
         title,
+        tableData: searchData,
     };
 
     return (
