@@ -452,6 +452,7 @@ export const ListCityMasterBase = (props) => {
         advanceFilterProps,
         title,
         setFilteredDistrictData,
+        tableData: searchData,
     };
 
     return (

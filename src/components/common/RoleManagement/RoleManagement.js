@@ -326,7 +326,8 @@ export const RoleManagementMain = (props) => {
         handleClearInSearch,
         handleReferesh,
         handleButtonClick,
-        title,
+        title,        
+        tableData: searchData,
     };
 
     return (

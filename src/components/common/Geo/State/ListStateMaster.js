@@ -345,6 +345,7 @@ export const ListStateMasterBase = (props) => {
         handleReferesh,
         handleButtonClick,
         title,
+        tableData: searchData,
     };
 
     return (

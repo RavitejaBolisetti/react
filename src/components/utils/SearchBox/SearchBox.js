@@ -13,8 +13,8 @@ const { Option } = Select;
 const { Search } = Input;
 
 const SearchBox = (props) => {
-    const { selectWide, searchForm, optionType, searchParamRule, filterString, setFilterString, handleChange, disabled = false, handleSearchWithoutParameter = () => {} } = props;
-    const { singleField = false, label = '', placeholder = 'Search' } = props;
+    const { selectWide, searchForm, optionType, searchParamRule, filterString, setFilterString, handleChange, disabled = false, handleSearchWithoutParameter = undefined } = props;
+    const { singleField = false, label = '', placeholder = 'Search', singleFieldKey = 'searchParam' } = props;
     const onKeyPressHandler = (e) => {
         e.key === 'Enter' && e.preventDefault();
     };
@@ -64,8 +64,8 @@ const SearchBox = (props) => {
                         </Select>
                     </Form.Item>
                 )}
-                <Form.Item label={label} {...searchParamRule} name="searchParam" rules={[validateRequiredInputField('search parameter')]} validateTrigger={['onChange', 'onSearch']}>
-                    <Search disabled={disabled} placeholder={placeholder} maxLength={25} value={filterString?.searchParam} allowClear onChange={handleChange} onSearch={singleField ? handleSearchWithoutParameter : handleSearchParamSearch} className={singleField ? styles.headerSearchField : selectWide ? styles.headerSearchFieldWide : styles.headerSearchField} />
+                <Form.Item label={label} {...searchParamRule} name={singleField && singleFieldKey ? singleFieldKey : 'searchParam'} rules={[validateRequiredInputField('search value')]} validateTrigger={['onChange', 'onSearch']}>
+                    <Search disabled={disabled} placeholder={placeholder} maxLength={25} value={filterString?.searchParam} allowClear onChange={handleChange} onSearch={singleField && handleSearchWithoutParameter ? handleSearchWithoutParameter : handleSearchParamSearch} className={singleField ? styles.headerSearchField : selectWide ? styles.headerSearchFieldWide : styles.headerSearchField} />
                 </Form.Item>
             </Form>
         </div>

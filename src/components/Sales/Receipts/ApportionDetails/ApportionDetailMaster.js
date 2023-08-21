@@ -63,7 +63,7 @@ const mapDispatchToProps = (dispatch) => ({
 const ApportionDetailMasterBase = (props) => {
     const { userId, documentDescriptionList, showGlobalNotification, section, isDocumentTypesLoaded, listDocumentTypeShowLoading, listInvoiceShowLoading, fetchDocumentTypeList, fetchInvoiceList, fetchList, isLoading } = props;
     const { form, formActionType, handleFormValueChange, handleButtonClick, receiptOnFinish } = props;
-    const { apportionList, setApportionList, receiptDetailData } = props;
+    const { apportionList, setApportionList, receiptDetailData, totalReceivedAmount, receiptStatus } = props;
 
     const [showApportionForm, setShowApportionForm] = useState();
     const [documentAmount, setDocumentAmount] = useState();
@@ -148,12 +148,14 @@ const ApportionDetailMasterBase = (props) => {
         handleFormValueChange,
         apportionList,
         setApportionList,
+        totalReceivedAmount,
     };
 
     const viewProps = {
         styles,
         isLoading,
         formActionType,
+        receiptStatus,
 
         tableColumn: tableColumnApportion(handleButtonClick),
         tableData: receiptDetailData?.apportionDetails,

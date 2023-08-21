@@ -651,6 +651,7 @@ const ListPinCodeMasterBase = (props) => {
         validator: searchValidatorPincode,
         // downloadReport: true,
         // handleDownloadReport,
+        tableData: data,
     };
     return (
         <>
