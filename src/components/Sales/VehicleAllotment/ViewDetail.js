@@ -57,10 +57,10 @@ const ViewDetailMain = (props) => {
     };
 
     const rowSelection = {
-        type: 'checkbox',
+        type: 'radio',
         onChange: (selectedRowKeys, selectedRows) => {
             console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-            setSelectedOrderOTFDetails(selectedRows);
+            setSelectedOrderOTFDetails(selectedRows?.[0]);
         },
         getCheckboxProps: () => ({}),
     };
@@ -73,7 +73,7 @@ const ViewDetailMain = (props) => {
         },
         pagination: false,
         tableColumn: tableColumnSearchOTF(handleButtonClick),
-        tableData: tableData || [formData?.vehicleOTFDetails] || [],
+        tableData: tableData || (formData?.vehicleOTFDetails && [formData?.vehicleOTFDetails]),
     };
 
     return (

@@ -327,6 +327,14 @@ p {
     border-bottom: none;
 }
 
+:global .ant-table-wrapper .ant-table-tbody>tr.ant-table-row-selected>td {
+    background: #f2f2f2;
+}
+
+:global .ant-table-wrapper .ant-table-tbody>tr.ant-table-row-selected:hover>td {
+    background: #e6e6e6;
+}
+
 /* AntD Table Design End*/
 
 /* AntD Table Pagination Design Start*/

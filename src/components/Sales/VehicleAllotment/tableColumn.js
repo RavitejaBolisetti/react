@@ -24,13 +24,13 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
         tblPrepareColumns({
             title: 'Age in Days',
             dataIndex: 'ageInDays',
-            width: '8%',
+            width: '10%',
         }),
 
         tblPrepareColumns({
             title: 'PDI Done',
             dataIndex: 'pdiIndicator',
-            width: '14%',
+            width: '12%',
         }),
 
         tblPrepareColumns({
@@ -43,7 +43,7 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             title: 'Vehicle Status',
             dataIndex: 'vehicleStatus',
             width: '14%',
-           render: (_, record) => vehicleAllotmentStatusTag(record.vehicleStatus),
+            render: (_, record) => vehicleAllotmentStatusTag(record.vehicleStatus),
         }),
 
         tblActionColumn({ handleButtonClick, styles, width: '8%', EyeIcon: true, canEdit: false }),
