@@ -88,7 +88,7 @@ const ViewDetailMain = (props) => {
         saveNameChangeData(requestData);
     };
 
-    const handleRequest = (type = 'approve') => {
+    const handleRequest = (type) => {
         if (type === STATUS?.APPROVED?.key) {
             setConfirmRequest({
                 isVisible: true,
@@ -141,10 +141,10 @@ const ViewDetailMain = (props) => {
             {canApproveNameChangeRequest && showApproveNameChangeRequestBtn && (
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Button type="primary" className={styles.marR20} onClick={() => handleRequest('approve')}>
+                        <Button type="primary" className={styles.marR20} onClick={() => handleRequest(STATUS?.APPROVED?.key)}>
                             Approve
                         </Button>
-                        <Button danger className={styles.marB20} onClick={() => handleRequest('reject')}>
+                        <Button danger className={styles.marB20} onClick={() => handleRequest(STATUS?.REJECTED?.key)}>
                             Reject
                         </Button>
                     </Col>

@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-import { Row, Col, Button, Space, Input, Form } from 'antd';
+import { Row, Col, Button, Input, Form } from 'antd';
 import { withModal } from 'components/withModal';
 
 import { validateRequiredInputField } from 'utils/validation';
