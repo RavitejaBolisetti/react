@@ -61,6 +61,7 @@ export const AdvancedSearchFrom = (props) => {
                             placeholder={preparePlaceholderSelect('From Date')}
                             format={dateFormat}
                             className={styles.fullWidth}
+                            disabledDate={(current) => current > new Date()}
                             onChange={(event) => {
                                 advanceFilterForm.setFieldsValue({ toDate: undefined });
                                 if (event && Object?.keys(event)?.length) setrules({ fromdate: true, todate: true });
