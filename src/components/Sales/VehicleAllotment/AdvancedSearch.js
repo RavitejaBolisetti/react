@@ -9,6 +9,7 @@ import { Col, Form, Row, Select, Button } from 'antd';
 import { withModal } from 'components/withModal';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { PARAM_MASTER } from 'constants/paramMaster';
+import { customSelectBox } from 'utils/customSelectBox';
 
 import styles from 'components/common/Common.module.css';
 
@@ -46,23 +47,17 @@ export const AdvancedSearchFrom = (props) => {
         return;
     };
 
-    const selectProps = {
-        optionFilterProp: 'children',
-        showSearch: true,
-        allowClear: true,
-        className: styles.headerSelectField,
-    };
     return (
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item initialValue={filterString?.otfStatus} label="Model" name="model">
-                        <Select placeholder={preparePlaceholderSelect('')} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }} options={productHierarchyData} {...selectProps} className={styles.headerSelectField}></Select>
+                        {customSelectBox({ data: productHierarchyData, placeholder: preparePlaceholderSelect('Model'), fieldNames: { key: 'prodctCode', value: 'prodctShrtName' } })}
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item initialValue={filterString?.vehicleStatus} label="Vehicle Status" name="vehicleStatus">
-                        <Select placeholder={preparePlaceholderSelect('')} fieldNames={{ label: 'value', value: 'key' }} options={typeData[PARAM_MASTER.ALT_ACTN.id]} {...selectProps} className={styles.headerSelectField}></Select>
+                        {customSelectBox({ data: typeData[PARAM_MASTER.ALT_ACTN.id], placeholder: preparePlaceholderSelect('vehicle status') })}
                     </Form.Item>
                     {/* <Form.Item name="oemCode" label="OEM Name" rules={[validateRequiredSelectField('OEM Name')]}>
                         <Select {...selectProps} fieldNames={{ label: 'value', value: 'key' }} options={typeData['COMPTR_MFG']} placeholder={preparePlaceholderSelect('OEM Name')} />
@@ -73,7 +68,7 @@ export const AdvancedSearchFrom = (props) => {
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form.Item initialValue={filterString?.otfStatus} label="PDI Done" name="pdDone">
-                        <Select placeholder={preparePlaceholderSelect('')} fieldNames={{ label: 'value', value: 'key' }} options={typeData[PARAM_MASTER.PD_DONE.id]} {...selectProps} className={styles.headerSelectField}></Select>
+                        {customSelectBox({ data: typeData[PARAM_MASTER.PD_DONE.id], placeholder: preparePlaceholderSelect('pdi done') })}
                     </Form.Item>
                 </Col>
             </Row>

@@ -123,12 +123,6 @@ export const AdvanceForm = (props) => {
         values && fetchInvoiceList({ setIsLoading: listInvoiceShowLoading, onErrorAction, onSuccessAction, userId, extraParams });
     };
 
-    const selectProps = {
-        optionFilterProp: 'children',
-        showSearch: true,
-        allowClear: true,
-        loading: isDocumentTypeLoading,
-    };
     return (
         <Form autoComplete="off" layout="vertical" form={apportionForm} onFinishFailed={onFinishFailed}>
             <Row gutter={20}>
