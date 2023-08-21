@@ -63,7 +63,7 @@ const ViewDetailMain = (props) => {
 
     return (
         <>
-            <div className={styles.viewDrawerContainer}>
+            <div className={styles?.viewDrawerContainer}>
                 <Card header="Customer Information">
                     <Descriptions {...viewProps}>
                         <Descriptions.Item label="Mobile Number">{checkAndSetDefaultValue(formData?.mobileNumber, isLoading)}</Descriptions.Item>
@@ -78,11 +78,11 @@ const ViewDetailMain = (props) => {
                     <Divider />
                     <Descriptions {...viewProps}>
                         <Descriptions.Item label="Email Id">{checkAndSetDefaultValue(formData?.emailId)}</Descriptions.Item>
-                        <Descriptions.Item label="Do you want to contact over whatsapp?" className={formData?.whatsappCommunicationIndicator ? styles.yesText : styles.noText}>
+                        <Descriptions.Item label="Do you want to contact over whatsapp?" className={formData?.whatsappCommunicationIndicator ? styles.yesText : styles?.noText}>
                             {checkAndSetDefaultValue(formData?.whatsappCommunicationIndicator ? 'Yes' : 'No')}
                         </Descriptions.Item>
                         <Descriptions />
-                        <Descriptions.Item label="Want to use Mobile no as whatsapp no?" className={formData?.mobileNumberAsWhatsappNumber ? styles.yesText : styles.noText}>
+                        <Descriptions.Item label="Want to use Mobile no as whatsapp no?" className={formData?.mobileNumberAsWhatsappNumber ? styles.yesText : styles?.noText}>
                             {checkAndSetDefaultValue(formData?.mobileNumberAsWhatsappNumber ? 'Yes' : 'No')}
                         </Descriptions.Item>
                         <Descriptions.Item label="Whatsapp Number">{checkAndSetDefaultValue(formData?.whatsAppNumber)}</Descriptions.Item>
