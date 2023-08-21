@@ -240,6 +240,7 @@ export const QualificationMasterMain = ({ moduleTitle, saveData, userId, isDataL
         handleReferesh,
         handleButtonClick,
         title,
+        tableData: searchData,
     };
 
     return (

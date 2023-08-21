@@ -12,9 +12,10 @@ import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import styles from 'components/common/Common.module.css';
 
 const AddEditFormMain = (props) => {
-    const { formData, form } = props;
+    const { formData, form, buttonData, setButtonData } = props;
 
     useEffect(() => {
+        setButtonData({ ...buttonData, formBtnActive: true });
         form.setFieldsValue({
             ...formData,
         });

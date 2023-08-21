@@ -8,7 +8,7 @@ import { Input, DatePicker, Row, Col, Form } from 'antd';
 
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { dateFormat } from 'utils/formatDateTime';
-import { validateLettersWithWhitespaces, validationFieldLetterAndNumber, validateRequiredInputField, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
+import { validateLettersWithWhitespaces, validationFieldLetterAndNumber, validateRequiredInputField, validateNumberWithTwoDecimalPlaces, validationNumber } from 'utils/validation';
 
 const { Search } = Input;
 
@@ -24,8 +24,8 @@ const ChequeFormBase = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.ddCheckNumber} label="Cheque/DD No." name="ddCheckNumber" rules={[validationFieldLetterAndNumber('cheque no')]}>
-                        <Input placeholder={preparePlaceholderText('Cheque/DD No.')} />
+                    <Form.Item initialValue={formData?.ddCheckNumber} label="Cheque/DD No." name="ddCheckNumber" rules={[validationFieldLetterAndNumber('cheque no'), validationNumber('cheque no')]}>
+                        <Input maxLength={6} placeholder={preparePlaceholderText('Cheque/DD No.')} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>

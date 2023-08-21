@@ -107,11 +107,11 @@ export const RSMApprovalMasterBase = (props) => {
     const REQUEST_CONSTANT = {
         Reject: {
             key: 'Reject',
-            value: 'Reject',
+            value: 'R',
         },
         Approve: {
             key: 'Approve',
-            value: 'Approve',
+            value: 'A',
         },
     };
 
@@ -261,6 +261,7 @@ export const RSMApprovalMasterBase = (props) => {
             delete data?.status;
             const onSuccess = (res) => {
                 form.resetFields();
+                rejectForm.resetFields();
                 setShowDataLoading(true);
                 showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
                 fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
@@ -383,7 +384,7 @@ export const RSMApprovalMasterBase = (props) => {
     const rejectRequestProps = {
         isVisible: isRejectModalVisible,
         onCloseAction: rejectModalCloseAction,
-        titleOverride: requestType === 'Reject' ? REQUEST_CONSTANT?.Reject?.value?.concat(requestModuleTitle) : REQUEST_CONSTANT?.Approve?.value?.concat(requestModuleTitle),
+        titleOverride: requestType === 'R' ? REQUEST_CONSTANT?.Reject?.key?.concat(requestModuleTitle) : REQUEST_CONSTANT?.Approve?.key?.concat(requestModuleTitle),
         rejectForm,
         rejectModalCloseAction,
         rejectRequest,

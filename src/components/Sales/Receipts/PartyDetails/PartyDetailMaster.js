@@ -93,7 +93,7 @@ const PartyDetailMasterBase = (props) => {
             const onSuccessAction = (res) => {
                 setButtonData({ ...buttonData, formBtnActive: true });
             };
-            if (partySegment == 'CUS') {
+            if (partySegment === 'CUS') {
                 const extraParams = [
                     {
                         key: 'customerId',
@@ -121,6 +121,7 @@ const PartyDetailMasterBase = (props) => {
         const partyDetails = { ...values, id: '' };
         setRequestPayload({ ...requestPayload, partyDetails: partyDetails });
         handleButtonClick({ buttonAction: NEXT_ACTION });
+        setButtonData({ ...buttonData, formBtnActive: false });
     };
 
     const onFinishFailed = () => {};

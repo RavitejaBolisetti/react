@@ -61,9 +61,9 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const VehicleDetailsMasterBase = (props) => {
-    const { typeData, vehicleStatusType, physicalStatusType, shortageType, vehicleDetailData } = props;
+    const { typeData, buttonData, setButtonData, vehicleStatusType, physicalStatusType, shortageType, vehicleDetailData } = props;
     const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, isLoading } = props;
-    const { form, selectedId, finalData, setFinalData, formActionType, handleFormValueChange, onFinish, onFinishFailed } = props;
+    const { form, selectedId, finalData, setFinalData, formActionType, onFinish, onFinishFailed } = props;
 
     const [vehicleDetailForm] = Form.useForm();
 
@@ -73,6 +73,7 @@ const VehicleDetailsMasterBase = (props) => {
 
     useEffect(() => {
         if (userId && selectedId) {
+            setButtonData({ ...buttonData, formBtnActive: false });
             const extraParams = [
                 {
                     key: 'supplierInvoiceNumber',
@@ -103,6 +104,8 @@ const VehicleDetailsMasterBase = (props) => {
         vehicleDetailForm,
         finalData,
         setFinalData,
+        setButtonData,
+        buttonData,
     };
 
     const viewProps = {
@@ -116,7 +119,7 @@ const VehicleDetailsMasterBase = (props) => {
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>

@@ -111,7 +111,7 @@ export const VoucherAndPartyDetailsMasterMain = (props) => {
             partyDetails: {
                 ...form.getFieldsValue()?.partyDetails,
                 address: null,
-                phoneNo: null,
+                mobileNumber: null,
                 state: null,
                 city: null,
                 partyName: null,
@@ -125,7 +125,7 @@ export const VoucherAndPartyDetailsMasterMain = (props) => {
             partyDetails: {
                 ...form.getFieldsValue()?.partyDetails,
                 address: null,
-                phoneNo: null,
+                mobileNumber: null,
                 state: null,
                 city: null,
                 partyId: null,

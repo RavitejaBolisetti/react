@@ -10,7 +10,7 @@ phases:
     build:
         commands:
             # - codebuild-breakpoint
-            - npm run coverage || true
+            - npm run test:coverage || true
 
             - sonar-scanner -Dsonar.sources=src -Dsonar.projectKey=dms-ui-application -Dsonar.host.url=http://sonarqube.mahindradealerrise.com:9000/ -Dsonar.login=squ_8e86dff391f32a83d24bf7c67a0309cd81588338
             - npm run build

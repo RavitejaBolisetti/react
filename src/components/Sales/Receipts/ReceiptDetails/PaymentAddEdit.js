@@ -12,7 +12,7 @@ import ViewList from './ViewList';
 const { Panel } = Collapse;
 const { Text } = Typography;
 const PaymentAddEdit = (props) => {
-    const { formData, setIsAdding, paymentForm, handleCollapse, isAdding, isListEditing, setShowAddEditForm, showAddEditForm, setOpenAccordian, formActionType } = props;
+    const { setIsAdding, paymentForm, handleCollapse, isAdding, isListEditing, setShowAddEditForm, showAddEditForm, setOpenAccordian, formActionType } = props;
 
     const addContactHandeler = (e) => {
         e.stopPropagation();

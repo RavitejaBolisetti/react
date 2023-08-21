@@ -486,6 +486,10 @@
 .floatRight {
     float: right;
 }
+.NewChecklist {
+    float: right;
+    color: #ff3e5b !important;
+}
 
 .textRight {
     text-align: right;
@@ -3386,6 +3390,45 @@ li.ant-timeline-item.active .ant-timeline-item-content p {
 }
 .marL20 {
     margin-left: 20px;
+}
+
+.confirmModalIcon {
+    color: #ff3e5b !important;
+    padding-right: 8px;
+}
+
+.confirmModal :global .ant-modal-confirm-confirm {
+    width: 376px !important;
+}
+
+.confirmModal :global .ant-modal-confirm-title {
+    font-weight: 700 !important;
+}
+
+.confirmModal :global .ant-modal-confirm-content {
+    text-align: center !important;
+    padding: 20px 0px 10px !important;
+}
+
+.confirmModal :global .ant-modal-confirm .ant-modal-content .ant-modal-close {
+    display: none;
+}
+
+.confirmModal :global .ant-modal-confirm .ant-modal-confirm-btns button {
+    width: 48%;
+    padding: 4px 16px !important;
+    height: 28px !important;
+    font-size: 12px !important;
+    line-height: 20px !important;
+    font-weight: 700;
+}
+
+.confirmModal :global .ant-modal-confirm .ant-modal-confirm-btns .ant-btn-default {
+    height: 36px !important;
+}
+
+.confirmModal :global .ant-modal-confirm .ant-modal-confirm-body > .anticon + .ant-modal-confirm-title + .ant-modal-confirm-content {
+    margin-inline-start: 0px !important;
 }
 
 @media (max-width: 768px) {

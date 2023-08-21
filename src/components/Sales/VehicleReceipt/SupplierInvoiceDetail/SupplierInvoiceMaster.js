@@ -57,7 +57,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const SupplierInvoiceDetailsMasterBase = (props) => {
     const { typeData } = props;
-    const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, supplierInvoiceData, isLoading } = props;
+    const { userId, buttonData, setButtonData, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, supplierInvoiceData, isLoading } = props;
     const { form, selectedId, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick } = props;
     const [exchangeValue, setexchangeValue] = useState(false);
 
@@ -76,6 +76,7 @@ const SupplierInvoiceDetailsMasterBase = (props) => {
 
     useEffect(() => {
         if (userId && selectedId) {
+            setButtonData({ ...buttonData, formBtnActive: true });
             const extraParams = [
                 {
                     key: 'supplierInvoiceNumber',
@@ -125,6 +126,8 @@ const SupplierInvoiceDetailsMasterBase = (props) => {
         onFinishFailed,
         fetchList,
         typeData,
+        buttonData,
+        setButtonData,
 
         userId,
         isDataLoaded,

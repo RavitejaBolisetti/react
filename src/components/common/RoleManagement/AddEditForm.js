@@ -6,17 +6,17 @@
 import React, { useState } from 'react';
 import { Input, Form, Col, Row, Switch, Space, Collapse, Tabs } from 'antd';
 
+import { DrawerFormButton } from 'components/common/Button';
+import { ViewRoleManagement } from './ViewRoleManagement';
+import LeftPanel from 'components/common/LeftPanel';
+import { InputSkeleton } from '../Skeleton';
+import { withDrawer } from 'components/withDrawer';
+
 import { validateAlphanumericWithSpaceHyphenPeriod, validateRequiredInputField, validationFieldLetterAndNumber } from 'utils/validation';
+import { APPLICATION_DEVICE_TYPE } from 'utils/applicationDeviceType';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { flattenData } from 'utils/flattenData';
-import { APPLICATION_DEVICE_TYPE } from 'utils/applicationDeviceType';
-
-import { ViewRoleManagement } from './ViewRoleManagement';
-import { withDrawer } from 'components/withDrawer';
-
-import { DrawerFormButton } from 'components/common/Button';
-import LeftPanel from 'components/common/LeftPanel';
 
 import styles from 'components/common/Common.module.css';
 
@@ -42,16 +42,15 @@ const fnMapData = ({ data, fieldNames, selectedKeys }) =>
 
 const AddEditFormMain = (props) => {
     const { deviceType, setDeviceType, setClosePanels, unFilteredMenuData, setUnFilteredMenuData, formData, onCloseAction, form, onFinish, formActionType: { viewMode, editMode } = undefined } = props;
+    const { showApplicationDataLoading, setShowApplicationDataLoading } = props;
 
     const APPLICATION_WEB = APPLICATION_DEVICE_TYPE?.WEB?.key;
     const APPLICATION_MOBILE = APPLICATION_DEVICE_TYPE?.MOBILE?.key;
 
     const [searchValue, setSearchValue] = useState();
     const [activeKey, setActiveKey] = useState();
-    console.log('🚀 ~ kuldeep file: AddEditForm.js:51 ~ AddEditFormMain ~ activeKey:', activeKey);
 
     const [searchItem] = Form.useForm();
-
     const fieldNames = { title: 'label', key: 'value', children: 'children' };
 
     const { buttonData, setButtonData, handleButtonClick } = props;
@@ -67,6 +66,7 @@ const AddEditFormMain = (props) => {
     const onFinishFailed = () => {};
 
     const onTabChange = (newActiveKey) => {
+        setShowApplicationDataLoading(true);
         setDeviceType(newActiveKey);
     };
 
@@ -95,13 +95,12 @@ const AddEditFormMain = (props) => {
             const selectedKeys = [...checkedKeysValue, ...halfCheckedKeys] || [];
             // const deviceTypePrev = checkedMenuKeys?.[deviceType] ? checkedMenuKeys[deviceType] : {};
             // setCheckedMenuKeys(selectedKeys?.length > 0 ? { ...checkedMenuKeys, [deviceType]: { ...deviceTypePrev, [currentKey]: [currentKey, ...selectedKeys] } } : { ...checkedMenuKeys, [deviceType]: { ...deviceTypePrev } });
-
             const mapSelectedKeyData = (data) =>
                 data?.map((item) =>
                     item.value === currentKey
                         ? {
                               ...item,
-                              checked: true,
+                              checked: selectedKeys?.length > 0,
                               children: item?.children && fnMapData({ data: item?.children, fieldNames, selectedKeys }),
                           }
                         : { ...item }
@@ -119,8 +118,8 @@ const AddEditFormMain = (props) => {
     };
 
     const AccordianTreeUtils = ({ menuData, viewMode = false }) => {
-        console.log('menuData', menuData);
-        return (
+        const dataAvailable = menuData?.length;
+        return dataAvailable ? (
             <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
                 {menuData?.map((el, i) => {
                     const treeData = el?.children;
@@ -176,11 +175,14 @@ const AddEditFormMain = (props) => {
                     );
                 })}
             </Space>
+        ) : (
+            <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
+                No Application Available
+            </Space>
         );
     };
 
     const AccordianTreePanel = ({ viewMode, menuTreeData }) => {
-        console.log('🚀 ~ file: AddEditForm.js:182 ~ AccordianTreePanel ~ menuTreeData:', menuTreeData);
         return (
             <Tabs
                 defaultActiveKey="1"
@@ -188,7 +190,7 @@ const AddEditFormMain = (props) => {
                 items={Object.values(APPLICATION_DEVICE_TYPE)?.map((item) => ({
                     key: item?.key,
                     label: item?.title,
-                    children: AccordianTreeUtils({ viewMode, menuData: viewMode ? menuTreeData[item?.key]?.filter((i) => i.checked) : menuTreeData[item?.key] }),
+                    children: showApplicationDataLoading ? <InputSkeleton height={55} count={5} /> : AccordianTreeUtils({ viewMode, menuData: viewMode ? menuTreeData[item?.key]?.filter((i) => i.checked) : menuTreeData[item?.key] }),
                 }))}
             />
         );
@@ -238,7 +240,7 @@ const AddEditFormMain = (props) => {
                                     </Row>
                                     <Row gutter={20}>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                            <Form.Item initialValue={formData?.roleDesceription} label="Role Description" name="roleDescription" rules={[validateRequiredInputField('description')]}>
+                                            <Form.Item initialValue={formData?.roleDescription} label="Role Description" name="roleDescription" rules={[validateRequiredInputField('description')]}>
                                                 <TextArea
                                                     placeholder={preparePlaceholderText('description')}
                                                     autoSize={{

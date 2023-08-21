@@ -206,6 +206,13 @@ export const MenuConstant = {
         parentMenuId: 'SACT-03',
     },
 
+    [getMenyKey('SACT-04.01')]: {
+        key: 'SACT-04.01',
+        link: routing.ROUTING_VECHILE_PURCHASE_ORDER,
+        icon: undefined,
+        parentMenuId: 'SACT-04',
+    },
+
     [getMenyKey('SACT-04.05')]: {
         key: 'SACT-04.05',
         link: routing.ROUTING_RSM_APPROVAL,
@@ -438,6 +445,20 @@ export const MenuConstant = {
         link: routing.ROUTING_VEHICLE_RECEIPT,
         icon: undefined,
         parentMenuId: 'SACT-04',
+    },
+
+    [getMenyKey('SACT-04.07')]: {
+        key: 'SACT-04.07',
+        link: routing.ROUTING_VEHICLE_RECIEPT_CHECKLIST,
+        icon: undefined,
+        parentMenuId: 'SACT-04',
+    },
+
+    [getMenyKey('FINA-01.06')]: {
+        key: 'FINA-01.06',
+        link: routing.ROUTING_VEHICLE_MODEL_TAX_CHARGES_CATEGORY,
+        icon: undefined,
+        parentMenuId: 'FINA-01',
     },
 
     [getMenyKey('FINA-02.01')]: {
