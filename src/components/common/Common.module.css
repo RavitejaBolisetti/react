@@ -1859,6 +1859,7 @@
     font-weight: 500;
     line-height: 20px;
     color: #0b0b0c;
+    word-break: break-all;
 }
 
 .drawerBodyLeft :global .ant-collapse .ant-collapse-content > .ant-collapse-content-box p:first-child {
