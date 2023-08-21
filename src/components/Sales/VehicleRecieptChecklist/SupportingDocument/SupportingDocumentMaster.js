@@ -93,7 +93,7 @@ const SupportingDocumentBase = (props) => {
         if ((supportingData && supportingData?.length) || payload?.length) {
             setviewSupportingData([...payload, ...supportingData]);
         }
-    }, [supportingData]);   
+    }, [supportingData]);
 
     useEffect(() => {
         if (fileList.length === 0) {
