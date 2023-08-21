@@ -62,12 +62,14 @@ export default function DataTable({ isLoading, rowSelection = undefined, showSiz
         setPage({ ...tablePagination, current: 1, pageSize });
     };
 
+    const showPaginator = dynamicPagination ? totalRecords > 0 : tableData?.length > 0;
+
     return (
         <div className={styles.marB20}>
             <div className={styles.mainDataTable}>
                 <Table rowSelection={rowSelection} pagination={pagination ? { ...tablePagination } : false} columns={isLoading ? tableSkeletonColumn : tableColumnWithSrl} dataSource={isLoading ? skeletonData : tableData} onChange={handleTableChange} rowKey={rowKey} scroll={scroll} />
             </div>
-            {!isLoading && pagination && tablePagination && (
+            {!isLoading && pagination && showPaginator && (
                 <Row gutter={20} className={styles.marT20}>
                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                         {tablePagination?.total && (
@@ -75,9 +77,9 @@ export default function DataTable({ isLoading, rowSelection = undefined, showSiz
                                 <span className={`${styles.marR20} ${styles.tableTextColor54}`}>
                                     Total <span style={{ color: '#0b0b0c' }}> {tablePagination?.total} </span> items
                                 </span>
+                                <Select defaultValue={tablePagination?.pageSize} onChange={handleChange} options={options} />
                             </>
                         )}
-                        <Select defaultValue={tablePagination?.pageSize} onChange={handleChange} options={options} />
                     </Col>
                     <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignRight}>
                         <Pagination {...tablePagination} onChange={handlePageChange} />
