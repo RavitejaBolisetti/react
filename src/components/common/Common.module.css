@@ -3393,6 +3393,10 @@ li.ant-timeline-item.active .ant-timeline-item-content p {
     margin-left: 20px;
 }
 
+.confirmModalIconHide {
+    display: none;
+}
+
 .confirmModalIcon {
     color: #ff3e5b !important;
     padding-right: 8px;
