@@ -45,8 +45,8 @@ const AddEditFormBase = (props) => {
         }
     };
 
-    const handleOnChange = (vall) => {
-        if (vall.target.checked) {
+    const handleOnChange = (e) => {
+        if (e.target.checked) {
             setSameAsBookingCustomer(true);
             let bookingCustomer = form.getFieldsValue()?.bookingCustomer;
             form?.setFieldsValue({ billingCustomer: { ...bookingCustomer } });
@@ -61,7 +61,7 @@ const AddEditFormBase = (props) => {
         typeData,
         formData: formData?.bookingCustomer,
         formType: 'bookingCustomer',
-        onChange: () => {},
+        handleOnChange: () => {},
     };
 
     const bilingCustomerProps = {
@@ -71,7 +71,7 @@ const AddEditFormBase = (props) => {
         formData: formData?.billingCustomer,
         formType: 'billingCustomer',
         disabledProps: { disabled: sameAsBookingCustomer },
-        onChange: handleOnChange,
+        handleOnChange,
     };
 
     return (
