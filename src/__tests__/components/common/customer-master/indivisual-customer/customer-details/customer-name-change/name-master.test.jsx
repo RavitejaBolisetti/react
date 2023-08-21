@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, screen } from '@testing-library/react';
+import { fireEvent, screen, act } from '@testing-library/react';
 import { CustomerNameChangeMaster } from '@components/common/CustomerMaster/IndividualCustomer/CustomerDetail/CustomerNameChange/CustomerNameChangeMaster';
 import customRender from '@utils/test-utils';
 import createMockStore from '__mocks__/store';
@@ -33,18 +33,21 @@ describe('Corporate nameChnage master Details render', () => {
         );
     });
     it('should render all fields', async () => {
-        const prop2 = { formActionType: { viewMode: false } };
+        const prop2 = { formActionType: { editMode: true } };
         const mockStore = createMockStore({
             auth: { userId: 123 },
         });
         customRender(
             <Provider store={mockStore}>
-                <FormWrapper {...prop2} selectedCustomerId={'kai'} setCustomerNameList={jest.fn()} fetchViewDocument={jest.fn()} />
+                <FormWrapper {...prop2} selectedCustomerId={'kai'} setCustomerNameList={jest.fn()} fetchViewDocument={jest.fn()} setShowNameChangeHistory={jest.fn()} />
             </Provider>
         );
 
         const customerName = screen.getByText('Customer Name');
         expect(customerName).toBeInTheDocument();
+
+        const editBtn = screen.getByRole('button', { name: /Edit/i });
+        fireEvent.click(editBtn);
 
         const titleCombo = screen.getByRole('combobox', { name: 'Title' });
         fireEvent.change(titleCombo, { target: { value: 'Mr.' } });
@@ -59,11 +62,12 @@ describe('Corporate nameChnage master Details render', () => {
         fireEvent.change(lastName, { target: { value: 'kai' } });
 
         const viewHistoryBtn = screen.getByRole('button', { name: 'View History' });
-        fireEvent.click(viewHistoryBtn);
 
-        const closeImg = screen.getByRole('img', { name: 'close' });
-        fireEvent.click(closeImg);
+        await act(async () => {
+            fireEvent.click(viewHistoryBtn);
+        });
     });
+
     it('should be able to close history', async () => {
         const prop2 = { formActionType: { viewMode: false } };
         const mockStore = createMockStore({
@@ -71,14 +75,14 @@ describe('Corporate nameChnage master Details render', () => {
         });
         customRender(
             <Provider store={mockStore}>
-                <FormWrapper {...prop2} selectedCustomerId={'kai'} setCustomerNameList={jest.fn()} fetchViewDocument={jest.fn()} onCloseAction={jest.fn()} />
+                <FormWrapper {...prop2} selectedCustomerId={'kai'} setCustomerNameList={jest.fn()} fetchViewDocument={jest.fn()} onCloseAction={jest.fn()} setShowNameChangeHistory={jest.fn()} />
             </Provider>
         );
 
         const viewHistoryBtn = screen.getByRole('button', { name: 'View History' });
         fireEvent.click(viewHistoryBtn);
 
-        const closeImg = screen.getByTestId('closed');
+        const closeImg = screen.getByRole('img', { name: /plus/i });
         fireEvent.click(closeImg);
     });
 });
