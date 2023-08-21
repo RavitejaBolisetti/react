@@ -1,6 +1,10 @@
 import '@testing-library/jest-dom/extend-expect';
 import { DisableParent, FindprodctCode } from '@components/common/ProductHierarchy/ProductHierarchyUtils';
 
+afterEach(() => {
+    jest.restoreAllMocks();
+});
+
 const node = {
     prodctCode: 'Kai',
     subProdct: [{prodctCode: 'Kai', subProdct: [{prodctCode: 'Kai'}]}],

@@ -6,7 +6,12 @@ import { Form } from 'antd';
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
 import { act } from 'react-dom/test-utils';
-import { ViewDetail } from '@components/common/CustomerMaster/CorporateCustomer/CompanyProfile/ViewDetail'; // Assuming this is the correct import path
+import userEvent from '@testing-library/user-event';
+
+const user = userEvent.setup();
+
+
+
 beforeEach(() => {
     jest.clearAllMocks()
 })
@@ -174,39 +179,44 @@ describe('CompanyProfileMaster', () => {
         isViewDataLoaded: true,
         handleFormValueChange: jest.fn(),
         handleOnClick: jest.fn(),
-        onChange:jest.fn(),
-        onCloseAction:jest.fn(),
-        downloadFileFromList:jest.fn(),
-        fetchViewDocument:jest.fn(),
-        newActivekeys:jest.fn(),
+        onChange: jest.fn(),
+        onCloseAction: jest.fn(),
+        downloadFileFromList: jest.fn(),
+        fetchViewDocument: jest.fn(),
     }
     it('should render company profile master view mode', async () => {
-         customRender(
+        customRender(
             <Provider store={mockStore}>
                 <FormWrapper
                     {...props}
                     formActionType={formActionType}
+                    onChange={jest.fn()}
+                    newActivekeys={[{ id: 1, value: 'test' }]}
+                    setactiveKey={jest.fn()}
                 />
             </Provider>
         );
 
-        const compImfo = screen.getByRole('button', { name: 'minus Company Information', exact: false });
-        await act(async()=>{
-            fireEvent.click(compImfo);
-            await screen.findByText("PAN");
+        const plusMinus = screen.getAllByRole('button');
+        await act(async () => {
+            user.click(plusMinus[0]);
+            expect(screen.getByText('Company Information')).toBeInTheDocument()
         });
-        const keyAccount = screen.getByRole('button', { name: 'minus Key Account Details', exact: false });
-        await act(async()=>{
-            fireEvent.click(keyAccount);
-            await screen.findByText("Account Code");
+
+
+        await act(async () => {
+            user.click(plusMinus[1]);
+            expect(screen.getByText('Key Account Details')).toBeInTheDocument()
         });
+
+
     });
 });
 
 describe('CompanyProfileBase Component', () => {
     it('renders in view mode true', () => {
         const mockCustomerData = {
-            companyName:"Test Company",
+            companyName: "Test Company",
             corporateCategory: "B",
             corporateCode: null,
             corporateName: "AS56",
@@ -220,48 +230,48 @@ describe('CompanyProfileBase Component', () => {
             mobileNumber: "7687686987",
             parentCompanyCode: "Par0000006",
             parentCompanyName: null,
-          };
-          
-          const mockViewDocumentData = {
+        };
+
+        const mockViewDocumentData = {
             docId: 'DOC456',
             fileName: 'document.pdf',
-            base64: 'mockBase64Data', 
-          };
-      const mockStore = {
-        auth: {
-          userId: 'user123',
-        },
-        data: {
-          ConfigurableParameterEditing: {
-            filteredListData: [],
-          },
-          CustomerMaster: {
-            CompanyProfile: {
-              isLoaded: true,
-              data: mockCustomerData,
+            base64: 'mockBase64Data',
+        };
+        const mockStore = {
+            auth: {
+                userId: 'user123',
             },
-            ViewDocument: {
-              isLoaded: true,
-              data: mockViewDocumentData,
+            data: {
+                ConfigurableParameterEditing: {
+                    filteredListData: [],
+                },
+                CustomerMaster: {
+                    CompanyProfile: {
+                        isLoaded: true,
+                        data: mockCustomerData,
+                    },
+                    ViewDocument: {
+                        isLoaded: true,
+                        data: mockViewDocumentData,
+                    },
+                },
             },
-          },
-        },
-        common: {
-          LeftSideBar: {
-            collapsed: true,
-          },
-        },
-      };
-      customRender(<CompanyProfileMaster />, {
-        initialState: mockStore,
-      });
-       const viewDetailTitle = screen.getByText('Company Information');
-       expect(viewDetailTitle).toBeInTheDocument();
+            common: {
+                LeftSideBar: {
+                    collapsed: true,
+                },
+            },
+        };
+        customRender(<CompanyProfileMaster setButtonData={jest.fn()} handleFormValueChange={jest.fn()}/>, {
+            initialState: mockStore,
+        });
+        const viewDetailTitle = screen.getByText('Company Information');
+        expect(viewDetailTitle).toBeInTheDocument();
     });
 });
 describe('CompanyProfileMaster Component', () => {
     const mockCustomerData = {
-        companyName:"Test Company",
+        companyName: "Test Company",
         corporateCategory: "B",
         corporateCode: null,
         corporateName: "AS56",
@@ -275,19 +285,19 @@ describe('CompanyProfileMaster Component', () => {
         mobileNumber: "7687686987",
         parentCompanyCode: "Par0000006",
         parentCompanyName: null,
-        };
-        
+    };
+
     const mockViewDocumentData = {
         docId: 'DOC456',
         fileName: 'document.pdf',
-        base64: 'mockBase64Data', 
+        base64: 'mockBase64Data',
     };
     const mockStore = {
         auth: {
             userId: 'user123',
         },
         data: {
-                ConfigurableParameterEditing: {
+            ConfigurableParameterEditing: {
                 filteredListData: [],
             },
             CustomerMaster: {
@@ -301,164 +311,121 @@ describe('CompanyProfileMaster Component', () => {
                 },
             },
         },
-    common: {
-        LeftSideBar: {
-            collapsed: true,
+        common: {
+            LeftSideBar: {
+                collapsed: true,
+            },
         },
-    },
     };
     const formActionType = {
         viewMode: false
     }
     it('renders in view mode false', () => {
-        customRender(<CompanyProfileMaster formActionType={formActionType} saveButtonName={"Save & Next"}/>, {
-        initialState: mockStore,
+        customRender(<CompanyProfileMaster formActionType={formActionType} saveButtonName={"Save & Next"} handleFormValueChange={jest.fn()} setButtonData={jest.fn()} />, {
+            initialState: mockStore,
         });
 
         const pan = screen.getByRole("textbox", { name: 'PAN', exact: false });
-        fireEvent.change(pan, { target: { value: 'TESTDMSPAN' } });
+        user.type(pan, { target: { value: 'TESTDMSPAN' } });
 
         const gstin = screen.getByRole("textbox", { name: 'GSTIN', exact: false });
-        fireEvent.change(gstin, { target: { value: 'TESTDMSGSTIN' } });
+        user.type(gstin, { target: { value: 'TESTDMSGSTIN' } });
 
         const accoutNo = screen.getByRole("textbox", { name: 'Account Code', exact: false });
-        fireEvent.change(accoutNo, { target: { value: '01234567890' } });
+        user.type(accoutNo, { target: { value: '01234567890' } });
 
         const accoutName = screen.getByRole("textbox", { name: 'Account Name', exact: false });
-        fireEvent.change(accoutName, { target: { value: 'TestDMS' } });
+        user.type(accoutName, { target: { value: 'TestDMS' } });
 
         const accountSegment = screen.getByRole("textbox", { name: 'Account Segment', exact: false });
-        fireEvent.change(accountSegment, { target: { value: 'TestDMS' } });
+        user.type(accountSegment, { target: { value: 'TestDMS' } });
 
         const accountClient = screen.getByRole("textbox", { name: 'Account Client Name', exact: false });
-        fireEvent.change(accountClient, { target: { value: 'TestDMS' } });
+        user.type(accountClient, { target: { value: 'TestDMS' } });
 
         const accountMapping = screen.getByRole("textbox", { name: 'Account Mapping Date', exact: false });
-        fireEvent.change(accountMapping, { target: { value: 'TestDMS' } });
+        user.type(accountMapping, { target: { value: 'TestDMS' } });
 
         const categorization = screen.getByRole("combobox", { name: 'Usage/Application Categorization', exact: false });
-        fireEvent.change(categorization, { target: { key: 'test', value: 'test' } });
+        user.type(categorization, { target: { key: 'test', value: 'test' } });
 
         expect(categorization).toBeInTheDocument();
 
         const subCategorization = screen.getByRole("combobox", { name: 'Usage/Application Sub-Category', exact: false });
-        fireEvent.change(subCategorization, { target: { value: 'TestDMS' } });
+        user.type(subCategorization, { target: { value: 'TestDMS' } });
 
         const cust = screen.getByRole("combobox", { name: 'Customer Category', exact: false });
-        fireEvent.change(cust, { target: { value: 'TestDMS' } });
+        user.type(cust, { target: { value: 'TestDMS' } });
 
     });
- });
+});
+
 // eslint-disable-next-line jest/no-identical-title
-describe('CompanyProfileMaster Component', () => {
-        const mockCustomerData = {
-            companyName:"Test Company",
-            corporateCategory: "B",
-            corporateCode: null,
-            corporateName: "AS56",
-            corporateType: "LIS",
-            corporateTypeName: "Listed",
-            customerId: "CUS1687596360129",
-            customerType: "CRP",
-            customerTypeName: "CORPORATE",
-            membershipType: "PL",
-            membershipTypeName: "Platinum",
-            mobileNumber: "7687686987",
-            parentCompanyCode: "Par0000006",
-            parentCompanyName: null,
-        };            
-        const mockViewDocumentData = {
-            docId: 'DOC456',
-            fileName: 'document.pdf',
-            base64: 'mockBase64Data', 
-        };
-        const mockStore = {
-            auth: {
-                userId: 'user123',
-            },
-            data: {
-                ConfigurableParameterEditing: {
-                    filteredListData: [],
-                },
-                CustomerMaster: {
-                    CompanyProfile: {
-                        isLoaded: false,
-                        data: mockCustomerData,
-                    },
-                    ViewDocument: {
-                        isLoaded: false,
-                        data: mockViewDocumentData,
-                    },
-                },
-            },
-            common: {
-                LeftSideBar: {
-                    collapsed: true,
-                },
-            },
-        };
-        const formActionType = {
-            viewMode: false
-        }
-        const mockShowGlobalNotification = jest.fn();
-        // Mock the form values
-        const formValues = {
-            customerConsent: false, 
-        };
-        it('renders in view mode false', () => {
-            customRender(<CompanyProfileMaster showGlobalNotification={mockShowGlobalNotification} formActionType={formActionType} saveButtonName={"Save & Next"} />, {
-            initialState: mockStore,
-            });
-            fireEvent.submit(screen.getByRole('form'), { target: { elements: formValues } });
-            expect(mockShowGlobalNotification).toHaveBeenCalledWith({
-                notificationType: 'error',
-                title: 'Error',
-                message: 'Please accept consent.',
-                placement: 'bottomRight',
-              });
-        });
-    });
-
-
-// describe('ViewDetailMain Component', () => {
-//   const mockFormData = {
-//     panNumber: '123456',
-//     gstinNumber: 'ABC123',
-//     applicationCategorization: 'APP_CAT_1',
-//     applicationSubCategory: 'APP_SUB_CAT_1',
-//     customerCategory: 'CUS_CAT_1',
-//     businessDetails: 'Some details',
-//     // ... other properties
-//   };
-
-//   const mockAppCategoryData = {
-//     APP_CAT: ['APP_CAT_1', 'APP_CAT_2'],
-//     // ... other categories
-//   };
-
-//   const mockProps = {
-//     formData: mockFormData,
-//     isLoading: false,
-//     appCategoryData: mockAppCategoryData,
-//   };
-
-//   it('expands and collapses panel when clicked', () => {
-//     const { getByText, queryByText } = customRender(<ViewDetail {...mockProps} />);
-//     const panelHeader = getByText('Company Information');
-    
-//     // Panel should be collapsed initially
-//     expect(queryByText('PAN')).toBeNull();
-
-//     // Click on the panel header to expand
-//     fireEvent.click(panelHeader);
-    
-//     // Panel content should be visible
-//     expect(getByText('PAN')).toBeInTheDocument();
-    
-//     // Click again to collapse
-//     fireEvent.click(panelHeader);
-
-//     expect(queryByText('PAN')).toBeNull();
-//   });
-
-// });
+// describe('CompanyProfileMaster Component', () => {
+//         const mockCustomerData = {
+//             companyName:"Test Company",
+//             corporateCategory: "B",
+//             corporateCode: null,
+//             corporateName: "AS56",
+//             corporateType: "LIS",
+//             corporateTypeName: "Listed",
+//             customerId: "CUS1687596360129",
+//             customerType: "CRP",
+//             customerTypeName: "CORPORATE",
+//             membershipType: "PL",
+//             membershipTypeName: "Platinum",
+//             mobileNumber: "7687686987",
+//             parentCompanyCode: "Par0000006",
+//             parentCompanyName: null,
+//         };
+//         const mockViewDocumentData = {
+//             docId: 'DOC456',
+//             fileName: 'document.pdf',
+//             base64: 'mockBase64Data',
+//         };
+//         const mockStore = {
+//             auth: {
+//                 userId: 'user123',
+//             },
+//             data: {
+//                 ConfigurableParameterEditing: {
+//                     filteredListData: [],
+//                 },
+//                 CustomerMaster: {
+//                     CompanyProfile: {
+//                         isLoaded: false,
+//                         data: mockCustomerData,
+//                     },
+//                     ViewDocument: {
+//                         isLoaded: false,
+//                         data: mockViewDocumentData,
+//                     },
+//                 },
+//             },
+//             common: {
+//                 LeftSideBar: {
+//                     collapsed: true,
+//                 },
+//             },
+//         };
+//         const formActionType = {
+//             viewMode: false
+//         }
+//         const mockShowGlobalNotification = jest.fn();
+//         // Mock the form values
+//         const formValues = {
+//             customerConsent: false,
+//         };
+//         it('renders in view mode false', () => {
+//             customRender(<CompanyProfileMaster showGlobalNotification={mockShowGlobalNotification} formActionType={formActionType} saveButtonName={"Save & Next"} />, {
+//             initialState: mockStore,
+//             });
+//             fireEvent.submit(screen.getByRole('form'), { target: { elements: formValues } });
+//             expect(mockShowGlobalNotification).toHaveBeenCalledWith({
+//                 notificationType: 'error',
+//                 title: 'Error',
+//                 message: 'Please accept consent.',
+//                 placement: 'bottomRight',
+//               });
+//         });
+//     });

@@ -2,6 +2,11 @@ import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
 import { ViewProductDetail } from '@components/common/ProductHierarchy/ViewProductDetail';
 import { act } from "@testing-library/react";
+
+afterEach(() => {
+    jest.restoreAllMocks();
+});
+
 describe('ViewProductDetail component', () => {
 
     it('should render the ViewProductDetail components', () => {

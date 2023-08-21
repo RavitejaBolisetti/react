@@ -2,9 +2,11 @@ import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
 import { fireEvent, screen } from '@testing-library/react';
 import { AddEditForm } from 'components/common/CustomerMaster/IndividualCustomer/FamilyDetail/AddEditForm';
-import createMockStore from '__mocks__/store';
-import { Provider } from 'react-redux';
 import { act } from 'react-dom/test-utils';
+
+afterEach(() => {
+    jest.restoreAllMocks();
+});
 
 describe('Family Detail Master component', () => {
     it('should render the family detail master component', () => {
@@ -56,32 +58,32 @@ describe('Family Detail Master component', () => {
             />
         );
 
-        const plusAdd = getByRole('button', { name: 'plus Add' });
+        const plusAdd = screen.getByRole('button', { name: 'plus Add' });
         await act(async () => {
             fireEvent.click(plusAdd);
         })
 
-        const edit = getByRole('button', { name: 'Edit' });
+        const edit = screen.getByRole('button', { name: 'Edit' });
         await act(async () => {
             fireEvent.click(edit);
         })
 
-        const mnmCustomer = getByRole('columnheader', { name: 'M&M Customer' });
+        const mnmCustomer = screen.getByRole('columnheader', { name: 'M&M Customer' });
         expect(mnmCustomer).toBeInTheDocument();  
         
-        const customerName = getByRole('columnheader', { name: 'Customer Name' });
+        const customerName = screen.getByRole('columnheader', { name: 'Customer Name' });
         expect(customerName).toBeInTheDocument();  
 
-        const relationship = getByRole('columnheader', { name: 'Customer Name' });
+        const relationship = screen.getByRole('columnheader', { name: 'Customer Name' });
         expect(relationship).toBeInTheDocument(); 
 
-        const dob = getByRole('columnheader', { name: 'Date of Birth' });
+        const dob = screen.getByRole('columnheader', { name: 'Date of Birth' });
         expect(dob).toBeInTheDocument();
 
-        const age = getByRole('columnheader', { name: 'Age' });
+        const age = screen.getByRole('columnheader', { name: 'Age' });
         expect(age).toBeInTheDocument(); 
 
-        const remark = getByRole('columnheader', { name: 'Remark' });
+        const remark = screen.getByRole('columnheader', { name: 'Remark' });
         expect(remark).toBeInTheDocument();
 
     })
@@ -130,27 +132,14 @@ describe('Family Detail Master component', () => {
             />
         );
 
-        const plusAdd = getByRole('button', { name: 'plus Add' });
+        const plusAdd = screen.getByRole('button', { name: 'plus Add' });
         await act(async () => {
             fireEvent.click(plusAdd);
         })
 
-        const edit = getByRole('button', { name: 'Edit' });
+        const edit = screen.getByRole('button', { name: 'Edit' });
         await act(async () => {
             fireEvent.click(edit);
         })
-
-        // const save = getByRole('button', { name: 'Save' });
-        // await act(async () => {
-        //     fireEvent.click(save);
-        // })
-
-        // const cancel = getByRole('button', { name: 'Cancel' });
-        // await act(async () => {
-        //     fireEvent.click(cancel);
-        // })
-
-       
-
     })
 })

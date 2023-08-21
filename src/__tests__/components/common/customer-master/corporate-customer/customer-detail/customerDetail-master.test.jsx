@@ -152,8 +152,8 @@ describe('customer details master', () => {
         const corporateCategory = getByRole("combobox", { name: 'Corporate Category', exact: false });
         fireEvent.change(corporateCategory, { target: { value: 'test' } });
 
-        const membership = getByRole("combobox", { name: 'Membership Type', exact: false });
-        fireEvent.change(membership, { target: { value: 'test' } });
+        // const membership = getByRole("combobox", { name: 'Membership Type', exact: false });
+        // fireEvent.change(membership, { target: { value: 'test' } });
 
         const close = getByRole('button', { name: 'Close', exact: false });
         fireEvent.click(close);

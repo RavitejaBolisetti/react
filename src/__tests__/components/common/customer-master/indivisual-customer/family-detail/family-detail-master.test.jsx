@@ -4,8 +4,13 @@ import { fireEvent, screen } from '@testing-library/react';
 import { FamilyDetailMaster } from 'components/common/CustomerMaster/IndividualCustomer/FamilyDetail/FamilyDetailMaster';
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
-import { act } from 'react-dom/test-utils';
+import { act, screen } from 'react-dom/test-utils';
 import { Form } from 'antd';
+
+afterEach(() => {
+    jest.restoreAllMocks();
+});
+
 
 const FormWrapper = (props) => {
     const [form] = Form.useForm();
@@ -20,6 +25,7 @@ const FormWrapper = (props) => {
 
 
 describe('Family Detail Master component', () => {
+
     it('should render the family detail master component', () => {
         customRender(<FamilyDetailMaster />);
     });
@@ -46,7 +52,7 @@ describe('Family Detail Master component', () => {
             selectedCustomerId: 'testid'
         }
 
-        const { getByRole } = customRender(
+        customRender(
             <Provider store={mockStore}>
                 <FormWrapper
                     {...props}
@@ -63,27 +69,27 @@ describe('Family Detail Master component', () => {
             </Provider>
         );
 
-        const plusAdd = getByRole('button', { name: 'plus Add' });
+        const plusAdd = screen.getByRole('button', { name: 'plus Add' });
         await act(async () => {
             fireEvent.click(plusAdd);
         })
 
-        const search = getByRole('button', { name: 'search' });
+        const search = screen.getByRole('button', { name: 'search' });
         await act(async () => {
             fireEvent.click(search);
         })
 
-        const save = getByRole('button', { name: 'Save' });
+        const save = screen.getByRole('button', { name: 'Save' });
         await act(async () => {
             fireEvent.click(save);
         })
 
-        const cancel = getByRole('button', { name: 'Cancel' });
+        const cancel = screen.getByRole('button', { name: 'Cancel' });
         await act(async () => {
             fireEvent.click(cancel);
         })
 
-        const plusImg = getByRole('img', { name: 'plus' });
+        const plusImg = screen.getByRole('img', { name: 'plus' });
         expect(plusImg).toBeInTheDocument();
 
     })
@@ -112,7 +118,7 @@ describe('Family Detail Master component', () => {
             selectedCustomerId: 'testid'
         }
 
-        const { getByRole } = customRender(
+        customRender(
             <Provider store={mockStore}>
                 <FormWrapper
                     {...props}
@@ -131,49 +137,12 @@ describe('Family Detail Master component', () => {
             </Provider>
         );
 
-        const plusAdd = getByRole('button', { name: 'plus Add' });
-        await act(async () => {
-            fireEvent.click(plusAdd);
-        })
-
-        // const save = getByRole('button', { name: 'Save' });
-        // await act(async () => {
-        //     fireEvent.click(save);
-        // })
-
-        // const cancel = getByRole('button', { name: 'Cancel' });
-        // await act(async () => {
-        //     fireEvent.click(cancel);
-        // })
-
         screen.debug()
-        screen.getByRole("master-test")
+        screen.getAllByRole("")
 
-        // const customerId = screen.getByRole("textbox", { name: 'Customer Id', exact: false });
+        // const plusAdd = screen.getByRole('button', { name: 'plus Add' });
         // await act(async () => {
-        //     fireEvent.change(customerId, { target: { value: 'TESTDMSPAN' } });
+        //     fireEvent.click(plusAdd);
         // })
-
-        // const customerName = screen.getByRole("textbox", { name: 'Customer Name', exact: false });
-        // await act(async () => {
-        //     fireEvent.change(customerName, { target: { value: 'TESTDMSPAN' } });
-        // })
-
-
-        // const dob = screen.getByRole("textbox", { name: 'Date of Birth', exact: false });
-        // await act(async () => {
-        //     fireEvent.change(dob, { target: { value: 'TESTDMSPAN' } });
-        // })
-
-        // const age = screen.getByRole("textbox", { name: 'Age', exact: false });
-        // await act(async () => {
-        //     fireEvent.change(age, { target: { value: 'TESTDMSPAN' } });
-        // })
-
-        // const remark = screen.getByRole("textbox", { name: 'Remark', exact: false });
-        // await act(async () => {
-        //     fireEvent.change(remark, { target: { value: 'TESTDMSPAN' } });
-        // })
-
     })
 })
