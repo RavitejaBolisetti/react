@@ -4,16 +4,16 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Col, Row } from 'antd';
+import { Row, Col } from 'antd';
+
 import { withDrawer } from 'components/withDrawer';
 import { CREDIT_DEBIT_SECTION } from 'constants/CreditDebitSection';
-
 import { LeftSidebar } from './LeftSidebar';
-
-import styles from 'components/common/Common.module.css';
 import { VoucherAndPartyDetailsMaster } from './VoucherAndPartyDetails';
 import { VoucherDetailsMaster } from './VoucherDetails';
 import { ApportionDetailsMaster } from './ApportionDetails';
+
+import styles from 'components/common/Common.module.css';
 
 const CreditDebitNoteMainContainerMain = (props) => {
     const { currentSection } = props;

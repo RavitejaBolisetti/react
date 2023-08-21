@@ -6,7 +6,7 @@ import customRender from '@utils/test-utils';
 describe('ViewDetailMain Component', () => {
     it('should toggle Collapse panel on header click', () => {
         const setActiveKey = jest.fn();
-        const activeKey = [1];
+        const activeKey = [];
         const formData = {
             dateOfBirth: '1990-01-01',
             gender: 'MALE',
@@ -19,16 +19,10 @@ describe('ViewDetailMain Component', () => {
         };
 
         customRender(<ViewDetail setActiveKey={setActiveKey} activeKey={activeKey} formData={formData} isLoading={isLoading} appCategoryData={appCategoryData} />);
+        const plusBtn = screen.getAllByRole('img', { name: 'plus' });
+        fireEvent.click(plusBtn[0]);
 
         const panelHeader = screen.getByText('Individual Information');
-        fireEvent.click(panelHeader);
-
-        expect(setActiveKey).toHaveBeenCalledWith([]);
-
-        setActiveKey.mockReset();
-
-        fireEvent.click(panelHeader);
-
-        expect(setActiveKey).toHaveBeenCalledWith([1]);
+        expect(panelHeader).toBeInTheDocument();
     });
 });

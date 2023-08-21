@@ -159,7 +159,7 @@ const ChangeHistoryMain = ({ fetchCustomerChangeHistory, onCloseAction, listShow
         setPage,
         totalRecords,
         dynamicPagination,
-        isChangeHistoryLoading,
+        isLoading: isChangeHistoryLoading,
         tableColumn,
         tableData: changeHistoryData?.customerNameChangeResponses,
         scroll: { x: '100%', y: 'calc(100vh - 320px)' },
@@ -175,7 +175,7 @@ const ChangeHistoryMain = ({ fetchCustomerChangeHistory, onCloseAction, listShow
             <div className={styles.formFooter}>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Button danger onClick={onCloseAction}>
+                        <Button data-testid="closed" danger onClick={onCloseAction}>
                             Close
                         </Button>
                     </Col>

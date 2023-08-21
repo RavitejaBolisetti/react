@@ -57,7 +57,7 @@ const SchemeDetailsMasterBase = (props) => {
     const [formData, setFormData] = useState();
     useEffect(() => {
         if (schemeData) {
-            form.setFieldsValue({ ...schemeData });
+            form?.setFieldsValue({ ...schemeData });
             setFormData(schemeData);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps

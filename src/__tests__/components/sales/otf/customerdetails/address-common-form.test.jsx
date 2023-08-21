@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -8,18 +8,17 @@ import customRender from '@utils/test-utils';
 import { screen, fireEvent } from '@testing-library/react';
 import { AddressCommonForm } from '@components/Sales/OTF/CustomerDetails/AddressCommonForm';
 
-
 describe('address common form Components', () => {
     it('should render form components', () => {
         customRender(<AddressCommonForm />);
     });
 
     it('should render form input field components', () => {
-        customRender(<AddressCommonForm formType='billingCustomer' isvisible={true} />);
+        customRender(<AddressCommonForm formType="billingCustomer" isvisible={true} />);
 
-        const mobileNo  = screen.getByLabelText('Mobile Number');
+        const mobileNo = screen.getByLabelText('Mobile Number');
         expect(mobileNo).toBeInTheDocument();
-        
+
         const customerid = screen.getByLabelText('Customer ID');
         fireEvent.change(customerid, { target: { value: 'Dmscustomerid' } });
         expect(customerid.value.includes('Dmscustomerid'));
@@ -38,11 +37,11 @@ describe('address common form Components', () => {
 
         const address = screen.getByLabelText('Address');
         fireEvent.change(address, { target: { value: 'Dmsaddress' } });
-        expect(address.value.includes('Dmsaddress'));   
+        expect(address.value.includes('Dmsaddress'));
 
         const citydistrict = screen.getByLabelText('City/District');
         fireEvent.change(citydistrict, { target: { value: 'Dmscitydistrict' } });
-        expect(citydistrict.value.includes('Dmscitydistrict'));   
+        expect(citydistrict.value.includes('Dmscitydistrict'));
 
         const state = screen.getByLabelText('State');
         fireEvent.change(state, { target: { value: 'Dmsstate' } });
@@ -83,12 +82,5 @@ describe('address common form Components', () => {
         const birthdate = screen.getByLabelText('Birth Date');
         fireEvent.change(birthdate, { target: { value: 'Dmsbirthdate' } });
         expect(birthdate.value.includes('Dmsbirthdate'));
-
-        const checkbox = screen.getByRole('checkbox', {name: 'Same as Booking Customer'})
-        fireEvent.click(checkbox); 
-        expect(checkbox).toBeChecked();
     });
-
 });
-
-

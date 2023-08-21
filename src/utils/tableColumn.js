@@ -5,7 +5,6 @@
  */
 import { Button, Space, Tag, Switch } from 'antd';
 import { FiEdit, FiTrash } from 'react-icons/fi';
-
 import { FaRegEye } from 'react-icons/fa';
 
 import { addToolTip } from 'utils/addToolTip';
@@ -29,7 +28,8 @@ const onFilterFn = (value, record) => {
     }
 };
 
-export const tblPrepareColumns = ({ title, dataIndex, render = undefined, ellipsis = false, filters = undefined, filterMode = 'tree', filterSearch = true, sortFn = undefined, width, sorter = true }) => {
+export const tblPrepareColumns = ({ title, dataIndex, localSort = true, render = undefined, ellipsis = false, filters = undefined, filterMode = 'tree', filterSearch = true, sortFn = undefined, width, sorter = true }) => {
+    const sortingFn = (a, b) => (a && b ? String(a[dataIndex]).localeCompare(String(b[dataIndex]), undefined, { sensitivity: 'base' }) : a);
     return {
         title,
         dataIndex,
@@ -40,7 +40,7 @@ export const tblPrepareColumns = ({ title, dataIndex, render = undefined, ellips
         filterMode,
         filterSearch,
         onFilter: onFilterFn,
-        sorter: sorter && ((a, b) => (a && b ? String(a[dataIndex]).localeCompare(String(b[dataIndex]), undefined, { sensitivity: 'base' }) : a)),
+        sorter: sorter ? (localSort ? sortingFn : true) : false,
         sortDirections: ['descend', 'ascend'],
     };
 };
@@ -62,6 +62,7 @@ export const tblApprovalStatusColumn = ({ width = '15%' }) => {
         sorter: (a, b) => (a && b ? String(a['approvalStatus']).localeCompare(String(b['approvalStatus']), undefined, { sensitivity: 'base' }) : a),
         render: (_, record) => (record?.approvalStatus ? <div className={styles.activeText}>Approved</div> : <div className={styles.inactiveText}>Not Approved</div>),
         width,
+        sortDirections: ['descend', 'ascend'],
     };
 };
 
@@ -73,6 +74,7 @@ export const tblStatusColumn = ({ width = '15%', fixed = '' }) => {
         render: (_, record) => (record?.status ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>),
         width,
         fixed: fixed,
+        sortDirections: ['descend', 'ascend'],
     };
 };
 
@@ -147,6 +149,7 @@ export const tableColumnStringWithTag = ({ title, dataIndex, sorter = true }) =>
             </Tag>
         );
     },
+    sortDirections: ['descend', 'ascend'],
 });
 
 export const tableColumnActionsEditDelete =

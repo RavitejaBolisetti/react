@@ -18,11 +18,6 @@ export const ThankYouMaster = (props) => {
     const title = LANGUAGE_EN.GENERAL.THANK_YOU_PAGE_OTF.TITLE;
     const message = LANGUAGE_EN.GENERAL.THANK_YOU_PAGE_OTF.MESSAGE.replace('{ORDER_ID}', props?.selectedOrderId);
 
-    const myProps = {
-        ...props,
-        buttonData: { ...props.defaultBtnVisiblity, closeBtn: true },
-    };
-
     return (
         <>
             <Row gutter={20} className={styles.drawerBodyRight}>

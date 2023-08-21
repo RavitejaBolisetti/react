@@ -26,7 +26,7 @@ export default function ReceiptFilter(props) {
                         <Col xs={24} sm={18} md={18} lg={18} xl={18} className={styles.verticallyCentered}>
                             <QueryButtons currentItem={receiptStatus} items={receiptStatusList} onClick={handleReceiptTypeChange} />
                             <div className={styles.fullWidth}>
-                                <Search placeholder="Receipt No." onChange={handleChange} onSearch={handleSearch} allowClear className={styles.headerSearchField} />
+                                <Search placeholder="Search Receipt No." onChange={handleChange} onSearch={handleSearch} allowClear className={styles.headerSearchField} />
                             </div>
                         </Col>
                         <Col xs={24} sm={6} md={6} lg={6} xl={6} className={styles.verticallyCentered}>

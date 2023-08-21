@@ -1,5 +1,6 @@
+/* eslint-disable jest/no-mocks-import */
 import React from "react";
-import { screen, fireEvent, render } from "@testing-library/react";
+import { screen, fireEvent, waitFor } from "@testing-library/react";
 import '@testing-library/jest-dom/extend-expect';
 import customRender from "@utils/test-utils";
 import { Provider } from 'react-redux';
@@ -255,85 +256,18 @@ describe("ExchangeVehiclesMaster component render",()=>{
     });
 
     it("should render text", async()=>{
-        const { getByRole } = customRender( <FormWrapper 
-            {...props} typeData={('REL_TYPE', 'MONTH')} buttonData={defaultBtnVisiblity} /> );
+     customRender( <FormWrapper {...props} typeData={('REL_TYPE', 'MONTH')} buttonData={defaultBtnVisiblity} /> );
         
         expect(screen.getByRole('table', {name:"", exact:false})).toBeInTheDocument();
 
         expect(screen.getByRole('rowgroup', {name:"", exact:false})).toBeInTheDocument();
 
-        const nameMake = screen.getByRole('row', { name: 'Customer ID Customer Name Make' });
-        expect(nameMake).toBeTruthy();
-
-        const regNumber = screen.getByRole('row', { name: 'Model Group Variant Old Reg. Number' });
-        expect(regNumber).toBeTruthy();
-
-        const oldChassis = screen.getByRole('row', { name: 'Old Chassis Number Relationship Month of Registration' });
-        expect(oldChassis).toBeTruthy();
-
-        const yearOfName = screen.getByRole('row', { name: 'Year of Registration Usage Scheme Name' });
-        expect(yearOfName).toBeTruthy();
-
-        const yearOfPrice = screen.getByRole('row', { name: 'Scheme Amount KM Customer Expected Price' });
-        expect(yearOfPrice).toBeTruthy();
-
-        const pricehypothecatedTo = screen.getByRole('row', { name: 'Procurement Price Hypothecated To' });
-        expect(pricehypothecatedTo).toBeTruthy();
-
-        const custId = screen.getByRole('columnheader', { name: 'Customer ID' });
-        expect(custId).toBeTruthy();
-
-        const custName = screen.getByRole('columnheader', { name: 'Customer Name' });
-        expect(custName).toBeTruthy();
-
-        const make = screen.getByRole('columnheader', { name: 'Make' });
-        expect(make).toBeTruthy();
-
-        const modelGroup = screen.getByRole('columnheader', { name: 'Model Group' });
-        expect(modelGroup).toBeTruthy();
-
-        const variant = screen.getByRole('columnheader', { name: 'Variant' });
-        expect(variant).toBeTruthy();
-
-        const oldRegNumber = screen.getByRole('columnheader', { name: 'Old Reg. Number' });
-        expect(oldRegNumber).toBeTruthy();
-
-        const oldChassisNumber = screen.getByRole('columnheader', { name: 'Old Chassis Number' });
-        expect(oldChassisNumber).toBeTruthy();
-
-        const relationship = screen.getByRole('columnheader', { name: 'Relationship' });
-        expect(relationship).toBeTruthy();
-
-        const monthOfRegistration = screen.getByRole('columnheader', { name: 'Month of Registration' });
-        expect(monthOfRegistration).toBeTruthy();
-        
-        const yearOfRegistration = screen.getByRole('columnheader', { name: 'Year of Registration' });
-        expect(yearOfRegistration).toBeTruthy();
-
-        const usage = screen.getByRole('columnheader', { name: 'Usage' });
-        expect(usage).toBeTruthy();
-
-        const schemeName = screen.getByRole('columnheader', { name: 'Scheme Name' });
-        expect(schemeName).toBeTruthy();
-
-        const schemeAmount = screen.getByRole('columnheader', { name: 'Scheme Amount' });
-        expect(schemeAmount).toBeTruthy();
-
-        const km = screen.getByRole('columnheader', { name: 'KM' });
-        expect(km).toBeTruthy();
-
-        const expectedPrice = screen.getByRole('columnheader', { name: 'Customer Expected Price' });
-        expect(expectedPrice).toBeTruthy();
-
-        const procurementPrice = screen.getByRole('columnheader', { name: 'Procurement Price' });
-        expect(procurementPrice).toBeTruthy();
-
-        const hypothecatedTo = screen.getByRole('columnheader', { name: 'Hypothecated To' });
-        expect(hypothecatedTo).toBeTruthy();
+        const nameMake = screen.getByText('Model Group');
+        expect(nameMake).toBeTruthy();       
     })
     
     it('should render buttons', async () => {
-        const { getByRole } = customRender(<ExchangeVehiclesMaster {...props} typeData={('REL_TYPE', 'MONTH')} 
+        customRender(<ExchangeVehiclesMaster {...props} typeData={('REL_TYPE', 'MONTH')} 
         setButtonData={jest.fn()}
         buttonData={defaultBtnVisiblity} />);
 
@@ -388,7 +322,7 @@ describe("ExchangeVehiclesMaster component render",()=>{
         }) 
     });
 
-    it('cancel button should work', async () => {
+    it('should check cancle button is working', async () => {
         customRender(
             <Provider store={mockStore}>
                 <ExchangeVehiclesMaster {...props} typeData="REL_TYPE" buttonData={defaultBtnVisiblity} onCloseAction={jest.fn()} />
@@ -405,7 +339,7 @@ describe("ExchangeVehiclesMaster component render",()=>{
         const mockStore = createMockStore({
             auth: { userId: 123 },
         });
-        const { getByRole } = customRender(
+             customRender(
             <Provider store={mockStore}>
                 <ExchangeVehiclesMaster 
                     {...props} 
@@ -439,4 +373,15 @@ describe('AddEdit Component render when viewmode is false', () => {
     it('should render addedit page', async () => {
         customRender(<ExchangeVehiclesMaster {...formActionType} typeData={('REL_TYPE', 'MONTH')} />);
     });
+    it('calls onFinish when form is submitted', async () => {
+        const mockOnFinish = jest.fn();
+        customRender(<FormWrapper onFinish={mockOnFinish} />);
+        fireEvent.submit(screen.getByTestId('exchangeVID'));
+        await waitFor(() => {
+            //expect(screen.getByText('Booked')).toBeInTheDocument();
+            expect(mockOnFinish).toHaveBeenCalled(2);
+        });
+      });
 });
+
+

@@ -7,15 +7,14 @@ import React from 'react';
 import { Descriptions } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { getCodeValue } from 'utils/getCodeValue';
-
 import { DATA_TYPE } from 'constants/dataType';
+import { PAYMENT_MODE } from 'components/Sales/Receipts/utils/receiptDetailsPaymentMode';
 
 import PaymentFormContainer from './PaymentDetails/PaymentFormContainer';
 
 const ViewPaymentDetailBase = (props) => {
     const { formData, styles } = props;
     const { setShowAddEditForm, setPaymentDataList, onFinish, paymentModeType, paymentForm, isLoading, isListEditing } = props;
-    console.log("🚀 ~ file: ViewPaymentDetail.js:18 ~ ViewPaymentDetailBase ~ isListEditing:", isListEditing)
 
     const viewProps = {
         bordered: false,
@@ -40,10 +39,10 @@ const ViewPaymentDetailBase = (props) => {
                         <Descriptions.Item label="Payment Mode">{checkAndSetDefaultValue(getCodeValue(paymentModeType, formData?.paymentMode))}</Descriptions.Item>
                         <br />
                         <br />
-                        {formData?.paymentMode === 'C' || 'R' || 'D' || 'NEFT' ? <Descriptions.Item label="Receive Amount">{checkAndSetDefaultValue(formData?.receivedAmount, isLoading)}</Descriptions.Item> : null}
-                        {formData?.paymentMode === 'C' ? <Descriptions.Item label="Transaction Date">{checkAndSetDefaultValue(formData?.transactionDate, isLoading, DATA_TYPE?.DAYJS?.key)}</Descriptions.Item> : null}
+                        {formData?.paymentMode === PAYMENT_MODE?.CASH?.KEY || PAYMENT_MODE?.CREDIT_CARD?.KEY || PAYMENT_MODE?.CHEQUE_DD?.KEY || PAYMENT_MODE?.RTGS?.KEY ? <Descriptions.Item label="Receive Amount">{checkAndSetDefaultValue(formData?.receivedAmount, isLoading)}</Descriptions.Item> : null}
+                        {formData?.paymentMode === PAYMENT_MODE?.CASH?.KEY ? <Descriptions.Item label="Transaction Date">{checkAndSetDefaultValue(formData?.transactionDate, isLoading, DATA_TYPE?.DAYJS?.key)}</Descriptions.Item> : null}
 
-                        {formData?.paymentMode === 'R' && (
+                        {formData?.paymentMode === PAYMENT_MODE?.CREDIT_CARD?.KEY && (
                             <>
                                 <Descriptions.Item label="Credit Card Transaction No.">{checkAndSetDefaultValue(formData?.creditCardTransNumber, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Service Charge Percentage">{checkAndSetDefaultValue(formData?.ccServiceChargePercentage, isLoading)}</Descriptions.Item>
@@ -52,25 +51,25 @@ const ViewPaymentDetailBase = (props) => {
                             </>
                         )}
 
-                        {formData?.paymentMode === 'D' && (
+                        {formData?.paymentMode === PAYMENT_MODE?.CHEQUE_DD?.KEY && (
                             <>
                                 <Descriptions.Item label="Cheque/DD No.">{checkAndSetDefaultValue(formData?.ddCheckNumber, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Cheque/DD Date">{checkAndSetDefaultValue(formData?.ddCheckDate, isLoading, DATA_TYPE?.DAYJS?.key)}</Descriptions.Item>
                                 <Descriptions.Item label="Bank Name">{checkAndSetDefaultValue(formData?.bankName, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Bank Location">{checkAndSetDefaultValue(formData?.bankLocationName, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Payment Bank Party ID">{checkAndSetDefaultValue(formData?.paymentBankPartyId, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Payment Bank Name">{checkAndSetDefaultValue(formData?.paymentBankName, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Payment Bank Location">{checkAndSetDefaultValue(formData?.paymentBankLocation, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Payment Bank Name">{checkAndSetDefaultValue(formData?.partyName, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Payment Bank Location">{checkAndSetDefaultValue(formData?.partyLocationCode, isLoading)}</Descriptions.Item>
                             </>
                         )}
 
-                        {formData?.paymentMode === 'O' && (
+                        {formData?.paymentMode === PAYMENT_MODE?.RTGS?.KEY && (
                             <>
                                 <Descriptions.Item label="Transaction No.">{checkAndSetDefaultValue(formData?.transactionNumber, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Transaction Date">{checkAndSetDefaultValue(formData?.transactionDate, isLoading, DATA_TYPE?.DAYJS?.key)}</Descriptions.Item>
                                 <Descriptions.Item label="Payment Bank Party ID">{checkAndSetDefaultValue(formData?.paymentBankPartyId, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Payment Bank Name">{checkAndSetDefaultValue(formData?.paymentBankName, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Payment Bank Location">{checkAndSetDefaultValue(formData?.paymentBankLocation, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Payment Bank Name">{checkAndSetDefaultValue(formData?.partyName, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Payment Bank Location">{checkAndSetDefaultValue(formData?.partyLocationCode, isLoading)}</Descriptions.Item>
                             </>
                         )}
                     </Descriptions>

@@ -33,7 +33,7 @@ const options = {
     // source language
     'sonar.language': 'js',
 
-    'sonar.javascript.lcov.reportPaths': 'coverage/lcov.info',
+    'sonar.javascript.lcov.reportPaths': 'src/coverage/lcov.info',
 
     // Encoding of the source code. Default is default system encoding
     'sonar.sourceEncoding': 'UTF-8',

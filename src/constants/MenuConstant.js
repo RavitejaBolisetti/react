@@ -439,4 +439,25 @@ export const MenuConstant = {
         icon: undefined,
         parentMenuId: 'SACT-04',
     },
+
+    [getMenyKey('SACT-04.07')]: {
+        key: 'SACT-04.07',
+        link: routing.ROUTING_VEHICLE_RECIEPT_CHECKLIST,
+        icon: undefined,
+        parentMenuId: 'SACT-04',
+    },
+
+    [getMenyKey('FINA-01.06')]: {
+        key: 'FINA-01.06',
+        link: routing.ROUTING_VEHICLE_MODEL_TAX_CHARGES_CATEGORY,
+        icon: undefined,
+        parentMenuId: 'FINA-01',
+    },
+
+    [getMenyKey('FINA-02.01')]: {
+        key: 'FINA-02.01',
+        link: routing.ROUTING_RECEIPTS,
+        icon: undefined,
+        parentMenuId: 'FINA-02',
+    },
 };

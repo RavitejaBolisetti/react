@@ -3,12 +3,12 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Input, DatePicker, Row, Col, Form } from 'antd';
 
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { dateFormat } from 'utils/formatDateTime';
-import { validationNumber, validateLettersWithWhitespaces, validationFieldLetterAndNumber } from 'utils/validation';
+import { validateLettersWithWhitespaces, validationFieldLetterAndNumber, validateRequiredInputField, validateNumberWithTwoDecimalPlaces, validationNumber } from 'utils/validation';
 
 const { Search } = Input;
 
@@ -19,13 +19,13 @@ const ChequeFormBase = (props) => {
         <>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.receivedAmount} label="Receive Amount" name="receivedAmount" rules={[validationNumber('received amount')]}>
+                    <Form.Item initialValue={formData?.receivedAmount} label="Receive Amount" name="receivedAmount" rules={[validateRequiredInputField('received amount'), validateNumberWithTwoDecimalPlaces('received amount')]}>
                         <Input placeholder={preparePlaceholderText('received amount')} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.ddCheckNumber} label="Cheque/DD No." name="ddCheckNumber" rules={[validationFieldLetterAndNumber('cheque no')]}>
-                        <Input placeholder={preparePlaceholderText('Cheque/DD No.')} />
+                    <Form.Item initialValue={formData?.ddCheckNumber} label="Cheque/DD No." name="ddCheckNumber" rules={[validationFieldLetterAndNumber('cheque no'), validationNumber('cheque no')]}>
+                        <Input maxLength={6} placeholder={preparePlaceholderText('Cheque/DD No.')} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>

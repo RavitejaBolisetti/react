@@ -19,7 +19,7 @@ const AddEditFormBase = (props) => {
 
     useEffect(() => {
         if (formData) {
-            form.setFieldsValue({
+            form?.setFieldsValue({
                 ...formData,
                 bookingCustomer: { ...formData?.bookingCustomer, birthDate: convertDateToCalender(formData?.bookingCustomer?.birthDate) },
                 billingCustomer: { ...formData?.billingCustomer, birthDate: convertDateToCalender(formData?.billingCustomer?.birthDate) },
@@ -48,7 +48,7 @@ const AddEditFormBase = (props) => {
     const handleOnChange = (vall) => {
         if (vall.target.checked) {
             setSameAsBookingCustomer(true);
-            let bookingCustomer = form.getFieldsValue()?.bookingCustomer;
+            let bookingCustomer = form?.getFieldsValue()?.bookingCustomer;
             form?.setFieldsValue({ billingCustomer: { ...bookingCustomer } });
         } else {
             setSameAsBookingCustomer(false);

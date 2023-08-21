@@ -11,7 +11,7 @@ import styles from 'components/common/Common.module.css';
 import { VEHICLE_RECIEPT_CHECKLIST_SECTION } from 'constants/VehicleRecieptCheckListSection';
 
 const MenuNav = (props) => {
-    const { currentSection, setCurrentSection } = props;
+    const { currentSection, setCurrentSection, addMode, editMode } = props;
     const vehicleSectionList = Object.values(VEHICLE_RECIEPT_CHECKLIST_SECTION);
 
     const onHandle = (key) => {
@@ -21,7 +21,7 @@ const MenuNav = (props) => {
     const items = vehicleSectionList
         ?.filter((i) => i?.displayOnList)
         ?.map((item) => ({
-            dot: item?.id === currentSection ? <BsRecordCircleFill className={styles.activeForm} /> : <FaCheckCircle />,
+            dot: item?.id === currentSection && (addMode || editMode) ? <BsRecordCircleFill className={styles.activeForm} /> : <FaCheckCircle />,
             children: <p onClick={() => onHandle(item?.id)}>{item?.title}</p>,
             className: item?.id === currentSection ? 'active' : 'noactive',
         }));

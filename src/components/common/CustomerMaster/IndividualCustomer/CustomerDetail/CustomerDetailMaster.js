@@ -80,11 +80,12 @@ const mapDispatchToProps = (dispatch) => ({
 
 const CustomerDetailMasterBase = (props) => {
     const { setRefreshCustomerList, handleResetFilter, typeData, fetchCorporateLovList, isCorporateLovDataLoaded, listCorporateLovShowLoading, corporateLovData } = props;
-    const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, data, saveData, isLoading, resetData, form, handleFormValueChange, onFinishFailed } = props;
+    const { userId, showGlobalNotification, section, fetchList, listShowLoading, data, saveData, isLoading, resetData, form, handleFormValueChange, onFinishFailed } = props;
     const { selectedCustomer, selectedCustomerId, setSelectedCustomerId } = props;
     const { buttonData, setButtonData, formActionType, setFormActionType, handleButtonClick, NEXT_ACTION } = props;
     const { fetchViewDocument, viewListShowLoading, listSupportingDocumentShowLoading, isSupportingDocumentDataLoaded, supportingData, isViewDataLoaded, viewDocument } = props;
 
+    const [refreshData, setRefreshData] = useState(false);
     const [showForm, setShowForm] = useState(false);
     const [status, setStatus] = useState(null);
     const [emptyList, setEmptyList] = useState(true);
@@ -107,13 +108,13 @@ const CustomerDetailMasterBase = (props) => {
     };
 
     useEffect(() => {
-        if (isDataLoaded) {
+        if (data) {
             form.setFieldsValue({ ...data });
             setFormData(data);
             // setWhatsAppConfiguration({ contactOverWhatsApp: data?.whatsappCommunicationIndicator, sameMobileNoAsWhatsApp: data?.mobileNumberAsWhatsappNumber });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDataLoaded]);
+    }, [data]);
 
     useEffect(() => {
         return () => {
@@ -142,7 +143,7 @@ const CustomerDetailMasterBase = (props) => {
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedCustomerId]);
+    }, [userId, selectedCustomerId, refreshData]);
 
     const downloadFileFromButton = (uploadData) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Your download will start soon' });
@@ -206,17 +207,24 @@ const CustomerDetailMasterBase = (props) => {
         setFileList([]);
         setEmptyList(false);
         setUploadedFile();
-
         let data = { ...values, customerId: selectedCustomer?.customerId };
-        console.log(nameChangeRequested, 'nameChangeRequested');
-        if (formActionType?.editMode && nameChangeRequested) {
-            data = { ...data, ...customerNameList };
-            delete data.titleCodeNew;
-            delete data.firstNameNew;
-            delete data.middleNameNew;
-            delete data.lastNameNew;
-        } else if (formActionType?.editMode) {
-            data = { ...data, titleCode: formData?.titleCode, firstName: formData?.firstName, middleName: formData?.middleName, lastName: formData?.lastName };
+
+        if (formActionType?.editMode) {
+            const customerCurrentName = {
+                titleCode: formData?.titleCode,
+                firstName: formData?.firstName,
+                middleName: formData?.middleName,
+                lastName: formData?.lastName,
+            };
+            data = { ...data, ...customerCurrentName, editMode: formActionType?.editMode };
+
+            if (nameChangeRequested) {
+                data = { ...data, customerNameChangeRequest: customerNameList };
+                delete data.titleCodeNew;
+                delete data.firstNameNew;
+                delete data.middleNameNew;
+                delete data.lastNameNew;
+            }
         }
 
         const onSuccess = (res) => {
@@ -239,21 +247,22 @@ const CustomerDetailMasterBase = (props) => {
                     });
                 } else {
                     setCustomerNameList({
-                        titleCode: res?.data?.customerNameChangeRequest?.newTitleCode,
-                        firstName: res?.data?.customerNameChangeRequest?.newFirstName,
-                        middleName: res?.data?.customerNameChangeRequest?.newMiddleName,
-                        lastName: res?.data?.customerNameChangeRequest?.newLastName,
+                        titleCode: res?.data?.customerNameChangeRequest?.titleCode,
+                        firstName: res?.data?.customerNameChangeRequest?.firstName,
+                        middleName: res?.data?.customerNameChangeRequest?.middleName,
+                        lastName: res?.data?.customerNameChangeRequest?.lastName,
                     });
                 }
             }
         };
+
         const onError = (message) => {
             showGlobalNotification({ message });
         };
 
         const requestData = {
             data: data,
-            method: formActionType?.editMode ? 'put' : 'post',
+            method: selectedCustomerId ? 'put' : 'post',
             setIsLoading: listShowLoading,
             userId,
             onError,
@@ -356,6 +365,8 @@ const CustomerDetailMasterBase = (props) => {
         setactiveKey,
         nameChangeRequested,
         setNameChangeRequested,
+        refreshData,
+        setRefreshData,
     };
 
     const viewProps = {
