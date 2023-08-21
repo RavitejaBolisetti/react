@@ -76,6 +76,7 @@ const mapDispatchToProps = (dispatch) => ({
             cardBtnDisableAction: productHierarchyDataActions.cardBtnDisableAction,
             fetchListHierarchyAttributeName: productHierarchyDataActions.fetchAttributeNameList,
             listAttibuteShowLoading: productHierarchyDataActions.listShowLoading,
+            emptyData: productHierarchyDataActions.emptyData,
 
             fetchOrgList: manufacturerOrgHierarchyDataActions.fetchList,
 
@@ -88,7 +89,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData, userId, isDataLoaded, productHierarchyData, fetchList, hierarchyAttributeFetchList, saveData, isChangeHistoryVisible, changeHistoryModelOpen, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, showGlobalNotification, unFilteredAttributeData, fetchListHierarchyAttributeName, productHierarchyAttributeData, fetchOrgList, isDataOrgLoaded, manufacturerOrgHierarchyData, organizationId, setSelectedOrganizationId, resetData }) => {
+export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData, userId, isDataLoaded, productHierarchyData, fetchList, hierarchyAttributeFetchList, saveData, isChangeHistoryVisible, changeHistoryModelOpen, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, showGlobalNotification, unFilteredAttributeData, fetchListHierarchyAttributeName, productHierarchyAttributeData, fetchOrgList, isDataOrgLoaded, manufacturerOrgHierarchyData, organizationId, setSelectedOrganizationId, resetData, emptyData }) => {
     const [form] = Form.useForm();
     const [isCollapsableView, setCollapsableView] = useState(true);
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
@@ -143,6 +144,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
 
     useEffect(() => {
         if (organizationId && userId) {
+            emptyData();
             fetchList({ setIsLoading: listShowLoading, userId, onCloseAction, id: organizationId, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps

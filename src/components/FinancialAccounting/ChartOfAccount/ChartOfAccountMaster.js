@@ -75,7 +75,7 @@ const mapDispatchToProps = (dispatch) => ({
             fetchProductDataList: productHierarchyDataActions.fetchList,
             listProductLoading: productHierarchyDataActions.listShowLoading,
             setSelectedOrganizationId: productHierarchyDataActions.setSelectedOrganizationId,
-            resetData: productHierarchyDataActions.resetotfSodata,
+            resetData: productHierarchyDataActions.emptyData,
 
             fetchOtfList: otfSoMappingActions.fetchList,
             listOtfSoMappingShowLoading: otfSoMappingActions.listShowLoading,
