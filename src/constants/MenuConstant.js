@@ -48,6 +48,13 @@ export const MenuConstant = {
         parentMenuId: 'OTD',
     },
 
+    [getMenyKey('SACT-06.05')]: {
+        key: 'SACT-06.05',
+        link: routing.ROUTING_VEHICLE_ALLOTMENT,
+        icon: undefined,
+        parentMenuId: 'OTD',
+    },
+
     [getMenyKey('COMN-10.01')]: {
         key: 'COMN-10.01',
         link: routing.ROUTING_COMMON_CUSTOMER_MASTER,

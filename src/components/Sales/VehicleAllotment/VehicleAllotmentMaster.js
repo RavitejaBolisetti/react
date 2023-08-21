@@ -11,7 +11,7 @@ import { Col, Form, Row } from 'antd';
 import { tableColumn } from './tableColumn';
 import AdvanceFilter from './AdvanceFilter';
 import { AdvancedSearch } from './AdvancedSearch';
-import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, ALLOT, UNALLOT, btnVisiblity } from 'utils/btnVisiblity';
+import { VIEW_ACTION, ALLOT, UNALLOT } from 'utils/btnVisiblity';
 
 import { ViewDetail } from './ViewDetail';
 import { ListDataTable } from 'utils/ListDataTable';
@@ -33,16 +33,16 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
-            ProductHierarchy: {  isLoaded: isDataLoaded = false, filteredListData: productHierarchyData = [] },
+            ProductHierarchy: { filteredListData: productHierarchyData = [] },
             OTF: {
                 OtfSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isOTFSearchLoading, data, isDetailLoaded },
             },
             vehicleAllotmentData: {
-                vehicleAllotment: { isLoaded, isLoading, detailData: allotmentSummaryDetails, data: allotmentSearchedList, filter: filterString, },
+                vehicleAllotment: { detailData: allotmentSummaryDetails, data: allotmentSearchedList, filter: filterString },
             },
         },
     } = state;
-    
+
     const moduleTitle = 'Vehicle Receipt';
     let returnValue = {
         userId,
@@ -57,7 +57,7 @@ const mapStateToProps = (state) => {
         filterString,
         allotmentSummaryDetails,
         allotmentSearchedList,
-        productHierarchyData
+        productHierarchyData,
     };
     return returnValue;
 };
@@ -84,9 +84,9 @@ const mapDispatchToProps = (dispatch) => ({
 export const VehicleAllotmentMasterBase = (props) => {
     const { fetchList, saveData, listShowLoading, userId, fetchVehicleAllotmentDetails, allotmentSummaryDetails, data, resetData } = props;
     const { fetchOTFSearchedList, fetchVehicleAllotmentSearchedList, allotmentSearchedList, resetOTFSearchedList, fetchModelList, productHierarchyData } = props;
-    const { typeData, moduleTitle, showGlobalNotification } = props;
+    const { typeData, showGlobalNotification } = props;
     const { filterString, setFilterString, otfStatusList } = props;
-    const [ filterStringOTFSearch, setFilterStringOTFSearch ] = useState('');
+    const [filterStringOTFSearch, setFilterStringOTFSearch] = useState('');
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [toggleButton, settoggleButton] = useState(VEHICLE_TYPE?.UNALLOTED.id);
     const [searchParamValue, setSearchParamValue] = useState('');
@@ -102,6 +102,8 @@ export const VehicleAllotmentMasterBase = (props) => {
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
+    const [page, setPage] = useState({ pageSize: 10, current: 1 });
+    const dynamicPagination = true;
 
     const defaultBtnVisiblity = {
         editBtn: false,
@@ -122,7 +124,7 @@ export const VehicleAllotmentMasterBase = (props) => {
     const [formData, setFormData] = useState([]);
 
     const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         setShowDataLoading(false);
     };
 
@@ -133,12 +135,11 @@ export const VehicleAllotmentMasterBase = (props) => {
 
     useEffect(() => {
         if (userId) {
-            fetchModelList({setIsLoading: listShowLoading, userId, onSuccessAction, onErrorAction });
+            fetchModelList({ setIsLoading: listShowLoading, userId, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
 
-    
     const extraParams = useMemo(() => {
         return [
             {
@@ -157,21 +158,24 @@ export const VehicleAllotmentMasterBase = (props) => {
                 name: searchParamValue,
                 canRemove: true,
                 filter: true,
-            },{
+            },
+            {
                 key: 'model',
                 title: 'Model',
                 value: filterString?.model,
                 name: productHierarchyData?.find((i) => i?.prodctCode === filterString?.model)?.prodctShrtName,
                 canRemove: true,
                 filter: true,
-            },{
+            },
+            {
                 key: 'vehicleStatus',
                 title: 'Vehicle Status',
                 value: filterString?.vehicleStatus,
                 name: typeData[PARAM_MASTER.ALT_ACTN.id]?.find((i) => i?.key === filterString?.vehicleStatus)?.value,
                 canRemove: true,
                 filter: true,
-            },{
+            },
+            {
                 key: 'pdDone',
                 title: 'PD Done',
                 value: filterString?.pdDone,
@@ -182,14 +186,28 @@ export const VehicleAllotmentMasterBase = (props) => {
             {
                 key: 'pageSize',
                 title: 'Value',
-                value: 100,
+                value: page?.pageSize,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'pageNumber',
                 title: 'Value',
-                value: 1,
+                value: page?.current,
+                canRemove: true,
+                filter: false,
+            },
+            {
+                key: 'sortBy',
+                title: 'Sort By',
+                value: page?.sortBy,
+                canRemove: true,
+                filter: false,
+            },
+            {
+                key: 'sortIn',
+                title: 'Sort Type',
+                value: page?.sortType,
                 canRemove: true,
                 filter: false,
             },
@@ -209,26 +227,24 @@ export const VehicleAllotmentMasterBase = (props) => {
         if (e.target.value.length > 2) {
             setSearchParamValue(e.target.value);
         } else if (e?.target?.value === '') {
-            
         }
     };
 
     const onSearchHandle = (value) => {
         if (value.length > 2) {
             setSearchParamValue(value);
-            setFilterString({...value, toggleButton, advanceFilter: true} );
+            setFilterString({ ...value, toggleButton, advanceFilter: true });
         } else if (value === '') {
-            
         }
     };
 
     useEffect(() => {
         if (userId) {
             resetOTFSearchedList();
-            fetchVehicleAllotmentSearchedList({ customURL:customURL+'/search', setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+            fetchVehicleAllotmentSearchedList({ customURL: customURL + '/search', setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, filterString, searchParamValue, toggleButton ]);
+    }, [userId, filterString, searchParamValue, toggleButton]);
 
     const searchOTFExtraParams = useMemo(() => {
         return [
@@ -237,12 +253,12 @@ export const VehicleAllotmentMasterBase = (props) => {
                 title: 'Type',
                 value: filterStringOTFSearch?.searchType,
                 //name: typeData?.[PARAM_MASTER.VECH_ALLOT_SER.id]?.find((i) => i?.key === filterString?.searchType)?.value
-                name: toggleButton
+                name: toggleButton,
             },
             {
                 key: 'searchParam',
                 title: 'Value',
-                value: filterStringOTFSearch?.searchParam
+                value: filterStringOTFSearch?.searchParam,
             },
             {
                 key: 'pageSize',
@@ -264,7 +280,7 @@ export const VehicleAllotmentMasterBase = (props) => {
 
     useEffect(() => {
         if (userId && searchOTFExtraParams[1]?.value) {
-           fetchOTFSearchedList({ setIsLoading: listShowLoading, userId, extraParams: searchOTFExtraParams, onSuccessAction, onErrorAction });
+            fetchOTFSearchedList({ setIsLoading: listShowLoading, userId, extraParams: searchOTFExtraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchOTFExtraParams]);
@@ -286,9 +302,9 @@ export const VehicleAllotmentMasterBase = (props) => {
                 const extraParamData = [
                     {
                         key: 'vin',
-                        value: record?.vehicleIdentificationNumber, //'MA2047182', //record?.vehicleIdentificationNumber,
-                    }
-                ]
+                        value: record?.vehicleIdentificationNumber, //record?.vehicleIdentificationNumber,
+                    },
+                ];
                 fetchVehicleAllotmentDetails({ setIsLoading: listShowLoading, userId, extraParams: extraParamData, onSuccessAction, onErrorAction });
                 setIsFormVisible(true);
                 break;
@@ -296,7 +312,7 @@ export const VehicleAllotmentMasterBase = (props) => {
             default:
                 break;
         }
-        
+
         //setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction, orderStatus: record?.orderStatus }));
     };
 
@@ -321,14 +337,14 @@ export const VehicleAllotmentMasterBase = (props) => {
     };
 
     const handleVehicleAllotment = (req, buttonAction) => {
-        let data = { ...allotmentSummaryDetails , vehicleOTFDetails: selectedOTFDetails   };
+        let data = { ...allotmentSummaryDetails, vehicleOTFDetails: selectedOTFDetails };
 
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
 
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            fetchVehicleAllotmentSearchedList({ customURL:customURL+'/search', setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+            fetchVehicleAllotmentSearchedList({ customURL: customURL + '/search', setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
 
             setButtonData({ ...buttonData, formBtnActive: false });
 
@@ -341,7 +357,7 @@ export const VehicleAllotmentMasterBase = (props) => {
 
         const requestData = {
             data: data,
-            method: (buttonAction === FROM_ACTION_TYPE?.ALLOT) ? 'post' : 'put',
+            method: buttonAction === FROM_ACTION_TYPE?.ALLOT ? 'post' : 'put',
             setIsLoading: listShowLoading,
             userId,
             onError,
@@ -401,6 +417,10 @@ export const VehicleAllotmentMasterBase = (props) => {
     };
 
     const tableProps = {
+        dynamicPagination,
+        totalRecords: allotmentSearchedList?.totalRecords,
+        setPage,
+        isLoading: showDataLoading,
         tableColumn: tableColumn(handleButtonClick),
         tableData: allotmentSearchedList?.paginationData,
         showAddButton: false,
@@ -423,7 +443,7 @@ export const VehicleAllotmentMasterBase = (props) => {
         otfFilter: true,
         filterString,
         setFilterString,
-        toggleButton, 
+        toggleButton,
         settoggleButton,
         from: listFilterForm,
         onFinish,
@@ -453,7 +473,7 @@ export const VehicleAllotmentMasterBase = (props) => {
         setAdvanceSearchVisible,
         typeData,
         onFinishSearch,
-        productHierarchyData
+        productHierarchyData,
     };
 
     const drawerTitle = useMemo(() => {
@@ -481,7 +501,7 @@ export const VehicleAllotmentMasterBase = (props) => {
         titleOverride: drawerTitle.concat('Allotment Details'),
         tableData: data,
         buttonData,
-        setSelectedOrderOTFDetails, 
+        setSelectedOrderOTFDetails,
         setButtonData,
         handleButtonClick,
         defaultFormActionType,
@@ -500,11 +520,11 @@ export const VehicleAllotmentMasterBase = (props) => {
             <AdvanceFilter {...advanceFilterResultProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable handleAdd={handleButtonClick} isLoading={showDataLoading} {...tableProps} showAddButton={true} />
+                    <ListDataTable handleAdd={handleButtonClick} {...tableProps} showAddButton={true} />
                 </Col>
             </Row>
             <AdvancedSearch {...advanceFilterProps} />
-            <ViewDetail {...containerProps} /> 
+            <ViewDetail {...containerProps} />
         </>
     );
 };
