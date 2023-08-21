@@ -246,6 +246,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
 
         setChangeView(() => !changeView);
+        
         form.resetFields();
         form.setFieldsValue(undefined);
         setIsFormVisible(true);

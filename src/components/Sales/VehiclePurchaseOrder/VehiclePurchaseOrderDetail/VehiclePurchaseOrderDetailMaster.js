@@ -134,7 +134,7 @@ const VehiclePurchaseOrderDetailMasterBase = (props) => {
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedRecordId, changeView]);
+    }, [userId, selectedRecordId, changeView] );
 
     useEffect(() => {
         if (userId && viewVehiclePODetails.dealerParentCode) {
