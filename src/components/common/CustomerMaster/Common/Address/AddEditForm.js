@@ -16,7 +16,7 @@ const { Search } = Input;
 
 const AddEditForm = (props) => {
     const { addressForm, setAddressData, addressData, editingData, setEditingData, setShowAddEditForm, setIsEditing, userId, formData, formActionType } = props;
-    const { forceUpdate, handleFormValueChange, setIsAdding, showGlobalNotification, addData } = props;
+    const { forceUpdate, handleFormValueChange, setIsAdding, showGlobalNotification, addData, resetPincodeData } = props;
     const { pincodeData, isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail } = props;
     const disabledProps = { disabled: formActionType?.editMode && formData?.partyCategory === 'Principal' ? true : false };
 
@@ -129,6 +129,7 @@ const AddEditForm = (props) => {
                 setIsAdding(false);
                 setEditingData({});
                 addressForm.setFieldsValue();
+                resetPincodeData();
             })
             .catch((err) => {
                 console.error('err', err);
