@@ -14,7 +14,7 @@ import ViewList from './ViewList';
 const { Panel } = Collapse;
 const { Text } = Typography;
 const PaymentAddEdit = (props) => {
-    const { setIsAdding, paymentForm, handleCollapse, isAdding, isListEditing, setShowAddEditForm, showAddEditForm, setOpenAccordian, formActionType, totalReceivedAmount } = props;
+    const { setIsAdding, paymentForm, handleCollapse, isAdding, isListEditing, setShowAddEditForm, showAddEditForm, setOpenAccordian, openAccordian, formActionType, totalReceivedAmount } = props;
 
     const addContactHandeler = (e) => {
         e.stopPropagation();
@@ -25,7 +25,7 @@ const PaymentAddEdit = (props) => {
     };
     return (
         <>
-            <Collapse onChange={() => handleCollapse(2)} expandIcon={expandIcon} expandIconPosition="end" collapsible="icon" defaultActiveKey={[2]}>
+            <Collapse onChange={() => handleCollapse(2)} expandIcon={expandIcon} expandIconPosition="end" collapsible="icon" activeKey={openAccordian}>
                 <Panel
                     header={
                         <Row>
