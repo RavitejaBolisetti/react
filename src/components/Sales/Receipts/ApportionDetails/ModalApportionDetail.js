@@ -48,7 +48,7 @@ export const ApportionDetailForm = (props) => {
             const filterItem = apportionList?.filter((item) => item?.documentNumber === value);
             if (!filterItem?.length) return Promise.resolve();
             else return Promise.reject(new Error('Document Number already exist.'));
-        }
+        } else return Promise.resolve();
     };
 
     const onFinishFailed = () => {
