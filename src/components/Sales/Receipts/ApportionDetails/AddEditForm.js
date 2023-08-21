@@ -18,7 +18,7 @@ import styles from 'components/common/Common.module.css';
 const { Text } = Typography;
 
 const AddEditFormMain = (props) => {
-    const { apportionList, setApportionList, apportionForm, documentDescriptionList, formActionType, isReadOnly, showApportionForm, setShowApportionForm, receiptDetailData, handleDocumentNumberSearch, handleFormValueChange, documentAmount, setDocumentAmount, receivedAmount, setReceivedAmount } = props;
+    const { apportionList, setApportionList, apportionForm, documentDescriptionList, formActionType, isReadOnly, showApportionForm, setShowApportionForm, receiptDetailData, handleDocumentNumberSearch, handleFormValueChange, documentAmount, setDocumentAmount, receivedAmount, setReceivedAmount, totalReceivedAmount } = props;
     const [modalForm] = Form.useForm();
     const [isModalApportionVisible, setModalApportionVisible] = useState(false);
     const [showApportionTable, setApportionTable] = useState(false);
@@ -52,6 +52,7 @@ const AddEditFormMain = (props) => {
         setisEditing(true);
         apportionForm.resetFields();
         setShowApportionForm(record);
+        setTotalApportionAmount(parseFloat(totalApportionAmount) - parseFloat(record?.apportionedAmount));
     };
 
     // const pagination = false;
@@ -68,6 +69,9 @@ const AddEditFormMain = (props) => {
             .validateFields()
             .then(() => {
                 const values = apportionForm.getFieldsValue();
+                // if (parseFloat(values?.apportionedAmount) + parseFloat(totalApportionAmount) > parseFloat(totalReceivedAmount)) {
+                //     console.log('Apportion amount more');
+                // }
                 if (!isEditing) {
                     const data = { ...values, id: '' };
                     setApportionList([data, ...apportionList]);
@@ -116,6 +120,8 @@ const AddEditFormMain = (props) => {
         setDocumentAmount,
         receivedAmount,
         setReceivedAmount,
+        totalReceivedAmount,
+        apportionList,
     };
 
     return (
@@ -126,9 +132,11 @@ const AddEditFormMain = (props) => {
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                     <Text strong>Apportion Details</Text>
-                    <Button onClick={handleApportionAdd} icon={<PlusOutlined />} type="primary" disabled={isReadOnly} className={styles.marB20}>
-                        Add
-                    </Button>
+                    {parseFloat(totalApportionAmount) < parseFloat(totalReceivedAmount) && (
+                        <Button onClick={handleApportionAdd} icon={<PlusOutlined />} type="primary" disabled={isReadOnly} className={styles.marB20}>
+                            Add
+                        </Button>
+                    )}
                 </Col>
             </Row>
             {/* key="2">
@@ -140,6 +148,7 @@ const AddEditFormMain = (props) => {
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                             <DataTable tableColumn={tableColumnApportion({ handleButtonClick, formActionType })} scroll={{ x: 1000 }} tableData={apportionList} pagination={false} />
+                            {parseFloat(totalApportionAmount) === parseFloat(totalReceivedAmount) && <p className={styles.marB20}>The entire paid amount has been apportioned. Cannot be apportioned further.</p>}
                             {/* <ListDataTable handleAdd={handleButtonClick} {...tableApportionProps} showAddButton={false} /> */}
                         </Col>
                     </Row>

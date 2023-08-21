@@ -12,6 +12,7 @@ import { validateRequiredSelectField } from 'utils/validation';
 import styles from 'components/common/Common.module.css';
 
 const { Search } = Input;
+const { Option } = Select;
 
 const AddEditFormMain = (props) => {
     const { formData, buttonData, setButtonData, partySegmentType, setPartySegment, handleChange, handleSearch, partyDetailForm, formActionType } = props;
@@ -33,9 +34,8 @@ const AddEditFormMain = (props) => {
 
     const selectProps = {
         optionFilterProp: 'children',
-        showSearch: false,
+        showSearch: true,
         allowClear: true,
-        className: styles.headerSelectField,
     };
 
     const handleCustomer = (value) => {
@@ -53,7 +53,13 @@ const AddEditFormMain = (props) => {
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                     <Form.Item initialValue={formData?.partySegment} label="Party Segment" name="partySegment" rules={[validateRequiredSelectField('Party Segment')]}>
-                        <Select {...selectProps} placeholder={preparePlaceholderSelect('Party Segment')} allowClear onChange={handleCustomer} options={partySegmentType} fieldNames={{ label: 'value', value: 'key' }} disabled={!formActionType?.addMode}></Select>
+                        <Select {...selectProps} placeholder={preparePlaceholderSelect('Party Segment')} onChange={handleCustomer} disabled={!formActionType?.addMode}>
+                            {partySegmentType?.map((item) => (
+                                <Option key={'dv' + item.key} value={item.key}>
+                                    {item.value}
+                                </Option>
+                            ))}
+                        </Select>
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>

@@ -18,7 +18,7 @@ import styles from 'components/common/Common.module.css';
 const { Search } = Input;
 
 export const ApportionDetailForm = (props) => {
-    const { handleCancel, handleAddApportion, apportionTableFormData, showApportionForm, apportionForm, documentAmount, setDocumentAmount, receivedAmount, setReceivedAmount, documentDescriptionList, handleDocumentNumberSearch } = props;
+    const { handleCancel, handleAddApportion, apportionTableFormData, showApportionForm, apportionForm, documentAmount, setDocumentAmount, receivedAmount, setReceivedAmount, documentDescriptionList, handleDocumentNumberSearch, totalApportionAmount, totalReceivedAmount, apportionList } = props;
 
     const [apportionedAmount, setApportionedAmount] = useState();
     const [writeOffAmount, setWriteOffAmount] = useState();
@@ -43,9 +43,13 @@ export const ApportionDetailForm = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [apportionTableFormData]);
 
-    // useEffect(() => {
-    //     setApportionedAmount(apportionedAmount);
-    // }, [writeOffAmount]);
+    const checkDuplicateValidator = (ObjValue, value) => {
+        if (apportionList.length > 0) {
+            const filterItem = apportionList?.filter((item) => item?.documentNumber === value);
+            if (!filterItem?.length) return Promise.resolve();
+            else return Promise.reject(new Error('Document Number already exist.'));
+        }
+    };
 
     const onFinishFailed = () => {
         return;
@@ -57,17 +61,19 @@ export const ApportionDetailForm = (props) => {
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                     <Form.Item label="Document Type" name="documentType" rules={[validateRequiredSelectField('Document Type')]}>
                         {customSelectBox({ data: documentDescriptionList, placeholder: preparePlaceholderSelect('Document Type'), fieldNames: { key: 'documentCode', value: 'documentDescription' } })}
-                        {/* <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} showSearch>
-                            {documentDescriptionList?.map((item) => (
-                                <Option key={'dv' + item.documentCode} value={item.documentCode}>
-                                    {item.documentDescription}
-                                </Option>
-                            ))}
-                        </Select> */}
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                    <Form.Item label="Document Number" name="documentNumber" rules={[validateRequiredInputField('Document Number')]}>
+                    <Form.Item
+                        label="Document Number"
+                        name="documentNumber"
+                        rules={[
+                            validateRequiredInputField('Document Number'),
+                            {
+                                validator: checkDuplicateValidator,
+                            },
+                        ]}
+                    >
                         <Search allowClear onSearch={handleDocumentNumberSearch} placeholder={preparePlaceholderText('Document Number')} />
                     </Form.Item>
                 </Col>
@@ -96,7 +102,20 @@ export const ApportionDetailForm = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                            <Form.Item label="Apportioned Amount" name="apportionedAmount" rules={[validateRequiredInputField('Apportion Amount'), validateNumberWithTwoDecimalPlaces('Apportioned Amount'), { validator: () => compareAmountValidator(parseFloat(documentAmount) - parseFloat(receivedAmount) - parseFloat(writeOffAmount), parseFloat(apportionedAmount), 'Apportion Amount') }]}>
+                            <Form.Item
+                                label="Apportioned Amount"
+                                name="apportionedAmount"
+                                rules={[
+                                    validateRequiredInputField('Apportion Amount'),
+                                    validateNumberWithTwoDecimalPlaces('Apportioned Amount'),
+                                    {
+                                        validator: () => compareAmountValidator(parseFloat(documentAmount) - parseFloat(receivedAmount) - parseFloat(writeOffAmount), parseFloat(apportionedAmount), 'Apportion Amount'),
+                                    },
+                                    {
+                                        validator: () => compareAmountValidator(parseFloat(totalReceivedAmount), parseFloat(apportionedAmount) + parseFloat(totalApportionAmount), 'Total Apportion Amount'),
+                                    },
+                                ]}
+                            >
                                 <Input onChange={(e) => setApportionedAmount(e.target.value)} placeholder={preparePlaceholderText('apportioned amount')} />
                             </Form.Item>
                             {/* { validator: () => compareAmountValidator(documentAmount, totalApportionAmount + parseFloat(apportionedAmount), 'Total Amount') */}

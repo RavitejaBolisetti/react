@@ -61,7 +61,7 @@ const mapDispatchToProps = (dispatch) => ({
 const ReceiptDetailMasterBase = (props) => {
     const { userId, receipt, setReceipt, section, typeData, receiptType, paymentModeType, buttonData, setButtonData, fetchList, handleCancelFormEdit, isDataLoaded, isLoading, listShowLoading, fetchPartyDetail, partyDetailData, receiptOnFinish } = props;
     const { form, formActionType, salesConsultantLov, NEXT_ACTION, handleButtonClick } = props;
-    const { requestPayload, setRequestPayload, receiptDetailData, setLastSection } = props;
+    const { requestPayload, setRequestPayload, receiptDetailData, setLastSection, totalReceivedAmount, setTotalReceivedAmount } = props;
     const [paymentForm] = Form.useForm();
     const [receiptForm] = Form.useForm();
     const [openAccordian, setOpenAccordian] = useState('');
@@ -85,10 +85,11 @@ const ReceiptDetailMasterBase = (props) => {
     }, [partyDetailData]);
 
     useEffect(() => {
-        if (receiptDetailData.receiptsDetails) {
-            setPaymentDataList(receiptDetailData.receiptsDetails.paymentDetails);
+        if (receiptDetailData?.receiptsDetails) {
+            setPaymentDataList(receiptDetailData?.receiptsDetails?.paymentDetails);
             setRequestPayload({ ...requestPayload, receiptsDetails: receiptDetailData.receiptsDetails });
-            setReceipt(receiptDetailData.receiptsDetails?.receiptType);
+            setReceipt(receiptDetailData?.receiptsDetails?.receiptType);
+            setTotalReceivedAmount(receiptDetailData?.receiptsDetails?.totalReceivedAmount);
             receiptDetailData?.receiptsDetails?.receiptType === ReceiptType?.ADVANCE?.key && !formActionType?.editMode && setButtonData({ ...buttonData, nextBtn: false, saveBtn: false });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -145,6 +146,7 @@ const ReceiptDetailMasterBase = (props) => {
                 setEditingListData({});
                 paymentForm.resetFields();
                 setButtonData({ ...buttonData, formBtnActive: true });
+                setTotalReceivedAmount(parseFloat(totalReceivedAmount) + parseFloat(value.receivedAmount));
             })
             .catch((err) => {
                 console.error('err', err);
@@ -152,12 +154,18 @@ const ReceiptDetailMasterBase = (props) => {
     };
 
     const onFinish = () => {
+        if (!receiptForm.getFieldValue('receiptDate') || !receiptForm.getFieldValue('receiptType')) {
+            setOpenAccordian([1]);
+
+            setTimeout(() => {
+                receiptForm.validateFields();
+            }, 1000);
+
+            return;
+        }
         receiptForm.validateFields().then((data) => {
             let finaldata = { ...data, paymentDetails: paymentDataList };
-            // setRequestPayload((requestPayload) => ({
-            //     ...requestPayload,
-            //     receiptsDetails: finaldata,
-            // }));
+            console.log('🚀 ~ file: ReceiptDetailMaster.js:159 ~ receiptForm.validateFields ~ finaldata:', finaldata);
 
             if (receipt === ReceiptType?.ADVANCE?.key) {
                 requestPayload && receiptOnFinish(finaldata);
@@ -219,6 +227,7 @@ const ReceiptDetailMasterBase = (props) => {
         handleFormValueChange,
         setIsListEditing,
         isListEditing,
+        totalReceivedAmount,
 
         formActionType,
         handleSavepaymenttForm,
@@ -249,6 +258,7 @@ const ReceiptDetailMasterBase = (props) => {
         formActionType,
         buttonData,
         handleFormValueChange,
+        totalReceivedAmount,
     };
 
     return (
