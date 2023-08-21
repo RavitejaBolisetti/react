@@ -74,12 +74,15 @@ const mapDispatchToProps = (dispatch) => ({
 
             fetchModelList: ProductModelGroupsDataActions.fetchList,
             listModelShowLoading: ProductModelGroupsDataActions.listShowLoading,
+            resetProductData: ProductModelGroupsDataActions.reset,
 
             fetchAccountCategoryLov: AccountCategoryLovdataActions.fetchFilteredList,
             listAccountCategoryLovLoading: AccountCategoryLovdataActions.listShowLoading,
+            resetAccountCategory: AccountCategoryLovdataActions.reset,
 
             fetchTaxCategoryLov: TaxChargesLovdataActions.fetchFilteredList,
             listTaxCategoryLovLoading: TaxChargesLovdataActions.listShowLoading,
+            resetTax: TaxChargesLovdataActions.reset,
 
             showGlobalNotification,
         },
@@ -96,7 +99,7 @@ export const VehicleModelAndTaxChargersCategoryMain = (props) => {
     const { isTaxCategoryDataLoaded, TaxCategoryData } = props;
     const { fetchList, listShowLoading, fetchModelList, listModelShowLoading, showGlobalNotification, saveData, fetchAccountCategoryLov, fetchTaxCategoryLov, listTaxCategoryLovLoading } = props;
 
-    const { resetData } = props;
+    const { resetData, resetProductData, resetAccountCategory, resetTax } = props;
 
     const [form] = Form.useForm();
 
@@ -204,6 +207,16 @@ export const VehicleModelAndTaxChargersCategoryMain = (props) => {
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isProductHierarchyDataLoaded, isAccountDataLoaded, isTaxCategoryDataLoaded]);
+    useEffect(() => {
+        return () => {
+            resetData();
+            resetProductData();
+            resetAccountCategory();
+            resetTax();
+        };
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     useEffect(() => {
         if (userId && refershData) {
