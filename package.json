@@ -43,15 +43,14 @@
         "web-vitals": "^2.1.4"
     },
     "scripts": {
-        "start": "react-scripts start",
-        "build": "react-scripts build",
+        "start": "react-scripts --max_old_space_size=4096 start",
+        "build": "node --max-old-space-size=4096 node_modules/.bin/react-scripts build",
         "test": "cross-env BABEL_ENV=test jest",
         "watch-tests": "cross-env BABEL_ENV=test jest --watch",
         "eject": "react-scripts eject",
         "clear_jest": "jest --clearCache",
         "test:coverage": "cross-env BABEL_ENV=test jest --coverage",
-        "sonar": "ts-node sonar-scanner.ts"
-        
+        "sonar": "ts-node sonar-scanner.ts"        
     },
     "eslintConfig": {
         "extends": [
