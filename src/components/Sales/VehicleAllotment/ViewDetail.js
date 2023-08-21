@@ -31,7 +31,6 @@ const ViewDetailMain = (props) => {
     };
 
     useEffect(() => {
-        console.log('AVYUKT');
         setButtonData(formData?.allotmentStatus === VEHICLE_TYPE.UNALLOTED.desc ? { cancelBtn: true, allotBtn: true } : { cancelBtn: true, unAllot: true });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -97,8 +96,8 @@ const ViewDetailMain = (props) => {
                     <Divider className={styles.marT20} />
                     <h4>Allot OTF</h4>
                     <Card>
-                        {/* {formData?.allotmentStatus === VEHICLE_TYPE.UNALLOTED.desc && ( */}
-                        {formData?.allotmentStatus === VEHICLE_TYPE.ALLOTED.desc && (
+                        {formData?.allotmentStatus === VEHICLE_TYPE.UNALLOTED.desc && (
+                            // {formData?.allotmentStatus === VEHICLE_TYPE.ALLOTED.desc && (
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.marB20}>
                                     <SearchBox {...serachBoxProps} />
