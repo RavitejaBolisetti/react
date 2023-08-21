@@ -5,12 +5,16 @@ import FinananceDetailsMaster from '@components/Sales/OTF/FinananceDetails/Finan
 import customRender from '@utils/test-utils';
 import { Form } from 'antd';
 import createMockStore from '__mocks__/store';
-
+afterEach(() => {
+    jest.restoreAllMocks();
+  }); 
 const FormWrapper = (props) => {
     const [form] = Form.useForm();
     return <FinananceDetailsMaster form={form} {...props} />;
 };
-
+afterEach(() => {
+    jest.restoreAllMocks();
+  }); 
 const props = {
     saveData: jest.fn(),
     resetData: jest.fn(),

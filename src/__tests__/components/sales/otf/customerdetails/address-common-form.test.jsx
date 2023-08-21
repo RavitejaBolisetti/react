@@ -7,7 +7,9 @@ import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
 import { screen, fireEvent } from '@testing-library/react';
 import { AddressCommonForm } from '@components/Sales/OTF/CustomerDetails/AddressCommonForm';
-
+afterEach(() => {
+    jest.restoreAllMocks();
+  }); 
 describe('address common form Components', () => {
     it('should render form components', () => {
         customRender(<AddressCommonForm />);

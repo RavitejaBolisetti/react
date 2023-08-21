@@ -2,7 +2,9 @@ import React from 'react';
 import { fireEvent, screen } from '@testing-library/react';
 import { InsuranceDetailsMaster } from '@components/Sales/OTF/InsuranceDetails/InsuranceDetailsMaster';
 import customRender from '@utils/test-utils';
-
+afterEach(() => {
+    jest.restoreAllMocks();
+  }); 
 const props = {
     insuranceData: [],
     onCloseAction: jest.fn(),

@@ -5,7 +5,9 @@ import { Provider } from 'react-redux';
 import { screen, fireEvent } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
 import { AddOnDetailsMaster } from 'components/Sales/OTF/AddOnDetails';
-
+afterEach(() => {
+    jest.restoreAllMocks();
+  }); 
 describe('Add On Details Component', () => {
     it('should render add on details components', () => {
         customRender(<AddOnDetailsMaster />);

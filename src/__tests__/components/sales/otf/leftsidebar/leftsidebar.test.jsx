@@ -7,7 +7,9 @@ import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
 import { screen } from '@testing-library/react';
 import  LeftSidebar  from '@components/Sales/OTF/LeftSidebar/LeftSidebar';
-
+afterEach(() => {
+    jest.restoreAllMocks();
+  }); 
 describe('Left side bar Components', () => {
     it('it should render leftsidebar components', () => {
         customRender(<LeftSidebar />);

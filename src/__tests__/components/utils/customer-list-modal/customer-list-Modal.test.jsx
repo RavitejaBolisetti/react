@@ -11,7 +11,9 @@ import { screen, fireEvent } from "@testing-library/react";
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
 
-
+afterEach(() => {
+    jest.restoreAllMocks();
+  });
 describe("CustomerListModal components", () => {
     const tableProps = {
         srl: false,

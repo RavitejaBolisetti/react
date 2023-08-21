@@ -4,7 +4,9 @@ import { OtfDetailsMaster } from '@components/Sales/OTF/OtfDetails/OtfDetailsMas
 import customRender from '@utils/test-utils';
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
-
+afterEach(() => {
+    jest.restoreAllMocks();
+  }); 
 const props = {
     formActionType: { addMode: false, editMode: false, viewMode: true },
     listConsultantShowLoading: jest.fn(),

@@ -11,7 +11,9 @@ import { Provider } from 'react-redux';
 import createMockStore from '__mocks__/store';
 import { Form } from 'antd';
 
-
+afterEach(() => {
+    jest.restoreAllMocks();
+  }); 
 const FormWrapper = (props) => {
     const [form] = Form.useForm();
     return <CustomerDetailsMaster form={form} {...props} />;

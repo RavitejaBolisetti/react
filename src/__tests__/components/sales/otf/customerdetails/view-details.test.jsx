@@ -9,7 +9,9 @@ import { screen, fireEvent } from '@testing-library/react';
 import { ViewDetail } from '@components/Sales/OTF/CustomerDetails/ViewDetail';
 
 const bookingCustomer = true;
-
+afterEach(() => {
+    jest.restoreAllMocks();
+  }); 
 describe('view details Components', () => {
     it('should render list details components', () => {
         customRender(<ViewDetail formData={bookingCustomer} />);

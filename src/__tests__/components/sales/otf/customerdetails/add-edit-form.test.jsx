@@ -11,7 +11,9 @@ import { AddEditForm } from '@components/Sales/OTF/CustomerDetails/AddEditForm';
 
 const setActiveKey = true;
 const bookingCustomer = true;
-
+afterEach(() => {
+    jest.restoreAllMocks();
+  }); 
 describe('Add Edit Form Components', () => {
     it('should Add Edit Form Component', () => {
         customRender(<AddEditForm />);

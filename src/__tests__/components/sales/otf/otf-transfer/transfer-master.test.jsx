@@ -5,7 +5,9 @@ import { TransferMaster } from '@components/Sales/OTF/OTFTransfer/TransferMaster
 import customRender from '@utils/test-utils';
 import { Form } from 'antd';
 import createMockStore from '__mocks__/store';
-
+afterEach(() => {
+    jest.restoreAllMocks();
+  }); 
 beforeEach(() => {
     jest.clearAllMocks()
 })

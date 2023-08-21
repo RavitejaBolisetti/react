@@ -9,7 +9,9 @@ import {ChangeHistory} from "@components/Sales/OTF/ChangeHistory/otfChangeHistor
 import { OTFMainConatiner } from '@components/Sales/OTF/OTFMainConatiner';
 import { AdvancedSearch } from 'components/Sales/OTF/AdvancedSearch';
 import { Form } from 'antd';
-
+afterEach(() => {
+  jest.restoreAllMocks();
+});
 const FormWrapper = (props) => {
     const [form] = Form.useForm();
     return <OTFMainConatiner form={form} {...props} />

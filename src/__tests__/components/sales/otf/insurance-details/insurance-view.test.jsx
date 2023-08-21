@@ -2,7 +2,9 @@ import React from 'react';
 import { screen } from '@testing-library/react';
 import { ViewDetail } from '@components/Sales/OTF/InsuranceDetails/ViewDetail';
 import customRender from '@utils/test-utils';
-
+afterEach(() => {
+    jest.restoreAllMocks();
+  }); 
 describe('OTF Insurance view Details render', () => {
     it('should render view details page', async () => {
         customRender(<ViewDetail />);

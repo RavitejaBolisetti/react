@@ -4,7 +4,9 @@ import { InvoiceDetailsMaster } from '@components/Sales/OTF/InvoiceDetails/Invoi
 import customRender from '@utils/test-utils';
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
-
+afterEach(() => {
+    jest.restoreAllMocks();
+  }); 
 const props = {
     invoiceData: [],
     fetchList: jest.fn(),

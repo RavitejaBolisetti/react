@@ -2,7 +2,9 @@ import { Form } from 'antd';
 import { fireEvent, screen } from '@testing-library/react';
 import customRender from '@utils/test-utils';
 import { OptionServicesForm } from '@components/Sales/OTF/VehicleDetails/optionServicesForm';
-
+afterEach(() => {
+    jest.restoreAllMocks();
+  }); 
 const typeDataMock = {
     OPT_SRV: [
         { key: 'FSTG', value: 'FasT Tag' },

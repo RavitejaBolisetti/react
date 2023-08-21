@@ -2,7 +2,9 @@ import React from 'react';
 import { fireEvent, screen } from '@testing-library/react';
 import { ViewDetail } from '@components/Sales/OTF/VehicleDetails/ViewDetail';
 import customRender from '@utils/test-utils';
-
+afterEach(() => {
+    jest.restoreAllMocks();
+  });
 const props = {
     formData: {},
     isLoading: false,

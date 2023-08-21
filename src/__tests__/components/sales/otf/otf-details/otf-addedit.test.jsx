@@ -10,7 +10,9 @@ const props = {
         loyaltyScheme: 1,
     },
 };
-
+afterEach(() => {
+    jest.restoreAllMocks();
+  }); 
 describe('AddEdit Component render', () => {
     it('should render addedit page', async () => {
         customRender(<AddEditForm {...props} typeData={('SALE_TYP', 'PRC_TYP')} />);

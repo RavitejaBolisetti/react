@@ -1,7 +1,9 @@
 import React from 'react';
 import customRender from '@utils/test-utils';
 import { taxDetailsColumn, optionalServicesColumns } from '@components/Sales/OTF/VehicleDetails/tableColumn';
-
+afterEach(() => {
+    jest.restoreAllMocks();
+  });
 describe('tableColumnInvoice', () => {
     it('renders invoice columns correctly', () => {
         const columns = taxDetailsColumn;

@@ -5,7 +5,9 @@ import { LoyaltySchemeMaster } from '@components/Sales/OTF/LoyaltyScheme/Loyalty
 import customRender from '@utils/test-utils';
 import { Form } from 'antd';
 import createMockStore from '__mocks__/store';
-
+afterEach(() => {
+    jest.restoreAllMocks();
+  }); 
 const FormWrapper = (props) => {
     const [form] = Form.useForm();
     return <LoyaltySchemeMaster form={form} {...props} />;

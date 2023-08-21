@@ -7,7 +7,9 @@ import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
 import { screen } from '@testing-library/react';
 import OTFDetailCard  from '@components/Sales/OTF/LeftSidebar/OTFDetailCard';
-
+afterEach(() => {
+    jest.restoreAllMocks();
+  }); 
 describe('OTF detail card Components', () => {
     it('it should render OTF detailcard components', () => {
         customRender(<OTFDetailCard />);

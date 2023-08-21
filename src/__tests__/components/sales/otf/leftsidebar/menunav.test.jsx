@@ -7,7 +7,9 @@ import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
 import { screen, fireEvent } from '@testing-library/react';
 import  MenuNav  from '@components/Sales/OTF/LeftSidebar/MenuNav';
-
+afterEach(() => {
+    jest.restoreAllMocks();
+  }); 
 describe('Menu test Components', () => {
     it('it should render menunav components', () => {
         customRender(<MenuNav setCurrentSection={jest.fn()}/>);
