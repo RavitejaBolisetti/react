@@ -57,13 +57,12 @@
             "react-app",
             "react-app/jest"
         ],
-        "jest": {
             "silenceWarnings": true,
             "silentWarn": true,
             "preset": "ts-jest",
             "nodeOptions": "--max-old-space-size=4096",
             "errorOnDeprecated": true
-          }
+
     },
     "browserslist": {
         "production": [
