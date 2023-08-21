@@ -15,7 +15,7 @@ import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 
 
 import { ListDataTable } from 'utils/ListDataTable';
 import { getCodeValue } from 'utils/getCodeValue';
-import { monthDateFormat, convertDate } from 'utils/formatDateTime';
+import { monthDateFormat, convertDateTimedayjs } from 'utils/formatDateTime';
 import { CreditDebitNoteMainContainer } from './CreditDebitNoteMainContainer';
 import { AdvancedSearch } from './AdvancedSearch';
 import { showGlobalNotification } from 'store/actions/notification';
@@ -138,7 +138,7 @@ export const CreditDebitNoteMasterBase = (props) => {
     }, [creditDebitData, isDetailLoaded, formActionType?.addMode]);
 
     const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
         searchForm.resetFields();
         setShowDataLoading(false);
@@ -179,7 +179,7 @@ export const CreditDebitNoteMasterBase = (props) => {
                 key: 'partySegment',
                 title: 'Party Segment',
                 value: filterString?.partySegment,
-                name: getCodeValue(typeData[PARAM_MASTER?.PARTY_CATEG?.id], filterString?.partySegment),
+                name: filterString?.partySegment && getCodeValue(typeData[PARAM_MASTER?.PARTY_CATEG?.id], filterString?.partySegment),
                 canRemove: true,
                 filter: true,
             },
@@ -188,7 +188,7 @@ export const CreditDebitNoteMasterBase = (props) => {
                 key: 'fromDate',
                 title: 'Start Date',
                 value: filterString?.fromDate,
-                name: convertDate(filterString?.fromDate, monthDateFormat),
+                name: convertDateTimedayjs(filterString?.fromDate, monthDateFormat, 'fromData'),
                 canRemove: true,
                 filter: true,
             },
@@ -196,8 +196,7 @@ export const CreditDebitNoteMasterBase = (props) => {
                 key: 'toDate',
                 title: 'End Date',
                 value: filterString?.toDate,
-                name: convertDate(filterString?.toDate, monthDateFormat),
-
+                name: convertDateTimedayjs(filterString?.toDate, monthDateFormat, 'toDate'),
                 canRemove: true,
                 filter: true,
             },
@@ -287,8 +286,8 @@ export const CreditDebitNoteMasterBase = (props) => {
     const handleResetFilter = (e) => {
         if (filterString) {
             setShowDataLoading(true);
+            setFilterString();
         }
-        setFilterString();
         advanceFilterForm.resetFields();
     };
 
@@ -373,8 +372,6 @@ export const CreditDebitNoteMasterBase = (props) => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
 
-    
-
     const onCloseAction = () => {
         form.resetFields();
         form.setFieldsValue();
@@ -401,6 +398,9 @@ export const CreditDebitNoteMasterBase = (props) => {
         if (key === 'searchParam') {
             const { searchType, searchParam, ...rest } = filterString;
             setFilterString({ ...rest });
+        } else if (key === 'fromDate' || key === 'toDate') {
+            setFilterString();
+            advanceFilterForm.resetFields();
         } else {
             const { [key]: names, ...rest } = filterString;
             setFilterString({ ...rest });
@@ -422,7 +422,7 @@ export const CreditDebitNoteMasterBase = (props) => {
         title,
         data,
         typeData,
-        
+
         searchForm,
         onFinishSearch,
         handleResetFilter,
