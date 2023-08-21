@@ -77,7 +77,7 @@ export const AdvancedSearchFrom = (props) => {
             </Row>
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Form.Item name="searchParam" label="Purchase Order Number" initialValue={filterString?.searchParam}>
+                    <Form.Item name="purchaseOrderNumber" label="Purchase Order Number" initialValue={filterString?.purchaseOrderNumber}>
                         <Input maxLength={50} placeholder={preparePlaceholderText('Purchase Order Number')} />
                     </Form.Item>
                 </Col>

@@ -23,6 +23,7 @@ export default function AppliedAdvanceFilter(props) {
         filterString,
         setFilterString,
         placeholder: 'Search By PO Number',
+        singleFieldKey:'purchaseOrderNumber'
     };
     return (
         <>

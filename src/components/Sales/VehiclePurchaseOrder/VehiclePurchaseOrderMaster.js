@@ -134,22 +134,6 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
     const extraParams = useMemo(() => {
         return [
             {
-                key: 'searchType',
-                title: 'Type',
-                value: 'purchaseOrderNumber',
-                name: 'Purchase Order Number',
-                canRemove: false,
-                filter: false,
-            },
-            {
-                key: 'searchParam',
-                title: 'Value',
-                value: filterString?.searchParam,
-                name: filterString?.searchParam,
-                canRemove: true,
-                filter: true,
-            },
-            {
                 key: 'fromDate',
                 title: 'Start Date',
                 value: filterString?.fromDate,
