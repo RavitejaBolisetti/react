@@ -5,10 +5,8 @@
  */
 import React, { useState, useEffect } from 'react';
 import { Card, Descriptions, Col, Row, Divider } from 'antd';
-import styles from 'components/common/Common.module.css';
-import style from 'components/utils/SearchBox/SearchBox.module.css';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
-import { getCodeValue } from 'utils/getCodeValue';
+
 import { DATA_TYPE } from 'constants/dataType';
 import { withDrawer } from 'components/withDrawer';
 import { VehicleDetailFormButton } from 'components/Sales/VehicleDetail/VehicleDetailFormButton';
@@ -18,10 +16,12 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import { tableColumnSearchOTF } from './tableColumnSearchOTF';
 import { VEHICLE_TYPE } from 'constants/VehicleType';
 
+import styles from 'components/common/Common.module.css';
+
 const ViewDetailMain = (props) => {
-    const { userId, formData, isLoading, typeData, setFilterStringOTFSearch, searchForm, tableData } = props;
+    const { formData, isLoading, typeData, setFilterStringOTFSearch, searchForm, tableData } = props;
     const { handleButtonClick, buttonData, setButtonData, onCloseAction, setSelectedOrderOTFDetails } = props;
-    const [ filterString, setFilterString ] = useState('');
+    const [filterString, setFilterString] = useState('');
 
     const viewProps = {
         bordered: false,
@@ -31,21 +31,22 @@ const ViewDetailMain = (props) => {
     };
 
     useEffect(() => {
-        console.log('AVYUKT')
-        setButtonData(formData?.allotmentStatus === VEHICLE_TYPE.UNALLOTED.desc ? ({cancelBtn: true, allotBtn: true}) : ({cancelBtn: true, unAllot:true}) )
+        console.log('AVYUKT');
+        setButtonData(formData?.allotmentStatus === VEHICLE_TYPE.UNALLOTED.desc ? { cancelBtn: true, allotBtn: true } : { cancelBtn: true, unAllot: true });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
-        setFilterStringOTFSearch({...filterString});
+        setFilterStringOTFSearch({ ...filterString });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString]);
 
     const serachBoxProps = {
         searchForm,
         filterString,
-        optionType: typeData?.[PARAM_MASTER.OTF_SER.id].filter(searchType => searchType.key !== 'mobileNumber'),
+        optionType: typeData?.[PARAM_MASTER.OTF_SER.id].filter((searchType) => searchType.key !== 'mobileNumber'),
         setFilterString,
+        selectWide: true,
     };
 
     const buttonProps = {
@@ -57,21 +58,25 @@ const ViewDetailMain = (props) => {
     };
 
     const rowSelection = {
+        type: 'checkbox',
         onChange: (selectedRowKeys, selectedRows) => {
-            setSelectedOrderOTFDetails(selectedRows[0]);
+            console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+            setSelectedOrderOTFDetails(selectedRows);
         },
-        getCheckboxProps: (record) => ({}),
+        getCheckboxProps: () => ({}),
     };
 
     const tableProps = {
-        tableColumn : tableColumnSearchOTF(handleButtonClick),
-        tableData: tableData || [formData?.vehicleOTFDetails] || [],
-        pagination: false,
-        dynamicPagination: false,
         srl: false,
+        rowKey: 'otfNumber',
         rowSelection: {
-          ...rowSelection,
+            ...rowSelection,
         },
+        pagination: false,
+        tableColumn: tableColumnSearchOTF(handleButtonClick),
+
+        render: (text) => convertDateMonthYear(text),
+        tableData: tableData || [formData?.vehicleOTFDetails] || [],
     };
 
     return (
@@ -94,13 +99,14 @@ const ViewDetailMain = (props) => {
                     <Divider className={styles.marT20} />
                     <h4>Allot OTF</h4>
                     <Card>
-                        {formData?.allotmentStatus === VEHICLE_TYPE.UNALLOTED.desc && 
+                        {/* {formData?.allotmentStatus === VEHICLE_TYPE.UNALLOTED.desc && ( */}
+                        {formData?.allotmentStatus === VEHICLE_TYPE.ALLOTED.desc && (
                             <Row gutter={20}>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={`${styles.marB20} ${style.viewAllotment}`}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.marB20}>
                                     <SearchBox {...serachBoxProps} />
                                 </Col>
                             </Row>
-                        }
+                        )}
                         <DataTable {...tableProps} />
                     </Card>
                 </Col>
