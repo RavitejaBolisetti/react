@@ -72,10 +72,11 @@ const mapDispatchToProps = (dispatch) => ({
             listShowLoading: productHierarchyDataActions.listShowLoading,
             changeHistoryModelOpen: productHierarchyDataActions.changeHistoryModelOpen,
             setSelectedOrganizationId: productHierarchyDataActions.setSelectedOrganizationId,
-            resetData: productHierarchyDataActions.resetData,
+
             cardBtnDisableAction: productHierarchyDataActions.cardBtnDisableAction,
             fetchListHierarchyAttributeName: productHierarchyDataActions.fetchAttributeNameList,
             listAttibuteShowLoading: productHierarchyDataActions.listShowLoading,
+            resetData: productHierarchyDataActions.resetData,
 
             fetchOrgList: manufacturerOrgHierarchyDataActions.fetchList,
 
@@ -143,6 +144,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
 
     useEffect(() => {
         if (organizationId && userId) {
+            resetData();
             fetchList({ setIsLoading: listShowLoading, userId, onCloseAction, id: organizationId, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps

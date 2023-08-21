@@ -67,20 +67,21 @@ const SupportingDocumentBase = (props) => {
 
     const { VehicelReceiptChecklistOnfinish } = props;
 
+    const { fileList, setFileList } = props;
+
     const { userId, showGlobalNotification, section, listShowLoading, typeData, supportingData, fetchViewDocument } = props;
     const { buttonData, setButtonData, formActionType, handleFormValueChange } = props;
     const { viewDocument, viewListShowLoading, downloadFile } = props;
 
-    const { payload, setPayload } = props;
+    const { payload, setPayload, deletedUpload, setdeletedUpload } = props;
 
     const [uploadedFile, setUploadedFile] = useState();
-    const [deletedUpload, setdeletedUpload] = useState([]);
     const [viewSupportingData, setviewSupportingData] = useState([]);
     const [uploadedFileList, setUploadedFileList] = useState();
     const [emptyList, setEmptyList] = useState(true);
 
     const [supportingDataView, setSupportingDataView] = useState();
-    const [fileList, setFileList] = useState([]);
+
     const [uploadedFileName, setUploadedFileName] = useState('');
     const [mandatoryFields, setMandatoryFields] = useState(false);
 
@@ -90,8 +91,13 @@ const SupportingDocumentBase = (props) => {
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
     useEffect(() => {
-        if ((supportingData && supportingData?.length) || payload?.length) {
-            setviewSupportingData([...payload, ...supportingData]);
+        if (supportingData && supportingData?.length) {
+            const showSupportingdata = supportingData?.filter((element, index) => {
+                const found = deletedUpload?.find((item, index) => item?.documentId === element?.documentId);
+
+                if (!found) return element;
+            });
+            setviewSupportingData([...showSupportingdata]);
         }
     }, [supportingData]);
 
@@ -136,9 +142,7 @@ const SupportingDocumentBase = (props) => {
     };
 
     const onFinish = () => {
-        // const title = LANGUAGE_EN.GENERAL.CUSTOMER_UPDATE.TITLE;
-        // const message = LANGUAGE_EN.GENERAL.CUSTOMER_UPDATE.MESSAGE;
-        VehicelReceiptChecklistOnfinish({ type: 'document', data: [...payload, ...deletedUpload] });
+        VehicelReceiptChecklistOnfinish();
     };
 
     const viewProps = {

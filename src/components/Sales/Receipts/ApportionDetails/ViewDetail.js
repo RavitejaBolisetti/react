@@ -10,11 +10,12 @@ import styles from 'components/common/Common.module.css';
 import { DataTable } from 'utils/dataTable';
 
 import { tableColumnApportion } from './tableColumnApportion';
+import { QUERY_BUTTONS_CONSTANTS } from '../QueryButtons';
 
 const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
-    const { formActionType, tableData, bindCodeValue } = props;
+    const { formActionType, tableData, bindCodeValue, receiptStatus } = props;
 
     return (
         <Card className={styles.drawerCardView}>
@@ -27,7 +28,7 @@ const ViewDetailMain = (props) => {
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <DataTable tableColumn={tableColumnApportion({ formActionType, bindCodeValue })} scroll={{ x: 1000 }} tableData={tableData} pagination={false} />
-                    {/* <ListDataTable {...viewProps} showAddButton={false} /> */}
+                    {receiptStatus === QUERY_BUTTONS_CONSTANTS.APPORTION.key && <p className={styles.marB20}>The entire paid amount has been apportioned. Cannot be apportioned further.</p>}
                 </Col>
             </Row>
         </Card>

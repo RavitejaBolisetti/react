@@ -72,14 +72,6 @@ export const InvoiceDetailsMasterBase = (props) => {
         setactiveKey([]);
         setactiveKey([values]);
     };
-    const extraParams = [
-        {
-            key: 'otfNumber',
-            title: 'otfNumber',
-            value: selectedOrderId,
-            name: 'OTF Number',
-        },
-    ];
 
     const errorAction = (message) => {
         // showGlobalNotification(message);
@@ -90,11 +82,20 @@ export const InvoiceDetailsMasterBase = (props) => {
     };
 
     useEffect(() => {
-        if (!isDataLoaded && userId) {
+        if (selectedOrderId && userId) {
+            const extraParams = [
+                {
+                    key: 'otfNumber',
+                    title: 'otfNumber',
+                    value: selectedOrderId,
+                    name: 'OTF Number',
+                },
+            ];
+
             fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, errorAction, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDataLoaded, userId]);
+    }, [selectedOrderId, userId]);
 
     const myProps = {
         ...props,

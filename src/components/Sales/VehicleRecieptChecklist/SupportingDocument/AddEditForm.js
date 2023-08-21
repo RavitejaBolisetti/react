@@ -13,25 +13,24 @@ import { UploadUtil } from 'utils/Upload';
 const { TextArea } = Input;
 
 const AddEditForm = (uploadProps) => {
+    const messageText = <>Click or drop your file here to Upload the Documents.</>;
     const { mandatoryFields } = uploadProps;
 
     return (
         <>
             <Row gutter={16}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item label="File Name" name="fileName" rules={mandatoryFields ? [validateRequiredInputField('fileName')] : ''} placeholder={preparePlaceholderSelect('fileName')}>
                         <Input placeholder={preparePlaceholderText('file name')} allowClear />
                     </Form.Item>
                 </Col>
-            </Row>
-            <Row gutter={16}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item label="Document Description" name="documentDescription" rules={mandatoryFields ? [validateRequiredInputField('document description')] : ''}>
-                        <TextArea placeholder={preparePlaceholderText('document description')} allowClear maxLength={50} />
+                        <TextArea style={{ height: '36px' }} placeholder={preparePlaceholderText('document description')} allowClear maxLength={50} />
                     </Form.Item>
                 </Col>
             </Row>
-            <UploadUtil {...uploadProps} />
+            <UploadUtil {...uploadProps} messageText={messageText} />
         </>
     );
 };

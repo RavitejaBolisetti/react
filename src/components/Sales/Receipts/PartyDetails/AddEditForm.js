@@ -5,17 +5,20 @@
  */
 import React, { useEffect } from 'react';
 import { Row, Col, Input, Form, Card, Divider, Select } from 'antd';
+import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
+
 import { validateRequiredSelectField } from 'utils/validation';
 
 import styles from 'components/common/Common.module.css';
 
 const { Search } = Input;
+const { Option } = Select;
 
 const AddEditFormMain = (props) => {
     const { formData, buttonData, setButtonData, partySegmentType, setPartySegment, handleChange, handleSearch, partyDetailForm, formActionType } = props;
-
+    const { isLoading } = props;
     useEffect(() => {
         partyDetailForm.setFieldsValue({
             ...formData,
@@ -33,9 +36,8 @@ const AddEditFormMain = (props) => {
 
     const selectProps = {
         optionFilterProp: 'children',
-        showSearch: false,
+        showSearch: true,
         allowClear: true,
-        className: styles.headerSelectField,
     };
 
     const handleCustomer = (value) => {
@@ -53,7 +55,13 @@ const AddEditFormMain = (props) => {
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                     <Form.Item initialValue={formData?.partySegment} label="Party Segment" name="partySegment" rules={[validateRequiredSelectField('Party Segment')]}>
-                        <Select {...selectProps} placeholder={preparePlaceholderSelect('Party Segment')} allowClear onChange={handleCustomer} options={partySegmentType} fieldNames={{ label: 'value', value: 'key' }} disabled={!formActionType?.addMode}></Select>
+                        <Select {...selectProps} placeholder={preparePlaceholderSelect('Party Segment')} onChange={handleCustomer} disabled={!formActionType?.addMode}>
+                            {partySegmentType?.map((item) => (
+                                <Option key={'dv' + item.key} value={item.key}>
+                                    {item.value}
+                                </Option>
+                            ))}
+                        </Select>
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
@@ -68,34 +76,34 @@ const AddEditFormMain = (props) => {
                     <Row gutter={20}>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item initialValue={formData?.partyName} label="Party Name" name="partyName">
-                                <Input placeholder={preparePlaceholderText('party name')} disabled={true} />
+                                {isLoading ? checkAndSetDefaultValue('-', isLoading) : <Input placeholder={preparePlaceholderText('party name')} disabled={true} />}
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item initialValue={formData?.address} label="Address" name="address">
-                                <Input placeholder={preparePlaceholderText('address')} disabled={true} />
+                                {isLoading ? checkAndSetDefaultValue('-', isLoading) : <Input placeholder={preparePlaceholderText('address')} disabled={true} />}
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item initialValue={formData?.city} label="City" name="city">
-                                <Input placeholder={preparePlaceholderText('city')} disabled={true} />
+                                {isLoading ? checkAndSetDefaultValue('-', isLoading) : <Input placeholder={preparePlaceholderText('city')} disabled={true} />}
                             </Form.Item>
                         </Col>
                     </Row>
                     <Row gutter={20}>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item initialValue={formData?.state} label="State" name="state">
-                                <Input placeholder={preparePlaceholderText('state')} disabled={true} />
+                                {isLoading ? checkAndSetDefaultValue('-', isLoading) : <Input placeholder={preparePlaceholderText('state')} disabled={true} />}
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item initialValue={formData?.mobileNumber} label="Phone" name="mobileNumber">
-                                <Input placeholder={preparePlaceholderText('phone')} disabled={true} />
+                                {isLoading ? checkAndSetDefaultValue('-', isLoading) : <Input placeholder={preparePlaceholderText('phone')} disabled={true} />}
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item initialValue={formData?.mitraType} label="Mitra Type" name="mitraType">
-                                <Input placeholder={preparePlaceholderText('mitra type')} disabled={true} />
+                                {isLoading ? checkAndSetDefaultValue('-', isLoading) : <Input placeholder={preparePlaceholderText('mitra type')} disabled={true} />}
                             </Form.Item>
                         </Col>
                     </Row>
