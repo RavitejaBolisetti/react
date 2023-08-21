@@ -31,8 +31,8 @@ const ViewRoleManagementMain = ({ formData, styles, menuTreeData, onTabChange, A
                     </Descriptions>
 
                     <Descriptions {...viewOneColProps}>
-                        <Descriptions.Item label="Role Description">{formData?.roleDesceription}</Descriptions.Item>
-                        <Descriptions.Item label="Status">{formData?.active === '1' ? 'Active' : 'InActive'}</Descriptions.Item>
+                        <Descriptions.Item label="Role Description">{formData?.roleDescription}</Descriptions.Item>
+                        <Descriptions.Item label="Status">{formData?.status ? 'Active' : 'InActive'}</Descriptions.Item>
                     </Descriptions>
                 </div>
                 <div className={styles.subTitleSec}>Application Access</div>

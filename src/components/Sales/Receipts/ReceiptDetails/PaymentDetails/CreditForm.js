@@ -7,7 +7,7 @@ import React from 'react';
 import { Input, Row, Col, Form } from 'antd';
 
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
-import { validationNumber, validationFieldLetterAndNumber, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
+import { validationFieldLetterAndNumber, validateNumberWithTwoDecimalPlaces, validateRequiredInputField } from 'utils/validation';
 
 const CreditFormBase = (props) => {
     const { formData } = props;
@@ -21,7 +21,7 @@ const CreditFormBase = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.receivedAmount} label="Receive Amount" name="receivedAmount" rules={[validationNumber('received amount')]}>
+                    <Form.Item initialValue={formData?.receivedAmount} label="Receive Amount" name="receivedAmount" rules={[validateRequiredInputField('received amount'), validateNumberWithTwoDecimalPlaces('received amount')]}>
                         <Input placeholder={preparePlaceholderText('received amount')} />
                     </Form.Item>
                 </Col>

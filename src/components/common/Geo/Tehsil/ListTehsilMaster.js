@@ -160,6 +160,7 @@ export const ListTehsilBase = (props) => {
         setFilterString({ countryCode: defaultCountry });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [defaultCountry]);
+
     useEffect(() => {
         if (isDataCountryLoaded && defaultCountry && isStateDataLoaded) {
             setFilterString({ countryCode: defaultCountry });
@@ -237,6 +238,26 @@ export const ListTehsilBase = (props) => {
         (name, type = 'value') =>
         (value) => {
             const filterValue = type === 'text' ? value.target.value : value;
+            if (!value) {
+                switch (name) {
+                    case 'countryCode': {
+                        setFilteredStateData();
+                        setFilteredDistrictData();
+                        advanceFilterForm.setFieldsValue({ stateCode: undefined });
+                        advanceFilterForm.setFieldsValue({ districtCode: undefined });
+                        break;
+                    }
+                    case 'stateCode': {
+                        setFilteredDistrictData();
+                        advanceFilterForm.setFieldsValue({ districtCode: undefined });
+                        break;
+                    }
+                    default: {
+                        break;
+                    }
+                }
+                return;
+            }
 
             if (name === 'countryCode') {
                 setFilteredStateData(stateData?.filter((i) => i?.parentKey === filterValue));
@@ -352,6 +373,8 @@ export const ListTehsilBase = (props) => {
         setAdvanceSearchVisible(false);
         advanceFilterForm.resetFields();
         // setFilteredDistrictData([]);
+        filterString?.countryCode && setFilteredStateData(stateData?.filter((i) => i?.parentKey === filterString?.countryCode));
+        filterString?.stateCode && setFilteredDistrictData(districtData?.filter((i) => i?.parentKey === filterString?.stateCode));
     };
 
     const handleResetFilter = () => {
@@ -441,6 +464,7 @@ export const ListTehsilBase = (props) => {
         handleButtonClick,
         advanceFilterProps,
         title,
+        tableData: searchData,
     };
     return (
         <>

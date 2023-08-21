@@ -8,7 +8,7 @@ import { Input, DatePicker, Row, Col, Form } from 'antd';
 
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { dateFormat } from 'utils/formatDateTime';
-import { validationNumber, validationFieldLetterAndNumber } from 'utils/validation';
+import { validationFieldLetterAndNumber, validateRequiredInputField, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
 
 const { Search } = Input;
 const NeftFormBase = (props) => {
@@ -18,7 +18,7 @@ const NeftFormBase = (props) => {
         <>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.receivedAmount} label="Receive Amount" name="receivedAmount" rules={[validationNumber('received amount')]}>
+                    <Form.Item initialValue={formData?.receivedAmount} label="Receive Amount" name="receivedAmount" rules={[validateRequiredInputField('received amount'), validateNumberWithTwoDecimalPlaces('received amount')]}>
                         <Input placeholder={preparePlaceholderText('received amount')} />
                     </Form.Item>
                 </Col>
@@ -45,7 +45,7 @@ const NeftFormBase = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.partyLocationCode}  label="Payment Bank Location" name="partyLocationCode">
+                    <Form.Item initialValue={formData?.partyLocationCode} label="Payment Bank Location" name="partyLocationCode">
                         <Input placeholder={preparePlaceholderText('payment bank location')} disabled={true} />
                     </Form.Item>
                 </Col>

@@ -11,6 +11,7 @@ import { Col, Form, Row } from 'antd';
 import { tableColumn } from './tableColumn';
 import VehicleReceiptFilter from './VehicleReceiptFilter';
 import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 'utils/btnVisiblity';
+import { convertDateTime, monthDateFormat } from 'utils/formatDateTime';
 
 import { VehicleReceiptMainConatiner } from './VehicleReceiptMainConatiner';
 import { ListDataTable } from 'utils/ListDataTable';
@@ -122,7 +123,7 @@ export const VehicleReceiptMasterBase = (props) => {
     const [formData, setFormData] = useState([]);
 
     const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
         searchForm.resetFields();
         setShowDataLoading(false);
@@ -139,19 +140,24 @@ export const VehicleReceiptMasterBase = (props) => {
                 key: 'searchType',
                 title: 'Type',
                 value: 'status',
-                name: 'status',
+                canRemove: false,
+                filter: false,
             },
             {
                 key: 'searchParam',
                 title: 'Value',
                 value: receiptType,
                 name: typeData?.[PARAM_MASTER?.GRN_STATS?.id]?.find((i) => i?.key === receiptType)?.value,
+                canRemove: false,
+                filter: false,
             },
             {
                 key: 'grnNumber',
                 title: 'grnNumber',
                 value: searchValue,
-                name: 'grnNumber',
+                name: searchValue,
+                canRemove: false,
+                filter: false,
             },
             {
                 key: 'pageNumber',
@@ -171,7 +177,7 @@ export const VehicleReceiptMasterBase = (props) => {
                 key: 'grnFromDate',
                 title: 'Start Date',
                 value: filterString?.grnFromDate,
-                name: filterString?.grnFromDate,
+                name: filterString?.grnFromDate ? convertDateTime(filterString?.grnFromDate, monthDateFormat) : '',
                 canRemove: true,
                 filter: true,
             },
@@ -179,7 +185,7 @@ export const VehicleReceiptMasterBase = (props) => {
                 key: 'grnToDate',
                 title: 'End Date',
                 value: filterString?.grnToDate,
-                name: filterString?.grnToDate,
+                name: filterString?.grnToDate ? convertDateTime(filterString?.grnToDate, monthDateFormat) : '',
                 canRemove: true,
                 filter: true,
             },
@@ -287,7 +293,7 @@ export const VehicleReceiptMasterBase = (props) => {
     const onFinishSearch = (values) => {};
 
     const handleResetFilter = (e) => {
-        setShowDataLoading(true);
+        setShowDataLoading(false);
         setFilterString();
         advanceFilterForm.resetFields();
     };

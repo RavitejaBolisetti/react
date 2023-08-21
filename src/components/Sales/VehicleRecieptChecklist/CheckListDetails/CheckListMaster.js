@@ -59,12 +59,12 @@ const mapDispatchToProps = (dispatch) => ({
 const VehicleRecieptCheckListMain = (props) => {
     const { userId, handleButtonClick, selectedRecord } = props;
     const { isChecklistDataLoaded, isChecklistDataLoading, ChecklistData } = props;
-    const { fetchList, VehicelReceiptChecklistOnfinish, listShowLoading, showGlobalNotification } = props;
+    const { fetchList, listShowLoading, showGlobalNotification } = props;
     const { form, selectedCheckListId, section, formActionType, handleFormValueChange, NEXT_ACTION } = props;
 
     const { chassisNumber } = selectedRecord;
+    const { checkListDataModified, setcheckListDataModified, resetData } = props;
 
-    const [checkListDataModified, setcheckListDataModified] = useState([]);
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [aggregateForm] = Form.useForm();
     const [AdvanceformData, setAdvanceformData] = useState([]);
@@ -98,22 +98,21 @@ const VehicleRecieptCheckListMain = (props) => {
     }, [userId, chassisNumber, isChecklistDataLoaded]);
 
     useEffect(() => {
-        if (isChecklistDataLoaded && ChecklistData) {
-            setcheckListDataModified(
-                ChecklistData['checklistDetailList']?.map((element, index) => {
-                    return { ...element, ismodified: false };
-                })
-            );
+        if (isChecklistDataLoaded && ChecklistData['checklistDetailList']?.length > 0) {
+            if (!checkListDataModified?.find((element) => element?.ismodified) || !checkListDataModified?.length > 0) {
+                setcheckListDataModified(
+                    ChecklistData['checklistDetailList']?.map((element) => {
+                        return { ...element, ismodified: false };
+                    })
+                );
+            }
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isChecklistDataLoaded, ChecklistData]);
+    }, [isChecklistDataLoaded, ChecklistData, formActionType]);
 
     const onFinish = (values) => {
-        if (checkListDataModified?.length) {
-            VehicelReceiptChecklistOnfinish({ type: 'checklist', data: checkListDataModified?.filter((element, index) => element?.ismodified) });
-            handleButtonClick({ buttonAction: NEXT_ACTION });
-        }
+        handleButtonClick({ buttonAction: NEXT_ACTION });
     };
     const onFinishFailed = () => {
         form.validateFields()

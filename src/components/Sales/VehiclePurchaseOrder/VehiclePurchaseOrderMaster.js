@@ -41,6 +41,7 @@ const mapStateToProps = (state) => {
         typeData: typeData,
         isDataLoaded: true,
         data: data?.paginationData,
+        totalRecords: data?.totalRecords || [],
         vehicleDetailStatusList: typeData['PO_STATS'],
         vpoTypeList: typeData['PO_TYPE'],
         vehicleDetailData: [],
@@ -67,7 +68,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 export const VehiclePurchaseOrderMasterBase = (props) => {
-    const { fetchList, saveData, listShowLoading, userId, data, vehicleDetailData } = props;
+    const { fetchList, saveData, listShowLoading, userId, data, vehicleDetailData, totalRecords } = props;
     const { typeData, moduleTitle, showGlobalNotification } = props;
     const { filterString, setFilterString, vehicleDetailStatusList, vpoTypeList, resetData } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
@@ -82,6 +83,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
     const [sectionName, setSetionName] = useState();
     const [isLastSection, setLastSection] = useState(false);
     const [page, setPage] = useState({ pageSize: 10, current: 1 });
+    const dynamicPagination = true;
 
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
@@ -118,7 +120,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
     const [isCancelVisible, setIsCancelVisible] = useState(false);
 
     const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
         searchForm.resetFields();
         setShowDataLoading(false);
@@ -128,25 +130,9 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         showGlobalNotification({ message });
         setShowDataLoading(false);
     };
-    
+
     const extraParams = useMemo(() => {
         return [
-            {
-                key: 'searchType',
-                title: 'Type',
-                value: filterString?.searchType,
-                name: typeData?.find((i) => i?.key === filterString?.searchType)?.value,
-                canRemove: false,
-                filter: false,
-            },
-            {
-                key: 'searchParam',
-                title: 'Value',
-                value: filterString?.searchParam,
-                name: filterString?.searchParam,
-                canRemove: true,
-                filter: true,
-            },
             {
                 key: 'fromDate',
                 title: 'Start Date',
@@ -217,7 +203,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString,page]);
+    }, [filterString, page]);
 
     useEffect(() => {
         return () => {
@@ -229,6 +215,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
 
     useEffect(() => {
         if (userId) {
+            setShowDataLoading(true);
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -351,24 +338,25 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         vpoCancellationForm.resetFields();
     };
     const tableProps = {
+        dynamicPagination,
+        totalRecords,
         tableColumn: tableColumn(handleButtonClick),
         tableData: data,
         showAddButton: false,
         setPage,
     };
-     const removeFilter = (key) => {
-         if (key === 'searchParam') {
+    const removeFilter = (key) => {
+        if (key === 'searchParam') {
             const { searchType, searchParam, ...rest } = filterString;
             setFilterString({ ...rest });
         } else {
             const { [key]: names, ...rest } = filterString;
             setFilterString({ ...rest });
-            
         }
     };
 
     const handleResetFilter = (e) => {
-         if (filterString) {
+        if (filterString) {
             setShowDataLoading(true);
         }
         setFilterString();
@@ -509,7 +497,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         saveButtonName: isLastSection ? 'Submit' : 'Save & Next',
         setIsCancelVisible,
         extraParamsAfterSave: extraParams,
-        
+        showDataLoading,
     };
     const cancelProps = {
         ...props,

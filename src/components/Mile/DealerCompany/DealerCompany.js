@@ -43,7 +43,7 @@ const mapStateToProps = (state) => {
         dealerParentData,
 
         isPinCodeDataLoaded,
-        pincodeData,
+        pincodeData: pincodeData?.pinCodeDetails,
         isLoading,
         moduleTitle,
         isPinCodeLoading,
@@ -278,6 +278,7 @@ export const DealerCompanyBase = (props) => {
         handleReferesh,
         handleButtonClick,
         title,
+        tableData: searchData,
     };
 
     return (

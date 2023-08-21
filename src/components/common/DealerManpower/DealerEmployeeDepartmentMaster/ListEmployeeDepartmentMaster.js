@@ -232,8 +232,7 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
     const handleClearInSearch = (e) => {
         if (e.target.value.length > 2) {
             listFilterForm.validateFields(['code']);
-        }
-        else if (e?.target?.value === '') {
+        } else if (e?.target?.value === '') {
             setFilterString();
             listFilterForm.resetFields();
             setShowDataLoading(false);
@@ -300,8 +299,6 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
         }
     };
 
-  
-
     const removeFilter = (key) => {
         const { [key]: names, ...rest } = filterString;
         if (key === 'divisionCode') {
@@ -339,6 +336,7 @@ export const ListEmployeeDepartmentMasterBase = (props) => {
         advanceFilterProps,
         title,
         searchValidator,
+        tableData: searchData,
     };
 
     return (

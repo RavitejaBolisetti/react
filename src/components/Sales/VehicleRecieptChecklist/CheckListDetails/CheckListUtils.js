@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { convertDateMonthYearDayjs, formatDateToCalenderDate } from 'utils/formatDateTime';
+import { convertDateTimedayjs, formatDateToCalenderDate } from 'utils/formatDateTime';
 import { Col, Input, Form, Row, DatePicker, InputNumber, Select } from 'antd';
 
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
@@ -37,9 +37,9 @@ export const MakeCheckResult = (props) => {
     switch (type) {
         case FORMTYPE_CONSTANTS?.DATE?.id: {
             if (data?.answerFromDate && data?.answerToDate) {
-                checkResult = checkResult.concat(data?.answerFromDate ? convertDateMonthYearDayjs(data?.answerFromDate) : 'NA');
+                checkResult = checkResult.concat(data?.answerFromDate ? convertDateTimedayjs(data?.answerFromDate, 'DD MMM YYYY') : 'NA');
                 checkResult = checkResult.concat('-');
-                checkResult = checkResult.concat(data?.answerToDate ? convertDateMonthYearDayjs(data?.answerToDate) : 'NA');
+                checkResult = checkResult.concat(data?.answerToDate ? convertDateTimedayjs(data?.answerToDate, 'DD MMM YYYY') : 'NA');
                 return checkResult;
             } else {
                 return 'NA';

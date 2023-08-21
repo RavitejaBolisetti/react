@@ -4,11 +4,13 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { useEffect } from 'react';
-import { Button, Form, Row, Col, Input, Select, Divider } from 'antd';
+import { Button, Form, Row, Col, Select, Divider } from 'antd';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
+import { validateRequiredSelectField } from 'utils/validation';
 
 import styles from 'components/common/Common.module.css';
 
+import { PAYMENT_MODE } from 'components/Sales/Receipts/utils/receiptDetailsPaymentMode';
 import { CashForm } from './CashForm';
 import { ChequeForm } from './ChequeForm';
 import { CreditForm } from './CreditForm';
@@ -37,16 +39,16 @@ const PaymentFormContainer = (props) => {
     const RenderPaymentForm = (formInstance) => {
         // if (!formInstance) return undefined;
         switch (formInstance) {
-            case 'C': {
+            case PAYMENT_MODE?.CASH?.KEY: {
                 return <CashForm />;
             }
-            case 'D': {
+            case PAYMENT_MODE?.CHEQUE_DD?.KEY: {
                 return <ChequeForm {...props} />;
             }
-            case 'O': {
+            case PAYMENT_MODE?.RTGS?.KEY: {
                 return <NeftForm {...props} />;
             }
-            case 'R': {
+            case PAYMENT_MODE?.CREDIT_CARD?.KEY: {
                 return <CreditForm />;
             }
             default:
@@ -54,13 +56,20 @@ const PaymentFormContainer = (props) => {
         }
     };
 
+    const selectProps = {
+        optionFilterProp: 'children',
+        showSearch: true,
+        allowClear: true,
+    };
+
     return (
         <>
             <Form form={paymentForm} autoComplete="off" onFinish={handleSavepaymenttForm} onFieldsChange={handleFormValueChange} layout="vertical">
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Payment Mode" name="paymentMode">
-                            <Select allowClear maxLength={50} placeholder={preparePlaceholderSelect('Select')} onChange={handlePayment} showSearch>
+                        <Form.Item label="Payment Mode" name="paymentMode" rules={[validateRequiredSelectField('Payment Mode')]}>
+                            {/* {customSelectBox({ data: paymentModeType, placeholder: preparePlaceholderSelect('Payment Mode'), onChange: { handlePayment } })} */}
+                            <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} onChange={handlePayment} {...selectProps}>
                                 {paymentModeType?.map((item) => (
                                     <Option key={'dv' + item.key} value={item.key}>
                                         {item.value}

@@ -391,8 +391,9 @@ export const TaxChargesCategoryMain = (props) => {
         handleReferesh,
         handleButtonClick,
         title,
+        tableData: taxChargeCategoryData,
     };
-    
+
     return (
         <>
             <AppliedAdvanceFilter {...advanceFilterResultProps} />

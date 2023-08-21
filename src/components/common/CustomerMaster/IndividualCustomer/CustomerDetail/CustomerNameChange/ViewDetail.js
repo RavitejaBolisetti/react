@@ -9,6 +9,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { FiDownload } from 'react-icons/fi';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { BiLockAlt } from 'react-icons/bi';
 
 import { nameChangeRequestDataActions } from 'store/actions/data/customerMaster/individual/nameChangeRequest/nameChangeRequest';
@@ -54,8 +55,8 @@ const mapDispatchToProps = (dispatch) => ({
 
 const ViewDetailMain = (props) => {
     const { styles, userId, selectedCustomerId, formData, typeData, downloadFileFromButton, showGlobalNotification, setRefreshCustomerList, saveNameChangeData, listShowLoading } = props;
-    const { setStatus, setActiveKey } = props;
-    const { showApproveNameChangeRequestBtn = false } = props;
+    const { setActiveKey } = props;
+    const { setRefreshData, showApproveNameChangeRequestBtn = false } = props;
 
     const [isModalOpen, setModelOpen] = useState(false);
 
@@ -67,16 +68,17 @@ const ViewDetailMain = (props) => {
         setModelOpen(true);
     };
 
-    const onStatusChange = (value) => {
-        const data = { id: formData?.customerNameChangeRequest?.id || '', customerCode: selectedCustomerId, rejectionRemark: 'Name change request', actionStatus: value };
+    const onStatusChange = (values) => {
+        const data = { id: formData?.customerNameChangeRequest?.id || '', customerCode: selectedCustomerId, rejectionRemark: values?.rejectionRemark, actionStatus: values?.status };
         const onSuccess = (res) => {
             setRefreshCustomerList(true);
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Customer name change request approved successfully' });
+            setRefreshData(true);
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Customer name change request updated successfully' });
             if (res?.data?.actionStatus === 'Rejected') {
-                setStatus(STATUS?.REJECTED?.title);
+                // setStatus(STATUS?.REJECTED?.title);
                 setModelOpen(false);
             } else {
-                setStatus(STATUS?.APPROVED?.title);
+                // setStatus(STATUS?.APPROVED?.title);
             }
             setActiveKey([]);
         };
@@ -99,16 +101,16 @@ const ViewDetailMain = (props) => {
     const handleApprove = () => {
         confirm({
             title: 'Confirmation',
-            icon: false,
-            content: 'Do you want to approved request?',
+            icon: <ExclamationCircleOutlined size={22} className={styles.confirmModalIcon} />,
+            content: 'Do you want to approve this request?',
             okText: 'Yes',
             okType: 'danger',
             cancelText: 'No',
             wrapClassName: styles.confirmModal,
             centered: true,
             closable: true,
-            onOk() {
-                onStatusChange(STATUS?.APPROVED?.title);
+            onOk: () => {
+                onStatusChange({ status: STATUS?.APPROVED?.title });
             },
         });
     };
@@ -119,7 +121,7 @@ const ViewDetailMain = (props) => {
         titleOverride: 'Rejection Note',
         closable: false,
         onCloseAction,
-        onContinueAction: () => onStatusChange(STATUS?.REJECTED?.title),
+        onContinueAction: (values) => onStatusChange({ ...values, status: STATUS?.REJECTED?.title }),
     };
 
     const canApproveNameChangeRequest = true;
@@ -139,10 +141,10 @@ const ViewDetailMain = (props) => {
                     <Form.Item label="Last Name">{checkAndSetDefaultValue(formData?.lastName)}</Form.Item>
                 </Col>
             </Row>
-            {formData?.supportingDocuments?.map((item) => (
+            {formData?.customerNameChangeRequest?.supportingDocuments?.map((item) => (
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Card className={styles.viewDocumentStrip} key={item?.documentId} title={item?.documentName} extra={<FiDownload />} onClick={downloadFileFromButton}></Card>
+                        <Card className={styles.viewDocumentStrip} key={item?.documentId} title={item?.documentName} extra={<FiDownload />} onClick={() => downloadFileFromButton(item)}></Card>
                     </Col>
                 </Row>
             ))}

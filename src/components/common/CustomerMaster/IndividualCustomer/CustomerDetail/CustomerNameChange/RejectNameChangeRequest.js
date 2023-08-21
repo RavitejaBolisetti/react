@@ -5,42 +5,48 @@
  */
 
 import React from 'react';
-import { Row, Col, Button, Space, Typography, Input } from 'antd';
+import { Row, Col, Button, Space, Input, Form } from 'antd';
 import { withModal } from 'components/withModal';
 
+import { validateRequiredInputField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
+
 import styles from '../../../CustomertMaster.module.css';
 
 const { TextArea } = Input;
-const { Text } = Typography;
 
 const RejectNameChangeRequestMain = (props) => {
     const { onCloseAction, onContinueAction } = props;
+    const [form] = Form.useForm();
+
+    const onFinish = (values) => {
+        onContinueAction({ ...values });
+    };
+
+    const onFinishFailed = () => {};
+
     return (
-        <>
-            <Row>
-                <Text type="secondary" style={{ fontWeight: '400', fontSize: '14px' }}>
-                    Reason for Rejection
-                </Text>
-            </Row>
+        <Form layout="vertical" autoComplete="off" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <TextArea showCount maxLength={300} placeholder={preparePlaceholderText('Description')} />
+                    <Form.Item name="rejectionRemark" label={'Reason for Rejection'} rules={[validateRequiredInputField('remark')]}>
+                        <TextArea maxLength={300} placeholder={preparePlaceholderText('Enter remark')} />
+                    </Form.Item>
                 </Col>
             </Row>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Space>
-                        <Button onClick={onCloseAction} htmlType="submit" danger className={styles.modalButton}>
+                        <Button onClick={onCloseAction} danger className={styles.modalButton}>
                             Cancel
                         </Button>
-                        <Button onClick={onContinueAction} htmlType="submit" type="primary" className={styles.modalButton}>
+                        <Button htmlType="submit" type="primary" className={styles.modalButton}>
                             Submit
                         </Button>
                     </Space>
                 </Col>
             </Row>
-        </>
+        </Form>
     );
 };
 

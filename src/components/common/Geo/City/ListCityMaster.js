@@ -172,6 +172,20 @@ export const ListCityMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, isDataLoaded, data, userId]);
+    useEffect(() => {
+        if (isAdvanceSearchVisible) {
+            advanceFilterForm.resetFields();
+            advanceFilterForm.setFieldsValue({ code: filterString?.code });
+            if (filterString?.stateCode) {
+                advanceFilterForm.setFieldsValue({ stateCode: filterString?.stateCode, districtCode: filterString?.districtCode });
+                handleFilterChange('stateCode')(filterString?.stateCode);
+            }
+            if (filterString?.districtCode) {
+                advanceFilterForm.setFieldsValue({ districtCode: filterString?.districtCode });
+            }
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [filterString, isAdvanceSearchVisible]);
 
     const extraParams = [
         {
@@ -266,14 +280,28 @@ export const ListCityMasterBase = (props) => {
         (name, type = 'value') =>
         (value) => {
             const filterValue = type === 'text' ? value.target.value : value;
+            if (!value) {
+                switch (name) {
+                    case 'stateCode': {
+                        setFilteredDistrictData();
+                        advanceFilterForm.setFieldsValue({ districtCode: undefined });
+                        break;
+                    }
+
+                    default: {
+                        break;
+                    }
+                }
+                return;
+            }
 
             if (name === 'countryCode') {
-                filterValue && setFilteredStateData(stateData?.filter((i) => i?.parentKey === filterValue));
+                setFilteredStateData(stateData?.filter((i) => i?.parentKey === filterValue));
                 advanceFilterForm.setFieldsValue({ stateCode: undefined, districtCode: undefined, cityCode: undefined, tehsilCode: undefined });
             }
 
             if (name === 'stateCode') {
-                filterValue && setFilteredDistrictData(districtData?.filter((i) => i?.parentKey === filterValue));
+                setFilteredDistrictData(districtData?.filter((i) => i?.parentKey === filterValue));
                 advanceFilterForm.setFieldsValue({ districtCode: undefined, cityCode: undefined, tehsilCode: undefined });
             }
         };
@@ -424,6 +452,7 @@ export const ListCityMasterBase = (props) => {
         advanceFilterProps,
         title,
         setFilteredDistrictData,
+        tableData: searchData,
     };
 
     return (

@@ -11,18 +11,14 @@ import styles from 'components/common/Common.module.css';
 import { CREDIT_DEBIT_SECTION } from 'constants/CreditDebitSection';
 
 const MenuNav = (props) => {
-    const { currentSection, setCurrentSection } = props;
+    const { currentSection } = props;
     const creditDebitSectionList = Object.values(CREDIT_DEBIT_SECTION);
-
-    const onHandle = (key, isClickable) => {
-        isClickable && setCurrentSection(key);
-    };
 
     const items = creditDebitSectionList
         ?.filter((i) => i?.displayOnList)
         ?.map((item) => ({
             dot: item?.id === currentSection ? <BsRecordCircleFill className={styles.activeForm} /> : <FaCheckCircle />,
-            children: <p onClick={() => onHandle(item?.id, item?.clickable)}>{item?.title}</p>,
+            children: <div>{item?.title}</div>,
             className: item?.id === currentSection ? 'active' : 'noactive',
         }));
 

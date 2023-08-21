@@ -18,7 +18,7 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 const { Search } = Input;
 export default function AppliedAdvanceFilter(props) {
-    const { showAddButton = true, advanceFilter = false, title, filterString, from, onFinish, onFinishFailed, extraParams, removeFilter, handleResetFilter, handleClearInSearch, onSearchHandle, setAdvanceSearchVisible, handleReferesh, handleButtonClick, validator = searchValidator, downloadReport = false, handleDownloadReport = false, showChangeHistoryButton = false, showChangeHistoryList } = props;
+    const { tableData = [], showAddButton = true, advanceFilter = false, title, filterString, from, onFinish, onFinishFailed, extraParams, removeFilter, handleResetFilter, handleClearInSearch, onSearchHandle, setAdvanceSearchVisible, handleReferesh, handleButtonClick, validator = searchValidator, downloadReport = false, handleDownloadReport = false, showChangeHistoryButton = false, showChangeHistoryList } = props;
     const onKeyPressHandler = (e) => {
         e.key === 'Enter' && e.preventDefault();
     };
@@ -76,10 +76,17 @@ export default function AppliedAdvanceFilter(props) {
                                     Download
                                 </Button>
                             )}
-                            <Button icon={<TfiReload />} onClick={handleReferesh} danger />
-                            <Button icon={<PlusOutlined />} type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                                Add
-                            </Button>
+
+                            {tableData?.length > 0 && (
+                                <>
+                                    <Button icon={<TfiReload />} onClick={handleReferesh} danger />
+                                    {showAddButton && (
+                                        <Button icon={<PlusOutlined />} type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
+                                            Add
+                                        </Button>
+                                    )}
+                                </>
+                            )}
                         </Col>
                     )}
                 </Row>
@@ -90,7 +97,7 @@ export default function AppliedAdvanceFilter(props) {
                                 <Col xs={24} sm={24} md={24} lg={22} xl={22} className={styles.advanceFilterContainer}>
                                     <div className={styles.advanceFilterTitle}>Applied Advance Filters : </div>
                                     {extraParams
-                                        ?.filter((item, index) => index < 5)
+                                        ?.filter((item, index) => index <= 5)
                                         ?.map((filter) => {
                                             return (
                                                 filter?.value && (

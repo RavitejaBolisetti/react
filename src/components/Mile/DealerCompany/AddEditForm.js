@@ -103,7 +103,7 @@ const AddEditFormMain = (props) => {
                 fetchPincodeDetail({ setIsLoading: pinCodeShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
             }
         } else {
-            showGlobalNotification({ message: 'Please enter 6 digit valid pincode' });
+            showGlobalNotification({ message: 'Please enter numeric 6 digit value' });
             return false;
         }
     };
@@ -212,9 +212,9 @@ const AddEditFormMain = (props) => {
                             </Row>
                             <Row gutter={16}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    <Form.Item initialValue={formData?.pinCode} label="Pin Code" name="pinCode" rules={[validatePincodeField('Pin Code'), validatePincodeField('Pin Code')]}>
-                                        <AutoComplete options={options} onSelect={handleOnSelect} maxLength={6} onFocus={handleOnfocus}>
-                                            <Input.Search type="number" onSearch={handleOnSearch} onChange={handleOnClear} maxLength={6} placeholder="Search" loading={isPinCodeLoading} allowClear />
+                                    <Form.Item initialValue={formData?.pinCode} label="Pin Code" name="pinCode" rules={[validateRequiredInputField('Pin Code'), validatePincodeField('Pin Code')]}>
+                                        <AutoComplete options={options} onSelect={handleOnSelect} maxLength={6} onFocus={handleOnfocus} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
+                                            <Input.Search className={styles.removePincodeUpDown} type="text" onSearch={handleOnSearch} onChange={handleOnClear} maxLength={6} placeholder="Search" loading={isPinCodeLoading} allowClear />
                                         </AutoComplete>
                                     </Form.Item>
                                 </Col>

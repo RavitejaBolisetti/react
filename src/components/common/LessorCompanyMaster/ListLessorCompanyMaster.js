@@ -274,6 +274,7 @@ export const ListLessorCompanyMasterBase = (props) => {
         handleReferesh,
         handleButtonClick,
         title,
+        tableData: searchData,
     };
 
     return (

@@ -13,7 +13,8 @@ const { Option } = Select;
 const { Search } = Input;
 
 const SearchBox = (props) => {
-    const { selectWide, searchForm, optionType, searchParamRule, filterString, setFilterString, handleChange, disabled = false } = props;
+    const { selectWide, searchForm, optionType, searchParamRule, filterString, setFilterString, handleChange, disabled = false, handleSearchWithoutParameter = undefined } = props;
+    const { singleField = false, label = '', placeholder = 'Search', singleFieldKey = 'searchParam' } = props;
     const onKeyPressHandler = (e) => {
         e.key === 'Enter' && e.preventDefault();
     };
@@ -48,21 +49,23 @@ const SearchBox = (props) => {
         allowClear: true,
         className: selectWide ? styles.headerSelectFieldWide : styles.headerSelectField,
     };
-    return (
-        <div className={styles.selectSearchBg}>
-            <Form onKeyPress={onKeyPressHandler} form={searchForm} layout="vertical" autoComplete="off">
-                <Form.Item name="searchType" rules={[validateRequiredSelectField('parameter')]}>
-                    <Select disabled={disabled} placeholder="Select Parameter" {...selectProps}>
-                        {optionType?.map((item) => (
-                            <Option key={'st' + item.key} value={item.key}>
-                                {item.value}
-                            </Option>
-                        ))}
-                    </Select>
-                </Form.Item>
 
-                <Form.Item {...searchParamRule} name="searchParam" rules={[validateRequiredInputField('search parameter')]} validateTrigger={['onChange', 'onSearch']}>
-                    <Search disabled={disabled} placeholder="Search" maxLength={25} value={filterString?.searchParam} allowClear onChange={handleChange} onSearch={handleSearchParamSearch} className={selectWide ? styles.headerSearchFieldWide : styles.headerSearchField} />
+    return (
+        <div className={singleField ? styles.masterListSearchForm : styles.selectSearchBg}>
+            <Form onKeyPress={onKeyPressHandler} form={searchForm} layout={singleField ? 'horizontal' : 'vertical'} colon={false} autoComplete="off">
+                {!singleField && (
+                    <Form.Item name="searchType" rules={[validateRequiredSelectField('parameter')]}>
+                        <Select disabled={disabled} placeholder="Select Parameter" {...selectProps}>
+                            {optionType?.map((item) => (
+                                <Option key={'st' + item.key} value={item.key}>
+                                    {item.value}
+                                </Option>
+                            ))}
+                        </Select>
+                    </Form.Item>
+                )}
+                <Form.Item label={label} {...searchParamRule} name={singleField && singleFieldKey ? singleFieldKey : 'searchParam'} rules={[validateRequiredInputField('search value')]} validateTrigger={['onChange', 'onSearch']}>
+                    <Search disabled={disabled} placeholder={placeholder} maxLength={25} value={filterString?.searchParam} allowClear onChange={handleChange} onSearch={singleField && handleSearchWithoutParameter ? handleSearchWithoutParameter : handleSearchParamSearch} className={singleField ? styles.headerSearchField : selectWide ? styles.headerSearchFieldWide : styles.headerSearchField} />
                 </Form.Item>
             </Form>
         </div>

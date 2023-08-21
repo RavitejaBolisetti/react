@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -148,14 +148,12 @@ export const ListDealerDivisionMasterBase = (props) => {
     const handleClearInSearch = (e) => {
         if (e.target.value.length > 2) {
             listFilterForm.validateFields(['code']);
-        }
-        else if (e?.target?.value === '') {
+        } else if (e?.target?.value === '') {
             setFilterString();
             listFilterForm.resetFields();
             setShowDataLoading(false);
         }
     };
-
 
     const onFinish = (values) => {
         let data = { ...values };
@@ -255,6 +253,7 @@ export const ListDealerDivisionMasterBase = (props) => {
         handleReferesh,
         handleButtonClick,
         title,
+        tableData: searchData,
     };
 
     return (

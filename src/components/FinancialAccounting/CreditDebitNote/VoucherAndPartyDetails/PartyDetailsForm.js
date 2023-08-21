@@ -8,7 +8,7 @@ import { Col, Input, Form, Row } from 'antd';
 
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { PARAM_MASTER } from 'constants/paramMaster';
-import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField, noWhiteSpaceinBeginning } from 'utils/validation';
 import { customSelectBox } from 'utils/customSelectBox';
 
 import styles from 'components/common/Common.module.css';
@@ -29,7 +29,7 @@ export const PartyDetailsForm = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name={[formType, 'partyId']} label="Party ID" initialValue={formData?.partyId} rules={[validateRequiredSelectField('parameter')]} validateTrigger={['onSearch']}>
+                    <Form.Item name={[formType, 'partyId']} label="Party ID" initialValue={formData?.partyId} rules={[validateRequiredSelectField('party id'), noWhiteSpaceinBeginning('party id')]} validateTrigger={['onSearch','onChange']}>
                         {formActionType?.editMode ? <Input {...disabledProps} placeholder={preparePlaceholderText('Party ID')} /> : <Search {...disabledProps} placeholder="Search" maxLength={25} allowClear onSearch={handleSearchParamSearch} onChange={handlePartyIdChange} className={styles.headerSearchField} />}
                     </Form.Item>
                 </Col>
@@ -58,7 +58,7 @@ export const PartyDetailsForm = (props) => {
             </Row>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name={[formType, 'phoneNo']} label="Phone No." initialValue={formData?.phoneNo}>
+                    <Form.Item name={[formType, 'mobileNumber']} label="Phone No." initialValue={formData?.mobileNumber}>
                         <Input placeholder={preparePlaceholderText('Phone No.')} disabled={true} />
                     </Form.Item>
                 </Col>

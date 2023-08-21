@@ -4,26 +4,31 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Row, Col, Card, Descriptions } from 'antd';
+import { Row, Col, Card, Divider, Typography } from 'antd';
 import styles from 'components/common/Common.module.css';
 
-import { ListDataTable } from 'utils/ListDataTable';
+import { DataTable } from 'utils/dataTable';
+
+import { tableColumnApportion } from './tableColumnApportion';
+import { QUERY_BUTTONS_CONSTANTS } from '../QueryButtons';
+
+const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
-    const { formData, isLoading, typeData, ...viewProps } = props;
-
-    // const viewProps = {
-    //     bordered: false,
-    //     colon: false,
-    //     layout: 'vertical',
-    //     column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
-    // };
+    const { formActionType, tableData, bindCodeValue, receiptStatus } = props;
 
     return (
         <Card className={styles.drawerCardView}>
+            <Row gutter={20} className={styles.marB20}>
+                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                    <Text strong>Apportion Details</Text>
+                </Col>
+            </Row>
+            <Divider />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable {...viewProps} showAddButton={false} />
+                    <DataTable tableColumn={tableColumnApportion({ formActionType, bindCodeValue })} scroll={{ x: 1000 }} tableData={tableData} pagination={false} />
+                    {receiptStatus === QUERY_BUTTONS_CONSTANTS.APPORTION.key && <p className={styles.marB20}>The entire paid amount has been apportioned. Cannot be apportioned further.</p>}
                 </Col>
             </Row>
         </Card>

@@ -14,16 +14,16 @@ export const CardSkeleton = ({ title = true, content = true }) => {
             {title ? (
                 <SkeletonTheme baseColor={`${theme === 'dark' ? '#444' : '#f5f5f5'}`} highlightColor={`${theme === 'dark' ? '#50535a' : '#ebebeb'}`}>
                     <div data-testid="title-skeleton">
-                    <Skeleton  height={48} />
+                        <Skeleton height={48} />
                     </div>
                 </SkeletonTheme>
             ) : (
                 ''
             )}
             {content ? (
-                <SkeletonTheme  baseColor={`${theme === 'dark' ? '#444' : '#f5f5f5'}`} highlightColor={`${theme === 'dark' ? '#50535a' : '#ebebeb'}`}>
-                     <div data-testid="content-skeleton">
-                    <Skeleton  height={265} />
+                <SkeletonTheme baseColor={`${theme === 'dark' ? '#444' : '#f5f5f5'}`} highlightColor={`${theme === 'dark' ? '#50535a' : '#ebebeb'}`}>
+                    <div data-testid="content-skeleton">
+                        <Skeleton height={265} />
                     </div>
                 </SkeletonTheme>
             ) : (

@@ -11,7 +11,6 @@ import { connect } from 'react-redux';
 import { BiTimeFive } from 'react-icons/bi';
 import { FiEdit } from 'react-icons/fi';
 
-import { nameChangeRequestDataActions } from 'store/actions/data/customerMaster/individual/nameChangeRequest/nameChangeRequest';
 import { customerDetailsIndividualDataActions } from 'store/actions/data/customerMaster/customerDetailsIndividual';
 import { documentViewDataActions } from 'store/actions/data/customerMaster/documentView';
 import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
@@ -76,10 +75,6 @@ const mapDispatchToProps = (dispatch) => ({
             fetchList: customerDetailsIndividualDataActions.fetchList,
             listShowLoading: customerDetailsIndividualDataActions.listShowLoading,
             saveData: customerDetailsIndividualDataActions.saveData,
-            resetData: customerDetailsIndividualDataActions.reset,
-
-            saveNameChangeData: nameChangeRequestDataActions.saveData,
-            listShowNameChangeLoading: nameChangeRequestDataActions.listShowLoading,
 
             showGlobalNotification,
         },
@@ -95,14 +90,14 @@ const CustomerNameChangeMasterBase = (props) => {
         userId,
         showGlobalNotification,
         fetchList,
-        listShowLoading,
         data,
         saveData,
         isLoading,
     } = props;
 
     const { selectedCustomerId } = props;
-    const customerNameChangeRequest = formData?.customerNameChangeRequest;
+    const customerNameChangeRequest = formData?.customerNameChangeRequest || false;
+    console.log('🚀 ~ file: CustomerNameChangeMaster.js:100 ~ CustomerNameChangeMasterBase ~ customerNameChangeRequest:', customerNameChangeRequest);
     const { fetchViewDocument, viewListShowLoading, listSupportingDocumentShowLoading, isSupportingDocumentDataLoaded, supportingData, isViewDataLoaded, viewDocument } = props;
 
     const [emptyList, setEmptyList] = useState(true);
@@ -115,10 +110,6 @@ const CustomerNameChangeMasterBase = (props) => {
     const [activeKey, setActiveKey] = useState([]);
     const [changeNameAllowed, setChangeNameAllowed] = useState(false);
     const [nameChangeHistoryItemList, setNameChangeHistoryItemList] = useState([]);
-
-    const onErrorAction = (message) => {
-        showGlobalNotification({ message });
-    };
 
     const nameChangeHistoryItem = useMemo(() => {
         const changeHistoryItem = [
@@ -167,33 +158,27 @@ const CustomerNameChangeMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data]);
 
-    useEffect(() => {
-        if (userId && selectedCustomerId) {
-            const extraParams = [
-                {
-                    key: 'customerId',
-                    title: 'customerId',
-                    value: selectedCustomerId,
-                    name: 'Customer ID',
-                },
-            ];
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
+    const onSuccessAction = (res) => {
+        if (res?.data?.docId) {
+            let a = document.createElement('a');
+            a.href = `data:image/png;base64,${res?.data?.base64}`;
+            a.download = res?.data?.fileName;
+            a.click();
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Your download will start soon' });
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedCustomerId]);
+    };
 
-    const downloadFileFromButton = (uploadData) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Your download will start soon' });
+    const downloadFileFromButton = (file) => {
         const extraParams = [
             {
                 key: 'docId',
                 title: 'docId',
-                value: uploadData?.docId,
+                value: file?.documentId,
                 name: 'docId',
             },
         ];
-        const supportingDocument = uploadData?.documentName;
-        fetchViewDocument({ setIsLoading: viewListShowLoading, userId, extraParams, supportingDocument });
+        const supportingDocument = file?.documentName;
+        fetchViewDocument({ setIsLoading: viewListShowLoading, userId, extraParams, supportingDocument, onSuccessAction });
     };
 
     const deleteFile = (uploadData) => {
@@ -218,7 +203,6 @@ const CustomerNameChangeMasterBase = (props) => {
         saveData(requestData);
     };
     const downloadFileFromList = () => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Your download will start soon' });
         const extraParams = [
             {
                 key: 'docId',
@@ -228,7 +212,7 @@ const CustomerNameChangeMasterBase = (props) => {
             },
         ];
         const supportingDocument = uploadedFileName;
-        fetchViewDocument({ setIsLoading: viewListShowLoading, userId, extraParams, supportingDocument });
+        fetchViewDocument({ setIsLoading: viewListShowLoading, userId, extraParams, supportingDocument, onSuccessAction });
     };
 
     const handlePreview = (selectedDocument) => {
@@ -240,8 +224,8 @@ const CustomerNameChangeMasterBase = (props) => {
                 name: 'docId',
             },
         ];
-        fetchViewDocument({ setIsLoading: viewListShowLoading, userId, extraParams, selectedDocument });
-        setSupportingDataView(supportingData);
+        fetchViewDocument({ setIsLoading: viewListShowLoading, userId, extraParams, selectedDocument, onSuccessAction });
+        // setSupportingDataView(supportingData);
     };
 
     const onViewHistoryChange = () => {
