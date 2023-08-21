@@ -8,6 +8,7 @@ import { Col, Form, Row, Select, Button } from 'antd';
 
 import { withModal } from 'components/withModal';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
+import { PARAM_MASTER } from 'constants/paramMaster';
 
 import styles from 'components/common/Common.module.css';
 
@@ -61,7 +62,7 @@ export const AdvancedSearchFrom = (props) => {
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item initialValue={filterString?.vehicleStatus} label="Vehicle Status" name="vehicleStatus">
-                        <Select placeholder={preparePlaceholderSelect('')} fieldNames={{ label: 'value', value: 'key' }} options={typeData['ALT_ACTN']} {...selectProps} className={styles.headerSelectField}></Select>
+                        <Select placeholder={preparePlaceholderSelect('')} fieldNames={{ label: 'value', value: 'key' }} options={typeData[PARAM_MASTER.ALT_ACTN.id]} {...selectProps} className={styles.headerSelectField}></Select>
                     </Form.Item>
                     {/* <Form.Item name="oemCode" label="OEM Name" rules={[validateRequiredSelectField('OEM Name')]}>
                         <Select {...selectProps} fieldNames={{ label: 'value', value: 'key' }} options={typeData['COMPTR_MFG']} placeholder={preparePlaceholderSelect('OEM Name')} />
@@ -72,7 +73,7 @@ export const AdvancedSearchFrom = (props) => {
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form.Item initialValue={filterString?.otfStatus} label="PDI Done" name="pdDone">
-                        <Select placeholder={preparePlaceholderSelect('')} fieldNames={{ label: 'value', value: 'key' }} options={typeData['PD_DONE']} {...selectProps} className={styles.headerSelectField}></Select>
+                        <Select placeholder={preparePlaceholderSelect('')} fieldNames={{ label: 'value', value: 'key' }} options={typeData[PARAM_MASTER.PD_DONE.id]} {...selectProps} className={styles.headerSelectField}></Select>
                     </Form.Item>
                 </Col>
             </Row>

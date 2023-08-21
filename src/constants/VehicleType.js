@@ -5,16 +5,12 @@
  */
 export const VEHICLE_TYPE = {
     UNALLOTED: {
-        id: 'UNALLOT',
+        id: 'D',
         title: 'Un-Allot',
-        desc: 'Un-Allot',
+        desc: 'De-Allot',
     },ALLOTED: {
-        id: 'ALLOT',
+        id: 'A',
         title: 'Allot',
         desc: 'Allot',
-    },ALL: {
-        id: 'ALL',
-        title: 'All',
-        desc: 'All',
     }
 };
