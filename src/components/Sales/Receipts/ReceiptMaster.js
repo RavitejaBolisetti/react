@@ -100,6 +100,7 @@ export const ReceiptMasterBase = (props) => {
     const [sectionName, setSetionName] = useState();
     const [isLastSection, setLastSection] = useState(false);
     const [receipt, setReceipt] = useState('');
+    const [totalReceivedAmount, setTotalReceivedAmount] = useState(0.0);
 
     const [apportionList, setApportionList] = useState([]);
 
@@ -404,6 +405,7 @@ export const ReceiptMasterBase = (props) => {
         setSelectedOrderId();
         partyDetailForm.resetFields();
         setReceipt();
+        setTotalReceivedAmount(0.0);
 
         advanceFilterForm.resetFields();
         advanceFilterForm.setFieldsValue();
@@ -570,6 +572,8 @@ export const ReceiptMasterBase = (props) => {
         receipt,
         setReceipt,
         receiptStatus,
+        totalReceivedAmount,
+        setTotalReceivedAmount,
 
         setButtonData,
         handleButtonClick,

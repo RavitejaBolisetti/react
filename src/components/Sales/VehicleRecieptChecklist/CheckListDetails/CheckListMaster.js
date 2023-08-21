@@ -59,11 +59,11 @@ const mapDispatchToProps = (dispatch) => ({
 const VehicleRecieptCheckListMain = (props) => {
     const { userId, handleButtonClick, selectedRecord } = props;
     const { isChecklistDataLoaded, isChecklistDataLoading, ChecklistData } = props;
-    const { fetchList, VehicelReceiptChecklistOnfinish, listShowLoading, showGlobalNotification } = props;
+    const { fetchList, listShowLoading, showGlobalNotification } = props;
     const { form, selectedCheckListId, section, formActionType, handleFormValueChange, NEXT_ACTION } = props;
 
     const { chassisNumber } = selectedRecord;
-    const { checkListDataModified, setcheckListDataModified } = props;
+    const { checkListDataModified, setcheckListDataModified, resetData } = props;
 
     const [isReadOnly, setIsReadOnly] = useState(false);
     const [aggregateForm] = Form.useForm();
@@ -98,19 +98,10 @@ const VehicleRecieptCheckListMain = (props) => {
     }, [userId, chassisNumber, isChecklistDataLoaded]);
 
     useEffect(() => {
-        console.log('called');
-        if (isChecklistDataLoaded && ChecklistData) {
-            if (checkListDataModified?.length > 0) {
+        if (isChecklistDataLoaded && ChecklistData['checklistDetailList']?.length > 0) {
+            if (!checkListDataModified?.find((element) => element?.ismodified) || !checkListDataModified?.length > 0) {
                 setcheckListDataModified(
-                    ChecklistData['checklistDetailList']?.map((element, index) => {
-                        const foundData = checkListDataModified?.find((item) => item?.ansMstId === element?.ansMstId);
-                        if (!foundData) return { ...element, ismodified: false };
-                        else return { ...foundData };
-                    })
-                );
-            } else {
-                setcheckListDataModified(
-                    ChecklistData['checklistDetailList']?.map((element, index) => {
+                    ChecklistData['checklistDetailList']?.map((element) => {
                         return { ...element, ismodified: false };
                     })
                 );
@@ -121,10 +112,7 @@ const VehicleRecieptCheckListMain = (props) => {
     }, [isChecklistDataLoaded, ChecklistData, formActionType]);
 
     const onFinish = (values) => {
-        if (checkListDataModified?.length) {
-            VehicelReceiptChecklistOnfinish({ type: 'checklist', data: checkListDataModified?.filter((element, index) => element?.ismodified) });
-            handleButtonClick({ buttonAction: NEXT_ACTION });
-        }
+        handleButtonClick({ buttonAction: NEXT_ACTION });
     };
     const onFinishFailed = () => {
         form.validateFields()
