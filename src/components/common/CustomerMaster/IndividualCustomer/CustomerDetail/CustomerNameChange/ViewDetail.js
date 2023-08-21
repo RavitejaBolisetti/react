@@ -144,7 +144,7 @@ const ViewDetailMain = (props) => {
             {formData?.customerNameChangeRequest?.supportingDocuments?.map((item) => (
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Card className={styles.viewDocumentStrip} key={item?.documentId} title={item?.documentName} extra={<FiDownload />} onClick={() => downloadFileFromButton(item)}></Card>
+                        <Card className={styles.viewDocumentStrip} key={item?.documentId} title={item?.documentName} extra={<FiDownload />} data-testid="download" onClick={() => downloadFileFromButton(item)}></Card>
                     </Col>
                 </Row>
             ))}
