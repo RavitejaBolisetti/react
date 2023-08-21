@@ -16,11 +16,13 @@ import styles from 'components/common/Common.module.css';
 export default function AppliedAdvanceFilter(props) {
     const { showAddButton = true, advanceFilter = false, title, handleButtonClick, filterString, extraParams, removeFilter, handleResetFilter, setAdvanceSearchVisible, setFilterString, vpoFilter = false, typeData } = props;
     const [searchForm] = Form.useForm();
+
     const searchBoxProps = {
+        singleField: true,
         searchForm,
         filterString,
         setFilterString,
-        optionType: typeData['PO_MST'],
+        placeholder: 'Search By PO Number',
     };
     return (
         <>
@@ -31,7 +33,7 @@ export default function AppliedAdvanceFilter(props) {
                             <Form.Item label={`${title}`}>
                                 <Row gutter={20}>
                                     {vpoFilter && (
-                                        <Col xs={24} sm={24} md={14} lg={14} xl={14}>
+                                        <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                                             <SearchBox {...searchBoxProps} />
                                         </Col>
                                     )}
@@ -62,7 +64,7 @@ export default function AppliedAdvanceFilter(props) {
                     )}
                 </Row>
 
-                {advanceFilter && filterString?.advanceFilter && extraParams.find((i) => i.name) && (
+                {advanceFilter && filterString?.advanceFilter && extraParams?.find((i) => i.value && i.filter) && (
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.advanceFilterTop}>
                             <Row gutter={20}>
