@@ -15,7 +15,7 @@ export const tableColumnSearchOTF = (handleButtonClick, page, pageSize) => {
         tblPrepareColumns({
             title: 'OTF Date',
             dataIndex: 'otfDate',
-            render: (text) => convertDateMonthYear(text ? text :''),
+            render: (text) => convertDateMonthYear(text ? text : ''),
         }),
         tblPrepareColumns({
             title: 'Cust. Name',

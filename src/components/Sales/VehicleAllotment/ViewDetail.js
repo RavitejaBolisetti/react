@@ -74,8 +74,6 @@ const ViewDetailMain = (props) => {
         },
         pagination: false,
         tableColumn: tableColumnSearchOTF(handleButtonClick),
-
-        render: (text) => convertDateMonthYear(text),
         tableData: tableData || [formData?.vehicleOTFDetails] || [],
     };
 

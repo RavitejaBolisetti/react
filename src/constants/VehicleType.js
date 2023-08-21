@@ -8,9 +8,10 @@ export const VEHICLE_TYPE = {
         id: 'D',
         title: 'Un-Allot',
         desc: 'De-Allot',
-    },ALLOTED: {
+    },
+    ALLOTED: {
         id: 'A',
         title: 'Allot',
         desc: 'Allot',
-    }
+    },
 };
