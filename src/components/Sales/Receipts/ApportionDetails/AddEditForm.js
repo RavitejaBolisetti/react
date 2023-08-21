@@ -18,7 +18,7 @@ import styles from 'components/common/Common.module.css';
 const { Text } = Typography;
 
 const AddEditFormMain = (props) => {
-    const { apportionList, setApportionList, apportionForm, documentDescriptionList, formActionType, isReadOnly, showApportionForm, setShowApportionForm, receiptDetailData, handleDocumentNumberSearch, handleFormValueChange, documentAmount, setDocumentAmount, receivedAmount, setReceivedAmount, totalReceivedAmount } = props;
+    const { apportionList, setApportionList, apportionForm, documentDescriptionList, formActionType, isReadOnly, showApportionForm, setShowApportionForm, receiptDetailData, handleDocumentNumberChange, handleDocumentNumberSearch, handleFormValueChange, documentAmount, setDocumentAmount, receivedAmount, setReceivedAmount, totalReceivedAmount } = props;
     const [modalForm] = Form.useForm();
     const [isModalApportionVisible, setModalApportionVisible] = useState(false);
     const [showApportionTable, setApportionTable] = useState(false);
@@ -110,6 +110,7 @@ const AddEditFormMain = (props) => {
         apportionForm,
         totalApportionAmount,
         documentDescriptionList,
+        handleDocumentNumberChange,
         handleDocumentNumberSearch,
         apportionTableFormData,
         setApportionTableFormData,

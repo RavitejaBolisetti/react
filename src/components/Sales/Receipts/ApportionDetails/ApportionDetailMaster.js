@@ -53,6 +53,7 @@ const mapDispatchToProps = (dispatch) => ({
             fetchDocumentTypeList: documentDescriptionDataActions.fetchList,
             listDocumentTypeShowLoading: documentDescriptionDataActions.listShowLoading,
             fetchInvoiceList: invoiceDetailsDataAction.fetchList,
+            resetInvoiceData: invoiceDetailsDataAction.reset,
             listInvoiceShowLoading: invoiceDetailsDataAction.listShowLoading,
             showGlobalNotification,
         },
@@ -61,7 +62,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ApportionDetailMasterBase = (props) => {
-    const { userId, documentDescriptionList, showGlobalNotification, section, isDocumentTypesLoaded, listDocumentTypeShowLoading, listInvoiceShowLoading, fetchDocumentTypeList, fetchInvoiceList, fetchList, isLoading } = props;
+    const { userId, documentDescriptionList, showGlobalNotification, section, isDocumentTypesLoaded, listDocumentTypeShowLoading, listInvoiceShowLoading, fetchDocumentTypeList, resetInvoiceData, fetchInvoiceList, fetchList, isLoading } = props;
     const { form, formActionType, handleFormValueChange, handleButtonClick, receiptOnFinish } = props;
     const { apportionList, setApportionList, receiptDetailData, totalReceivedAmount, receiptStatus } = props;
 
@@ -95,6 +96,11 @@ const ApportionDetailMasterBase = (props) => {
     }, [isDocumentTypesLoaded]);
 
     const handleFieldsChange = () => {};
+
+    const handleDocumentNumberChange = () => {
+        setShowApportionForm();
+        resetInvoiceData();
+    };
 
     const handleDocumentNumberSearch = (values) => {
         const extraParams = [
@@ -144,6 +150,7 @@ const ApportionDetailMasterBase = (props) => {
         fetchList,
         userId,
         isLoading,
+        handleDocumentNumberChange,
         handleDocumentNumberSearch,
         handleFormValueChange,
         apportionList,

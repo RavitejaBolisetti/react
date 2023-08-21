@@ -7,7 +7,7 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Input, Menu, Layout, Row, Col, Form, AutoComplete, Button } from 'antd';
+import { Input, Menu, Layout, Row, Col, Form, AutoComplete, Button, Popover } from 'antd';
 import { BsChevronUp, BsChevronDown, BsMoon, BsSun, BsSearch } from 'react-icons/bs';
 import { RxCross2 } from 'react-icons/rx';
 import IMG_ICON from 'assets/img/icon.png';
@@ -291,9 +291,11 @@ const LeftSideBarMain = (props) => {
                                     <BsSun size={20} /> Light Mode
                                 </Button>
 
-                                <Button className={theme === 'dark' ? styles.darkThemeActive : styles.darkTheme} danger onClick={() => handleThemeChange()}>
-                                    <BsMoon size={20} /> Dark Mode
-                                </Button>
+                                <Popover content={"Coming Soon"} trigger="hover">
+                                    <Button className={theme === 'dark' ? styles.darkThemeActive : styles.darkTheme} danger onClick={() => handleThemeChange()}>
+                                        <BsMoon size={20} /> Dark Mode
+                                    </Button>
+                                </Popover>
                             </>
                         )}
                     </div>

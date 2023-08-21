@@ -18,7 +18,7 @@ import styles from 'components/common/Common.module.css';
 const { Search } = Input;
 
 export const ApportionDetailForm = (props) => {
-    const { handleCancel, handleAddApportion, apportionTableFormData, showApportionForm, apportionForm, documentAmount, setDocumentAmount, receivedAmount, setReceivedAmount, documentDescriptionList, handleDocumentNumberSearch, totalApportionAmount, totalReceivedAmount, apportionList } = props;
+    const { handleCancel, handleAddApportion, apportionTableFormData, showApportionForm, apportionForm, documentAmount, setDocumentAmount, receivedAmount, setReceivedAmount, documentDescriptionList, handleDocumentNumberChange, handleDocumentNumberSearch, totalApportionAmount, totalReceivedAmount, apportionList } = props;
 
     const [apportionedAmount, setApportionedAmount] = useState();
     const [writeOffAmount, setWriteOffAmount] = useState();
@@ -48,7 +48,7 @@ export const ApportionDetailForm = (props) => {
             const filterItem = apportionList?.filter((item) => item?.documentNumber === value);
             if (!filterItem?.length) return Promise.resolve();
             else return Promise.reject(new Error('Document Number already exist.'));
-        }
+        } else return Promise.resolve();
     };
 
     const onFinishFailed = () => {
@@ -74,7 +74,7 @@ export const ApportionDetailForm = (props) => {
                             },
                         ]}
                     >
-                        <Search allowClear onSearch={handleDocumentNumberSearch} placeholder={preparePlaceholderText('Document Number')} />
+                        <Search allowClear onChange={handleDocumentNumberChange} onSearch={handleDocumentNumberSearch} placeholder={preparePlaceholderText('Document Number')} />
                     </Form.Item>
                 </Col>
             </Row>
