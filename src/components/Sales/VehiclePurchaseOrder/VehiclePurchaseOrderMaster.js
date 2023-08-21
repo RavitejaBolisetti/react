@@ -118,7 +118,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
 
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [isCancelVisible, setIsCancelVisible] = useState(false);
-    const [changeView, setChangeView] = useState(false);
+    const [changeView, setChangeView] = useState(false); 
 
     const onSuccessAction = (res) => {
         // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
