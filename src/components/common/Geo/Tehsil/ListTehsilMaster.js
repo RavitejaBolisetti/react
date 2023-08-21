@@ -464,6 +464,7 @@ export const ListTehsilBase = (props) => {
         handleButtonClick,
         advanceFilterProps,
         title,
+        tableData: searchData,
     };
     return (
         <>

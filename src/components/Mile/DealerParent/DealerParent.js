@@ -251,6 +251,7 @@ export const DealerParentBase = (props) => {
         handleReferesh,
         handleButtonClick,
         title,
+        tableData: searchData,
     };
 
     return (

@@ -120,7 +120,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
     const [isCancelVisible, setIsCancelVisible] = useState(false);
 
     const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
         searchForm.resetFields();
         setShowDataLoading(false);
@@ -133,22 +133,6 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
 
     const extraParams = useMemo(() => {
         return [
-            {
-                key: 'searchType',
-                title: 'Type',
-                value: filterString?.searchType,
-                name: typeData?.find((i) => i?.key === filterString?.searchType)?.value,
-                canRemove: false,
-                filter: false,
-            },
-            {
-                key: 'searchParam',
-                title: 'Value',
-                value: filterString?.searchParam,
-                name: filterString?.searchParam,
-                canRemove: true,
-                filter: true,
-            },
             {
                 key: 'fromDate',
                 title: 'Start Date',
@@ -231,6 +215,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
 
     useEffect(() => {
         if (userId) {
+            setShowDataLoading(true);
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps

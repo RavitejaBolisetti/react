@@ -32,7 +32,7 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
 
         tblPrepareColumns({
             title: 'Status',
-            dataIndex: 'purchaseOrderStatusCode',
+            dataIndex: 'purchaseOrderStatus',
             width: '14%',
             render: (_, record) => VechilePurchaseOrderStatusTag(record.purchaseOrderStatusCode),
         }),
