@@ -48,7 +48,7 @@
     color: #ed302d !important;
 }
 
-.warning :global .ant-notification-close-icon,
+.warning :global .ant-notification-notice-close,
 .warning :global .ant-notification-notice-message {
     color: #f99c22 !important;
 }
