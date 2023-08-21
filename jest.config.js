@@ -24,8 +24,7 @@ module.exports = {
         '^.+\\.(js|jsx)$': 'babel-jest',
     },
     setupFilesAfterEnv: ['@testing-library/jest-dom', '<rootDir>/jest.setup.js'],
-    coveragePathIgnorePatterns: ['<rootDir>/language/', '<rootDir>/assets/', '<rootDir>/utils/', '<rootDir>/mocks/', '<rootDir>/components/common/RoleManagement'],
-    transformIgnorePatterns: ['<rootDir>/node_modules/(?![a-z])', '<rootDir>/assets/(?![a-z])'],
+    coveragePathIgnorePatterns: ['<rootDir>/language/', '<rootDir>/assets/', '<rootDir>/utils/', '<rootDir>/mocks/', '<rootDir>/components/common/RoleManagement', '/node_modules/'],
     coverageThreshold: {
         global: {
             branches: 80,

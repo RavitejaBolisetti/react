@@ -9,14 +9,31 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.jsx$/,
+        test: /\.html$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader',
+          loader: "html-loader",
           options: {
             presets: ['@babel/preset-env', '@babel/preset-react'],
           },
         },
+      },
+      {
+        loader: "html-loader",
+      },
+      {
+        test: /\.css$/,
+        use: [
+          { loader: "style-loader" },
+          {
+            loader: "css-loader",
+          },
+          { loader: "sass-loader" },
+        ],
+      },
+      {
+        test: /\.(jpg|jpeg|gif|png|woff|woff2|eot|ttf|otf|svg|cur)(\?|$)/,
+        type: "asset/resource",
       },
     ],
   },
