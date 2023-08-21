@@ -213,7 +213,7 @@ export const VehicleAllotmentMasterBase = (props) => {
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, searchParamValue, toggleButton]);
+    }, [page, filterString, searchParamValue, toggleButton]);
 
     useEffect(() => {
         return () => {
@@ -520,7 +520,7 @@ export const VehicleAllotmentMasterBase = (props) => {
             <AdvanceFilter {...advanceFilterResultProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable handleAdd={handleButtonClick} {...tableProps} showAddButton={true} />
+                    <ListDataTable handleAdd={handleButtonClick} {...tableProps} showAddButton={false} />
                 </Col>
             </Row>
             <AdvancedSearch {...advanceFilterProps} />
