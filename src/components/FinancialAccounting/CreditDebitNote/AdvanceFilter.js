@@ -9,11 +9,15 @@ import { FilterIcon } from 'Icons';
 import styles from 'components/common/Common.module.css';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { SearchBox } from 'components/utils/SearchBox';
+import { RxCross2 } from 'react-icons/rx';
 
 export default function AdvanceFilter(props) {
-    const { handleButtonClick, extraParams, handleResetFilter, advanceFilter = false, otfFilter = false, title, filterString, setFilterString, setAdvanceSearchVisible, searchForm } = props;
+    const { handleButtonClick, extraParams, handleResetFilter, advanceFilter = false, otfFilter = false, title, filterString, setFilterString, setAdvanceSearchVisible, searchForm, removeFilter } = props;
 
     const handleSearchWithoutParameter = (values) => {
+        if (values.trim() === '') {
+            return;
+        }
         searchForm
             .validateFields()
             .then((values) => {
@@ -76,12 +80,18 @@ export default function AdvanceFilter(props) {
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={22} xl={22} className={styles.advanceFilterContainer}>
                                 <div className={styles.advanceFilterTitle}>Applied Advance Filters : </div>
+                                
                                 {extraParams?.map((filter) => {
                                     return (
                                         filter?.value &&
                                         filter?.filter && (
                                             <div className={styles.advanceFilterItem} key={filter?.key}>
                                                 {filter?.name}
+                                                {filter?.canRemove && (
+                                                    <span>
+                                                        <RxCross2 onClick={() => removeFilter(filter?.key)} />
+                                                    </span>
+                                                )}
                                             </div>
                                         )
                                     );
