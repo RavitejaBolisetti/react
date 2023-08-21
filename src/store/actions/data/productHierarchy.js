@@ -95,8 +95,14 @@ productHierarchyDataActions.fetchList = withAuthToken((params) => ({ token, acce
         if (res?.data) {
             dispatch(receiveProductHierarchyData(res?.data));
         } else {
-            onError();
+            dispatch(receiveProductHierarchyData([]));
+            onError && onError();
         }
+    };
+
+    const onErrorAction = () => {
+        dispatch(receiveProductHierarchyData([]));
+        onError && onError();
     };
 
     const apiCallParams = {
@@ -107,7 +113,7 @@ productHierarchyDataActions.fetchList = withAuthToken((params) => ({ token, acce
         accessToken,
         userId,
         onSuccess,
-        onError,
+        onError: onErrorAction,
         onTimeout: () => onError('Request timed out, Please try again'),
         onUnAuthenticated: () => dispatch(doLogout()),
         onUnauthorized: (message) => dispatch(unAuthenticateUser(message)),

@@ -42,7 +42,6 @@ const mapStateToProps = (state) => {
 
     const moduleTitle = 'Product Detail';
     const viewTitle = 'Hierarchy Details';
-
     let returnValue = {
         isLoading,
         collapsed,
@@ -144,7 +143,6 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
 
     useEffect(() => {
         if (organizationId && userId) {
-            resetData();
             fetchList({ setIsLoading: listShowLoading, userId, onCloseAction, id: organizationId, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -380,6 +378,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         disabledEdit,
         setDisabledEdit,
     };
+
     const leftCol = organizationId && productHierarchyData.length > 0 ? 14 : 24;
     const rightCol = organizationId && productHierarchyData.length > 0 ? 10 : 24;
 
