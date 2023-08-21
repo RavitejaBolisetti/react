@@ -118,6 +118,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
 
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [isCancelVisible, setIsCancelVisible] = useState(false);
+    const [changeView, setChangeView] = useState(false);
 
     const onSuccessAction = (res) => {
         // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -243,11 +244,12 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
     }, [currentSection, sectionName]);
 
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
+
+        setChangeView(() => !changeView);
         form.resetFields();
         form.setFieldsValue(undefined);
         setIsFormVisible(true);
         setIsCancelVisible(false);
-
         switch (buttonAction) {
             case ADD_ACTION:
                 defaultSection && setCurrentSection(defaultSection);
@@ -498,6 +500,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         setIsCancelVisible,
         extraParamsAfterSave: extraParams,
         showDataLoading,
+        changeView,
     };
     const cancelProps = {
         ...props,
