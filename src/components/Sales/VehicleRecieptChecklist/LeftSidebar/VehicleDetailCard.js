@@ -26,7 +26,9 @@ const expandIcon = ({ isActive }) =>
     );
 
 const VehicleDetailCard = (props) => {
-    const { ProfileData } = props;
+    const { ProfileData, typeData } = props;
+    const findStatus = (key) => typeData?.find((element) => element?.key === key)?.value || 'NA';
+
     return (
         <Collapse bordered={true} defaultActiveKey={[1]} expandIcon={expandIcon} collapsible="icon">
             <Panel
@@ -45,7 +47,7 @@ const VehicleDetailCard = (props) => {
                     Checklist Date: <span className={styles.floatRight}>{ProfileData?.checklistDate ? dayjs(ProfileData?.checklistDate)?.format('DD MM YYYY') : 'NA'}</span>
                 </p>
                 <p>
-                    Checklist Status: <span className={styles.floatRight}>{ProfileData?.checklistStatus || 'NA'}</span>
+                    Checklist Status: <span className={styles.floatRight}>{findStatus(ProfileData?.checklistStatus)}</span>
                 </p>
                 <p>
                     GRN Number: <span className={styles.floatRight}>{ProfileData?.grnNumber || 'NA'}</span>
