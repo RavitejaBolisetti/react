@@ -99,16 +99,18 @@ export const RoleManagementMain = (props) => {
         // refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         setRefershData(false);
         setShowDataLoading(false);
+        setShowApplicationDataLoading(false);
     };
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
         setShowDataLoading(false);
+        setShowApplicationDataLoading(false);
     };
 
     useEffect(() => {
         if (userId && (!isDataLoaded || refershData)) {
-            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isDataLoaded, refershData]);
@@ -326,7 +328,7 @@ export const RoleManagementMain = (props) => {
         handleClearInSearch,
         handleReferesh,
         handleButtonClick,
-        title,        
+        title,
         tableData: searchData,
     };
 
