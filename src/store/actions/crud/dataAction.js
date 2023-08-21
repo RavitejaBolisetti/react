@@ -302,7 +302,7 @@ export const dataActions = (params) => {
             };
 
             const onSuccess = (response) => {
-                console.log('res', response.blob());
+                //console.log('res', response.blob());
                 // if (response) {
                 //     response.blob().then((blob) => {
                 //         let url = window.URL.createObjectURL(blob.blob());

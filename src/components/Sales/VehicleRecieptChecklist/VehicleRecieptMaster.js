@@ -260,7 +260,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, page, buttonType]);
-    console.log('filterString', extraParams);
+    //console.log('filterString', extraParams);
 
     useEffect(() => {
         if (userId) {

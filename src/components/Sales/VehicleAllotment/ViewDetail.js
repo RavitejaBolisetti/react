@@ -57,7 +57,7 @@ const ViewDetailMain = (props) => {
     const rowSelection = {
         onChange: (selectedRowKeys, selectedRows) => {
             setSelectedOrderOTFDetails(selectedRows[0]);
-          console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+          //console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
         },
         getCheckboxProps: (record) => ({}),
     };
