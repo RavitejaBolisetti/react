@@ -38,6 +38,7 @@ module.exports = {
         "silenceWarnings": true,
         "silentWarn": true,
         "preset": "ts-jest",
-        "testEnvironment": "jsdom"
-      }
+        "testEnvironment": "jsdom",
+        "nodeOptions": "--max-old-space-size=4096"
+      },
 };
