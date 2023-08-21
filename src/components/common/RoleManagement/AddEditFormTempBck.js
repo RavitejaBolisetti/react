@@ -20,7 +20,7 @@ import { withDrawer } from 'components/withDrawer';
 import { ViewRoleManagement } from './ViewRoleManagement';
 import { makeTreeFromArray, chackedKeysMapData } from './TranformMenudata';
 import { getHierarchyParents } from 'utils/getHierarchyParents';
-import TreeSample from './TreeSample';
+// import TreeSample from './TreeSample';
 
 const { TextArea } = Input;
 const { Panel } = Collapse;
@@ -304,20 +304,20 @@ const AddEditFormMain = (props) => {
         return (
             <>
                 <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
-                    <TreeSample />
+                    {/* <TreeSample /> */}
                     <Tree defaultExpandedKeys={['0-0-0']}>
-                        <TreeNode title="parent 1" key="0-0">
-                            <TreeNode title="parent 1-0" key="0-0-0">
-                                <TreeNode isLeaf title="leaf" key="0-0-0-0" />
-                                <TreeNode isLeaf title="leaf" key="0-0-0-1" />
-                                <TreeNode isLeaf title="leaf" key="0-0-0-2" />
+                        <TreeNode checkable={true} title="parent 1" key="0-0">
+                            <TreeNode className={styles.leafItem} title="parent 1-0" key="0-0-0">
+                                <TreeNode title="leaf" key="0-0-0-0" />
+                                <TreeNode title="leaf" key="0-0-0-1" />
+                                <TreeNode title="leaf" key="0-0-0-2" />
                             </TreeNode>
                             <TreeNode title="parent 1-1" key="0-0-1">
-                                <TreeNode title="leaf" key="0-0-1-0" />
+                                <TreeNode className={styles.leafItem} title="leaf" key="0-0-1-0" />
                             </TreeNode>
                             <TreeNode title="parent 1-2" key="0-0-2">
-                                <TreeNode title="leaf" key="0-0-2-0" />
-                                <TreeNode title="leaf" key="0-0-2-1" />
+                                <TreeNode className={styles.leafItem} title="leaf" key="0-0-2-0" />
+                                <TreeNode className={styles.leafItem} title="leaf" key="0-0-2-1" />
                             </TreeNode>
                         </TreeNode>
                     </Tree>

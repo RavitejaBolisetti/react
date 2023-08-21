@@ -295,7 +295,7 @@ export const VehiclePriceMasterBase = (props) => {
 
     const downloadReport = (documentId) => {
         const onSuccessAction = (res) => {
-            setFileList();
+            setFileList([]);
             setUploadedFile();
             setUploadedFileName();
             resetData();
@@ -387,7 +387,7 @@ export const VehiclePriceMasterBase = (props) => {
             setIsUploadFormVisible(false);
             setEmptyList(false);
             setUploadedFile();
-            setFileList();
+            setFileList([]);
 
             form.resetFields();
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -553,7 +553,7 @@ export const VehiclePriceMasterBase = (props) => {
         onCloseAction: () => {
             setIsUploadFormVisible(false);
             form.resetFields();
-            setFileList();
+            setFileList([]);
             resetViewData();
         },
         buttonData,

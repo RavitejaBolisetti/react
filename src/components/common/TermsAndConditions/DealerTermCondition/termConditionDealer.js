@@ -368,7 +368,8 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHi
         isVisible: isHistoryVisible,
         ChangeHistoryTermsConditionsData,
         onCloseAction: changeHistoryClose,
-        isChangeHistoryContainer: false,
+        isChangeHistoryContainer: false,        
+        tableData: searchData,
     };
 
     return (

@@ -278,6 +278,7 @@ export const DealerCompanyBase = (props) => {
         handleReferesh,
         handleButtonClick,
         title,
+        tableData: searchData,
     };
 
     return (

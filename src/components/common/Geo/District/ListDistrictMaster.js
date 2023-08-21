@@ -408,6 +408,7 @@ export const ListDistrictBase = (props) => {
         handleButtonClick,
         advanceFilterProps,
         title,
+        tableData: searchData,
     };
     return (
         <>

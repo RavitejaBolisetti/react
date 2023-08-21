@@ -56,13 +56,20 @@ const PaymentFormContainer = (props) => {
         }
     };
 
+    const selectProps = {
+        optionFilterProp: 'children',
+        showSearch: true,
+        allowClear: true,
+    };
+
     return (
         <>
             <Form form={paymentForm} autoComplete="off" onFinish={handleSavepaymenttForm} onFieldsChange={handleFormValueChange} layout="vertical">
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item label="Payment Mode" name="paymentMode" rules={[validateRequiredSelectField('Payment Mode')]}>
-                            <Select allowClear maxLength={50} placeholder={preparePlaceholderSelect('Select')} onChange={handlePayment} showSearch>
+                            {/* {customSelectBox({ data: paymentModeType, placeholder: preparePlaceholderSelect('Payment Mode'), onChange: { handlePayment } })} */}
+                            <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} onChange={handlePayment} {...selectProps}>
                                 {paymentModeType?.map((item) => (
                                     <Option key={'dv' + item.key} value={item.key}>
                                         {item.value}

@@ -80,11 +80,12 @@ const mapDispatchToProps = (dispatch) => ({
 
 const CustomerDetailMasterBase = (props) => {
     const { setRefreshCustomerList, handleResetFilter, typeData, fetchCorporateLovList, isCorporateLovDataLoaded, listCorporateLovShowLoading, corporateLovData } = props;
-    const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, data, saveData, isLoading, resetData, form, handleFormValueChange, onFinishFailed } = props;
+    const { userId, showGlobalNotification, section, fetchList, listShowLoading, data, saveData, isLoading, resetData, form, handleFormValueChange, onFinishFailed } = props;
     const { selectedCustomer, selectedCustomerId, setSelectedCustomerId } = props;
     const { buttonData, setButtonData, formActionType, setFormActionType, handleButtonClick, NEXT_ACTION } = props;
     const { fetchViewDocument, viewListShowLoading, listSupportingDocumentShowLoading, isSupportingDocumentDataLoaded, supportingData, isViewDataLoaded, viewDocument } = props;
 
+    const [refreshData, setRefreshData] = useState(false);
     const [showForm, setShowForm] = useState(false);
     const [status, setStatus] = useState(null);
     const [emptyList, setEmptyList] = useState(true);
@@ -107,13 +108,13 @@ const CustomerDetailMasterBase = (props) => {
     };
 
     useEffect(() => {
-        if (isDataLoaded) {
+        if (data) {
             form.setFieldsValue({ ...data });
             setFormData(data);
             // setWhatsAppConfiguration({ contactOverWhatsApp: data?.whatsappCommunicationIndicator, sameMobileNoAsWhatsApp: data?.mobileNumberAsWhatsappNumber });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDataLoaded]);
+    }, [data]);
 
     useEffect(() => {
         return () => {
@@ -142,7 +143,7 @@ const CustomerDetailMasterBase = (props) => {
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedCustomerId]);
+    }, [userId, selectedCustomerId, refreshData]);
 
     const downloadFileFromButton = (uploadData) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Your download will start soon' });
@@ -364,6 +365,8 @@ const CustomerDetailMasterBase = (props) => {
         setactiveKey,
         nameChangeRequested,
         setNameChangeRequested,
+        refreshData,
+        setRefreshData,
     };
 
     const viewProps = {

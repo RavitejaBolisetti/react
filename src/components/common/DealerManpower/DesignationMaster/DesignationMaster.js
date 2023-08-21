@@ -209,14 +209,12 @@ export const DesignationMasterBase = (props) => {
     const handleClearInSearch = (e) => {
         if (e.target.value.length > 2) {
             listFilterForm.validateFields(['code']);
-        }
-        else if (e?.target?.value === '') {
+        } else if (e?.target?.value === '') {
             setFilterString();
             listFilterForm.resetFields();
             setShowDataLoading(false);
         }
     };
-
 
     const handleFilterChange =
         (name, type = 'value') =>
@@ -400,6 +398,7 @@ export const DesignationMasterBase = (props) => {
         handleButtonClick,
         advanceFilterProps,
         title,
+        tableData: searchData,
     };
 
     return (

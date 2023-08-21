@@ -21,7 +21,7 @@ const UploadMain = (props) => {
 
     const downloadReport = (documentId) => {
         const onSuccessAction = (res) => {
-            setFileList();
+            setFileList([]);
             setUploadedFile();
             setUploadedFileName();
             resetData();

@@ -397,6 +397,7 @@ export const AccountCategoryMain = (props) => {
         handleReferesh,
         handleButtonClick,
         title,
+        tableData: accountCategoryData,
     };
 
     return (
