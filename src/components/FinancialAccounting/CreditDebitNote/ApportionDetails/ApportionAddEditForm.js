@@ -12,6 +12,7 @@ import { dateFormat, formatDateToCalenderDate } from 'utils/formatDateTime';
 import { disableFutureDate } from 'utils/disableDate';
 
 import { validateRequiredInputField, validateRequiredSelectField, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
+import { customSelectBox } from 'utils/customSelectBox';
 
 import styles from 'components/common/Common.module.css';
 
@@ -107,8 +108,11 @@ export const AdvanceForm = (props) => {
             showGlobalNotification({ message });
         };
         const onSuccessAction = (res) => {
+            if (typeof res?.data[0] === 'undefined') {
+                showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Document Number is invalid' });
+                return;
+            }
             const apportionValues = res?.data[0];
-
             apportionForm.setFieldsValue({
                 documentDate: formatDateToCalenderDate(apportionValues?.invoiceDate),
                 documentAmount: apportionValues?.invoiceAmount,
@@ -132,7 +136,7 @@ export const AdvanceForm = (props) => {
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item label="Document Type" name="documentType" rules={[validateRequiredSelectField('Document Type')]}>
-                                <Select {...selectProps} allowClear placeholder={preparePlaceholderSelect('item')} options={documentTypeOptions} fieldNames={{ label: 'documentDescription', value: 'documentCode' }} />
+                                {customSelectBox({ data: documentTypeOptions, placeholder: preparePlaceholderSelect('Document type'), fieldNames: { key: 'documentCode', value: 'documentDescription' } })}
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
