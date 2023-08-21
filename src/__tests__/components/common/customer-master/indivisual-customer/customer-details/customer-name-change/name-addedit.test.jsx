@@ -13,10 +13,10 @@ const prop = { formActionType: { editMode: true } };
 
 describe('NameChange addedit   Component', () => {
     it('should render addedit component ', async () => {
-        customRender(<FormWrapper {...prop} setActiveKey={jest.fn()} setEditedMode={jest.fn()} setNameChangeRequested={jest.fn()} />);
+        customRender(<FormWrapper {...prop} setActiveKey={jest.fn()} setEditedMode={jest.fn()} setNameChangeRequested={jest.fn()} setNameChangeHistoryItemList={jest.fn()} />);
 
-        const editBtn = screen.getByRole('button', { name: 'Edit' });
-        fireEvent.click(editBtn);
+        // const editBtn = screen.getByRole('button', { name: 'Edit' });
+        // fireEvent.click(editBtn);
 
         const firstName = screen.getByRole('textbox', { name: 'First Name' });
         fireEvent.change(firstName, { target: { value: 'kai' } });
@@ -31,10 +31,10 @@ describe('NameChange addedit   Component', () => {
         fireEvent.click(saveBtn);
     });
     it('should click on cancel button', async () => {
-        customRender(<FormWrapper {...prop} setActiveKey={jest.fn()} setEditedMode={jest.fn()} setNameChangeRequested={jest.fn()} />);
+        customRender(<FormWrapper {...prop} setActiveKey={jest.fn()} setEditedMode={jest.fn()} setNameChangeRequested={jest.fn()} setNameChangeHistoryItemList={jest.fn()} />);
 
-        const editBtn = screen.getByRole('button', { name: 'Edit' });
-        fireEvent.click(editBtn);
+        // const editBtn = screen.getByRole('button', { name: 'Edit' });
+        // fireEvent.click(editBtn);
 
         const firstName = screen.getByRole('textbox', { name: 'First Name' });
         fireEvent.change(firstName, { target: { value: 'kai' } });

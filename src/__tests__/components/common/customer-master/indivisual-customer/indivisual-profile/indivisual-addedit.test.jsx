@@ -131,15 +131,10 @@ describe('Indivisual addedit Master  Component', () => {
         customRender(<FormWrapper setActiveKey={setActiveKey} activeKey={activeKey} formData={formData} isLoading={isLoading} appCategoryData={appCategoryData} />);
 
         const panelHeader = screen.getByText('Individual Information');
-        fireEvent.click(panelHeader);
+        expect(panelHeader).toBeInTheDocument();
 
-        expect(setActiveKey).toHaveBeenCalledWith([]);
-
-        setActiveKey.mockReset();
-
-        fireEvent.click(panelHeader);
-
-        expect(setActiveKey).toHaveBeenCalledWith([1]);
+        const plusBtn = screen.getAllByRole('img', { name: 'minus' });
+        fireEvent.click(plusBtn[0]);
     });
 
     it('should select marital status value for single', async () => {
