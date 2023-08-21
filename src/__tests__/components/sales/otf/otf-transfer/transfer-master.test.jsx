@@ -1,14 +1,14 @@
 import React from 'react';
-import { screen, fireEvent, waitFor } from '@testing-library/react';
+import { screen, fireEvent, act } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { TransferMaster } from '@components/Sales/OTF/OTFTransfer/TransferMaster';
 import customRender from '@utils/test-utils';
 import { Form } from 'antd';
 import createMockStore from '__mocks__/store';
 
-beforeEach(() => {
-    jest.clearAllMocks()
-})
+afterEach(() => {
+    jest.restoreAllMocks();
+});
 
 const FormWrapper = (props) => {
     const [otfTransferForm] = Form.useForm();
@@ -19,42 +19,6 @@ const FormWrapper = (props) => {
     }
     return <TransferMaster form={myFormMock}  {...props} />;
 };
-
-const data = [
-    {
-        cpd: null,
-        customerName: "Kalyan  Test1",
-        customerType: "IND",
-        mobileNumber: "8097976574",
-        model: "THRNMM8395642778",
-        orderStatus: "B",
-        otfDate: "null",
-        otfNumber: "OTF1690455272392",
-        userProfilePicDocId: "",
-    },
-    {
-        cpd: null,
-        customerName: "Kalyan  Test",
-        customerType: "IND",
-        mobileNumber: "8097976574",
-        model: "THRNMM8395642778",
-        orderStatus: "B",
-        otfDate: "null",
-        otfNumber: "OTF16904552723922",
-        userProfilePicDocId: "",
-    },
-    {
-        cpd: null,
-        customerName: "Kalyan  Test",
-        customerType: "IND",
-        mobileNumber: "8097976574",
-        model: "THRNMM8395642778",
-        orderStatus: "B",
-        otfDate: "null",
-        otfNumber: "OTF169045527239283",
-        userProfilePicDocId: "",
-    }
-]
 
 const typeData = [{
     id: "testId",
@@ -101,11 +65,11 @@ const dealerLocations = [
         dealerLocationName: 'testdealer'
     },
     {
-        locationId: 2,
+        locationId: 22,
         dealerLocationName: 'testdealer2'
     },
     {
-        locationId: 3,
+        locationId: 32,
         dealerLocationName: 'testdealer12'
     }
 ]
@@ -154,7 +118,7 @@ describe('OTF transfer master render', () => {
     });
 
 
-    it('should render transfer master add edit form', () => {
+    it('should render transfer master add edit form', async () => {
         const { getByRole } = customRender(
             <Provider store={mockStore}>
                 <FormWrapper
@@ -168,43 +132,49 @@ describe('OTF transfer master render', () => {
             </Provider>
         );
 
-        const close = getByRole("button", { name: 'Close', exact: false });
-        fireEvent.click(close);
+        const close = screen.getByRole("button", { name: 'Close', exact: false });
+        await act(async () => {
+            fireEvent.click(close);
+        })
+        
+        const cancel = screen.getByRole("button", { name: 'Cancel', exact: false });
+        await act(async () => {
+            fireEvent.click(cancel);
+        })
 
-        const cancel = getByRole("button", { name: 'Cancel', exact: false });
-        fireEvent.click(cancel);
+        const transferOtf = screen.getByRole("button", { name: 'Transfer OTF', exact: false });
+        await act(async () => {
+            fireEvent.click(transferOtf);
+        })
 
-        const transferOtf = getByRole("button", { name: 'Transfer OTF', exact: false });
-        fireEvent.click(transferOtf);
-
-        const closeImg = getByRole("img", { name: 'close', exact: false });
+        const closeImg = screen.getByRole("img", { name: 'close', exact: false });
         expect(closeImg).toBeTruthy();
 
-        const otfNo = getByRole("columnheader", { name: 'OTF No.', exact: false });
+        const otfNo = screen.getByRole("columnheader", { name: 'OTF No.', exact: false });
         expect(otfNo).toBeTruthy();
 
-        const otfDate = getByRole("columnheader", { name: 'OTF Date', exact: false });
+        const otfDate = screen.getByRole("columnheader", { name: 'OTF Date', exact: false });
         expect(otfDate).toBeTruthy();
 
-        const customerName = getByRole("columnheader", { name: 'Customer Name', exact: false });
+        const customerName = screen.getByRole("columnheader", { name: 'Customer Name', exact: false });
         expect(customerName).toBeTruthy();
 
-        const mobileNo = getByRole("columnheader", { name: 'Mobile No.', exact: false });
+        const mobileNo = screen.getByRole("columnheader", { name: 'Mobile No.', exact: false });
         expect(mobileNo).toBeTruthy();
 
-        const model = getByRole("columnheader", { name: 'Model', exact: false });
+        const model = screen.getByRole("columnheader", { name: 'Model', exact: false });
         expect(model).toBeTruthy();
 
-        const order = getByRole("columnheader", { name: 'Order Status', exact: false });
+        const order = screen.getByRole("columnheader", { name: 'Order Status', exact: false });
         expect(order).toBeTruthy();
 
-        const tranLocation = getByRole("combobox", { name: 'Transfer To Location', exact: false });
+        const tranLocation = screen.getByRole("combobox", { name: 'Transfer To Location', exact: false });
         fireEvent.change(tranLocation, { target: { value: 'noida' } });
 
-        const sales = getByRole("combobox", { name: 'Sales Consultant', exact: false });
+        const sales = screen.getByRole("combobox", { name: 'Sales Consultant', exact: false });
         fireEvent.change(sales, { target: { value: 'noida' } });
 
-        const reason = getByRole("combobox", { name: 'Reason For Transfer', exact: false });
+        const reason = screen.getByRole("combobox", { name: 'Reason For Transfer', exact: false });
         fireEvent.change(reason, { target: { value: 'noida' } });
 
     })

@@ -18,7 +18,7 @@ describe('Customer Master component', () => {
             data: {
                 ConfigurableParameterEditing: {
                     filteredListData: {
-                        CUST_MST: [{"id":"1","key":"chassisNumber","value":"Chassis Number","parentKey":"CUST_MST"},{"id":"2","key":"registrationNumber","value":"Registration Number","parentKey":"CUST_MST"},{"id":"3","key":"viNumber","value":"VIN ","parentKey":"CUST_MST"},{"id":"4","key":"customerName","value":"Customer name","parentKey":"CUST_MST"},{"id":"5","key":"mobileNumber","value":"Mobile Number","parentKey":"CUST_MST"},{"id":"6","key":"customerId","value":"Customer ID","parentKey":"CUST_MST"}]
+                        CUST_MST: [{ "id": "1", "key": "chassisNumber", "value": "Chassis Number", "parentKey": "CUST_MST" }, { "id": "2", "key": "registrationNumber", "value": "Registration Number", "parentKey": "CUST_MST" }, { "id": "3", "key": "viNumber", "value": "VIN ", "parentKey": "CUST_MST" }, { "id": "4", "key": "customerName", "value": "Customer name", "parentKey": "CUST_MST" }, { "id": "5", "key": "mobileNumber", "value": "Mobile Number", "parentKey": "CUST_MST" }, { "id": "6", "key": "customerId", "value": "Customer ID", "parentKey": "CUST_MST" }]
                     }
                 }
             },
@@ -27,7 +27,7 @@ describe('Customer Master component', () => {
                     filter: {
                         searchType: {
                             value: 'search'
-                        }, 
+                        },
                         searchParam: 'search'
                     }
                 }
@@ -35,30 +35,30 @@ describe('Customer Master component', () => {
         });
 
         customRender(
-        <Provider store={mockStore}>
-            <CustomerMaster />
-        </Provider>
+            <Provider store={mockStore}>
+                <CustomerMaster />
+            </Provider>
         );
 
     });
 
     it('individual and corporate toggle button should work', () => {
 
-        customRender(<CustomerMaster /> );
+        customRender(<CustomerMaster />);
 
-        const individualBtn=screen.getByRole('button', { name: 'Individual' });
+        const individualBtn = screen.getByRole('button', { name: 'Individual' });
         fireEvent.click(individualBtn);
 
-        const corporateBtn=screen.getByRole('button', { name: 'Corporate' });
+        const corporateBtn = screen.getByRole('button', { name: 'Corporate' });
         fireEvent.click(corporateBtn);
 
     });
 
     it('add button should work', () => {
 
-        customRender(<CustomerMaster /> );
+        customRender(<CustomerMaster />);
 
-        const addBtn=screen.getByRole('button', { name: 'plus Add' });
+        const addBtn = screen.getByRole('button', { name: 'plus Add' });
         fireEvent.click(addBtn);
 
     });
@@ -69,37 +69,37 @@ describe('Customer Master component', () => {
             data: {
                 ConfigurableParameterEditing: {
                     filteredListData: {
-                        CUST_MST: [{"id":"1","key":"chassisNumber","value":"Chassis Number","parentKey":"CUST_MST"},{"id":"2","key":"registrationNumber","value":"Registration Number","parentKey":"CUST_MST"},{"id":"3","key":"viNumber","value":"VIN ","parentKey":"CUST_MST"},{"id":"4","key":"customerName","value":"Customer name","parentKey":"CUST_MST"},{"id":"5","key":"mobileNumber","value":"Mobile Number","parentKey":"CUST_MST"},{"id":"6","key":"customerId","value":"Customer ID","parentKey":"CUST_MST"}]
+                        CUST_MST: [{ "id": "1", "key": "chassisNumber", "value": "Chassis Number", "parentKey": "CUST_MST" }, { "id": "2", "key": "registrationNumber", "value": "Registration Number", "parentKey": "CUST_MST" }, { "id": "3", "key": "viNumber", "value": "VIN ", "parentKey": "CUST_MST" }, { "id": "4", "key": "customerName", "value": "Customer name", "parentKey": "CUST_MST" }, { "id": "5", "key": "mobileNumber", "value": "Mobile Number", "parentKey": "CUST_MST" }, { "id": "6", "key": "customerId", "value": "Customer ID", "parentKey": "CUST_MST" }]
                     }
                 }
             },
             customer: {
                 customerDetail: {
-                    filter: {"searchType":"customerName","searchParam":"Hello World","advanceFilter":true}
+                    filter: { "searchType": "customerName", "searchParam": "Hello World", "advanceFilter": true }
                 }
             }
         });
 
         customRender(
-        <Provider store={mockStore}>
-            <CustomerMaster setFilterString={jest.fn()} />
-        </Provider>
+            <Provider store={mockStore}>
+                <CustomerMaster setFilterString={jest.fn()} />
+            </Provider>
         );
 
-        const selectParameter=screen.getByRole('combobox', { name: '' });
-        fireEvent.change(selectParameter, { target: { value: 'Customer name' }});
+        const selectParameter = screen.getByRole('combobox', { name: '' });
+        fireEvent.change(selectParameter, { target: { value: 'Customer name' } });
 
-        const customerName=screen.getByText('Customer name');
+        const customerName = screen.getByText('Customer name');
         fireEvent.click(customerName);
-        
-        const searchBox=screen.getByRole('textbox', { name: '' });
+
+        const searchBox = screen.getByRole('textbox', { name: '' });
         fireEvent.change(searchBox, { target: { value: 'Hello World' } });
 
-        const searchBtn=screen.getByRole('button', { name: 'search' });
+        const searchBtn = screen.getByRole('button', { name: 'search' });
         fireEvent.click(searchBtn);
 
-        const clearBtn=screen.getByRole('button', { name: 'close-circle' });
+        const clearBtn = screen.getByRole('button', { name: 'close-circle' });
         fireEvent.click(clearBtn);
     });
-    
+
 });
