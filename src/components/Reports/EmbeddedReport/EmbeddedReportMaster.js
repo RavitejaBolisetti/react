@@ -95,13 +95,13 @@ export const EmbeddedReportMasterMain = (props) => {
         [
             'loaded',
             function () {
-                console.log('Report has loaded');
+               // console.log('Report has loaded');
             },
         ],
         [
             'rendered',
             function () {
-                console.log('Report has rendered');
+                //console.log('Report has rendered');
             },
         ],
         [

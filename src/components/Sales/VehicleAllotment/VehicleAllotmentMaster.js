@@ -140,14 +140,24 @@ export const VehicleAllotmentMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
 
+    useEffect(() => {
+        setButtonData(allotmentSummaryDetails?.allotmentStatus === VEHICLE_TYPE.UNALLOTED.desc ? { cancelBtn: true, allotBtn: true } : { cancelBtn: true, unAllot: true });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [allotmentSummaryDetails]);
+
+    useEffect(() => {
+        setPage({ pageSize: 10, current: 1 });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [toggleButton]);
+
     const extraParams = useMemo(() => {
         return [
             {
                 key: 'searchType',
                 title: 'Type',
                 value: toggleButton,
-                //name: typeData?.[PARAM_MASTER.VECH_ALLOT_SER.id]?.find((i) => i?.key === toggleButton)?.value,
-                name: toggleButton,
+                name: typeData?.[PARAM_MASTER.ALT_ACTN.id]?.find((i) => i?.key === toggleButton)?.value,
+                //name: toggleButton,
                 canRemove: false,
                 filter: true,
             },
@@ -160,7 +170,7 @@ export const VehicleAllotmentMasterBase = (props) => {
                 filter: true,
             },
             {
-                key: 'model',
+                key: 'modelValue',
                 title: 'Model',
                 value: filterString?.model,
                 name: productHierarchyData?.find((i) => i?.prodctCode === filterString?.model)?.prodctShrtName,
@@ -168,15 +178,15 @@ export const VehicleAllotmentMasterBase = (props) => {
                 filter: true,
             },
             {
-                key: 'vehicleStatus',
+                key: 'vehicleStatusValue',
                 title: 'Vehicle Status',
                 value: filterString?.vehicleStatus,
-                name: typeData[PARAM_MASTER.ALT_ACTN.id]?.find((i) => i?.key === filterString?.vehicleStatus)?.value,
+                name: typeData[PARAM_MASTER.VEHCL_STATS.id]?.find((i) => i?.key === filterString?.vehicleStatus)?.value,
                 canRemove: true,
                 filter: true,
             },
             {
-                key: 'pdDone',
+                key: 'pdiDoneValue',
                 title: 'PD Done',
                 value: filterString?.pdDone,
                 name: typeData[PARAM_MASTER.PD_DONE.id]?.find((i) => i?.key === filterString?.pdDone)?.value,
@@ -224,10 +234,7 @@ export const VehicleAllotmentMasterBase = (props) => {
     }, []);
 
     const ChangeSearchHandler = (e) => {
-        if (e.target.value.length > 2) {
-            setSearchParamValue(e.target.value);
-        } else if (e?.target?.value === '') {
-        }
+        setSearchParamValue(e.target.value);
     };
 
     const onSearchHandle = (value) => {
@@ -244,7 +251,7 @@ export const VehicleAllotmentMasterBase = (props) => {
             fetchVehicleAllotmentSearchedList({ customURL: customURL + '/search', setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, filterString, searchParamValue, toggleButton]);
+    }, [userId, filterString, searchParamValue, toggleButton, extraParams]);
 
     const searchOTFExtraParams = useMemo(() => {
         return [
@@ -337,7 +344,14 @@ export const VehicleAllotmentMasterBase = (props) => {
     };
 
     const handleVehicleAllotment = (req, buttonAction) => {
-        let data = { ...allotmentSummaryDetails, vehicleOTFDetails: selectedOTFDetails };
+        let updatedStatus = '';
+        if(buttonAction === FROM_ACTION_TYPE?.ALLOT){
+            updatedStatus = VEHICLE_TYPE?.ALLOTED.desc;
+        }else{
+            updatedStatus = VEHICLE_TYPE?.UNALLOTED.desc;
+        }
+
+        let data = { ...allotmentSummaryDetails, vehicleOTFDetails: selectedOTFDetails, allotmentStatus: updatedStatus };
 
         const onSuccess = (res) => {
             form.resetFields();

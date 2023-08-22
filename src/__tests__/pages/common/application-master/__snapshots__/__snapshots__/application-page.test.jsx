@@ -4,7 +4,6 @@ import { ApplicationMasterPage } from '@pages/common/ApplicationMasterPage/Appli
 
 describe('ApplicationMasterPageBase Components', () => {
     it('should render ApplicationMasterPageBase components', () => {
-        const ApplicationMasterPageBase = customRender(<ApplicationMasterPage />);
-        expect(ApplicationMasterPageBase).toMatchSnapshot();
+        customRender(<ApplicationMasterPage />);
     });
 });

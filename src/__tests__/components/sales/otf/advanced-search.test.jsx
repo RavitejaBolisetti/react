@@ -8,7 +8,9 @@ import { screen, fireEvent } from "@testing-library/react";
 import customRender from '@utils/test-utils';
 import { AdvancedSearch } from 'components/Sales/OTF/AdvancedSearch';
 import { Form } from 'antd';
-
+afterEach(() => {
+    jest.restoreAllMocks();
+  });
 const FormWrapper = (props) => {
     const [advanceFilterForm] = Form.useForm();
     return <AdvancedSearch advanceFilterForm={advanceFilterForm} {...props} />

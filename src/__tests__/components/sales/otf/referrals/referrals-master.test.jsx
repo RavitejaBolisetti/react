@@ -5,10 +5,12 @@ import { ReferralsMaster } from '@components/Sales/OTF/Referrals/ReferralsMaster
 import customRender from '@utils/test-utils';
 import { Form } from 'antd';
 import createMockStore from '__mocks__/store';
+import { act } from 'react-dom/test-utils';
 
-beforeEach(() => {
-    jest.clearAllMocks()
-})
+afterEach(() => {
+    jest.restoreAllMocks();
+});
+
 
 const FormWrapper = (props) => {
     const [form] = Form.useForm();
@@ -210,7 +212,7 @@ describe('OTF referrals master render', () => {
         },
         customer: {
             customerDetail: {
-                isLoaded: false, 
+                isLoaded: false,
                 isLoading: false,
                 data: referralData
             },
@@ -219,7 +221,7 @@ describe('OTF referrals master render', () => {
 
     it('should render referrals view details', async () => {
         await waitFor(() => {
-            const { getByRole } = customRender(
+            customRender(
                 <Provider store={mockStore}>
                     <FormWrapper
                         setFormData={jest.fn()}
@@ -236,89 +238,87 @@ describe('OTF referrals master render', () => {
                 </Provider>
             );
 
-            const referralId = getByRole('columnheader', { name: 'Referral ID' });
+            const referralId = screen.getByRole('columnheader', { name: 'Referral ID' });
             expect(referralId).toBeTruthy();
 
-            const regNumber = getByRole('columnheader', { name: 'Registration Number' });
+            const regNumber = screen.getByRole('columnheader', { name: 'Registration Number' });
             expect(regNumber).toBeTruthy();
 
-            const chassisNo = getByRole('columnheader', { name: 'Chassis Number' });
+            const chassisNo = screen.getByRole('columnheader', { name: 'Chassis Number' });
             expect(chassisNo).toBeTruthy();
 
-            const customerId = getByRole('columnheader', { name: 'Customer ID' });
+            const customerId = screen.getByRole('columnheader', { name: 'Customer ID' });
             expect(customerId).toBeTruthy();
 
-            const customerType = getByRole('columnheader', { name: 'Customer Type' });
+            const customerType = screen.getByRole('columnheader', { name: 'Customer Type' });
             expect(customerType).toBeTruthy();
 
-            const customerName = getByRole('columnheader', { name: 'Customer Name' });
+            const customerName = screen.getByRole('columnheader', { name: 'Customer Name' });
             expect(customerName).toBeTruthy();
 
-            const mobileNo = getByRole('columnheader', { name: 'Mobile Number' });
+            const mobileNo = screen.getByRole('columnheader', { name: 'Mobile Number' });
             expect(mobileNo).toBeTruthy();
 
-            const emailId = getByRole('columnheader', { name: 'Email ID' });
+            const emailId = screen.getByRole('columnheader', { name: 'Email ID' });
             expect(emailId).toBeTruthy();
 
-            const dob = getByRole('columnheader', { name: 'Date of Birth' });
+            const dob = screen.getByRole('columnheader', { name: 'Date of Birth' });
             expect(dob).toBeTruthy();
         })
     })
 
     it('should render referrals add edit form', async () => {
-        await waitFor(() => {
-            const { getByRole } = customRender(
-                <Provider store={mockStore}>
-                    <FormWrapper
-                        setFormData={jest.fn()}
-                        {...props}
-                        formActionType={formActionTypeAdd}
-                        handleFormValueChange={jest.fn()}
-                        fetchCustomerList={jest.fn()}
-                        extraParams={searchParams}
-                        onFinish={jest.fn()}
-                        onFinishFailed={jest.fn()}
-                        onError={jest.fn()}
-                        onSuccess={jest.fn()}
-                        buttonData={buttonData}
-                        showGlobalNotification={true}
-                        onSuccessAction={jest.fn()}
-                    />
-                </Provider>
-            );
+        customRender(
+            <Provider store={mockStore}>
+                <FormWrapper
+                    setFormData={jest.fn()}
+                    {...props}
+                    formActionType={formActionTypeAdd}
+                    handleFormValueChange={jest.fn()}
+                    fetchCustomerList={jest.fn()}
+                    extraParams={searchParams}
+                    onFinish={jest.fn()}
+                    onFinishFailed={jest.fn()}
+                    onError={jest.fn()}
+                    onSuccess={jest.fn()}
+                    buttonData={buttonData}
+                    showGlobalNotification={true}
+                    onSuccessAction={jest.fn()}
+                />
+            </Provider>
+        );
 
-            const customerType = getByRole("combobox", { name: 'Customer Type', exact: false });
-            fireEvent.change(customerType, { target: { value: 'testType' } });
+        const customerType = screen.getByRole("combobox", { name: 'Customer Type', exact: false });
+        fireEvent.change(customerType, { target: { value: 'testType' } });
 
-            const vehicleReg = getByRole("textbox", { name: 'Vehicle Registration Number', exact: false });
-            fireEvent.change(vehicleReg, { target: { value: 'reg' } });
+        const vehicleReg = screen.getByRole("textbox", { name: 'Vehicle Registration Number', exact: false });
+        fireEvent.change(vehicleReg, { target: { value: 'reg' } });
 
-            const chassisNo = getByRole("textbox", { name: 'Chassis Number', exact: false });
-            fireEvent.change(chassisNo, { target: { value: 'make' } });
+        const chassisNo = screen.getByRole("textbox", { name: 'Chassis Number', exact: false });
+        fireEvent.change(chassisNo, { target: { value: 'make' } });
 
-            const customerCode = getByRole("textbox", { name: 'Customer Code', exact: false });
-            fireEvent.change(customerCode, { target: { value: 'tseCode' } });
+        const customerCode = screen.getByRole("textbox", { name: 'Customer Code', exact: false });
+        fireEvent.change(customerCode, { target: { value: 'tseCode' } });
 
-            const customerName = getByRole("textbox", { name: 'Customer Name', exact: false });
-            fireEvent.change(customerName, { target: { value: 'test' } });
+        const customerName = screen.getByRole("textbox", { name: 'Customer Name', exact: false });
+        fireEvent.change(customerName, { target: { value: 'test' } });
 
-            const mobileNo = getByRole("textbox", { name: 'Mobile Number', exact: false });
-            fireEvent.change(mobileNo, { target: { value: '199934' } });
+        const mobileNo = screen.getByRole("textbox", { name: 'Mobile Number', exact: false });
+        fireEvent.change(mobileNo, { target: { value: '199934' } });
 
-            const emailId = getByRole("textbox", { name: 'Email Id', exact: false });
-            fireEvent.change(emailId, { target: { value: 'test@gmail.com' } });
+        const emailId = screen.getByRole("textbox", { name: 'Email Id', exact: false });
+        fireEvent.change(emailId, { target: { value: 'test@gmail.com' } });
 
-            const dob = getByRole("textbox", { name: 'Date of Birth', exact: false });
-            fireEvent.click(dob, { target: { value: '1997-12-20' } });
+        const dob = screen.getByRole("textbox", { name: 'Date of Birth', exact: false });
+        fireEvent.change(dob, { target: { value: '1997-12-20' } });
 
-            const searchBtn = getByRole("button", { name: 'search', exact: false });
-            fireEvent.click(searchBtn);
+        const searchBtn = screen.getByRole("button", { name: 'search', exact: false });
+        fireEvent.click(searchBtn);
 
-            const searchImg = getByRole("img", { name: 'search', exact: false });
-            fireEvent.click(searchImg);
+        const searchImg = screen.getByRole("img", { name: 'search', exact: false });
+        expect(searchImg).toBeTruthy();
 
-            const calendar = getByRole("img", { name: 'calendar', exact: false });
-            fireEvent.click(calendar);
-        })
+        const calendar = screen.getByRole("img", { name: 'calendar', exact: false });
+        expect(calendar).toBeTruthy();
     })
 })

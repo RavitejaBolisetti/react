@@ -156,7 +156,7 @@
     padding-top: 10px;
 } */
 
-:global .ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-title-content > a:hover {
+:global .ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-title-content>a:hover {
     text-decoration: none;
 }
 
@@ -402,7 +402,7 @@
     height: 36px !important;
 }
 
-@media (min-width: 997px) and (max-width: 1280px) {
+/* @media (min-width: 997px) and (max-width: 1280px) {
     .headerLeft {
         padding-left: 20px;
     }
@@ -428,7 +428,7 @@
         line-height: 15px;
         font-weight: 500;
     }
-}
+} */
 
 @media (min-width: 768px) and (max-width: 998px) {
     .menuIcon {

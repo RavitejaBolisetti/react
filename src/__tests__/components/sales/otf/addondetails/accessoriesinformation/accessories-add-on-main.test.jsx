@@ -5,6 +5,10 @@ import { screen, fireEvent, render } from '@testing-library/react';
 import AccessoriesAddonMain from 'components/Sales/OTF/AddOnDetails/AccessoriesInformation/AccessoriesAddonMain';
 import { Form } from 'antd';
 
+afterEach(() => {
+    jest.restoreAllMocks();
+  });  
+
 const FormWrapper = (props) => {
     const [accessoryForm] = Form.useForm();
 

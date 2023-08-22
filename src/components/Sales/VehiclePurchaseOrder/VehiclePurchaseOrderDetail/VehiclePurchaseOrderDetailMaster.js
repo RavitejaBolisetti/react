@@ -151,20 +151,23 @@ const VehiclePurchaseOrderDetailMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, viewVehiclePODetails]);
 
-    const getDealerlocation = (e) => {
-        const extraParams = [
-            {
-                key: 'dealerParentCode',
-                title: 'dealerParentCode',
-                value: e,
-                name: 'Dealer Parent Code',
-            },
-        ];
-        fetchDealerLocation({ setIsLoading: listShowLoading, extraParams, onErrorAction });
+    const getDealerlocation = (dealerCode) => {        
+        if(dealerCode){      
+            const extraParams = [
+                {
+                    key: 'dealerParentCode',
+                    title: 'dealerParentCode',
+                    value: dealerCode,
+                    name: 'Dealer Parent Code',
+                }, 
+            ];
+            fetchDealerLocation({ setIsLoading: listShowLoading, extraParams, onErrorAction });
+
+        } 
     };
 
     const onFinish = (values) => {
-        console.log('save');
+        //console.log('save');
         const recordId = viewVehiclePODetails?.id || '';
 
         const onSuccess = (res) => {

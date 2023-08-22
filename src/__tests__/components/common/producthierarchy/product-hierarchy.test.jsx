@@ -1,93 +1,100 @@
 import '@testing-library/jest-dom/extend-expect';
-import customRender from "@utils/test-utils";
+import customRender from '@utils/test-utils';
 import { ProductHierarchy } from '@components/common/ProductHierarchy/ProductHierarchy';
-import { fireEvent, screen } from "@testing-library/react";
+import { fireEvent, screen } from '@testing-library/react';
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
+import { act } from 'react-dom/test-utils';
 
-describe("Producthierarchy Components", () => {
+afterEach(() => {
+    jest.restoreAllMocks();
+});
 
-    it("should render producthierarchy component", () => {
+describe('Producthierarchy Components', () => {
+    it('should render producthierarchy component', () => {
         customRender(<ProductHierarchy />);
     });
 
-    it("search input box should work", () => {
+    it('search input box should work', () => {
         const mockStore = createMockStore({
             auth: { userId: 106 },
-            data:{
-                ProductHierarchy:{
+            data: {
+                ProductHierarchy: {
                     organizationId: true,
                 },
-            }
+            },
         });
 
         customRender(
-        <Provider store={mockStore}>
-            <ProductHierarchy />
-        </Provider>
+            <Provider store={mockStore}>
+                <ProductHierarchy />
+            </Provider>
         );
-        const searchBox=screen.getByRole('textbox', { name: '' });
-        fireEvent.change(searchBox, { target : { value: 'Kai' } });
+        const searchBox = screen.getByRole('textbox', { name: '' });
+        fireEvent.change(searchBox, { target: { value: 'Kai' } });
     });
 
-    it("add and edit form cancel button should work", () => {
+    it('add and edit form cancel button should work', async () => {
         const mockStore = createMockStore({
             auth: { userId: 106 },
-            data:{
-                ProductHierarchy:{
+            data: {
+                ProductHierarchy: {
                     organizationId: true,
                 },
-            }
+            },
         });
 
         customRender(
-        <Provider store={mockStore}>
-            <ProductHierarchy onCloseAction={jest.fn()} />
-        </Provider>
+            <Provider store={mockStore}>
+                <ProductHierarchy onCloseAction={jest.fn()} />
+            </Provider>
         );
-        const addBtn=screen.getByRole('button', { name: 'plus Add' });
+        const addBtn = screen.getByRole('button', { name: 'plus Add' });
+
         fireEvent.click(addBtn);
-        const cancelBtn=screen.getByRole('button', { name: 'Cancel' });
+
+        const cancelBtn = screen.getByRole('button', { name: 'Cancel' });
+
         fireEvent.click(cancelBtn);
     });
 
-    it("Hierarchy tree select should work", () => {
+    it('Hierarchy tree select should work', async () => {
         const mockStore = createMockStore({
             auth: { userId: 106 },
-            data:{
-                ProductHierarchy:{
+            data: {
+                ProductHierarchy: {
                     organizationId: true,
-                    data: [ { "id": "106", "prodctLongName": "Kai", "prodctShrtName": "Kai", "prodctCode": "106", "active": true, "attributeKey": "106" } ],
+                    data: [{ id: '106', prodctLongName: 'Kai', prodctShrtName: 'Kai', prodctCode: '106', active: true, attributeKey: '106' }],
                     changeHistoryVisible: true,
-                    isVisible: true
+                    isVisible: true,
                 },
                 HierarchyAttributeMaster: {
-                    data: [{status: 'active'}]
+                    data: [{ status: 'active' }],
                 },
-            }
+            },
         });
-
 
         customRender(
             <Provider store={mockStore}>
                 <ProductHierarchy onCloseAction={jest.fn()} />
             </Provider>
         );
-        const treeSelect=screen.getByText('Kai');
+        const treeSelect = screen.getByText('Kai');
+
         fireEvent.click(treeSelect);
     });
 
-    it("Hierarchy tree select should work with selecting tree", () => {
+    it('Hierarchy tree select should work with selecting tree', async () => {
         const mockStore = createMockStore({
             auth: { userId: 106 },
-            data:{
-                ProductHierarchy:{
+            data: {
+                ProductHierarchy: {
                     organizationId: false,
                 },
                 ManufacturerOrgHierarchy: {
-                    data: [ {"id":"106","manufactureOrgLongName":"Kai","manufactureOrgShrtName":"Kai","manufactureOrgCode":"Kai","manufactureOrgParntId":"null","active":true,"attributeKey":"106","subManufactureOrg":[]} ]
-                }
-            }
+                    data: [{ id: '106', manufactureOrgLongName: 'Kai', manufactureOrgShrtName: 'Kai', manufactureOrgCode: 'Kai', manufactureOrgParntId: 'null', active: true, attributeKey: '106', subManufactureOrg: [] }],
+                },
+            },
         });
 
         customRender(
@@ -95,10 +102,10 @@ describe("Producthierarchy Components", () => {
                 <ProductHierarchy onCloseAction={jest.fn()} />
             </Provider>
         );
-        const treeSelect=screen.getByRole('combobox', { name:'' });
+        const treeSelect = screen.getByRole('combobox', { name: '' });
         fireEvent.change(treeSelect, { target: { value: 'Kai' } });
-        const treeData=screen.getByText('Kai');
+        const treeData = screen.getByText('Kai');
+
         fireEvent.click(treeData);
     });
-
-})
+});
