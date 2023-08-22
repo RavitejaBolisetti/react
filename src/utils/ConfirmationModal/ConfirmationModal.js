@@ -11,11 +11,11 @@ import { withModal } from 'components/withModal';
 import { validateRequiredInputField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
-import styles from './ConfirmNameChangeRequest.module.css';
+import styles from './ConfirmationModal.module.css';
 
 const { TextArea } = Input;
 
-const ConfirmNameChangeRequestMain = (props) => {
+const ConfirmationModalMain = (props) => {
     const { onCloseAction, onSubmitAction, submitText = 'Submit', showField = false, text = '' } = props;
 
     const [form] = Form.useForm();
@@ -51,4 +51,4 @@ const ConfirmNameChangeRequestMain = (props) => {
     );
 };
 
-export const ConfirmNameChangeRequest = withModal(ConfirmNameChangeRequestMain, { width: 400 });
+export const ConfirmationModal = withModal(ConfirmationModalMain, { width: 400 });
