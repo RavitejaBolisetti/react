@@ -41,7 +41,7 @@ import {
 } from 'pages/common';
 
 import { TaxChargesPage, TaxChargesCategoryPage, AccountCategoryPage, VehicleModelTaxChargesCategoryPage, DocumentTypeOtherChargesPage, CreditDebitNoteMasterPage } from 'pages/FinancialAccounting';
-import { OTFMasterPage, VehicleDetailMasterPage, VehiclePriceMasterPage, VehicleReceiptMasterPage, RSMApprovalPage, VehiclePurchaseOrderMasterPage, VehicleRecieptChecklistMaster, OtfSoMappingMasterPage, ReceiptMasterPage, VehicleAllotmentMasterPage } from 'pages/Sales';
+import { OTFMasterPage, VehicleDetailMasterPage, VehiclePriceMasterPage, VehicleReceiptMasterPage, RSMApprovalPage, VehiclePurchaseOrderMasterPage, VehicleRecieptChecklistMaster, OtfSoMappingMasterPage, ReceiptMasterPage, VehicleInvoiceMasterPage, VehicleAllotmentMasterPage } from 'pages/Sales';
 
 import * as routing from 'constants/routing';
 import { SplashPage } from 'pages/splash';
@@ -124,6 +124,8 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_VEHICLE_PRICE_MASTER} element={<VehiclePriceMasterPage />} exact />
             <Route path={routing.ROUTING_VEHICLE_RECEIPT} element={<VehicleReceiptMasterPage />} exact />
             <Route path={routing.ROUTING_RECEIPTS} element={<ReceiptMasterPage />} exact />
+            <Route path={routing.ROUTING_VEHICLE_INVOICE_GENERATION} element={<VehicleInvoiceMasterPage />} exact />
+
             <Route path={routing.ROUTING_REPORT_OTF_REPORTS} element={<OtfReportsPage />} />
             <Route path={routing.ROUTING_OTF_SO_MAPPING_CONTROL_MASTER} element={<OtfSoMappingMasterPage />} />
 
@@ -135,7 +137,6 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_CREDIT_DEBIT_NOTE} element={<CreditDebitNoteMasterPage />} exact />
             <Route path={routing.ROUTING_DOCUMENT_TYPE} element={<DocumentTypeOtherChargesPage />} exact />
             <Route path={routing.ROUTING_VEHICLE_RECIEPT_CHECKLIST} element={<VehicleRecieptChecklistMaster />} exact />
-
         </Routes>
     );
 };
