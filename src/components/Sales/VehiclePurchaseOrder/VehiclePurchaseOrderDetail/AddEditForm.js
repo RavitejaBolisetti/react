@@ -68,7 +68,7 @@ const AddEditFormMain = (props) => {
                                 {dealerFlag && (
                                     <>
                                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                                            <Form.Item name="dealerParentCode" label="Dealer Code" initialValue={formData?.dealerParentCode} rules={[validateRequiredSelectField('Dealer Code')]}>
+                                            <Form.Item name="dealerParentCode" label="Dealer Code" initialValue={formData?.dealerParentCode} rules={[validateRequiredSelectField('Dealer Code')]} validateTrigger={['onChange','onSearch']}>
                                                 <Search maxLength={50} allowClear onSearch={getDealerlocation} onChange={handleOnClear} placeholder="Enter Dealer Code" />
                                             </Form.Item>
                                         </Col>
@@ -77,7 +77,7 @@ const AddEditFormMain = (props) => {
                                             {/* <Form.Item name="dealerLocation" label="Dealer Location" initialValue={formData?.dealerLocation} rules={[validateRequiredSelectField('Dealer Location')]}>
                                                 <Select placeholder="Select Location" showSearch options={dealerLocationList} fieldNames={{ label: 'dealerLocationName', value: 'id' }} />
                                             </Form.Item> */}
-                                            <Form.Item initialValue={formData?.dealerLocation} name="dealerLocation" label="Dealer Location" >                                          
+                                            <Form.Item initialValue={formData?.dealerLocation} name="dealerLocation" label="Dealer Location" rules={[validateRequiredSelectField('Dealer Location')]}>                                          
                                                 {customSelectBox({data: dealerLocationList, fieldNames: { key: 'id', value: 'dealerLocationName' }, placeholder: preparePlaceholderSelect('Location'),})}
                                             </Form.Item>
                                         </Col>
