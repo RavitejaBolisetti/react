@@ -49,6 +49,7 @@
         "watch-tests": "cross-env BABEL_ENV=test jest --watch",
         "eject": "react-scripts eject",
         "clear_jest": "jest --clearCache",
+        "prepare": "husky install",
         "test:coverage": "cross-env BABEL_ENV=test jest --coverage",
         "sonar": "ts-node sonar-scanner.ts"
     },
