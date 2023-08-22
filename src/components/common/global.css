@@ -545,6 +545,7 @@ p {
 
 :global .ant-form-item .ant-form-item-explain-error {
     color: #ed302d;
+    font-size: 12px;
 }
 
 :global .ant-form-item .ant-form-item-label>label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
