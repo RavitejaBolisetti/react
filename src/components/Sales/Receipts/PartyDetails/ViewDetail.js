@@ -23,13 +23,13 @@ const ViewDetailMain = (props) => {
         <Card className={styles.drawerCardView}>
             <Descriptions {...viewProps}>
                 <Descriptions.Item label="Party Segment">{checkAndSetDefaultValue(getCodeValue(partySegmentType, formData?.partySegment, isLoading))}</Descriptions.Item>
-                <Descriptions.Item label="Party ID">{checkAndSetDefaultValue(formData?.partyId)}</Descriptions.Item>
-                <Descriptions.Item label="Party Name">{checkAndSetDefaultValue(formData?.customerName || formData?.partyName)}</Descriptions.Item>
-                <Descriptions.Item label="Address">{checkAndSetDefaultValue(formData?.address)}</Descriptions.Item>
-                <Descriptions.Item label="City">{checkAndSetDefaultValue(formData?.city)}</Descriptions.Item>
-                <Descriptions.Item label="State">{checkAndSetDefaultValue(formData?.state)}</Descriptions.Item>
-                <Descriptions.Item label="Phone">{checkAndSetDefaultValue(formData?.mobileNumber)}</Descriptions.Item>
-                <Descriptions.Item label="Mitra Type">{checkAndSetDefaultValue(formData?.mitraType)}</Descriptions.Item>
+                <Descriptions.Item label="Party ID">{checkAndSetDefaultValue(formData?.partyId, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Party Name">{checkAndSetDefaultValue(formData?.customerName || formData?.partyName, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Address">{checkAndSetDefaultValue(formData?.address, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="City">{checkAndSetDefaultValue(formData?.city, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="State">{checkAndSetDefaultValue(formData?.state, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Phone">{checkAndSetDefaultValue(formData?.mobileNumber, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Mitra Type">{checkAndSetDefaultValue(formData?.mitraType, isLoading)}</Descriptions.Item>
             </Descriptions>
         </Card>
     );

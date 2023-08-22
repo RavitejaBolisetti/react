@@ -22,7 +22,11 @@ const MenuNav = (props) => {
         ?.filter((i) => i?.displayOnList)
         ?.map((item) => ({
             dot: item?.id === currentSection && (addMode || editMode) ? <BsRecordCircleFill className={styles.activeForm} /> : <FaCheckCircle />,
-            children: <p onClick={() => onHandle(item?.id)}>{item?.title}</p>,
+            children: (
+                <p className={item?.id !== currentSection ? styles.tableTextColor85 : ''} onClick={() => onHandle(item?.id)}>
+                    {item?.title}
+                </p>
+            ),
             className: item?.id === currentSection ? 'active' : 'noactive',
         }));
 

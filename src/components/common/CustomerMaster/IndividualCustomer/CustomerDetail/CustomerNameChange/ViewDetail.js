@@ -4,23 +4,19 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { Card, Row, Col, Form, Modal, Button } from 'antd';
+import { Card, Row, Col, Form, Button } from 'antd';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-
 import { FiDownload } from 'react-icons/fi';
-import { ExclamationCircleOutlined } from '@ant-design/icons';
-import { BiLockAlt } from 'react-icons/bi';
 
 import { nameChangeRequestDataActions } from 'store/actions/data/customerMaster/individual/nameChangeRequest/nameChangeRequest';
 import { showGlobalNotification } from 'store/actions/notification';
 
-import { RejectNameChangeRequest } from './RejectNameChangeRequest';
-import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
-import { getCodeValue } from 'utils/getCodeValue';
+import { ConfirmNameChangeRequest } from './ConfirmNameChangeRequest';
 import { STATUS } from '../statusConstant';
 
-const { confirm } = Modal;
+import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
+import { getCodeValue } from 'utils/getCodeValue';
 
 const mapStateToProps = (state) => {
     const {
@@ -55,32 +51,26 @@ const mapDispatchToProps = (dispatch) => ({
 
 const ViewDetailMain = (props) => {
     const { styles, userId, selectedCustomerId, formData, typeData, downloadFileFromButton, showGlobalNotification, setRefreshCustomerList, saveNameChangeData, listShowLoading } = props;
-    const { setActiveKey } = props;
     const { setRefreshData, showApproveNameChangeRequestBtn = false } = props;
 
-    const [isModalOpen, setModelOpen] = useState(false);
-
+    const [confirmRequest, setConfirmRequest] = useState();
     const onCloseAction = () => {
-        setModelOpen(false);
-    };
-
-    const handleReject = () => {
-        setModelOpen(true);
+        setConfirmRequest({
+            ...confirmRequest,
+            isVisible: false,
+        });
     };
 
     const onStatusChange = (values) => {
         const data = { id: formData?.customerNameChangeRequest?.id || '', customerCode: selectedCustomerId, rejectionRemark: values?.rejectionRemark, actionStatus: values?.status };
+
         const onSuccess = (res) => {
+            setConfirmRequest({
+                isVisible: false,
+            });
             setRefreshCustomerList(true);
             setRefreshData(true);
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Customer name change request updated successfully' });
-            if (res?.data?.actionStatus === 'Rejected') {
-                // setStatus(STATUS?.REJECTED?.title);
-                setModelOpen(false);
-            } else {
-                // setStatus(STATUS?.APPROVED?.title);
-            }
-            setActiveKey([]);
         };
 
         const onError = (message) => {
@@ -98,30 +88,30 @@ const ViewDetailMain = (props) => {
         saveNameChangeData(requestData);
     };
 
-    const handleApprove = () => {
-        confirm({
-            title: 'Confirmation',
-            icon: <ExclamationCircleOutlined size={22} className={styles.confirmModalIcon} />,
-            content: 'Do you want to approve this request?',
-            okText: 'Yes',
-            okType: 'danger',
-            cancelText: 'No',
-            wrapClassName: styles.confirmModal,
-            centered: true,
-            closable: true,
-            onOk: () => {
-                onStatusChange({ status: STATUS?.APPROVED?.title });
-            },
-        });
-    };
-
-    const modalProps = {
-        isVisible: isModalOpen,
-        icon: <BiLockAlt />,
-        titleOverride: 'Rejection Note',
-        closable: false,
-        onCloseAction,
-        onContinueAction: (values) => onStatusChange({ ...values, status: STATUS?.REJECTED?.title }),
+    const handleRequest = (type) => {
+        if (type === STATUS?.APPROVED?.key) {
+            setConfirmRequest({
+                isVisible: true,
+                titleOverride: 'Approve Name',
+                closable: true,
+                icon: false,
+                onCloseAction,
+                onSubmitAction: () => onStatusChange({ status: STATUS?.APPROVED?.title }),
+                submitText: 'Yes, Approve',
+                text: 'Are you sure want to approve the changes within the current name?',
+            });
+        } else if (type === STATUS?.REJECTED?.key) {
+            setConfirmRequest({
+                isVisible: true,
+                titleOverride: 'Reject Name',
+                closable: true,
+                icon: false,
+                onCloseAction,
+                onSubmitAction: (values) => onStatusChange({ ...values, status: STATUS?.REJECTED?.title }),
+                submitText: 'Yes, Reject',
+                showField: true,
+            });
+        }
     };
 
     const canApproveNameChangeRequest = true;
@@ -151,16 +141,16 @@ const ViewDetailMain = (props) => {
             {canApproveNameChangeRequest && showApproveNameChangeRequestBtn && (
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Button type="primary" className={styles.marR20} onClick={handleApprove}>
+                        <Button type="primary" className={styles.marR20} onClick={() => handleRequest(STATUS?.APPROVED?.key)}>
                             Approve
                         </Button>
-                        <Button className={styles.marB20} onClick={handleReject} danger>
+                        <Button danger className={styles.marB20} onClick={() => handleRequest(STATUS?.REJECTED?.key)}>
                             Reject
                         </Button>
                     </Col>
                 </Row>
             )}
-            <RejectNameChangeRequest {...modalProps} />
+            <ConfirmNameChangeRequest {...confirmRequest} />
         </>
     );
 };

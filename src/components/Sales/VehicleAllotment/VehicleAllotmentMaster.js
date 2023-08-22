@@ -11,17 +11,17 @@ import { Col, Form, Row } from 'antd';
 import { tableColumn } from './tableColumn';
 import AdvanceFilter from './AdvanceFilter';
 import { AdvancedSearch } from './AdvancedSearch';
-import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, ALLOT, UNALLOT } from 'utils/btnVisiblity';
+import { VIEW_ACTION, ALLOT, UNALLOT } from 'utils/btnVisiblity';
 
 import { ViewDetail } from './ViewDetail';
 import { ListDataTable } from 'utils/ListDataTable';
 import { OTF_STATUS } from 'constants/OTFStatus';
-import { VEHICLE_RECEIPT_SECTION } from 'constants/VehicleReceiptSection';
 
 import { showGlobalNotification } from 'store/actions/notification';
 import { otfDataActions } from 'store/actions/data/otf/otf';
 import { vehicleAllotment } from 'store/actions/data/vehicleAllotment/VehicleAllotment';
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
+import { PARAM_MASTER } from 'constants/paramMaster';
 import { VEHICLE_TYPE } from 'constants/VehicleType';
 import { BASE_URL_VEHICLE_ALLOTMENT as customURL } from 'constants/routingApi';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
@@ -33,9 +33,9 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
-            ProductHierarchy: { data: productHierarchyData = [] },
+            ProductHierarchy: { filteredListData: productHierarchyData = [] },
             OTF: {
-                OtfSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isOTFSearchLoading, data, isDetailLoaded, detailData: otfData = [] },
+                OtfSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isOTFSearchLoading, data, isDetailLoaded },
             },
             vehicleAllotmentData: {
                 vehicleAllotment: { detailData: allotmentSummaryDetails, data: allotmentSearchedList, filter: filterString },
@@ -50,7 +50,6 @@ const mapStateToProps = (state) => {
         isDataLoaded: isDetailLoaded,
         data: data?.otfDetails,
         otfStatusList: Object.values(OTF_STATUS),
-        otfData,
         isLoading: !isDetailLoaded,
         moduleTitle,
         isOTFSearchLoading,
@@ -75,7 +74,7 @@ const mapDispatchToProps = (dispatch) => ({
             fetchVehicleAllotmentDetails: vehicleAllotment.fetchDetail,
             saveData: vehicleAllotment.saveData,
             listShowLoading: vehicleAllotment.listShowLoading,
-            fetchModelList: productHierarchyDataActions.fetchList,
+            fetchModelList: productHierarchyDataActions.fetchFilteredList,
             showGlobalNotification,
         },
         dispatch
@@ -83,9 +82,9 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const VehicleAllotmentMasterBase = (props) => {
-    const { fetchList, saveData, listShowLoading, userId, fetchVehicleAllotmentDetails, allotmentSummaryDetails, data, otfData, resetData } = props;
+    const { fetchList, saveData, listShowLoading, userId, fetchVehicleAllotmentDetails, allotmentSummaryDetails, data, resetData } = props;
     const { fetchOTFSearchedList, fetchVehicleAllotmentSearchedList, allotmentSearchedList, resetOTFSearchedList, fetchModelList, productHierarchyData } = props;
-    const { typeData, moduleTitle } = props;
+    const { typeData, showGlobalNotification } = props;
     const { filterString, setFilterString, otfStatusList } = props;
     const [filterStringOTFSearch, setFilterStringOTFSearch] = useState('');
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
@@ -97,18 +96,14 @@ export const VehicleAllotmentMasterBase = (props) => {
     const [selectedOrderId, setSelectedOrderId] = useState();
     const [selectedOTFDetails, setSelectedOrderOTFDetails] = useState();
 
-    const [section, setSection] = useState();
-    const [defaultSection, setDefaultSection] = useState();
-    const [currentSection, setCurrentSection] = useState();
-    const [sectionName, setSetionName] = useState();
-    const [isLastSection, setLastSection] = useState(false);
-
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
+    const [page, setPage] = useState({ pageSize: 10, current: 1 });
+    const dynamicPagination = true;
 
     const defaultBtnVisiblity = {
         editBtn: false,
@@ -129,9 +124,7 @@ export const VehicleAllotmentMasterBase = (props) => {
     const [formData, setFormData] = useState([]);
 
     const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-        searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
-        searchForm.resetFields();
+        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         setShowDataLoading(false);
     };
 
@@ -145,7 +138,7 @@ export const VehicleAllotmentMasterBase = (props) => {
             fetchModelList({ setIsLoading: listShowLoading, userId, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [userId]);
 
     const extraParams = useMemo(() => {
         return [
@@ -170,7 +163,7 @@ export const VehicleAllotmentMasterBase = (props) => {
                 key: 'model',
                 title: 'Model',
                 value: filterString?.model,
-                name: filterString?.model,
+                name: productHierarchyData?.find((i) => i?.prodctCode === filterString?.model)?.prodctShrtName,
                 canRemove: true,
                 filter: true,
             },
@@ -178,7 +171,7 @@ export const VehicleAllotmentMasterBase = (props) => {
                 key: 'vehicleStatus',
                 title: 'Vehicle Status',
                 value: filterString?.vehicleStatus,
-                name: filterString?.vehicleStatus,
+                name: typeData[PARAM_MASTER.ALT_ACTN.id]?.find((i) => i?.key === filterString?.vehicleStatus)?.value,
                 canRemove: true,
                 filter: true,
             },
@@ -186,27 +179,41 @@ export const VehicleAllotmentMasterBase = (props) => {
                 key: 'pdDone',
                 title: 'PD Done',
                 value: filterString?.pdDone,
-                name: filterString?.pdDone,
+                name: typeData[PARAM_MASTER.PD_DONE.id]?.find((i) => i?.key === filterString?.pdDone)?.value,
                 canRemove: true,
                 filter: true,
             },
             {
                 key: 'pageSize',
                 title: 'Value',
-                value: 100,
+                value: page?.pageSize,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'pageNumber',
                 title: 'Value',
-                value: 1,
+                value: page?.current,
+                canRemove: true,
+                filter: false,
+            },
+            {
+                key: 'sortBy',
+                title: 'Sort By',
+                value: page?.sortBy,
+                canRemove: true,
+                filter: false,
+            },
+            {
+                key: 'sortIn',
+                title: 'Sort Type',
+                value: page?.sortType,
                 canRemove: true,
                 filter: false,
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, searchParamValue, toggleButton]);
+    }, [page, filterString, searchParamValue, toggleButton]);
 
     useEffect(() => {
         return () => {
@@ -278,31 +285,6 @@ export const VehicleAllotmentMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchOTFExtraParams]);
 
-    // useEffect(() => {
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [filterStringOTFSearch]);
-
-    useEffect(() => {
-        const defaultSection = VEHICLE_RECEIPT_SECTION.SUPPLIER_INVOICE_DETAILS.id;
-        setDefaultSection(defaultSection);
-        setSetionName(VEHICLE_RECEIPT_SECTION);
-        setSection(defaultSection);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    useEffect(() => {
-        if (currentSection && sectionName) {
-            const section = Object.values(sectionName)?.find((i) => i.id === currentSection);
-            setSection(section);
-
-            const nextSection = Object.values(sectionName)?.find((i) => i?.displayOnList && i.id > currentSection);
-            setLastSection(!nextSection?.id);
-        }
-        form.resetFields();
-        form.setFieldsValue(undefined);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [currentSection, sectionName]);
-
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
         form.resetFields();
         form.setFieldsValue(undefined);
@@ -317,11 +299,10 @@ export const VehicleAllotmentMasterBase = (props) => {
                 resetOTFSearchedList();
                 setSelectedOrder(record);
                 record && setSelectedOrderId(record?.otfNumber);
-                defaultSection && setCurrentSection(defaultSection);
                 const extraParamData = [
                     {
                         key: 'vin',
-                        value: record?.vehicleIdentificationNumber, //'MA2047182', //record?.vehicleIdentificationNumber,
+                        value: record?.vehicleIdentificationNumber, //record?.vehicleIdentificationNumber,
                     },
                 ];
                 fetchVehicleAllotmentDetails({ setIsLoading: listShowLoading, userId, extraParams: extraParamData, onSuccessAction, onErrorAction });
@@ -356,14 +337,14 @@ export const VehicleAllotmentMasterBase = (props) => {
     };
 
     const handleVehicleAllotment = (req, buttonAction) => {
-        let data = { ...selectedOrder, vehicleOTFDetails: selectedOTFDetails };
+        let data = { ...allotmentSummaryDetails, vehicleOTFDetails: selectedOTFDetails };
 
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
 
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+            fetchVehicleAllotmentSearchedList({ customURL: customURL + '/search', setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
 
             setButtonData({ ...buttonData, formBtnActive: false });
 
@@ -422,10 +403,6 @@ export const VehicleAllotmentMasterBase = (props) => {
         return;
     };
 
-    const handleFormValueChange = () => {
-        setButtonData({ ...buttonData, formBtnActive: true });
-    };
-
     const onCloseAction = () => {
         form.resetFields();
         form.setFieldsValue();
@@ -440,6 +417,10 @@ export const VehicleAllotmentMasterBase = (props) => {
     };
 
     const tableProps = {
+        dynamicPagination,
+        totalRecords: allotmentSearchedList?.totalRecords,
+        setPage,
+        isLoading: showDataLoading,
         tableColumn: tableColumn(handleButtonClick),
         tableData: allotmentSearchedList?.paginationData,
         showAddButton: false,
@@ -490,7 +471,6 @@ export const VehicleAllotmentMasterBase = (props) => {
         setFilterString,
         advanceFilterForm,
         setAdvanceSearchVisible,
-        otfStatusList,
         typeData,
         onFinishSearch,
         productHierarchyData,
@@ -507,6 +487,7 @@ export const VehicleAllotmentMasterBase = (props) => {
     }, [formActionType]);
 
     const containerProps = {
+        userId,
         formData: allotmentSummaryDetails,
         searchForm,
         filterStringOTFSearch,
@@ -519,10 +500,6 @@ export const VehicleAllotmentMasterBase = (props) => {
         onCloseAction,
         titleOverride: drawerTitle.concat('Allotment Details'),
         tableData: data,
-        ADD_ACTION,
-        EDIT_ACTION,
-        VIEW_ACTION,
-        NEXT_ACTION,
         buttonData,
         setSelectedOrderOTFDetails,
         setButtonData,
@@ -533,16 +510,9 @@ export const VehicleAllotmentMasterBase = (props) => {
         setSelectedOrderId,
         selectedOrder,
         setSelectedOrder,
-        section,
-        currentSection,
-        sectionName,
-        setCurrentSection,
         setFormData,
-        handleFormValueChange,
-        isLastSection,
         typeData,
-        otfData,
-        saveButtonName: !selectedOrderId ? 'Create Customer ID' : isLastSection ? 'Submit' : 'Save & Next',
+        //saveButtonName: !selectedOrderId ? 'Create Customer ID' : isLastSection ? 'Submit' : 'Save & Next',
     };
 
     return (
@@ -550,7 +520,7 @@ export const VehicleAllotmentMasterBase = (props) => {
             <AdvanceFilter {...advanceFilterResultProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable handleAdd={handleButtonClick} isLoading={showDataLoading} {...tableProps} showAddButton={true} />
+                    <ListDataTable handleAdd={handleButtonClick} {...tableProps} showAddButton={false} />
                 </Col>
             </Row>
             <AdvancedSearch {...advanceFilterProps} />

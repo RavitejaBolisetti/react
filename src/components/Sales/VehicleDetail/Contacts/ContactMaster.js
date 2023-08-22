@@ -197,7 +197,7 @@ const ContactMasterMain = (props) => {
 
         const requestData = {
             data: data,
-            method: formActionType?.editMode ? 'put' : 'post',
+            method: vehicleContactData?.contact ? 'put' : 'post',
             setIsLoading: listShowLoading,
             userId,
             onError,

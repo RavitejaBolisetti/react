@@ -18,7 +18,9 @@ export const customSelectBox = ({ data, placeholder = 'Select', loading = false,
     return (
         <Select placeholder={placeholder} onChange={onChange} {...selectProps}>
             {data?.map((item) => (
-                <Option value={item?.[fieldNames?.key]}>{item?.[fieldNames?.value]}</Option>
+                <Option disabled={item?.disabled || false} value={item?.[fieldNames?.key]}>
+                    {item?.[fieldNames?.value]}
+                </Option>
             ))}
         </Select>
     );

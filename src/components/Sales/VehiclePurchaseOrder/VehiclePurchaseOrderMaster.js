@@ -118,9 +118,10 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
 
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [isCancelVisible, setIsCancelVisible] = useState(false);
+    const [changeView, setChangeView] = useState(false); 
 
     const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
         searchForm.resetFields();
         setShowDataLoading(false);
@@ -133,22 +134,6 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
 
     const extraParams = useMemo(() => {
         return [
-            {
-                key: 'searchType',
-                title: 'Type',
-                value: filterString?.searchType,
-                name: typeData?.find((i) => i?.key === filterString?.searchType)?.value,
-                canRemove: false,
-                filter: false,
-            },
-            {
-                key: 'searchParam',
-                title: 'Value',
-                value: filterString?.searchParam,
-                name: filterString?.searchParam,
-                canRemove: true,
-                filter: true,
-            },
             {
                 key: 'fromDate',
                 title: 'Start Date',
@@ -231,6 +216,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
 
     useEffect(() => {
         if (userId) {
+            setShowDataLoading(true);
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -258,11 +244,13 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
     }, [currentSection, sectionName]);
 
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
+
+        setChangeView(() => !changeView);
+        
         form.resetFields();
         form.setFieldsValue(undefined);
         setIsFormVisible(true);
         setIsCancelVisible(false);
-
         switch (buttonAction) {
             case ADD_ACTION:
                 defaultSection && setCurrentSection(defaultSection);
@@ -513,6 +501,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         setIsCancelVisible,
         extraParamsAfterSave: extraParams,
         showDataLoading,
+        changeView,
     };
     const cancelProps = {
         ...props,

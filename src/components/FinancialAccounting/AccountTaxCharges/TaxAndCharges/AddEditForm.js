@@ -160,7 +160,7 @@ const AddEditFormMain = (props) => {
                                     ) : calculationType === TAX_CHARGES_CALCULATION_TYPE?.AMOUNT?.KEY ? (
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                             <Form.Item initialValue={formData?.rate} label="Rate" name="rate" rules={[validateRequiredInputField('Rate'), validateNumberWithTwoDecimalPlaces('rate with two decimal places')]}>
-                                                <InputNumber placeholder={preparePlaceholderText('Rate')} type="number" />
+                                                <InputNumber placeholder={preparePlaceholderText('Rate')} type="number" step="any" />
                                             </Form.Item>
                                         </Col>
                                     ) : null}

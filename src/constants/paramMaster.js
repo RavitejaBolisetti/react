@@ -293,4 +293,16 @@ export const PARAM_MASTER = {
         id: 'VECH_ALLOT_SER',
         title: 'Vehicle Allotment Search',
     },
+    ALT_ACTN: {
+        id: 'ALT_ACTN',
+        title: 'Vehicle Status',
+    },
+    PD_DONE: {
+        id: 'PD_DONE',
+        title: 'Vehicle PD Done',
+    },
+    CHK_STATS: {
+        id: 'CHK_STATS',
+        title: 'Vehicle Receipt checlist status',
+    },
 };

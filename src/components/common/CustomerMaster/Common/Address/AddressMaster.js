@@ -74,7 +74,7 @@ const mapDispatchToProps = (dispatch) => ({
 
             listPinCodeShowLoading: geoPinCodeDataActions.listShowLoading,
             fetchPincodeDetail: geoPinCodeDataActions.fetchList,
-
+            resetPincodeData: geoPinCodeDataActions.reset,
             showGlobalNotification,
         },
         dispatch
@@ -84,7 +84,7 @@ const mapDispatchToProps = (dispatch) => ({
 const AddressMasterBase = (props) => {
     const { form, isViewModeVisible, section, addressIndData, formActionType, addressCompanyData, selectedCustomer, saveData, addData } = props;
     const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, buttonData, setButtonData, defaultBtnVisiblity, setIsFormVisible, pincodeData, userId, fetchList, listShowLoading, showGlobalNotification, handleButtonClick } = props;
-    const { isAddressLoading, isCorporateAddressLoading, fetchListCorporate, saveDataCorporate, customerType, resetData, resetDataCorporate, NEXT_ACTION } = props;
+    const { isAddressLoading, isCorporateAddressLoading, fetchListCorporate, saveDataCorporate, customerType, resetData, resetPincodeData, resetDataCorporate, NEXT_ACTION } = props;
 
     const [addressForm] = Form.useForm();
     const [addressData, setAddressData] = useState([]);
@@ -127,6 +127,7 @@ const AddressMasterBase = (props) => {
         return () => {
             resetData();
             resetDataCorporate();
+            resetPincodeData();
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedCustomer?.customerId]);

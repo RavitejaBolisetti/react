@@ -30,7 +30,7 @@
 }
 
 .tableTextColor85 {
-    color: #858585;
+    color: #858585 !important;
 }
 
 .approvedColor {
@@ -1859,6 +1859,7 @@
     font-weight: 500;
     line-height: 20px;
     color: #0b0b0c;
+    word-break: break-all;
 }
 
 .drawerBodyLeft :global .ant-collapse .ant-collapse-content > .ant-collapse-content-box p:first-child {
@@ -3390,6 +3391,10 @@ li.ant-timeline-item.active .ant-timeline-item-content p {
 }
 .marL20 {
     margin-left: 20px;
+}
+
+.confirmModalIconHide {
+    display: none;
 }
 
 .confirmModalIcon {
