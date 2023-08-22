@@ -5,8 +5,6 @@
  */
 import React, { useState, useEffect } from 'react';
 import { Card, Descriptions, Col, Row, Divider } from 'antd';
-import styles from 'components/common/Common.module.css';
-import style from 'components/utils/SearchBox/SearchBox.module.css';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 
 import { DATA_TYPE } from 'constants/dataType';
@@ -17,6 +15,8 @@ import { DataTable } from 'utils/dataTable';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { tableColumnSearchOTF } from './tableColumnSearchOTF';
 import { VEHICLE_TYPE } from 'constants/VehicleType';
+
+import styles from 'components/common/Common.module.css';
 
 const ViewDetailMain = (props) => {
     const { formData, isLoading, typeData, setFilterStringOTFSearch, searchForm, tableData } = props;
@@ -52,30 +52,25 @@ const ViewDetailMain = (props) => {
     };
 
     useEffect(() => {
-        setFilterStringOTFSearch({...filterString});
+        setFilterStringOTFSearch({ ...filterString });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString]);
 
     const rowSelection = {
         type: 'radio',
         onChange: (selectedRowKeys, selectedRows) => {
-            //console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
             setSelectedOrderOTFDetails(selectedRows?.[0]);
         },
         getCheckboxProps: () => ({}),
     };
 
     const tableProps = {
-        //isChangeHistoryLoading,
-        tableColumn : tableColumnSearchOTF(handleButtonClick),
-        tableData: tableData || [formData?.vehicleOTFDetails] || [],
         pagination: false,
         srl: false,
         rowKey: 'otfNumber',
         rowSelection: {
             ...rowSelection,
         },
-        pagination: false,
         tableColumn: tableColumnSearchOTF(handleButtonClick),
         tableData: tableData || (formData?.vehicleOTFDetails && [formData?.vehicleOTFDetails]),
     };
@@ -101,7 +96,6 @@ const ViewDetailMain = (props) => {
                     <h4>Allot OTF</h4>
                     <Card>
                         {formData?.allotmentStatus === VEHICLE_TYPE.UNALLOTED.desc && (
-                            // {formData?.allotmentStatus === VEHICLE_TYPE.ALLOTED.desc && (
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.marB20}>
                                     <SearchBox {...serachBoxProps} />
