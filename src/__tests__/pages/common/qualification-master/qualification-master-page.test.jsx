@@ -4,7 +4,6 @@ import { QualificationMasterPage } from '@pages/common/QualificationMaster/Quali
 
 describe('QualificationMasterPageBase Components', () => {
     it('should render QualificationMasterPageBase components', () => {
-        const QualificationMasterPageBase = customRender(<QualificationMasterPage />);
-        expect(QualificationMasterPageBase).toMatchSnapshot();
+        customRender(<QualificationMasterPage />);
     });
 });

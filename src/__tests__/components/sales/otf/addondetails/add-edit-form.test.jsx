@@ -3,7 +3,9 @@ import customRender from '@utils/test-utils';
 import { screen, fireEvent, render } from '@testing-library/react';
 import { AddEditForm } from 'components/Sales/OTF/AddOnDetails/AddEditForm';
 import { Form } from 'antd';
-
+afterEach(() => {
+    jest.restoreAllMocks();
+  }); 
 const FormWrapper = (props) => {
     const [accessoryForm] = Form.useForm();
     const [shieldForm]=Form.useForm();

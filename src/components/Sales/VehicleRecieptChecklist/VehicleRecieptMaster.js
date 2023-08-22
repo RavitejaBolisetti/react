@@ -103,6 +103,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
 
     const [selectedRecord, setSelectedRecord] = useState();
     const [selectedRecordId, setSelectedRecordId] = useState();
+    const [vehicleReceiptFinalFormData, setvehicleReceiptFinalFormData] = useState({ checklistDetails: [], supportingDocument: [] });
     const [checkListDataModified, setcheckListDataModified] = useState([]);
     const [payload, setPayload] = useState([]);
     const [deletedUpload, setdeletedUpload] = useState([]);
@@ -371,6 +372,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         switch (buttonAction) {
             case ADD_ACTION:
                 resetProfile();
+                setvehicleReceiptFinalFormData({ checklistDetails: [], supportingDocument: [] });
                 defaultSection && setCurrentSection(defaultSection);
                 setSelectedRecord(record);
                 setcheckListDataModified([]);
@@ -538,7 +540,13 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         }
     }, [formActionType]);
 
+    const vehicleReceiptFormdataProps = {
+        vehicleReceiptFinalFormData,
+        setvehicleReceiptFinalFormData,
+    };
+
     const containerProps = {
+        ...vehicleReceiptFormdataProps,
         isProfileDataLoaded,
         ProfileData,
         record: selectedRecord,

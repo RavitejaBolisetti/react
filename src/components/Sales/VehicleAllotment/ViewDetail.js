@@ -5,6 +5,8 @@
  */
 import React, { useState, useEffect } from 'react';
 import { Card, Descriptions, Col, Row, Divider } from 'antd';
+import styles from 'components/common/Common.module.css';
+import style from 'components/utils/SearchBox/SearchBox.module.css';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 
 import { DATA_TYPE } from 'constants/dataType';
@@ -56,16 +58,37 @@ const ViewDetailMain = (props) => {
         handleButtonClick,
     };
 
+    useEffect(() => {
+        setButtonData(formData?.vehicleOTFDetails?.allotmentStatus === 'UnaLLOT' ? ({cancelBtn: true, allotBtn: true}) : ({cancelBtn: true, unAllot:true}) )
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {
+        setFilterStringOTFSearch({...filterString});
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [filterString]);
+
+    const serachBoxProps = {
+        searchForm,
+        filterString,
+        optionType: typeData?.[PARAM_MASTER.OTF_SER.id].filter(searchType => searchType.key !== 'mobileNumber'),
+        setFilterString,
+    };
+
     const rowSelection = {
         type: 'radio',
         onChange: (selectedRowKeys, selectedRows) => {
-            console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+            //console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
             setSelectedOrderOTFDetails(selectedRows?.[0]);
         },
         getCheckboxProps: () => ({}),
     };
 
     const tableProps = {
+        //isChangeHistoryLoading,
+        tableColumn : tableColumnSearchOTF(handleButtonClick),
+        tableData: tableData || [formData?.vehicleOTFDetails] || [],
+        pagination: false,
         srl: false,
         rowKey: 'otfNumber',
         rowSelection: {

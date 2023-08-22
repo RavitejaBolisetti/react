@@ -167,7 +167,7 @@ const CustomerListBase = (props) => {
 
     return (
         <>
-            <Row gutter={20}>
+            <Row gutter={20} data-testid="test-user">
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <SearchBox {...searchBoxProps} />
                 </Col>

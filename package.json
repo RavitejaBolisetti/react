@@ -13,6 +13,7 @@
         "axios": "^1.2.3",
         "bootstrap": "^4.6.0",
         "ckeditor4-react": "^4.2.0",
+        "cross-env": "^7.0.3",
         "encrypt-storage": "^2.12.14",
         "history": "^5.3.0",
         "jest-sonar": "^0.2.15",
@@ -42,18 +43,37 @@
         "web-vitals": "^2.1.4"
     },
     "scripts": {
-        "start": "react-scripts start",
-        "build": "react-scripts build",
-        "test": "jest",
+        "start": "react-scripts --max_old_space_size=4096 start",
+        "build": "node --max-old-space-size=4096 node_modules/.bin/react-scripts build",
+        "test": "cross-env BABEL_ENV=test jest",
+        "watch-tests": "cross-env BABEL_ENV=test jest --watch",
         "eject": "react-scripts eject",
-        "test:coverage": "jest --coverage",
+        "clear_jest": "jest --clearCache",
+        "prepare": "husky install",
+        "test:coverage": "cross-env BABEL_ENV=test jest --coverage",
         "sonar": "ts-node sonar-scanner.ts"
     },
     "eslintConfig": {
         "extends": [
             "react-app",
             "react-app/jest"
+        ],
+        "silenceWarnings": true,
+        "silentWarn": true,
+        "preset": "ts-jest",
+        "nodeOptions": "--max-old-space-size=4096",
+        "errorOnDeprecated": true
+    },
+    "lint-staged": {
+        "*.{js,jsx}": [
+            "jest --bail --findRelatedTests",
+            "git add"
         ]
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged"
+        }
     },
     "browserslist": {
         "production": [
@@ -78,18 +98,24 @@
         ]
     },
     "devDependencies": {
-        "@babel/preset-env": "^7.20.2",
+        "@babel/preset-env": "^7.22.10",
+        "@babel/preset-react": "^7.22.5",
         "@testing-library/dom": "^9.3.1",
         "@testing-library/jest-dom": "^5.16.5",
         "@testing-library/react": "^14.0.0",
         "@testing-library/user-event": "^14.4.3",
         "babel-jest": "^27.5.1",
+        "husky": "^8.0.3",
         "jest": "^27.5.1",
         "jest-environment-jsdom": "^27.5.1",
+        "lint-staged": "^14.0.1",
         "react-app-rewired": "^2.2.1",
         "react-test-renderer": "^18.2.0",
         "redux-devtools-extension": "^2.13.9",
         "redux-mock-store": "^1.5.4",
-        "sonarqube-scanner": "^3.0.1"
+        "sonarqube-scanner": "^3.0.1",
+        "webpack": "^5.88.2",
+        "webpack-cli": "^5.1.4",
+        "webpack-dev-server": "^4.15.1"
     }
 }
