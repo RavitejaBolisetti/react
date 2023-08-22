@@ -29,7 +29,7 @@ export default function AdvanceFilter(props) {
                                         <div className={`${styles.userManagement} ${styles.headingToggle}`}>
                                             {Object.values(VEHICLE_TYPE)?.map((item) => {
                                                 return (
-                                                    <Button type={toggleButton === item?.id ? 'primary' : 'link'} onClick={() => settoggleButton(item?.id)}>
+                                                    <Button type={toggleButton === item?.key ? 'primary' : 'link'} onClick={() => settoggleButton(item?.key)}>
                                                         {item?.title}
                                                     </Button>
                                                 );
