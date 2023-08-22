@@ -106,7 +106,7 @@
 
 :global .ant-modal-confirm .ant-modal-confirm-btns button:hover {
     background-color: #ff3e5b;
-    border: 1px solid #ff3e5b;
+    border: 1px solid #ff3e5b !important;
     color: #ffffff !important;
 }
 

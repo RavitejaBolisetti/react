@@ -284,18 +284,20 @@ const CustomerNameChangeMasterBase = (props) => {
         return checkAndSetDefaultValue(
             <>
                 <Typography className={styles.verticallyCentered}>
-                    {getCodeValue(typeData?.TITLE, formData?.titleCode) + ' ' + (formData?.firstName || '') + ' ' + (formData?.middleName || '') + ' ' + (formData?.lastName || '')}
+                    <div className={styles.flexDirectionColumn}>
+                        {getCodeValue(typeData?.TITLE, formData?.titleCode) + ' ' + (formData?.firstName || '') + ' ' + (formData?.middleName || '') + ' ' + (formData?.lastName || '')}
+                        {customerNameChangeRequest && (
+                            <Text type="secondary" style={{ fontSize: '12px', fontWeight: 'normal' }}>
+                                {requestPending ? 'Current' : 'Previous'} Name
+                            </Text>
+                        )}
+                    </div>
                     {canEdit && (
                         <Button className={styles.marL20} disabled={changeNameAllowed} type="link" icon={<FiEdit />} onClick={onEdit(currentKey)}>
                             Edit
                         </Button>
                     )}
                 </Typography>
-                {customerNameChangeRequest && (
-                    <Text type="secondary" style={{ fontSize: '12px', fontWeight: 'normal' }}>
-                        {requestPending ? 'Current' : 'Previous'} Name
-                    </Text>
-                )}
             </>,
             isLoading
         );
@@ -328,15 +330,9 @@ const CustomerNameChangeMasterBase = (props) => {
                                 <Panel
                                     header={
                                         <Row justify="space-between">
-                                            <Col xs={24} sm={24} md={18} lg={20} xl={20}>
-                                                {customerName({ currentKey: item?.id, formData: item?.formData, requestPending: item?.pending, changeAllowed: item?.changeAllowed, canEdit: item?.canEdit })}
-                                            </Col>
+                                            {customerName({ currentKey: item?.id, formData: item?.formData, requestPending: item?.pending, changeAllowed: item?.changeAllowed, canEdit: item?.canEdit })}
 
-                                            {item?.pending && (
-                                                <Col xs={24} sm={24} md={6} lg={4} xl={4} className={styles.verticallyCentered}>
-                                                    {status === STATUS?.REJECTED?.title ? <Tag color="error">Rejected</Tag> : status === STATUS?.APPROVED?.title ? <Tag color="success">Approved</Tag> : <Tag color="warning">Pending for Approval</Tag>}
-                                                </Col>
-                                            )}
+                                            {item?.pending && <div className={styles.verticallyCentered}>{status === STATUS?.REJECTED?.title ? <Tag color="error">Rejected</Tag> : status === STATUS?.APPROVED?.title ? <Tag color="success">Approved</Tag> : <Tag color="warning">Pending for Approval</Tag>}</div>}
                                         </Row>
                                     }
                                     key={item?.id}

@@ -6,6 +6,7 @@
 import React from 'react';
 import { Collapse, Space, Avatar, Typography, Divider } from 'antd';
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
+import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
 const { Text, Title } = Typography;
@@ -38,18 +39,18 @@ const ProfileDetailCard = (props) => {
                                 <Text>{selectedCustomer?.customerId}</Text>
                             </div>
                         </Space>
+                        <Divider />
+                        <div className={styles.detailCardText}>
+                            Customer Type: <span>{selectedCustomer?.customerTypeName}</span>
+                        </div>
                     </>
                 }
                 key={1}
             >
-                <p>
-                    Customer Type: <span>{selectedCustomer?.customerTypeName}</span>
-                </p>
                 <Divider />
-                <p>
-                    Mobile No.: <span>{selectedCustomer?.mobileNumber}</span>
-                </p>
-                <Divider />
+                <div className={styles.detailCardText}>
+                    Mobile No.: <span>{'+91-' + selectedCustomer?.mobileNumber || 'NA'}</span>
+                </div>
             </Panel>
         </Collapse>
     );
