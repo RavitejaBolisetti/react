@@ -21,7 +21,7 @@ export const PRODUCT_HIERARCHY_ATTRIBUTE_NAME_DROPDOWN = 'PRODUCT_HIERARCHY_ATTR
 export const PRODUCT_HIERARCHY_SELECTED_ORGANIZATION_ID = 'PRODUCT_HIERARCHY_SELECTED_ORGANIZATION_ID';
 export const PRODUCT_HIERARCHY_RESET_DATA = 'PRODUCT_HIERARCHY_RESET_DATA';
 export const PRODUCT_HIERARCHY_FILTERED_DATA_ACTION_CONSTANT = 'PRODUCT_HIERARCHY_FILTERED_DATA_ACTION_CONSTANT';
-export const PRODUCT_HIERARCHY_EMPTY_DATA = 'PRODUCT_HIERARCHY_EMPTY_DATA';
+
 const receiveProductHierarchyData = (data) => ({
     type: PRODUCT_HIERARCHY_DATA_LOADED,
     isLoaded: true,
@@ -54,10 +54,6 @@ const productHierarchyDataActions = {};
 
 productHierarchyDataActions.resetData = (data) => ({
     type: PRODUCT_HIERARCHY_RESET_DATA,
-    data,
-});
-productHierarchyDataActions.emptyData = (data) => ({
-    type: PRODUCT_HIERARCHY_EMPTY_DATA,
     data,
 });
 
@@ -99,8 +95,14 @@ productHierarchyDataActions.fetchList = withAuthToken((params) => ({ token, acce
         if (res?.data) {
             dispatch(receiveProductHierarchyData(res?.data));
         } else {
-            onError();
+            dispatch(receiveProductHierarchyData([]));
+            onError && onError();
         }
+    };
+
+    const onErrorAction = () => {
+        dispatch(receiveProductHierarchyData([]));
+        onError && onError();
     };
 
     const apiCallParams = {
@@ -111,7 +113,7 @@ productHierarchyDataActions.fetchList = withAuthToken((params) => ({ token, acce
         accessToken,
         userId,
         onSuccess,
-        onError,
+        onError: onErrorAction,
         onTimeout: () => onError('Request timed out, Please try again'),
         onUnAuthenticated: () => dispatch(doLogout()),
         onUnauthorized: (message) => dispatch(unAuthenticateUser(message)),
