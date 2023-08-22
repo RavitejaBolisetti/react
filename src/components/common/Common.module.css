@@ -3171,7 +3171,27 @@
 .cursorPointer {
     cursor: pointer;
 }
+.cursorPointer:hover,
+.drawerBodyLeft .active .cursorPointer,
+.drawerBodyLeft .active .cursorNotAllowed {
+    color: #ff3e5b;
+}
+.drawerBodyLeft .viewActive .cursorPointer,
+.drawerBodyLeft .viewInActive .cursorPointer:hover {
+    color: #0b0b0c;
+}
+.drawerBodyLeft .active :global .ant-timeline-item-tail {
+    background-color: #ff3e5b !important;
+}
+.drawerBodyLeft .inActive :global .ant-timeline-item-tail,
+.drawerBodyLeft .viewActive :global .ant-timeline-item-tail,
+.drawerBodyLeft .viewInActive :global .ant-timeline-item-tail {
+    background-color: #70c922 !important;
+}
 
+.viewInActive .cursorPointer {
+    color: #858585;
+}
 .viewDrawerContainer .yesText :global .ant-descriptions-item-container .ant-descriptions-item-content {
     color: #70c922 !important;
     font-weight: 600 !important;
