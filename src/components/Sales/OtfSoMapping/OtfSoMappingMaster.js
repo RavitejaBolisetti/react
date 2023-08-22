@@ -73,7 +73,7 @@ const mapDispatchToProps = (dispatch) => ({
             fetchProductDataList: productHierarchyDataActions.fetchList,
             listProductLoading: productHierarchyDataActions.listShowLoading,
             setSelectedOrganizationId: productHierarchyDataActions.setSelectedOrganizationId,
-            resetData: productHierarchyDataActions.emptyData,
+            resetData: productHierarchyDataActions.resetData,
 
             fetchOtfList: otfSoMappingActions.fetchList,
             listOtfSoMappingShowLoading: otfSoMappingActions.listShowLoading,
@@ -118,10 +118,14 @@ export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, sav
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataOrgLoaded, userId]);
 
+    const onErrorAction = (message) => {
+        resetData();
+        showGlobalNotification({ message });
+    };
+
     useEffect(() => {
         if (organizationId && userId) {
-            resetData();
-            fetchProductDataList({ setIsLoading: listProductLoading, userId, id: organizationId });
+            fetchProductDataList({ setIsLoading: listProductLoading, userId, id: organizationId, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, organizationId]);
@@ -285,7 +289,6 @@ export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, sav
         handleSelectTreeClick: (value) => {
             setSelectedTreeKey();
             setViewData(null);
-            resetData();
             setSelectedOrganizationId(value);
         },
         defaultValue: organizationId,
