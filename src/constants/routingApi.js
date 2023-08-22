@@ -100,7 +100,7 @@ export const BASE_URL_APPLICATION_DETAILS = BASE_URL + 'application/applicationd
 
 export const BASE_URL_APPLICATION_ACTIONS = BASE_URL + 'application/actions';
 export const BASE_URL_APPLICATION_CRITICALITY_GROUP = BASE_URL + 'application/criticalitygroup';
-export const BASE_URL_APPLICATION_DEALER_LOCATION = BASE_URL + 'dealer/search/locations';
+export const BASE_URL_APPLICATION_DEALER_LOCATION = BASE_URL + 'dealer/search/locations'; //THIS WILL BE USE FOR --
 
 export const BASE_URL_DOCUMENT_TYPE = BASE_URL + 'document';
 
@@ -236,6 +236,19 @@ export const BASE_URL_VEHICLE_MODEL_AND_TAX_CHARGE_CATEGORY_PRODUCT_MODEL_GROUP 
 export const BASE_URL_VEHICLE_MODEL_AND_TAX_CHARGE_CATEGORY_ACCOUNT_CATEGORY = BASE_URL_FINANCE + 'accounts/categories';
 export const BASE_URL_VEHICLE_MODEL_AND_TAX_CHARGE_CATEGORY_TAX_CHARGES = BASE_URL_FINANCE + 'tax/chargecategory';
 
+export const BASE_URL_USER_MANAGEMENT = BASE_URL + 'users/';
+export const BASE_URL_USER_MANAGEMENT_USER_SEARCH = BASE_URL_USER_MANAGEMENT + 'search';
+export const BASE_URL_USER_MANAGEMENT_APPLICATIONS_DEALER = BASE_URL_USER_MANAGEMENT + 'dealer';
+export const BASE_URL_USER_MANAGEMENT_MAC_ID = BASE_URL_USER_MANAGEMENT_APPLICATIONS_DEALER + '/devices';
+
+export const BASE_URL_USER_MANAGEMENT_USER_DEALER_BRANCH_LOCATIONS = BASE_URL_USER_MANAGEMENT_APPLICATIONS_DEALER + '/location'; // MAPPED WITH USER//users/dealer/location?employeeCode=deepakpalariya
+export const BASE_URL_USER_MANAGEMENT_DEALER_BRANCH_LOCATIONS = BASE_URL + 'dealer/search/locations'; //all location of dealer dealer/search/locations?dealerParentCode=DP007
+export const BASE_URL_USER_MANAGEMENT_MANUFACTURER_APPLICATIONS = BASE_URL_USER_MANAGEMENT + 'manufacturer';
+export const BASE_URL_USER_ROLE = BASE_URL_USER_MANAGEMENT + 'roles';
+export const BASE_URL_ROLE_LIST = BASE_URL + 'application/rolemaster';
+
+export const BASE_URL_DEALER_LIST = BASE_URL + 'dealer/details';
+
 export const BASE_URL_RECEIPT_SEARCH_LIST = BASE_URL_FINANCE + 'receipts/search';
 export const BASE_URL_RECEIPT_DETAILS = BASE_URL_FINANCE + 'receipts';
 export const BASE_URL_CANCEL_RECEIPT = BASE_URL_RECEIPT_DETAILS + '/cancelreceipts';
@@ -243,4 +256,5 @@ export const BASE_URL_VEHICLE_RECEIPT_CHECKLIST_SUPPORTING_DOCUMENT = BASE_URL_V
 export const BASE_URL_VEHICLE_RECEIPT_CHECKLIST_MAIN = BASE_URL_VEHICLE + 'receiptchecklist/search';
 export const BASE_URL_VEHICLE_RECEIPT_CHECKLIST_PROFILE = BASE_URL_VEHICLE + 'receiptchecklist/profile';
 export const BASE_URL_VEHICLE_RECEIPT_CHECKLIST_MASTER = BASE_URL_VEHICLE + 'receiptchecklist/detail';
+
 export const BASE_URL_VEHICLE_ALLOTMENT = BASE_URL + 'vehicle/allotments';

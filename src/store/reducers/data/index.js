@@ -16,8 +16,8 @@ import { ChangePassword } from './changePassword';
 import { ConfigurableParameterEditing } from './configurableParamterEditing';
 import { ApplicationMaster } from './applicationMaster';
 import { QualificationMaster } from './qualificationMaster';
-import { UserManagement } from './userManagement';
-import { UserManagementManufacturer } from './UserManagementManufacturer';
+// import { UserManagement } from './userManagement';
+// import { UserManagementManufacturer } from './UserManagementManufacturer';
 import { Geo } from './geo';
 import { Sales } from './sales';
 import { DealerManpower } from './dealerManpower';
@@ -41,6 +41,7 @@ import { VehicleReceipt } from './vehicleReceipt';
 import { Receipt } from './receipt';
 import { VehicleModelandTaxChargesCategory } from './VehicleModelTaxChargesCategory';
 import { Report } from './report';
+import { UserManagement } from './userManagement';
 import { VehicleReceiptChecklist } from './VehicleReceiptCheckList';
 import { vehicleAllotmentData } from './vehicleAllotment';
 
@@ -57,7 +58,7 @@ export const data = combineReducers({
     ApplicationMaster,
     QualificationMaster,
     UserManagement,
-    UserManagementManufacturer,
+    // UserManagementManufacturer,
     Geo,
     Sales,
     DealerManpower,
