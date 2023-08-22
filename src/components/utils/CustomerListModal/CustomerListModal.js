@@ -14,7 +14,7 @@ import { tableColumn } from './tableColumn';
 import styles from 'components/common/Common.module.css';
 
 export const CustomerListBase = (props) => {
-    console.log('setSelectedRowData---->', props)
+    //console.log('setSelectedRowData---->', props)
     const { data, handleSelectedData, setSelectedRowData } = props;
     const [formBtnActive, setFormBtnActive] = useState(false);
     const [selectedRows, setSelectedRows] = useState([]);

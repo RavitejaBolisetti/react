@@ -72,7 +72,7 @@ const AddEditFormMain = (props) => {
 
     useEffect(() => {
         if (menuTreeData?.length) {
-            console.log('🚀 ~ file: AddEditFormTemp.js:56 ~ useEffect ~ menuTreeData:', menuTreeData);
+          //  console.log('🚀 ~ file: AddEditFormTemp.js:56 ~ useEffect ~ menuTreeData:', menuTreeData);
             const chackedKeysdata = chackedKeysMapData(menuTreeData);
             setreferenceKeys(chackedKeysdata);
             generateDataList(menuTreeData);
@@ -91,7 +91,7 @@ const AddEditFormMain = (props) => {
         // })
 
         let checkedTreeData = makeTreeFromArray(checkedKeysTreeData, 'Web');
-        console.log('checkedTreeData', checkedTreeData);
+       // console.log('checkedTreeData', checkedTreeData);
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [checkedKeysTreeData]);
@@ -234,7 +234,7 @@ const AddEditFormMain = (props) => {
 
     var r = searchTree(data, 'children', 'title', 'node4');
     //var r = searchTree(data, 'children', 'title', 'node2');  // check it too
-    console.log(r, 'searchTree');
+    //console.log(r, 'searchTree');
 
     const onTreeCheck = (checked, targetNode, value) => {
         const fieldNames = { key: 'value', children: 'parent' };
@@ -249,7 +249,7 @@ const AddEditFormMain = (props) => {
             }
         };
 
-        console.log('Kuldeep', targetNode, targetNode?.children);
+        //console.log('Kuldeep', targetNode, targetNode?.children);
 
         // targetNode && generateList(targetNode?.[fieldNames?.key]);
         // console.log('🚀 ~ file: AddEditFormTemp.js:140 ~ onTreeCheck ~ checked:', dataList, targetNode);
@@ -277,15 +277,15 @@ const AddEditFormMain = (props) => {
 
         const selectedKeys = [...parentKeys, ...childKeys];
         if (targetNode?.checked) {
-            console.log('Add Keys', selectedKeys);
+            //console.log('Add Keys', selectedKeys);
         } else {
-            console.log('Remove Keys', selectedKeys);
+           // console.log('Remove Keys', selectedKeys);
         }
         setreferenceKeys((prev) => ({ ...prev, [value]: checked }));
     };
 
     const onChanges = (value) => {
-        console.log('this is the Change in the Tree =>>>>>', value);
+       // console.log('this is the Change in the Tree =>>>>>', value);
     };
 
     const onExpanded = (expanded, targetNode, value) => {

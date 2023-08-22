@@ -13,7 +13,7 @@ export const tranformMenudata = (data, title, key, children) => {
                 subdata(child);
             });
         } else if (data?.['action']) {
-            console.log('childAction', true);
+           // console.log('childAction', true);
             data['value'] = data?.[key];
             data['label'] = data?.[title];
             data['children'] = data?.['action']?.map((childAction, i) => {

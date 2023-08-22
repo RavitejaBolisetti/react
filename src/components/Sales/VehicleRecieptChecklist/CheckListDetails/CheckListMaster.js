@@ -98,7 +98,7 @@ const VehicleRecieptCheckListMain = (props) => {
     }, [userId, chassisNumber, isChecklistDataLoaded]);
 
     useEffect(() => {
-        console.log('called');
+       // console.log('called');
         if (isChecklistDataLoaded && ChecklistData) {
             if (checkListDataModified?.length > 0) {
                 setcheckListDataModified(

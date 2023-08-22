@@ -97,7 +97,7 @@ const CustomerNameChangeMasterBase = (props) => {
 
     const { selectedCustomerId } = props;
     const customerNameChangeRequest = formData?.customerNameChangeRequest || false;
-    console.log('🚀 ~ file: CustomerNameChangeMaster.js:100 ~ CustomerNameChangeMasterBase ~ customerNameChangeRequest:', customerNameChangeRequest);
+    //console.log('🚀 ~ file: CustomerNameChangeMaster.js:100 ~ CustomerNameChangeMasterBase ~ customerNameChangeRequest:', customerNameChangeRequest);
     const { fetchViewDocument, viewListShowLoading, listSupportingDocumentShowLoading, isSupportingDocumentDataLoaded, supportingData, isViewDataLoaded, viewDocument } = props;
 
     const [emptyList, setEmptyList] = useState(true);

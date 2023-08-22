@@ -7,7 +7,9 @@ import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
 import { screen, fireEvent } from '@testing-library/react';
 import { AddEditForm } from '@components/Sales/OTF/SchemeDetails/AddEditForm';
-
+afterEach(() => {
+    jest.restoreAllMocks();
+  }); 
 const props = {
     defaultFormActionType: { addMode: false, editMode: false, viewMode: false },
     userId: undefined,
