@@ -7,7 +7,6 @@ afterEach(() => {
 });
 
 describe('CardProductAttribute', () => {
-
     it('should render card product attribute component', () => {
         render(<CardProductAttribute setDisabledEdit={jest.fn()} isVisible={true} />);
     });
@@ -15,22 +14,19 @@ describe('CardProductAttribute', () => {
     it('edit button should work', async () => {
         render(<CardProductAttribute setDisabledEdit={jest.fn()} isVisible={true} setFormBtnActive={jest.fn()} />);
         const editBtn = screen.getAllByRole('button', { name: '' })[0];
-        await act(async () => {
-            fireEvent.click(editBtn);
-        })
+
+        fireEvent.click(editBtn);
     });
 
     it('delete should work', () => {
         const setSKUAttributes = jest.fn();
         render(<CardProductAttribute setDisabledEdit={jest.fn()} isVisible={true} setSKUAttributes={setSKUAttributes} forceUpdate={jest.fn()} />);
         const deleteBtn = screen.getAllByRole('button', { name: '' })[1];
-        act(() => {
-            fireEvent.click(deleteBtn);
-            const setSKUAttributesFunction = setSKUAttributes.mock.calls[0][0];
-            const prev = [{ attributeId: 1 }];
-            setSKUAttributesFunction(prev);
-        })
 
+        fireEvent.click(deleteBtn);
+        const setSKUAttributesFunction = setSKUAttributes.mock.calls[0][0];
+        const prev = [{ attributeId: 1 }];
+        setSKUAttributesFunction(prev);
     });
 
     it('save button should work', async () => {
@@ -38,25 +34,22 @@ describe('CardProductAttribute', () => {
 
         render(<CardProductAttribute forceUpdate={jest.fn()} setSKUAttributes={jest.fn()} skuAttributes={skuAttributes} setDisabledEdit={jest.fn()} isVisible={true} setFormBtnActive={jest.fn()} />);
         const editBtn = screen.getAllByRole('button', { name: '' });
-        await act(async () => {
-            fireEvent.click(editBtn[0]);
-        })
+
+        fireEvent.click(editBtn[0]);
+
         const saveBtn = screen.getByRole('button', { name: 'Save' });
-        await act(async () => {
-            fireEvent.click(saveBtn);
-        })
+
+        fireEvent.click(saveBtn);
     });
 
     it('cancel button should work', async () => {
         render(<CardProductAttribute forceUpdate={jest.fn()} setSKUAttributes={jest.fn()} setDisabledEdit={jest.fn()} isVisible={true} setFormBtnActive={jest.fn()} />);
         const editBtn = screen.getAllByRole('button', { name: '' });
-        await act(async () => {
-            fireEvent.click(editBtn[0]);
-        })
-        const cancelBtn = screen.getByRole('button', { name: 'Cancel' });
-        await act(async () => {
-            fireEvent.click(cancelBtn);
-        })
-    });
 
+        fireEvent.click(editBtn[0]);
+
+        const cancelBtn = screen.getByRole('button', { name: 'Cancel' });
+
+        fireEvent.click(cancelBtn);
+    });
 });
