@@ -19,7 +19,7 @@ const sameParentAndChildWarning = LANGUAGE_EN.GENERAL.HIERARCHY_SAME_PARENT_AND_
 const ApplicationDetails = ({ setCanFormSave, form, onFinishFailed = () => {}, parentAppCode, isReadOnly, isFieldDisable, onFinish, setIsRestrictedLocation, setparentAppCode, setIsDocumentToGenerate, finalFormdata, criticalityGroupData, configurableParamData, menuData, setSelectedTreeKey, selectedTreeKey, showGlobalNotification, isApplicatinoOnSaveLoading, canFormSave, onCloseAction }) => {
     useEffect(() => {
         form?.setFieldsValue({ ...finalFormdata?.applicationDetails });
-        setparentAppCode(finalFormdata?.applicationDetails.parentApplicationId);
+        setparentAppCode(finalFormdata?.applicationDetails.parentApplicationId || 'Web');
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [form, finalFormdata?.applicationDetails, finalFormdata?.applicationDetails?.parentApplicationId, setSelectedTreeKey]);
 
@@ -47,7 +47,7 @@ const ApplicationDetails = ({ setCanFormSave, form, onFinishFailed = () => {}, p
     const treeSelectFieldProps = {
         treeFieldNames: fieldNames,
         treeData: menuData,
-        treeDisabled: isReadOnly,
+        treeDisabled: isReadOnly || !menuData?.length,
         selectedTreeSelectKey: parentAppCode,
         handleSelectTreeClick,
         defaultValue: finalFormdata?.applicationDetails?.parentApplicationId,
@@ -90,7 +90,7 @@ const ApplicationDetails = ({ setCanFormSave, form, onFinishFailed = () => {}, p
                 </Row>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Form.Item name="parentApplicationId" label="Parent Application" rules={[validateRequiredSelectField('parent application ID')]}>
+                        <Form.Item name="parentApplicationId" label="Parent Application" initialValue={"Web"} rules={[validateRequiredSelectField('parent application ID')]}>
                             <TreeSelectField {...treeSelectFieldProps} />
                         </Form.Item>
                     </Col>

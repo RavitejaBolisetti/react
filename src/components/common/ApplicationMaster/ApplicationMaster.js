@@ -89,7 +89,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
     const [finalFormdata, setFinalFormdata] = useState(initialFormData);
     const [isReadOnly, setIsReadOnly] = useState(true);
     const [isFieldDisable, setIsFieldDisable] = useState(false);
-    const [parentAppCode, setparentAppCode] = useState();
+    const [parentAppCode, setparentAppCode] = useState("Web");
     const [isBtnDisabled, setIsBtnDisabled] = useState(false);
 
     const moduleTitle = 'Application Master';
