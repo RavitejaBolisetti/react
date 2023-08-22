@@ -118,7 +118,7 @@ export const VehicleAllotmentMasterBase = (props) => {
 
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
-    const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
+    const defaultFormActionType = { addMode: false, editMode: false, viewMode: true };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
     const [formData, setFormData] = useState([]);
@@ -140,26 +140,17 @@ export const VehicleAllotmentMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
 
-    useEffect(() => {
-        setButtonData(allotmentSummaryDetails?.allotmentStatus === VEHICLE_TYPE.UNALLOTED.desc ? { cancelBtn: true, allotBtn: true } : { cancelBtn: true, unAllot: true });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [allotmentSummaryDetails]);
-
-    useEffect(() => {
-        setPage({ pageSize: 10, current: 1 });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [toggleButton]);
-
+        setButtonData(allotmentSummaryDetails?.allotmentStatus === VEHICLE_TYPE.UNALLOTED.key ? { cancelBtn: true, allotBtn: true } : { cancelBtn: true, unAllot: true });
     const extraParams = useMemo(() => {
         return [
             {
                 key: 'searchType',
                 title: 'Type',
                 value: toggleButton,
-                name: typeData?.[PARAM_MASTER.ALT_ACTN.id]?.find((i) => i?.key === toggleButton)?.value,
-                //name: toggleButton,
+                //name: typeData?.[PARAM_MASTER.VECH_ALLOT_SER.id]?.find((i) => i?.key === toggleButton)?.value,
+                name: toggleButton,
                 canRemove: false,
-                filter: true,
+                filter: false,
             },
             {
                 key: 'searchParam',
@@ -170,7 +161,7 @@ export const VehicleAllotmentMasterBase = (props) => {
                 filter: true,
             },
             {
-                key: 'modelValue',
+                key: 'model',
                 title: 'Model',
                 value: filterString?.model,
                 name: productHierarchyData?.find((i) => i?.prodctCode === filterString?.model)?.prodctShrtName,
@@ -178,15 +169,15 @@ export const VehicleAllotmentMasterBase = (props) => {
                 filter: true,
             },
             {
-                key: 'vehicleStatusValue',
+                key: 'vehicleStatus',
                 title: 'Vehicle Status',
                 value: filterString?.vehicleStatus,
-                name: typeData[PARAM_MASTER.VEHCL_STATS.id]?.find((i) => i?.key === filterString?.vehicleStatus)?.value,
+                name: typeData[PARAM_MASTER.ALT_ACTN.id]?.find((i) => i?.key === filterString?.vehicleStatus)?.value,
                 canRemove: true,
                 filter: true,
             },
             {
-                key: 'pdiDoneValue',
+                key: 'pdDone',
                 title: 'PD Done',
                 value: filterString?.pdDone,
                 name: typeData[PARAM_MASTER.PD_DONE.id]?.find((i) => i?.key === filterString?.pdDone)?.value,
@@ -234,7 +225,10 @@ export const VehicleAllotmentMasterBase = (props) => {
     }, []);
 
     const ChangeSearchHandler = (e) => {
-        setSearchParamValue(e.target.value);
+        if (e.target.value.length > 2) {
+            setSearchParamValue(e.target.value);
+        } else if (e?.target?.value === '') {
+        }
     };
 
     const onSearchHandle = (value) => {
@@ -251,7 +245,7 @@ export const VehicleAllotmentMasterBase = (props) => {
             fetchVehicleAllotmentSearchedList({ customURL: customURL + '/search', setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, filterString, searchParamValue, toggleButton, extraParams]);
+    }, [userId, filterString, searchParamValue, toggleButton]);
 
     const searchOTFExtraParams = useMemo(() => {
         return [
@@ -319,7 +313,6 @@ export const VehicleAllotmentMasterBase = (props) => {
             default:
                 break;
         }
-
         //setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction, orderStatus: record?.orderStatus }));
     };
 
@@ -344,14 +337,11 @@ export const VehicleAllotmentMasterBase = (props) => {
     };
 
     const handleVehicleAllotment = (req, buttonAction) => {
-        let updatedStatus = '';
-        if(buttonAction === FROM_ACTION_TYPE?.ALLOT){
-            updatedStatus = VEHICLE_TYPE?.ALLOTED.desc;
-        }else{
-            updatedStatus = VEHICLE_TYPE?.UNALLOTED.desc;
-        }
-
-        let data = { ...allotmentSummaryDetails, vehicleOTFDetails: selectedOTFDetails, allotmentStatus: updatedStatus };
+        let data = { ...allotmentSummaryDetails, vehicleOTFDetails: selectedOTFDetails };
+        if (buttonAction === FROM_ACTION_TYPE?.ALLOT) {
+            updatedStatus = VEHICLE_TYPE?.ALLOTED.key;
+        } else {
+            updatedStatus = VEHICLE_TYPE?.UNALLOTED.key;
 
         const onSuccess = (res) => {
             form.resetFields();
