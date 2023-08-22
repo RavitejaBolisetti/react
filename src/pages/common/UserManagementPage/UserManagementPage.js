@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
 // import { UserManagementMaster } from 'components/common/UserManagement'
-import { UserManagementMaster } from 'components/common/UserManagement'
+import { UserManagementMaster } from 'components/common/UserManagement';
 
 const mapStateToProps = (state) => {
     const {
