@@ -21,6 +21,11 @@
     justify-content: center;
 }
 
+.flexDirectionColumn {
+    display: flex;
+    flex-direction: column;
+}
+
 .fullWidth {
     width: 100%;
 }
@@ -63,6 +68,10 @@
 
 .marR5 {
     margin-right: 5px;
+}
+
+.marL5 {
+    margin-left: 5px;
 }
 
 .marB5 {
@@ -124,7 +133,7 @@
     align-items: center;
 }
 
-.tooltipAlign > svg {
+.tooltipAlign>svg {
     margin-left: 5px;
     color: #2782f9;
 }
@@ -205,7 +214,7 @@
     top: 0;
 }
 
-.modalCheckBox :global .ant-form-item .ant-checkbox-wrapper .ant-checkbox + span {
+.modalCheckBox :global .ant-form-item .ant-checkbox-wrapper .ant-checkbox+span {
     font-size: 16px;
     padding-inline-start: 30px;
 }
@@ -483,13 +492,18 @@
     color: #858585;
 }
 
+.floatLeft {
+    float: left;
+}
+
 .floatRight {
     float: right;
 }
-.NewChecklist {
+
+/* .NewChecklist {
     float: right;
     color: #ff3e5b !important;
-}
+} */
 
 .textRight {
     text-align: right;
@@ -739,7 +753,7 @@
     background: #ffffff;
     left: 10px;
     bottom: 0px;
-    box-shadow: 0px -4px 4px rgba(0, 0, 0, 0.15);
+    box-shadow: 0px -1px 1px 0px rgba(0, 0, 0, 0.15);
 }
 
 .formFooter .footerBtnLeft,
@@ -899,9 +913,9 @@
 
 /* .accordianContainer :global .ant-card .ant-card-body {
     padding: 6px 20px;
-}
+} */
 
-.accordianContainer :global .ant-space-item .ant-collapse-item .ant-card {
+/* .accordianContainer :global .ant-space-item .ant-collapse-item .ant-card {
     margin-top: 10px;
 } */
 
@@ -911,9 +925,9 @@
 
 /* .accordianContainer :global .ant-select-single {
     width: 100%;
-}
+} */
 
-.accordianContainer :global .ant-collapse .ant-collapse-content-box .ant-select .ant-input-group-wrapper .ant-input-affix-wrapper {
+/* .accordianContainer :global .ant-collapse .ant-collapse-content-box .ant-select .ant-input-group-wrapper .ant-input-affix-wrapper {
     border-width: 0;
 } */
 
@@ -1107,7 +1121,7 @@
     border-end-start-radius: 3px;
 } */
 
-.contentHeaderBackground :global .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary):disabled {
+.contentHeaderBackground :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary):disabled {
     background-color: #e6e6e6;
     border-left: #e6e6e6;
 }
@@ -1129,7 +1143,7 @@
 }
 
 .contentHeaderBackground .contentHeading {
-    font-size: 12px;
+    font-size: 14px;
     color: rgba(116, 116, 116, 0.85);
     font-weight: 400;
     width: 100%;
@@ -1144,11 +1158,12 @@
     margin-bottom: 5px;
 }
 
-/* .contentHeaderBackground .subheading .filterBtn {
+
+.contentHeaderBackground .subheading .filterBtn {
     line-height: 24px;
     font-weight: 600;
     margin-left: -10px;
-} */
+}
 
 /* .contentHeaderBackground .subheading .filterBtn svg {
     margin-right: 6px;
@@ -1156,7 +1171,7 @@
     vertical-align: middle;
 } */
 
-.contentHeaderBackground :global .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) :hover {
+.contentHeaderBackground :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) :hover {
     border-left: #ff3e5b;
 }
 
@@ -1721,8 +1736,8 @@
     margin-top: 10px;
 }
 
-.timingCardItem :global .ant-descriptions .ant-descriptions-row > th,
-.timingCardItem :global .ant-descriptions .ant-descriptions-row > td {
+.timingCardItem :global .ant-descriptions .ant-descriptions-row>th,
+.timingCardItem :global .ant-descriptions .ant-descriptions-row>td {
     padding-bottom: 0px;
 }
 
@@ -1730,7 +1745,7 @@
     margin-bottom: 0px;
 }
 
-.masterListSearchForm :global .ant-form-item .ant-form-item-label > label {
+.masterListSearchForm :global .ant-form-item .ant-form-item-label>label {
     margin-right: 20px;
     height: 36px;
     color: #0b0b0c;
@@ -1794,7 +1809,7 @@
     /* margin: 30px 30px 0px 30px; */
 }
 
-.drawerBodyLeft :global .ant-collapse > .ant-collapse-item > .ant-collapse-header {
+.drawerBodyLeft :global .ant-collapse>.ant-collapse-item>.ant-collapse-header {
     padding: 12px 16px 16px;
 }
 
@@ -1802,49 +1817,62 @@
      padding-bottom: 10px;
  } */
 
-.drawerBodyLeft :global .ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-collapse-header-text .ant-space {
+.drawerBodyLeft :global .ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-collapse-header-text {
+    margin-bottom: 12px;
+}
+
+.drawerBodyLeft :global .ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-collapse-header-text .ant-space {
     gap: 10px !important;
-    margin-bottom: 16px;
+    /* margin-bottom: 16px; */
     width: 100%;
 }
 
-.drawerBodyLeft :global .ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-collapse-header-text .ant-space .ant-space-item h5.ant-typography {
+.drawerBodyLeft :global .ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-collapse-header-text .ant-space .ant-space-item:first-child {
+    align-self: flex-start;
+}
+
+.drawerBodyLeft :global .ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-collapse-header-text .ant-space .ant-space-item h5.ant-typography {
     margin-top: 0;
     margin-bottom: 0;
     color: #ff3e5b;
-    font-weight: 700;
+    text-transform: capitalize;
+    /* font-weight: 700;
     font-size: 16px;
-    line-height: 24px;
+    line-height: 24px; */
 }
 
-.drawerBodyLeft :global .ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-collapse-header-text .ant-space .ant-space-item span.ant-typography {
+.drawerBodyLeft :global .ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-collapse-header-text .ant-space .ant-space-item span.ant-typography {
     color: #0b0b0c;
     font-size: 12px;
     font-weight: 400;
     line-height: 20px;
 }
 
+.drawerBodyLeft :global .ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-collapse-header-text .ant-divider-horizontal {
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
 /* .drawerBodyLeft :global .ant-collapse .ant-collapse-content {
     border-top: none;
 } */
 
-.drawerBodyLeft :global .ant-collapse .ant-collapse-content > .ant-collapse-content-box {
+.drawerBodyLeft :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box {
     padding: 0 16px 12px;
     margin-bottom: 0;
 }
 
-.drawerBodyLeft :global .ant-collapse .ant-collapse-content > .ant-collapse-content-box .ant-divider-horizontal {
-    margin: 0;
+.drawerBodyLeft :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box .ant-divider-horizontal {
     margin-top: 5px;
-    border-block-start: 1px solid #e6e6e6;
+    margin-bottom: 5px;
 }
 
-.drawerBodyLeft :global .ant-collapse .ant-collapse-content > .ant-collapse-content-box .ant-divider-horizontal:last-child {
+.drawerBodyLeft :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box .ant-divider-horizontal:last-child {
     margin-top: 0;
     border-block-start: 1px solid #f2f2f2;
 }
 
-.drawerBodyLeft :global .ant-collapse .ant-collapse-content > .ant-collapse-content-box p {
+.drawerBodyLeft :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box p {
     padding-top: 5px;
     padding-left: 0 !important;
     font-size: 12px;
@@ -1853,26 +1881,42 @@
     color: #545454;
 }
 
-.drawerBodyLeft :global .ant-collapse .ant-collapse-content > .ant-collapse-content-box p span {
+.drawerBodyLeft :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box p span {
     float: right !important;
     font-size: 12px;
     font-weight: 500;
-    line-height: 20px;
+    line-height: 24px;
     color: #0b0b0c;
     word-break: break-all;
 }
 
-.drawerBodyLeft :global .ant-collapse .ant-collapse-content > .ant-collapse-content-box p:first-child {
+.drawerBodyLeft .detailCardText {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    line-height: 20px;
+    font-weight: 500;
+    color: #545454;
+}
+
+.drawerBodyLeft .detailCardText span {
+    color: #0b0b0c;
+    max-width: 132px;
+    word-wrap: break-word;
+    text-align: justify;
+}
+
+.drawerBodyLeft :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box p:first-child {
     border-top: 1px solid #e6e6e6;
 }
 
-.drawerBodyLeft :global .ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-collapse-expand-icon {
+.drawerBodyLeft :global .ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-collapse-expand-icon {
     position: absolute;
     bottom: 4px;
     color: #ff3e5b;
 }
 
-.drawerBodyLeft :global .ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-collapse-expand-icon span {
+.drawerBodyLeft :global .ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-collapse-expand-icon span {
     padding-right: 4px !important;
     font-size: 12px;
     font-weight: 700;
@@ -1880,7 +1924,7 @@
     text-transform: capitalize;
 }
 
-.drawerBodyLeft :global .ant-collapse > .ant-collapse-item > .ant-collapse-header > .ant-collapse-header-text .ant-space-vertical {
+.drawerBodyLeft :global .ant-collapse>.ant-collapse-item>.ant-collapse-header>.ant-collapse-header-text .ant-space-vertical {
     display: inline-block;
     width: 100%;
 }
@@ -1897,7 +1941,7 @@
     line-height: 46px !important;
 }
 
-.drawerBodyLeft :global .ant-collapse > .ant-collapse-item > .ant-collapse-header > .ant-collapse-header-text .ant-space .ant-space-item p {
+.drawerBodyLeft :global .ant-collapse>.ant-collapse-item>.ant-collapse-header>.ant-collapse-header-text .ant-space .ant-space-item p {
     padding-left: 0 !important;
     color: #0b0b0c;
     font-size: 14px;
@@ -1909,7 +1953,7 @@
     max-width: 15ch;
 }
 
-.drawerBodyLeft :global .ant-collapse > .ant-collapse-item > .ant-collapse-header > .ant-collapse-header-text .ant-space .ant-space-item p span {
+.drawerBodyLeft :global .ant-collapse>.ant-collapse-item>.ant-collapse-header>.ant-collapse-header-text .ant-space .ant-space-item p span {
     color: #ff3e5b;
     font-size: 18px;
     font-weight: 700;
@@ -1920,7 +1964,7 @@
     max-width: 12ch;
 }
 
-.drawerBodyLeft :global .ant-collapse > .ant-collapse-item > .ant-collapse-header > .ant-collapse-header-text .ant-space .ant-space-item:last-child {
+.drawerBodyLeft :global .ant-collapse>.ant-collapse-item>.ant-collapse-header>.ant-collapse-header-text .ant-space .ant-space-item:last-child {
     color: #0b0b0c;
     font-size: 14px;
     font-weight: 500;
@@ -1939,13 +1983,20 @@
 }
 
 .drawerBodyLeft :global .ant-timeline .ant-timeline-item .ant-timeline-item-content p {
-    padding-left: 0 !important;
     font-size: 14px;
     color: #0b0b0c;
     font-weight: 500;
     line-height: 23px;
     cursor: pointer;
 }
+
+/* .drawerBodyLeft .active :global .ant-timeline-item-content p:hover {
+    color: #0b0b0c;
+}
+
+.drawerBodyLeft .inActive :global .ant-timeline-item-content p:hover {
+    color: #ff3e5b !important;
+} */
 
 /* .drawerBodyLeft :global .ant-timeline .ant-timeline-item-last .ant-timeline-item-content p,
  .drawerBodyLeft :global .ant-timeline .ant-timeline-item-last .ant-timeline-item-content p:hover {
@@ -1963,7 +2014,7 @@
      line-height: 22px;
  } */
 
-.drawerBodyLeft :global .ant-timeline .ant-timeline-item-last > .ant-timeline-item-content {
+.drawerBodyLeft :global .ant-timeline .ant-timeline-item-last>.ant-timeline-item-content {
     min-height: 32px;
 }
 
@@ -2102,8 +2153,8 @@
     margin-inline-start: 68px;
 }
 
-.drawerBodyRight :global .ant-steps .ant-steps-item-process > .ant-steps-item-container > .ant-steps-item-tail::after,
-.drawerBodyRight :global .ant-steps .ant-steps-item-wait > .ant-steps-item-container > .ant-steps-item-tail::after {
+.drawerBodyRight :global .ant-steps .ant-steps-item-process>.ant-steps-item-container>.ant-steps-item-tail::after,
+.drawerBodyRight :global .ant-steps .ant-steps-item-wait>.ant-steps-item-container>.ant-steps-item-tail::after {
     background-color: #b5b5b6;
 }
 
@@ -2129,8 +2180,8 @@
     width: 80px;
 }
 
-.drawerBodyRight :global .ant-steps .ant-steps-item-process > .ant-steps-item-container > .ant-steps-item-content > .ant-steps-item-title,
-.drawerBodyRight :global .ant-steps .ant-steps-item-wait > .ant-steps-item-container > .ant-steps-item-content > .ant-steps-item-title {
+.drawerBodyRight :global .ant-steps .ant-steps-item-process>.ant-steps-item-container>.ant-steps-item-content>.ant-steps-item-title,
+.drawerBodyRight :global .ant-steps .ant-steps-item-wait>.ant-steps-item-container>.ant-steps-item-content>.ant-steps-item-title {
     color: #0b0b0c;
     font-size: 10px;
     font-weight: 500;
@@ -2446,12 +2497,12 @@
     border: 1px solid #E6E6E6 !important;
 } */
 
-.drawerBodyRight :global .ant-collapse > .ant-collapse-item > .ant-collapse-header,
-.drawerBodyRight :global .ant-collapse > .ant-collapse-item-active > .ant-collapse-header {
+.drawerBodyRight :global .ant-collapse>.ant-collapse-item>.ant-collapse-header,
+.drawerBodyRight :global .ant-collapse>.ant-collapse-item-active>.ant-collapse-header {
     padding: 20px 30px;
 }
 
-.drawerBodyRight :global .ant-collapse .ant-collapse-content > .ant-collapse-content-box {
+.drawerBodyRight :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box {
     padding: 0 30px;
     margin-bottom: 0;
 }
@@ -2498,7 +2549,7 @@
 } */
 
 .drawerBodyRight :global .ant-card-bordered .ant-card-body .ant-typography,
-.drawerBodyRight :global .ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-typography {
+.drawerBodyRight :global .ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-typography {
     margin-left: 0 !important;
     margin-top: 0 !important;
     margin-right: 30px;
@@ -2508,7 +2559,7 @@
     margin-right: 8px;
 }
 
-.drawerBodyRight :global .ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-typography strong {
+.drawerBodyRight :global .ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-typography strong {
     font-weight: 700;
     font-size: 16px;
     line-height: 22px;
@@ -2609,7 +2660,7 @@
      margin-bottom: 20px;
  } */
 
-.drawerBodyRight :global .ant-collapse .ant-collapse-content > .ant-collapse-content-box .ant-form-item button {
+.drawerBodyRight :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box .ant-form-item button {
     margin-bottom: 0;
 }
 
@@ -2733,7 +2784,7 @@
 } */
 
 /* .drawerBodyRight .accordianContainer :global .ant-collapse>.ant-collapse-item>.ant-collapse-header, */
-.drawerBodyRight .viewDrawerContainer :global .ant-collapse > .ant-collapse-item > .ant-collapse-header {
+.drawerBodyRight .viewDrawerContainer :global .ant-collapse>.ant-collapse-item>.ant-collapse-header {
     padding: 20px 30px;
 }
 
@@ -2980,19 +3031,19 @@
     color: #00a310;
 }
 
-.drawerCardView :global .ant-collapse-content-box .ant-descriptions .ant-descriptions-view .ant-descriptions-row:nth-child(odd) .ant-descriptions-item,
-.drawerCardView :global .ant-card-body .ant-descriptions .ant-descriptions-view .ant-descriptions-row:nth-child(odd) .ant-descriptions-item {
-    /* .ExchangeCard :global .ant-card-body .ant-descriptions .ant-descriptions-view .ant-descriptions-row:nth-child(odd) .ant-descriptions-item { */
+/* .drawerCardView :global .ant-collapse-content-box .ant-descriptions .ant-descriptions-view .ant-descriptions-row:nth-child(odd) .ant-descriptions-item,
+.drawerCardView :global .ant-card-body .ant-descriptions .ant-descriptions-view .ant-descriptions-row:nth-child(odd) .ant-descriptions-item,
+.ExchangeCard :global .ant-card-body .ant-descriptions .ant-descriptions-view .ant-descriptions-row:nth-child(odd) .ant-descriptions-item {
     padding-bottom: 0px;
-}
+} */
 
 /*.ExchangeCard :global .ant-card-body .ant-descriptions .ant-descriptions-row:last-child > td {
     padding-bottom: 0;
 } */
 
-.drawerCardView :global .ant-card-body .ant-descriptions .ant-descriptions-view .ant-descriptions-row:nth-child(even) .ant-descriptions-item {
+/* .drawerCardView :global .ant-card-body .ant-descriptions .ant-descriptions-view .ant-descriptions-row:nth-child(even) .ant-descriptions-item {
     padding-bottom: 20px;
-}
+} */
 
 /* .collapseContainer :global .ant-descriptions .ant-descriptions-view .ant-descriptions-row:nth-child(odd) .ant-descriptions-item {
     padding-bottom: 0px !important;
@@ -3100,7 +3151,7 @@
     line-height: 23px;
 }
 
-.drawerBodyRight :global .ant-result-success .ant-result-icon > .anticon-check-circle {
+.drawerBodyRight :global .ant-result-success .ant-result-icon>.anticon-check-circle {
     border: 47px solid #eefcd2;
     border-radius: 100px;
 }
@@ -3313,7 +3364,7 @@ li.ant-timeline-item.active .ant-timeline-item-content p {
     margin-bottom: 0px;
 }
 
-.rolemanagmentContaner :global .ant-collapse .ant-collapse-content > .ant-collapse-content-box {
+.rolemanagmentContaner :global .ant-collapse .ant-collapse-content>.ant-collapse-content-box {
     padding-top: 0px;
 }
 
@@ -3380,6 +3431,33 @@ li.ant-timeline-item.active .ant-timeline-item-content p {
     margin-top: 5px;
 }
 
+.modalTree {
+    max-height:50vh !important;
+    min-height: 20vh;
+    overflow: auto ;
+    margin-bottom: 20px;
+}
+
+.modalTree::-webkit-scrollbar-track {
+    background-color: #ffffff;
+}
+
+.modalTree::-webkit-scrollbar {
+    background-color: #ffffff;
+    width: 8px;
+    height: 8px;
+}
+
+.modalTree::-webkit-scrollbar-thumb {
+    background-color: #b5b5b6;
+    border-radius: 10px;
+    border: 2px solid #ffffff;
+}
+
+.modalTree::-webkit-scrollbar-thumb:hover {
+    border: 2px solid #b5b5b6;
+}
+
 .mainDataTable :global .ant-pagination {
     display: none;
 }
@@ -3389,6 +3467,7 @@ li.ant-timeline-item.active .ant-timeline-item-content p {
     align-items: center;
     float: right;
 }
+
 .marL20 {
     margin-left: 20px;
 }
@@ -3404,6 +3483,10 @@ li.ant-timeline-item.active .ant-timeline-item-content p {
 
 .confirmModal :global .ant-modal-confirm-confirm {
     width: 376px !important;
+}
+
+.confirmModal :global .ant-modal-confirm .ant-modal-confirm-body>.anticon {
+    display: none;
 }
 
 .confirmModal :global .ant-modal-confirm-title {
@@ -3432,11 +3515,12 @@ li.ant-timeline-item.active .ant-timeline-item-content p {
     height: 36px !important;
 }
 
-.confirmModal :global .ant-modal-confirm .ant-modal-confirm-body > .anticon + .ant-modal-confirm-title + .ant-modal-confirm-content {
+.confirmModal :global .ant-modal-confirm .ant-modal-confirm-body>.anticon+.ant-modal-confirm-title+.ant-modal-confirm-content {
     margin-inline-start: 0px !important;
 }
 
 @media (max-width: 768px) {
+
     /* For mobile phones: */
     .headerSearchField {
         vertical-align: middle;

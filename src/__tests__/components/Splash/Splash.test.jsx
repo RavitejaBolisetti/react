@@ -14,7 +14,9 @@ const props={
     setIsLoading: jest.fn(),
     setShowB: jest.fn(),
 }
-
+afterEach(() => {
+    jest.restoreAllMocks();
+  });
 describe('splash component render', () => {
 
     it("should render splash component ",async ()=>{

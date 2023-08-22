@@ -20,7 +20,7 @@ export const TaxAndChargesCalculationMaster = (props) => {
             .validateFields()
             .then(() => {
                 let data = taxChargeCalForm.getFieldsValue();
-                console.log('tData', data);
+                //console.log('tData', data);
 
                 let updateData = { ...data, internalId: Math.floor(Math.random() * 100000000 + 1), id: '' };
                 setTaxChargeCalList((item) => [updateData, ...item]);

@@ -4,14 +4,15 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Collapse, Space, Typography } from 'antd';
+import { Collapse, Divider } from 'antd';
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
 import { getCodeValue } from 'utils/getCodeValue';
 import { DATA_TYPE } from 'constants/dataType';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
+import styles from 'components/common/Common.module.css';
+import { FiCopy } from 'react-icons/fi';
 
 const { Panel } = Collapse;
-const { Text } = Typography;
 
 const expandIcon = ({ isActive }) =>
     isActive ? (
@@ -33,26 +34,31 @@ const VehicleReceiptDetailCard = (props) => {
             <Panel
                 header={
                     <>
-                        <Space>
-                            <div>
-                                <Text>
-                                    GRN Number: <span>{checkAndSetDefaultValue(selectedRecord?.grnNumber, isLoading)}</span>
-                                </Text>
-                            </div>
-                        </Space>
+                        <div className={`${styles.detailCardText} ${styles.marB5}`} style={{ fontSize: '14px' }}>
+                            GRN Number:
+                            <span>
+                                {checkAndSetDefaultValue(selectedRecord?.grnNumber, isLoading)}
+                                <a className={`${styles.floatRight} ${styles.marL5}`}>
+                                    <FiCopy className={styles.activeForm} />
+                                </a>
+                            </span>
+                        </div>
                     </>
                 }
                 key={1}
             >
-                <p>
+                <Divider />
+                <div className={styles.detailCardText}>
                     GRN Type: <span>{selectedRecord && checkAndSetDefaultValue(selectedRecord?.grnType, isLoading)}</span>
-                </p>
-                <p>
+                </div>
+                <Divider />
+                <div className={styles.detailCardText}>
                     GRN Date: <span>{checkAndSetDefaultValue(selectedRecord?.grnDate, isLoading, DATA_TYPE?.DATE?.key) || 'NA'}</span>
-                </p>
-                <p>
+                </div>
+                <Divider />
+                <div className={styles.detailCardText}>
                     GRN Status: <span>{getCodeValue(typeData, selectedRecord?.status) || 'NA'}</span>
-                </p>
+                </div>
             </Panel>
         </Collapse>
     );

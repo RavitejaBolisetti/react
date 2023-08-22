@@ -2,7 +2,9 @@ import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
 import { screen, fireEvent } from '@testing-library/react';
 import { OTFFormButton } from 'components/Sales/OTF/OTFFormButton';
-
+afterEach(() => {
+    jest.restoreAllMocks();
+  }); 
 const buttonData = {
     closeBtn: true,
     cancelBtn: true,

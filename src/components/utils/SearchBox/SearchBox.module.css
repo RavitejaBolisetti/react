@@ -94,6 +94,7 @@
     text-align: center;
     padding: 5px 10px;
     border-radius: 5px;
+    z-index: 1;
 }
 
 .selectSearchBg :global .ant-form-vertical .ant-form-item:last-child .ant-form-item-explain .ant-form-item-explain-error:after {

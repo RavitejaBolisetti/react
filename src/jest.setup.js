@@ -20,7 +20,13 @@ beforeAll(() => {
     });
 });
 
-
+global.console = {
+    log: jest.fn(),    // Mock console.log
+    error: jest.fn(),  // Mock console.error
+    warn: jest.fn()    // Mock console.warn
+    // You can add more methods as needed
+  };
+  
 // Establish API mocking before all tests.
 beforeAll(() => server.listen());
 

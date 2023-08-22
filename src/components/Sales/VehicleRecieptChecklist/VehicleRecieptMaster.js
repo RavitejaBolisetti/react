@@ -44,6 +44,7 @@ const mapStateToProps = (state) => {
             OTF: {
                 VehicleDetailsLov: { isFilteredListLoaded: isModelDataLoaded = false, isLoading: isModelDataLoading, filteredListData: vehicleModelData },
             },
+            ConfigurableParameterEditing: { filteredListData: typeData = [] },
         },
     } = state;
     const moduleTitle = 'Vehicle Receipt Checklist';
@@ -63,6 +64,7 @@ const mapStateToProps = (state) => {
         isProfileDataLoading,
         ProfileData,
         ChecklistData: ChecklistData['supportingDocumentList'],
+        typeData: typeData['CHK_STATS'],
     };
     return returnValue;
 };
@@ -95,12 +97,13 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
     const { userId, data, totalRecords, moduleTitle, filterString } = props;
     const { fetchList, listShowLoading, setFilterString, resetCheckListData, saveData, showGlobalNotification } = props;
     const { fetchModel, isModelDataLoaded, isModelDataLoading, vehicleModelData, modelLoading } = props;
-    const { fetchProfile, profileLoading, isProfileDataLoaded, ProfileData, resetProfile, ChecklistData } = props;
+    const { fetchProfile, profileLoading, isProfileDataLoaded, ProfileData, resetProfile, ChecklistData, typeData } = props;
 
     const [listFilterForm] = Form.useForm();
 
     const [selectedRecord, setSelectedRecord] = useState();
     const [selectedRecordId, setSelectedRecordId] = useState();
+    const [vehicleReceiptFinalFormData, setvehicleReceiptFinalFormData] = useState({ checklistDetails: [], supportingDocument: [] });
     const [checkListDataModified, setcheckListDataModified] = useState([]);
     const [payload, setPayload] = useState([]);
     const [deletedUpload, setdeletedUpload] = useState([]);
@@ -369,6 +372,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         switch (buttonAction) {
             case ADD_ACTION:
                 resetProfile();
+                setvehicleReceiptFinalFormData({ checklistDetails: [], supportingDocument: [] });
                 defaultSection && setCurrentSection(defaultSection);
                 setSelectedRecord(record);
                 setcheckListDataModified([]);
@@ -536,7 +540,13 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         }
     }, [formActionType]);
 
+    const vehicleReceiptFormdataProps = {
+        vehicleReceiptFinalFormData,
+        setvehicleReceiptFinalFormData,
+    };
+
     const containerProps = {
+        ...vehicleReceiptFormdataProps,
         isProfileDataLoaded,
         ProfileData,
         record: selectedRecord,
@@ -586,6 +596,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         setdeletedUpload,
         fileList,
         setFileList,
+        typeData,
     };
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,

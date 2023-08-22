@@ -7,7 +7,9 @@ import '@testing-library/jest-dom/extend-expect';
 import { screen, fireEvent } from "@testing-library/react";
 import customRender from '@utils/test-utils';
 import AdvanceOTFFilter from 'components/Sales/OTF/AdvanceOtfFilter';
-
+afterEach(() => {
+    jest.restoreAllMocks();
+  });
 describe('advanced otf filter component render', () => {
 
     it("should render advanced search component",async ()=>{

@@ -4,13 +4,14 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import CommonCard from './CommonCard';
 import { Col, Input, Form, Descriptions, Row, Button, Space, Collapse } from 'antd';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
-import MacIdCard from './MacIdCard';
-import AssignUserRole from './AssignUserRole';
-import BranchMapping from './BranchMapping';
-import ProductMapping from './ProductMapping';
+
+import CommonCard from './../UserInfoCard';
+// import MacIdCard from './../MacIdCard';
+import AssignUserRole from './AssignUserRole/AssignUserRole';
+import BranchMapping from './../BranchMapping';
+import ProductMapping from './../ProductMapping';
 import { accordianExpandIcon } from 'utils/accordianExpandIcon';
 
 const { Panel } = Collapse;
@@ -25,15 +26,14 @@ const ViewUserManagementDealerMain = ({ formData, styles, DealerSearchvalue, han
     return (
         <div className={styles.viewContainer}>
             <>
-                <Descriptions {...viewProps}></Descriptions>
+                <Descriptions {...viewProps}>
                 <Space
                     direction="vertical"
-                    size="middle"
-                    style={{
-                        display: 'flex',
-                    }}
+                  
                 >
+
                     <CommonCard DealerData={DealerData} />
+
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                             <Form.Item label="MAC ID" name="macid">
@@ -44,7 +44,7 @@ const ViewUserManagementDealerMain = ({ formData, styles, DealerSearchvalue, han
                             <Button disabled={true}>Add</Button>
                         </Col>
                     </Row>
-                    <MacIdCard AccessMacid={AccessMacid} handleDelete={handleDelete} isViewModeVisible={isViewModeVisible} />
+                    {/* <MacIdCard AccessMacid={AccessMacid} handleDelete={handleDelete} isViewModeVisible={isViewModeVisible} /> */}
                     <Row>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                             Access Management<span style={{ color: 'red' }}>*</span>
@@ -56,17 +56,22 @@ const ViewUserManagementDealerMain = ({ formData, styles, DealerSearchvalue, han
                             <AssignUserRole userRoleOptions={DealerData?.roles} DealerSearchvalue={DealerSearchvalue} finalFormdata={finalFormdata} setfinalFormdata={setfinalFormdata} />
                         </Panel>
                     </Collapse>
+                    
                     <Collapse onChange={() => handleCollapse(2)} expandIcon={accordianExpandIcon} activeKey={openAccordian}>
                         <Panel header="Branch Mapping" key="2">
                             <BranchMapping BranchMappingData={DealerData?.branches} finalFormdata={finalFormdata} setfinalFormdata={setfinalFormdata} />
                         </Panel>
                     </Collapse>
+
                     <Collapse onChange={() => handleCollapse(3)} expandIcon={accordianExpandIcon} activeKey={openAccordian}>
                         <Panel header="Product Mapping" key="3">
                             <ProductMapping ProductMappingData={DealerData?.products} productHierarchyData={productHierarchyData} finalFormdata={finalFormdata} setfinalFormdata={setfinalFormdata} />
                         </Panel>
                     </Collapse>
+
                 </Space>
+                </Descriptions>
+
             </>
         </div>
     );

@@ -3,6 +3,9 @@ import customRender from '@utils/test-utils';
 import { screen, fireEvent } from '@testing-library/react';
 import FMSForm from 'components/Sales/OTF/AddOnDetails/FMS/FMSForm';
 import { Form } from 'antd';
+afterEach(() => {
+    jest.restoreAllMocks();
+  }); 
 
 const FormWrapper = (props) => {
     const [fmsForm] = Form.useForm();

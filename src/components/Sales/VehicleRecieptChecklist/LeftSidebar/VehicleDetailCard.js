@@ -4,11 +4,12 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Collapse, Space } from 'antd';
+import { Collapse, Divider } from 'antd';
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
 import dayjs from 'dayjs';
 
 import styles from 'components/common/Common.module.css';
+import { FiCopy } from 'react-icons/fi';
 
 const { Panel } = Collapse;
 
@@ -26,43 +27,53 @@ const expandIcon = ({ isActive }) =>
     );
 
 const VehicleDetailCard = (props) => {
-    const { ProfileData } = props;
+    const { ProfileData, typeData } = props;
+    const findStatus = (key) => typeData?.find((element) => element?.key === key)?.value || 'NA';
+
     return (
         <Collapse bordered={true} defaultActiveKey={[1]} expandIcon={expandIcon} collapsible="icon">
             <Panel
                 header={
-                    <Space>
-                        <div>
-                            <div>
-                                CheckList Number: <span className={ProfileData?.checklistNumber ? styles.floatRight : styles.NewChecklist}>{ProfileData?.checklistNumber || 'New'}</span>
-                            </div>
-                        </div>
-                    </Space>
+                    <div className={`${styles.detailCardText} ${styles.marB5}`} style={{ fontSize: '14px' }}>
+                        CheckList Number:
+                        <span className={ProfileData?.checklistNumber ? '' : styles.activeForm}>
+                            {ProfileData?.checklistNumber || 'New'}
+                            <a className={`${styles.floatRight} ${styles.marL5}`}>
+                                <FiCopy className={styles.activeForm} />
+                            </a>
+                        </span>
+                    </div>
                 }
                 key={1}
             >
-                <p>
-                    Checklist Date: <span className={styles.floatRight}>{ProfileData?.checklistDate ? dayjs(ProfileData?.checklistDate)?.format('DD MM YYYY') : 'NA'}</span>
-                </p>
-                <p>
-                    Checklist Status: <span className={styles.floatRight}>{ProfileData?.checklistStatus || 'NA'}</span>
-                </p>
-                <p>
-                    GRN Number: <span className={styles.floatRight}>{ProfileData?.grnNumber || 'NA'}</span>
-                </p>
-
-                <p>
-                    GRN Date: <span className={styles.floatRight}>{ProfileData?.grnDate ? dayjs(ProfileData?.grnDate)?.format('DD-MM-YYYY') : 'NA'}</span>
-                </p>
-                <p>
-                    GRN Status: <span className={styles.floatRight}>{ProfileData?.grnStatus || 'NA'}</span>
-                </p>
-                <p>
-                    VIN: <span className={styles.floatRight}>{ProfileData?.vinNumber || 'NA'}</span>
-                </p>
-                <p>
-                    MODEL: <span className={styles.floatRight}>{ProfileData?.model || 'NA'}</span>
-                </p>
+                <Divider />
+                <div className={styles.detailCardText}>
+                    Checklist Date: <span>{ProfileData?.checklistDate ? dayjs(ProfileData?.checklistDate)?.format('DD MM YYYY') : 'NA'}</span>
+                </div>
+                <Divider />
+                <div className={styles.detailCardText}>
+                    Checklist Status: <span>{ProfileData?.checklistStatus || 'NA'}</span>
+                </div>
+                <Divider />
+                <div className={styles.detailCardText}>
+                    GRN Number: <span>{ProfileData?.grnNumber || 'NA'}</span>
+                </div>
+                <Divider />
+                <div className={styles.detailCardText}>
+                    GRN Date: <span>{ProfileData?.grnDate ? dayjs(ProfileData?.grnDate)?.format('DD-MM-YYYY') : 'NA'}</span>
+                </div>
+                <Divider />
+                <div className={styles.detailCardText}>
+                    GRN Status: <span>{ProfileData?.grnStatus || 'NA'}</span>
+                </div>
+                <Divider />
+                <div className={styles.detailCardText}>
+                    VIN: <span>{ProfileData?.vinNumber || 'NA'}</span>
+                </div>
+                <Divider />
+                <div className={styles.detailCardText}>
+                    MODEL: <span>{ProfileData?.model || 'NA'}</span>
+                </div>
             </Panel>
         </Collapse>
     );

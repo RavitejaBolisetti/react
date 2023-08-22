@@ -27,7 +27,7 @@ const MenuNav = (props) => {
                     {item?.title}
                 </p>
             ),
-            className: item?.id === currentSection ? 'active' : 'noactive',
+            className: item?.id === currentSection ? 'active' : 'inActive',
         }));
 
     const finalItem = items?.filter((i) => i);
