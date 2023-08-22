@@ -81,7 +81,7 @@ const ViewDetailMain = (props) => {
                             <Descriptions.Item label="Age In Days">{checkAndSetDefaultValue(formData?.ageInDays, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="PDI Done?">{checkAndSetDefaultValue(formData?.pdiDone === true ? 'Yes' : 'No', isLoading)}</Descriptions.Item>
 
-                            <Descriptions.Item label="Vehicle Status 1">{checkAndSetDefaultValue(Object.values(VEHICLE_TYPE)?.find((i) => i.key === formData?.allotmentStatus)?.title, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Vehicle Status 1">{checkAndSetDefaultValue(Object.values(VEHICLE_TYPE)?.find((i) => i?.key === formData?.allotmentStatus)?.title, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="M&M Invoices Date">{checkAndSetDefaultValue(formData?.mnmInvoiceDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                             <Descriptions.Item label="M&M Invoices No.">{checkAndSetDefaultValue(formData?.mnmInvoiceNo, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Model Description">{checkAndSetDefaultValue(formData?.modelDescription, isLoading)}</Descriptions.Item>
@@ -97,7 +97,7 @@ const ViewDetailMain = (props) => {
                                 </Col>
                             </Row>
                         )}
-                        {tableDataItem.length > 0 && <DataTable {...tableProps} />}
+                        {tableDataItem?.length > 0 && <DataTable {...tableProps} />}
                     </Card>
                 </Col>
             </Row>

@@ -88,7 +88,7 @@ export const VehicleAllotmentMasterBase = (props) => {
     const { filterString, setFilterString, otfStatusList } = props;
     const [filterStringOTFSearch, setFilterStringOTFSearch] = useState('');
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
-    const [toggleButton, settoggleButton] = useState(VEHICLE_TYPE?.UNALLOTED.id);
+    const [toggleButton, settoggleButton] = useState(VEHICLE_TYPE?.UNALLOTED.key);
     const [searchParamValue, setSearchParamValue] = useState('');
     const [listFilterForm] = Form.useForm();
 
