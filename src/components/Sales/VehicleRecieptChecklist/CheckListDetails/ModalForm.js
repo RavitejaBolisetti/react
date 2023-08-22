@@ -36,7 +36,7 @@ export const ChecklistModalForms = (props) => {
             .validateFields()
             .then(() => {
                 const values = aggregateForm.getFieldsValue();
-                console.log('valuesDate', convertDateTimedayjs(values?.answerToDate), convertDateTimedayjs(values?.answerFromDate));
+                //console.log('valuesDate', convertDateTimedayjs(values?.answerToDate), convertDateTimedayjs(values?.answerFromDate));
                 const data = { ...AdvanceformData, ...values, ismodified: true, checkResult: MakeCheckResult({ type: AdvanceformData?.checklistType, data: { ...values, answerToDate: convertDateTimedayjs(values?.answerToDate), answerFromDate: convertDateTimedayjs(values?.answerFromDate) } }) };
                 const newarr = [...checkListDataModified];
                 newarr[AdvanceformData?.index] = data;

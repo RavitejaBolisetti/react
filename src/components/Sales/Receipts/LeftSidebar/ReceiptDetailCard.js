@@ -4,15 +4,16 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Collapse, Space, Typography } from 'antd';
+import { Collapse, Divider } from 'antd';
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
 import { DATA_TYPE } from 'constants/dataType';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { getCodeValue } from 'utils/getCodeValue';
 import { PARAM_MASTER } from 'constants/paramMaster';
+import styles from 'components/common/Common.module.css';
+import { FiCopy } from 'react-icons/fi';
 
 const { Panel } = Collapse;
-const { Text } = Typography;
 
 const expandIcon = ({ isActive }) =>
     isActive ? (
@@ -34,23 +35,27 @@ const VehicleReceiptDetailCard = (props) => {
             <Panel
                 header={
                     <>
-                        <Space>
-                            <div>
-                                <Text>
-                                    Receipt No.: <span>{receiptDetailData?.receiptsDetails?.receiptNumber}</span>
-                                </Text>
-                            </div>
-                        </Space>
+                        <div className={`${styles.detailCardText} ${styles.marB5}`} style={{ fontSize: '14px' }}>
+                            Receipt No.:
+                            <span className={styles.verticallyCentered}>
+                                {receiptDetailData?.receiptsDetails?.receiptNumber}
+                                <a className={`${styles.verticallyCentered} ${styles.marL5}`}>
+                                    <FiCopy className={styles.activeForm} />
+                                </a>
+                            </span>
+                        </div>
                     </>
                 }
                 key={1}
             >
-                <p>
+                <Divider />
+                <div className={styles.detailCardText}>
                     Receipt Date: <span>{checkAndSetDefaultValue(receiptDetailData?.receiptsDetails?.receiptDate, isLoading, DATA_TYPE?.DATE?.key) || 'NA'}</span>
-                </p>
-                <p>
+                </div>
+                <Divider />
+                <div className={styles.detailCardText}>
                     Status: <span>{checkAndSetDefaultValue(getCodeValue(typeData[PARAM_MASTER.INDNT_STATS.id], receiptDetailData?.receiptsDetails?.receiptStatus, isLoading))}</span>
-                </p>
+                </div>
             </Panel>
         </Collapse>
     );

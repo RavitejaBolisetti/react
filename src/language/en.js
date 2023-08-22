@@ -25,6 +25,8 @@ export const LANGUAGE_EN = {
         HIERARCHY_SAME_PARENT_AND_CHILD_WARNING: { TITLE: 'WARNING', MESSAGE: 'Select different parent' },
         THANK_YOU_PAGE_OTF: { TITLE: 'Order Tracking Form edited successfully', MESSAGE: 'Order number: {ORDER_ID}' },
         CUSTOMER_UPDATE: { TITLE: 'Success', MESSAGE: 'Customer detail edited successfully' },
+
         DOWNLOAD_START: { TITLE: 'Download', MESSAGE: 'Your download will start soon' },
+        USER_TOKEN_VALIDATION : { TITLE: 'Error', MESSAGE: 'User token number {DealerSearchvalue} does not exist. Try again with valid token number' },
     },
 };

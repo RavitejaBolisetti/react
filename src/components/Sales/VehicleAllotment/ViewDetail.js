@@ -31,11 +31,6 @@ const ViewDetailMain = (props) => {
     };
 
     useEffect(() => {
-        setButtonData(formData?.allotmentStatus === VEHICLE_TYPE.UNALLOTED.desc ? { cancelBtn: true, allotBtn: true } : { cancelBtn: true, unAllot: true });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    useEffect(() => {
         setFilterStringOTFSearch({ ...filterString });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString]);
@@ -56,22 +51,26 @@ const ViewDetailMain = (props) => {
         handleButtonClick,
     };
 
+    useEffect(() => {
+        setFilterStringOTFSearch({ ...filterString });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [filterString]);
+
     const rowSelection = {
         type: 'radio',
         onChange: (selectedRowKeys, selectedRows) => {
-            console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
             setSelectedOrderOTFDetails(selectedRows?.[0]);
         },
         getCheckboxProps: () => ({}),
     };
 
     const tableProps = {
+        pagination: false,
         srl: false,
         rowKey: 'otfNumber',
         rowSelection: {
             ...rowSelection,
         },
-        pagination: false,
         tableColumn: tableColumnSearchOTF(handleButtonClick),
         tableData: tableData || (formData?.vehicleOTFDetails && [formData?.vehicleOTFDetails]),
     };
@@ -97,7 +96,6 @@ const ViewDetailMain = (props) => {
                     <h4>Allot OTF</h4>
                     <Card>
                         {formData?.allotmentStatus === VEHICLE_TYPE.UNALLOTED.desc && (
-                            // {formData?.allotmentStatus === VEHICLE_TYPE.ALLOTED.desc && (
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.marB20}>
                                     <SearchBox {...serachBoxProps} />

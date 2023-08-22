@@ -1,0 +1,32 @@
+import React from 'react';
+import { fireEvent, screen } from '@testing-library/react';
+import { ViewDetail } from '@components/common/CustomerMaster/IndividualCustomer/CustomerDetail/ViewDetail';
+import customRender from '@utils/test-utils';
+import createMockStore from '__mocks__/store';
+import { Provider } from 'react-redux';
+import { Form } from 'antd';
+
+const props = { setactiveKey: jest.fn(), setIsLoading: jest.fn(), onCloseAction: jest.fn(), onCloseActionOnContinue: jest.fn() };
+const formActionType = { editMode: false };
+const FormWrapper = (props) => {
+    const [form] = Form.useForm();
+    return <ViewDetail form={form} {...props} />;
+};
+
+describe('Corporate customer view Details render', () => {
+    it('should render view details page', async () => {
+        const mockStore = createMockStore({
+            auth: { userId: 123 },
+            data: {
+                CustomerMaster: {
+                    NameChangeRequest: { isLoaded: true },
+                },
+            },
+        });
+        customRender(
+            <Provider store={mockStore}>
+                <FormWrapper {...props} onCloseAction={jest.fn()} onCloseActionOnContinue={jest.fn()} formActionType={formActionType} setCustomerNameList={jest.fn()} />
+            </Provider>
+        );
+    });
+});

@@ -4,6 +4,10 @@ import { screen, fireEvent } from '@testing-library/react';
 import AMCForm from 'components/Sales/OTF/AddOnDetails/AMC/AMCForm';
 import { Form } from 'antd';
 
+afterEach(() => {
+    jest.restoreAllMocks();
+  }); 
+
 const FormWrapper = (props) => {
     const [amcForm] = Form.useForm();
     return <AMCForm amcForm={amcForm} {...props} />

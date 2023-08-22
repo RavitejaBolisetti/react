@@ -57,7 +57,7 @@ export const AdvancedSearchFrom = (props) => {
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item initialValue={filterString?.vehicleStatus} label="Vehicle Status" name="vehicleStatus">
-                        {customSelectBox({ data: typeData[PARAM_MASTER.ALT_ACTN.id], placeholder: preparePlaceholderSelect('vehicle status') })}
+                        {customSelectBox({ data: typeData[PARAM_MASTER.VEHCL_STATS.id], placeholder: preparePlaceholderSelect('vehicle status') })}
                     </Form.Item>
                     {/* <Form.Item name="oemCode" label="OEM Name" rules={[validateRequiredSelectField('OEM Name')]}>
                         <Select {...selectProps} fieldNames={{ label: 'value', value: 'key' }} options={typeData['COMPTR_MFG']} placeholder={preparePlaceholderSelect('OEM Name')} />

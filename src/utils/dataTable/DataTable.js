@@ -75,7 +75,7 @@ export default function DataTable({ isLoading, rowSelection = undefined, showSiz
                         {tablePagination?.total && (
                             <>
                                 <span className={`${styles.marR20} ${styles.tableTextColor54}`}>
-                                    Total <span style={{ color: '#0b0b0c' }}> {tablePagination?.total} </span> items
+                                    Total <span style={{ color: '#0b0b0c' }}> {tablePagination?.total} </span> {tablePagination?.total > 1 ? 'items' : 'item'}
                                 </span>
                                 <Select defaultValue={tablePagination?.pageSize} onChange={handleChange} options={options} />
                             </>

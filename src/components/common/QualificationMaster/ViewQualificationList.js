@@ -19,7 +19,7 @@ const ViewQualificationListMain = ({ formData, styles }) => {
                 <Descriptions {...viewProps}>
                     <Descriptions.Item label="Qualification Code">{formData?.qualificationCode}</Descriptions.Item>
                     <Descriptions.Item label="Qualification Name">{formData?.qualificationName}</Descriptions.Item>
-                    <Descriptions.Item label="Status">{formData?.status === 1 ? <text className={styles.activeText}>Active</text> : <text className={styles.inactiveText}>InActive</text>}</Descriptions.Item>
+                    <Descriptions.Item label="Status">{formData?.status === 1 ? <text className={styles?.activeText}>Active</text> : <text className={styles?.inactiveText}>InActive</text>}</Descriptions.Item>
                 </Descriptions>
             </>
         </div>

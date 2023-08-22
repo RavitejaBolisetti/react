@@ -7,6 +7,7 @@ module.exports = {
     rootDir: 'src',
     testEnvironment: 'jest-environment-jsdom',
     moduleFileExtensions: ['js', 'jsx'],
+    verbose: true,
     moduleNameMapper: {
         '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$': '<rootDir>/__mocks__/fileMock.js',
         '\\.(css|scss|sass|less)$': 'identity-obj-proxy',
@@ -23,8 +24,8 @@ module.exports = {
         '^.+\\.(js|jsx)$': 'babel-jest',
     },
     setupFilesAfterEnv: ['@testing-library/jest-dom', '<rootDir>/jest.setup.js'],
-    coveragePathIgnorePatterns: ['<rootDir>/language/', '<rootDir>/assets/', '<rootDir>/utils/', '<rootDir>/mocks/', '<rootDir>/components/common/RoleManagement'],
-    transformIgnorePatterns: ['<rootDir>/node_modules/(?![a-z])', '<rootDir>/assets/(?![a-z])'],
+    coveragePathIgnorePatterns: ['<rootDir>/language/', '<rootDir>/assets/', '<rootDir>/utils/', '<rootDir>/mocks/'],
+    transformIgnorePatterns: ['/node_modules/(?![a-z])'],
     coverageThreshold: {
         global: {
             branches: 80,
@@ -33,4 +34,5 @@ module.exports = {
             statements: -10,
         },
     },
+
 };

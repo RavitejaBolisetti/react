@@ -7,7 +7,9 @@ import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
 import { screen } from '@testing-library/react';
 import  { ThankYouMaster }  from '@components/Sales/OTF/ThankYou/ThankYouMaster';
-
+afterEach(() => {
+    jest.restoreAllMocks();
+  }); 
 describe('Thankyou master Components', () => {
     it('it should render thankyoumaster components', () => {
         customRender(<ThankYouMaster />);

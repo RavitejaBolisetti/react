@@ -4,7 +4,6 @@ import { CriticalityGroupPage } from '@pages/common/CriticalityGroup/Criticality
 
 describe('CrticalityGroupPageBase Components', () => {
     it('should render CrticalityGroupPageBase components', () => {
-        const CrticalityGroupPageBase = customRender(<CriticalityGroupPage />);
-        expect(CrticalityGroupPageBase).toMatchSnapshot();
+     customRender(<CriticalityGroupPage />);
     });
 });

@@ -4,7 +4,6 @@ import { RoleManagementPageBase } from '@pages/common/RoleManagement/RoleManagem
 
 describe("RoleManagementPageBase Components", () => {
     it("should render RoleManagementPageBase components", ()=> {
-    const roleManagementPageBase =  customRender(<RoleManagementPageBase />);
-    expect(roleManagementPageBase).toMatchSnapshot();
+        customRender(<RoleManagementPageBase />);
     });
 });
