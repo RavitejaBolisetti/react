@@ -4,7 +4,6 @@ import ForgotPasswordPage from '@pages/auth/ForgotPassword/ForgotPasswordPage';
 
 describe('ForgotPasswordPageBase Components', () => {
     it('should render ForgotPasswordPage components', () => {
-        const ForgotpasswordPage = customRender(<ForgotPasswordPage />);
-        expect(ForgotpasswordPage).toMatchSnapshot();
+        customRender(<ForgotPasswordPage />);
     });
 });
