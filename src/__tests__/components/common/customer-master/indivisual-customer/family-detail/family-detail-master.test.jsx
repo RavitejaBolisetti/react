@@ -200,7 +200,6 @@ describe('Family Detail Master component', () => {
 
         const relationship = screen.getByRole("combobox", { name: 'Relationship', exact: false });
         fireEvent.change(relationship, { target: { value: '25' } });
-
     })
 
     it("should render the family detail master view component", async () => {
