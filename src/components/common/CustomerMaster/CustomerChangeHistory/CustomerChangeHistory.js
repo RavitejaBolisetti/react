@@ -149,6 +149,7 @@ const CustomerChangeHistoryMain = ({ fetchCustomerChangeHistory, onCloseAction, 
     ];
 
     const tableProps = {
+        page,
         setPage,
         totalRecords,
         dynamicPagination,

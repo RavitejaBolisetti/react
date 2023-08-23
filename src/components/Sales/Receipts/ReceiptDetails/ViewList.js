@@ -18,7 +18,6 @@ const { Text } = Typography;
 
 const ViewList = (props) => {
     const { paymentDataList, deleteContactHandeler, setPaymentDataList, onFinish, typeData, paymentModeType } = props;
-    //console.log("🚀 ~ file: ViewList.js:21 ~ ViewList ~ paymentDataList:", paymentDataList)
     const { isAdding, setShowAddEditForm, setIsListEditing, isListEditing, showAddEditForm, paymentForm, receiptForm } = props;
 
     const [openListAccordian, setOpenListAccordian] = useState('');

@@ -79,6 +79,10 @@ p {
     line-height: 12px;
 }
 
+:global .ant-btn.ant-btn-icon-only {
+    width: auto;
+}
+
 :global .ant-btn-primary.ant-btn-dangerous:disabled,
 :global .ant-btn-primary:disabled {
     border-color: #b5b5b6;

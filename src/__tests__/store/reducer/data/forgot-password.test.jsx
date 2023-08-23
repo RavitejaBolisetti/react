@@ -1,5 +1,4 @@
 import '@testing-library/jest-dom/extend-expect';
-import customRender from '@utils/test-utils';
 import { ForgotPassword } from '@store/reducers/data/forgotPassword';
 
 describe('Forgot password reducer Component', () => {

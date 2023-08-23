@@ -8,7 +8,7 @@ import { Col, Row, Space, Collapse, AutoComplete, Divider } from 'antd';
 
 import { FiEdit } from 'react-icons/fi';
 import { AddressCommonForm } from './AddressCommonForm';
-import { convertDateToCalender } from 'utils/formatDateTime';
+import { formattedCalendarDate } from 'utils/formatDateTime';
 
 import { expandIconWithText } from 'utils/accordianExpandIcon';
 const { Panel } = Collapse;
@@ -21,8 +21,8 @@ const AddEditFormBase = (props) => {
         if (formData) {
             form?.setFieldsValue({
                 ...formData,
-                bookingCustomer: { ...formData?.bookingCustomer, birthDate: convertDateToCalender(formData?.bookingCustomer?.birthDate) },
-                billingCustomer: { ...formData?.billingCustomer, birthDate: convertDateToCalender(formData?.billingCustomer?.birthDate) },
+                bookingCustomer: { ...formData?.bookingCustomer, birthDate: formattedCalendarDate(formData?.bookingCustomer?.birthDate) },
+                billingCustomer: { ...formData?.billingCustomer, birthDate: formattedCalendarDate(formData?.billingCustomer?.birthDate) },
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps

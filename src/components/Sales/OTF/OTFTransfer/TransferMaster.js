@@ -62,7 +62,7 @@ const mapDispatchToProps = (dispatch) => ({
 const TransferMasterBase = (props) => {
     const { otfData, selectedOrder, fetchSalesConsultant, listConsultantShowLoading, fetchDealerLocations, dealerLocations, locationDataLoding } = props;
     const { userId, salesConsultantLov, reset } = props;
-    const { moduleTitle } = props;
+    const { moduleTitle, otfTransferForm } = props;
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: true, transferOTFBtn: true };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -77,19 +77,24 @@ const TransferMasterBase = (props) => {
         if (userId) {
             reset();
             fetchDealerLocations({ setIsLoading: locationDataLoding, userId });
+            
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
 
     const handleOtfTransferLocationChange = (value) => {
-        const extraParams = [
-            {
-                key: 'locationCode',
-                value: value ? value : 'No Data',
-                
-            },
-        ];
-        fetchSalesConsultant({ setIsLoading: listConsultantShowLoading, extraParams, userId, onErrorAction });
+        if (!value) {
+            otfTransferForm.resetFields(['salesConsultant']);
+            reset()
+        } else {
+            const extraParams = [
+                {
+                    key: 'locationCode',
+                    value: value ? value : 'No Data',
+                },
+            ];
+            fetchSalesConsultant({ setIsLoading: listConsultantShowLoading, extraParams, userId, onErrorAction });
+        }
     };
 
     const formProps = {
