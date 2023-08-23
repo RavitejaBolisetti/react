@@ -146,8 +146,8 @@ export const VehicleAllotmentMasterBase = (props) => {
 
     useEffect(() => {
         if (allotmentSummaryDetails) {
-            allotmentSummaryDetails?.allotmentStatus === VEHICLE_TYPE.UNALLOTED.key && setSelectedOrderOTFDetails(allotmentSummaryDetails?.vehicleOTFDetails);
-            setButtonData(allotmentSummaryDetails?.allotmentStatus === VEHICLE_TYPE.UNALLOTED.key ? { cancelBtn: true, allotBtn: true } : { cancelBtn: true, unAllot: true });
+            allotmentSummaryDetails?.allotmentStatus === VEHICLE_TYPE.ALLOTED.key && setSelectedOrderOTFDetails(allotmentSummaryDetails?.vehicleOTFDetails);
+            setButtonData(allotmentSummaryDetails?.allotmentStatus === VEHICLE_TYPE.ALLOTED.key ? { cancelBtn: true, unAllot: true } : { cancelBtn: true, allotBtn: true });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [allotmentSummaryDetails]);
@@ -321,7 +321,8 @@ export const VehicleAllotmentMasterBase = (props) => {
                     onCloseAction: onCloseConfirmationModalAction,
                     onSubmitAction: () => handleVehicleAllotment(record, buttonAction),
                     submitText: 'Yes',
-                    text: 'Are you sure want to Un-allot this OTF?',
+                    text: 'Are you sure want to Un-allot this OTF? ',
+                    content: selectedOTFDetails ? selectedOTFDetails?.otfNumber : '',
                 });
 
                 break;
@@ -544,7 +545,6 @@ export const VehicleAllotmentMasterBase = (props) => {
         titleOverride: drawerTitle.concat('Allotment Details'),
         tableData: data,
         buttonData,
-        setSelectedOrderOTFDetails,
         setButtonData,
         handleButtonClick,
         defaultFormActionType,
@@ -555,7 +555,8 @@ export const VehicleAllotmentMasterBase = (props) => {
         setSelectedOrder,
         setFormData,
         typeData,
-        //saveButtonName: !selectedOrderId ? 'Create Customer ID' : isLastSection ? 'Submit' : 'Save & Next',
+        selectedOTFDetails,
+        setSelectedOrderOTFDetails,
     };
 
     return (
