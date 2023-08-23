@@ -54,16 +54,13 @@
         "sonar": "ts-node sonar-scanner.ts"
     },
     "eslintConfig": {
-        "extends": [
-            "react-app",
-            "react-app/jest"
-        ]
+        "extends": ["react-app", "react-app/jest"],
+        "preset": "ts-jest",
+        "nodeOptions": "--max-old-space-size=4096",
+        "errorOnDeprecated": true
     },
     "lint-staged": {
-        "*.{js,jsx}": [
-            "jest --bail --findRelatedTests",
-            "git add"
-        ]
+        "*.{js,jsx}": ["jest --bail --findRelatedTests", "git add"]
     },
     "husky": {
         "hooks": {
@@ -71,26 +68,10 @@
         }
     },
     "browserslist": {
-        "production": [
-            ">0.2%",
-            "not dead",
-            "not op_mini all"
-        ],
-        "development": [
-            "last 1 chrome version",
-            "last 1 firefox version",
-            "last 1 safari version"
-        ],
-        "qa": [
-            "last 1 chrome version",
-            "last 1 firefox version",
-            "last 1 safari version"
-        ],
-        "uat": [
-            "last 1 chrome version",
-            "last 1 firefox version",
-            "last 1 safari version"
-        ]
+        "production": [">0.2%", "not dead", "not op_mini all"],
+        "development": ["last 1 chrome version", "last 1 firefox version", "last 1 safari version"],
+        "qa": ["last 1 chrome version", "last 1 firefox version", "last 1 safari version"],
+        "uat": ["last 1 chrome version", "last 1 firefox version", "last 1 safari version"]
     },
     "devDependencies": {
         "@babel/preset-env": "^7.22.10",

@@ -48,11 +48,11 @@ const VehicleDetailCard = (props) => {
             >
                 <Divider />
                 <div className={styles.detailCardText}>
-                    Checklist Date: <span>{ProfileData?.checklistDate ? dayjs(ProfileData?.checklistDate)?.format('DD MM YYYY') : 'NA'}</span>
+                    Checklist Date: <span>{ProfileData?.checklistDate ? dayjs(ProfileData?.checklistDate)?.format('DD MMM YYYY') : 'NA'}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    Checklist Status: <span>{ProfileData?.checklistStatus || 'NA'}</span>
+                    Checklist Status: <span>{findStatus(ProfileData?.checklistStatus)}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
@@ -60,11 +60,11 @@ const VehicleDetailCard = (props) => {
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    GRN Date: <span>{ProfileData?.grnDate ? dayjs(ProfileData?.grnDate)?.format('DD-MM-YYYY') : 'NA'}</span>
+                    GRN Date: <span>{ProfileData?.grnDate ? dayjs(ProfileData?.grnDate)?.format('DD MMM YYYY') : 'NA'}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    GRN Status: <span>{ProfileData?.grnStatus || 'NA'}</span>
+                    GRN Status: <span>{ProfileData?.grnStatusDescription || 'NA'}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>

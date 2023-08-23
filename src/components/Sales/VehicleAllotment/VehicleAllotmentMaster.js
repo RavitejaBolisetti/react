@@ -140,6 +140,16 @@ export const VehicleAllotmentMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
 
+    useEffect(() => {
+        setButtonData(allotmentSummaryDetails?.allotmentStatus === VEHICLE_TYPE.UNALLOTED.desc ? { cancelBtn: true, allotBtn: true } : { cancelBtn: true, unAllot: true });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [allotmentSummaryDetails]);
+
+    useEffect(() => {
+        setPage({ pageSize: 10, current: 1 });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [toggleButton]);
+
     const extraParams = useMemo(() => {
         return [
             {
@@ -224,10 +234,7 @@ export const VehicleAllotmentMasterBase = (props) => {
     }, []);
 
     const ChangeSearchHandler = (e) => {
-        if (e.target.value.length > 2) {
-            setSearchParamValue(e.target.value);
-        } else if (e?.target?.value === '') {
-        }
+        setSearchParamValue(e.target.value);
     };
 
     const onSearchHandle = (value) => {
@@ -244,7 +251,7 @@ export const VehicleAllotmentMasterBase = (props) => {
             fetchVehicleAllotmentSearchedList({ customURL: customURL + '/search', setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, filterString, searchParamValue, toggleButton]);
+    }, [userId, filterString, searchParamValue, toggleButton, extraParams]);
 
     const searchOTFExtraParams = useMemo(() => {
         return [
