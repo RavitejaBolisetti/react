@@ -4,6 +4,10 @@ import '@testing-library/jest-dom/extend-expect';
 import customRender from "@utils/test-utils";
 import  ApplicationDetails from '@components/common/ApplicationMaster/ApplicationDetails';
 
+afterEach(() => {
+    jest.restoreAllMocks();
+});
+
 describe('Application Details Component', () => {
 
     it('should render Application Details', async () => {

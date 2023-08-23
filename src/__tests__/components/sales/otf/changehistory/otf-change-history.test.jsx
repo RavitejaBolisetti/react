@@ -7,7 +7,9 @@ import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
 import  { ChangeHistory }  from "@components/Sales/OTF/ChangeHistory/otfChangeHistory";
 import { screen,fireEvent } from '@testing-library/react'
-
+afterEach(() => {
+    jest.restoreAllMocks();
+  }); 
 describe('OTF otfChangeHistory component render', () => {
     const props = {
         fetchOTFChangeHistory:jest.fn(),

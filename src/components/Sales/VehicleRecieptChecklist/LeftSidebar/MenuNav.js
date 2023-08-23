@@ -11,23 +11,94 @@ import styles from 'components/common/Common.module.css';
 import { VEHICLE_RECIEPT_CHECKLIST_SECTION } from 'constants/VehicleRecieptCheckListSection';
 
 const MenuNav = (props) => {
-    const { currentSection, setCurrentSection, addMode, editMode } = props;
+    const { currentSection, setCurrentSection, formActionType, previousSection } = props;
     const vehicleSectionList = Object.values(VEHICLE_RECIEPT_CHECKLIST_SECTION);
-
     const onHandle = (key) => {
         setCurrentSection(key);
+    };
+
+    const className = (id) => {
+        return formActionType?.addMode && id > previousSection ? styles.cursorNotAllowed : styles.cursorPointer;
+    };
+
+    const mapIconAndClass = (id) => {
+        let activeClassName = '';
+        let menuNavIcon = '';
+
+        switch (true) {
+            case formActionType?.addMode: {
+                switch (true) {
+                    case id === currentSection: {
+                        activeClassName = styles.active;
+                        menuNavIcon = <BsRecordCircleFill className={styles.activeForm} />;
+                        break;
+                    }
+                    case id > currentSection: {
+                        activeClassName = styles.inActive;
+                        menuNavIcon = <BsRecordCircleFill className={styles.tableTextColor85} />;
+                        break;
+                    }
+                    case id < currentSection: {
+                        activeClassName = styles.inActive;
+                        menuNavIcon = <FaCheckCircle />;
+                        break;
+                    }
+                    default: {
+                        break;
+                    }
+                }
+                break;
+            }
+            case formActionType?.editMode: {
+                switch (true) {
+                    case id === currentSection: {
+                        activeClassName = styles.active;
+                        menuNavIcon = <BsRecordCircleFill className={styles.activeForm} />;
+                        break;
+                    }
+
+                    default: {
+                        activeClassName = styles.inActive;
+                        menuNavIcon = <FaCheckCircle />;
+                        break;
+                    }
+                }
+
+                break;
+            }
+            case formActionType?.viewMode: {
+                menuNavIcon = <FaCheckCircle />;
+                switch (true) {
+                    case id === currentSection: {
+                        activeClassName = styles.viewActive;
+                        break;
+                    }
+
+                    default: {
+                        activeClassName = styles.viewInActive;
+                        break;
+                    }
+                }
+                break;
+            }
+            default: {
+                break;
+            }
+        }
+
+        return { activeClassName, menuNavIcon };
     };
 
     const items = vehicleSectionList
         ?.filter((i) => i?.displayOnList)
         ?.map((item) => ({
-            dot: item?.id === currentSection && (addMode || editMode) ? <BsRecordCircleFill className={styles.activeForm} /> : <FaCheckCircle />,
+            dot: mapIconAndClass(item?.id)?.menuNavIcon,
             children: (
-                <p className={item?.id !== currentSection ? styles.tableTextColor85 : ''} onClick={() => onHandle(item?.id)}>
-                    {item?.title}
-                </p>
+                <div className={className(item?.id)} onClick={() => (!formActionType?.addMode || (formActionType?.addMode && item?.id <= previousSection) ? onHandle(item?.id) : '')}>
+                    {item.title}
+                </div>
             ),
-            className: item?.id === currentSection ? 'active' : 'noactive',
+            className: mapIconAndClass(item?.id)?.activeClassName,
         }));
 
     const finalItem = items?.filter((i) => i);

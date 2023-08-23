@@ -5,12 +5,11 @@ import { CancellationMaster } from '@components/Sales/OTF/OTFCancellation/Cancel
 import customRender from '@utils/test-utils';
 import { Form } from 'antd';
 import createMockStore from '__mocks__/store';
-import { showGlobalNotification } from '@store/actions/notification';
 import { act } from 'react-dom/test-utils'
 
-beforeEach(() => {
-    jest.clearAllMocks()
-})
+afterEach(() => {
+    jest.restoreAllMocks();
+});
 
 const FormWrapper = (props) => {
     const [otfCancellationForm] = Form.useForm();
@@ -265,7 +264,8 @@ describe('OTF cancellation master render', () => {
 
         const handleCancellationReasonTypeChange = jest.fn();
 
-        const { getByRole } = customRender(
+
+        customRender(
             <Provider store={mockStore}>
                 <FormWrapper
                     {...props}
@@ -283,53 +283,53 @@ describe('OTF cancellation master render', () => {
             </Provider>
         );
 
-
-        const close = getByRole("button", { name: 'Close', exact: false });
+        const close = screen.getByRole("button", { name: 'Close', exact: false });
         fireEvent.click(close);
 
-        const uploadCancell = getByRole("button", { name: 'Upload Cancellation Letter (File type should be png, jpg or pdf and max file size to be 5Mb) Upload File', exact: false });
+        const uploadCancell = screen.getByRole("button", { name: 'Upload Cancellation Letter (File type should be png, jpg or pdf and max file size to be 5Mb) Upload File', exact: false });
         fireEvent.click(uploadCancell);
 
-        const uploadFile = getByRole("button", { name: 'Upload File', exact: false });
+
+        const uploadFile = screen.getByRole("button", { name: 'Upload File', exact: false });
         fireEvent.change(uploadFile);
 
-        const cancelOtf = getByRole("button", { name: 'Cancel OTF', exact: false });
+        const cancelOtf = screen.getByRole("button", { name: 'Cancel OTF', exact: false });
         fireEvent.click(cancelOtf);
 
-        const cancel = getByRole("button", { name: 'Cancel', exact: false });
+        const cancel = screen.getByRole("button", { name: 'Cancel', exact: false });
         fireEvent.click(cancel);
 
-        const closeImg = getByRole("img", { name: 'close', exact: false });
+        const closeImg = screen.getByRole("img", { name: 'close', exact: false });
         expect(closeImg).toBeTruthy();
 
-        const otfNo = getByRole("columnheader", { name: 'OTF No.', exact: false });
+        const otfNo = screen.getByRole("columnheader", { name: 'OTF No.', exact: false });
         expect(otfNo).toBeTruthy();
 
-        const otfDate = getByRole("columnheader", { name: 'OTF Date', exact: false });
+        const otfDate = screen.getByRole("columnheader", { name: 'OTF Date', exact: false });
         expect(otfDate).toBeTruthy();
 
-        const customerName = getByRole("columnheader", { name: 'Customer Name', exact: false });
+        const customerName = screen.getByRole("columnheader", { name: 'Customer Name', exact: false });
         expect(customerName).toBeTruthy();
 
-        const mobileNo = getByRole("columnheader", { name: 'Mobile No.', exact: false });
+        const mobileNo = screen.getByRole("columnheader", { name: 'Mobile No.', exact: false });
         expect(mobileNo).toBeTruthy();
 
-        const model = getByRole("columnheader", { name: 'Model', exact: false });
+        const model = screen.getByRole("columnheader", { name: 'Model', exact: false });
         expect(model).toBeTruthy();
 
-        const order = getByRole("columnheader", { name: 'Order Status', exact: false });
+        const order = screen.getByRole("columnheader", { name: 'Order Status', exact: false });
         expect(order).toBeTruthy();
 
-        const reasonType = getByRole("combobox", { name: 'Cancellation Reason Type', exact: false });
+        const reasonType = screen.getByRole("combobox", { name: 'Cancellation Reason Type', exact: false });
         fireEvent.change(reasonType, { target: { value: 'LOMMD' } });
 
-        const reasonCancell = getByRole("combobox", { name: 'Reason For Cancellation', exact: false });
+        const reasonCancell = screen.getByRole("combobox", { name: 'Reason For Cancellation', exact: false });
         fireEvent.change(reasonCancell, { target: { value: 'testing for reason cancel' } });
 
-        const cancelRemark = getByRole("textbox", { name: 'Cancellation Remarks', exact: false });
+        const cancelRemark = screen.getByRole("textbox", { name: 'Cancellation Remarks', exact: false });
         fireEvent.change(cancelRemark, { target: { value: 'tset' } });
 
-        const uploadLetter = getByRole("heading", { name: 'Upload Cancellation Letter', exact: false });
+        const uploadLetter = screen.getByRole("heading", { name: 'Upload Cancellation Letter', exact: false });
         expect(uploadLetter).toBeTruthy();
 
     })

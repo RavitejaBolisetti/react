@@ -9,6 +9,10 @@ const props = {
     handleDeleteLocation: jest.fn(),
 };
 
+afterEach(() => {
+    jest.restoreAllMocks();
+});
+
 describe('Location card component render', () => {
     it('should render card', async () => {
         customRender(<LocationCard {...props} />);

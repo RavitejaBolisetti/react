@@ -32,7 +32,6 @@ const useFileDownload = (url) => {
             downloadFile();
         }
 
-        // Cleanup the file data when the component unmounts or when the URL changes
         return () => {
             setFileData(null);
         };

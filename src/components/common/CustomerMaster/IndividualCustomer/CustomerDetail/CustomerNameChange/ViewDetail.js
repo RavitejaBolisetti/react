@@ -12,10 +12,10 @@ import { FiDownload } from 'react-icons/fi';
 import { nameChangeRequestDataActions } from 'store/actions/data/customerMaster/individual/nameChangeRequest/nameChangeRequest';
 import { showGlobalNotification } from 'store/actions/notification';
 
-import { ConfirmNameChangeRequest } from './ConfirmNameChangeRequest';
 import { STATUS } from '../statusConstant';
 
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
+import { ConfirmationModal } from 'utils/ConfirmationModal';
 import { getCodeValue } from 'utils/getCodeValue';
 
 const mapStateToProps = (state) => {
@@ -134,7 +134,7 @@ const ViewDetailMain = (props) => {
             {formData?.customerNameChangeRequest?.supportingDocuments?.map((item) => (
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Card className={styles.viewDocumentStrip} key={item?.documentId} title={item?.documentName} extra={<FiDownload />} onClick={() => downloadFileFromButton(item)}></Card>
+                        <Card className={styles.viewDocumentStrip} key={item?.documentId} title={item?.documentName} extra={<FiDownload />} data-testid="download" onClick={() => downloadFileFromButton(item)}></Card>
                     </Col>
                 </Row>
             ))}
@@ -150,7 +150,7 @@ const ViewDetailMain = (props) => {
                     </Col>
                 </Row>
             )}
-            <ConfirmNameChangeRequest {...confirmRequest} />
+            <ConfirmationModal {...confirmRequest} />
         </>
     );
 };

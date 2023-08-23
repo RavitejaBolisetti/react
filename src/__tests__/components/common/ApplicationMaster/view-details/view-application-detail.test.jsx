@@ -1,8 +1,12 @@
 import React from "react";
-import {  render, screen, fireEvent } from "@testing-library/react";
+import { screen, fireEvent } from "@testing-library/react";
 import '@testing-library/jest-dom/extend-expect';
 import customRender from "@utils/test-utils";
 import ViewApplicationDetail from "components/common/ApplicationMaster/viewDeatils/ViewApplicationDetail";
+
+afterEach(() => {
+    jest.restoreAllMocks();
+});
 
 describe('View Application Detail Component', () => {
     it('should render view application detail component', async () => {

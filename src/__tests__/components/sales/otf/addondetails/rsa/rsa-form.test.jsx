@@ -3,7 +3,9 @@ import customRender from '@utils/test-utils';
 import { screen, fireEvent } from '@testing-library/react';
 import RSAForm from 'components/Sales/OTF/AddOnDetails/RSA/RSAForm';
 import { Form } from 'antd';
-
+afterEach(() => {
+    jest.restoreAllMocks();
+  }); 
 const FormWrapper = (props) => {
     const [rsaForm] = Form.useForm();
     return <RSAForm rsaForm={rsaForm} {...props} />

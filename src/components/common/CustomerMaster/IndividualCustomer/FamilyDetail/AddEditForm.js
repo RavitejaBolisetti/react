@@ -133,7 +133,7 @@ const AddEditFormMain = (props) => {
     return (
         <>
             {!isViewModeVisible ? (
-                <Card>
+                <Card data-testid="test-case">
                     <Row type="flex" align="middle">
                         <Typography>Family Details</Typography>
                         {!VIEW_ACTION && (

@@ -5,24 +5,36 @@ import customRender from "@utils/test-utils";
 import createMockStore from '__mocks__/store';
 import { ApplicationMaster } from "@components/common/ApplicationMaster";
 
+afterEach(() => {
+  jest.restoreAllMocks();
+});
+
 describe('Application Master Component', () => {
 
     it('should render Application Master', async () => {
+      act(() => {
         customRender(<ApplicationMaster />);
+      });
     });
 
     it('web and mobile button should work', async () => {
         customRender(<ApplicationMaster />);
         const web = screen.getByRole("button", { name: 'Web', exact: false});
         const mobile = screen.getByRole("button", { name: 'Mobile', exact: false});
-        fireEvent.click(mobile);
-        fireEvent.click(web);
+        act(() => {
+          fireEvent.click(mobile);
+          fireEvent.click(web);
+        })
     });
 
     it('search should work', async () => {
-      customRender(<ApplicationMaster />);
+      act(() => {
+        customRender(<ApplicationMaster />);
+      });
       const inputBox = screen.getByPlaceholderText('Search');
-      fireEvent.change(inputBox, { target: { value: 'Test' } });
+      act(() => {
+        fireEvent.change(inputBox, { target: { value: 'Test' } });
+      });
       expect(inputBox.value).toBe('Test');
       await act(async () => {
           const searchButton = screen.getByRole('button', { name: "search", exact:false });
@@ -44,15 +56,18 @@ describe('Application Master Component', () => {
             },
         }
       });
-
-      customRender(
-        <Provider store={mockStore}>
-          <ApplicationMaster />
-        </Provider>
-      );
+      act(() => {
+        customRender(
+          <Provider store={mockStore}>
+            <ApplicationMaster />
+          </Provider>
+        );
+      });
       const addButton = await screen.findByRole("button", { name: 'plus Add', exact:false });
       expect(addButton).toBeInTheDocument();
-      fireEvent.click(addButton);
+      act(() => {
+        fireEvent.click(addButton);
+      });
     });
 
     it('edit button, add child, and add sibling button should work', async () => {
@@ -66,22 +81,33 @@ describe('Application Master Component', () => {
             },
         },
       });
-      customRender(
-        <Provider store={mockStore}>
-          <ApplicationMaster />
-        </Provider>
-      );
-
+      act(() => {
+        customRender(
+          <Provider store={mockStore}>
+            <ApplicationMaster />
+          </Provider>
+        );
+      });
       const parentText=screen.getByText('tree3');
-      fireEvent.click(parentText);
+      act(() => {
+        fireEvent.click(parentText);
+      });
       const editButton=screen.getByRole('button', {name: 'Edit', exact: false});
-      fireEvent.click(editButton);
+      act(() => {
+        fireEvent.click(editButton);
+      });
       const editCancel=screen.getByRole('button', {name: 'Cancel', exact: false});
-      fireEvent.click(editCancel);
+      act(() => {
+        fireEvent.click(editCancel);
+      });
       const childButton=screen.getByRole('button', {name: 'Add Child', exact: false});
-      fireEvent.click(childButton);
+      act(() => {
+        fireEvent.click(childButton);
+      });
       const siblingButton=screen.getByRole('button', {name: 'Add Sibling', exact: false});
-      fireEvent.click(siblingButton);
+      act(() => {
+        fireEvent.click(siblingButton);
+      });
 
     });
 
@@ -96,20 +122,29 @@ describe('Application Master Component', () => {
             },
         },
       });
-      customRender(
-        <Provider store={mockStore}>
-          <ApplicationMaster />
-        </Provider>
-      );
-
+      act(() => {
+        customRender(
+          <Provider store={mockStore}>
+            <ApplicationMaster />
+          </Provider>
+        );
+      });
       const parentText=screen.getByText('tree3');
-      fireEvent.click(parentText);
+      act(() => {
+        fireEvent.click(parentText);
+      });
       const editButton=screen.getByRole('button', {name: 'Edit', exact: false});
-      fireEvent.click(editButton);
+      act(() => {
+        fireEvent.click(editButton);
+      });
       const appTitle=screen.getByRole('textbox', {name: 'Application Title', exact: false});
+      act(() => {
       fireEvent.change(appTitle, { target : { value: "test" }});
-      const editSave=screen.getByRole('button', {name: 'Save', exact:false});
+      });
+        const editSave=screen.getByRole('button', {name: 'Save', exact:false});
+      act(() => {
       fireEvent.click(editSave);
+      });
     });
 
 

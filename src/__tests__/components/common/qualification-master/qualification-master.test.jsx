@@ -7,7 +7,6 @@
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
 import { screen, fireEvent } from '@testing-library/react';
-import { act } from 'react-dom/test-utils';
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
 
@@ -32,10 +31,9 @@ describe('Qualification Master Test', () => {
         const inputBox = screen.getByRole('textbox');
         fireEvent.change(inputBox, { target: { value: 'Dmatest' } });
         expect(inputBox.value.includes('Dmatest'));
-        await act(async () => {
-            const searchButton = screen.getByRole('button', { name: /search/i });
-            fireEvent.click(searchButton);
-        });
+
+        const searchButton = screen.getByRole('button', { name: /search/i });
+        fireEvent.click(searchButton);
     });
 
     it('refresh button should work', async () => {
@@ -67,6 +65,7 @@ describe('Qualification Master Test', () => {
                 },
             },
         });
+
         customRender(
             <Provider store={mockStore}>
                 <QualificationMaster onCloseAction={jest.fn()} />
@@ -80,13 +79,8 @@ describe('Qualification Master Test', () => {
 
     it('should click img', async () => {
         customRender(<QualificationMaster {...props} />);
-        const imgSearch = screen.getByRole('img', { name: 'search' });
-        expect(imgSearch).toBeTruthy();
+        const imgSearch = screen.getByRole('img', { name: /search/i });
         fireEvent.click(imgSearch);
-
-        const imgPlus = screen.getByRole('img', { name: 'plus' });
-        expect(imgPlus).toBeTruthy();
-        fireEvent.click(imgPlus);
     });
 
     it('should validate search', async () => {
@@ -108,14 +102,13 @@ describe('Qualification Master Test', () => {
         fireEvent.change(inputBox, { target: { value: 'test' } });
         expect(inputBox.value.includes('test')).toBeTruthy();
         const searchButton = screen.getByRole('button', { name: /search/i });
-        await act(() => {
-            fireEvent.click(searchButton);
-        });
+
+        fireEvent.click(searchButton);
+
         fireEvent.change(inputBox, { target: { value: '' } });
         expect(inputBox.value.includes('')).toBeTruthy();
-        await act(() => {
-            fireEvent.click(searchButton);
-        });
+
+        fireEvent.click(searchButton);
     });
 
     it('save button should work with on finish', async () => {

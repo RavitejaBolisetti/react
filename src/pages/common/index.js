@@ -13,7 +13,7 @@ import { ManufacturerOrgHierarchyPage } from './ManufacturerOrganizationHierarch
 import { ConfigurableParameterEditingPage } from './ConfigurableParameterEditing';
 import { ApplicationMasterPage } from './ApplicationMasterPage';
 import { UserManagementPage } from './UserManagementPage';
-import { UserManagementManufacturerPage } from './UserManagementManufacturer';
+import { UserManagementPageNew} from './UserManagementPageNew';
 import { StateCrudPage, StatePage, DistrictPage, TehsilPage, CityPage, PinCodePage } from './Geo';
 import { DealerLocationTypePage, DealerDivisionMasterPage, BayTypeMasterPage, DealerEmployeeDepartmentPage, DesignationMasterPage, RoleMasterPage } from './DealerManpower';
 import { PartyMasterPage } from './PartyMaster';
@@ -36,7 +36,7 @@ export {
     QualificationMasterPage,
     HierarchyAttributeMasterPage,
     UserManagementPage,
-    UserManagementManufacturerPage,
+    UserManagementPageNew,
     StateCrudPage,
     StatePage,
     DistrictPage,

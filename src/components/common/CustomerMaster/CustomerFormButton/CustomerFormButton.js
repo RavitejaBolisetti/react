@@ -34,7 +34,7 @@ export const CustomerFormButton = ({ record, onCloseAction, buttonData, handleCh
                         </Button>
                     )}
                     {buttonData?.editBtn && (
-                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record, openDefaultSection: false })} type="primary">
+                        <Button data-testid="editBtn" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record, openDefaultSection: false })} type="primary">
                             Edit
                         </Button>
                     )}

@@ -2,6 +2,8 @@ import React from 'react';
 import { fireEvent, screen } from '@testing-library/react';
 import { InsuranceDetailsMaster } from '@components/Sales/OTF/InsuranceDetails/InsuranceDetailsMaster';
 import customRender from '@utils/test-utils';
+import createMockStore from '__mocks__/store';
+import { Provider } from 'react-redux';
 
 const props = {
     insuranceData: [],
@@ -26,7 +28,24 @@ describe('OTF Finance Details Component render', () => {
     });
 
     it('should render all fields', () => {
-        customRender(<InsuranceDetailsMaster {...props} />);
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+            data: {
+                OTF: {
+                    InsuranceDetail: {
+                        isLoaded: true,
+                        data: [{ name: '1' }, { name: '2' }],
+                    },
+                },
+            },
+        });
+
+        customRender(
+            <Provider store={mockStore}>
+                <InsuranceDetailsMaster selectedOrderId={'123'} {...props} />
+            </Provider>
+        );
+        // customRender(<InsuranceDetailsMaster {...props} />);
 
         const insuranceDetails = screen.getByText('Insurance Details');
         expect(insuranceDetails).toBeTruthy();

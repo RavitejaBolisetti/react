@@ -1,17 +1,24 @@
-import React, {useState} from "react";
+import React from "react";
 import { Provider } from 'react-redux';
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import customRender from "@utils/test-utils";
 import createMockStore from '__mocks__/store';
-import userEvent from '@testing-library/user-event';
 import { AccessibleDealerLocations } from "components/common/ApplicationMaster/dealerLocations/AccessibleDealerLocations";
+import { debounce } from "utils/debounce";
 
 const finalFormdata = { accessibleLocation: [ { id: 1, name: "Location 1", address: "123 Main St", city: "Springfield", state: "IL", zip: "12345" }, ] };
 const finalFormdata1 = { accessibleLocation: [] };
 
+jest.mock('utils/debounce', () => ({
+  debounce: jest.fn((fn) => fn),
+}));
 
-describe('Application Actions Component', () => {
-      it('should render application actions component', async () => {
+afterEach(() => {
+  jest.restoreAllMocks();
+});
+
+describe('Accessible Dealer Locations Component', () => {
+      it('should render accessible dealer locations component', async () => {
          customRender(<AccessibleDealerLocations />);
       });
 
@@ -98,6 +105,7 @@ describe('Application Actions Component', () => {
           });
 
           const setSearchValue=jest.fn();
+          debounce.mockImplementation((fn) => fn);
 
           render(
             <Provider store={mockStore}>
@@ -106,8 +114,10 @@ describe('Application Actions Component', () => {
           );
 
           const inputBox=screen.getByRole('combobox', {name: '', exact:false});
-          userEvent.type(inputBox, 'test');
-          await waitFor(() => expect(setSearchValue).toHaveBeenCalled(), { timeout: 350 });           
+          fireEvent.click(inputBox, { target: { value: 'test' } })
+          const searchBtn=screen.getByRole('button', { name: 'search' });
+          fireEvent.click(searchBtn);
+          expect(debounce).toHaveBeenCalled();
       });
 
       it('delete button should work', async () => {

@@ -23,7 +23,7 @@ const mapStateToProps = (state) => {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             SupportingDocument: { isLoaded: isDataLoaded = false, isLoading, data: supportingData },
             OTF: {
-                OtfCancellation: { detailData: dealerDataList },
+                OtfCancellation: { detailData: dealerDataList = [] },
             },
         },
     } = state;
@@ -53,6 +53,7 @@ const mapDispatchToProps = (dispatch) => ({
             listShowLoading: supportingDocumentDataActions.listShowLoading,
             fetchProductHierarchyList: productHierarchyDataActions.fetchList,
             fetchDealerList: cancellationDataActions.fetchDetail,
+            resetDealerList: cancellationDataActions.reset,
 
             showGlobalNotification,
         },
@@ -64,7 +65,7 @@ const CancellationMasterBase = (props) => {
     const { otfData, selectedOrder } = props;
     const { userId, listShowLoading, uploadDocumentFile } = props;
     const { moduleTitle, setUploadedFile, uploadedFile } = props;
-    const { fetchProductHierarchyList, productHierarchyData, onFinishOTFCancellation, fetchDealerList, dealerDataList } = props;
+    const { fetchProductHierarchyList, productHierarchyData, onFinishOTFCancellation, fetchDealerList, dealerDataList, resetDealerList } = props;
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: true, cancelOTFBtn: true };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -93,7 +94,7 @@ const CancellationMasterBase = (props) => {
             const extraParams = [
                 {
                     key: 'searchType',
-                    value: 'code',
+                    value: 'dealerName',
                 },
                 {
                     key: 'searchParam',
@@ -102,7 +103,6 @@ const CancellationMasterBase = (props) => {
             ];
             fetchDealerList({ customURL, setIsLoading: listShowLoading, extraParams, onErrorAction });
         }
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchDealerValue, userId]);
 
@@ -129,6 +129,7 @@ const CancellationMasterBase = (props) => {
         uploadedFile,
         parentAppCode,
         setparentAppCode,
+        resetDealerList,
     };
 
     return <AddEditForm {...formProps} />;

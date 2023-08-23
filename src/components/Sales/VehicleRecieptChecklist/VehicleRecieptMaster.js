@@ -111,6 +111,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
     const [section, setSection] = useState();
     const [defaultSection, setDefaultSection] = useState();
     const [currentSection, setCurrentSection] = useState();
+    const [previousSection, setpreviousSection] = useState(1);
     const [sectionName, setSetionName] = useState();
     const [isLastSection, setLastSection] = useState(false);
 
@@ -172,9 +173,10 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
 
     const handleButtonQuery = (item, keyName) => {
         handleResetFilter();
-        setPage({ ...pageIntialState });
         const buttonkey = item?.key;
+        if (item?.key === buttonType) return;
         setbuttonType(buttonkey);
+        setPage({ ...pageIntialState });
 
         switch (buttonkey) {
             case QUERY_BUTTONS_CONSTANTS?.PENDING?.key: {
@@ -372,6 +374,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
             case ADD_ACTION:
                 resetProfile();
                 defaultSection && setCurrentSection(defaultSection);
+                setpreviousSection(1);
                 setSelectedRecord(record);
                 setcheckListDataModified([]);
                 setPayload([]);
@@ -427,10 +430,16 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
     const onFinish = () => {
         const checklistNumber = ProfileData?.checklistNumber ?? '';
         const chassisNumber = selectedRecord?.chassisNumber ?? '';
-        const checklistModifiedData = checkListDataModified?.filter((element) => {
-            const { ismodified, index, ...rest } = element;
-            if (ismodified) return rest;
-        });
+        const checklistModifiedData = checkListDataModified
+            ?.filter((element) => {
+                const { ismodified, index, ...rest } = element;
+                if (ismodified) return rest;
+                return false;
+            })
+            ?.map((item) => {
+                const { ismodified, index, ...rest } = item;
+                return { ...rest, answerFromDate: rest?.answerFromDate?.toISOString(), answerToDate: rest?.answerToDate?.toISOString() };
+            });
 
         const data = {
             checklistDetailList: checklistModifiedData,
@@ -487,6 +496,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
     const tableProps = {
         dynamicPagination,
         totalRecords,
+        page,
         setPage,
         tableColumn: tableColumn({ handleButtonClick, actionButtonVisibility }),
         tableData: data,
@@ -570,11 +580,13 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         currentSection,
         sectionName,
         setCurrentSection,
+        previousSection,
+        setpreviousSection,
         formData,
         setFormData,
         handleFormValueChange,
         isLastSection,
-        saveButtonName: isLastSection ? 'Submit' : 'Next',
+        saveButtonName: isLastSection ? 'Submit' : formActionType?.addMode ? 'Save & Next' : 'Next',
         VehicelReceiptChecklistOnfinish: onFinish,
         supportingData: ChecklistData,
         buttonType: buttonType === QUERY_BUTTONS_CONSTANTS?.COMPLETED?.key ? true : false,

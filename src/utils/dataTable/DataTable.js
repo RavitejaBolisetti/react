@@ -10,15 +10,15 @@ import { tblSerialNumberColumn } from 'utils/tableColumn';
 
 import styles from 'components/common/Common.module.css';
 
-export default function DataTable({ isLoading, rowSelection = undefined, showSizeChanger = true, dynamicPagination = false, totalRecords = '10', pagination = true, removePagination = false, srl = true, srlTitle = '#', tableColumn, scroll = 'auto', tableData, rowKey = 'index', setPage = () => {} }) {
+export default function DataTable({ isLoading, rowSelection = undefined, showSizeChanger = true, dynamicPagination = false, totalRecords = '10', pagination = true, removePagination = false, srl = true, srlTitle = '#', tableColumn, scroll = 'auto', tableData, rowKey = 'index', page = undefined, setPage = () => {} }) {
     useEffect(() => {
         if (dynamicPagination) {
-            setPagination({ ...tablePagination, total: totalRecords });
+            setPagination({ ...tablePagination, total: totalRecords, current: page?.current });
         } else {
             setPagination({ ...tablePagination, total: tableData?.length });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [dynamicPagination, totalRecords, tableData]);
+    }, [dynamicPagination, totalRecords, tableData, page]);
 
     const [tablePagination, setPagination] = useState({
         pageSize: 10,
@@ -62,7 +62,7 @@ export default function DataTable({ isLoading, rowSelection = undefined, showSiz
         setPage({ ...tablePagination, current: 1, pageSize });
     };
 
-    const showPaginator = dynamicPagination ? totalRecords > 0 : tableData?.length > 0;
+    const showPaginator = tableData?.length > 0;
 
     return (
         <div className={styles.marB20}>
@@ -75,7 +75,7 @@ export default function DataTable({ isLoading, rowSelection = undefined, showSiz
                         {tablePagination?.total && (
                             <>
                                 <span className={`${styles.marR20} ${styles.tableTextColor54}`}>
-                                    Total <span style={{ color: '#0b0b0c' }}> {tablePagination?.total} </span> items
+                                    Total <span style={{ color: '#0b0b0c' }}> {tablePagination?.total} </span> {tablePagination?.total > 1 ? 'items' : 'item'}
                                 </span>
                                 <Select defaultValue={tablePagination?.pageSize} onChange={handleChange} options={options} />
                             </>

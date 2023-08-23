@@ -3,9 +3,10 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React from 'react';
-import { Collapse, Space } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Collapse, Divider } from 'antd';
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
+import { CopytoClipboard } from 'utils/CopytoClipboard';
 import dayjs from 'dayjs';
 
 import styles from 'components/common/Common.module.css';
@@ -28,43 +29,57 @@ const expandIcon = ({ isActive }) =>
 const VehicleDetailCard = (props) => {
     const { ProfileData, typeData } = props;
     const findStatus = (key) => typeData?.find((element) => element?.key === key)?.value || 'NA';
+    const [clipBoardClick, setClipboardClick] = useState(false);
+    useEffect(() => {
+        if (clipBoardClick)
+            setTimeout(() => {
+                setClipboardClick(false);
+            }, 500);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [clipBoardClick]);
 
     return (
         <Collapse bordered={true} defaultActiveKey={[1]} expandIcon={expandIcon} collapsible="icon">
             <Panel
                 header={
-                    <Space>
-                        <div>
-                            <div>
-                                CheckList Number: <span className={ProfileData?.checklistNumber ? styles.floatRight : styles.NewChecklist}>{ProfileData?.checklistNumber || 'New'}</span>
-                            </div>
-                        </div>
-                    </Space>
+                    <div className={`${styles.detailCardText} ${styles.marB5}`} style={{ fontSize: '14px' }}>
+                        CheckList Number:
+                        <span className={styles.activeForm}>
+                            {ProfileData?.checklistNumber || 'New'}
+                            <CopytoClipboard text={ProfileData?.checklistNumber} />
+                        </span>
+                    </div>
                 }
                 key={1}
             >
-                <p>
-                    Checklist Date: <span className={styles.floatRight}>{ProfileData?.checklistDate ? dayjs(ProfileData?.checklistDate)?.format('DD MM YYYY') : 'NA'}</span>
-                </p>
-                <p>
-                    Checklist Status: <span className={styles.floatRight}>{findStatus(ProfileData?.checklistStatus)}</span>
-                </p>
-                <p>
-                    GRN Number: <span className={styles.floatRight}>{ProfileData?.grnNumber || 'NA'}</span>
-                </p>
-
-                <p>
-                    GRN Date: <span className={styles.floatRight}>{ProfileData?.grnDate ? dayjs(ProfileData?.grnDate)?.format('DD-MM-YYYY') : 'NA'}</span>
-                </p>
-                <p>
-                    GRN Status: <span className={styles.floatRight}>{ProfileData?.grnStatus || 'NA'}</span>
-                </p>
-                <p>
-                    VIN: <span className={styles.floatRight}>{ProfileData?.vinNumber || 'NA'}</span>
-                </p>
-                <p>
-                    MODEL: <span className={styles.floatRight}>{ProfileData?.model || 'NA'}</span>
-                </p>
+                <Divider />
+                <div className={styles.detailCardText}>
+                    Checklist Date: <span>{ProfileData?.checklistDate ? dayjs(ProfileData?.checklistDate)?.format('DD MMM YYYY') : 'NA'}</span>
+                </div>
+                <Divider />
+                <div className={styles.detailCardText}>
+                    Checklist Status: <span>{findStatus(ProfileData?.checklistStatus)}</span>
+                </div>
+                <Divider />
+                <div className={styles.detailCardText}>
+                    GRN Number: <span>{ProfileData?.grnNumber || 'NA'}</span>
+                </div>
+                <Divider />
+                <div className={styles.detailCardText}>
+                    GRN Date: <span>{ProfileData?.grnDate ? dayjs(ProfileData?.grnDate)?.format('DD MMM YYYY') : 'NA'}</span>
+                </div>
+                <Divider />
+                <div className={styles.detailCardText}>
+                    GRN Status: <span>{ProfileData?.grnStatusDescription || 'NA'}</span>
+                </div>
+                <Divider />
+                <div className={styles.detailCardText}>
+                    VIN: <span>{ProfileData?.vinNumber || 'NA'}</span>
+                </div>
+                <Divider />
+                <div className={styles.detailCardText}>
+                    MODEL: <span>{ProfileData?.model || 'NA'}</span>
+                </div>
             </Panel>
         </Collapse>
     );

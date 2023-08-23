@@ -9,7 +9,7 @@ import { DashboardPage } from 'pages/dashboard';
 import {
     ProductHierarchyPage,
     UserManagementPage,
-    UserManagementManufacturerPage,
+    UserManagementPageNew,
     HierarchyAttributeMasterPage,
     ManufacturerAdministrativeHierarchyPage,
     ManufacturerOrgHierarchyPage,
@@ -65,6 +65,7 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_COMMON_PRODUCT_HIERARCHY} element={<ProductHierarchyPage />} />
             <Route path={routing.ROUTING_COMMON_CONFIG_PARAM_EDIT} element={<ConfigurableParameterEditingPage />} />
             <Route path={routing.ROUTING_COMMON_USER_MANAGEMENT} element={<UserManagementPage />} />
+            <Route path={routing.ROUTING_COMMON_USER_MANAGEMENT_NEW} element={<UserManagementPageNew />} />
             <Route path={routing.ROUTING_COMMON_HIERARCHY_ATTRIBUTE_MASTER} element={<HierarchyAttributeMasterPage />} exact />
             <Route path={routing.ROUTING_COMMON_MANUFACTURER_ADMINISTRATIVE_HIERARCHY} element={<ManufacturerAdministrativeHierarchyPage />} />
 
@@ -109,7 +110,6 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_USER_FAQ} element={<FaqPage />} exact />
             <Route path={routing.ROUTING_USER_TRAINING} element={<TrainingPage />} exact />
             <Route path={routing.ROUTING_USER_MANAGEMENT_DEALER} element={<UserManagementPage />} exact />
-            <Route path={routing.ROUTING_USER_MANAGEMENT_MANUFACTURER} element={<UserManagementManufacturerPage />} exact />
 
             <Route path={routing.ROUTING_USER_TERM} element={<CMSPage />} exact />
             <Route path={routing.ROUTING_USER_ABOUT} element={<CMSPage />} exact />
@@ -137,7 +137,6 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_VEHICLE_RECIEPT_CHECKLIST} element={<VehicleRecieptChecklistMaster />} exact />
             <Route path={routing.ROUTING_FINANCIAL_ACCOUNTING_CHART_OF_ACCOUNT} element={<ChartOfAccountPage />} exact />
 
-            {/* <Route path="*" element={<LoginPage />} exact /> */}
         </Routes>
     );
 };

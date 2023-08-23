@@ -4,7 +4,11 @@ import '@testing-library/jest-dom/extend-expect';
 import customRender from "@utils/test-utils";
 import { AddEditForm } from "@components/common/ApplicationMaster/AddEditForm";
 
-const finalFormdata ={ applicationDetails: { documentNumRequired: true, accessableIndicator:2 } }
+const finalFormdata ={ applicationDetails: { documentNumRequired: true, accessableIndicator:2 } };
+
+afterEach(() => {
+   jest.restoreAllMocks();
+});
 
 describe('Add Edit Form Component', () => {
 

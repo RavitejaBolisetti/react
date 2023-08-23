@@ -4,11 +4,10 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import '@testing-library/jest-dom/extend-expect';
-import { render, screen, waitFor } from "@testing-library/react";
 import customRender from '@utils/test-utils';
-import { tableColumn } from "@components/Sales/OTF/tableColumn";
-
-
+afterEach(() => {
+    jest.restoreAllMocks();
+  });
 describe('OTF tableColumn component render', () => {
 
     it("should render OTF tableColumn component ",async ()=>{

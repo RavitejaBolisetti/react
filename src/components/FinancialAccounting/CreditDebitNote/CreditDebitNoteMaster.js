@@ -149,6 +149,12 @@ export const CreditDebitNoteMasterBase = (props) => {
         setShowDataLoading(false);
     };
 
+    useEffect(() => {
+        if (filterString) {
+            setPage({ ...page, current: 1 });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [filterString]);
     const extraParams = useMemo(() => {
         return [
             {

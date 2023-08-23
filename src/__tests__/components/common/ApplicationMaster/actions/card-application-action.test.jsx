@@ -1,10 +1,14 @@
 import React from "react";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, act } from "@testing-library/react";
 import '@testing-library/jest-dom/extend-expect';
 import customRender from "@utils/test-utils";
 import CardApplicationAction from "components/common/ApplicationMaster/actions/CardApplicationAction";
 
-const finalFormdata={ applicationAction: [{id:1, name:"test"},{id:2, name:"test"}], }
+const finalFormdata={ applicationAction: [{id:1, name:"test"},{id:2, name:"test"}], };
+
+afterEach(() => {
+    jest.restoreAllMocks();
+});
 
 describe('Card Application Action Component', () => {
     it('should render card application action component', async () => {
@@ -16,7 +20,9 @@ describe('Card Application Action Component', () => {
         jest.spyOn(React, 'useState').mockReturnValue([null,setFinalFormdata]);
         render(<CardApplicationAction id={null} setCanFormSave={jest.fn()} setFinalFormdata={setFinalFormdata} setIsBtnDisabled={jest.fn()} finalFormdata={finalFormdata} status={"Active"} actionName={"Test"} actionId={123} />);
         const buttons = screen.getAllByRole('button', { name: '', exact: false});
-        fireEvent.click(buttons[1]);
+        act(() => {
+            fireEvent.click(buttons[1]);
+        });
         expect(setFinalFormdata).toHaveBeenCalledWith(expect.any(Function));
         const setFinalFormdataFunction=setFinalFormdata.mock.calls[0][0];
         const prev={

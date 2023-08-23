@@ -4,11 +4,12 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Collapse, Space, Avatar, Typography } from 'antd';
+import { Collapse, Space, Avatar, Typography, Divider } from 'antd';
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
 import { convertDateTime } from 'utils/formatDateTime';
 import { getCodeValue } from 'utils/getCodeValue';
 import { PARAM_MASTER } from 'constants/paramMaster';
+import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
 const { Text, Title } = Typography;
@@ -38,33 +39,38 @@ const OTFDetailCard = (props) => {
                         <Space>
                             <Avatar size={50}>{userAvatar?.toUpperCase()}</Avatar>
                             <div>
-                                <Title level={5} style={{ textTransform: 'capitalize' }}>
-                                    {selectedOrder?.customerName?.toLowerCase()}
-                                </Title>
-                                <Text>
-                                    OTF No.: <span>{selectedOrder?.otfNumber}</span>
-                                </Text>
+                                <Title level={5}>{selectedOrder?.customerName?.toLowerCase()}</Title>
+                                <Text>{selectedOrder?.mobileNumber || 'NA'}</Text>
                             </div>
                         </Space>
+                        <Divider />
+                        <div className={styles.detailCardText}>
+                            OTF No.: <span>{selectedOrder?.otfNumber}</span>
+                        </div>
                     </>
                 }
                 key={1}
             >
-                <p>
+                <Divider />
+                <div className={styles.detailCardText}>
                     Customer Type: <span>{selectedOrder && getCodeValue(typeData?.[PARAM_MASTER?.CUST_TYPE?.id], selectedOrder?.customerType)}</span>
-                </p>
-                <p>
-                    Mobile No.: <span>{selectedOrder?.mobileNumber || 'NA'}</span>
-                </p>
-                <p>
+                </div>
+                <Divider />
+                <div className={styles.detailCardText}>
+                    Mobile No.: <span>{'+91-' + selectedOrder?.mobileNumber || 'NA'}</span>
+                </div>
+                <Divider />
+                <div className={styles.detailCardText}>
                     OTF Date: <span>{convertDateTime(selectedOrder?.otfDate, 'DD MMM YYYY') || 'NA'}</span>
-                </p>
-                <p>
+                </div>
+                <Divider />
+                <div className={styles.detailCardText}>
                     Model: <span>{selectedOrder?.model || 'NA'}</span>
-                </p>
-                <p>
+                </div>
+                <Divider />
+                <div className={styles.detailCardText}>
                     CPD: <span>{convertDateTime(selectedOrder?.cpd, 'DD MMM YYYY') || 'NA'}</span>
-                </p>
+                </div>
             </Panel>
         </Collapse>
     );

@@ -3,13 +3,9 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-:global .ant-layout .ant-layout-header {
-    line-height: 40px;
-    height: 64px;
-}
 
 .headerContainer {
-    height: 60px;
+    /* height: 60px; */
     padding: 16px 20px 0 24px;
     /* border: 1px solid red; */
 }
@@ -155,10 +151,6 @@
 /* .dropdownArrow .navLink :global .ant-space .ant-space-item:last-child {
     padding-top: 10px;
 } */
-
-:global .ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-title-content > a:hover {
-    text-decoration: none;
-}
 
 .headerRight {
     /* float: right; */
@@ -349,29 +341,6 @@
     transform: rotate(180deg) !important;
 }
 
-:global .ant-dropdown.ant-dropdown-placement-bottomRight .ant-dropdown-menu {
-    /* padding: 10px; */
-    padding: 4px 3px;
-    border: 1px solid #0b0b0c;
-    border-radius: 6px;
-    margin-top: 16px;
-    box-shadow: none;
-}
-
-:global .ant-dropdown.ant-dropdown-placement-bottomRight .ant-dropdown-menu .ant-dropdown-menu-item:not(:last-child) {
-    margin-bottom: 4px;
-}
-
-:global .ant-dropdown.ant-dropdown-placement-bottomRight .ant-dropdown-menu .ant-dropdown-menu-item:hover {
-    color: #ff3e5b;
-    background-color: #ffd8de;
-}
-
-:global .ant-dropdown.ant-dropdown-placement-bottomRight .ant-dropdown-menu .ant-dropdown-menu-item .ant-dropdown-menu-title-content svg {
-    color: #ff3e5b;
-    vertical-align: sub;
-}
-
 .confirmModal :global .ant-modal-confirm-confirm {
     width: 376px !important;
 }
@@ -402,7 +371,7 @@
     height: 36px !important;
 }
 
-@media (min-width: 997px) and (max-width: 1280px) {
+/* @media (min-width: 997px) and (max-width: 1280px) {
     .headerLeft {
         padding-left: 20px;
     }
@@ -428,15 +397,13 @@
         line-height: 15px;
         font-weight: 500;
     }
-}
+} */
 
 @media (min-width: 768px) and (max-width: 998px) {
     .menuIcon {
         display: inline;
-        padding-top: 14px;
+        /* padding-top: 14px; */
         padding-left: 0 !important;
-        /* position: absolute; */
-        /* left: 0; */
         cursor: pointer;
     }
 
@@ -451,9 +418,13 @@
         padding-left: 10px;
     }
 
-    .headerLeft {
-        padding-left: 20px;
+    .headerContainer {
+        padding: 0 20px;
     }
+
+    /* .headerLeft {
+        padding-left: 20px;
+    } */
 
     .mrt6 {
         margin-top: 0;
@@ -484,10 +455,8 @@
 
     .menuIcon {
         display: inline;
-        padding-top: 14px;
+        padding-top: 20px;
         padding-left: 0 !important;
-        /* position: absolute; */
-        /* left: 0; */
         cursor: pointer;
     }
 
@@ -519,12 +488,7 @@
     }
 
     .headerRight {
-        padding: 14px 20px 0px 10px;
-    }
-
-    .navbarNav {
-        /* justify-content: space-between; */
-        justify-content: flex-end;
+        padding-top: 14px;
     }
 
     .helpLineText {
@@ -542,16 +506,20 @@
         padding-left: 4px;
     }
 
+    .headerContainer {
+        padding: 0 20px;
+    }
+
     /* .columnInterchange {
         flex-direction: column-reverse;
     } */
 
     .headerLeft {
-        padding-left: 50px;
+        padding-left: 40px;
     }
 
     .mrt6 {
-        margin-top: 0;
+        margin-top: 3px;
     }
 
     .userAvatar {
@@ -596,7 +564,7 @@
     .menuIcon {
         display: inline;
         position: absolute;
-        left: 8px;
+        left: 0;
         top: 12px;
         cursor: pointer;
     }
@@ -626,10 +594,9 @@
 
     .userText {
         float: right;
-        padding-top: 13px;
+        padding-top: 18px;
         font-size: 12px;
         font-weight: 500;
-        margin-top: 5px;
     }
 
     .welcomeUser .userText {
@@ -637,13 +604,7 @@
     }
 
     .headerRight {
-        padding: 14px 10px 0px 10px;
-        float: none;
-    }
-
-    .navbarNav {
-        /* justify-content: space-between; */
-        justify-content: flex-end;
+        padding: 14px 0 0;
     }
 
     .helpLineText {
@@ -653,6 +614,10 @@
     .welcomeUser {
         margin-top: -10px;
         padding-left: 4px;
+    }
+
+    .welcomeUser :global .ant-space {
+        gap: 0 !important;
     }
 
     :global .ant-dropdown.ant-dropdown-placement-bottomRight .ant-dropdown-menu {

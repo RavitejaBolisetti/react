@@ -216,7 +216,7 @@ const AddEditFormMain = (props) => {
     };
     return (
         <>
-            <Form form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed} layout="vertical">
+            <Form form={form} autoComplete="off" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed} layout="vertical">
                 <Row gutter={20} className={styles.drawerBody}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         {viewMode ? (
@@ -229,7 +229,7 @@ const AddEditFormMain = (props) => {
                                     <Row gutter={20}>
                                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                                             <Form.Item initialValue={formData?.roleId} name="roleId" label="Role Id" rules={[validateRequiredInputField('id'), validationFieldLetterAndNumber('id')]}>
-                                                <Input maxLength={6} placeholder={preparePlaceholderText('id')} />
+                                                <Input maxLength={6} disabled={editMode ? true : false} placeholder={preparePlaceholderText('id')} />
                                             </Form.Item>
                                         </Col>
                                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>

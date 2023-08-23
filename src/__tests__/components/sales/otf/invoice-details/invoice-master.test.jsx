@@ -12,10 +12,10 @@ const props = {
     listShowLoading: jest.fn(),
     showGlobalNotification: jest.fn(),
     handleButtonClick: jest.fn(),
+    userId: '12',
     NEXT_ACTION: jest.fn(),
     section: { id: 10, title: 'Invoice Information', displayOnList: true },
     displaySection: { invoiceInformation: true, deliveryInformation: true },
-    selectedOrder: { orderStatus: false },
 };
 
 describe('OTF Invoice Details render', () => {
@@ -29,15 +29,17 @@ describe('OTF Invoice Details render', () => {
             data: {
                 OTF: {
                     InvoiceDetail: {
+                        isLoaded: true,
                         data: [{ name: '1' }, { name: '2' }],
-                        isLoaded: false,
                     },
                 },
             },
         });
+        const selectedOrder = { orderStatus: true };
+
         customRender(
             <Provider store={mockStore}>
-                <InvoiceDetailsMaster NEXT_ACTION={jest.fn()} selectedOrder={true} onChange={jest.fn()} {...props} />
+                <InvoiceDetailsMaster NEXT_ACTION={jest.fn()} selectedOrder={selectedOrder} selectedOrderId={'123'} userId={'123'} onChange={jest.fn()} onFinish={jest.fn()} {...props} />
             </Provider>
         );
 

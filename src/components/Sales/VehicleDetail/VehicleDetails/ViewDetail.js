@@ -70,7 +70,9 @@ const ViewDetailMain = (props) => {
                     <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
                         <Panel header="Registration Number Change Request" key="2">
                             <Divider />
-                            <Card>Coming Soon</Card>
+                            <Card>
+                                <div className={styles.marB20}>Coming Soon</div>
+                            </Card>
                         </Panel>
                     </Collapse>
                 </Col>

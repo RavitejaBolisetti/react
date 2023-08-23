@@ -64,7 +64,7 @@ const LeftPanel = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchValue]);
 
-    // const panelParentClass = isTreeViewVisible ? styles.panelVisible : styles.panelHidden;
+    const panelParentClass = isTreeViewVisible ? styles.panelVisible : styles.panelHidden;
 
     const finalTreeData = useMemo(() => {
         const loop = (data) =>
@@ -109,7 +109,7 @@ const LeftPanel = (props) => {
     const mainClass = callOnForm ? styles.scrollTreeDataInner : styles.scrollTreeData;
     // <Tree onCheck={onCheck} checkedKeys={checkedKeys} checkable={checkable} onSelect={handleTreeViewClick} showLine={true} showIcon={true} onExpand={onExpand} treeData={finalTreeData} />
     return (
-        <div>
+        <div className={`${styles.leftpanel} ${panelParentClass}`}>
             {isTreeViewVisible ? (
                 <div className={isOpenInModal ? styles.modalView : ''}>
                     <div className={mainClass}>

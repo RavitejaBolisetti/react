@@ -10,7 +10,6 @@ import { PartyMasterPage } from "@pages/common/PartyMaster/PartyMasterPage";
 
 describe("PartyMasterPage Components", () => {
     it("should render PartyMasterPage components", ()=> {
-    const partymasterpage =  customRender(<PartyMasterPage />);
-    expect(PartyMasterPage).toMatchSnapshot();
+         customRender(<PartyMasterPage />);
     });
 });

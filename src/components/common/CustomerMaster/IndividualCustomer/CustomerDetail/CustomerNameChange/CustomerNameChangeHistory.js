@@ -156,6 +156,7 @@ const ChangeHistoryMain = ({ fetchCustomerChangeHistory, onCloseAction, listShow
     ];
 
     const tableProps = {
+        page,
         setPage,
         totalRecords,
         dynamicPagination,
@@ -175,7 +176,7 @@ const ChangeHistoryMain = ({ fetchCustomerChangeHistory, onCloseAction, listShow
             <div className={styles.formFooter}>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Button danger onClick={onCloseAction}>
+                        <Button data-testid="closed" danger onClick={onCloseAction}>
                             Close
                         </Button>
                     </Col>

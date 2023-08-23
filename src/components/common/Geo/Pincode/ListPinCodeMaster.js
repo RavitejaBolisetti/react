@@ -170,6 +170,13 @@ const ListPinCodeMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    useEffect(() => {
+        if (filterString) {
+            setPage({ ...page, current: 1 });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [filterString]);
+
     const extraParams = useMemo(() => {
         return [
             {
@@ -519,6 +526,7 @@ const ListPinCodeMasterBase = (props) => {
     const tableProps = {
         dynamicPagination,
         totalRecords,
+        page,
         setPage,
         isLoading: showDataLoading,
         tableColumn: tableColumn(handleButtonClick),

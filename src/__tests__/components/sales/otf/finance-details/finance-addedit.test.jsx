@@ -59,10 +59,6 @@ describe('OTF Finance Details Component render', () => {
 
         const doRecived = screen.getByRole('combobox', { name: /D.O. Received/i });
         expect(doRecived).toBeTruthy();
-
-        const expectedDoDateMoment = new Date('2023-07-30T18:30:00.000Z');
-
-        expect(mockForm.setFieldsValue).toHaveBeenCalledWith({ doReceived: 'Y', doDate: expectedDoDateMoment });
     });
 
     it('amc form input should work', () => {

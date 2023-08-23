@@ -2,14 +2,16 @@ import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
 import { screen, fireEvent, act } from '@testing-library/react';
 import { OTFStatusTag } from 'components/Sales/OTF/utils/OTFStatusTag';
-
+afterEach(() => {
+    jest.restoreAllMocks();
+  }); 
 describe('OTF Form Button Component', () => {
     it('should render otf form button component', () => {
         customRender(<OTFStatusTag />);
     });
 
     it('if status is booked', () => {
-        render(<OTFStatusTag status="O"/>);
+        customRender(<OTFStatusTag status="O"/>);
     });
 
     it('if status is alloted', () => {

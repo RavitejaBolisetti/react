@@ -44,6 +44,7 @@ const MenuNav = (props) => {
         }
     };
 
+    
     const className = (item) => {
         return !selectedCustomerId && !item.enableOnAdd ? styles.cursorNotAllowed : styles.cursorPointer;
     };

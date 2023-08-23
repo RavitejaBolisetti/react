@@ -7,7 +7,9 @@ const FormWrapper = (props) => {
     const [form] = Form.useForm();
     return <OTFMainConatiner form={form} {...props} />
 }
-
+afterEach(() => {
+    jest.restoreAllMocks();
+  });
 describe("OtfMaster component render",()=>{
 
     it("should render OtfMaster component",()=>{

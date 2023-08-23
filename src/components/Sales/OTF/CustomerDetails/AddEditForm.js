@@ -8,7 +8,7 @@ import { Col, Row, Space, Collapse, AutoComplete, Divider } from 'antd';
 
 import { FiEdit } from 'react-icons/fi';
 import { AddressCommonForm } from './AddressCommonForm';
-import { convertDateToCalender } from 'utils/formatDateTime';
+import { formattedCalendarDate } from 'utils/formatDateTime';
 
 import { expandIconWithText } from 'utils/accordianExpandIcon';
 const { Panel } = Collapse;
@@ -19,10 +19,10 @@ const AddEditFormBase = (props) => {
 
     useEffect(() => {
         if (formData) {
-            form.setFieldsValue({
+            form?.setFieldsValue({
                 ...formData,
-                bookingCustomer: { ...formData?.bookingCustomer, birthDate: convertDateToCalender(formData?.bookingCustomer?.birthDate) },
-                billingCustomer: { ...formData?.billingCustomer, birthDate: convertDateToCalender(formData?.billingCustomer?.birthDate) },
+                bookingCustomer: { ...formData?.bookingCustomer, birthDate: formattedCalendarDate(formData?.bookingCustomer?.birthDate) },
+                billingCustomer: { ...formData?.billingCustomer, birthDate: formattedCalendarDate(formData?.billingCustomer?.birthDate) },
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -48,7 +48,7 @@ const AddEditFormBase = (props) => {
     const handleOnChange = (e) => {
         if (e.target.checked) {
             setSameAsBookingCustomer(true);
-            let bookingCustomer = form.getFieldsValue()?.bookingCustomer;
+            let bookingCustomer = form?.getFieldsValue()?.bookingCustomer;
             form?.setFieldsValue({ billingCustomer: { ...bookingCustomer } });
         } else {
             setSameAsBookingCustomer(false);

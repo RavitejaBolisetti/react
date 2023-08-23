@@ -133,6 +133,13 @@ export const RSMApprovalMasterBase = (props) => {
         setShowDataLoading(true);
     };
 
+    useEffect(() => {
+        if (filterString) {
+            setPage({ ...page, current: 1 });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [filterString]);
+
     const extraParams = useMemo(() => {
         return [
             {
@@ -310,6 +317,7 @@ export const RSMApprovalMasterBase = (props) => {
     const tableProps = {
         dynamicPagination,
         totalRecords,
+        page,
         setPage,
         tableColumn: tableColumn(handleButtonClick),
         tableData: data,
