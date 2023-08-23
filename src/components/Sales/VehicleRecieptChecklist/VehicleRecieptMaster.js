@@ -487,6 +487,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
     const tableProps = {
         dynamicPagination,
         totalRecords,
+        page,
         setPage,
         tableColumn: tableColumn({ handleButtonClick, actionButtonVisibility }),
         tableData: data,
