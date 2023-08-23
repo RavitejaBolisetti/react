@@ -58,7 +58,6 @@
             "react-app",
             "react-app/jest"
         ],
-        "nodeOptions": "--max-old-space-size=4096",
         "errorOnDeprecated": true
     },
     "lint-staged": {
