@@ -162,6 +162,11 @@ export const OtfMasterBase = (props) => {
         setShowDataLoading(false);
     };
 
+    useEffect(() => {
+        setPage({ ...page, current: 1 });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, filterString);
+
     const extraParams = useMemo(() => {
         return [
             {
