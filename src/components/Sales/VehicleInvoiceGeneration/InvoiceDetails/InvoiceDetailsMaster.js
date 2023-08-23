@@ -56,7 +56,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-const PartyDetailMasterBase = (props) => {
+const InvoiceDetailsMasterBase = (props) => {
     const { setReceipt, typeData, partySegmentType, receiptDetailData, partyDetailData } = props;
     const { userId, buttonData, setButtonData, showGlobalNotification, section, fetchCustomerDetail, fetchPartyDetail, resetData, listShowLoading, isDataLoaded, isLoading } = props;
     const {  form, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick } = props;
@@ -178,4 +178,4 @@ const PartyDetailMasterBase = (props) => {
     );
 };
 
-export const PartyDetailMaster = connect(null, null)(PartyDetailMasterBase);
+export const InvoiceDetailsMaster = connect(null, null)(InvoiceDetailsMasterBase);

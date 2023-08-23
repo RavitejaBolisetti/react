@@ -6,7 +6,7 @@
 import React, { useEffect, useState } from 'react';
 import { Row, Col, AutoComplete, Form, Collapse, Divider, Select, Space } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
-import { AddressCommonForm } from 'components/Sales/OTF/CustomerDetails/AddressCommonForm';
+import { CommonForm } from './CommonForm';
 import { FiEdit } from 'react-icons/fi';
 import { expandIcon } from 'utils/accordianExpandIcon';
 
@@ -88,19 +88,19 @@ const AddEditFormMain = (props) => {
                         <Panel header="OTF Details" key="3">
                             <Divider />
                            <text>Coming Soon...</text>
-                            {/* <AddressCommonForm key="3" {...bookingCustomerProps} isBillingCustmrForm={false} /> */}
+                            {/* <CommonForm key="3" {...bookingCustomerProps} isBillingCustmrForm={false} /> */}
                         </Panel>
                     </Collapse>
                     <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
                         <Panel header="Booked Customer" key="1">
                             <Divider />
-                            <AddressCommonForm key="3" {...bookingCustomerProps} isBillingCustmrForm={false} />
+                            <CommonForm key="3" {...bookingCustomerProps} isBillingCustmrForm={false} />
                         </Panel>
                     </Collapse>
                     <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
                         <Panel header="Billing Customer" key="2">
                             <Divider />
-                            <AddressCommonForm key="4" {...bilingCustomerProps} isBillingCustmrForm={true} />
+                            <CommonForm key="4" {...bilingCustomerProps} isBillingCustmrForm={true} />
                         </Panel>
                     </Collapse>
                 </Space>

@@ -9,10 +9,10 @@ import { bindActionCreators } from 'redux';
 
 import { Col, Form, Row } from 'antd';
 import { tableColumn } from './tableColumn';
-import ReceiptFilter from './ReceiptFilter';
+import VehicleInvoiceFilter from './VehicleInvoiceFilter';
 import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 'utils/btnVisiblity';
 
-import { ReceiptMainConatiner } from './ReceiptMainConatiner';
+import { VehicleInvoiceMainConatiner } from './VehicleInvoiceMainConatiner';
 import { ListDataTable } from 'utils/ListDataTable';
 import { AdvancedSearch } from './AdvancedSearch';
 import { CancelReceipt } from './CancelReceipt';
@@ -334,23 +334,23 @@ export const VehicleInvoiceMasterBase = (props) => {
                 break;
         }
 
-        // if (buttonAction !== NEXT_ACTION) {
-        //     setFormActionType({
-        //         addMode: buttonAction === ADD_ACTION,
-        //         editMode: buttonAction === EDIT_ACTION,
-        //         viewMode: buttonAction === VIEW_ACTION,
-        //     });
-        //     if (buttonAction === EDIT_ACTION) {
-        //         setButtonData({ ...buttonData, nextBtn: true, editBtn: false, saveBtn: true });
-        //     } else {
-        //         const Visibility = btnVisiblity({ defaultBtnVisiblity, buttonAction });
-        //         setButtonData(Visibility);
-        //         // setButtonData({ ...Visibility, cancelReceiptBtn: true });
-        //         if (buttonAction === VIEW_ACTION) {
-        //             receiptStatus === QUERY_BUTTONS_CONSTANTS.CANCELLED.key ? setButtonData({ ...Visibility, editBtn: false, cancelReceiptBtn: false }) : receiptStatus === QUERY_BUTTONS_CONSTANTS.APPORTION.key ? setButtonData({ ...Visibility, editBtn: false, cancelReceiptBtn: true }) : setButtonData({ ...Visibility, editBtn: true, cancelReceiptBtn: true });
-        //         }
-        //     }
-        // }
+        if (buttonAction !== NEXT_ACTION) {
+            setFormActionType({
+                addMode: buttonAction === ADD_ACTION,
+                editMode: buttonAction === EDIT_ACTION,
+                viewMode: buttonAction === VIEW_ACTION,
+            });
+            if (buttonAction === EDIT_ACTION) {
+                setButtonData({ ...buttonData, nextBtn: true, editBtn: false, saveBtn: true });
+            } else {
+                const Visibility = btnVisiblity({ defaultBtnVisiblity, buttonAction });
+                setButtonData(Visibility);
+                // setButtonData({ ...Visibility, cancelReceiptBtn: true });
+                if (buttonAction === VIEW_ACTION) {
+                    receiptStatus === QUERY_BUTTONS_CONSTANTS.CANCELLED.key ? setButtonData({ ...Visibility, editBtn: false, cancelReceiptBtn: false }) : receiptStatus === QUERY_BUTTONS_CONSTANTS.APPORTION.key ? setButtonData({ ...Visibility, editBtn: false, cancelReceiptBtn: true }) : setButtonData({ ...Visibility, editBtn: true, cancelReceiptBtn: true });
+                }
+            }
+        }
         setIsFormVisible(true);
     };
 
@@ -611,7 +611,7 @@ export const VehicleInvoiceMasterBase = (props) => {
 
     return (
         <>
-            <ReceiptFilter {...advanceFilterResultProps} />
+            <VehicleInvoiceFilter {...advanceFilterResultProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <ListDataTable 
@@ -621,7 +621,7 @@ export const VehicleInvoiceMasterBase = (props) => {
                 </Col>
             </Row>
             <AdvancedSearch {...advanceFilterProps} />
-            <ReceiptMainConatiner {...containerProps} />
+            <VehicleInvoiceMainConatiner {...containerProps} />
             <CancelReceipt {...cancelReceiptProps} />
         </>
     );
