@@ -6,9 +6,7 @@
 import React from 'react';
 import { Col, Input, Form, Row, DatePicker, Checkbox } from 'antd';
 
-import { disableFutureDate } from 'utils/disableDate';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
-import { dateFormat } from 'utils/formatDateTime';
 import { convertToUpperCase } from 'utils/convertToUpperCase';
 
 import { validateRequiredInputField, validateRequiredSelectField, validateEmailField, validatePincodeField, validateMobileNoField, validatePanField, validateAadhar, validateDrivingLicenseNoWithSpace, validateGSTIN } from 'utils/validation';

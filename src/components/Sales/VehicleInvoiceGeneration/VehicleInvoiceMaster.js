@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 
 import { Col, Form, Row } from 'antd';
@@ -267,18 +267,18 @@ export const VehicleInvoiceMasterBase = (props) => {
     //     // eslint-disable-next-line react-hooks/exhaustive-deps
     // }, []);
 
-    // useEffect(() => {
-    //     if (currentSection && sectionName) {
-    //         const section = Object.values(sectionName)?.find((i) => i.id === currentSection);
-    //         setSection(section);
+    useEffect(() => {
+        if (currentSection && sectionName) {
+            const section = Object.values(sectionName)?.find((i) => i.id === currentSection);
+            setSection(section);
 
-    //         const nextSection = Object.values(sectionName)?.find((i) => i?.displayOnList && i.id > currentSection);
-    //         setLastSection(!nextSection?.id);
-    //     }
-    //     form.resetFields();
-    //     form.setFieldsValue(undefined);
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [currentSection, sectionName]);
+            const nextSection = Object.values(sectionName)?.find((i) => i?.displayOnList && i.id > currentSection);
+            setLastSection(!nextSection?.id);
+        }
+        form.resetFields();
+        form.setFieldsValue(undefined);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [currentSection, sectionName]);
 
     const handleReceiptTypeChange = (buttonName) => {
         setReceiptStatus(buttonName?.key);

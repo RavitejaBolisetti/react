@@ -9,6 +9,7 @@ import { CommonForm } from './CommonForm';
 import { expandIcon } from 'utils/accordianExpandIcon';
 
 import { convertDateToCalender } from 'utils/formatDateTime';
+import OtfDetailsForm from './OtfDetailsForm';
 
 const { Panel } = Collapse;
 
@@ -84,8 +85,7 @@ const AddEditFormMain = (props) => {
                     <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(3)} expandIconPosition="end">
                         <Panel header="OTF Details" key="3">
                             <Divider />
-                            <text>Coming Soon...</text>
-                            {/* <CommonForm key="3" {...bookingCustomerProps} isBillingCustmrForm={false} /> */}
+                            <OtfDetailsForm {...props} />
                         </Panel>
                     </Collapse>
                     <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">

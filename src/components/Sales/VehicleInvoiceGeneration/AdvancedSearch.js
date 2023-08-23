@@ -60,14 +60,14 @@ export const AdvancedSearchFrom = (props) => {
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.fromDate)} label="Receipt From Date" name="fromDate" className={styles?.datePicker}>
+                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.fromDate)} label="Invoice From Date" name="fromDate" className={styles?.datePicker}>
                         <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} onChange={() => advanceFilterForm.setFieldsValue({ toDate: undefined })} className={styles.fullWidth} disabledDate={disableFutureDate} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item
                         initialValue={formatDateToCalenderDate(filterString?.toDate)}
-                        label="Receipt To Date"
+                        label="Invoice To Date"
                         name="toDate"
                         className={styles?.datePicker}
                         rules={[
@@ -84,14 +84,9 @@ export const AdvancedSearchFrom = (props) => {
             </Row>
 
             <Row gutter={16}>
-                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item initialValue={filterString?.receiptType} label="Receipt Type" name="receiptType">
-                        {customSelectBox({ data: receiptType, placeholder: preparePlaceholderSelect('Receipt Type') })}
-                    </Form.Item>
-                </Col>
-                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item initialValue={filterString?.partySegment} label="Party Segment" name="partySegment">
-                        {customSelectBox({ data: partySegmentType, placeholder: preparePlaceholderSelect('Party Segment') })}
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    <Form.Item initialValue={filterString?.receiptType} label="Digital Signature" name="digitalSignature">
+                        {customSelectBox({ data: receiptType, placeholder: preparePlaceholderSelect('Digital Signature') })}
                     </Form.Item>
                 </Col>
             </Row>

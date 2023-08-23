@@ -9,6 +9,7 @@ import { withDrawer } from 'components/withDrawer';
 import { VEHICLE_INVOICE_SECTION } from 'constants/VehicleInvoiceSection';
 
 import { InvoiceDetailsMaster } from './InvoiceDetails';
+import { InsuranceDetailsMaster } from './InsuranceDetails';
 
 import { LeftSidebar } from './LeftSidebar';
 
@@ -39,8 +40,8 @@ const VehicleInvoiceMainConatinerMain = (props) => {
                 // return <InvoiceDetailsMaster {...myProps} />;
             }
             case VEHICLE_INVOICE_SECTION.INSURANCE_DETAILS.id: {
-                return <p>Coming Soon...</p>;
-                // return <InvoiceDetailsMaster {...myProps} />;
+                // return <p>Coming Soon...</p>;
+                return <InsuranceDetailsMaster {...myProps} />;
             }
             case VEHICLE_INVOICE_SECTION.EXCHANGE_DETAILS.id: {
                 return <p>Coming Soon...</p>;

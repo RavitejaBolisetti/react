@@ -59,11 +59,12 @@ const mapDispatchToProps = (dispatch) => ({
 const InvoiceDetailsMasterBase = (props) => {
     const { setReceipt, typeData, partySegmentType, receiptDetailData, partyDetailData } = props;
     const { userId, buttonData, setButtonData, showGlobalNotification, section, fetchCustomerDetail, fetchPartyDetail, resetData, listShowLoading, isDataLoaded, isLoading } = props;
-    const {  form, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick } = props;
+    const { form, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick } = props;
     const { requestPayload, setRequestPayload } = props;
     const [partySegment, setPartySegment] = useState('');
     const [partyId, setPartyId] = useState();
     const [activeKey, setActiveKey] = useState([]);
+    const [otfNumber, setOtfNumber] = useState();
 
     // useEffect(() => {
     //     return () => {
@@ -129,7 +130,7 @@ const InvoiceDetailsMasterBase = (props) => {
 
     const formProps = {
         ...props,
-     
+
         form,
         // onFinish,
         // onFinishFailed,
@@ -147,6 +148,8 @@ const InvoiceDetailsMasterBase = (props) => {
         setPartySegment,
         setActiveKey,
         activeKey,
+        otfNumber,
+        setOtfNumber,
     };
 
     const viewProps = {
@@ -163,7 +166,10 @@ const InvoiceDetailsMasterBase = (props) => {
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <h2>{section?.title}</h2>
+                            <h2>
+                                Invoice Details
+                                {/* {section?.title} */}
+                            </h2>
                         </Col>
                     </Row>
                     {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
