@@ -28,6 +28,7 @@ const MenuNav = (props) => {
 
         switch (true) {
             case formActionType?.addMode: {
+
                 switch (true) {
                     case id === currentSection: {
                         activeClassName = styles.active;

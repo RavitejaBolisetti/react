@@ -51,22 +51,20 @@ const ViewDetailMain = (props) => {
         handleButtonClick,
     };
 
-    useEffect(() => {
-        setFilterStringOTFSearch({ ...filterString });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString]);
-
     const rowSelection = {
         type: 'radio',
         onChange: (selectedRowKeys, selectedRows) => {
             setSelectedOrderOTFDetails(selectedRows?.[0]);
         },
-        getCheckboxProps: () => ({}),
+        getCheckboxProps: (record) => {
+            return {
+                disabled: formData?.allotmentStatus === VEHICLE_TYPE.ALLOTED.key, //disable the first 4 rows only
+            };
+        },
     };
 
     const tableDataItem = tableData || (formData?.vehicleOTFDetails && [formData?.vehicleOTFDetails]);
     const tableProps = {
-        pagination: false,
         srl: false,
         rowKey: 'otfNumber',
         rowSelection: {
@@ -85,9 +83,8 @@ const ViewDetailMain = (props) => {
                         <Descriptions {...viewProps}>
                             <Descriptions.Item label="VIN/Chassis">{checkAndSetDefaultValue(formData?.vehicleIdentificationNumber, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Age In Days">{checkAndSetDefaultValue(formData?.ageInDays, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="PDI Done?">{checkAndSetDefaultValue(formData?.pdiDone === true ? 'Yes' : 'No', isLoading)}</Descriptions.Item>
-
-                            <Descriptions.Item label="Vehicle Status 1">{checkAndSetDefaultValue(Object.values(VEHICLE_TYPE)?.find((i) => i.key === formData?.allotmentStatus)?.title, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="PDI Done?">{checkAndSetDefaultValue(formData?.pdiDone ? 'Yes' : 'No', isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Vehicle Status">{checkAndSetDefaultValue(Object.values(VEHICLE_TYPE)?.find((i) => i?.key === formData?.allotmentStatus)?.title, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="M&M Invoices Date">{checkAndSetDefaultValue(formData?.mnmInvoiceDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                             <Descriptions.Item label="M&M Invoices No.">{checkAndSetDefaultValue(formData?.mnmInvoiceNo, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Model Description">{checkAndSetDefaultValue(formData?.modelDescription, isLoading)}</Descriptions.Item>
@@ -103,7 +100,7 @@ const ViewDetailMain = (props) => {
                                 </Col>
                             </Row>
                         )}
-                        {tableDataItem.length > 0 && <DataTable {...tableProps} />}
+                        {tableDataItem?.length > 0 && <DataTable {...tableProps} />}
                     </Card>
                 </Col>
             </Row>

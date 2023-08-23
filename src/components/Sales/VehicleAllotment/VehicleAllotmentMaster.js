@@ -25,6 +25,7 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import { VEHICLE_TYPE } from 'constants/VehicleType';
 import { BASE_URL_VEHICLE_ALLOTMENT as customURL } from 'constants/routingApi';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
+import { ConfirmationModal } from 'utils/ConfirmationModal';
 
 import { FilterIcon } from 'Icons';
 
@@ -43,7 +44,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Vehicle Receipt';
+    const moduleTitle = 'Vehicle Allotment';
     let returnValue = {
         userId,
         typeData,
@@ -56,6 +57,7 @@ const mapStateToProps = (state) => {
         isSearchDataLoaded,
         filterString,
         allotmentSummaryDetails,
+        // allotmentSummaryDetails: { ...allotmentSummaryDetails, allotmentStatus: allotmentSummaryDetails?.allotmentStatus || 'D' },
         allotmentSearchedList,
         productHierarchyData,
     };
@@ -88,8 +90,10 @@ export const VehicleAllotmentMasterBase = (props) => {
     const { filterString, setFilterString, otfStatusList } = props;
     const [filterStringOTFSearch, setFilterStringOTFSearch] = useState('');
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
-    const [toggleButton, settoggleButton] = useState(VEHICLE_TYPE?.UNALLOTED.id);
+    const [toggleButton, settoggleButton] = useState(VEHICLE_TYPE?.UNALLOTED.key);
     const [searchParamValue, setSearchParamValue] = useState('');
+    const [confirmRequest, setConfirmRequest] = useState();
+
     const [listFilterForm] = Form.useForm();
 
     const [selectedOrder, setSelectedOrder] = useState();
@@ -163,8 +167,8 @@ export const VehicleAllotmentMasterBase = (props) => {
             {
                 key: 'searchParam',
                 title: 'Value',
-                value: searchParamValue,
-                name: searchParamValue,
+                value: filterString?.searchParam,
+                name: filterString?.searchParam,
                 canRemove: true,
                 filter: true,
             },
@@ -291,6 +295,13 @@ export const VehicleAllotmentMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchOTFExtraParams]);
 
+    const onCloseConfirmationModalAction = () => {
+        setConfirmRequest({
+            ...confirmRequest,
+            isVisible: false,
+        });
+    };
+
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
         form.resetFields();
         form.setFieldsValue(undefined);
@@ -299,7 +310,17 @@ export const VehicleAllotmentMasterBase = (props) => {
                 handleVehicleAllotment(record, buttonAction);
                 break;
             case UNALLOT:
-                handleVehicleAllotment(record, buttonAction);
+                setConfirmRequest({
+                    isVisible: true,
+                    titleOverride: 'Un-Allot OTF',
+                    closable: true,
+                    icon: false,
+                    onCloseAction: onCloseConfirmationModalAction,
+                    onSubmitAction: () => handleVehicleAllotment(record, buttonAction),
+                    submitText: 'Yes',
+                    text: 'Are you sure want to Un-allot this OTF?',
+                });
+
                 break;
             case VIEW_ACTION:
                 resetOTFSearchedList();
@@ -342,6 +363,11 @@ export const VehicleAllotmentMasterBase = (props) => {
     };
 
     const handleVehicleAllotment = (req, buttonAction) => {
+        if (!selectedOTFDetails) {
+            showGlobalNotification({ message: 'Please select OTF' });
+            return false;
+        }
+
         let updatedStatus = '';
         if (buttonAction === FROM_ACTION_TYPE?.ALLOT) {
             updatedStatus = VEHICLE_TYPE?.ALLOTED.key;
@@ -350,17 +376,18 @@ export const VehicleAllotmentMasterBase = (props) => {
         }
 
         let data = { ...allotmentSummaryDetails, vehicleOTFDetails: selectedOTFDetails, allotmentStatus: updatedStatus };
-
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
 
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchVehicleAllotmentSearchedList({ customURL: customURL + '/search', setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
-
             setButtonData({ ...buttonData, formBtnActive: false });
-
             setIsFormVisible(false);
+            setConfirmRequest({
+                ...confirmRequest,
+                isVisible: false,
+            });
         };
 
         const onError = (message) => {
@@ -537,6 +564,7 @@ export const VehicleAllotmentMasterBase = (props) => {
             </Row>
             <AdvancedSearch {...advanceFilterProps} />
             <ViewDetail {...containerProps} />
+            <ConfirmationModal {...confirmRequest} />
         </>
     );
 };
