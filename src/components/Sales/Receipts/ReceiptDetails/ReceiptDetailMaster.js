@@ -60,7 +60,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const ReceiptDetailMasterBase = (props) => {
     const { userId, receipt, setReceipt, section, typeData, receiptType, paymentModeType, buttonData, setButtonData, fetchList, handleCancelFormEdit, isDataLoaded, isLoading, listShowLoading, fetchPartyDetail, partyDetailData, receiptOnFinish } = props;
-    const { form, formActionType, salesConsultantLov, NEXT_ACTION, handleButtonClick } = props;
+    const { form, formActionType, salesConsultantLov, NEXT_ACTION, handleButtonClick, setApportionList } = props;
     const { requestPayload, setRequestPayload, receiptDetailData, setLastSection, totalReceivedAmount, setTotalReceivedAmount } = props;
     const [paymentForm] = Form.useForm();
     const [receiptForm] = Form.useForm();
@@ -83,6 +83,14 @@ const ReceiptDetailMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [partyDetailData]);
+
+    useEffect(() => {
+        if (requestPayload?.receiptsDetails?.paymentDetails) {
+            setPaymentDataList(requestPayload?.receiptsDetails?.paymentDetails);
+            setButtonData({ ...buttonData, formBtnActive: true });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [requestPayload?.receiptsDetails]);
 
     useEffect(() => {
         if (receiptDetailData?.receiptsDetails) {
@@ -165,10 +173,11 @@ const ReceiptDetailMasterBase = (props) => {
         }
         receiptForm.validateFields().then((data) => {
             let finaldata = { ...data, paymentDetails: paymentDataList };
-            console.log('🚀 ~ file: ReceiptDetailMaster.js:159 ~ receiptForm.validateFields ~ finaldata:', finaldata);
 
             if (receipt === ReceiptType?.ADVANCE?.key) {
+                setApportionList([]);
                 requestPayload && receiptOnFinish(finaldata);
+                setRequestPayload({ ...requestPayload, receiptsDetails: finaldata });
             } else {
                 setRequestPayload({ ...requestPayload, receiptsDetails: finaldata });
                 handleButtonClick({ buttonAction: NEXT_ACTION });
@@ -209,7 +218,7 @@ const ReceiptDetailMasterBase = (props) => {
         receiptForm,
         setReceiptData,
         setPaymentDataList,
-        receiptData: receiptDetailData?.receiptsDetails,
+        receiptData: receiptDetailData?.receiptsDetails ? receiptDetailData?.receiptsDetails : requestPayload?.receiptsDetails,
 
         paymentModeType,
         setIsAdding,

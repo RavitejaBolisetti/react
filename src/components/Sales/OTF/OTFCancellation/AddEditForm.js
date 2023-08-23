@@ -103,15 +103,16 @@ const AddEditFormMain = (props) => {
     };
 
     useEffect(() => {
-        if ((searchDealerValue?.length > 2)) {
-            if(dealerDataList?.length == 0){
-                setDealerList([{
-                    value: '',
-                    label: "No Dealer Found",
-                    disabled: true // disable this option
-                }]);
-            }else
-                setDealerList(highlightFinalLocatonList(dealerDataList) || []);
+        if (searchDealerValue?.length > 2) {
+            if (dealerDataList?.length == 0) {
+                setDealerList([
+                    {
+                        value: '',
+                        label: 'No Dealer Found',
+                        disabled: true, // disable this option
+                    },
+                ]);
+            } else setDealerList(highlightFinalLocatonList(dealerDataList) || []);
         } else {
             setDealerList([]);
         }
@@ -178,9 +179,10 @@ const AddEditFormMain = (props) => {
         treeFieldNames,
         treeData: productHierarchyData,
         //treeDisabled: treeCodeReadOnly || isReadOnly,
+        defaultParent: false,
         selectedTreeSelectKey: parentAppCode,
         handleSelectTreeClick,
-        //defaultValue: treeCodeId,
+        defaultValue: null,
         placeholder: preparePlaceholderSelect('Parent'),
     };
 
@@ -234,7 +236,7 @@ const AddEditFormMain = (props) => {
                             <Row>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.inputAutFillWrapper}>
                                     <Form.Item name="dealerName" label="Find Dealer Name" rules={[validateRequiredSelectField('Dealer Name')]}>
-                                        <AutoComplete label="Find Dealer Name" options={dealerList} backfill={false} onSelect={handleSelect} onSearch={onSearchDealer} allowSearch >
+                                        <AutoComplete label="Find Dealer Name" options={dealerList} backfill={false} onSelect={handleSelect} onSearch={onSearchDealer} allowSearch>
                                             <Search allowClear placeholder={preparePlaceholderAutoComplete(' / Search Dealer Name')} />
                                         </AutoComplete>
                                     </Form.Item>

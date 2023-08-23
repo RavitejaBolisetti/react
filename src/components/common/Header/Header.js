@@ -227,7 +227,7 @@ const HeaderMain = (props) => {
                             <Col xs={14} sm={isDashboard ? 9 : 16} md={isDashboard ? 9 : 16} lg={isDashboard ? 9 : 16} xl={isDashboard ? 9 : 16} xxl={isDashboard ? 9 : 16}>
                                 <div className={styles.headerLeft}>
                                     <Space>
-                                        <div className={`${styles.floatLeft} ${styles.mrt6} ${styles.menuIcon}`} style={{ paddingLeft: '10px' }} onClick={handleCollapse}>
+                                        <div className={`${styles.floatLeft} ${styles.mrt6} ${styles.menuIcon}`} onClick={handleCollapse}>
                                             <img width={20} src={IMG_ICON} alt="brandImage" className={styles.brandImage} /> <Icon component={MenuArrow} />
                                         </div>
                                         <div className={styles.userText}>

@@ -134,6 +134,13 @@ export const VehicleReceiptMasterBase = (props) => {
         setShowDataLoading(false);
     };
 
+    useEffect(() => {
+        if (filterString) {
+            setPage({ ...page, current: 1 });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [filterString]);
+
     const extraParams = useMemo(() => {
         return [
             {
@@ -362,6 +369,7 @@ export const VehicleReceiptMasterBase = (props) => {
     const tableProps = {
         dynamicPagination,
         totalRecords,
+        page,
         setPage,
         tableColumn: tableColumn({ handleButtonClick, tableIconsVisibility }),
         tableData: data,

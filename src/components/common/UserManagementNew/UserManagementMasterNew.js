@@ -441,6 +441,7 @@ const UserManagementMain = (props) => {
         tableData: userDataList?.userSearchResponse?.userDetails && !userDataList?.userSearchResponse?.userDetails?.[0]?.dmsUserNotExist ? userDataList?.userSearchResponse?.userDetails : [],
         // tableData: userDataList?.userSearchResponse?.userDetails || [],
         tableColumn: userType === USER_TYPE_USER?.DEALER?.id ? tableColumn(handleButtonClick) : manufacturerTableColumn(handleButtonClick),
+        page,
         setPage,
         dynamicPagination: true,
         totalRecords: userDataList?.totalRecords,

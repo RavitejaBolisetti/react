@@ -117,6 +117,13 @@ export const AccountCategoryMain = (props) => {
         setShowDataLoading(false);
     };
 
+    useEffect(() => {
+        if (filterString) {
+            setPage({ ...page, current: 1 });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [filterString]);
+
     const extraParams = useMemo(() => {
         return [
             {
@@ -376,6 +383,7 @@ export const AccountCategoryMain = (props) => {
         addTitle: moduleTitle,
         dynamicPagination,
         totalRecords,
+        page,
         setPage,
         isLoading: showDataLoading,
         tableColumn: tableColumn(handleButtonClick),

@@ -79,6 +79,10 @@ p {
     line-height: 12px;
 }
 
+:global .ant-btn.ant-btn-icon-only {
+    width: auto;
+}
+
 :global .ant-btn-primary.ant-btn-dangerous:disabled,
 :global .ant-btn-primary:disabled {
     border-color: #b5b5b6;
@@ -474,6 +478,11 @@ p {
     line-height: 12px;
     transform: scaleX(-1);
     color: #ff3e5b;
+}
+
+:global .ant-input-affix-wrapper-status-error:not(.ant-input-affix-wrapper-disabled):not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper .ant-input-prefix,
+:global .ant-input-affix-wrapper-status-error:not(.ant-input-affix-wrapper-disabled):not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper .ant-input-suffix {
+    color: #ed302d;
 }
 
 :global .ant-input-group {
@@ -1194,9 +1203,43 @@ p {
 
 /* AntD Descriptions Design End*/
 
+/* AntD Dropdown Design Start*/
+:global .ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-title-content>a:hover {
+    text-decoration: none;
+}
+
+:global .ant-dropdown.ant-dropdown-placement-bottomRight .ant-dropdown-menu {
+    /* padding: 10px; */
+    padding: 4px 3px;
+    border: 1px solid #0b0b0c;
+    border-radius: 6px;
+    margin-top: 16px;
+    box-shadow: none;
+}
+
+:global .ant-dropdown.ant-dropdown-placement-bottomRight .ant-dropdown-menu .ant-dropdown-menu-item:not(:last-child) {
+    margin-bottom: 4px;
+}
+
+:global .ant-dropdown.ant-dropdown-placement-bottomRight .ant-dropdown-menu .ant-dropdown-menu-item:hover {
+    color: #ff3e5b;
+    background-color: #ffd8de;
+}
+
+:global .ant-dropdown.ant-dropdown-placement-bottomRight .ant-dropdown-menu .ant-dropdown-menu-item .ant-dropdown-menu-title-content svg {
+    color: #ff3e5b;
+    vertical-align: sub;
+}
+
+/* AntD Dropdown Design End*/
+
 /* Miscellaneous CSS Design Start*/
 :global .ant-tooltip {
     pointer-events: none;
+}
+
+:global .ant-layout .ant-layout-header {
+    line-height: 40px;
 }
 
 :global .rc-virtual-list-scrollbar.rc-virtual-list-scrollbar-show {
