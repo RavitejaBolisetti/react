@@ -292,7 +292,7 @@ const ForgotPasswordBase = (props) => {
                                                     <Row gutter={20}>
                                                         <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.inputLabelPlaceholder}>
                                                             <Form.Item name="userId" data-testid="userIdInput" rules={[validateRequiredInputField('user id')]} className={`${styles.inputBox} ${styles.marginBottomZero}`}>
-                                                                {<Input ref={userIdRef} prefix={<BiUser size={18} />} type="text" maxLength={25} onChange={handleFormChange('userId')} />}
+                                                                {<Input ref={userIdRef} prefix={<BiUser size={16} />} type="text" maxLength={25} onChange={handleFormChange('userId')} />}
                                                             </Form.Item>
                                                             {!fieldData?.userId && <label onClick={handleFieldFocus(userIdRef)}>User ID (MILE ID.Parent ID)</label>}
                                                         </Col>
@@ -327,7 +327,7 @@ const ForgotPasswordBase = (props) => {
                                                         <Row gutter={20}>
                                                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                                 <Form.Item initialValue={selectedUserId} name="userId" rules={[validateRequiredInputField('User id, mobile no, or email id')]} className={`${styles.inputBox} ${styles.disabledInput}`}>
-                                                                    <Input value={selectedUserId} disabled prefix={<BiUser size={18} />} type="text" placeholder="User ID (MILE ID.Parent ID)" />
+                                                                    <Input value={selectedUserId} disabled prefix={<BiUser size={16} />} type="text" placeholder="User ID (MILE ID.Parent ID)" />
                                                                     <p>User credentials verified successfully</p>
                                                                 </Form.Item>
                                                             </Col>
@@ -450,7 +450,7 @@ const ForgotPasswordBase = (props) => {
                                                         <Row gutter={20}>
                                                             <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.inputLabelPlaceholder}>
                                                                 <Form.Item name="newPassword" className={styles.inputBox} rules={[validateRequiredInputField('new password')]}>
-                                                                    <Input onChange={handleNewPasswordChange} type={showPassword?.newPassword ? 'text' : 'password'} ref={newPasswordInput} prefix={<FiLock size={18} />} suffix={passwordSuffix('newPassword')} onFocus={() => setTooltipVisible(true)} onBlur={() => setTooltipVisible(false)} />
+                                                                    <Input onChange={handleNewPasswordChange} type={showPassword?.newPassword ? 'text' : 'password'} ref={newPasswordInput} prefix={<FiLock size={16} />} suffix={passwordSuffix('newPassword')} onFocus={() => setTooltipVisible(true)} onBlur={() => setTooltipVisible(false)} />
                                                                 </Form.Item>
                                                                 {!fieldData?.newPassword && <label onClick={handleFieldFocus(newPasswordInput)}>New password</label>}
                                                                 {form.getFieldValue('newPassword') && <PasswordStrengthMeter password={form.getFieldValue('newPassword')} beforeLogin={true} tooltipVisible={tooltipVisible} />}
@@ -474,7 +474,7 @@ const ForgotPasswordBase = (props) => {
                                                                         }),
                                                                     ]}
                                                                 >
-                                                                    <Input type={showPassword?.confirmNewPassword ? 'text' : 'password'} ref={confirmPasswordInput} prefix={<FiLock size={18} />} onChange={handleFormChange('confirmNewPassword')} suffix={passwordSuffix('confirmNewPassword')} />
+                                                                    <Input type={showPassword?.confirmNewPassword ? 'text' : 'password'} ref={confirmPasswordInput} prefix={<FiLock size={16} />} onChange={handleFormChange('confirmNewPassword')} suffix={passwordSuffix('confirmNewPassword')} />
                                                                 </Form.Item>
                                                                 {!fieldData?.confirmNewPassword && <label onClick={handleFieldFocus(confirmPasswordInput)}>Confirm password</label>}
                                                             </Col>

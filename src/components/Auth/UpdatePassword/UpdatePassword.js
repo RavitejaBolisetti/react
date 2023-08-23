@@ -63,7 +63,7 @@ const UpdatePasswordBase = ({ showGlobalNotification, preLoginData, authPostLogi
 
     useEffect(() => {
         if (!preLoginData) {
-            navigate(ROUTING_LOGIN);
+            // navigate(ROUTING_LOGIN);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [preLoginData]);
@@ -143,16 +143,16 @@ const UpdatePasswordBase = ({ showGlobalNotification, preLoginData, authPostLogi
                                                 {/* className={`${styles.inputBox}`} */}
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.inputLabelPlaceholder}>
-                                                        <Form.Item name="oldPassword" rules={[validateRequiredInputField('old password', false)]}>
-                                                            <Input data-testid="oldPasswordInput" type={showPassword?.oldPassword ? 'text' : 'password'} ref={oldPasswordInput} prefix={<FiLock size={18} />} onChange={handleFormChange('oldPassword')} suffix={passwordSuffix('oldPassword')} />
+                                                        <Form.Item name="oldPassword" rules={[validateRequiredInputField('old password', false)]} className={styles.inputBox}>
+                                                            <Input data-testid="oldPasswordInput" type={showPassword?.oldPassword ? 'text' : 'password'} ref={oldPasswordInput} prefix={<FiLock size={16} />} onChange={handleFormChange('oldPassword')} suffix={passwordSuffix('oldPassword')} />
                                                         </Form.Item>
                                                         {!fieldData?.oldPassword && <label onClick={handleFieldFocus(oldPasswordInput)}>Old password</label>}
                                                     </Col>
                                                 </Row>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.inputLabelPlaceholder}>
-                                                        <Form.Item name="newPassword" rules={[validateRequiredInputField('new password')]}>
-                                                            <Input data-testid="newPasswordInput" onChange={handleNewPasswordChange} type={showPassword?.newPassword ? 'text' : 'password'} ref={newPasswordInput} prefix={<FiLock size={18} />} suffix={passwordSuffix('newPassword')} onFocus={() => setTooltipVisible(true)} onBlur={() => setTooltipVisible(false)} />
+                                                        <Form.Item name="newPassword" rules={[validateRequiredInputField('new password')]} className={styles.inputBox}>
+                                                            <Input data-testid="newPasswordInput" onChange={handleNewPasswordChange} type={showPassword?.newPassword ? 'text' : 'password'} ref={newPasswordInput} prefix={<FiLock size={16} />} suffix={passwordSuffix('newPassword')} onFocus={() => setTooltipVisible(true)} onBlur={() => setTooltipVisible(false)} />
                                                         </Form.Item>
                                                         {!fieldData?.newPassword && <label onClick={handleFieldFocus(newPasswordInput)}>New password</label>}
                                                         {password && <PasswordStrengthMeter password={password} beforeLogin={true} tooltipVisible={tooltipVisible} />}
@@ -163,6 +163,7 @@ const UpdatePasswordBase = ({ showGlobalNotification, preLoginData, authPostLogi
                                                         <Form.Item
                                                             name="confirmNewPassword"
                                                             dependencies={['newPassword']}
+                                                            className={styles.inputBox}
                                                             rules={[
                                                                 validateRequiredInputField('confirm password', false),
                                                                 ({ getFieldValue }) => ({
@@ -175,7 +176,7 @@ const UpdatePasswordBase = ({ showGlobalNotification, preLoginData, authPostLogi
                                                                 }),
                                                             ]}
                                                         >
-                                                            <Input data-testid="confirmNewPasswordInput" type={showPassword?.confirmNewPassword ? 'text' : 'password'} ref={confirmPasswordInput} prefix={<FiLock size={18} />} onChange={handleFormChange('confirmNewPassword')} suffix={passwordSuffix('confirmNewPassword')} />
+                                                            <Input data-testid="confirmNewPasswordInput" type={showPassword?.confirmNewPassword ? 'text' : 'password'} ref={confirmPasswordInput} prefix={<FiLock size={16} />} onChange={handleFormChange('confirmNewPassword')} suffix={passwordSuffix('confirmNewPassword')} />
                                                         </Form.Item>
                                                         {!fieldData?.confirmNewPassword && <label onClick={handleFieldFocus(confirmPasswordInput)}>Confirm password</label>}
                                                     </Col>

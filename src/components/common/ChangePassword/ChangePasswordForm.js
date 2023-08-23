@@ -16,7 +16,7 @@ import { handleErrorModal } from 'utils/responseModal';
 import { doLogoutAPI } from 'store/actions/auth';
 import { ROUTING_LOGIN } from 'constants/routing';
 import { useNavigate } from 'react-router-dom';
-import styles from './ChangePassword.module.css';
+import styles from 'components/Auth/Auth.module.css';
 import { PasswordStrengthMeter } from 'utils/PasswordStrengthMeter';
 
 const mapStateToProps = (state) => {
