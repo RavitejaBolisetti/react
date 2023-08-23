@@ -591,6 +591,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         addMode: formActionType?.addMode,
         editMode: formActionType?.editMode,
         viewMode: formActionType?.viewMode,
+        formActionType,
         payload,
         setPayload,
         deletedUpload,

@@ -118,7 +118,7 @@ export const VehicleAllotmentMasterBase = (props) => {
 
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
-    const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
+    const defaultFormActionType = { addMode: false, editMode: false, viewMode: true };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
     const [formData, setFormData] = useState([]);
@@ -141,7 +141,7 @@ export const VehicleAllotmentMasterBase = (props) => {
     }, [userId]);
 
     useEffect(() => {
-        setButtonData(allotmentSummaryDetails?.allotmentStatus === VEHICLE_TYPE.UNALLOTED.desc ? { cancelBtn: true, allotBtn: true } : { cancelBtn: true, unAllot: true });
+        setButtonData(allotmentSummaryDetails?.allotmentStatus === VEHICLE_TYPE.UNALLOTED.key ? { cancelBtn: true, allotBtn: true } : { cancelBtn: true, unAllot: true });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [allotmentSummaryDetails]);
 
@@ -157,9 +157,8 @@ export const VehicleAllotmentMasterBase = (props) => {
                 title: 'Type',
                 value: toggleButton,
                 name: typeData?.[PARAM_MASTER.ALT_ACTN.id]?.find((i) => i?.key === toggleButton)?.value,
-                //name: toggleButton,
                 canRemove: false,
-                filter: true,
+                filter: false,
             },
             {
                 key: 'searchParam',
@@ -319,7 +318,6 @@ export const VehicleAllotmentMasterBase = (props) => {
             default:
                 break;
         }
-
         //setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction, orderStatus: record?.orderStatus }));
     };
 
@@ -345,10 +343,10 @@ export const VehicleAllotmentMasterBase = (props) => {
 
     const handleVehicleAllotment = (req, buttonAction) => {
         let updatedStatus = '';
-        if(buttonAction === FROM_ACTION_TYPE?.ALLOT){
-            updatedStatus = VEHICLE_TYPE?.ALLOTED.desc;
-        }else{
-            updatedStatus = VEHICLE_TYPE?.UNALLOTED.desc;
+        if (buttonAction === FROM_ACTION_TYPE?.ALLOT) {
+            updatedStatus = VEHICLE_TYPE?.ALLOTED.key;
+        } else {
+            updatedStatus = VEHICLE_TYPE?.UNALLOTED.key;
         }
 
         let data = { ...allotmentSummaryDetails, vehicleOTFDetails: selectedOTFDetails, allotmentStatus: updatedStatus };
