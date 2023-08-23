@@ -1,4 +1,4 @@
-import { UserManagement } from '@store/reducers/data/userManagement';
+import { UserManagement } from "store/reducers/data/userManagement";
 
 describe('UserManagement reducer', () => {
     const initialState = {
@@ -98,6 +98,6 @@ describe('UserManagement reducer', () => {
 
         const newState = UserManagement(currentState, action);
 
-        expect(newState).toEqual(currentState);
+        expect(newState).toHaveBeenCalled();
     });
 });

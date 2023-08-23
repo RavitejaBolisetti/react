@@ -99,7 +99,7 @@ const UpdatePasswordBase = ({ showGlobalNotification, preLoginData, authPostLogi
     };
 
     const passwordSuffix = (type) => (
-        <span onMouseDown={() => setShowPassword({ [type]: true })} onMouseUp={() => setShowPassword({ [type]: false })} onMouseLeave={() => setShowPassword({ [type]: false })}>
+        <span onMouseDown={() => setShowPassword({ [type]: true })} onMouseUp={() => setShowPassword({ [type]: false })} onMouseLeave={() => setShowPassword({ [type]: false })} data-testid="eyeContainer">
             {!showPassword?.[type] ? <AiOutlineEyeInvisible size={18} /> : <AiOutlineEye size={18} />}
         </span>
     );
