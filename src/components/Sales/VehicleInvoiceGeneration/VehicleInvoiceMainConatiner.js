@@ -14,6 +14,7 @@ import styles from 'components/common/Common.module.css';
 import { InvoiceDetailsMaster } from './InvoiceDetails';
 import { InsuranceDetailsMaster } from './InsuranceDetails';
 import { ExchangeDetailsMaster } from './ExchangeDetails';
+import { LoyaltySchemeMaster } from './LoyaltyScheme';
 
 const VehicleInvoiceMainConatinerMain = (props) => {
     const { currentSection } = props;
@@ -40,16 +41,13 @@ const VehicleInvoiceMainConatinerMain = (props) => {
                 // return <InvoiceDetailsMaster {...myProps} />;
             }
             case VEHICLE_INVOICE_SECTION.INSURANCE_DETAILS.id: {
-                // return <p>Coming Soon...</p>;
                 return <InsuranceDetailsMaster {...myProps} />;
             }
             case VEHICLE_INVOICE_SECTION.EXCHANGE_DETAILS.id: {
-                // return <p>Coming Soon...</p>;
                 return <ExchangeDetailsMaster {...myProps} />;
             }
             case VEHICLE_INVOICE_SECTION.LOYALTY_SCHEME.id: {
-                return <p>Coming Soon...</p>;
-                // return <InvoiceDetailsMaster {...myProps} />;
+                return <LoyaltySchemeMaster {...myProps} />;
             }
             case VEHICLE_INVOICE_SECTION.REFERRALS.id: {
                 return <p>Coming Soon...</p>;
