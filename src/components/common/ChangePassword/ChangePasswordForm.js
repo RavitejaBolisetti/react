@@ -16,7 +16,7 @@ import { handleErrorModal } from 'utils/responseModal';
 import { doLogoutAPI } from 'store/actions/auth';
 import { ROUTING_LOGIN } from 'constants/routing';
 import { useNavigate } from 'react-router-dom';
-import styles from './ChangePassword.module.css';
+import styles from 'components/Auth/Auth.module.css';
 import { PasswordStrengthMeter } from 'utils/PasswordStrengthMeter';
 
 const mapStateToProps = (state) => {
@@ -114,38 +114,29 @@ const ChangePasswordBase = ({ form, password, fieldData, setFieldData, setPasswo
         setFieldData({ ...fieldData, newPassword: e?.target?.value?.length > 0 ? true : false });
     };
     return (
-        <Form className={styles.changePasswordForm} form={form} name="change_password" layout="vertical" autoComplete="off" onFinish={onFinish}>
+        <Form form={form} name="change_password" layout="vertical" autoComplete="off" onFinish={onFinish}>
             <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} class="textfieldWithPrefix">
-                    <Form.Item name="oldPassword" class="textfieldWithPrefix__input" rules={[validateRequiredInputField('old password', false)]}>
-                        <Input  data-testid="oldPasswordInput" type={showPassword?.oldPassword ? 'text' : 'password'} ref={oldPasswordInput} prefix={<FiLock size={16} />} onChange={handleFormChange('oldPassword')} suffix={passwordSuffix('oldPassword')} />
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.inputLabelPlaceholder}>
+                    <Form.Item name="oldPassword" rules={[validateRequiredInputField('old password', false)]}>
+                        <Input data-testid="oldPasswordInput" type={showPassword?.oldPassword ? 'text' : 'password'} ref={oldPasswordInput} prefix={<FiLock size={16} />} onChange={handleFormChange('oldPassword')} suffix={passwordSuffix('oldPassword')} />
                     </Form.Item>
-                    {!fieldData?.oldPassword && (
-                        <label className="textfieldWithPrefix__label" onClick={handleFieldFocus(oldPasswordInput)}>
-                            Old password
-                        </label>
-                    )}
+                    {!fieldData?.oldPassword && <label onClick={handleFieldFocus(oldPasswordInput)}>Old password</label>}
                 </Col>
             </Row>
             <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} class="textfieldWithPrefix">
-                    <Form.Item name="newPassword" class="textfieldWithPrefix__input" rules={[validateRequiredInputField('new password')]}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.inputLabelPlaceholder}>
+                    <Form.Item name="newPassword" rules={[validateRequiredInputField('new password')]}>
                         <Input data-testid="newPasswordInput" onChange={handleNewPasswordChange} type={showPassword?.newPassword ? 'text' : 'password'} ref={newPasswordInput} prefix={<FiLock size={16} />} suffix={passwordSuffix('newPassword')} onFocus={() => setTooltipVisible(true)} onBlur={() => setTooltipVisible(false)} />
                     </Form.Item>
-                    {!fieldData?.newPassword && (
-                        <label className="textfieldWithPrefix__label" onClick={handleFieldFocus(newPasswordInput)}>
-                            New password
-                        </label>
-                    )}
+                    {!fieldData?.newPassword && <label onClick={handleFieldFocus(newPasswordInput)}>New password</label>}
                     {password && <PasswordStrengthMeter Row={Row} Col={Col} password={password} tooltipVisible={tooltipVisible} />}
                 </Col>
             </Row>
             <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} className="textfieldWithPrefix">
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.inputLabelPlaceholder}>
                     <Form.Item
                         name="confirmNewPassword"
                         dependencies={['newPassword']}
-                        className="textfieldWithPrefix__input"
                         rules={[
                             validateRequiredInputField('confirm password', false),
                             ({ getFieldValue }) => ({
@@ -153,23 +144,19 @@ const ChangePasswordBase = ({ form, password, fieldData, setFieldData, setPasswo
                                     if (!value || getFieldValue('newPassword') === value) {
                                         return Promise.resolve();
                                     }
-                                    return Promise.reject(new Error("New Password and confirm Password doesn't match!"));
+                                    return Promise.reject(new Error("New Password and Confirm Password doesn't match!"));
                                 },
                             }),
                         ]}
                     >
                         <Input data-testid="confirmNewPasswordInput" type={showPassword?.confirmNewPassword ? 'text' : 'password'} ref={confirmPasswordInput} prefix={<FiLock size={16} />} onChange={handleFormChange('confirmNewPassword')} suffix={passwordSuffix('confirmNewPassword')} />
                     </Form.Item>
-                    {!fieldData?.confirmNewPassword && (
-                        <label className="textfieldWithPrefix__label" onClick={handleFieldFocus(confirmPasswordInput)}>
-                            Confirm password
-                        </label>
-                    )}
+                    {!fieldData?.confirmNewPassword && <label onClick={handleFieldFocus(confirmPasswordInput)}>Confirm password</label>}
                 </Col>
             </Row>
             <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.textCenter}>
-                    <Button data-testid="changePassword" type="primary" htmlType="submit">
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    <Button className={styles.fullWidth} data-testid="changePassword" type="primary" htmlType="submit">
                         Change Password
                     </Button>
                 </Col>

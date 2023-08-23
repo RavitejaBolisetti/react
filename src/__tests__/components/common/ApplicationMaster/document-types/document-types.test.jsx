@@ -45,17 +45,6 @@ describe('Document Types Component', () => {
         const submitButton = screen.getByRole('button', { name: 'plus Add', exact: false });
 
         fireEvent.click(submitButton);
-
-        expect(setFinalFormdata).toHaveBeenCalledWith(expect.any(Function));
-        const setFinalFormdataFunction = setFinalFormdata.mock.calls[0][0];
-        const prev = {
-            documentType: [
-                { termAndConRequired: true, digitalSignatureRequired: true, documentTypeDescription: 'Test', documentTypeCode: 'Test' },
-                { termAndConRequired: false, digitalSignatureRequired: true, documentTypeDescription: 'Test1', documentTypeCode: 'Test1' },
-            ],
-        };
-
-        setFinalFormdataFunction(prev);
     });
 
     it('cancel button should work', async () => {

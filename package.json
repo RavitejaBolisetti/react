@@ -49,6 +49,7 @@
         "watch-tests": "cross-env BABEL_ENV=test jest --watch",
         "eject": "react-scripts eject",
         "clear_jest": "jest --clearCache",
+        "lint": "eslint .",
         "prepare": "husky install",
         "test:coverage": "cross-env BABEL_ENV=test jest --coverage",
         "sonar": "ts-node sonar-scanner.ts"
@@ -93,6 +94,7 @@
         ]
     },
     "devDependencies": {
+        "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
         "@babel/preset-env": "^7.22.10",
         "@babel/preset-react": "^7.22.5",
         "@testing-library/dom": "^9.3.1",
@@ -100,7 +102,7 @@
         "@testing-library/react": "^14.0.0",
         "@testing-library/user-event": "^14.4.3",
         "babel-jest": "^27.5.1",
-        "husky": "^8.0.3",
+        "husky": "^8.0.0",
         "jest": "^27.5.1",
         "jest-environment-jsdom": "^27.5.1",
         "lint-staged": "^14.0.1",

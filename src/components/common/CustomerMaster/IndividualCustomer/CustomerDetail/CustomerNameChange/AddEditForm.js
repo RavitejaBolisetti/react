@@ -8,7 +8,7 @@ import React, { useState } from 'react';
 import { Col, Input, Form, Row, Select, Card, Button } from 'antd';
 import { FiDownload } from 'react-icons/fi';
 
-import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField, noWhiteSpaceinBeginning, validationFieldLetter } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import { UploadUtil } from 'utils/Upload';
@@ -79,17 +79,17 @@ const AddEditFormMain = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={6} lg={6} xl={6}>
-                    <Form.Item label="First Name" initialValue={customerNameList?.firstName} name={'firstName' + formType} data-testid="firstName" rules={[validateRequiredInputField('first name')]}>
+                    <Form.Item label="First Name" initialValue={customerNameList?.firstName} name={'firstName' + formType} data-testid="firstName" rules={[validateRequiredInputField('first name'), validationFieldLetter('first name')]}>
                         <Input placeholder={preparePlaceholderText('first name')} />
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={7} lg={7} xl={7}>
-                    <Form.Item label="Middle Name" initialValue={customerNameList?.middleName} name={'middleName' + formType} data-testid="middleName">
+                    <Form.Item label="Middle Name" initialValue={customerNameList?.middleName} name={'middleName' + formType} data-testid="middleName" rules={[validationFieldLetter('middle name')]}>
                         <Input placeholder={preparePlaceholderText('middle name')} />
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={7} lg={7} xl={7}>
-                    <Form.Item label="Last Name" initialValue={customerNameList?.lastName} name={'lastName' + formType} data-testid="lastName" rules={[validateRequiredInputField('last name')]}>
+                    <Form.Item label="Last Name" initialValue={customerNameList?.lastName} name={'lastName' + formType} data-testid="lastName" rules={[validateRequiredInputField('last name'), validationFieldLetter('last name')]}>
                         <Input placeholder={preparePlaceholderText('last name')} />
                     </Form.Item>
                 </Col>
