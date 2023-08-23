@@ -5,19 +5,16 @@
  */
 import React, { useEffect, useState } from 'react';
 import { Row, Col, AutoComplete, Form, Collapse, Divider, Select, Space } from 'antd';
-import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { CommonForm } from './CommonForm';
-import { FiEdit } from 'react-icons/fi';
 import { expandIcon } from 'utils/accordianExpandIcon';
 
-import { expandIconWithText } from 'utils/accordianExpandIcon';
 import { convertDateToCalender } from 'utils/formatDateTime';
 
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { formData, typeData, setSameAsBookingCustomer, sameAsBookingCustomer, form, partySegmentType, setPartySegment, handleChange, handleSearch, partyDetailForm, formActionType } = props;
-    const { activeKey, setActiveKey, formActionType: { editMode } = undefined, validateParentCode, customerType, customerParentCompanyData } = props;
+    const { formData, typeData, setSameAsBookingCustomer, sameAsBookingCustomer, form } = props;
+    const { activeKey, setActiveKey, formActionType: { editMode } = undefined } = props;
     const [corporateType, setCorporateType] = useState('');
 
     useEffect(() => {
@@ -87,7 +84,7 @@ const AddEditFormMain = (props) => {
                     <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(3)} expandIconPosition="end">
                         <Panel header="OTF Details" key="3">
                             <Divider />
-                           <text>Coming Soon...</text>
+                            <text>Coming Soon...</text>
                             {/* <CommonForm key="3" {...bookingCustomerProps} isBillingCustmrForm={false} /> */}
                         </Panel>
                     </Collapse>

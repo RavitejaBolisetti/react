@@ -8,7 +8,7 @@ import { Form, Row, Col } from 'antd';
 
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
-import { VehicleReceiptFormButton } from '../VehicleReceiptFormButton';
+import { VehicleInvoiceFormButton } from '../VehicleInvoiceFormButton';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -171,7 +171,7 @@ const InvoiceDetailsMasterBase = (props) => {
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <VehicleReceiptFormButton {...props} />
+                    <VehicleInvoiceFormButton {...props} />
                 </Col>
             </Row>
         </Form>

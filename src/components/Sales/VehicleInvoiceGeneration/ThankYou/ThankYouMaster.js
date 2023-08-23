@@ -6,7 +6,7 @@
 
 import { Row, Col, Space, Avatar, Typography } from 'antd';
 
-import { VehicleReceiptFormButton } from '../VehicleReceiptFormButton';
+import { VehicleReceiptFormButton } from '../VehicleInvoiceFormButton';
 import { LANGUAGE_EN } from 'language/en';
 import { HiCheck } from 'react-icons/hi';
 

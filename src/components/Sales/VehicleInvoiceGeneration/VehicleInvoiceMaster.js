@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import { connect } from 'react-redux';
 
 import { Col, Form, Row } from 'antd';
@@ -30,7 +30,7 @@ const mapStateToProps = (state) => {
     //         },
     //     },
     // } = state;
-    // const moduleTitle = 'Receipts';
+    const moduleTitle = 'Invoice';
     // let returnValue = {
     //     userId,
     //     typeData,
@@ -70,7 +70,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const VehicleInvoiceMasterBase = (props) => {
-    const { fetchList, saveData, listShowLoading, userId, fetchReceiptDetails, data, receiptDetailData, resetData, cancelReceipt } = props;
+    const { data, receiptDetailData } = props;
     const { typeData, receiptType, partySegmentType, paymentModeType, documentType, moduleTitle, totalRecords, showGlobalNotification } = props;
     const { filterString, setFilterString, receiptStatusList } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);

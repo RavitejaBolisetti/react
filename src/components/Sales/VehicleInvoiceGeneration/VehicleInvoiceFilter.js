@@ -16,7 +16,7 @@ import styles from 'components/common/Common.module.css';
 
 const { Search } = Input;
 
-export default function ReceiptFilter(props) {
+export default function VehicleInvoiceFilter(props) {
     const { extraParams, removeFilter, handleResetFilter, advanceFilter = false, receiptStatusList, handleReceiptTypeChange, filterString, setAdvanceSearchVisible, handleButtonClick, handleSearch, receiptStatus, handleChange } = props;
 
     return (

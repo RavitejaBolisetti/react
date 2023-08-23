@@ -9,7 +9,6 @@ import { BsRecordCircleFill } from 'react-icons/bs';
 import { FaCheckCircle } from 'react-icons/fa';
 
 import { VEHICLE_INVOICE_SECTION } from 'constants/VehicleInvoiceSection';
-import { validateReceiptMenu } from '../utils/validateReceiptMenu';
 
 import styles from 'components/common/Common.module.css';
 

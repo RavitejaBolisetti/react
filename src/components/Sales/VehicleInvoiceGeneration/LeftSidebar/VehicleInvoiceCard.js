@@ -27,7 +27,7 @@ const expandIcon = ({ isActive }) =>
         </>
     );
 
-const ReceiptDetailCard = (props) => {
+const VehicleInvoiceCard = (props) => {
     const { selectedOrder, typeData } = props;
     const fullName = selectedOrder?.customerName?.split(' ');
     const userAvatar = fullName ? fullName[0]?.slice(0, 1) + (fullName[1] ? fullName[1].slice(0, 1) : '') : '';
@@ -45,7 +45,7 @@ const ReceiptDetailCard = (props) => {
                         </Space>
                         <Divider />
                         <div className={styles.detailCardText}>
-                            OTF No.: <span>{selectedOrder?.otfNumber}</span>
+                            Invoice No.: <span>{selectedOrder?.otfNumber}</span>
                         </div>
                     </>
                 }
@@ -53,27 +53,19 @@ const ReceiptDetailCard = (props) => {
             >
                 <Divider />
                 <div className={styles.detailCardText}>
-                    Customer Type: <span>{selectedOrder && getCodeValue(typeData?.[PARAM_MASTER?.CUST_TYPE?.id], selectedOrder?.customerType)}</span>
+                    Invoice Date: <span>{selectedOrder && getCodeValue(typeData?.[PARAM_MASTER?.CUST_TYPE?.id], selectedOrder?.customerType)}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    Mobile No.: <span>{'+91-' + selectedOrder?.mobileNumber || 'NA'}</span>
+                    OTF No.: <span>{'+91-' + selectedOrder?.mobileNumber || 'NA'}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
                     OTF Date: <span>{convertDateTime(selectedOrder?.otfDate, 'DD MMM YYYY') || 'NA'}</span>
-                </div>
-                <Divider />
-                <div className={styles.detailCardText}>
-                    Model: <span>{selectedOrder?.model || 'NA'}</span>
-                </div>
-                <Divider />
-                <div className={styles.detailCardText}>
-                    CPD: <span>{convertDateTime(selectedOrder?.cpd, 'DD MMM YYYY') || 'NA'}</span>
                 </div>
             </Panel>
         </Collapse>
     );
 };
 
-export default ReceiptDetailCard;
+export default VehicleInvoiceCard;
