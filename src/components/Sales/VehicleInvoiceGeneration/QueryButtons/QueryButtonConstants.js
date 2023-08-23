@@ -5,21 +5,21 @@
  */
 export const QUERY_BUTTONS = {
     OPENED: {
-        id: 'opened',
-        title: 'Opened',
+        id: 'invoiced',
+        title: 'Invoiced',
         key: 'O',
         active: true,
-    },
-    APPORTION: {
-        id: 'apportion',
-        title: 'Apportion',
-        key: 'A',
-        active: false,
     },
     CANCELLED: {
         id: 'cancelled',
         title: 'Cancelled',
         key: 'C',
+        active: false,
+    },
+    CANCELLATION_REQUEST: {
+        id: 'cancellation request',
+        title: 'Cancellation Request',
+        key: 'A',
         active: false,
     },
 };

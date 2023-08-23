@@ -11,28 +11,30 @@ import styles from 'components/common/Common.module.css';
 export const tableColumn = (handleButtonClick, page, pageSize) => {
     const tableColumn = [
         tblPrepareColumns({
-            title: 'Receipt No.',
+            title: 'Invoice No.',
             dataIndex: 'receiptNumber',
-            width: '18%',
+            width: '14%',
         }),
-
         tblPrepareColumns({
-            title: 'Receipt Date',
+            title: 'Customer Name',
             dataIndex: 'receiptDate',
             width: '14%',
             render: (text) => convertDateMonthYear(text),
         }),
-
         tblPrepareColumns({
-            title: 'Party Segment',
+            title: 'Model Description',
             dataIndex: 'partySegment',
             width: '14%',
         }),
-
         tblPrepareColumns({
-            title: 'Customer/Supplier Name',
+            title: 'Invoice Date',
             dataIndex: 'customerName',
-            width: '28%',
+            width: '14%',
+        }),
+        tblPrepareColumns({
+            title: 'Digital Signature',
+            dataIndex: 'digitalSignature',
+            width: '24%',
         }),
 
         tblActionColumn({ handleButtonClick, styles, width: '8%', canEdit: false }),

@@ -5,7 +5,6 @@
  */
 import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 
 import { Col, Form, Row } from 'antd';
 import { tableColumn } from './tableColumn';
@@ -17,14 +16,6 @@ import { ListDataTable } from 'utils/ListDataTable';
 import { AdvancedSearch } from './AdvancedSearch';
 import { CancelReceipt } from './CancelReceipt';
 import { QUERY_BUTTONS_CONSTANTS } from './QueryButtons';
-import { RECEIPT_SECTION } from 'constants/ReceiptSection';
-import { convertDateTime, monthDateFormat } from 'utils/formatDateTime';
-
-import { showGlobalNotification } from 'store/actions/notification';
-import { receiptDataActions } from 'store/actions/data/receipt/receipt';
-import { receiptDetailDataActions } from 'store/actions/data/receipt/receiptDetails';
-import { cancelReceiptDataActions } from 'store/actions/data/receipt/cancelReceipt';
-import { PARAM_MASTER } from 'constants/paramMaster';
 
 import { FilterIcon } from 'Icons';
 
@@ -346,9 +337,9 @@ export const VehicleInvoiceMasterBase = (props) => {
                 const Visibility = btnVisiblity({ defaultBtnVisiblity, buttonAction });
                 setButtonData(Visibility);
                 // setButtonData({ ...Visibility, cancelReceiptBtn: true });
-                if (buttonAction === VIEW_ACTION) {
-                    receiptStatus === QUERY_BUTTONS_CONSTANTS.CANCELLED.key ? setButtonData({ ...Visibility, editBtn: false, cancelReceiptBtn: false }) : receiptStatus === QUERY_BUTTONS_CONSTANTS.APPORTION.key ? setButtonData({ ...Visibility, editBtn: false, cancelReceiptBtn: true }) : setButtonData({ ...Visibility, editBtn: true, cancelReceiptBtn: true });
-                }
+                // if (buttonAction === VIEW_ACTION) {
+                //     receiptStatus === QUERY_BUTTONS_CONSTANTS.CANCELLED.key ? setButtonData({ ...Visibility, editBtn: false, cancelReceiptBtn: false }) : receiptStatus === QUERY_BUTTONS_CONSTANTS.APPORTION.key ? setButtonData({ ...Visibility, editBtn: false, cancelReceiptBtn: true }) : setButtonData({ ...Visibility, editBtn: true, cancelReceiptBtn: true });
+                // }
             }
         }
         setIsFormVisible(true);
@@ -364,7 +355,6 @@ export const VehicleInvoiceMasterBase = (props) => {
 
     const onFinish = (receiptData) => {
         // const data = { ...requestPayload, apportionDetails: apportionList, receiptsDetails: receiptData.hasOwnProperty('receiptType') ? receiptData : requestPayload?.receiptsDetails };
-
         // const onSuccess = (res) => {
         //     form.resetFields();
         //     setShowDataLoading(true);
@@ -373,11 +363,9 @@ export const VehicleInvoiceMasterBase = (props) => {
         //     setButtonData({ ...buttonData, formBtnActive: false });
         //     setIsFormVisible(false);
         // };
-
         // const onError = (message) => {
         //     showGlobalNotification({ message });
         // };
-
         // const requestData = {
         //     data: data,
         //     method: 'post',
@@ -386,7 +374,6 @@ export const VehicleInvoiceMasterBase = (props) => {
         //     onError,
         //     onSuccess,
         // };
-
         // saveData(requestData);
     };
 
@@ -463,7 +450,6 @@ export const VehicleInvoiceMasterBase = (props) => {
         // const recordId = selectedOrderId;
         // const cancelRemark = cancelReceiptForm.getFieldValue().cancelRemarks;
         // const data = { id: recordId ?? '', receiptNumber: receiptDetailData?.receiptsDetails?.receiptNumber, cancelRemarks: cancelRemark };
-
         // const onSuccess = (res) => {
         //     setShowDataLoading(true);
         //     showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
@@ -472,11 +458,9 @@ export const VehicleInvoiceMasterBase = (props) => {
         //     setIsFormVisible(false);
         //     setCancelReceiptVisible(false);
         // };
-
         // const onError = (message) => {
         //     showGlobalNotification({ message });
         // };
-
         // const requestData = {
         //     data: data,
         //     method: 'put',
@@ -485,7 +469,6 @@ export const VehicleInvoiceMasterBase = (props) => {
         //     onError,
         //     onSuccess,
         // };
-
         // cancelReceipt(requestData);
     };
 
@@ -614,10 +597,12 @@ export const VehicleInvoiceMasterBase = (props) => {
             <VehicleInvoiceFilter {...advanceFilterResultProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <ListDataTable 
-                    // handleButtonClick={handleButtonClick} 
-                    // isLoading={showDataLoading}
-                     {...tableProps} showAddButton={false} />
+                    <ListDataTable
+                        // handleButtonClick={handleButtonClick}
+                        // isLoading={showDataLoading}
+                        {...tableProps}
+                        showAddButton={false}
+                    />
                 </Col>
             </Row>
             <AdvancedSearch {...advanceFilterProps} />

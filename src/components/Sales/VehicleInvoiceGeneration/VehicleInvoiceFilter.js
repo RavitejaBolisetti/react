@@ -10,6 +10,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import { RxCross2 } from 'react-icons/rx';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { QueryButtons } from 'components/Sales/VehicleRecieptChecklist/QueryButtons';
+import { QUERY_BUTTONS_CONSTANTS } from './QueryButtons';
 
 import styles from 'components/common/Common.module.css';
 
@@ -23,13 +24,13 @@ export default function ReceiptFilter(props) {
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={16} lg={16} xl={16}>
                     <Row gutter={20}>
-                        <Col xs={24} sm={18} md={18} lg={18} xl={18} className={styles.verticallyCentered}>
-                            <QueryButtons currentItem={receiptStatus} items={receiptStatusList} onClick={handleReceiptTypeChange} />
+                        <Col xs={24} sm={20} md={20} lg={20} xl={20} className={styles.verticallyCentered}>
+                            <QueryButtons currentItem={receiptStatus} items={QUERY_BUTTONS_CONSTANTS} onClick={handleReceiptTypeChange} />
                             <div className={styles.fullWidth}>
                                 <Search placeholder="Search Receipt No." onChange={handleChange} onSearch={handleSearch} allowClear className={styles.headerSearchField} />
                             </div>
                         </Col>
-                        <Col xs={24} sm={6} md={6} lg={6} xl={6} className={styles.verticallyCentered}>
+                        <Col xs={24} sm={4} md={4} lg={4} xl={4} className={styles.verticallyCentered}>
                             <Button
                                 icon={<FilterIcon />}
                                 type="link"
