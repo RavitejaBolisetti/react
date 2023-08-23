@@ -63,7 +63,7 @@ const UpdatePasswordBase = ({ showGlobalNotification, preLoginData, authPostLogi
 
     useEffect(() => {
         if (!preLoginData) {
-            // navigate(ROUTING_LOGIN);
+            navigate(ROUTING_LOGIN);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [preLoginData]);
