@@ -62,7 +62,7 @@ export default function DataTable({ isLoading, rowSelection = undefined, showSiz
         setPage({ ...tablePagination, current: 1, pageSize });
     };
 
-    const showPaginator = dynamicPagination ? totalRecords > 0 : tableData?.length > 0;
+    const showPaginator = tableData?.length > 0;
 
     return (
         <div className={styles.marB20}>

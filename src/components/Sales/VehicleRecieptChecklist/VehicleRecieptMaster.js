@@ -103,7 +103,6 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
 
     const [selectedRecord, setSelectedRecord] = useState();
     const [selectedRecordId, setSelectedRecordId] = useState();
-    const [vehicleReceiptFinalFormData, setvehicleReceiptFinalFormData] = useState({ checklistDetails: [], supportingDocument: [] });
     const [checkListDataModified, setcheckListDataModified] = useState([]);
     const [payload, setPayload] = useState([]);
     const [deletedUpload, setdeletedUpload] = useState([]);
@@ -372,7 +371,6 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         switch (buttonAction) {
             case ADD_ACTION:
                 resetProfile();
-                setvehicleReceiptFinalFormData({ checklistDetails: [], supportingDocument: [] });
                 defaultSection && setCurrentSection(defaultSection);
                 setSelectedRecord(record);
                 setcheckListDataModified([]);
@@ -540,13 +538,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         }
     }, [formActionType]);
 
-    const vehicleReceiptFormdataProps = {
-        vehicleReceiptFinalFormData,
-        setvehicleReceiptFinalFormData,
-    };
-
     const containerProps = {
-        ...vehicleReceiptFormdataProps,
         isProfileDataLoaded,
         ProfileData,
         record: selectedRecord,
@@ -582,7 +574,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         setFormData,
         handleFormValueChange,
         isLastSection,
-        saveButtonName: isLastSection ? 'Submit' : formActionType?.addMode ? 'Save & Next' : 'Next',
+        saveButtonName: isLastSection ? 'Submit' : 'Next',
         VehicelReceiptChecklistOnfinish: onFinish,
         supportingData: ChecklistData,
         buttonType: buttonType === QUERY_BUTTONS_CONSTANTS?.COMPLETED?.key ? true : false,
@@ -590,7 +582,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         setcheckListDataModified,
         addMode: formActionType?.addMode,
         editMode: formActionType?.editMode,
-        viewMode: formActionType?.viewMode,
+        formActionType,
         payload,
         setPayload,
         deletedUpload,

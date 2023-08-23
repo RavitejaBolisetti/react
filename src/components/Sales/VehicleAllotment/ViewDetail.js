@@ -51,28 +51,27 @@ const ViewDetailMain = (props) => {
         handleButtonClick,
     };
 
-    useEffect(() => {
-        setFilterStringOTFSearch({ ...filterString });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString]);
-
     const rowSelection = {
         type: 'radio',
         onChange: (selectedRowKeys, selectedRows) => {
             setSelectedOrderOTFDetails(selectedRows?.[0]);
         },
-        getCheckboxProps: () => ({}),
+        getCheckboxProps: (record) => {
+            return {
+                disabled: formData?.allotmentStatus === VEHICLE_TYPE.ALLOTED.key, //disable the first 4 rows only
+            };
+        },
     };
 
+    const tableDataItem = tableData || (formData?.vehicleOTFDetails && [formData?.vehicleOTFDetails]);
     const tableProps = {
-        pagination: false,
         srl: false,
         rowKey: 'otfNumber',
         rowSelection: {
             ...rowSelection,
         },
         tableColumn: tableColumnSearchOTF(handleButtonClick),
-        tableData: tableData || (formData?.vehicleOTFDetails && [formData?.vehicleOTFDetails]),
+        tableData: tableDataItem,
     };
 
     return (
@@ -84,9 +83,8 @@ const ViewDetailMain = (props) => {
                         <Descriptions {...viewProps}>
                             <Descriptions.Item label="VIN/Chassis">{checkAndSetDefaultValue(formData?.vehicleIdentificationNumber, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Age In Days">{checkAndSetDefaultValue(formData?.ageInDays, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="PDI Done?">{checkAndSetDefaultValue(formData?.pdiDone === true ? 'Yes' : 'No', isLoading)}</Descriptions.Item>
-
-                            <Descriptions.Item label="Vehicle Status">{checkAndSetDefaultValue(formData?.allotmentStatus, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="PDI Done?">{checkAndSetDefaultValue(formData?.pdiDone ? 'Yes' : 'No', isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Vehicle Status">{checkAndSetDefaultValue(Object.values(VEHICLE_TYPE)?.find((i) => i?.key === formData?.allotmentStatus)?.title, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="M&M Invoices Date">{checkAndSetDefaultValue(formData?.mnmInvoiceDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                             <Descriptions.Item label="M&M Invoices No.">{checkAndSetDefaultValue(formData?.mnmInvoiceNo, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Model Description">{checkAndSetDefaultValue(formData?.modelDescription, isLoading)}</Descriptions.Item>
@@ -95,14 +93,14 @@ const ViewDetailMain = (props) => {
                     <Divider className={styles.marT20} />
                     <h4>Allot OTF</h4>
                     <Card>
-                        {formData?.allotmentStatus === VEHICLE_TYPE.UNALLOTED.desc && (
+                        {formData?.allotmentStatus === VEHICLE_TYPE.UNALLOTED.key && (
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.marB20}>
                                     <SearchBox {...serachBoxProps} />
                                 </Col>
                             </Row>
                         )}
-                        <DataTable {...tableProps} />
+                        {tableDataItem?.length > 0 && <DataTable {...tableProps} />}
                     </Card>
                 </Col>
             </Row>

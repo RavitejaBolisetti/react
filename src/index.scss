@@ -17,145 +17,144 @@ body {
 //     outline: 0px auto -webkit-focus-ring-color !important;
 // }
 
-.textfield {
-    position: relative;
-    box-sizing: border-box;
-    min-width: 300px;
-    margin: 0;
-    padding: 0;
-    border: none;
+// .textfield {
+//     position: relative;
+//     box-sizing: border-box;
+//     min-width: 300px;
+//     margin: 0;
+//     padding: 0;
+//     border: none;
 
-    &__label {
-        position: absolute;
-        top: 10px;
-        font-weight: 600;
-        left: 10px;
-        display: block;
-        font-size: 16px;
-        line-height: 24px;
-        color: #827a7a;
-        user-select: none;
-        cursor: text;
+//     &__label {
+//         position: absolute;
+//         top: 10px;
+//         font-weight: 600;
+//         left: 10px;
+//         display: block;
+//         font-size: 16px;
+//         line-height: 24px;
+//         color: #827a7a;
+//         user-select: none;
+//         cursor: text;
 
-        &::after {
-            position: relative;
-            top: -3px;
-            left: 1px;
-            display: inline-block;
-            content: '*';
-            color: #d0011b;
-        }
-    }
+//         &::after {
+//             position: relative;
+//             top: -3px;
+//             left: 1px;
+//             display: inline-block;
+//             content: '*';
+//             color: #d0011b;
+//         }
+//     }
 
-    &__input {
-        display: block;
-        box-sizing: border-box;
-        height: 48px;
-        width: 100%;
-        padding: 11px 14px;
-        border: 1px solid #cccccc;
-        border-radius: 5px;
-        background: #ffffff;
-        font-weight: 400;
-        font-size: 16px;
-        line-height: 24px;
-        outline: none;
-        transition: all 0.25s linear;
+//     &__input {
+//         display: block;
+//         box-sizing: border-box;
+//         height: 48px;
+//         width: 100%;
+//         padding: 11px 14px;
+//         border: 1px solid #cccccc;
+//         border-radius: 5px;
+//         background: #ffffff;
+//         font-weight: 400;
+//         font-size: 16px;
+//         line-height: 24px;
+//         outline: none;
+//         transition: all 0.25s linear;
 
-        &:focus {
-            border-color: #3a82c6;
-        }
+//         &:focus {
+//             border-color: #3a82c6;
+//         }
 
-        &:disabled {
-            border-color: #e6e6e6;
-            background: #f9fafb;
-        }
+//         &:disabled {
+//             border-color: #e6e6e6;
+//             background: #f9fafb;
+//         }
 
-        // hide original placeholder
-        &::placeholder {
-            color: transparent;
-        }
-    }
+// hide original placeholder
+//     &::placeholder {
+//         color: transparent;
+//     }
+// }
 
-    // &__input:focus+&__label,
-    // &__input:valid+&__label,
-    // &__input:disabled+&__label {
-    //   display: none;
-    // }
-}
+// &__input:focus+&__label,
+// &__input:valid+&__label,
+// &__input:disabled+&__label {
+//   display: none;
+// }
+// }
 
-.textfieldWithPrefix {
-    position: relative;
-    box-sizing: border-box;
-    min-width: 300px;
-    margin: 0;
-    padding: 0;
-    border: none;
+// .textfieldWithPrefix {
+//     position: relative;
+//     box-sizing: border-box;
+//     min-width: 300px;
+//     margin: 0;
+//     padding: 0;
+//     border: none;
 
-    &__label {
-        position: absolute;
-        z-index: 0 !important;
-        top: 6px;
-        font-weight: 400;
-        left: 50px;
-        // display: block;
-        font-size: 16px !important;
-        line-height: 24px;
-        color: #b5b5b6;
-        user-select: none;
-        cursor: text;
+//     &__label {
+//         position: absolute;
+//         z-index: 0 !important;
+//         top: 6px;
+//         font-weight: 400;
+//         left: 50px;
+//         font-size: 16px !important;
+//         line-height: 24px;
+//         color: #b5b5b6;
+//         user-select: none;
+//         cursor: text;
 
-        &::after {
-            position: relative;
-            top: -3px;
-            left: 1px;
-            display: inline-block;
-            content: '*';
-            color: #d0011b;
-        }
-    }
+//         &::after {
+//             position: relative;
+//             top: -3px;
+//             left: 1px;
+//             display: inline-block;
+//             content: '*';
+//             color: #d0011b;
+//         }
+//     }
 
-    &__input {
-        display: block;
-        box-sizing: border-box;
-        height: 48px;
-        width: 100%;
-        padding: 11px 14px;
-        border: 1px solid #cccccc;
-        border-radius: 5px;
-        background: #ffffff;
-        font-weight: 400;
-        font-size: 16px;
-        line-height: 24px;
-        outline: none;
-        transition: all 0.25s linear;
+//     &__input {
+//         display: block;
+//         box-sizing: border-box;
+//         height: 48px;
+//         width: 100%;
+//         padding: 11px 14px;
+//         border: 1px solid #cccccc;
+//         border-radius: 5px;
+//         background: #ffffff;
+//         font-weight: 400;
+//         font-size: 16px;
+//         line-height: 24px;
+//         outline: none;
+//         transition: all 0.25s linear;
 
-        &:focus {
-            border-color: #3a82c6;
-        }
+//         &:focus {
+//             border-color: #3a82c6;
+//         }
 
-        &:disabled {
-            border-color: #e6e6e6;
-            background: #f9fafb;
-        }
+//         &:disabled {
+//             border-color: #e6e6e6;
+//             background: #f9fafb;
+//         }
 
-        // hide original placeholder
-        &::placeholder {
-            color: transparent;
-        }
-    }
+// hide original placeholder
+//     &::placeholder {
+//         color: transparent;
+//     }
+// }
 
-    // &__input:focus+&__label,
-    // &__input:valid+&__label,
-    // &__input:disabled+&__label {
-    //   display: none;
-    // }
-}
+// &__input:focus+&__label,
+// &__input:valid+&__label,
+// &__input:disabled+&__label {
+//   display: none;
+// }
+// }
 
-@media (max-width: 768px) {
-    .textfieldWithPrefix {
-        &__label {
-            font-size: 12px !important;
-        }
-    }
-}
+// @media (max-width: 768px) {
+//     .textfieldWithPrefix {
+//         &__label {
+//             font-size: 12px !important;
+//         }
+//     }
+// }

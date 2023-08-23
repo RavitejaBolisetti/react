@@ -133,7 +133,7 @@ export const RoleManagementMain = (props) => {
         if (isDataLoaded && roleManagementData && userId) {
             if (filterString) {
                 const keyword = filterString?.keyword;
-                const filterDataItem = roleManagementData?.filter((item) => filterFunction(keyword)(item?.roleId) || filterFunction(keyword)(item?.roleName) || filterFunction(keyword)(item?.roleDesceription));
+                const filterDataItem = roleManagementData?.filter((item) => filterFunction(keyword)(item?.roleName));
                 setSearchdata(filterDataItem);
             } else {
                 setSearchdata(roleManagementData);
@@ -315,7 +315,7 @@ export const RoleManagementMain = (props) => {
         tableData: searchData,
     };
 
-    const title = 'Role Management';
+    const title = 'Role List';
 
     const advanceFilterResultProps = {
         advanceFilter: false,

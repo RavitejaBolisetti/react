@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -34,9 +34,9 @@ const DashboardBase = ({ props }) => {
     return (
         <div className={styles.dashboardContainer}>
             <Row gutter={20}>
-                <Col xs={24} sm={24} md={12} lg={24} xl={24} xxl={24}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <Row gutter={20}>
-                        <Col xs={24} sm={24} md={12} lg={18} xl={18} xxl={18}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                             <div className={styles.dashboardPageHeading}>
                                 <span className={styles.headingGradient}>Home</span>
                             </div>
