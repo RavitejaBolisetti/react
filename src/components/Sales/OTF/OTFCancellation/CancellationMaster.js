@@ -93,7 +93,7 @@ const CancellationMasterBase = (props) => {
             const extraParams = [
                 {
                     key: 'searchType',
-                    value: 'code',
+                    value: 'dealerName',
                 },
                 {
                     key: 'searchParam',
