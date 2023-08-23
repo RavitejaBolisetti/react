@@ -174,6 +174,14 @@ export const VehiclePriceMasterBase = (props) => {
     };
 
     const paramMasterId = 'VH_PRC_SRCH';
+
+    useEffect(() => {
+        if (filterString) {
+            setPage({ ...page, current: 1 });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [filterString]);
+
     const extraParams = useMemo(() => {
         return [
             {
@@ -434,6 +442,7 @@ export const VehiclePriceMasterBase = (props) => {
     const tableProps = {
         dynamicPagination,
         totalRecords,
+        page,
         setPage,
         isLoading: showDataLoading,
         tableColumn: tableColumn(handleButtonClick),

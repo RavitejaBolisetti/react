@@ -334,6 +334,7 @@ export const VehicleDetailMasterBase = (props) => {
     const tableProps = {
         dynamicPagination,
         totalRecords,
+        page,
         setPage,
         tableColumn: tableColumn(handleButtonClick),
         tableData: data,

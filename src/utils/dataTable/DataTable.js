@@ -10,15 +10,15 @@ import { tblSerialNumberColumn } from 'utils/tableColumn';
 
 import styles from 'components/common/Common.module.css';
 
-export default function DataTable({ isLoading, rowSelection = undefined, showSizeChanger = true, dynamicPagination = false, totalRecords = '10', pagination = true, removePagination = false, srl = true, srlTitle = '#', tableColumn, scroll = 'auto', tableData, rowKey = 'index', setPage = () => {} }) {
+export default function DataTable({ isLoading, rowSelection = undefined, showSizeChanger = true, dynamicPagination = false, totalRecords = '10', pagination = true, removePagination = false, srl = true, srlTitle = '#', tableColumn, scroll = 'auto', tableData, rowKey = 'index', page = undefined, setPage = () => {} }) {
     useEffect(() => {
         if (dynamicPagination) {
-            setPagination({ ...tablePagination, total: totalRecords });
+            setPagination({ ...tablePagination, total: totalRecords, current: page?.current });
         } else {
             setPagination({ ...tablePagination, total: tableData?.length });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [dynamicPagination, totalRecords, tableData]);
+    }, [dynamicPagination, totalRecords, tableData, page]);
 
     const [tablePagination, setPagination] = useState({
         pageSize: 10,

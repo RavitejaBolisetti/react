@@ -150,9 +150,9 @@ export const VehicleAllotmentMasterBase = (props) => {
     }, [allotmentSummaryDetails]);
 
     useEffect(() => {
-        setPage({ pageSize: 10, current: 1 });
+        setPage({ ...page, current: 1 });
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [toggleButton]);
+    }, [filterString, toggleButton]);
 
     const extraParams = useMemo(() => {
         return [
@@ -458,6 +458,7 @@ export const VehicleAllotmentMasterBase = (props) => {
     const tableProps = {
         dynamicPagination,
         totalRecords: allotmentSearchedList?.totalRecords,
+        page,
         setPage,
         isLoading: showDataLoading,
         tableColumn: tableColumn(handleButtonClick),
