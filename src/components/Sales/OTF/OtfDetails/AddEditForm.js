@@ -9,7 +9,6 @@ import { Row, Col, Input, Form, DatePicker, Switch, Card } from 'antd';
 import { formattedCalendarDate, dateFormat } from 'utils/formatDateTime';
 import { validateRequiredSelectField, validateRequiredInputField, noWhiteSpaceinBeginning } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
-import { disablePastDate } from 'utils/disableDate';
 import { customSelectBox } from 'utils/customSelectBox';
 
 import styles from 'components/common/Common.module.css';
@@ -22,12 +21,12 @@ const AddEditFormMain = (props) => {
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={formattedCalendarDate(formData?.initialPromiseDeliveryDate)} label="Initial Promise Delivery Date" name="initialPromiseDeliveryDate" rules={[validateRequiredInputField('Initial Promise Delivery Date')]}>
-                        <DatePicker disabledDate={disablePastDate} format={dateFormat} style={{ display: 'auto', width: '100%' }} />
+                        <DatePicker format={dateFormat} style={{ display: 'auto', width: '100%' }} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={formattedCalendarDate(formData?.custExpectedDeliveryDate)} label="Cust. Expected Delivery Date" name="custExpectedDeliveryDate">
-                        <DatePicker disabledDate={disablePastDate} format={dateFormat} style={{ display: 'auto', width: '100%' }} />
+                        <DatePicker format={dateFormat} style={{ display: 'auto', width: '100%' }} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -66,7 +65,7 @@ const AddEditFormMain = (props) => {
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={formData?.deliveryAt} label="Delivery At" name="deliveryAt" rules={[validateRequiredSelectField('Delivery At')]}>
-                        {customSelectBox({ data: typeData['DLVR_AT'] })}
+                        {customSelectBox({ data: typeData['DELIVERYAT_IND'] })}
                     </Form.Item>
                 </Col>
             </Row>
