@@ -8,12 +8,12 @@ import { Col, Row } from 'antd';
 import { withDrawer } from 'components/withDrawer';
 import { VEHICLE_INVOICE_SECTION } from 'constants/VehicleInvoiceSection';
 
-import { InvoiceDetailsMaster } from './InvoiceDetails';
-import { InsuranceDetailsMaster } from './InsuranceDetails';
-
 import { LeftSidebar } from './LeftSidebar';
 
 import styles from 'components/common/Common.module.css';
+import { InvoiceDetailsMaster } from './InvoiceDetails';
+import { InsuranceDetailsMaster } from './InsuranceDetails';
+import { ExchangeDetailsMaster } from './ExchangeDetails';
 
 const VehicleInvoiceMainConatinerMain = (props) => {
     const { currentSection } = props;
@@ -44,8 +44,8 @@ const VehicleInvoiceMainConatinerMain = (props) => {
                 return <InsuranceDetailsMaster {...myProps} />;
             }
             case VEHICLE_INVOICE_SECTION.EXCHANGE_DETAILS.id: {
-                return <p>Coming Soon...</p>;
-                // return <InvoiceDetailsMaster {...myProps} />;
+                // return <p>Coming Soon...</p>;
+                return <ExchangeDetailsMaster {...myProps} />;
             }
             case VEHICLE_INVOICE_SECTION.LOYALTY_SCHEME.id: {
                 return <p>Coming Soon...</p>;
