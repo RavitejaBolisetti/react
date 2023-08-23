@@ -19,6 +19,8 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { LANGUAGE_EN } from 'language/en';
 import styles from 'components/common/Common.module.css';
 import { ContentHeader } from 'utils/ContentHeader';
+import { APPLICATION_ACTION_ID, ROOT_PARENT_APPLICATION, SPECIAL_MENU_ID } from 'constants/modules/applicationMaster';
+import { APPLICATION_DEVICE_TYPE } from 'utils/applicationDeviceType';
 
 const mapStateToProps = (state) => {
     const {
@@ -83,13 +85,13 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const [isVisible, setisVisible] = useState(false);
 
-    const [menuType, setMenuType] = useState('W');
+    const [menuType, setMenuType] = useState(APPLICATION_DEVICE_TYPE.WEB.key);
     const [searchValue, setSearchValue] = useState('');
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
     const [finalFormdata, setFinalFormdata] = useState(initialFormData);
     const [isReadOnly, setIsReadOnly] = useState(true);
     const [isFieldDisable, setIsFieldDisable] = useState(false);
-    const [parentAppCode, setparentAppCode] = useState("Web");
+    const [parentAppCode, setparentAppCode] = useState(ROOT_PARENT_APPLICATION);
     const [isBtnDisabled, setIsBtnDisabled] = useState(false);
 
     const moduleTitle = 'Application Master';
@@ -98,9 +100,9 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
     useEffect(() => {
         if (userId) {
             fetchApplicationCriticality({ setIsLoading: applicationMasterDataShowLoading });
-            fetchApplicationAction({ setIsLoading: applicationMasterDataShowLoading, userId, id: 'Finac' });
+            fetchApplicationAction({ setIsLoading: applicationMasterDataShowLoading, userId, id: APPLICATION_ACTION_ID });
             fetchCriticalitiData({ setIsLoading: applicationMasterDataShowLoading });
-            fetchList({ setIsLoading: applicationMasterDataShowLoading, userId, deviceType: menuType, sid: 'APPMST' });
+            fetchList({ setIsLoading: applicationMasterDataShowLoading, userId, deviceType: menuType, sid: SPECIAL_MENU_ID });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, menuType]);
@@ -130,7 +132,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
             const { accessibleLocation, applicationAction, documentType, ...rest } = res?.data[0];
 
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-            fetchList({ setIsLoading: applicationMasterDataShowLoading, userId, deviceType: menuType, sid: 'APPMST' });
+            fetchList({ setIsLoading: applicationMasterDataShowLoading, userId, deviceType: menuType, sid: SPECIAL_MENU_ID });
 
             applicationCall(rest?.applicationId);
             setSelectedTreeKey([rest?.applicationId]);

@@ -8,18 +8,20 @@ import { Input, Form, Col, Row, Switch, Select, Button } from 'antd';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { LANGUAGE_EN } from 'language/en';
+import { ROOT_PARENT_APPLICATION, ACCESSIBLE_LOCATION_INDICATOR_SELECT_DATA } from 'constants/modules/applicationMaster';
 
 import styles from 'components/common/Common.module.css';
 
 import TreeSelectField from '../TreeSelectField';
+import { customSelectBox } from 'utils/customSelectBox';
 
 const { Option } = Select;
 const sameParentAndChildWarning = LANGUAGE_EN.GENERAL.HIERARCHY_SAME_PARENT_AND_CHILD_WARNING;
 
 const ApplicationDetails = ({ setCanFormSave, form, onFinishFailed = () => {}, parentAppCode, isReadOnly, isFieldDisable, onFinish, setIsRestrictedLocation, setparentAppCode, setIsDocumentToGenerate, finalFormdata, criticalityGroupData, configurableParamData, menuData, setSelectedTreeKey, selectedTreeKey, showGlobalNotification, isApplicatinoOnSaveLoading, canFormSave, onCloseAction }) => {
     useEffect(() => {
-        form?.setFieldsValue({ ...finalFormdata?.applicationDetails });
-        setparentAppCode(finalFormdata?.applicationDetails.parentApplicationId || 'Web');
+        form?.setFieldsValue({ ...finalFormdata?.applicationDetails, parentApplicationId: finalFormdata?.applicationDetails?.parentApplicationId || ROOT_PARENT_APPLICATION });
+        setparentAppCode(finalFormdata?.applicationDetails?.parentApplicationId || ROOT_PARENT_APPLICATION);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [form, finalFormdata?.applicationDetails, finalFormdata?.applicationDetails?.parentApplicationId, setSelectedTreeKey]);
 
@@ -50,7 +52,7 @@ const ApplicationDetails = ({ setCanFormSave, form, onFinishFailed = () => {}, p
         treeDisabled: isReadOnly || !menuData?.length,
         selectedTreeSelectKey: parentAppCode,
         handleSelectTreeClick,
-        defaultValue: finalFormdata?.applicationDetails?.parentApplicationId,
+        defaultValue: finalFormdata?.applicationDetails?.parentApplicationId || ROOT_PARENT_APPLICATION,
         placeholder: preparePlaceholderSelect('parent'),
     };
 
@@ -90,7 +92,7 @@ const ApplicationDetails = ({ setCanFormSave, form, onFinishFailed = () => {}, p
                 </Row>
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Form.Item name="parentApplicationId" label="Parent Application" initialValue={"Web"} rules={[validateRequiredSelectField('parent application ID')]}>
+                        <Form.Item name="parentApplicationId" label="Parent Application" initialValue={ROOT_PARENT_APPLICATION} rules={[validateRequiredSelectField('parent application ID')]}>
                             <TreeSelectField {...treeSelectFieldProps} />
                         </Form.Item>
                     </Col>
@@ -99,23 +101,13 @@ const ApplicationDetails = ({ setCanFormSave, form, onFinishFailed = () => {}, p
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item name="accessableIndicator" label="Accessible Location" rules={[validateRequiredSelectField('Accessible Locations')]}>
-                            <Select onChange={handleChangeLocations} placeholder={preparePlaceholderSelect('Accessible Location')} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
-                                <Option value={0}>Accessible to all</Option>
-                                <Option value={1}>Not accessible to all</Option>
-                                <Option value={2}>Restricted Accessible</Option>
-                            </Select>
+                            {customSelectBox({ data: ACCESSIBLE_LOCATION_INDICATOR_SELECT_DATA, onChange: handleChangeLocations, placeholder: preparePlaceholderSelect('accessible location') })}
                         </Form.Item>
                     </Col>
 
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item label="Application Criticality Group" name="criticalityGroupMasterId" rules={[validateRequiredInputField('Application Criticality Group')]}>
-                            <Select maxLength={50} placeholder={preparePlaceholderText('Application Criticality Group')} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
-                                {criticalityGroupData?.map((group) => (
-                                    <Option key={'acg' + group?.id} value={group?.id} disabled={!group?.activeIndicator}>
-                                        {group?.criticalityGroupName}
-                                    </Option>
-                                ))}
-                            </Select>
+                            {customSelectBox({ data: criticalityGroupData, fieldNames: { key: 'id', value: 'criticalityGroupName' }, placeholder: preparePlaceholderText('application criticality group') })}
                         </Form.Item>
                     </Col>
                 </Row>
