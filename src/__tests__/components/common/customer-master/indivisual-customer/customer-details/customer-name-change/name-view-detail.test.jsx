@@ -60,7 +60,7 @@ describe('View Form component', () => {
         const rejectionText = screen.getByRole('textbox', { name: 'Remark for Rejection' });
         fireEvent.change(rejectionText, { target: { value: 'helo' } });
 
-        const closeBtn = await screen.findByRole('button', { name: 'Yes,Reject' });
+        const closeBtn = screen.getByRole('button', { name: /yes, reject/i });
         fireEvent.click(closeBtn);
     });
 });
