@@ -145,7 +145,10 @@ export const VehicleAllotmentMasterBase = (props) => {
     }, [userId]);
 
     useEffect(() => {
-        setButtonData(allotmentSummaryDetails?.allotmentStatus === VEHICLE_TYPE.UNALLOTED.key ? { cancelBtn: true, allotBtn: true } : { cancelBtn: true, unAllot: true });
+        if (allotmentSummaryDetails) {
+            allotmentSummaryDetails?.allotmentStatus === VEHICLE_TYPE.UNALLOTED.key && setSelectedOrderOTFDetails(allotmentSummaryDetails?.vehicleOTFDetails);
+            setButtonData(allotmentSummaryDetails?.allotmentStatus === VEHICLE_TYPE.UNALLOTED.key ? { cancelBtn: true, allotBtn: true } : { cancelBtn: true, unAllot: true });
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [allotmentSummaryDetails]);
 
