@@ -57,8 +57,7 @@
         "extends": [
             "react-app",
             "react-app/jest"
-        ],
-        "errorOnDeprecated": true
+        ]
     },
     "lint-staged": {
         "*.{js,jsx}": [
