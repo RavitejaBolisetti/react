@@ -7,7 +7,7 @@ import { Select } from 'antd';
 
 const { Option } = Select;
 
-export const customSelectBox = ({ data, placeholder = 'Select', loading = false, onChange = undefined, disabled = false, fieldNames = { key: 'key', value: 'value' } }) => {
+export const customSelectBox = ({ data, placeholder = 'Select', mode = '', loading = false, onChange = undefined, disabled = false, fieldNames = { key: 'key', value: 'value' } }) => {
     const selectProps = {
         optionFilterProp: 'children',
         showSearch: true,
@@ -16,7 +16,7 @@ export const customSelectBox = ({ data, placeholder = 'Select', loading = false,
         disabled,
     };
     return (
-        <Select placeholder={placeholder} onChange={onChange} {...selectProps}>
+        <Select placeholder={placeholder} mode={mode} onChange={onChange} {...selectProps}>
             {data?.map((item) => (
                 <Option disabled={item?.disabled || false} value={item?.[fieldNames?.key]}>
                     {item?.[fieldNames?.value]}
