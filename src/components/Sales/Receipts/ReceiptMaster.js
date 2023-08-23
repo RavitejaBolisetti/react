@@ -25,6 +25,7 @@ import { receiptDataActions } from 'store/actions/data/receipt/receipt';
 import { receiptDetailDataActions } from 'store/actions/data/receipt/receiptDetails';
 import { cancelReceiptDataActions } from 'store/actions/data/receipt/cancelReceipt';
 import { PARAM_MASTER } from 'constants/paramMaster';
+import { partyDetailDataActions } from 'store/actions/data/receipt/partyDetails';
 
 import { FilterIcon } from 'Icons';
 
@@ -72,6 +73,9 @@ const mapDispatchToProps = (dispatch) => ({
             fetchList: receiptDataActions.fetchList,
             cancelReceipt: cancelReceiptDataActions.saveData,
             listShowLoading: receiptDataActions.listShowLoading,
+
+            resetPartyDetailData: partyDetailDataActions.reset,
+
             showGlobalNotification,
         },
         dispatch
@@ -79,7 +83,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const ReceiptMasterBase = (props) => {
-    const { fetchList, saveData, listShowLoading, userId, fetchReceiptDetails, data, receiptDetailData, resetData, cancelReceipt } = props;
+    const { fetchList, saveData, listShowLoading, userId, fetchReceiptDetails, resetPartyDetailData, data, receiptDetailData, resetData, cancelReceipt } = props;
     const { typeData, receiptType, partySegmentType, paymentModeType, documentType, moduleTitle, totalRecords, showGlobalNotification } = props;
     const { filterString, setFilterString, receiptStatusList } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
@@ -112,6 +116,8 @@ export const ReceiptMasterBase = (props) => {
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [cancelReceiptVisible, setCancelReceiptVisible] = useState(false);
+    const [partySegment, setPartySegment] = useState('');
+    const [partyId, setPartyId] = useState();
 
     const [page, setPage] = useState({ pageSize: 10, current: 1 });
     const dynamicPagination = true;
@@ -291,8 +297,8 @@ export const ReceiptMasterBase = (props) => {
             const nextSection = Object.values(sectionName)?.find((i) => i?.displayOnList && i.id > currentSection);
             setLastSection(!nextSection?.id);
         }
-        form.resetFields();
-        form.setFieldsValue(undefined);
+        // form.resetFields();
+        // form.setFieldsValue(undefined);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentSection, sectionName]);
 
@@ -311,8 +317,8 @@ export const ReceiptMasterBase = (props) => {
     };
 
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
-        form.resetFields();
-        form.setFieldsValue(undefined);
+        // form.resetFields();
+        // form.setFieldsValue(undefined);
         switch (buttonAction) {
             case ADD_ACTION:
                 defaultSection && setCurrentSection(defaultSection);
@@ -370,7 +376,7 @@ export const ReceiptMasterBase = (props) => {
     };
 
     const onFinish = (receiptData) => {
-        const data = { ...requestPayload, apportionDetails: apportionList, receiptsDetails: receiptData.hasOwnProperty('receiptType') ? receiptData : requestPayload?.receiptsDetails };
+        const data = { ...requestPayload, apportionDetails: receiptData.hasOwnProperty('receiptType') ? [] : apportionList, receiptsDetails: receiptData.hasOwnProperty('receiptType') ? receiptData : requestPayload?.receiptsDetails };
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -381,8 +387,17 @@ export const ReceiptMasterBase = (props) => {
             setIsFormVisible(false);
         };
 
-        const onError = (message) => {
+        const sectionKey = {
+            partyDetails: RECEIPT_SECTION.PARTY_DETAILS.id,
+            receiptsDetails: RECEIPT_SECTION.RECEIPT_DETAILS.id,
+            apportionDetails: RECEIPT_SECTION.APPORTION_DETAILS.id,
+        };
+
+        const onError = (message, errorData, errorSection) => {
             showGlobalNotification({ message });
+            if (errorSection) {
+                errorSection && setCurrentSection(sectionKey?.[errorSection]);
+            }
         };
 
         const requestData = {
@@ -391,6 +406,7 @@ export const ReceiptMasterBase = (props) => {
             setIsLoading: listShowLoading,
             userId,
             onError,
+            errorData: true,
             onSuccess,
         };
 
@@ -413,6 +429,7 @@ export const ReceiptMasterBase = (props) => {
         partyDetailForm.resetFields();
         setReceipt();
         setTotalReceivedAmount(0.0);
+        resetPartyDetailData();
 
         advanceFilterForm.resetFields();
         advanceFilterForm.setFieldsValue();
@@ -423,6 +440,7 @@ export const ReceiptMasterBase = (props) => {
         setIsFormVisible(false);
         setCancelReceiptVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
+        setRequestPayload();
     };
 
     const tableProps = {
@@ -606,6 +624,10 @@ export const ReceiptMasterBase = (props) => {
         onCancelReceipt,
         saveButtonName: isLastSection ? 'Submit' : 'Save & Next',
         setLastSection,
+        partySegment,
+        setPartySegment,
+        partyId,
+        setPartyId,
     };
 
     const cancelReceiptProps = {

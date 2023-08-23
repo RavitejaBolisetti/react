@@ -16,8 +16,8 @@ export const PAYMENT_MODE = {
         KEY: 'D',
         TITLE: 'Cheque / DD',
     },
-    RTGS: {
-        KEY: 'O',
-        TITLE: 'RTGS',
+    NEFT: {
+        KEY: 'N',
+        TITLE: 'NEFT',
     },
 };

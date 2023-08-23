@@ -126,6 +126,7 @@ const ApportionDetailMasterBase = (props) => {
             });
             setDocumentAmount(apportionValues?.invoiceAmount);
             setReceivedAmount(apportionValues?.receivedAmount);
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         };
 
         values && fetchInvoiceList({ setIsLoading: listInvoiceShowLoading, onErrorAction, onSuccessAction, userId, extraParams });

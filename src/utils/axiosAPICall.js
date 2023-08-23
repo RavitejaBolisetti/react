@@ -39,8 +39,8 @@ const baseAPICall = (params) => {
     // const unAuthorizedTtitle = LANGUAGE_EN.GENERAL.AUTHORIZED_REQUEST.TITLE;
     const unAuthorizedMessage = LANGUAGE_EN.GENERAL.AUTHORIZED_REQUEST.MESSAGE;
 
-    const handleErrorMessage = ({ onError, displayErrorTitle, errorData = false, errorTitle, errorMessage }) => {
-        onError && (displayErrorTitle ? onError({ title: errorTitle, message: Array.isArray(errorMessage) ? errorMessage[0] : errorMessage }) : errorData ? onError(Array.isArray(errorMessage) ? errorMessage[0] : errorMessage, data) : onError(Array.isArray(errorMessage) ? errorMessage[0] : errorMessage));
+    const handleErrorMessage = ({ onError, displayErrorTitle, errorData = false, errorSection = undefined, errorTitle, errorMessage }) => {
+        onError && (displayErrorTitle ? onError({ title: errorTitle, message: Array.isArray(errorMessage) ? errorMessage[0] : errorMessage }) : errorData || errorSection ? onError(Array.isArray(errorMessage) ? errorMessage[0] : errorMessage, errorData, errorSection) : onError(Array.isArray(errorMessage) ? errorMessage[0] : errorMessage));
     };
 
     const onUnAuthenticated = (message = '') => {
@@ -61,7 +61,7 @@ const baseAPICall = (params) => {
                         if (response?.data?.statusCode === 200) {
                             onSuccess(response?.data);
                         } else if (response?.data?.statusCode === 400) {
-                            handleErrorMessage({ onError, displayErrorTitle, errorData: response?.data?.data, errorTitle: response?.data?.errorTitle, errorMessage: response?.data?.errors || response?.data?.data?.responseMessage || response?.data?.responseMessage });
+                            handleErrorMessage({ onError, displayErrorTitle, errorSection: response?.data?.errorSection, errorData: response?.data?.data, errorTitle: response?.data?.errorTitle, errorMessage: response?.data?.errors || response?.data?.data?.responseMessage || response?.data?.responseMessage });
                         } else if (response?.data?.statusCode === 404) {
                             handleErrorMessage({ onError, displayErrorTitle, errorTitle: response?.data?.errorTitle, errorMessage: response?.data?.errors || response?.data?.data?.responseMessage });
                         } else if (response?.data?.statusCode === 409) {

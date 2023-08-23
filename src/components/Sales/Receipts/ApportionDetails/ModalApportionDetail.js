@@ -45,10 +45,14 @@ export const ApportionDetailForm = (props) => {
 
     const checkDuplicateValidator = (ObjValue, value) => {
         if (apportionList.length > 0) {
-            const filterItem = apportionList?.filter((item) => item?.documentNumber === value);
+            const filterItem = apportionList?.filter((item, index) => {
+                return apportionTableFormData?.index !== index && item?.documentNumber === value;
+            });
             if (!filterItem?.length) return Promise.resolve();
             else return Promise.reject(new Error('Document Number already exist.'));
-        } else return Promise.resolve();
+        } else {
+            return Promise.resolve();
+        }
     };
 
     const onFinishFailed = () => {

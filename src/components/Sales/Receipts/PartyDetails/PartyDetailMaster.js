@@ -8,6 +8,7 @@ import { Form, Row, Col } from 'antd';
 
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
+import { PartySegment } from 'components/Sales/Receipts/utils/partySegment';
 import { VehicleReceiptFormButton } from '../VehicleReceiptFormButton';
 
 import { connect } from 'react-redux';
@@ -60,16 +61,16 @@ const PartyDetailMasterBase = (props) => {
     const { setReceipt, typeData, partySegmentType, receiptDetailData, partyDetailData } = props;
     const { userId, buttonData, setButtonData, showGlobalNotification, section, fetchCustomerDetail, fetchPartyDetail, resetData, listShowLoading, isDataLoaded, isLoading } = props;
     const { form, partyDetailForm, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick } = props;
-    const { requestPayload, setRequestPayload } = props;
-    const [partySegment, setPartySegment] = useState('');
-    const [partyId, setPartyId] = useState();
+    const { requestPayload, setRequestPayload, partySegment, setPartySegment, partyId, setPartyId, errorSection } = props;
+    // const [partySegment, setPartySegment] = useState('');
+    // const [partyId, setPartyId] = useState();
 
-    useEffect(() => {
-        return () => {
-            resetData();
-        };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    // useEffect(() => {
+    //     return () => {
+    //         resetData();
+    //     };
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [!requestPayload?.partyDetails]);
 
     useEffect(() => {
         if (receiptDetailData.partyDetails) {
@@ -78,6 +79,16 @@ const PartyDetailMasterBase = (props) => {
         setReceipt(receiptDetailData?.receiptsDetails?.receiptType);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, receiptDetailData.partyDetails]);
+
+    // useEffect(() => {
+    //     if(errorSection) {
+    //         return () => {
+    //             handleSearch();
+    //         };
+    //     }
+
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [errorSection]);
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
@@ -93,7 +104,7 @@ const PartyDetailMasterBase = (props) => {
             const onSuccessAction = (res) => {
                 setButtonData({ ...buttonData, formBtnActive: true });
             };
-            if (partySegment === 'CUS') {
+            if (partySegment === PartySegment.CUSTOMER.key) {
                 const extraParams = [
                     {
                         key: 'customerId',
