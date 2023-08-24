@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -13,7 +13,7 @@ import { otfDataActions } from 'store/actions/data/otf/otf';
 
 import { DataTable } from 'utils/dataTable';
 import { withDrawer } from 'components/withDrawer';
-import { BASE_URL_OTF_CHANGE_HISTORY as customURL } from 'constants/routingApi';
+import { BASE_URL_OTF_SO_MAPPING_UNMAPPING_HISTORY as customURL } from 'constants/routingApi';
 
 import { Row, Button, Col } from 'antd';
 
@@ -24,18 +24,16 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             OTF: {
-                OtfSearchList: { detailData: otfData = [], isChangeHistoryLoaded, isChangeHistoryLoading, changeHistoryData = [] },
+                OtfSearchList: { detailData: otfData = [], isChangeHistoryLoaded, isChangeHistoryLoading, changeHistoryData },
             },
         },
     } = state;
-    
-
     let returnValue = {
         userId,
         otfData,
         isChangeHistoryLoaded,
         isChangeHistoryLoading,
-        changeHistoryData,
+        changeHistoryData: changeHistoryData?.paginationData,
     };
     return returnValue;
 };
@@ -69,8 +67,8 @@ const ChangeHistoryMain = ({ fetchOTFChangeHistory, onCloseAction, listShowChang
 
     const tableColumn = [
         tblPrepareColumns({
-            title: 'Modified Date & Time',
-            dataIndex: 'modifiedDate',
+            title: 'Action Date & Time',
+            dataIndex: 'actionDate',
             render: (text) => [
                 <div>
                     {convertDateTime(text, 'DD MMM YYYY')}
@@ -80,31 +78,32 @@ const ChangeHistoryMain = ({ fetchOTFChangeHistory, onCloseAction, listShowChang
             ],
         }),
         tblPrepareColumns({
-            title: 'Modified By',
-            dataIndex: 'modifiedBy',
+            title: 'Actioned By',
+            dataIndex: 'actionBy',
         }),
         tblPrepareColumns({
-            title: 'Change Source',
-            dataIndex: 'source',
+            title: 'Action',
+            dataIndex: 'action',
         }),
         tblPrepareColumns({
-            title: 'Field Name',
-            dataIndex: 'fieldName',
+            title: 'SO Number',
+            dataIndex: 'soNumber',
         }),
         tblPrepareColumns({
-            title: 'Old Value',
-            dataIndex: 'oldValue',
-        }),
-        tblPrepareColumns({
-            title: 'New Value',
-            dataIndex: 'newValue',
-        }),
+            title: 'SO Date',
+            dataIndex: 'soDate',
+            render: (text) => [
+                <div>
+                    {convertDateTime(text, 'DD MMM YYYY')}
+                </div>,
+            ],
+        })
     ];
 
     const tableProps = {
         isChangeHistoryLoading,
         tableColumn,
-        tableData: changeHistoryData?.otfChangeHistoryListResponse || [],
+        tableData: changeHistoryData,
     };
 
     return (
@@ -128,4 +127,4 @@ const ChangeHistoryMain = ({ fetchOTFChangeHistory, onCloseAction, listShowChang
     );
 };
 
-export const ChangeHistory = connect(mapStateToProps, mapDispatchToProps)(withDrawer(ChangeHistoryMain, { title: 'Change History', width: '90%' }));
+export const OtfSoMappingUnmappingChangeHistory = connect(mapStateToProps, mapDispatchToProps)(withDrawer(ChangeHistoryMain, { title: 'Change History', width: '90%' }));

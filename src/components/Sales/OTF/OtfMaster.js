@@ -32,6 +32,7 @@ import { FilterIcon } from 'Icons';
 import { ChangeHistory } from './ChangeHistory';
 
 import styles from 'components/common/Common.module.css';
+import { OtfSoMappingUnmappingChangeHistory } from './OtfSoMappingUnmappingChangeHistory';
 
 const { confirm } = Modal;
 
@@ -47,6 +48,7 @@ const mapStateToProps = (state) => {
     } = state;
     const moduleTitle = 'Order Tracking Form';
     const ChangeHistoryTitle = 'OTF Change History ';
+    const otfSoMappingChangeHistoryTitle = 'OTF - SO Mapping & Un-mapping History';
 
     let returnValue = {
         userId,
@@ -64,6 +66,7 @@ const mapStateToProps = (state) => {
         isSearchDataLoaded,
         filterString,
         ChangeHistoryTitle,
+        otfSoMappingChangeHistoryTitle,
 
         isChangeHistoryLoaded,
         isChangeHistoryLoading,
@@ -92,7 +95,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const OtfMasterBase = (props) => {
     const { showGlobalNotification, fetchOTFDetail, saveData, listShowLoading, userId, fetchOTFSearchedList, data, totalRecords, otfData, resetData } = props;
-    const { ChangeHistoryTitle } = props;
+    const { ChangeHistoryTitle, otfSoMappingChangeHistoryTitle } = props;
 
     const { typeData, moduleTitle, transferOTF } = props;
     const { filterString, setFilterString, otfStatusList } = props;
@@ -137,6 +140,7 @@ export const OtfMasterBase = (props) => {
         invoiceBtn: false,
         deliveryNote: false,
         changeHistory: true,
+        otfSoMappingChangeHistory: true,
     };
 
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -149,6 +153,7 @@ export const OtfMasterBase = (props) => {
 
     const [formData, setFormData] = useState([]);
     const [ChangeHistoryVisible, setChangeHistoryVisible] = useState(false);
+    const [OtfSoMappingHistoryVisible , setOtfSoMappingHistoryVisible] = useState(false);
 
     const onSuccessAction = (res) => {
         // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -379,6 +384,9 @@ export const OtfMasterBase = (props) => {
     const handleChangeHistory = () => {
         setChangeHistoryVisible(true);
     };
+    const handleOtfSoMappingHistory = () => {
+        setOtfSoMappingHistoryVisible(true);
+    }
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
@@ -549,6 +557,18 @@ export const OtfMasterBase = (props) => {
         ChangeHistoryTitle,
         selectedOrderId,
     };
+    const OtfSoMappingChangeHistoryProps = {
+        isVisible: OtfSoMappingHistoryVisible,
+        onCloseAction: () => {
+            setOtfSoMappingHistoryVisible(false);
+        },
+        titleOverride: otfSoMappingChangeHistoryTitle,
+        formData,
+        setIsFormVisible,
+        buttonData,
+        otfSoMappingChangeHistoryTitle,
+        selectedOrderId,
+    };
 
     const containerProps = {
         record: selectedOrder,
@@ -587,6 +607,7 @@ export const OtfMasterBase = (props) => {
         otfData,
         saveButtonName: !selectedOrderId ? 'Create Customer ID' : isLastSection ? 'Submit' : 'Save & Next',
         handleChangeHistory,
+        handleOtfSoMappingHistory,
     };
 
     const onCancelCloseAction = () => {
@@ -632,6 +653,7 @@ export const OtfMasterBase = (props) => {
             <CancellationMaster {...cancelProps} />
             <TransferMaster {...transferOTFProps} />
             <ChangeHistory {...ChangeHistoryProps} />
+            <OtfSoMappingUnmappingChangeHistory {...OtfSoMappingChangeHistoryProps} />
         </>
     );
 };
