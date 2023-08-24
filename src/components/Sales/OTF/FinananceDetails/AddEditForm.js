@@ -8,7 +8,7 @@ import { Col, Input, Form, Row, Select, Card, DatePicker, Space, Switch } from '
 
 import { disableFutureDate } from 'utils/disableDate';
 import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
-import { validateNumberWithTwoDecimalPlaces } from 'utils/validation';
+import { validateNumberWithTwoDecimalPlaces, validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { customSelectBox } from 'utils/customSelectBox';
 
@@ -128,7 +128,7 @@ const AddEditFormMain = (props) => {
                                                 {doReceived === YES_NO_FLAG?.YES?.key && (
                                                     <Row gutter={20}>
                                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                            <Form.Item label="D.O. Number" name="doNumber">
+                                                            <Form.Item label="D.O. Number" name="doNumber" rules={[validateRequiredInputField('doNumber')]}>
                                                                 <Input placeholder={preparePlaceholderText('d.o. number')}></Input>
                                                             </Form.Item>
                                                         </Col>

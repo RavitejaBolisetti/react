@@ -4,7 +4,6 @@ import { ProductHierarchy } from '@components/common/ProductHierarchy/ProductHie
 import { fireEvent, screen } from '@testing-library/react';
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
-import { act } from 'react-dom/test-utils';
 
 afterEach(() => {
     jest.restoreAllMocks();

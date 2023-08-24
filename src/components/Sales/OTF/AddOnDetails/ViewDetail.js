@@ -67,7 +67,7 @@ const ViewDetailMain = (props) => {
                         </Panel>
                     </Collapse>
                     <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse('Amc')} expandIconPosition="end">
-                        <Panel header="Amc" key={'Amc'}>
+                        <Panel header="AMC" key={'Amc'}>
                             <Divider />
                             <AMCForm formActionType={formActionType} formData={formData} amcForm={amcForm} />
                         </Panel>

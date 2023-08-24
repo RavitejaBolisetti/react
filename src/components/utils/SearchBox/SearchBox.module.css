@@ -254,6 +254,7 @@
     text-align: center;
     padding: 5px 10px;
     border-radius: 5px;
+    z-index: 1;
 }
 
 .masterListSearchForm :global .ant-form-item .ant-form-item-explain-error:after {
@@ -268,6 +269,7 @@
     top: -10px;
     left: 50%;
     margin-left: -10px;
+    z-index: 1;
 }
 
 .masterListSearchForm :global .ant-form-item .ant-form-item-label > label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
