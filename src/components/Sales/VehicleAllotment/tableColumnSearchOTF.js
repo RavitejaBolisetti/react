@@ -6,7 +6,7 @@
 import { tblPrepareColumns } from 'utils/tableColumn';
 import { convertDateMonthYear } from 'utils/formatDateTime';
 
-export const tableColumnSearchOTF = (handleButtonClick, page, pageSize) => {
+export const tableColumnSearchOTF = () => {
     const tableColumn = [
         tblPrepareColumns({
             title: 'OTF No.',
