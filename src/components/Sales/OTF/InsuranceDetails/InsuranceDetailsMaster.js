@@ -44,6 +44,7 @@ const mapDispatchToProps = (dispatch) => ({
             fetchList: insuranceDetailDataActions.fetchList,
             listShowLoading: insuranceDetailDataActions.listShowLoading,
             resetData: insuranceDetailDataActions.reset,
+            saveData: insuranceDetailDataActions.saveData,
             showGlobalNotification,
         },
         dispatch
@@ -52,15 +53,24 @@ const mapDispatchToProps = (dispatch) => ({
 
 const InsuranceDetailsMasterBase = (props) => {
     const { insuranceData, onCloseAction, fetchList, formActionType, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
-    const { form, selectedOrderId, handleFormValueChange, section, isLoading, NEXT_ACTION, handleButtonClick, onFinishFailed } = props;
+    const { form, selectedOrderId, handleFormValueChange, section, isLoading, NEXT_ACTION, handleButtonClick, onFinishFailed, saveData } = props;
 
-    const [formData, setFormData] = useState();
+    // const [formData, setFormData] = useState();
 
-    useEffect(() => {
-        setFormData(insuranceData);
-        handleFormValueChange();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [insuranceData]);
+    // useEffect(() => {
+    //     setFormData(insuranceData);
+    //     handleFormValueChange();
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [insuranceData]);
+
+    const extraParams = [
+        {
+            key: 'otfNumber',
+            title: 'otfNumber',
+            value: selectedOrderId,
+            name: 'OTF Number',
+        },
+    ];
 
     useEffect(() => {
         if (userId && selectedOrderId) {
@@ -88,7 +98,7 @@ const InsuranceDetailsMasterBase = (props) => {
     const viewProps = {
         styles,
         onCloseAction,
-        insuranceData,
+        formData: insuranceData,
         isLoading,
     };
 
@@ -98,22 +108,43 @@ const InsuranceDetailsMasterBase = (props) => {
         fetchList,
         userId,
         isDataLoaded,
-        formData,
         isLoading,
-        insuranceData,
+        formData: insuranceData,
     };
 
     const myProps = {
         ...props,
-        buttonData: { ...props.buttonData, editBtn: false, nextBtn: true, saveBtn: false },
+        // buttonData: { ...props.buttonData, editBtn: true, saveAndNewBtn: true, nextBtn: true, saveBtn: true },
     };
 
     const onFinish = (values) => {
-        handleButtonClick({ record: undefined, buttonAction: NEXT_ACTION });
+        const recordId = insuranceData?.id || '';
+        const data = { ...values, id: recordId, otfNumber: selectedOrderId };
+
+        const onSuccess = (res) => {
+            handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction, onSuccessAction });
+        };
+
+        const onError = (message) => {
+            showGlobalNotification({ message });
+        };
+
+        const requestData = {
+            data: data,
+            method: data?.id ? 'post' : 'put',
+            setIsLoading: listShowLoading,
+            userId,
+            onError,
+            onSuccess,
+        };
+
+        saveData(requestData);
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed} onValuesChange={handleFormValueChange}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>

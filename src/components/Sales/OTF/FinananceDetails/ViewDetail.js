@@ -20,6 +20,8 @@ const ViewDetailMain = (props) => {
     return (
         <Card className={styles?.drawerCardView}>
             <Descriptions {...viewProps}>
+                <Descriptions.Item label="Finance Arranged By">{checkAndSetDefaultValue(formData?.financeArrangedBy, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Print Hypothecation Details?">{checkAndSetDefaultValue(formData?.printHyptheticatedDetail, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Financier">{checkAndSetDefaultValue(formData?.financier, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Branch">{checkAndSetDefaultValue(formData?.branch, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="File Number">{checkAndSetDefaultValue(formData?.fileNumber, isLoading)}</Descriptions.Item>

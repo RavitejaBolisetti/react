@@ -14,7 +14,7 @@ const { Search } = Input;
 
 const SearchBox = (props) => {
     const { selectWide, searchForm, optionType, searchParamRule, filterString, setFilterString, handleChange, disabled = false, isLoading, handleSearchWithoutParameter = undefined } = props;
-    const { singleField = false, label = '', placeholder = 'Search', singleFieldKey = 'searchParam', defaultValue='' } = props;
+    const { singleField = false, label = '', placeholder = 'Search', singleFieldKey = 'searchParam', defaultValue = undefined } = props;
     const onKeyPressHandler = (e) => {
         e.key === 'Enter' && e.preventDefault();
     };
