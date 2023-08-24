@@ -207,14 +207,14 @@ const UserManagementMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isRoleListLoaded, isDealerListLoaded]);
 
-    useEffect(() => {
-        return () => {
-            setFilterString('');
-            setError('');
-            resetUserDetails();
-        };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userType]);
+    // useEffect(() => {
+    //     return () => {
+    //         setFilterString('');
+    //         setError('');
+    //         resetUserDetails();
+    //     };
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [userType]);
 
     useEffect(() => {
         if (userType) {
@@ -297,7 +297,7 @@ const UserManagementMain = (props) => {
         setError(res);
     };
     const onSuccessAction = (res) => {
-        setFilterString('');
+        // setFilterString('');
         setselectedDealerCode('');
         setError('');
     };
@@ -308,7 +308,7 @@ const UserManagementMain = (props) => {
             fetchUserDataList({ setIsLoading: listShowLoading, extraParams: params, userId, onErrorAction, onSuccessAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, userType, page, filterString?.searchParam]);
+    }, [userId, userType, page?.pageSize, page?.current, filterString?.searchParam]);
 
     const onFinish = (values, e) => {};
 
