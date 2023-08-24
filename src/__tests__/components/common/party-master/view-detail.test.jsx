@@ -7,9 +7,6 @@ import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
 import { ViewDetail } from '@components/common/PartyMaster/ViewDetail';
 import { screen } from '@testing-library/react';
-afterEach(() => {
-    jest.restoreAllMocks();
-});
 
 describe('viewdetail Components', () => {
     it('should render list components', () => {

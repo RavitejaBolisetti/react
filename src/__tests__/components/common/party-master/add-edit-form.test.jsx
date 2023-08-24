@@ -54,8 +54,8 @@ describe('party master Components', () => {
         expect(partyname.value.includes('Dmstest'));
 
         const partyCode = screen.getByLabelText('Party Code');
-        fireEvent.change(partyname, { target: { value: 'Dms' } });
-        expect(partyname.value.includes('Dms'));
+        fireEvent.change(partyCode, { target: { value: 'Dms' } });
+        expect(partyCode.value.includes('Dms'));
 
         const comboBox = screen.getByRole('combobox', { name: /party category/i });
         fireEvent.click(comboBox);

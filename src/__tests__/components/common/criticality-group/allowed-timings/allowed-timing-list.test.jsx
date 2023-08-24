@@ -2,9 +2,11 @@ import '@testing-library/jest-dom/extend-expect';
 import { fireEvent, screen, act } from '@testing-library/react';
 import customRender from '@utils/test-utils';
 import AllowedTimingList from '@components/common/CriticalityGroup/AllowedTimings/AllowedTimingList';
+
 afterEach(() => {
     jest.restoreAllMocks();
 });
+
 describe('AllowedTimingList Components', () => {
     it('should render AllowedTimingList components', () => {
         customRender(<AllowedTimingList />);

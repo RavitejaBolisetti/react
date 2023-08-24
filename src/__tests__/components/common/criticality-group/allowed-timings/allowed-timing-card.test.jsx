@@ -3,9 +3,11 @@ import '@testing-library/jest-dom/extend-expect';
 import { screen, fireEvent, render } from '@testing-library/react';
 import customRender from '@utils/test-utils';
 import AllowedTimingCard from '@components/common/CriticalityGroup/AllowedTimings/AllowedTimingCard';
+
 afterEach(() => {
     jest.restoreAllMocks();
 });
+
 describe('AllowedTimingCard Components', () => {
     it('should render AllowedTimingCard components', () => {
         customRender(<AllowedTimingCard />);

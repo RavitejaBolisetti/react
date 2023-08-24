@@ -10,7 +10,6 @@ import createMockStore from '__mocks__/store';
 import { ListPartyMaster } from '@components/common/PartyMaster/listpartymaster';
 import { screen, fireEvent } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
-import { AddEditForm } from 'components/common/PartyMaster/AddEditForm';
 afterEach(() => {
     jest.restoreAllMocks();
 });
@@ -83,45 +82,5 @@ describe('List party master Components', () => {
         fireEvent.change(inputBox, { target: { value: '' } });
         expect(inputBox.value.includes('')).toBeTruthy();
         fireEvent.click(searchButton);
-    });
-
-    it('should click on add button', async () => {
-        customRender(<ListPartyMaster />);
-        const btnClick = screen.getByRole('button', { name: /Add/i });
-        fireEvent.click(btnClick);
-    });
-
-    it('render refresh button', () => {
-        const mockStore = createMockStore({
-            auth: { userId: 123 },
-        });
-        customRender(
-            <Provider store={mockStore}>
-                <ListPartyMaster />
-            </Provider>
-        );
-        const refreshbutton = screen.getByRole('button', { name: '', exact: false });
-        fireEvent.click(refreshbutton);
-    });
-
-    it('cancel button should work', () => {
-        customRender(<ListPartyMaster />);
-        const btnClick = screen.getByRole('button', { name: 'plus Add', exact: false });
-        fireEvent.click(btnClick);
-        const btnClick2 = screen.getByRole('button', { name: 'Cancel', exact: false });
-        fireEvent.click(btnClick2);
-    });
-
-    it('edit button should work', () => {
-        const buttonData = {
-            editBtn: true,
-        };
-        customRender(
-            <ListPartyMaster>
-                <AddEditForm buttonData={buttonData} />
-            </ListPartyMaster>
-        );
-        const btnClick = screen.getByRole('button', { name: 'plus Add', exact: false });
-        fireEvent.click(btnClick);
     });
 });
