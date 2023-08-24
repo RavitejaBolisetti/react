@@ -74,8 +74,9 @@ const ViewDetailMain = (props) => {
         rowSelection: {
             ...rowSelection,
         },
-        tableColumn: tableColumnSearchOTF(handleButtonClick),
+        tableColumn: tableColumnSearchOTF(),
         tableData: tableDataItem,
+        pagination: formData?.allotmentStatus !== VEHICLE_TYPE.UNALLOTED.key,
     };
 
     return (
