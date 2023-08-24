@@ -55,7 +55,7 @@ describe('ChangePasswordForm Components', () => {
         });
         expect(confirmNewPasswordInput.value.includes('Dma@test1234'));
 
-        await act(async () => {
+        act(async () => {
             fireEvent.click(screen.getByTestId('changePassword'));
         });
     });
