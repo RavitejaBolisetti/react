@@ -12,29 +12,27 @@ import styles from 'components/common/Common.module.css';
 const OptionServicesFormMain = (props) => {
     const { typeData, handleCancel, handleFormValueChange, optionsServicesMapping, setoptionsServicesMapping, optionsServiceModified, setoptionsServiceModified, showGlobalNotification, formData, optionForm } = props;
     const [serviceOptions, setserviceOptions] = useState(typeData['OPT_SRV']);
-    const [includedOption, setincludedOption] = useState([]);
 
     useEffect(() => {
+        const arr = [];
         if (serviceOptions && serviceOptions?.length) {
-            const arr = [];
             optionsServiceModified?.map((element) => {
                 arr.push(element?.serviceName);
-                return undefined;
             });
-            setincludedOption(arr);
 
             setserviceOptions(
                 serviceOptions?.map((element) => {
-                    if (includedOption?.includes(element?.value)) {
+                    if (arr?.includes(element?.value) || arr?.includes(element?.key)) {
                         return { ...element, disabled: true };
                     } else {
-                        return element;
+                        return { ...element, disabled: false };
                     }
                 })
             );
         }
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [serviceOptions, optionsServiceModified]);
+    }, [optionsServiceModified]);
 
     const isServiceNamePresent = (serviceName) => {
         let found = false;
