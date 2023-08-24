@@ -3183,7 +3183,9 @@
 .drawerBodyLeft .active :global .ant-timeline-item-tail {
     background-color: #ff3e5b !important;
 }
-.drawerBodyLeft .inActive :global .ant-timeline-item-tail,
+.drawerBodyLeft .AddmodeinActive :global .ant-timeline-item-tail{
+    background-color: #b5b5b6 !important;
+}
 .drawerBodyLeft .viewActive :global .ant-timeline-item-tail,
 .drawerBodyLeft .viewInActive :global .ant-timeline-item-tail {
     background-color: #70c922 !important;
