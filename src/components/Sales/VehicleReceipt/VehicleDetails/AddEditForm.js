@@ -22,6 +22,7 @@ const { Option } = Select;
 
 const AddEditFormMain = (props) => {
     const { formData, setFinalData, buttonData, setButtonData, vehicleStatusType, physicalStatusType, shortageType, vehicleDetailForm } = props;
+    console.log('🚀 ~ file: AddEditForm.js:25 ~ AddEditFormMain ~ vehicleStatusType:', vehicleStatusType);
 
     const [activeKey, setactiveKey] = useState([]);
     // const [vehicleDetailList, setVehicleDetailList] = useState([]);
@@ -179,11 +180,13 @@ const AddEditFormMain = (props) => {
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item initialValue={item?.vehicleStatus} label="Vehicle Status" name={[index, 'vehicleStatus']} rules={[validateRequiredSelectField('Vehicle Status')]}>
                                             <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} {...selectProps}>
-                                                {vehicleStatusType?.map((item) => (
-                                                    <Option key={'vs' + item.key} value={item.key}>
-                                                        {item.value}
-                                                    </Option>
-                                                ))}
+                                                {vehicleStatusType
+                                                    ?.filter((i) => i?.key !== 'TRN')
+                                                    ?.map((item) => (
+                                                        <Option key={'vs' + item.key} value={item.key}>
+                                                            {item.value}
+                                                        </Option>
+                                                    ))}
                                             </Select>
                                         </Form.Item>
                                     </Col>
