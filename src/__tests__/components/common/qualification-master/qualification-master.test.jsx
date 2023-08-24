@@ -12,6 +12,10 @@ import { Provider } from 'react-redux';
 
 import { QualificationMaster } from '@components/common/QualificationMaster/QualificationMaster';
 
+beforeEach(() => {
+    jest.clearAllMocks();
+});
+
 const props = {
     isDataLoaded: jest.fn(),
     data: '',
@@ -19,7 +23,9 @@ const props = {
     filterString: jest.fn(),
     handleButtonClick: jest.fn(),
 };
-
+beforeEach(() => {
+    jest.clearAllMocks();
+});
 describe('Qualification Master Test', () => {
     it('should render qualification master page', () => {
         customRender(<QualificationMaster {...props} />);
