@@ -20,7 +20,6 @@ const { Text } = Typography;
 
 const APPLICATION_WEB = DEVICE_TYPE?.WEB?.key;
 const APPLICATION_MOBILE = DEVICE_TYPE?.MOBILE?.key;
-const defaultBtnVisiblity = { editBtn: false, saveBtn: false, next: false, nextBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: true, formBtnActive: false };
 
 export function chackedKeysMapData(treeData) {
     let initialCheckedKeys = {};
@@ -44,12 +43,11 @@ export function chackedKeysMapData(treeData) {
 }
 
 const AssignUserRole = (props) => {
-    const { userId, userType, formData, buttonData, setButtonData, showGlobalNotification } = props;
+    const { userId, userType, formData, setButtonData, showGlobalNotification } = props;
     const { formActionType, section } = props;
     const { fetchRoleDataList, roleListdata, isRoleListLoding } = props;
     const { fetchDLRUserRoleDataList, resetUsrDlrRoleAppDataList, usrRolelAppListShowLoading, saveDLRUserRoleDataList, fetchMNMUserRoleAppDataList, resetMnmUserRoleAppDataList, mnmUserRoleAppListShowLoading, saveMNMUserRoleAppDataList } = props;
     const { isDlrAppLoaded, isDlrAppLoding, dlrAppList, isMnmAppLoaded, isMnmAppLoding, mnmAppList } = props;
-    console.log('🚀 ~ file: AssignUserRoleMain.js:52 ~ AssignUserRole ~ mnmAppList:', mnmAppList?.role?.applications?.webApplications);
     const { fetchUserRoleList, resetUserRoleList, userRoleShowLoading, userRoleDataList, isUserRoleListLoaded, isUserRoleListLoding } = props;
 
     const [form] = Form.useForm();
@@ -217,7 +215,7 @@ const AssignUserRole = (props) => {
         showSizeChanger: false,
         pagination: false,
         dynamicPagination: false,
-        tableColumn: tableColumn(handleButtonClick),
+        tableColumn: tableColumn(handleButtonClick, formActionType),
     };
 
     const handleFormFieldChange = () => {};
