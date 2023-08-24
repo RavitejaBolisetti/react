@@ -3,15 +3,15 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-export const ReceiptType = {
-    AGAINIST_CREDIT_BILL: {
+export const PartySegment = {
+    CUSTOMER: {
         id: 1,
-        key: 'C',
-        title: 'Against Credit Bills',
+        key: 'CUS',
+        title: 'Customer',
     },
-    ADVANCE: {
+    OTHERS: {
         id: 2,
-        key: 'A',
-        title: 'Advance',
+        key: 'OTH',
+        title: 'Others',
     },
 };

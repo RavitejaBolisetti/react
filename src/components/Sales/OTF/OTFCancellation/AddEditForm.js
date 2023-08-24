@@ -25,11 +25,10 @@ import styles from 'components/common/Common.module.css';
 const { TextArea, Search } = Input;
 
 const AddEditFormMain = (props) => {
-    //console.log('dealerDataList===>', props.dealerDataList)
     const { otfCancellationForm, formData, selectedOrder, fieldNames, onFinishOTFCancellation } = props;
     const { handleButtonClick, buttonData, setButtonData, onCloseAction, handleFormValueChange, typeData, setUploadedFile, showGlobalNotification, viewDocument, setEmptyList } = props;
     const { searchDealerValue, setSearchDealerValue, dealerDataList } = props;
-    const { uploadedFileName, setUploadedFileName, uploadedFile, parentAppCode, setparentAppCode } = props;
+    const { uploadedFileName, setUploadedFileName, uploadedFile, parentAppCode, setparentAppCode, resetDealerList } = props;
 
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
     const [reasonTypeChange, setReasonTypeChange] = useState('');
@@ -77,20 +76,14 @@ const AddEditFormMain = (props) => {
         isReplaceEnabled: false,
     };
 
-    // useEffect(() => {
-    //     if (showStatus.status === 'done') {
-    //         showGlobalNotification({ notificationType: 'success', title: 'Success', message: `${showStatus.name + ' file uploaded successfully'}` });
-    //     } else if (showStatus.status === 'error') {
-    //         showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Error' });
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [showStatus]);
-
     const handleCancellationReasonTypeChange = (value) => {
         setReasonTypeChange(value);
         otfCancellationForm.resetFields(['dealerCode', 'oemCode', 'productCode', 'dealerName', 'cancellationRemark', 'reasonForCancellation']);
         setUploadedFile('');
         setFileList([]);
+        setDealerList([]);
+        resetDealerList();
+        setSearchDealerValue('');
     };
 
     const onSearchDealer = debounce(function (text) {
@@ -98,13 +91,13 @@ const AddEditFormMain = (props) => {
     }, 300);
 
     const handleSelect = (value) => {
-        let dealerDetails = dealerDataList?.find((dealer) => dealer?.dealerName === value);
+        let dealerDetails = Object.values(dealerDataList)?.find((dealer) => dealer?.dealerName === value);
         otfCancellationForm.setFieldsValue({ dealerCode: dealerDetails?.dealerCode });
     };
 
     useEffect(() => {
         if (searchDealerValue?.length > 2) {
-            if (dealerDataList?.length == 0) {
+            if (Object.values(dealerDataList)?.length == 0) {
                 setDealerList([
                     {
                         value: '',
@@ -118,35 +111,19 @@ const AddEditFormMain = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dealerDataList, searchDealerValue]);
-    const highlightFinalLocatonList = useMemo(
-        () => (data) => {
-            if (data?.length < 1) return [];
-            let finalLocations = data?.map((item) => {
-                // const index = item?.dealerName?.toLowerCase().indexOf(searchDealerValue);
-                // const beforeStr = item?.dealerName?.substring(0, index);
-                // const afterStr = item?.dealerName?.slice(index + searchDealerValue?.length);
-                // let locatonName =
-                //     index > -1 ? (
-                //         <span>
-                //             {beforeStr}
-                //             <span className="site-tree-search-value" style={{ color: 'red' }}>
-                //                 {/* {searchString} */}
-                //                 {item?.dealerName?.substring(index, index + searchDealerValue?.length)}
-                //             </span>
-                //             {afterStr}
-                //         </span>
-                //     ) : (
-                //         <span>{item?.dealerName}</span>
-                //     );
+
+    const highlightFinalLocatonList = useMemo(() => (data) => {
+        if (Object.values(data)?.length === 0) return [];
+        else {
+            let finalLocations = Object.values(dealerDataList)?.map((item) => {
                 return {
                     label: item?.dealerName,
                     value: item?.dealerName,
                 };
             });
             return finalLocations;
-        },
-        []
-    );
+        }
+    });
 
     const handleSelectTreeClick = (value) => {
         setparentAppCode(value);
@@ -178,7 +155,6 @@ const AddEditFormMain = (props) => {
     const treeSelectFieldProps = {
         treeFieldNames,
         treeData: productHierarchyData,
-        //treeDisabled: treeCodeReadOnly || isReadOnly,
         defaultParent: false,
         selectedTreeSelectKey: parentAppCode,
         handleSelectTreeClick,

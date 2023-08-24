@@ -145,14 +145,17 @@ export const VehicleAllotmentMasterBase = (props) => {
     }, [userId]);
 
     useEffect(() => {
-        setButtonData(allotmentSummaryDetails?.allotmentStatus === VEHICLE_TYPE.UNALLOTED.key ? { cancelBtn: true, allotBtn: true } : { cancelBtn: true, unAllot: true });
+        if (allotmentSummaryDetails) {
+            allotmentSummaryDetails?.allotmentStatus === VEHICLE_TYPE.ALLOTED.key && setSelectedOrderOTFDetails(allotmentSummaryDetails?.vehicleOTFDetails);
+            setButtonData(allotmentSummaryDetails?.allotmentStatus === VEHICLE_TYPE.ALLOTED.key ? { cancelBtn: true, unAllot: true } : { cancelBtn: true, allotBtn: true });
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [allotmentSummaryDetails]);
 
     useEffect(() => {
-        setPage({ pageSize: 10, current: 1 });
+        setPage({ ...page, current: 1 });
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [toggleButton]);
+    }, [filterString, toggleButton]);
 
     const extraParams = useMemo(() => {
         return [
@@ -318,7 +321,8 @@ export const VehicleAllotmentMasterBase = (props) => {
                     onCloseAction: onCloseConfirmationModalAction,
                     onSubmitAction: () => handleVehicleAllotment(record, buttonAction),
                     submitText: 'Yes',
-                    text: 'Are you sure want to Un-allot this OTF?',
+                    text: 'Are you sure want to Un-allot this OTF? ',
+                    content: selectedOTFDetails ? selectedOTFDetails?.otfNumber : '',
                 });
 
                 break;
@@ -458,6 +462,7 @@ export const VehicleAllotmentMasterBase = (props) => {
     const tableProps = {
         dynamicPagination,
         totalRecords: allotmentSearchedList?.totalRecords,
+        page,
         setPage,
         isLoading: showDataLoading,
         tableColumn: tableColumn(handleButtonClick),
@@ -540,7 +545,6 @@ export const VehicleAllotmentMasterBase = (props) => {
         titleOverride: drawerTitle.concat('Allotment Details'),
         tableData: data,
         buttonData,
-        setSelectedOrderOTFDetails,
         setButtonData,
         handleButtonClick,
         defaultFormActionType,
@@ -551,7 +555,8 @@ export const VehicleAllotmentMasterBase = (props) => {
         setSelectedOrder,
         setFormData,
         typeData,
-        //saveButtonName: !selectedOrderId ? 'Create Customer ID' : isLastSection ? 'Submit' : 'Save & Next',
+        selectedOTFDetails,
+        setSelectedOrderOTFDetails,
     };
 
     return (

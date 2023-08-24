@@ -11,15 +11,14 @@ import styles from 'components/common/Common.module.css';
 import { VEHICLE_RECIEPT_CHECKLIST_SECTION } from 'constants/VehicleRecieptCheckListSection';
 
 const MenuNav = (props) => {
-    const { currentSection, setCurrentSection, formActionType } = props;
+    const { currentSection, setCurrentSection, formActionType, previousSection } = props;
     const vehicleSectionList = Object.values(VEHICLE_RECIEPT_CHECKLIST_SECTION);
-
     const onHandle = (key) => {
         setCurrentSection(key);
     };
 
     const className = (id) => {
-        return formActionType?.addMode && id > currentSection ? styles.cursorNotAllowed : styles.cursorPointer;
+        return formActionType?.addMode && id > previousSection ? styles.cursorNotAllowed : styles.cursorPointer;
     };
 
     const mapIconAndClass = (id) => {
@@ -28,7 +27,6 @@ const MenuNav = (props) => {
 
         switch (true) {
             case formActionType?.addMode: {
-
                 switch (true) {
                     case id === currentSection: {
                         activeClassName = styles.active;
@@ -96,7 +94,7 @@ const MenuNav = (props) => {
         ?.map((item) => ({
             dot: mapIconAndClass(item?.id)?.menuNavIcon,
             children: (
-                <div className={className(item?.id)} onClick={() => (!formActionType?.addMode || (formActionType?.addMode && item?.id < currentSection) ? onHandle(item?.id) : '')}>
+                <div className={className(item?.id)} onClick={() => (!formActionType?.addMode || (formActionType?.addMode && item?.id <= previousSection) ? onHandle(item?.id) : '')}>
                     {item.title}
                 </div>
             ),
