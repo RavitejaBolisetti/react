@@ -9,7 +9,6 @@ import customRender from '@utils/test-utils';
 import createMockStore from '__mocks__/store';
 import { ListPartyMaster } from '@components/common/PartyMaster/ListPartyMaster';
 import { screen, fireEvent } from '@testing-library/react';
-import { act } from 'react-dom/test-utils';
 afterEach(() => {
     jest.restoreAllMocks();
 });
@@ -54,9 +53,7 @@ describe('List party master Components', () => {
         fireEvent.change(inputBox, { target: { value: 'Dmstest' } });
         expect(inputBox.value.includes('Dmstest')).toBeTruthy();
         const searchButton = screen.getByRole('button', { name: /search/i });
-        act(() => {
-            fireEvent.click(searchButton);
-        });
+        fireEvent.click(searchButton);
     });
 
     it('should validate search', async () => {

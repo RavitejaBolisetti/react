@@ -215,7 +215,7 @@ const Login = (props) => {
 
     const passowrdSuffix = (
         <span onMouseDown={handleShowPassword} onMouseUp={handleHidePassword} onMouseLeave={handleHidePassword}>
-            {!showPassword ? <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20} />}
+            {!showPassword ? <AiOutlineEyeInvisible size={20} data-testid="eyeInvisible"/> : <AiOutlineEye size={20} data-testid="eyeVisible"/>}
         </span>
     );
 
