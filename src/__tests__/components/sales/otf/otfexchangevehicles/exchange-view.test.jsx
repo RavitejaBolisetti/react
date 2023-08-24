@@ -2,12 +2,13 @@ import { screen } from "@testing-library/react";
 import '@testing-library/jest-dom/extend-expect';
 import customRender from "@utils/test-utils";
 import { ViewDetail } from "@components/Sales/OTF/ExchangeVehicles/ViewDetail"
+
 afterEach(() => {
     jest.restoreAllMocks();
 });
 
-describe("All Fields Render for OTF-View File", ()=>{
-
+describe("ViewDetails Component Should Render", ()=>{
+    
     it("should veiw detail main component rendr", ()=>{
         customRender(<ViewDetail styles={{}} />)
 
