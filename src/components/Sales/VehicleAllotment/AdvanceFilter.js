@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-
+import React, { useEffect } from 'react';
 import { Form, Button, Row, Col } from 'antd';
 
 import styles from 'components/common/Common.module.css';
@@ -14,9 +14,14 @@ import { VEHICLE_TYPE } from 'constants/VehicleType';
 import { SearchBox } from 'components/utils/SearchBox';
 
 export default function AdvanceFilter(props) {
-    const { setFilterString, setAdvanceSearchVisible, handleResetFilter, toggleButton, settoggleButton, advanceFilter, removeFilter, filterString, extraParams } = props;
+    const { resetAdvanceFilter, setResetAdvanceFilter, setFilterString, setAdvanceSearchVisible, handleResetFilter, toggleButton, settoggleButton, advanceFilter, removeFilter, filterString, extraParams } = props;
 
     const [searchForm] = Form.useForm();
+
+    useEffect(() => {
+        // searchForm.resetFields();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [resetAdvanceFilter]);
 
     const searchBoxProps = {
         singleField: true,
@@ -25,6 +30,7 @@ export default function AdvanceFilter(props) {
         setFilterString,
         placeholder: 'Search by VIN No./Chassis No.',
         singleFieldKey: 'searchParam',
+        setResetAdvanceFilter,
     };
     return (
         <>

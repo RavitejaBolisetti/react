@@ -5,7 +5,7 @@
  */
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import { vehicleAllotmentStatusTag } from 'components/Sales/OTF/utils/VehicleAllotmentStatusTag';
-//import { vehicleAllotmentStatusTag } from 'components/sales/OTF/utils/VehicleAllotmentStatusTag';
+import { convertDateTime } from 'utils/formatDateTime';
 import styles from 'components/common/Common.module.css';
 
 export const tableColumn = (handleButtonClick, page, pageSize) => {
@@ -15,7 +15,9 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             dataIndex: 'vehicleIdentificationNumber',
             width: '14%',
         }),
+    ];
 
+    tableColumn.push(
         tblPrepareColumns({
             title: 'Model Description',
             dataIndex: 'modelCode',
@@ -37,6 +39,17 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             title: 'M&M Invoice',
             dataIndex: 'invoiceId',
             width: '14%',
+            render: (text, record) => [
+                <div>
+                    {record?.invoiceId}
+                    {record?.mnmInvoiceDate && (
+                        <>
+                            <br />
+                            Invoice Date: {convertDateTime(record?.mnmInvoiceDate, 'DD MMM YYYY')}
+                        </>
+                    )}
+                </div>,
+            ],
         }),
 
         tblPrepareColumns({
@@ -46,8 +59,8 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             render: (_, record) => vehicleAllotmentStatusTag(record.vehicleStatus),
         }),
 
-        tblActionColumn({ handleButtonClick, styles, width: '8%', EyeIcon: true, canEdit: false }),
-    ];
+        tblActionColumn({ handleButtonClick, styles, width: '8%', EyeIcon: true, canEdit: false })
+    );
 
     return tableColumn;
 };

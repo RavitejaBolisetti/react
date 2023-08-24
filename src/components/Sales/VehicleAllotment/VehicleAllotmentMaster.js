@@ -88,6 +88,7 @@ export const VehicleAllotmentMasterBase = (props) => {
     const { fetchOTFSearchedList, fetchVehicleAllotmentSearchedList, allotmentSearchedList, resetOTFSearchedList, fetchModelList, productHierarchyData } = props;
     const { typeData, showGlobalNotification } = props;
     const { filterString, setFilterString, otfStatusList } = props;
+
     const [filterStringOTFSearch, setFilterStringOTFSearch] = useState('');
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [toggleButton, settoggleButton] = useState(VEHICLE_TYPE?.UNALLOTED.key);
@@ -103,6 +104,8 @@ export const VehicleAllotmentMasterBase = (props) => {
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
+    const [resetAdvanceFilter, setResetAdvanceFilter] = useState(false);
+    console.log('🚀 ~ file: VehicleAllotmentMaster.js:107 ~ VehicleAllotmentMasterBase ~ resetAdvanceFilter:', resetAdvanceFilter);
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
@@ -136,6 +139,11 @@ export const VehicleAllotmentMasterBase = (props) => {
         showGlobalNotification({ message });
         setShowDataLoading(false);
     };
+
+    useEffect(() => {
+        // searchForm.resetFields();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [resetAdvanceFilter]);
 
     useEffect(() => {
         if (userId) {
@@ -388,6 +396,7 @@ export const VehicleAllotmentMasterBase = (props) => {
             fetchVehicleAllotmentSearchedList({ customURL: customURL + '/search', setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
             setButtonData({ ...buttonData, formBtnActive: false });
             setIsFormVisible(false);
+
             setConfirmRequest({
                 ...confirmRequest,
                 isVisible: false,
@@ -452,6 +461,8 @@ export const VehicleAllotmentMasterBase = (props) => {
 
         advanceFilterForm.resetFields();
         advanceFilterForm.setFieldsValue();
+
+        setResetAdvanceFilter(true);
         setAdvanceSearchVisible(false);
 
         setSelectedOrder();
@@ -502,14 +513,14 @@ export const VehicleAllotmentMasterBase = (props) => {
         typeData,
         searchForm,
         onFinishSearch,
+        resetAdvanceFilter,
+        setResetAdvanceFilter,
     };
 
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
-
         icon: <FilterIcon size={20} />,
         titleOverride: 'Advance Filters',
-
         onCloseAction: onAdvanceSearchCloseAction,
         filterString,
         setFilterString,
@@ -518,6 +529,8 @@ export const VehicleAllotmentMasterBase = (props) => {
         typeData,
         onFinishSearch,
         productHierarchyData,
+        resetAdvanceFilter,
+        setResetAdvanceFilter,
     };
 
     const drawerTitle = useMemo(() => {
@@ -557,6 +570,8 @@ export const VehicleAllotmentMasterBase = (props) => {
         typeData,
         selectedOTFDetails,
         setSelectedOrderOTFDetails,
+        resetAdvanceFilter,
+        setResetAdvanceFilter,
     };
 
     return (
