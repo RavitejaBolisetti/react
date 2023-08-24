@@ -163,6 +163,7 @@ export const BASE_URL_OTF_EXCHANGE_VEHICLE = BASE_URL_OTF + 'exchangevehicle';
 export const BASE_URL_OTF_CHANGE_HISTORY = BASE_URL_OTF + 'changehistory';
 export const BASE_URL_OTF_SO_MAPPING = BASE_URL_OTF + 'somapping';
 export const BASE_URL_OTF_SO_USER_MAPPING = BASE_URL_OTF + 'somapping/users';
+export const BASE_URL_OTF_SO_MAPPING_UNMAPPING_HISTORY = BASE_URL_OTF + 'somapping/history';
 
 export const BASE_URL_OTF_TRANSFER = BASE_URL_OTF + 'transfer';
 export const BASE_URL_OTF_CANCELLATION = BASE_URL_OTF + 'request/cancel';

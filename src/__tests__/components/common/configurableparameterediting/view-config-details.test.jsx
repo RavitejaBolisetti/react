@@ -3,9 +3,6 @@ import customRender from '@utils/test-utils';
 import { screen } from '@testing-library/react';
 import { ViewConfigDetails } from 'components/common/ConfigurableParameterEditing/ViewConfigDetails';
 
-afterEach(() => {
-    jest.restoreAllMocks();
-});
 describe('Render AddEditForm Component', () => {
     it('Render Component', () => {
         customRender(<ViewConfigDetails styles={{}} />);

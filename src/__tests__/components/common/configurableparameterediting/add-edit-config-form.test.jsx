@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
-import { fireEvent, screen } from '@testing-library/react';
+import { fireEvent, screen, act } from '@testing-library/react';
 import { AddEditForm } from 'components/common/ConfigurableParameterEditing/AddEditForm';
 import { Form } from 'antd';
 
@@ -14,6 +14,10 @@ const FormWrapper = (props) => {
     };
     return <AddEditForm form={myFormMock} {...props} />;
 };
+
+afterEach(() => {
+    jest.restoreAllMocks();
+});
 
 describe('Render AddEditForm Component', () => {
     const props = {
@@ -34,23 +38,21 @@ describe('Render AddEditForm Component', () => {
         setFormBtnActive: jest.fn(),
     };
 
-    it('load AddEditForm component', () => {
-        customRender(<FormWrapper {...props} onCloseAction={jest.fn()} setIsFormVisible={jest.fn()} setFormBtnActive={jest.fn()} setFormData={jest.fn()} setSaveAndAddNewBtnClicked={jest.fn()} />);
-
-        const closeBtn = screen.getByRole('button', { name: 'Close' });
-        fireEvent.click(closeBtn);
-
-        const cancelBtn = screen.getByRole('button', { name: 'Cancel' });
-        fireEvent.click(cancelBtn);
+    it('Save Button click should work', () => {
+        customRender(<FormWrapper {...props} setSaveAndAddNewBtnClicked={jest.fn(false)} onCloseAction={jest.fn()} footerEdit={false} />);
 
         const saveBtn = screen.getByRole('button', { name: 'Save' });
-        fireEvent.click(saveBtn);
+        act(() => {
+            fireEvent.click(saveBtn);
+        });
 
-        const saveAddNewBtn = screen.getByRole('button', { name: 'Save & Add New' });
-        fireEvent.click(saveAddNewBtn);
+        const cancelBtn = screen.getByRole('button', { name: 'Cancel' });
+        act(() => {
+            fireEvent.click(cancelBtn);
+        });
     });
 
-    it('load form', () => {
+    it('should render input fields', () => {
         const formData = {
             booleanValue: null,
             configurableParameterType: 'N',
@@ -82,17 +84,21 @@ describe('Render AddEditForm Component', () => {
         expect(controlDesc.value).toHaveValue(3);
     });
 
-    it('footerEdit false', () => {
-        customRender(<FormWrapper {...props} footerEdit={false} setSaveAndAddNewBtnClicked={jest.fn()} />);
+    it('Save & Add New Button click should work', () => {
+        customRender(<FormWrapper {...props} setSaveAndAddNewBtnClicked={jest.fn(true)} formData={[]} />);
 
-        const saveBtn = screen.getByRole('button', { name: 'Save' });
-        fireEvent.click(saveBtn);
+        const saveAddNewBtn = screen.getByRole('button', { name: 'Save & Add New' });
+        act(() => {
+            fireEvent.click(saveAddNewBtn);
+        });
     });
 
-    it('footerEdit true', () => {
+    it('Edit Button click should work', () => {
         customRender(<FormWrapper {...props} footerEdit={true} hanndleEditData={jest.fn()} />);
 
         const editBtn = screen.getByRole('button', { name: 'Edit' });
-        fireEvent.click(editBtn);
+        act(() => {
+            fireEvent.click(editBtn);
+        });
     });
 });
