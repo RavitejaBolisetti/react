@@ -363,14 +363,10 @@ describe('ExchangeVehiclesMaster component render', () => {
         );
 
         const addBtn = screen.getByRole('button', { name: 'Edit', exact: false });
-        await act(async () => {
-            fireEvent.click(addBtn);
-        });
+        fireEvent.click(addBtn);
 
         const saveBtn = screen.getByRole('button', { name: 'Save & Next', exact: false });
-        await act(async () => {
-            fireEvent.click(saveBtn);
-        });
+        fireEvent.click(saveBtn);
     });
 });
 
