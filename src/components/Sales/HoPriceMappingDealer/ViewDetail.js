@@ -7,10 +7,9 @@ import React from 'react';
 import { Card, Descriptions, Divider } from 'antd';
 import styles from 'components/common/Common.module.css';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
-import { getCodeValue } from 'utils/getCodeValue';
 
 const ViewDetailMain = (props) => {
-    const { formData, isLoading, partySegmentType } = props;
+    const { formData, isLoading } = props;
 
     const viewProps = {
         bordered: false,
@@ -23,17 +22,12 @@ const ViewDetailMain = (props) => {
         <div className={styles.viewDrawerContainer}>
             <Card>
                 <Descriptions {...viewProps}>
-                    <Descriptions.Item label="Party Segment">{checkAndSetDefaultValue(getCodeValue(partySegmentType, formData?.partySegment, isLoading))}</Descriptions.Item>
-                    <Descriptions.Item label="Party ID">{checkAndSetDefaultValue(formData?.partyId, isLoading)}</Descriptions.Item>
-                </Descriptions>
-                <Divider />
-                <Descriptions {...viewProps}>
-                    <Descriptions.Item label="Party Name">{checkAndSetDefaultValue(formData?.customerName || formData?.partyName, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Address">{checkAndSetDefaultValue(formData?.address, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="City">{checkAndSetDefaultValue(formData?.city, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="State">{checkAndSetDefaultValue(formData?.state, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Phone">{checkAndSetDefaultValue(formData?.mobileNumber, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Mitra Type">{checkAndSetDefaultValue(formData?.mitraType, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Area Office">{checkAndSetDefaultValue(formData?.customerName || formData?.partyName, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="State">{checkAndSetDefaultValue(formData?.address, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Pricing City Code">{checkAndSetDefaultValue(formData?.city, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Dealer Name">{checkAndSetDefaultValue(formData?.state, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Dealer Branch">{checkAndSetDefaultValue(formData?.mobileNumber, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Dealer Selected for on Road Price">{checkAndSetDefaultValue(formData?.mitraType, isLoading)}</Descriptions.Item>
                 </Descriptions>
             </Card>
         </div>

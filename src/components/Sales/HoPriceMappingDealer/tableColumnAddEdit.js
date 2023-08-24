@@ -5,17 +5,19 @@
  */
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 
-export const tableColumnAddEdit = (page, pageSize) => {
+export const tableColumnAddEdit = (page, pageSize, sorter) => {
     const tableColumn = [
         tblPrepareColumns({
             title: 'Product Hierarchy',
             dataIndex: 'productHierarchy',
-            width: '12%',
+            width: '20%',
+            sorter: false,
         }),
         tblPrepareColumns({
             title: 'Dealer Flag',
             dataIndex: 'dealerFlag',
             width: '14%',
+            sorter: false,
         }),
     ];
 

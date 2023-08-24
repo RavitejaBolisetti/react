@@ -62,7 +62,7 @@ const AddEditFormMain = (props) => {
     const tableData = [
         {
             productHierarchy: 'product01',
-            dealerFlag: 'Flag01',
+            dealerFlag: 'Yes',
         },
     ];
 
