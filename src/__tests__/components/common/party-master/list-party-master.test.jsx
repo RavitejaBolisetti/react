@@ -54,9 +54,7 @@ describe('List party master Components', () => {
         fireEvent.change(inputBox, { target: { value: 'Dmstest' } });
         expect(inputBox.value.includes('Dmstest')).toBeTruthy();
         const searchButton = screen.getByRole('button', { name: /search/i });
-        await act(async () => {
-            fireEvent.click(searchButton);
-        });
+        fireEvent.click(searchButton);
     });
 
     it('should validate search', async () => {
