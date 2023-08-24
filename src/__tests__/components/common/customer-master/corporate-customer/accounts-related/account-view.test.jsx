@@ -3,6 +3,10 @@ import { screen } from '@testing-library/react';
 import customRender from '@utils/test-utils';
 import { ViewDetail } from '@components/common/CustomerMaster/CorporateCustomer/AccountRelated/ViewDetail';
 
+beforeEach(() => {
+    jest.clearAllMocks();
+});
+
 describe('ViewDetailBase', () => {
     it('should render checkboxes when vipDealerInd is true and formActionType is viewMode', () => {
         const formData = {

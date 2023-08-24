@@ -347,9 +347,8 @@ describe('ExchangeVehiclesMaster component render', () => {
         );
 
         const cancelBtn = screen.getByRole('button', { name: 'Cancel', exact: false });
-        await act(async () => {
-            fireEvent.click(cancelBtn);
-        });
+
+        fireEvent.click(cancelBtn);
     });
 
     it('should validate fields on finish failed', async () => {
@@ -364,7 +363,6 @@ describe('ExchangeVehiclesMaster component render', () => {
 
         const addBtn = screen.getByRole('button', { name: 'Edit', exact: false });
         fireEvent.click(addBtn);
-
         const saveBtn = screen.getByRole('button', { name: 'Save & Next', exact: false });
         fireEvent.click(saveBtn);
     });

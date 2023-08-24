@@ -2,6 +2,10 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { ViewQualificationList } from '@components/common/QualificationMaster/ViewQualificationList';
 
+beforeEach(() => {
+    jest.clearAllMocks();
+});
+
 describe('ViewQualificationList', () => {
     test('renders qualification details correctly', () => {
         const formData = {
