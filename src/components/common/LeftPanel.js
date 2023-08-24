@@ -9,7 +9,7 @@ import styles from './TreeView.module.css';
 
 const LeftPanel = (props) => {
     const { selectedTreeKey, callOnForm = false, treeData, fieldNames, handleTreeViewClick, isOpenInModal, checkedKeys, expendedKeys: defaultExpandedKeys = [] } = props;
-    const { isTreeViewVisible, checkable, onCheck = () => {} } = props;
+    const { isTreeViewVisible, checkable, onCheck = () => {}, selectable=true } = props;
     const { searchValue, setSearchValue, disableCheckbox = false } = props;
 
     const [expandedKeys, setExpandedKeys] = useState([]);
@@ -113,7 +113,7 @@ const LeftPanel = (props) => {
             {isTreeViewVisible ? (
                 <div className={isOpenInModal ? styles.modalView : ''}>
                     <div className={mainClass}>
-                        <Tree onCheck={onCheck} checkable={checkable} checkedKeys={checkedKeys} expandedKeys={expandedKeys} selectedKeys={selectedTreeKey} onSelect={handleTreeViewClick} showLine={true} showIcon={true} onExpand={onExpand} autoExpandParent={autoExpandParent} treeData={finalTreeData} />
+                        <Tree onCheck={onCheck} checkable={checkable} checkedKeys={checkedKeys} expandedKeys={expandedKeys} selectedKeys={selectedTreeKey} onSelect={handleTreeViewClick} showLine={true} showIcon={true} onExpand={onExpand} autoExpandParent={autoExpandParent} treeData={finalTreeData} selectable={selectable}/>
                     </div>
                 </div>
             ) : undefined}

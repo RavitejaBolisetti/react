@@ -129,6 +129,7 @@ const AddEditFormMain = (props) => {
                     const allowedAccess = treeData?.filter((i) => i.checked);
                     const myProps = {
                         callOnForm: true,
+                        selectable: false,
                         fieldNames,
                         treeData,
                         searchValue,

@@ -3,6 +3,10 @@ import { screen, fireEvent, act } from '@testing-library/react';
 import customRender from '@utils/test-utils';
 import { AddEditForm } from '@components/common/CustomerMaster/IndividualCustomer/CustomerDetail/CustomerNameChange/AddEditForm';
 
+beforeEach(() => {
+    jest.clearAllMocks();
+});
+
 import { Form } from 'antd';
 
 const FormWrapper = (props) => {

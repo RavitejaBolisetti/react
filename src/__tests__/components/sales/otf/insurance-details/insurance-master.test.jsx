@@ -5,6 +5,10 @@ import customRender from '@utils/test-utils';
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
 
+beforeEach(() => {
+    jest.clearAllMocks();
+});
+
 const props = {
     insuranceData: [],
     onCloseAction: jest.fn(),
