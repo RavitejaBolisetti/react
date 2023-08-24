@@ -28,6 +28,7 @@ const mapStateToProps = (state) => {
             },
         },
     } = state;
+    
 
     let returnValue = {
         userId,

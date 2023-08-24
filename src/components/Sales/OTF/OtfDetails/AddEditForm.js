@@ -14,19 +14,19 @@ import { customSelectBox } from 'utils/customSelectBox';
 import styles from 'components/common/Common.module.css';
 
 const AddEditFormMain = (props) => {
-    const { formData, formActionType, typeData, salesConsultantLov, exchangeValue, loyaltyValue } = props;
+    const { formData, disabledProps, formActionType, typeData, salesConsultantLov, exchangeValue, loyaltyValue } = props;
 
     return (
         <Card className={styles.drawerCardView}>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formattedCalendarDate(formData?.initialPromiseDeliveryDate)} label="Initial Promise Delivery Date" name="initialPromiseDeliveryDate" rules={[validateRequiredInputField('Initial Promise Delivery Date')]}>
-                        <DatePicker format={dateFormat} style={{ display: 'auto', width: '100%' }} />
+                    <Form.Item initialValue={formattedCalendarDate(formData?.initialPromiseDeliveryDate)} label="Initial Promise Delivery Date" name="initialPromiseDeliveryDate">
+                        <DatePicker {...disabledProps} format={dateFormat} style={{ display: 'auto', width: '100%' }} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={formattedCalendarDate(formData?.custExpectedDeliveryDate)} label="Cust. Expected Delivery Date" name="custExpectedDeliveryDate">
-                        <DatePicker format={dateFormat} style={{ display: 'auto', width: '100%' }} />
+                        <DatePicker {...disabledProps} format={dateFormat} style={{ display: 'auto', width: '100%' }} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -47,7 +47,7 @@ const AddEditFormMain = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.saleConsultant} name="saleConsultant" label="Sales Consultant" rules={[validateRequiredSelectField('Sales Consultant')]}>
+                    <Form.Item initialValue={formData?.saleConsultant} name="saleConsultant" label="Sales Consultant">
                         {customSelectBox({ data: salesConsultantLov })}
                     </Form.Item>
                 </Col>
@@ -64,7 +64,7 @@ const AddEditFormMain = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.deliveryAt} label="Delivery At" name="deliveryAt" rules={[validateRequiredSelectField('Delivery At')]}>
+                    <Form.Item initialValue={formData?.deliveryAt} label="Delivery At" name="deliveryAt">
                         {customSelectBox({ data: typeData['DELIVERYAT_IND'] })}
                     </Form.Item>
                 </Col>

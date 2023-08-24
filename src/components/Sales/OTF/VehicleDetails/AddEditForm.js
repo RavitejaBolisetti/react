@@ -87,7 +87,7 @@ const AddEditFormMain = (props) => {
                     <Panel header="Vehicle Information" key="1">
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item label="Vehicle Usage Type" name="vehicleUsageType" data-testid="usageType" rules={[validateRequiredSelectField('vehicle usage Type')]}>
+                                <Form.Item label="Vehicle Usage Type" name="vehicleUsageType" data-testid="usageType">
                                     <Select placeholder="Select Vehicle Usage Type" allowClear options={typeData['VEHCL_TYPE']} fieldNames={{ label: 'value', value: 'key' }} />
                                 </Form.Item>
                             </Col>

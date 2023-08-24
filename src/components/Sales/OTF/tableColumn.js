@@ -18,10 +18,10 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
         }),
 
         tblPrepareColumns({
-            title: 'OTF Date',
+            title: 'OTF Date 1',
             dataIndex: 'otfDate',
             width: '14%',
-            render: (text) => convertDateMonthYear(text),
+            render: (_, record) => (record?.otfDate ? convertDateMonthYear(record?.otfDate) : ''),
         }),
         tblPrepareColumns({
             title: 'Customer Name',

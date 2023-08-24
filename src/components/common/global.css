@@ -1183,16 +1183,10 @@ p {
     padding-left: 2px;
 }
 
-/* AntD Menu Design End*/
+:global .ant-table-thead .ant-table-selection-column {
+    background-color: #f2f2f2 !important;
+}
 
-/* AntD Space Design Start*/
-/* :global .ant-space {
-    width: 100%;
-} */
-
-/* AntD Space Design End*/
-
-/* AntD Descriptions Design Start*/
 :global .ant-descriptions .ant-descriptions-view .ant-descriptions-row:nth-child(odd) .ant-descriptions-item {
     padding-bottom: 0;
 }
@@ -1201,15 +1195,11 @@ p {
     padding-bottom: 20px;
 }
 
-/* AntD Descriptions Design End*/
-
-/* AntD Dropdown Design Start*/
-:global .ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-title-content>a:hover {
+:global .ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-title-content > a:hover {
     text-decoration: none;
 }
 
 :global .ant-dropdown.ant-dropdown-placement-bottomRight .ant-dropdown-menu {
-    /* padding: 10px; */
     padding: 4px 3px;
     border: 1px solid #0b0b0c;
     border-radius: 6px;
@@ -1231,9 +1221,6 @@ p {
     vertical-align: sub;
 }
 
-/* AntD Dropdown Design End*/
-
-/* Miscellaneous CSS Design Start*/
 :global .ant-tooltip {
     pointer-events: none;
 }
@@ -1249,5 +1236,3 @@ p {
 :global .rc-virtual-list-scrollbar-thumb {
     background: #c1c1c1 !important;
 }
-
-/* Miscellaneous CSS Design End*/

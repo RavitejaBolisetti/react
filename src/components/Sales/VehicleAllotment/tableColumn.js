@@ -5,26 +5,40 @@
  */
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import { vehicleAllotmentStatusTag } from 'components/Sales/OTF/utils/VehicleAllotmentStatusTag';
-//import { vehicleAllotmentStatusTag } from 'components/sales/OTF/utils/VehicleAllotmentStatusTag';
+import { convertDateTime } from 'utils/formatDateTime';
+import { VEHICLE_TYPE } from 'constants/VehicleType';
+
 import styles from 'components/common/Common.module.css';
 
-export const tableColumn = (handleButtonClick, page, pageSize) => {
+export const tableColumn = (handleButtonClick, allotmentStatus) => {
     const tableColumn = [
         tblPrepareColumns({
             title: 'VIN/Chasis no.',
             dataIndex: 'vehicleIdentificationNumber',
-            width: '14%',
         }),
+    ];
 
+    if (allotmentStatus === VEHICLE_TYPE.ALLOTED.key) {
+        tableColumn.push(
+            tblPrepareColumns({
+                title: 'OTF no.',
+                dataIndex: 'otfNumber',
+                width: '10%',
+            })
+        );
+    }
+    tableColumn.push(
         tblPrepareColumns({
             title: 'Model Description',
             dataIndex: 'modelCode',
-            width: '20%',
+            width: '15%',
         }),
+
         tblPrepareColumns({
             title: 'Age in Days',
             dataIndex: 'ageInDays',
             width: '10%',
+            render: (text) => <div className={styles.alignRight}>{text}</div>,
         }),
 
         tblPrepareColumns({
@@ -37,6 +51,17 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             title: 'M&M Invoice',
             dataIndex: 'invoiceId',
             width: '14%',
+            render: (text, record) => [
+                <div>
+                    {record?.invoiceId}
+                    {record?.oemInvoiceDate && (
+                        <>
+                            <br />
+                            Invoice Date: {convertDateTime(record?.oemInvoiceDate, 'DD MMM YYYY')}
+                        </>
+                    )}
+                </div>,
+            ],
         }),
 
         tblPrepareColumns({
@@ -46,8 +71,8 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             render: (_, record) => vehicleAllotmentStatusTag(record.vehicleStatus),
         }),
 
-        tblActionColumn({ handleButtonClick, styles, width: '8%', EyeIcon: true, canEdit: false }),
-    ];
+        tblActionColumn({ handleButtonClick, styles, width: '8%', EyeIcon: true, canEdit: false })
+    );
 
     return tableColumn;
 };

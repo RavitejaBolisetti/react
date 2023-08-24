@@ -208,14 +208,32 @@ const VehicleDetailsMasterMain = (props) => {
         ];
         fetchProductLovCode({ setIsLoading: ProductLovLoading, userId, onErrorAction, extraparams: LovParams });
     };
+    const findOptionServiceCode = (data) => {
+        const modifiedData = data?.map((element) => {
+            const foundData = typeData['OPT_SRV']?.find((item) => item?.value === element?.serviceName)?.key;
+            if (foundData) return { ...element, serviceName: foundData };
+            return element;
+        });
+        return modifiedData;
+    };
+
     const onFinish = (values) => {
         let data;
         if (!values.hasOwnProperty('vehicleUsageType')) {
-            data = { otfNumber: selectedOrderId, OtfId: formData?.id, id: formData?.id, podate: dayjs(formData?.podate?.substr(0, 10)).format('DD/MM/YYYY'), vehicleUsageType: VehicleDetailsData?.vehicleUsageType, model: VehicleDetailsData?.model, modelCode: VehicleDetailsData?.modelCode, discountAmount: VehicleDetailsData?.discountAmount, optionalServices: optionsServicesMapping };
+            data = {
+                otfNumber: selectedOrderId,
+                OtfId: formData?.id,
+                id: formData?.id,
+                podate: dayjs(formData?.podate?.substr(0, 10)).format('DD/MM/YYYY'),
+                vehicleUsageType: VehicleDetailsData?.vehicleUsageType,
+                model: VehicleDetailsData?.model,
+                modelCode: VehicleDetailsData?.modelCode,
+                discountAmount: VehicleDetailsData?.discountAmount,
+                optionalServices: findOptionServiceCode(optionsServiceModified),
+            };
         } else {
-            data = { ...values, otfNumber: selectedOrderId, OtfId: formData?.id, id: formData?.id, optionalServices: optionsServicesMapping, model: ProductHierarchyData['0']['prodctShrtName'] };
+            data = { ...values, otfNumber: selectedOrderId, OtfId: formData?.id, id: formData?.id, optionalServices: findOptionServiceCode(optionsServicesMapping), model: ProductHierarchyData['0']['prodctShrtName'] };
         }
-
         const onSuccess = (res) => {
             setoptionsServicesMapping([]);
             setoptionsServiceModified([]);
