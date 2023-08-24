@@ -4,9 +4,11 @@ import '@testing-library/jest-dom/extend-expect';
 import customRender from "@utils/test-utils";
 import { AddEditForm } from "@components/Sales/OTF/ExchangeVehicles/AddEditForm"
 import { Form } from 'antd';
+
 afterEach(() => {
     jest.restoreAllMocks();
-  }); 
+}); 
+
 const FormWrapper = (props) => {
     const [form]=Form.useForm();
     const mockForm = {
