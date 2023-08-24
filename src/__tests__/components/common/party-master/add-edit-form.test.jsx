@@ -6,11 +6,11 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
-import { AddEditForm } from '@components/common/PartyMaster/addeditform';
+import { AddEditForm } from '@components/common/PartyMaster/AddEditForm';
 import { screen, fireEvent, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { act } from 'react-dom/test-utils';
 import { Form } from 'antd';
+
 afterEach(() => {
     jest.restoreAllMocks();
 });

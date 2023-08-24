@@ -9,10 +9,10 @@ afterEach(() => {
 
 describe('RoleManagement Components', () => {
     it('should render RoleManagement components', () => {
-        customRender(<RoleManagement />);
-        const text = screen.getByText('Role Management');
+        customRender(<RoleManagement title="Role List" />);
+        const text = screen.getByText('Role List');
         expect(text).toBeTruthy();
-        const textSearch = screen.findByPlaceholderText('Search');
+        const textSearch = screen.getByPlaceholderText('Search');
         expect(textSearch).toBeTruthy();
         const searchBtn = screen.getByRole('img', { name: /search/i });
         fireEvent.click(searchBtn);
