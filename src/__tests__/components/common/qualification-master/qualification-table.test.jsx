@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { tableColumn } from '@components/common/QualificationMaster/tableColumn';
 
 test('renders table columns correctly', () => {
@@ -7,8 +7,8 @@ test('renders table columns correctly', () => {
     const columns = tableColumn(handleButtonClick, 1, 10);
 
     columns.forEach((column) => {
-        const { getByText } = render(<div>{column.title}</div>);
-        const columnTitle = getByText(column.title);
+        render(<div>{column.title}</div>);
+        const columnTitle = screen.getByText(column.title);
         expect(columnTitle).toBeInTheDocument();
     });
 

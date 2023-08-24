@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { ViewQualificationList } from '@components/common/QualificationMaster/ViewQualificationList';
 
 describe('ViewQualificationList', () => {
@@ -10,15 +10,15 @@ describe('ViewQualificationList', () => {
             status: 1,
         };
 
-        const { getByText } = render(<ViewQualificationList formData={formData} style={{}} />);
+        render(<ViewQualificationList formData={formData} style={{}} />);
 
-        expect(getByText('Qualification Code')).toBeInTheDocument();
-        expect(getByText('Q123')).toBeInTheDocument();
+        expect(screen.getByText('Qualification Code')).toBeInTheDocument();
+        expect(screen.getByText('Q123')).toBeInTheDocument();
 
-        expect(getByText('Qualification Name')).toBeInTheDocument();
-        expect(getByText('Sample Qualification')).toBeInTheDocument();
+        expect(screen.getByText('Qualification Name')).toBeInTheDocument();
+        expect(screen.getByText('Sample Qualification')).toBeInTheDocument();
 
-        expect(getByText('Status')).toBeInTheDocument();
-        expect(getByText('Active')).toBeInTheDocument();
+        expect(screen.getByText('Status')).toBeInTheDocument();
+        expect(screen.getByText('Active')).toBeInTheDocument();
     });
 });

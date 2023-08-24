@@ -19,7 +19,9 @@ const props = {
     filterString: jest.fn(),
     handleButtonClick: jest.fn(),
 };
-
+beforeEach(() => {
+    jest.clearAllMocks();
+});
 describe('Qualification Master Test', () => {
     it('should render qualification master page', () => {
         customRender(<QualificationMaster {...props} />);
