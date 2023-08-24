@@ -67,7 +67,8 @@ const ViewDetailMain = (props) => {
         },
     };
 
-    const tableDataItem = tableData || (formData?.vehicleOTFDetails && [formData?.vehicleOTFDetails]);
+    const tableDataItem = (formData?.vehicleOTFDetails && [formData?.vehicleOTFDetails]) || tableData;
+
     const tableProps = {
         srl: false,
         rowKey: 'otfNumber',

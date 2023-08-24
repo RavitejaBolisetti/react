@@ -14,7 +14,7 @@ const { Search } = Input;
 
 const SearchBox = (props) => {
     const { selectWide, searchForm, optionType, searchParamRule, filterString, setFilterString, handleChange, disabled = false, isLoading, handleSearchWithoutParameter = undefined } = props;
-    const { singleField = false, label = '', placeholder = 'Search', singleFieldKey = 'searchParam', setResetAdvanceFilter } = props;
+    const { singleField = false, label = '', placeholder = 'Search', singleFieldKey = 'searchParam' } = props;
 
     const onKeyPressHandler = (e) => {
         e.key === 'Enter' && e.preventDefault();
@@ -55,7 +55,7 @@ const SearchBox = (props) => {
         <div className={singleField ? styles.masterListSearchForm : styles.selectSearchBg}>
             <Form onKeyPress={onKeyPressHandler} form={searchForm} layout={singleField ? 'horizontal' : 'vertical'} colon={false} autoComplete="off">
                 {!singleField && (
-                    <Form.Item name="searchType" initialValue={filterString?.searchType} rules={[validateRequiredSelectField('parameter')]}>
+                    <Form.Item name="searchType" rules={[validateRequiredSelectField('parameter')]}>
                         <Select disabled={disabled} placeholder="Select Parameter" {...selectProps}>
                             {optionType?.map((item) => (
                                 <Option key={'st' + item.key} value={item.key}>
@@ -65,8 +65,8 @@ const SearchBox = (props) => {
                         </Select>
                     </Form.Item>
                 )}
-                <Form.Item initialValue={filterString?.searchParam} label={label} {...searchParamRule} name={singleField && singleFieldKey ? singleFieldKey : 'searchParam'} rules={[validateRequiredInputField('search value')]} validateTrigger={['onChange', 'onSearch']}>
-                    <Search onBlur={setResetAdvanceFilter} loading={isLoading} disabled={disabled} placeholder={placeholder} maxLength={25} value={filterString?.searchParam} allowClear onChange={handleChange} onSearch={singleField && handleSearchWithoutParameter ? handleSearchWithoutParameter : handleSearchParamSearch} className={singleField ? styles.headerSearchField : selectWide ? styles.headerSearchFieldWide : styles.headerSearchField} />
+                <Form.Item label={label} {...searchParamRule} name={singleField && singleFieldKey ? singleFieldKey : 'searchParam'} rules={[validateRequiredInputField('search value')]} validateTrigger={['onChange', 'onSearch']}>
+                    <Search loading={isLoading} disabled={disabled} placeholder={placeholder} maxLength={25} value={filterString?.searchParam} allowClear onChange={handleChange} onSearch={singleField && handleSearchWithoutParameter ? handleSearchWithoutParameter : handleSearchParamSearch} className={singleField ? styles.headerSearchField : selectWide ? styles.headerSearchFieldWide : styles.headerSearchField} />
                 </Form.Item>
             </Form>
         </div>
