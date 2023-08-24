@@ -17,9 +17,10 @@ import { ListSkeleton } from 'components/common/Skeleton';
 import { USER_TYPE_USER } from 'constants/modules/UserManagement/userType';
 
 const RoleApplicationModalrMain = (props) => {
-    const { form, handleFormFieldChange, onFinishFailed, isLoading, roleListdata, handleSaveUserRoleAppliactions, handleCancelModal, handleSelectRole } = props;
+    const { form, formActionType, handleFormFieldChange, onFinishFailed, isLoading, roleListdata, handleSaveUserRoleAppliactions, handleCancelModal, handleSelectRole } = props;
     const { dlrAppList, mnmAppList, userType, userRoleDataList } = props;
     const [disableSelect, setDisableSelect] = useState(false);
+    const [disableMdlSaveBtn, setDisableMdlSaveBtn] = useState(true);
 
     useEffect(() => {
         let defaultRoleID = userType === USER_TYPE_USER?.MANUFACTURER?.id ? mnmAppList?.role?.roleId : dlrAppList?.role?.roleId;
@@ -32,6 +33,8 @@ const RoleApplicationModalrMain = (props) => {
     const modalBtnProps = {
         reset: true,
         submit: true,
+        hideSaveBtn: formActionType?.viewMode,
+        saveDisabled: disableMdlSaveBtn,
         htmltype: false,
         resetName: 'Cancel',
         submitName: 'Save',
@@ -53,7 +56,7 @@ const RoleApplicationModalrMain = (props) => {
                     </Form>
                 </Col>
             </Row>
-            {isLoading ? <ListSkeleton count={4} height={30} /> : <ApplicationTree {...props} />}
+            {isLoading ? <ListSkeleton count={4} height={30} /> : <ApplicationTree {...props} setDisableMdlSaveBtn={setDisableMdlSaveBtn} />}
 
             <ModalButtons {...modalBtnProps} />
         </>
