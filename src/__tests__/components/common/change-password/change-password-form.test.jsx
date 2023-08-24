@@ -19,7 +19,7 @@ const setPassword = () => {};
 describe('ChangePasswordForm Components', () => {
     const handler = jest.fn(() => Promise.resolve());
     it('should render ChangePasswordForm components', () => {
-        const changePasswordForm = customRender(<ChangePasswordForm />);
+        customRender(<ChangePasswordForm />);
     });
     it('should change old password field in the screen', () => {
         customRender(<ChangePasswordForm />);
@@ -35,7 +35,7 @@ describe('ChangePasswordForm Components', () => {
         });
     });
     it('should render change password form input field oldPassword, newPassword and confirmPassword', async () => {
-        const { getByTestId } = customRender(<ChangePasswordForm setFieldData={setFieldData} setPassword={setPassword} callback={handler} />);
+        customRender(<ChangePasswordForm setFieldData={setFieldData} setPassword={setPassword} callback={handler} />);
 
         const oldPasswordInput = screen.getByTestId('oldPasswordInput');
         fireEvent.change(oldPasswordInput, {
