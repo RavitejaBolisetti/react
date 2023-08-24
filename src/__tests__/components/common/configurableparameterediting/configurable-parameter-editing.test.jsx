@@ -171,7 +171,6 @@ describe('Render ConfigurableParameterEditing Component', () => {
             isFormBtnActive: false,
             saveAndAddNewBtnClicked: false,
             showSaveBtn: true,
-            // setSaveAndAddNewBtnClicked:jest.fn(false),
         };
 
         customRender(
@@ -246,7 +245,6 @@ describe('Render ConfigurableParameterEditing Component', () => {
             setIsReadOnly: jest.fn(),
             setFormData: jest.fn(),
             setParameterType: jest.fn(),
-            setFormData: jest.fn([]),
             setSaveAndAddNewBtnClicked: jest.fn(true),
         };
 
