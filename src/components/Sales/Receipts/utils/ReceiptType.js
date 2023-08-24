@@ -10,7 +10,7 @@ export const ReceiptType = {
         title: 'Against Credit Bills',
     },
     ADVANCE: {
-        id: 1,
+        id: 2,
         key: 'A',
         title: 'Advance',
     },

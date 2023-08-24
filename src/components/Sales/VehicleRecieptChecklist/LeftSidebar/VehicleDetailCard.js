@@ -3,13 +3,13 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Collapse, Divider } from 'antd';
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
+import { CopytoClipboard } from 'utils/CopytoClipboard';
 import dayjs from 'dayjs';
 
 import styles from 'components/common/Common.module.css';
-import { FiCopy } from 'react-icons/fi';
 
 const { Panel } = Collapse;
 
@@ -29,6 +29,14 @@ const expandIcon = ({ isActive }) =>
 const VehicleDetailCard = (props) => {
     const { ProfileData, typeData } = props;
     const findStatus = (key) => typeData?.find((element) => element?.key === key)?.value || 'NA';
+    const [clipBoardClick, setClipboardClick] = useState(false);
+    useEffect(() => {
+        if (clipBoardClick)
+            setTimeout(() => {
+                setClipboardClick(false);
+            }, 500);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [clipBoardClick]);
 
     return (
         <Collapse bordered={true} defaultActiveKey={[1]} expandIcon={expandIcon} collapsible="icon">
@@ -36,11 +44,9 @@ const VehicleDetailCard = (props) => {
                 header={
                     <div className={`${styles.detailCardText} ${styles.marB5}`} style={{ fontSize: '14px' }}>
                         CheckList Number:
-                        <span className={ProfileData?.checklistNumber ? '' : styles.activeForm}>
+                        <span className={styles.activeForm}>
                             {ProfileData?.checklistNumber || 'New'}
-                            <a className={`${styles.floatRight} ${styles.marL5}`}>
-                                <FiCopy className={styles.activeForm} />
-                            </a>
+                            <CopytoClipboard text={ProfileData?.checklistNumber} />
                         </span>
                     </div>
                 }
@@ -48,11 +54,11 @@ const VehicleDetailCard = (props) => {
             >
                 <Divider />
                 <div className={styles.detailCardText}>
-                    Checklist Date: <span>{ProfileData?.checklistDate ? dayjs(ProfileData?.checklistDate)?.format('DD MM YYYY') : 'NA'}</span>
+                    Checklist Date: <span>{ProfileData?.checklistDate ? dayjs(ProfileData?.checklistDate)?.format('DD MMM YYYY') : 'NA'}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    Checklist Status: <span>{ProfileData?.checklistStatus || 'NA'}</span>
+                    Checklist Status: <span>{findStatus(ProfileData?.checklistStatus)}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
@@ -60,11 +66,11 @@ const VehicleDetailCard = (props) => {
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    GRN Date: <span>{ProfileData?.grnDate ? dayjs(ProfileData?.grnDate)?.format('DD-MM-YYYY') : 'NA'}</span>
+                    GRN Date: <span>{ProfileData?.grnDate ? dayjs(ProfileData?.grnDate)?.format('DD MMM YYYY') : 'NA'}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    GRN Status: <span>{ProfileData?.grnStatus || 'NA'}</span>
+                    GRN Status: <span>{ProfileData?.grnStatusDescription || 'NA'}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>

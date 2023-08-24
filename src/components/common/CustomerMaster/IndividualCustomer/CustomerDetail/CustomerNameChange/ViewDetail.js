@@ -12,10 +12,10 @@ import { FiDownload } from 'react-icons/fi';
 import { nameChangeRequestDataActions } from 'store/actions/data/customerMaster/individual/nameChangeRequest/nameChangeRequest';
 import { showGlobalNotification } from 'store/actions/notification';
 
-import { ConfirmNameChangeRequest } from './ConfirmNameChangeRequest';
 import { STATUS } from '../statusConstant';
 
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
+import { ConfirmationModal } from 'utils/ConfirmationModal';
 import { getCodeValue } from 'utils/getCodeValue';
 
 const mapStateToProps = (state) => {
@@ -150,7 +150,7 @@ const ViewDetailMain = (props) => {
                     </Col>
                 </Row>
             )}
-            <ConfirmNameChangeRequest {...confirmRequest} />
+            <ConfirmationModal {...confirmRequest} />
         </>
     );
 };

@@ -4,15 +4,17 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { Input, Form, Col, Row, Divider, Collapse, Tabs, Typography } from 'antd';
+import { Input, Form, Col, Row, Divider, Collapse, Tabs, Typography, Empty } from 'antd';
 
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { DEVICE_TYPE } from 'constants/modules/UserManagement/deviceType';
-
 import LeftPanel from 'components/common/LeftPanel';
+import { LANGUAGE_EN } from 'language/en';
 
 import style from 'components/common/TreeView.module.css';
 import styles from 'components/common/Common.module.css';
+
+const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
 
 const { Panel } = Collapse;
 const { Search } = Input;
@@ -130,56 +132,70 @@ const ApplicationTreeMain = (props) => {
 
         return (
             <div className={styles.modalTree}>
-                {menuMapData?.map((el, i) => {
-                    const treeData = el?.children;
-                    const flatternData = flattenData(treeData);
-                    const checkedMenuKeys = flatternData?.map((i) => i.checked && i?.value);
-                    const allowedAccess = checkedMenuKeys?.filter((i) => i.checked && i?.vlaue);
+                {menuMapData?.length ? (
+                    menuMapData?.map((el, i) => {
+                        const treeData = el?.children;
+                        const flatternData = flattenData(treeData);
+                        const checkedMenuKeys = flatternData?.map((i) => i.checked && i?.value);
+                        const allowedAccess = checkedMenuKeys?.filter((i) => i.checked && i?.vlaue);
 
-                    const myProps = {
-                        fieldNames,
-                        treeData,
-                        searchValue,
-                        setSearchValue,
-                        checkable: true,
-                        isTreeViewVisible: true,
-                        onCheck: onCheck(el?.value),
-                        disableCheckbox: viewMode,
-                        checkedKeys: checkedKeys?.[deviceType]?.[el?.value] || [],
-                    };
+                        const myProps = {
+                            fieldNames,
+                            treeData,
+                            searchValue,
+                            setSearchValue,
+                            checkable: true,
+                            isTreeViewVisible: true,
+                            onCheck: onCheck(el?.value),
+                            disableCheckbox: viewMode,
+                            checkedKeys: checkedKeys?.[deviceType]?.[el?.value] || [],
+                        };
 
-                    return (
-                        <div className={styles.accordianContainer}>
-                            <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(i)} expandIconPosition="end">
-                                <Panel
-                                    header={
-                                        <Row type="flex" justify="space-between" align="middle" size="large">
-                                            <Row type="flex" justify="space-around" align="middle">
-                                                <Typography>{el?.label}</Typography>
+                        return (
+                            <div className={styles.accordianContainer}>
+                                <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(i)} expandIconPosition="end">
+                                    <Panel
+                                        header={
+                                            <Row type="flex" justify="space-between" align="middle" size="large">
+                                                <Row type="flex" justify="space-around" align="middle">
+                                                    <Typography>{el?.label}</Typography>
+                                                </Row>
+                                                {allowedAccess?.length > 0 && <Text type="secondary">{allowedAccess?.length} Access Provided</Text>}
                                             </Row>
-                                            {allowedAccess?.length > 0 && <Text type="secondary">{allowedAccess?.length} Access Provided</Text>}
+                                        }
+                                        key={i}
+                                    >
+                                        <Divider />
+                                        <Row gutter={20}>
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                                <Form.Item label={''} name="search" validateTrigger={['onSearch']}>
+                                                    <Search placeholder="Search" initialValue={searchValue} onChange={handleSearchValue} allowClear />
+                                                </Form.Item>
+                                            </Col>
                                         </Row>
-                                    }
-                                    key={i}
-                                >
-                                    <Divider />
-                                    <Row gutter={20}>
-                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                            <Form.Item label={''} name="search" validateTrigger={['onSearch']}>
-                                                <Search placeholder="Search" initialValue={searchValue} onChange={handleSearchValue} allowClear />
-                                            </Form.Item>
-                                        </Col>
-                                    </Row>
-                                    <Row gutter={20}>
-                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={style.roleTree}>
-                                            <LeftPanel {...myProps} />
-                                        </Col>
-                                    </Row>
-                                </Panel>
-                            </Collapse>
-                        </div>
-                    );
-                })}
+                                        <Row gutter={20}>
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={style.roleTree}>
+                                                <LeftPanel {...myProps} />
+                                            </Col>
+                                        </Row>
+                                    </Panel>
+                                </Collapse>
+                            </div>
+                        );
+                    })
+                ) : (
+                    <Empty
+                        image={Empty.PRESENTED_IMAGE_SIMPLE}
+                        imageStyle={{
+                            height: 60,
+                        }}
+                        description={
+                            <span>
+                                {noDataTitle} <br />
+                            </span>
+                        }
+                    ></Empty>
+                )}
             </div>
         );
     };

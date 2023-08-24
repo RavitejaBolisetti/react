@@ -39,9 +39,9 @@ const VehicleReceiptDetailCard = (props) => {
                             Receipt No.:
                             <span className={styles.verticallyCentered}>
                                 {receiptDetailData?.receiptsDetails?.receiptNumber}
-                                <a className={`${styles.verticallyCentered} ${styles.marL5}`}>
+                                {/* <a className={`${styles.verticallyCentered} ${styles.marL5}`}>
                                     <FiCopy className={styles.activeForm} />
-                                </a>
+                                </a> */}
                             </span>
                         </div>
                     </>

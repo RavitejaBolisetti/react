@@ -42,7 +42,7 @@ describe('View Form component', () => {
         const rejectedBtn = screen.getByRole('button', { name: 'Reject' });
         fireEvent.click(rejectedBtn);
 
-        const closeBtn = await screen.findByRole('button', { name: 'Cancel' });
+        const closeBtn = await screen.findByRole('button', { name: 'No' });
         fireEvent.click(closeBtn);
     });
     it('should click on rejection model Submit buttons', async () => {
@@ -57,10 +57,10 @@ describe('View Form component', () => {
         const rejectedBtn = screen.getByRole('button', { name: 'Reject' });
         fireEvent.click(rejectedBtn);
 
-        const rejectionText = screen.getByRole('textbox', { name: 'Reason for Rejection' });
+        const rejectionText = screen.getByRole('textbox', { name: 'Remark for Rejection' });
         fireEvent.change(rejectionText, { target: { value: 'helo' } });
 
-        const closeBtn = await screen.findByRole('button', { name: 'Submit' });
+        const closeBtn = screen.getByRole('button', { name: /yes, reject/i });
         fireEvent.click(closeBtn);
     });
 });

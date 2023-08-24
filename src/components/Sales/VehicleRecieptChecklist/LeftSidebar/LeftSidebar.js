@@ -8,6 +8,9 @@ import MenuNav from './MenuNav';
 import VehicleDetailCard from './VehicleDetailCard';
 
 const LeftSidebar = (props) => {
+    const { previousSection, setpreviousSection, currentSection } = props;
+    if (currentSection > previousSection) setpreviousSection(currentSection);
+
     return (
         <>
             <VehicleDetailCard {...props} />

@@ -45,7 +45,7 @@ const PaymentFormContainer = (props) => {
             case PAYMENT_MODE?.CHEQUE_DD?.KEY: {
                 return <ChequeForm {...props} />;
             }
-            case PAYMENT_MODE?.RTGS?.KEY: {
+            case PAYMENT_MODE?.NEFT?.KEY: {
                 return <NeftForm {...props} />;
             }
             case PAYMENT_MODE?.CREDIT_CARD?.KEY: {
