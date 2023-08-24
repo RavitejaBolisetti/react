@@ -281,6 +281,11 @@ export const VehicleAllotmentMasterBase = (props) => {
                 title: 'Value',
                 value: filterStringOTFSearch?.searchParam,
             },
+            // {
+            //     key: 'otfStatus',
+            //     title: 'Status',
+            //     value: OTF_STATUS?.BOOKED?.key,
+            // },
             {
                 key: 'otfStatus',
                 title: 'Status',
