@@ -62,8 +62,6 @@ const AddEditFormMain = (props) => {
     const tableData = [
         {
             productHierarchy: 'product01',
-        },
-        {
             dealerFlag: 'Flag01',
         },
     ];
@@ -129,7 +127,7 @@ const AddEditFormMain = (props) => {
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                         {/* <Form.Item initialValue={formData?.areaOffice} label="Area Office" name="areaOffice"> */}
-                                        <DataTable tableColumn={tableColumnAddEdit({ handleButtonClick })} scroll={{ x: 1000 }} tableData={tableData} pagination={false} />
+                                        <DataTable tableColumn={tableColumnAddEdit({ handleButtonClick })} tableData={tableData} pagination={false} />
                                         {/* </Form.Item> */}
                                     </Col>
                                 </Row>
