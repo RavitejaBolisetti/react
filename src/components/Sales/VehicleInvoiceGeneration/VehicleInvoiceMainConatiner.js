@@ -18,6 +18,7 @@ import { LoyaltySchemeMaster } from './LoyaltyScheme';
 import { ReferralsMaster } from './Referrals';
 import { FinanceDetailsMaster } from './FinanceDetails';
 import { SchemeOfferDetailsMaster } from './SchemeOfferDetails';
+import { VehicleInvoiceDetailMaster } from './VehicleDetails';
 
 const VehicleInvoiceMainConatinerMain = (props) => {
     const { currentSection } = props;
@@ -32,11 +33,9 @@ const VehicleInvoiceMainConatinerMain = (props) => {
                 return <InvoiceDetailsMaster {...myProps} />;
             }
             case VEHICLE_INVOICE_SECTION.VEHICLE_DETAILS.id: {
-                return <p>Coming Soon...</p>;
-                // return <InvoiceDetailsMaster {...myProps} />;
+                return <VehicleInvoiceDetailMaster {...myProps} />;
             }
             case VEHICLE_INVOICE_SECTION.SCHEME_OFFER_DETAILS.id: {
-                // return <p>Coming Soon...</p>;
                 return <SchemeOfferDetailsMaster {...myProps} />;
             }
             case VEHICLE_INVOICE_SECTION.FINANACE_DETAILS.id: {

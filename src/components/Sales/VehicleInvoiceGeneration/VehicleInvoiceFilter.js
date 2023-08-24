@@ -11,13 +11,21 @@ import { RxCross2 } from 'react-icons/rx';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { QueryButtons } from 'components/Sales/VehicleRecieptChecklist/QueryButtons';
 import { QUERY_BUTTONS_CONSTANTS } from './QueryButtons';
+import { SearchBox } from 'components/utils/SearchBox';
 
 import styles from 'components/common/Common.module.css';
 
 const { Search } = Input;
 
 export default function VehicleInvoiceFilter(props) {
-    const { extraParams, removeFilter, handleResetFilter, advanceFilter = false, receiptStatusList, handleReceiptTypeChange, filterString, setAdvanceSearchVisible, handleButtonClick, handleSearch, receiptStatus, handleChange } = props;
+    const { extraParams, removeFilter, searchForm, filterString, setFilterString, handleResetFilter, advanceFilter = false, receiptStatusList, handleReceiptTypeChange, setAdvanceSearchVisible, handleButtonClick, handleSearch, receiptStatus, handleChange } = props;
+
+    const serachBoxProps = {
+        searchForm,
+        filterString,
+        // optionType: typeData?.[PARAM_MASTER.OTF_SER.id],
+        setFilterString,
+    };
 
     return (
         <div className={styles.contentHeaderBackground}>
@@ -30,7 +38,7 @@ export default function VehicleInvoiceFilter(props) {
                                 <Search placeholder="Search Receipt No." onChange={handleChange} onSearch={handleSearch} allowClear className={styles.headerSearchField} />
                             </div>
                         </Col>
-                        <Col xs={24} sm={4} md={4} lg={4} xl={4} className={styles.verticallyCentered}>
+                        <Col xs={24} sm={24} md={4} lg={4} xl={4} className={styles.verticallyCentered}>
                             <Button
                                 icon={<FilterIcon />}
                                 type="link"
