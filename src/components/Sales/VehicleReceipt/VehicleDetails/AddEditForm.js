@@ -23,7 +23,6 @@ const { Option } = Select;
 
 const AddEditFormMain = (props) => {
     const { formData, setFinalData, buttonData, setButtonData, vehicleStatusType, physicalStatusType, shortageType, vehicleDetailForm } = props;
-    console.log('🚀 ~ file: AddEditForm.js:25 ~ AddEditFormMain ~ vehicleStatusType:', vehicleStatusType);
 
     const [activeKey, setactiveKey] = useState([]);
     // const [vehicleDetailList, setVehicleDetailList] = useState([]);
