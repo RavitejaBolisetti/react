@@ -1,6 +1,10 @@
 import { render } from '@testing-library/react';
 import { tableColumn } from '@components/common/QualificationMaster/tableColumn';
 
+beforeEach(() => {
+    jest.clearAllMocks();
+});
+
 test('renders table columns correctly', () => {
     const handleButtonClick = jest.fn();
 

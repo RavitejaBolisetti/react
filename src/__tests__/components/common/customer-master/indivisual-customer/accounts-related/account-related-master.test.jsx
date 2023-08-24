@@ -6,6 +6,10 @@ import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
 import { Form } from 'antd';
 
+beforeEach(() => {
+    jest.clearAllMocks();
+});
+
 const props = {
     formActionType: { addMode: false, editMode: true, viewMode: false },
     selectedCustomerId: 'CUS1687508619061',

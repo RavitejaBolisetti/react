@@ -347,9 +347,8 @@ describe('ExchangeVehiclesMaster component render', () => {
         );
 
         const cancelBtn = screen.getByRole('button', { name: 'Cancel', exact: false });
-        await act(async () => {
-            fireEvent.click(cancelBtn);
-        });
+
+        fireEvent.click(cancelBtn);
     });
 
     it('should validate fields on finish failed', async () => {

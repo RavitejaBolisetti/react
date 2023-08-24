@@ -3,6 +3,10 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { ViewDetail } from '@components/common/CustomerMaster/IndividualCustomer/IndividualProfile/ViewDetail';
 import customRender from '@utils/test-utils';
 
+beforeEach(() => {
+    jest.clearAllMocks();
+});
+
 describe('ViewDetailMain Component', () => {
     it('should toggle Collapse panel on header click', () => {
         const setActiveKey = jest.fn();

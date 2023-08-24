@@ -3,6 +3,10 @@ import { screen } from '@testing-library/react';
 import { ViewDetail } from '@components/Sales/OTF/OtfDetails/ViewDetail';
 import customRender from '@utils/test-utils';
 
+beforeEach(() => {
+    jest.clearAllMocks();
+});
+
 describe('OTF View Details Component render', () => {
     it('should render view details page', async () => {
         customRender(<ViewDetail />);

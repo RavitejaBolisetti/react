@@ -6,6 +6,10 @@ import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
 import { Form } from 'antd';
 
+beforeEach(() => {
+    jest.clearAllMocks();
+});
+
 const FormWrapper = (props) => {
     const [form] = Form.useForm();
     return <IndividualProfileMaster form={form} {...props} />;

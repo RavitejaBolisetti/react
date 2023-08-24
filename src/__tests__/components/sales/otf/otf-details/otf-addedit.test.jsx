@@ -3,6 +3,10 @@ import { fireEvent, screen } from '@testing-library/react';
 import { AddEditForm } from '@components/Sales/OTF/OtfDetails/AddEditForm';
 import customRender from '@utils/test-utils';
 
+beforeEach(() => {
+    jest.clearAllMocks();
+});
+
 const props = {
     formActionType: { editMode: 'true' },
     formData: {
