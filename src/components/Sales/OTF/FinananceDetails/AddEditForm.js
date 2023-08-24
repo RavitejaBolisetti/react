@@ -13,40 +13,20 @@ import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/prepareP
 import { customSelectBox } from 'utils/customSelectBox';
 
 import { YES_NO_FLAG } from 'constants/yesNoFlag';
+import { FINANCE_ARRANGED_BY } from 'constants/financeArrangedBy';
 
 import styles from 'components/common/Common.module.css';
 
 const AddEditFormMain = (props) => {
-    const { formData, FinanceLovData, typeData, form, formActionType } = props;
+    const { formData, FinanceLovData, typeData, form, formActionType, setFormData } = props;
     const [doReceived, setDoReceived] = useState();
-    const FINANCE_CONSTANTS = {
-        Self: {
-            value: 'Self',
-            key: 'SLF',
-        },
-        Dealer: {
-            value: 'Dealer',
-            key: 'DEL',
-        },
-        DSA: {
-            value: 'DSA',
-            key: 'DSA',
-        },
-        Cash: {
-            value: 'Cash',
-            key: 'CSH',
-        },
-    };
-    const [financeArranged, setFinanceArranged] = useState({
-        customerArranged: formData?.financeArrangedBy === FINANCE_CONSTANTS?.Self?.key,
-        dealerArranged: formData?.financeArrangedBy === FINANCE_CONSTANTS?.Dealer?.key,
-        cash: formData?.financeArrangedBy === FINANCE_CONSTANTS?.Cash?.key,
-        dsa: formData?.financeArrangedBy === FINANCE_CONSTANTS?.DSA?.key,
-    });
+    const [financeArrangedBy, setFinanceArrangedBy] = useState();
+    const checkFinanceType = (type, key) => (type ? type === key : false);
 
     useEffect(() => {
         setDoReceived(formData?.doReceived || 'N');
-        formData && form.setFieldsValue({ ...formData, doDate: formattedCalendarDate(formData?.doDate) });
+        setFinanceArrangedBy(formData?.financeArrangedBy);
+        formData && form.setFieldsValue({ ...formData, printHypothecationDetails: formData?.printHypothecationDetails ? 1 : 0, doDate: formattedCalendarDate(formData?.doDate), financier: formData?.financierCode });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
 
@@ -60,30 +40,6 @@ const AddEditFormMain = (props) => {
 
     const onLoanChange = () => {
         form.validateFields(['emi']);
-    };
-
-    const handleFinanceArrangedChange = (value) => {
-        switch (value) {
-            case FINANCE_CONSTANTS?.Self?.key: {
-                setFinanceArranged({ dealerArranged: false, cash: false, dsa: false, customerArranged: true });
-                break;
-            }
-            case FINANCE_CONSTANTS?.Dealer?.key: {
-                setFinanceArranged({ dealerArranged: true, cash: false, dsa: false, customerArranged: false });
-                break;
-            }
-            case FINANCE_CONSTANTS?.Cash?.key: {
-                setFinanceArranged({ dsa: false, customerArranged: false, cash: true, dealerArranged: false });
-                break;
-            }
-            case FINANCE_CONSTANTS?.DSA?.key: {
-                setFinanceArranged({ dsa: true, customerArranged: false, cash: false, dealerArranged: false });
-                break;
-            }
-            default: {
-                break;
-            }
-        }
     };
 
     const emiLessThanAmount = (value) => {
@@ -101,6 +57,12 @@ const AddEditFormMain = (props) => {
         className: styles.headerSelectField,
     };
 
+    const handleFinanceArrangedBy = (value) => {
+        setFinanceArrangedBy(value);
+        form.resetFields();
+        form.setFieldsValue({ financeArrangedBy: value });
+    };
+
     return (
         <>
             <div className={styles.drawerCustomerMaster}>
@@ -109,20 +71,20 @@ const AddEditFormMain = (props) => {
                         <Space style={{ display: 'flex' }} size="middle" direction="vertical">
                             <Card style={{ backgroundColor: '#F2F2F2' }}>
                                 <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                                        <Form.Item initialValue={formData?.financeArrangedBy} name="financeArrangedBy" label="Finance Arranged By">
-                                            {customSelectBox({ data: typeData['FNC_ARNGD'], onChange: handleFinanceArrangedChange })}
+                                    <Col xs={24} sm={24} md={8} lg={8} xl={8} xxl={8}>
+                                        <Form.Item name="financeArrangedBy" label="Finance Arranged By">
+                                            {customSelectBox({ data: typeData['FNC_ARNGD'], onChange: handleFinanceArrangedBy })}
                                         </Form.Item>
                                     </Col>
-                                    {!financeArranged?.cash && (
-                                        <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                                            <Form.Item initialValue={formActionType?.editMode ? (formData?.printHyptheticatedDetail === 1 ? true : false) : false} labelAlign="left" wrapperCol={{ span: 24 }} name="printHyptheticatedDetail" label="Print Hypothecation Details?" valuePropName="checked">
+                                    {financeArrangedBy && !checkFinanceType(financeArrangedBy, FINANCE_ARRANGED_BY?.CASH?.key) && (
+                                        <Col xs={24} sm={24} md={8} lg={8} xl={8} xxl={8}>
+                                            <Form.Item initialValue={formActionType?.editMode ? (formData?.printHyptheticatedDetail === 1 ? true : false) : false} labelAlign="left" wrapperCol={{ span: 24 }} name="printHypothecationDetails" label="Print Hypothecation Details?" valuePropName="checked">
                                                 <Switch checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" onChange={(checked) => (checked ? 1 : 0)} />
                                             </Form.Item>
                                         </Col>
                                     )}
                                 </Row>
-                                {(financeArranged?.dealerArranged || financeArranged?.customerArranged || financeArranged?.dsa) && (
+                                {financeArrangedBy && !checkFinanceType(financeArrangedBy, FINANCE_ARRANGED_BY?.CASH?.key) && (
                                     <>
                                         <Row gutter={20}>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
@@ -131,34 +93,34 @@ const AddEditFormMain = (props) => {
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                <Form.Item initialValue={formData?.branch} label="Branch" name="branch">
+                                                <Form.Item label="Branch" name="branch">
                                                     <Input placeholder={preparePlaceholderText('branch')} maxLength={55} />
                                                 </Form.Item>
                                             </Col>
 
-                                            {financeArranged?.dealerArranged && (
+                                            {financeArrangedBy && checkFinanceType(financeArrangedBy, FINANCE_ARRANGED_BY?.DEALER?.key) && (
                                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                    <Form.Item initialValue={formData?.fileNumber} label="File Number" name="fileNumber">
+                                                    <Form.Item label="File Number" name="fileNumber">
                                                         <Input placeholder={preparePlaceholderText('file number')} maxLength={30} />
                                                     </Form.Item>
                                                 </Col>
                                             )}
                                         </Row>
-                                        {financeArranged?.dealerArranged && (
+                                        {financeArrangedBy && checkFinanceType(financeArrangedBy, FINANCE_ARRANGED_BY?.DEALER?.key) && (
                                             <>
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                        <Form.Item initialValue={formData?.loanAmount} onChange={onLoanChange} label="Loan Amount" name="loanAmount" rules={[validateNumberWithTwoDecimalPlaces('loan amount')]}>
+                                                        <Form.Item onChange={onLoanChange} label="Loan Amount" name="loanAmount" rules={[validateNumberWithTwoDecimalPlaces('loan amount')]}>
                                                             <Input placeholder={preparePlaceholderText('loan amount')} maxLength={10} />
                                                         </Form.Item>
                                                     </Col>
                                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                        <Form.Item initialValue={formData?.emi} label="EMI" name="emi" rules={[validateNumberWithTwoDecimalPlaces('emi'), { validator: (rule, value) => emiLessThanAmount(value) }]}>
+                                                        <Form.Item label="EMI" name="emi" rules={[validateNumberWithTwoDecimalPlaces('emi'), { validator: (rule, value) => emiLessThanAmount(value) }]}>
                                                             <Input placeholder={preparePlaceholderText('emi')} maxLength={10} />
                                                         </Form.Item>
                                                     </Col>
                                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                        <Form.Item initialValue={formData?.doReceived} label="D.O. Received" name="doReceived">
+                                                        <Form.Item label="D.O. Received" name="doReceived">
                                                             {customSelectBox({ data: typeData?.YES_NO_FLG, onChange: handleDOChange })}
                                                         </Form.Item>
                                                     </Col>
@@ -166,7 +128,7 @@ const AddEditFormMain = (props) => {
                                                 {doReceived === YES_NO_FLAG?.YES?.key && (
                                                     <Row gutter={20}>
                                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                            <Form.Item initialValue={formData?.doNumber} label="D.O. Number" name="doNumber">
+                                                            <Form.Item label="D.O. Number" name="doNumber">
                                                                 <Input placeholder={preparePlaceholderText('d.o. number')}></Input>
                                                             </Form.Item>
                                                         </Col>

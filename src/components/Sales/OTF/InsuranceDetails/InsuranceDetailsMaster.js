@@ -55,13 +55,14 @@ const InsuranceDetailsMasterBase = (props) => {
     const { insuranceData, onCloseAction, fetchList, formActionType, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
     const { form, selectedOrderId, handleFormValueChange, section, isLoading, NEXT_ACTION, handleButtonClick, onFinishFailed, saveData } = props;
 
-    // const [formData, setFormData] = useState();
+    const [formData, setFormData] = useState();
 
-    // useEffect(() => {
-    //     setFormData(insuranceData);
-    //     handleFormValueChange();
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [insuranceData]);
+    useEffect(() => {
+        if (insuranceData) {
+            setFormData(insuranceData);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [insuranceData]);
 
     const extraParams = [
         {
@@ -98,7 +99,7 @@ const InsuranceDetailsMasterBase = (props) => {
     const viewProps = {
         styles,
         onCloseAction,
-        formData: insuranceData,
+        formData,
         isLoading,
     };
 
@@ -109,12 +110,11 @@ const InsuranceDetailsMasterBase = (props) => {
         userId,
         isDataLoaded,
         isLoading,
-        formData: insuranceData,
+        formData,
     };
 
     const myProps = {
         ...props,
-        // buttonData: { ...props.buttonData, editBtn: true, saveAndNewBtn: true, nextBtn: true, saveBtn: true },
     };
 
     const onFinish = (values) => {
@@ -133,7 +133,7 @@ const InsuranceDetailsMasterBase = (props) => {
 
         const requestData = {
             data: data,
-            method: data?.id ? 'post' : 'put',
+            method: insuranceData?.id ? 'put' : 'post',
             setIsLoading: listShowLoading,
             userId,
             onError,

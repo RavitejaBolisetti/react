@@ -4,20 +4,22 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect } from 'react';
-import { Row, Col, Input, Form, Select, Card } from 'antd';
+import { Row, Col, Input, Form, Select, Card, Divider } from 'antd';
 
 import styles from 'components/common/Common.module.css';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
+import { CustomerListMaster } from 'components/utils/CustomerListModal';
 
 import { validateRequiredInputField, validateRequiredSelectField, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
 
 const { Search } = Input;
 
 const AddEditFormMain = (props) => {
-    const { formData, form, isCustomerLoading, onSearch } = props;
+    const { formData, form, editableOnSearch } = props;
     const { financeLovData, schemeLovData, typeData, makeData } = props;
     const { isConfigLoading, isSchemeLovLoading, isFinanceLovLoading, isMakeLoading, isModelLoading, isVariantLoading } = props;
-    const { filteredModelData, filteredVariantData, handleFilterChange } = props;
+    const { filteredModelData, filteredVariantData, handleFilterChange, fnSetData, setEditableOnSearch } = props;
+
     useEffect(() => {
         if (formData) {
             form.setFieldsValue({
@@ -26,6 +28,7 @@ const AddEditFormMain = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
+
     const onHandleChange = () => {
         form.setFieldsValue({ customerName: undefined });
     };
@@ -38,44 +41,46 @@ const AddEditFormMain = (props) => {
 
     return (
         <Card className={styles.ExchangeCard}>
+            <CustomerListMaster fnSetData={fnSetData} setEditableOnSearch={setEditableOnSearch} />
+            <Divider />
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name="customerId" label="Customer ID" initialValue={formData?.customerId} rules={[validateRequiredInputField('customer id')]}>
-                        <Search loading={isCustomerLoading} placeholder={preparePlaceholderText('customer id')} maxLength={35} allowClear type="text" onSearch={onSearch} onChange={onHandleChange} />
+                    <Form.Item name="customerId" label="Customer ID" initialValue={formData?.customerId} rules={[validateRequiredInputField('customerId')]}>
+                        <Input disabled={editableOnSearch} placeholder={preparePlaceholderText('customer id')} maxLength={35} allowClear />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name="customerName" label="Customer Name" initialValue={formData?.customerName}>
-                        <Input disabled={true} placeholder={preparePlaceholderText('customer name')} maxLength={50} />
+                    <Form.Item name="customerName" label="Customer Name" initialValue={formData?.customerName} rules={[validateRequiredInputField('customer number')]}>
+                        <Input disabled={editableOnSearch} placeholder={preparePlaceholderText('customer name')} maxLength={50} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={formData?.make} label="Make" name="make" data-testid="make" rules={[validateRequiredSelectField('make')]}>
-                        <Select placeholder="Select" loading={isMakeLoading} allowClear fieldNames={{ label: 'value', value: 'key' }} options={makeData} onChange={(value, selectobj) => handleFilterChange('make', value, selectobj)} />
+                        <Select disabled={editableOnSearch} placeholder="Select" loading={isMakeLoading} allowClear fieldNames={{ label: 'value', value: 'key' }} options={makeData} onChange={(value, selectobj) => handleFilterChange('make', value, selectobj)} />
                     </Form.Item>
                 </Col>
             </Row>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={formData?.modelGroup} label="Model Group" name="modelGroup" data-testid="modelGroup" rules={[validateRequiredSelectField('model group')]}>
-                        <Select placeholder="Select" loading={isModelLoading} allowClear fieldNames={{ label: 'value', value: 'key' }} options={filteredModelData} onChange={(value, selectobj) => handleFilterChange('modelGroup', value, selectobj)} />
+                        <Select disabled={editableOnSearch} placeholder="Select" loading={isModelLoading} allowClear fieldNames={{ label: 'value', value: 'key' }} options={filteredModelData} onChange={(value, selectobj) => handleFilterChange('modelGroup', value, selectobj)} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={formData?.variant} label="Variant" name="variant" data-testid="variant" rules={[validateRequiredSelectField('Variant')]}>
-                        <Select placeholder="Select" loading={isVariantLoading} allowClear fieldNames={{ label: 'value', value: 'key' }} options={filteredVariantData} />
+                        <Select disabled={editableOnSearch} placeholder="Select" loading={isVariantLoading} allowClear fieldNames={{ label: 'value', value: 'key' }} options={filteredVariantData} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name="oldRegistrationNumber" label="Old Reg Number" initialValue={formData?.oldRegistrationNumber} rules={[validateRequiredInputField('Old Reg Number')]}>
-                        <Input placeholder={preparePlaceholderText('Old Reg Number')} maxLength={50} />
+                    <Form.Item name="registrationNumber" label="Reg Number" initialValue={formData?.registrationNumber} rules={[validateRequiredInputField('Reg Number')]}>
+                        <Input disabled={editableOnSearch} placeholder={preparePlaceholderText('Reg Number')} maxLength={50} />
                     </Form.Item>
                 </Col>
             </Row>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name="oldChessisNumber" label="Old Chassis Number" initialValue={formData?.oldChessisNumber} rules={[validateRequiredInputField('Old Chassis Number')]}>
-                        <Input maxLength={50} placeholder={preparePlaceholderText('Old Chassis Number')} />
+                    <Form.Item name="chassisNumber" label="VIN Number" initialValue={formData?.chassisNumber} rules={[validateRequiredInputField('VIN number')]}>
+                        <Input disabled={editableOnSearch} maxLength={50} placeholder={preparePlaceholderText('vin number')} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -130,7 +135,7 @@ const AddEditFormMain = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name="hypothicatedToCode" label="Hypothecated To" initialValue={formData?.hypothicatedToCode} fieldNames={{ label: 'value', value: 'key' }} rules={[validateRequiredSelectField('hypothecated')]}>
+                    <Form.Item name="hypothicatedToCode" label="Hypothecated To" initialValue={formData?.hypothicatedToCode} fieldNames={{ label: 'value', value: 'key' }}>
                         <Select loading={isFinanceLovLoading} fieldNames={{ label: 'value', value: 'key' }} options={financeLovData} placeholder={preparePlaceholderSelect('Finance Company')} />
                     </Form.Item>
                 </Col>
