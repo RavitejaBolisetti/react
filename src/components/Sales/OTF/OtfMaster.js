@@ -10,7 +10,7 @@ import { bindActionCreators } from 'redux';
 import { Col, Form, Row, Modal } from 'antd';
 import { tableColumn } from './tableColumn';
 import AdvanceOtfFilter from './AdvanceOtfFilter';
-import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, CANCEL_ACTION, TRANSFER_ACTION, btnVisiblity } from 'utils/btnVisiblity';
+import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, CANCEL_ACTION, TRANSFER_ACTION, btnVisiblity, ALLOT } from 'utils/btnVisiblity';
 
 import { OTFMainConatiner } from './OTFMainConatiner';
 import { ListDataTable } from 'utils/ListDataTable';
@@ -19,6 +19,7 @@ import { OTF_STATUS } from 'constants/OTFStatus';
 import { OTF_SECTION } from 'constants/OTFSection';
 import { CancellationMaster } from './OTFCancellation/CancellationMaster';
 import { TransferMaster } from './OTFTransfer/TransferMaster';
+import { OTFAllotmentMaster } from './OTFAllotment/OTFAllotmentMaster';
 
 import { showGlobalNotification } from 'store/actions/notification';
 import { otfDataActions } from 'store/actions/data/otf/otf';
@@ -120,6 +121,7 @@ export const OtfMasterBase = (props) => {
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [isCancelVisible, setIsCancelVisible] = useState(false);
     const [isTransferVisible, setIsTransferVisible] = useState(false);
+    const [isAllotVisible, setIsAllotVisible] = useState(false);
     const [uploadedFile, setUploadedFile] = useState();
 
     const [otfTransferForm] = Form.useForm();
@@ -140,7 +142,7 @@ export const OtfMasterBase = (props) => {
         invoiceBtn: false,
         deliveryNote: false,
         changeHistory: true,
-        otfSoMappingChangeHistory: true,
+        otfSoMappingChangeHistory: false,
     };
 
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -153,7 +155,7 @@ export const OtfMasterBase = (props) => {
 
     const [formData, setFormData] = useState([]);
     const [ChangeHistoryVisible, setChangeHistoryVisible] = useState(false);
-    const [OtfSoMappingHistoryVisible , setOtfSoMappingHistoryVisible] = useState(false);
+    const [OtfSoMappingHistoryVisible, setOtfSoMappingHistoryVisible] = useState(false);
 
     const onSuccessAction = (res) => {
         // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -166,13 +168,6 @@ export const OtfMasterBase = (props) => {
         showGlobalNotification({ message });
         setShowDataLoading(false);
     };
-
-    useEffect(() => {
-        if (filterString) {
-            setPage({ ...page, current: 1 });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString]);
 
     const extraParams = useMemo(() => {
         return [
@@ -320,6 +315,10 @@ export const OtfMasterBase = (props) => {
                 setIsFormVisible(false);
                 setIsTransferVisible(true);
                 break;
+            case ALLOT:
+                setIsFormVisible(false);
+                setIsAllotVisible(true);
+                break;
             default:
                 break;
         }
@@ -386,7 +385,7 @@ export const OtfMasterBase = (props) => {
     };
     const handleOtfSoMappingHistory = () => {
         setOtfSoMappingHistoryVisible(true);
-    }
+    };
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
@@ -408,7 +407,6 @@ export const OtfMasterBase = (props) => {
     const tableProps = {
         dynamicPagination,
         totalRecords,
-        page,
         setPage,
         isLoading: showDataLoading,
         tableColumn: tableColumn(handleButtonClick),
@@ -640,6 +638,13 @@ export const OtfMasterBase = (props) => {
         onCloseAction: onCancelCloseAction,
     };
 
+    const AllotOTFProps = {
+        ...props,
+        selectedOrder,
+        isVisible: isAllotVisible,
+        onCloseAction: onCancelCloseAction,
+    };
+
     return (
         <>
             <AdvanceOtfFilter {...advanceFilterResultProps} />
@@ -653,6 +658,7 @@ export const OtfMasterBase = (props) => {
             <CancellationMaster {...cancelProps} />
             <TransferMaster {...transferOTFProps} />
             <ChangeHistory {...ChangeHistoryProps} />
+            <OTFAllotmentMaster {...AllotOTFProps} />
             <OtfSoMappingUnmappingChangeHistory {...OtfSoMappingChangeHistoryProps} />
         </>
     );

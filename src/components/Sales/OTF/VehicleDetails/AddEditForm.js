@@ -11,7 +11,6 @@ import { PlusOutlined } from '@ant-design/icons';
 import { FiEdit } from 'react-icons/fi';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { OptionServicesForm } from './optionServicesForm';
-import styles from 'components/common/Common.module.css';
 import dayjs from 'dayjs';
 
 import { DataTable } from 'utils/dataTable';
@@ -19,6 +18,10 @@ import { taxDetailsColumn, optionalServicesColumns } from './tableColumn';
 import { expandIconWithText, dynamicExpandIcon } from 'utils/accordianExpandIcon';
 import { addToolTip } from 'utils/customMenuLink';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
+import { getCodeValue } from 'utils/getCodeValue';
+import { VEHICLE_TYPE } from 'constants/VehicleType';
+
+import styles from 'components/common/Common.module.css';
 
 const { Text } = Typography;
 const { Panel } = Collapse;
@@ -38,6 +41,7 @@ const AddEditFormMain = (props) => {
                 ...formData,
                 poDate: dayjs(formData?.podate?.substr(0, 10)).format('DD/MM/YYYY'),
                 vehicleUsageType: findUsageType(formData?.vehicleUsageType),
+                vehicleAllocatedStatus: getCodeValue(VEHICLE_TYPE, formData?.vehicleAllocatedStatus, 'title'),
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
