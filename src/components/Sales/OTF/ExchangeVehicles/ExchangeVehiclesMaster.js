@@ -137,11 +137,13 @@ const ExchangeVehiclesBase = (props) => {
     const [customerList, setCustomerList] = useState();
 
     const fnSetData = (data) => {
+        // console.log('data', data);
         setFormData(data);
         handleFormValueChange();
         setEditableOnSearch(true);
         if (!data) {
             setEditableOnSearch(false);
+            form.resetFields(['customerId', 'customerName', 'make', 'modelGroup', 'variant', 'registrationNumber', 'chassisNumber']);
         }
     };
 

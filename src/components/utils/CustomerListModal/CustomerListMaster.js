@@ -115,7 +115,9 @@ const CustomerListBase = (props) => {
                         res?.data?.customerMasterDetails && fnSetData(res?.data?.customerMasterDetails?.[0]);
                     }
                 },
-                onErrorAction,
+                onErrorAction: () => {
+                    fnSetData(null);
+                },
                 userId,
             });
         }

@@ -8,6 +8,8 @@ import { Col, Input, Form, Row, DatePicker, Space, Card } from 'antd';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { formattedCalendarDate, dateFormat } from 'utils/formatDateTime';
 import { validateNumberWithTwoDecimalPlaces } from 'utils/validation';
+import { disableFutureDate } from 'utils/disableDate';
+
 
 const AddEditFormMain = (props) => {
     const { formData, form } = props;
@@ -44,7 +46,7 @@ const AddEditFormMain = (props) => {
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item label="Date" name="insuranceDate">
-                                    <DatePicker format={dateFormat} placeholder={preparePlaceholderSelect('Date')} />
+                                    <DatePicker disabledDate={disableFutureDate} format={dateFormat} placeholder={preparePlaceholderSelect('Date')} />
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
