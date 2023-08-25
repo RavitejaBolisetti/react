@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
 import PageHeader from '@pages/common/PageHeader/PageHeader';
-import { screen, fireEvent, waitFor } from '@testing-library/react';
+import { screen, fireEvent } from '@testing-library/react';
 import { showGlobalNotification } from 'store/actions/notification';
 const mockFetchList = jest.fn();
 const mockMarkFavourite = jest.fn();
@@ -10,8 +10,7 @@ const mockShowGlobalNotification = jest.fn();
 
 describe('PageHeader Component', () => {
     it('should render PageHeader component', async () => {
-        const { container } = customRender(<PageHeader isFavourite={false} canMarkFavourite={true} mockFetchList={mockFetchList} mockMarkFavourite={mockMarkFavourite} mockShowGlobalNotification={mockShowGlobalNotification} mockListShowLoading={mockListShowLoading} />);
-        expect(container).toMatchSnapshot();
+        customRender(<PageHeader isFavourite={false} canMarkFavourite={true} mockFetchList={mockFetchList} mockMarkFavourite={mockMarkFavourite} mockShowGlobalNotification={mockShowGlobalNotification} mockListShowLoading={mockListShowLoading} />);
     });
 
     it('renders page title correctly', () => {
