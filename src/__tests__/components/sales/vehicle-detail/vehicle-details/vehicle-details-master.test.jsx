@@ -3,8 +3,6 @@ import { screen, fireEvent } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { VehicleDetailsMaster } from '@components/Sales/VehicleDetail/VehicleDetails/VehicleDetailsMaster';
 import customRender from '@utils/test-utils';
-import { Form } from 'antd';
-import createMockStore from '__mocks__/store';
 
 afterEach(() => {
     jest.restoreAllMocks();
@@ -23,6 +21,7 @@ describe('Vehicle details master render', () => {
         customRender(<VehicleDetailsMaster
             formActionType={formActionType}
             onChange={jest.fn()}
+            selectedRecordId={"test"}
         />)
 
         const minusBtn = screen.getAllByRole('img');
@@ -39,6 +38,7 @@ describe('Vehicle details master render', () => {
         const formActionType = { viewMode: true }
         customRender(<VehicleDetailsMaster
             formActionType={formActionType}
+            fetchList={jest.fn()}
         />)
 
         const endDate = screen.getByRole('columnheader', { name: 'Manufacturer Warranty End Date', exact: false });
@@ -46,7 +46,6 @@ describe('Vehicle details master render', () => {
 
         const deliveryDate = screen.getByRole('columnheader', { name: 'Delivery Date', exact: false });
         expect(deliveryDate).toBeTruthy();
-
 
         const saleDate = screen.getByRole('columnheader', { name: 'Sale Date', exact: false });
         expect(saleDate).toBeTruthy();
@@ -75,10 +74,8 @@ describe('Vehicle details master render', () => {
         const insuranceExpiryDate = screen.getByRole('columnheader', { name: 'Insurance Expiry Date', exact: false });
         expect(insuranceExpiryDate).toBeTruthy();
 
-
         const customerCategory = screen.getByRole('columnheader', { name: 'Customer Category-SSI', exact: false });
         expect(customerCategory).toBeTruthy();
-
 
         const customerCategoryCSI = screen.getByRole('columnheader', { name: 'Customer Category-CSI', exact: false });
         expect(customerCategoryCSI).toBeTruthy();
@@ -112,5 +109,139 @@ describe('Vehicle details master render', () => {
 
         const managedBy = screen.getByRole('columnheader', { name: 'Managed By', exact: false });
         expect(managedBy).toBeTruthy();
+
+    })
+
+    it('should render vehicle detals master addEdit form button', () => {
+        const formActionType = { viewMode: false }
+        const props = {
+            onFinish: jest.fn(),
+            onFinishFailed: jest.fn(),
+            fetchList: jest.fn(),
+            typeData: [{ key: 1, value: 'test' }],
+            userId: 63456,
+            isDataLoaded: false,
+            formData: { key: 1, value: 'test' },
+            isLoading: false,
+            setMnmCtcVehicleFlag: jest.fn(),
+            onChange: jest.fn(),
+            setactiveKey: jest.fn(),
+            selectedRecordId: 'test'
+        }
+        customRender(<VehicleDetailsMaster
+            {...props}
+            formActionType={formActionType}
+            userType={"MNM"}
+        />)
+
+        const minusBtn = screen.getAllByRole('img');
+        fireEvent.click(minusBtn[0]);
+        const vehicleDetails = screen.getByText('Vehicle Details');
+        fireEvent.click(vehicleDetails);
+
+        fireEvent.click(minusBtn[7]);
+        const change = screen.getByText('Registration Number Change Request');
+        fireEvent.click(change);
+
+
+        const endDate = screen.getByRole('textbox', { name: 'Manufacturer Warranty End Date', exact: false });
+        fireEvent.change(endDate, { target: { value: 'Hello World' } });
+
+        const deliveryDate = screen.getByRole('textbox', { name: 'Delivery Date', exact: false });
+        fireEvent.change(deliveryDate, { target: { value: 'Hello World' } });
+
+        const saleDate = screen.getByRole('textbox', { name: 'Sale Date', exact: false });
+        fireEvent.change(saleDate, { target: { value: 'Hello World' } });
+
+        const soldBy = screen.getByRole('textbox', { name: 'Sold By', exact: false });
+        fireEvent.change(soldBy, { target: { value: 'Hello World' } });
+
+        const odometerReading = screen.getByRole('textbox', { name: 'Last Odometer Reading', exact: false });
+        fireEvent.change(odometerReading, { target: { value: 'Hello World' } });
+
+        const averageRun = screen.getByRole('textbox', { name: 'Average Run', exact: false });
+        fireEvent.change(averageRun, { target: { value: 'Hello World' } });
+
+        const nextDue = screen.getByRole('textbox', { name: 'Next Due Service', exact: false });
+        fireEvent.change(nextDue, { target: { value: 'Hello World' } });
+
+        const manager = screen.getByRole('textbox', { name: 'Relationship Manager', exact: false });
+        fireEvent.change(manager, { target: { value: 'Hello World' } });
+
+        const serviceDueDate = screen.getByRole('textbox', { name: 'Next Service Due Date', exact: false });
+        fireEvent.change(serviceDueDate, { target: { value: 'Hello World' } });
+
+        const expireDate = screen.getByRole('textbox', { name: 'PUC Expiry Date', exact: false });
+        fireEvent.change(expireDate, { target: { value: 'Hello World' } });
+
+        const insuranceExpiryDate = screen.getByRole('textbox', { name: 'Insurance Expiry Date', exact: false });
+        fireEvent.change(insuranceExpiryDate, { target: { value: 'Hello World' } });
+
+        const customerCategory = screen.getByRole('textbox', { name: 'Customer Category-SSI', exact: false });
+        fireEvent.change(customerCategory, { target: { value: 'Hello World' } });
+
+        const customerCategoryCSI = screen.getByRole('textbox', { name: 'Customer Category-CSI', exact: false });
+        fireEvent.change(customerCategoryCSI, { target: { value: 'Hello World' } });
+
+        const customerCategoryIQS = screen.getByRole('textbox', { name: 'Customer Category-IQS', exact: false });
+        fireEvent.change(customerCategoryIQS, { target: { value: 'Hello World' } });
+
+        const oemPriviledgeCustomer = screen.getByRole('checkbox', { name: 'OEM Privileged Customer', exact: false });
+        fireEvent.click(oemPriviledgeCustomer);
+        // expect(oemPriviledgeCustomer).toBeChecked();
+
+        const keyAccountVehicle = screen.getByRole('checkbox', { name: 'Key Account Vehicle', exact: false });
+        fireEvent.click(keyAccountVehicle);
+        // expect(keyAccountVehicle).toBeChecked();
+
+        const refurbished = screen.getByRole('checkbox', { name: 'Refurbished', exact: false });
+        fireEvent.click(refurbished);
+        // expect(refurbished).toBeChecked();
+
+        const theftVehicle = screen.getByRole('checkbox', { name: 'Theft Vehicle', exact: false });
+        fireEvent.click(theftVehicle);
+        // expect(theftVehicle).toBeChecked();
+
+        const pdiDone = screen.getByRole('checkbox', { name: 'PDI Done', exact: false });
+        fireEvent.click(pdiDone);
+        // expect(pdiDone).toBeChecked();
+
+        const governmentVehicle = screen.getByRole('checkbox', { name: 'Government Vehicle', exact: false });
+        fireEvent.click(governmentVehicle);
+        // expect(governmentVehicle).toBeChecked();
+
+        const taxiNonTaxi = screen.getByRole('combobox', { name: 'Taxi/Non Taxi', exact: false });
+        fireEvent.change(taxiNonTaxi, { target: { value: 'Hello World' } });
+
+        const ctcVehicleMM = screen.getByRole('checkbox', { name: 'M&M CTC Vehicle', exact: false });
+        fireEvent.click(ctcVehicleMM);
+        // expect(ctcVehicleMM).toBeChecked();
+    })
+
+
+    it('should render vehicle detals master addEdit form user type button', () => {
+        const formActionType = { viewMode: false }
+        const props = {
+            onFinish: jest.fn(),
+            onFinishFailed: jest.fn(),
+            fetchList: jest.fn(),
+            typeData: [{ key: 1, value: 'test' }],
+            userId: 63456,
+            isDataLoaded: false,
+            formData: { key: 1, value: 'test' },
+            isLoading: false,
+            setMnmCtcVehicleFlag: jest.fn(),
+            onChange: jest.fn(),
+            setactiveKey: jest.fn(),
+            selectedRecordId: 'test',
+            checked: "1"
+        }
+        customRender(<VehicleDetailsMaster
+            {...props}
+            formActionType={formActionType}
+        />)
+
+        screen.debug()
+        screen.getByRole('test-id')
     })
 })
