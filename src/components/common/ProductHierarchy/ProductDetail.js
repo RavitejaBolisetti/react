@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -46,15 +46,15 @@ const ProductDetail = (props) => {
 
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form.Item name="prodctShrtName" label="Short Description" initialValue={formData?.prodctShrtName} rules={[validateRequiredInputField('short description'), validateAlphanumericWithSpaceHyphenPeriod('short description')]}>
-                        <Input placeholder={preparePlaceholderText('short description')} maxLength={50} disabled={formData?.id || isReadOnly}  />
+                        <Input placeholder={preparePlaceholderText('short description')} maxLength={50} disabled={formData?.id || isReadOnly} />
                     </Form.Item>
                 </Col>
             </Row>
 
             <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.textareaError}>
                     <Form.Item name="prodctLongName" label="Long Description" initialValue={formData?.prodctLongName} rules={[validateRequiredInputField('long description'), validateAlphanumericWithSpaceHyphenPeriod('long description')]}>
-                        <TextArea rows={1} placeholder={preparePlaceholderText('long description')} maxLength={300} disabled={formData?.id || isReadOnly} showCount/>
+                        <TextArea rows={1} placeholder={preparePlaceholderText('long description')} maxLength={300} disabled={formData?.id || isReadOnly} showCount />
                     </Form.Item>
                 </Col>
 

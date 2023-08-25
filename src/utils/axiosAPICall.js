@@ -4,7 +4,6 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { LANGUAGE_EN } from 'language/en';
-
 import axios from 'axios';
 import { clearLocalStorageData } from 'store/actions/auth';
 export const AXIOS_ERROR_WITH_RESPONSE = 'AXIOS_ERROR_WITH_RESPONSE';
@@ -44,6 +43,7 @@ const baseAPICall = (params) => {
     };
 
     const onUnAuthenticated = (message = '') => {
+        window.location.href = '/login';
         clearLocalStorageData();
         onError && onError(message);
     };

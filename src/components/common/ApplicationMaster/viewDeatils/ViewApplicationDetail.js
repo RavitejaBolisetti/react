@@ -47,7 +47,7 @@ const ViewDealerDetailsMain = ({ applicationDetailsData, viewTitle = 'Applicatio
 
                 <div>
                     {applicationAction.length > 0 && (
-                        <Collapse onChange={() => handleCollapse(1)} expandIcon={accordianExpandIcon} activeKey={openAccordian}>
+                        <Collapse onChange={() => handleCollapse(1)} expandIcon={accordianExpandIcon} collapsible="icon" activeKey={openAccordian}>
                             <Panel
                                 header={
                                     <>
@@ -65,7 +65,7 @@ const ViewDealerDetailsMain = ({ applicationDetailsData, viewTitle = 'Applicatio
                         </Collapse>
                     )}
                     {documentType.length > 0 && (
-                        <Collapse onChange={() => handleCollapse(2)} expandIcon={accordianExpandIcon} activeKey={openAccordian}>
+                        <Collapse onChange={() => handleCollapse(2)} expandIcon={accordianExpandIcon} collapsible="icon" activeKey={openAccordian}>
                             <Panel
                                 header={
                                     <>
@@ -83,7 +83,7 @@ const ViewDealerDetailsMain = ({ applicationDetailsData, viewTitle = 'Applicatio
                         </Collapse>
                     )}
                     {accessibleLocation?.length > 0 && (
-                        <Collapse onChange={() => handleCollapse(3)} expandIcon={accordianExpandIcon} activeKey={openAccordian}>
+                        <Collapse onChange={() => handleCollapse(3)} expandIcon={accordianExpandIcon} collapsible="icon" activeKey={openAccordian}>
                             <Panel
                                 header={
                                     <>

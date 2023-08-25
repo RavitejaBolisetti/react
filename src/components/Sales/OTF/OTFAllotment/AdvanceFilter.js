@@ -6,16 +6,12 @@
 import React, { useEffect } from 'react';
 import { Form, Button, Row, Col } from 'antd';
 
-import styles from 'components/common/Common.module.css';
-import { FilterIcon } from 'Icons';
 import { RxCross2 } from 'react-icons/rx';
-import { VEHICLE_TYPE } from 'constants/VehicleType';
-
 import { SearchBox } from 'components/utils/SearchBox';
+import styles from 'components/common/Common.module.css';
 
 export default function AdvanceFilter(props) {
-    const { resetAdvanceFilter, setResetAdvanceFilter, setFilterString, setAdvanceSearchVisible, handleResetFilter, toggleButton, settoggleButton, advanceFilter, removeFilter, filterString, extraParams } = props;
-
+    const { resetAdvanceFilter, setResetAdvanceFilter, setFilterString, handleResetFilter, advanceFilter, removeFilter, filterString, extraParams } = props;
     const [searchForm] = Form.useForm();
 
     useEffect(() => {
@@ -36,42 +32,8 @@ export default function AdvanceFilter(props) {
         <>
             <div className={styles.contentHeaderBackground}>
                 <Row gutter={20}>
-                    <Col xs={24} sm={24} md={18} lg={18} xl={18}>
-                        {/* <div className={styles.contentHeaderBackground}> */}
-                        <Form autoComplete="off" colon={false} className={styles.masterListSearchForm}>
-                            <Form.Item>
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={14} lg={14} xl={14} className={styles.verticallyCentered}>
-                                        <div className={`${styles.userManagement} ${styles.headingToggle}`}>
-                                            {Object.values(VEHICLE_TYPE)?.map((item) => {
-                                                return (
-                                                    <Button type={toggleButton === item?.key ? 'primary' : 'link'} onClick={() => settoggleButton(item?.key)}>
-                                                        {item?.title}
-                                                    </Button>
-                                                );
-                                            })}
-                                        </div>
-                                        <div className={styles.fullWidth}>
-                                            <SearchBox {...searchBoxProps} />
-                                            {/* <Search placeholder="Search by VIN No./Chassis No." value={vehicleSearchvalue} onChange={ChangeSearchHandler} allowClear onSearch={onSearchHandle} className={styles.headerSearchField} /> */}
-                                        </div>
-                                    </Col>
-                                    <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.verticallyCentered}>
-                                        <Button
-                                            icon={<FilterIcon />}
-                                            type="link"
-                                            onClick={() => {
-                                                setAdvanceSearchVisible(true);
-                                            }}
-                                        >
-                                            Advanced Filters
-                                        </Button>
-                                    </Col>
-                                </Row>
-                            </Form.Item>
-                        </Form>
-
-                        {/* </div> */}
+                    <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+                        <SearchBox {...searchBoxProps} />
                     </Col>
                 </Row>
 

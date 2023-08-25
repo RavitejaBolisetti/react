@@ -172,7 +172,7 @@ const AddEditFormMain = (props) => {
                     </Row>
 
                     <Row gutter={20}>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.textareaError}>
                             <Form.Item name="prodctLongName" label="Long Description" initialValue={formData?.prodctLongName} rules={[validateRequiredInputField('long description')]}>
                                 <TextArea placeholder={preparePlaceholderText('long description')} maxLength={300} showCount disabled={formData?.id || isReadOnly} />
                             </Form.Item>

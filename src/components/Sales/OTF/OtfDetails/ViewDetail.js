@@ -15,7 +15,7 @@ const ViewDetailMain = (props) => {
 
     const viewProps = {
         bordered: false,
-        colon: false,
+        colon: false,   
         layout: 'vertical',
         column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
     };
@@ -25,7 +25,7 @@ const ViewDetailMain = (props) => {
             <Descriptions {...viewProps}>
                 <Descriptions.Item label="Initial Promise Delivery Date">{checkAndSetDefaultValue(formData?.initialPromiseDeliveryDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                 <Descriptions.Item label="Cust. Expected Delivery Date">{checkAndSetDefaultValue(formData?.custExpectedDeliveryDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                <Descriptions.Item label="Sale Type">{checkAndSetDefaultValue(getCodeValue(typeData?.SALE_TYP, formData?.saleType), isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Sale Type">{checkAndSetDefaultValue(getCodeValue(typeData?.SALE_TYPE, formData?.saleType), isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Price Type">{checkAndSetDefaultValue(getCodeValue(typeData?.PRC_TYP, formData?.priceType), isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Booking Amount">{checkAndSetDefaultValue(formData?.bookingAmount, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Sales Consultant">{checkAndSetDefaultValue(getCodeValue(salesConsultantLov, formData?.saleConsultant), isLoading)}</Descriptions.Item>
@@ -37,7 +37,7 @@ const ViewDetailMain = (props) => {
                 <Descriptions.Item label="Influencer/Mitra Name">{checkAndSetDefaultValue(formData?.mitraName, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Mode Of Payment">{checkAndSetDefaultValue(formData?.modeOfPAyment, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Finance Agreed">{checkAndSetDefaultValue(getCodeValue(typeData?.FNC_ARNGD, formData?.financeArrangedBy), isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Exchange">{checkAndSetDefaultValue(formData?.exchange === 1 ? <span className={styles.activeText}>Yes</span> : 'No', isLoading)}</Descriptions.Item>
+                {/* <Descriptions.Item label="Exchange">{checkAndSetDefaultValue(formData?.exchange === 1 ? <span className={styles.activeText}>Yes</span> : 'No', isLoading)}</Descriptions.Item> */}
                 <Descriptions.Item label="Loyality Scheme">{checkAndSetDefaultValue(formData?.loyaltyScheme ? <span className={styles.activeText}>Yes</span> : 'No', isLoading)}</Descriptions.Item>
             </Descriptions>
         </Card>

@@ -15,13 +15,18 @@ export const FINANCE_ARRANGED_BY = {
         title: 'DSA',
     },
     SELF: {
-        id: 2,
-        key: 'SELF',
+        id: 3,
+        key: 'SLF',
         title: 'Self',
     },
     DEALER_1: {
-        id: 1,
+        id: 4,
         key: 'DLR',
         title: 'Dealer',
+    },
+    CASH: {
+        id: 5,
+        key: 'CSH',
+        title: 'Cash',
     },
 };

@@ -27,9 +27,9 @@ const ConfirmationModalMain = (props) => {
     return (
         <Form layout="vertical" autoComplete="off" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.textareaError}>
                     {text && (
-                        <div className={styles.confirmModelText}>
+                        <div className={styles.confirmModalText}>
                             {text}
                             {content && (
                                 <>
@@ -40,7 +40,7 @@ const ConfirmationModalMain = (props) => {
                     )}
                     {showField && (
                         <Form.Item name="rejectionRemark" label={'Remark for Rejection'} rules={[validateRequiredInputField('remark')]}>
-                            <TextArea maxLength={300} placeholder={preparePlaceholderText('remark')} />
+                            <TextArea maxLength={300} placeholder={preparePlaceholderText('remark')} showCount />
                         </Form.Item>
                     )}
                 </Col>
