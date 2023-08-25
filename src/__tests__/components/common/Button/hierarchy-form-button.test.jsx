@@ -24,19 +24,19 @@ describe('HierarchyFormButton Components', () => {
     });
     it('should render all buttons', async () => {
         customRender(<HierarchyFormButton buttonData={buttonData} handleButtonClick={jest.fn()} />);
-        await act(async () => {
+        act(async () => {
             const editButton = screen.getByRole('button', {
                 name: /Edit/i,
             });
             fireEvent.click(editButton);
         });
-        await act(async () => {
+        act(async () => {
             const addChildButton = screen.getByRole('button', {
                 name: /Add Child/i,
             });
             fireEvent.click(addChildButton);
         });
-        await act(async () => {
+        act(async () => {
             const addSiblingButton = screen.getByRole('button', {
                 name: /Add Sibling/i,
             });

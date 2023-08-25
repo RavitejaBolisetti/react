@@ -268,11 +268,11 @@ const mockStore = createMockStore({
 
 describe('ExchangeVehiclesMaster component render', () => {
     it('should render addedit page', async () => {
-        customRender(<ExchangeVehiclesMaster {...props} typeData={('REL_TYPE', 'MONTH')} buttonData={defaultBtnVisiblity} />);
+        customRender(<ExchangeVehiclesMaster {...props} typeData={('REL_TYPE', 'MONTH')} buttonData={defaultBtnVisiblity} handleFormValueChange={jest.fn()} />);
     });
 
     it('should render text components', async () => {
-        customRender(<ExchangeVehiclesMaster {...props} typeData={('REL_TYPE', 'MONTH')} />);
+        customRender(<ExchangeVehiclesMaster {...props} typeData={('REL_TYPE', 'MONTH')} handleFormValueChange={jest.fn()} />);
 
         const otfDetails = screen.getByText('Exchange Vehicle');
         expect(otfDetails).toBeTruthy();
@@ -291,7 +291,7 @@ describe('ExchangeVehiclesMaster component render', () => {
     });
 
     it('should render buttons', async () => {
-        customRender(<ExchangeVehiclesMaster {...props} typeData={('REL_TYPE', 'MONTH')} setButtonData={jest.fn()} buttonData={defaultBtnVisiblity} />);
+        customRender(<ExchangeVehiclesMaster {...props} typeData={('REL_TYPE', 'MONTH')} setButtonData={jest.fn()} buttonData={defaultBtnVisiblity} handleFormValueChange={jest.fn()} />);
 
         const close = screen.getByRole('button', { name: 'Close' });
         act(() => {
@@ -342,7 +342,7 @@ describe('ExchangeVehiclesMaster component render', () => {
     it('should check cancle button is working', async () => {
         customRender(
             <Provider store={mockStore}>
-                <ExchangeVehiclesMaster {...props} typeData="REL_TYPE" buttonData={defaultBtnVisiblity} onCloseAction={jest.fn()} setButtonData={jest.fn()} />
+                <ExchangeVehiclesMaster {...props} typeData="REL_TYPE" buttonData={defaultBtnVisiblity} onCloseAction={jest.fn()} setButtonData={jest.fn()} handleFormValueChange={jest.fn()} />
             </Provider>
         );
 
@@ -385,7 +385,7 @@ describe('setfilteredModelData', () => {
             isModelDataLoaded: true,
         };
 
-        customRender(<ExchangeVehiclesMaster {...props} />);
+        customRender(<ExchangeVehiclesMaster {...props} handleFormValueChange={jest.fn()} />);
         setfilteredModelData(modelData);
     });
 
@@ -403,7 +403,7 @@ describe('setfilteredModelData', () => {
             isVariantDataLoaded: true,
         };
 
-        customRender(<ExchangeVehiclesMaster {...props} />);
+        customRender(<ExchangeVehiclesMaster {...props} handleFormValueChange={jest.fn()} />);
         setfilteredModelData(variantData);
     });
 });
@@ -417,7 +417,7 @@ describe('onSearch', () => {
     it('onSearch when no value', () => {
         const value = '';
 
-        customRender(<ExchangeVehiclesMaster {...props} typeData={('REL_TYPE', 'MONTH')} setButtonData={jest.fn()} buttonData={defaultBtnVisiblity} onSearch={jest.fn(value)} />);
+        customRender(<ExchangeVehiclesMaster {...props} typeData={('REL_TYPE', 'MONTH')} setButtonData={jest.fn()} buttonData={defaultBtnVisiblity} onSearch={jest.fn(value)} handleFormValueChange={jest.fn()} />);
 
         const editBtn = screen.getByRole('button', { name: 'Edit', exact: false });
         act(() => {
@@ -476,7 +476,7 @@ describe('onSearch', () => {
             onErrorAction: jest.fn(),
         });
 
-        customRender(<FormWrapper {...props} typeData={('REL_TYPE', 'MONTH')} setButtonData={jest.fn()} buttonData={defaultBtnVisiblity} onSearch={jest.fn(value)} onHandleChange={jest.fn()} />);
+        customRender(<FormWrapper {...props} typeData={('REL_TYPE', 'MONTH')} setButtonData={jest.fn()} buttonData={defaultBtnVisiblity} onSearch={jest.fn(value)} onHandleChange={jest.fn()} handleFormValueChange={jest.fn()} />);
 
         const editBtn = screen.getByRole('button', { name: 'Edit', exact: false });
         act(() => {
