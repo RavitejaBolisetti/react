@@ -65,7 +65,7 @@ const AddEditFormMain = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                    <Form.Item initialValue={formData?.partyId} label="Party ID" name="partyId" rules={[validateRequiredSelectField('Demo Vehicle')]}>
+                    <Form.Item initialValue={formData?.partyId} label="Party ID" name="partyId" rules={[validateRequiredSelectField('Party ID')]}>
                         {formActionType?.addMode ? <Search allowClear onChange={handleChange} onSearch={handleSearch} placeholder={preparePlaceholderText('party id')} disabled={!formActionType?.addMode} /> : <Input placeholder={preparePlaceholderText('party id')} disabled={true} />}
                     </Form.Item>
                 </Col>

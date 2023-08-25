@@ -11,12 +11,14 @@ import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { ApplicationTree } from './ApplicationTree';
 import { withModal } from 'components/withModal';
 import { ModalButtons } from 'components/common/Button';
+import { customSelectBox } from 'utils/customSelectBox';
 
 import { ListSkeleton } from 'components/common/Skeleton';
 import { USER_TYPE_USER } from 'constants/modules/UserManagement/userType';
+
 const RoleApplicationModalrMain = (props) => {
-    const { form, handleFormFieldChange, onFinishFailed, isLoading, roleListdata, handleSaveUserRoleAppliactions, handleCancelModal, handleSelectRole, handleCancelAddForm } = props;
-    const { dlrAppList, mnmAppList, userType } = props;
+    const { form, formActionType, handleFormFieldChange, onFinishFailed, isLoading, roleListdata, handleSaveUserRoleAppliactions, handleCancelModal, handleSelectRole } = props;
+    const { dlrAppList, mnmAppList, userType, userRoleDataList, disableMdlSaveBtn, setDisableMdlSaveBtn } = props;
     const [disableSelect, setDisableSelect] = useState(false);
 
     useEffect(() => {
@@ -30,6 +32,8 @@ const RoleApplicationModalrMain = (props) => {
     const modalBtnProps = {
         reset: true,
         submit: true,
+        hideSaveBtn: formActionType?.viewMode,
+        saveDisabled: disableMdlSaveBtn,
         htmltype: false,
         resetName: 'Cancel',
         submitName: 'Save',
@@ -44,14 +48,14 @@ const RoleApplicationModalrMain = (props) => {
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
                                 <Form.Item label="Role" name="roleId">
-                                    <Select disabled={disableSelect} onChange={handleSelectRole} placeholder={preparePlaceholderSelect('role')} fieldNames={{ label: 'roleName', value: 'roleId' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} options={roleListdata} allowClear allowSearch></Select>
+                                    {customSelectBox({ disabled: disableSelect, disableOptionsList: userRoleDataList, disableOptionsKey: 'roleId', onChange: handleSelectRole, data: roleListdata, fieldNames: { value: 'roleName', key: 'roleId' }, placeholder: preparePlaceholderSelect('role') })}
                                 </Form.Item>
                             </Col>
                         </Row>
                     </Form>
                 </Col>
             </Row>
-            {isLoading ? <ListSkeleton count={4} height={30} /> : <ApplicationTree {...props} />}
+            {isLoading ? <ListSkeleton count={4} height={30} /> : <ApplicationTree {...props} setDisableMdlSaveBtn={setDisableMdlSaveBtn} />}
 
             <ModalButtons {...modalBtnProps} />
         </>

@@ -143,7 +143,7 @@ const AddEditFormMain = (props) => {
             {/* key="2">
             </Panel>
             </Collapse> */}
-            {showApportionTable && (
+            {(showApportionTable || apportionList.length > 0) && (
                 <>
                     <Divider />
                     <Row gutter={20}>

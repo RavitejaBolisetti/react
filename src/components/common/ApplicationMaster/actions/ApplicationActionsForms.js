@@ -21,7 +21,7 @@ const ApplicationActionsForm = ({ finalFormdata, form, onFinish, status, name, i
     return (
         <>
             <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.marB20}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form form={form} onFieldsChange={onFieldsChange} autoComplete="off" id="applicationActionsForm" layout="vertical" onFinish={onFinish} onFinishFailed={onFinishFailed}>
                         <Row gutter={20}>
                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
@@ -34,20 +34,22 @@ const ApplicationActionsForm = ({ finalFormdata, form, onFinish, status, name, i
                                     <Switch disabled={isBtnDisabled} checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" />
                                 </Form.Item>
                             </Col>
-                            {!isEditing && (
-                                <Col xs={4} sm={4} md={4} lg={4} xl={4} xxl={4}>
+                        </Row>
+                        {!isEditing && (
+                            <Row gutter={20}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.marB20}>
                                     <Button form="applicationActionsForm" disabled={isBtnDisabled} icon={<PlusOutlined />} htmlType="submit" type="primary">
                                         Add
                                     </Button>
                                 </Col>
-                            )}
-                            <Form.Item name="id" hidden>
-                                <Input />
-                            </Form.Item>
-                            <Form.Item name="actionMasterId" hidden>
-                                <Input />
-                            </Form.Item>
-                        </Row>
+                            </Row>
+                        )}
+                        <Form.Item name="id" hidden>
+                            <Input />
+                        </Form.Item>
+                        <Form.Item name="actionMasterId" hidden>
+                            <Input />
+                        </Form.Item>
                     </Form>
                 </Col>
             </Row>

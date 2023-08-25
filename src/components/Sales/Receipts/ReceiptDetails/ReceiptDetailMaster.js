@@ -8,6 +8,7 @@ import { Form, Row, Col } from 'antd';
 import { bindActionCreators } from 'redux';
 
 import { partyDetailDataActions } from 'store/actions/data/receipt/partyDetails';
+import { partyMasterDataActions } from 'store/actions/data/partyMaster';
 import { connect } from 'react-redux';
 import { showGlobalNotification } from 'store/actions/notification';
 
@@ -26,9 +27,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            Receipt: {
-                PartyDetails: { isLoaded: isDataLoaded = false, isLoading, data: partyDetailData = [] },
-            },
+            PartyMaster: { isLoaded: isDataLoaded = false, isLoading, data: partyDetailData = [] },
         },
     } = state;
 
@@ -49,9 +48,9 @@ const mapDispatchToProps = (dispatch) => ({
     ...bindActionCreators(
         {
             fetchCustomerDetail: partyDetailDataActions.fetchList,
-            fetchPartyDetail: partyDetailDataActions.fetchList,
-            resetData: partyDetailDataActions.reset,
-            listShowLoading: partyDetailDataActions.listShowLoading,
+            fetchPartyDetail: partyMasterDataActions.fetchList,
+            resetData: partyMasterDataActions.reset,
+            listShowLoading: partyMasterDataActions.listShowLoading,
             showGlobalNotification,
         },
         dispatch
@@ -59,8 +58,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ReceiptDetailMasterBase = (props) => {
-    const { userId, receipt, setReceipt, section, typeData, receiptType, paymentModeType, buttonData, setButtonData, fetchList, handleCancelFormEdit, isDataLoaded, isLoading, listShowLoading, fetchPartyDetail, partyDetailData, receiptOnFinish } = props;
-    const { form, formActionType, salesConsultantLov, NEXT_ACTION, handleButtonClick } = props;
+    const { userId, receipt, setReceipt, section, typeData, receiptType, paymentModeType, buttonData, setButtonData, fetchList, handleCancelFormEdit, isDataLoaded, isLoading, listShowLoading, resetData, showGlobalNotification, fetchPartyDetail, partyDetailData, receiptOnFinish } = props;
+    const { form, formActionType, salesConsultantLov, NEXT_ACTION, handleButtonClick, setApportionList } = props;
     const { requestPayload, setRequestPayload, receiptDetailData, setLastSection, totalReceivedAmount, setTotalReceivedAmount } = props;
     const [paymentForm] = Form.useForm();
     const [receiptForm] = Form.useForm();
@@ -77,12 +76,20 @@ const ReceiptDetailMasterBase = (props) => {
     useEffect(() => {
         if (partyDetailData?.length > 0) {
             paymentForm.setFieldsValue({
-                partyName: partyDetailData?.[0]?.partyName,
-                partyLocationCode: partyDetailData?.[0]?.partyLocationCode,
+                paymentBankName: partyDetailData?.[0]?.partyName,
+                paymentBankLocation: partyDetailData?.[0]?.partyLocationCode,
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [partyDetailData]);
+
+    useEffect(() => {
+        if (requestPayload?.receiptsDetails?.paymentDetails) {
+            setPaymentDataList(requestPayload?.receiptsDetails?.paymentDetails);
+            setButtonData({ ...buttonData, formBtnActive: true });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [requestPayload?.receiptsDetails]);
 
     useEffect(() => {
         if (receiptDetailData?.receiptsDetails) {
@@ -108,10 +115,21 @@ const ReceiptDetailMasterBase = (props) => {
     };
 
     const handleChange = (e) => {
+        resetData();
+        paymentForm.setFieldsValue({
+            paymentBankName: '',
+            paymentBankLocation: '',
+        });
         setPartyId(e.target.value);
     };
 
     const handlePaymentSearch = () => {
+        const onSuccessAction = (res) => {
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        };
+        const onErrorAction = (message) => {
+            showGlobalNotification({ message });
+        };
         const extraParams = [
             {
                 key: 'partyCode',
@@ -120,10 +138,14 @@ const ReceiptDetailMasterBase = (props) => {
                 name: 'partyCode',
             },
         ];
-        fetchPartyDetail({ setIsLoading: listShowLoading, userId, extraParams, customURL: BASE_URL_PARTY_MASTER });
+        fetchPartyDetail({ setIsLoading: listShowLoading, userId, extraParams, customURL: BASE_URL_PARTY_MASTER, onSuccessAction, onErrorAction });
     };
 
     const handleSavepaymenttForm = () => {
+        if (paymentForm.getFieldValue('paymentBankPartyId') && partyDetailData?.length === 0) {
+            paymentForm.validateFields();
+            return;
+        }
         paymentForm
             .validateFields()
             .then((value) => {
@@ -165,10 +187,11 @@ const ReceiptDetailMasterBase = (props) => {
         }
         receiptForm.validateFields().then((data) => {
             let finaldata = { ...data, paymentDetails: paymentDataList };
-            console.log('🚀 ~ file: ReceiptDetailMaster.js:159 ~ receiptForm.validateFields ~ finaldata:', finaldata);
 
             if (receipt === ReceiptType?.ADVANCE?.key) {
+                setApportionList([]);
                 requestPayload && receiptOnFinish(finaldata);
+                setRequestPayload({ ...requestPayload, receiptsDetails: finaldata });
             } else {
                 setRequestPayload({ ...requestPayload, receiptsDetails: finaldata });
                 handleButtonClick({ buttonAction: NEXT_ACTION });
@@ -209,7 +232,7 @@ const ReceiptDetailMasterBase = (props) => {
         receiptForm,
         setReceiptData,
         setPaymentDataList,
-        receiptData: receiptDetailData?.receiptsDetails,
+        receiptData: receiptDetailData?.receiptsDetails ? receiptDetailData?.receiptsDetails : requestPayload?.receiptsDetails,
 
         paymentModeType,
         setIsAdding,

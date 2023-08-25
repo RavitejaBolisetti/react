@@ -154,7 +154,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 // for token type select
-const typeData = [{ key: ' employeeCode', value: 'Token No.' }];
+const typeData = [{ key: 'employeeCode', value: 'Token No.' }];
 
 const UserManagementMain = (props) => {
     const { userId, fetchDetail, fetchUserDataList, listShowLoading, isDataLoading, resetUserDetails, userDataList, userDetailData } = props;
@@ -207,14 +207,14 @@ const UserManagementMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isRoleListLoaded, isDealerListLoaded]);
 
-    useEffect(() => {
-        return () => {
-            setFilterString('');
-            setError('');
-            resetUserDetails();
-        };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userType]);
+    // useEffect(() => {
+    //     return () => {
+    //         setFilterString('');
+    //         setError('');
+    //         resetUserDetails();
+    //     };
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [userType]);
 
     useEffect(() => {
         if (userType) {
@@ -296,14 +296,19 @@ const UserManagementMain = (props) => {
     const onErrorAction = (res) => {
         setError(res);
     };
+    const onSuccessAction = (res) => {
+        // setFilterString('');
+        setselectedDealerCode('');
+        setError('');
+    };
 
     useEffect(() => {
         if (userId && userType) {
             const params = filterString?.searchParam ? extraParams : [...defaultExtraParam, ...extraParams];
-            fetchUserDataList({ setIsLoading: listShowLoading, extraParams: params, userId, onErrorAction });
+            fetchUserDataList({ setIsLoading: listShowLoading, extraParams: params, userId, onErrorAction, onSuccessAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, userType, page, filterString?.searchParam]);
+    }, [userId, userType, page?.pageSize, page?.current, filterString?.searchParam]);
 
     const onFinish = (values, e) => {};
 
@@ -335,6 +340,7 @@ const UserManagementMain = (props) => {
                 setFormActionType({ ...defaultFormActionType, addMode: false, editMode: false, viewMode: true });
                 setButtonData({ editBtn: true, saveBtn: false, nextBtn: true, cancelBtn: true });
                 record && setSelectedRecord(record);
+                record && setFormData(record);
                 setDrawer(true);
                 setIsReadOnly(true);
                 setIsFormVisible(true);
@@ -439,8 +445,8 @@ const UserManagementMain = (props) => {
     const tableProps = {
         isLoading: isDataLoading,
         tableData: userDataList?.userSearchResponse?.userDetails && !userDataList?.userSearchResponse?.userDetails?.[0]?.dmsUserNotExist ? userDataList?.userSearchResponse?.userDetails : [],
-        // tableData: userDataList?.userSearchResponse?.userDetails || [],
         tableColumn: userType === USER_TYPE_USER?.DEALER?.id ? tableColumn(handleButtonClick) : manufacturerTableColumn(handleButtonClick),
+        page,
         setPage,
         dynamicPagination: true,
         totalRecords: userDataList?.totalRecords,
@@ -452,17 +458,18 @@ const UserManagementMain = (props) => {
         setselectedDealerCode('');
         setError('');
         form.resetFields();
+        searchForm.resetFields();
         setPage({ pageSize: 10, current: 1 });
     };
 
     const searchBoxProps = {
-        isLoading: isDataLoading,
+        isLoading: filterString?.searchParam ? isDataLoading : false,
         searchForm,
         filterString,
         setFilterString,
         disabled: disableSearch,
         optionType: typeData,
-        defaultValue: 'tokenNumber',
+        defaultValue: 'employeeCode',
         handleChange: onChangeSearchHandler,
     };
 

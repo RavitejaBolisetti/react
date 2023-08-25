@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect, useState } from 'react';
-import { Collapse, Spin } from 'antd';
+import { Collapse, Divider, Spin } from 'antd';
 import styles from 'components/common/Common.module.css';
 
 import ApplicationDetails from './ApplicationDetails';
@@ -108,7 +108,7 @@ const AddEditFormMain = ({
                         onCloseAction={onCloseAction}
                     />
 
-                    <Collapse onChange={() => handleCollapse(1)} expandIcon={accordianExpandIcon} activeKey={openAccordian}>
+                    <Collapse onChange={() => handleCollapse(1)} expandIcon={accordianExpandIcon} collapsible="icon" activeKey={openAccordian}>
                         <Panel
                             header={
                                 <>
@@ -118,11 +118,12 @@ const AddEditFormMain = ({
                             }
                             key="1"
                         >
+                            <Divider />
                             <ApplicationActions actions={actions} setFinalFormdata={setFinalFormdata} finalFormdata={finalFormdata} setCanFormSave={setCanFormSave} />
                         </Panel>
                     </Collapse>
                     {isDocumentToGenerate && (
-                        <Collapse onChange={() => handleCollapse(2)} expandIcon={accordianExpandIcon} activeKey={openAccordian}>
+                        <Collapse onChange={() => handleCollapse(2)} expandIcon={accordianExpandIcon} collapsible="icon" activeKey={openAccordian}>
                             <Panel
                                 header={
                                     <>
@@ -132,12 +133,13 @@ const AddEditFormMain = ({
                                 }
                                 key="2"
                             >
+                                <Divider />
                                 <DocumentTypes setFinalFormdata={setFinalFormdata} finalFormdata={finalFormdata} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} setCanFormSave={setCanFormSave} />
                             </Panel>
                         </Collapse>
                     )}
                     {isRestrictedLocation && (
-                        <Collapse onChange={() => handleCollapse(3)} expandIcon={accordianExpandIcon} activeKey={openAccordian}>
+                        <Collapse onChange={() => handleCollapse(3)} expandIcon={accordianExpandIcon} collapsible="icon" activeKey={openAccordian}>
                             <Panel
                                 header={
                                     <>
@@ -147,6 +149,7 @@ const AddEditFormMain = ({
                                 }
                                 key="3"
                             >
+                                <Divider />
                                 <AccessibleDealerLocations setFinalFormdata={setFinalFormdata} finalFormdata={finalFormdata} setCanFormSave={setCanFormSave} />
                             </Panel>
                         </Collapse>

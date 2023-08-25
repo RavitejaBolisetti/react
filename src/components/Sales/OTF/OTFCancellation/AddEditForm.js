@@ -25,11 +25,10 @@ import styles from 'components/common/Common.module.css';
 const { TextArea, Search } = Input;
 
 const AddEditFormMain = (props) => {
-    //console.log('dealerDataList===>', props.dealerDataList)
     const { otfCancellationForm, formData, selectedOrder, fieldNames, onFinishOTFCancellation } = props;
     const { handleButtonClick, buttonData, setButtonData, onCloseAction, handleFormValueChange, typeData, setUploadedFile, showGlobalNotification, viewDocument, setEmptyList } = props;
     const { searchDealerValue, setSearchDealerValue, dealerDataList } = props;
-    const { uploadedFileName, setUploadedFileName, uploadedFile, parentAppCode, setparentAppCode } = props;
+    const { uploadedFileName, setUploadedFileName, uploadedFile, parentAppCode, setparentAppCode, resetDealerList } = props;
 
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
     const [reasonTypeChange, setReasonTypeChange] = useState('');
@@ -77,20 +76,14 @@ const AddEditFormMain = (props) => {
         isReplaceEnabled: false,
     };
 
-    // useEffect(() => {
-    //     if (showStatus.status === 'done') {
-    //         showGlobalNotification({ notificationType: 'success', title: 'Success', message: `${showStatus.name + ' file uploaded successfully'}` });
-    //     } else if (showStatus.status === 'error') {
-    //         showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Error' });
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [showStatus]);
-
     const handleCancellationReasonTypeChange = (value) => {
         setReasonTypeChange(value);
         otfCancellationForm.resetFields(['dealerCode', 'oemCode', 'productCode', 'dealerName', 'cancellationRemark', 'reasonForCancellation']);
         setUploadedFile('');
         setFileList([]);
+        setDealerList([]);
+        resetDealerList();
+        setSearchDealerValue('');
     };
 
     const onSearchDealer = debounce(function (text) {
@@ -98,54 +91,39 @@ const AddEditFormMain = (props) => {
     }, 300);
 
     const handleSelect = (value) => {
-        let dealerDetails = dealerDataList?.find((dealer) => dealer?.dealerName === value);
+        let dealerDetails = Object.values(dealerDataList)?.find((dealer) => dealer?.dealerName === value);
         otfCancellationForm.setFieldsValue({ dealerCode: dealerDetails?.dealerCode });
     };
 
     useEffect(() => {
-        if ((searchDealerValue?.length > 2)) {
-            if(dealerDataList?.length == 0){
-                setDealerList([{
-                    value: '',
-                    label: "No Dealer Found",
-                    disabled: true // disable this option
-                }]);
-            }else
-                setDealerList(highlightFinalLocatonList(dealerDataList) || []);
+        if (searchDealerValue?.length > 2) {
+            if (Object.values(dealerDataList)?.length == 0) {
+                setDealerList([
+                    {
+                        value: '',
+                        label: 'No Dealer Found',
+                        disabled: true, // disable this option
+                    },
+                ]);
+            } else setDealerList(highlightFinalLocatonList(dealerDataList) || []);
         } else {
             setDealerList([]);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dealerDataList, searchDealerValue]);
-    const highlightFinalLocatonList = useMemo(
-        () => (data) => {
-            if (data?.length < 1) return [];
-            let finalLocations = data?.map((item) => {
-                // const index = item?.dealerName?.toLowerCase().indexOf(searchDealerValue);
-                // const beforeStr = item?.dealerName?.substring(0, index);
-                // const afterStr = item?.dealerName?.slice(index + searchDealerValue?.length);
-                // let locatonName =
-                //     index > -1 ? (
-                //         <span>
-                //             {beforeStr}
-                //             <span className="site-tree-search-value" style={{ color: 'red' }}>
-                //                 {/* {searchString} */}
-                //                 {item?.dealerName?.substring(index, index + searchDealerValue?.length)}
-                //             </span>
-                //             {afterStr}
-                //         </span>
-                //     ) : (
-                //         <span>{item?.dealerName}</span>
-                //     );
+
+    const highlightFinalLocatonList = useMemo(() => (data) => {
+        if (Object.values(data)?.length === 0) return [];
+        else {
+            let finalLocations = Object.values(dealerDataList)?.map((item) => {
                 return {
                     label: item?.dealerName,
                     value: item?.dealerName,
                 };
             });
             return finalLocations;
-        },
-        []
-    );
+        }
+    });
 
     const handleSelectTreeClick = (value) => {
         setparentAppCode(value);
@@ -156,7 +134,7 @@ const AddEditFormMain = (props) => {
         optionFilterProp: 'children',
         showSearch: false,
         allowClear: true,
-        className: styles.headerSelectField,
+        // className: styles.headerSelectField,
     };
 
     const buttonProps = {
@@ -177,10 +155,10 @@ const AddEditFormMain = (props) => {
     const treeSelectFieldProps = {
         treeFieldNames,
         treeData: productHierarchyData,
-        //treeDisabled: treeCodeReadOnly || isReadOnly,
+        defaultParent: false,
         selectedTreeSelectKey: parentAppCode,
         handleSelectTreeClick,
-        //defaultValue: treeCodeId,
+        defaultValue: null,
         placeholder: preparePlaceholderSelect('Parent'),
     };
 
@@ -190,7 +168,7 @@ const AddEditFormMain = (props) => {
             <Form form={otfCancellationForm} data-testid="test" onFinish={onFinishOTFCancellation} layout="vertical" autocomplete="off" colon="false">
                 <Row gutter={20} className={styles.drawerBody}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Card className={styles.ExchangeCard}>
+                        <Card className={styles.marB20}>
                             <Descriptions {...viewProps}>
                                 <Descriptions.Item label="OTF No.">{checkAndSetDefaultValue(selectedOrder?.otfNumber, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="OTF Date">{checkAndSetDefaultValue(convertDateTime(selectedOrder?.otfDate, 'DD MMM YYYY'), isLoading)}</Descriptions.Item>
@@ -232,9 +210,9 @@ const AddEditFormMain = (props) => {
 
                         {reasonTypeChange === PARAM_MASTER.LOMMD.id && (
                             <Row>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.inputAutFillWrapper}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                     <Form.Item name="dealerName" label="Find Dealer Name" rules={[validateRequiredSelectField('Dealer Name')]}>
-                                        <AutoComplete label="Find Dealer Name" options={dealerList} backfill={false} onSelect={handleSelect} onSearch={onSearchDealer} allowSearch >
+                                        <AutoComplete label="Find Dealer Name" options={dealerList} backfill={false} onSelect={handleSelect} onSearch={onSearchDealer} allowSearch>
                                             <Search allowClear placeholder={preparePlaceholderAutoComplete(' / Search Dealer Name')} />
                                         </AutoComplete>
                                     </Form.Item>
@@ -250,7 +228,7 @@ const AddEditFormMain = (props) => {
                             </Col>
                         </Row>
                         <Row>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.textareaError}>
                                 <Form.Item name="cancellationRemark" label="Cancellation Remarks" rules={[validateRequiredInputField('Cancellation Remarks')]}>
                                     <TextArea maxLength={300} placeholder={preparePlaceholderText('Cancellation Remarks')} showCount />
                                 </Form.Item>

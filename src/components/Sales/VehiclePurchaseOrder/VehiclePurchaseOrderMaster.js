@@ -118,7 +118,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
 
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [isCancelVisible, setIsCancelVisible] = useState(false);
-    const [changeView, setChangeView] = useState(false); 
+    const [changeView, setChangeView] = useState(false);
 
     const onSuccessAction = (res) => {
         // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -131,6 +131,13 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         showGlobalNotification({ message });
         setShowDataLoading(false);
     };
+
+    useEffect(() => {
+        if (filterString) {
+            setPage({ ...page, current: 1 });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [filterString]);
 
     const extraParams = useMemo(() => {
         return [
@@ -244,9 +251,8 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
     }, [currentSection, sectionName]);
 
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
-
         setChangeView(() => !changeView);
-        
+
         form.resetFields();
         form.setFieldsValue(undefined);
         setIsFormVisible(true);
@@ -345,7 +351,8 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         totalRecords,
         tableColumn: tableColumn(handleButtonClick),
         tableData: data,
-        showAddButton: false,
+        showAddButton: false,   
+        page,
         setPage,
     };
     const removeFilter = (key) => {

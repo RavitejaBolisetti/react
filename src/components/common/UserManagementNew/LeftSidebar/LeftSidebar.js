@@ -9,13 +9,10 @@ import ProfileDetailCard from './ProfileDetailCard';
 
 
 const LeftSidebar = (props) => {
-    const { selectedCustomerId } = props;
     
     return (
         <>
-            {/* {selectedCustomerId &&  */}
             <ProfileDetailCard {...props} />
-            {/* // } */}
             <MenuNav {...props} />
         </>
     );

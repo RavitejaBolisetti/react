@@ -10,7 +10,7 @@ import { getCodeValue } from 'utils/getCodeValue';
 import { DATA_TYPE } from 'constants/dataType';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import styles from 'components/common/Common.module.css';
-import { FiCopy } from 'react-icons/fi';
+import { CopytoClipboard } from 'utils/CopytoClipboard';
 
 const { Panel } = Collapse;
 
@@ -36,11 +36,9 @@ const VehicleReceiptDetailCard = (props) => {
                     <>
                         <div className={`${styles.detailCardText} ${styles.marB5}`} style={{ fontSize: '14px' }}>
                             GRN Number:
-                            <span>
-                                {checkAndSetDefaultValue(selectedRecord?.grnNumber, isLoading)}
-                                <a className={`${styles.floatRight} ${styles.marL5}`}>
-                                    <FiCopy className={styles.activeForm} />
-                                </a>
+                            <span className={styles.activeForm}>
+                                {selectedRecord?.grnNumber || 'New'}
+                                <CopytoClipboard text={selectedRecord?.grnNumber} />
                             </span>
                         </div>
                     </>

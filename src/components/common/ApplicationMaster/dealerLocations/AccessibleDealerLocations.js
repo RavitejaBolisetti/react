@@ -6,13 +6,14 @@
 import React, { useReducer, useState, useEffect, useMemo, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { applicationMasterDataActions } from 'store/actions/data/applicationMaster';
-import { Col, Row, Input, AutoComplete, Divider } from 'antd';
+import { Col, Row, Input, AutoComplete } from 'antd';
 import LocationCard from './LocationCard';
 import { bindActionCreators } from 'redux';
 import { showGlobalNotification } from 'store/actions/notification';
 import { preparePlaceholderAutoComplete } from 'utils/preparePlaceholder';
 import { debounce } from 'utils/debounce';
 import { LANGUAGE_EN } from 'language/en';
+import styles from 'components/common/Common.module.css';
 
 const locationDeleteTitle = LANGUAGE_EN.GENERAL.REMOVE_DEALER_LOCATION.TITLE;
 const locationDeleteMessage = LANGUAGE_EN.GENERAL.REMOVE_DEALER_LOCATION.MESSAGE.replace('{NAME}', 'Location');
@@ -131,15 +132,13 @@ const AccessibleDealerLocationMain = ({ setCanFormSave, userId, dealerLocations,
     };
 
     return (
-        <Fragment>
-            <Divider />
-            <Row gap={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+        <>
+            <Row gutter={20}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.marB20}>
                     <AutoComplete options={dealerLocationsList} backfill={false} onSelect={handleSelect} onSearch={onSearchLocation} allowSearch notFoundContent="No location found">
                         <Input.Search size="large" allowClear placeholder={preparePlaceholderAutoComplete('')} />
                     </AutoComplete>
                 </Col>
-
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     {finalFormdata?.accessibleLocation?.length > 0
                         ? finalFormdata?.accessibleLocation?.map((location) => {
@@ -148,7 +147,7 @@ const AccessibleDealerLocationMain = ({ setCanFormSave, userId, dealerLocations,
                         : ''}
                 </Col>
             </Row>
-        </Fragment>
+        </>
     );
 };
 

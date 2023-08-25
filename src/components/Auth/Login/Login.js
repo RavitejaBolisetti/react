@@ -215,7 +215,7 @@ const Login = (props) => {
 
     const passowrdSuffix = (
         <span onMouseDown={handleShowPassword} onMouseUp={handleHidePassword} onMouseLeave={handleHidePassword}>
-            {!showPassword ? <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20} />}
+            {!showPassword ? <AiOutlineEyeInvisible size={20} data-testid="eyeInvisible"/> : <AiOutlineEye size={20} data-testid="eyeVisible"/>}
         </span>
     );
 
@@ -252,27 +252,19 @@ const Login = (props) => {
                                                     <div className={styles.loginSubHeading}>Please enter your credentials to login</div>
                                                 </div>
                                                 <Row gutter={20}>
-                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} class="textfieldWithPrefix">
-                                                        <Form.Item name="userId" class="textfieldWithPrefix__input" data-testid="userIdInput" rules={[validateRequiredInputField('user id')]} className={styles.inputBox}>
+                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.inputLabelPlaceholder}>
+                                                        <Form.Item name="userId" data-testid="userIdInput" rules={[validateRequiredInputField('user id')]} className={styles.inputBox}>
                                                             {<Input data-testid="userNameInput" ref={userIdRef} prefix={<BiUser size={16} />} type="text" maxLength={25} onChange={handleFormChange('userId')} />}
                                                         </Form.Item>
-                                                        {!fieldData?.userId && (
-                                                            <label className="textfieldWithPrefix__label" onClick={handleFieldFocus(userIdRef)}>
-                                                                User ID (MILE ID.Parent ID)
-                                                            </label>
-                                                        )}
+                                                        {!fieldData?.userId && <label onClick={handleFieldFocus(userIdRef)}>User ID (MILE ID.Parent ID)</label>}
                                                     </Col>
                                                 </Row>
                                                 <Row gutter={20}>
-                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} class="textfieldWithPrefix">
-                                                        <Form.Item name="password" class="textfieldWithPrefix__input" data-testid="password" rules={[validateRequiredInputField('password')]} className={styles.inputBox}>
-                                                            <Input  data-testid="inputPassword"  ref={passwordInputRef} type={showPassword ? 'text' : 'password'} prefix={<FiLock size={16} />} suffix={passowrdSuffix} onChange={handleFormChange('password')} />
+                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.inputLabelPlaceholder}>
+                                                        <Form.Item name="password" data-testid="password" rules={[validateRequiredInputField('password')]} className={styles.inputBox}>
+                                                            <Input data-testid="inputPassword" ref={passwordInputRef} type={showPassword ? 'text' : 'password'} prefix={<FiLock size={16} />} suffix={passowrdSuffix} onChange={handleFormChange('password')} />
                                                         </Form.Item>
-                                                        {!fieldData?.password && (
-                                                            <label className="textfieldWithPrefix__label" onClick={handleFieldFocus(passwordInputRef)}>
-                                                                Password
-                                                            </label>
-                                                        )}
+                                                        {!fieldData?.password && <label onClick={handleFieldFocus(passwordInputRef)}>Password</label>}
                                                         <div className={styles.forgotPasswordLink}>
                                                             <Link to={ROUTING_FORGOT_PASSWORD}>Forgot Password?</Link>
                                                         </div>

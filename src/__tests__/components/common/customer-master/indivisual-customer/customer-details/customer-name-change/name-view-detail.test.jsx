@@ -3,6 +3,10 @@ import customRender from '@utils/test-utils';
 import { fireEvent, screen, act } from '@testing-library/react';
 import { ViewDetail } from '@components/common/CustomerMaster/IndividualCustomer/CustomerDetail/CustomerNameChange/ViewDetail';
 
+beforeEach(() => {
+    jest.clearAllMocks();
+});
+
 describe('View Form component', () => {
     it('should render view form component', () => {
         const styles = {
@@ -42,7 +46,7 @@ describe('View Form component', () => {
         const rejectedBtn = screen.getByRole('button', { name: 'Reject' });
         fireEvent.click(rejectedBtn);
 
-        const closeBtn = await screen.findByRole('button', { name: 'Cancel' });
+        const closeBtn = await screen.findByRole('button', { name: 'No' });
         fireEvent.click(closeBtn);
     });
     it('should click on rejection model Submit buttons', async () => {
@@ -57,10 +61,10 @@ describe('View Form component', () => {
         const rejectedBtn = screen.getByRole('button', { name: 'Reject' });
         fireEvent.click(rejectedBtn);
 
-        const rejectionText = screen.getByRole('textbox', { name: 'Reason for Rejection' });
+        const rejectionText = screen.getByRole('textbox', { name: 'Remark for Rejection' });
         fireEvent.change(rejectionText, { target: { value: 'helo' } });
 
-        const closeBtn = await screen.findByRole('button', { name: 'Submit' });
+        const closeBtn = screen.getByRole('button', { name: /yes, reject/i });
         fireEvent.click(closeBtn);
     });
 });

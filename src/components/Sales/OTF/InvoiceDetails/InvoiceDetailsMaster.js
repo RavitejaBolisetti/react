@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Collapse, Form } from 'antd';
+import { Row, Col, Collapse, Form, Divider } from 'antd';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -126,6 +126,7 @@ export const InvoiceDetailsMasterBase = (props) => {
                     {displaySection?.invoiceInformation && (
                         <Collapse onChange={() => onChange(1)} expandIconPosition="end" expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={activeKey}>
                             <Panel header="Invoice Information" key={1}>
+                                <Divider />
                                 <DataTable srlTitle={'#'} pagination={false} tableColumn={tableColumnInvoice()} tableData={invoiceData?.invoiceDetails} />
                             </Panel>
                         </Collapse>
@@ -134,6 +135,7 @@ export const InvoiceDetailsMasterBase = (props) => {
                     {displaySection?.deliveryInformation && (
                         <Collapse onChange={() => onChange(2)} expandIconPosition="end" expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={activeKey}>
                             <Panel header="Delivery Information" key={2}>
+                                <Divider />
                                 <DataTable srlTitle={'#'} pagination={false} tableColumn={tableColumnDelivery()} tableData={invoiceData?.deliveryDetails} />
                             </Panel>
                         </Collapse>

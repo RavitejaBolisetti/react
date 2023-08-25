@@ -10,7 +10,7 @@ import { bindActionCreators } from 'redux';
 import { Col, Form, Row, Modal } from 'antd';
 import { tableColumn } from './tableColumn';
 import AdvanceOtfFilter from './AdvanceOtfFilter';
-import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, CANCEL_ACTION, TRANSFER_ACTION, btnVisiblity } from 'utils/btnVisiblity';
+import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, CANCEL_ACTION, TRANSFER_ACTION, btnVisiblity, ALLOT, UNALLOT } from 'utils/btnVisiblity';
 
 import { OTFMainConatiner } from './OTFMainConatiner';
 import { ListDataTable } from 'utils/ListDataTable';
@@ -18,11 +18,15 @@ import { AdvancedSearch } from './AdvancedSearch';
 import { OTF_STATUS } from 'constants/OTFStatus';
 import { OTF_SECTION } from 'constants/OTFSection';
 import { CancellationMaster } from './OTFCancellation/CancellationMaster';
+import { vehicleAllotment } from 'store/actions/data/vehicleAllotment/VehicleAllotment';
 import { TransferMaster } from './OTFTransfer/TransferMaster';
+import { OTFAllotmentMaster } from './OTFAllotment/OTFAllotmentMaster';
 
+import { otfvehicleDetailsDataActions } from 'store/actions/data/otf/vehicleDetails';
 import { showGlobalNotification } from 'store/actions/notification';
 import { otfDataActions } from 'store/actions/data/otf/otf';
 import { PARAM_MASTER } from 'constants/paramMaster';
+import { VEHICLE_TYPE } from 'constants/VehicleType';
 import { BASE_URL_OTF_DETAILS as baseURL, BASE_URL_OTF_TRANSFER as otfTransferURL, BASE_URL_OTF_CANCELLATION as otfCancelURL } from 'constants/routingApi';
 
 import { LANGUAGE_EN } from 'language/en';
@@ -32,6 +36,8 @@ import { FilterIcon } from 'Icons';
 import { ChangeHistory } from './ChangeHistory';
 
 import styles from 'components/common/Common.module.css';
+import { OtfSoMappingUnmappingChangeHistory } from './OtfSoMappingUnmappingChangeHistory';
+import { ConfirmationModal } from 'utils/ConfirmationModal';
 
 const { confirm } = Modal;
 
@@ -41,12 +47,14 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             OTF: {
+                VehicleDetails: { isLoaded: isVehicleDetailDataLoaded = false, isVehicleDetailLoading, data: VehicleDetailsData = [] },
                 OtfSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isOTFSearchLoading, data, filter: filterString, isDetailLoaded, detailData: otfData = [], isChangeHistoryLoaded, isChangeHistoryLoading, isChangeHistoryData = [] },
             },
         },
     } = state;
     const moduleTitle = 'Order Tracking Form';
     const ChangeHistoryTitle = 'OTF Change History ';
+    const otfSoMappingChangeHistoryTitle = 'OTF - SO Mapping & Un-mapping History';
 
     let returnValue = {
         userId,
@@ -64,10 +72,15 @@ const mapStateToProps = (state) => {
         isSearchDataLoaded,
         filterString,
         ChangeHistoryTitle,
+        otfSoMappingChangeHistoryTitle,
 
         isChangeHistoryLoaded,
         isChangeHistoryLoading,
         isChangeHistoryData,
+
+        isVehicleDetailDataLoaded,
+        VehicleDetailsData,
+        isVehicleDetailLoading,
     };
     return returnValue;
 };
@@ -84,6 +97,12 @@ const mapDispatchToProps = (dispatch) => ({
             resetData: otfDataActions.reset,
             transferOTF: otfDataActions.transferOTF,
             listShowLoading: otfDataActions.listShowLoading,
+
+            fetchVehicleDetail: otfvehicleDetailsDataActions.fetchList,
+
+            updateVehicleAllotmentStatus: vehicleAllotment.saveData,
+            fetchVehicleAllotmentSearchedList: vehicleAllotment.fetchList,
+
             showGlobalNotification,
         },
         dispatch
@@ -92,11 +111,14 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const OtfMasterBase = (props) => {
     const { showGlobalNotification, fetchOTFDetail, saveData, listShowLoading, userId, fetchOTFSearchedList, data, totalRecords, otfData, resetData } = props;
-    const { ChangeHistoryTitle } = props;
+    const { ChangeHistoryTitle, otfSoMappingChangeHistoryTitle } = props;
+    const { fetchVehicleDetail, updateVehicleAllotmentStatus, VehicleDetailsData } = props;
 
     const { typeData, moduleTitle, transferOTF } = props;
     const { filterString, setFilterString, otfStatusList } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
+    const [confirmRequest, setConfirmRequest] = useState();
+    const [refreshData, setRefreshData] = useState();
 
     const [listFilterForm] = Form.useForm();
 
@@ -117,10 +139,12 @@ export const OtfMasterBase = (props) => {
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [isCancelVisible, setIsCancelVisible] = useState(false);
     const [isTransferVisible, setIsTransferVisible] = useState(false);
+    const [isAllotVisible, setIsAllotVisible] = useState(false);
     const [uploadedFile, setUploadedFile] = useState();
 
     const [otfTransferForm] = Form.useForm();
     const [otfCancellationForm] = Form.useForm();
+    const [otfAllotmentForm] = Form.useForm();
 
     const defaultBtnVisiblity = {
         editBtn: false,
@@ -137,6 +161,7 @@ export const OtfMasterBase = (props) => {
         invoiceBtn: false,
         deliveryNote: false,
         changeHistory: true,
+        otfSoMappingChangeHistory: false,
     };
 
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -149,6 +174,14 @@ export const OtfMasterBase = (props) => {
 
     const [formData, setFormData] = useState([]);
     const [ChangeHistoryVisible, setChangeHistoryVisible] = useState(false);
+    const [OtfSoMappingHistoryVisible, setOtfSoMappingHistoryVisible] = useState(false);
+
+    const onCloseConfirmationModalAction = () => {
+        setConfirmRequest({
+            ...confirmRequest,
+            isVisible: false,
+        });
+    };
 
     const onSuccessAction = (res) => {
         // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -251,7 +284,7 @@ export const OtfMasterBase = (props) => {
             fetchOTFSearchedList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, extraParams]);
+    }, [userId, extraParams, refreshData]);
 
     useEffect(() => {
         const defaultSection = OTF_SECTION.OTF_DETAILS.id;
@@ -273,6 +306,46 @@ export const OtfMasterBase = (props) => {
         form.setFieldsValue(undefined);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentSection, sectionName]);
+
+    const handleVehicleAllotment = (record, updatedStatus) => {
+        if (!record) {
+            showGlobalNotification({ message: 'Please select OTF' });
+            return false;
+        }
+
+        const { otfId, otfNumber } = record;
+        const { vinnumber } = VehicleDetailsData;
+
+        let data = { otfId, otfNumber, allotmentStatus: updatedStatus, vehicleIdentificationNumber: vinnumber };
+        const onSuccess = (res) => {
+            form.resetFields();
+            setShowDataLoading(true);
+            setRefreshData(true);
+            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            setButtonData({ ...buttonData, formBtnActive: false });
+            setIsFormVisible(false);
+
+            setConfirmRequest({
+                ...confirmRequest,
+                isVisible: false,
+            });
+        };
+
+        const onError = (message) => {
+            showGlobalNotification({ message });
+        };
+
+        const requestData = {
+            data: data,
+            method: 'put',
+            setIsLoading: listShowLoading,
+            userId,
+            onError,
+            onSuccess,
+        };
+
+        updateVehicleAllotmentStatus(requestData);
+    };
 
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
         form.resetFields();
@@ -301,12 +374,44 @@ export const OtfMasterBase = (props) => {
                 break;
             case CANCEL_ACTION:
                 //  setFormActionType(CANCEL_OTF)
-                setIsCancelVisible(true);
+                // setIsCancelVisible(true);
                 setIsFormVisible(false);
                 break;
             case TRANSFER_ACTION:
-                setIsFormVisible(false);
                 setIsTransferVisible(true);
+                break;
+            case ALLOT:
+                setIsAllotVisible(true);
+                break;
+            case UNALLOT:
+                if (userId && selectedOrderId) {
+                    const onSuccessAction = () => {
+                        setConfirmRequest({
+                            isVisible: true,
+                            titleOverride: 'Un-Allot OTF',
+                            closable: true,
+                            icon: false,
+                            onCloseAction: onCloseConfirmationModalAction,
+                            onSubmitAction: () => handleVehicleAllotment(record, VEHICLE_TYPE?.UNALLOTED.key),
+                            submitText: 'Yes',
+                            text: 'Are you sure want to Un-allot this OTF? ',
+                            content: VehicleDetailsData ? VehicleDetailsData?.vinnumber : '',
+                        });
+                    };
+
+                    const onErrorAction = (message) => {
+                        showGlobalNotification({ message });
+                    };
+                    const extraParams = [
+                        {
+                            key: 'otfNumber',
+                            title: 'otfNumber',
+                            value: selectedOrderId,
+                            name: 'OTF Number',
+                        },
+                    ];
+                    fetchVehicleDetail({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction, onSuccessAction });
+                }
                 break;
             default:
                 break;
@@ -340,12 +445,9 @@ export const OtfMasterBase = (props) => {
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
-
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchOTFDetail({ setIsLoading: listShowLoading, userId, onSuccessAction });
-
             setButtonData({ ...buttonData, formBtnActive: false });
-
             setIsFormVisible(false);
         };
 
@@ -371,6 +473,9 @@ export const OtfMasterBase = (props) => {
     };
     const handleChangeHistory = () => {
         setChangeHistoryVisible(true);
+    };
+    const handleOtfSoMappingHistory = () => {
+        setOtfSoMappingHistoryVisible(true);
     };
 
     const handleFormValueChange = () => {
@@ -541,6 +646,18 @@ export const OtfMasterBase = (props) => {
         ChangeHistoryTitle,
         selectedOrderId,
     };
+    const OtfSoMappingChangeHistoryProps = {
+        isVisible: OtfSoMappingHistoryVisible,
+        onCloseAction: () => {
+            setOtfSoMappingHistoryVisible(false);
+        },
+        titleOverride: otfSoMappingChangeHistoryTitle,
+        formData,
+        setIsFormVisible,
+        buttonData,
+        otfSoMappingChangeHistoryTitle,
+        selectedOrderId,
+    };
 
     const containerProps = {
         record: selectedOrder,
@@ -579,13 +696,16 @@ export const OtfMasterBase = (props) => {
         otfData,
         saveButtonName: !selectedOrderId ? 'Create Customer ID' : isLastSection ? 'Submit' : 'Save & Next',
         handleChangeHistory,
+        handleOtfSoMappingHistory,
     };
 
     const onCancelCloseAction = () => {
         setIsCancelVisible(false);
         setIsTransferVisible(false);
+        setIsAllotVisible(false);
         otfTransferForm.resetFields();
         otfCancellationForm.resetFields();
+        otfAllotmentForm.resetFields();
     };
 
     const cancelProps = {
@@ -611,6 +731,13 @@ export const OtfMasterBase = (props) => {
         onCloseAction: onCancelCloseAction,
     };
 
+    const allotOTFProps = {
+        ...props,
+        selectedOrder,
+        isVisible: isAllotVisible,
+        onCloseAction: onCancelCloseAction,
+    };
+
     return (
         <>
             <AdvanceOtfFilter {...advanceFilterResultProps} />
@@ -624,6 +751,9 @@ export const OtfMasterBase = (props) => {
             <CancellationMaster {...cancelProps} />
             <TransferMaster {...transferOTFProps} />
             <ChangeHistory {...ChangeHistoryProps} />
+            <OTFAllotmentMaster {...allotOTFProps} />
+            <OtfSoMappingUnmappingChangeHistory {...OtfSoMappingChangeHistoryProps} />
+            <ConfirmationModal {...confirmRequest} />
         </>
     );
 };

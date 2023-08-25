@@ -9,30 +9,29 @@ import { Row, Col, Input, Form, DatePicker, Switch, Card } from 'antd';
 import { formattedCalendarDate, dateFormat } from 'utils/formatDateTime';
 import { validateRequiredSelectField, validateRequiredInputField, noWhiteSpaceinBeginning } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
-import { disablePastDate } from 'utils/disableDate';
 import { customSelectBox } from 'utils/customSelectBox';
 
 import styles from 'components/common/Common.module.css';
 
 const AddEditFormMain = (props) => {
-    const { formData, formActionType, typeData, salesConsultantLov, exchangeValue, loyaltyValue } = props;
+    const { formData, disabledProps, formActionType, typeData, salesConsultantLov, exchangeValue, loyaltyValue } = props;
 
     return (
         <Card className={styles.drawerCardView}>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formattedCalendarDate(formData?.initialPromiseDeliveryDate)} label="Initial Promise Delivery Date" name="initialPromiseDeliveryDate" rules={[validateRequiredInputField('Initial Promise Delivery Date')]}>
-                        <DatePicker disabledDate={disablePastDate} format={dateFormat} style={{ display: 'auto', width: '100%' }} />
+                    <Form.Item initialValue={formattedCalendarDate(formData?.initialPromiseDeliveryDate)} label="Initial Promise Delivery Date" name="initialPromiseDeliveryDate">
+                        <DatePicker {...disabledProps} format={dateFormat} style={{ display: 'auto', width: '100%' }} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={formattedCalendarDate(formData?.custExpectedDeliveryDate)} label="Cust. Expected Delivery Date" name="custExpectedDeliveryDate">
-                        <DatePicker disabledDate={disablePastDate} format={dateFormat} style={{ display: 'auto', width: '100%' }} />
+                        <DatePicker {...disabledProps} format={dateFormat} style={{ display: 'auto', width: '100%' }} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={formData?.saleType} name="saleType" label="Sale Type" rules={[validateRequiredSelectField('Sale Type')]}>
-                        {customSelectBox({ data: typeData['SALE_TYP'] })}
+                        {customSelectBox({ data: typeData['SALE_TYPE'] })}
                     </Form.Item>
                 </Col>
             </Row>
@@ -48,7 +47,7 @@ const AddEditFormMain = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.saleConsultant} name="saleConsultant" label="Sales Consultant" rules={[validateRequiredSelectField('Sales Consultant')]}>
+                    <Form.Item initialValue={formData?.saleConsultant} name="saleConsultant" label="Sales Consultant">
                         {customSelectBox({ data: salesConsultantLov })}
                     </Form.Item>
                 </Col>
@@ -65,8 +64,8 @@ const AddEditFormMain = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.deliveryAt} label="Delivery At" name="deliveryAt" rules={[validateRequiredSelectField('Delivery At')]}>
-                        {customSelectBox({ data: typeData['DLVR_AT'] })}
+                    <Form.Item initialValue={formData?.deliveryAt} label="Delivery At" name="deliveryAt">
+                        {customSelectBox({ data: typeData['DELIVERYAT_IND'] })}
                     </Form.Item>
                 </Col>
             </Row>
@@ -94,24 +93,24 @@ const AddEditFormMain = (props) => {
                         <Input maxLength={50} placeholder={preparePlaceholderText('Mode Of Payment')} disabled={formActionType?.editMode ? true : false} />
                     </Form.Item>
                 </Col>
-                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                {/* <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={formData?.financeArrangedBy} name="financeArrangedBy" label="Finance Arranged By">
                         {customSelectBox({ data: typeData['FNC_ARNGD'] })}
                     </Form.Item>
-                </Col>
-                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                </Col> */}
+                {/* <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={formActionType?.editMode ? (formData?.exchange === 1 ? true : false) : false} labelAlign="left" wrapperCol={{ span: 24 }} name="exchange" label="Exchange" valuePropName="checked">
                         <Switch disabled={exchangeValue} checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" onChange={(checked) => (checked ? 1 : 0)} />
                     </Form.Item>
-                </Col>
-            </Row>
-            <Row gutter={20}>
+                </Col> disabled={loyaltyValue}*/}
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={formActionType?.editMode ? (formData?.loyaltyScheme === 1 ? true : false) : false} labelAlign="left" wrapperCol={{ span: 24 }} name="loyaltyScheme" label="Loyality Scheme" valuePropName="checked">
-                        <Switch disabled={loyaltyValue} checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" onChange={(checked) => (checked ? 1 : 0)} />
+                        <Switch checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" onChange={(checked) => (checked ? 1 : 0)} />
                     </Form.Item>
                 </Col>
             </Row>
+            {/* <Row gutter={20}>
+            </Row> */}
         </Card>
     );
 };

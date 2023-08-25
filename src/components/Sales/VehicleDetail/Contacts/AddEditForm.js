@@ -39,8 +39,7 @@ const AddEditForm = (props) => {
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8} className={styles.contactDays}>
                             <Form.Item label="Preferred Days For Contact" name="preferredDayForContact" rules={[validateRequiredSelectField('preferred days for contact')]}>
-                                {customSelectBox({ data: typeData['VH_CONTACT_DAYS'],  placeholder: preparePlaceholderSelect('preferred days for contact') })}
-                                {/* <Select {...selectProps} mode="multiple" placeholder={preparePlaceholderSelect('preferred days for contact')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} allowClear options={typeData['VH_CONTACT_DAYS']}></Select> */}
+                                {customSelectBox({ data: typeData['VH_CONTACT_DAYS'], mode: 'multiple', placeholder: preparePlaceholderSelect('preferred days for contact') })}
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>

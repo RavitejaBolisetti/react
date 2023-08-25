@@ -16,7 +16,6 @@ import styles from 'components/common/Common.module.css';
 
 const VehicleRecieptMasterMainContainerMain = (props) => {
     const { currentSection } = props;
-
     const myProps = {
         ...props,
     };

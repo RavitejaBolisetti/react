@@ -143,6 +143,12 @@ export const VehicleModelAndTaxChargersCategoryMain = (props) => {
         setshowDataLoading(false);
     };
 
+    useEffect(() => {
+        if (filterString) {
+            setPage({ ...page, current: 1 });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [filterString]);
     const extraParams = useMemo(() => {
         return [
             {
@@ -312,6 +318,7 @@ export const VehicleModelAndTaxChargersCategoryMain = (props) => {
     };
 
     const tableProps = {
+        page,
         setPage,
         VehicleModelTaxChargesCategoryisLoading,
         tableData: searchData,

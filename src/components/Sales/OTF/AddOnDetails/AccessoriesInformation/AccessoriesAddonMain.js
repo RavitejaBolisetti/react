@@ -87,16 +87,13 @@ const AccessoriesAddonMain = ({ setIsBtnDisabled, openAccordian, setOpenAccordia
         isPresent,
     };
     return (
-        <div>
+        <>
             <Divider />
-            <Space size="large" direction="vertical">
-                {addButtonDisabled?.partDetailsResponses && <AddEditForm {...AddEditFormProps} />}
-
-                {addOnItemInfo?.map((element, index) => {
-                    return <CardMapping AddEditFormProps={AddEditFormProps} element={element} isEditing={isEditing} setisEditing={setisEditing} handleDelete={handleDelete} index={index} />;
-                })}
-            </Space>
-        </div>
+            {addButtonDisabled?.partDetailsResponses && <AddEditForm {...AddEditFormProps} />}
+            {addOnItemInfo?.map((element, index) => {
+                return <CardMapping AddEditFormProps={AddEditFormProps} element={element} isEditing={isEditing} setisEditing={setisEditing} handleDelete={handleDelete} index={index} />;
+            })}
+        </>
     );
 };
 

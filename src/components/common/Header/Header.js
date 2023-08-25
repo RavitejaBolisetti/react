@@ -22,7 +22,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 import styles from './Header.module.css';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { doLogoutAPI } from 'store/actions/auth';
+import { clearLocalStorageData, doLogoutAPI } from 'store/actions/auth';
 import { headerDataActions } from 'store/actions/common/header';
 import { Link, useNavigate } from 'react-router-dom';
 import { HeaderSkeleton } from './HeaderSkeleton';
@@ -117,11 +117,14 @@ const HeaderMain = (props) => {
         if (res?.data) {
             showGlobalNotification({ notificationType: 'successBeforeLogin', title: res?.title || 'Logout Successful', message: Array.isArray(res?.responseMessage) ? res?.responseMessage[0] : res?.responseMessage });
             navigate(routing.ROUTING_LOGIN);
+            clearLocalStorageData();
         }
     };
 
     const onError = (message) => {
         showGlobalNotification({ message: Array.isArray(message) ? message[0] : message });
+        navigate(routing.ROUTING_LOGIN);
+        clearLocalStorageData();
     };
 
     const showConfirm = () => {
@@ -227,7 +230,7 @@ const HeaderMain = (props) => {
                             <Col xs={14} sm={isDashboard ? 9 : 16} md={isDashboard ? 9 : 16} lg={isDashboard ? 9 : 16} xl={isDashboard ? 9 : 16} xxl={isDashboard ? 9 : 16}>
                                 <div className={styles.headerLeft}>
                                     <Space>
-                                        <div className={`${styles.floatLeft} ${styles.mrt6} ${styles.menuIcon}`} style={{ paddingLeft: '10px' }} onClick={handleCollapse}>
+                                        <div className={`${styles.floatLeft} ${styles.mrt6} ${styles.menuIcon}`} onClick={handleCollapse}>
                                             <img width={20} src={IMG_ICON} alt="brandImage" className={styles.brandImage} /> <Icon component={MenuArrow} />
                                         </div>
                                         <div className={styles.userText}>
