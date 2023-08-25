@@ -9,7 +9,6 @@ import { Row, Col, Typography, Card, Space, Button, Divider } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { RxCross2 } from 'react-icons/rx';
 
-
 import { ApplicationTree } from './ApplicationTree';
 
 import styles from 'components/common/Common.module.css';
@@ -74,7 +73,7 @@ const RoleCard = (props) => {
                 )}
             </Card>
 
-            {/* <div key={'rid' + value} className={`${styles.accordianContainer} ${styles.rolemanagmentContaner}`}>
+            {/* <div key={'rid' + value} className={`${styles.accordianContainer} ${styles.managementContainer}`}>
                 <Collapse
                     expandIcon={() => (
                         <Button type="link" icon={<PlusOutlined />}>

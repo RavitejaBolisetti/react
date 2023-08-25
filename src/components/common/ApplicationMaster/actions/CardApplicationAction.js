@@ -69,48 +69,34 @@ const CardApplicationAction = (props) => {
     return (
         <>
             <Card className={styles.viewCardSize} key={actionId}>
-                <Row align="middle">
-                    <Col xs={18} sm={18} md={18} lg={18} xl={18} xxl={18}>
-                        <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
+                <Row align="middle" className={styles.marB20}>
+                    <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                             <Text type="secondary">Status: </Text> {status ? <Text type="success">Active</Text> : <Text type="secondary">Inactive</Text>}
                         </Col>
-                        <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                             <Text strong>{actionName}</Text>
                         </Col>
-                        <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                             <Text type="secondary">Action ID: {actionId}</Text>
                         </Col>
                     </Col>
-                    <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
-                        <Row justify="end">
-                            {!isEditing ? (
-                                <>
-                                    <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
-                                        <Button disabled={isBtnDisabled} type="link" icon={<FiEdit />} onClick={() => onEdit({ status, actionName, actionId, actionMasterId, id })} />
-                                    </Col>
-                                    {!id ? (
-                                        <Col xs={4} sm={4} md={4} lg={4} xl={4} xxl={4}>
-                                            <Button disabled={isBtnDisabled} onClick={() => handleDeleteAction({ status, actionName, actionId })} type="link" icon={<FiTrash />}></Button>
-                                        </Col>
-                                    ) : (
-                                        ''
-                                    )}
-                                </>
-                            ) : (
-                                <>
-                                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className={styles.saveCancelBtn}>
-                                        <Button type="link" onClick={onUpdate}>
-                                            Save
-                                        </Button>
-                                    </Col>
-                                    <Col xs={11} sm={11} md={11} lg={11} xl={11} xxl={11} className={styles.saveCancelBtn}>
-                                        <Button type="link" onClick={() => onCancel()}>
-                                            Cancel
-                                        </Button>
-                                    </Col>
-                                </>
-                            )}
-                        </Row>
+                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.buttonsGroupRight}>
+                        {!isEditing ? (
+                            <>
+                                <Button disabled={isBtnDisabled} type="link" icon={<FiEdit />} onClick={() => onEdit({ status, actionName, actionId, actionMasterId, id })} />
+                                {!id ? <Button disabled={isBtnDisabled} onClick={() => handleDeleteAction({ status, actionName, actionId })} type="link" icon={<FiTrash />}></Button> : ''}
+                            </>
+                        ) : (
+                            <>
+                                <Button type="link" onClick={onUpdate}>
+                                    Save
+                                </Button>
+                                <Button type="link" onClick={() => onCancel()}>
+                                    Cancel
+                                </Button>
+                            </>
+                        )}
                     </Col>
                 </Row>
 

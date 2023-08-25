@@ -33,8 +33,8 @@ const ViewDetailMain = (props) => {
                             <Divider />
                             {formData?.partDetailsResponses?.map((element, i) => {
                                 return (
-                                    <div className={styles.accessInfo}>
-                                        <Collapse expandIcon={expandIcon} activeKey={myActiveKey} onChange={() => handleCollapses(i)} expandIconPosition="end" className={styles.innerCollapseBorder}>
+                                    <div className={styles.innerCollapse}>
+                                        <Collapse expandIcon={expandIcon} activeKey={myActiveKey} onChange={() => handleCollapses(i)} expandIconPosition="end">
                                             <Panel
                                                 header={
                                                     <Row justify="space-between">
@@ -52,6 +52,7 @@ const ViewDetailMain = (props) => {
                                                 }
                                                 key={i}
                                             >
+                                                <Divider />
                                                 <AccessoriesInformationCard formData={element} />
                                             </Panel>
                                         </Collapse>

@@ -38,7 +38,7 @@ export const RejectRequestForm = (props) => {
         <Form autoComplete="off" layout="vertical" form={rejectForm} onFinish={onFinish} onFinishFailed={onFinishFailed} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange}>
             {rejectRequest ? (
                 <Row gutter={16}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.textareaError}>
                         <Form.Item label="Rejection Remarks" name="remarks" rules={[validateRequiredInputField('remarks')]} initialValue={formData?.remarks}>
                             <TextArea showCount maxLength={300} placeholder={preparePlaceholderText('remark')} />
                         </Form.Item>

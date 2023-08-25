@@ -15,7 +15,7 @@ export const tableColumn = (handleButtonClick, allotmentStatus, fixedWith) => {
         tblPrepareColumns({
             title: 'VIN/Chasis no.',
             dataIndex: 'vehicleIdentificationNumber',
-            width: fixedWith ? '250px' : '20%',
+            width: fixedWith ? '202px' : '20%',
         }),
     ];
 
@@ -24,7 +24,7 @@ export const tableColumn = (handleButtonClick, allotmentStatus, fixedWith) => {
             tblPrepareColumns({
                 title: 'OTF no.',
                 dataIndex: 'otfNumber',
-                width: fixedWith ? '250px' : '20%',
+                width: fixedWith ? '202px' : '20%',
             })
         );
     }
@@ -32,25 +32,25 @@ export const tableColumn = (handleButtonClick, allotmentStatus, fixedWith) => {
         tblPrepareColumns({
             title: 'Model Description',
             dataIndex: 'modelCode',
-            width: fixedWith ? '250px' : '20%',
+            width: fixedWith ? '202px' : '20%',
         }),
 
         tblPrepareColumns({
             title: 'Age in Days',
             dataIndex: 'ageInDays',
-            width: fixedWith ? '130px' : '15%',
+            width: fixedWith ? '140px' : '15%',
         }),
 
         tblPrepareColumns({
             title: 'PDI Done',
             dataIndex: 'pdiIndicator',
-            width: fixedWith ? '130px' : '12%',
+            width: fixedWith ? '140px' : '12%',
         }),
 
         tblPrepareColumns({
             title: 'M&M Invoice',
             dataIndex: 'invoiceId',
-            width: fixedWith ? '200px' : '18%',
+            width: fixedWith ? '180px' : '18%',
             render: (text, record) => [
                 <div>
                     {record?.invoiceId}
@@ -62,11 +62,11 @@ export const tableColumn = (handleButtonClick, allotmentStatus, fixedWith) => {
         tblPrepareColumns({
             title: 'Vehicle Status',
             dataIndex: 'vehicleStatus',
-            width: fixedWith ? '200px' : '14%',
+            width: fixedWith ? '160px' : '15%',
             render: (_, record) => vehicleAllotmentStatusTag(record.vehicleStatus),
         }),
 
-        tblActionColumn({ handleButtonClick, styles, width: fixedWith ? '80px' : '8%', EyeIcon: true, canEdit: false, fixed: 'right' })
+        tblActionColumn({ handleButtonClick, styles, width: fixedWith ? '90px' : '10%', EyeIcon: true, canEdit: false, fixed: 'right' })
     );
 
     return tableColumn;
