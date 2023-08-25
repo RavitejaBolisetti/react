@@ -378,11 +378,9 @@ export const OtfMasterBase = (props) => {
                 setIsFormVisible(false);
                 break;
             case TRANSFER_ACTION:
-                // setIsFormVisible(false);
                 setIsTransferVisible(true);
                 break;
             case ALLOT:
-                // setIsFormVisible(false);
                 setIsAllotVisible(true);
                 break;
             case UNALLOT:
@@ -414,7 +412,6 @@ export const OtfMasterBase = (props) => {
                     ];
                     fetchVehicleDetail({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction, onSuccessAction });
                 }
-
                 break;
             default:
                 break;
