@@ -11,5 +11,6 @@ import { ReceiptMaster } from './Receipts';
 
 import { VehicleRecieptChecklistMaster } from './VehicleRecieptChecklist';
 import { OtfSoMappingMaster } from './OtfSoMapping';
+import { DigitalSignatureMaster } from './DigitalSignatureMapping';
 
-export { OtfMaster, VehicleDetailMaster, VehicleReceiptMaster, VehiclePurchaseOrderMaster, VehicleRecieptChecklistMaster, OtfSoMappingMaster, ReceiptMaster };
+export { OtfMaster, VehicleDetailMaster, VehicleReceiptMaster, VehiclePurchaseOrderMaster, VehicleRecieptChecklistMaster, OtfSoMappingMaster, ReceiptMaster, DigitalSignatureMaster };
