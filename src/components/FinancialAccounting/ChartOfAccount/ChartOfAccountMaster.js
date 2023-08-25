@@ -75,7 +75,7 @@ const mapDispatchToProps = (dispatch) => ({
             fetchProductDataList: productHierarchyDataActions.fetchList,
             listProductLoading: productHierarchyDataActions.listShowLoading,
             setSelectedOrganizationId: productHierarchyDataActions.setSelectedOrganizationId,
-            resetData: productHierarchyDataActions.emptyData,
+            resetData: productHierarchyDataActions.resetData,
 
             fetchOtfList: otfSoMappingActions.fetchList,
             listOtfSoMappingShowLoading: otfSoMappingActions.listShowLoading,
@@ -123,9 +123,13 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
     }, [isDataOrgLoaded, userId]);
 
     useEffect(() => {
-        if (organizationId && userId) {
+        const onErrorAction = (message) => {
             resetData();
-            fetchProductDataList({ setIsLoading: listProductLoading, userId, id: organizationId });
+            showGlobalNotification({ message });
+        };
+
+        if (organizationId && userId) {
+            fetchProductDataList({ setIsLoading: listProductLoading, userId, id: organizationId, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, organizationId]);
@@ -314,7 +318,6 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
         handleSelectTreeClick: (value) => {
             setSelectedTreeKey();
             setViewData(null);
-            resetData();
             setSelectedOrganizationId(value);
         },
         defaultValue: organizationId,
