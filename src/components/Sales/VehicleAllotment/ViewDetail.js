@@ -21,7 +21,7 @@ import styles from 'components/common/Common.module.css';
 
 const ViewDetailMain = (props) => {
     const { formData, isLoading, typeData, setFilterStringOTFSearch, searchForm, tableData } = props;
-    const { handleButtonClick, buttonData, setButtonData, onCloseAction, selectedOTFDetails, setSelectedOrderOTFDetails } = props;
+    const { resetAdvanceFilter, setResetAdvanceFilter, handleButtonClick, buttonData, setButtonData, onCloseAction, selectedOTFDetails, setSelectedOrderOTFDetails } = props;
     const [filterString, setFilterString] = useState('');
 
     const viewProps = {
@@ -42,6 +42,8 @@ const ViewDetailMain = (props) => {
         optionType: typeData?.[PARAM_MASTER.OTF_SER.id].filter((searchType) => searchType.key !== 'mobileNumber'),
         setFilterString,
         selectWide: true,
+        resetAdvanceFilter,
+        setResetAdvanceFilter,
     };
 
     const buttonProps = {
@@ -65,15 +67,17 @@ const ViewDetailMain = (props) => {
         },
     };
 
-    const tableDataItem = tableData || (formData?.vehicleOTFDetails && [formData?.vehicleOTFDetails]);
+    const tableDataItem = (formData?.vehicleOTFDetails && [formData?.vehicleOTFDetails]) || tableData;
+
     const tableProps = {
         srl: false,
         rowKey: 'otfNumber',
         rowSelection: {
             ...rowSelection,
         },
-        tableColumn: tableColumnSearchOTF(handleButtonClick),
+        tableColumn: tableColumnSearchOTF(),
         tableData: tableDataItem,
+        pagination: formData?.allotmentStatus !== VEHICLE_TYPE.UNALLOTED.key,
     };
 
     return (
@@ -87,8 +91,8 @@ const ViewDetailMain = (props) => {
                             <Descriptions.Item label="Age In Days">{checkAndSetDefaultValue(formData?.ageInDays, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="PDI Done?">{checkAndSetDefaultValue(formData?.pdiDone ? 'Yes' : 'No', isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Vehicle Status">{checkAndSetDefaultValue(getCodeValue(typeData?.VEHCL_STATS, formData?.vehicleStatus), isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="M&M Invoices Date">{checkAndSetDefaultValue(formData?.mnmInvoiceDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                            <Descriptions.Item label="M&M Invoices No.">{checkAndSetDefaultValue(formData?.mnmInvoiceNo, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="M&M Invoice Date">{checkAndSetDefaultValue(formData?.mnmInvoiceDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                            <Descriptions.Item label="M&M Invoice No.">{checkAndSetDefaultValue(formData?.mnmInvoiceNo, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Model Description">{checkAndSetDefaultValue(formData?.modelDescription, isLoading)}</Descriptions.Item>
                         </Descriptions>
                     </Card>

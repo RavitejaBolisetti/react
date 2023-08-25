@@ -40,12 +40,12 @@ const NeftFormBase = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.partyName} label="Payment Bank Name" name="partyName">
+                    <Form.Item initialValue={formData?.paymentBankName} label="Payment Bank Name" name="paymentBankName">
                         <Input placeholder={preparePlaceholderText('payment bank name')} disabled={true} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.partyLocationCode} label="Payment Bank Location" name="partyLocationCode">
+                    <Form.Item initialValue={formData?.paymentBankLocation} label="Payment Bank Location" name="paymentBankLocation">
                         <Input placeholder={preparePlaceholderText('payment bank location')} disabled={true} />
                     </Form.Item>
                 </Col>

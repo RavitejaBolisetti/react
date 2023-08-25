@@ -81,6 +81,21 @@ export const FinananceDetailsMasterBase = (props) => {
 
     const [formData, setFormData] = useState();
 
+    const ValidKeys = {
+        financier: null,
+        branch: null,
+        fileNumber: null,
+        loanAmount: null,
+        emi: null,
+        financeDone: null,
+        financierCode: null,
+        doReceived: null,
+        doNumber: null,
+        financeArrangedBy: null,
+        printHypothecationDetails: null,
+        doDate: null,
+    };
+
     useEffect(() => {
         if (financeData) {
             form.setFieldsValue({ ...financeData, doDate: convertDateToCalender(financeData?.doDate) });
@@ -129,7 +144,8 @@ export const FinananceDetailsMasterBase = (props) => {
     };
 
     const onFinish = (values) => {
-        const data = { ...values, id: financeData?.id, otfNumber: selectedOrderId, doDate: values?.doDate };
+        const recordId = financeData?.id || '';
+        const data = { ...values, id: recordId, otfNumber: selectedOrderId, doDate: values?.doDate };
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -163,6 +179,7 @@ export const FinananceDetailsMasterBase = (props) => {
         typeData,
         form,
         formData,
+        setFormData,
         formActionType,
         setFormActionType,
         fetchList,

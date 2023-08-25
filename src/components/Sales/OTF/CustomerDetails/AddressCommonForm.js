@@ -30,29 +30,29 @@ export const AddressCommonForm = (props) => {
             )}
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name={[formType, 'mobileNumber']} label="Mobile Number" initialValue={formData?.mobileNumber} rules={[validateRequiredInputField('Mobile Number')]}>
+                    <Form.Item name={[formType, 'mobileNumber']} label="Mobile Number" initialValue={formData?.mobileNumber}>
                         <Input placeholder={preparePlaceholderText('Mobile Number')} maxLength={10} disabled={true} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name={[formType, 'customerId']} label="Customer ID" initialValue={formData?.customerId} rules={[validateRequiredInputField('id')]}>
+                    <Form.Item name={[formType, 'customerId']} label="Customer ID" initialValue={formData?.customerId}>
                         <Input maxLength={6} placeholder={preparePlaceholderText('id')} disabled={true} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name={[formType, 'customerType']} label="Customer Type" initialValue={formData?.customerType} data-testid="customerType" rules={[validateRequiredSelectField('customer Type')]}>
+                    <Form.Item name={[formType, 'customerType']} label="Customer Type" initialValue={formData?.customerType} data-testid="customerType">
                         <Input maxLength={6} placeholder={preparePlaceholderText('id')} disabled={true} />
                     </Form.Item>
                 </Col>
             </Row>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name={[formType, 'saluation']} label="Salutation" initialValue={formData?.saluation} rules={[validateRequiredInputField('Salutation')]}>
+                    <Form.Item name={[formType, 'saluation']} label="Salutation" initialValue={formData?.saluation}>
                         <Input maxLength={6} placeholder={preparePlaceholderText('Salutation')} disabled={true} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name={[formType, 'customerName']} label="Customer Name" initialValue={formData?.customerName} rules={[validateRequiredInputField('Customer Name')]}>
+                    <Form.Item name={[formType, 'customerName']} label="Customer Name" initialValue={formData?.customerName}>
                         <Input placeholder={preparePlaceholderText('Customer Name')} maxLength={50} disabled={true} />
                     </Form.Item>
                 </Col>
@@ -74,7 +74,7 @@ export const AddressCommonForm = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name={[formType, 'pincode']} label="PIN Code" initialValue={formData?.pincode} rules={[validateRequiredInputField('PIN Code'), validatePincodeField('PIN Code')]}>
+                    <Form.Item name={[formType, 'pincode']} label="PIN Code" initialValue={formData?.pincode}>
                         <Input placeholder={preparePlaceholderText('PIN Code"')} maxLength={8} disabled={true} />
                     </Form.Item>
                 </Col>
@@ -92,14 +92,14 @@ export const AddressCommonForm = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name={[formType, 'panNo']} label="PAN" initialValue={formData?.panNo} rules={[validateRequiredInputField('PAN'), validatePanField('PAN')]}>
+                    <Form.Item name={[formType, 'panNo']} label="PAN" initialValue={formData?.panNo} rules={[validatePanField('PAN')]}>
                         <Input placeholder={preparePlaceholderText('PAN')} onInput={convertToUpperCase} maxLength={10} {...disabledProps} />
                     </Form.Item>
                 </Col>
             </Row>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name={[formType, 'aadharNumber']} label="Aadhar" initialValue={formData?.aadharNumber} rules={[validateRequiredInputField('Aadhar'), validateAadhar('Aadhar')]}>
+                    <Form.Item name={[formType, 'aadharNumber']} label="Aadhar" initialValue={formData?.aadharNumber} rules={[validateAadhar('Aadhar')]}>
                         <Input maxLength={12} placeholder={preparePlaceholderText('Aadhar')} {...disabledProps} />
                     </Form.Item>
                 </Col>

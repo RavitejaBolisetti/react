@@ -35,8 +35,7 @@ const ProfileDetailCard = (props) => {
                         <Space>
                             <Avatar size={50}>{userAvatar?.toUpperCase()}</Avatar>
                             <div>
-                                <Title level={5}>{selectedRecord?.customerName || 'NA'}</Title>
-                                <Text>{selectedRecord?.customerId || 'NA'}</Text>
+                                <Title level={5}>{selectedRecord?.userName}</Title>
                             </div>
                         </Space>
                     </>

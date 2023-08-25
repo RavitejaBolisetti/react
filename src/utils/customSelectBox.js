@@ -7,7 +7,7 @@ import { Select } from 'antd';
 
 const { Option } = Select;
 
-export const customSelectBox = ({ data, placeholder = 'Select', loading = false, onChange = undefined, disabled = false, disableOptionsList, disableOptionsKey, fieldNames = { key: 'key', value: 'value' } }) => {
+export const customSelectBox = ({ data, placeholder = 'Select', mode = '', loading = false, onChange = undefined, disabled = false, disableOptionsList, disableOptionsKey, fieldNames = { key: 'key', value: 'value' } }) => {
     const selectProps = {
         optionFilterProp: 'children',
         showSearch: true,
@@ -16,9 +16,9 @@ export const customSelectBox = ({ data, placeholder = 'Select', loading = false,
         disabled,
     };
     return (
-        <Select placeholder={placeholder} onChange={onChange} {...selectProps}>
+        <Select placeholder={placeholder} mode={mode} onChange={onChange} {...selectProps}>
             {data?.map((item) => (
-                <Option key={item?.[fieldNames?.key]} disabled={item?.disabled || (disableOptionsList?.length && !!disableOptionsList?.find((element) => element?.[disableOptionsKey] === item?.[fieldNames?.key])) } value={item?.[fieldNames?.key]}>
+                <Option key={item?.[fieldNames?.key]} disabled={item?.disabled || (disableOptionsList?.length && !!disableOptionsList?.find((element) => element?.[disableOptionsKey] === item?.[fieldNames?.key]))} value={item?.[fieldNames?.key]}>
                     {item?.[fieldNames?.value]}
                 </Option>
             ))}

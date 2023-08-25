@@ -3,6 +3,10 @@ import { screen } from '@testing-library/react';
 import { AddEditForm } from '@components/Sales/OTF/InsuranceDetails/AddEditForm';
 import customRender from '@utils/test-utils';
 
+beforeEach(() => {
+    jest.clearAllMocks();
+});
+
 describe('OTF Finance Details Component render', () => {
     it('should render addedit form', async () => {
         customRender(<AddEditForm />);

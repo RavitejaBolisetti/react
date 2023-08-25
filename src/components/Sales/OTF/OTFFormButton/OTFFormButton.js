@@ -9,7 +9,7 @@ import { Button, Row, Col, Popover } from 'antd';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import styles from 'components/common/Common.module.css';
 
-export const OTFFormButton = ({ record, handleChangeHistory, onCloseAction, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection }) => {
+export const OTFFormButton = ({ record, handleChangeHistory, handleOtfSoMappingHistory, onCloseAction, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection }) => {
     const content = <div>Coming Soon</div>;
     return (
         <div className={styles.formFooter}>
@@ -29,6 +29,11 @@ export const OTFFormButton = ({ record, handleChangeHistory, onCloseAction, butt
                 </Col>
 
                 <Col xs={24} sm={16} md={18} lg={20} xl={20} className={styles.buttonsGroupRight}>
+                    {buttonData?.otfSoMappingChangeHistory && (
+                        <Button onClick={handleOtfSoMappingHistory} danger>
+                            OTF Mapping History
+                        </Button>
+                    )}
                     {buttonData?.editBtn && (
                         <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record, openDefaultSection: false })} type="primary">
                             Edit
@@ -36,20 +41,16 @@ export const OTFFormButton = ({ record, handleChangeHistory, onCloseAction, butt
                     )}
 
                     {buttonData?.allotBtn && (
-                        <Popover content={content} trigger="hover">
-                            <Button onClick={() => {}} type="primary">
-                                Allot
-                            </Button>
-                        </Popover>
+                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.ALLOT, record })} type="primary">
+                            Allot
+                        </Button>
                     )}
 
-                    {buttonData?.unAllotBtn && (
-                        <Popover content={content} trigger="hover">
-                            <Button onClick={() => {}} type="primary">
-                                Un-Allot
-                            </Button>
-                        </Popover>
-                    )}
+                    {/* {buttonData?.unAllotBtn && ( */}
+                    <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.UNALLOT, record })} type="primary">
+                        Un-Allot
+                    </Button>
+                    {/* )} */}
 
                     {buttonData?.invoiceBtn && (
                         <Popover content={content} trigger="hover">

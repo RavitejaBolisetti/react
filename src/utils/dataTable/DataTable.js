@@ -11,15 +11,6 @@ import { tblSerialNumberColumn } from 'utils/tableColumn';
 import styles from 'components/common/Common.module.css';
 
 export default function DataTable({ isLoading, rowSelection = undefined, showSizeChanger = true, dynamicPagination = false, totalRecords = '10', pagination = true, removePagination = false, srl = true, srlTitle = '#', tableColumn, scroll = 'auto', tableData, rowKey = 'index', page = undefined, setPage = () => {} }) {
-    useEffect(() => {
-        if (dynamicPagination) {
-            setPagination({ ...tablePagination, total: totalRecords, current: page?.current });
-        } else {
-            setPagination({ ...tablePagination, total: tableData?.length });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [dynamicPagination, totalRecords, tableData, page]);
-
     const [tablePagination, setPagination] = useState({
         pageSize: 10,
         current: 1,
@@ -27,6 +18,15 @@ export default function DataTable({ isLoading, rowSelection = undefined, showSiz
         hideOnSinglePage: false,
         showTotal: false,
     });
+
+    useEffect(() => {
+        if (dynamicPagination) {
+            setPagination({ ...tablePagination, total: totalRecords });
+        } else {
+            setPagination({ ...tablePagination, total: tableData?.length });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [dynamicPagination, totalRecords, tableData, page]);
 
     const handleTableChange = (pagination, filters, sorter) => {
         if (dynamicPagination) {
@@ -63,7 +63,7 @@ export default function DataTable({ isLoading, rowSelection = undefined, showSiz
     };
 
     const showPaginator = tableData?.length > 0;
-
+    console.log('tablePagination', tablePagination);
     return (
         <div className={styles.marB20}>
             <div className={styles.mainDataTable}>

@@ -5,6 +5,7 @@
  */
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import { convertDateMonthYear } from 'utils/formatDateTime';
+import { CopytoClipboard } from 'utils/CopytoClipboard';
 
 import styles from 'components/common/Common.module.css';
 
@@ -13,7 +14,17 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
         tblPrepareColumns({
             title: 'Receipt No.',
             dataIndex: 'receiptNumber',
-            width: '18%',
+            width: '20%',
+            render: (text) => {
+                return (
+                    <p>
+                        {text}
+                        <span>
+                            <CopytoClipboard text={text} />
+                        </span>
+                    </p>
+                );
+            },
         }),
 
         tblPrepareColumns({
@@ -32,7 +43,7 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
         tblPrepareColumns({
             title: 'Customer/Supplier Name',
             dataIndex: 'customerName',
-            width: '28%',
+            width: '26%',
         }),
 
         tblActionColumn({ handleButtonClick, styles, width: '8%', canEdit: false }),
