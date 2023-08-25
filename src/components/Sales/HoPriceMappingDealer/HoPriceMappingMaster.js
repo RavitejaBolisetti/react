@@ -21,7 +21,6 @@ import { receiptDataActions } from 'store/actions/data/receipt/receipt';
 import { receiptDetailDataActions } from 'store/actions/data/receipt/receiptDetails';
 
 import { showGlobalNotification } from 'store/actions/notification';
-import { PARAM_MASTER } from 'constants/paramMaster';
 
 import { FilterIcon } from 'Icons';
 
@@ -40,10 +39,6 @@ const mapStateToProps = (state) => {
     let returnValue = {
         userId,
         typeData,
-        receiptType: typeData[PARAM_MASTER.RECPT_TYPE.id],
-        partySegmentType: typeData[PARAM_MASTER.PARTY_CATEG.id],
-        paymentModeType: typeData[PARAM_MASTER.RECPT_PAYMNT_MODE.id],
-        documentType: typeData[PARAM_MASTER.RECPT_DOC_TYPE.id],
         data: data?.paginationData,
         totalRecords: data?.totalRecords || [],
         receiptDetailData,
@@ -76,7 +71,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const HoPriceMappingMasterBase = (props) => {
     const { fetchList, saveData, listShowLoading, userId, fetchReceiptDetails, data, resetData } = props;
-    const { typeData, receiptType, partySegmentType, moduleTitle, totalRecords, showGlobalNotification } = props;
+    const { typeData, moduleTitle, totalRecords, showGlobalNotification } = props;
     const { filterString, setFilterString } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
 
@@ -86,7 +81,6 @@ export const HoPriceMappingMasterBase = (props) => {
     const [selectedOrderId, setSelectedOrderId] = useState();
 
     const [section, setSection] = useState();
-    const [defaultSection, setDefaultSection] = useState();
     const [currentSection, setCurrentSection] = useState();
     const [sectionName, setSetionName] = useState();
     const [isLastSection, setLastSection] = useState(false);
@@ -184,22 +178,6 @@ export const HoPriceMappingMasterBase = (props) => {
                 title: 'End Date',
                 value: filterString?.toDate,
                 name: filterString?.toDate ? convertDateTime(filterString?.toDate, monthDateFormat) : '',
-                canRemove: true,
-                filter: true,
-            },
-            {
-                key: 'receiptType',
-                title: 'Receipt Type',
-                value: filterString?.receiptType,
-                name: receiptType?.find((i) => i?.key === filterString?.receiptType)?.value,
-                canRemove: true,
-                filter: true,
-            },
-            {
-                key: 'partySegment',
-                title: 'Party Segment',
-                value: filterString?.partySegment,
-                name: partySegmentType?.find((i) => i?.key === filterString?.partySegment)?.value,
                 canRemove: true,
                 filter: true,
             },
@@ -427,15 +405,15 @@ export const HoPriceMappingMasterBase = (props) => {
     const formProps = {
         isVisible: isFormVisible,
         titleOverride: drawerTitle.concat(moduleTitle),
+        handleButtonClick,
         formActionType,
         onCloseAction,
         ADD_ACTION,
         EDIT_ACTION,
         VIEW_ACTION,
         buttonData,
-
         setButtonData,
-
+        typeData,
         formData,
     };
 

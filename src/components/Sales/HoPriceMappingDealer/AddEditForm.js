@@ -16,11 +16,8 @@ import { ViewDetail } from './ViewDetail';
 
 import styles from 'components/common/Common.module.css';
 
-const { Search } = Input;
-const { Option } = Select;
-
 const AddEditFormMain = (props) => {
-    const { form, formData, buttonData, setButtonData, handleButtonClick, onCloseAction, formActionType: { viewMode } = undefined, onFinish, onFinishFailed } = props;
+    const { form, formData, buttonData, setButtonData, typeData, handleButtonClick, onCloseAction, formActionType, onFinish, onFinishFailed } = props;
     const { isLoading } = props;
     // useEffect(() => {
     //     partyDetailForm.setFieldsValue({
@@ -36,6 +33,17 @@ const AddEditFormMain = (props) => {
     //     });
     //     // eslint-disable-next-line react-hooks/exhaustive-deps
     // }, [formData]);
+
+    const tableData = [
+        {
+            productHierarchy: 'Product01',
+            dealerFlag: 'Y',
+        },
+        {
+            productHierarchy: 'Product02',
+            dealerFlag: 'N',
+        },
+    ];
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
@@ -54,24 +62,20 @@ const AddEditFormMain = (props) => {
     };
 
     const viewProps = {
-        isVisible: viewMode,
+        isVisible: formActionType?.viewMode,
         formData,
         styles,
+        typeData,
+        tableData,
+        formActionType,
     };
-
-    const tableData = [
-        {
-            productHierarchy: 'product01',
-            dealerFlag: 'Yes',
-        },
-    ];
 
     return (
         <>
             <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
                 <Row gutter={20} className={styles.drawerBody}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        {viewMode ? (
+                        {formActionType?.viewMode ? (
                             <ViewDetail {...viewProps} />
                         ) : (
                             <>
@@ -127,7 +131,7 @@ const AddEditFormMain = (props) => {
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                         {/* <Form.Item initialValue={formData?.areaOffice} label="Area Office" name="areaOffice"> */}
-                                        <DataTable tableColumn={tableColumnAddEdit({ handleButtonClick })} tableData={tableData} pagination={false} />
+                                        <DataTable tableColumn={tableColumnAddEdit({ handleButtonClick, typeData, formActionType })} tableData={tableData} pagination={false} />
                                         {/* </Form.Item> */}
                                     </Col>
                                 </Row>
