@@ -12,11 +12,11 @@ import { otfFinanceDetailDataActions } from 'store/actions/data/otf/financeDetai
 import { financeLovDataActions } from 'store/actions/data/otf/financeLov';
 import { showGlobalNotification } from 'store/actions/notification';
 
-import { VehicleInvoiceFormButton } from '../VehicleInvoiceFormButton';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
-import AddEditForm from './AddEditForm';
+import { AddEditForm } from './AddEditForm';
 import { ViewDetail } from './ViewDetail';
 import styles from 'components/common/Common.module.css';
+import { VehicleInvoiceFormButton } from '../VehicleInvoiceFormButton';
 
 const mapStateToProps = (state) => {
     const {
@@ -29,7 +29,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Insurance Details';
+    const moduleTitle = 'Finance Detail';
 
     let returnValue = {
         userId,
@@ -63,7 +63,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const FinanceDetailsMasterBase = (props) => {
-    const { fetchList, financeData, isFinanceLovDataLoaded, setFormActionType, isFinanceLovLoading, FinanceLovData, fetchFinanceLovList, listFinanceLovShowLoading, isLoading } = props;
+    const { saveData, resetData, fetchList, userId, listShowLoading, financeData, isFinanceLovDataLoaded, setFormActionType, isFinanceLovLoading, FinanceLovData, fetchFinanceLovList, listFinanceLovShowLoading, section, isLoading } = props;
 
     const { typeData, form, selectedOrderId, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION } = props;
 
@@ -77,7 +77,21 @@ export const FinanceDetailsMasterBase = (props) => {
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
     const [formData, setFormData] = useState();
-    const [finance, setFinance] = useState();
+
+    const ValidKeys = {
+        financier: null,
+        branch: null,
+        fileNumber: null,
+        loanAmount: null,
+        emi: null,
+        financeDone: null,
+        financierCode: null,
+        doReceived: null,
+        doNumber: null,
+        financeArrangedBy: null,
+        printHypothecationDetails: null,
+        doDate: null,
+    };
 
     // useEffect(() => {
     //     if (financeData) {
@@ -127,25 +141,8 @@ export const FinanceDetailsMasterBase = (props) => {
     };
 
     const onFinish = (values) => {
-        const data = { ...values, id: financeData?.id, otfNumber: selectedOrderId, doDate: values?.doDate };
-
-        // const onSuccess = (res) => {
-        //     form.resetFields();
-        //     showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-        //     fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, onErrorAction, userId });
-        //     handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
-        // };
-
-        // const requestData = {
-        //     data: data,
-        //     method: financeData?.id ? 'put' : 'post',
-        //     setIsLoading: listShowLoading,
-        //     userId,
-        //     onError: onErrorAction,
-        //     onSuccess,
-        // };
-
-        // saveData(requestData);
+        const recordId = financeData?.id || '';
+        const data = { ...values, id: recordId, otfNumber: selectedOrderId, doDate: values?.doDate };
     };
 
     const onFinishFailed = () => {};
@@ -161,6 +158,7 @@ export const FinanceDetailsMasterBase = (props) => {
         typeData,
         form,
         formData,
+        setFormData,
         formActionType,
         setFormActionType,
         fetchList,
@@ -180,8 +178,6 @@ export const FinanceDetailsMasterBase = (props) => {
         buttonData,
         setButtonData,
         handleButtonClick,
-        setFinance,
-        finance,
     };
 
     const viewProps = {
@@ -198,7 +194,7 @@ export const FinanceDetailsMasterBase = (props) => {
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <h2>{/* {section?.title} */}Insurance Details</h2>
+                            <h2>{section?.title}</h2>
                         </Col>
                     </Row>
 
@@ -214,4 +210,5 @@ export const FinanceDetailsMasterBase = (props) => {
     );
 };
 
-export const FinanceDetailsMaster = connect(null, null)(FinanceDetailsMasterBase);
+const FinanceDetailsMaster = connect(null, null)(FinanceDetailsMasterBase);
+export default FinanceDetailsMaster;

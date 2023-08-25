@@ -3,63 +3,64 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React from 'react';
-import { Row, Col, Form, Select, Switch, DatePicker, Input, Collapse, Divider, Card, Space } from 'antd';
-import { dateFormat } from 'utils/formatDateTime';
-import { validateRequiredSelectField, validateRequiredInputField, validationNumber } from 'utils/validation';
-import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
+import React, { useEffect, useState } from 'react';
+import { Col, Input, Form, Row, Select, Card, DatePicker, Space, Switch } from 'antd';
+
+import { disableFutureDate } from 'utils/disableDate';
+import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
+import { validateNumberWithTwoDecimalPlaces, validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
+import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { customSelectBox } from 'utils/customSelectBox';
+
+import { YES_NO_FLAG } from 'constants/yesNoFlag';
+import { FINANCE_ARRANGED_BY } from 'constants/financeArrangedBy';
 
 import styles from 'components/common/Common.module.css';
 
-const { TextArea, Search } = Input;
-const { Panel } = Collapse;
-const { Option } = Select;
+const AddEditFormMain = (props) => {
+    const { formData, FinanceLovData, typeData, form, formActionType, setFormData } = props;
+    const [doReceived, setDoReceived] = useState();
+    const [financeArrangedBy, setFinanceArrangedBy] = useState();
+    const checkFinanceType = (type, key) => (type ? type === key : false);
 
-const AddEditForm = (props) => {
-    const { formData, finance, setFinance } = props;
+    // useEffect(() => {
+    //     setDoReceived(formData?.doReceived || 'N');
+    //     setFinanceArrangedBy(formData?.financeArrangedBy);
+    //     formData && form.setFieldsValue({ ...formData, printHypothecationDetails: formData?.printHypothecationDetails ? 1 : 0, doDate: formattedCalendarDate(formData?.doDate), financier: formData?.financierCode });
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [formData]);
 
-    const handleChange = (value) => {
-        setFinance(value);
+    const datePickerStyle = {
+        width: '100%',
     };
 
-    // const RenderForm = (formInstance) => {
-    //     // if (!formInstance) return undefined;
-    //     switch (formInstance) {
-    //         case 'Cash': {
-    //             return <></>;
-    //         }
-    //         case 'Dealer': {
-    //             return;
-    //         }
-    //         case 'Customer Arranged': {
-    //             return;
-    //         }
+    const handleDOChange = (item) => {
+        setDoReceived(item);
+    };
 
-    //         default:
-    //             return '';
-    //     }
-    // };
+    const onLoanChange = () => {
+        form.validateFields(['emi']);
+    };
 
-    const financeArrangedBy = [
-        {
-            value: 'Dealer',
-            label: 'Dealer',
-        },
-        {
-            value: 'Customer Arranged',
-            label: 'Customer Arranged',
-        },
-        {
-            value: 'Cash',
-            label: 'Cash',
-        },
-    ];
+    const emiLessThanAmount = (value) => {
+        if (Number(form.getFieldsValue(['loanAmount'])?.loanAmount) <= Number(value)) {
+            return Promise.reject('EMI cannot exceed loan amount');
+        } else {
+            return Promise.resolve();
+        }
+    };
 
     const selectProps = {
         optionFilterProp: 'children',
         showSearch: true,
         allowClear: true,
+        className: styles.headerSelectField,
+    };
+
+    const handleFinanceArrangedBy = (value) => {
+        setFinanceArrangedBy(value);
+        form.resetFields();
+        form.setFieldsValue({ financeArrangedBy: value });
     };
 
     return (
@@ -69,75 +70,79 @@ const AddEditForm = (props) => {
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Space style={{ display: 'flex' }} size="middle" direction="vertical">
                             <Card style={{ backgroundColor: '#F2F2F2' }}>
-                                <Row gutter={16}>
-                                    <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                                        <Form.Item initialValue={formData?.otfNumber} label="Finance Arranged By" name="financeArrangedBy" rules={[validateRequiredSelectField('Finance Arranged By')]}>
-                                            <Select options={financeArrangedBy} maxLength={50} placeholder={preparePlaceholderSelect('Select')} onChange={handleChange} {...selectProps}></Select>
-                                            {/* {customSelectBox({ data: financeArrangedBy, placeholder: preparePlaceholderSelect('otf number'), onChange: { handleChange } })} */}
+                                <Row gutter={20}>
+                                    <Col xs={24} sm={24} md={8} lg={8} xl={8} xxl={8}>
+                                        <Form.Item name="financeArrangedBy" label="Finance Arranged By">
+                                            {customSelectBox({ onChange: handleFinanceArrangedBy })}
                                         </Form.Item>
                                     </Col>
-                                    <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                                        <Form.Item label="Status" name="active">
-                                            <Switch checkedChildren="Yes" unCheckedChildren="No" />
-                                        </Form.Item>
-                                    </Col>
+                                    {financeArrangedBy && !checkFinanceType(financeArrangedBy, FINANCE_ARRANGED_BY?.CASH?.key) && (
+                                        <Col xs={24} sm={24} md={8} lg={8} xl={8} xxl={8}>
+                                            <Form.Item initialValue={formActionType?.editMode ? (formData?.printHyptheticatedDetail === 1 ? true : false) : false} labelAlign="left" wrapperCol={{ span: 24 }} name="printHypothecationDetails" label="Print Hypothecation Details?" valuePropName="checked">
+                                                <Switch checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" onChange={(checked) => (checked ? 1 : 0)} />
+                                            </Form.Item>
+                                        </Col>
+                                    )}
                                 </Row>
-                                {/* {RenderForm(formData?.finance || finance)} */}
-                                {finance && (
-                                    <div>
-                                        <Divider />
+                                {financeArrangedBy && !checkFinanceType(financeArrangedBy, FINANCE_ARRANGED_BY?.CASH?.key) && (
+                                    <>
                                         <Row gutter={20}>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item initialValue={formData?.totalApportionAmount} label="Financer" name="financer">
-                                                    <DatePicker format={dateFormat} placeholder={preparePlaceholderText('financer')} />
+                                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                                <Form.Item label="Financier" name="financier" placeholder={preparePlaceholderSelect('Select')}>
+                                                    <Select placeholder="Select" options={FinanceLovData} fieldNames={{ label: 'value', value: 'key' }} {...selectProps}></Select>
                                                 </Form.Item>
                                             </Col>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item initialValue={formData?.totalReceivedAmount} label="Branch" name="branch">
-                                                    <Input placeholder={preparePlaceholderText('branch')} />
+                                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                                <Form.Item label="Branch" name="branch">
+                                                    <Input placeholder={preparePlaceholderText('branch')} maxLength={55} />
                                                 </Form.Item>
                                             </Col>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item initialValue={formData?.totalReceivedAmount} label="File Number" name="fileNumber">
-                                                    <Input placeholder={preparePlaceholderText('File Number')} />
-                                                </Form.Item>
-                                            </Col>
+
+                                            {financeArrangedBy && checkFinanceType(financeArrangedBy, FINANCE_ARRANGED_BY?.DEALER?.key) && (
+                                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                                    <Form.Item label="File Number" name="fileNumber">
+                                                        <Input placeholder={preparePlaceholderText('file number')} maxLength={30} />
+                                                    </Form.Item>
+                                                </Col>
+                                            )}
                                         </Row>
-                                        <Row gutter={20}>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item initialValue={formData?.totalReceivedAmount} label="Loan Amount" name="loanAmount">
-                                                    <Input placeholder={preparePlaceholderText('Loan Amount')} />
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item initialValue={formData?.totalReceivedAmount} label="EMI" name="emi">
-                                                    <Input placeholder={preparePlaceholderText('emi')} />
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item initialValue={formData?.totalWriteOffAmount} label="Finance Done" name="finaceDone">
-                                                    {customSelectBox({ placeholder: preparePlaceholderSelect('Finance Done') })}
-                                                </Form.Item>
-                                            </Col>
-                                        </Row>
-                                        <Row gutter={20}>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item initialValue={formData?.totalWriteOffAmount} label="D.O. Received" name="doReceived">
-                                                    {customSelectBox({ placeholder: preparePlaceholderSelect('D.O. Received') })}
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item initialValue={formData?.totalReceivedAmount} label="D.O. Number" name="doNumber">
-                                                    <Input placeholder={preparePlaceholderText('D.O. Number')} />
-                                                </Form.Item>
-                                            </Col>
-                                            <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                                <Form.Item initialValue={formData?.totalReceivedAmount} label="D.O. Date" name="doDate">
-                                                    <Input placeholder={preparePlaceholderText('D.O. Date')} />
-                                                </Form.Item>
-                                            </Col>
-                                        </Row>
-                                    </div>
+                                        {financeArrangedBy && checkFinanceType(financeArrangedBy, FINANCE_ARRANGED_BY?.DEALER?.key) && (
+                                            <>
+                                                <Row gutter={20}>
+                                                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                                        <Form.Item onChange={onLoanChange} label="Loan Amount" name="loanAmount" rules={[validateNumberWithTwoDecimalPlaces('loan amount')]}>
+                                                            <Input placeholder={preparePlaceholderText('loan amount')} maxLength={10} />
+                                                        </Form.Item>
+                                                    </Col>
+                                                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                                        <Form.Item label="EMI" name="emi" rules={[validateNumberWithTwoDecimalPlaces('emi'), { validator: (rule, value) => emiLessThanAmount(value) }]}>
+                                                            <Input placeholder={preparePlaceholderText('emi')} maxLength={10} />
+                                                        </Form.Item>
+                                                    </Col>
+                                                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                                        <Form.Item label="D.O. Received" name="doReceived">
+                                                            {customSelectBox({ data: typeData?.YES_NO_FLG, onChange: handleDOChange })}
+                                                        </Form.Item>
+                                                    </Col>
+                                                </Row>
+                                                {doReceived === YES_NO_FLAG?.YES?.key && (
+                                                    <Row gutter={20}>
+                                                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                                            <Form.Item label="D.O. Number" name="doNumber" rules={[validateRequiredInputField('doNumber')]}>
+                                                                <Input placeholder={preparePlaceholderText('d.o. number')}></Input>
+                                                            </Form.Item>
+                                                        </Col>
+
+                                                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                                            <Form.Item label="D.O. Date" name="doDate">
+                                                                <DatePicker format={dateFormat} disabledDate={disableFutureDate} placeholder={preparePlaceholderSelect('date')} style={datePickerStyle} />
+                                                            </Form.Item>
+                                                        </Col>
+                                                    </Row>
+                                                )}
+                                            </>
+                                        )}
+                                    </>
                                 )}
                             </Card>
                         </Space>
@@ -148,4 +153,4 @@ const AddEditForm = (props) => {
     );
 };
 
-export default AddEditForm;
+export const AddEditForm = AddEditFormMain;
