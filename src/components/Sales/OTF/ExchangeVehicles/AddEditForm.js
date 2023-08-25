@@ -18,7 +18,7 @@ const AddEditFormMain = (props) => {
     const { formData, form, formActionType, editableOnSearch } = props;
     const { financeLovData, schemeLovData, typeData, makeData } = props;
     const { isConfigLoading, isSchemeLovLoading, isFinanceLovLoading, isMakeLoading, isModelLoading, isVariantLoading } = props;
-    const { filteredModelData, filteredVariantData, handleFilterChange, fnSetData, setEditableOnSearch } = props;
+    const { filteredModelData, filteredVariantData, handleFilterChange, fnSetData } = props;
 
     useEffect(() => {
         if (formData) {
@@ -44,13 +44,14 @@ const AddEditFormMain = (props) => {
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={formActionType?.editMode ? (formData?.exchange === 1 ? true : false) : false} labelAlign="left" wrapperCol={{ span: 24 }} name="exchange" label="Exchange" valuePropName="checked">
-                        <Switch checkedChildren="Yes" unCheckedChildren="No" valuePropName="checked" onChange={(checked) => (checked ? 1 : 0)} />
+                        <Switch checkedChildren="Yes" unCheckedChildren="No" onChange={(checked) => (checked ? 1 : 0)} />
                     </Form.Item>
                 </Col>
             </Row>
+
             {form.getFieldValue('exchange') && (
                 <>
-                    <CustomerListMaster fnSetData={fnSetData} setEditableOnSearch={setEditableOnSearch} />
+                    <CustomerListMaster fnSetData={fnSetData} />
                     <Divider />
                     <Row gutter={20}>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -65,7 +66,7 @@ const AddEditFormMain = (props) => {
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item label="Make" name="make" data-testid="make" rules={[validateRequiredSelectField('make')]}>
-                                <Select disabled={editableOnSearch} placeholder="Select" loading={isMakeLoading} allowClear fieldNames={{ label: 'value', value: 'key' }} options={makeData} onChange={(value, selectobj) => handleFilterChange('make', value, selectobj)} />
+                                <Select placeholder="Select" loading={isMakeLoading} allowClear fieldNames={{ label: 'value', value: 'key' }} options={makeData} onChange={!editableOnSearch ? (value, selectobj) => handleFilterChange('make', value, selectobj) : null} />
                             </Form.Item>
                         </Col>
                     </Row>
@@ -77,19 +78,19 @@ const AddEditFormMain = (props) => {
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item label="Variant" name="variant" data-testid="variant" rules={[validateRequiredSelectField('Variant')]}>
-                                <Select disabled={editableOnSearch} placeholder="Select" loading={isVariantLoading} allowClear fieldNames={{ label: 'value', value: 'key' }} options={filteredVariantData} />
+                                <Select placeholder="Select" loading={isVariantLoading} allowClear fieldNames={{ label: 'value', value: 'key' }} options={filteredVariantData} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item name="registrationNumber" label="Reg Number" rules={[validateRequiredInputField('Reg Number')]}>
-                                <Input disabled={editableOnSearch} placeholder={preparePlaceholderText('Reg Number')} maxLength={50} />
+                            <Form.Item name="oldRegistrationNumber" label="Reg Number" rules={[validateRequiredInputField('Reg Number')]}>
+                                <Input placeholder={preparePlaceholderText('Reg Number')} maxLength={50} />
                             </Form.Item>
                         </Col>
                     </Row>
                     <Row gutter={20}>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item name="chassisNumber" label="VIN Number" rules={[validateRequiredInputField('VIN number')]}>
-                                <Input disabled={editableOnSearch} maxLength={50} placeholder={preparePlaceholderText('vin number')} />
+                            <Form.Item name="oldChessisNumber" label="VIN Number" rules={[validateRequiredInputField('VIN number')]}>
+                                <Input maxLength={50} placeholder={preparePlaceholderText('vin number')} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>

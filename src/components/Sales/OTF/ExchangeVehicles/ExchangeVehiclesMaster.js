@@ -137,13 +137,17 @@ const ExchangeVehiclesBase = (props) => {
     const [customerList, setCustomerList] = useState();
 
     const fnSetData = (data) => {
-        // console.log('data', data);
-        setFormData(data);
-        handleFormValueChange();
-        setEditableOnSearch(true);
-        if (!data) {
+        if (data?.make) {
+            setFormData({ ...data, oldRegistrationNumber: data?.registrationNumber, oldChessisNumber: data?.chassisNumber });
+            handleFormValueChange();
+            setEditableOnSearch(true);
+        } else if (data && !data?.make) {
+            setFormData({ ...data, modelGroup: null, variant: null, oldRegistrationNumber: data?.registrationNumber, oldChessisNumber: data?.chassisNumber });
+            handleFormValueChange();
+            setEditableOnSearch(true);
+        } else if (!data) {
             setEditableOnSearch(false);
-            form.resetFields(['customerId', 'customerName', 'make', 'modelGroup', 'variant', 'registrationNumber', 'chassisNumber']);
+            form.resetFields(['customerId', 'customerName', 'make', 'modelGroup', 'variant', 'oldRegistrationNumber', 'oldChessisNumber']);
         }
     };
 
@@ -273,7 +277,7 @@ const ExchangeVehiclesBase = (props) => {
 
         const requestData = {
             data: data,
-            method: formData?.id ? 'put' : 'post',
+            method: exchangeData?.id ? 'put' : 'post',
             setIsLoading: listShowLoading,
             userId,
             onError: onErrorAction,
@@ -333,7 +337,6 @@ const ExchangeVehiclesBase = (props) => {
                     res?.data?.customerMasterDetails && setFormData(res?.data?.customerMasterDetails?.[0]);
                     handleFormValueChange();
                 }
-                setEditableOnSearch(true);
             },
             onErrorAction,
         });
