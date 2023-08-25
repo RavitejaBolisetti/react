@@ -212,6 +212,7 @@
 }
 
 .uploadDragger :global .ant-space-vertical .ant-space-horizontal {
+    display: inline-flex;
     gap: 10px !important;
 }
 

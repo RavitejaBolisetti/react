@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Row, Col, Collapse, Descriptions, Divider,Space } from 'antd';
+import { Row, Col, Collapse, Descriptions, Divider, Space } from 'antd';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
@@ -14,8 +14,10 @@ import { addToolTip } from 'utils/customMenuLink';
 import { DataTable } from 'utils/dataTable';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { DATA_TYPE } from 'constants/dataType';
+import { VEHICLE_TYPE } from 'constants/VehicleType';
 
 import { taxDetailsColumn, optionalServicesColumns } from './tableColumn';
+import { getCodeValue } from 'utils/getCodeValue';
 
 const { Panel } = Collapse;
 const ViewDetailMain = (props) => {
@@ -48,9 +50,9 @@ const ViewDetailMain = (props) => {
                                     </Descriptions.Item>
                                     <Descriptions.Item label="Model Code">{checkAndSetDefaultValue(formData?.modelCode, isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label="Available Stock">{checkAndSetDefaultValue(formData?.availableStock, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Vehicle Allocated Status">{checkAndSetDefaultValue(formData?.vehicleAllocatedStatus, isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Vehicle Allocated Status">{checkAndSetDefaultValue(getCodeValue(VEHICLE_TYPE, formData?.vehicleAllocatedStatus,'title'), isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label="PO Number">{checkAndSetDefaultValue(formData?.ponumber, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="PO Date">{checkAndSetDefaultValue(formData?.podate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                                    <Descriptions.Item label="PO Date">{checkAndSetDefaultValue(formData?.podate ? formData?.podate : undefined, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                                     <Descriptions.Item label="PO Status">{checkAndSetDefaultValue(formData?.postatus, isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label="SO Number">{checkAndSetDefaultValue(formData?.sonumber, isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label="SO Status">{checkAndSetDefaultValue(formData?.sostatus, isLoading)}</Descriptions.Item>

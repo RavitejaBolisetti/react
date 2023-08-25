@@ -60,6 +60,7 @@ const AssignUserRole = (props) => {
 
     const [isModalVisible, setisModalVisible] = useState(false);
     const [record, setRecord] = useState({});
+    const [disableMdlSaveBtn, setDisableMdlSaveBtn] = useState(true);
 
     useEffect(() => {
         if (!userType) return;
@@ -163,6 +164,7 @@ const AssignUserRole = (props) => {
             setisModalVisible(false);
             setButtonData((prev) => ({ ...prev, formBtnActive: true }));
             fetchUserRoleFn();
+            setDisableMdlSaveBtn(true);
             // handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
         };
         const onError = (message) => {
@@ -287,6 +289,8 @@ const AssignUserRole = (props) => {
 
         dlrAppList,
         mnmAppList,
+        disableMdlSaveBtn,
+        setDisableMdlSaveBtn,
     };
 
     return (

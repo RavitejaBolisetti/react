@@ -6,10 +6,12 @@
 import React from 'react';
 import { Card, Descriptions } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
+import { DATA_TYPE } from 'constants/dataType';
+
 import styles from 'components/common/Common.module.css';
 
 const ViewDetailMain = (props) => {
-    const { insuranceData, isLoading } = props;
+    const { formData, isLoading } = props;
     const viewProps = {
         bordered: false,
         colon: false,
@@ -20,11 +22,11 @@ const ViewDetailMain = (props) => {
     return (
         <Card className={styles.drawerCardView}>
             <Descriptions {...viewProps}>
-                <Descriptions.Item label="Insurance Company">{checkAndSetDefaultValue(insuranceData?.insuranceCompany, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Insurance Cover Note">{checkAndSetDefaultValue(insuranceData?.insuranceCoverNote, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Insurance Amount">{checkAndSetDefaultValue(insuranceData?.insuranceAmount, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Date">{checkAndSetDefaultValue(insuranceData?.insuranceDate, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Registration Number">{checkAndSetDefaultValue(insuranceData?.registrationNumber, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Insurance Company">{checkAndSetDefaultValue(formData?.insuranceCompany, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Insurance Cover Note">{checkAndSetDefaultValue(formData?.insuranceCoverNote, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Insurance Amount">{checkAndSetDefaultValue(formData?.insuranceAmount, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Date">{checkAndSetDefaultValue(formData?.insuranceDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                <Descriptions.Item label="Registration Number">{checkAndSetDefaultValue(formData?.registrationNumber, isLoading)}</Descriptions.Item>
             </Descriptions>
         </Card>
     );

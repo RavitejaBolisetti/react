@@ -57,7 +57,7 @@ const OTFDetailCard = (props) => {
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    Mobile No.: <span>{'+91-' + selectedOrder?.mobileNumber || 'NA'}</span>
+                    Mobile No.: <span>{selectedOrder?.mobileNumber ? '+91-' + selectedOrder?.mobileNumber : 'NA'}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>

@@ -58,7 +58,7 @@ const fnMapData = ({ data, fieldNames, selectedKeys }) =>
     );
 
 const ApplicationTreeMain = (props) => {
-    const { checkedKeys, setCheckedKeys, webApplications, roleCode, setWebApplications, mobileApplications, setMobileApplications, deviceType, setDeviceType, form, onFinish, formActionType: { addMode = false, viewMode = false, editMode = true } = undefined } = props;
+    const { checkedKeys, setCheckedKeys, webApplications, roleCode, setWebApplications, mobileApplications, setMobileApplications, deviceType, setDisableMdlSaveBtn, setDeviceType, form, onFinish, formActionType: { addMode = false, viewMode = false, editMode = true } = undefined } = props;
 
     const APPLICATION_WEB = DEVICE_TYPE?.WEB?.key;
     const APPLICATION_MOBILE = DEVICE_TYPE?.MOBILE?.key;
@@ -100,6 +100,7 @@ const ApplicationTreeMain = (props) => {
     const onCheck =
         (currentKey) =>
         (checkedKeysValue, { halfCheckedKeys }) => {
+            setDisableMdlSaveBtn(false);
             const selectedKeys = [...checkedKeysValue, ...halfCheckedKeys] || [];
             const deviceTypePrev = checkedKeys || {};
             const appPrev = checkedKeys?.[deviceType] ? checkedKeys[deviceType] : {};

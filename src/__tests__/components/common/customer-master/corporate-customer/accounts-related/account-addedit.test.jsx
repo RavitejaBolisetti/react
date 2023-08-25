@@ -4,6 +4,10 @@ import customRender from '@utils/test-utils';
 import { screen } from '@testing-library/react';
 import { AddEditForm } from '@components/common/CustomerMaster/CorporateCustomer/AccountRelated/AddEditForm';
 
+beforeEach(() => {
+    jest.clearAllMocks();
+});
+
 describe('AddEditFormMain', () => {
     it('should render Label text', async () => {
         customRender(<AddEditForm />);
