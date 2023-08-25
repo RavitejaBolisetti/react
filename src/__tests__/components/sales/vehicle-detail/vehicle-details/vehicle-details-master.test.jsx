@@ -1,6 +1,5 @@
 import React from 'react';
 import { screen, fireEvent } from '@testing-library/react';
-import { Provider } from 'react-redux';
 import { VehicleDetailsMaster } from '@components/Sales/VehicleDetail/VehicleDetails/VehicleDetailsMaster';
 import customRender from '@utils/test-utils';
 import { Form } from 'antd';
