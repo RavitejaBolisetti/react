@@ -1,14 +1,13 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { Fragment, useState, useReducer } from 'react';
-import { Form, Divider } from 'antd';
+import { Form } from 'antd';
 
 import CardApplicationAction from './CardApplicationAction';
 import ApplicationActionsForm from './ApplicationActionsForms';
-
 
 const ApplicationActions = ({ footerEdit = false, onFinishFailed = () => {}, isReadOnly = false, setFormBtnDisable, setFinalFormdata, finalFormdata, actions, setCanFormSave }) => {
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
@@ -22,18 +21,17 @@ const ApplicationActions = ({ footerEdit = false, onFinishFailed = () => {}, isR
         actionForm.resetFields();
     };
     const onFieldsChange = () => {
-        setCanFormSave(true)
-    }
+        setCanFormSave(true);
+    };
 
     return (
-        <Fragment>
-            <Divider />
-            <ApplicationActionsForm finalFormdata={finalFormdata} form={actionForm} onFinish={onActionFormFinish} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} actions={actions} onFieldsChange={onFieldsChange}/>
+        <>
+            <ApplicationActionsForm finalFormdata={finalFormdata} form={actionForm} onFinish={onActionFormFinish} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} actions={actions} onFieldsChange={onFieldsChange} />
             {finalFormdata?.applicationAction?.length > 0 &&
                 finalFormdata?.applicationAction?.map((action) => {
-                    return <CardApplicationAction {...action} form={actionForm} onFinish={onActionFormFinish} setFinalFormdata={setFinalFormdata} forceUpdate={forceUpdate} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} actions={actions} onFieldsChange={onFieldsChange}/>;
+                    return <CardApplicationAction {...action} form={actionForm} onFinish={onActionFormFinish} setFinalFormdata={setFinalFormdata} forceUpdate={forceUpdate} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} actions={actions} onFieldsChange={onFieldsChange} />;
                 })}
-        </Fragment>
+        </>
     );
 };
 

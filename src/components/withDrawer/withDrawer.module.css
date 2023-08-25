@@ -8,21 +8,21 @@
     overflow: hidden;
 }
 
-.myDrawerStyle :global .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover,
-.myDrawerStyle :global .ant-input-affix-wrapper-focused {
-    border-color: #0b0b0c !important;
-}
-
-.myDrawerStyle :global .ant-drawer-wrapper-body {
-    height: calc(100vh - 0px) !important;
-}
-
 .myDrawerStyle :global .ant-drawer-wrapper-body .ant-drawer-body .ant-form-item .ant-form-item-label>label .ant-form-item-tooltip {
     color: #2782f9;
     cursor: inherit;
     position: absolute;
     right: -24px;
 }
+
+/* .myDrawerStyle :global .ant-drawer-wrapper-body {
+    height: calc(100vh - 0px) !important;
+} */
+
+/* .myDrawerStyle :global .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover,
+.myDrawerStyle :global .ant-input-affix-wrapper-focused {
+    border-color: #0b0b0c !important;
+} */
 
 /* .myDrawerStyle :global .ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled):hover .ant-checkbox-checked:not(.ant-checkbox-disabled) .ant-checkbox-inner {
     background-color: #ff3e5b !important;

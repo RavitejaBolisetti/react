@@ -65,7 +65,7 @@ const AddEditFormMain = (props) => {
                                         <Select showSearch allowClear placeholder={preparePlaceholderSelect('Select')} onChange={handleControlChange} disabled={isReadOnly} fieldNames={{ label: 'value', value: 'key' }} options={typeData[PARAM_MASTER.CFG_PARAM.id]}></Select>
                                     </Form.Item>
                                 </Col>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.textareaError}>
                                     <Form.Item label="Control Description" initialValue={formData?.controlDescription} rules={[validateRequiredInputField('Control Description')]} name="controlDescription">
                                         <TextArea maxLength={300} value={formData?.controlDescription} placeholder="Enter Data" disabled={isReadOnly} showCount />
                                     </Form.Item>

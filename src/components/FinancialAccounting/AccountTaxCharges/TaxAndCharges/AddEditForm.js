@@ -134,7 +134,7 @@ const AddEditFormMain = (props) => {
                                 </Form.Item>
                             </Col>
 
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.textareaError}>
                                 <Form.Item initialValue={formData?.taxChargesTypeDescription} label="Tax/Charge Type Descrption" name="taxChargesTypeDescription" rules={[validateRequiredInputField('Tax/Charge Type Descrption')]}>
                                     <TextArea maxLength={300} placeholder={preparePlaceholderText('Tax/Charge Type Descrption')} showCount />
                                 </Form.Item>

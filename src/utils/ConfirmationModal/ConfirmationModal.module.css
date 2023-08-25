@@ -9,16 +9,16 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 
-.information {
+/* .information {
     text-align: center;
     line-height: 23px;
     font-size: 14px;
     font-weight: 400;
     margin: 10px 0px 20px;
     padding: 0px 5px;
-}
+} */
 
-.confirmModelText {
+.confirmModalText {
     text-align: center;
     margin-bottom: 20px;
 }
@@ -31,7 +31,7 @@
     float: right;
 }
 
-.button {
+/* .button {
     width: 131.5px;
     height: 36px;
     display: flex;
@@ -40,15 +40,15 @@
     align-items: center;
     padding: 6px 16px;
     border-radius: 4px;
-}
+} */
 
 .modalButton {
-    width: 170px;
-    height: 36px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+    width: 47%;
     padding: 6px 16px;
     border-radius: 4px;
+}
+
+.textareaError :global .ant-form-item .ant-form-item-explain-error {
+    position: absolute;
+    bottom: 21px;
 }

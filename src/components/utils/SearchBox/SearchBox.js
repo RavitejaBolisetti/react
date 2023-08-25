@@ -65,8 +65,8 @@ const SearchBox = (props) => {
                         </Select>
                     </Form.Item>
                 )}
-                <Form.Item label={label} {...searchParamRule} name={singleField && singleFieldKey ? singleFieldKey : 'searchParam'} rules={[validateRequiredInputField('search value')]} validateTrigger={['onChange', 'onSearch']}>
-                    <Search loading={isLoading} disabled={disabled} placeholder={placeholder} maxLength={25} value={filterString?.searchParam} allowClear onChange={handleChange} onSearch={singleField && handleSearchWithoutParameter ? handleSearchWithoutParameter : handleSearchParamSearch} className={singleField ? styles.headerSearchField : selectWide ? styles.headerSearchFieldWide : styles.headerSearchField} />
+                <Form.Item label={label} {...searchParamRule} name={singleField && singleFieldKey ? singleFieldKey : 'searchParam'} rules={[validateRequiredInputField('search value')]} validateTrigger={['onChange', 'onSearch']} className={selectWide ? styles.headerSearchFieldWide : ''}>
+                    <Search loading={isLoading} disabled={disabled} placeholder={placeholder} maxLength={25} value={filterString?.searchParam} allowClear onChange={handleChange} onSearch={singleField && handleSearchWithoutParameter ? handleSearchWithoutParameter : handleSearchParamSearch} className={styles.headerSearchField} />
                 </Form.Item>
             </Form>
         </div>
