@@ -14,7 +14,6 @@ import { tableColumn } from './tableColumn';
 import styles from 'components/common/Common.module.css';
 
 export const CustomerListBase = (props) => {
-    //console.log('setSelectedRowData---->', props)
     const { data, handleSelectedData, setSelectedRowData } = props;
     const [formBtnActive, setFormBtnActive] = useState(false);
     const [selectedRows, setSelectedRows] = useState([]);
@@ -45,19 +44,18 @@ export const CustomerListBase = (props) => {
         isLoading: false,
         tableColumn,
         tableData: data,
+        scroll: { x: 1000, y: 'calc(100vh - 324px)' },
     };
 
     return (
         <div className={styles.customerChooseContainer}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <DataTable scroll={{ x: 1000 }} pagination={false} {...tableProps} />
+                    <DataTable pagination={false} {...tableProps} />
                 </Col>
             </Row>
-
             <Row gutter={20}>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignLeft}></Col>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignRight}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonsGroupRight}>
                     <Button data-testid="counter-text" htmlType="submit" type="primary" onClick={handleViewDetail} disabled={!formBtnActive}>
                         View Details
                     </Button>

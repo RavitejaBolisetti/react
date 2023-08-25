@@ -6,6 +6,10 @@ import customRender from '@utils/test-utils';
 import { Form } from 'antd';
 import createMockStore from '__mocks__/store';
 
+beforeEach(() => {
+    jest.clearAllMocks();
+});
+
 const FormWrapper = (props) => {
     const [form] = Form.useForm();
     return <FinananceDetailsMaster form={form} {...props} />;

@@ -12,6 +12,7 @@ import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validateRequiredInputField } from 'utils/validation';
 import { ModalButtons } from 'components/common/Button';
 import { convertDateTimedayjs } from 'utils/formatDateTime';
+import styles from 'components/common/Common.module.css';
 
 import { MakeCheckResult, setCheckresultValue, BindFormItems } from './CheckListUtils';
 
@@ -73,9 +74,9 @@ export const ChecklistModalForms = (props) => {
                 </Col>
             </Row>
             <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.textareaError}>
                     <Form.Item label="Remarks" name="checklistDescription" rules={[validateRequiredInputField('Remarks')]}>
-                        <TextArea placeholder={preparePlaceholderText('Remarks')} autoSize={{ minRows: 3, maxRows: 5 }} />
+                        <TextArea placeholder={preparePlaceholderText('Remarks')} autoSize={{ minRows: 3, maxRows: 5 }} maxLength={300} showCount />
                     </Form.Item>
                     <Form.Item name="id" hidden></Form.Item>
                 </Col>

@@ -6,6 +6,10 @@ import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
 import { Form } from 'antd';
 
+beforeEach(() => {
+    jest.clearAllMocks();
+});
+
 const props = { setactiveKey: jest.fn(), setIsLoading: jest.fn(), onCloseAction: jest.fn(), onCloseActionOnContinue: jest.fn() };
 const formActionType = { editMode: false };
 const FormWrapper = (props) => {

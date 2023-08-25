@@ -22,7 +22,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 import styles from './Header.module.css';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { doLogoutAPI } from 'store/actions/auth';
+import { clearLocalStorageData, doLogoutAPI } from 'store/actions/auth';
 import { headerDataActions } from 'store/actions/common/header';
 import { Link, useNavigate } from 'react-router-dom';
 import { HeaderSkeleton } from './HeaderSkeleton';
@@ -117,11 +117,14 @@ const HeaderMain = (props) => {
         if (res?.data) {
             showGlobalNotification({ notificationType: 'successBeforeLogin', title: res?.title || 'Logout Successful', message: Array.isArray(res?.responseMessage) ? res?.responseMessage[0] : res?.responseMessage });
             navigate(routing.ROUTING_LOGIN);
+            clearLocalStorageData();
         }
     };
 
     const onError = (message) => {
         showGlobalNotification({ message: Array.isArray(message) ? message[0] : message });
+        navigate(routing.ROUTING_LOGIN);
+        clearLocalStorageData();
     };
 
     const showConfirm = () => {

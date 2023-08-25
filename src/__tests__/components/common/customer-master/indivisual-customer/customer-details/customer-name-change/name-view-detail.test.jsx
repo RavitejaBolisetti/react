@@ -3,6 +3,10 @@ import customRender from '@utils/test-utils';
 import { fireEvent, screen, act } from '@testing-library/react';
 import { ViewDetail } from '@components/common/CustomerMaster/IndividualCustomer/CustomerDetail/CustomerNameChange/ViewDetail';
 
+beforeEach(() => {
+    jest.clearAllMocks();
+});
+
 describe('View Form component', () => {
     it('should render view form component', () => {
         const styles = {

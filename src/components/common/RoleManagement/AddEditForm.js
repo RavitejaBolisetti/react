@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { Input, Form, Col, Row, Switch, Space, Collapse, Tabs } from 'antd';
+import { Input, Form, Col, Row, Switch, Space, Collapse, Tabs, Divider, Tag } from 'antd';
 
 import { DrawerFormButton } from 'components/common/Button';
 import { ViewRoleManagement } from './ViewRoleManagement';
@@ -120,7 +120,7 @@ const AddEditFormMain = (props) => {
     const AccordianTreeUtils = ({ menuData, viewMode = false }) => {
         const dataAvailable = menuData?.length;
         return dataAvailable ? (
-            <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
+            <Space direction="vertical" size="middle">
                 {menuData?.map((el, i) => {
                     const treeData = el?.children;
                     const flatternData = flattenData(treeData);
@@ -129,6 +129,7 @@ const AddEditFormMain = (props) => {
                     const allowedAccess = treeData?.filter((i) => i.checked);
                     const myProps = {
                         callOnForm: true,
+                        selectable: false,
                         fieldNames,
                         treeData,
                         searchValue,
@@ -136,39 +137,38 @@ const AddEditFormMain = (props) => {
                         checkable: true,
                         isTreeViewVisible: true,
                         onCheck: onCheck(el?.value),
-                        disableCheckbox: viewMode,
+                        // disableCheckbox: viewMode,
                         expendedKeys: expendedKeys?.map((i) => i.value),
                         checkedKeys: checkedKeys?.map((i) => i.value), // handleDefaultCheckedKeys(viewMode, defaultCheckedKeysMangement, checkedMenuKeys),
                     };
 
                     return (
-                        <div className={`${styles.accordianContainer} ${styles.rolemanagmentContaner}`}>
-                            <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={onCollapseChange} expandIconPosition="end">
+                        <div className={styles.managementContainer}>
+                            <Collapse expandIcon={expandIcon} collapsible="icon" activeKey={activeKey} onChange={onCollapseChange} expandIconPosition="end">
                                 <Panel
                                     header={
-                                        <Row>
+                                        <>
                                             {el?.label}
-                                            {allowedAccess?.length > 0 && <div className={styles.allowAccess}>{allowedAccess?.length} Access Provided</div>}
-                                        </Row>
+                                            {allowedAccess?.length > 0 && <Tag color="default" className={styles.marL10}>{`${allowedAccess?.length >= 2 ? `${allowedAccess?.length} Accesses Provided` : `${allowedAccess?.length} Access Provided`}`}</Tag>}
+                                        </>
                                     }
                                     key={i}
                                 >
-                                    <div style={{ borderTop: 'solid 1px #E6E6E6', paddingTop: '10px' }}>
-                                        <Form layout="vertical" autoComplete="off" form={searchItem}>
-                                            <Row>
-                                                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.roleMangementSearch}>
-                                                    <Form.Item label={''} name="search" validateTrigger={['onSearch']}>
-                                                        <Search placeholder="Search" initialValue={searchValue} onChange={handleSearchValue} allowClear />
-                                                    </Form.Item>
-                                                </Col>
-                                            </Row>
-                                            <Row>
-                                                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                                    <LeftPanel {...myProps} />
-                                                </Col>
-                                            </Row>
-                                        </Form>
-                                    </div>
+                                    <Divider />
+                                    <Form layout="vertical" autoComplete="off" form={searchItem}>
+                                        <Row>
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                                <Form.Item label={''} name="search" validateTrigger={['onSearch']}>
+                                                    <Search placeholder="Search" initialValue={searchValue} onChange={handleSearchValue} allowClear />
+                                                </Form.Item>
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={viewMode ? styles.viewModeTree : ''}>
+                                                <LeftPanel {...myProps} />
+                                            </Col>
+                                        </Row>
+                                    </Form>
                                 </Panel>
                             </Collapse>
                         </div>
@@ -176,7 +176,7 @@ const AddEditFormMain = (props) => {
                 })}
             </Space>
         ) : (
-            <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
+            <Space direction="vertical" size="middle">
                 No Application Available
             </Space>
         );
@@ -248,6 +248,7 @@ const AddEditFormMain = (props) => {
                                                         maxRows: 5,
                                                     }}
                                                     maxLength={250}
+                                                    showCount
                                                 />
                                             </Form.Item>
                                         </Col>
@@ -260,6 +261,7 @@ const AddEditFormMain = (props) => {
                                         </Col>
                                     </Row>
                                 </div>
+                                <Divider />
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.subTitleSec}>
                                         Application Access<span className={styles.mandatory}>*</span>

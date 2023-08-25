@@ -34,7 +34,7 @@ const MenuNav = (props) => {
                         break;
                     }
                     case id > currentSection: {
-                        activeClassName = styles.inActive;
+                        activeClassName = styles.AddmodeinActive;
                         menuNavIcon = <BsRecordCircleFill className={styles.tableTextColor85} />;
                         break;
                     }

@@ -4,6 +4,10 @@ import { fireEvent, screen } from '@testing-library/react';
 import { AddEditForm } from '@components/Sales/OTF/FinananceDetails/AddEditForm';
 import customRender from '@utils/test-utils';
 
+beforeEach(() => {
+    jest.clearAllMocks();
+});
+
 const FinanceLovDataMock = [
     { key: '1', value: 'Finance Option 1' },
     { key: '2', value: 'Finance Option 2' },

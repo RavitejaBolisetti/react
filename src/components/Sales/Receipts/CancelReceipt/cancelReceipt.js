@@ -22,7 +22,7 @@ export const CancelReceiptForm = ({ handleCloseReceipt, handleCancelReceipt, can
     return (
         <Form autoComplete="off" form={cancelReceiptForm} onFinish={handleCancelReceipt} layout="vertical" onFinishFailed={onFinishFailed}>
             <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.textareaError}>
                     <Form.Item label="Cancellation Remark" name="cancelRemarks" rules={[validateRequiredInputField('Cancel Remarks')]}>
                         <TextArea showCount maxLength={300} placeholder={preparePlaceholderText('Remarks')} />
                     </Form.Item>
