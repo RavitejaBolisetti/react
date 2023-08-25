@@ -32,7 +32,6 @@ const ViewDetailMain = (props) => {
                         <Descriptions.Item label="Branch">{checkAndSetDefaultValue(formData?.branch, isLoading)}</Descriptions.Item>
                         {formData?.financeArrangedBy && checkFinanceType(formData?.financeArrangedBy, FINANCE_ARRANGED_BY?.DEALER?.key) && (
                             <>
-                                {' '}
                                 <Descriptions.Item label="File Number">{checkAndSetDefaultValue(formData?.fileNumber, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Loan Amount">{checkAndSetDefaultValue(formData?.loanAmount, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="EMI">{checkAndSetDefaultValue(formData?.emi, isLoading)}</Descriptions.Item>
