@@ -9,7 +9,7 @@ import { Button, Row, Col, Popover } from 'antd';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import styles from 'components/common/Common.module.css';
 
-export const OTFFormButton = ({ record, handleChangeHistory,handleOtfSoMappingHistory, onCloseAction, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection }) => {
+export const OTFFormButton = ({ record, handleChangeHistory, handleOtfSoMappingHistory, onCloseAction, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection }) => {
     const content = <div>Coming Soon</div>;
     return (
         <div className={styles.formFooter}>
@@ -46,13 +46,11 @@ export const OTFFormButton = ({ record, handleChangeHistory,handleOtfSoMappingHi
                         </Button>
                     )}
 
-                    {buttonData?.unAllotBtn && (
-                        <Popover content={content} trigger="hover">
-                            <Button onClick={() => {}} type="primary">
-                                Un-Allot
-                            </Button>
-                        </Popover>
-                    )}
+                    {/* {buttonData?.unAllotBtn && ( */}
+                    <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.UNALLOT, record })} type="primary">
+                        Un-Allot
+                    </Button>
+                    {/* )} */}
 
                     {buttonData?.invoiceBtn && (
                         <Popover content={content} trigger="hover">

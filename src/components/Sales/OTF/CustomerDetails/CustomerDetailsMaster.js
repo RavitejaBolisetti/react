@@ -126,32 +126,37 @@ export const CustomerDetailsMain = (props) => {
     }, [userId, selectedOrderId]);
 
     const onFinish = (values) => {
-        if (!values?.bookingCustomer?.panNo || !values?.billingCustomer?.panNo || !values?.bookingCustomer?.customerId || !values?.billingCustomer?.customerId) {
-            setActiveKey([...activeKey, !values?.bookingCustomer?.panNo || !values?.bookingCustomer?.customerId ? 1 : '']);
-            setActiveKey([...activeKey, !values?.billingCustomer?.panNo || !values?.billingCustomer?.customerId ? 2 : '']);
+        if (values?.bookingCustomer?.customerId) {
+            showGlobalNotification({ message: 'Please provide booking customer' });
+            setActiveKey([...activeKey, !values?.bookingCustomer?.customerId ? 1 : '']);
             return false;
+        } else if (values?.billingCustomer?.customerId) {
+            showGlobalNotification({ message: 'Please provide billing customer' });
+            setActiveKey([...activeKey, !values?.billingCustomer?.customerId ? 2 : '']);
+            return false;
+        } else {
+            form.getFieldsValue();
+            const data = { bookingCustomer: { ...values?.bookingCustomer, otfNumber: selectedOrderId, bookingAndBillingType: 'BOOKING', id: customerFormData?.bookingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer }, billingCustomer: { ...values?.billingCustomer, otfNumber: selectedOrderId, bookingAndBillingType: 'BILLING', id: customerFormData?.billingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer } };
+            const onSuccess = (res) => {
+                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+                fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, onError, extraParams });
+                handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
+            };
+
+            const onError = (message) => {
+                showGlobalNotification({ message });
+            };
+
+            const requestData = {
+                data: data,
+                method: 'put',
+                setIsLoading: listShowLoading,
+                userId,
+                onError,
+                onSuccess,
+            };
+            saveData(requestData);
         }
-        form.getFieldsValue();
-        const data = { bookingCustomer: { ...values?.bookingCustomer, otfNumber: selectedOrderId, bookingAndBillingType: 'BOOKING', id: customerFormData?.bookingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer }, billingCustomer: { ...values?.billingCustomer, otfNumber: selectedOrderId, bookingAndBillingType: 'BILLING', id: customerFormData?.billingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer } };
-        const onSuccess = (res) => {
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, onError, extraParams });
-            handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
-        };
-
-        const onError = (message) => {
-            showGlobalNotification({ message });
-        };
-
-        const requestData = {
-            data: data,
-            method: 'put',
-            setIsLoading: listShowLoading,
-            userId,
-            onError,
-            onSuccess,
-        };
-        saveData(requestData);
     };
 
     const formProps = {
