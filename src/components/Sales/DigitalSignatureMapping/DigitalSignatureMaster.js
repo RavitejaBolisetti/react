@@ -24,8 +24,6 @@ import styles from 'components/common/Common.module.css';
 
 import { showGlobalNotification } from 'store/actions/notification';
 
-import { FilterIcon } from 'Icons';
-
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -196,14 +194,6 @@ export const DigitalSignatureMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchValue, filterString, page]);
 
-    // useEffect(() => {
-    //     return () => {
-    //         resetData();
-    //         setFilterString();
-    //     };
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, []);
-
     useEffect(() => {
         if (userId) {
             // setShowDataLoading(true);
@@ -227,15 +217,6 @@ export const DigitalSignatureMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedOrderId]);
 
-    const handleChange = (e) => {
-        setSearchValue(e.target.value);
-    };
-
-    const handleSearch = (value) => {
-        setFilterString({ ...filterString, searchParam: value });
-        setSearchValue(value);
-    };
-
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
         form.resetFields();
         setFormData([]);
@@ -245,14 +226,6 @@ export const DigitalSignatureMasterBase = (props) => {
 
         record && setFormData(record);
         setIsFormVisible(true);
-    };
-
-    const onFinishSearch = (values) => {};
-
-    const handleResetFilter = (e) => {
-        setShowDataLoading(false);
-        setFilterString();
-        advanceFilterForm.resetFields();
     };
 
     const onFinish = (values) => {
@@ -284,14 +257,6 @@ export const DigitalSignatureMasterBase = (props) => {
         saveData(requestData);
     };
 
-    const onFinishFailed = (errorInfo) => {
-        return;
-    };
-
-    const handleFormValueChange = () => {
-        setButtonData({ ...buttonData, formBtnActive: true });
-    };
-
     const onCloseAction = () => {
         resetData();
         fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
@@ -319,23 +284,6 @@ export const DigitalSignatureMasterBase = (props) => {
         typeData,
     };
 
-    const onAdvanceSearchCloseAction = () => {
-        form.resetFields();
-        advanceFilterForm.resetFields();
-        advanceFilterForm.setFieldsValue();
-        setAdvanceSearchVisible(false);
-    };
-
-    const removeFilter = (key) => {
-        if (key === 'searchParam') {
-            const { searchType, searchParam, ...rest } = filterString;
-            setFilterString({ ...rest });
-        } else {
-            const { [key]: names, ...rest } = filterString;
-            setFilterString({ ...rest });
-        }
-    };
-
     const title = 'Dealer Sig-Dealer Code Mapping';
 
     const drawerTitle = useMemo(() => {
@@ -348,26 +296,12 @@ export const DigitalSignatureMasterBase = (props) => {
         }
     }, [formActionType]);
 
-    const advanceFilterProps = {
-        isVisible: isAdvanceSearchVisible,
-
-        icon: <FilterIcon size={20} />,
-        titleOverride: 'Advance Filters',
-
-        onCloseAction: onAdvanceSearchCloseAction,
-        handleResetFilter,
-        filterString,
-        setFilterString,
-        advanceFilterForm,
-        setAdvanceSearchVisible,
-        typeData,
-        onFinishSearch,
-    };
-    const serachBoxProps = {
+    const searchBoxProps = {
         searchForm,
         filterString,
-        optionType: typeData?.[PARAM_MASTER.OTF_SER.id],
+        optionType: typeData[PARAM_MASTER?.CUST_VEH_SEARCH?.id],
         setFilterString,
+        selectWide: true,
     };
 
     const formProps = {
@@ -387,9 +321,15 @@ export const DigitalSignatureMasterBase = (props) => {
 
     return (
         <>
-            <Row gutter={20} className={styles.masterListSearchForm}>
-                <Col xs={24} sm={24} md={14} lg={14} xl={14}>
-                    <SearchBox {...serachBoxProps} />
+            <Row gutter={20}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    <div className={styles.contentHeaderBackground}>
+                        <Row gutter={20}>
+                            <Col xs={24} sm={24} md={14} lg={14} xl={14}>
+                                <SearchBox {...searchBoxProps} />
+                            </Col>
+                        </Row>
+                    </div>
                 </Col>
             </Row>
             <Row gutter={20}>

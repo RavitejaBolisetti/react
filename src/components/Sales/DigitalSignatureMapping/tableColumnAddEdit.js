@@ -25,7 +25,7 @@ export const tableColumnAddEdit = (props) => {
             render: (text) => {
                 return !formActionType.viewMode ? (
                     <p>
-                        <Switch onClick={() => handleUpdateStatus(text)} />
+                        <Switch checkedChildren="Yes" unCheckedChildren="No" onChange={(checked) => (checked ? 1 : 0)} />
                     </p>
                 ) : (
                     <p>{getCodeValue(typeData[PARAM_MASTER.YES_NO_FLG.id], text)}</p>
