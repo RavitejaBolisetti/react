@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom/extend-expect';
-import { AssignUserRole } from '@components/common/UserManagement/AssignUserRole/AssignUserRole';
+import AssignUserRole from '@components/common/UserManagement/AssignUserRole/AssignUserRole';
 import customRender from '@utils/test-utils';
 
 afterEach(() => {

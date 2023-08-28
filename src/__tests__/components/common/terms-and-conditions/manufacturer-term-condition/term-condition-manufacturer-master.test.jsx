@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom/extend-expect';
-import { TermConditionManufacturerMaster } from '@components/common/ManufacturerTermCondition';
+import { TermConditionManufacturerMaster } from '@components/common/TermsAndConditions/ManufacturerTermCondition';
 import customRender from '@utils/test-utils';
 
 afterEach(() => {

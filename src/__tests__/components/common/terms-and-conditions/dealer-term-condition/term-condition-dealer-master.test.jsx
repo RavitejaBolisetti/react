@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom/extend-expect';
-import { TermConditionDealerMaster } from '@components/common/DealerTermCondition';
+import { TermConditionDealerMaster } from '@components/common/TermsAndConditions/DealerTermCondition';
 import customRender from '@utils/test-utils';
 
 afterEach(() => {

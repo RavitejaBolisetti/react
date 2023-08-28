@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom/extend-expect';
-import { OTFReports } from '@components/common/OTFReports';
+import { OtfReportsMaster } from '@components/common/OTFReports/OtfReportsMaster';
 import customRender from '@utils/test-utils';
 
 afterEach(() => {
@@ -8,6 +8,6 @@ afterEach(() => {
 
 describe('OTF Reports components', () => {
     it('should render OTFReports components', () => {
-        customRender(<OTFReports/>)
+        customRender(<OtfReportsMaster/>)
     });
 });
