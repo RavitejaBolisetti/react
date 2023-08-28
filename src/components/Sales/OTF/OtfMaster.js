@@ -35,7 +35,8 @@ import { validateOTFMenu } from './utils/validateOTFMenu';
 import { FilterIcon } from 'Icons';
 import { ChangeHistory } from './ChangeHistory';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 import { OtfSoMappingUnmappingChangeHistory } from './OtfSoMappingUnmappingChangeHistory';
 import { ConfirmationModal } from 'utils/ConfirmationModal';
 
@@ -332,7 +333,7 @@ export const OtfMasterBase = (props) => {
         };
 
         const onError = (message) => {
-            showGlobalNotification({ message });
+            // showGlobalNotification({ message });
         };
 
         const requestData = {
@@ -374,8 +375,8 @@ export const OtfMasterBase = (props) => {
                 break;
             case CANCEL_ACTION:
                 //  setFormActionType(CANCEL_OTF)
-                // setIsCancelVisible(true);
-                setIsFormVisible(false);
+                // setIsFormVisible(false);
+                setIsCancelVisible(true);
                 break;
             case TRANSFER_ACTION:
                 setIsTransferVisible(true);
@@ -452,7 +453,7 @@ export const OtfMasterBase = (props) => {
         };
 
         const onError = (message) => {
-            showGlobalNotification({ message });
+            // showGlobalNotification({ message });
         };
 
         const requestData = {
@@ -735,6 +736,7 @@ export const OtfMasterBase = (props) => {
         ...props,
         selectedOrder,
         isVisible: isAllotVisible,
+        setIsAllotVisible,
         onCloseAction: onCancelCloseAction,
     };
 

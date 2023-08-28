@@ -14,7 +14,8 @@ import { bindActionCreators } from 'redux';
 import { viewVehicleDetailDataActions } from 'store/actions/data/vehicle/viewVehicleDetails';
 import { showGlobalNotification } from 'store/actions/notification';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 const mapStateToProps = (state) => {
     const {
@@ -165,7 +166,7 @@ const VehicleDetailsMasterBase = (props) => {
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" data-testid="test-id" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>

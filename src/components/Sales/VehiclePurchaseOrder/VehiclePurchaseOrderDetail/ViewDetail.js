@@ -9,7 +9,8 @@ import { Descriptions, Card } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { DATA_TYPE } from 'constants/dataType';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 const ViewDetailMain = (props) => {
     const { formData, isLoading } = props;

@@ -35,7 +35,9 @@ import { ChangeHistory } from './ChangeHistory';
 import { DisableParent } from 'components/common/ProductHierarchy/ProductHierarchyUtils';
 
 import LeftPanel from '../LeftPanel';
-import styles from 'components/common/Common.module.css';
+
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 import { LANGUAGE_EN } from 'language/en';
 

@@ -6,6 +6,8 @@
 import React, { useEffect } from 'react';
 import { Col, Form, Row, Select, Input } from 'antd';
 import { withModal } from 'components/withModal';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 import { validateRequiredSelectField, searchValidator } from 'utils/validation';
 import { ModalButtons } from 'components/common/Button';

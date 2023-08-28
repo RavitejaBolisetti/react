@@ -38,7 +38,8 @@ import { tableColumn } from './Dealer/tableColumn';
 import { tableColumn as manufacturerTableColumn } from './Manufacturer/tableColumn';
 
 import { productDataTree, adminDataTree, initialDealerBranches } from 'components/common/UserManagement/dummyData';
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 const { Option } = Select;
 

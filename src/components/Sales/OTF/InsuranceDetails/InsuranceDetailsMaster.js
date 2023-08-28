@@ -4,7 +4,8 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect, useState } from 'react';
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { showGlobalNotification } from 'store/actions/notification';
@@ -128,7 +129,7 @@ const InsuranceDetailsMasterBase = (props) => {
         };
 
         const onError = (message) => {
-            showGlobalNotification({ message });
+            // showGlobalNotification({ message });
         };
 
         const requestData = {

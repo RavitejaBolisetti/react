@@ -15,7 +15,8 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { getCodeValue } from 'utils/getCodeValue';
 import { AddEditForm } from './AddEditForm';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 const { Text } = Typography;
 

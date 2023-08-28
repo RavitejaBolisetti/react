@@ -13,7 +13,8 @@ import { preparePlaceholderText, preparePlaceholderSelect, prepareDatePickerText
 
 import { dateFormat, formatDateToCalenderDate } from 'utils/formatDateTime';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 const { Search } = Input;
 

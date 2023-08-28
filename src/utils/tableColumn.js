@@ -16,7 +16,9 @@ import { DisableItemComponent } from 'utils/disableItemComponent';
 import { PlusOutlined } from '@ant-design/icons';
 
 // import { handleEdit, handleCustomEdit } from 'components/crud/crudListingPage/tableColumnActionEdit';
-import styles from './tableColumn.module.css';
+
+import styles from './tableColumn.module.scss';
+//import styles from './tableColumn.module.css';
 
 const onFilterFn = (value, record) => {
     if (record.ChangeDate !== undefined) {

@@ -14,7 +14,8 @@ import { productHierarchyDataActions } from 'store/actions/data/productHierarchy
 
 import { showGlobalNotification } from 'store/actions/notification';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 import { AddEditForm } from './AddEditForm';
 import { ViewDetail } from './ViewDetail';
 import { OTFFormButton } from '../OTFFormButton';
@@ -246,7 +247,7 @@ const VehicleDetailsMasterMain = (props) => {
         };
 
         const onError = (message) => {
-            showGlobalNotification({ message });
+            // showGlobalNotification({ message });
         };
 
         const requestData = {

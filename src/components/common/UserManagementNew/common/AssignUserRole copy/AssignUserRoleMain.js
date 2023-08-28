@@ -10,8 +10,10 @@ import { tableColumn } from './tableColumn';
 import { FiEdit } from 'react-icons/fi';
 import { PlusOutlined } from '@ant-design/icons';
 
-import styles from 'components/common/Common.module.css';
-import style from 'components/withModal/withModal.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
+import style from '../../../../../components/common/withModal.module.scss';
+//import style from 'components/withModal/withModal.module.css';
 import { RoleApplicationModal } from './RoleApplicationModal';
 import { DEVICE_TYPE } from 'constants/modules/UserManagement/deviceType';
 import { expandIcon } from 'utils/accordianExpandIcon';
@@ -53,7 +55,7 @@ const AssignUserRole = (props) => {
     const { fetchRoleDataList, roleListdata, isRoleListLoding } = props;
     const { fetchDLRUserRoleDataList, resetUsrDlrRoleAppDataList, usrRolelAppListShowLoading, saveDLRUserRoleDataList, fetchMNMUserRoleAppDataList, resetMnmUserRoleAppDataList, mnmUserRoleAppListShowLoading, saveMNMUserRoleAppDataList } = props;
     const { isDlrAppLoaded, isDlrAppLoding, dlrAppList, isMnmAppLoaded, isMnmAppLoding, mnmAppList } = props; //data list
-    console.log("🚀 ~ file: AssignUserRoleMain.js:57 ~ AssignUserRole ~ dlrAppList:", dlrAppList)
+    console.log('🚀 ~ file: AssignUserRoleMain.js:57 ~ AssignUserRole ~ dlrAppList:', dlrAppList);
     const { fetchRoleApplicationList, resetRoleApplicationList, rolelApplicationShowLoading, roleApplicationData, isRoleApplicationLoding, isRoleApplicationLoaded } = props;
     const { fetchUserRoleList, resetUserRoleList, userRoleShowLoading, userRoleDataList, isUserRoleListLoaded, isUserRoleListLoding } = props;
 
@@ -145,7 +147,7 @@ const AssignUserRole = (props) => {
             // id: 'f388cd2a-7809-43f1-985e-9caa5c243bf9',
             // employeeCode: 'deepakpalariya',
             // roleId: record?.roleId,
-            id: (dlrAppList?.role?.id && dlrAppList?.role?.id !== 'null') ? dlrAppList?.role?.id : '',
+            id: dlrAppList?.role?.id && dlrAppList?.role?.id !== 'null' ? dlrAppList?.role?.id : '',
             employeeCode: formData?.employeeCode,
             roleId: record?.roleId,
             status: true,
@@ -158,7 +160,7 @@ const AssignUserRole = (props) => {
         const requestData = {
             data: request,
             // method: 'post',
-            method:  (dlrAppList?.role?.id && dlrAppList?.role?.id !== 'null')  ? 'put' : 'post',
+            method: dlrAppList?.role?.id && dlrAppList?.role?.id !== 'null' ? 'put' : 'post',
             setIsLoading: usrRolelAppListShowLoading,
             userId,
             onError,

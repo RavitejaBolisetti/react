@@ -11,7 +11,8 @@ import { FaCheckCircle } from 'react-icons/fa';
 import { USER_ACCESS_SECTION_DEALER, USER_ACCESS_SECTION_MANUFACTURER } from 'constants/modules/UserManagement/userAccessSection';
 import { USER_TYPE_USER } from 'constants/modules/UserManagement/userType';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 const MenuNav = (props) => {
     const {

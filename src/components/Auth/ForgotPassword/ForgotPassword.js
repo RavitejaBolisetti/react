@@ -20,7 +20,9 @@ import { BiUser } from 'react-icons/bi';
 
 import { ROUTING_LOGIN } from 'constants/routing';
 import { validateRequiredInputField } from 'utils/validation';
-import styles from '../Auth.module.css';
+import { preparePlaceholderText } from 'utils/preparePlaceholder';
+import styles from '../Auth.module.scss';
+//import styles from '../Auth.module.css';
 
 import * as IMAGES from 'assets';
 import Footer from '../Footer';

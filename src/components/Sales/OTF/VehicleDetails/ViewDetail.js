@@ -21,7 +21,7 @@ import { getCodeValue } from 'utils/getCodeValue';
 
 const { Panel } = Collapse;
 const ViewDetailMain = (props) => {
-    const { isLoading, activeKey, onChange, tooltTipText, styles, formData } = props;
+    const { typeData, isLoading, activeKey, onChange, tooltTipText, styles, formData } = props;
     const viewProps = {
         bordered: false,
         colon: false,
@@ -50,10 +50,11 @@ const ViewDetailMain = (props) => {
                                     </Descriptions.Item>
                                     <Descriptions.Item label="Model Code">{checkAndSetDefaultValue(formData?.modelCode, isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label="Available Stock">{checkAndSetDefaultValue(formData?.availableStock, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Vehicle Allocated Status">{checkAndSetDefaultValue(getCodeValue(VEHICLE_TYPE, formData?.vehicleAllocatedStatus,'title'), isLoading)}</Descriptions.Item>
+                                    <Descriptions.Item label="Vehicle Allocated Status">{checkAndSetDefaultValue(getCodeValue(VEHICLE_TYPE, formData?.vehicleAllocatedStatus, 'title'), isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label="PO Number">{checkAndSetDefaultValue(formData?.ponumber, isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label="PO Date">{checkAndSetDefaultValue(formData?.podate ? formData?.podate : undefined, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                                    <Descriptions.Item label="PO Status">{checkAndSetDefaultValue(formData?.postatus, isLoading)}</Descriptions.Item>
+                                    {/* <Descriptions.Item label="PO Status">{checkAndSetDefaultValue(formData?.postatus, isLoading)}</Descriptions.Item> */}
+                                    <Descriptions.Item label="PO Status">{checkAndSetDefaultValue(getCodeValue(typeData?.SPR_PO_STATS, formData?.postatus, isLoading))}</Descriptions.Item>
                                     <Descriptions.Item label="SO Number">{checkAndSetDefaultValue(formData?.sonumber, isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label="SO Status">{checkAndSetDefaultValue(formData?.sostatus, isLoading)}</Descriptions.Item>
                                     <Descriptions.Item label="VIN Number">{checkAndSetDefaultValue(formData?.vinnumber, isLoading)}</Descriptions.Item>
@@ -73,7 +74,7 @@ const ViewDetailMain = (props) => {
                         </Collapse>
 
                         <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(3)} expandIconPosition="end" className={styles?.collapseContainer}>
-                            <Panel header="Charges" key="3">
+                            <Panel header="Other Charges" key="3">
                                 <Divider />
                                 <DataTable tableColumn={optionalServicesColumns} tableData={formData['optionalServices']} pagination={false} />
                             </Panel>

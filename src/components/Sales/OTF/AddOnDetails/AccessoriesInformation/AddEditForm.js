@@ -8,7 +8,9 @@ import { Input, Form, Col, Row, Button, Divider } from 'antd';
 
 import { validateRequiredInputField, validationNumber } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
-import styles from 'components/common/Common.module.css';
+
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 const { TextArea } = Input;
 const { Search } = Input;

@@ -10,7 +10,7 @@ import { LANGUAGE_EN } from 'language/en';
 import AddEditForm from './AddEditForm';
 import AllowedTimingCard from './AllowedTimingCard';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 const AllowedTimingList = (props) => {
     const { deletedTime, setDeletedTime, timeData, setTimeData, isAddTimeVisible, setIsAddTimeVisible } = props;

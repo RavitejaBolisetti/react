@@ -19,7 +19,9 @@ import { OTFFormButton } from '../OTFFormButton';
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
 
-import styles from 'components/common/Common.module.css';
+import dayjs from 'dayjs';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 const mapStateToProps = (state) => {
     const {
@@ -126,11 +128,11 @@ export const CustomerDetailsMain = (props) => {
     }, [userId, selectedOrderId]);
 
     const onFinish = (values) => {
-        if (values?.bookingCustomer?.customerId) {
+        if (!values?.bookingCustomer?.customerId) {
             showGlobalNotification({ message: 'Please provide booking customer' });
             setActiveKey([...activeKey, !values?.bookingCustomer?.customerId ? 1 : '']);
             return false;
-        } else if (values?.billingCustomer?.customerId) {
+        } else if (!values?.billingCustomer?.customerId) {
             showGlobalNotification({ message: 'Please provide billing customer' });
             setActiveKey([...activeKey, !values?.billingCustomer?.customerId ? 2 : '']);
             return false;
@@ -144,7 +146,7 @@ export const CustomerDetailsMain = (props) => {
             };
 
             const onError = (message) => {
-                showGlobalNotification({ message });
+                // showGlobalNotification({ message });
             };
 
             const requestData = {

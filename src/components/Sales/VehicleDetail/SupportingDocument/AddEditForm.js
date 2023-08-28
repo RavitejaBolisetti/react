@@ -9,7 +9,9 @@ import { Row, Col, Form, Select, Input, Divider, Collapse } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { expandIcon } from 'utils/accordianExpandIcon';
-import styles from 'components/common/Common.module.css';
+
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 import { ViewSupportingDocDetail } from './ViewSupportingDocDetail';
 import { ViewTechnicalDocDetail } from './ViewTechnicalDocDetail';
 import { UploadUtil } from 'utils/Upload';

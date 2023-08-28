@@ -9,7 +9,8 @@ import { PlusOutlined } from '@ant-design/icons';
 
 import { duplicateValidator, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
-import styles from 'components/common/Common.module.css';
+import styles from './../ApplicationMaster.module.scss';
+//import styles from './../ApplicationMaster.module.css';
 
 const ApplicationActionsForm = ({ finalFormdata, form, onFinish, status, name, id, isEditing, isBtnDisabled, actions, disableStatus, setIsBtnDisabled, onFieldsChange }) => {
     const onFinishFailed = (err) => {

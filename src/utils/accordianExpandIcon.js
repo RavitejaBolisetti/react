@@ -6,7 +6,8 @@
 import { PlusBorderedIcon, MinusBorderedIcon } from 'Icons';
 import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
-import styles from 'components/common/Common.module.css';
+
+import styles from 'assets/sass/app.module.scss';
 
 export const accordianExpandIcon = ({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />);
 

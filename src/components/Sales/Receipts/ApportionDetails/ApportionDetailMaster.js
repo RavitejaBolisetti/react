@@ -19,8 +19,8 @@ import { documentDescriptionDataActions } from 'store/actions/data/financialAcco
 import { invoiceDetailsDataAction } from 'store/actions/data/financialAccounting/invoiceDetails';
 import { showGlobalNotification } from 'store/actions/notification';
 import { tableColumnApportion } from './tableColumnApportion';
-
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 const mapStateToProps = (state) => {
     const {
