@@ -1,0 +1,338 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
+
+@import 'assets/sass/app.module.scss';
+
+/* Upload File Box */
+
+.iconSize {
+	width: 20px;
+	color: $primaryRed;
+}
+
+.uploadDragger {
+	padding-bottom: 20px;
+
+	& :global {
+		h5.ant-typography {
+			margin: 0 !important;
+			color: $primaryBlack;
+			font-size: 14px;
+			font-weight: 500;
+			line-height: 23px;
+		}
+
+		span.ant-typography {
+			margin: 0 !important;
+			color: $neutralGrey4;
+			font-size: 12px;
+			font-weight: 400;
+			line-height: 20px;
+		}
+
+		.ant-upload-wrapper {
+			.ant-upload-drag {
+				border: 1px dashed $neutralGrey2;
+				background: $neutralGrey0;
+				border-radius: 4px;
+				padding: 20px;
+
+				&:not(.ant-upload-disabled) {
+					&:hover {
+						border-color: $primaryRed;
+						cursor: pointer;
+					}
+				}
+
+				.ant-upload {
+					padding: 0;
+
+					.ant-space-vertical {
+						.ant-space-item {
+							&:first-child {
+								svg {
+									margin-bottom: -16px;
+								}
+							}
+						}
+					}
+				}
+			}
+
+			.ant-upload-list {
+				.ant-upload-list-item {
+					&:hover {
+						.ant-upload-list-item-action {
+							color: $primaryRed;
+						}
+					}
+
+					.ant-upload-list-item-actions {
+						display: flex;
+						align-items: center;
+
+						.ant-upload-list-item-action {
+							opacity: 1;
+						}
+
+						.ant-upload-list-item-action.ant-btn-sm.ant-btn-icon-only {
+							display: flex;
+							align-items: center;
+							width: 20px;
+							color: $primaryRed;
+
+							.ant-btn-icon {
+								svg {
+									width: 20px;
+									height: 20px;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		.ant-btn-dangerous {
+			margin-left: 20px;
+		}
+
+		.ant-upload-list {
+			.ant-upload-list-item {
+				.ant-upload-icon {
+					display: none;
+				}
+			}
+		}
+
+		.ant-btn-text {
+			&:not(:disabled) {
+				&:not(.ant-btn-disabled) {
+					&:hover {
+						color: $primaryRed;
+						background-color: $transparentColor;
+					}
+				}
+			}
+		}
+
+		.ant-space-vertical {
+			gap: 20px !important;
+
+			.ant-space-horizontal {
+				gap: 10px !important;
+
+				.ant-space-item {
+					.ant-btn-link {
+						padding: 0;
+						position: absolute;
+						font-weight: 600;
+						line-height: 24px;
+						text-transform: capitalize;
+					}
+				}
+			}
+		}
+
+		.ant-space-horizontal {
+			.ant-avatar.ant-avatar-icon {
+				line-height: 26px !important;
+				font-size: 18px !important;
+				background-color: $semanticSuccess;
+			}
+		}
+	}
+
+	.uploadDraggerStrip {
+		& :global {
+			.ant-upload-drag {
+				&:not(.ant-upload-disabled) {
+					&:hover {
+						border-color: $neutralGrey2;
+						cursor: not-allowed;
+					}
+				}
+			}
+
+			.ant-upload-list {
+				.ant-upload-list-item {
+					height: auto;
+					margin-top: 10px;
+					padding: 0;
+					background-color: $transparentColor;
+					border: none;
+					box-shadow: none;
+
+					.ant-upload-icon {
+						display: none;
+					}
+
+					.ant-upload-list-item-name {
+						padding-left: 0;
+						color: $primaryBlack;
+						font-weight: 600;
+						line-height: 24px;
+						padding-bottom: 16px;
+					}
+
+					&:hover {
+						background-color: $transparentColor;
+
+						.ant-upload-list-item-action {
+							color: $primaryRed;
+						}
+					}
+
+					.ant-upload-list-item-actions {
+						display: flex;
+						align-items: center;
+
+						.ant-upload-list-item-action {
+							opacity: 1;
+						}
+
+						.ant-upload-list-item-action.ant-btn-sm {
+							&:not(:last-child) {
+								display: none;
+							}
+						}
+
+						.ant-upload-list-item-action.ant-btn-sm.ant-btn-icon-only {
+							display: flex;
+							align-items: center;
+							width: 20px;
+							color: $primaryRed;
+
+							.ant-btn-icon {
+								svg {
+									width: 20px;
+									height: 20px;
+								}
+							}
+						}
+					}
+
+					.ant-upload-list-item-progress {
+						bottom: -6px;
+						padding-inline-start: 0;
+						display: block;
+						opacity: 1;
+					}
+				}
+
+				.ant-upload-list-item-done {
+					.ant-upload-list-item-progress {
+						display: block;
+						opacity: 1;
+						visibility: visible;
+
+						.ant-progress.ant-progress-line {
+							display: block !important;
+							opacity: 1 !important;
+							visibility: visible;
+						}
+
+						.ant-progress.ant-progress-status-success {
+							display: block !important;
+							opacity: 1 !important;
+							visibility: visible;
+						}
+					}
+				}
+			}
+
+			.ant-btn-text {
+				&:not(:disabled) {
+					&:not(.ant-btn-disabled) {
+						&:hover {
+							color: $primaryRed;
+							background-color: $transparentColor;
+						}
+					}
+				}
+			}
+
+			.ant-progress {
+				.ant-progress-inner {
+					width: 95%;
+					background-color: $transparentSuccessL;
+				}
+
+				.ant-progress-text {
+					position: absolute;
+					z-index: 1;
+					top: -18px;
+					margin-inline-start: -66px;
+					color: $primaryBlack;
+					font-weight: 600;
+					text-align: end;
+				}
+
+				.ant-progress-success-bg {
+					height: 8px !important;
+					background-color: $semanticSuccess;
+				}
+
+				.ant-progress-bg {
+					height: 8px !important;
+					background-color: $semanticSuccess;
+				}
+			}
+		}
+	}
+
+	.uploadDraggerBox {
+		& :global {
+			.ant-upload-drag {
+				&:not(.ant-upload-disabled) {
+					&:hover {
+						border-color: $neutralGrey2;
+						cursor: not-allowed;
+					}
+				}
+			}
+
+			.ant-upload-list {
+				.ant-upload-list-item {
+					height: auto;
+					margin-top: 10px;
+					padding: 10px 20px;
+					border: 1px solid $neutralGrey1;
+					background-color: $neutralGrey0;
+					border-radius: 4px;
+					box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.15);
+
+					&:hover {
+						background-color: $neutralGrey0;
+					}
+
+					.ant-upload-list-item-name {
+						padding-left: 0;
+						padding-right: 20px;
+						color: $primaryBlack;
+						font-weight: 600;
+						line-height: 24px;
+					}
+
+					.ant-upload-list-item-actions {
+						.ant-btn {
+							&:not(:first-child) {
+								margin-left: 20px;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	.viewDragger {
+		width: -webkit-fill-available;
+		padding: 20px;
+		border: 1px dashed $neutralGrey2;
+		border-radius: 4px;
+	}
+}

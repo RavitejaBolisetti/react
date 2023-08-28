@@ -13,7 +13,8 @@ import { PlusOutlined } from '@ant-design/icons';
 import { Button, Col, Form, Row, Select, Input } from 'antd';
 import { generateRandomNumber } from 'utils/generateRandomNumber';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 import { hierarchyAttributeMasterDataActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { showGlobalNotification } from 'store/actions/notification';

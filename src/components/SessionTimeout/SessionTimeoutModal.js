@@ -7,7 +7,8 @@ import React from 'react';
 import { Row, Col, Button } from 'antd';
 import { withModal } from 'components/withModal';
 
-import styles from './SessionTimeoutModal.module.css';
+import styles from './SessionTimeoutModal.module.scss';
+//import styles from './SessionTimeoutModal.module.css';
 
 const SessionTimeoutModalMain = (props) => {
     const { remaining, handleLogoutAction, handleSessionContinueAction } = props;

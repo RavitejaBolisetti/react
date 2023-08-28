@@ -5,7 +5,8 @@
  */
 import React from 'react';
 import { Descriptions } from 'antd';
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 const ViewHierarchyAttributeMain = ({ editRow, style }) => {
     const viewOneColProps = {

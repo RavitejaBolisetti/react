@@ -6,7 +6,9 @@
 import React from 'react';
 import { Row, Col, Form, Button, Select } from 'antd';
 import { withModal } from 'components/withModal';
-import styles from 'components/common/Common.module.css';
+
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 const { Option } = Select;
 
@@ -24,7 +26,9 @@ export const OTFConfirmationModalFrom = (props) => {
 
             <Row gutter={20}>
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignLeft}>
-                    <Button onClick={handleCloseModal} danger>No</Button>
+                    <Button onClick={handleCloseModal} danger>
+                        No
+                    </Button>
                 </Col>
 
                 <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignRight}>

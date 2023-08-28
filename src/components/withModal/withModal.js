@@ -6,7 +6,8 @@
 import React, { useEffect } from 'react';
 import { Modal } from 'antd';
 
-import styles from './withModal.module.css';
+import styles from './withModal.module.scss';
+//import styles from './withModal.module.css';
 
 export const withModal =
     (InputComponent, { title = 'default title', width = 480, footer = false }) =>

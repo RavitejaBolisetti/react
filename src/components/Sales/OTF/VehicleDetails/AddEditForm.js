@@ -21,7 +21,8 @@ import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { getCodeValue } from 'utils/getCodeValue';
 import { VEHICLE_TYPE } from 'constants/VehicleType';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 const { Text } = Typography;
 const { Panel } = Collapse;

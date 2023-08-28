@@ -10,12 +10,13 @@ import { withModal } from 'components/withModal';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { validateRequiredSelectField } from 'utils/validation';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 export const ConfirmationModalFrom = (props) => {
     // const { handleCloseModal } = props;
     const { vpoCancellationForm, onFinishVPOCancellation } = props;
-    const { buttonData, setButtonData, typeData,setIsCancelVisible } = props;
+    const { buttonData, setButtonData, typeData, setIsCancelVisible } = props;
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
@@ -25,10 +26,10 @@ export const ConfirmationModalFrom = (props) => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
     const handleCloseModal = () => {
-        setIsCancelVisible(false);  
-        vpoCancellationForm.resetFields(); 
+        setIsCancelVisible(false);
+        vpoCancellationForm.resetFields();
     };
-     
+
     return (
         <Form form={vpoCancellationForm} onFinish={onFinishVPOCancellation} layout="vertical" autocomplete="off" colon="false" onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange}>
             <Row gutter={16}>

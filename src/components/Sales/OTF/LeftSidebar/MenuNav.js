@@ -11,7 +11,8 @@ import { FaCheckCircle } from 'react-icons/fa';
 import { OTF_SECTION } from 'constants/OTFSection';
 import { validateOTFMenu } from '../utils/validateOTFMenu';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 const MenuNav = (props) => {
     const { currentSection, setCurrentSection, otfData, selectedOrder: { orderStatus = false } = {} } = props;

@@ -7,7 +7,8 @@ import React from 'react';
 import moment from 'moment';
 import { convertDateTime } from 'utils/formatDateTime';
 
-import styles from './Footer.module.css';
+import styles from './Footer.module.scss';
+//import styles from './Footer.module.css';
 
 function Copyright({ alignRight }) {
     return (

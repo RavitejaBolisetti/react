@@ -20,7 +20,8 @@ import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
 import LeftPanel from 'components/common/LeftPanel';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 import { BsExclamationSquareFill } from 'react-icons/bs';
 
 const fieldNames = { title: 'productName', key: 'productCode', children: 'children' };
