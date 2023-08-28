@@ -3,12 +3,12 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Col, Input, Form, Row, Select, Card, DatePicker, Space, Switch } from 'antd';
 
 import { disableFutureDate } from 'utils/disableDate';
-import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
-import { validateNumberWithTwoDecimalPlaces, validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
+import { dateFormat } from 'utils/formatDateTime';
+import { validateNumberWithTwoDecimalPlaces, validateRequiredInputField } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { customSelectBox } from 'utils/customSelectBox';
 
@@ -18,7 +18,7 @@ import { FINANCE_ARRANGED_BY } from 'constants/financeArrangedBy';
 import styles from 'components/common/Common.module.css';
 
 const AddEditFormMain = (props) => {
-    const { formData, FinanceLovData, typeData, form, formActionType, setFormData } = props;
+    const { formData, FinanceLovData, typeData, form, formActionType } = props;
     const [doReceived, setDoReceived] = useState();
     const [financeArrangedBy, setFinanceArrangedBy] = useState();
     const checkFinanceType = (type, key) => (type ? type === key : false);
