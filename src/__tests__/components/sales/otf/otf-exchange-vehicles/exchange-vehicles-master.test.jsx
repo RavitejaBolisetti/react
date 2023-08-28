@@ -1,8 +1,8 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
-*/
+ */
 
 /* eslint-disable jest/no-mocks-import */
 import React from 'react';
@@ -61,30 +61,30 @@ const mockStore = createMockStore({
         OTF: {
             ExchangeVehicle: {
                 isDataLoaded: true,
-                exchangeData: [{customerExpectedPrice: '12313123'}],
+                exchangeData: [{ customerExpectedPrice: '12313123' }],
             },
             FinanceLov: {
                 isFinanceLovDataLoaded: true,
-                financeLovData: [{value: 'HDFC',}],
+                financeLovData: [{ value: 'HDFC' }],
             },
             SchemeDetail: {
                 isSchemeLovDataLoaded: true,
-                schemeLovData: [{ value: 'Name'}],
+                schemeLovData: [{ value: 'Name' }],
             },
         },
         ConfigurableParameterEditing: { typeData: ['REL_TYPE'] },
         Vehicle: {
             MakeVehicleDetails: {
                 isMakeDataLoaded: true,
-                makeData: [{value: 'Maruti'}],
+                makeData: [{ value: 'Maruti' }],
             },
             ModelVehicleDetails: {
                 isModelDataLoaded: false,
-                modelData: [{value: 'Swift'},],
+                modelData: [{ value: 'Swift' }],
             },
             VariantVehicleDetails: {
                 isVariantDataLoaded: false,
-                variantData: [{value: 'Swift dezire'}],
+                variantData: [{ value: 'Swift dezire' }],
             },
         },
     },
@@ -120,7 +120,7 @@ describe('ExchangeVehiclesMaster component render', () => {
     it('should render buttons', async () => {
         customRender(
             <Provider store={mockStore}>
-                <ExchangeVehiclesMaster {...props} typeData="REL_TYPE" buttonData={defaultBtnVisiblity} onCloseAction={jest.fn()} setButtonData={jest.fn()} handleButtonClick={jest.fn()}  />
+                <ExchangeVehiclesMaster {...props} typeData="REL_TYPE" buttonData={defaultBtnVisiblity} onCloseAction={jest.fn()} setButtonData={jest.fn()} handleButtonClick={jest.fn()} />
             </Provider>
         );
 
@@ -240,19 +240,11 @@ describe('ExchangeVehiclesMaster component onSearch function should work', () =>
             onErrorAction: jest.fn(),
         });
 
-        customRender(<FormWrapper {...props} typeData={('REL_TYPE', 'MONTH')} setButtonData={jest.fn()} buttonData={defaultBtnVisiblity} onSearch={jest.fn(value)} onHandleChange={jest.fn()} showGlobalNotification={jest.fn()}/>);
+        customRender(<FormWrapper {...props} typeData={('REL_TYPE', 'MONTH')} setButtonData={jest.fn()} buttonData={defaultBtnVisiblity} onSearch={jest.fn(value)} onHandleChange={jest.fn()} showGlobalNotification={jest.fn()} />);
 
         const editBtn = screen.getByRole('button', { name: 'Edit', exact: false });
         act(() => {
             fireEvent.click(editBtn);
         });
-
-//         // const custId = screen.getByRole('textbox', { name: 'Customer ID', exact: false });
-//         // fireEvent.change(custId, { target: { value: 'CUS1687411157049' } });
-
-//         // const searchImg = screen.getByRole('img', { name: 'search', exact: false });
-//         // act(() => {
-//             // fireEvent.click(searchImg);
-//         // });
     });
 });
