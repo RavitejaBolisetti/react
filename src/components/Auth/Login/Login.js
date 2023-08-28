@@ -67,6 +67,7 @@ const Login = (props) => {
     const [isLoading, setIsLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [fieldData, setFieldData] = useState();
+    const [loginButtonDisabled, setLoginButtonDisabled] = useState(false);
 
     const userIdRef = useRef(null);
     const passwordInputRef = useRef(null);
@@ -89,6 +90,8 @@ const Login = (props) => {
 
     const onSuccess = (data) => {
         hideGlobalNotification();
+        setLoginButtonDisabled(true);
+
         setIsLoading(false);
         const passwordStatus = data?.passwordStatus;
         const loginFromRegisteredDevice = data?.userRegisteredDevice;
@@ -108,6 +111,7 @@ const Login = (props) => {
     const onError = ({ title, message }) => {
         showGlobalNotification({ notificationType: 'errorBeforeLogin', title, message });
         setIsLoading(false);
+        setLoginButtonDisabled(false);
     };
 
     const handleUpdatePassword = () => {
@@ -137,6 +141,7 @@ const Login = (props) => {
 
     const onFinishFailed = (errorInfo) => {
         form.validateFields().then((values) => {});
+        setLoginButtonDisabled(false);
     };
 
     const accessFromRegisteredDeviceStatusInfo = (data) => {
@@ -215,7 +220,7 @@ const Login = (props) => {
 
     const passowrdSuffix = (
         <span onMouseDown={handleShowPassword} onMouseUp={handleHidePassword} onMouseLeave={handleHidePassword}>
-            {!showPassword ? <AiOutlineEyeInvisible size={20} data-testid="eyeInvisible"/> : <AiOutlineEye size={20} data-testid="eyeVisible"/>}
+            {!showPassword ? <AiOutlineEyeInvisible size={20} data-testid="eyeInvisible" /> : <AiOutlineEye size={20} data-testid="eyeVisible" />}
         </span>
     );
 
@@ -273,7 +278,7 @@ const Login = (props) => {
 
                                                 <Row gutter={20}>
                                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <Button icon={<FiLock size={18} />} data-testid="Login" className={styles.button} type="primary" htmlType="submit" loading={isLoading}>
+                                                        <Button icon={<FiLock size={18} />} data-testid="Login" disabled={loginButtonDisabled} className={styles.button} type="primary" htmlType="submit" loading={isLoading}>
                                                             Login
                                                         </Button>
                                                     </Col>

@@ -3657,6 +3657,10 @@
     bottom: 21px;
 }
 
+/* .randomClassCSS {
+    border: 1px solid red;
+} */
+
 @media (max-width: 768px) {
 
     /* For mobile phones: */

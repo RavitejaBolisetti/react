@@ -22,22 +22,24 @@ const ViewRoleManagementMain = ({ formData, styles, menuTreeData, onTabChange, A
         column: { xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 },
     };
     return (
-        <div className={styles.viewContainer}>
-            <div className={styles.roleDescription}>
-                <Descriptions {...viewTwoColProps}>
-                    <Descriptions.Item label="Role ID">{formData?.roleId}</Descriptions.Item>
-                    <Descriptions.Item label="Role Name">{formData?.roleName}</Descriptions.Item>
-                </Descriptions>
+        <>
+            <div className={styles.viewContainer}>
+                <div className={styles.roleDescription}>
+                    <Descriptions {...viewTwoColProps}>
+                        <Descriptions.Item label="Role ID">{formData?.roleId}</Descriptions.Item>
+                        <Descriptions.Item label="Role Name">{formData?.roleName}</Descriptions.Item>
+                    </Descriptions>
 
-                <Descriptions {...viewOneColProps}>
-                    <Descriptions.Item label="Role Description">{formData?.roleDescription}</Descriptions.Item>
-                    <Descriptions.Item label="Status">{formData?.status ? 'Active' : 'InActive'}</Descriptions.Item>
-                </Descriptions>
+                    <Descriptions {...viewOneColProps}>
+                        <Descriptions.Item label="Role Description">{formData?.roleDescription}</Descriptions.Item>
+                        <Descriptions.Item label="Status">{formData?.status ? 'Active' : 'InActive'}</Descriptions.Item>
+                    </Descriptions>
+                </div>
+                <Divider />
+                <div className={styles.subTitleSec}>Application Access</div>
+                {AccordianTreePanel({ viewMode: true, menuTreeData })}
             </div>
-            <Divider />
-            <div className={styles.subTitleSec}>Application Access</div>
-            {AccordianTreePanel({ viewMode: true, menuTreeData })}
-        </div>
+        </>
     );
 };
 
