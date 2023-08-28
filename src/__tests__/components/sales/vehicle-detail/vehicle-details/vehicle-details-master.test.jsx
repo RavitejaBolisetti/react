@@ -200,31 +200,24 @@ describe('Vehicle details master render', () => {
 
         const oemPriviledgeCustomer = screen.getByRole('checkbox', { name: 'OEM Privileged Customer', exact: false });
         fireEvent.click(oemPriviledgeCustomer);
-        // expect(oemPriviledgeCustomer).toBeChecked();
 
         const keyAccountVehicle = screen.getByRole('checkbox', { name: 'Key Account Vehicle', exact: false });
         fireEvent.click(keyAccountVehicle);
-        // expect(keyAccountVehicle).toBeChecked();
 
         const refurbished = screen.getByRole('checkbox', { name: 'Refurbished', exact: false });
         fireEvent.click(refurbished);
-        // expect(refurbished).toBeChecked();
 
         const theftVehicle = screen.getByRole('checkbox', { name: 'Theft Vehicle', exact: false });
         fireEvent.click(theftVehicle);
-        // expect(theftVehicle).toBeChecked();
 
         const pdiDone = screen.getByRole('checkbox', { name: 'PDI Done', exact: false });
         fireEvent.click(pdiDone);
-        // expect(pdiDone).toBeChecked();
 
         const governmentVehicle = screen.getByRole('checkbox', { name: 'Government Vehicle', exact: false });
-        fireEvent.click(governmentVehicle);
-        // expect(governmentVehicle).toBeChecked();        
+        fireEvent.click(governmentVehicle);       
 
         const ctcVehicleMM = screen.getByRole('checkbox', { name: 'M&M CTC Vehicle', exact: false });
         fireEvent.click(ctcVehicleMM);
-        // expect(ctcVehicleMM).toBeChecked();
 
         const taxiNonTaxi = screen.getByRole('combobox', { name: 'Taxi/Non Taxi', exact: false });
         fireEvent.change(taxiNonTaxi, { target: { value: 'Hello World' } });
