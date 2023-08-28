@@ -126,11 +126,11 @@ export const CustomerDetailsMain = (props) => {
     }, [userId, selectedOrderId]);
 
     const onFinish = (values) => {
-        if (values?.bookingCustomer?.customerId) {
+        if (!values?.bookingCustomer?.customerId) {
             showGlobalNotification({ message: 'Please provide booking customer' });
             setActiveKey([...activeKey, !values?.bookingCustomer?.customerId ? 1 : '']);
             return false;
-        } else if (values?.billingCustomer?.customerId) {
+        } else if (!values?.billingCustomer?.customerId) {
             showGlobalNotification({ message: 'Please provide billing customer' });
             setActiveKey([...activeKey, !values?.billingCustomer?.customerId ? 2 : '']);
             return false;
@@ -144,7 +144,7 @@ export const CustomerDetailsMain = (props) => {
             };
 
             const onError = (message) => {
-                showGlobalNotification({ message });
+                // showGlobalNotification({ message });
             };
 
             const requestData = {

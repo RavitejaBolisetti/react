@@ -46,11 +46,11 @@ export const OTFFormButton = ({ record, handleChangeHistory, handleOtfSoMappingH
                         </Button>
                     )}
 
-                    {/* {buttonData?.unAllotBtn && ( */}
-                    <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.UNALLOT, record })} type="primary">
-                        Un-Allot
-                    </Button>
-                    {/* )} */}
+                    {buttonData?.unAllotBtn && (
+                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.UNALLOT, record })} type="primary">
+                            Un-Allot
+                        </Button>
+                    )}
 
                     {buttonData?.invoiceBtn && (
                         <Popover content={content} trigger="hover">
