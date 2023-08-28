@@ -61,13 +61,13 @@ p {
     color: #ffffff;
 }
 
-:global .ant-btn:not(.ant-btn-icon-only)>.ant-btn-icon.ant-btn-loading-icon,
-:global .ant-btn:not(.ant-btn-icon-only)>.ant-btn-icon:not(:last-child) {
+:global .ant-btn:not(.ant-btn-icon-only) > .ant-btn-icon.ant-btn-loading-icon,
+:global .ant-btn:not(.ant-btn-icon-only) > .ant-btn-icon:not(:last-child) {
     margin-inline-end: 6px;
 }
 
-:global .ant-btn:not(.ant-btn-icon-only)>.ant-btn-icon.ant-btn-loading-icon .anticon,
-:global .ant-btn:not(.ant-btn-icon-only)>.ant-btn-icon:not(:last-child) .anticon {
+:global .ant-btn:not(.ant-btn-icon-only) > .ant-btn-icon.ant-btn-loading-icon .anticon,
+:global .ant-btn:not(.ant-btn-icon-only) > .ant-btn-icon:not(:last-child) .anticon {
     color: #ffffff;
 }
 
@@ -88,10 +88,10 @@ p {
     color: #b5b5b6;
 }
 
-:global .ant-btn-primary.ant-btn-dangerous:disabled:not(.ant-btn-icon-only)>.ant-btn-icon.ant-btn-loading-icon .anticon,
-:global .ant-btn-primary.ant-btn-dangerous:disabled:not(.ant-btn-icon-only)>.ant-btn-icon:not(:last-child) .anticon,
-:global .ant-btn-primary:disabled:not(.ant-btn-icon-only)>.ant-btn-icon.ant-btn-loading-icon .anticon,
-:global .ant-btn-primary:disabled:not(.ant-btn-icon-only)>.ant-btn-icon:not(:last-child) .anticon {
+:global .ant-btn-primary.ant-btn-dangerous:disabled:not(.ant-btn-icon-only) > .ant-btn-icon.ant-btn-loading-icon .anticon,
+:global .ant-btn-primary.ant-btn-dangerous:disabled:not(.ant-btn-icon-only) > .ant-btn-icon:not(:last-child) .anticon,
+:global .ant-btn-primary:disabled:not(.ant-btn-icon-only) > .ant-btn-icon.ant-btn-loading-icon .anticon,
+:global .ant-btn-primary:disabled:not(.ant-btn-icon-only) > .ant-btn-icon:not(:last-child) .anticon {
     color: #b5b5b6;
 }
 
@@ -153,12 +153,12 @@ p {
 }
 
 :global .ant-tree .ant-tree-node-content-wrapper:hover .site-tree-search-value,
-:global .ant-tree .ant-tree-checkbox+span:hover .site-tree-search-value {
+:global .ant-tree .ant-tree-checkbox + span:hover .site-tree-search-value {
     color: #ff3e5b !important;
 }
 
 :global .ant-tree .ant-tree-node-content-wrapper.ant-tree-node-selected,
-:global .ant-tree .ant-tree-checkbox+span.ant-tree-node-selected {
+:global .ant-tree .ant-tree-checkbox + span.ant-tree-node-selected {
     background-color: transparent;
     color: #ff3e5b;
     border-radius: 4px;
@@ -183,22 +183,22 @@ p {
 }
 
 :global .ant-tree .ant-tree-node-content-wrapper,
-:global .ant-tree .ant-tree-checkbox+span {
+:global .ant-tree .ant-tree-checkbox + span {
     color: #858585;
 }
 
-:global .ant-tree .ant-tree-checkbox-indeterminate+span {
+:global .ant-tree .ant-tree-checkbox-indeterminate + span {
     color: #0b0b0c;
 }
 
-:global .ant-tree .ant-tree-checkbox-checked+span {
+:global .ant-tree .ant-tree-checkbox-checked + span {
     color: #ff3e5b;
 }
 
 :global .ant-tree .ant-tree-node-content-wrapper:hover,
-:global .ant-tree .ant-tree-checkbox+span:hover,
-:global .ant-tree .ant-tree-checkbox:hover+span,
-:global .ant-tree .ant-tree-checkbox-indeterminate:hover+span {
+:global .ant-tree .ant-tree-checkbox + span:hover,
+:global .ant-tree .ant-tree-checkbox:hover + span,
+:global .ant-tree .ant-tree-checkbox-indeterminate:hover + span {
     background-color: transparent;
     color: #ff3e5b;
 }
@@ -250,7 +250,7 @@ p {
     border-color: #b5b5b6;
 }
 
-:global .ant-checkbox+span {
+:global .ant-checkbox + span {
     padding-inline-start: 10px;
     padding-inline-end: 0;
     color: #0b0b0c;
@@ -259,15 +259,15 @@ p {
     line-height: 23px;
 }
 
-:global .ant-checkbox:hover+span,
-:global .ant-checkbox+span:hover,
-:global .ant-checkbox-checked.ant-checkbox:hover+span,
-:global .ant-checkbox-checked.ant-checkbox+span:hover {
+:global .ant-checkbox:hover + span,
+:global .ant-checkbox + span:hover,
+:global .ant-checkbox-checked.ant-checkbox:hover + span,
+:global .ant-checkbox-checked.ant-checkbox + span:hover {
     color: #ff3e5b;
 }
 
-:global .ant-checkbox-disabled.ant-checkbox:hover+span,
-:global .ant-checkbox-disabled.ant-checkbox+span:hover {
+:global .ant-checkbox-disabled.ant-checkbox:hover + span,
+:global .ant-checkbox-disabled.ant-checkbox + span:hover {
     pointer-events: none;
     color: #0b0b0c;
 }
@@ -419,13 +419,13 @@ p {
     border-start-end-radius: 4px;
 } */
 
-:global .ant-table-wrapper .ant-table-tbody>tr:last-child>td:first-child,
-:global .ant-table-wrapper .ant-table-tbody>tr.ant-table-row:last-child:hover>td:first-child {
+:global .ant-table-wrapper .ant-table-tbody > tr:last-child > td:first-child,
+:global .ant-table-wrapper .ant-table-tbody > tr.ant-table-row:last-child:hover > td:first-child {
     border-radius: 0 0 0 4px;
 }
 
-:global .ant-table-wrapper .ant-table-tbody>tr:last-child>td:last-child,
-:global .ant-table-wrapper .ant-table-tbody>tr.ant-table-row:last-child:hover>td:last-child {
+:global .ant-table-wrapper .ant-table-tbody > tr:last-child > td:last-child,
+:global .ant-table-wrapper .ant-table-tbody > tr.ant-table-row:last-child:hover > td:last-child {
     border-radius: 0 0 4px 0;
 }
 
@@ -439,7 +439,7 @@ p {
     box-shadow: none;
 }
 
-:global .ant-table-wrapper .ant-table-thead>tr>th {
+:global .ant-table-wrapper .ant-table-thead > tr > th {
     color: #0b0b0c;
     line-height: 20px;
     background: #f2f2f2;
@@ -451,7 +451,7 @@ p {
     box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.15);
 }
 
-:global .ant-table-wrapper .ant-table-tbody>tr>td {
+:global .ant-table-wrapper .ant-table-tbody > tr > td {
     padding: 10px 16px;
     color: #545454;
     font-weight: 500;
@@ -464,31 +464,33 @@ p {
     padding-left: 16px;
 } */
 
-:global .ant-table-wrapper .ant-table-tbody>tr>td:last-child .ant-space .ant-space-item:last-child button {
+:global .ant-table-wrapper .ant-table-tbody > tr > td:last-child .ant-space .ant-space-item:last-child button {
     margin-right: 0;
 }
 
-:global .ant-table-wrapper .ant-table-tbody>tr:last-child>td {
+:global .ant-table-wrapper .ant-table-tbody > tr:last-child > td {
     border-bottom: none;
 }
 
-:global .ant-table-wrapper .ant-table-tbody>tr.ant-table-row-selected>td {
+:global .ant-table-wrapper .ant-table-tbody > tr.ant-table-row-selected > td {
     background: #f2f2f2;
 }
 
-:global .ant-table-wrapper .ant-table-tbody>tr:first-child.ant-table-row-selected>td {
+:global .ant-table-wrapper .ant-table-tbody > tr:first-child.ant-table-row-selected > td {
     border-top: 1px solid #e6e6e6;
 }
 
-:global .ant-table-wrapper .ant-table-tbody>tr.ant-table-row-selected:hover>td {
+:global .ant-table-wrapper .ant-table-tbody > tr.ant-table-row-selected:hover > td {
     background: #e6e6e6;
 }
 
 /* AntD Table Design End*/
 
 /* AntD Table Pagination Design Start*/
+
 :global .ant-table-wrapper .ant-table-pagination.ant-pagination {
     margin: 20px 0 0;
+    display: none;
 }
 
 :global .ant-pagination .ant-pagination-total-text {
@@ -646,15 +648,15 @@ p {
     color: #0b0b0c;
 }
 
-:global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child {
+:global .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child {
     inset-inline-start: 0;
     padding: 5px 12px;
     padding-left: 0;
     background-color: #ffffff;
 }
 
-:global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-btn-icon-only.ant-input-search-button:not(.ant-btn-primary),
-:global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-btn-icon-only.ant-input-search-button:not(.ant-btn-primary):hover {
+:global .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-btn-icon-only.ant-input-search-button:not(.ant-btn-primary),
+:global .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-btn-icon-only.ant-input-search-button:not(.ant-btn-primary):hover {
     color: #ff3e5b;
     border: none;
     width: 20px;
@@ -662,7 +664,7 @@ p {
     box-shadow: none;
 }
 
-:global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-btn-icon-only.ant-input-search-button:not(.ant-btn-primary) svg {
+:global .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-btn-icon-only.ant-input-search-button:not(.ant-btn-primary) svg {
     width: 20px;
     height: 20px;
 }
@@ -688,7 +690,7 @@ p {
     pointer-events: none;
 }
 
-:global .ant-form-item .ant-form-item-label>label {
+:global .ant-form-item .ant-form-item-label > label {
     color: #545454;
     line-height: 22px;
     font-weight: 400;
@@ -699,7 +701,7 @@ p {
     font-size: 12px;
 }
 
-:global .ant-form-item .ant-form-item-label>label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
+:global .ant-form-item .ant-form-item-label > label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
     margin-top: -3px;
     margin-inline-end: 6px;
     color: #ff3e5b;
@@ -711,7 +713,13 @@ p {
     top: 3px;
 }
 
-:global .ant-form-item .ant-form-item-label>label::after {
+:global .ant-form-item-required:before {
+    position: absolute;
+    right: -15px;
+    top: 3px;
+}
+
+:global .ant-form-item .ant-form-item-label > label::after {
     margin-inline-start: 0px;
     margin-inline-end: 0px;
 }
@@ -810,7 +818,7 @@ p {
     border-color: #e6e6e6;
 }
 
-:global .ant-input-textarea-affix-wrapper.ant-input-affix-wrapper>textarea.ant-input {
+:global .ant-input-textarea-affix-wrapper.ant-input-affix-wrapper > textarea.ant-input {
     padding: 6px 12px;
 }
 
@@ -837,14 +845,14 @@ p {
 }
 
 :global .ant-tree-select-dropdown .ant-select-tree .ant-select-tree-node-content-wrapper.ant-select-tree-node-selected,
-:global .ant-tree-select-dropdown .ant-select-tree .ant-select-tree-checkbox+span.ant-select-tree-node-selected {
+:global .ant-tree-select-dropdown .ant-select-tree .ant-select-tree-checkbox + span.ant-select-tree-node-selected {
     background-color: transparent !important;
     color: #ff3e5b;
     font-size: 14px;
 }
 
 :global .ant-tree-select-dropdown .ant-select-tree .ant-select-tree-node-content-wrapper:hover,
-:global .ant-tree-select-dropdown .ant-select-tree .ant-select-tree-checkbox+span:hover {
+:global .ant-tree-select-dropdown .ant-select-tree .ant-select-tree-checkbox + span:hover {
     background-color: transparent !important;
 }
 
@@ -1074,11 +1082,11 @@ p {
     margin-bottom: 20px;
 }
 
-:global .ant-collapse>.ant-collapse-item {
+:global .ant-collapse > .ant-collapse-item {
     border-bottom: none;
 }
 
-:global .ant-collapse>.ant-collapse-item>.ant-collapse-header {
+:global .ant-collapse > .ant-collapse-item > .ant-collapse-header {
     align-items: center;
     padding: 16px 20px;
     font-size: 16px;
@@ -1086,22 +1094,22 @@ p {
     color: #0b0b0c;
 }
 
-:global .ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-collapse-header-text {
+:global .ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-collapse-header-text {
     display: flex;
     align-items: center;
     font-weight: 600;
 }
 
-:global .ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-collapse-expand-icon {
+:global .ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-collapse-expand-icon {
     margin-inline-start: 0;
 }
 
-:global .ant-collapse.ant-collapse-icon-position-end>.ant-collapse-item>.ant-collapse-header .ant-collapse-expand-icon {
+:global .ant-collapse.ant-collapse-icon-position-end > .ant-collapse-item > .ant-collapse-header .ant-collapse-expand-icon {
     height: 24px;
     color: #ff3e5b;
 }
 
-:global .ant-collapse.ant-collapse-icon-position-end>.ant-collapse-item>.ant-collapse-header .ant-collapse-expand-icon span {
+:global .ant-collapse.ant-collapse-icon-position-end > .ant-collapse-item > .ant-collapse-header .ant-collapse-expand-icon span {
     font-size: 24px;
 }
 
@@ -1110,7 +1118,7 @@ p {
     border-top: none;
 }
 
-:global .ant-collapse .ant-collapse-content>.ant-collapse-content-box {
+:global .ant-collapse .ant-collapse-content > .ant-collapse-content-box {
     padding: 0 20px;
     margin-bottom: 20px;
 }
@@ -1260,17 +1268,17 @@ p {
     padding-left: 22px !important;
 }
 
-:global .ant-menu .ant-menu-item .ant-menu-item-icon+span,
-:global .ant-menu .ant-menu-submenu-title .ant-menu-item-icon+span,
-:global .ant-menu .ant-menu-item .anticon+span,
-:global .ant-menu .ant-menu-submenu-title .anticon+span {
+:global .ant-menu .ant-menu-item .ant-menu-item-icon + span,
+:global .ant-menu .ant-menu-submenu-title .ant-menu-item-icon + span,
+:global .ant-menu .ant-menu-item .anticon + span,
+:global .ant-menu .ant-menu-submenu-title .anticon + span {
     padding-left: 20px !important;
 }
 
 /* changes on menu list items on select/visited/focus */
 :global .ant-menu-light .ant-menu-item-selected,
-:global .ant-menu-light .ant-menu-submenu-selected>.ant-menu-submenu-title,
-:global .ant-menu-light .ant-menu-submenu-selected>.ant-menu-submenu-title span.ant-menu-title-content a {
+:global .ant-menu-light .ant-menu-submenu-selected > .ant-menu-submenu-title,
+:global .ant-menu-light .ant-menu-submenu-selected > .ant-menu-submenu-title span.ant-menu-title-content a {
     background-color: white;
     border-radius: 4px;
     color: #ff3e5b !important;
@@ -1299,7 +1307,7 @@ p {
     border: 2px solid #c1c1c1;
 }
 
-:global .ant-menu .ant-menu-submenu-title .ant-menu-item-icon+span {
+:global .ant-menu .ant-menu-submenu-title .ant-menu-item-icon + span {
     text-transform: uppercase;
     padding-left: 0 !important;
 }
@@ -1328,7 +1336,7 @@ p {
     width: 8px;
 }
 
-:global .ant-menu-inline .ant-menu-sub.ant-menu-inline>.ant-menu-submenu>.ant-menu-submenu-title {
+:global .ant-menu-inline .ant-menu-sub.ant-menu-inline > .ant-menu-submenu > .ant-menu-submenu-title {
     height: 36px !important;
 }
 
@@ -1345,8 +1353,8 @@ p {
     width: 5px !important;
 }
 
-:global .ant-menu-inline.ant-menu-root .ant-menu-submenu-title>.ant-menu-title-content span:first-child,
-:global .ant-menu-inline.ant-menu-root .ant-menu-item>.ant-menu-title-content span:first-child {
+:global .ant-menu-inline.ant-menu-root .ant-menu-submenu-title > .ant-menu-title-content span:first-child,
+:global .ant-menu-inline.ant-menu-root .ant-menu-item > .ant-menu-title-content span:first-child {
     padding-left: 2px;
 }
 
@@ -1370,7 +1378,7 @@ p {
     padding-bottom: 20px;
 }
 
-:global .ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-title-content>a:hover {
+:global .ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-title-content > a:hover {
     text-decoration: none;
 }
 
@@ -1404,7 +1412,7 @@ p {
     line-height: 40px;
 }
 
-:global .rc-virtual-list-holder:has(+div.rc-virtual-list-scrollbar-show) {
+:global .rc-virtual-list-holder:has(+ div.rc-virtual-list-scrollbar-show) {
     padding-right: 10px;
 }
 

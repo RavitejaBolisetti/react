@@ -54,20 +54,9 @@ describe('Render AddEditForm Component', () => {
 
     it('should render input fields', () => {
         const formData = {
-            booleanValue: null,
-            configurableParameterType: 'N',
             controlDescription: 'Days after which password needs to be updated',
             controlGroup: 'CMN',
-            controlGroupName: 'Common',
             controlId: 'PWDUPD',
-            controlName: 'Update Password',
-            fromDate: null,
-            fromNumber: 90,
-            id: '470b3361-7b92-4cb3-8582-d4bf0800ef2e',
-            isActive: true,
-            textValue: null,
-            toDate: null,
-            toNumber: 90,
         };
         customRender(<FormWrapper {...props} handleControlChange={jest.fn()} formData={formData} />);
 
