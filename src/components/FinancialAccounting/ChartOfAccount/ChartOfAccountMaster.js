@@ -10,16 +10,16 @@ import { Col, Form, Row, Input, Empty, Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { ExportCOA } from './ExportCOA';
 import { HierarchyFormButton } from 'components/common/Button';
-import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
-import { otfSoMappingActions } from 'store/actions/data/otf/otfSoMapping';
-import { otfSoUserMappingActions } from 'store/actions/data/otf/otfSoUserMapping';
-import TreeSelectField from '../../common/TreeSelectField';
+import { customSelectBox } from 'utils/customSelectBox';
+import { dealerCompanyDataActions } from 'store/actions/data/dealer/dealerCompany';
+import { chartOfAccountDataHierarchyActions } from 'store/actions/data/financialAccounting/chartOfAccount/chartOfAccountHierarchy';
+import { chartOfAccountDataActions } from 'store/actions/data/financialAccounting/chartOfAccount/chartOfAccount';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { showGlobalNotification } from 'store/actions/notification';
-import { manufacturerOrgHierarchyDataActions } from 'store/actions/data/manufacturerOrgHierarchy';
 import { AddEditForm } from './AddEditForm';
 import { ViewDetails } from './ViewDetails';
 import LeftPanel from 'components/common/LeftPanel';
+import { ATTRIBUTE_TYPE } from 'constants/modules/ChartOfAccount/attributeType';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
@@ -31,17 +31,22 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ManufacturerOrgHierarchy: { isLoaded: isDataOrgLoaded = false, data: manufacturerOrgHierarchyData = [] },
-            ProductHierarchy: { isLoading, isLoaded: isDataLoaded = false, data: productHierarchyData = [], organizationId = '' },
-            OTF: {
-                OtfSoMapping: { isLoaded: isDataOtfSoMappingLoaded = false, data: otfSoMappingData = {} },
-                OtfSoUserMapping: { isLoaded: isDataOtfSoUserMappingLoaded = false, data: otfSoUserMappingData = [] },
+            DealerHierarchy: {
+                DealerCompany: { isLoaded: isDealerCompanyDataLoaded = false, data: dealerCompanyLovData = [] },
+            },
+            FinancialAccounting: {
+                ChartOfAccountMaster: {
+                    ChartOfAccountHierarchy: { isLoaded: isChartOfAccountHierarchyLoaded = false, data: chartOfAccountHierarchy = [] },
+                    ChartOfAccount: { isLoaded: isChartOfAccountLoaded = false, data: chartOfAccountData = [] },
+                },
             },
         },
         common: {
             LeftSideBar: { collapsed = false },
         },
     } = state;
+
+    console.log(state);
 
     const moduleTitle = 'Chart of Account Hierarchy';
     const viewTitle = 'Chart of Account Hierarchy';
@@ -51,16 +56,12 @@ const mapStateToProps = (state) => {
         userId,
         moduleTitle,
         viewTitle,
-        isDataOrgLoaded,
-        manufacturerOrgHierarchyData,
-        isLoading,
-        isDataLoaded,
-        productHierarchyData,
-        organizationId,
-        otfSoMappingData,
-        otfSoUserMappingData,
-        isDataOtfSoMappingLoaded,
-        isDataOtfSoUserMappingLoaded,
+        isDealerCompanyDataLoaded,
+        dealerCompanyLovData,
+        isChartOfAccountHierarchyLoaded,
+        chartOfAccountHierarchy,
+        isChartOfAccountLoaded,
+        chartOfAccountData,
     };
     return returnValue;
 };
@@ -69,20 +70,15 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchOrgList: manufacturerOrgHierarchyDataActions.fetchList,
-            listOrgLoading: manufacturerOrgHierarchyDataActions.listShowLoading,
+            fetchDealerCompanyLov: dealerCompanyDataActions.fetchList,
+            listShowLoadingDealerCompanyLov: dealerCompanyDataActions.listShowLoading,
 
-            fetchProductDataList: productHierarchyDataActions.fetchList,
-            listProductLoading: productHierarchyDataActions.listShowLoading,
-            setSelectedOrganizationId: productHierarchyDataActions.setSelectedOrganizationId,
-            resetData: productHierarchyDataActions.resetData,
+            fetchChartOfAccountHierarchy: chartOfAccountDataHierarchyActions.fetchList,
+            listShowLoadingChartOfAccountHierachy: chartOfAccountDataHierarchyActions.listShowLoading,
 
-            fetchOtfList: otfSoMappingActions.fetchList,
-            listOtfSoMappingShowLoading: otfSoMappingActions.listShowLoading,
-            saveData: otfSoMappingActions.saveData,
-
-            fetchOtfUserList: otfSoUserMappingActions.fetchList,
-            listOtfSoUserMappingShowLoading: otfSoUserMappingActions.listShowLoading,
+            fetchChartOfAccount: chartOfAccountDataActions.fetchList,
+            listShowLoadingChartOfAccount: chartOfAccountDataActions.listShowLoading,
+            saveData: chartOfAccountDataActions.saveData,
 
             showGlobalNotification,
         },
@@ -90,7 +86,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, saveData, listOrgLoading, showGlobalNotification, manufacturerOrgHierarchyData, fetchOrgList, isDataOrgLoaded, productHierarchyData, setSelectedOrganizationId, organizationId, fetchProductDataList, fetchOtfList, listOtfSoMappingShowLoading, resetData, otfSoMappingData, otfSoUserMappingData, isDataOtfSoMappingLoaded, isDataOtfSoUserMappingLoaded, fetchOtfUserList, listOtfSoUserMappingShowLoading, listProductLoading }) => {
+export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, saveData, showGlobalNotification, fetchDealerCompanyLov, listShowLoadingDealerCompanyLov, dealerCompanyLovData, fetchChartOfAccountHierarchy, isDealerCompanyDataLoaded, listShowLoadingChartOfAccountHierachy, chartOfAccountHierarchy, isChartOfAccountLoaded, chartOfAccountData, listShowLoadingChartOfAccount, fetchChartOfAccount }) => {
     const [form] = Form.useForm();
     const [exportCoaForm] = Form.useForm();
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
@@ -104,117 +100,64 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
 
     const [isFormBtnActive, setFormBtnActive] = useState(false);
     const [searchValue, setSearchValue] = useState('');
-    const [soMapName, setSoMapName] = useState(null);
     const [viewData, setViewData] = useState(null);
-    const [finalManufacturerOrgHierarchyData, setFinalManufacturerOrgHierarchyData] = useState(null);
-    const [finalProductHierarchyData, setFinalProductHierarchyData] = useState(null);
+    const [companyCode, setCompanyCode] = useState(null);
+    // const [hierarchyData, setHierarchyData] = useState(null);
 
-    const defaultBtnVisiblity = { editBtn: false, childBtn: false, siblingBtn: false, enable: false, save: false };
+    const defaultBtnVisiblity = { editBtn: true, childBtn: true, siblingBtn: true };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const [modalOpen, setModalOpen] = useState(false);
-    const organizationFieldNames = { title: 'manufactureOrgShrtName', key: 'id', children: 'subManufactureOrg' };
-    const fieldNames = { title: 'prodctShrtName', key: 'prodctCode', children: 'subProdct' };
+    const companyFieldNames = { value: 'companyName', key: 'companyCode' };
+    const fieldNames = { title: 'parentAccountDescription', key: 'parentAccountCode', children: 'subGroup' };
 
     useEffect(() => {
-        if (!isDataOrgLoaded && userId) {
-            fetchOrgList({ setIsLoading: listOrgLoading, userId });
+        if (userId && !isDealerCompanyDataLoaded) {
+            fetchDealerCompanyLov({ setIsLoading: listShowLoadingDealerCompanyLov, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDataOrgLoaded, userId]);
+    }, [userId, isDealerCompanyDataLoaded]);
 
-    useEffect(() => {
-        const onErrorAction = (message) => {
-            resetData();
-            showGlobalNotification({ message });
-        };
-
-        if (organizationId && userId) {
-            fetchProductDataList({ setIsLoading: listProductLoading, userId, id: organizationId, onErrorAction });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, organizationId]);
+    const onSelect = (val) => {
+        setCompanyCode(val);
+        setViewData(null);
+        const extraParams = [
+            {
+                key: 'companyCode',
+                title: 'companyCode',
+                value: val,
+                name: 'Company Code',
+            },
+        ];
+        fetchChartOfAccountHierarchy({ setIsLoading: listShowLoadingChartOfAccountHierachy, extraParams });
+    };
 
     const extraParams = [
         {
-            key: 'code',
-            title: 'code',
+            key: 'accountCode',
+            title: 'accountCode',
             value: selectedTreeKey,
-            name: 'code ID',
-        },
-        {
-            key: 'manufactureOrdId',
-            title: 'manufactureOrdId',
-            value: organizationId,
-            name: 'manufacture OrdId ID',
+            name: 'Account Code',
         },
     ];
 
     useEffect(() => {
-        if (organizationId && selectedTreeKey) {
-            fetchOtfList({ setIsLoading: listOtfSoMappingShowLoading, userId, extraParams });
+        if (selectedTreeKey?.length > 0) {
+            console.log('INSIDE_SHAKA');
+
+            fetchChartOfAccount({ setIsLoading: listShowLoadingChartOfAccount, userId, extraParams });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedTreeKey]);
 
     useEffect(() => {
-        if (userId) {
-            fetchOtfUserList({ setIsLoading: listOtfSoUserMappingShowLoading, userId });
+        setViewData(chartOfAccountData);
+        if (chartOfAccountData?.chartOfAccountData === ATTRIBUTE_TYPE?.[1]?.key) {
+            setButtonData({ ...defaultBtnVisiblity, childBtn: true });
+        } else if (chartOfAccountData?.chartOfAccountData === ATTRIBUTE_TYPE?.[0]?.key) {
+            setButtonData({ ...defaultBtnVisiblity, childBtn: false });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId]);
-
-    useEffect(() => {
-        if (viewData) {
-            setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [viewData]);
-
-    useEffect(() => {
-        if (otfSoMappingData?.orgManufactureId) {
-            form.setFieldsValue({
-                productAttributeCode: otfSoMappingData?.productAttributeCode,
-                productAttributeValue: otfSoMappingData?.productAttributeValue,
-                manufactureOrgId: otfSoMappingData?.orgManufactureId,
-                otfSoMapUnmapBy: otfSoMappingData?.otfSoMapUnmapBy,
-            });
-            setFormActionType(FROM_ACTION_TYPE.EDIT);
-        } else {
-            form.setFieldsValue({
-                productAttributeCode: viewData?.productAttributeCode?.[0],
-                productAttributeValue: viewData?.productAttributeValue,
-                manufactureOrgId: organizationId,
-                otfSoMapUnmapBy: null,
-            });
-            setFormActionType(FROM_ACTION_TYPE.ADD);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formActionType, change]);
-
-    const disableParent = (node, key) => {
-        function datas(node) {
-            if (node?.[key] && node?.[key].length) {
-                node['disabled'] = true;
-                node?.[key]?.forEach((child) => {
-                    datas(child);
-                });
-            } else {
-                return;
-            }
-        }
-        datas(node);
-        return node;
-    };
-
-    useEffect(() => {
-        setFinalManufacturerOrgHierarchyData(manufacturerOrgHierarchyData?.map((i) => disableParent(i, 'subManufactureOrg')));
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [manufacturerOrgHierarchyData]);
-
-    useEffect(() => {
-        setFinalProductHierarchyData(productHierarchyData?.map((i) => disableParent(i, 'subProdct')));
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [productHierarchyData]);
+    }, [chartOfAccountData]);
 
     const onChange = (e) => {
         setSearchValue(e.target.value);
@@ -223,22 +166,13 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
     const handleTreeViewVisiblity = () => setTreeViewVisible(!isTreeViewVisible);
 
     const handleTreeViewClick = (keys, tree) => {
+        console.log('_KEY_', keys);
         form.resetFields();
         setFormData([]);
         setViewData(null);
         let name = tree?.node?.title?.props?.children?.[2];
-        setSoMapName(name);
-        setSelectedTreeKey(keys);
+        setSelectedTreeKey(keys?.[0]);
     };
-
-    useEffect(() => {
-        if (otfSoMappingData?.orgManufactureId) {
-            setViewData(otfSoMappingData);
-        } else {
-            setViewData({ productAttributeCode: selectedTreeKey, productAttributeValue: soMapName, manufactureOrgId: organizationId, otfSoMapUnmapBy: 'NA' });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [otfSoMappingData]);
 
     const handleAdd = () => {
         setIsFormVisible(true);
@@ -252,15 +186,16 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
 
     const onFinish = (values) => {
         const recordId = formData?.id || '';
-        const data = { ...values, id: recordId };
+        const data = { ...values, id: recordId, parentAccountCode: 'DMS', companyCode: companyCode };
+
+        console.log('TOBE', data);
 
         const onSuccess = (res) => {
             form.resetFields();
-            setButtonData({ ...defaultBtnVisiblity, editBtn: true });
 
             if (res?.data) {
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-                fetchOtfList({ setIsLoading: listOtfSoMappingShowLoading, userId, extraParams });
+                fetchChartOfAccount({ setIsLoading: listShowLoadingChartOfAccount, userId, extraParams });
                 setFormBtnActive(false);
                 setIsFormVisible(false);
             }
@@ -272,8 +207,8 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
 
         const requestData = {
             data: data,
-            method: formActionType === FROM_ACTION_TYPE.EDIT ? 'put' : 'post',
-            setIsLoading: listOtfSoMappingShowLoading,
+            method: 'post',
+            setIsLoading: listShowLoadingChartOfAccount,
             userId,
             onError,
             onSuccess,
@@ -285,7 +220,7 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
         exportCoaForm
             .validateFields()
             .then(() => {
-                let data = exportCoaForm.getFieldsValue();
+                //let data = exportCoaForm.getFieldsValue();
                 setModalOpen(false);
             })
             .catch((error) => console.log(error));
@@ -308,36 +243,20 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
         form.resetFields();
     };
 
-    const treeOrgFieldNames = { ...organizationFieldNames, label: organizationFieldNames?.title, value: organizationFieldNames?.key };
-
-    const treeSelectFieldProps = {
-        treeFieldNames: treeOrgFieldNames,
-        treeData: finalManufacturerOrgHierarchyData,
-        selectedTreeSelectKey: organizationId,
-        defaultParent: false,
-        handleSelectTreeClick: (value) => {
-            setSelectedTreeKey();
-            setViewData(null);
-            setSelectedOrganizationId(value);
-        },
-        defaultValue: organizationId,
-        placeholder: preparePlaceholderSelect('Financial Company'),
-    };
-
     const myProps = {
         isTreeViewVisible,
         handleTreeViewVisiblity,
         selectedTreeKey,
         fieldNames,
         handleTreeViewClick,
-        treeData: finalProductHierarchyData,
+        treeData: chartOfAccountHierarchy,
         searchValue,
         setSearchValue,
     };
 
     const formProps = {
         typeData,
-        setSelectedTreeKey,
+        // setSelectedTreeKey,
         formActionType,
         isVisible: isFormVisible,
         onFinishFailed,
@@ -346,8 +265,6 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
         onFinish,
         isFormBtnActive,
         setFormBtnActive,
-        otfSoUserMappingData,
-        productHierarchyData,
         form,
     };
 
@@ -358,47 +275,6 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
         handleButtonClick,
         styles,
         viewTitle,
-        otfSoMappingData,
-        otfSoUserMappingData,
-    };
-
-    const advanceFilterResultProps = {
-        extraParams,
-        // removeFilter,
-        advanceFilter: true,
-        filter: true,
-        // filterString,
-        // setFilterString,
-        // from: listFilterForm,
-        // onFinish,
-        // onFinishFailed,
-        // title: <QueryButtons items={QUERY_BUTTONS_CONSTANTS} onClick={handleButtonQuery} currentItem={buttonType} />,
-        // data,
-        // otfSearchRules,
-        // setOtfSearchRules,
-        // searchForm,
-        // onFinishSearch,
-        // handleResetFilter,
-        // isAdvanceSearchVisible,
-        // setAdvanceSearchVisible,
-        // handleSearchChange,
-    };
-
-    const advanceFilterProps = {
-        // isVisible: isAdvanceSearchVisible,
-        // icon: <FilterIcon size={20} />,
-        // titleOverride: 'Advance Filters',
-        // onCloseAction: onAdvanceSearchCloseAction,
-        // handleResetFilter,
-        // filterString,
-        // setFilterString,
-        // advanceFilterForm,
-        // setAdvanceSearchVisible,
-        // onFinishSearch,
-        // vehicleModelData,
-        // isModelDataLoading,
-        // rules,
-        // setrules,
     };
 
     const modalProps = {
@@ -412,9 +288,17 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
     const noDataTitle = 'Please choose Financial Company to view data';
     const diffSelection = 'No Record Found';
 
-    const leftCol = productHierarchyData?.length > 0 ? 14 : 24;
-    const rightCol = productHierarchyData?.length > 0 ? 10 : 24;
+    const leftCol = chartOfAccountHierarchy?.length > 0 ? 14 : 24;
+    const rightCol = chartOfAccountHierarchy?.length > 0 ? 10 : 24;
     const title = 'Financial Company';
+
+    useEffect(() => {
+        console.log(chartOfAccountHierarchy, 'chartOfAccountHierarchy');
+    }, [chartOfAccountHierarchy]);
+
+    useEffect(() => {
+        console.log(chartOfAccountData, 'chartOfAccountData');
+    }, [chartOfAccountData]);
 
     return (
         <>
@@ -425,9 +309,9 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
                             <Form.Item label={`${title}`} name="code">
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={10} lg={10} xl={10}>
-                                        <TreeSelectField {...treeSelectFieldProps} />
+                                        {customSelectBox({ data: dealerCompanyLovData, placeholder: preparePlaceholderSelect('Attribute Level'), onChange: onSelect, fieldNames: companyFieldNames })}
                                     </Col>
-                                    {organizationId && productHierarchyData?.length > 0 && (
+                                    {companyCode && chartOfAccountHierarchy?.length > 0 && (
                                         <Col xs={24} sm={24} md={10} lg={10} xl={10}>
                                             <Search placeholder="Search" allowClear onChange={onChange} className={`${styles.headerSearchField} ${styles.headerSearchInput}`} />
                                         </Col>
@@ -449,7 +333,7 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
 
             <Row gutter={20} span={24}>
                 <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol}>
-                    {productHierarchyData?.length <= 0 ? (
+                    {chartOfAccountHierarchy?.length <= 0 ? (
                         <div className={styles.emptyContainer}>
                             <Empty
                                 image={Empty.PRESENTED_IMAGE_SIMPLE}
@@ -458,7 +342,7 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
                                 }}
                                 description={
                                     <span>
-                                        {organizationId && productHierarchyData?.length <= 0 ? (
+                                        {companyCode && chartOfAccountHierarchy?.length <= 0 ? (
                                             <>
                                                 {diffSelection} {'Please add new '} <br />
                                                 {'"Chart of Account" details using below button'}
@@ -469,7 +353,7 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
                                     </span>
                                 }
                             >
-                                {organizationId && productHierarchyData?.length <= 0 && (
+                                {companyCode && chartOfAccountHierarchy?.length <= 0 && (
                                     <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
                                         Add
                                     </Button>
@@ -481,7 +365,7 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
                     )}
                 </Col>
 
-                {productHierarchyData?.length > 0 ? (
+                {chartOfAccountData?.length > 0 ? (
                     <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol}>
                         {selectedTreeKey?.length > 0 ? (
                             <>

@@ -37,7 +37,7 @@ const AddEditFormMain = (props) => {
         // treeDisabled: treeCodeReadOnly || isReadOnly,
         // selectedTreeSelectKey,
         // handleSelectTreeClick,
-        // defaultValue: treeCodeId,
+        defaultValue: 'DMS',
         placeholder: preparePlaceholderSelect('Parent'),
     };
 
@@ -47,14 +47,14 @@ const AddEditFormMain = (props) => {
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Form.Item label="Attribute Level" name="attributeLevelCode" rules={[validateRequiredSelectField('Attribute Level')]}>
+                            <Form.Item label="Attribute Level" name="accountType" rules={[validateRequiredSelectField('Attribute Level')]}>
                                 {customSelectBox({ data: ATTRIBUTE_TYPE, placeholder: preparePlaceholderSelect('Attribute Level'), onChange: onChange })}
                             </Form.Item>
                         </Col>
                     </Row>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Form.Item label="Parent" name="parntProdctId">
+                            <Form.Item label="Parent" name="parentAccountCode">
                                 <TreeSelectField {...treeSelectFieldProps} />
                             </Form.Item>
                         </Col>
@@ -62,14 +62,14 @@ const AddEditFormMain = (props) => {
 
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Form.Item label="Code" name="chartOfAccountCode" rules={[validateRequiredInputField('code')]}>
+                            <Form.Item label="Code" name="accountCode" rules={[validateRequiredInputField('code')]}>
                                 <Input placeholder={preparePlaceholderText('code')} maxLength={6} />
                             </Form.Item>
                         </Col>
                     </Row>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Form.Item label="Description" name="description" rules={[validateRequiredInputField('short description')]}>
+                            <Form.Item label="Description" name="parentAccountDescription" rules={[validateRequiredInputField('short description')]}>
                                 <Input placeholder={preparePlaceholderText('short description')} maxLength={50} />
                             </Form.Item>
                         </Col>

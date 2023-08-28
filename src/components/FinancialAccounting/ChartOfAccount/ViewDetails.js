@@ -5,6 +5,7 @@
  */
 import React from 'react';
 import { Descriptions } from 'antd';
+import { ATTRIBUTE_TYPE } from 'constants/modules/ChartOfAccount/attributeType';
 
 export const ViewMain = (props) => {
     const { viewTitle, viewData, styles } = props;
@@ -19,18 +20,18 @@ export const ViewMain = (props) => {
     return (
         <div className={styles.viewContainer}>
             <Descriptions {...viewProps}>
-                <Descriptions.Item label="Attribute Level">{'Ledger Account'}</Descriptions.Item>
-                <Descriptions.Item label="Parent">{'DBSQ'}</Descriptions.Item>
-                <Descriptions.Item label="Code">{'DBSQ'}</Descriptions.Item>
-                <Descriptions.Item label="Description">{'DBSQ'}</Descriptions.Item>
-                {
+                <Descriptions.Item label="Attribute Level">{viewData?.accountType}</Descriptions.Item>
+                <Descriptions.Item label="Parent">{viewData?.parentAccountCode}</Descriptions.Item>
+                <Descriptions.Item label="Code">{viewData?.accountCode}</Descriptions.Item>
+                <Descriptions.Item label="Description">{viewData?.parentAccountDescription}</Descriptions.Item>
+                {viewData?.accountType === ATTRIBUTE_TYPE?.[1]?.key && (
                     <>
-                        <Descriptions.Item label="Opening Balance Cr.">{'DBSQ'}</Descriptions.Item>
-                        <Descriptions.Item label="Opening Balance Dr">{'DBSQ'}</Descriptions.Item>
+                        <Descriptions.Item label="Opening Balance Cr.">{viewData?.OpeningBalanceCredit}</Descriptions.Item>
+                        <Descriptions.Item label="Opening Balance Dr">{viewData?.OpeningBalanceDebit}</Descriptions.Item>
                     </>
-                }
+                )}
 
-                <Descriptions.Item label="Status">{'Active'}</Descriptions.Item>
+                <Descriptions.Item label="Status">{viewData?.status}</Descriptions.Item>
             </Descriptions>
         </div>
     );
