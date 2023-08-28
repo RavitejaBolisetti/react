@@ -12,12 +12,15 @@ import { tableColumn } from './tableColumn';
 import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 'utils/btnVisiblity';
 
 import { AddEditForm } from './AddEditForm';
+import { SearchBox } from 'components/utils/SearchBox';
 
 import { ListDataTable } from 'utils/ListDataTable';
-import { AdvancedSearch } from './AdvancedSearch';
 import { convertDateTime, monthDateFormat } from 'utils/formatDateTime';
 import { receiptDataActions } from 'store/actions/data/receipt/receipt';
 import { receiptDetailDataActions } from 'store/actions/data/receipt/receiptDetails';
+import { PARAM_MASTER } from 'constants/paramMaster';
+
+import styles from 'components/common/Common.module.css';
 
 import { showGlobalNotification } from 'store/actions/notification';
 
@@ -34,7 +37,7 @@ const mapStateToProps = (state) => {
             },
         },
     } = state;
-    const moduleTitle = 'Dealer List';
+    const moduleTitle = 'Map New Digital Signature';
     let returnValue = {
         userId,
         typeData,
@@ -360,6 +363,12 @@ export const DigitalSignatureMasterBase = (props) => {
         typeData,
         onFinishSearch,
     };
+    const serachBoxProps = {
+        searchForm,
+        filterString,
+        optionType: typeData?.[PARAM_MASTER.OTF_SER.id],
+        setFilterString,
+    };
 
     const formProps = {
         isVisible: isFormVisible,
@@ -378,13 +387,16 @@ export const DigitalSignatureMasterBase = (props) => {
 
     return (
         <>
+            <Row gutter={20} className={styles.masterListSearchForm}>
+                <Col xs={24} sm={24} md={14} lg={14} xl={14}>
+                    <SearchBox {...serachBoxProps} />
+                </Col>
+            </Row>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <ListDataTable handleButtonClick={handleButtonClick} isLoading={showDataLoading} {...tableProps} showAddButton={false} />
                 </Col>
             </Row>
-
-            <AdvancedSearch {...advanceFilterProps} />
 
             <AddEditForm {...formProps} />
         </>
