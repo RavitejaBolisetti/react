@@ -40,7 +40,7 @@ const mapStateToProps = (state) => {
             },
         },
     } = state;
-    console.log('state',state);
+    // console.log('state',state);
      const moduleTitle = 'GST IRN Authentication';
     let returnValue = {
         userId,
@@ -277,7 +277,8 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
 
     const onFinish = (values) => {
         console.log('values',values);
-        handleButtonClick({record:values, VIEW_ACTION, openDefaultSection:false });    
+        setCurrentSection(1);
+        handleButtonClick({record:values, VIEW_ACTION, openDefaultSection:false, currentSection:1, });    
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -487,6 +488,8 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
         isLastSection,
         typeData,
         saveButtonName: isLastSection ? 'Submit' : 'Next',
+        addMode: formActionType?.addMode,
+        editMode: formActionType?.editMode,
     };
 
     const loginProps = {
