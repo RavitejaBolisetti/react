@@ -246,7 +246,7 @@ const VehicleDetailsMasterMain = (props) => {
         };
 
         const onError = (message) => {
-            showGlobalNotification({ message });
+            // showGlobalNotification({ message });
         };
 
         const requestData = {

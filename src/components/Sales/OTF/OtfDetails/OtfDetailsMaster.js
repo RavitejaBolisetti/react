@@ -140,7 +140,7 @@ const OtfDetailsMasterBase = (props) => {
         };
 
         const onError = (message) => {
-            showGlobalNotification({ message });
+            // showGlobalNotification({ message });
         };
 
         const requestData = {

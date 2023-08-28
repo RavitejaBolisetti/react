@@ -33,7 +33,7 @@ describe('AllowedTimingList Components', () => {
         fireEvent.click(okBtn1[1]);
 
         const saveButton = screen.getByRole('button', { name: 'Save', exact: false });
-        await act(() => {
+        act(() => {
             fireEvent.click(saveButton);
         });
     });

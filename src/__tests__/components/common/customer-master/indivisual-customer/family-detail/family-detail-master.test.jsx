@@ -223,7 +223,6 @@ describe('Family Detail Master component', () => {
             />
         );
 
-
         const mnmCustomer = screen.getByRole('columnheader', { name: 'M&M Customer' });
         expect(mnmCustomer).toBeInTheDocument();
 
