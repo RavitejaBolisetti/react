@@ -13,7 +13,7 @@ export const validateOTFMenu = ({ item, status, otfData }) => {
 
     switch (item?.id) {
         case OTF_SECTION.EXCHANGE_VEHICLE.id:
-            return otfData?.exchange === 1 && otfData?.loyaltyScheme !== 1;
+            return otfData?.loyaltyScheme !== 1;
         case OTF_SECTION.REFERRALS.id:
             return otfData?.referral === 'Y';
         case OTF_SECTION.LOYALTY_SCHEME.id:

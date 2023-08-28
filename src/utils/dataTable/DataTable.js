@@ -44,12 +44,12 @@ export default function DataTable({ isLoading, rowSelection = undefined, showSiz
         setPage({ ...tablePagination, current: page, pageSize });
     };
 
-    const skeletonData = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
+    const skeletonData = [{}, {}, {}, {}, {}, {}, {}, {}];
 
     const tableColumnWithSrl = srl ? [tblSerialNumberColumn({ page: tablePagination?.current, title: srlTitle, pageSize: tablePagination?.pageSize, width: scroll === 'auto' ? '5%' : '80px' }), ...tableColumn] : [...tableColumn];
 
     const tableSkeletonColumn = tableColumnWithSrl?.map((item) => {
-        return { ...item, render: () => <InputSkeleton height={40} /> };
+        return { ...item, render: () => <InputSkeleton height={30} /> };
     });
 
     const optionValue = [1, 2, 5, 10];

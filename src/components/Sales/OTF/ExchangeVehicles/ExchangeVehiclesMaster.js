@@ -263,11 +263,11 @@ const ExchangeVehiclesBase = (props) => {
     };
     const onFinish = (values) => {
         const { customerName } = values;
-        if (!customerName) {
+        if (values?.exchange && !customerName) {
             showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Verify Customer id to continue' });
             return;
         }
-        const data = { ...values, id: exchangeData?.id || '', otfNumber: selectedOrderId };
+        const data = { ...values, exchange: values?.exchange ? 1 : 0, id: exchangeData?.id || '', otfNumber: selectedOrderId };
 
         const onSuccess = (res) => {
             form.resetFields();
