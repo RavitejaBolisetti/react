@@ -8,7 +8,8 @@ import { Col, Form, Row, Button, Space, Card, Collapse } from 'antd';
 import { withDrawer } from 'components/withDrawer';
 import { AiOutlinePlusSquare } from 'react-icons/ai';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 import style4 from './UserManagementManufacturer.module.css';
 import AssignUserRolesMunfacturer from './AssignUserRolesMunfacturer';
 import AssignProducts from './AssignProducts';

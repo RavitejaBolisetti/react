@@ -11,7 +11,8 @@ import { FaCheckCircle } from 'react-icons/fa';
 import { RECEIPT_SECTION } from 'constants/ReceiptSection';
 import { validateReceiptMenu } from '../utils/validateReceiptMenu';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 const MenuNav = (props) => {
     const { currentSection, setCurrentSection, receipt, formActionType, selectedOrder: { orderStatus = false } = {} } = props;

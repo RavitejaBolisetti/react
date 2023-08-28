@@ -9,8 +9,10 @@ import DataTable from 'utils/dataTable/DataTable';
 import { tableColumn } from './tableColumn';
 import { PlusOutlined } from '@ant-design/icons';
 
-import styles from 'components/common/Common.module.css';
-import style from 'components/withModal/withModal.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
+import style from '../../../../../components/withModal/withModal.module.scss';
+//import style from 'components/withModal/withModal.module.css';
 import { RoleApplicationModal } from './RoleApplicationModal';
 import { DEVICE_TYPE } from 'constants/modules/UserManagement/deviceType';
 import { UserManagementFormButton } from '../../UserManagementFormButton/UserManagementFormButton';

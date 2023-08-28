@@ -8,8 +8,7 @@ import { Col, Card, Row, Button, Divider, Form, Typography } from 'antd';
 import { FiEdit, FiTrash } from 'react-icons/fi';
 
 import ApplicationActionsForm from './ApplicationActionsForms';
-
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 const { Text } = Typography;
 

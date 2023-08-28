@@ -6,7 +6,9 @@
 import React from 'react';
 import { withModal } from 'components/withModal';
 import { ApplicationTree } from './ApplicationTree';
-import styles from 'components/common/Common.module.css';
+
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 import { Spin } from 'antd';
 import { ModalButtons } from 'components/common/Button';
 
@@ -25,11 +27,11 @@ const RoleApplicationModalrMain = (props) => {
     return (
         <>
             {/* <Spin spinning={isLoading} > */}
-                <ApplicationTree {...props} />
-                <ModalButtons {...modalProps} />
+            <ApplicationTree {...props} />
+            <ModalButtons {...modalProps} />
             {/* </Spin> */}
         </>
     );
 };
 
-export const RoleApplicationModal = withModal(RoleApplicationModalrMain, {width:'70%'});
+export const RoleApplicationModal = withModal(RoleApplicationModalrMain, { width: '70%' });

@@ -11,7 +11,8 @@ import { RxCross2 } from 'react-icons/rx';
 
 import { ApplicationTree } from './ApplicationTree';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 const { Text } = Typography;
 

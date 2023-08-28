@@ -19,8 +19,8 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { CustomerFormButton } from '../../CustomerFormButton';
 import AddEditForm from './AddEditForm';
 import { ViewDetail } from './ViewDetail';
-
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 const mapStateToProps = (state) => {
     const {

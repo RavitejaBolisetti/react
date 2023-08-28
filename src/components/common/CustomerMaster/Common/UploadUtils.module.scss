@@ -1,0 +1,202 @@
+@import 'assets/sass/app.module.scss';
+
+.uploadDragger {
+	padding-bottom: 20px;
+
+	& :global {
+		h5.ant-typography {
+			margin: 0 !important;
+			color: $primaryBlack;
+			font-size: 14px;
+			font-weight: 500;
+			line-height: 23px;
+		}
+
+		span.ant-typography {
+			margin: 0 !important;
+			color: $neutralGrey4;
+			font-size: 12px;
+			font-weight: 400;
+			line-height: 20px;
+		}
+
+		.ant-upload-wrapper {
+			.ant-upload-drag {
+				border: 1px dashed $neutralGrey4-dark;
+				background: $neutralGrey0;
+				border-radius: 4px;
+				padding: 20px;
+
+				.ant-upload {
+					padding: 0;
+
+					.ant-space-vertical {
+						.ant-space-item {
+							&:first-child {
+								svg {
+									margin-bottom: -16px;
+								}
+							}
+						}
+					}
+				}
+			}
+
+			.ant-upload-list {
+				.ant-upload-list-item {
+					height: auto;
+					margin-top: 10px;
+
+					.ant-upload-icon {
+						display: none;
+					}
+
+					.ant-upload-list-item-name {
+						padding-left: 0;
+						color: $primaryBlack;
+						font-weight: 600;
+						line-height: 24px;
+						padding-bottom: 16px;
+					}
+
+					&:hover {
+						background-color: $transparentColor;
+
+						.ant-upload-list-item-action {
+							color: $neutralGrey4;
+						}
+					}
+
+					.ant-upload-list-item-actions {
+						display: flex;
+						align-items: center;
+
+						.ant-upload-list-item-action {
+							opacity: 1;
+						}
+
+						.ant-upload-list-item-action.ant-btn-sm {
+							&:not(:last-child) {
+								display: none;
+							}
+						}
+
+						.ant-upload-list-item-action.ant-btn-sm.ant-btn-icon-only {
+							width: 20px;
+							color: $neutralGrey4;
+
+							.ant-btn-icon {
+								svg {
+									width: 20px;
+									height: 20px;
+								}
+							}
+						}
+					}
+
+					.ant-upload-list-item-progress {
+						bottom: -6px;
+						padding-inline-start: 0;
+						display: block;
+						opacity: 1;
+					}
+				}
+
+				.ant-upload-list-item-done {
+					.ant-upload-list-item-progress {
+						display: block;
+						opacity: 1;
+						visibility: visible;
+
+						.ant-progress.ant-progress-line {
+							display: block !important;
+							opacity: 1 !important;
+							visibility: visible;
+						}
+
+						.ant-progress.ant-progress-status-success {
+							display: block !important;
+							opacity: 1 !important;
+							visibility: visible;
+						}
+					}
+				}
+			}
+		}
+
+		.ant-btn-dangerous {
+			margin-left: 20px;
+		}
+
+		.ant-btn-text {
+			&:not(:disabled) {
+				&:not(.ant-btn-disabled) {
+					&:hover {
+						color: $neutralGrey4;
+						background-color: $transparentColor;
+					}
+				}
+			}
+		}
+
+		.ant-space-vertical {
+			gap: 20px !important;
+
+			.ant-space-horizontal {
+				gap: 10px !important;
+
+				.ant-space-item {
+					.ant-btn-link {
+						padding: 0;
+						position: absolute;
+						font-weight: 600;
+						line-height: 24px;
+						text-transform: capitalize;
+					}
+				}
+			}
+		}
+
+		.ant-space-horizontal {
+			.ant-avatar.ant-avatar-icon {
+				line-height: 26px !important;
+				font-size: 18px !important;
+				background-color: $semanticSuccess;
+			}
+		}
+
+		.ant-progress {
+			.ant-progress-inner {
+				width: 95%;
+				background-color: $transparentSuccessL;
+			}
+
+			.ant-progress-text {
+				position: absolute;
+				z-index: 1;
+				top: -18px;
+				margin-inline-start: -66px;
+				color: $primaryBlack;
+				font-weight: 600;
+				text-align: end;
+			}
+
+			.ant-progress-success-bg {
+				height: 8px !important;
+				background-color: $semanticSuccess;
+			}
+
+			.ant-progress-bg {
+				height: 8px !important;
+				background-color: $semanticSuccess;
+			}
+		}
+	}
+
+	.viewDragger {
+		width: -webkit-fill-available;
+		padding: 20px;
+		border: 1px dashed $neutralGrey4-dark;
+		border-radius: 4px;
+	}
+}

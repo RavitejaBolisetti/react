@@ -12,9 +12,10 @@ import { DEVICE_TYPE } from 'constants/modules/UserManagement/deviceType';
 
 import LeftPanel from 'components/common/LeftPanel';
 
-import style from 'components/common/TreeView.module.css';
-import styles from 'components/common/Common.module.css';
-
+import style from '../../../../../components/common/TreeView.module.scss';
+//import style from 'components/common/TreeView.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
 const { Search } = Input;
@@ -58,9 +59,9 @@ const fnMapData = ({ data, fieldNames, selectedKeys }) =>
     );
 
 const ApplicationTreeMain = (props) => {
-    const { menuList} = props;
+    const { menuList } = props;
     const { checkedKeys, setCheckedKeys, webApplications, roleCode, setWebApplications, mobileApplications, setMobileApplications, deviceType, setDeviceType, setClosePanels, formData, onCloseAction, form, onFinish, formActionType: { addMode = false, viewMode = false, editMode = true } = undefined } = props;
-    console.log("🚀 ~ file: ApplicationTree.js:63 ~ ApplicationTreeMain ~ checkedKeys:", checkedKeys)
+    console.log('🚀 ~ file: ApplicationTree.js:63 ~ ApplicationTreeMain ~ checkedKeys:', checkedKeys);
     const { defaultCheckedKeysMangement, setdefaultCheckedKeysMangement } = props;
     const { buttonData, setButtonData, handleButtonClick } = props;
 
@@ -110,7 +111,7 @@ const ApplicationTreeMain = (props) => {
             // setCheckedKeys(selectedKeys.length !== 0 ? { ...checkedKeys, {...checkedKeys?.[deviceType], [deviceType]: { [currentKey]: [...selectedKeys] } }} : {});
             const deviceTypePrev = checkedKeys || {};
             const appPrev = checkedKeys?.[deviceType] ? checkedKeys[deviceType] : {};
-            setCheckedKeys(checkedKeysValue.length !== 0 ? {...deviceTypePrev, [deviceType]:{ ...appPrev, [currentKey]: [...checkedKeysValue] } }    : []);
+            setCheckedKeys(checkedKeysValue.length !== 0 ? { ...deviceTypePrev, [deviceType]: { ...appPrev, [currentKey]: [...checkedKeysValue] } } : []);
 
             const mapSelectedKeyData = (data) => {
                 return data?.map((item) =>
@@ -124,7 +125,7 @@ const ApplicationTreeMain = (props) => {
                 );
             };
             if (deviceType === APPLICATION_WEB) {
-                setWebApplications( mapSelectedKeyData(webApplications));
+                setWebApplications(mapSelectedKeyData(webApplications));
             } else if (deviceType === APPLICATION_MOBILE) {
                 setMobileApplications(mapSelectedKeyData(mobileApplications));
             }

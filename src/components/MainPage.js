@@ -11,7 +11,8 @@ import { withSpinner } from './withSpinner';
 import { SessionTimeout } from './SessionTimeout';
 import { doLogoutAPI } from '../store/actions/auth';
 import { bindActionCreators } from 'redux';
-import styles from './withSpinner.module.css';
+import styles from './withSpinner.module.scss';
+//import styles from './withSpinner.module.css';
 
 import { AuthenticatedUserPage } from 'pages/routing/AuthenticatedUserPage';
 import { UnAuthenticatedUserPage } from 'pages/routing/UnAuthenticatedUserPage';

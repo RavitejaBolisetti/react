@@ -9,7 +9,8 @@ import { Row, Col, Input, Form, DatePicker, Card } from 'antd';
 import { formattedCalendarDate, dateFormat } from 'utils/formatDateTime';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 const AddEditFormMain = (props) => {
     const { formData, form, buttonData, setButtonData } = props;

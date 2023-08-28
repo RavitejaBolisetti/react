@@ -16,8 +16,8 @@ import { LANGUAGE_EN } from 'language/en';
 
 import AddEditForm from './AddEditForm';
 import ViewMacIdList from './ViewMacIdList';
-
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 import { UserManagementFormButton } from 'components/common/UserManagementNew/UserManagementFormButton/UserManagementFormButton';
 
 const { Text } = Typography;

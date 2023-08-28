@@ -7,7 +7,8 @@ import { Button, Form, Row, Col, Space, Select, Input } from 'antd';
 import { validationFieldLetterAndNumber, validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 const AddEditForm = (props) => {
     const { onSaveFormData, macIdform, setShowAddEditForm, setIsEditing, formActionType, handleFormValueChange, setIsAdding } = props;

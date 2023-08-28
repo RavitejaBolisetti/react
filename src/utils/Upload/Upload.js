@@ -13,7 +13,9 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { AiOutlineCloseCircle, AiOutlineClose, AiOutlineEye } from 'react-icons/ai';
 import { HiCheck } from 'react-icons/hi';
 import { UploadBoxIcon } from 'Icons';
-import styles from './UploadUtil.module.css';
+
+import styles from './UploadUtil.module.scss';
+//import styles from './UploadUtil.module.css';
 
 const { Dragger } = Upload;
 const { Text, Title } = Typography;

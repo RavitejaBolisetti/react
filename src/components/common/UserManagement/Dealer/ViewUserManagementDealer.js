@@ -18,16 +18,16 @@ import ProductMapping from './../ProductMapping';
 const { Panel } = Collapse;
 
 const ViewUserManagementDealerMain = ({ formData, styles, DealerSearchvalue, handleCollapse, openAccordian, productHierarchyData, finalFormdata, AccessMacid, isViewModeVisible, handleDelete, DealerData, setfinalFormdata }) => {
-    const viewProps = {
+    const viewOneColProps = {
         bordered: false,
         colon: false,
         layout: 'vertical',
         column: { xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 },
     };
     return (
-        <div className={`${styles.viewContainer} ${styles.hierarchyRightContaners}`}>
-            <>
-                <Descriptions {...viewProps}>
+        <>
+            <div className={styles.viewContainer}>
+                <Descriptions {...viewOneColProps}>
                     <Space direction="vertical">
                         <CommonCard DealerData={DealerData} />
 
@@ -67,8 +67,8 @@ const ViewUserManagementDealerMain = ({ formData, styles, DealerSearchvalue, han
                         </Collapse>
                     </Space>
                 </Descriptions>
-            </>
-        </div>
+            </div>
+        </>
     );
 };
 

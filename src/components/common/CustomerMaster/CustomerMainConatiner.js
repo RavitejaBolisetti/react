@@ -15,7 +15,8 @@ import { CUSTOMER_CORPORATE_SECTION } from 'constants/CustomerCorporateSection';
 import { CUSTOMER_TYPE } from 'constants/CustomerType';
 
 import { withDrawer } from 'components/withDrawer';
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 const CustomerMainConatinerMain = (props) => {
     const { customerType, currentSection, resetViewData } = props;

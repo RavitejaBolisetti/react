@@ -7,7 +7,8 @@ import React from 'react';
 import { Row, Col, Button, Space } from 'antd';
 import { withModal } from '../../../../withModal/withModal';
 
-import styles from '../../CustomertMaster.module.css';
+import styles from '../../../../../sass/drawer_two_pannel.scss';
+//import styles from '../../CustomertMaster.module.css';
 
 const MarkAsDefaultModalMain = (props) => {
     const { onCloseAction } = props;

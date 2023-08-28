@@ -20,7 +20,8 @@ import { tableColumn } from './tableCoulmn';
 import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
 import { NoDataFound } from 'utils/noDataFound';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
 const { Text } = Typography;

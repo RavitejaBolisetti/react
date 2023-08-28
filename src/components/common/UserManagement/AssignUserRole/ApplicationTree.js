@@ -18,8 +18,10 @@ import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
 import LeftPanel from 'components/common/LeftPanel';
 
-import style from 'components/common/TreeView.module.css';
-import styles from 'components/common/Common.module.css';
+import style from '../../../../components/common/TreeView.module.scss';
+//import style from 'components/common/TreeView.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 // import dummyMenuData from './../../RoleManagement/Treedata.json';
 

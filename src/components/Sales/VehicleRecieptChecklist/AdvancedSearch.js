@@ -11,7 +11,8 @@ import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { dateFormat, formatDate } from 'utils/formatDateTime';
 import { ModalButtons } from 'components/common/Button';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 export const AdvancedSearchFrom = (props) => {
     const { setAdvanceSearchVisible, vehicleModelData, isModelDataLoading } = props;

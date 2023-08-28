@@ -11,7 +11,8 @@ import { Row, Col, Button } from 'antd';
 import { manufacturerOrgHierarchyDataActions } from 'store/actions/data/manufacturerOrgHierarchy';
 import { convertDateTime } from 'utils/formatDateTime';
 import { tblPrepareColumns, tblStatusColumn } from 'utils/tableColumn';
-import styles from 'components/common/Common.module.css';
+import styles from '../ChangeHistory/ChangeHistory.module.scss';
+//import styles from '../ChangeHistory/ChangeHistory.module.css';
 import { DataTable } from 'utils/dataTable';
 import { withDrawer } from 'components/withDrawer';
 

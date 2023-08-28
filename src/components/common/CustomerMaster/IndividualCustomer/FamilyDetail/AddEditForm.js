@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState, useEffect } from 'react';
-import { Collapse, Card, Typography, Button, Row, Empty, Divider, Space } from 'antd';
+import { Collapse, Card, Typography, Button, Row, Empty, Divider } from 'antd';
 
 import { PlusOutlined } from '@ant-design/icons';
 import { FiEdit } from 'react-icons/fi';
@@ -17,7 +17,8 @@ import { LANGUAGE_EN } from 'language/en';
 
 import { expandIcon } from 'utils/accordianExpandIcon';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 const { Text } = Typography;
 const { Panel } = Collapse;

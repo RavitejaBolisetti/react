@@ -12,7 +12,7 @@ import { DrawerFormButton } from 'components/common/Button';
 import { withDrawer } from 'components/withDrawer';
 import { ViewCriticalityGroup } from './ViewCriticalityGroup';
 import AllowedTimingList from './AllowedTimings/AllowedTimingList';
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 const AddEditFormMain = (props) => {
     const { formActionType, setIsFormVisible, forceUpdate, showGlobalNotification, onFinish, onFinishFailed, form, formData, setFormData, defaultBtnVisiblity, timeData, setTimeData } = props;
