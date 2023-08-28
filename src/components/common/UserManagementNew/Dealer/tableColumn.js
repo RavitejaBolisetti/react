@@ -34,15 +34,13 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             title: 'Branch',
             dataIndex: 'branchMapping',
             width: '12%',
-            render: (text) =>  (<Tag className={ text ? styles.success : styles.warning } > { text ? 'Mapped' : 'Unmapped' }</Tag>),
-
+            render: (text, record) => <>{text ? <Tag color="success">Mapped</Tag> : <Tag color="error">Unmapped</Tag>}</>,
         }),
         tblPrepareColumns({
             title: 'Products',
             dataIndex: 'productMapping',
             width: '16%',
-            render: (text) =>  (<Tag className={ text ? styles.success : styles.warning } > { text ? 'Mapped' : 'Unmapped' }</Tag>),
-
+            render: (text, record) => <>{text ? <Tag color="success">Mapped</Tag> : <Tag color="error">Unmapped</Tag>}</>,
         }),
         tblActionColumn({ styles, handleButtonClick, width: '12%' }),
     ];

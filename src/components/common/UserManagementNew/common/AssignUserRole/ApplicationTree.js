@@ -136,9 +136,7 @@ const ApplicationTreeMain = (props) => {
                 {menuMapData?.length ? (
                     menuMapData?.map((el, i) => {
                         const treeData = el?.children;
-                        const flatternData = flattenData(treeData);
-                        const checkedMenuKeys = flatternData?.map((i) => i.checked && i?.value);
-                        const allowedAccess = checkedMenuKeys?.filter((i) => i.checked && i?.vlaue);
+                        const allowedAccess = treeData?.filter((i) => i.checked);
 
                         const myProps = {
                             fieldNames,
