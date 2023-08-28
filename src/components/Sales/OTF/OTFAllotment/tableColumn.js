@@ -13,7 +13,7 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
         tblPrepareColumns({
             title: 'VIN/Chasis no.',
             dataIndex: 'vehicleIdentificationNumber',
-            width: '14%',
+            width: '20%',
         }),
     ];
 
@@ -38,7 +38,7 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
         tblPrepareColumns({
             title: 'M&M Invoice',
             dataIndex: 'invoiceId',
-            width: '14%',
+            width: '15%',
             render: (text, record) => [
                 <div>
                     {record?.invoiceId}
@@ -55,11 +55,11 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
         tblPrepareColumns({
             title: 'Vehicle Status',
             dataIndex: 'vehicleStatus',
-            width: '14%',
+            width: '15%',
             render: (_, record) => vehicleAllotmentStatusTag(record.vehicleStatus),
         }),
 
-        tblActionColumn({ handleButtonClick, styles, width: '8%', EyeIcon: true, canEdit: false })
+        // tblActionColumn({ handleButtonClick, styles, width: '8%', EyeIcon: true, canEdit: false })
     );
 
     return tableColumn;

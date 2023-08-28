@@ -190,7 +190,7 @@ const AddEditFormMain = (props) => {
                         header={
                             <Row>
                                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                    <Text strong>Charges</Text>
+                                    <Text strong>Other Charges</Text>
                                     <Button onClick={addContactHandeler} icon={<PlusOutlined />} type="primary" disabled={isReadOnly}>
                                         Add
                                     </Button>

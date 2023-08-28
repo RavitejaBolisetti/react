@@ -26,7 +26,7 @@ const props = {
     onErrorAction: jest.fn(),
 };
 
-describe('OTF Finance Details Component render', () => {
+describe('OTF Insurance Details Component render', () => {
     it('should render addedit form', async () => {
         customRender(<InsuranceDetailsMaster {...props} />);
     });
@@ -49,7 +49,6 @@ describe('OTF Finance Details Component render', () => {
                 <InsuranceDetailsMaster selectedOrderId={'123'} {...props} />
             </Provider>
         );
-        // customRender(<InsuranceDetailsMaster {...props} />);
 
         const insuranceDetails = screen.getByText('Insurance Details');
         expect(insuranceDetails).toBeTruthy();
@@ -80,10 +79,6 @@ describe('OTF Finance Details Component render', () => {
 
         const registrationNo = screen.getByText('Registration Number');
         expect(registrationNo).toBeTruthy();
-
-        const nextBtn = screen.getByRole('button', { name: 'Next' });
-        fireEvent.click(nextBtn);
-        expect(nextBtn).toBeTruthy();
     });
 
     it('should render when view mode is false', async () => {

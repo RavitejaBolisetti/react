@@ -499,8 +499,10 @@ p {
 /* AntD Table Design End*/
 
 /* AntD Table Pagination Design Start*/
+
 :global .ant-table-wrapper .ant-table-pagination.ant-pagination {
     margin: 20px 0 0;
+    display: none;
 }
 
 :global .ant-pagination .ant-pagination-total-text {
@@ -715,6 +717,12 @@ p {
     margin-top: -3px;
     margin-inline-end: 6px;
     color: #ff3e5b;
+}
+
+:global .ant-form-item-required:before {
+    position: absolute;
+    right: -15px;
+    top: 3px;
 }
 
 :global .ant-form-item-required:before {
@@ -1416,7 +1424,7 @@ p {
     line-height: 40px;
 }
 
-:global .rc-virtual-list-holder:has(+div.rc-virtual-list-scrollbar-show) {
+:global .rc-virtual-list-holder:has(+ div.rc-virtual-list-scrollbar-show) {
     padding-right: 10px;
 }
 
