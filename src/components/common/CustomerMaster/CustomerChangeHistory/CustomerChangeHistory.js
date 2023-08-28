@@ -10,8 +10,8 @@ import { convertDateTime } from 'utils/formatDateTime';
 
 import { tblPrepareColumns } from 'utils/tableColumn';
 import { customerDetailDataActions } from 'store/actions/customer/customerDetail';
-
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 import { DataTable } from 'utils/dataTable';
 import { withDrawer } from 'components/withDrawer';

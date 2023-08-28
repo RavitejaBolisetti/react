@@ -6,7 +6,8 @@
 import React, { useState, Fragment, useEffect } from 'react';
 import { Col, Card, Row, Button, Form, Divider, Typography } from 'antd';
 import { FiEdit, FiTrash } from 'react-icons/fi';
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 import FormProductAttribute from './FormProductAttribute';
 
 const { Text } = Typography;
@@ -54,7 +55,6 @@ const CardProductAttribute = (props) => {
     };
 
     const onAttributeDelete = (val) => {
-
         setSKUAttributes((prev) => {
             const indx = prev.findIndex((el) => el.attributeId === val?.attributeId);
             let updatedValue = prev;
@@ -97,15 +97,18 @@ const CardProductAttribute = (props) => {
                 backgroundColor: '#BEBEBE1A',
                 marginTop: '12px',
             }}
-            
         >
             <Row align="middle">
                 <Col xs={colLeft} sm={colLeft} md={colLeft} lg={colLeft} xl={colLeft} xxl={colLeft}>
                     <div>
-                        <Text data-testid="code" strong>{props?.code}</Text>
+                        <Text data-testid="code" strong>
+                            {props?.code}
+                        </Text>
                     </div>
-                    <div >
-                        <Text type="secondary" data-testid="secondary">{props?.value}</Text>
+                    <div>
+                        <Text type="secondary" data-testid="secondary">
+                            {props?.value}
+                        </Text>
                     </div>
                 </Col>
 

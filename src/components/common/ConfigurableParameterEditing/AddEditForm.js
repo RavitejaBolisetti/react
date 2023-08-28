@@ -12,8 +12,8 @@ import { CONFIGURABLE_PARAMETARS_INPUT_TYPE } from './InputType';
 import { ViewConfigDetails } from './ViewConfigDetails';
 import { preparePlaceholderSelect, prepareDatePickerText } from 'utils/preparePlaceholder';
 import { dateFormat } from 'utils/formatDateTime';
-
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 const { TextArea } = Input;
 const AddEditFormMain = (props) => {
@@ -65,7 +65,7 @@ const AddEditFormMain = (props) => {
                                         <Select showSearch allowClear placeholder={preparePlaceholderSelect('Select')} onChange={handleControlChange} disabled={isReadOnly} fieldNames={{ label: 'value', value: 'key' }} options={typeData[PARAM_MASTER.CFG_PARAM.id]}></Select>
                                     </Form.Item>
                                 </Col>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.textareaError}>
                                     <Form.Item label="Control Description" initialValue={formData?.controlDescription} rules={[validateRequiredInputField('Control Description')]} name="controlDescription">
                                         <TextArea maxLength={300} value={formData?.controlDescription} placeholder="Enter Data" disabled={isReadOnly} showCount />
                                     </Form.Item>

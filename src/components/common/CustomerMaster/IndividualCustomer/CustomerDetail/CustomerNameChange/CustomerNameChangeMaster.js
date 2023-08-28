@@ -25,7 +25,7 @@ import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { getCodeValue } from 'utils/getCodeValue';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 const { Text } = Typography;
 const { Panel } = Collapse;
@@ -329,7 +329,7 @@ const CustomerNameChangeMasterBase = (props) => {
                             <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={(value) => setActiveKey(value)} expandIconPosition="end" collapsible="icon">
                                 <Panel
                                     header={
-                                        <Row justify="space-between">
+                                        <Row justify="space-between" className={styles.fullWidth}>
                                             {customerName({ currentKey: item?.id, formData: item?.formData, requestPending: item?.pending, changeAllowed: item?.changeAllowed, canEdit: item?.canEdit })}
 
                                             {item?.pending && <div className={styles.verticallyCentered}>{status === STATUS?.REJECTED?.title ? <Tag color="error">Rejected</Tag> : status === STATUS?.APPROVED?.title ? <Tag color="success">Approved</Tag> : <Tag color="warning">Pending for Approval</Tag>}</div>}

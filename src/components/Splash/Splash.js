@@ -7,7 +7,8 @@ import React, { useEffect, useState } from 'react';
 
 import * as IMAGES from 'assets';
 
-import styles from './Splash.module.css';
+import styles from './Splash.module.scss';
+//import styles from './Splash.module.css';
 
 
 export const Splash = () => {

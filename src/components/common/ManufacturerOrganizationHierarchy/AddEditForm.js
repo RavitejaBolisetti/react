@@ -9,7 +9,8 @@ import TreeSelectField from '../TreeSelectField';
 
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { withDrawer } from 'components/withDrawer';
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
@@ -115,7 +116,7 @@ const AddEditFormMain = (props) => {
                         </Row>
 
                         <Row gutter={20}>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.textareaError}>
                                 <Form.Item name="manufactureOrgLongName" label="Long Description" placeholder={preparePlaceholderSelect('Long Description')} initialValue={formData?.manufactureOrgLongName} rules={[validateRequiredInputField('Long Description')]}>
                                     <TextArea placeholder={preparePlaceholderText('Long Description')} maxLength={300} disabled={formData?.id || isReadOnly} showCount />
                                 </Form.Item>

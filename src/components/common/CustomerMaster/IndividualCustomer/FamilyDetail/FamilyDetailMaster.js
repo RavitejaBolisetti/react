@@ -17,7 +17,8 @@ import { CustomerFormButton } from '../../CustomerFormButton';
 
 import { formatDate } from 'utils/formatDateTime';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 import dayjs from 'dayjs';
 

@@ -9,16 +9,16 @@ import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { DATA_TYPE } from 'constants/dataType';
 
 const ViewTermConditionListMain = ({ formData, isLoading, styles }) => {
-    const viewProps = {
+    const viewOneColProps = {
         bordered: false,
         colon: false,
         layout: 'vertical',
         column: { xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 },
     };
     return (
-        <div className={styles.viewContainer}>
-            <>
-                <Descriptions {...viewProps}>
+        <>
+            <div className={styles.viewContainer}>
+                <Descriptions {...viewOneColProps}>
                     <Descriptions.Item label="Product Hierarchy">{checkAndSetDefaultValue(formData?.productName, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="Document Type">{checkAndSetDefaultValue(formData?.documentTypeCode, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="Language">{checkAndSetDefaultValue(formData?.languageDesc, isLoading)}</Descriptions.Item>
@@ -27,8 +27,8 @@ const ViewTermConditionListMain = ({ formData, isLoading, styles }) => {
                     <Descriptions.Item label="Version">{checkAndSetDefaultValue(formData?.version, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="Terms & Conditions">{checkAndSetDefaultValue(formData?.termsconditiondescription, isLoading)}</Descriptions.Item>
                 </Descriptions>
-            </>
-        </div>
+            </div>
+        </>
     );
 };
 

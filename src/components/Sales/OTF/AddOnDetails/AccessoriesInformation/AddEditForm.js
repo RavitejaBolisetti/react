@@ -8,7 +8,9 @@ import { Input, Form, Col, Row, Button, Divider } from 'antd';
 
 import { validateRequiredInputField, validationNumber } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
-import styles from 'components/common/Common.module.css';
+
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 const { TextArea } = Input;
 const { Search } = Input;
@@ -113,6 +115,7 @@ function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm
                                     maxRows: 2,
                                 }}
                                 maxLength={300}
+                                showCount
                             />
                         </Form.Item>
                     </Col>
@@ -121,8 +124,8 @@ function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm
                     </Form.Item>
                 </Row>
             </Form>
-            <Row gutter={20} justify="start">
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.addOnButtons}>
+            <Row gutter={20} className={styles.marB20}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.buttonsGroup}>
                     {addButtonDisabled?.partDetailsResponses ? (
                         <>
                             <Button disabled={isBtnDisabled} onClick={handleAccesoriesForm} type="primary">

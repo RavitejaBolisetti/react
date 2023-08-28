@@ -13,7 +13,8 @@ import { ViewDetail } from './ViewDetail';
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 const { Option } = Select;
 
@@ -228,7 +229,7 @@ const AddEditFormMain = (props) => {
                                     </Col>
                                 </Row>
                                 <Row gutter={16}>
-                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.textareaError}>
                                         <Form.Item initialValue={formData?.address} label="Address" name="address" rules={[validateRequiredInputField('address')]}>
                                             <TextArea {...disabledProps} placeholder={preparePlaceholderText('Address')} maxLength={300} showCount />
                                         </Form.Item>

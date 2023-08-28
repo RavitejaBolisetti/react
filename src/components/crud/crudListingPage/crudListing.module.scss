@@ -1,0 +1,797 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
+@import 'assets/sass/app.module.scss';
+
+.listFilterContainer {
+    background-color: $neutralGrey0;
+    border: 1px solid $neutralGrey1;
+    padding: 10px !important;
+    margin-bottom: 20px;
+    border-radius: 8px !important;
+    font-weight: 500;
+
+    .searchMainBox {
+        display: flex;
+    }
+
+    .headerSelectField {
+        & :global {
+            .ant-input-affix-wrapper {
+                border-inline-end-width: 0px;
+                border-color: $transparentColor;
+
+                .ant-input-clear-icon {
+                    color: $primaryBlack;
+                }
+            }
+
+            .ant-btn-default {
+                border-inline-end-width: 0px;
+                border-color: $transparentColor;
+                border-color: $transparentColor;
+
+                &:not(:disabled) {
+                    &:active {
+                        border-color: $transparentColor;
+                    }
+                }
+            }
+
+            .ant-input-search {
+                .ant-input {
+                    &:focus {
+                        border-color: $transparentColor;
+                    }
+                }
+            }
+
+            .ant-input-affix-wrapper-focused {
+                border-color: $transparentColor;
+            }
+        }
+    }
+
+    & :global {
+        .ant-input-affix-wrapper {
+            &:not(.ant-input-affix-wrapper-disabled) {
+                &:hover {
+                    border-inline-end-width: 0px;
+                    border-color: $transparentColor;
+                }
+            }
+
+            &:focus {
+                box-shadow: 0 0 0 2px rgba(255, 5, 5, 0);
+            }
+        }
+
+        .ant-btn-default {
+            &:not(:disabled) {
+                &:hover {
+                    border-color: $transparentColor;
+                }
+            }
+        }
+
+        .ant-input-search {
+            .ant-input {
+                &:focus {
+                    border-color: $transparentColor;
+                }
+            }
+
+            >.ant-input-group {
+                >.ant-input-group-addon {
+                    &:last-child {
+                        .ant-input-search-button {
+                            &:not(.ant-btn-primary) {
+                                background-color: $primaryWhite;
+                                border-left: $primaryWhite;
+                                background-color: $primaryWhite;
+
+                                &:disabled {
+                                    background-color: $neutralGrey1;
+                                    border-left: $neutralGrey1;
+                                    background-color: $neutralGrey1;
+                                }
+
+                                &:hover {
+                                    border-left: $primaryRed;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .anticon-close-circle {
+            color: $primaryBlack;
+            width: 12px;
+            height: 12px;
+            vertical-align: sub !important;
+        }
+
+        .ant-input-group {
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            border: 1px solid $neutralGrey1;
+
+            &:hover {
+                border: 1px solid $primaryBlack;
+            }
+
+            .ant-input {
+                &:focus {
+                    border-inline-end-width: 0;
+                }
+
+                &:hover {
+                    border-inline-end-width: 0;
+                }
+            }
+        }
+
+        .ant-input-affix-wrapper-focused {
+            box-shadow: 0 0 0 2px rgba(255, 5, 5, 0);
+        }
+
+        .ant-input-group-wrapper {
+            width: auto;
+        }
+
+        .ant-select-single {
+            &:not(.ant-select-customize-input) {
+                .ant-select-selector {
+                    height: 36px;
+                }
+            }
+        }
+
+        .ant-btn-default.ant-btn-dangerous.ant-btn-background-ghost {
+            &:hover {
+                background-color: $primaryRed;
+                background-color: $primaryRed;
+            }
+        }
+    }
+
+    .headingToggle {
+        border: $neutralGrey1 1px solid;
+        border-radius: 6px;
+        -moz-border-radius: 6px;
+        -webkit-border-radius: 6px;
+        padding: 7px 5px;
+        display: inline-block;
+    }
+
+    .advanceFilterClear {
+        display: flex;
+        align-items: center;
+        flex-direction: row-reverse;
+        margin-bottom: -2px;
+    }
+
+    .advanceFilterTop {
+        .advanceFilterTitle {
+            padding: 10px 0px;
+            margin-right: 10px;
+            width: 160px;
+        }
+
+        .advanceFilterItem {
+            height: 30px;
+            border-radius: 20px;
+            margin-top: 6px;
+            padding: 4px 10px;
+            border: solid 1px $primaryRed;
+            color: $primaryRed;
+            line-height: 18px;
+            margin-right: 12px;
+
+            span {
+                vertical-align: middle;
+                margin-left: 4px;
+                cursor: pointer;
+            }
+        }
+
+        .clearBtn {
+            float: right !important;
+            height: 30px !important;
+            line-height: 16px;
+        }
+    }
+
+    .headerSearchField {
+        & :global {
+            .ant-btn-default {
+                border-color: $transparentColor !important;
+            }
+        }
+    }
+
+    .buttonsGroupRight {
+        text-align: right;
+
+        button {
+            margin-bottom: 0px !important;
+            margin-left: 10px;
+            background-color: $primaryRed;
+        }
+
+        @include breakpoint(md) {
+            margin-right: 15px;
+        }
+    }
+
+    .userManagement {
+        & :global {
+            .ant-btn-link {
+                color: $primaryBlack;
+                font-weight: 500;
+            }
+        }
+    }
+
+    .dataDisplay {
+        margin-top: 10px;
+        padding: 10px 0 0 0;
+        padding-bottom: 0;
+        border-top: 1px solid $neutralGrey1;
+    }
+
+    .errorDisplay {
+        color: $semanticError;
+    }
+
+    .contentHeading {
+        font-size: 12px;
+        color: rgba(116, 116, 116, 0.85);
+        font-weight: 400;
+        width: 100%;
+        margin-bottom: 5px;
+
+        @include breakpoint(md) {
+            width: 30%;
+            float: left;
+        }
+    }
+
+    .contentData {
+        font-size: 14px;
+        color: rgba(0, 0, 0, 0.85);
+        font-weight: 600;
+        width: 100%;
+        margin-bottom: 5px;
+
+        @include breakpoint(md) {
+            padding: 2px 10px 0;
+            width: 70%;
+            float: left;
+        }
+    }
+
+    .subheading {
+        .filterBtn {
+            line-height: 24px;
+            font-weight: 600;
+
+            svg {
+                margin-right: 6px;
+                margin-top: -4px;
+                vertical-align: middle;
+            }
+        }
+    }
+}
+
+.autoCompleteContent {
+    & :global {
+        .ant-input-search {
+            .ant-input {
+                &:hover {
+                    border-color: $transparentColor;
+                }
+
+                &:focus {
+                    border-color: $transparentColor;
+                }
+            }
+        }
+
+        .ant-btn-default {
+            border-color: $transparentColor;
+            background-color: $primaryWhite;
+
+            &:not(:disabled) {
+                &:hover {
+                    border-color: $transparentColor;
+                }
+            }
+        }
+    }
+}
+
+.dataTable {
+    margin-bottom: 20px;
+    padding: 0;
+
+    & :global {
+        .ant-pagination {
+            .ant-pagination-item {
+                height: 34px !important;
+                line-height: 32px !important;
+                background-color: $primaryWhite;
+                border: 1px solid $neutralGrey2;
+            }
+
+            .ant-pagination-item-active {
+                border: 1px solid $primaryRed !important;
+                font-weight: 500;
+            }
+
+            .ant-pagination-prev {
+                .ant-pagination-item-link {
+                    height: 34px !important;
+                    line-height: 32px !important;
+                    border: 1px solid $neutralGrey2;
+                    color: $neutralGrey2;
+                }
+            }
+
+            .ant-pagination-next {
+                .ant-pagination-item-link {
+                    height: 34px !important;
+                    line-height: 32px !important;
+                    border: 1px solid $neutralGrey2;
+                    color: $neutralGrey2;
+                }
+            }
+        }
+    }
+}
+
+.buttonHeadingContainer {
+    margin-top: 0px;
+    display: inline-block;
+    width: 100%;
+    padding: 0;
+    text-align: left;
+
+    .buttonIcon {
+        margin-right: 6px;
+        padding-top: 2px;
+        float: none;
+
+        @include breakpoint(md) {
+            margin-right: 6px;
+            padding-top: 2px;
+            float: none;
+        }
+    }
+
+    @include breakpoint(md) {
+        margin-top: 10px;
+        display: inline-block;
+        width: 100%;
+        padding: 0;
+        text-align: center;
+        padding-right: 0px !important;
+    }
+}
+
+.buttonContainer {
+    margin-top: 10px;
+    display: inline-block;
+    width: 100%;
+    padding: 0;
+
+    .buttonIcon {
+        margin-right: 6px;
+        padding-top: 2px;
+    }
+
+    .btnLeft {
+        text-align: left;
+        float: left;
+    }
+
+    .btnRight {
+        text-align: right;
+        float: right;
+
+        button {
+            margin-left: 14px;
+        }
+    }
+
+    & :global {
+        .ant-btn-default.ant-btn-dangerous {
+            &:not(:disabled) {
+                &:hover {
+                    background-color: $primaryRed;
+                    color: $primaryWhite !important;
+                }
+            }
+        }
+    }
+
+    @include breakpoint(md) {
+        margin-top: 4px;
+    }
+
+    @include breakpoint(sm) {
+        margin-top: 4px;
+    }
+}
+
+.formFooter {
+    width: 100%;
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 0px;
+    background: $primaryWhite;
+    left: 10px;
+    bottom: 0px;
+    box-shadow: 0px -4px 4px rgba(0, 0, 0, 0.15);
+
+    .footerBtnLeft {
+        text-align: left;
+    }
+
+    .footerBtnRight {
+        text-align: right;
+        right: 10px;
+    }
+
+    button {
+        margin-left: 14px;
+    }
+
+    .buttonIcon {
+        margin-right: 6px;
+        padding-top: 2px;
+    }
+}
+
+.viewContainer {
+    & :global {
+        .ant-descriptions-view {
+            table {
+                tbody {
+                    tr {
+                        th {
+                            padding: 8px 10px 2px !important;
+                        }
+
+                        td {
+                            padding: 3px 10px 9px !important;
+                        }
+                    }
+                }
+            }
+        }
+
+        .ant-descriptions {
+            .ant-descriptions-item-label {
+                color: $primaryBlack !important;
+                font-size: 14px !important;
+                font-weight: 500;
+            }
+
+            .ant-descriptions-item-content {
+                color: $neutralGrey2 !important;
+                font-size: 14px !important;
+                display: inline-block;
+            }
+        }
+    }
+}
+
+.deleteBtn {
+    &:disabled {
+        background-color: $primaryWhite;
+        color: $neutralGrey2;
+        border-color: $primaryWhite;
+    }
+
+    background-color: $primaryWhite;
+    color: $neutralGrey2;
+    border-color: none !important;
+    border: none !important;
+}
+
+/*--------------Common Css--------------*/
+.searchBox {
+    line-height: 33px;
+    padding-right: 0 !important;
+    margin-right: 20px;
+}
+
+.advanceFilterTop {
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: solid 1px #e6e6e6;
+}
+
+.advanceFilterContainer {
+    display: flex;
+    flex-flow: wrap;
+    /* align-items: center; */
+}
+
+.lastheaderbutton {
+    margin-right: 0px;
+}
+
+.activeText {
+    color: #00a310;
+}
+
+.inactiveText {
+    color: #8e8585;
+}
+
+.container {
+    padding: 20px;
+}
+
+.mb10 {
+    margin-bottom: 20px;
+}
+
+.inputBox {
+    border-radius: 4px;
+    height: 36px;
+}
+
+.floatRight {
+    float: right;
+}
+
+.textRight {
+    text-align: right;
+}
+
+.textCenter {
+    text-align: center;
+}
+
+.hyrbuttonContainer {
+    border: 1px solid $neutralGrey1;
+    border-top: 0px solid $neutralGrey1;
+}
+
+.ant-row {
+    display: flex;
+    flex-flow: row wrap;
+    min-width: 0;
+    /* margin-right: 0px !important; */
+}
+
+.formContainer {
+    padding: 0px;
+
+    @include breakpoint(md) {
+        padding: 10px;
+    }
+
+    @include breakpoint(sm) {
+        padding: 10px;
+    }
+}
+
+.pad10 {
+    padding: 0px;
+
+    @include breakpoint(md) {
+        padding: 10px;
+    }
+
+    @include breakpoint(sm) {
+        padding: 10px;
+    }
+}
+
+.padRight18 {
+    padding-right: 18px;
+}
+
+.padLeft10 {
+    & :global {
+        .ant-form {
+            margin: 0px 0px 0px 46px;
+        }
+    }
+
+    @include breakpoint(md) {
+        padding-left: 10px !important;
+        padding-right: 0px !important;
+    }
+
+    @include breakpoint(sm) {
+        padding-left: 10px !important;
+        padding-right: 0px !important;
+    }
+}
+
+.mb10 {
+    margin-bottom: 20px;
+}
+
+.inputBox {
+    border-radius: 4px;
+    height: 36px;
+}
+
+.treemenu {
+    margin: 24px 0px;
+    padding-left: 0px;
+    padding-bottom: 0px;
+    line-height: 2em;
+    list-style: none;
+    background-color: transparent;
+    color: $primaryBlack;
+}
+
+.floatRight {
+    float: right;
+}
+
+.heading {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}
+
+.content {
+    border: 1px solid $neutralGrey1;
+    border-radius: 0 0 4px 4px;
+    margin-top: -21px;
+    overflow-y: hidden;
+    height: 62.6vh;
+
+    @include breakpoint(md) {
+        margin-top: 10px;
+    }
+}
+
+.emptyContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: calc(100vh - 174px);
+    border: 1px solid $neutralGrey1;
+    border-radius: 4px;
+}
+
+.hierarchyRightContaners {
+    border-radius: 4px 4px 0px 0px;
+    border: none;
+}
+
+.hierarchyRightContaner {
+    border-radius: 4px 4px 0px 0px;
+    -moz-border-radius: 4px 4px 0px 0px;
+    -webkit-border-radius: 4px 4px 0px 0px;
+    border: 1px solid $neutralGrey1;
+    margin-top: 0px;
+
+    @include breakpoint(md) {
+        margin-top: 10px;
+    }
+}
+
+.hideInViewMode {
+    visibility: hidden;
+}
+
+.paddingLeft {
+    padding-left: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+}
+
+/*--------------media--------------*/
+.headerSearchField {
+    @include breakpoint(md) {
+        vertical-align: middle;
+        margin: 0 0px;
+        width: 100%;
+    }
+}
+
+.headerSelectField {
+    @include breakpoint(md) {
+        vertical-align: middle;
+        margin: 0;
+        width: 100%;
+    }
+}
+
+.leftpanel {
+    @include breakpoint(md) {
+        height: auto;
+        margin-left: 4px;
+    }
+
+    @include breakpoint(sm) {
+        height: auto;
+        margin-left: 4px;
+    }
+}
+
+.exitButton {
+    @include breakpoint(md) {
+        padding: 10px 15px;
+        margin: 0;
+        margin-top: 4px;
+        font-size: 12px;
+        line-height: 2px;
+    }
+
+    @include breakpoint(sm) {
+        padding: 10px 15px;
+        margin: 0;
+        margin-top: 4px;
+        font-size: 12px;
+        line-height: 2px;
+    }
+}
+
+.gap {
+    @include breakpoint(md) {
+        gap: 8px;
+    }
+
+    @include breakpoint(sm) {
+        gap: 8px;
+    }
+}
+
+.treeCollapsibleButton {
+    @include breakpoint(md) {
+        top: 174px;
+    }
+
+    @include breakpoint(sm) {
+        top: 184px;
+    }
+}
+
+.TreeView_searchField__jn\+nY {
+    @include breakpoint(md) {
+        padding: 0 8px;
+        margin-bottom: 8px;
+        margin-top: 12px;
+        width: '100%';
+    }
+
+    @include breakpoint(sm) {
+        padding: 0 8px;
+        margin-bottom: 8px;
+        margin-top: 12px;
+        width: '100%';
+    }
+}
+
+.padRight0 {
+    @include breakpoint(sm) {
+        padding-right: 0px !important;
+    }
+}
+
+.pad0 {
+    @include breakpoint(sm) {
+        padding: 0px !important;
+    }
+}

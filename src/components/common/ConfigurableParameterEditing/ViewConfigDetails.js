@@ -8,16 +8,16 @@ import { Descriptions } from 'antd';
 import { CONFIGURABLE_PARAMETARS_INPUT_TYPE } from './InputType';
 
 const ViewConfigDetailsMain = ({ formData, styles, parameterType }) => {
-    const viewProps = {
+    const viewOneColProps = {
         bordered: false,
         colon: false,
         layout: 'vertical',
         column: { xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 },
     };
     return (
-        <div className={styles.viewContainer}>
-            <>
-                <Descriptions {...viewProps}>
+        <>
+            <div className={styles.viewContainer}>
+                <Descriptions {...viewOneColProps}>
                     <Descriptions.Item label="Control ID">{formData?.controlId}</Descriptions.Item>
                     <Descriptions.Item label="Control Description">{formData?.controlDescription}</Descriptions.Item>
                     <Descriptions.Item label="Control Group">{formData?.controlGroup}</Descriptions.Item>
@@ -39,8 +39,8 @@ const ViewConfigDetailsMain = ({ formData, styles, parameterType }) => {
                         <Descriptions.Item label="Configurable Parameter Values">{formData?.booleanValue ? 'Yes' : 'No'}</Descriptions.Item>
                     ) : null}
                 </Descriptions>
-            </>
-        </div>
+            </div>
+        </>
     );
 };
 

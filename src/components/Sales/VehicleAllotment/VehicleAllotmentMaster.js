@@ -287,6 +287,11 @@ export const VehicleAllotmentMasterBase = (props) => {
             //     value: OTF_STATUS?.BOOKED?.key,
             // },
             {
+                key: 'otfStatus',
+                title: 'Status',
+                value: OTF_STATUS?.BOOKED?.key,
+            },
+            {
                 key: 'pageSize',
                 title: 'Value',
                 value: 10,
@@ -305,7 +310,7 @@ export const VehicleAllotmentMasterBase = (props) => {
     }, [filterStringOTFSearch]);
 
     useEffect(() => {
-        if (userId) {
+        if (userId && toggleButton === VEHICLE_TYPE.UNALLOTED.key) {
             fetchOTFSearchedList({ setIsLoading: listShowLoading, userId, extraParams: searchOTFExtraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -392,7 +397,8 @@ export const VehicleAllotmentMasterBase = (props) => {
             updatedStatus = VEHICLE_TYPE?.UNALLOTED.key;
         }
 
-        const { otfId, otfNumber, vehicleIdentificationNumber } = allotmentSummaryDetails;
+        const { otfId, otfNumber } = selectedOTFDetails;
+        const { vehicleIdentificationNumber } = allotmentSummaryDetails;
 
         // let data = { ...allotmentSummaryDetails, vehicleOTFDetails: selectedOTFDetails, allotmentStatus: updatedStatus };
         let data = { otfId, otfNumber, allotmentStatus: updatedStatus, vehicleIdentificationNumber };
@@ -479,15 +485,17 @@ export const VehicleAllotmentMasterBase = (props) => {
         setSelectedOrderOTFDetails();
     };
 
+    const fixedWith = toggleButton === VEHICLE_TYPE.ALLOTED.key;
     const tableProps = {
         dynamicPagination,
         totalRecords: allotmentSearchedList?.totalRecords,
         page,
         setPage,
         isLoading: showDataLoading,
-        tableColumn: tableColumn(handleButtonClick, toggleButton),
+        tableColumn: tableColumn(handleButtonClick, toggleButton, fixedWith),
         tableData: allotmentSearchedList?.paginationData,
         showAddButton: false,
+        scroll: fixedWith ? { x: 1400 } : '',
     };
 
     const onAdvanceSearchCloseAction = () => {

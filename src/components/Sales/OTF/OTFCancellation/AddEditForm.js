@@ -20,7 +20,8 @@ import { convertDateTime } from 'utils/formatDateTime';
 import { debounce } from 'utils/debounce';
 import { UploadUtil } from 'utils/Upload';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 const { TextArea, Search } = Input;
 
@@ -134,7 +135,7 @@ const AddEditFormMain = (props) => {
         optionFilterProp: 'children',
         showSearch: false,
         allowClear: true,
-        className: styles.headerSelectField,
+        // className: styles.headerSelectField,
     };
 
     const buttonProps = {
@@ -168,7 +169,7 @@ const AddEditFormMain = (props) => {
             <Form form={otfCancellationForm} data-testid="test" onFinish={onFinishOTFCancellation} layout="vertical" autocomplete="off" colon="false">
                 <Row gutter={20} className={styles.drawerBody}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Card className={styles.ExchangeCard}>
+                        <Card className={styles.marB20}>
                             <Descriptions {...viewProps}>
                                 <Descriptions.Item label="OTF No.">{checkAndSetDefaultValue(selectedOrder?.otfNumber, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="OTF Date">{checkAndSetDefaultValue(convertDateTime(selectedOrder?.otfDate, 'DD MMM YYYY'), isLoading)}</Descriptions.Item>
@@ -210,7 +211,7 @@ const AddEditFormMain = (props) => {
 
                         {reasonTypeChange === PARAM_MASTER.LOMMD.id && (
                             <Row>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.inputAutFillWrapper}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                     <Form.Item name="dealerName" label="Find Dealer Name" rules={[validateRequiredSelectField('Dealer Name')]}>
                                         <AutoComplete label="Find Dealer Name" options={dealerList} backfill={false} onSelect={handleSelect} onSearch={onSearchDealer} allowSearch>
                                             <Search allowClear placeholder={preparePlaceholderAutoComplete(' / Search Dealer Name')} />
@@ -228,7 +229,7 @@ const AddEditFormMain = (props) => {
                             </Col>
                         </Row>
                         <Row>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.textareaError}>
                                 <Form.Item name="cancellationRemark" label="Cancellation Remarks" rules={[validateRequiredInputField('Cancellation Remarks')]}>
                                     <TextArea maxLength={300} placeholder={preparePlaceholderText('Cancellation Remarks')} showCount />
                                 </Form.Item>

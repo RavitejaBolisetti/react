@@ -14,7 +14,8 @@ import { geoPinCodeDataActions } from 'store/actions/data/geo/pincodes';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { CUSTOMER_TYPE } from 'constants/CustomerType';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 import { bindActionCreators } from 'redux';
 import { showGlobalNotification } from 'store/actions/notification';
 import { addressIndividualDataActions } from 'store/actions/data/customerMaster/individual/address/individualAddress';

@@ -6,7 +6,8 @@
 import { Button, Row, Col } from 'antd';
 import React from 'react';
 import { OTF_FORM_ACTION_TYPE } from 'constants/otfActionType';
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 const OTFFormButton = ({ buttonData, id = { edit: 'edit', transfer: 'transfer', cancel: 'cancelOTF', allot: 'allot', unallot: 'unallot', invoice: 'invoice', deliverynote: 'deliveryNote', Next: 'myform' }, loader, onCloseAction, handleButtonClick, formData }) => {
     return (

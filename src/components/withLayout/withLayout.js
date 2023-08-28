@@ -6,7 +6,8 @@
 import React from 'react';
 import { Layout } from 'antd';
 
-import styles from './withLayout.module.css';
+import styles from './withLayout.module.scss';
+//import styles from './withLayout.module.css';
 
 const { Header, Content } = Layout;
 

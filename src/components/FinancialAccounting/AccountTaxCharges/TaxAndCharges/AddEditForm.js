@@ -8,7 +8,9 @@ import { Col, Input, Form, Row, Switch, Button, InputNumber } from 'antd';
 import TreeSelectField from 'components/common/TreeSelectField';
 import { validateRequiredInputField, validateRequiredSelectField, valueOfPer, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
 import { withDrawer } from 'components/withDrawer';
-import styles from 'components/common/Common.module.css';
+
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 import { TAX_CHARGES_TYPE } from 'constants/modules/taxChargesType';
 import { TAX_CHARGES_CALCULATION_TYPE } from 'constants/modules/taxChargesCalculationType';
@@ -134,7 +136,7 @@ const AddEditFormMain = (props) => {
                                 </Form.Item>
                             </Col>
 
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.textareaError}>
                                 <Form.Item initialValue={formData?.taxChargesTypeDescription} label="Tax/Charge Type Descrption" name="taxChargesTypeDescription" rules={[validateRequiredInputField('Tax/Charge Type Descrption')]}>
                                     <TextArea maxLength={300} placeholder={preparePlaceholderText('Tax/Charge Type Descrption')} showCount />
                                 </Form.Item>

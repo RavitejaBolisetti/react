@@ -12,7 +12,8 @@ import { DrawerFormButton } from 'components/common/Button';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { UploadUtil } from 'utils/Upload';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 const VehiclePriceMasterUploadMain = (uploadProps) => {
     const { listShowLoading, downloadFile, form, formData, onCloseAction, onFinish, onFinishFailed } = uploadProps;

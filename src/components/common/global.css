@@ -61,19 +61,17 @@ p {
     color: #ffffff;
 }
 
-:global .ant-btn:not(.ant-btn-icon-only) > .ant-btn-icon.ant-btn-loading-icon,
-:global .ant-btn:not(.ant-btn-icon-only) > .ant-btn-icon:not(:last-child) {
+:global .ant-btn:not(.ant-btn-icon-only)>.ant-btn-icon.ant-btn-loading-icon,
+:global .ant-btn:not(.ant-btn-icon-only)>.ant-btn-icon:not(:last-child) {
     margin-inline-end: 6px;
 }
 
-:global .ant-btn:not(.ant-btn-icon-only) > .ant-btn-icon.ant-btn-loading-icon .anticon,
-:global .ant-btn:not(.ant-btn-icon-only) > .ant-btn-icon:not(:last-child) .anticon {
+:global .ant-btn:not(.ant-btn-icon-only)>.ant-btn-icon.ant-btn-loading-icon .anticon,
+:global .ant-btn:not(.ant-btn-icon-only)>.ant-btn-icon:not(:last-child) .anticon {
     color: #ffffff;
 }
 
 :global .ant-btn-dangerous.ant-btn-icon-only {
-    /* display: flex;
-    align-items: center; */
     width: auto;
     padding: 6px 15px;
     line-height: 12px;
@@ -90,10 +88,10 @@ p {
     color: #b5b5b6;
 }
 
-:global .ant-btn-primary.ant-btn-dangerous:disabled:not(.ant-btn-icon-only) > .ant-btn-icon.ant-btn-loading-icon .anticon,
-:global .ant-btn-primary.ant-btn-dangerous:disabled:not(.ant-btn-icon-only) > .ant-btn-icon:not(:last-child) .anticon,
-:global .ant-btn-primary:disabled:not(.ant-btn-icon-only) > .ant-btn-icon.ant-btn-loading-icon .anticon,
-:global .ant-btn-primary:disabled:not(.ant-btn-icon-only) > .ant-btn-icon:not(:last-child) .anticon {
+:global .ant-btn-primary.ant-btn-dangerous:disabled:not(.ant-btn-icon-only)>.ant-btn-icon.ant-btn-loading-icon .anticon,
+:global .ant-btn-primary.ant-btn-dangerous:disabled:not(.ant-btn-icon-only)>.ant-btn-icon:not(:last-child) .anticon,
+:global .ant-btn-primary:disabled:not(.ant-btn-icon-only)>.ant-btn-icon.ant-btn-loading-icon .anticon,
+:global .ant-btn-primary:disabled:not(.ant-btn-icon-only)>.ant-btn-icon:not(:last-child) .anticon {
     color: #b5b5b6;
 }
 
@@ -146,15 +144,84 @@ p {
 
 /* AntD Switch Checkbox Design End*/
 
-/* AntD Checkbox Design Start*/
-:global .ant-checkbox .ant-checkbox-inner {
+/* AntD Checkbox & Tree-Checkbox Design Start*/
+:global .ant-tree .ant-tree-treenode {
+    display: flex;
+    align-items: flex-start;
+    padding: 0 0 4px 0;
+    outline: none;
+}
+
+:global .ant-tree .ant-tree-node-content-wrapper:hover .site-tree-search-value,
+:global .ant-tree .ant-tree-checkbox+span:hover .site-tree-search-value {
+    color: #ff3e5b !important;
+}
+
+:global .ant-tree .ant-tree-node-content-wrapper.ant-tree-node-selected,
+:global .ant-tree .ant-tree-checkbox+span.ant-tree-node-selected {
+    background-color: transparent;
+    color: #ff3e5b;
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+:global .ant-tree .ant-tree-switcher {
+    margin-right: 6px;
+}
+
+:global .ant-tree .ant-tree-switcher .anticon svg {
+    height: 20px;
+    width: 20px;
+}
+
+:global .ant-tree-show-line .ant-tree-switcher-line-icon {
+    vertical-align: -0.35em;
+}
+
+:global .ant-tree .ant-tree-checkbox {
+    margin-inline-end: 0;
+}
+
+:global .ant-tree .ant-tree-node-content-wrapper,
+:global .ant-tree .ant-tree-checkbox+span {
+    color: #858585;
+}
+
+:global .ant-tree .ant-tree-checkbox-indeterminate+span {
+    color: #0b0b0c;
+}
+
+:global .ant-tree .ant-tree-checkbox-checked+span {
+    color: #ff3e5b;
+}
+
+:global .ant-tree .ant-tree-node-content-wrapper:hover,
+:global .ant-tree .ant-tree-checkbox+span:hover,
+:global .ant-tree .ant-tree-checkbox:hover+span,
+:global .ant-tree .ant-tree-checkbox-indeterminate:hover+span {
+    background-color: transparent;
+    color: #ff3e5b;
+}
+
+:global .ant-checkbox .ant-checkbox-inner,
+:global .ant-tree .ant-tree-checkbox .ant-tree-checkbox-inner {
     width: 20px;
     height: 20px;
     background-color: #ffffff;
+    border: 1px solid #b5b5b6;
+}
+
+:global .ant-checkbox-checked .ant-checkbox-inner {
+    border-color: #0b0b0c;
+}
+
+:global .ant-tree .ant-tree-checkbox-checked .ant-tree-checkbox-inner,
+:global .ant-tree .ant-tree-checkbox-indeterminate .ant-tree-checkbox-inner {
     border: 1px solid #0b0b0c;
 }
 
-:global .ant-checkbox .ant-checkbox-inner:after {
+:global .ant-checkbox .ant-checkbox-inner:after,
+:global .ant-tree .ant-tree-checkbox .ant-tree-checkbox-inner:after {
     top: 44%;
     inset-inline-start: 28%;
     width: 6px;
@@ -164,24 +231,45 @@ p {
     border-inline-start: 0;
 }
 
-:global .ant-checkbox-indeterminate .ant-checkbox-inner:after {
-    top: 50%;
-    inset-inline-start: 50%;
-    width: 12px;
-    height: 12px;
+:global .ant-tree .ant-tree-checkbox-indeterminate .ant-tree-checkbox-inner:after {
+    top: 50% !important;
+    inset-inline-start: 50% !important;
+    width: 12px !important;
+    height: 12px !important;
+    border-radius: 2px;
 }
+
+/* :global .ant-checkbox-indeterminate .ant-checkbox-inner:after {
+    top: 50% !important;
+    inset-inline-start: 50% !important;
+    width: 12px !important;
+    height: 12px !important;
+} */
 
 :global .ant-checkbox-disabled .ant-checkbox-inner:after {
     border-color: #b5b5b6;
 }
 
-:global .ant-checkbox + span {
+:global .ant-checkbox+span {
     padding-inline-start: 10px;
     padding-inline-end: 0;
     color: #0b0b0c;
     font-size: 14px;
     font-weight: 500;
     line-height: 23px;
+}
+
+:global .ant-checkbox:hover+span,
+:global .ant-checkbox+span:hover,
+:global .ant-checkbox-checked.ant-checkbox:hover+span,
+:global .ant-checkbox-checked.ant-checkbox+span:hover {
+    color: #ff3e5b;
+}
+
+:global .ant-checkbox-disabled.ant-checkbox:hover+span,
+:global .ant-checkbox-disabled.ant-checkbox+span:hover {
+    pointer-events: none;
+    color: #0b0b0c;
 }
 
 :global .ant-checkbox-disabled .ant-checkbox-inner {
@@ -201,7 +289,33 @@ p {
     background-color: transparent;
 }
 
+:global .ant-tree .ant-tree-checkbox-wrapper-checked:not(.ant-tree-checkbox-wrapper-disabled):hover .ant-tree-checkbox-inner,
+:global .ant-tree .ant-tree-checkbox-checked:not(.ant-tree-checkbox-disabled):hover .ant-tree-checkbox-inner {
+    background-color: #ffffff;
+    border-color: #ff3e5b;
+}
+
 /* AntD Checkbox Design End*/
+
+/* AntD Radio Button Design Start*/
+:global .ant-radio-wrapper .ant-radio-inner {
+    border-color: #b5b5b6;
+}
+
+:global .ant-radio-wrapper .ant-radio-checked .ant-radio-inner {
+    background-color: #ffffff;
+    border-color: #0b0b0c;
+}
+
+:global .ant-radio-wrapper .ant-radio-inner::after {
+    width: 24px;
+    height: 24px;
+    margin-block-start: -12px;
+    margin-inline-start: -12px;
+    background-color: #ff3e5b;
+}
+
+/* AntD Radio Button Design End*/
 
 /* AntD Divider Design Start*/
 :global .ant-divider-vertical {
@@ -225,6 +339,12 @@ p {
     padding: 1px;
     margin-inline-end: 0;
     padding-inline: 6px;
+}
+
+:global .ant-tag-default {
+    color: #ff3e5b;
+    background: #f2f2f2;
+    border-color: #b5b5b6;
 }
 
 :global .ant-tag-success {
@@ -266,18 +386,27 @@ p {
 /* AntD Tags Design End*/
 
 /* AntD Table Design Start*/
-:global .ant-table-wrapper table {
+:global .ant-table-wrapper .ant-table-container {
+    border-radius: 4px;
     border: 1px solid #e6e6e6;
+}
+
+:global .ant-table-wrapper .ant-table {
     border-radius: 4px;
 }
+
+/* :global .ant-table-wrapper table {
+    border: 1px solid #e6e6e6;
+    border-radius: 4px;
+} */
 
 :global .ant-table-wrapper .ant-table-expanded-row-fixed {
     width: 100% !important;
 }
 
-:global .ant-table-wrapper .ant-table .ant-table-content {
+/* :global .ant-table-wrapper .ant-table .ant-table-content {
     border-radius: 4px 4px 0 0;
-}
+} */
 
 :global .ant-table-wrapper .ant-table-ping-left:not(.ant-table-has-fix-left) .ant-table-container::before {
     box-shadow: none;
@@ -295,29 +424,46 @@ p {
     border-start-end-radius: 4px;
 } */
 
-:global .ant-table-wrapper .ant-table-tbody > tr:last-child > td:first-child,
-:global .ant-table-wrapper .ant-table-tbody > tr.ant-table-row:last-child:hover > td:first-child {
+:global .ant-table-wrapper .ant-table-tbody>tr:last-child>td:first-child,
+:global .ant-table-wrapper .ant-table-tbody>tr.ant-table-row:last-child:hover>td:first-child {
     border-radius: 0 0 0 4px;
 }
 
-:global .ant-table-wrapper .ant-table-tbody > tr:last-child > td:last-child,
-:global .ant-table-wrapper .ant-table-tbody > tr.ant-table-row:last-child:hover > td:last-child {
+:global .ant-table-wrapper .ant-table-tbody>tr:last-child>td:last-child,
+:global .ant-table-wrapper .ant-table-tbody>tr.ant-table-row:last-child:hover>td:last-child {
     border-radius: 0 0 4px 0;
 }
 
-:global .ant-table-wrapper .ant-table-thead > tr > th {
+:global .ant-table-wrapper table thead tr th.ant-table-selection-column,
+:global .ant-table-wrapper table thead tr td.ant-table-selection-column {
+    background: #f2f2f2;
+    border-bottom: 1px solid #e6e6e6;
+}
+
+:global .ant-table-wrapper .ant-table-cell-scrollbar:not([rowspan]) {
+    background: #f2f2f2;
+    box-shadow: none;
+}
+
+:global .ant-table-wrapper .ant-table-thead>tr>th {
     color: #0b0b0c;
     line-height: 20px;
     background: #f2f2f2;
-    border-bottom: none;
+    border-bottom: 1px solid #e6e6e6;
     padding: 12px 16px;
 }
 
-:global .ant-table-wrapper thead {
-    box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.15);
+:global .ant-table-wrapper .ant-table-thead>tr>th:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before,
+:global .ant-table-wrapper .ant-table-thead>tr>td:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before {
+    background-color: #e6e6e6;
 }
 
-:global .ant-table-wrapper .ant-table-tbody > tr > td {
+:global .ant-table-wrapper thead {
+    /* box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.15); */
+    box-shadow: none;
+}
+
+:global .ant-table-wrapper .ant-table-tbody>tr>td {
     padding: 10px 16px;
     color: #545454;
     font-weight: 500;
@@ -330,27 +476,33 @@ p {
     padding-left: 16px;
 } */
 
-:global .ant-table-wrapper .ant-table-tbody > tr > td:last-child .ant-space .ant-space-item:last-child button {
+:global .ant-table-wrapper .ant-table-tbody>tr>td:last-child .ant-space .ant-space-item:last-child button {
     margin-right: 0;
 }
 
-:global .ant-table-wrapper .ant-table-tbody > tr:last-child > td {
+:global .ant-table-wrapper .ant-table-tbody>tr:last-child>td {
     border-bottom: none;
 }
 
-:global .ant-table-wrapper .ant-table-tbody > tr.ant-table-row-selected > td {
+:global .ant-table-wrapper .ant-table-tbody>tr.ant-table-row-selected>td {
     background: #f2f2f2;
 }
 
-:global .ant-table-wrapper .ant-table-tbody > tr.ant-table-row-selected:hover > td {
+/* :global .ant-table-wrapper .ant-table-tbody>tr:first-child.ant-table-row-selected>td {
+    border-top: 1px solid #e6e6e6;
+} */
+
+:global .ant-table-wrapper .ant-table-tbody>tr.ant-table-row-selected:hover>td {
     background: #e6e6e6;
 }
 
 /* AntD Table Design End*/
 
 /* AntD Table Pagination Design Start*/
+
 :global .ant-table-wrapper .ant-table-pagination.ant-pagination {
     margin: 20px 0 0;
+    display: none;
 }
 
 :global .ant-pagination .ant-pagination-total-text {
@@ -460,13 +612,9 @@ p {
 :global .ant-input-affix-wrapper:focus,
 :global .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover,
 :global .ant-input-affix-wrapper-focused {
+    border-color: #0b0b0c;
     box-shadow: none;
-    /* background: #FFFFFF; */
     z-index: 0;
-}
-
-:global .ant-input-affix-wrapper-status-error:not(.ant-input-affix-wrapper-disabled):not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper {
-    border-color: #ed302d;
 }
 
 :global .ant-input-affix-wrapper .ant-input-prefix {
@@ -496,6 +644,14 @@ p {
     border: 1px solid #0b0b0c;
 }
 
+:global .ant-input-group:has(.ant-input-affix-wrapper-focused) {
+    border: 1px solid #0b0b0c;
+}
+
+:global .ant-input-group:has(.ant-input-affix-wrapper-status-error) {
+    border: 1px solid #ed302d;
+}
+
 :global .ant-input-group .ant-input-affix-wrapper {
     border: none;
 }
@@ -504,15 +660,15 @@ p {
     color: #0b0b0c;
 }
 
-:global .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child {
+:global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child {
     inset-inline-start: 0;
     padding: 5px 12px;
     padding-left: 0;
     background-color: #ffffff;
 }
 
-:global .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-btn-icon-only.ant-input-search-button:not(.ant-btn-primary),
-:global .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-btn-icon-only.ant-input-search-button:not(.ant-btn-primary):hover {
+:global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-btn-icon-only.ant-input-search-button:not(.ant-btn-primary),
+:global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-btn-icon-only.ant-input-search-button:not(.ant-btn-primary):hover {
     color: #ff3e5b;
     border: none;
     width: 20px;
@@ -520,7 +676,7 @@ p {
     box-shadow: none;
 }
 
-:global .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-btn-icon-only.ant-input-search-button:not(.ant-btn-primary) svg {
+:global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-btn-icon-only.ant-input-search-button:not(.ant-btn-primary) svg {
     width: 20px;
     height: 20px;
 }
@@ -546,7 +702,7 @@ p {
     pointer-events: none;
 }
 
-:global .ant-form-item .ant-form-item-label > label {
+:global .ant-form-item .ant-form-item-label>label {
     color: #545454;
     line-height: 22px;
     font-weight: 400;
@@ -557,12 +713,25 @@ p {
     font-size: 12px;
 }
 
-:global .ant-form-item .ant-form-item-label > label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
+:global .ant-form-item .ant-form-item-label>label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
     margin-top: -3px;
     margin-inline-end: 6px;
+    color: #ff3e5b;
 }
 
-:global .ant-form-item .ant-form-item-label > label::after {
+:global .ant-form-item-required:before {
+    position: absolute;
+    right: -15px;
+    top: 3px;
+}
+
+:global .ant-form-item-required:before {
+    position: absolute;
+    right: -15px;
+    top: 3px;
+}
+
+:global .ant-form-item .ant-form-item-label>label::after {
     margin-inline-start: 0px;
     margin-inline-end: 0px;
 }
@@ -571,15 +740,31 @@ p {
     display: none;
 } */
 
+:global .ant-select-show-search {
+    width: 100%;
+}
+
 :global .ant-select:not(.ant-select-customize-input) .ant-select-selector {
     border: 1px solid #b5b5b6;
     height: auto;
     padding: 2px 12px;
 }
 
-:global .ant-select:not(.ant-select-disabled):not(.ant-select-customize-input):not(.ant-pagination-size-changer):hover .ant-select-selector {
+:global .ant-select:not(.ant-select-disabled):not(.ant-select-customize-input):not(.ant-pagination-size-changer):hover .ant-select-selector,
+:global .ant-select-focused.ant-select:not(.ant-select-disabled) .ant-select-selector,
+:global .ant-select-status-success.ant-select-focused.ant-select:not(.ant-select-disabled) .ant-select-selector {
     border-color: #0b0b0c !important;
-    box-shadow: none;
+    box-shadow: none !important;
+}
+
+:global .ant-input-affix-wrapper-status-error:not(.ant-input-affix-wrapper-disabled):not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper,
+:global .ant-input-affix-wrapper-status-error:not(.ant-input-affix-wrapper-disabled):not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper-focused,
+:global .ant-input-affix-wrapper-status-error:not(.ant-input-affix-wrapper-disabled):not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper:hover,
+:global .ant-select-status-error:not(.ant-select-disabled):not(.ant-select-customize-input):not(.ant-pagination-size-changer) .ant-select-selector,
+:global .ant-select-status-error:not(.ant-select-disabled):not(.ant-select-customize-input):not(.ant-pagination-size-changer) .ant-select-selector,
+:global .ant-select-status-error:not(.ant-select-disabled):not(.ant-select-customize-input):not(.ant-pagination-size-changer):hover .ant-select-selector {
+    border-color: #ed302d !important;
+    box-shadow: none !important;
 }
 
 :global .ant-select-single:not(.ant-select-customize-input) .ant-select-selector .ant-select-selection-search-input {
@@ -645,7 +830,7 @@ p {
     border-color: #e6e6e6;
 }
 
-:global .ant-input-textarea-affix-wrapper.ant-input-affix-wrapper > textarea.ant-input {
+:global .ant-input-textarea-affix-wrapper.ant-input-affix-wrapper>textarea.ant-input {
     padding: 6px 12px;
 }
 
@@ -672,14 +857,14 @@ p {
 }
 
 :global .ant-tree-select-dropdown .ant-select-tree .ant-select-tree-node-content-wrapper.ant-select-tree-node-selected,
-:global .ant-tree-select-dropdown .ant-select-tree .ant-select-tree-checkbox + span.ant-select-tree-node-selected {
+:global .ant-tree-select-dropdown .ant-select-tree .ant-select-tree-checkbox+span.ant-select-tree-node-selected {
     background-color: transparent !important;
     color: #ff3e5b;
     font-size: 14px;
 }
 
 :global .ant-tree-select-dropdown .ant-select-tree .ant-select-tree-node-content-wrapper:hover,
-:global .ant-tree-select-dropdown .ant-select-tree .ant-select-tree-checkbox + span:hover {
+:global .ant-tree-select-dropdown .ant-select-tree .ant-select-tree-checkbox+span:hover {
     background-color: transparent !important;
 }
 
@@ -697,7 +882,7 @@ p {
 /* AntD Modal Design Start*/
 :global .ant-modal .ant-modal-content {
     padding: 20px;
-    max-height: 300vh;
+    max-height: 80vh;
 }
 
 :global .ant-modal .ant-modal-content .ant-modal-close,
@@ -909,11 +1094,11 @@ p {
     margin-bottom: 20px;
 }
 
-:global .ant-collapse > .ant-collapse-item {
+:global .ant-collapse>.ant-collapse-item {
     border-bottom: none;
 }
 
-:global .ant-collapse > .ant-collapse-item > .ant-collapse-header {
+:global .ant-collapse>.ant-collapse-item>.ant-collapse-header {
     align-items: center;
     padding: 16px 20px;
     font-size: 16px;
@@ -921,20 +1106,22 @@ p {
     color: #0b0b0c;
 }
 
-:global .ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-collapse-header-text {
+:global .ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-collapse-header-text {
+    display: flex;
+    align-items: center;
     font-weight: 600;
 }
 
-:global .ant-collapse > .ant-collapse-item > .ant-collapse-header .ant-collapse-expand-icon {
+:global .ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-collapse-expand-icon {
     margin-inline-start: 0;
 }
 
-:global .ant-collapse.ant-collapse-icon-position-end > .ant-collapse-item > .ant-collapse-header .ant-collapse-expand-icon {
+:global .ant-collapse.ant-collapse-icon-position-end>.ant-collapse-item>.ant-collapse-header .ant-collapse-expand-icon {
     height: 24px;
     color: #ff3e5b;
 }
 
-:global .ant-collapse.ant-collapse-icon-position-end > .ant-collapse-item > .ant-collapse-header .ant-collapse-expand-icon span {
+:global .ant-collapse.ant-collapse-icon-position-end>.ant-collapse-item>.ant-collapse-header .ant-collapse-expand-icon span {
     font-size: 24px;
 }
 
@@ -943,7 +1130,7 @@ p {
     border-top: none;
 }
 
-:global .ant-collapse .ant-collapse-content > .ant-collapse-content-box {
+:global .ant-collapse .ant-collapse-content>.ant-collapse-content-box {
     padding: 0 20px;
     margin-bottom: 20px;
 }
@@ -1093,17 +1280,17 @@ p {
     padding-left: 22px !important;
 }
 
-:global .ant-menu .ant-menu-item .ant-menu-item-icon + span,
-:global .ant-menu .ant-menu-submenu-title .ant-menu-item-icon + span,
-:global .ant-menu .ant-menu-item .anticon + span,
-:global .ant-menu .ant-menu-submenu-title .anticon + span {
+:global .ant-menu .ant-menu-item .ant-menu-item-icon+span,
+:global .ant-menu .ant-menu-submenu-title .ant-menu-item-icon+span,
+:global .ant-menu .ant-menu-item .anticon+span,
+:global .ant-menu .ant-menu-submenu-title .anticon+span {
     padding-left: 20px !important;
 }
 
 /* changes on menu list items on select/visited/focus */
 :global .ant-menu-light .ant-menu-item-selected,
-:global .ant-menu-light .ant-menu-submenu-selected > .ant-menu-submenu-title,
-:global .ant-menu-light .ant-menu-submenu-selected > .ant-menu-submenu-title span.ant-menu-title-content a {
+:global .ant-menu-light .ant-menu-submenu-selected>.ant-menu-submenu-title,
+:global .ant-menu-light .ant-menu-submenu-selected>.ant-menu-submenu-title span.ant-menu-title-content a {
     background-color: white;
     border-radius: 4px;
     color: #ff3e5b !important;
@@ -1132,7 +1319,7 @@ p {
     border: 2px solid #c1c1c1;
 }
 
-:global .ant-menu .ant-menu-submenu-title .ant-menu-item-icon + span {
+:global .ant-menu .ant-menu-submenu-title .ant-menu-item-icon+span {
     text-transform: uppercase;
     padding-left: 0 !important;
 }
@@ -1161,7 +1348,7 @@ p {
     width: 8px;
 }
 
-:global .ant-menu-inline .ant-menu-sub.ant-menu-inline > .ant-menu-submenu > .ant-menu-submenu-title {
+:global .ant-menu-inline .ant-menu-sub.ant-menu-inline>.ant-menu-submenu>.ant-menu-submenu-title {
     height: 36px !important;
 }
 
@@ -1178,8 +1365,8 @@ p {
     width: 5px !important;
 }
 
-:global .ant-menu-inline.ant-menu-root .ant-menu-submenu-title > .ant-menu-title-content span:first-child,
-:global .ant-menu-inline.ant-menu-root .ant-menu-item > .ant-menu-title-content span:first-child {
+:global .ant-menu-inline.ant-menu-root .ant-menu-submenu-title>.ant-menu-title-content span:first-child,
+:global .ant-menu-inline.ant-menu-root .ant-menu-item>.ant-menu-title-content span:first-child {
     padding-left: 2px;
 }
 
@@ -1187,6 +1374,14 @@ p {
     background-color: #f2f2f2 !important;
 }
 
+/* AntD Space Design Start*/
+:global .ant-space {
+    display: flex;
+}
+
+/* AntD Space Design End*/
+
+/* AntD Descriptions Design Start*/
 :global .ant-descriptions .ant-descriptions-view .ant-descriptions-row:nth-child(odd) .ant-descriptions-item {
     padding-bottom: 0;
 }
@@ -1195,7 +1390,7 @@ p {
     padding-bottom: 20px;
 }
 
-:global .ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-title-content > a:hover {
+:global .ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-title-content>a:hover {
     text-decoration: none;
 }
 
@@ -1229,10 +1424,23 @@ p {
     line-height: 40px;
 }
 
+:global .rc-virtual-list-holder:has(+ div.rc-virtual-list-scrollbar-show) {
+    padding-right: 10px;
+}
+
 :global .rc-virtual-list-scrollbar.rc-virtual-list-scrollbar-show {
     display: block !important;
+    background: #ffffff;
 }
 
 :global .rc-virtual-list-scrollbar-thumb {
-    background: #c1c1c1 !important;
+    width: 50% !important;
+    background: #b5b5b6 !important;
+    border: 2px solid #ffffff;
 }
+
+:global .rc-virtual-list-scrollbar-thumb:hover {
+    border: 2px solid #b5b5b6;
+}
+
+/* Miscellaneous CSS Design End*/

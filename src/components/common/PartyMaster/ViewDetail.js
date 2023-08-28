@@ -7,16 +7,16 @@ import React from 'react';
 import { Descriptions } from 'antd';
 
 const ViewDetailBase = ({ formData, styles, parameterType }) => {
-    const viewProps = {
+    const viewOneColProps = {
         bordered: false,
         colon: false,
         layout: 'vertical',
         column: { xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 },
     };
     return (
-        <div className={styles?.viewContainer}>
-            <>
-                <Descriptions {...viewProps}>
+        <>
+            <div className={styles?.viewContainer}>
+                <Descriptions {...viewOneColProps}>
                     <Descriptions.Item label="Party Category">{formData?.partyCategory}</Descriptions.Item>
                     <Descriptions.Item label="Party Code">{formData?.partyCode}</Descriptions.Item>
                     <Descriptions.Item label="Party Name">{formData?.partyName}</Descriptions.Item>
@@ -38,8 +38,8 @@ const ViewDetailBase = ({ formData, styles, parameterType }) => {
                     <Descriptions.Item label="Credit limit">{formData?.creditLimit}</Descriptions.Item>
                     <Descriptions.Item label="Remarks">{formData?.remarks}</Descriptions.Item>
                 </Descriptions>
-            </>
-        </div>
+            </div>
+        </>
     );
 };
 

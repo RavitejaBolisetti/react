@@ -6,7 +6,8 @@
 import React, { useEffect } from 'react';
 import { Form, Button, Row, Col } from 'antd';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 import { FilterIcon } from 'Icons';
 import { RxCross2 } from 'react-icons/rx';
 import { VEHICLE_TYPE } from 'constants/VehicleType';

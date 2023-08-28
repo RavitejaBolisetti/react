@@ -7,7 +7,8 @@ import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import { OTFStatusTag } from './utils/OTFStatusTag';
 import { convertDateMonthYear } from 'utils/formatDateTime';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 export const tableColumn = (handleButtonClick, page, pageSize) => {
     const tableColumn = [
@@ -18,7 +19,7 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
         }),
 
         tblPrepareColumns({
-            title: 'OTF Date 1',
+            title: 'OTF Date',
             dataIndex: 'otfDate',
             width: '14%',
             render: (_, record) => (record?.otfDate ? convertDateMonthYear(record?.otfDate) : ''),

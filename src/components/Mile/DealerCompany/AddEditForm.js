@@ -10,7 +10,8 @@ import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/prepareP
 import { ViewDetail } from './ViewDetail';
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -204,7 +205,7 @@ const AddEditFormMain = (props) => {
                                 </Col>
                             </Row>
                             <Row gutter={16}>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.textareaError}>
                                     <Form.Item initialValue={formData?.address} label="Company Address" name="address" rules={[validateRequiredInputField('Company Address')]}>
                                         <TextArea placeholder={preparePlaceholderText('Company Address')} showCount maxLength={300} />
                                     </Form.Item>

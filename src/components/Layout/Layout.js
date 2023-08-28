@@ -5,7 +5,10 @@
  */
 import React from 'react';
 import { Layout as AntdLayout } from 'antd';
-import styles from './Layout.module.css';
+
+import styles from './Layout.module.scss';
+//import styles from './Layout.module.css';
+
 import Sider from 'antd/es/layout/Sider';
 
 const Header = ({ children }) => <div className={styles.topHeader}>{children}</div>;

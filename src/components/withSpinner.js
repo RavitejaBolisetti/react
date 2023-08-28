@@ -5,7 +5,8 @@
  */
 import React from 'react';
 import { Spin } from 'antd';
-import styles from './withSpinner.module.css';
+import styles from './withSpinner.module.scss';
+//import styles from './withSpinner.module.css';
 
 const antIcon = undefined;
 

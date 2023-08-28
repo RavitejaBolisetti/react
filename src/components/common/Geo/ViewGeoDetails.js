@@ -8,7 +8,7 @@ import { Descriptions } from 'antd';
 import { HIERARCHY_DEFAULT_PARENT } from 'constants/constants';
 
 export const ViewGeoDetailMain = ({ viewTitle, selectedTreeData, styles }) => {
-    const viewProps = {
+    const viewOneColProps = {
         bordered: false,
         colon: false,
         layout: 'vertical',
@@ -17,15 +17,17 @@ export const ViewGeoDetailMain = ({ viewTitle, selectedTreeData, styles }) => {
     };
 
     return (
-        <div className={`${styles.viewContainer} ${styles.hierarchyRightContainer}`}>
-            <Descriptions {...viewProps}>
-                <Descriptions.Item label="Attribute Level">{selectedTreeData?.hierarchyAttribueName}</Descriptions.Item>
-                <Descriptions.Item label="Parent">{selectedTreeData?.parentName || HIERARCHY_DEFAULT_PARENT}</Descriptions.Item>
-                <Descriptions.Item label="Code">{selectedTreeData?.geoCode}</Descriptions.Item>
-                <Descriptions.Item label="Name">{selectedTreeData?.geoName}</Descriptions.Item>
-                <Descriptions.Item label="Status">{selectedTreeData?.isActive ? 'Active' : 'InActive'}</Descriptions.Item>
-            </Descriptions>
-        </div>
+        <>
+            <div className={styles.viewContainer}>
+                <Descriptions {...viewOneColProps}>
+                    <Descriptions.Item label="Attribute Level">{selectedTreeData?.hierarchyAttribueName}</Descriptions.Item>
+                    <Descriptions.Item label="Parent">{selectedTreeData?.parentName || HIERARCHY_DEFAULT_PARENT}</Descriptions.Item>
+                    <Descriptions.Item label="Code">{selectedTreeData?.geoCode}</Descriptions.Item>
+                    <Descriptions.Item label="Name">{selectedTreeData?.geoName}</Descriptions.Item>
+                    <Descriptions.Item label="Status">{selectedTreeData?.isActive ? 'Active' : 'InActive'}</Descriptions.Item>
+                </Descriptions>
+            </div>
+        </>
     );
 };
 

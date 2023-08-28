@@ -11,8 +11,10 @@ import { DEVICE_TYPE } from 'constants/modules/UserManagement/deviceType';
 import LeftPanel from 'components/common/LeftPanel';
 import { LANGUAGE_EN } from 'language/en';
 
-import style from 'components/common/TreeView.module.css';
-import styles from 'components/common/Common.module.css';
+import style from '../../../../../components/common/TreeView.module.scss';
+//import style from 'components/common/TreeView.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
 

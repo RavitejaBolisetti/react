@@ -5,7 +5,8 @@
  */
 import React from 'react';
 import { Button, Col, Row, Space } from 'antd';
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 import { PlusOutlined } from '@ant-design/icons';
@@ -14,7 +15,7 @@ import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { USER_TYPE_USER } from 'constants/modules/UserManagement/userType';
 
 const TokenValidateDataCard = ({ tokenData, selectedDealer, handleButtonClick, userType, isLoding }) => {
-    console.log("🚀 ~ file: TokenValidateDataCard.js:17 ~ TokenValidateDataCard ~ tokenData:", tokenData)
+    console.log('🚀 ~ file: TokenValidateDataCard.js:17 ~ TokenValidateDataCard ~ tokenData:', tokenData);
     // const { employeeCode, dealerName, designation, mobileNumber, email, userName, userRoleCount, branchMapping, productMapping, isDmsUser } = tokenData;
     return (
         <div className={styles.dataDisplay}>

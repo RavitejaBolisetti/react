@@ -11,7 +11,7 @@ const { Panel } = Collapse;
 
 const expandIcon = ({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />);
 const ViewDetailBase = ({ styles, accountCategory, setDisabledEdit, financialAccountData }) => {
-    const viewProps = {
+    const viewOneColProps = {
         bordered: false,
         colon: false,
         layout: 'vertical',
@@ -19,25 +19,27 @@ const ViewDetailBase = ({ styles, accountCategory, setDisabledEdit, financialAcc
     };
 
     return (
-        <div className={styles.viewContainer}>
-            <Descriptions {...viewProps}>
-                <Descriptions.Item label="Account Category Code">{accountCategory?.[0]?.accountCategoryCode}</Descriptions.Item>
-                <Descriptions.Item label="Description">{accountCategory?.[0]?.accountCategoryDescription}</Descriptions.Item>
-                <Descriptions.Item label="Status">{accountCategory?.[0]?.status === true ? 'Active' : 'InActive'} </Descriptions.Item>
+        <>
+            <div className={styles.viewContainer}>
+                <Descriptions {...viewOneColProps}>
+                    <Descriptions.Item label="Account Category Code">{accountCategory?.[0]?.accountCategoryCode}</Descriptions.Item>
+                    <Descriptions.Item label="Description">{accountCategory?.[0]?.accountCategoryDescription}</Descriptions.Item>
+                    <Descriptions.Item label="Status">{accountCategory?.[0]?.status === true ? 'Active' : 'InActive'} </Descriptions.Item>
 
-                <div>
-                    {accountCategory?.[0]?.accountDocumentMaps?.length > 0 && (
-                        <Collapse expandIcon={expandIcon}>
-                            <Panel header="Account and Document Mapping" key="2">
-                                {accountCategory?.[0]?.accountDocumentMaps?.map((item, index) => (
-                                    <CardAccountAndDocumentMapping key={'menu' + item?.menuId} accountDocumentMapId={item?.accountDocumentMapId} applicationId={item?.applicationId} financialAccountHeadCode={item?.financialAccountHeadCode} setDisabledEdit={setDisabledEdit} documentDescription={item?.documentDescription} financialAccountData={financialAccountData} applicationName={item?.applicationName} />
-                                ))}
-                            </Panel>
-                        </Collapse>
-                    )}
-                </div>
-            </Descriptions>
-        </div>
+                    <div>
+                        {accountCategory?.[0]?.accountDocumentMaps?.length > 0 && (
+                            <Collapse expandIcon={expandIcon}>
+                                <Panel header="Account and Document Mapping" key="2">
+                                    {accountCategory?.[0]?.accountDocumentMaps?.map((item, index) => (
+                                        <CardAccountAndDocumentMapping key={'menu' + item?.menuId} accountDocumentMapId={item?.accountDocumentMapId} applicationId={item?.applicationId} financialAccountHeadCode={item?.financialAccountHeadCode} setDisabledEdit={setDisabledEdit} documentDescription={item?.documentDescription} financialAccountData={financialAccountData} applicationName={item?.applicationName} />
+                                    ))}
+                                </Panel>
+                            </Collapse>
+                        )}
+                    </div>
+                </Descriptions>
+            </div>
+        </>
     );
 };
 

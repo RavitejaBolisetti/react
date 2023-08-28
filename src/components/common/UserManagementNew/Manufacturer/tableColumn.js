@@ -6,7 +6,9 @@
 
 
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
-import styles from 'components/common/Common.module.css';
+
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 export const tableColumn = (handleButtonClick, page, pageSize) => {
     const tableColumn = [
@@ -30,18 +32,6 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             dataIndex: 'userRoleCount',
             width: '20%',
         }),
-        // tblPrepareColumns({
-        //     title: 'Hierarchy',
-        //     dataIndex: 'hierarchyMapping',
-        //     width: '14%',
-        //     render: (text) => <Tag className={text ? styles.success : styles.warning}> {text ? 'Mapped' : 'Unmapped'}</Tag>,
-        // }),
-        // tblPrepareColumns({
-        //     title: 'Products',
-        //     dataIndex: 'productsMapping',
-        //     width: '14%',
-        //     render: (text) => <Tag className={text ? styles.success : styles.warning}> {text ? 'Mapped' : 'Unmapped'}</Tag>,
-        // }),
         tblActionColumn({ styles, handleButtonClick, width: '15%' }),
     ];
     return tableColumn;
