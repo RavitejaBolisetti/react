@@ -1,0 +1,118 @@
+@import 'assets/sass/app.module.scss';
+
+
+.changeHistoryContainer {
+    & :global {
+        .ant-table-wrapper {
+            .ant-table-thead {
+                >tr {
+                    >th {
+                        > {
+                            border-radius: 0 !important;
+                            background: $primaryBlack !important;
+                            @include space(padding, top, $sp10);
+                            @include space(padding, right, $sp16);
+                            @include space(padding, bottom, $sp10);
+                            @include space(padding, left, $sp16);
+                        }
+
+                        >span {
+                            @include space(padding, right, $sp50);
+                        }
+                    }
+                }
+            }
+
+            .ant-table-filter-trigger {
+                margin-inline: -10px -8px;
+            }
+
+            .ant-table-column-title {
+                @include space(padding, right, $sp16);
+            }
+
+            .ant-table-container {
+                table {
+                    >thead {
+                        >tr {
+                            &:first-child {
+                                >* {
+                                    &:first-child {
+                                        border-start-start-radius: 0;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            .ant-table {
+                &:not(.ant-table-bordered) {
+                    .ant-table-tbody {
+                        >tr.ant-table-row {
+                            &:hover {
+                                >td {
+                                    &:first-child {
+                                        border-start-start-radius: 0;
+                                        border-end-start-radius: 0;
+                                    }
+                                }
+                            }
+                        }
+
+                        >tr {
+                            >td.ant-table-cell-row-hover {
+                                &:first-child {
+                                    border-start-start-radius: 0;
+                                    border-end-start-radius: 0;
+                                }
+                            }
+                        }
+
+                        >tr.ant-table-row.ant-table-row-selected {
+                            >td {
+                                &:first-child {
+                                    border-start-start-radius: 0;
+                                    border-end-start-radius: 0;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .ant-table-content {
+            border: 1px solid $neutralGrey0;
+
+            &::-webkit-scrollbar-track {
+                background-color: $neutralGrey0;
+            }
+
+            &::-webkit-scrollbar {
+                height: 5px;
+                background-color: $neutralGrey1;
+            }
+
+            &:hover {
+                &::-webkit-scrollbar {
+                    height: 10px;
+                }
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background-color: $primaryBlack;
+                border-radius: 10px;
+            }
+        }
+
+        .anticon {
+            color: $neutralGrey3;
+        }
+    }
+
+    h3 {
+        @include space(margin, top, $sp4);
+    }
+}

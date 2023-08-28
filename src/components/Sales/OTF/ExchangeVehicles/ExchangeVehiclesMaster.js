@@ -25,7 +25,8 @@ import { ViewDetail } from './ViewDetail';
 import { OTFFormButton } from '../OTFFormButton';
 import { OTFStatusBar } from '../utils/OTFStatusBar';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 const mapStateToProps = (state) => {
     const {
@@ -263,11 +264,11 @@ const ExchangeVehiclesBase = (props) => {
     };
     const onFinish = (values) => {
         const { customerName } = values;
-        if (!customerName) {
+        if (values?.exchange && !customerName) {
             showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Verify Customer id to continue' });
             return;
         }
-        const data = { ...values, id: exchangeData?.id || '', otfNumber: selectedOrderId };
+        const data = { ...values, exchange: values?.exchange ? 1 : 0, id: exchangeData?.id || '', otfNumber: selectedOrderId };
 
         const onSuccess = (res) => {
             form.resetFields();

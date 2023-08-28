@@ -9,7 +9,8 @@ import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
 import { CopytoClipboard } from 'utils/CopytoClipboard';
 import dayjs from 'dayjs';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
 

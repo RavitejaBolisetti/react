@@ -15,7 +15,8 @@ import { validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { VEHICLE_RECEIPT_STATUS } from 'constants/VehicleReceiptStatus';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
@@ -180,13 +181,11 @@ const AddEditFormMain = (props) => {
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                         <Form.Item initialValue={item?.vehicleStatus} label="Vehicle Status" name={[index, 'vehicleStatus']} rules={[validateRequiredSelectField('Vehicle Status')]}>
                                             <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} {...selectProps}>
-                                                {vehicleStatusType
-                                                    ?.filter((i) => i?.key !== VEHICLE_RECEIPT_STATUS.IN_TRANSIT.key)
-                                                    ?.map((item) => (
-                                                        <Option key={'vs' + item.key} value={item.key}>
-                                                            {item.value}
-                                                        </Option>
-                                                    ))}
+                                                {vehicleStatusType?.map((item) => (
+                                                    <Option disabled={VEHICLE_RECEIPT_STATUS.RETURNED.key === item.key} key={'vs' + item.key} value={item.key}>
+                                                        {item.value}
+                                                    </Option>
+                                                ))}
                                             </Select>
                                         </Form.Item>
                                     </Col>

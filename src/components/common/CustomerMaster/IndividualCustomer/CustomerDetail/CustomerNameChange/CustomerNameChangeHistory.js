@@ -15,10 +15,10 @@ import { withDrawer } from 'components/withDrawer';
 import { tblPrepareColumns } from 'utils/tableColumn';
 import { convertDateTime } from 'utils/formatDateTime';
 import { DataTable } from 'utils/dataTable';
-
 import { BASE_URL_CUSTOMER_MASTER_NAME_CHANGE_HISTORY as customURL } from 'constants/routingApi';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+
 const mapStateToProps = (state) => {
     const {
         auth: { userId },

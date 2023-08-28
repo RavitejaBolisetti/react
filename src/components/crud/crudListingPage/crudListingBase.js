@@ -22,7 +22,8 @@ import { PAGINATION } from 'constants/constants';
 import CurdSearchBox from './curdSearchBox';
 import { ListDataTable } from 'utils/ListDataTable';
 
-import styles from './crudListing.module.css';
+import styles from './crudListing.module.scss';
+//import styles from './crudListing.module.css';
 
 export const dependentDataLoader =
     (myKey) =>

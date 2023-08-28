@@ -8,7 +8,7 @@ import { searchValidator } from 'utils/validation';
 import { RxCross2 } from 'react-icons/rx';
 import { FaHistory } from 'react-icons/fa';
 import { FilterIcon } from 'Icons';
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 import { TfiReload } from 'react-icons/tfi';
 import { BsDownload } from 'react-icons/bs';

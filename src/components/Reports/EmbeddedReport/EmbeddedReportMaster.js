@@ -13,7 +13,8 @@ import { bindActionCreators } from 'redux';
 import { reportDataActions } from 'store/actions/data/report/reports';
 import { showGlobalNotification } from 'store/actions/notification';
 
-import styles from './EmbeddedReportMaster.module.css';
+import styles from './EmbeddedReportMaster.module.scss';
+//import styles from './EmbeddedReportMaster.module.css';
 
 const mapStateToProps = (state) => {
     const {

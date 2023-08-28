@@ -10,7 +10,8 @@ import { VehicleReceiptFormButton } from '../VehicleReceiptFormButton';
 import { LANGUAGE_EN } from 'language/en';
 import { HiCheck } from 'react-icons/hi';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 const { Title, Text } = Typography;
 

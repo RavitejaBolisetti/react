@@ -21,7 +21,8 @@ import { CardSkeleton } from 'components/common/Skeleton';
 import { VEHICLE_DETAIL_SECTION } from 'constants/VehicleDetailSection';
 import { LANGUAGE_EN } from 'language/en';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 const { Text } = Typography;
 

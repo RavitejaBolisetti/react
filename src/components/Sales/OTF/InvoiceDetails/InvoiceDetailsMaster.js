@@ -20,7 +20,8 @@ import { OTFFormButton } from '../OTFFormButton';
 import { tableColumnInvoice, tableColumnDelivery } from './tableColumn';
 import { OTF_STATUS } from 'constants/OTFStatus';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
 const mapStateToProps = (state) => {

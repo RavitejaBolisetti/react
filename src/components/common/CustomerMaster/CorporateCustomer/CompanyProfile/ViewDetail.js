@@ -4,18 +4,19 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { Space, Collapse,  Descriptions,  Divider } from 'antd';
+import { Space, Collapse, Descriptions, Divider } from 'antd';
 
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { getCodeValue } from 'utils/getCodeValue';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
 
 const ViewDetailMain = (props) => {
-    const { formData,  isLoading, appCategoryData } = props;
+    const { formData, isLoading, appCategoryData } = props;
     const [activeKey, setactiveKey] = useState([1]);
 
     const viewProps = {

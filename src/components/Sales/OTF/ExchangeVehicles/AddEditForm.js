@@ -6,7 +6,8 @@
 import React, { useEffect } from 'react';
 import { Row, Col, Input, Form, Select, Card, Divider, Switch } from 'antd';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { CustomerListMaster } from 'components/utils/CustomerListModal';
 
@@ -66,7 +67,7 @@ const AddEditFormMain = (props) => {
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item label="Make" name="make" data-testid="make" rules={[validateRequiredSelectField('make')]}>
-                                <Select placeholder="Select" loading={isMakeLoading} allowClear fieldNames={{ label: 'value', value: 'key' }} options={makeData} onChange={!editableOnSearch ? (value, selectobj) => handleFilterChange('make', value, selectobj) : null} />
+                                <Select placeholder="Select" loading={isMakeLoading} allowClear fieldNames={{ label: 'value', value: 'key' }} options={makeData} onChange={(value, selectobj) => handleFilterChange('make', value, selectobj)} />
                             </Form.Item>
                         </Col>
                     </Row>

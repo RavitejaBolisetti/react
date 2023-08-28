@@ -1,0 +1,33 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
+ 
+/* Breakpoint sizes */
+$screen-xs-min: 320px;
+$screen-sm-min: 600px;
+$screen-md-min: 768px;
+$screen-xmd-min: 992px;
+$screen-lg-min: 1024px;
+
+/* Create the mixin (usually in a separate .scss file) */
+@mixin breakpoint($media) {
+  @if $media == xs {
+    @media only screen and (max-width: $screen-xs-min) { @content; }
+  }
+  @else if $media == sm {
+    @media only screen and (max-width: $screen-sm-min) { @content; }
+  }
+  @else if $media == md {
+    @media only screen and (max-width: $screen-md-min) { @content; }
+  }
+  @else if $media == xmd {
+    @media only screen and (max-width: $screen-xmd-min) { @content; }
+  }
+  @else if $media == lg {
+    @media only screen and (max-width: $screen-lg-min) { @content; }
+  }
+}
+
+

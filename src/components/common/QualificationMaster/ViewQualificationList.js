@@ -7,22 +7,22 @@ import React from 'react';
 import { Descriptions } from 'antd';
 
 const ViewQualificationListMain = ({ formData, styles }) => {
-    const viewProps = {
+    const viewOneColProps = {
         bordered: false,
         colon: false,
         layout: 'vertical',
         column: { xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 },
     };
     return (
-        <div className={`${styles?.viewContainer} ${styles?.hierarchyRightContainers}`}>
-            <>
-                <Descriptions {...viewProps}>
+        <>
+            <div className={styles?.viewContainer}>
+                <Descriptions {...viewOneColProps}>
                     <Descriptions.Item label="Qualification Code">{formData?.qualificationCode}</Descriptions.Item>
                     <Descriptions.Item label="Qualification Name">{formData?.qualificationName}</Descriptions.Item>
                     <Descriptions.Item label="Status">{formData?.status === 1 ? <text className={styles?.activeText}>Active</text> : <text className={styles?.inactiveText}>InActive</text>}</Descriptions.Item>
                 </Descriptions>
-            </>
-        </div>
+            </div>
+        </>
     );
 };
 

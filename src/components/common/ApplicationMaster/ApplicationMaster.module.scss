@@ -1,0 +1,74 @@
+@import 'assets/sass/app.module.scss';
+
+.anticon {
+	padding-bottom: 0px !important;
+	padding-top: 0px !important;
+	height: 10px !important;
+
+	svg {
+		color: $primaryRed;
+	}
+}
+
+.viewAccordianHeader {
+	color: $primaryRed !important;
+
+	&::after {
+		content: '*';
+	}
+}
+
+.leftPanelScroll {
+	border-radius: 7px 7px 0px 0px;
+	-moz-border-radius: 7px 7px 0px 0px;
+	-webkit-border-radius: 7px 7px 0px 0px;
+	border: 1px solid $neutralGrey1;
+	margin-top: 0px;
+
+	&::-webkit-scrollbar-track {
+		background-color: $neutralGrey0;
+	}
+
+	&::-webkit-scrollbar {
+		background-color: $neutralGrey0;
+		width: 5px;
+	}
+
+	&:hover {
+		&::-webkit-scrollbar {
+			width: 5px !important;
+		}
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background-color: $neutralGrey2;
+		border-radius: 10px;
+	}
+}
+
+.changeThemeBorder {
+	border: 1px solid #dedede;
+	border-radius: 6px;
+	padding: 2px;
+	width: 130px;
+}
+
+/*.selectMgTop6 :global(.ant-select:not(.ant-select-customize-input) .ant-select-selector) {
+    margin-top: 6px;
+}
+.cardBody {
+    display: flex;
+    height: 50vh;
+    border-radius: 0px;
+}
+.viewCollapse {
+    gap: 10px;
+}
+.contentLeftPanel {
+    overflow-y: hidden;
+    overflow-x: hidden;
+    height: calc(100vh - 240px);
+    width: 100%;
+}
+
+*/

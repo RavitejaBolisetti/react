@@ -11,16 +11,16 @@ const { Panel } = Collapse;
 
 const expandIcon = ({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />);
 const ViewDetailBase = ({ formData, styles, parameterType, typeData, docTypeLedger, setDisabledEdit }) => {
-    const viewProps = {
+    const viewOneColProps = {
         bordered: false,
         colon: false,
         layout: 'vertical',
         column: { xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 },
     };
     return (
-        <div className={styles.viewContainer}>
-            <>
-                <Descriptions {...viewProps}>
+        <>
+            <div className={styles.viewContainer}>
+                <Descriptions {...viewOneColProps}>
                     <Descriptions.Item label="Application Menu">{docTypeLedger?.applicationName}</Descriptions.Item>
                     <Descriptions.Item label="Document Name">{docTypeLedger?.documentTypeName}</Descriptions.Item>
                     <Descriptions.Item label="Document Type">{docTypeLedger?.documentTypeCode}</Descriptions.Item>
@@ -37,8 +37,8 @@ const ViewDetailBase = ({ formData, styles, parameterType, typeData, docTypeLedg
                         )}
                     </div>
                 </Descriptions>
-            </>
-        </div>
+            </div>
+        </>
     );
 };
 

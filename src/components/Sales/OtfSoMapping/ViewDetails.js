@@ -8,7 +8,7 @@ import { Descriptions } from 'antd';
 
 export const ViewMain = (props) => {
     const { viewTitle, viewData, styles, otfSoUserMappingData } = props;
-    const viewProps = {
+    const viewOneColProps = {
         bordered: false,
         colon: false,
         layout: 'vertical',
@@ -19,13 +19,15 @@ export const ViewMain = (props) => {
     const mapName = otfSoUserMappingData?.find((e) => e?.key === viewData?.otfSoMapUnmapBy)?.value;
 
     return (
-        <div className={styles.viewContainer}>
-            <Descriptions {...viewProps}>
-                <Descriptions.Item label="Variant Code">{viewData?.productAttributeCode}</Descriptions.Item>
-                <Descriptions.Item label="Product Variant">{viewData?.productAttributeValue}</Descriptions.Item>
-                <Descriptions.Item label="User for Mapping/Unmapping">{mapName ? mapName : 'NA'}</Descriptions.Item>
-            </Descriptions>
-        </div>
+        <>
+            <div className={styles.viewContainer}>
+                <Descriptions {...viewOneColProps}>
+                    <Descriptions.Item label="Variant Code">{viewData?.productAttributeCode}</Descriptions.Item>
+                    <Descriptions.Item label="Product Variant">{viewData?.productAttributeValue}</Descriptions.Item>
+                    <Descriptions.Item label="User for Mapping/Unmapping">{mapName ? mapName : 'NA'}</Descriptions.Item>
+                </Descriptions>
+            </div>
+        </>
     );
 };
 

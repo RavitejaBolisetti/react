@@ -79,12 +79,12 @@ const ViewDetailMain = (props) => {
                             <RSAForm formActionType={formActionType} formData={formData} rsaForm={rsaForm} />
                         </Panel>
                     </Collapse>
-                    <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse('fMS')} expandIconPosition="end">
+                    {/* <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse('fMS')} expandIconPosition="end">
                         <Panel header="FMS" key={'fMS'}>
                             <Divider />
                             <FMSForm formActionType={formActionType} formData={formData} fmsForm={fmsForm} />
                         </Panel>
-                    </Collapse>
+                    </Collapse> */}
                 </Col>
             </Row>
         </div>

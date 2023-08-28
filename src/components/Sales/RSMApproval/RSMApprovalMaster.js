@@ -24,7 +24,9 @@ import { LANGUAGE_EN } from 'language/en';
 import { FilterIcon } from 'Icons';
 import { rsmApprovalSearchDataAction } from 'store/actions/data/sales/rsmApprovalSearch';
 import { rsmApprovalDataAction } from 'store/actions/data/sales/rsmApproval';
-import styles from 'components/common/Common.module.css';
+
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 const mapStateToProps = (state) => {
     const {
