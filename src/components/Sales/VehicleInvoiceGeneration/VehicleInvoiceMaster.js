@@ -5,6 +5,7 @@
  */
 import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import { Col, Form, Row } from 'antd';
 import { tableColumn } from './tableColumn';
@@ -16,65 +17,60 @@ import { ListDataTable } from 'utils/ListDataTable';
 import { AdvancedSearch } from './AdvancedSearch';
 import { CancelReceipt } from './CancelReceipt';
 import { QUERY_BUTTONS_CONSTANTS } from './QueryButtons';
+import { vehicleInvoiceDataActions } from 'store/actions/data/invoiceGeneration/vehicleInvoiceGeneration';
+import { showGlobalNotification } from 'store/actions/notification';
 
 import { FilterIcon } from 'Icons';
 
 const mapStateToProps = (state) => {
-    // const {
-    //     auth: { userId },
-    //     data: {
-    //         ConfigurableParameterEditing: { filteredListData: typeData = [] },
-    //         Receipt: {
-    //             ReceiptSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString },
-    //             ReceiptDetails: { isLoaded: isDetailedDataLoaded = false, isLoading, data: receiptDetailData = [] },
-    //         },
-    //     },
-    // } = state;
+    const {
+        auth: { userId },
+        data: {
+            // ConfigurableParameterEditing: { filteredListData: typeData = [] },
+            VehicleInvoiceGeneration: {
+                VehicleInvoiceSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString },
+                // ReceiptDetails: { isLoaded: isDetailedDataLoaded = false, isLoading, data: receiptDetailData = [] },
+            },
+        },
+    } = state;
     const moduleTitle = 'Invoice';
-    // let returnValue = {
-    //     userId,
-    //     typeData,
-    //     receiptType: typeData[PARAM_MASTER.RECPT_TYPE.id],
-    //     partySegmentType: typeData[PARAM_MASTER.PARTY_CATEG.id],
-    //     paymentModeType: typeData[PARAM_MASTER.RECPT_PAYMNT_MODE.id],
-    //     documentType: typeData[PARAM_MASTER.RECPT_DOC_TYPE.id],
-    //     data: data?.paginationData,
-    //     totalRecords: data?.totalRecords || [],
-    //     receiptStatusList: Object.values(QUERY_BUTTONS_CONSTANTS),
-    //     receiptDetailData,
-    //     isLoading,
-    //     moduleTitle,
-    //     isSearchLoading,
-    //     isSearchDataLoaded,
-    //     isDetailedDataLoaded,
-    //     filterString,
-    // };
-    // return returnValue;
+    let returnValue = {
+        userId,
+        data: data?.paginationData,
+        totalRecords: data?.totalRecords || [],
+        receiptStatusList: Object.values(QUERY_BUTTONS_CONSTANTS),
+        moduleTitle,
+        isSearchLoading,
+        isSearchDataLoaded,
+        filterString,
+    };
+    return returnValue;
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    // dispatch,
-    // ...bindActionCreators(
-    //     {
-    //         fetchReceiptDetails: receiptDetailDataActions.fetchList,
-    //         saveData: receiptDetailDataActions.saveData,
-    //         setFilterString: receiptDataActions.setFilter,
-    //         resetData: receiptDetailDataActions.reset,
-    //         fetchList: receiptDataActions.fetchList,
-    //         cancelReceipt: cancelReceiptDataActions.saveData,
-    //         listShowLoading: receiptDataActions.listShowLoading,
-    //         showGlobalNotification,
-    //     },
-    //     dispatch
-    // ),
+    dispatch,
+    ...bindActionCreators(
+        {
+            fetchList: vehicleInvoiceDataActions.fetchList,
+            listShowLoading: vehicleInvoiceDataActions.listShowLoading,
+            setFilterString: vehicleInvoiceDataActions.setFilter,
+
+            // saveData: receiptDetailDataActions.saveData,
+            // fetchReceiptDetails: receiptDetailDataActions.fetchList,
+            // resetData: receiptDetailDataActions.reset,
+            // cancelReceipt: cancelReceiptDataActions.saveData,
+            showGlobalNotification,
+        },
+        dispatch
+    ),
 });
 
 export const VehicleInvoiceMasterBase = (props) => {
-    const { data, receiptDetailData } = props;
-    const { typeData, receiptType, partySegmentType, paymentModeType, documentType, moduleTitle, totalRecords, showGlobalNotification } = props;
+    const { data, receiptDetailData, userId, fetchList, listShowLoading, showGlobalNotification } = props;
+    const { typeData, receiptType, partySegmentType, paymentModeType, documentType, moduleTitle, totalRecords } = props;
     const { filterString, setFilterString, receiptStatusList } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
-    const [receiptStatus, setReceiptStatus] = useState(QUERY_BUTTONS_CONSTANTS.OPENED.key);
+    const [invoiceStatus, setInvoiceStatus] = useState(QUERY_BUTTONS_CONSTANTS.OPENED.key);
     const [requestPayload, setRequestPayload] = useState({ partyDetails: {}, receiptsDetails: {}, apportionDetails: {} });
 
     const [listFilterForm] = Form.useForm();
@@ -140,93 +136,46 @@ export const VehicleInvoiceMasterBase = (props) => {
     };
 
     const extraParams = useMemo(() => {
-        // return [
-        //     {
-        //         key: 'pageNumber',
-        //         title: 'Value',
-        //         value: page?.current,
-        //         canRemove: true,
-        //         filter: false,
-        //     },
-        //     {
-        //         key: 'pageSize',
-        //         title: 'Value',
-        //         value: page?.pageSize,
-        //         canRemove: true,
-        //         filter: false,
-        //     },
-        //     {
-        //         key: 'searchType',
-        //         title: 'Value',
-        //         value: 'receiptNumber',
-        //         canRemove: false,
-        //         filter: false,
-        //     },
-        //     {
-        //         key: 'searchParam',
-        //         title: 'searchParam',
-        //         value: searchValue,
-        //         name: searchValue,
-        //         canRemove: false,
-        //         filter: false,
-        //     },
-        //     {
-        //         key: 'fromDate',
-        //         title: 'Start Date',
-        //         value: filterString?.fromDate,
-        //         name: filterString?.fromDate ? convertDateTime(filterString?.fromDate, monthDateFormat) : '',
-        //         canRemove: true,
-        //         filter: true,
-        //     },
-        //     {
-        //         key: 'toDate',
-        //         title: 'End Date',
-        //         value: filterString?.toDate,
-        //         name: filterString?.toDate ? convertDateTime(filterString?.toDate, monthDateFormat) : '',
-        //         canRemove: true,
-        //         filter: true,
-        //     },
-        //     {
-        //         key: 'receiptStatus',
-        //         title: 'Receipt Status',
-        //         value: receiptStatus,
-        //         // name: typeData?.[PARAM_MASTER.INDNT_STATS.id]?.find((i) => i?.key === receiptStatus)?.value,
-        //         canRemove: false,
-        //         filter: false,
-        //     },
-        //     {
-        //         key: 'receiptType',
-        //         title: 'Receipt Type',
-        //         value: filterString?.receiptType,
-        //         name: receiptType?.find((i) => i?.key === filterString?.receiptType)?.value,
-        //         canRemove: true,
-        //         filter: true,
-        //     },
-        //     {
-        //         key: 'partySegment',
-        //         title: 'Party Segment',
-        //         value: filterString?.partySegment,
-        //         name: partySegmentType?.find((i) => i?.key === filterString?.partySegment)?.value,
-        //         canRemove: true,
-        //         filter: true,
-        //     },
-        //     {
-        //         key: 'sortBy',
-        //         title: 'Sort By',
-        //         value: page?.sortBy,
-        //         canRemove: true,
-        //         filter: false,
-        //     },
-        //     {
-        //         key: 'sortIn',
-        //         title: 'Sort Type',
-        //         value: page?.sortType,
-        //         canRemove: true,
-        //         filter: false,
-        //     },
-        // ];
+        return [
+            {
+                key: 'pageNumber',
+                title: 'Value',
+                value: page?.current,
+                canRemove: true,
+                filter: false,
+            },
+            {
+                key: 'pageSize',
+                title: 'Value',
+                value: page?.pageSize,
+                canRemove: true,
+                filter: false,
+            },
+            {
+                key: 'searchParam',
+                title: 'searchParam',
+                value: searchValue,
+                name: searchValue,
+                canRemove: false,
+                filter: false,
+            },
+            {
+                key: 'sortBy',
+                title: 'Sort By',
+                value: page?.sortBy,
+                canRemove: true,
+                filter: false,
+            },
+            {
+                key: 'sortIn',
+                title: 'Sort Type',
+                value: page?.sortType,
+                canRemove: true,
+                filter: false,
+            },
+        ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [searchValue, receiptStatus, filterString, page]);
+    }, [searchValue, filterString, page]);
 
     // useEffect(() => {
     //     return () => {
@@ -236,13 +185,13 @@ export const VehicleInvoiceMasterBase = (props) => {
     //     // eslint-disable-next-line react-hooks/exhaustive-deps
     // }, []);
 
-    // useEffect(() => {
-    //     if (userId) {
-    //         setShowDataLoading(true);
-    //         fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [userId, receiptStatus, filterString, page]);
+    useEffect(() => {
+        if (userId) {
+            setShowDataLoading(true);
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, filterString, page]);
 
     // useEffect(() => {
     //     if (userId && selectedOrderId) {
@@ -281,7 +230,7 @@ export const VehicleInvoiceMasterBase = (props) => {
     }, [currentSection, sectionName]);
 
     const handleReceiptTypeChange = (buttonName) => {
-        setReceiptStatus(buttonName?.key);
+        setInvoiceStatus(buttonName?.key);
         searchForm.resetFields();
     };
 
@@ -338,7 +287,7 @@ export const VehicleInvoiceMasterBase = (props) => {
                 setButtonData(Visibility);
                 // setButtonData({ ...Visibility, cancelReceiptBtn: true });
                 // if (buttonAction === VIEW_ACTION) {
-                //     receiptStatus === QUERY_BUTTONS_CONSTANTS.CANCELLED.key ? setButtonData({ ...Visibility, editBtn: false, cancelReceiptBtn: false }) : receiptStatus === QUERY_BUTTONS_CONSTANTS.APPORTION.key ? setButtonData({ ...Visibility, editBtn: false, cancelReceiptBtn: true }) : setButtonData({ ...Visibility, editBtn: true, cancelReceiptBtn: true });
+                //     invoiceStatus === QUERY_BUTTONS_CONSTANTS.CANCELLED.key ? setButtonData({ ...Visibility, editBtn: false, cancelReceiptBtn: false }) : invoiceStatus === QUERY_BUTTONS_CONSTANTS.APPORTION.key ? setButtonData({ ...Visibility, editBtn: false, cancelReceiptBtn: true }) : setButtonData({ ...Visibility, editBtn: true, cancelReceiptBtn: true });
                 // }
             }
         }
@@ -477,7 +426,7 @@ export const VehicleInvoiceMasterBase = (props) => {
     const advanceFilterResultProps = {
         extraParams,
         removeFilter,
-        receiptStatus,
+        invoiceStatus,
         receiptStatusList,
         advanceFilter: true,
         otfFilter: true,
@@ -554,7 +503,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         setRequestPayload,
         receipt,
         setReceipt,
-        receiptStatus,
+        invoiceStatus,
         totalReceivedAmount,
         setTotalReceivedAmount,
 
@@ -612,4 +561,4 @@ export const VehicleInvoiceMasterBase = (props) => {
     );
 };
 
-export const VehicleInvoiceMaster = connect(null, null)(VehicleInvoiceMasterBase);
+export const VehicleInvoiceMaster = connect(mapStateToProps, mapDispatchToProps)(VehicleInvoiceMasterBase);

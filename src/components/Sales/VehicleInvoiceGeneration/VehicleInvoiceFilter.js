@@ -18,7 +18,7 @@ import styles from 'components/common/Common.module.css';
 const { Search } = Input;
 
 export default function VehicleInvoiceFilter(props) {
-    const { extraParams, removeFilter, searchForm, filterString, setFilterString, handleResetFilter, advanceFilter = false, receiptStatusList, handleReceiptTypeChange, setAdvanceSearchVisible, handleButtonClick, handleSearch, receiptStatus, handleChange } = props;
+    const { extraParams, removeFilter, searchForm, filterString, setFilterString, handleResetFilter, advanceFilter = false, receiptStatusList, handleReceiptTypeChange, setAdvanceSearchVisible, handleButtonClick, handleSearch, invoiceStatus, handleChange } = props;
 
     const serachBoxProps = {
         searchForm,
@@ -33,7 +33,7 @@ export default function VehicleInvoiceFilter(props) {
                 <Col xs={24} sm={24} md={16} lg={16} xl={16}>
                     <Row gutter={20}>
                         <Col xs={24} sm={20} md={20} lg={20} xl={20} className={styles.verticallyCentered}>
-                            <QueryButtons currentItem={receiptStatus} items={QUERY_BUTTONS_CONSTANTS} onClick={handleReceiptTypeChange} />
+                            <QueryButtons currentItem={invoiceStatus} items={QUERY_BUTTONS_CONSTANTS} onClick={handleReceiptTypeChange} />
                             <div className={styles.fullWidth}>
                                 <Search placeholder="Search Receipt No." onChange={handleChange} onSearch={handleSearch} allowClear className={styles.headerSearchField} />
                             </div>
