@@ -32,7 +32,6 @@ const BranchMapping = (props) => {
         setParentDealerCode(parentGroupId);
 
         if (dlrBranchLocationDataList?.length && isUsrdlrBrLocationsLoaded) {
-            console.log("🚀 ~ file: BranchMapping.js:35 ~ useEffect ~ dlrBranchLocationDataList:", dlrBranchLocationDataList)
             const defaultBranches = [];
             dlrBranchLocationDataList?.forEach((branch) => {
                 let matchMapdata = usrdlrBranchLocationDataList?.find((el) => el?.locationCode === branch?.id);

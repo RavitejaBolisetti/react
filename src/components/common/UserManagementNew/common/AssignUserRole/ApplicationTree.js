@@ -20,28 +20,9 @@ const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
 
 const { Panel } = Collapse;
 const { Search } = Input;
-const { Text } = Typography;
 
 const fieldNames = { title: 'label', key: 'value', children: 'children' };
 
-const flattenData = (data) => {
-    if (data) {
-        const listItem = [];
-        const generateList = (data) => {
-            for (let node of data) {
-                listItem.push({
-                    ...node,
-                });
-                if (node?.children) {
-                    generateList(node?.children);
-                }
-            }
-
-            return listItem;
-        };
-        generateList(data);
-    }
-};
 
 const checkKey = (data, key) => data?.includes(key);
 

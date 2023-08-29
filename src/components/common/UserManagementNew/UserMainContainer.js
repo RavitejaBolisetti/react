@@ -3,8 +3,8 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState } from 'react';
-import { Row, Col, Typography } from 'antd';
+import React from 'react';
+import { Row, Col } from 'antd';
 import { withDrawer } from 'components/withDrawer';
 import { LeftSidebar } from './LeftSidebar';
 import { USER_ACCESS_SECTION_DEALER, USER_ACCESS_SECTION_MANUFACTURER } from 'constants/modules/UserManagement/userAccessSection';
@@ -13,7 +13,6 @@ import { USER_TYPE_USER } from 'constants/modules/UserManagement/userType';
 // import UserInfoCard from './common/UserInfoCard';
 import { MacIdMaster } from './Dealer/MacIdComponent';
 import AssignUserRole from './common/AssignUserRole';
-import { AdministrativeHierarchy } from './Manufacturer/AdministrativeHierarchy';
 import { ProductMapping } from './Dealer/ProductMapping';
 import { BranchMapping } from './Dealer/BranchMapping';
 

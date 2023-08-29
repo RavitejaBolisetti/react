@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Row, Col, Form, Typography, Button, Empty, Card, Divider } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { bindActionCreators } from 'redux';
@@ -61,9 +61,9 @@ const mapDispatchToProps = (dispatch) => ({
 const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
 
 const MacIdMasterMain = (props) => {
-    const { form, section, userId, searchType, fetchMacIdList, listMacIdShowLoading, isMacIdLoading, showGlobalNotification, typeData, macIdDataList, isMacIdLoaded } = props;
+    const { form, section, userId, searchType, fetchMacIdList, listMacIdShowLoading, showGlobalNotification, typeData, macIdDataList, isMacIdLoaded } = props;
     const { isContactDataLoading, saveData, formData } = props;
-    const { buttonData, setButtonData, formActionType, handleButtonClick, NEXT_ACTION, setIsFormVisible } = props;
+    const { buttonData, setButtonData, formActionType, setIsFormVisible } = props;
 
     const [macIdform] = Form.useForm();
     const [macIdData, setMacIdData] = useState([]);
@@ -71,18 +71,6 @@ const MacIdMasterMain = (props) => {
     const [isEditing, setIsEditing] = useState(false);
     const [editingData, setEditingData] = useState({});
     const [isAdding, setIsAdding] = useState(false);
-    const [filterString, setFilterString] = useState();
-
-    // const extraParams = useMemo(() => {
-    //     return [
-    //         {
-    //             key: 'userId',
-    //             title: 'userId',
-    //             value: filterString?.searchParam,
-    //             name: 'userId',
-    //         },
-    //     ];
-    // }, [filterString]);
 
     const extraParams = [
         {
@@ -169,7 +157,6 @@ const MacIdMasterMain = (props) => {
         isAdding,
         setIsAdding,
         buttonData,
-        setFilterString,
     };
 
     const onFinish = () => {
@@ -178,7 +165,6 @@ const MacIdMasterMain = (props) => {
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             setIsFormVisible(false);
             setButtonData({ ...buttonData, formBtnActive: false });
-            // handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
         };
 
         const onError = (message) => {
@@ -221,10 +207,6 @@ const MacIdMasterMain = (props) => {
         saveButtonName: 'Save & Close',
         buttonData,
     };
-
-    useEffect(() => {
-        console.log('formData', formData);
-    }, [formData]);
 
     return (
         <>

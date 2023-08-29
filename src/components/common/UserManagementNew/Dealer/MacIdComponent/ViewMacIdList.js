@@ -16,7 +16,7 @@ const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewMacIdList = (props) => {
-    const { styles, macIdData, deleteContactHandeler, timeData, setTimeData, forceUpdate, setAllowedTimingSave, setEditingData, typeData } = props;
+    const { styles, macIdData, deleteContactHandeler, setEditingData, typeData } = props;
     const { isAdding, setShowAddEditForm, showAddEditForm, setMacIdData, macIdform, isEditing, setIsEditing, formActionType } = props;
 
     const [openAccordian, setOpenAccordian] = useState('');
@@ -31,15 +31,6 @@ const ViewMacIdList = (props) => {
         macIdform.setFieldsValue({ ...data, preferredContactTime: [formatTime(data?.preferredContactTimeFrom), formatTime(data?.preferredContactTimeTo)] });
     };
 
-    // const onTimingFormFinish = (values) => {
-    //     let preferredContactTimeFrom = values?.preferredContactTime?.[0]?.format('HH:mm');
-    //     let preferredContactTimeTo = values?.preferredContactTime[1]?.format('HH:mm');
-    //     setTimeData([...timeData, { preferredContactTimeFrom, preferredContactTimeTo }]);
-    //     timingForm.resetFields();
-    //     setAllowedTimingSave(true);
-    //     forceUpdate();
-    // };
-
     const handleCollapse = (key) => {
         if (isEditing) return;
         setOpenAccordian((prev) => (prev === key ? '' : key));
@@ -50,7 +41,6 @@ const ViewMacIdList = (props) => {
         setShowAddEditForm,
         showAddEditForm,
         setMacIdData,
-        // onFinish: onTimingFormFinish,
         form: timingForm,
         macIdform,
         isEditing,

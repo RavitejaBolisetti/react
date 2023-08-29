@@ -4,10 +4,9 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState, useMemo, useEffect } from 'react';
-import { Row, Col, Select, Card, Form, Collapse, Typography, Button, ConfigProvider, Empty, Divider } from 'antd';
+import { Row, Col, Select, Form, Collapse, Typography, Button, ConfigProvider, Empty, Divider } from 'antd';
 import DataTable from 'utils/dataTable/DataTable';
 import { tableColumn } from './tableColumn';
-import { FiEdit } from 'react-icons/fi';
 import { PlusOutlined } from '@ant-design/icons';
 
 import styles from 'assets/sass/app.module.scss';
@@ -51,13 +50,10 @@ export function chackedKeysMapData(treeData) {
 
 const AssignUserRole = (props) => {
     const { userId, userType, formData, showGlobalNotification } = props;
-    const { formActionType, currentSection } = props;
-    const { fetchRoleDataList, roleListdata, isRoleListLoding } = props;
+    const { formActionType, currentSection, roleListdata } = props;
     const { fetchDLRUserRoleDataList, resetUsrDlrRoleAppDataList, usrRolelAppListShowLoading, saveDLRUserRoleDataList, fetchMNMUserRoleAppDataList, resetMnmUserRoleAppDataList, mnmUserRoleAppListShowLoading, saveMNMUserRoleAppDataList } = props;
-    const { isDlrAppLoaded, isDlrAppLoding, dlrAppList, isMnmAppLoaded, isMnmAppLoding, mnmAppList } = props; //data list
-    console.log('🚀 ~ file: AssignUserRoleMain.js:57 ~ AssignUserRole ~ dlrAppList:', dlrAppList);
-    const { fetchRoleApplicationList, resetRoleApplicationList, rolelApplicationShowLoading, roleApplicationData, isRoleApplicationLoding, isRoleApplicationLoaded } = props;
-    const { fetchUserRoleList, resetUserRoleList, userRoleShowLoading, userRoleDataList, isUserRoleListLoaded, isUserRoleListLoding } = props;
+    const { isDlrAppLoaded, isDlrAppLoding, dlrAppList, isMnmAppLoaded, isMnmAppLoding, mnmAppList } = props;
+    const { fetchUserRoleList, userRoleShowLoading, userRoleDataList, isUserRoleListLoding } = props;
 
     const [form] = Form.useForm();
     const [checkedKeys, setCheckedKeys] = useState([]);
@@ -94,12 +90,11 @@ const AssignUserRole = (props) => {
     }, [formData, record]);
 
     const onErrorAction = (data) => {
-        console.log('🚀 ~ file: AssignUserRoleMain.js:65 ~ onErrorAction ~ data:', data);
+        console.error(data);
     };
 
     useEffect(() => {
         if (userId && formData?.employeeCode && record?.roleId) {
-            //fetch dlr/mnm usr app
             if (userType === USER_TYPE_USER?.DEALER?.id) {
                 fetchDLRUserRoleDataList({ setIsLoading: usrRolelAppListShowLoading, userId, extraParams, onErrorAction });
             } else {
@@ -115,7 +110,6 @@ const AssignUserRole = (props) => {
                 key: 'employeeCode',
                 title: 'employeeCode',
                 value: formData?.employeeCode,
-                // value: 'deepakpalariya',
                 name: 'employeeCode',
             },
         ];
@@ -133,20 +127,15 @@ const AssignUserRole = (props) => {
     const handleSaveUserRoleAppliactions = () => {
         const onSuccess = (res) => {
             showGlobalNotification({ message: res?.responseMessage });
-            console.log('🚀 ~ file: AssignUserRoleMain.js:127 ~ onSuccess ~ res:', res);
             form.resetFields();
             resetUsrDlrRoleAppDataList();
             setisModalVisible(false);
             fetchUserRoleFn();
-            // handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
         };
         const onError = (message) => {
             showGlobalNotification({ message });
         };
         const request = {
-            // id: 'f388cd2a-7809-43f1-985e-9caa5c243bf9',
-            // employeeCode: 'deepakpalariya',
-            // roleId: record?.roleId,
             id: dlrAppList?.role?.id && dlrAppList?.role?.id !== 'null' ? dlrAppList?.role?.id : '',
             employeeCode: formData?.employeeCode,
             roleId: record?.roleId,
@@ -159,7 +148,6 @@ const AssignUserRole = (props) => {
 
         const requestData = {
             data: request,
-            // method: 'post',
             method: dlrAppList?.role?.id && dlrAppList?.role?.id !== 'null' ? 'put' : 'post',
             setIsLoading: usrRolelAppListShowLoading,
             userId,
@@ -237,11 +225,9 @@ const AssignUserRole = (props) => {
             if (userType === USER_TYPE_USER?.DEALER?.id) {
                 webApps = dlrAppList?.role?.applications?.webApplications || [];
                 mobApp = dlrAppList?.role?.applications?.mobileApplications || [];
-                // setMenuList({ W: webApps, M: mobApp });
             } else {
                 webApps = mnmAppList?.role?.applications?.webApplications || [];
                 mobApp = mnmAppList?.role?.applications?.mobileApplications || [];
-                // setMenuList({ W: webApps, M: mobApp });
             }
 
             if (deviceType === APPLICATION_WEB) {
@@ -251,7 +237,6 @@ const AssignUserRole = (props) => {
                 setMobileApplications(mobApp);
                 setCheckedKeys((prev) => ({ ...prev, [deviceType]: chackedKeysMapData(mobApp) }));
             }
-            // setisModalVisible(true);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dlrAppList?.employeeCode, mnmAppList?.employeeCode, deviceType]);
@@ -259,7 +244,6 @@ const AssignUserRole = (props) => {
     const handleAddNewRole = () => {
         form.validateFields()
             .then((data) => {
-                console.log('🚀 ~ file: AssignUserRoleMain.js:261 ~ .then ~ data:', data);
                 setRecord(data);
                 form.resetFields();
                 setCanAddRole(false);
