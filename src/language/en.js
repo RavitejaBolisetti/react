@@ -28,5 +28,6 @@ export const LANGUAGE_EN = {
 
         DOWNLOAD_START: { TITLE: 'Download', MESSAGE: 'Your download will start soon' },
         USER_TOKEN_VALIDATION : { TITLE: 'Error', MESSAGE: 'User token number {DealerSearchvalue} does not exist. Try again with valid token number' },
+        APPLICATON_REQUIRE_VALIDATION : { TITLE: 'Error', MESSAGE: 'Please provide {NAME} to proceed' },
     },
 };
