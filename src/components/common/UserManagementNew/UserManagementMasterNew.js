@@ -70,7 +70,7 @@ const mapStateToProps = (state) => {
         isDataLoading,
         moduleTitle,
 
-        roleListdata,
+        roleListdata: roleListdata?.filter((i) => i?.status),
         isRoleListLoding,
 
         roleApplicationData,

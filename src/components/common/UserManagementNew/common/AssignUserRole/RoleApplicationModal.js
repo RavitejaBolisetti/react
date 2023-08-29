@@ -40,6 +40,7 @@ const RoleApplicationModalrMain = (props) => {
         onClickAction: handleSaveUserRoleAppliactions,
         handleResetFilter: handleCancelModal,
     };
+
     return (
         <>
             <Row gutter={20}>

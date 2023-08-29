@@ -23,7 +23,6 @@ const { Search } = Input;
 
 const fieldNames = { title: 'label', key: 'value', children: 'children' };
 
-
 const checkKey = (data, key) => data?.includes(key);
 
 const fnMapData = ({ data, fieldNames, selectedKeys }) =>
@@ -45,6 +44,7 @@ const ApplicationTreeMain = (props) => {
 
     const APPLICATION_WEB = DEVICE_TYPE?.WEB?.key;
     const APPLICATION_MOBILE = DEVICE_TYPE?.MOBILE?.key;
+    const [searchItem] = Form.useForm();
 
     const [searchValue, setSearchValue] = useState();
     const [activeKey, setActiveKey] = useState([]);
@@ -61,23 +61,13 @@ const ApplicationTreeMain = (props) => {
 
     const onTabChange = (newActiveKey) => {
         setDeviceType(newActiveKey);
+        searchItem.setFieldValue('search', '');
     };
 
-    const onChange = (values) => {
-        const isPresent = activeKey.includes(values);
-
-        if (isPresent) {
-            const newActivekeys = [];
-
-            activeKey.forEach((item) => {
-                if (item !== values) {
-                    newActivekeys.push(item);
-                }
-            });
-            setActiveKey(newActivekeys);
-        } else {
-            setActiveKey([...activeKey, values]);
-        }
+    const onChange = (key) => {
+        setSearchValue('');
+        searchItem.setFieldValue('search', '');
+        setActiveKey(key.pop());
     };
 
     const onCheck =
@@ -135,7 +125,7 @@ const ApplicationTreeMain = (props) => {
 
                         return (
                             <div className={styles.managementContainer}>
-                                <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(i)} expandIconPosition="end">
+                                <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={onChange} expandIconPosition="end">
                                     <Panel
                                         header={
                                             <>
@@ -146,18 +136,20 @@ const ApplicationTreeMain = (props) => {
                                         key={i}
                                     >
                                         <Divider />
-                                        <Row gutter={20}>
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                                <Form.Item label={''} name="search" validateTrigger={['onSearch']}>
-                                                    <Search placeholder="Search" initialValue={searchValue} onChange={handleSearchValue} allowClear />
-                                                </Form.Item>
-                                            </Col>
-                                        </Row>
-                                        <Row gutter={20}>
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={style.roleTree}>
-                                                <LeftPanel {...myProps} />
-                                            </Col>
-                                        </Row>
+                                        <Form layout="vertical" autoComplete="off" form={searchItem}>
+                                            <Row gutter={20}>
+                                                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                                    <Form.Item label={''} name="search" validateTrigger={['onSearch']}>
+                                                        <Search placeholder="Search" initialValue={searchValue} onChange={handleSearchValue} allowClear />
+                                                    </Form.Item>
+                                                </Col>
+                                            </Row>
+                                            <Row gutter={20}>
+                                                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={style.roleTree}>
+                                                    <LeftPanel {...myProps} />
+                                                </Col>
+                                            </Row>
+                                        </Form>
                                     </Panel>
                                 </Collapse>
                             </div>

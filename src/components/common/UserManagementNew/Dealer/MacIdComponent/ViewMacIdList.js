@@ -55,7 +55,7 @@ const ViewMacIdList = (props) => {
             {macIdData?.length > 0 &&
                 macIdData?.map((data, i) => {
                     return (
-                        <Collapse key={data?.deviceType} onChange={() => handleCollapse(i)} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian} collapsible="icon">
+                        <Collapse key={data?.macId} onChange={() => handleCollapse(i)} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian} collapsible="icon">
                             <Panel
                                 key={i}
                                 header={
@@ -72,7 +72,7 @@ const ViewMacIdList = (props) => {
                                             <Col xs={10} sm={10} md={10} lg={10} xl={10}>
                                                 <div className={styles.floatRight}>
                                                     <Divider type="vertical" />
-                                                    <Text type="secondary">{data?.macId}</Text>
+                                                    <Text type="secondary">{data?.deviceType}</Text>
                                                 </div>
                                             </Col>
                                         )}
