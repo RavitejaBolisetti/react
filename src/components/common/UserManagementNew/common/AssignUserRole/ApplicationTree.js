@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { Input, Form, Col, Row, Divider, Collapse, Tabs, Typography, Empty } from 'antd';
+import { Input, Form, Col, Row, Divider, Collapse, Tabs, Typography, Empty, Tag } from 'antd';
 
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { DEVICE_TYPE } from 'constants/modules/UserManagement/deviceType';
@@ -153,16 +153,14 @@ const ApplicationTreeMain = (props) => {
                         };
 
                         return (
-                            <div className={styles.accordianContainer}>
+                            <div className={styles.managementContainer}>
                                 <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(i)} expandIconPosition="end">
                                     <Panel
                                         header={
-                                            <Row type="flex" justify="space-between" align="middle" size="large">
-                                                <Row type="flex" justify="space-around" align="middle">
-                                                    <Typography>{el?.label}</Typography>
-                                                </Row>
-                                                {allowedAccess?.length > 0 && <Text type="secondary">{allowedAccess?.length} Access Provided</Text>}
-                                            </Row>
+                                            <>
+                                                {el?.label}
+                                                {allowedAccess?.length > 0 && <Tag color="default" className={styles.marL20}>{`${allowedAccess?.length >= 2 ? `${allowedAccess?.length} Accesses Provided` : `${allowedAccess?.length} Access Provided`}`}</Tag>}
+                                            </>
                                         }
                                         key={i}
                                     >

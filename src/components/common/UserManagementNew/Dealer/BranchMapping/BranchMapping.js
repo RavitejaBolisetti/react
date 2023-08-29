@@ -32,13 +32,14 @@ const BranchMapping = (props) => {
         setParentDealerCode(parentGroupId);
 
         if (dlrBranchLocationDataList?.length && isUsrdlrBrLocationsLoaded) {
+            console.log("🚀 ~ file: BranchMapping.js:35 ~ useEffect ~ dlrBranchLocationDataList:", dlrBranchLocationDataList)
             const defaultBranches = [];
             dlrBranchLocationDataList?.forEach((branch) => {
-                let matchMapdata = usrdlrBranchLocationDataList?.find((el) => el?.locationCode === branch?.locationId);
+                let matchMapdata = usrdlrBranchLocationDataList?.find((el) => el?.locationCode === branch?.id);
                 if (matchMapdata) {
                     defaultBranches.push({ ...matchMapdata, locationName: branch?.dealerLocationName });
                 } else {
-                    let unMapdata = { id: '', locationCode: branch?.locationId, locationName: branch?.dealerLocationName, parentGroupId: branch?.parentGroupCode || parentGroupId, defaultBranchIndicator: false, status: false, userId: formData?.userName };
+                    let unMapdata = { id: '', locationCode: branch?.id, locationName: branch?.dealerLocationName, parentGroupId: branch?.parentGroupCode || parentGroupId, defaultBranchIndicator: false, status: false, userId: formData?.userName };
 
                     defaultBranches.push(unMapdata);
                 }

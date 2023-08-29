@@ -9,7 +9,8 @@ import { Input, Form, Row, Col, Card, Empty, Typography, Divider } from 'antd';
 // import { generateList } from 'utils/generateList';
 import LeftPanel from 'components/common/LeftPanel';
 import styles from 'components/common/TreeView.module.css';
-import style from 'components/common/Common.module.css';
+// import style from 'components/common/Common.module.css';
+import style from 'assets/sass/app.module.scss';
 import { UserManagementFormButton } from '../../UserManagementFormButton/UserManagementFormButton';
 import { LANGUAGE_EN } from 'language/en';
 
@@ -39,7 +40,7 @@ const flattenData = (data) => {
 const moduleStatus = 'pending';
 
 const ProductMapping = (props) => {
-    const { productDataTree, productHierarchyData, viewMode, section, setButtonData } = props;
+    const { productDataTree, viewMode, section, setButtonData } = props;
     const [finalProductData, setFinalProductData] = useState([]);
     const [searchValue, setSearchValue] = useState();
     const [checkedKeys, setCheckedKeys] = useState([]);

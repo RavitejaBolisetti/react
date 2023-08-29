@@ -30,11 +30,11 @@ export const UserManagementFormButton = ({ record, handleChangeHistory, onCloseA
                 </Col>
 
                 <Col xs={24} sm={16} md={18} lg={20} xl={20} className={styles.buttonsGroupRight}>
-                    {/* {buttonData?.closeBtn && (
+                    {buttonData?.closeBtn && (
                         <Button disabled={!buttonData?.formBtnActive} danger onClick={onCloseAction}>
                             Close
                         </Button>
-                    )} */}
+                    )}
                     {buttonData?.editBtn && (
                         <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record, openDefaultSection: false })} type="primary">
                             Edit
@@ -42,7 +42,7 @@ export const UserManagementFormButton = ({ record, handleChangeHistory, onCloseA
                     )}
 
                     {buttonData?.nextBtn && !isLastSection && (
-                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.NEXT, record })} type="primary">
+                        <Button disabled={!buttonData?.formBtnActive} onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.NEXT, record })} type="primary">
                             Next
                         </Button>
                     )}
