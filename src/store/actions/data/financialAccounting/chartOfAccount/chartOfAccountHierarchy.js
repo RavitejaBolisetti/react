@@ -6,7 +6,7 @@
 import { dataActions } from 'store/actions/crud/dataAction';
 import { BASE_URL_FINANCIAL_ACC_CHART_OF_ACCOUNT_HIERARCHY } from 'constants/routingApi';
 
-const PREFIX = 'CHART_OF_ACCOUNT_';
+const PREFIX = 'CHART_OF_ACCOUNT_HIERARCHY_';
 
 export const RECEIVE_DATA_LOADING_ACTION_CONSTANT = PREFIX + 'LOADING_DATA';
 export const RECEIVE_DATA_ACTION_CONSTANT = PREFIX + 'LIST_RECIEVE_DATA';

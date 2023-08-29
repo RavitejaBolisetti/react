@@ -6,7 +6,7 @@
 import React, { useState } from 'react';
 import { Col, Input, Form, Row, Button, Switch } from 'antd';
 import TreeSelectField from '../../common/TreeSelectField';
-import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { ATTRIBUTE_TYPE } from 'constants/modules/ChartOfAccount/attributeType';
 import { withDrawer } from 'components/withDrawer';
@@ -15,9 +15,10 @@ import { customSelectBox } from 'utils/customSelectBox';
 import styles from 'components/common/Common.module.css';
 
 const AddEditFormMain = (props) => {
-    const { onCloseAction } = props;
-    const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed, form } = props;
+    const { onCloseAction, chartOfAccountHierarchy, selectedTreeSelectKey, setSelectedTreeSelectKey } = props;
+    const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed, form, disable } = props;
     const [attributeTyp, setAttributeTyp] = useState(0);
+    const treeFieldNames = { label: 'parentAccountDescription', value: 'accountCode', children: 'subGroup' };
 
     const handleFormValueChange = () => {
         setFormBtnActive(true);
@@ -31,13 +32,17 @@ const AddEditFormMain = (props) => {
         setAttributeTyp(props);
     };
 
+    const handleSelectTreeClick = (value) => {
+        setSelectedTreeSelectKey(value);
+    };
+
     const treeSelectFieldProps = {
-        // treeFieldNames,
-        // treeData: productHierarchyData,
-        // treeDisabled: treeCodeReadOnly || isReadOnly,
-        // selectedTreeSelectKey,
-        // handleSelectTreeClick,
-        defaultValue: 'DMS',
+        treeFieldNames,
+        treeData: chartOfAccountHierarchy,
+        treeDisabled: disable,
+        selectedTreeSelectKey,
+        handleSelectTreeClick,
+        defaultValue: selectedTreeSelectKey?.[0],
         placeholder: preparePlaceholderSelect('Parent'),
     };
 
@@ -69,8 +74,8 @@ const AddEditFormMain = (props) => {
                     </Row>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Form.Item label="Description" name="parentAccountDescription" rules={[validateRequiredInputField('short description')]}>
-                                <Input placeholder={preparePlaceholderText('short description')} maxLength={50} />
+                            <Form.Item label="Description" name="accountDescription" rules={[validateRequiredInputField('Account description')]}>
+                                <Input placeholder={preparePlaceholderText('Account description')} maxLength={50} />
                             </Form.Item>
                         </Col>
                     </Row>
@@ -78,16 +83,16 @@ const AddEditFormMain = (props) => {
                         <>
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    <Form.Item name="openingBalanceCr" label="Opening Balance Cr." rules={[validateRequiredInputField('short description')]}>
-                                        <Input placeholder={preparePlaceholderText('short description')} maxLength={50} />
+                                    <Form.Item name="openingBalanceCredit" label="Opening Balance Cr." rules={[validateRequiredInputField('Opening Balance Credit'), validateNumberWithTwoDecimalPlaces]}>
+                                        <Input placeholder={preparePlaceholderText('Opening Balance Credit')} />
                                     </Form.Item>
                                 </Col>
                             </Row>
 
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    <Form.Item name="openingBalanceDr" label="Opening Balance Dr." rules={[validateRequiredInputField('short description')]}>
-                                        <Input placeholder={preparePlaceholderText('short description')} maxLength={50} />
+                                    <Form.Item name="openingBalanceDebit" label="Opening Balance Debit" rules={[validateRequiredInputField('Opening Balance Debit'), validateNumberWithTwoDecimalPlaces]}>
+                                        <Input placeholder={preparePlaceholderText('Opening Balance Debit')} />
                                     </Form.Item>
                                 </Col>
                             </Row>

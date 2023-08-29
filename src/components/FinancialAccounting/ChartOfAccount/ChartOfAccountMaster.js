@@ -46,8 +46,6 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    console.log(state);
-
     const moduleTitle = 'Chart of Account Hierarchy';
     const viewTitle = 'Chart of Account Hierarchy';
 
@@ -94,21 +92,20 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
 
     const [selectedTreeKey, setSelectedTreeKey] = useState(null);
     const [formActionType, setFormActionType] = useState('');
-    const [change, setChange] = useState(false);
-
-    const [formData, setFormData] = useState([]);
 
     const [isFormBtnActive, setFormBtnActive] = useState(false);
     const [searchValue, setSearchValue] = useState('');
     const [viewData, setViewData] = useState(null);
     const [companyCode, setCompanyCode] = useState(null);
-    // const [hierarchyData, setHierarchyData] = useState(null);
+    const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState(null);
+    const [change, setChange] = useState(false);
+    const [disable, setDisable] = useState(true);
 
     const defaultBtnVisiblity = { editBtn: true, childBtn: true, siblingBtn: true };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const [modalOpen, setModalOpen] = useState(false);
     const companyFieldNames = { value: 'companyName', key: 'companyCode' };
-    const fieldNames = { title: 'parentAccountDescription', key: 'parentAccountCode', children: 'subGroup' };
+    const fieldNames = { title: 'parentAccountDescription', key: 'accountCode', children: 'subGroup' };
 
     useEffect(() => {
         if (userId && !isDealerCompanyDataLoaded) {
@@ -120,6 +117,7 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
     const onSelect = (val) => {
         setCompanyCode(val);
         setViewData(null);
+        setSelectedTreeKey(null);
         const extraParams = [
             {
                 key: 'companyCode',
@@ -142,8 +140,6 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
 
     useEffect(() => {
         if (selectedTreeKey?.length > 0) {
-            console.log('INSIDE_SHAKA');
-
             fetchChartOfAccount({ setIsLoading: listShowLoadingChartOfAccount, userId, extraParams });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -159,6 +155,31 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [chartOfAccountData]);
 
+    useEffect(() => {
+        if (formActionType === FROM_ACTION_TYPE?.CHILD) {
+            setDisable(true);
+            setSelectedTreeSelectKey(chartOfAccountData?.parentAccountDescription);
+            form.setFieldValue('parentAccountCode', chartOfAccountData?.parentAccountDescription);
+        } else if (formActionType === FROM_ACTION_TYPE?.SIBLING) {
+            setDisable(true);
+            setSelectedTreeSelectKey(chartOfAccountData?.parentAccountDescription);
+            form.setFieldValue('parentAccountCode', chartOfAccountData?.parentAccountCode);
+        } else if (formActionType === FROM_ACTION_TYPE?.EDIT) {
+            setDisable(false);
+            setSelectedTreeSelectKey(chartOfAccountData?.accountDescription);
+            form.setFieldsValue({
+                accountType: chartOfAccountData?.accountType === ATTRIBUTE_TYPE?.[0]?.key ? ATTRIBUTE_TYPE?.[0]?.value : ATTRIBUTE_TYPE?.[1]?.value,
+                parentAccountCode: chartOfAccountData?.financialCompany,
+                accountCode: chartOfAccountData?.accountCode,
+                accountDescription: chartOfAccountData?.accountDescription,
+                openingBalanceCredit: chartOfAccountData?.accountType === ATTRIBUTE_TYPE?.[1]?.key ? chartOfAccountData?.openingBalanceCredit : null,
+                openingBalanceDebit: chartOfAccountData?.accountType === ATTRIBUTE_TYPE?.[1]?.key ? chartOfAccountData?.openingBalanceDebit : null,
+                status: chartOfAccountData?.status,
+            });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formActionType, change]);
+
     const onChange = (e) => {
         setSearchValue(e.target.value);
     };
@@ -166,12 +187,9 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
     const handleTreeViewVisiblity = () => setTreeViewVisible(!isTreeViewVisible);
 
     const handleTreeViewClick = (keys, tree) => {
-        console.log('_KEY_', keys);
         form.resetFields();
-        setFormData([]);
         setViewData(null);
-        let name = tree?.node?.title?.props?.children?.[2];
-        setSelectedTreeKey(keys?.[0]);
+        setSelectedTreeKey(keys);
     };
 
     const handleAdd = () => {
@@ -185,8 +203,9 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
     };
 
     const onFinish = (values) => {
-        const recordId = formData?.id || '';
-        const data = { ...values, id: recordId, parentAccountCode: 'DMS', companyCode: companyCode };
+        const recordId = chartOfAccountData?.id || '';
+        const parentCode = values?.parentAccountCode ? values?.parentAccountCode : '';
+        const data = { ...values, id: recordId, companyCode: companyCode, parentAccountCode: parentCode };
 
         console.log('TOBE', data);
 
@@ -207,7 +226,7 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
 
         const requestData = {
             data: data,
-            method: 'post',
+            method: formActionType === FROM_ACTION_TYPE?.EDIT ? 'put' : 'post',
             setIsLoading: listShowLoadingChartOfAccount,
             userId,
             onError,
@@ -231,8 +250,8 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
     };
 
     const handleButtonClick = (type) => {
-        setFormData([]);
         form.resetFields();
+        setFormActionType(type);
         setIsFormVisible(true);
         setFormBtnActive(false);
         setChange(() => !change);
@@ -256,16 +275,20 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
 
     const formProps = {
         typeData,
-        // setSelectedTreeKey,
+        setSelectedTreeKey,
         formActionType,
         isVisible: isFormVisible,
         onFinishFailed,
         onCloseAction,
-        titleOverride: (formData?.code ? 'Edit ' : 'Add ').concat(moduleTitle),
+        titleOverride: (formActionType === FROM_ACTION_TYPE?.EDIT ? 'Edit ' : 'Add ').concat(moduleTitle),
         onFinish,
         isFormBtnActive,
         setFormBtnActive,
         form,
+        chartOfAccountHierarchy,
+        selectedTreeSelectKey,
+        disable,
+        setSelectedTreeSelectKey,
     };
 
     const viewProps = {
@@ -291,14 +314,6 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
     const leftCol = chartOfAccountHierarchy?.length > 0 ? 14 : 24;
     const rightCol = chartOfAccountHierarchy?.length > 0 ? 10 : 24;
     const title = 'Financial Company';
-
-    useEffect(() => {
-        console.log(chartOfAccountHierarchy, 'chartOfAccountHierarchy');
-    }, [chartOfAccountHierarchy]);
-
-    useEffect(() => {
-        console.log(chartOfAccountData, 'chartOfAccountData');
-    }, [chartOfAccountData]);
 
     return (
         <>
@@ -365,7 +380,7 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
                     )}
                 </Col>
 
-                {chartOfAccountData?.length > 0 ? (
+                {chartOfAccountHierarchy?.length > 0 ? (
                     <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol}>
                         {selectedTreeKey?.length > 0 ? (
                             <>

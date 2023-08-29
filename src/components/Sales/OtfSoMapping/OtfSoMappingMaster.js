@@ -343,6 +343,10 @@ export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, sav
     const rightCol = productHierarchyData?.length > 0 ? 10 : 24;
     const title = 'Hierarchy';
 
+    useEffect(() => {
+        console.log(selectedTreeKey, 'selectedTreeKey');
+    }, [selectedTreeKey]);
+
     return (
         <>
             <div className={styles.contentHeaderBackground}>

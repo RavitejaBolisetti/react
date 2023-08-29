@@ -17,21 +17,23 @@ export const ViewMain = (props) => {
         column: { xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 },
     };
 
+    const accountType = viewData?.accountType === ATTRIBUTE_TYPE?.[0]?.key ? ATTRIBUTE_TYPE?.[0]?.value : ATTRIBUTE_TYPE?.[1]?.value;
+
     return (
         <div className={styles.viewContainer}>
             <Descriptions {...viewProps}>
-                <Descriptions.Item label="Attribute Level">{viewData?.accountType}</Descriptions.Item>
+                <Descriptions.Item label="Attribute Level">{accountType}</Descriptions.Item>
                 <Descriptions.Item label="Parent">{viewData?.parentAccountCode}</Descriptions.Item>
                 <Descriptions.Item label="Code">{viewData?.accountCode}</Descriptions.Item>
-                <Descriptions.Item label="Description">{viewData?.parentAccountDescription}</Descriptions.Item>
+                <Descriptions.Item label="Description">{viewData?.accountDescription}</Descriptions.Item>
                 {viewData?.accountType === ATTRIBUTE_TYPE?.[1]?.key && (
                     <>
-                        <Descriptions.Item label="Opening Balance Cr.">{viewData?.OpeningBalanceCredit}</Descriptions.Item>
-                        <Descriptions.Item label="Opening Balance Dr">{viewData?.OpeningBalanceDebit}</Descriptions.Item>
+                        <Descriptions.Item label="Opening Balance Cr.">{viewData?.openingBalanceCredit}</Descriptions.Item>
+                        <Descriptions.Item label="Opening Balance Dr">{viewData?.openingBalanceDebit}</Descriptions.Item>
                     </>
                 )}
 
-                <Descriptions.Item label="Status">{viewData?.status}</Descriptions.Item>
+                <Descriptions.Item label="Status">{viewData?.status === true ? 'Active' : 'Inactive'}</Descriptions.Item>
             </Descriptions>
         </div>
     );
