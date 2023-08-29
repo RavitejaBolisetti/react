@@ -150,7 +150,7 @@ const AddEditFormMain = (props) => {
                                     header={
                                         <>
                                             {el?.label}
-                                            {allowedAccess?.length > 0 && <Tag color="default" className={styles.marL10}>{`${allowedAccess?.length >= 2 ? `${allowedAccess?.length} Accesses Provided` : `${allowedAccess?.length} Access Provided`}`}</Tag>}
+                                            {allowedAccess?.length > 0 && <Tag color="default" className={styles.marL20}>{`${allowedAccess?.length >= 2 ? `${allowedAccess?.length} Accesses Provided` : `${allowedAccess?.length} Access Provided`}`}</Tag>}
                                         </>
                                     }
                                     key={i}
@@ -262,7 +262,7 @@ const AddEditFormMain = (props) => {
                                         </Col>
                                     </Row>
                                 </div>
-                                <Divider />
+                                {/* <Divider /> */}
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.subTitleSec}>
                                         Application Access<span className={styles.mandatory}>*</span>
