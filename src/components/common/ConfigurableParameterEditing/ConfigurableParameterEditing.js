@@ -23,7 +23,8 @@ import { FaRegEye } from 'react-icons/fa';
 
 import { formatDate } from 'utils/formatDateTime';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 const { Search } = Input;
 

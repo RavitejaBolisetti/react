@@ -24,7 +24,8 @@ import { ViewManufacturerOrgDetail } from './ViewManufacturerOrgDetails';
 
 import LeftPanel from '../LeftPanel';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 const { Search } = Input;
 const mapStateToProps = (state) => {

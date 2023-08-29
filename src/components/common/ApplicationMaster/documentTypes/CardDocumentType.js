@@ -6,8 +6,8 @@
 import React, { useState, Fragment, useEffect } from 'react';
 import { Col, Card, Row, Button, Form, Divider, Typography, Space } from 'antd';
 import { FiEdit, FiTrash } from 'react-icons/fi';
-
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from './../../Common.module.css';
 import DocumentTypesForm from './DocumentTypesForm';
 
 const { Text } = Typography;

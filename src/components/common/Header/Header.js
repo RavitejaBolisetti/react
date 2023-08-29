@@ -19,7 +19,8 @@ import customMenuLink, { addToolTip } from 'utils/customMenuLink';
 import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { showGlobalNotification } from 'store/actions/notification';
 
-import styles from './Header.module.css';
+import styles from './Header.module.scss';
+//import styles from './Header.module.css';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { clearLocalStorageData, doLogoutAPI } from 'store/actions/auth';
@@ -223,9 +224,10 @@ const HeaderMain = (props) => {
 
     return (
         <>
+            <div className={styles.headerContainer}>
             {!isLoading ? (
                 <>
-                    <div className={styles.headerContainer}>
+                    
                         <Row gutter={0}>
                             <Col xs={14} sm={isDashboard ? 9 : 16} md={isDashboard ? 9 : 16} lg={isDashboard ? 9 : 16} xl={isDashboard ? 9 : 16} xxl={isDashboard ? 9 : 16}>
                                 <div className={styles.headerLeft}>
@@ -311,12 +313,12 @@ const HeaderMain = (props) => {
                                 </div>
                             </Col>
                         </Row>
-                    </div>
+                    
                 </>
             ) : (
                 <HeaderSkeleton />
             )}
-
+            </div>
             <div style={{ clear: 'both' }}></div>
             <ChangePassword title="Change Password" setModalOpen={setChangePasswordModalOpen} isOpen={isChangePasswordModalOpen} onOk={() => setChangePasswordModalOpen(false)} onCancel={() => console.log('onCancel', isChangePasswordModalOpen) || setChangePasswordModalOpen(false)} />
         </>

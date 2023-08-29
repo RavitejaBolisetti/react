@@ -7,7 +7,7 @@ import React from 'react';
 import { Input, Form, Button, TimePicker, Space } from 'antd';
 import { validateRequiredInputField } from 'utils/validation';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 const AddEditForm = (props) => {
     const { allowedTimingSave, isAddTimeVisible, form, onFinish, handleFormValueChange, handleFormFieldChange } = props;

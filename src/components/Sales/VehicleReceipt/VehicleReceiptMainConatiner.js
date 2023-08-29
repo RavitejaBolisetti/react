@@ -13,7 +13,8 @@ import { VehicleDetailsMaster } from './VehicleDetails';
 
 import { LeftSidebar } from './LeftSidebar';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 const VehicleReceiptMainConatinerMain = (props) => {
     const { currentSection } = props;

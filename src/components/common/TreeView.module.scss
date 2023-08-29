@@ -1,0 +1,200 @@
+@import 'assets/sass/app.module.scss';
+
+/* Tree panel CSS */
+:global {
+    .ant-form-item-required {
+        &:before {
+            position: absolute;
+            right: -15px;
+            top: 3px;
+        }
+    }
+
+    .ant-tree {
+        .ant-tree-node-content-wrapper {
+            line-height: 24px;
+            -webkit-user-select: none;
+            user-select: none;
+            color: $primaryBlack;
+            margin-left: 8px;
+            font-size: 15px;
+            padding: 0px 14px;
+            padding-bottom: 0px;
+            position: relative;
+            z-index: auto;
+            min-height: 24px;
+            margin: 0;
+            padding: 0px 17px 0px 4px;
+            color: inherit;
+            line-height: 24px;
+            cursor: pointer;
+
+            &:hover {
+                background-color: $transparentColor;
+                color: $primaryRed;
+                border-radius: 4px;
+                padding: 0px 17px 0px 4px;
+
+                .site-tree-search-value {
+                    color: $primaryRed !important;
+                }
+            }
+        }
+
+        .ant-tree-node-content-wrapper.ant-tree-node-selected {
+            background-color: $transparentColor;
+            color: $primaryRed;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .ant-tree-checkbox+span.ant-tree-node-selected {
+            background-color: $transparentColor;
+            color: $primaryRed;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .ant-tree-checkbox+span {
+            position: relative;
+            z-index: auto;
+            min-height: 24px;
+            margin: 0;
+            padding: 0px 17px 0px 4px;
+            color: inherit;
+            line-height: 24px;
+            cursor: pointer;
+
+            &:hover {
+                background-color: $transparentColor;
+                color: $primaryRed;
+                border-radius: 4px;
+                padding: 0px 17px 0px 4px;
+
+                .site-tree-search-value {
+                    color: $primaryRed !important;
+                }
+            }
+        }
+
+        .ant-tree-treenode {
+            display: flex;
+            align-items: flex-start;
+            padding: 0 0 4px 0;
+            outline: none;
+        }
+
+        .ant-tree-switcher {
+            .anticon {
+                svg {
+                    height: 16px;
+                    width: 16px;
+                }
+            }
+        }
+    }
+
+    .ant-tree-show-line {
+        .ant-tree-switcher-line-icon {
+            vertical-align: -0.28em;
+        }
+    }
+}
+
+.scrollTreeData {
+    width: 100%;
+    overflow: auto;
+    height: calc(100vh - 246px);
+    @include space(padding, all, $sp20);
+    border: 1px solid $neutralGrey1;
+    border-radius: 4px;
+
+    &::-webkit-scrollbar-track {
+        background-color: $neutralGrey0;
+    }
+
+    &::-webkit-scrollbar {
+        width: 5px;
+        height: 0px;
+        background-color: $neutralGrey0;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: $neutralGrey2;
+        border-radius: 10px;
+    }
+
+    &:hover {
+        &::-webkit-scrollbar {
+            width: 8px !important;
+        }
+    }
+}
+
+/* modalView */
+.modalView {
+    .scrollTreeData {
+        &::-webkit-scrollbar-track {
+            background-color: $primaryWhite;
+        }
+
+        &::-webkit-scrollbar {
+            width: 5px;
+            height: 0px;
+            background-color: $primaryWhite;
+        }
+    }
+}
+
+.leftpanel {
+    width: 100%;
+    white-space: nowrap;
+}
+
+.panelVisible {
+    height: calc(100vh - 280px);
+}
+
+.panelHidden {
+    background: none;
+}
+
+.treemenu {
+    @include space(margin, top, $sp24);
+    @include space(margin, right, $sp0);
+    @include space(margin, bottom, $sp24);
+    @include space(margin, left, $sp0);
+    @include space(padding, left, $sp0);
+    @include space(padding, bottom, $sp0);
+    line-height: 2em;
+    list-style: none;
+    background-color: transparent;
+    color: #0b0b0c;
+}
+
+.treeCollapsibleButton {
+    border-radius: 3px;
+    @include space(padding, all, $sp5);
+    color: #ff3e5b;
+    line-height: 2px;
+    background-color: #f4f4f4;
+    font-weight: 400;
+    cursor: pointer;
+    float: left;
+    will-change: box-shadow, transform;
+    transition: box-shadow 0.2s cubic-bezier(0.4, 0, 1, 1), background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.bigblue {
+    color: red;
+}
+
+.searchField {
+    @include space(padding, top, $sp0);
+    @include space(padding, right, $sp8);
+    @include space(padding, bottom, $sp0);
+    @include space(padding, left, $sp8);
+    @include space(margin, top, $sp12);
+    @include space(margin, bottom, $sp8);
+    width: '100%';
+}

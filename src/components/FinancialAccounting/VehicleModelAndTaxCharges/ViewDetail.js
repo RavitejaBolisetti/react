@@ -9,7 +9,7 @@ import { Descriptions } from 'antd';
 const ViewDetailMain = (props) => {
     const { formData, style } = props;
 
-    const viewProps = {
+    const viewOneColProps = {
         bordered: false,
         colon: false,
         layout: 'vertical',
@@ -17,15 +17,15 @@ const ViewDetailMain = (props) => {
     };
 
     return (
-        <div className={`${style.viewContainer} ${style.hierarchyRightContaners}`}>
-            <>
-                <Descriptions {...viewProps}>
+        <>
+            <div className={style.viewContainer}>
+                <Descriptions {...viewOneColProps}>
                     <Descriptions.Item label="Model Group Code">{formData?.modelGroup}</Descriptions.Item>
                     <Descriptions.Item label="Tax Category Description">{formData?.taxCategoryDescription}</Descriptions.Item>
                     <Descriptions.Item label="Account Category Description">{formData?.accountCategoryDescription}</Descriptions.Item>
                 </Descriptions>
-            </>
-        </div>
+            </div>
+        </>
     );
 };
 

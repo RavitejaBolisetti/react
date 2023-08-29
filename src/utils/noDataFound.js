@@ -6,7 +6,8 @@
 
 import React from 'react';
 import { Empty, Card } from 'antd';
-import styles from 'components/common/Common.module.css';
+
+import styles from 'assets/sass/app.module.scss';
 
 export const NoDataFound = (props) => {
     const { informtion = 'No Data Found' } = props;

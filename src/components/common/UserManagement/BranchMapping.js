@@ -5,7 +5,8 @@
  */
 import React, { useState, useEffect } from 'react';
 import { Col, Row, Space, Checkbox } from 'antd';
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 const BranchMapping = ({ branchMappingData, finalFormdata, setfinalFormdata, forceUpdate }) => {
     const [dealerBranches, setDealerBranches] = useState([]);

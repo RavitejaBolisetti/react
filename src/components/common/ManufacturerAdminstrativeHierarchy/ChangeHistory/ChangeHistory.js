@@ -17,7 +17,8 @@ import { tableColumnAdmin, tableColumnAuthority } from './tableColumn';
 import { DataTable } from 'utils/dataTable';
 import { MANUFACTURER_HIERARCHY_TYPE } from 'constants/manufacturerHierarchyType';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 const mapStateToProps = (state) => {
     const {
@@ -138,4 +139,5 @@ const ChangeHistoryMain = (props) => {
     );
 };
 
-export const ChangeHistory = connect(mapStateToProps, mapDispatchToProps)(withDrawer(ChangeHistoryMain, { title: '', width: '90%' }));
+const ChangeHistory = connect(mapStateToProps, mapDispatchToProps)(withDrawer(ChangeHistoryMain, { title: '', width: '90%' }));
+export default ChangeHistory;

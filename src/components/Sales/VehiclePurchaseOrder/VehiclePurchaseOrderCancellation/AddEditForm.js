@@ -11,7 +11,8 @@ import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { validateRequiredSelectField } from 'utils/validation';
 import { VehiclePurchaseOrderFormButton } from '../VehiclePurchaseOrderFormButton';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 const AddEditFormMain = (props) => {
     const { otfCancellationForm, onFinishVPOCancellation } = props;
