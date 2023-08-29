@@ -295,12 +295,12 @@ const UserManagementMain = (props) => {
     };
 
     useEffect(() => {
-        if (userId && userType) {
+        if (userId && userType && !isFormVisible) {
             const params = filterString?.searchParam ? extraParams : [...defaultExtraParam, ...extraParams];
             fetchUserDataList({ setIsLoading: listShowLoading, extraParams: params, userId, onErrorAction, onSuccessAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, userType, page?.pageSize, page?.current, filterString?.searchParam]);
+    }, [userId, userType, page?.pageSize, page?.current, filterString?.searchParam, isFormVisible]);
 
     const onFinish = (values, e) => {};
 
@@ -459,8 +459,8 @@ const UserManagementMain = (props) => {
         searchForm,
         filterString,
         setFilterString,
-        singleField: true,
-        placeholder: 'Search token number',
+        // singleField: true,
+        // placeholder: 'Search token number',
         disabled: disableSearch,
         optionType: typeData,
         defaultValue: 'employeeCode',
