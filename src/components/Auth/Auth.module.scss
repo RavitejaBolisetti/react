@@ -69,13 +69,9 @@
      margin-top: 20px;
      padding: 7px 16px !important;
      background-color: $primaryRed-dark;
- 
-     /*&:hover {
-          background: $primaryRed-dark !important;
-      }*/
      &:disabled {
-         background-color: $neutralGrey2-dark;
-         border: 1px solid $neutralGrey2-dark;
+         background-color: $neutralGrey2-dark !important;
+         border: 1px solid $neutralGrey2-dark !important;
          opacity: 1;
          @include font-style(16, 24, 600, $neutralGrey3-dark, $fontfamily, center);
          &:hover {
@@ -123,18 +119,21 @@
      & :global {
          .ant-input-affix-wrapper {
              background: $primaryRed-dark;
-             height: 36px !important;
+             border-color: $neutralGrey4;
+            color: $primaryWhite;
+            //  height: 36px !important;
              // color: $primaryWhite;
              // font-size: 16px;
-             padding: 0;
+            //  padding: 0;
              @include borderRedius(4px, 1px, solid, $neutralGrey2-dark);
              @include font-style(16, normal, normal, $primaryWhite, $fontfamily, inherit);
              @include breakpoint(md) {
                  padding: 2px 10px 0;
              }
              &:hover {
-                 border-color: $primaryWhite-dark;
-                 border-inline-end-width: 0;
+                z-index: 0 !important;
+                border-color: $primaryWhite-dark;
+                //  border-inline-end-width: 0;
              }
              &:not(.ant-input-affix-wrapper-disabled) {
                  &:hover {
@@ -151,6 +150,7 @@
                  }
              }
              .ant-input-prefix {
+                color: $neutralGrey3;
                  &::placeholder {
                      // color: $neutralGrey2-dark;
                      // font-size: 18px;
@@ -166,8 +166,8 @@
              border-color: $primaryWhite-dark !important;
              .ant-input-prefix {
                  color: $primaryWhite-dark;
-                 box-shadow: none !important;
-                 border-color: $primaryWhite-dark;
+                //  box-shadow: none !important;
+                //  border-color: $primaryWhite-dark;
              }
          }
          .ant-input-affix-wrapper-status-success {
@@ -175,9 +175,6 @@
                  color: $primaryWhite;
              }
          }
-         // .ant-form-item-explain-error {
-         //     font-size: 12px;
-         // }
          .ant-form-item {
              .ant-form-item-explain-error {
                  // color: $semanticError-dark;
@@ -208,7 +205,12 @@
          }
      }
      .disabledInput {
-         color: #838383;
+         color: $neutralGrey3;
+         & :global{
+            .ant-input-affix-wrapper {
+                border-color: $neutralGrey3;
+            }
+         }
      }
      input {
          &:-webkit-autofill {
@@ -363,10 +365,15 @@
                                  color: $DarkPink-dark;
                              }
                          }
+                         .ant-form-item-control-input {
+                            background: $primaryBlack !important;
+                            border-radius: 6px !important;
+                        }
                      }
                      input {
-                         background: transparent;
+                         background: $transparentColor;
                          color: $primaryWhite;
+                         height: auto;
                          &::-ms-reveal {
                              display: none;
                          }
@@ -393,12 +400,18 @@
                      }
                      p {
                          padding-left: 0 !important;
+                         margin-top: 3px !important;
                          // color: $semanticSuccess !important;
                          // font-size: 12px;
                          // font-weight: 400;
                          // line-height: 20px;
                          @include font-style(12, 20, 400, $semanticSuccess !important, $fontfamily, inherit);
                      }
+                     & :global {
+						.ant-form-item-control-input {
+							background: $transparentColor !important;
+						}
+					}
                  }
                  .logOutHeading {
                      color: $primaryWhite;
@@ -608,7 +621,7 @@
                  text-transform: uppercase;
                  color: $neutralGrey4;
                  font-size: 14px;
-                 border-right: 1px solid #8e8585;
+                 border-right: 1px solid $neutralGrey4;
                  &:last-child {
                      border-right: none;
                  }
@@ -671,23 +684,29 @@
      margin-left: 12px;
  }
  .changer {
-     margin-top: 5px;
-     margin-bottom: 5px;
-     input {
-         background: black;
-         border: white !important;
-         border-radius: 5px;
-         margin-right: 15px !important;
-         padding: 6px;
-         font-size: 20px;
-         color: $primaryWhite-dark;
-     }
-     > input {
-         &:focus-visible {
-             margin-right: 10px;
-         }
-     }
- }
+	margin-top: 5px;
+	margin-bottom: 5px;
+	input {
+		background: black;
+		border: $primaryWhite !important;
+		border-radius: 5px;
+		margin-right: 15px !important;
+		padding: 6px;
+		font-size: 20px;
+		color: $primaryWhite;
+		&::placeholder {
+			color: $neutralGrey5-dark;
+			font-size: 16px !important;
+			font-weight: 400 !important;
+			line-height: 24px;
+		}
+	}
+	>input {
+		&:focus-visible {
+			margin-right: 10px;
+		}
+	}
+}
  .clock {
      @include font-style(13, normal, normal, $primaryWhite-dark, $fontfamily, center);
      @include breakpoint(md) {
@@ -696,8 +715,7 @@
          margin-left: -20px;
      }
  }
- $primaryWhite-dark: $primaryWhite-dark;
- $primaryRed: $primaryRed;
+
  
  .ant-input-affix-wrapper-status-error {
      &:not(.ant-input-affix-wrapper-disabled) {
@@ -711,4 +729,20 @@
          }
      }
  }
- 
+ .loginForm {
+    .button {
+        span {
+            svg{
+                margin-left: -24px;
+                visibility: hidden;
+            }
+            span {
+                margin-left: -24px;
+                svg {
+                    margin-left: 0px !important;
+                    visibility: visible;
+                }
+            }
+        }
+    }
+ } 

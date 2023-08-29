@@ -1587,6 +1587,26 @@
 					border: 2px solid $neutralGrey1;
 				}
 			}
+			.ant-descriptions-row {
+				.ant-descriptions-item {
+					.ant-descriptions-item-container {
+						.ant-descriptions-item-content {
+							display: inline-block;
+							white-space: nowrap;
+							overflow: hidden;
+							text-overflow: ellipsis;
+							color: $primaryBlack;
+							font-weight: 400;
+							line-height: 23px;
+							align-items: center;
+							a {
+								color: $primaryBlack;
+								text-decoration: underline;
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 }

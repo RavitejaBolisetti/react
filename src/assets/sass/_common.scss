@@ -242,10 +242,10 @@
     overflow: hidden;
     overflow-y: auto;
     .advanceFilterTop {
-		.advanceFilterItem {
-			height: 20px;
-		}
-	}
+        .advanceFilterItem {
+            height: 20px;
+        }
+    }
     .rsmApproval {
         .buttonsGroupRight {
             color: $primaryBlack;
@@ -2160,14 +2160,14 @@
 }
 /*-------------Text Area Error Section Strat--------------*/
 .textareaError {
-	& :global {
-		.ant-form-item {
-			.ant-form-item-explain-error {
-				position: absolute;
-				bottom: 21px;
-			}
-		}
-	}
+    & :global {
+        .ant-form-item {
+            .ant-form-item-explain-error {
+                position: absolute;
+                bottom: 21px;
+            }
+        }
+    }
 }
 /*-------------Roll Managemnt Section Strat--------------*/
 .roleMangementSearch {
@@ -2303,6 +2303,29 @@
 //     border-bottom: 1px solid $neutralGrey1;
 //     margin-bottom: 20px;
 // }
+
+
+
+
+.roleDescription {
+	& :global {
+		.ant-descriptions {
+			.ant-descriptions-view {
+				.ant-descriptions-row {
+					.ant-descriptions-item {
+						.ant-descriptions-item-container {
+							.ant-descriptions-item-content {
+								white-space: break-spaces;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+
 /*-------------confirm Module css--------------*/
 .confirmModalIcon {
     color: #ff3e5b !important;
