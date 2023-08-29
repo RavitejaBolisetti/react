@@ -6,7 +6,9 @@
 import React from 'react';
 import { Button, Row, Col, Form } from 'antd';
 import { FilterIcon } from 'Icons';
-import styles from 'components/common/Common.module.css';
+
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 import { SearchBox } from 'components/utils/SearchBox';
 
 export default function AdvanceOTFFilter(props) {

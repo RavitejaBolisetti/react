@@ -6,7 +6,7 @@
 import React from 'react';
 import { Col, Row } from 'antd';
 
-import styles from './Auth.module.css';
+import styles from './Auth.module.scss';
 import Copyright from 'components/common/Footer/Copyright';
 
 export default function Footer() {

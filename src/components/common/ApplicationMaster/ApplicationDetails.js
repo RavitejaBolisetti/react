@@ -10,8 +10,7 @@ import { validateRequiredInputField, validateRequiredSelectField } from 'utils/v
 import { LANGUAGE_EN } from 'language/en';
 import { ROOT_PARENT_APPLICATION, ACCESSIBLE_LOCATION_INDICATOR_SELECT_DATA } from 'constants/modules/applicationMaster';
 
-import styles from 'components/common/Common.module.css';
-
+import styles from 'assets/sass/app.module.scss';
 import TreeSelectField from '../TreeSelectField';
 import { customSelectBox } from 'utils/customSelectBox';
 

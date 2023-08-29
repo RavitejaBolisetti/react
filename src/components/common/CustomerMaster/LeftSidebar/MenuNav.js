@@ -12,7 +12,8 @@ import { CUSTOMER_INDIVIDUAL_SECTION } from 'constants/CustomerIndividualSection
 import { CUSTOMER_CORPORATE_SECTION } from 'constants/CustomerCorporateSection';
 import { CUSTOMER_TYPE } from 'constants/CustomerType';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 const MenuNav = (props) => {
     const { customerType, currentSection, setCurrentSection, formActionType: { addMode } = undefined, selectedCustomerId } = props;
@@ -44,7 +45,6 @@ const MenuNav = (props) => {
         }
     };
 
-    
     const className = (item) => {
         return !selectedCustomerId && !item.enableOnAdd ? styles.cursorNotAllowed : styles.cursorPointer;
     };

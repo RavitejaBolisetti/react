@@ -6,7 +6,9 @@
 import React from 'react';
 import { withLayoutMaster } from 'components/withLayoutMaster';
 import CMS from 'assets/images/comingsoon.svg';
-import styles from './CMSPage.module.css';
+
+import styles from './CMSPage.module.scss';
+//import styles from './CMSPage.module.css';
 import { PageHeader } from 'pages/common/PageHeader';
 import { useLocation } from 'react-router-dom';
 import * as routing from 'constants/routing';

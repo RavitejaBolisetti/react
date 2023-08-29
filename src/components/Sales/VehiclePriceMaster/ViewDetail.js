@@ -6,7 +6,9 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Descriptions } from 'antd';
 import { withDrawer } from 'components/withDrawer';
-import styles from 'components/common/Common.module.css';
+
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';

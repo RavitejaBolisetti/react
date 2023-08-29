@@ -5,7 +5,9 @@
  */
 import React from 'react';
 import { Col, Row, Button, Space, Card, Typography, Divider } from 'antd';
-import styles from './../UserManagement.module.css';
+
+import styles from './../UserManagement.module.scss';
+//import styles from './../UserManagement.module.css';
 import { AiOutlineClose } from 'react-icons/ai';
 
 const { Text } = Typography;

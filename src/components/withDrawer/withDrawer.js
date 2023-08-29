@@ -6,7 +6,8 @@
 import React, { useEffect } from 'react';
 import { Drawer } from 'antd';
 
-import styles from './withDrawer.module.css';
+import styles from './withDrawer.module.scss';
+//import styles from './withDrawer.module.css';
 
 export const withDrawer =
     (InputComponent, { title = 'default title', width = 520, footer }) =>

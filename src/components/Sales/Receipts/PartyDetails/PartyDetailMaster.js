@@ -19,7 +19,8 @@ import { showGlobalNotification } from 'store/actions/notification';
 
 import { BASE_URL_PARTY_MASTER } from 'constants/routingApi';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 const mapStateToProps = (state) => {
     const {

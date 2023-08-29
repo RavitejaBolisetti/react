@@ -1,0 +1,650 @@
+@import 'assets/sass/app.module.scss';
+
+:global {
+    .ant-layout {
+        .ant-layout-header {
+            line-height: 40px;
+            height: 64px;
+        }
+    }
+
+    .ant-dropdown {
+        .ant-dropdown-menu {
+            .ant-dropdown-menu-title-content {
+                &>a {
+                    &:hover {
+                        text-decoration: none;
+                    }
+                }
+            }
+        }
+
+        &.ant-dropdown-placement-bottomRight {
+            .ant-dropdown-menu {
+                border: 1px solid $primaryBlack;
+                border-radius: 6px;
+                box-shadow: none;
+                margin-top: 16px;
+                box-shadow: none;
+
+                .ant-dropdown-menu-item {
+                    &:not(:last-child) {
+                        margin-bottom: 4px;
+                    }
+
+                    &:hover {
+                        color: $primaryRed;
+                        background-color: $transparentPrimaryL;
+                    }
+
+                    .ant-dropdown-menu-title-content {
+                        svg {
+                            color: $primaryRed;
+                            vertical-align: sub;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.headerRight {
+    display: flex;
+    justify-content: flex-end;
+
+    & :global {
+        .ant-input-group {
+            border-radius: 4px;
+            -moz-border-radius: 4px;
+            -webkit-border-radius: 4px;
+            border: 1px solid $neutralGrey2;
+
+            &:hover {
+                border: 1px solid $primaryBlack-dark;
+            }
+        }
+
+        .ant-input-affix-wrapper {
+            &:not(.ant-input-affix-wrapper-disabled):hover {
+                border-color: $transparentColor;
+                border-inline-end-width: 0px;
+            }
+
+            &:focus {
+                box-shadow: 0 0 0 2px $primaryWhite;
+            }
+        }
+
+        .ant-input-affix-wrapper-focused {
+            box-shadow: 0 0 0 2px $primaryWhite;
+        }
+
+        .ant-btn-default {
+            //box-shadow: 0 2px 0 $primaryBlack;
+            background-color: $primaryWhite;
+            font-size: 16px;
+
+            &:not(:disabled):hover {
+                border-color: $transparentColor;
+            }
+        }
+    }
+
+    .navbarNav {
+        .floatLeft {
+            .navLink {
+                color: $primaryBlack;
+                padding-left: 10px;
+                padding-right: 14px;
+
+                &:hover {
+                    svg {
+                        color: $primaryRed;
+                    }
+                }
+
+                & :global {
+                    .ant-space {
+                        .ant-space-item {
+                            &:last-child {
+                                @include breakpoint(md) {
+                                    padding-top: 0px;
+                                    padding-left: 10px;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                @include breakpoint(sm) {
+                    padding-left: 4px;
+                    padding-right: 8px;
+                }
+            }
+        }
+    }
+
+    @include breakpoint(lg) {
+        padding: 20px;
+    }
+
+    @include breakpoint(md) {
+        padding: 14px 20px 0px 10px;
+    }
+}
+
+.headerContainer {
+    height: 60px;
+    padding: 16px 20px 0 24px;
+
+    @include breakpoint(md) {
+        padding: 0 20px;
+    }
+
+    :global {
+        .ant-dropdown {
+            width: 170px;
+
+            .ant-dropdown-menu {
+                padding: 10px 16px;
+
+                .ant-dropdown-menu-item {
+                    @include font-style(14, 32, 400, $primaryBlack, $fontfamily, inherit);
+                    padding: 0;
+
+                    &:hover {
+                        background-color: transparent;
+                        color: $primaryRed;
+                    }
+                }
+
+                .ant-dropdown-menu-submenu-title {
+                    @include font-style(14, 32, 400, $primaryBlack, $fontfamily, inherit);
+                    padding: 0;
+
+                    &:hover {
+                        background-color: transparent;
+                        color: $primaryRed;
+                    }
+                }
+
+                .ant-dropdown-menu-item-active {
+                    background-color: transparent;
+                    color: $primaryRed;
+                }
+
+                .ant-dropdown-menu-submenu-title-active {
+                    background-color: transparent;
+                    color: $primaryRed;
+                }
+
+                .ant-dropdown-menu-title-content {
+                    .anticon {
+                        padding-right: 8px;
+                    }
+                }
+            }
+        }
+
+        .ant-dropdown-menu-submenu {
+            .ant-dropdown-menu {
+                padding: 10px 16px;
+
+                .ant-dropdown-menu-item {
+                    @include font-style(14, 32, 400, $primaryBlack, $fontfamily, inherit);
+                    padding: 0;
+                }
+
+                .ant-dropdown-menu-submenu-title {
+                    @include font-style(14, 32, 400, $primaryBlack, $fontfamily, inherit);
+                    padding: 0;
+
+                    &:hover {
+                        background-color: transparent;
+                        color: $primaryRed;
+                    }
+                }
+
+                .ant-dropdown-menu-item-active {
+                    background-color: transparent;
+                    color: $primaryRed;
+                }
+
+                .ant-dropdown-menu-submenu-title-active {
+                    background-color: transparent;
+                    color: $primaryRed;
+                }
+
+                .ant-dropdown-menu-title-content {
+                    .anticon {
+                        padding-right: 8px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.headerLeft {
+    margin-top: -8px !important;
+
+    .userAvatar {
+        .userAvatarInside {
+            background-color: $neutralGrey2;
+            @include font-style(20, 35, inherit, inherit, $fontfamily, inherit);
+
+            @include breakpoint(md) {
+                height: 30px;
+                width: 30px;
+                margin-right: -3px;
+                @include font-style(16, 25, inherit, inherit, $fontfamily, inherit);
+            }
+
+            @include breakpoint(sm) {
+                height: 30px;
+                width: 30px;
+                margin-right: -3px;
+                @include font-style(16, 25, inherit, inherit, $fontfamily, inherit);
+            }
+        }
+    }
+
+    @include breakpoint(lg) {
+        padding-left: 20px;
+    }
+
+    @include breakpoint(md) {
+        padding-left: 20px;
+    }
+
+    @include breakpoint(sm) {
+        padding-left: 50px;
+    }
+}
+
+.userText {
+    float: right;
+    @include font-style(14, 20, 700, $primaryBlack, $fontfamily, inherit);
+
+    .userName {
+        max-width: 140px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    .userServiceArea {
+        @include font-style(12, 20, 500, $neutralGrey3, $fontfamily, inherit);
+    }
+
+    @include breakpoint(md) {
+        padding-top: 6px;
+    }
+
+    @include breakpoint(sm) {
+        float: right;
+        padding-top: 13px;
+        font-size: 12px;
+        font-weight: 500;
+        margin-top: 5px;
+    }
+}
+
+.dropdownIcon {
+    color: $primaryRed;
+    padding: 5px;
+    cursor: pointer;
+
+    :hover {
+        color: $primaryRed;
+    }
+}
+
+.helpLineText {
+    display: inline-block;
+    margin-left: 4px;
+    @include font-style(12, 16, 700, inherit, $fontfamily, left);
+
+    span {
+        @include font-style(12, inherit, 300, inherit, $fontfamily, inherit);
+    }
+
+    @include breakpoint(lg) {
+        line-height: 15px;
+        font-weight: 500;
+    }
+
+    @include breakpoint(md) {
+        display: none;
+    }
+}
+
+.welcomeUser {
+    padding-left: 10px;
+    margin-top: -6px;
+
+    .userAvatar {
+        .userAvatarInside {
+            background-color: $neutralGrey1;
+            @include font-style(16, 30, 500, $primaryBlack, $fontfamily, left);
+            border-color: $neutralGrey2;
+
+            @include breakpoint(md) {
+                width: 26px;
+                height: 26px;
+                @include font-style(12, 22, 500, $primaryBlack, $fontfamily, left);
+            }
+
+            @include breakpoint(sm) {
+                width: 26px;
+                height: 26px;
+                @include font-style(12, 22, 500, $primaryBlack, $fontfamily, left);
+            }
+        }
+
+        @include breakpoint(lg) {
+            padding-left: 20px;
+        }
+
+        @include breakpoint(md) {
+            padding-top: 2px;
+        }
+
+        @include breakpoint(sm) {
+            padding-top: 4px;
+        }
+    }
+
+    .navLink {
+        color: $primaryBlack;
+        padding: 1px !important;
+        float: right;
+
+        &:hover {
+            color: $brandColor !important;
+        }
+
+        .userServiceArea {
+            &:hover {
+                color: $brandColor !important;
+            }
+
+            @include breakpoint(md) {
+                display: none;
+            }
+        }
+
+        &:active {
+            color: $brandColor !important;
+        }
+    }
+
+    .userServiceArea {
+        @include breakpoint(sm) {
+            display: none;
+        }
+    }
+
+    @include breakpoint(md) {
+        margin-top: -10px;
+    }
+
+    & :global {
+        .ant-space {
+            @include breakpoint(md) {
+                gap: 0 !important;
+            }
+        }
+    }
+}
+
+.webmenuDropDownArrow {
+    display: inline;
+
+    & :global {
+        .ant-dropdown-open {
+            .ant-space {
+                .ant-space-item {
+                    span {
+                        transform: rotate(180deg) !important;
+                    }
+                }
+            }
+        }
+    }
+
+    @include breakpoint(sm) {
+        display: none;
+    }
+}
+
+.confirmModal {
+    :global {
+        .ant-modal-confirm-confirm {
+            width: 376px !important;
+        }
+
+        .ant-modal-confirm-title {
+            font-weight: 700 !important;
+        }
+
+        .ant-modal-confirm-content {
+            text-align: center !important;
+            padding: 20px 0px 10px !important;
+        }
+
+        .ant-modal-confirm {
+            .ant-modal-content {
+                .ant-modal-close {
+                    display: none;
+                }
+            }
+
+            .ant-modal-confirm-btns {
+                button {
+                    width: 48%;
+                    padding: 4px 16px !important;
+                    height: 28px !important;
+                    @include font-style(12, 20, 700, $primaryWhite, $fontfamily, center);
+                }
+
+                .ant-btn-default {
+                    height: 36px !important;
+                }
+            }
+        }
+    }
+}
+
+.navLink {
+    :global {
+        .ant-badge {
+            .ant-badge-count {
+                color: $primaryWhite;
+                background-color: $primaryRed;
+                right: 5px;
+                top: 4px;
+            }
+        }
+    }
+}
+
+.navbarExpand {
+    .navbarNav {
+        .navLink {
+            @include breakpoint(lg) {
+                padding-left: 15px;
+                padding-right: 5px;
+            }
+
+            @include breakpoint(md) {
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+        }
+    }
+}
+
+/*----------*/
+.navbarNav {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+
+    @include breakpoint(md) {
+        justify-content: flex-end;
+    }
+}
+
+.dropdownArrow {
+    .navLink {
+        color: $primaryRed !important;
+    }
+
+    & :global {
+        .ant-space {
+            .ant-space-item {
+                &:last-child {
+                    @include breakpoint(sm) {
+                        padding-top: 0px;
+                        padding-left: 4px;
+                    }
+                }
+            }
+        }
+    }
+
+    @include breakpoint(md) {
+        padding: 0px;
+    }
+
+    @include breakpoint(sm) {
+        padding: 0%;
+    }
+}
+
+.userAvatarSkeleton {
+    padding-top: 0px;
+}
+
+.userAvatar {
+    @include breakpoint(sm) {
+        padding-top: 8px;
+    }
+}
+
+.bellSkeleton {
+    padding-top: 1px;
+}
+
+.userTypeSkeleton {
+    float: right;
+    padding-top: 7px;
+    @include font-style(14, 20, 700, $primaryBlack, $fontfamily, left);
+}
+
+.userTextSkeleton {
+    float: right;
+    padding-top: 8px;
+    @include font-style(14, 20, 700, $primaryBlack, $fontfamily, left);
+}
+
+.dealerName {
+    padding-bottom: 2px;
+    @include font-style(16, 24, 700, $primaryBlack, $fontfamily, left);
+
+    @include breakpoint(lg) {
+        font-size: 18px;
+    }
+
+    @include breakpoint(md) {
+        font-size: 14px;
+        padding-bottom: 0;
+        margin-bottom: -5px;
+    }
+
+    @include breakpoint(sm) {
+        font-size: 14px;
+        padding-bottom: 0;
+        margin-bottom: -5px;
+    }
+}
+
+.dealerLocation {
+    @include font-style(12, 20, 400, $primaryRed, $fontfamily, left);
+}
+
+.seprator {
+    padding-right: 5px;
+    @include font-style(16, 20, 400, $primaryBlack, $fontfamily, left);
+}
+
+.dealerInfo {
+    margin-top: -5px;
+}
+
+.userServiceArea {
+    @include font-style(12, inherit, inherit, $primaryBlack, $fontfamily, left);
+
+    @include breakpoint(md) {
+        font-size: 10px;
+    }
+
+    @include breakpoint(sm) {
+        font-size: 10px;
+    }
+}
+
+.userRoleName {
+    @include font-style(14, 20, 400, $primaryRed, $fontfamily, left);
+}
+
+.modalIconAlert {
+    color: $semanticWarning;
+    padding-right: 8px;
+}
+
+.modalIconLogout {
+    color: $primaryRed;
+    padding-right: 8px;
+}
+
+.mobmenuDropDownArrow {
+    display: none;
+
+    @include breakpoint(sm) {
+        display: inline;
+    }
+}
+
+.menuIcon {
+    display: none;
+
+    & :global {
+        .anticon {
+            @include breakpoint(md) {
+                vertical-align: 12px;
+            }
+
+            @include breakpoint(sm) {
+                vertical-align: 12px;
+            }
+        }
+    }
+
+    @include breakpoint(md) {
+        display: inline;
+        padding-top: 14px;
+        padding-left: 0 !important;
+        cursor: pointer;
+    }
+
+    @include breakpoint(md) {
+        display: inline;
+        position: absolute;
+        left: 8px;
+        top: 12px;
+        cursor: pointer;
+    }
+}

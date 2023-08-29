@@ -23,7 +23,8 @@ import { disableFutureDate } from 'utils/disableDate';
 import { withModal } from 'components/withModal';
 import { ModalButtons } from 'components/common/Button';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 const { Option } = Select;
 

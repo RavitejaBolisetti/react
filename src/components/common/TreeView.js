@@ -5,7 +5,9 @@
  */
 import { Tree, Input } from 'antd';
 import { useState } from 'react';
-import styles from './TreeView.module.css';
+
+import styles from './TreeView.module.scss';
+//import styles from './TreeView.module.css';
 
 const { Search } = Input;
 
