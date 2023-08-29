@@ -1,3 +1,4 @@
+
 /*
  *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
  *   All rights reserved.
@@ -1106,6 +1107,7 @@
                 > .ant-collapse-header {
                     padding: 12px 16px 16px;
                     .ant-collapse-header-text {
+                        display: block;
                         margin-bottom: 12px;
                         .ant-divider-horizontal{
                             margin-top: 10px;
