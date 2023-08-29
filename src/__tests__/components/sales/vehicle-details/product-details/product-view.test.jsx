@@ -7,19 +7,16 @@ describe('ViewDetail Component', () => {
         productAttributeDetail: {
             productDivision: 'Division A',
             modelFamily: 'Family X',
-            // ...other data
         },
         connectedVehicle: [
             {
                 tcuId: 'TCU001',
                 esimNo: 'ESIM123',
-                // ...other data
             },
-            // ...more connected vehicles
         ],
     };
 
-    const mockCollapseProps = {}; // Define your collapse props here
+    const mockCollapseProps = {};
 
     it('should render product attribute details', () => {
         render(<ViewDetail formData={mockFormData} bindStatus={jest.fn()} collapseProps={mockCollapseProps} />);
@@ -27,12 +24,10 @@ describe('ViewDetail Component', () => {
         const productDivision = screen.getByText('Product Attribute Details');
         const modelFamily = screen.getByText('Connected Vehicle');
         const aggregates = screen.getByText('Aggregates');
-        // ...assert other fields
 
         expect(productDivision).toBeInTheDocument();
         expect(modelFamily).toBeInTheDocument();
         expect(aggregates).toBeInTheDocument();
-        // ...assert other fields
     });
 
     it('should expand and collapse panels', () => {
@@ -50,8 +45,5 @@ describe('ViewDetail Component', () => {
         expect(screen.getByText('TCU001 | ESIM123')).toBeInTheDocument();
 
         fireEvent.click(thirdPanelHeader);
-        // ...assert other fields in the aggregates panel
     });
-
-    // Add more test cases as needed
 });
