@@ -3,14 +3,12 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useMemo } from 'react';
-import { Input, Form, Row, Col, Space, Collapse, Tabs, Typography, Card } from 'antd';
+import React, { useState } from 'react';
+import { Input, Form, Row, Col, Card } from 'antd';
 import LeftPanel from 'components/common/LeftPanel';
 
-import { generateList } from 'utils/generateList';
 import styles from 'components/common/TreeView.module.css';
 import style from 'components/common/Common.module.css';
-import { DEVICE_TYPE } from 'constants/modules/UserManagement/deviceType';
 
 import { UserManagementFormButton } from '../../UserManagementFormButton/UserManagementFormButton';
 
@@ -18,17 +16,14 @@ const { Search } = Input;
 const fieldNames = { title: 'adminName', key: 'adminCode', children: 'children' };
 
 
-const APPLICATION_WEB = DEVICE_TYPE?.WEB?.key;
-const APPLICATION_MOBILE = DEVICE_TYPE?.MOBILE?.key;
 
 const AdministrativeHierarchy = (props) => {
-    const { adminDataTree, deviceType, finalFormdata, setfinalFormdata, formActionType, section } = props;
+    const { adminDataTree, formActionType, section } = props;
     const [searchValue, setSearchValue] = useState();
     const [adminData, setAdminData] = useState();
     const [checkedKeys, setCheckedKeys] = useState([]);
     const [defaultCheckedKeysMangement, setdefaultCheckedKeysMangement] = useState([]);
 
-    const flattenAdmnList = useMemo(() => generateList(adminDataTree), [adminDataTree]);
     const checkKey = (data, key) => data?.includes(key);
 
     const fnMapData = ({ data, fieldNames, selectedKeys }) =>
@@ -82,10 +77,6 @@ const AdministrativeHierarchy = (props) => {
             //     setMobileApplications(mapSelectedKeyData(mobileApplications));
             // }
         };
-
-    const handleDefaultCheckedKeys = (Mode, keys, checkedMenuKeys) => {
-        console.log('🚀 ~ file: AdministrativeHierarchy.js:82 ~ ProductMapping ~ Mode, keys, checkedMenuKeys:', Mode, keys, checkedMenuKeys);
-    };
 
     const myProps = {
         fieldNames,
