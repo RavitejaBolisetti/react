@@ -48,14 +48,14 @@
             font-weight: 500;
         }
 
-        .ant-tree-checkbox+span.ant-tree-node-selected {
+        .ant-tree-checkbox + span.ant-tree-node-selected {
             background-color: $transparentColor;
             color: $primaryRed;
             border-radius: 4px;
             font-weight: 500;
         }
 
-        .ant-tree-checkbox+span {
+        .ant-tree-checkbox + span {
             position: relative;
             z-index: auto;
             min-height: 24px;
@@ -151,9 +151,9 @@
     white-space: nowrap;
 }
 
-.panelVisible {
-    height: calc(100vh - 280px);
-}
+// .panelVisible {
+//     height: calc(100vh - 280px);
+// }
 
 .panelHidden {
     background: none;

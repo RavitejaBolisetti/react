@@ -254,8 +254,6 @@ const ApplicationTreeMain = (props) => {
                     <>{''}</>
                 ) : (
                     <>
-                        {/* <div className={styles.roleDescription}> </div> */}
-
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.subTitleSec}>
                                 Application Access<span className={styles.mandatory}>*</span>
