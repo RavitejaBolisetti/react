@@ -1,4 +1,3 @@
-
 /*
  *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
  *   All rights reserved.
@@ -242,6 +241,11 @@
     height: calc(100vh - 120px);
     overflow: hidden;
     overflow-y: auto;
+    .advanceFilterTop {
+		.advanceFilterItem {
+			height: 20px;
+		}
+	}
     .rsmApproval {
         .buttonsGroupRight {
             color: $primaryBlack;
@@ -911,40 +915,38 @@
 
 /*--------------advance Filter Section Strat--------------*/
 
-
-
 .advanceFilterTop {
-	margin-top: 18px;
-	padding-top: 4px;
-	border-top: solid 1px $neutralGrey1;
-	.advanceFilterTitle {
-		padding: 10px 0px;
-		margin-right: 10px;
-		width: 160px;
-	}
-	.advanceFilterItem {
-		height: 30px;
-		border-radius: 20px;
-		margin-top: 6px;
-		padding: 4px 10px;
-		border: solid 1px $primaryRed;
-		color: $primaryRed;
-		line-height: 18px;
-		margin-right: 12px;
-		span {
-			vertical-align: text-bottom;
-			margin-left: 4px;
-			cursor: pointer;
-			svg {
-				vertical-align: middle;
-			}
-		}
-	}
-	.clearBtn {
-		float: right !important;
-		height: 30px !important;
-		line-height: 16px;
-	}
+    margin-top: 18px;
+    padding-top: 4px;
+    border-top: solid 1px $neutralGrey1;
+    .advanceFilterTitle {
+        padding: 10px 0px;
+        margin-right: 10px;
+        width: 160px;
+    }
+    .advanceFilterItem {
+        height: 30px;
+        border-radius: 20px;
+        margin-top: 6px;
+        padding: 4px 10px;
+        border: solid 1px $primaryRed;
+        color: $primaryRed;
+        line-height: 18px;
+        margin-right: 12px;
+        span {
+            vertical-align: text-bottom;
+            margin-left: 4px;
+            cursor: pointer;
+            svg {
+                vertical-align: middle;
+            }
+        }
+    }
+    .clearBtn {
+        float: right !important;
+        height: 30px !important;
+        line-height: 16px;
+    }
 }
 
 .advanceFilterClear {
@@ -1054,12 +1056,14 @@
             .ant-form-item-explain-error {
                 position: absolute;
                 left: 0px;
+                top: 40px;
+                z-index: 99;
                 background: $transparentErrorL;
                 color: $semanticError;
-                font-size: 13px;
+                font-size: 12px;
                 text-align: center;
                 padding: 5px 10px;
-                border-radius: 5px;
+                border-radius: 4px;
                 &:after {
                     content: '';
                     position: absolute;
@@ -1109,9 +1113,9 @@
                     .ant-collapse-header-text {
                         display: block;
                         margin-bottom: 12px;
-                        .ant-divider-horizontal{
+                        .ant-divider-horizontal {
                             margin-top: 10px;
-                            margin-bottom: 5px; 
+                            margin-bottom: 5px;
                         }
                         .ant-space {
                             gap: 10px !important;
@@ -1198,7 +1202,7 @@
                     margin-bottom: 0;
                     .ant-divider-horizontal {
                         margin-bottom: 5px;
-                        margin-top: 5px ;
+                        margin-top: 5px;
                         // border-block-start: 1px solid $neutralGrey1;
                         &:last-child {
                             margin-top: 0;
@@ -1291,6 +1295,48 @@
             }
         }
     }
+    .active {
+        .cursorPointer {
+            color: $primaryRed;
+        }
+        .cursorNotAllowed {
+            color: $primaryRed;
+        }
+        & :global {
+            .ant-timeline-item-tail {
+                background-color: $primaryRed !important;
+            }
+        }
+    }
+    .viewActive {
+        .cursorPointer {
+            color: $primaryBlack;
+        }
+        & :global {
+            .ant-timeline-item-tail {
+                background-color: $semanticSuccess !important;
+            }
+        }
+    }
+    .viewInActive {
+        .cursorPointer {
+            &:hover {
+                color: $primaryBlack;
+            }
+        }
+        & :global {
+            .ant-timeline-item-tail {
+                background-color: $semanticSuccess !important;
+            }
+        }
+    }
+    .inActive {
+        & :global {
+            .ant-timeline-item-tail {
+                background-color: $semanticSuccess !important;
+            }
+        }
+    }
     .detailCardText {
         display: flex;
         justify-content: space-between;
@@ -1305,7 +1351,11 @@
         }
     }
 }
-
+.viewInActive {
+    .cursorPointer {
+        color: $neutralGrey3;
+    }
+}
 /*-------------Drwar Body Right Section Strat--------------*/
 
 .drawerBodyRight {
@@ -1431,10 +1481,10 @@
             }
         }
         .ant-table-wrapper {
-            table {
-                border: 1px solid $neutralGrey2;
-                background: $primaryWhite;
-            }
+            // table {
+            //     border: 1px solid $neutralGrey2;
+            //     background: $primaryWhite;
+            // }
             .ant-table-expanded-row-fixed {
                 width: 100% !important;
             }
@@ -1483,7 +1533,13 @@
             > .ant-collapse-item {
                 > .ant-collapse-header {
                     padding: 20px 30px;
+                    .ant-collapse-header-text {
+                        display: block;
+                    }
                     .ant-typography {
+                        margin-left: 0 !important;
+                        margin-top: 0 !important;
+                        margin-right: 30px;
                         margin-left: 0 !important;
                         margin-top: 0 !important;
                         margin-right: 30px;
@@ -2102,7 +2158,17 @@
         }
     }
 }
-
+/*-------------Text Area Error Section Strat--------------*/
+.textareaError {
+	& :global {
+		.ant-form-item {
+			.ant-form-item-explain-error {
+				position: absolute;
+				bottom: 21px;
+			}
+		}
+	}
+}
 /*-------------Roll Managemnt Section Strat--------------*/
 .roleMangementSearch {
     & :global {
@@ -2130,14 +2196,54 @@
         }
     }
 }
-/*-------------allow Access Section Strat--------------*/
-.allowAccess {
-    padding: 0px 5px;
-    color: $primaryRed;
-    border: solid 1px $neutralGrey2;
-    margin-left: 10px;
-    font-size: 12px;
+/*-------------Management Contaner Section Strat--------------*/
+
+.managementContainer {
+    & :global {
+        .ant-collapse {
+            .ant-collapse-content-box {
+                .ant-form {
+                    .ant-form-item {
+                        margin-bottom: 0;
+                    }
+                }
+            }
+            margin-bottom: 0px;
+            &:last-child {
+                margin-bottom: 0px;
+            }
+            .ant-collapse-content {
+                > .ant-collapse-content-box {
+                    padding-top: 0px;
+                }
+            }
+        }
+        .ant-space-vertical {
+            border-top: 1px solid $neutralGrey1;
+        }
+        .ant-collapse-content {
+            .ant-tree {
+                .ant-tree-list-holder {
+                    .ant-tree-switcher {
+                        svg {
+                            border-radius: 6px;
+                            color: $primaryRed;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
+
+/*-------------allow Access Section Strat--------------*/
+// .allowAccess {
+//     padding: 0px 5px;
+//     color: $primaryRed;
+//     border: solid 1px $neutralGrey2;
+//     margin-left: 10px;
+//     font-size: 12px;
+// }
 /*-------------Roll Tree Section Strat--------------*/
 .rollTree {
     height: calc(100vh - 280px);
@@ -2193,10 +2299,10 @@
     align-items: center;
     float: right;
 }
-.roleDescription {
-    border-bottom: 1px solid $neutralGrey1;
-    margin-bottom: 20px;
-}
+// .roleDescription {
+//     border-bottom: 1px solid $neutralGrey1;
+//     margin-bottom: 20px;
+// }
 /*-------------confirm Module css--------------*/
 .confirmModalIcon {
     color: #ff3e5b !important;
@@ -2246,6 +2352,109 @@
                         }
                     }
                     display: none;
+                }
+            }
+        }
+    }
+}
+
+.viewModeTree {
+    & :global {
+        .ant-tree {
+            .ant-tree-node-content-wrapper {
+                &:hover {
+                    color: $neutralGrey3;
+                    pointer-events: none;
+                }
+            }
+            .ant-tree-checkbox + span {
+                &:hover {
+                    color: $neutralGrey3;
+                    pointer-events: none;
+                }
+            }
+            .ant-tree-checkbox {
+                &:hover + span {
+                    color: $neutralGrey3;
+                    pointer-events: none;
+                }
+                .ant-tree-checkbox-inner {
+                    background-color: $neutralGrey1;
+                    border: 1px solid $neutralGrey2;
+                    &:after {
+                        border: 1px solid $neutralGrey2;
+                        border-top: 0;
+                        border-inline-start: 0;
+                    }
+                }
+                &:not(.ant-tree-checkbox-disabled) {
+                    &:hover {
+                        pointer-events: none;
+                        .ant-tree-checkbox-inner {
+                            border-color: $neutralGrey2;
+                            pointer-events: none;
+                        }
+                    }
+                }
+            }
+            .ant-tree-checkbox-checked + span {
+                &:hover {
+                    color: $primaryRed;
+                    pointer-events: none;
+                }
+            }
+            .ant-tree-checkbox-checked {
+                &:hover + span {
+                    color: $primaryRed;
+                    pointer-events: none;
+                }
+                .ant-tree-checkbox-inner {
+                    background-color: $neutralGrey0;
+                }
+                &:not(.ant-tree-checkbox-disabled) {
+                    &:hover {
+                        .ant-tree-checkbox-inner {
+                            background-color: $neutralGrey0;
+                        }
+                    }
+                }
+            }
+            .ant-tree-checkbox-indeterminate + span {
+                &:hover {
+                    color: $primaryBlack;
+                    pointer-events: none;
+                }
+            }
+            .ant-tree-checkbox-indeterminate {
+                &:hover + span {
+                    color: $primaryBlack;
+                    pointer-events: none;
+                }
+                .ant-tree-checkbox-inner {
+                    background-color: $neutralGrey0;
+                    &:after {
+                        background-color: $neutralGrey2;
+                    }
+                }
+            }
+            .ant-tree-checkbox-wrapper {
+                &:not(.ant-tree-checkbox-wrapper-disabled) {
+                    &:hover {
+                        pointer-events: none;
+                        .ant-tree-checkbox-inner {
+                            border-color: $neutralGrey2;
+                            pointer-events: none;
+                        }
+                    }
+                }
+            }
+            .ant-tree-checkbox-wrapper-checked {
+                &:not(.ant-tree-checkbox-wrapper-disabled) {
+                    &:hover {
+                        .ant-tree-checkbox-inner {
+                            background-color: $neutralGrey0;
+                        }
+                    }
                 }
             }
         }
