@@ -76,13 +76,11 @@ const AssignUserRole = (props) => {
                 key: 'employeeCode',
                 title: 'employeeCode',
                 value: formData?.employeeCode,
-                // value: 'deepakpalariya',
                 name: 'employeeCode',
             },
             {
                 key: 'roleId',
                 title: 'roleId',
-                // value: 'admin25',
                 value: record?.roleId,
                 name: 'roleId',
             },

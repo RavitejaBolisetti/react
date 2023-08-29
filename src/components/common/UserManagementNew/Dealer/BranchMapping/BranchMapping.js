@@ -10,7 +10,7 @@ import AddEditForm from './AddEditForm';
 import { NEXT_ACTION } from 'utils/btnVisiblity';
 
 const BranchMapping = (props) => {
-    const { currentSection, formData, userId, selectedDealerCode, dealerDataList, setButtonData, showGlobalNotification, handleButtonClick } = props;
+    const { currentSection, formData, userId, selectedDealerCode, dealerDataList, setButtonData, showGlobalNotification, handleButtonClick, formActionType } = props;
     const { fetchUsrDlrBranchLocationsList, resetUsrDlrBranchLocationsList, userUsrDlrBrLoactionShowLoading, usrdlrBranchLocationDataList, isUsrDlrBrLocationLoding, isUsrdlrBrLocationsLoaded } = props;
     const { fetchDlrBranchLocationsList, saveUsrDlrBrLoactionRoleDataList, resetDlrBranchLocationsList, userDlrBrLoactionShowLoading, dlrBranchLocationDataList, isDlrBrLocationLoding, isdlrBrLocationsLoaded } = props;
     const [form] = Form.useForm();
@@ -18,7 +18,7 @@ const BranchMapping = (props) => {
     const [parentDealerCode, setParentDealerCode] = useState('');
 
     useEffect(() => {
-        setButtonData((prev) => ({ ...prev, nextBtn: false, nextBtnWthPopMag: false, saveBtn: true }));
+        setButtonData((prev) => ({ ...prev, nextBtn: false, nextBtnWthPopMag: false, saveBtn: true, editBtn: formActionType?.viewMode }));
 
         return () => {
             resetUsrDlrBranchLocationsList();
