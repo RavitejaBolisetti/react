@@ -13,7 +13,8 @@ import { withDrawer } from 'components/withDrawer';
 import { checkAndSetDefaultValue, getStatus } from 'utils/checkAndSetDefaultValue';
 import { VehicleDetailFormButton } from 'components/Sales/VehicleDetail/VehicleDetailFormButton';
 import { convertDateTime } from 'utils/formatDateTime';
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+// import styles from 'components/common/Common.module.css';
 
 import { FilterIcon } from 'Icons';
 const { Option } = Select;

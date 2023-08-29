@@ -24,7 +24,7 @@ const ViewRoleManagementMain = ({ formData, styles, menuTreeData, onTabChange, A
     return (
         <>
             <div className={styles.viewContainer}>
-                <div>
+                <div className={styles.roleDescription}>
                     <Descriptions {...viewTwoColProps}>
                         <Descriptions.Item label="Role ID">{formData?.roleId}</Descriptions.Item>
                         <Descriptions.Item label="Role Name">{formData?.roleName}</Descriptions.Item>

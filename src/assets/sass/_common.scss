@@ -2197,6 +2197,9 @@
 //     border-bottom: 1px solid $neutralGrey1;
 //     margin-bottom: 20px;
 // }
+.roleDescription :global .ant-descriptions .ant-descriptions-view .ant-descriptions-row .ant-descriptions-item .ant-descriptions-item-container .ant-descriptions-item-content {
+    white-space: break-spaces;
+}
 /*-------------confirm Module css--------------*/
 .confirmModalIcon {
     color: #ff3e5b !important;
