@@ -137,6 +137,13 @@ export const VehicleInvoiceMasterBase = (props) => {
 
     const extraParams = useMemo(() => {
         return [
+            // {
+            //     key: 'searchType',
+            //     title: 'Value',
+            //     value: 'invoiceNumber',
+            //     canRemove: false,
+            //     filter: false,
+            // },
             {
                 key: 'pageNumber',
                 title: 'Value',
@@ -151,6 +158,7 @@ export const VehicleInvoiceMasterBase = (props) => {
                 canRemove: true,
                 filter: false,
             },
+
             {
                 key: 'searchParam',
                 title: 'searchParam',

@@ -6,9 +6,10 @@
 import React from 'react';
 import { Card, Descriptions } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
+import styles from 'assets/sass/app.module.scss';
 
 const ViewDetailMain = (props) => {
-    const { styles, formData, isLoading, typeData } = props;
+    const { formData, isLoading, typeData } = props;
     const viewProps = {
         bordered: false,
         colon: false,

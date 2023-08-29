@@ -13,7 +13,7 @@ import { QueryButtons } from 'components/Sales/VehicleRecieptChecklist/QueryButt
 import { QUERY_BUTTONS_CONSTANTS } from './QueryButtons';
 import { SearchBox } from 'components/utils/SearchBox';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 const { Search } = Input;
 

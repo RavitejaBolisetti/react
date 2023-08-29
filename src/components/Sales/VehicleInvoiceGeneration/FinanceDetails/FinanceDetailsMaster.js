@@ -15,7 +15,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { AddEditForm } from './AddEditForm';
 import { ViewDetail } from './ViewDetail';
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 import { VehicleInvoiceFormButton } from '../VehicleInvoiceFormButton';
 
 const mapStateToProps = (state) => {

@@ -11,7 +11,7 @@ import { validateRequiredInputField, validateMobileNoField } from 'utils/validat
 import { formattedCalendarDate, dateFormat } from 'utils/formatDateTime';
 
 import { CustomerListMaster } from 'components/utils/CustomerListModal';
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 const AddEditFormMain = (props) => {
     const { form, formData, typeData, fnSetData } = props;

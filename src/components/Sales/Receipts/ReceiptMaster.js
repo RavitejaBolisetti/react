@@ -161,6 +161,10 @@ export const ReceiptMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString]);
 
+    //ttps://apidev.mahindradealerrise.com/finance/receipts/search?pageNumber=1&pageSize=10&searchType=receiptNumber&searchParam=RECT0003&receiptStatus=O
+
+    // https://apidev.mahindradealerrise.com/finance/receipts/search?pageNumber=1&pageSize=10&searchType=receiptNumber&receiptStatus=O
+
     const extraParams = useMemo(() => {
         return [
             {

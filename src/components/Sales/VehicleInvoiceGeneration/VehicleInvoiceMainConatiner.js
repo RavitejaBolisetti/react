@@ -10,7 +10,7 @@ import { VEHICLE_INVOICE_SECTION } from 'constants/VehicleInvoiceSection';
 
 import { LeftSidebar } from './LeftSidebar';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 import { InvoiceDetailsMaster } from './InvoiceDetails';
 import { InsuranceDetailsMaster } from './InsuranceDetails';
 import { ExchangeDetailsMaster } from './ExchangeDetails';

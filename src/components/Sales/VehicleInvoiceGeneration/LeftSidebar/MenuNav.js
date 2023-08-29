@@ -10,7 +10,7 @@ import { FaCheckCircle } from 'react-icons/fa';
 
 import { VEHICLE_INVOICE_SECTION } from 'constants/VehicleInvoiceSection';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 const MenuNav = (props) => {
     const { currentSection, setCurrentSection, receipt, formActionType: { addMode } = undefined, selectedOrder: { orderStatus = false } = {} } = props;
