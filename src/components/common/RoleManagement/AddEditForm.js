@@ -138,7 +138,7 @@ const AddEditFormMain = (props) => {
                         checkable: true,
                         isTreeViewVisible: true,
                         onCheck: onCheck(el?.value),
-                        // disableCheckbox: viewMode,
+                        disabled: viewMode,
                         expendedKeys: expendedKeys?.map((i) => i.value),
                         checkedKeys: checkedKeys?.map((i) => i.value), // handleDefaultCheckedKeys(viewMode, defaultCheckedKeysMangement, checkedMenuKeys),
                     };

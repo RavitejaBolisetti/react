@@ -6,7 +6,7 @@
 import React from 'react';
 import { Descriptions, Divider } from 'antd';
 
-const ViewRoleManagementMain = ({ formData, styles, menuTreeData, onTabChange, AccordianTreePanel }) => {
+const ViewRoleManagementMain = ({ formData, styles, menuTreeData, AccordianTreePanel }) => {
     const viewProps = {
         bordered: false,
         colon: false,
