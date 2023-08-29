@@ -11,7 +11,7 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
     const tableColumn = [
         tblPrepareColumns({
             title: 'Invoice No.',
-            dataIndex: 'receiptNumber',
+            dataIndex: 'invoiceNumber',
             width: '14%',
         }),
         tblPrepareColumns({
@@ -22,12 +22,12 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
         }),
         tblPrepareColumns({
             title: 'Model Description',
-            dataIndex: 'partySegment',
+            dataIndex: 'modelDescription',
             width: '14%',
         }),
         tblPrepareColumns({
             title: 'Invoice Date',
-            dataIndex: 'customerName',
+            dataIndex: 'invoiceDate',
             width: '14%',
         }),
         tblPrepareColumns({
