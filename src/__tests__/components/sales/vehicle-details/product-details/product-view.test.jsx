@@ -36,7 +36,6 @@ describe('ViewDetail Component', () => {
         const firstPanelHeader = screen.getByText('Product Attribute Details');
         const secondPanelHeader = screen.getByText('Connected Vehicle');
         const thirdPanelHeader = screen.getByText('Aggregates');
-        const plusImg = screen.getAllByRole('img', { name: 'plus' });
 
         fireEvent.click(firstPanelHeader);
         expect(screen.getByText('Product Division')).toBeInTheDocument();

@@ -1,0 +1,48 @@
+import React from 'react';
+import { screen, fireEvent } from '@testing-library/react';
+import { AddEditForm } from '@components/Sales/VehicleDetail/ProductDetails/AddEditForm';
+import customRender from '@utils/test-utils';
+
+
+beforeEach(() => {
+    jest.clearAllMocks();
+});
+
+const formData = {
+    connectedVehicle: [
+        { esimNo: 'ESIM001', esimStatus: true, kycStatus: true, preferredMobileNo1: '9412681874', preferredMobileNo2: '9412681879', tcuId: 'TCU001' },
+        { esimNo: 'ESIM002', esimStatus: true, kycStatus: true, preferredMobileNo1: '94181874', preferredMobileNo2: '942681879', tcuId: 'TCU002' },
+    ],
+    aggregates: { id: '657aab5c-5c07-4da9-879b-3733a26bb4b3', item: 'VIT002', itemValue: null, make: 'VIM002', makeValue: null, serialNo: '9876' },
+};
+
+describe('Vehicle ProductDetails render', () => {
+    it('should render page', async () => {
+        const prop = { formActionType: { viewMode: false } };
+        customRender(<AddEditForm handleCollapse={jest.fn()} formData={formData} bindStatus={jest.fn()} isEditing={true} handleButtonClick={jest.fn()} />);
+
+        const firstPanelHeader = screen.getByText('Product Attribute Details');
+        fireEvent.click(firstPanelHeader);
+
+        const secondPanelHeader = screen.getByText('Connected Vehicle');
+        fireEvent.click(secondPanelHeader);
+
+        const tcuId1Header = screen.getAllByText('TCU001 | ESIM001')[0];
+        fireEvent.click(tcuId1Header);
+        expect(tcuId1Header).toBeInTheDocument();
+
+        const thirdPanelHeader = screen.getByText('Aggregates');
+        fireEvent.click(thirdPanelHeader);
+
+        const addBtn = screen.getByTestId('addBtn');
+        fireEvent.click(addBtn);
+    });
+
+    it('should render page2', async () => {
+        const formData = [];
+        customRender(<AddEditForm handleCollapse={jest.fn()} formData={formData} bindStatus={jest.fn()} />);
+
+        const addBtn = screen.getByTestId('addBtn');
+        fireEvent.click(addBtn);
+    });
+});

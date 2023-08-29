@@ -251,7 +251,7 @@ const AddEditFormMain = (props) => {
                                                 'No product Attribute Details Present',
                                                 'bottom'
                                             )(
-                                                <Button onClick={addContactHandeler} icon={<PlusOutlined />} type="primary" disabled={isReadOnly || !formData?.productAttributeDetail}>
+                                                <Button data-testid="addBtn" onClick={addContactHandeler} icon={<PlusOutlined />} type="primary" disabled={isReadOnly || !formData?.productAttributeDetail}>
                                                     Add
                                                 </Button>
                                             )}
