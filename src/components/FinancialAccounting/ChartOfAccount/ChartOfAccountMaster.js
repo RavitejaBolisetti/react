@@ -121,9 +121,7 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
         const extraParams = [
             {
                 key: 'companyCode',
-                title: 'companyCode',
                 value: val,
-                name: 'Company Code',
             },
         ];
         fetchChartOfAccountHierarchy({ setIsLoading: listShowLoadingChartOfAccountHierachy, extraParams });
@@ -132,9 +130,7 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
     const extraParams = [
         {
             key: 'accountCode',
-            title: 'accountCode',
             value: selectedTreeKey,
-            name: 'Account Code',
         },
     ];
 
@@ -158,20 +154,20 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
     useEffect(() => {
         if (formActionType === FROM_ACTION_TYPE?.CHILD) {
             setDisable(true);
-            setSelectedTreeSelectKey(chartOfAccountData?.parentAccountDescription);
-            form.setFieldValue('parentAccountCode', chartOfAccountData?.parentAccountDescription);
+            setSelectedTreeSelectKey(chartOfAccountData?.accountDescription);
+            form.setFieldValue('parentAccountCode', chartOfAccountData?.accountCode);
         } else if (formActionType === FROM_ACTION_TYPE?.SIBLING) {
             setDisable(true);
             setSelectedTreeSelectKey(chartOfAccountData?.parentAccountDescription);
             form.setFieldValue('parentAccountCode', chartOfAccountData?.parentAccountCode);
         } else if (formActionType === FROM_ACTION_TYPE?.EDIT) {
             setDisable(false);
-            setSelectedTreeSelectKey(chartOfAccountData?.accountDescription);
+            setSelectedTreeSelectKey(chartOfAccountData?.parentAccountDescription);
             form.setFieldsValue({
                 accountType: chartOfAccountData?.accountType === ATTRIBUTE_TYPE?.[0]?.key ? ATTRIBUTE_TYPE?.[0]?.value : ATTRIBUTE_TYPE?.[1]?.value,
                 parentAccountCode: chartOfAccountData?.financialCompany,
                 accountCode: chartOfAccountData?.accountCode,
-                accountDescription: chartOfAccountData?.accountDescription,
+                accountDescription: chartOfAccountData?.parentAccountCode,
                 openingBalanceCredit: chartOfAccountData?.accountType === ATTRIBUTE_TYPE?.[1]?.key ? chartOfAccountData?.openingBalanceCredit : null,
                 openingBalanceDebit: chartOfAccountData?.accountType === ATTRIBUTE_TYPE?.[1]?.key ? chartOfAccountData?.openingBalanceDebit : null,
                 status: chartOfAccountData?.status,
@@ -205,7 +201,7 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
     const onFinish = (values) => {
         const recordId = chartOfAccountData?.id || '';
         const parentCode = values?.parentAccountCode ? values?.parentAccountCode : '';
-        const data = { ...values, id: recordId, companyCode: companyCode, parentAccountCode: parentCode };
+        const data = { ...values, id: '', companyCode: companyCode, parentAccountCode: parentCode };
 
         console.log('TOBE', data);
 
@@ -213,8 +209,10 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
             form.resetFields();
 
             if (res?.data) {
+                console.log(res, '__RES__');
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-                fetchChartOfAccount({ setIsLoading: listShowLoadingChartOfAccount, userId, extraParams });
+                fetchChartOfAccountHierarchy({ setIsLoading: listShowLoadingChartOfAccountHierachy, extraParams: [{ key: 'companyCode', value: companyCode }], userId });
+                fetchChartOfAccount({ setIsLoading: listShowLoadingChartOfAccount, userId, extraParams: [{ key: 'accountCode', value: res?.data?.accountCode }] });
                 setFormBtnActive(false);
                 setIsFormVisible(false);
             }

@@ -42,7 +42,7 @@ const AddEditFormMain = (props) => {
         treeDisabled: disable,
         selectedTreeSelectKey,
         handleSelectTreeClick,
-        defaultValue: selectedTreeSelectKey?.[0],
+        defaultValue: selectedTreeSelectKey?.[0] ,
         placeholder: preparePlaceholderSelect('Parent'),
     };
 
@@ -83,7 +83,7 @@ const AddEditFormMain = (props) => {
                         <>
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    <Form.Item name="openingBalanceCredit" label="Opening Balance Cr." rules={[validateRequiredInputField('Opening Balance Credit'), validateNumberWithTwoDecimalPlaces]}>
+                                    <Form.Item name="openingBalanceCredit" label="Opening Balance Cr." rules={[validateRequiredInputField('Opening Balance Credit'), validateNumberWithTwoDecimalPlaces('Opening Balance Credit')]}>
                                         <Input placeholder={preparePlaceholderText('Opening Balance Credit')} />
                                     </Form.Item>
                                 </Col>
@@ -91,7 +91,7 @@ const AddEditFormMain = (props) => {
 
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    <Form.Item name="openingBalanceDebit" label="Opening Balance Debit" rules={[validateRequiredInputField('Opening Balance Debit'), validateNumberWithTwoDecimalPlaces]}>
+                                    <Form.Item name="openingBalanceDebit" label="Opening Balance Debit" rules={[validateRequiredInputField('Opening Balance Debit'), validateNumberWithTwoDecimalPlaces('Opening Balance Credit')]}>
                                         <Input placeholder={preparePlaceholderText('Opening Balance Debit')} />
                                     </Form.Item>
                                 </Col>
