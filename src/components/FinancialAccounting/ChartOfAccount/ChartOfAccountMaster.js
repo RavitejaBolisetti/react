@@ -102,6 +102,7 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
     const [disable, setDisable] = useState(true);
     const [recordId, setRecordId] = useState('');
     const [accountTyp, setAccountTyp] = useState(null);
+    const [childAdd, isChildAdd] = useState(null);
 
     const defaultBtnVisiblity = { editBtn: true, childBtn: true, siblingBtn: true };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -160,6 +161,7 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
             setDisable(true);
             setSelectedTreeSelectKey(chartOfAccountData?.accountDescription);
             setAccountTyp(null);
+            isChildAdd(true);
             form.setFieldValue('parentAccountCode', chartOfAccountData?.accountCode);
         } else if (formActionType === FROM_ACTION_TYPE?.SIBLING) {
             form.resetFields();
@@ -167,6 +169,11 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
             setDisable(true);
             setSelectedTreeSelectKey(chartOfAccountData?.parentAccountDescription);
             setAccountTyp(null);
+            if (chartOfAccountData?.parentAccountCode === '') {
+                isChildAdd(false);
+            } else {
+                isChildAdd(true);
+            }
             form.setFieldValue('parentAccountCode', chartOfAccountData?.parentAccountCode);
         } else if (formActionType === FROM_ACTION_TYPE?.EDIT) {
             form.resetFields();
@@ -194,7 +201,6 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
     const handleTreeViewVisiblity = () => setTreeViewVisible(!isTreeViewVisible);
 
     const handleTreeViewClick = (keys, tree) => {
-        console.log('_KEY_', keys);
         form.resetFields();
         setViewData(null);
         setSelectedTreeKey(keys);
@@ -213,7 +219,7 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
     const onFinish = (values) => {
         const parentCode = values?.parentAccountCode ? values?.parentAccountCode : '';
         const accountTypeCode = formActionType === FROM_ACTION_TYPE?.EDIT ? (values?.accountType === ATTRIBUTE_TYPE?.[0]?.value ? ATTRIBUTE_TYPE?.[0]?.key : ATTRIBUTE_TYPE?.[1]?.key) : values?.accountType;
-        const data = { ...values, id: recordId, companyCode: companyCode, parentAccountCode: parentCode, accountType: accountTypeCode };
+        const data = { ...values, id: recordId, companyCode: companyCode, parentAccountCode: parentCode, accountType: accountTypeCode, addChild: childAdd };
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -221,7 +227,6 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
             if (res?.data) {
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
                 fetchChartOfAccountHierarchy({ setIsLoading: listShowLoadingChartOfAccountHierachy, extraParams: [{ key: 'companyCode', value: companyCode }], userId });
-                fetchChartOfAccount({ setIsLoading: listShowLoadingChartOfAccount, userId, extraParams: [{ key: 'accountCode', value: res?.data?.accountCode }] });
                 setFormBtnActive(false);
                 setIsFormVisible(false);
                 setSelectedTreeKey([res?.data?.accountCode]);
@@ -299,6 +304,7 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
         setSelectedTreeSelectKey,
         accountTyp,
         setAccountTyp,
+        isChildAdd,
     };
 
     const viewProps = {
