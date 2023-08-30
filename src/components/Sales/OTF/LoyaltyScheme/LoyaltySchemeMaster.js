@@ -102,6 +102,7 @@ const mapDispatchToProps = (dispatch) => ({
             fetchList: otfLoyaltySchemeDataActions.fetchList,
             resetData: otfLoyaltySchemeDataActions.reset,
             listShowLoading: otfLoyaltySchemeDataActions.listShowLoading,
+            saveData: otfLoyaltySchemeDataActions.saveData,
 
             showGlobalNotification,
         },
@@ -120,7 +121,21 @@ const LoyaltySchemeMasterMain = (props) => {
 
     const [filteredModelData, setfilteredModelData] = useState([]);
     const [filteredVariantData, setfilteredVariantData] = useState([]);
-    const [formdata, setformdata] = useState();
+    const [formData, setformData] = useState([]);
+    const [editable, setEditable] = useState();
+
+    const disabledProps = { disabled: editable };
+
+    const fnSetData = (data) => {
+        if (data && Object?.keys(data)?.length > 0) {
+            if (data?.customerId) setEditable(true);
+            else setEditable(false);
+            form.setFieldsValue({ ...data, customerCode: data?.customerId, oldChassisNumber: data?.chassisNumber, variantCode: data?.variant, vehicleModelGroup: data?.modelGroup });
+        } else if (data === null) {
+            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'No data found' });
+            form.resetFields(['customerId', 'customerName', 'make', 'modelGroup', 'variant', 'oldRegNumber', 'oldChassisNumber', 'dob']);
+        }
+    };
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
@@ -135,8 +150,20 @@ const LoyaltySchemeMasterMain = (props) => {
             name: 'OTF Number',
         },
     ];
+    const makeExtraParams = (key, title, value, name) => {
+        const extraParams = [
+            {
+                key: key,
+                title: title,
+                value: value,
+                name: name,
+            },
+        ];
+        return extraParams;
+    };
 
     const onFinish = (values) => {
+        console.log('values', values);
         const { customerName } = values;
         if (!customerName) {
             showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Verify Customer id to continue' });
@@ -152,7 +179,7 @@ const LoyaltySchemeMasterMain = (props) => {
 
         const requestData = {
             data: data,
-            method: formdata?.id ? 'put' : 'post',
+            method: formData?.id ? 'put' : 'post',
             setIsLoading: listShowLoading,
             userId,
             onError: onErrorAction,
@@ -181,7 +208,11 @@ const LoyaltySchemeMasterMain = (props) => {
 
     useEffect(() => {
         if (LoyaltySchemeData) {
-            setformdata(LoyaltySchemeData);
+            if (LoyaltySchemeData?.customerCode) setEditable(true);
+            else setEditable(false);
+            setformData(LoyaltySchemeData);
+            LoyaltySchemeData?.make && handleFilterChange('make', LoyaltySchemeData?.make ?? '');
+            LoyaltySchemeData?.vehicleModelGroup && handleFilterChange('modelGroup', LoyaltySchemeData?.vehicleModelGroup ?? '');
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [LoyaltySchemeData]);
@@ -200,54 +231,51 @@ const LoyaltySchemeMasterMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [variantData]);
 
-    const onSearch = (value) => {
+    const handleFilterChange = (name, value, selectobj) => {
         if (!value) {
-            return false;
+            switch (name) {
+                case 'make': {
+                    setfilteredModelData();
+                    setfilteredVariantData();
+                    form.setFieldsValue({
+                        modelGroup: undefined,
+                        variant: undefined,
+                    });
+                    break;
+                }
+                case 'modelGroup': {
+                    setfilteredVariantData();
+                    form.setFieldsValue({
+                        variant: undefined,
+                    });
+                    break;
+                }
+                default: {
+                    setfilteredModelData();
+                    setfilteredVariantData();
+                    form.setFieldsValue({
+                        modelGroup: undefined,
+                        variant: undefined,
+                    });
+                    break;
+                }
+            }
+            return;
+        } else if (name === 'make') {
+            setfilteredModelData();
+            setfilteredVariantData();
+            form.setFieldsValue({
+                modelGroup: undefined,
+                variant: undefined,
+            });
+            fetchModelLovList({ setIsLoading: listModelShowLoading, userId, extraParams: makeExtraParams('make', 'make', value, 'make') });
+        } else if (name === 'modelGroup') {
+            form.setFieldsValue({
+                variant: undefined,
+            });
+            setfilteredVariantData();
+            fetchVariantLovList({ setIsLoading: listVariantShowLoading, userId, extraParams: makeExtraParams('model', 'model', value, 'model') });
         }
-        const defaultExtraParam = [
-            {
-                key: 'customerType',
-                title: 'Customer Type',
-                value: 'IND',
-                canRemove: true,
-            },
-            {
-                key: 'pageSize',
-                title: 'Value',
-                value: 1000,
-                canRemove: true,
-            },
-            {
-                key: 'pageNumber',
-                title: 'Value',
-                value: 1,
-                canRemove: true,
-            },
-
-            {
-                key: 'searchType',
-                title: 'Type',
-                value: 'customerId',
-                canRemove: true,
-            },
-            {
-                key: 'searchParam',
-                title: 'Value',
-                value: value,
-                canRemove: true,
-            },
-        ];
-
-        fetchCustomerList({
-            setIsLoading: listCustomerShowLoading,
-            extraParams: defaultExtraParam,
-            userId,
-            onSuccessAction: (res) => {
-                res?.data && res?.data?.customerMasterDetails && res?.data?.customerMasterDetails[0] && setformdata({ ...res?.data?.customerMasterDetails[0], id: formdata?.id ?? '' } ?? []);
-                !res?.data?.customerMasterDetails && showGlobalNotification({ message: res?.responseMessage });
-            },
-            onErrorAction,
-        });
     };
 
     const formProps = {
@@ -256,8 +284,8 @@ const LoyaltySchemeMasterMain = (props) => {
         onFinishFailed,
         onFinish,
         LoyaltySchemeData,
-        formdata,
-        setformdata,
+        formData,
+        setformData,
         isLoyaltySchemeDataLoaded,
 
         typeData,
@@ -274,9 +302,11 @@ const LoyaltySchemeMasterMain = (props) => {
         isVariantLoading,
         variantData,
         isLoading,
-        onSearch,
         filteredModelData,
         filteredVariantData,
+        fnSetData,
+        disabledProps,
+        handleFilterChange,
     };
 
     const myProps = {
@@ -285,7 +315,7 @@ const LoyaltySchemeMasterMain = (props) => {
 
     const viewProps = {
         styles,
-        customerForm: formdata,
+        customerForm: formData,
         isLoyaltySchemeDataLoaded,
         isLoading,
     };

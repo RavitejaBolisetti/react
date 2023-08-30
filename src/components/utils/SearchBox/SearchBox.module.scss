@@ -17,14 +17,11 @@
     padding: 4px 6px;
     border: 1px solid $neutralGrey2;
     border-radius: 4px;
-
     & :global {
         .ant-form-vertical {
             height: 26px;
-
             .ant-form-item {
                 margin-bottom: 0;
-
                 &:first-child {
                     .ant-form-item-explain {
                         .ant-form-item-explain-error {
@@ -37,7 +34,6 @@
                             text-align: center;
                             padding: 5px 10px;
                             border-radius: 5px;
-
                             &:after {
                                 content: '';
                                 position: absolute;
@@ -54,7 +50,6 @@
                         }
                     }
                 }
-
                 &:last-child {
                     .ant-form-item-explain {
                         .ant-form-item-explain-error {
@@ -66,7 +61,6 @@
                             text-align: center;
                             padding: 5px 10px;
                             border-radius: 5px;
-
                             &:after {
                                 content: '';
                                 position: absolute;
@@ -85,10 +79,9 @@
                 }
             }
         }
-
         .ant-input-search {
-            >.ant-input-group {
-                >.ant-input-group-addon {
+            > .ant-input-group {
+                > .ant-input-group-addon {
                     &:last-child {
                         .ant-input-search-button {
                             &:not(.ant-btn-primary) {
@@ -100,7 +93,6 @@
                 }
             }
         }
-
         .ant-form-item {
             .ant-form-item-explain {
                 .ant-form-item-explain-error {
@@ -108,47 +100,40 @@
                     margin-top: -2px;
                 }
             }
-
             .ant-form-item-control-input {
                 min-height: 26px;
+                // top: -26px;
             }
         }
-
         .ant-select-single {
             &:not(.ant-select-customize-input) {
                 .ant-select-selector {
                     height: 26px;
                     background-color: $neutralGrey1;
-
                     .ant-select-selection-search-input {
                         height: 18px;
                     }
                 }
             }
         }
-
         .ant-input-affix-wrapper-status-error {
             &:not(.ant-input-affix-wrapper-disabled) {
                 &:not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper {
                     &:hover {
                         border-color: $transparentColor;
                     }
-
                     border-color: $transparentColor;
-
                     &:focus {
                         border-color: $transparentColor;
                         box-shadow: none;
                     }
                 }
-
                 &:not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper-focused {
                     border-color: $transparentColor;
                     box-shadow: none;
                 }
             }
         }
-
         .ant-card {
             .ant-card-body {
                 .ant-form-item {
@@ -163,18 +148,15 @@
             }
         }
     }
-
     .headerSelectFieldWide {
         width: 180px;
         position: absolute;
         z-index: 99;
         top: 0;
-
         & :global {
             .ant-select-clear {
                 background: $neutralGrey1;
             }
-
             .ant-select-selector {
                 .ant-select-selection-placeholder {
                     padding-inline-end: 12px;
@@ -183,7 +165,6 @@
                     font-weight: 500;
                     line-height: 20px;
                 }
-
                 .ant-select-selection-item {
                     padding-inline-end: 12px;
                     color: $primaryBlack;
@@ -194,18 +175,15 @@
             }
         }
     }
-
     .headerSelectField {
         width: 140px;
         position: absolute;
         z-index: 99;
         top: 0;
-
         & :global {
             .ant-select-clear {
                 background: $neutralGrey1;
             }
-
             .ant-select-selector {
                 .ant-select-selection-placeholder {
                     padding-inline-end: 12px;
@@ -214,7 +192,6 @@
                     font-weight: 500;
                     line-height: 20px;
                 }
-
                 .ant-select-selection-item {
                     padding-inline-end: 12px;
                     color: $primaryBlack;
@@ -225,11 +202,9 @@
             }
         }
     }
-
     .headerSearchFieldWide {
         width: calc(100% - 176px);
         float: right;
-
         & :global {
             .ant-input-wrapper {
                 .ant-input-affix-wrapper {
@@ -237,30 +212,25 @@
                     padding: 4px 10px;
                     border-inline-end-width: 0px;
                     border: none;
-
                     .ant-input {
                         height: 18px !important;
                         padding: 0 !important;
                     }
                 }
             }
-
             .ant-input-group {
                 button {
                     width: 20px;
                 }
-
                 border: none;
                 height: 29px;
                 margin-top: -39px;
-
                 .ant-input-group-addon {
                     button {
                         box-shadow: none;
                         margin-right: -6px;
                     }
                 }
-
                 .ant-input {
                     &::placeholder {
                         // color: $primaryRed;
@@ -271,12 +241,13 @@
                 }
             }
         }
+        .headerSearchField {
+            width: 100%;
+        }
     }
-
     .headerSearchField {
         width: calc(100% - 136px);
         float: right;
-
         & :global {
             .ant-input-wrapper {
                 .ant-input-affix-wrapper {
@@ -284,29 +255,24 @@
                     padding: 4px 10px;
                     border-inline-end-width: 0px;
                     border: none;
-
                     .ant-input {
                         height: 18px !important;
                         padding: 0 !important;
                     }
                 }
             }
-
             .ant-input-group {
                 button {
                     width: 20px;
                 }
-
                 border: none;
                 height: 29px;
-
                 .ant-input-group-addon {
                     button {
                         box-shadow: none;
                         margin-right: -6px;
                     }
                 }
-
                 .ant-input {
                     &::placeholder {
                         color: $primaryRed;
@@ -318,4 +284,5 @@
             }
         }
     }
+   
 }

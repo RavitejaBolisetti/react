@@ -1,830 +1,748 @@
+
 /*
  *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 
-@import 'assets/sass/app.module.scss';
+ @import 'assets/sass/app.module.scss';
 
-/* Main Properties */
-
-.inputBox {
-    margin-bottom: 20px !important;
-}
-
-.marginBottomZero {
-    margin-bottom: 0 !important;
-}
-
-.registered {
-    padding: 28px 0 8px;
-    color: $neutralGrey4-dark;
-    font-size: 14px;
-    line-height: 22px;
-    font-weight: 400;
-
-    & :global {
-        .ant-checkbox {
-            .ant-checkbox-inner {
-                width: 18px;
-                height: 18px;
-                background-color: $transparentColor;
-                border: 1px solid $neutralGrey5-dark;
-
-                &:after {
-                    top: 48%;
-                    inset-inline-start: 35%;
-                    width: 4px;
-                    height: 7px;
-                    border: 1px solid $primaryRed-dark;
-                    border-top: 0;
-                    border-inline-start: 0;
-                }
-            }
-        }
-
-        .ant-checkbox-checked {
-            .ant-checkbox-inner {
-                border-color: 1px solid $neutralGrey5-dark !important;
-            }
-
-            &:not(.ant-checkbox-disabled) {
-                &:hover {
-                    .ant-checkbox-inner {
-                        background-color: $transparentColor !important;
-                    }
-                }
-            }
-
-            &:after {
-                border: 1px solid $primaryRed-dark !important;
-                background-color: $transparentColor !important;
-            }
-        }
-    }
-}
-
-.button {
-    width: 100%;
-    // @include font-style(16, 24, 600, $primaryWhite, $fontfamily, center) ;
-    font-size: 16px;
-    line-height: 24px !important;
-    font-weight: 600 !important;
-    text-align: center;
-    color: $primaryWhite;
-    margin-top: 20px;
-    padding: 7px 16px !important;
-    background-color: $primaryRed-dark;
-
-    /*&:hover {
-         background: $primaryRed-dark !important;
-     }*/
-    &:disabled {
-        background-color: $neutralGrey2-dark;
-        border: 1px solid $neutralGrey2-dark;
-        opacity: 1;
-        @include font-style(16, 24, 600, $neutralGrey3-dark, $fontfamily, center);
-
-        &:hover {
-            background-color: $neutralGrey2-dark !important;
-            border: 1px solid $neutralGrey2-dark;
-            opacity: 1;
-            @include font-style(16, normal, 600, $neutralGrey3-dark, $fontfamily, center);
-        }
-    }
-}
-
-.fullWidth {
-    width: 100%;
-}
-
-.inputLabelPlaceholder {
-    label {
-        position: absolute;
-        top: 6px;
-        font-weight: 400;
-        left: 49px;
-        font-size: 16px;
-        line-height: 24px;
-        color: $neutralGrey2;
-        user-select: none;
-        cursor: text;
-
-        &::after {
-            position: relative;
-            top: -3px;
-            left: 1px;
-            content: '*';
-            color: $primaryRed;
-        }
-    }
-}
-
-.loginSection {
-    background: url(../../assets/images/mainbg.png) no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-
-    & :global {
-        .ant-input-affix-wrapper {
-            background: $primaryRed-dark;
-            height: 36px !important;
-            // color: $primaryWhite;
-            // font-size: 16px;
-            padding: 0;
-            @include borderRedius(4px, 1px, solid, $neutralGrey2-dark);
-            @include font-style(16, normal, normal, $primaryWhite, $fontfamily, inherit);
-
-            @include breakpoint(md) {
-                padding: 2px 10px 0;
-            }
-
-            &:hover {
-                border-color: $primaryWhite-dark;
-                border-inline-end-width: 0;
-            }
-
-            &:not(.ant-input-affix-wrapper-disabled) {
-                &:hover {
-                    border-color: $primaryWhite-dark;
-                    border-inline-end-width: 0;
-                }
-            }
-
-            >input.ant-input.disabledInput {
-                color: $neutralGrey2-dark !important;
-            }
-
-            >input.ant-input {
-                @include breakpoint(md) {
-                    padding: 2px 5px 3px 5px;
-                }
-            }
-
-            .ant-input-prefix {
-                &::placeholder {
-                    // color: $neutralGrey2-dark;
-                    // font-size: 18px;
-                    @include font-style(18, normal, normal, $neutralGrey2-dark, $fontfamily, inherit);
-                }
-
-                margin-inline-start: 12px;
-                margin-inline-end: 12px;
-                color: $neutralGrey2-dark;
-            }
-        }
-
-        .ant-input-affix-wrapper-focused {
-            box-shadow: none !important;
-            border-color: $primaryWhite-dark !important;
-
-            .ant-input-prefix {
-                color: $primaryWhite-dark;
-                box-shadow: none !important;
-                border-color: $primaryWhite-dark;
-            }
-        }
-
-        .ant-input-affix-wrapper-status-success {
-            .ant-input-prefix {
-                color: $primaryWhite;
-            }
-        }
-
-        // .ant-form-item-explain-error {
-        //     font-size: 12px;
-        // }
-        .ant-form-item {
-            .ant-form-item-explain-error {
-                // color: $semanticError-dark;
-                // line-height: 18px;
-                // font-weight: 400;
-                @include font-style(12, 18, 400, $semanticError-dark, $fontfamily, inherit);
-            }
-        }
-
-        .ant-checkbox-wrapper {
-            &:not(.ant-checkbox-wrapper-disabled) {
-                &:hover {
-                    .ant-checkbox-checked {
-                        &:not(.ant-checkbox-disabled) {
-                            .ant-checkbox-inner {
-                                background-color: $transparentColor !important;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        .g-recaptcha {
-            >div {
-                >div {
-                    margin: 0px auto;
-                }
-            }
-        }
-    }
-
-    .disabledInput {
-        color: #838383;
-    }
-
-    input {
-        &:-webkit-autofill {
-            transition: background-color 5000s ease-in-out 0s;
-            -webkit-text-fill-color: $primaryWhite-dark !important;
-
-            &:hover {
-                transition: background-color 5000s ease-in-out 0s;
-                -webkit-text-fill-color: $primaryWhite-dark !important;
-            }
-
-            &:focus {
-                transition: background-color 5000s ease-in-out 0s;
-                -webkit-text-fill-color: $primaryWhite-dark !important;
-            }
-
-            &:active {
-                transition: background-color 5000s ease-in-out 0s;
-                -webkit-text-fill-color: $primaryWhite-dark !important;
-            }
-        }
-    }
-
-    .center {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        min-height: -webkit-fill-available;
-
-        .loginLogoSection {
-            text-align: center;
-            margin-top: 12px;
-            margin-bottom: 20px;
+ /* Main Properties */
+ 
+ .inputBox {
+     margin-bottom: 20px !important;
+ }
+ 
+ .marginBottomZero {
+     margin-bottom: 0 !important;
+ }
+ .registered {
+     padding: 28px 0 8px;
+     color: $neutralGrey4-dark;
+     font-size: 14px;
+     line-height: 22px;
+     font-weight: 400;
+     & :global {
+         .ant-checkbox {
+             .ant-checkbox-inner {
+                 width: 18px;
+                 height: 18px;
+                 background-color: $transparentColor;
+                 border: 1px solid $neutralGrey5-dark;
+                 &:after {
+                     top: 48%;
+                     inset-inline-start: 35%;
+                     width: 4px;
+                     height: 7px;
+                     border: 1px solid $primaryRed-dark;
+                     border-top: 0;
+                     border-inline-start: 0;
+                 }
+             }
+         }
+         .ant-checkbox-checked {
+             .ant-checkbox-inner {
+                 border-color: 1px solid $neutralGrey5-dark !important;
+             }
+             &:not(.ant-checkbox-disabled) {
+                 &:hover {
+                     .ant-checkbox-inner {
+                         background-color: $transparentColor !important;
+                     }
+                 }
+             }
+             &:after {
+                 border: 1px solid $primaryRed-dark !important;
+                 background-color: $transparentColor !important;
+             }
+         }
+     }
+ }
+ .button {
+     width: 100%;
+     // @include font-style(16, 24, 600, $primaryWhite, $fontfamily, center) ;
+     font-size: 16px;
+     line-height: 24px !important;
+     font-weight: 600 !important;
+     text-align: center;
+     color: $primaryWhite;
+     margin-top: 20px;
+     padding: 7px 16px !important;
+     background-color: $primaryRed-dark;
+     &:disabled {
+         background-color: $neutralGrey2-dark !important;
+         border: 1px solid $neutralGrey2-dark !important;
+         opacity: 1;
+         @include font-style(16, 24, 600, $neutralGrey3-dark, $fontfamily, center);
+         &:hover {
+             background-color: $neutralGrey2-dark !important;
+             border: 1px solid $neutralGrey2-dark;
+             opacity: 1;
+             @include font-style(16, normal, 600, $neutralGrey3-dark, $fontfamily, center);
+         }
+     }
+ }
+ .fullWidth {
+     width: 100%;
+ }
+ .inputLabelPlaceholder {
+     label {
+         position: absolute;
+         top: 6px;
+         font-weight: 400;
+         left: 49px;
+         font-size: 16px;
+         line-height: 24px;
+         color: $neutralGrey2;
+         user-select: none;
+         cursor: text;
+         &::after {
+             position: relative;
+             top: -3px;
+             left: 1px;
+             content: '*';
+             color: $primaryRed;
+         }
+     }
+ }
+ 
+ .loginSection {
+     background: url(../../assets/images/mainbg.png) no-repeat center center fixed;
+     -webkit-background-size: cover;
+     -moz-background-size: cover;
+     -o-background-size: cover;
+     background-size: cover;
+     min-height: 100vh;
+     display: flex;
+     flex-direction: column;
+     justify-content: space-between;
+     & :global {
+         .ant-input-affix-wrapper {
+             background: $primaryRed-dark;
+             border-color: $neutralGrey4;
             color: $primaryWhite;
-
-            img {
-                @include breakpoint(md) {
-                    width: 240px;
-                }
+            //  height: 36px !important;
+             // color: $primaryWhite;
+             // font-size: 16px;
+            //  padding: 0;
+             @include borderRedius(4px, 1px, solid, $neutralGrey2-dark);
+             @include font-style(16, normal, normal, $primaryWhite, $fontfamily, inherit);
+             @include breakpoint(md) {
+                 padding: 2px 10px 0;
+             }
+             &:hover {
+                z-index: 0 !important;
+                border-color: $primaryWhite-dark;
+                //  border-inline-end-width: 0;
+             }
+             &:not(.ant-input-affix-wrapper-disabled) {
+                 &:hover {
+                     border-color: $primaryWhite-dark;
+                     border-inline-end-width: 0;
+                 }
+             }
+             > input.ant-input.disabledInput {
+                 color: $neutralGrey2-dark !important;
+             }
+             > input.ant-input {
+                 @include breakpoint(md) {
+                     padding: 2px 5px 3px 5px;
+                 }
+             }
+             .ant-input-prefix {
+                color: $neutralGrey3;
+                 &::placeholder {
+                     // color: $neutralGrey2-dark;
+                     // font-size: 18px;
+                     @include font-style(18, normal, normal, $neutralGrey2-dark, $fontfamily, inherit);
+                 }
+                 margin-inline-start: 12px;
+                 margin-inline-end: 12px;
+                 color: $neutralGrey2-dark;
+             }
+         }
+         .ant-input-affix-wrapper-focused {
+             box-shadow: none !important;
+             border-color: $primaryWhite-dark !important;
+             .ant-input-prefix {
+                 color: $primaryWhite-dark;
+                //  box-shadow: none !important;
+                //  border-color: $primaryWhite-dark;
+             }
+         }
+         .ant-input-affix-wrapper-status-success {
+             .ant-input-prefix {
+                 color: $primaryWhite;
+             }
+         }
+         .ant-form-item {
+             .ant-form-item-explain-error {
+                 // color: $semanticError-dark;
+                 // line-height: 18px;
+                 // font-weight: 400;
+                 @include font-style(12, 18, 400, $semanticError-dark, $fontfamily, inherit);
+             }
+         }
+         .ant-checkbox-wrapper {
+             &:not(.ant-checkbox-wrapper-disabled) {
+                 &:hover {
+                     .ant-checkbox-checked {
+                         &:not(.ant-checkbox-disabled) {
+                             .ant-checkbox-inner {
+                                 background-color: $transparentColor !important;
+                             }
+                         }
+                     }
+                 }
+             }
+         }
+         .g-recaptcha {
+             > div {
+                 > div {
+                     margin: 0px auto;
+                 }
+             }
+         }
+     }
+     .disabledInput {
+         color: $neutralGrey3;
+         & :global{
+            .ant-input-affix-wrapper {
+                border-color: $neutralGrey3;
             }
+         }
+     }
+     input {
+         &:-webkit-autofill {
+             transition: background-color 5000s ease-in-out 0s;
+             -webkit-text-fill-color: $primaryWhite-dark !important;
+             &:hover {
+                 transition: background-color 5000s ease-in-out 0s;
+                 -webkit-text-fill-color: $primaryWhite-dark !important;
+             }
+             &:focus {
+                 transition: background-color 5000s ease-in-out 0s;
+                 -webkit-text-fill-color: $primaryWhite-dark !important;
+             }
+             &:active {
+                 transition: background-color 5000s ease-in-out 0s;
+                 -webkit-text-fill-color: $primaryWhite-dark !important;
+             }
+         }
+     }
+     .center {
+         display: flex;
+         flex-direction: column;
+         justify-content: center;
+         align-items: center;
+         min-height: -webkit-fill-available;
+         .loginLogoSection {
+             text-align: center;
+             margin-top: 12px;
+             margin-bottom: 20px;
+             color: $primaryWhite;
+             img {
+                 @include breakpoint(md) {
+                     width: 240px;
+                 }
+             }
+             .mainLogo {
+                 height: 44px;
+             }
+             .mainLogoLine {
+                 width: 300px;
+                 height: 2px;
+                 margin-top: 20px;
+             }
+             .logoText {
+                 padding-top: 10px;
+                 @include font-style(24, 34, 400, $primaryWhite, $fontfamily, inherit);
+                 @include breakpoint(md) {
+                     font-size: 20px;
+                 }
+             }
+         }
+     }
+     .loginMnMlogo {
+         padding-top: 20px;
+         width: 100%;
+         text-align: right;
+         img {
+             padding-right: 25px;
+             height: 40px;
+             @include breakpoint(md) {
+                 width: 150px;
+             }
+         }
+     }
+     .loginWrap {
+         background: $neutralGrey0-dark;
+         @include borderRedius(10px, 1px, solid, $neutralGrey0-dark);
+         .loginHtml {
+             height: max-content;
+             width: 420px;
+             .centerInner {
+                 padding: 30px 40px;
+             }
+             .loginForm {
+                 position: relative;
+                 width: 100%;
+                 perspective: 1000px;
+                 transform-style: preserve-3d;
+                 .loginHeading {
+                     h1 {
+                         @include font-style(32, 48, 600, $primaryWhite, $fontfamily, center);
+                         margin: 0;
+                         // margin-bottom: 30px;
+                     }
+                     h4 {
+                         @include breakpoint(md) {
+                             margin-top: 0;
+                             margin-bottom: 0;
+                             font-size: 24px;
+                         }
+                     }
+                     .loginSubHeading {
+                         @include font-style(16, 24, 400, $neutralGrey2, $fontfamily, center);
+                         margin-top: 8px;
+                         margin-bottom: 30px;
+                         @include breakpoint(md) {
+                             margin-bottom: 4px;
+                             font-size: 12px;
+                         }
+                     }
+                 }
+                 .fielderror {
+                     background: $neutralGrey1-dark;
+                     margin-bottom: 10px !important;
+                     @include borderRedius(6px, 0px, solid, $transparentColor);
+                     padding: 8px 16px;
+                     min-height: 0px !important;
+                     .registered {
+                         display: flex;
+                         align-items: center;
+                         padding: 0;
+                         @include font-style(14, 24, 500, $primaryRed-dark, $fontfamily, left);
+                         p {
+                             padding-left: 0px !important;
+                             color: $primaryRed-dark;
+                         }
+                         & :global {
+                             .ant-checkbox-checked {
+                                 &:checked {
+                                     background-color: $transparentColor !important;
+                                 }
+                             }
+                             .ant-checkbox {
+                                 &:not(.ant-checkbox-checked) + span {
+                                     color: $neutralGrey3-dark !important;
+                                     p {
+                                         color: $neutralGrey3-dark !important;
+                                     }
+                                 }
+                             }
+                         }
+                     }
+                 }
+                 .inputBox {
+                     & :global {
+                         .ant-input-affix-wrapper {
+                             background: $primaryBlack-dark;
+                             height: 36px !important;
+                             // color: $primaryWhite-dark;
+                             // font-size: 16px;
+                             @include font-style(16, inherit, inherit, $primaryWhite-dark, $fontfamily, inherit);
+                             @include borderRedius(5px, 1px, solid, $neutralGrey2-dark);
+                             padding: 0;
+                             &:focus {
+                                 box-shadow: none !important;
+                                 border-color: $primaryWhite-dark;
+                             }
+                             .ant-input-suffix {
+                                 margin-inline-end: 8px;
+                                 line-height: 16px;
+                                 transform: scaleX(-1) !important;
+                                 color: $DarkPink-dark;
+                             }
+                         }
+                         .ant-form-item-control-input {
+                            background: $primaryBlack !important;
+                            border-radius: 6px !important;
+                        }
+                     }
+                     input {
+                         background: $transparentColor;
+                         color: $primaryWhite;
+                         height: auto;
+                         &::-ms-reveal {
+                             display: none;
+                         }
+                         input {
+                             &::-ms-clear {
+                                 display: none;
+                             }
+                         }
+                         &::placeholder {
+                             color: $neutralGrey4;
+                             font-size: 16px !important;
+                             font-weight: 400 !important;
+                             line-height: 24px;
+                             @include breakpoint(md) {
+                                 font-size: 14px;
+                             }
+                         }
+                     }
+                 }
+                 .inputBox.disabledInput {
+                     input {
+                         background: transparent;
+                         color: $neutralGrey4 !important;
+                     }
+                     p {
+                         padding-left: 0 !important;
+                         margin-top: 3px !important;
+                         // color: $semanticSuccess !important;
+                         // font-size: 12px;
+                         // font-weight: 400;
+                         // line-height: 20px;
+                         @include font-style(12, 20, 400, $semanticSuccess !important, $fontfamily, inherit);
+                     }
+                     & :global {
+						.ant-form-item-control-input {
+							background: $transparentColor !important;
+						}
+					}
+                 }
+                 .logOutHeading {
+                     color: $primaryWhite;
+                     text-align: center;
+                 }
+                 .input-group {
+                     width: 100%;
+                     margin-bottom: 15px;
+                     .input-group-prepend {
+                         margin-right: -1px;
+                         display: flex;
+                         .input-group-text {
+                             background: none;
+                             color: $primaryWhite;
+                             border: none;
+                             border-bottom: 1px solid $primaryWhite;
+                             i {
+                                 color: $primaryWhite;
+                                 text-decoration: none;
+                             }
+                         }
+                     }
+                     .input {
+                         background: none;
+                         border: none;
+                         border-bottom: 1px solid $primaryWhite-dark;
+                         box-shadow: none !important;
+                         color: $primaryWhite-dark;
+                         &:focus {
+                             background: none;
+                             border: none;
+                             border-bottom: 1px solid $primaryWhite-dark;
+                             box-shadow: none !important;
+                             color: $primaryWhite-dark;
+                         }
+                         &:active {
+                             background: none;
+                             border: none;
+                             border-bottom: 1px solid $primaryWhite-dark;
+                             box-shadow: none !important;
+                             color: $primaryWhite-dark;
+                         }
+                     }
+                     .label {
+                         text-transform: uppercase;
+                     }
+                     .button {
+                         text-transform: uppercase;
+                         width: 100%;
+                         color: $primaryWhite-dark;
+                         display: block;
+                         background: $primaryRed;
+                         cursor: pointer;
+                         border-radius: 5px;
+                         border: none;
+                         padding: 10px;
+                         @include breakpoint(md) {
+                             padding: 5px;
+                             margin-top: 20px !important;
+                         }
+                     }
+                     .logininputLabel {
+                         color: $primaryWhite-dark;
+                         font-size: 16px !important;
+                         margin: 4px 0 0 10px;
+                     }
+                     .inputOTP {
+                         width: 13%;
+                         color: $primaryWhite-dark;
+                         display: block;
+                         padding: 10px 0px;
+                         background: none;
+                         border: none;
+                         border-bottom: 1px solid $primaryWhite-dark;
+                         float: left;
+                         text-align: center;
+                         margin: 0 3px;
+                     }
+                 }
+                 .button {
+                     span {
+                         svg {
+                             margin-left: -24px;
+                             visibility: hidden;
+                         }
+                     }
+                 }
+             }
+             .verifyUser {
+                 & :global {
+                     .ant-form-item {
+                         margin-bottom: 0px !important;
+                     }
+                 }
+             }
+             .forgotPasswordLink {
+                 // font-size: 12px;
+                 // line-height: 20px;
+                 // font-weight: 600;
+                 // text-align: right;
+                 @include font-style(12, 20, 600, $primaryRed-dark, $fontfamily, right);
+                 width: 100%;
+                 margin-top: -16px;
+                 z-index: 10;
+                 position: absolute;
+                 right: 10px;
+                 a {
+                     color: $primaryRed !important;
+                     &:hover {
+                         text-decoration: underline;
+                     }
+                 }
+             }
+             .loginFooter {
+                 @include font-style(14, 22, 600, $primaryRed-dark, $fontfamily, center);
+                 width: 100%;
+                 margin-top: 20px;
+                 // @include breakpoint(md) {
+                 //     margin-top: 3px;
+                 //   }
+                 a {
+                     @include font-style(14, 24, 600, $primaryRed-dark, $fontfamily, center);
+                     @include breakpoint(md) {
+                         font-size: 13px;
+                     }
+                     &:hover {
+                         text-decoration: underline;
+                     }
+                 }
+             }
+         }
+         .logOutHtml {
+             height: max-content;
+             width: 420px;
+             @include breakpoint(md) {
+                 height: 300px;
+             }
+             .centerInner {
+                 padding: 30px 40px;
+             }
+             .loginForm {
+                 position: relative;
+                 width: 100%;
+                 perspective: 1000px;
+                 transform-style: preserve-3d;
+                 .logOutHeading {
+                     color: $primaryWhite;
+                     text-align: center;
+                     h1 {
+                         @include font-style(32, 48, 600, $primaryWhite, $fontfamily, center);
+                         margin: 0;
+                         margin-bottom: 30px;
+                     }
+                     h4 {
+                         @include breakpoint(md) {
+                             font-size: 24px;
+                         }
+                     }
+                     .logOutSubHeading {
+                         @include font-style(16, 24, 400, $neutralGrey2, $fontfamily, center);
+                         margin-top: 8px;
+                         margin-bottom: 30px;
+                         @include breakpoint(md) {
+                             font-size: 12px;
+                             margin-bottom: 4px;
+                         }
+                     }
+                 }
+             }
+             .button {
+                 width: 100%;
+                 color: $primaryWhite-dark;
+                 display: block;
+                 background: $primaryRed;
+                 cursor: pointer;
+                 @include borderRedius(5px, 0, solid, $transparentColor);
+                 padding: 10px;
+             }
+         }
+     }
+     .loginMainFooter {
+         padding: 20px 10px 10px;
+         div {
+             > a {
+                 padding: 0 32px 0 16px;
+                 text-transform: uppercase;
+                 color: $neutralGrey5-dark;
+                 font-size: 14px;
+                 border-right: 1px solid $neutralGrey5-dark;
+                 &:last-child {
+                     border-right: none;
+                 }
+             }
+             > span {
+                 color: $neutralGrey5-dark;
+                 font-weight: 400;
+                 font-size: 14px;
+                 padding-right: 12px;
+             }
+         }
+     }
+     .logOutFooter {
+         padding: 20px 10px 10px;
+         div {
+             > a {
+                 padding: 0 32px 0 16px;
+                 text-transform: uppercase;
+                 color: $neutralGrey4;
+                 font-size: 14px;
+                 border-right: 1px solid $neutralGrey4;
+                 &:last-child {
+                     border-right: none;
+                 }
+             }
+             > span {
+                 color: $neutralGrey4;
+                 font-weight: 400;
+                 font-size: 14px;
+                 padding-right: 12px;
+             }
+         }
+     }
+ }
+ .otpVerificationContainer {
+     font-size: 14px;
+ }
+ .otpCounter {
+     color: $primaryWhite-dark;
+     letter-spacing: 0.8px;
+ }
+ .otpTitle {
+     color: $neutralGrey3-dark;
+     font-size: 14px;
+     font-weight: 400;
+     line-height: 24px;
+ }
+ .otpNotReceive {
+     color: $DarkPink-dark;
+     letter-spacing: 0.8px;
+     svg {
+         margin-right: 5px;
+         vertical-align: unset;
+     }
+ }
+ .resendEnabled {
+     color: $primaryWhite-dark;
+     float: right;
+     cursor: pointer;
+     svg {
+         transform: scaleX(-1);
+         vertical-align: unset;
+     }
+ }
+ .resendDisabled {
+     color: $neutralGrey2-dark;
+     float: right;
+     cursor: pointer;
+     pointer-events: none;
+     svg {
+         transform: scaleX(-1);
+         vertical-align: unset;
+     }
+ }
+ .buttonResend {
+     font-size: 12px;
+     line-height: 16px;
+     height: 45px;
+     margin-top: 12px;
+     padding: 4px 20px;
+     margin-left: 12px;
+ }
+ .changer {
+	margin-top: 5px;
+	margin-bottom: 5px;
+	input {
+		background: black;
+		border: $primaryWhite !important;
+		border-radius: 5px;
+		margin-right: 15px !important;
+		padding: 6px;
+		font-size: 20px;
+		color: $primaryWhite;
+		&::placeholder {
+			color: $neutralGrey5-dark;
+			font-size: 16px !important;
+			font-weight: 400 !important;
+			line-height: 24px;
+		}
+	}
+	>input {
+		&:focus-visible {
+			margin-right: 10px;
+		}
+	}
+}
+ .clock {
+     @include font-style(13, normal, normal, $primaryWhite-dark, $fontfamily, center);
+     @include breakpoint(md) {
+         font-size: 11px;
+         margin-top: -25px;
+         margin-left: -20px;
+     }
+ }
 
-            .mainLogo {
-                height: 44px;
+ 
+ .ant-input-affix-wrapper-status-error {
+     &:not(.ant-input-affix-wrapper-disabled) {
+         &:not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper {
+             &:focus {
+                 box-shadow: none !important;
+             }
+         }
+         &:not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper-focused {
+             box-shadow: none !important;
+         }
+     }
+ }
+ .loginForm {
+    .button {
+        span {
+            svg{
+                margin-left: -24px;
+                visibility: hidden;
             }
-
-            .mainLogoLine {
-                width: 300px;
-                height: 2px;
-                margin-top: 20px;
-            }
-
-            .logoText {
-                padding-top: 10px;
-                @include font-style(24, 34, 400, $primaryWhite, $fontfamily, inherit);
-
-                @include breakpoint(md) {
-                    font-size: 20px;
+            span {
+                margin-left: -24px;
+                svg {
+                    margin-left: 0px !important;
+                    visibility: visible;
                 }
             }
         }
     }
-
-    .loginMnMlogo {
-        padding-top: 20px;
-        width: 100%;
-        text-align: right;
-
-        img {
-            padding-right: 25px;
-            height: 40px;
-
-            @include breakpoint(md) {
-                width: 150px;
-            }
-        }
-    }
-
-    .loginWrap {
-        background: $neutralGrey0-dark;
-        @include borderRedius(10px, 1px, solid, $neutralGrey0-dark);
-
-        .loginHtml {
-            height: max-content;
-            width: 420px;
-
-            .centerInner {
-                padding: 30px 40px;
-            }
-
-            .loginForm {
-                position: relative;
-                width: 100%;
-                perspective: 1000px;
-                transform-style: preserve-3d;
-
-                .loginHeading {
-                    h1 {
-                        @include font-style(32, 48, 600, $primaryWhite, $fontfamily, center);
-                        margin: 0;
-                        // margin-bottom: 30px;
-                    }
-
-                    h4 {
-                        @include breakpoint(md) {
-                            margin-top: 0;
-                            margin-bottom: 0;
-                            font-size: 24px;
-                        }
-                    }
-
-                    .loginSubHeading {
-                        @include font-style(16, 24, 400, $neutralGrey2, $fontfamily, center);
-                        margin-top: 8px;
-                        margin-bottom: 30px;
-
-                        @include breakpoint(md) {
-                            margin-bottom: 4px;
-                            font-size: 12px;
-                        }
-                    }
-                }
-
-                .fielderror {
-                    background: $neutralGrey1-dark;
-                    margin-bottom: 10px !important;
-                    @include borderRedius(6px, 0px, solid, $transparentColor);
-                    padding: 8px 16px;
-                    min-height: 0px !important;
-
-                    .registered {
-                        display: flex;
-                        align-items: center;
-                        padding: 0;
-                        @include font-style(14, 24, 500, $primaryRed-dark, $fontfamily, left);
-
-                        p {
-                            padding-left: 0px !important;
-                            color: $primaryRed-dark;
-                        }
-
-                        & :global {
-                            .ant-checkbox-checked {
-                                &:checked {
-                                    background-color: $transparentColor !important;
-                                }
-                            }
-
-                            .ant-checkbox {
-                                &:not(.ant-checkbox-checked)+span {
-                                    color: $neutralGrey3-dark !important;
-
-                                    p {
-                                        color: $neutralGrey3-dark !important;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-
-                .inputBox {
-                    & :global {
-                        .ant-input-affix-wrapper {
-                            background: $primaryBlack-dark;
-                            height: 36px !important;
-                            // color: $primaryWhite-dark;
-                            // font-size: 16px;
-                            @include font-style(16, inherit, inherit, $primaryWhite-dark, $fontfamily, inherit);
-                            @include borderRedius(5px, 1px, solid, $neutralGrey2-dark);
-                            padding: 0;
-
-                            &:focus {
-                                box-shadow: none !important;
-                                border-color: $primaryWhite-dark;
-                            }
-
-                            .ant-input-suffix {
-                                margin-inline-end: 8px;
-                                line-height: 16px;
-                                transform: scaleX(-1) !important;
-                                color: $DarkPink-dark;
-                            }
-                        }
-                    }
-
-                    input {
-                        background: transparent;
-                        color: $primaryWhite;
-
-                        &::-ms-reveal {
-                            display: none;
-                        }
-
-                        input {
-                            &::-ms-clear {
-                                display: none;
-                            }
-                        }
-
-                        &::placeholder {
-                            color: $neutralGrey4;
-                            font-size: 16px !important;
-                            font-weight: 400 !important;
-                            line-height: 24px;
-
-                            @include breakpoint(md) {
-                                font-size: 14px;
-                            }
-                        }
-                    }
-                }
-
-                .inputBox.disabledInput {
-                    input {
-                        background: transparent;
-                        color: $neutralGrey4 !important;
-                    }
-
-                    p {
-                        padding-left: 0 !important;
-                        // color: $semanticSuccess !important;
-                        // font-size: 12px;
-                        // font-weight: 400;
-                        // line-height: 20px;
-                        @include font-style(12, 20, 400, $semanticSuccess !important, $fontfamily, inherit);
-                    }
-                }
-
-                .logOutHeading {
-                    color: $primaryWhite;
-                    text-align: center;
-                }
-
-                .input-group {
-                    width: 100%;
-                    margin-bottom: 15px;
-
-                    .input-group-prepend {
-                        margin-right: -1px;
-                        display: flex;
-
-                        .input-group-text {
-                            background: none;
-                            color: $primaryWhite;
-                            border: none;
-                            border-bottom: 1px solid $primaryWhite;
-
-                            i {
-                                color: $primaryWhite;
-                                text-decoration: none;
-                            }
-                        }
-                    }
-
-                    .input {
-                        background: none;
-                        border: none;
-                        border-bottom: 1px solid $primaryWhite-dark;
-                        box-shadow: none !important;
-                        color: $primaryWhite-dark;
-
-                        &:focus {
-                            background: none;
-                            border: none;
-                            border-bottom: 1px solid $primaryWhite-dark;
-                            box-shadow: none !important;
-                            color: $primaryWhite-dark;
-                        }
-
-                        &:active {
-                            background: none;
-                            border: none;
-                            border-bottom: 1px solid $primaryWhite-dark;
-                            box-shadow: none !important;
-                            color: $primaryWhite-dark;
-                        }
-                    }
-
-                    .label {
-                        text-transform: uppercase;
-                    }
-
-                    .button {
-                        text-transform: uppercase;
-                        width: 100%;
-                        color: $primaryWhite-dark;
-                        display: block;
-                        background: $primaryRed;
-                        cursor: pointer;
-                        border-radius: 5px;
-                        border: none;
-                        padding: 10px;
-
-                        @include breakpoint(md) {
-                            padding: 5px;
-                            margin-top: 20px !important;
-                        }
-                    }
-
-                    .logininputLabel {
-                        color: $primaryWhite-dark;
-                        font-size: 16px !important;
-                        margin: 4px 0 0 10px;
-                    }
-
-                    .inputOTP {
-                        width: 13%;
-                        color: $primaryWhite-dark;
-                        display: block;
-                        padding: 10px 0px;
-                        background: none;
-                        border: none;
-                        border-bottom: 1px solid $primaryWhite-dark;
-                        float: left;
-                        text-align: center;
-                        margin: 0 3px;
-                    }
-                }
-
-                .button {
-                    span {
-                        svg {
-                            margin-left: -24px;
-                            visibility: hidden;
-                        }
-                    }
-                }
-            }
-
-            .verifyUser {
-                & :global {
-                    .ant-form-item {
-                        margin-bottom: 0px !important;
-                    }
-                }
-            }
-
-            .forgotPasswordLink {
-                // font-size: 12px;
-                // line-height: 20px;
-                // font-weight: 600;
-                // text-align: right;
-                @include font-style(12, 20, 600, $primaryRed-dark, $fontfamily, right);
-                width: 100%;
-                margin-top: -16px;
-
-                a {
-                    color: $primaryRed !important;
-
-                    &:hover {
-                        text-decoration: underline;
-                    }
-                }
-            }
-
-            .loginFooter {
-                @include font-style(14, 22, 600, $primaryRed-dark, $fontfamily, center);
-                width: 100%;
-                margin-top: 20px;
-
-                // @include breakpoint(md) {
-                //     margin-top: 3px;
-                //   }
-                a {
-                    @include font-style(14, 24, 600, $primaryRed-dark, $fontfamily, center);
-
-                    @include breakpoint(md) {
-                        font-size: 13px;
-                    }
-
-                    &:hover {
-                        text-decoration: underline;
-                    }
-                }
-            }
-        }
-
-        .logOutHtml {
-            height: max-content;
-            width: 420px;
-
-            @include breakpoint(md) {
-                height: 300px;
-            }
-
-            .centerInner {
-                padding: 30px 40px;
-            }
-
-            .loginForm {
-                position: relative;
-                width: 100%;
-                perspective: 1000px;
-                transform-style: preserve-3d;
-
-                .logOutHeading {
-                    color: $primaryWhite;
-                    text-align: center;
-
-                    h1 {
-                        @include font-style(32, 48, 600, $primaryWhite, $fontfamily, center);
-                        margin: 0;
-                        margin-bottom: 30px;
-                    }
-
-                    h4 {
-                        @include breakpoint(md) {
-                            font-size: 24px;
-                        }
-                    }
-
-                    .logOutSubHeading {
-                        @include font-style(16, 24, 400, $neutralGrey2, $fontfamily, center);
-                        margin-top: 8px;
-                        margin-bottom: 30px;
-
-                        @include breakpoint(md) {
-                            font-size: 12px;
-                            margin-bottom: 4px;
-                        }
-                    }
-                }
-            }
-
-            .button {
-                width: 100%;
-                color: $primaryWhite-dark;
-                display: block;
-                background: $primaryRed;
-                cursor: pointer;
-                @include borderRedius(5px, 0, solid, $transparentColor);
-                padding: 10px;
-            }
-        }
-    }
-
-    .loginMainFooter {
-        padding: 20px 10px 10px;
-
-        div {
-            >a {
-                padding: 0 32px 0 16px;
-                text-transform: uppercase;
-                color: $neutralGrey5-dark;
-                font-size: 14px;
-                border-right: 1px solid $neutralGrey5-dark;
-
-                &:last-child {
-                    border-right: none;
-                }
-            }
-
-            >span {
-                color: $neutralGrey5-dark;
-                font-weight: 400;
-                font-size: 14px;
-                padding-right: 12px;
-            }
-        }
-    }
-
-    .logOutFooter {
-        padding: 20px 10px 10px;
-
-        div {
-            >a {
-                padding: 0 32px 0 16px;
-                text-transform: uppercase;
-                color: $neutralGrey4;
-                font-size: 14px;
-                border-right: 1px solid #8e8585;
-
-                &:last-child {
-                    border-right: none;
-                }
-            }
-
-            >span {
-                color: $neutralGrey4;
-                font-weight: 400;
-                font-size: 14px;
-                padding-right: 12px;
-            }
-        }
-    }
-}
-
-.otpVerificationContainer {
-    font-size: 14px;
-}
-
-.otpCounter {
-    color: $primaryWhite-dark;
-    letter-spacing: 0.8px;
-}
-
-.otpTitle {
-    color: $neutralGrey3-dark;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 24px;
-}
-
-.otpNotReceive {
-    color: $DarkPink-dark;
-    letter-spacing: 0.8px;
-
-    svg {
-        margin-right: 5px;
-        vertical-align: unset;
-    }
-}
-
-.resendEnabled {
-    color: $primaryWhite-dark;
-    float: right;
-    cursor: pointer;
-
-    svg {
-        transform: scaleX(-1);
-        vertical-align: unset;
-    }
-}
-
-.resendDisabled {
-    color: $neutralGrey2-dark;
-    float: right;
-    cursor: pointer;
-    pointer-events: none;
-
-    svg {
-        transform: scaleX(-1);
-        vertical-align: unset;
-    }
-}
-
-.buttonResend {
-    font-size: 12px;
-    line-height: 16px;
-    height: 45px;
-    margin-top: 12px;
-    padding: 4px 20px;
-    margin-left: 12px;
-}
-
-.changer {
-    margin-top: 5px;
-    margin-bottom: 5px;
-
-    input {
-        background: black;
-        border: white !important;
-        border-radius: 5px;
-        margin-right: 15px !important;
-        padding: 6px;
-        font-size: 20px;
-        color: $primaryWhite-dark;
-    }
-
-    >input {
-        &:focus-visible {
-            margin-right: 10px;
-        }
-    }
-}
-
-.clock {
-    @include font-style(13, normal, normal, $primaryWhite-dark, $fontfamily, center);
-
-    @include breakpoint(md) {
-        font-size: 11px;
-        margin-top: -25px;
-        margin-left: -20px;
-    }
-}
-
-$primaryWhite-dark: $primaryWhite-dark;
-$primaryRed: $primaryRed;
-
-.ant-input-affix-wrapper-status-error {
-    &:not(.ant-input-affix-wrapper-disabled) {
-        &:not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper {
-            &:focus {
-                box-shadow: none !important;
-            }
-        }
-
-        &:not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper-focused {
-            box-shadow: none !important;
-        }
-    }
-}
+ } 
