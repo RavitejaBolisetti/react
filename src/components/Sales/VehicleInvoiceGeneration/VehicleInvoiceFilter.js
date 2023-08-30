@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Button, Row, Col, Input } from 'antd';
+import { Button, Row, Col, Input, Form } from 'antd';
 import { FilterIcon } from 'Icons';
 import { PlusOutlined } from '@ant-design/icons';
 import { RxCross2 } from 'react-icons/rx';
@@ -26,33 +26,34 @@ export default function VehicleInvoiceFilter(props) {
         filterString,
         optionType: typeData?.[PARAM_MASTER.INV_SER.id],
         setFilterString,
-        selectWide: true,
     };
 
     return (
         <div className={styles.contentHeaderBackground}>
             <Row gutter={20}>
-                <Col xs={24} sm={24} md={20} lg={20} xl={20}  className={styles.masterListSearchForm}>
-                    <Row gutter={20}>
-                        <Col xs={24} sm={24} md={20} lg={20} xl={20} className={styles.verticallyCentered}>
-                            <QueryButtons currentItem={invoiceStatus} items={invoiceStatusList} onClick={handleInvoiceTypeChange} />
-                            <div className={styles.fullWidth}>
-                                <SearchBox {...serachBoxProps} />
-                            </div>
-                        </Col>
-                        <Col xs={24} sm={24} md={4} lg={4} xl={4} className={styles.verticallyCentered}>
-                            <Button
-                                icon={<FilterIcon />}
-                                type="link"
-                                className={styles.verticallyCentered}
-                                onClick={() => {
-                                    setAdvanceSearchVisible(true);
-                                }}
-                            >
-                                Advanced Filters
-                            </Button>
-                        </Col>
-                    </Row>
+                <Col xs={24} sm={20} md={20} lg={20} xl={20}>
+                    <Form autoComplete="off" colon={false} className={styles.masterListSearchForm}>
+                        <Row gutter={20}>
+                            <Col xs={24} sm={24} md={20} lg={20} xl={20} className={styles.verticallyCentered}>
+                                <QueryButtons currentItem={invoiceStatus} items={invoiceStatusList} onClick={handleInvoiceTypeChange} />
+                                <div className={styles.fullWidth}>
+                                    <SearchBox {...serachBoxProps} />
+                                </div>
+                            </Col>
+                            <Col xs={24} sm={24} md={4} lg={4} xl={4} className={styles.verticallyCentered}>
+                                <Button
+                                    icon={<FilterIcon />}
+                                    type="link"
+                                    className={styles.verticallyCentered}
+                                    onClick={() => {
+                                        setAdvanceSearchVisible(true);
+                                    }}
+                                >
+                                    Advanced Filters
+                                </Button>
+                            </Col>
+                        </Row>
+                    </Form>
                 </Col>
                 <Col xs={24} sm={4} md={4} lg={4} xl={4} className={styles.buttonsGroupRight}>
                     <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
