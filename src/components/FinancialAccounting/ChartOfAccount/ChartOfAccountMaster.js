@@ -207,6 +207,8 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
     };
 
     const handleAdd = () => {
+        form.resetFields();
+        setSelectedTreeSelectKey(null);
         setIsFormVisible(true);
         setFormBtnActive(false);
     };
@@ -340,7 +342,7 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
                             <Form.Item label={`${title}`} name="code">
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={10} lg={10} xl={10}>
-                                        {customSelectBox({ data: dealerCompanyLovData, placeholder: preparePlaceholderSelect('Attribute Level'), onChange: onSelect, fieldNames: companyFieldNames })}
+                                        {customSelectBox({ data: dealerCompanyLovData, placeholder: preparePlaceholderSelect('Financial Company'), onChange: onSelect, fieldNames: companyFieldNames })}
                                     </Col>
                                     {companyCode && chartOfAccountHierarchy?.length > 0 && (
                                         <Col xs={24} sm={24} md={10} lg={10} xl={10}>

@@ -27,9 +27,14 @@ const AddEditFormMain = (props) => {
         setFormBtnActive(true);
     };
 
-    const onChange = (props) => {
+    const onChange = (props) => {   
         setAccountTyp(props);
-        form.setFieldValue('accountType', props);
+
+        form.setFieldsValue({
+            accountType: props,
+            openingBalanceCredit: null,
+            openingBalanceDebit: null,
+        });
     };
 
     const handleSelectTreeClick = (value) => {
@@ -85,7 +90,7 @@ const AddEditFormMain = (props) => {
                         <>
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    <Form.Item name="openingBalanceCredit" label="Opening Balance Cr." rules={[validateRequiredInputField('Opening Balance Credit'), validateNumberWithTwoDecimalPlaces('Opening Balance Credit')]}>
+                                    <Form.Item name="openingBalanceCredit" label="Opening Balance Credit" rules={[validateRequiredInputField('Opening Balance Credit'), validateNumberWithTwoDecimalPlaces('Opening Balance Credit')]}>
                                         <Input placeholder={preparePlaceholderText('Opening Balance Credit')} />
                                     </Form.Item>
                                 </Col>
