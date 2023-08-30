@@ -47,10 +47,10 @@ export function chackedKeysMapData(treeData) {
 const AssignUserRole = (props) => {
     const { userId, userType, formData, setButtonData, showGlobalNotification } = props;
     const { formActionType, section } = props;
-    const { fetchRoleDataList, roleListdata, isRoleListLoding } = props;
+    const { roleListdata } = props;
     const { fetchDLRUserRoleDataList, resetUsrDlrRoleAppDataList, usrRolelAppListShowLoading, saveDLRUserRoleDataList, fetchMNMUserRoleAppDataList, resetMnmUserRoleAppDataList, mnmUserRoleAppListShowLoading, saveMNMUserRoleAppDataList } = props;
     const { isDlrAppLoaded, isDlrAppLoding, dlrAppList, isMnmAppLoaded, isMnmAppLoding, mnmAppList } = props;
-    const { fetchUserRoleList, resetUserRoleList, userRoleShowLoading, userRoleDataList, isUserRoleListLoaded, isUserRoleListLoding } = props;
+    const { fetchUserRoleList, userRoleShowLoading, userRoleDataList, isUserRoleListLoding } = props;
 
     const [form] = Form.useForm();
     const [checkedKeys, setCheckedKeys] = useState([]);
@@ -68,9 +68,9 @@ const AssignUserRole = (props) => {
         if (!userType) return;
         setButtonData((prev) => {
             if (userType === USER_TYPE_USER?.MANUFACTURER?.id) {
-                return { ...prev, nextBtn: false, saveBtn: false, nextBtnWthPopMag: false, closeBtn: true };
+                return { ...prev, nextBtn: false, saveBtn: false, nextBtnWthPopMag: false, closeBtn: true, formBtnActive: false };
             } else {
-                return { ...prev, saveBtn: false, nextBtnWthPopMag: false, nextBtn: true };
+                return { ...prev, closeBtn: false, saveBtn: false, nextBtnWthPopMag: false, nextBtn: true, formBtnActive: false };
             }
         });
 
@@ -112,7 +112,7 @@ const AssignUserRole = (props) => {
     }, [formData, record]);
 
     const onErrorAction = (data) => {
-        console.log('🚀 ~ file: AssignUserRoleMain.js:65 ~ onErrorAction ~ data:', data);
+        console.error(data);
     };
 
     useEffect(() => {
@@ -185,7 +185,6 @@ const AssignUserRole = (props) => {
 
         const requestData = {
             data: request,
-            // method: 'post',
             method: (dlrAppList?.role?.id && dlrAppList?.role?.id !== 'null') || (mnmAppList?.role?.id && mnmAppList?.role?.id !== 'null') ? 'put' : 'post',
             setIsLoading: usrRolelAppListShowLoading,
             userId,

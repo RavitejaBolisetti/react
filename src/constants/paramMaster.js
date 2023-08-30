@@ -301,4 +301,8 @@ export const PARAM_MASTER = {
         id: 'CHK_STATS',
         title: 'Vehicle Receipt checlist status',
     },
+    DESG_TYP_ASGN_TO: {
+        id: 'DESG_TYP_ASGN_TO',
+        title: 'Designation Master',
+    },
 };
