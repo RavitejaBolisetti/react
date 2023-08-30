@@ -17,13 +17,14 @@ export const ViewMain = (props) => {
         column: { xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 },
     };
 
-    const accountType = viewData?.accountType === ATTRIBUTE_TYPE?.[0]?.key ? ATTRIBUTE_TYPE?.[0]?.value : ATTRIBUTE_TYPE?.[1]?.value;
+    const accountType = viewData?.accountType === ATTRIBUTE_TYPE?.[0]?.key ? ATTRIBUTE_TYPE?.[0]?.value : viewData?.accountType === ATTRIBUTE_TYPE?.[1]?.key ? ATTRIBUTE_TYPE?.[1]?.value : null;
+    const parentName = viewData?.parentAccountDescription ? viewData?.parentAccountDescription : 'DMS';
 
     return (
         <div className={styles.viewContainer}>
             <Descriptions {...viewProps}>
                 <Descriptions.Item label="Attribute Level">{accountType}</Descriptions.Item>
-                <Descriptions.Item label="Parent">{viewData?.parentAccountCode}</Descriptions.Item>
+                <Descriptions.Item label="Parent">{parentName}</Descriptions.Item>
                 <Descriptions.Item label="Code">{viewData?.accountCode}</Descriptions.Item>
                 <Descriptions.Item label="Description">{viewData?.accountDescription}</Descriptions.Item>
                 {viewData?.accountType === ATTRIBUTE_TYPE?.[1]?.key && (

@@ -100,12 +100,14 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
     const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState(null);
     const [change, setChange] = useState(false);
     const [disable, setDisable] = useState(true);
+    const [recordId, setRecordId] = useState('');
+    const [accountTyp, setAccountTyp] = useState(null);
 
     const defaultBtnVisiblity = { editBtn: true, childBtn: true, siblingBtn: true };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const [modalOpen, setModalOpen] = useState(false);
     const companyFieldNames = { value: 'companyName', key: 'companyCode' };
-    const fieldNames = { title: 'parentAccountDescription', key: 'accountCode', children: 'subGroup' };
+    const fieldNames = { title: 'accountDescription', key: 'accountCode', children: 'subGroup' };
 
     useEffect(() => {
         if (userId && !isDealerCompanyDataLoaded) {
@@ -143,31 +145,40 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
 
     useEffect(() => {
         setViewData(chartOfAccountData);
-        if (chartOfAccountData?.chartOfAccountData === ATTRIBUTE_TYPE?.[1]?.key) {
-            setButtonData({ ...defaultBtnVisiblity, childBtn: true });
-        } else if (chartOfAccountData?.chartOfAccountData === ATTRIBUTE_TYPE?.[0]?.key) {
+        if (chartOfAccountData?.accountType === ATTRIBUTE_TYPE?.[1]?.key) {
             setButtonData({ ...defaultBtnVisiblity, childBtn: false });
+        } else if (chartOfAccountData?.accountType === ATTRIBUTE_TYPE?.[0]?.key) {
+            setButtonData({ ...defaultBtnVisiblity, childBtn: true });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [chartOfAccountData]);
 
     useEffect(() => {
         if (formActionType === FROM_ACTION_TYPE?.CHILD) {
+            form.resetFields();
+            setRecordId('');
             setDisable(true);
             setSelectedTreeSelectKey(chartOfAccountData?.accountDescription);
+            setAccountTyp(null);
             form.setFieldValue('parentAccountCode', chartOfAccountData?.accountCode);
         } else if (formActionType === FROM_ACTION_TYPE?.SIBLING) {
+            form.resetFields();
+            setRecordId('');
             setDisable(true);
             setSelectedTreeSelectKey(chartOfAccountData?.parentAccountDescription);
+            setAccountTyp(null);
             form.setFieldValue('parentAccountCode', chartOfAccountData?.parentAccountCode);
         } else if (formActionType === FROM_ACTION_TYPE?.EDIT) {
+            form.resetFields();
+            setRecordId(chartOfAccountData?.id);
             setDisable(false);
             setSelectedTreeSelectKey(chartOfAccountData?.parentAccountDescription);
+            setAccountTyp(chartOfAccountData?.accountType);
             form.setFieldsValue({
                 accountType: chartOfAccountData?.accountType === ATTRIBUTE_TYPE?.[0]?.key ? ATTRIBUTE_TYPE?.[0]?.value : ATTRIBUTE_TYPE?.[1]?.value,
-                parentAccountCode: chartOfAccountData?.financialCompany,
+                parentAccountCode: chartOfAccountData?.parentAccountCode,
                 accountCode: chartOfAccountData?.accountCode,
-                accountDescription: chartOfAccountData?.parentAccountCode,
+                accountDescription: chartOfAccountData?.accountDescription,
                 openingBalanceCredit: chartOfAccountData?.accountType === ATTRIBUTE_TYPE?.[1]?.key ? chartOfAccountData?.openingBalanceCredit : null,
                 openingBalanceDebit: chartOfAccountData?.accountType === ATTRIBUTE_TYPE?.[1]?.key ? chartOfAccountData?.openingBalanceDebit : null,
                 status: chartOfAccountData?.status,
@@ -183,6 +194,7 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
     const handleTreeViewVisiblity = () => setTreeViewVisible(!isTreeViewVisible);
 
     const handleTreeViewClick = (keys, tree) => {
+        console.log('_KEY_', keys);
         form.resetFields();
         setViewData(null);
         setSelectedTreeKey(keys);
@@ -199,22 +211,20 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
     };
 
     const onFinish = (values) => {
-        const recordId = chartOfAccountData?.id || '';
         const parentCode = values?.parentAccountCode ? values?.parentAccountCode : '';
-        const data = { ...values, id: '', companyCode: companyCode, parentAccountCode: parentCode };
-
-        console.log('TOBE', data);
+        const accountTypeCode = formActionType === FROM_ACTION_TYPE?.EDIT ? (values?.accountType === ATTRIBUTE_TYPE?.[0]?.value ? ATTRIBUTE_TYPE?.[0]?.key : ATTRIBUTE_TYPE?.[1]?.key) : values?.accountType;
+        const data = { ...values, id: recordId, companyCode: companyCode, parentAccountCode: parentCode, accountType: accountTypeCode };
 
         const onSuccess = (res) => {
             form.resetFields();
 
             if (res?.data) {
-                console.log(res, '__RES__');
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
                 fetchChartOfAccountHierarchy({ setIsLoading: listShowLoadingChartOfAccountHierachy, extraParams: [{ key: 'companyCode', value: companyCode }], userId });
                 fetchChartOfAccount({ setIsLoading: listShowLoadingChartOfAccount, userId, extraParams: [{ key: 'accountCode', value: res?.data?.accountCode }] });
                 setFormBtnActive(false);
                 setIsFormVisible(false);
+                setSelectedTreeKey([res?.data?.accountCode]);
             }
         };
 
@@ -287,6 +297,8 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
         selectedTreeSelectKey,
         disable,
         setSelectedTreeSelectKey,
+        accountTyp,
+        setAccountTyp,
     };
 
     const viewProps = {

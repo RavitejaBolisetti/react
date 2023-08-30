@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState } from 'react';
+import React from 'react';
 import { Col, Input, Form, Row, Button, Switch } from 'antd';
 import TreeSelectField from '../../common/TreeSelectField';
 import { validateRequiredInputField, validateRequiredSelectField, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
@@ -16,9 +16,8 @@ import styles from 'components/common/Common.module.css';
 
 const AddEditFormMain = (props) => {
     const { onCloseAction, chartOfAccountHierarchy, selectedTreeSelectKey, setSelectedTreeSelectKey } = props;
-    const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed, form, disable } = props;
-    const [attributeTyp, setAttributeTyp] = useState(0);
-    const treeFieldNames = { label: 'parentAccountDescription', value: 'accountCode', children: 'subGroup' };
+    const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed, form, disable, accountTyp, setAccountTyp } = props;
+    const treeFieldNames = { label: 'accountDescription', value: 'accountCode', children: 'subGroup' };
 
     const handleFormValueChange = () => {
         setFormBtnActive(true);
@@ -29,11 +28,14 @@ const AddEditFormMain = (props) => {
     };
 
     const onChange = (props) => {
-        setAttributeTyp(props);
+        setAccountTyp(props);
+        form.setFieldValue('accountType', props);
     };
 
     const handleSelectTreeClick = (value) => {
         setSelectedTreeSelectKey(value);
+        setFormBtnActive(true);
+        form.setFieldValue('parentAccountCode', value);
     };
 
     const treeSelectFieldProps = {
@@ -42,7 +44,7 @@ const AddEditFormMain = (props) => {
         treeDisabled: disable,
         selectedTreeSelectKey,
         handleSelectTreeClick,
-        defaultValue: selectedTreeSelectKey?.[0] ,
+        defaultValue: selectedTreeSelectKey?.[0],
         placeholder: preparePlaceholderSelect('Parent'),
     };
 
@@ -53,7 +55,7 @@ const AddEditFormMain = (props) => {
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item label="Attribute Level" name="accountType" rules={[validateRequiredSelectField('Attribute Level')]}>
-                                {customSelectBox({ data: ATTRIBUTE_TYPE, placeholder: preparePlaceholderSelect('Attribute Level'), onChange: onChange })}
+                                {customSelectBox({ data: ATTRIBUTE_TYPE, placeholder: preparePlaceholderSelect('Attribute Level'), onChange: onChange, disabled: !disable })}
                             </Form.Item>
                         </Col>
                     </Row>
@@ -68,18 +70,18 @@ const AddEditFormMain = (props) => {
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item label="Code" name="accountCode" rules={[validateRequiredInputField('code')]}>
-                                <Input placeholder={preparePlaceholderText('code')} maxLength={6} />
+                                <Input placeholder={preparePlaceholderText('code')} maxLength={6} disabled={!disable} />
                             </Form.Item>
                         </Col>
                     </Row>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item label="Description" name="accountDescription" rules={[validateRequiredInputField('Account description')]}>
-                                <Input placeholder={preparePlaceholderText('Account description')} maxLength={50} />
+                                <Input placeholder={preparePlaceholderText('Account description')} maxLength={50} disabled={!disable} />
                             </Form.Item>
                         </Col>
                     </Row>
-                    {attributeTyp === ATTRIBUTE_TYPE?.[1]?.key && (
+                    {accountTyp === ATTRIBUTE_TYPE?.[1]?.key && (
                         <>
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -101,7 +103,7 @@ const AddEditFormMain = (props) => {
 
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Form.Item labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label="Status">
+                            <Form.Item initialValue={false} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label="Status">
                                 <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} />
                             </Form.Item>
                         </Col>
