@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect } from 'react';
-import { Descriptions, Collapse } from 'antd';
+import { Descriptions, Collapse, Divider } from 'antd';
 import { HIERARCHY_DEFAULT_PARENT } from 'constants/constants';
 import CardProductAttribute from './ProductAttribute/CardProductAttribute';
 import { PlusBorderedIcon, MinusBorderedIcon } from 'Icons';
@@ -42,8 +42,9 @@ export const ViewProductDetailMain = ({ form, skuAttributes, setSKUAttributes, i
                     <Descriptions.Item label="Status">{selectedTreeData?.active === true ? 'Active' : 'InActive'}</Descriptions.Item>
                     <div>
                         {selectedTreeData?.skuAttributes?.length > 0 && (
-                            <Collapse expandIcon={expandIcon}>
+                            <Collapse expandIcon={expandIcon} collapsible="icon">
                                 <Panel header="Product SKU" key="2">
+                                    <Divider />
                                     {skuAttributes?.map((item) => (
                                         <CardProductAttribute key={'sku' + item?.code} code={item?.code} value={item?.value} id={item?.id} setDisabledEdit={setDisabledEdit} />
                                     ))}

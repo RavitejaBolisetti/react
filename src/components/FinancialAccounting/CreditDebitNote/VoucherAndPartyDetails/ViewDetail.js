@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { Col, Row, Space, Collapse, Descriptions } from 'antd';
+import { Col, Row,  Collapse, Descriptions, Divider } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { getCodeValue } from 'utils/getCodeValue';
 
@@ -47,32 +47,32 @@ const ViewDetailMain = (props) => {
         <div className={styles.viewDrawerContainer}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Space style={{ display: 'flex' }} size="middle" direction="vertical">
-                        <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end" className={styles.collapseContainer}>
-                            <Panel header="Voucher Details" key="1">
-                                <Descriptions {...viewProps}>
-                                    <Descriptions.Item label="Total Settled Amount">{checkAndSetDefaultValue(voucherDetailsDto?.totalSettledAmount, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Total Write-Off Amount">{checkAndSetDefaultValue(voucherDetailsDto?.totalWriteOffAmount, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Total Apportioned Amount">{checkAndSetDefaultValue(voucherDetailsDto?.totalApportionedAmount, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Total Amount">{checkAndSetDefaultValue(voucherDetailsDto?.totalAmount, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Total Balanced Amount">{checkAndSetDefaultValue(voucherDetailsDto?.totalBalancedAmount, isLoading)}</Descriptions.Item>
-                                </Descriptions>
-                            </Panel>
-                        </Collapse>
-                        <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end" className={styles.collapseContainer}>
-                            <Panel header="Party Details" key="2">
-                                <Descriptions {...viewProps}>
-                                    <Descriptions.Item label="Party ID">{getCodeValue(typeData[PARAM_MASTER?.PARTY_CATEG?.id], partyDetailsDto?.partySegment)}</Descriptions.Item>
-                                    <Descriptions.Item label="Party ID">{checkAndSetDefaultValue(partyDetailsDto?.partyId, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Party Name">{checkAndSetDefaultValue(partyDetailsDto?.partyName, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Address">{checkAndSetDefaultValue(partyDetailsDto?.address, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="City">{checkAndSetDefaultValue(partyDetailsDto?.city, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="State">{checkAndSetDefaultValue(partyDetailsDto?.state, isLoading)}</Descriptions.Item>
-                                    <Descriptions.Item label="Phone No.">{checkAndSetDefaultValue(partyDetailsDto?.mobileNumber, isLoading)}</Descriptions.Item>
-                                </Descriptions>
-                            </Panel>
-                        </Collapse>
-                    </Space>
+                    <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end" className={styles.collapseContainer}>
+                        <Panel header="Voucher Details" key="1">
+                            <Divider/>
+                            <Descriptions {...viewProps}>
+                                <Descriptions.Item label="Total Settled Amount">{checkAndSetDefaultValue(voucherDetailsDto?.totalSettledAmount, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Total Write-Off Amount">{checkAndSetDefaultValue(voucherDetailsDto?.totalWriteOffAmount, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Total Apportioned Amount">{checkAndSetDefaultValue(voucherDetailsDto?.totalApportionedAmount, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Total Amount">{checkAndSetDefaultValue(voucherDetailsDto?.totalAmount, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Total Balanced Amount">{checkAndSetDefaultValue(voucherDetailsDto?.totalBalancedAmount, isLoading)}</Descriptions.Item>
+                            </Descriptions>
+                        </Panel>
+                    </Collapse>
+                    <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end" className={styles.collapseContainer}>
+                        <Panel header="Party Details" key="2">
+                            <Divider/>
+                            <Descriptions {...viewProps}>
+                                <Descriptions.Item label="Party ID">{getCodeValue(typeData[PARAM_MASTER?.PARTY_CATEG?.id], partyDetailsDto?.partySegment)}</Descriptions.Item>
+                                <Descriptions.Item label="Party ID">{checkAndSetDefaultValue(partyDetailsDto?.partyId, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Party Name">{checkAndSetDefaultValue(partyDetailsDto?.partyName, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Address">{checkAndSetDefaultValue(partyDetailsDto?.address, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="City">{checkAndSetDefaultValue(partyDetailsDto?.city, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="State">{checkAndSetDefaultValue(partyDetailsDto?.state, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Phone No.">{checkAndSetDefaultValue(partyDetailsDto?.mobileNumber, isLoading)}</Descriptions.Item>
+                            </Descriptions>
+                        </Panel>
+                    </Collapse>
                 </Col>
             </Row>
         </div>

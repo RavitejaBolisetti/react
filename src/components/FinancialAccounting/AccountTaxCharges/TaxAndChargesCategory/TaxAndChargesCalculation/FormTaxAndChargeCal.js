@@ -18,7 +18,6 @@ function FormProductAttribute(props) {
 
     return (
         <>
-            <Divider />
             <Form form={formEdit ? editForm : taxChargeCalForm} id="myForm" autoComplete="off" layout="vertical">
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>

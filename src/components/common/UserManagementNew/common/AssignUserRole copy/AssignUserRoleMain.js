@@ -268,11 +268,8 @@ const AssignUserRole = (props) => {
                         <Panel
                             header={
                                 <Row>
-                                    <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                        <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                            Roles
-                                        </Text>
-
+                                    <Col xs={24} sm={24} md={12} lg={12} xl={12} className={styles.verticallyCentered}>
+                                        <Text strong>Roles</Text>
                                         {!formActionType?.viewMode && (
                                             <>
                                                 <Button icon={<PlusOutlined />} type="primary" disabled={disableAddBtn} onClick={handleCanAdd}>
@@ -286,7 +283,6 @@ const AssignUserRole = (props) => {
                             key={'1'}
                         >
                             <Divider />
-
                             {canAddRole && (
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -306,8 +302,8 @@ const AssignUserRole = (props) => {
                                                         <Select placeholder={preparePlaceholderSelect('role')} fieldNames={{ label: 'roleName', value: 'roleId' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} options={roleListdata} allowClear allowSearch></Select>
                                                     </Form.Item>
                                                 </Col>
-                                                <Col xs={24} sm={24} md={12} lg={12} xl={12} style={{ textAlign: 'right' }} className={styles.marT30}>
-                                                    <Button onClick={(event, key) => handleAddNewRole(event, key)} className={styles.marR20} type="primary">
+                                                <Col xs={24} sm={24} md={12} lg={12} xl={12} className={styles.buttonsGroupRight}>
+                                                    <Button onClick={(event, key) => handleAddNewRole(event, key)} type="primary">
                                                         Add
                                                     </Button>
                                                     <Button onClick={handleCancelAddForm} danger>

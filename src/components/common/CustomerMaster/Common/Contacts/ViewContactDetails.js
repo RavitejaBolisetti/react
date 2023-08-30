@@ -42,7 +42,6 @@ const ViewDetailBase = (props) => {
         <div className={styles.viewDrawerContainer}>
             {!isEditing ? (
                 <>
-                    <Divider />
                     {/* <UploadUtils {...formProps} /> */}
                     <Descriptions {...viewProps}>
                         <Descriptions.Item label="Purpose of Contact">{checkAndSetDefaultValue(getCodeValue(typeData?.PURPOSE, formData?.purposeOfContact), isLoading)}</Descriptions.Item>

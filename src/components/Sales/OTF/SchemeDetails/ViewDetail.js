@@ -25,7 +25,7 @@ const ViewDetailMain = (props) => {
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     {schemeData && schemeData?.schemes?.length > 0 ? (
                         schemeData?.schemes?.map((schemeForm, index) => (
-                            <Collapse expandIcon={expandIcon} activeKey={activeKey} expandIconPosition="end">
+                            <Collapse expandIcon={expandIcon} activeKey={activeKey} expandIconPosition="end" collapsible="icon">
                                 <Panel header={`Scheme ${index + 1}`} key={schemeForm?.id}>
                                     <Divider />
                                     <Descriptions {...viewProps}>

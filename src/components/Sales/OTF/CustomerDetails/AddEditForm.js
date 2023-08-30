@@ -77,20 +77,18 @@ const AddEditFormBase = (props) => {
     return (
         <Row gutter={20}>
             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                <Space style={{ display: 'flex' }} size="middle" direction="vertical">
-                    <Collapse collapsible="icon" expandIcon={({ isActive }) => expandIconWithText(isActive, <FiEdit />, <FiEdit style={{ color: '#B5B5B6' }} />)} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
-                        <Panel header="Booking Customer" key="1">
-                            <Divider />
-                            <AddressCommonForm key="3" {...bookingCustomerProps} isBillingCustmrForm={false} />
-                        </Panel>
-                    </Collapse>
-                    <Collapse collapsible="icon" expandIcon={({ isActive }) => expandIconWithText(isActive, <FiEdit />, <FiEdit style={{ color: '#B5B5B6' }} />)} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
-                        <Panel header="Billing Customer" key="2">
-                            <Divider />
-                            <AddressCommonForm key="4" {...bilingCustomerProps} isBillingCustmrForm={true} />
-                        </Panel>
-                    </Collapse>
-                </Space>
+                <Collapse collapsible="icon" expandIcon={({ isActive }) => expandIconWithText(isActive, <FiEdit />, <FiEdit style={{ color: '#B5B5B6' }} />)} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
+                    <Panel header="Booking Customer" key="1">
+                        <Divider />
+                        <AddressCommonForm key="3" {...bookingCustomerProps} isBillingCustmrForm={false} />
+                    </Panel>
+                </Collapse>
+                <Collapse collapsible="icon" expandIcon={({ isActive }) => expandIconWithText(isActive, <FiEdit />, <FiEdit style={{ color: '#B5B5B6' }} />)} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
+                    <Panel header="Billing Customer" key="2">
+                        <Divider />
+                        <AddressCommonForm key="4" {...bilingCustomerProps} isBillingCustmrForm={true} />
+                    </Panel>
+                </Collapse>
             </Col>
         </Row>
     );

@@ -192,8 +192,8 @@ const ApplicationTreeMain = (props) => {
                     };
 
                     return (
-                        <div className={styles.accordianContainer}>
-                            <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(i)} expandIconPosition="end">
+                        <div>
+                            <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(i)} expandIconPosition="end" collapsible="icon">
                                 <Panel
                                     header={
                                         <Row type="flex" justify="space-between" align="middle" size="large">

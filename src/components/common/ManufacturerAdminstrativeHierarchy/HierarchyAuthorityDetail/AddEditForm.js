@@ -152,7 +152,7 @@ const AuthorityFormMin = (props) => {
             )}
 
             {!isEditing && (
-                <Button {...disableAddBtn} icon={<PlusOutlined />} type="primary" onClick={onFinish}>
+                <Button {...disableAddBtn} icon={<PlusOutlined />} type="primary" onClick={onFinish} className={styles.marB20}>
                     Add
                 </Button>
             )}

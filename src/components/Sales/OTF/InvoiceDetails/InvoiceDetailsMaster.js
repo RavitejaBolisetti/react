@@ -125,7 +125,7 @@ export const InvoiceDetailsMasterBase = (props) => {
                         </Col>
                     </Row>
                     {displaySection?.invoiceInformation && (
-                        <Collapse onChange={() => onChange(1)} expandIconPosition="end" expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={activeKey}>
+                        <Collapse onChange={() => onChange(1)} expandIconPosition="end" expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={activeKey} collapsible="icon">
                             <Panel header="Invoice Information" key={1}>
                                 <Divider />
                                 <DataTable srlTitle={'#'} pagination={false} tableColumn={tableColumnInvoice()} tableData={invoiceData?.invoiceDetails} />
@@ -134,7 +134,7 @@ export const InvoiceDetailsMasterBase = (props) => {
                     )}
 
                     {displaySection?.deliveryInformation && (
-                        <Collapse onChange={() => onChange(2)} expandIconPosition="end" expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={activeKey}>
+                        <Collapse onChange={() => onChange(2)} expandIconPosition="end" expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={activeKey} collapsible="icon">
                             <Panel header="Delivery Information" key={2}>
                                 <Divider />
                                 <DataTable srlTitle={'#'} pagination={false} tableColumn={tableColumnDelivery()} tableData={invoiceData?.deliveryDetails} />

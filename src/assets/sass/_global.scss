@@ -23,7 +23,7 @@
         padding: 6px 16px;
 
         &:not(.ant-btn-icon-only) {
-            >.ant-btn-icon {
+            > .ant-btn-icon {
                 &:not(:last-child) {
                     margin-inline-end: 6px;
 
@@ -33,7 +33,7 @@
                 }
             }
 
-            >.ant-btn-icon.ant-btn-loading-icon {
+            > .ant-btn-icon.ant-btn-loading-icon {
                 margin-inline-end: 6px;
 
                 .anticon {
@@ -65,13 +65,13 @@
             color: $neutralGrey2;
 
             &:not(.ant-btn-icon-only) {
-                >.ant-btn-icon.ant-btn-loading-icon {
+                > .ant-btn-icon.ant-btn-loading-icon {
                     .anticon {
                         color: $neutralGrey2;
                     }
                 }
 
-                >.ant-btn-icon {
+                > .ant-btn-icon {
                     &:not(:last-child) {
                         .anticon {
                             color: $neutralGrey2;
@@ -149,13 +149,13 @@
             color: $neutralGrey2;
 
             &:not(.ant-btn-icon-only) {
-                >.ant-btn-icon.ant-btn-loading-icon {
+                > .ant-btn-icon.ant-btn-loading-icon {
                     .anticon {
                         color: $neutralGrey2;
                     }
                 }
 
-                >.ant-btn-icon {
+                > .ant-btn-icon {
                     &:not(:last-child) {
                         .anticon {
                             color: $neutralGrey2;
@@ -269,7 +269,7 @@
         }
     }
 
-    .ant-checkbox+span {
+    .ant-checkbox + span {
         padding-inline-start: 10px;
         padding-inline-end: 0;
         color: $primaryBlack;
@@ -405,9 +405,9 @@
         }
 
         .ant-table-tbody {
-            >tr {
+            > tr {
                 &:last-child {
-                    >td {
+                    > td {
                         &:first-child {
                             border-radius: 0 0 0 4px;
                         }
@@ -420,7 +420,7 @@
                     }
                 }
 
-                >td {
+                > td {
                     padding: 10px 16px;
                     color: $neutralGrey4;
                     font-weight: 500;
@@ -441,10 +441,10 @@
                 }
             }
 
-            >tr.ant-table-row {
+            > tr.ant-table-row {
                 &:last-child {
                     &:hover {
-                        >td {
+                        > td {
                             &:first-child {
                                 border-radius: 0 0 0 4px;
                             }
@@ -459,8 +459,8 @@
         }
 
         .ant-table-thead {
-            >tr {
-                >th {
+            > tr {
+                > th {
                     color: $primaryBlack;
                     line-height: 20px;
                     background: $neutralGrey0;
@@ -706,8 +706,8 @@
     }
 
     .ant-input-search {
-        >.ant-input-group {
-            >.ant-input-group-addon {
+        > .ant-input-group {
+            > .ant-input-group-addon {
                 &:last-child {
                     inset-inline-start: 0;
                     padding: 5px 12px;
@@ -759,13 +759,13 @@
         margin-bottom: 20px;
 
         .ant-form-item-label {
-            >label {
+            > label {
                 color: $primaryBlack;
                 line-height: 22px;
                 font-weight: 400;
             }
 
-            >label.ant-form-item-required {
+            > label.ant-form-item-required {
                 &:not(.ant-form-item-required-mark-optional) {
                     &::before {
                         margin-top: -3px;
@@ -953,7 +953,7 @@
     .ant-input-textarea-affix-wrapper.ant-input-affix-wrapper {
         margin-bottom: 20px;
 
-        >textarea.ant-input {
+        > textarea.ant-input {
             padding: 6px 12px;
         }
 
@@ -1008,7 +1008,7 @@
             color: $neutralGrey3;
         }
 
-        .ant-tree-checkbox+span {
+        .ant-tree-checkbox + span {
             &:hover {
                 .site-tree-search-value {
                     color: $primaryRed !important;
@@ -1028,7 +1028,7 @@
             font-weight: 500;
         }
 
-        .ant-tree-checkbox+span.ant-tree-node-selected {
+        .ant-tree-checkbox + span.ant-tree-node-selected {
             background-color: $transparentColor;
             color: $primaryRed;
             border-radius: 4px;
@@ -1049,7 +1049,7 @@
         .ant-tree-checkbox {
             margin-inline-end: 0;
 
-            &:hover+span {
+            &:hover + span {
                 background-color: $transparentColor;
                 color: $primaryRed;
             }
@@ -1072,16 +1072,16 @@
             }
         }
 
-        .ant-tree-checkbox-indeterminate+span {
+        .ant-tree-checkbox-indeterminate + span {
             color: $primaryBlack;
         }
 
-        .ant-tree-checkbox-checked+span {
+        .ant-tree-checkbox-checked + span {
             color: $primaryRed;
         }
 
         .ant-tree-checkbox-indeterminate {
-            &:hover+span {
+            &:hover + span {
                 background-color: $transparentColor;
                 color: $primaryRed;
             }
@@ -1138,13 +1138,13 @@
                 }
             }
 
-            .ant-select-tree-checkbox+span.ant-select-tree-node-selected {
+            .ant-select-tree-checkbox + span.ant-select-tree-node-selected {
                 background-color: $transparentColor !important;
                 color: $primaryRed;
                 font-size: 14px;
             }
 
-            .ant-select-tree-checkbox+span {
+            .ant-select-tree-checkbox + span {
                 &:hover {
                     background-color: $transparentColor !important;
                 }
@@ -1301,13 +1301,13 @@
     }
 
     .ant-picker-input {
-        >input-disabled {
+        > input-disabled {
             color: $neutralGrey3;
         }
     }
 
     .ant-picker-input {
-        >input[disabled] {
+        > input[disabled] {
             color: $neutralGrey3 !important;
         }
     }
@@ -1411,15 +1411,15 @@
         box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.15);
 
         &:last-child {
-            &:not(:first-child) {
-                margin-bottom: 20px;
-            }
+            // &:not(:first-child) {
+            margin-bottom: 20px !important;
+            // }
         }
 
-        >.ant-collapse-item {
+        > .ant-collapse-item {
             border-bottom: none;
 
-            >.ant-collapse-header {
+            > .ant-collapse-header {
                 align-items: center;
                 padding: 16px 20px;
                 font-size: 16px;
@@ -1441,15 +1441,15 @@
             background-color: $neutralGrey0;
             border-top: none;
 
-            >.ant-collapse-content-box {
+            > .ant-collapse-content-box {
                 padding: 0 20px;
             }
         }
     }
 
     .ant-collapse.ant-collapse-icon-position-end {
-        >.ant-collapse-item {
-            >.ant-collapse-header {
+        > .ant-collapse-item {
+            > .ant-collapse-header {
                 .ant-collapse-expand-icon {
                     height: 24px;
                     color: $DarkPink;
@@ -1621,21 +1621,21 @@
         }
 
         .ant-menu-item {
-            .ant-menu-item-icon+span {
+            .ant-menu-item-icon + span {
                 padding-left: 20px !important;
             }
 
-            .anticon+span {
+            .anticon + span {
                 padding-left: 20px !important;
             }
         }
 
         .ant-menu-submenu-title {
-            .ant-menu-item-icon+span {
+            .ant-menu-item-icon + span {
                 padding-left: 20px !important;
             }
 
-            .anticon+span {
+            .anticon + span {
                 padding-left: 20px !important;
             }
         }
@@ -1654,7 +1654,7 @@
         }
 
         .ant-menu-submenu-selected {
-            >.ant-menu-submenu-title {
+            > .ant-menu-submenu-title {
                 background-color: $primaryWhite;
                 border-radius: 4px;
                 color: $primaryRed !important;
@@ -1714,7 +1714,7 @@
 
     .ant-menu {
         .ant-menu-submenu-title {
-            .ant-menu-item-icon+span {
+            .ant-menu-item-icon + span {
                 text-transform: uppercase;
                 padding-left: 0 !important;
             }
@@ -1748,8 +1748,8 @@
         }
 
         .ant-menu-sub.ant-menu-inline {
-            >.ant-menu-submenu {
-                >.ant-menu-submenu-title {
+            > .ant-menu-submenu {
+                > .ant-menu-submenu-title {
                     height: 36px !important;
                 }
             }
@@ -1795,7 +1795,7 @@
 
     .ant-menu-inline.ant-menu-root {
         .ant-menu-submenu-title {
-            >.ant-menu-title-content {
+            > .ant-menu-title-content {
                 span {
                     &:first-child {
                         padding-left: 2px;
@@ -1805,7 +1805,7 @@
         }
 
         .ant-menu-item {
-            >.ant-menu-title-content {
+            > .ant-menu-title-content {
                 span {
                     &:first-child {
                         padding-left: 2px;

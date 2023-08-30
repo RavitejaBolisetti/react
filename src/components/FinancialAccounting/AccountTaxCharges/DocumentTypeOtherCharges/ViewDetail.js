@@ -26,7 +26,7 @@ const ViewDetailBase = ({ formData, styles, parameterType, typeData, docTypeLedg
                     <Descriptions.Item label="Document Type">{docTypeLedger?.documentTypeCode}</Descriptions.Item>
                     <div>
                         {docTypeLedger?.accountLedgerMappingDtoList?.length > 0 && (
-                            <Collapse expandIcon={expandIcon} className={styles.fullWidth}>
+                            <Collapse expandIcon={expandIcon} collapsible="icon" className={styles.fullWidth}>
                                 <Panel header="Doc Type and A/C head Mapping" key="2">
                                     <Divider />
                                     {docTypeLedger?.accountLedgerMappingDtoList?.map((item, index) => (

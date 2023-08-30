@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Descriptions, Collapse } from 'antd';
+import { Descriptions, Collapse, Divider } from 'antd';
 import CardAccountAndDocumentMapping from './AccountAndDocumentMapping/CardAccountAndDocumentMapping';
 import { PlusBorderedIcon, MinusBorderedIcon } from 'Icons';
 const { Panel } = Collapse;
@@ -30,6 +30,7 @@ const ViewDetailBase = ({ styles, accountCategory, setDisabledEdit, financialAcc
                         {accountCategory?.[0]?.accountDocumentMaps?.length > 0 && (
                             <Collapse expandIcon={expandIcon}>
                                 <Panel header="Account and Document Mapping" key="2">
+                                    <Divider />
                                     {accountCategory?.[0]?.accountDocumentMaps?.map((item, index) => (
                                         <CardAccountAndDocumentMapping key={'menu' + item?.menuId} accountDocumentMapId={item?.accountDocumentMapId} applicationId={item?.applicationId} financialAccountHeadCode={item?.financialAccountHeadCode} setDisabledEdit={setDisabledEdit} documentDescription={item?.documentDescription} financialAccountData={financialAccountData} applicationName={item?.applicationName} />
                                     ))}
