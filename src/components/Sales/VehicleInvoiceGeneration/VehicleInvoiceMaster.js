@@ -19,6 +19,7 @@ import { CancelReceipt } from './CancelReceipt';
 import { QUERY_BUTTONS_CONSTANTS } from './QueryButtons';
 import { vehicleInvoiceDataActions } from 'store/actions/data/invoiceGeneration/vehicleInvoiceGeneration';
 import { showGlobalNotification } from 'store/actions/notification';
+import { PARAM_MASTER } from 'constants/paramMaster';
 
 import { FilterIcon } from 'Icons';
 
@@ -39,7 +40,7 @@ const mapStateToProps = (state) => {
         typeData,
         data: data?.paginationData,
         totalRecords: data?.totalRecords || [],
-        receiptStatusList: Object.values(QUERY_BUTTONS_CONSTANTS),
+        invoiceStatusList: Object.values(QUERY_BUTTONS_CONSTANTS),
         moduleTitle,
         isSearchLoading,
         isSearchDataLoaded,
@@ -69,10 +70,12 @@ const mapDispatchToProps = (dispatch) => ({
 export const VehicleInvoiceMasterBase = (props) => {
     const { data, receiptDetailData, userId, fetchList, listShowLoading, showGlobalNotification } = props;
     const { typeData, receiptType, partySegmentType, paymentModeType, documentType, moduleTitle, totalRecords } = props;
-    const { filterString, setFilterString, receiptStatusList } = props;
+    const { filterString, setFilterString, invoiceStatusList } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
-    const [invoiceStatus, setInvoiceStatus] = useState(QUERY_BUTTONS_CONSTANTS.OPENED.key);
+    const [invoiceStatus, setInvoiceStatus] = useState(QUERY_BUTTONS_CONSTANTS.INVOICED.key);
     const [requestPayload, setRequestPayload] = useState({ partyDetails: {}, receiptsDetails: {}, apportionDetails: {} });
+
+    console.log('filterString', filterString);
 
     const [listFilterForm] = Form.useForm();
     const [cancelReceiptForm] = Form.useForm();
@@ -141,7 +144,23 @@ export const VehicleInvoiceMasterBase = (props) => {
             {
                 key: 'searchType',
                 title: 'Value',
-                value: 'invoiceNumber',
+                value: filterString?.searchType,
+                name: typeData?.[PARAM_MASTER.INV_SER.id]?.find((i) => i?.key === filterString?.searchType)?.value,
+                canRemove: false,
+                filter: false,
+            },
+            {
+                key: 'searchParam',
+                title: 'searchParam',
+                value: filterString?.searchParam,
+                name: filterString?.searchParam,
+                canRemove: false,
+                filter: false,
+            },
+            {
+                key: 'invoiceStatus',
+                title: 'Invoice Status',
+                value: invoiceStatus,
                 canRemove: false,
                 filter: false,
             },
@@ -157,15 +176,6 @@ export const VehicleInvoiceMasterBase = (props) => {
                 title: 'Value',
                 value: page?.pageSize,
                 canRemove: true,
-                filter: false,
-            },
-
-            {
-                key: 'searchParam',
-                title: 'searchParam',
-                value: searchValue,
-                name: searchValue,
-                canRemove: false,
                 filter: false,
             },
             {
@@ -238,7 +248,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentSection, sectionName]);
 
-    const handleReceiptTypeChange = (buttonName) => {
+    const handleInvoiceTypeChange = (buttonName) => {
         setInvoiceStatus(buttonName?.key);
         searchForm.resetFields();
     };
@@ -294,10 +304,10 @@ export const VehicleInvoiceMasterBase = (props) => {
             } else {
                 const Visibility = btnVisiblity({ defaultBtnVisiblity, buttonAction });
                 setButtonData(Visibility);
-                // setButtonData({ ...Visibility, cancelReceiptBtn: true });
-                // if (buttonAction === VIEW_ACTION) {
-                //     invoiceStatus === QUERY_BUTTONS_CONSTANTS.CANCELLED.key ? setButtonData({ ...Visibility, editBtn: false, cancelReceiptBtn: false }) : invoiceStatus === QUERY_BUTTONS_CONSTANTS.APPORTION.key ? setButtonData({ ...Visibility, editBtn: false, cancelReceiptBtn: true }) : setButtonData({ ...Visibility, editBtn: true, cancelReceiptBtn: true });
-                // }
+                setButtonData({ ...Visibility, cancelReceiptBtn: true });
+                if (buttonAction === VIEW_ACTION) {
+                    invoiceStatus === QUERY_BUTTONS_CONSTANTS.CANCELLED.key ? setButtonData({ ...Visibility, editBtn: false, cancelReceiptBtn: false }) : invoiceStatus === QUERY_BUTTONS_CONSTANTS.CANCELLATION_REQUEST.key ? setButtonData({ ...Visibility, editBtn: false, cancelReceiptBtn: true }) : setButtonData({ ...Visibility, editBtn: true, cancelReceiptBtn: true });
+                }
             }
         }
         setIsFormVisible(true);
@@ -436,7 +446,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         extraParams,
         removeFilter,
         invoiceStatus,
-        receiptStatusList,
+        invoiceStatusList,
         advanceFilter: true,
         otfFilter: true,
         filterString,
@@ -449,7 +459,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         handleButtonClick,
         handleChange,
         handleSearch,
-        handleReceiptTypeChange,
+        handleInvoiceTypeChange,
 
         title,
         data,
@@ -473,7 +483,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         setFilterString,
         advanceFilterForm,
         setAdvanceSearchVisible,
-        receiptStatusList,
+        invoiceStatusList,
         typeData,
         onFinishSearch,
     };

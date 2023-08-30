@@ -4,10 +4,10 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 export const QUERY_BUTTONS = {
-    OPENED: {
+    INVOICED: {
         id: 'invoiced',
         title: 'Invoiced',
-        key: 'O',
+        key: 'I',
         active: true,
     },
     CANCELLED: {
@@ -19,7 +19,7 @@ export const QUERY_BUTTONS = {
     CANCELLATION_REQUEST: {
         id: 'cancellation request',
         title: 'Cancellation Request',
-        key: 'A',
+        key: 'R',
         active: false,
     },
 };

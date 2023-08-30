@@ -37,8 +37,7 @@ export const AdvancedSearchFrom = (props) => {
             ...values,
             fromDate: formatDate(values?.fromDate),
             toDate: formatDate(values?.toDate),
-            receiptType: values?.receiptType,
-            partySegment: values?.partySegment,
+            digitalSignature: values?.digitalSignature,
             advanceFilter: true,
         });
         setAdvanceSearchVisible(false);

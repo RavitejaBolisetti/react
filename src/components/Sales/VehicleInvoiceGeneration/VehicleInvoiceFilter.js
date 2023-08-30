@@ -12,30 +12,32 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { QueryButtons } from 'components/Sales/VehicleRecieptChecklist/QueryButtons';
 import { QUERY_BUTTONS_CONSTANTS } from './QueryButtons';
 import { SearchBox } from 'components/utils/SearchBox';
+import { PARAM_MASTER } from 'constants/paramMaster';
 
 import styles from 'assets/sass/app.module.scss';
 
 const { Search } = Input;
 
 export default function VehicleInvoiceFilter(props) {
-    const { extraParams, removeFilter, searchForm, filterString, setFilterString, handleResetFilter, advanceFilter = false, receiptStatusList, handleReceiptTypeChange, setAdvanceSearchVisible, handleButtonClick, handleSearch, invoiceStatus, handleChange } = props;
+    const { extraParams, removeFilter, typeData, invoiceStatusList, searchForm, filterString, setFilterString, handleResetFilter, advanceFilter = false, handleInvoiceTypeChange, setAdvanceSearchVisible, handleButtonClick, invoiceStatus } = props;
 
     const serachBoxProps = {
         searchForm,
         filterString,
-        // optionType: typeData?.[PARAM_MASTER.OTF_SER.id],
+        optionType: typeData?.[PARAM_MASTER.INV_SER.id],
         setFilterString,
+        selectWide: true,
     };
 
     return (
         <div className={styles.contentHeaderBackground}>
             <Row gutter={20}>
-                <Col xs={24} sm={24} md={16} lg={16} xl={16}>
+                <Col xs={24} sm={24} md={20} lg={20} xl={20}  className={styles.masterListSearchForm}>
                     <Row gutter={20}>
-                        <Col xs={24} sm={20} md={20} lg={20} xl={20} className={styles.verticallyCentered}>
-                            <QueryButtons currentItem={invoiceStatus} items={QUERY_BUTTONS_CONSTANTS} onClick={handleReceiptTypeChange} />
+                        <Col xs={24} sm={24} md={20} lg={20} xl={20} className={styles.verticallyCentered}>
+                            <QueryButtons currentItem={invoiceStatus} items={invoiceStatusList} onClick={handleInvoiceTypeChange} />
                             <div className={styles.fullWidth}>
-                                <Search placeholder="Search Receipt No." onChange={handleChange} onSearch={handleSearch} allowClear className={styles.headerSearchField} />
+                                <SearchBox {...serachBoxProps} />
                             </div>
                         </Col>
                         <Col xs={24} sm={24} md={4} lg={4} xl={4} className={styles.verticallyCentered}>
@@ -52,7 +54,7 @@ export default function VehicleInvoiceFilter(props) {
                         </Col>
                     </Row>
                 </Col>
-                <Col xs={24} sm={8} md={8} lg={8} xl={8} className={styles.buttonsGroupRight}>
+                <Col xs={24} sm={4} md={4} lg={4} xl={4} className={styles.buttonsGroupRight}>
                     <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
                         Add
                     </Button>

@@ -301,4 +301,12 @@ export const PARAM_MASTER = {
         id: 'CHK_STATS',
         title: 'Vehicle Receipt checlist status',
     },
+    INV_SER: {
+        id: 'INV_SER',
+        title: 'Invoice Search',
+    },
+    INVC_STATS: {
+        id: 'INVC_STATS',
+        title: 'Invoice Status',
+    },
 };
