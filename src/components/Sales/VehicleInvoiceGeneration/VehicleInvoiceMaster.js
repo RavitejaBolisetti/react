@@ -172,7 +172,7 @@ export const VehicleInvoiceMasterBase = (props) => {
                 key: 'digitalSignature',
                 title: 'Digital Signature',
                 value: filterString?.digitalSignature,
-                // name: typeData?.[PARAM_MASTER.YES_NO_FLG.id]?.find((i) => i?.key === filterString?.digitalSignature)?.value,
+                name: typeData?.[PARAM_MASTER.YES_NO_FLG.id]?.find((i) => i?.key === filterString?.digitalSignature)?.value,
                 canRemove: true,
                 filter: true,
             },
