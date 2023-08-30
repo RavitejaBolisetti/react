@@ -35,7 +35,9 @@ const ViewDetailMain = (props) => {
     };
 
     useEffect(() => {
+        searchForm.resetFields();
         setFilterStringOTFSearch({ ...filterString });
+        setSelectedOrderOTFDetails();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString]);
 
