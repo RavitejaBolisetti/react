@@ -12,7 +12,8 @@ import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validateRequiredInputField } from 'utils/validation';
 import { ModalButtons } from 'components/common/Button';
 import { convertDateTimedayjs } from 'utils/formatDateTime';
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+// import styles from 'components/common/Common.module.css';
 
 import { MakeCheckResult, setCheckresultValue, BindFormItems } from './CheckListUtils';
 

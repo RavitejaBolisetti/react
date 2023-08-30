@@ -6,7 +6,6 @@
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 export const tableColumn = (props) => {
     const { handleButtonClick, formActionType, bindCodeValue } = props;
@@ -31,7 +30,7 @@ export const tableColumn = (props) => {
         }),
     ];
     if (!formActionType?.viewMode) {
-        tableColumn.push(tblActionColumn({ handleButtonClick, styles, width: '15%', EditIcon: true, EyeIcon: false, DeleteIcon: true }));
+        tableColumn.push(tblActionColumn({ handleButtonClick, styles, width: '15%', EditIcon: true, canView: false, canDelete: true }));
     }
     return tableColumn;
 };

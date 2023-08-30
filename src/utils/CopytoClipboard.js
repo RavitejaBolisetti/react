@@ -9,7 +9,8 @@ import { bindActionCreators } from 'redux';
 import { FiCopy } from 'react-icons/fi';
 import { Button } from 'antd';
 import { showGlobalNotification } from 'store/actions/notification';
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+// import styles from 'components/common/Common.module.css';
 
 const mapDispatchToProps = (dispatch) => ({
     dispatch,

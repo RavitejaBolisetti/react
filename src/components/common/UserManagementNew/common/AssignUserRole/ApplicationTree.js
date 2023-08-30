@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { Input, Form, Col, Row, Divider, Collapse, Tabs, Typography, Empty } from 'antd';
+import { Input, Form, Col, Row, Divider, Collapse, Tabs, Typography, Empty, Tag } from 'antd';
 
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { DEVICE_TYPE } from 'constants/modules/UserManagement/deviceType';
@@ -20,28 +20,8 @@ const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
 
 const { Panel } = Collapse;
 const { Search } = Input;
-const { Text } = Typography;
 
 const fieldNames = { title: 'label', key: 'value', children: 'children' };
-
-const flattenData = (data) => {
-    if (data) {
-        const listItem = [];
-        const generateList = (data) => {
-            for (let node of data) {
-                listItem.push({
-                    ...node,
-                });
-                if (node?.children) {
-                    generateList(node?.children);
-                }
-            }
-
-            return listItem;
-        };
-        generateList(data);
-    }
-};
 
 const checkKey = (data, key) => data?.includes(key);
 
@@ -64,6 +44,7 @@ const ApplicationTreeMain = (props) => {
 
     const APPLICATION_WEB = DEVICE_TYPE?.WEB?.key;
     const APPLICATION_MOBILE = DEVICE_TYPE?.MOBILE?.key;
+    const [searchItem] = Form.useForm();
 
     const [searchValue, setSearchValue] = useState();
     const [activeKey, setActiveKey] = useState([]);
@@ -80,23 +61,13 @@ const ApplicationTreeMain = (props) => {
 
     const onTabChange = (newActiveKey) => {
         setDeviceType(newActiveKey);
+        searchItem.setFieldValue('search', '');
     };
 
-    const onChange = (values) => {
-        const isPresent = activeKey.includes(values);
-
-        if (isPresent) {
-            const newActivekeys = [];
-
-            activeKey.forEach((item) => {
-                if (item !== values) {
-                    newActivekeys.push(item);
-                }
-            });
-            setActiveKey(newActivekeys);
-        } else {
-            setActiveKey([...activeKey, values]);
-        }
+    const onChange = (key) => {
+        setSearchValue('');
+        searchItem.setFieldValue('search', '');
+        setActiveKey(key.pop());
     };
 
     const onCheck =
@@ -138,9 +109,7 @@ const ApplicationTreeMain = (props) => {
                 {menuMapData?.length ? (
                     menuMapData?.map((el, i) => {
                         const treeData = el?.children;
-                        const flatternData = flattenData(treeData);
-                        const checkedMenuKeys = flatternData?.map((i) => i.checked && i?.value);
-                        const allowedAccess = checkedMenuKeys?.filter((i) => i.checked && i?.vlaue);
+                        const allowedAccess = treeData?.filter((i) => i.checked);
 
                         const myProps = {
                             fieldNames,
@@ -155,32 +124,32 @@ const ApplicationTreeMain = (props) => {
                         };
 
                         return (
-                            <div className={styles.accordianContainer}>
-                                <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(i)} expandIconPosition="end">
+                            <div className={styles.managementContainer}>
+                                <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={onChange} expandIconPosition="end">
                                     <Panel
                                         header={
-                                            <Row type="flex" justify="space-between" align="middle" size="large">
-                                                <Row type="flex" justify="space-around" align="middle">
-                                                    <Typography>{el?.label}</Typography>
-                                                </Row>
-                                                {allowedAccess?.length > 0 && <Text type="secondary">{allowedAccess?.length} Access Provided</Text>}
-                                            </Row>
+                                            <>
+                                                {el?.label}
+                                                {allowedAccess?.length > 0 && <Tag color="default" className={styles.marL20}>{`${allowedAccess?.length >= 2 ? `${allowedAccess?.length} Accesses Provided` : `${allowedAccess?.length} Access Provided`}`}</Tag>}
+                                            </>
                                         }
                                         key={i}
                                     >
                                         <Divider />
-                                        <Row gutter={20}>
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                                <Form.Item label={''} name="search" validateTrigger={['onSearch']}>
-                                                    <Search placeholder="Search" initialValue={searchValue} onChange={handleSearchValue} allowClear />
-                                                </Form.Item>
-                                            </Col>
-                                        </Row>
-                                        <Row gutter={20}>
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={style.roleTree}>
-                                                <LeftPanel {...myProps} />
-                                            </Col>
-                                        </Row>
+                                        <Form layout="vertical" autoComplete="off" form={searchItem}>
+                                            <Row gutter={20}>
+                                                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                                    <Form.Item label={''} name="search" validateTrigger={['onSearch']}>
+                                                        <Search placeholder="Search" initialValue={searchValue} onChange={handleSearchValue} allowClear />
+                                                    </Form.Item>
+                                                </Col>
+                                            </Row>
+                                            <Row gutter={20}>
+                                                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={style.roleTree}>
+                                                    <LeftPanel {...myProps} />
+                                                </Col>
+                                            </Row>
+                                        </Form>
                                     </Panel>
                                 </Collapse>
                             </div>

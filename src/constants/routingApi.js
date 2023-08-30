@@ -178,6 +178,8 @@ export const BASE_URL_OTF_CUSTOMER = BASE_URL + 'otf/customerdetails';
 
 export const BASE_URL_INVOICE = BASE_URL + 'invoice/';
 export const BASE_URL_RSM_APPROVAL = BASE_URL_INVOICE + 'rsm';
+export const BASE_URL_DELIVERY_NOTE_INVOICE_CANCELLATION = BASE_URL_INVOICE + 'invoicedeliverynote/cancellation';
+export const BASE_URL_DELIVERY_NOTE_INVOICE_CANCELLATION_SEARCH = BASE_URL_DELIVERY_NOTE_INVOICE_CANCELLATION + '/search';
 export const BASE_URL_RSM_APPROVAL_SEARCH = BASE_URL_RSM_APPROVAL + '/search';
 export const BASE_URL_INVOICE_DETAILS = BASE_URL_INVOICE + 'details';
 
@@ -260,3 +262,5 @@ export const BASE_URL_VEHICLE_RECEIPT_CHECKLIST_PROFILE = BASE_URL_VEHICLE + 're
 export const BASE_URL_VEHICLE_RECEIPT_CHECKLIST_MASTER = BASE_URL_VEHICLE + 'receiptchecklist/detail';
 
 export const BASE_URL_VEHICLE_ALLOTMENT = BASE_URL + 'vehicle/allotments';
+
+export const BASE_URL_VEHICLE_DETAILS_SERVICE = BASE_URL + 'otf/vehicledetails/optionalcharges';

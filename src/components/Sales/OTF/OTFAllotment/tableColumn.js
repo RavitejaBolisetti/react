@@ -6,7 +6,8 @@
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import { vehicleAllotmentStatusTag } from 'components/Sales/OTF/utils/VehicleAllotmentStatusTag';
 import { convertDateTime } from 'utils/formatDateTime';
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+// import styles from 'components/common/Common.module.css';
 
 export const tableColumn = (handleButtonClick, page, pageSize) => {
     const tableColumn = [
@@ -57,7 +58,7 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             dataIndex: 'vehicleStatus',
             width: '15%',
             render: (_, record) => vehicleAllotmentStatusTag(record.vehicleStatus),
-        }),
+        })
 
         // tblActionColumn({ handleButtonClick, styles, width: '8%', EyeIcon: true, canEdit: false })
     );

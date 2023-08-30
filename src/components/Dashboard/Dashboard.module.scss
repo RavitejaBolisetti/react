@@ -184,7 +184,7 @@
         @include space(padding, right, $sp10);
         width: 100%;
         @include font-style(14, 30, 400, $primaryBlack, $fontfamily, left);
-        border-bottom: 1px solid #E6E6E6;
+        border-bottom: 1px solid $neutralGrey1;
     }
 }
 
@@ -377,16 +377,7 @@
     height: 143px;
 }
 
-/* .headerContainer {
-    clear: both;
-    border-bottom: dashed 1px #a5b5c2;
-    margin-bottom: 30px;
-} 
 
- .container {
-    padding: 20px;
-} 
-*/
 .mb20 {
     margin-bottom: 20px;
 }
