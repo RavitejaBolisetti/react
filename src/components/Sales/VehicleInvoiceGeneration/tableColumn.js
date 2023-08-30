@@ -16,24 +16,25 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
         }),
         tblPrepareColumns({
             title: 'Customer Name',
-            dataIndex: 'receiptDate',
+            dataIndex: 'customerName',
             width: '14%',
-            render: (text) => convertDateMonthYear(text),
         }),
         tblPrepareColumns({
             title: 'Model Description',
             dataIndex: 'modelDescription',
-            width: '14%',
+            width: '25%',
         }),
         tblPrepareColumns({
             title: 'Invoice Date',
             dataIndex: 'invoiceDate',
             width: '14%',
+            render: (text) => (text ? convertDateMonthYear(text) : ''),
         }),
         tblPrepareColumns({
             title: 'Digital Signature',
             dataIndex: 'digitalSignature',
-            width: '24%',
+            width: '15%',
+            render: (text) => (text === 'Y' ? 'Yes' : 'No'),
         }),
 
         tblActionColumn({ handleButtonClick, styles, width: '8%', canEdit: false }),

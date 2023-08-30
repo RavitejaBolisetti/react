@@ -16,15 +16,19 @@ import styles from 'assets/sass/app.module.scss';
 // import { SchemeOfferDetailsMaster } from './SchemeOfferDetails';
 // import { VehicleInvoiceDetailMaster } from './VehicleDetails';
 // import { FinanceDetailsMaster } from './FinanceDetails';
+// import { LoyaltySchemeMaster } from './LoyaltyScheme';
+// import { ReferralsMaster } from './Referrals';
+// import { ExchangeDetailsMaster } from './ExchangeDetails';
+
 import { InsuranceDetailsMaster } from 'components/Sales/Common/InsuranceDetails';
 import { SchemeDetailsMaster } from 'components/Sales/Common/SchemeDetails';
 import { VehicleDetailsMaster } from 'components/Sales/Common/VehicleDetails';
 import { FinananceDetailsMaster } from 'components/Sales/Common/FinananceDetails';
+import { ReferralsMaster } from 'components/Sales/Common/Referrals';
+import { ExchangeVehiclesMaster } from 'components/Sales/Common/ExchangeVehicles';
+import { LoyaltySchemeMaster } from 'components/Sales/Common/LoyaltyScheme';
 
 import { InvoiceDetailsMaster } from './InvoiceDetails';
-import { ExchangeDetailsMaster } from './ExchangeDetails';
-import { LoyaltySchemeMaster } from './LoyaltyScheme';
-import { ReferralsMaster } from './Referrals';
 
 const VehicleInvoiceMainConatinerMain = (props) => {
     const { currentSection } = props;
@@ -51,7 +55,7 @@ const VehicleInvoiceMainConatinerMain = (props) => {
                 return <InsuranceDetailsMaster {...myProps} />;
             }
             case VEHICLE_INVOICE_SECTION.EXCHANGE_DETAILS.id: {
-                return <ExchangeDetailsMaster {...myProps} />;
+                return <ExchangeVehiclesMaster {...myProps} />;
             }
             case VEHICLE_INVOICE_SECTION.LOYALTY_SCHEME.id: {
                 return <LoyaltySchemeMaster {...myProps} />;

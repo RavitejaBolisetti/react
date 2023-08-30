@@ -17,7 +17,7 @@ import { disableFutureDate } from 'utils/disableDate';
 import styles from 'assets/sass/app.module.scss';
 
 export const AdvancedSearchFrom = (props) => {
-    const { setAdvanceSearchVisible, receiptType, partySegmentType } = props;
+    const { setAdvanceSearchVisible, typeData } = props;
     const {
         filterString,
         setFilterString,
@@ -86,7 +86,7 @@ export const AdvancedSearchFrom = (props) => {
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form.Item initialValue={filterString?.receiptType} label="Digital Signature" name="digitalSignature">
-                        {customSelectBox({ data: receiptType, placeholder: preparePlaceholderSelect('Digital Signature') })}
+                        {customSelectBox({ data: typeData?.YES_NO_FLG, placeholder: preparePlaceholderSelect('Digital Signature') })}
                     </Form.Item>
                 </Col>
             </Row>

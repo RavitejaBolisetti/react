@@ -6,9 +6,7 @@
 import React from 'react';
 import { Collapse, Space, Avatar, Typography, Divider } from 'antd';
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
-import { convertDateTime } from 'utils/formatDateTime';
-import { getCodeValue } from 'utils/getCodeValue';
-import { PARAM_MASTER } from 'constants/paramMaster';
+import { monthDateFormat, convertDateTime } from 'utils/formatDateTime';
 import styles from 'assets/sass/app.module.scss';
 
 const { Panel } = Collapse;
@@ -28,7 +26,7 @@ const expandIcon = ({ isActive }) =>
     );
 
 const VehicleInvoiceCard = (props) => {
-    const { selectedOrder, typeData } = props;
+    const { selectedOrder } = props;
     const fullName = selectedOrder?.customerName?.split(' ');
     const userAvatar = fullName ? fullName[0]?.slice(0, 1) + (fullName[1] ? fullName[1].slice(0, 1) : '') : '';
     return (
@@ -45,7 +43,7 @@ const VehicleInvoiceCard = (props) => {
                         </Space>
                         <Divider />
                         <div className={styles.detailCardText}>
-                            Invoice No.: <span>{selectedOrder?.otfNumber}</span>
+                            Invoice No.: <span>{selectedOrder?.invoiceNumber}</span>
                         </div>
                     </>
                 }
@@ -53,15 +51,15 @@ const VehicleInvoiceCard = (props) => {
             >
                 <Divider />
                 <div className={styles.detailCardText}>
-                    Invoice Date: <span>{selectedOrder && getCodeValue(typeData?.[PARAM_MASTER?.CUST_TYPE?.id], selectedOrder?.customerType)}</span>
+                    Invoice Date: <span>{convertDateTime(selectedOrder?.invoiceDate, monthDateFormat) || 'NA'}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    OTF No.: <span>{'+91-' + selectedOrder?.mobileNumber || 'NA'}</span>
+                    OTF No.: <span>{selectedOrder?.otfNumber || 'NA'}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    OTF Date: <span>{convertDateTime(selectedOrder?.otfDate, 'DD MMM YYYY') || 'NA'}</span>
+                    OTF Date: <span>{convertDateTime(selectedOrder?.otfDate, monthDateFormat) || 'NA'}</span>
                 </div>
             </Panel>
         </Collapse>

@@ -26,16 +26,17 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            // ConfigurableParameterEditing: { filteredListData: typeData = [] },
+            ConfigurableParameterEditing: { filteredListData: typeData = [] },
             VehicleInvoiceGeneration: {
                 VehicleInvoiceSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString },
                 // ReceiptDetails: { isLoaded: isDetailedDataLoaded = false, isLoading, data: receiptDetailData = [] },
             },
         },
     } = state;
-    const moduleTitle = 'Invoice';
+    const moduleTitle = 'Invoice Generation';
     let returnValue = {
         userId,
+        typeData,
         data: data?.paginationData,
         totalRecords: data?.totalRecords || [],
         receiptStatusList: Object.values(QUERY_BUTTONS_CONSTANTS),
@@ -137,13 +138,13 @@ export const VehicleInvoiceMasterBase = (props) => {
 
     const extraParams = useMemo(() => {
         return [
-            // {
-            //     key: 'searchType',
-            //     title: 'Value',
-            //     value: 'invoiceNumber',
-            //     canRemove: false,
-            //     filter: false,
-            // },
+            {
+                key: 'searchType',
+                title: 'Value',
+                value: 'invoiceNumber',
+                canRemove: false,
+                filter: false,
+            },
             {
                 key: 'pageNumber',
                 title: 'Value',

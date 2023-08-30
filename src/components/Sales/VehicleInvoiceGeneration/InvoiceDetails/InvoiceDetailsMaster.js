@@ -15,6 +15,7 @@ import { bindActionCreators } from 'redux';
 
 import { partyDetailDataActions } from 'store/actions/data/receipt/partyDetails';
 import { showGlobalNotification } from 'store/actions/notification';
+import { CustomerDetailsMaster } from 'components/Sales/Common/CustomerDetails';
 
 import { BASE_URL_PARTY_MASTER } from 'constants/routingApi';
 import styles from 'assets/sass/app.module.scss';
@@ -171,7 +172,7 @@ const InvoiceDetailsMasterBase = (props) => {
                             </h2>
                         </Col>
                     </Row>
-                    {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
+                    {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <><AddEditForm {...formProps} /> <CustomerDetailsMaster {...formProps}/> </>}
                 </Col>
             </Row>
             <Row>
