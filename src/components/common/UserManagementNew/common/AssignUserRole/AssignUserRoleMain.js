@@ -15,6 +15,9 @@ import { RoleApplicationModal } from './RoleApplicationModal';
 import { DEVICE_TYPE } from 'constants/modules/UserManagement/deviceType';
 import { UserManagementFormButton } from '../../UserManagementFormButton/UserManagementFormButton';
 import { USER_TYPE_USER } from 'constants/modules/UserManagement/userType';
+// import { NEXT_ACTION } from 'utils/btnVisiblity';
+import { FROM_ACTION_TYPE } from 'constants/formActionType';
+
 
 const { Text } = Typography;
 const defaultBtnVisiblity = { editBtn: false, saveBtn: false, next: false, nextBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: true, formBtnActive: false };
@@ -46,12 +49,13 @@ export function chackedKeysMapData(treeData) {
 const AssignUserRole = (props) => {
     const { userId, userType, formData, setButtonData, showGlobalNotification } = props;
     const { formActionType, section, buttonData } = props;
-    const { roleListdata } = props;
+    const { roleListdata, handleButtonClick } = props;
     const { fetchDLRUserRoleDataList, resetUsrDlrRoleAppDataList, usrRolelAppListShowLoading, saveDLRUserRoleDataList, fetchMNMUserRoleAppDataList, resetMnmUserRoleAppDataList, saveMNMUserRoleAppDataList } = props;
     const { isDlrAppLoaded, isDlrAppLoding, dlrAppList, isMnmAppLoaded, isMnmAppLoding, mnmAppList } = props;
     const { fetchUserRoleList, userRoleShowLoading, userRoleDataList, isUserRoleListLoding } = props;
 
     const [form] = Form.useForm();
+    const [mainform] = Form.useForm();
     const [checkedKeys, setCheckedKeys] = useState([]);
     const [webApplications, setWebApplications] = useState([]);
     const [mobileApplications, setMobileApplications] = useState([]);
@@ -213,7 +217,7 @@ const AssignUserRole = (props) => {
         resetUsrDlrRoleAppDataList();
     };
 
-    const handleButtonClick = ({ buttonAction, record }) => {
+    const handleButtonClickModal = ({ buttonAction, record }) => {
         setisModalVisible(true);
         setRecord(record);
     };
@@ -224,11 +228,11 @@ const AssignUserRole = (props) => {
         showSizeChanger: false,
         pagination: false,
         dynamicPagination: false,
-        tableColumn: tableColumn(handleButtonClick, formActionType),
+        tableColumn: tableColumn(handleButtonClickModal, formActionType),
     };
 
     const handleFormFieldChange = () => {};
-    const onFinishFailed = () => {};
+    const onFinishFailed = (error) => console.error(error);
 
     useEffect(() => {
         if ((userType === USER_TYPE_USER?.DEALER?.id && isDlrAppLoaded && dlrAppList?.employeeCode) || (userType === USER_TYPE_USER?.MANUFACTURER?.id && isMnmAppLoaded && mnmAppList?.employeeCode)) {
@@ -301,52 +305,58 @@ const AssignUserRole = (props) => {
         setDisableMdlSaveBtn,
     };
 
+    const onFinish = () => {
+        handleButtonClick({ buttonAction: FROM_ACTION_TYPE.NEXT });
+    };
+
     return (
         <>
-            <Row gutter={20} className={styles.drawerBodyRight}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <h2>{section?.title}</h2>
-                    <Card>
-                        <Row>
-                            <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
-                                    Roles
-                                </Text>
+            <Form layout="vertical" key={'mainform'} autoComplete="off" form={mainform} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                <Row gutter={20} className={styles.drawerBodyRight}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <h2>{section?.title}</h2>
+                        <Card>
+                            <Row>
+                                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                                    <Text strong style={{ marginTop: '4px', marginLeft: '8px' }}>
+                                        Roles
+                                    </Text>
 
-                                {!formActionType?.viewMode && (
-                                    <>
-                                        <Button icon={<PlusOutlined />} onClick={(event, key) => handleShowRoleAppModal(event, key)} className={styles.marR20} type="primary">
-                                            Add
-                                        </Button>
-                                    </>
-                                )}
-                            </Col>
-                        </Row>
-                        <Row gutter={20} className={styles.marT20}>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                <Divider />
-                                <ConfigProvider
-                                    renderEmpty={() => (
-                                        <Empty
-                                            image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                            imageStyle={{
-                                                height: 60,
-                                            }}
-                                            description={<span> No record found.</span>}
-                                        ></Empty>
+                                    {!formActionType?.viewMode && (
+                                        <>
+                                            <Button icon={<PlusOutlined />} onClick={(event, key) => handleShowRoleAppModal(event, key)} className={styles.marR20} type="primary">
+                                                Add
+                                            </Button>
+                                        </>
                                     )}
-                                >
-                                    <DataTable {...tableProps} />
-                                </ConfigProvider>
-                            </Col>
-                        </Row>
-                    </Card>
-                </Col>
-            </Row>
-            <div className={style.modalTree}>
-                <RoleApplicationModal {...modalProps} />
-            </div>
-            <UserManagementFormButton {...buttonProps} />
+                                </Col>
+                            </Row>
+                            <Row gutter={20} className={styles.marT20}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                    <Divider />
+                                    <ConfigProvider
+                                        renderEmpty={() => (
+                                            <Empty
+                                                image={Empty.PRESENTED_IMAGE_SIMPLE}
+                                                imageStyle={{
+                                                    height: 60,
+                                                }}
+                                                description={<span> No record found.</span>}
+                                            ></Empty>
+                                        )}
+                                    >
+                                        <DataTable {...tableProps} />
+                                    </ConfigProvider>
+                                </Col>
+                            </Row>
+                        </Card>
+                    </Col>
+                </Row>
+                <div className={style.modalTree}>
+                    <RoleApplicationModal {...modalProps} />
+                </div>
+                <UserManagementFormButton {...buttonProps} />
+            </Form>
         </>
     );
 };

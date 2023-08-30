@@ -378,6 +378,8 @@ const UserManagementMain = (props) => {
         setIsFormVisible(false);
         setSelectedRecord([]);
         setDisabledSearch(true);
+        setFilterString('');
+        setselectedDealerCode('');
     };
 
     const drawerTitle = useMemo(() => {
