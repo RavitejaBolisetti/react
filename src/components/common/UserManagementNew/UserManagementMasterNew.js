@@ -38,7 +38,8 @@ import { tableColumn } from './Dealer/tableColumn';
 import { tableColumn as manufacturerTableColumn } from './Manufacturer/tableColumn';
 
 import { productDataTree, adminDataTree, initialDealerBranches } from 'components/common/UserManagement/dummyData';
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 const { Option } = Select;
 
@@ -69,7 +70,7 @@ const mapStateToProps = (state) => {
         isDataLoading,
         moduleTitle,
 
-        roleListdata,
+        roleListdata: roleListdata?.filter((i) => i?.status),
         isRoleListLoding,
 
         roleApplicationData,
@@ -157,10 +158,10 @@ const mapDispatchToProps = (dispatch) => ({
 const typeData = [{ key: 'employeeCode', value: 'Token No.' }];
 
 const UserManagementMain = (props) => {
-    const { userId, fetchDetail, fetchUserDataList, listShowLoading, isDataLoading, resetUserDetails, userDataList, userDetailData } = props;
-    const { fetchRoleDataList, rolelistShowLoading, roleListdata, isRoleListLoding, isRoleListLoaded } = props;
-    const { fetchDealersList, resetDealersList, rolelDealersListShowLoading, dealerDataList, isDealerListLoaded, isDealerListLoding } = props;
-    const { moduleTitle, productHierarchyData, saveDealerDetails, showGlobalNotification } = props;
+    const { userId, fetchUserDataList, listShowLoading, isDataLoading, userDataList } = props;
+    const { fetchRoleDataList, rolelistShowLoading, isRoleListLoaded } = props;
+    const { fetchDealersList, rolelDealersListShowLoading, dealerDataList, isDealerListLoaded } = props;
+    const { moduleTitle, productHierarchyData } = props;
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, next: false, nextBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: true, formBtnActive: false };
 
@@ -206,15 +207,6 @@ const UserManagementMain = (props) => {
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, isRoleListLoaded, isDealerListLoaded]);
-
-    useEffect(() => {
-        return () => {
-            setFilterString('');
-            setError('');
-            resetUserDetails();
-        };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userType]);
 
     useEffect(() => {
         if (userType) {
@@ -297,18 +289,18 @@ const UserManagementMain = (props) => {
         setError(res);
     };
     const onSuccessAction = (res) => {
-        setFilterString('');
+        // setFilterString('');
         setselectedDealerCode('');
         setError('');
     };
 
     useEffect(() => {
-        if (userId && userType) {
+        if (userId && userType && !isFormVisible) {
             const params = filterString?.searchParam ? extraParams : [...defaultExtraParam, ...extraParams];
             fetchUserDataList({ setIsLoading: listShowLoading, extraParams: params, userId, onErrorAction, onSuccessAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, userType, page, filterString?.searchParam]);
+    }, [userId, userType, page?.pageSize, page?.current, filterString?.searchParam, isFormVisible]);
 
     const onFinish = (values, e) => {};
 
@@ -467,6 +459,8 @@ const UserManagementMain = (props) => {
         searchForm,
         filterString,
         setFilterString,
+        // singleField: true,
+        // placeholder: 'Search token number',
         disabled: disableSearch,
         optionType: typeData,
         defaultValue: 'employeeCode',

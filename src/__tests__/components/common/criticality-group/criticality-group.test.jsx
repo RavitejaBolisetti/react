@@ -41,8 +41,6 @@ describe('CriticalityGroup Components', () => {
                 <CriticalityGroup onSuccessAction={jest.fn()} errorAction={jest.fn()} />
             </Provider>
         );
-        const refreshBtn = screen.getByRole('button', { name: '', exact: false });
-        fireEvent.click(refreshBtn);
     });
 
     it('cancel button should work', async () => {
@@ -124,12 +122,12 @@ describe('CriticalityGroup Components', () => {
         fireEvent.change(inputBox, { target: { value: 'test' } });
         expect(inputBox.value.includes('test')).toBeTruthy();
         const searchButton = screen.getByRole('button', { name: /search/i });
-        await act(() => {
+        act(() => {
             fireEvent.click(searchButton);
         });
         fireEvent.change(inputBox, { target: { value: '' } });
         expect(inputBox.value.includes('')).toBeTruthy();
-        await act(() => {
+        act(() => {
             fireEvent.click(searchButton);
         });
     });

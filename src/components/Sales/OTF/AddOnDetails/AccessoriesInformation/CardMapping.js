@@ -4,11 +4,11 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { Card, Row, Col, Typography, Button, Space } from 'antd';
+import { Card, Row, Col, Typography, Button, Space, Divider } from 'antd';
 import { FiEdit } from 'react-icons/fi';
 import { BsTrash3 } from 'react-icons/bs';
-
-import style from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 import AddEditForm from './AddEditForm';
 const { Text } = Typography;
 
@@ -31,42 +31,33 @@ const CardMapping = ({ index, AddEditFormProps, handleDelete, element, isEditing
     };
     return (
         <>
-            <Card className={style.viewCardSize}>
-                <Row>
-                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <Space>
-                            <Text className={style.headText}>{element?.partDescription}</Text>
-                            <Text className={style.headText}> {'|'}</Text>
-                            <Text className={style.headText}> {element?.partNumber}</Text>
+            <Card className={styles.innerCollapse}>
+                <Row align="middle" className={styles.marB20}>
+                    <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
+                        <Space size="small">
+                            <Text className={styles.headText}>{element?.partDescription}</Text>
+                            <Text className={styles.headText}> {'|'}</Text>
+                            <Text className={styles.headText}> {element?.partNumber}</Text>
                         </Space>
-                        <Row>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                <Text type="secondary" className={style.subSection}>
-                                    {`Required Quantity: ` + element?.requiredQuantity}
-                                </Text>
-                            </Col>
-                        </Row>
+                        <Text type="secondary" className={styles.subSection}>
+                            {`Required Quantity: ` + element?.requiredQuantity}
+                        </Text>
                     </Col>
-                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className={style.editIcon}>
-                        <Space size="large" className={isEditing || addButtonDisabled?.partDetailsResponses ? style.disabledClass : ''}>
-                            <Button
-                                disabled={isEditing || addButtonDisabled?.partDetailsResponses}
-                                type="link"
-                                className={style.editButtonWithText}
-                                icon={
-                                    <div>
-                                        <FiEdit />
-                                    </div>
-                                }
-                                onClick={() => handleEdit(index)}
-                            >
+                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.buttonsGroupRight}>
+                        <Space size="middle" className={isEditing || addButtonDisabled?.partDetailsResponses ? styles.disabledClass : ''}>
+                            <Button disabled={isEditing || addButtonDisabled?.partDetailsResponses} className={styles.verticallyCentered} type="link" icon={<FiEdit />} onClick={() => handleEdit(index)}>
                                 Edit
                             </Button>
-                            {element?.isDeleting && <Button disabled={isEditing || addButtonDisabled?.partDetailsResponses} onClick={() => handleDelete(index)} type="link" icon={<BsTrash3 />}></Button>}
+                            {element?.isDeleting && <Button disabled={isEditing || addButtonDisabled?.partDetailsResponses} onClick={() => handleDelete(index)} className={styles.verticallyCentered} type="link" icon={<BsTrash3 />}></Button>}
                         </Space>
                     </Col>
                 </Row>
-                {editCardForm && !addButtonDisabled?.partDetailsResponses && <AddEditForm {...AddEditFormProps} editCardForm={editCardForm} seteditCardForm={seteditCardForm} index={index} onCancel={onCancel} />}
+                {editCardForm && !addButtonDisabled?.partDetailsResponses && (
+                    <>
+                        <Divider />
+                        <AddEditForm {...AddEditFormProps} editCardForm={editCardForm} seteditCardForm={seteditCardForm} index={index} onCancel={onCancel} />
+                    </>
+                )}
 
                 {/* {identification===index && isEditing &&  } */}
             </Card>

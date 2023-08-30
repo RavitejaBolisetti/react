@@ -11,7 +11,9 @@ import { USER_TYPE } from 'constants/userType';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 
 import { expandIcon } from 'utils/accordianExpandIcon';
-import styles from 'components/common/Common.module.css';
+
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
 

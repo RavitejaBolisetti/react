@@ -17,6 +17,7 @@ import { vehicleMakeDetailsDataActions } from 'store/actions/data/vehicle/makeDe
 import { vehicleModelDetailsDataActions } from 'store/actions/data/vehicle/modelDetails';
 import { vehicleVariantDetailsDataActions } from 'store/actions/data/vehicle/variantDetails';
 import { showGlobalNotification } from 'store/actions/notification';
+import { BASE_URL_CUSTOMER_MASTER_VEHICLE_LIST as customURL } from 'constants/routingApi';
 
 import { AddEditForm } from './AddEditForm';
 import { ViewDetail } from './ViewDetail';
@@ -24,7 +25,8 @@ import { ViewDetail } from './ViewDetail';
 import { OTFFormButton } from '../OTFFormButton';
 import { OTFStatusBar } from '../utils/OTFStatusBar';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 const mapStateToProps = (state) => {
     const {
@@ -132,6 +134,24 @@ const ExchangeVehiclesBase = (props) => {
     const [formData, setFormData] = useState('');
     const [filteredModelData, setfilteredModelData] = useState([]);
     const [filteredVariantData, setfilteredVariantData] = useState([]);
+    const [editableOnSearch, setEditableOnSearch] = useState(false);
+    const [customerList, setCustomerList] = useState();
+
+    const fnSetData = (data) => {
+        if (data?.make) {
+            setFormData({ ...data, oldRegistrationNumber: data?.registrationNumber, oldChessisNumber: data?.chassisNumber });
+            handleFormValueChange();
+            setEditableOnSearch(true);
+        } else if (data && !data?.make) {
+            setFormData({ ...data, modelGroup: null, variant: null, oldRegistrationNumber: data?.registrationNumber, oldChessisNumber: data?.chassisNumber });
+            handleFormValueChange();
+            setEditableOnSearch(true);
+        } else if (!data) {
+            setEditableOnSearch(false);
+            form.resetFields(['customerId', 'customerName', 'make', 'modelGroup', 'variant', 'oldRegistrationNumber', 'oldChessisNumber']);
+        }
+    };
+
     useEffect(() => {
         if (exchangeData && isDataLoaded) {
             setFormData(exchangeData);
@@ -140,6 +160,7 @@ const ExchangeVehiclesBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [exchangeData, isDataLoaded]);
+
     const makeExtraParams = (key, title, value, name) => {
         const extraParams = [
             {
@@ -162,6 +183,7 @@ const ExchangeVehiclesBase = (props) => {
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
+        setEditableOnSearch(false);
     };
     const onSuccessAction = (res) => {
         // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -173,6 +195,7 @@ const ExchangeVehiclesBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [modelData]);
+
     useEffect(() => {
         if (isVariantDataLoaded && variantData) {
             setfilteredVariantData(variantData);
@@ -241,11 +264,11 @@ const ExchangeVehiclesBase = (props) => {
     };
     const onFinish = (values) => {
         const { customerName } = values;
-        if (!customerName) {
+        if (values?.exchange && !customerName) {
             showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Verify Customer id to continue' });
             return;
         }
-        const data = { ...values, id: exchangeData?.id || '', otfNumber: selectedOrderId };
+        const data = { ...values, exchange: values?.exchange ? 1 : 0, id: exchangeData?.id || '', otfNumber: selectedOrderId };
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -255,7 +278,7 @@ const ExchangeVehiclesBase = (props) => {
 
         const requestData = {
             data: data,
-            method: formData?.id ? 'put' : 'post',
+            method: exchangeData?.id ? 'put' : 'post',
             setIsLoading: listShowLoading,
             userId,
             onError: onErrorAction,
@@ -277,12 +300,6 @@ const ExchangeVehiclesBase = (props) => {
         }
         const defaultExtraParam = [
             {
-                key: 'customerType',
-                title: 'Customer Type',
-                value: 'IND',
-                canRemove: true,
-            },
-            {
                 key: 'pageSize',
                 title: 'Value',
                 value: 1000,
@@ -298,7 +315,7 @@ const ExchangeVehiclesBase = (props) => {
             {
                 key: 'searchType',
                 title: 'Type',
-                value: 'customerId',
+                value: 'registrationNumber',
                 canRemove: true,
             },
             {
@@ -313,9 +330,14 @@ const ExchangeVehiclesBase = (props) => {
             setIsLoading: listCustomerShowLoading,
             extraParams: defaultExtraParam,
             userId,
+            customURL,
             onSuccessAction: (res) => {
-                res?.data && res?.data?.customerMasterDetails && res?.data?.customerMasterDetails[0] && setFormData({ ...res?.data?.customerMasterDetails[0], id: formData?.id ?? '' } ?? []);
-                !res?.data?.customerMasterDetails && showGlobalNotification({ message: res?.responseMessage });
+                if (res?.data?.customerMasterDetails?.length > 0) {
+                    setCustomerList(res?.data?.customerMasterDetails);
+                } else {
+                    res?.data?.customerMasterDetails && setFormData(res?.data?.customerMasterDetails?.[0]);
+                    handleFormValueChange();
+                }
             },
             onErrorAction,
         });
@@ -349,6 +371,10 @@ const ExchangeVehiclesBase = (props) => {
         handleFilterChange,
         filteredModelData,
         filteredVariantData,
+        editableOnSearch,
+        setEditableOnSearch,
+        fnSetData,
+        customerList,
     };
 
     const viewProps = {

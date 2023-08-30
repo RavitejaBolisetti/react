@@ -532,7 +532,7 @@ const ListPinCodeMasterBase = (props) => {
         tableColumn: tableColumn(handleButtonClick),
         tableData: data,
         noDataMessage: dataMessage,
-        scroll: 1800,
+        scroll: { x: 1800 },
     };
 
     const onAdvanceSearchCloseAction = () => {

@@ -18,8 +18,10 @@ import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
 import LeftPanel from 'components/common/LeftPanel';
 
-import style from 'components/common/TreeView.module.css';
-import styles from 'components/common/Common.module.css';
+import style from '../../../../components/common/TreeView.module.scss';
+//import style from 'components/common/TreeView.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 // import dummyMenuData from './../../RoleManagement/Treedata.json';
 
@@ -252,8 +254,6 @@ const ApplicationTreeMain = (props) => {
                     <>{''}</>
                 ) : (
                     <>
-                        {/* <div className={styles.roleDescription}> </div> */}
-
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.subTitleSec}>
                                 Application Access<span className={styles.mandatory}>*</span>

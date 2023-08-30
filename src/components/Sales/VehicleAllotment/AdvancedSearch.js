@@ -11,10 +11,11 @@ import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { customSelectBox } from 'utils/customSelectBox';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 export const AdvancedSearchFrom = (props) => {
-    const { setAdvanceSearchVisible, typeData, productHierarchyData } = props;
+    const { setAdvanceSearchVisible, typeData, productHierarchyData, resetAdvanceFilter } = props;
     const {
         filterString,
         setFilterString,
@@ -25,7 +26,7 @@ export const AdvancedSearchFrom = (props) => {
     useEffect(() => {
         resetFields();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString]);
+    }, [filterString, resetAdvanceFilter]);
 
     const onFinish = (values) => {
         setFilterString({

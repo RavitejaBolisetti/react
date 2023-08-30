@@ -4,9 +4,10 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Tag } from 'antd'; 
+import { Tag } from 'antd';
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
-import styles from 'components/common/Common.module.css';
+
+import styles from 'assets/sass/app.module.scss';
 
 export const tableColumn = (handleButtonClick, page, pageSize) => {
     const tableColumn = [
@@ -34,15 +35,13 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             title: 'Branch',
             dataIndex: 'branchMapping',
             width: '12%',
-            render: (text) =>  (<Tag className={ text ? styles.success : styles.warning } > { text ? 'Mapped' : 'Unmapped' }</Tag>),
-
+            render: (text) => (text ? <Tag color="success">Mapped</Tag> : <Tag color="warning">Unmapped</Tag>),
         }),
         tblPrepareColumns({
             title: 'Products',
             dataIndex: 'productMapping',
             width: '16%',
-            render: (text) =>  (<Tag className={ text ? styles.success : styles.warning } > { text ? 'Mapped' : 'Unmapped' }</Tag>),
-
+            render: (text) => (text ? <Tag color="success">Mapped</Tag> : <Tag color="warning">Unmapped</Tag>),
         }),
         tblActionColumn({ styles, handleButtonClick, width: '12%' }),
     ];

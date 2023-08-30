@@ -21,7 +21,8 @@ import { formatDate } from 'utils/formatDateTime';
 
 import { OTFStatusBar } from '../utils/OTFStatusBar';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 const mapStateToProps = (state) => {
     const {
@@ -71,6 +72,9 @@ const OtfDetailsMasterBase = (props) => {
     const { form, selectedOrderId, formActionType, handleFormValueChange, fetchSalesConsultant, salesConsultantLov, isSalesConsultantDataLoaded, NEXT_ACTION, handleButtonClick } = props;
     const [exchangeValue, setexchangeValue] = useState(false);
     const [loyaltyValue, setloyaltyValue] = useState(false);
+    const disabledProps = {
+        disabled: true,
+    };
 
     useEffect(() => {
         if (otfData?.exchange) {
@@ -137,7 +141,7 @@ const OtfDetailsMasterBase = (props) => {
         };
 
         const onError = (message) => {
-            showGlobalNotification({ message });
+            // showGlobalNotification({ message });
         };
 
         const requestData = {
@@ -172,6 +176,7 @@ const OtfDetailsMasterBase = (props) => {
         setexchangeValue,
         loyaltyValue,
         setloyaltyValue,
+        disabledProps,
     };
 
     const viewProps = {

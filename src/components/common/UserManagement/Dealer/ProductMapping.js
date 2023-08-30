@@ -5,7 +5,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { Input, Form, Col, Row, Switch, Space, Collapse, Tabs, Typography } from 'antd';
+import { Input, Form, Col, Row, Switch, Space, Collapse, Tabs, Typography, Divider } from 'antd';
 
 import { productDataTree } from 'components/common/UserManagement/dummyData';
 import { validateAlphanumericWithSpaceHyphenPeriod, validateRequiredInputField, validationFieldLetterAndNumber } from 'utils/validation';
@@ -20,7 +20,8 @@ import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
 import LeftPanel from 'components/common/LeftPanel';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 import { BsExclamationSquareFill } from 'react-icons/bs';
 
 const fieldNames = { title: 'productName', key: 'productCode', children: 'children' };
@@ -145,7 +146,7 @@ const AddEditFormMain = (props) => {
     const AccordianTreeUtils = ({ menuData }) => {
         return (
             <>
-                <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
+                <Space direction="vertical" size="middle">
                     {menuData?.map((el, i) => {
                         const treeData = el?.children;
                         const flatternData = flattenData(treeData);
@@ -165,9 +166,9 @@ const AddEditFormMain = (props) => {
                         };
 
                         return (
-                            <div className={`${styles.accordianContainer} ${styles.rolemanagmentContaner}`}>
+                            <div className={styles.managementContainer}>
                                 <h1>is product mapping</h1>
-                                <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(i)} expandIconPosition="end">
+                                <Collapse expandIcon={expandIcon} collapsible="icon" activeKey={activeKey} onChange={() => onChange(i)} expandIconPosition="end">
                                     <Panel
                                         header={
                                             <Row type="flex" justify="space-between" align="middle" size="large">
@@ -183,19 +184,11 @@ const AddEditFormMain = (props) => {
                                         }
                                         key={i}
                                     >
-                                        <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
+                                        <Space direction="vertical" size="middle">
                                             <Row gutter={20}>
                                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                                     <Form.Item label={''} name="search" validateTrigger={['onSearch']}>
-                                                        <Search
-                                                            placeholder="Search"
-                                                            style={{
-                                                                width: '100%',
-                                                            }}
-                                                            initialValue={searchValue}
-                                                            onChange={handleSearchValue}
-                                                            allowClear
-                                                        />
+                                                        <Search placeholder="Search" initialValue={searchValue} onChange={handleSearchValue} allowClear />
                                                     </Form.Item>
                                                 </Col>
                                             </Row>
@@ -256,7 +249,7 @@ const AddEditFormMain = (props) => {
                     </>
                 ) : ( */}
                 <>
-                    <div className={styles.roleDescription}>
+                    <div>
                         <Row gutter={20}>
                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                                 <Form.Item initialValue={formData?.roleId} name="roleId" label="Role Id" rules={[validateRequiredInputField('id'), validationFieldLetterAndNumber('id')]}>
@@ -291,6 +284,7 @@ const AddEditFormMain = (props) => {
                             </Col>
                         </Row>
                     </div>
+                    <Divider />
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.subTitleSec}>
                             Application Access<span className={styles.mandatory}>*</span>

@@ -9,7 +9,8 @@ import { FilterIcon } from 'Icons';
 import { RxCross2 } from 'react-icons/rx';
 import { SearchBox } from 'components/utils/SearchBox';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 export default function AdvanceVehiclePriceMasterFilter(props) {
     const {

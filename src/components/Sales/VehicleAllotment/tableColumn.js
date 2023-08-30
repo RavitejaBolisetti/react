@@ -5,49 +5,70 @@
  */
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import { vehicleAllotmentStatusTag } from 'components/Sales/OTF/utils/VehicleAllotmentStatusTag';
-//import { vehicleAllotmentStatusTag } from 'components/sales/OTF/utils/VehicleAllotmentStatusTag';
-import styles from 'components/common/Common.module.css';
+import { convertDateTime } from 'utils/formatDateTime';
+import { VEHICLE_TYPE } from 'constants/VehicleType';
 
-export const tableColumn = (handleButtonClick, page, pageSize) => {
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
+
+export const tableColumn = (handleButtonClick, allotmentStatus, fixedWith) => {
     const tableColumn = [
         tblPrepareColumns({
             title: 'VIN/Chasis no.',
             dataIndex: 'vehicleIdentificationNumber',
-            width: '14%',
+            width: fixedWith ? '202px' : '20%',
         }),
+    ];
 
+    if (allotmentStatus === VEHICLE_TYPE.ALLOTED.key) {
+        tableColumn.push(
+            tblPrepareColumns({
+                title: 'OTF no.',
+                dataIndex: 'otfNumber',
+                width: fixedWith ? '202px' : '20%',
+            })
+        );
+    }
+    tableColumn.push(
         tblPrepareColumns({
             title: 'Model Description',
             dataIndex: 'modelCode',
-            width: '20%',
+            width: fixedWith ? '202px' : '20%',
         }),
+
         tblPrepareColumns({
             title: 'Age in Days',
             dataIndex: 'ageInDays',
-            width: '10%',
+            width: fixedWith ? '140px' : '15%',
         }),
 
         tblPrepareColumns({
             title: 'PDI Done',
             dataIndex: 'pdiIndicator',
-            width: '12%',
+            width: fixedWith ? '140px' : '12%',
         }),
 
         tblPrepareColumns({
             title: 'M&M Invoice',
             dataIndex: 'invoiceId',
-            width: '14%',
+            width: fixedWith ? '180px' : '18%',
+            render: (text, record) => [
+                <div>
+                    {record?.invoiceId}
+                    {record?.oemInvoiceDate && <div style={{ fontSize: '12px', lineHeight: '20px' }}>Invoice Date: {convertDateTime(record?.oemInvoiceDate, 'DD MMM YYYY')}</div>}
+                </div>,
+            ],
         }),
 
         tblPrepareColumns({
             title: 'Vehicle Status',
             dataIndex: 'vehicleStatus',
-            width: '14%',
+            width: fixedWith ? '160px' : '15%',
             render: (_, record) => vehicleAllotmentStatusTag(record.vehicleStatus),
         }),
 
-        tblActionColumn({ handleButtonClick, styles, width: '8%', EyeIcon: true, canEdit: false }),
-    ];
+        tblActionColumn({ handleButtonClick, styles, width: fixedWith ? '90px' : '10%', EyeIcon: true, canEdit: false, fixed: 'right' })
+    );
 
     return tableColumn;
 };

@@ -13,8 +13,10 @@ import { getCodeValue } from 'utils/getCodeValue';
 import { formattedCalendarDate, dateFormat } from 'utils/formatDateTime';
 import { validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
+import { VEHICLE_RECEIPT_STATUS } from 'constants/VehicleReceiptStatus';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
@@ -85,18 +87,18 @@ const AddEditFormMain = (props) => {
         <>
             <Form form={vehicleDetailForm} id="myAdd" onFinish={handleSave} autoComplete="off" layout="vertical" onFinishFailed={onFinishFailed}>
                 {formData?.map((item, index) => (
-                    <div className={styles.accessInfo}>
+                    <div className={styles.innerCollapse}>
                         <Collapse defaultActiveKey={index} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(index)} expandIconPosition="end" {...collapseProps}>
                             <Panel
                                 header={
-                                    <Space direction="vertical">
-                                        <Space>
+                                    <>
+                                        <Space size="small">
                                             <Text className={styles.headText}> Model: {item?.modelDescription} </Text>
                                             <Text className={styles.headText}> {`|`}</Text>
                                             <Text className={styles.headText}> VIN: {item?.vin}</Text>
                                         </Space>
                                         <Text className={styles.subSection}> Vehicle Status: {getCodeValue(vehicleStatusType, item?.vehicleStatus)}</Text>
-                                    </Space>
+                                    </>
                                 }
                                 key={index}
                             >
@@ -180,7 +182,7 @@ const AddEditFormMain = (props) => {
                                         <Form.Item initialValue={item?.vehicleStatus} label="Vehicle Status" name={[index, 'vehicleStatus']} rules={[validateRequiredSelectField('Vehicle Status')]}>
                                             <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} {...selectProps}>
                                                 {vehicleStatusType?.map((item) => (
-                                                    <Option key={'vs' + item.key} value={item.key}>
+                                                    <Option disabled={VEHICLE_RECEIPT_STATUS.RETURNED.key === item.key} key={'vs' + item.key} value={item.key}>
                                                         {item.value}
                                                     </Option>
                                                 ))}

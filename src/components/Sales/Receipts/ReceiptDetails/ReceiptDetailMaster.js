@@ -8,6 +8,7 @@ import { Form, Row, Col } from 'antd';
 import { bindActionCreators } from 'redux';
 
 import { partyDetailDataActions } from 'store/actions/data/receipt/partyDetails';
+import { partyMasterDataActions } from 'store/actions/data/partyMaster';
 import { connect } from 'react-redux';
 import { showGlobalNotification } from 'store/actions/notification';
 
@@ -16,8 +17,8 @@ import { BASE_URL_PARTY_MASTER } from 'constants/routingApi';
 import { ViewDetail } from './ViewDetail';
 
 import { VehicleReceiptFormButton } from '../VehicleReceiptFormButton';
-
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 import PaymentAddEdit from './PaymentAddEdit';
 import ReceiptInfoAddEdit from './ReceiptInfoAddEdit';
 import { ReceiptType } from 'components/Sales/Receipts/utils/ReceiptType';
@@ -26,9 +27,7 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            Receipt: {
-                PartyDetails: { isLoaded: isDataLoaded = false, isLoading, data: partyDetailData = [] },
-            },
+            PartyMaster: { isLoaded: isDataLoaded = false, isLoading, data: partyDetailData = [] },
         },
     } = state;
 
@@ -49,9 +48,9 @@ const mapDispatchToProps = (dispatch) => ({
     ...bindActionCreators(
         {
             fetchCustomerDetail: partyDetailDataActions.fetchList,
-            fetchPartyDetail: partyDetailDataActions.fetchList,
-            resetData: partyDetailDataActions.reset,
-            listShowLoading: partyDetailDataActions.listShowLoading,
+            fetchPartyDetail: partyMasterDataActions.fetchList,
+            resetData: partyMasterDataActions.reset,
+            listShowLoading: partyMasterDataActions.listShowLoading,
             showGlobalNotification,
         },
         dispatch
@@ -59,7 +58,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ReceiptDetailMasterBase = (props) => {
-    const { userId, receipt, setReceipt, section, typeData, receiptType, paymentModeType, buttonData, setButtonData, fetchList, handleCancelFormEdit, isDataLoaded, isLoading, listShowLoading, fetchPartyDetail, partyDetailData, receiptOnFinish } = props;
+    const { userId, receipt, setReceipt, section, typeData, receiptType, paymentModeType, buttonData, setButtonData, fetchList, handleCancelFormEdit, isDataLoaded, isLoading, listShowLoading, resetData, showGlobalNotification, fetchPartyDetail, partyDetailData, receiptOnFinish } = props;
     const { form, formActionType, salesConsultantLov, NEXT_ACTION, handleButtonClick, setApportionList } = props;
     const { requestPayload, setRequestPayload, receiptDetailData, setLastSection, totalReceivedAmount, setTotalReceivedAmount } = props;
     const [paymentForm] = Form.useForm();
@@ -77,8 +76,8 @@ const ReceiptDetailMasterBase = (props) => {
     useEffect(() => {
         if (partyDetailData?.length > 0) {
             paymentForm.setFieldsValue({
-                partyName: partyDetailData?.[0]?.partyName,
-                partyLocationCode: partyDetailData?.[0]?.partyLocationCode,
+                paymentBankName: partyDetailData?.[0]?.partyName,
+                paymentBankLocation: partyDetailData?.[0]?.partyLocationCode,
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -116,10 +115,21 @@ const ReceiptDetailMasterBase = (props) => {
     };
 
     const handleChange = (e) => {
+        resetData();
+        paymentForm.setFieldsValue({
+            paymentBankName: '',
+            paymentBankLocation: '',
+        });
         setPartyId(e.target.value);
     };
 
     const handlePaymentSearch = () => {
+        const onSuccessAction = (res) => {
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        };
+        const onErrorAction = (message) => {
+            showGlobalNotification({ message });
+        };
         const extraParams = [
             {
                 key: 'partyCode',
@@ -128,10 +138,14 @@ const ReceiptDetailMasterBase = (props) => {
                 name: 'partyCode',
             },
         ];
-        fetchPartyDetail({ setIsLoading: listShowLoading, userId, extraParams, customURL: BASE_URL_PARTY_MASTER });
+        fetchPartyDetail({ setIsLoading: listShowLoading, userId, extraParams, customURL: BASE_URL_PARTY_MASTER, onSuccessAction, onErrorAction });
     };
 
     const handleSavepaymenttForm = () => {
+        if (paymentForm.getFieldValue('paymentBankPartyId') && partyDetailData?.length === 0) {
+            paymentForm.validateFields();
+            return;
+        }
         paymentForm
             .validateFields()
             .then((value) => {

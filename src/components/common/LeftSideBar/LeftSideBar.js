@@ -16,7 +16,9 @@ import IMG_LOGO from 'assets/images/RobinLightTheme.svg';
 import { menuDataActions } from 'store/actions/data/menu';
 import { setCollapsed, setIsMobile, setSelectKeyToScroll } from 'store/actions/common/leftsidebar';
 
-import styles from './LeftSideBar.module.css';
+
+import styles from './LeftSideBar.module.scss';
+//import styles from './LeftSideBar.module.css';
 import * as routing from 'constants/routing';
 
 import { getMenuValue } from 'utils/menuKey';

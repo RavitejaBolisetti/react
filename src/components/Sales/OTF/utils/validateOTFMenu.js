@@ -5,7 +5,6 @@
  */
 import { OTF_SECTION } from 'constants/OTFSection';
 import { OTF_STATUS } from 'constants/OTFStatus';
-import { FINANCE_ARRANGED_BY } from 'constants/financeArrangedBy';
 
 export const validateOTFMenu = ({ item, status, otfData }) => {
     if (item?.id === OTF_SECTION.INVOICE_INFORMATION.id) {
@@ -13,14 +12,12 @@ export const validateOTFMenu = ({ item, status, otfData }) => {
     }
 
     switch (item?.id) {
-        case OTF_SECTION.FINANCE_DETAILS.id:
-            return otfData?.financeArrangedBy === FINANCE_ARRANGED_BY?.DEALER?.key || otfData?.financeArrangedBy === FINANCE_ARRANGED_BY?.DEALER_1?.key;
         case OTF_SECTION.EXCHANGE_VEHICLE.id:
-            return otfData?.exchange === 1;
+            return otfData?.loyaltyScheme !== 1;
         case OTF_SECTION.REFERRALS.id:
             return otfData?.referral === 'Y';
         case OTF_SECTION.LOYALTY_SCHEME.id:
-            return otfData?.loyaltyScheme === 1;
+            return otfData?.exchange !== 1 && otfData?.loyaltyScheme === 1;
         case OTF_SECTION.INVOICE_INFORMATION.id:
             return otfData?.loyaltyScheme === 1;
         default:

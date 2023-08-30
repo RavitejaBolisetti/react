@@ -8,8 +8,8 @@ import { Input, Form, Col, Row, Button, Select, Divider } from 'antd';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { customSelectBox } from 'utils/customSelectBox';
-
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 function FormProductAttribute(props) {
     const { taxChargeCalForm, taxCharges, addTaxChargeCal, formEdit, editForm, handleCodeFunction, handleDescriptionChange, mainFomEdit, dropdownItems } = props;

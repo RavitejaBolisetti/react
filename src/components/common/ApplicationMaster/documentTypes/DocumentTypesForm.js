@@ -6,6 +6,8 @@
 import React from 'react';
 import { Input, Form, Col, Row, Switch, Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
+import styles from 'assets/sass/app.module.scss';
+// import styles from 'components/common/Common.module.css';
 
 import { duplicateValidator, validateAlphanumericWithSpace, validateRequiredInputField, validationFieldLetterAndNumber } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
@@ -45,9 +47,13 @@ function DocumentTypesForm({ form, onFieldsChange, onFinish, isEditing, isBtnDis
                 </Form.Item>
             </Row>
             {!isEditing && (
-                <Button disabled={isBtnDisabled} icon={<PlusOutlined />} type="primary" htmlType="submit">
-                    Add
-                </Button>
+                <Row>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.marB20}>
+                        <Button disabled={isBtnDisabled} icon={<PlusOutlined />} type="primary" htmlType="submit">
+                            Add
+                        </Button>
+                    </Col>
+                </Row>
             )}
         </Form>
     );

@@ -10,7 +10,8 @@ import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/prepareP
 import { ViewDetail } from './ViewDetail';
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 const { Option } = Select;
 
@@ -85,18 +86,15 @@ const AddEditFormMain = (props) => {
                             </Row>
                             <Row gutter={16}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={formData?.roleCode} label="Role Code" name="roleCode" rules={[validateRequiredInputField('role code')]}>
-                                        <Input placeholder={preparePlaceholderText('role code')} maxLength={6} disabled={editMode ? true : false} />
-                                    </Form.Item>
-                                </Col>
-                                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                     <Form.Item label="Role Name" initialValue={formData?.roleDescription} rules={[validateRequiredInputField('role Name')]} name="roleDescription">
                                         <Input placeholder={preparePlaceholderText('role Name')} maxLength={50} />
                                     </Form.Item>
                                 </Col>
-                            </Row>
-
-                            <Row gutter={16}>
+                                {/* <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                    <Form.Item initialValue={formData?.roleCode} label="Role Code" name="roleCode" rules={[validateRequiredInputField('role code')]}>
+                                        <Input placeholder={preparePlaceholderText('role code')} maxLength={6} disabled={editMode ? true : false} />
+                                    </Form.Item>
+                                </Col> */}
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                     <Form.Item initialValue={editMode ? formData.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label="Status">
                                         <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} />

@@ -5,142 +5,138 @@
  */
 import React, { useEffect } from 'react';
 
-import styles from 'components/common/Common.module.css';
-import { preparePlaceholderText } from 'utils/preparePlaceholder';
+import { Col, Input, Form, Row, Card, Select } from 'antd';
+import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
+import { validateRequiredInputField, validateRequiredSelectField, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
+import { CustomerListMaster } from 'components/utils/CustomerListModal';
+import styles from 'assets/sass/app.module.scss';
 
-import { Col, Input, Form, Row, Card } from 'antd';
 const { TextArea } = Input;
+const { Search } = Input;
 
 const AddEditFormMain = (props) => {
-    const { formData, form, formdata, onFinishFailed, onFinish } = props;
+    const { formData, form } = props;
+    const { schemeLovData, typeData, makeData } = props;
+    const { isConfigLoading, isSchemeLovLoading, isMakeLoading, isModelLoading, isVariantLoading } = props;
+    const { filteredModelData, filteredVariantData, handleFilterChange, fnSetData, disabledProps } = props;
+
+    const currentYear = new Date().getFullYear();
+    const yearsList = [];
+    for (let i = currentYear; i >= currentYear - 15; i--) {
+        yearsList.push({ key: i, value: i });
+    }
 
     useEffect(() => {
-        if (formdata) {
+        if (formData) {
             form.setFieldsValue({
-                customerId: formdata?.customerCode,
-                customerName: formdata?.customerName,
-                make: formdata?.make,
-                modelGroup: formdata?.vehicleModelGroup,
-                variant: formdata?.variantName,
-                oldRegNumber: formdata?.registrationNumber,
-                oldChassisNumber: formdata?.oldChassisNumber,
-                dob: formdata?.customerDOB,
-                relationship: formdata?.relationName,
-                year: formdata?.registrationYear,
-                month: formdata?.registrationMonth,
-                usage: formdata?.vehicleUsage,
-                schemeName: formdata?.schemeName,
-                schemeAmount: formdata?.schemeBase,
-                remarks: formdata?.remarks,
+                ...formData,
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formdata]);
+    }, [formData]);
 
     return (
         <Card className={styles.ExchangeCard}>
-            <Form form={form} autoComplete="off" layout="vertical" colon={false} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-                <Row gutter={20}>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item name="customerId" label="Customer ID" initialValue={formData?.customerId}>
-                            <Input maxLength={6} placeholder={preparePlaceholderText('id')} disabled={true} />
-                        </Form.Item>
-                    </Col>
+            <CustomerListMaster fnSetData={fnSetData} />
+            <Row gutter={20} style={{ marginTop: '20px' }}>
+                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                    <Form.Item name="customerCode" label="Customer ID" rules={[validateRequiredInputField('customerId')]}>
+                        <Input placeholder={preparePlaceholderText('customer id')} maxLength={35} allowClear {...disabledProps} />
+                    </Form.Item>
+                </Col>
+                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                    <Form.Item name="customerName" label="Customer Name" initialValue={formData?.customerName}>
+                        <Input {...disabledProps} placeholder={preparePlaceholderText('customer name')} maxLength={50} />
+                    </Form.Item>
+                </Col>
 
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item name="customerName" label="Customer Name" initialValue={formData?.customerName}>
-                            <Input disabled={true} placeholder={preparePlaceholderText('customer name')} maxLength={50} />
-                        </Form.Item>
-                    </Col>
+                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                    <Form.Item label="Make" name="make" data-testid="make" rules={[validateRequiredSelectField('make')]}>
+                        <Select {...disabledProps} placeholder="Select" loading={isMakeLoading} allowClear fieldNames={{ label: 'value', value: 'key' }} options={makeData} onChange={(value, selectobj) => handleFilterChange('make', value, selectobj)} />
+                    </Form.Item>
+                </Col>
+            </Row>
 
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item name="make" label="Make" initialValue={formData?.make}>
-                            <Input disabled={true} placeholder={preparePlaceholderText('make')} maxLength={50} />
-                        </Form.Item>
-                    </Col>
-                </Row>
+            <Row gutter={20}>
+                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                    <Form.Item label="Model Group" name="vehicleModelGroup" data-testid="modelGroup" rules={[validateRequiredSelectField('model group')]}>
+                        <Select {...disabledProps} placeholder="Select" loading={isModelLoading} allowClear fieldNames={{ label: 'value', value: 'key' }} options={filteredModelData} onChange={(value, selectobj) => handleFilterChange('modelGroup', value, selectobj)} />
+                    </Form.Item>
+                </Col>
 
-                <Row gutter={20}>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item name="modelGroup" label="Model Group" initialValue={formData?.modelGroup}>
-                            <Input maxLength={6} placeholder={preparePlaceholderText('Model Group')} disabled={true} />
-                        </Form.Item>
-                    </Col>
+                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                    <Form.Item label="Variant" name="variantCode" data-testid="variant" rules={[validateRequiredSelectField('Variant')]}>
+                        <Select {...disabledProps} placeholder="Select" loading={isVariantLoading} allowClear fieldNames={{ label: 'value', value: 'key' }} options={filteredVariantData} />
+                    </Form.Item>
+                </Col>
 
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item name="variant" label="Variant" initialValue={formData?.variant}>
-                            <Input disabled={true} placeholder={preparePlaceholderText('variant')} maxLength={50} />
-                        </Form.Item>
-                    </Col>
+                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                    <Form.Item name="registrationNumber" label="Old Registration No" initialValue={formData?.oldRegNumber}>
+                        <Input {...disabledProps} placeholder={preparePlaceholderText('old registration no')} maxLength={50} />
+                    </Form.Item>
+                </Col>
+            </Row>
 
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item name="oldRegNumber" label="Old Registration No" initialValue={formData?.oldRegNumber}>
-                            <Input disabled={true} placeholder={preparePlaceholderText('old registration no')} maxLength={50} />
-                        </Form.Item>
-                    </Col>
-                </Row>
+            <Row gutter={20}>
+                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                    <Form.Item name="oldChassisNumber" label="VIN Number" initialValue={formData?.oldChassisNumber}>
+                        <Input maxLength={50} placeholder={preparePlaceholderText('old chassis no')} {...disabledProps} />
+                    </Form.Item>
+                </Col>
 
-                <Row gutter={20}>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item name="oldChassisNumber" label="Old Chassis No" initialValue={formData?.oldChassisNumber}>
-                            <Input maxLength={50} placeholder={preparePlaceholderText('old chassis no')} disabled={true} />
-                        </Form.Item>
-                    </Col>
+                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                    <Form.Item name="customerDOB" label="Date Of Birth" initialValue={formData?.dob}>
+                        <Input {...disabledProps} placeholder={preparePlaceholderText('date of birth')} maxLength={50} />
+                    </Form.Item>
+                </Col>
 
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item name="dob" label="Date Of Birth" initialValue={formData?.dob}>
-                            <Input disabled={true} placeholder={preparePlaceholderText('date of birth')} maxLength={50} />
-                        </Form.Item>
-                    </Col>
+                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                    <Form.Item name="relationCode" label="Relationship" initialValue={formData?.relationship}>
+                        <Select placeholder="Select" loading={isConfigLoading} allowClear fieldNames={{ label: 'value', value: 'key' }} options={typeData['REL_TYPE']} />
+                    </Form.Item>
+                </Col>
+            </Row>
 
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item name="relationship" label="Relationship" initialValue={formData?.relationship}>
-                            <Input disabled={true} placeholder={preparePlaceholderText('relationship')} maxLength={50} />
-                        </Form.Item>
-                    </Col>
-                </Row>
+            <Row gutter={20}>
+                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                    <Form.Item name="registrationMonthCode" label="Month of Registration" initialValue={formData?.monthOfRegistrationCode} rules={[validateRequiredSelectField('Month of Registration')]}>
+                        <Select loading={isConfigLoading} fieldNames={{ label: 'value', value: 'key' }} options={typeData['MONTH']} placeholder={preparePlaceholderSelect('Month of Registration')} />
+                    </Form.Item>
+                </Col>
 
-                <Row gutter={20}>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item name="year" label="Year Of Registration" initialValue={formData?.year}>
-                            <Input disabled={true} maxLength={50} placeholder={preparePlaceholderText('year of registration')} />
-                        </Form.Item>
-                    </Col>
+                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                    <Form.Item name="registrationYearCode" label="Year of Registration" initialValue={formData?.yearOfRegistrationCode} rules={[validateRequiredInputField('year of reg')]}>
+                        <Select placeholder="Select" allowClear fieldNames={{ label: 'value', value: 'key' }} options={yearsList} />
+                    </Form.Item>
+                </Col>
 
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item name="month" label="Month Of Registration" initialValue={formData?.month}>
-                            <Input disabled={true} placeholder={preparePlaceholderText('month of registration')} maxLength={50} />
-                        </Form.Item>
-                    </Col>
+                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                    <Form.Item name="vehicleUsageCode" label="Usage" initialValue={formData?.usageCode} rules={[validateRequiredSelectField('Usage')]}>
+                        <Select placeholder="Select" loading={false} allowClear fieldNames={{ label: 'value', value: 'key' }} options={typeData['VEHCL_USAG']} />
+                    </Form.Item>
+                </Col>
+            </Row>
 
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item name="usage" label="Usage" initialValue={formData?.usage}>
-                            <Input disabled={true} placeholder={preparePlaceholderText('usage')} maxLength={50} />
-                        </Form.Item>
-                    </Col>
-                </Row>
+            <Row gutter={20}>
+                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                    <Form.Item name="schemeCode" label="Scheme Name" initialValue={formData?.schemeCode} rules={[validateRequiredSelectField('Scheme Name')]}>
+                        <Select loading={isSchemeLovLoading} fieldNames={{ label: 'value', value: 'key' }} options={schemeLovData} placeholder={preparePlaceholderSelect('Scheme Name')} />
+                    </Form.Item>
+                </Col>
 
-                <Row gutter={20}>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item name="schemeName" label="Scheme Name" initialValue={formData?.schemeName}>
-                            <Input disabled={true} maxLength={50} placeholder={preparePlaceholderText('scheme name')} />
-                        </Form.Item>
-                    </Col>
-
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item name="schemeAmount" label="Scheme Amount" initialValue={formData?.schemeAmount}>
-                            <Input disabled={true} placeholder={preparePlaceholderText('scheme amount')} maxLength={50} />
-                        </Form.Item>
-                    </Col>
-                </Row>
-                <Row gutter={20}>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Form.Item name="remarks" label="Remarks" initialValue={formData?.remarks}>
-                            <TextArea disabled={true} placeholder={preparePlaceholderText('remarks')} maxLength={300} showCount />
-                        </Form.Item>
-                    </Col>
-                </Row>
-            </Form>
+                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                    <Form.Item name="schemeAmount" label="Scheme Amount" initialValue={formData?.schemeAmount} rules={[validateNumberWithTwoDecimalPlaces('Scheme Amount')]}>
+                        <Input placeholder={preparePlaceholderText('scheme amount')} maxLength={50} />
+                    </Form.Item>
+                </Col>
+            </Row>
+            <Row gutter={20}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                    <Form.Item name="remarks" label="Remarks" initialValue={formData?.remarks}>
+                        <TextArea placeholder={preparePlaceholderText('remarks')} maxLength={300} showCount />
+                    </Form.Item>
+                </Col>
+            </Row>
         </Card>
     );
 };

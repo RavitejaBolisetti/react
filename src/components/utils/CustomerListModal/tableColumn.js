@@ -9,30 +9,30 @@ export const tableColumn = [
     tblPrepareColumns({
         title: 'Customer ID',
         dataIndex: 'customerId',
-        width: '100px',
+        width: '170px',
     }),
 
     tblPrepareColumns({
         title: 'Customer Name',
         dataIndex: 'customerName',
-        width: '150px',
+        width: '170px',
     }),
 
     tblPrepareColumns({
         title: 'Mobile No',
         dataIndex: 'mobileNumber',
-        width: '100px',
+        width: '120px',
     }),
 
     tblPrepareColumns({
         title: 'Registration Number',
         dataIndex: 'registrationNumber',
-        width: '150px',
+        width: '160px',
     }),
 
     tblPrepareColumns({
         title: 'Chassis Number',
         dataIndex: 'chassisNumber',
-        width: '150px',
+        width: '180px',
     }),
 ];

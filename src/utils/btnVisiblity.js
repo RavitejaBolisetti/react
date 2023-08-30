@@ -34,6 +34,8 @@ export const btnVisiblity = ({ defaultBtnVisiblity, buttonAction, saveAndNewBtn 
                 return { ...btnVisibility, transferOTFBtn: true, allotBtn: true, cancelOTFBtn: true };
             case OTF_STATUS?.ALLOTED?.key:
                 return { ...btnVisibility, unAllotBtn: true, invoiceBtn: true };
+            case OTF_STATUS?.UNALLOTED?.key:
+                return { ...btnVisibility, unAllotBtn: true, invoiceBtn: true };
             case OTF_STATUS?.INVOICED?.key:
                 return { ...btnVisibility, editBtn: false, deliveryNoteBtn: true };
             case OTF_STATUS?.TRANSFERRED?.key:

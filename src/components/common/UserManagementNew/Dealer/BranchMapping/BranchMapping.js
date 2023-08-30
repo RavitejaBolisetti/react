@@ -9,10 +9,8 @@ import { UserManagementFormButton } from '../../UserManagementFormButton/UserMan
 import AddEditForm from './AddEditForm';
 import { NEXT_ACTION } from 'utils/btnVisiblity';
 
-const defaultBtnVisiblity = { editBtn: false, saveBtn: false, next: false, nextBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: true, formBtnActive: false };
-
 const BranchMapping = (props) => {
-    const { currentSection, formData, userId, selectedDealerCode, dealerDataList, setButtonData, showGlobalNotification, handleButtonClick } = props;
+    const { currentSection, formData, userId, selectedDealerCode, dealerDataList, setButtonData, showGlobalNotification, handleButtonClick, formActionType } = props;
     const { fetchUsrDlrBranchLocationsList, resetUsrDlrBranchLocationsList, userUsrDlrBrLoactionShowLoading, usrdlrBranchLocationDataList, isUsrDlrBrLocationLoding, isUsrdlrBrLocationsLoaded } = props;
     const { fetchDlrBranchLocationsList, saveUsrDlrBrLoactionRoleDataList, resetDlrBranchLocationsList, userDlrBrLoactionShowLoading, dlrBranchLocationDataList, isDlrBrLocationLoding, isdlrBrLocationsLoaded } = props;
     const [form] = Form.useForm();
@@ -20,8 +18,12 @@ const BranchMapping = (props) => {
     const [parentDealerCode, setParentDealerCode] = useState('');
 
     useEffect(() => {
-        setButtonData(prev => ({ ...prev,nextBtn: false,nextBtnWthPopMag: false, saveBtn: true }));
+        setButtonData((prev) => ({ ...prev, nextBtn: false, nextBtnWthPopMag: false, saveBtn: true, editBtn: formActionType?.viewMode }));
 
+        return () => {
+            resetUsrDlrBranchLocationsList();
+            resetDlrBranchLocationsList();
+        };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -32,11 +34,11 @@ const BranchMapping = (props) => {
         if (dlrBranchLocationDataList?.length && isUsrdlrBrLocationsLoaded) {
             const defaultBranches = [];
             dlrBranchLocationDataList?.forEach((branch) => {
-                let matchMapdata = usrdlrBranchLocationDataList?.find((el) => el?.locationCode === branch?.locationId);
+                let matchMapdata = usrdlrBranchLocationDataList?.find((el) => el?.locationCode === branch?.id);
                 if (matchMapdata) {
                     defaultBranches.push({ ...matchMapdata, locationName: branch?.dealerLocationName });
                 } else {
-                    let unMapdata = { id: '', locationCode: branch?.locationId, locationName: branch?.dealerLocationName, parentGroupId: branch?.parentGroupCode || parentGroupId, defaultBranchIndicator: false, status: false, userId: formData?.userName };
+                    let unMapdata = { id: '', locationCode: branch?.id, locationName: branch?.dealerLocationName, parentGroupId: branch?.parentGroupCode || parentGroupId, defaultBranchIndicator: false, status: false, userId: formData?.userName };
 
                     defaultBranches.push(unMapdata);
                 }
@@ -48,7 +50,7 @@ const BranchMapping = (props) => {
     }, [dlrBranchLocationDataList, usrdlrBranchLocationDataList, isUsrdlrBrLocationsLoaded]);
 
     useEffect(() => {
-        if ((userId, formData?.employeeCode)) {
+        if (userId && formData?.employeeCode && !isUsrdlrBrLocationsLoaded) {
             const extraParams = [
                 {
                     key: 'employeeCode',
@@ -59,7 +61,7 @@ const BranchMapping = (props) => {
             ];
             fetchUsrDlrBranchLocationsList({ setIsLoading: userUsrDlrBrLoactionShowLoading, extraParams, userId });
         }
-        if (userId && parentDealerCode) {
+        if (userId && parentDealerCode && !isdlrBrLocationsLoaded) {
             const extraParams = [
                 {
                     key: 'dealerParentCode',
@@ -68,7 +70,7 @@ const BranchMapping = (props) => {
                     name: 'dealerParentCode',
                 },
             ];
-            fetchDlrBranchLocationsList({ setIsLoading: userUsrDlrBrLoactionShowLoading, extraParams, userId });
+            fetchDlrBranchLocationsList({ setIsLoading: userDlrBrLoactionShowLoading, extraParams, userId });
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -76,7 +78,7 @@ const BranchMapping = (props) => {
 
     const onFinish = (data) => {
         const onErrorAction = (res) => {
-            console.log('🚀 ~ file: BranchMapping.js:100 ~ onErrorAction ~ res:', res);
+            console.error(res);
         };
 
         const onSuccess = (res) => {
@@ -86,7 +88,7 @@ const BranchMapping = (props) => {
         };
 
         const requestData = {
-            data: dealerBranches,
+            data: dealerBranches?.filter((el) => el?.id || el?.status),
             setIsLoading: userUsrDlrBrLoactionShowLoading,
             userId,
             onErrorAction,
@@ -100,10 +102,10 @@ const BranchMapping = (props) => {
         setButtonData((prev) => ({ ...prev, nextBtn: false, saveBtn: true, formBtnActive: true }));
     };
     const onFinishFailed = (err) => {
-        console.log('🚀 ~ ♥file: BranchMapping.js:105 ~ onFinishFailed ~ err:', err);
+        console.error(err);
     };
 
-    const formProps = { ...props, currentSection, dealerBranches, setDealerBranches };
+    const formProps = { ...props, currentSection, dealerBranches, setDealerBranches, isUsrDlrBrLocationLoding, isDlrBrLocationLoding };
     const buttonProps = { ...props };
 
     return (

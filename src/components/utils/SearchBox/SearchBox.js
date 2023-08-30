@@ -7,14 +7,17 @@ import React from 'react';
 import { Form, Select, Input } from 'antd';
 
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
-import styles from './SearchBox.module.css';
+
+import styles from './SearchBox.module.scss';
+//import styles from './SearchBox.module.css';
 
 const { Option } = Select;
 const { Search } = Input;
 
 const SearchBox = (props) => {
     const { selectWide, searchForm, optionType, searchParamRule, filterString, setFilterString, handleChange, disabled = false, isLoading, handleSearchWithoutParameter = undefined } = props;
-    const { singleField = false, label = '', placeholder = 'Search', singleFieldKey = 'searchParam', defaultValue='' } = props;
+    const { singleField = false, label = '', placeholder = 'Search', singleFieldKey = 'searchParam' } = props;
+
     const onKeyPressHandler = (e) => {
         e.key === 'Enter' && e.preventDefault();
     };
@@ -46,7 +49,6 @@ const SearchBox = (props) => {
 
     const selectProps = {
         optionFilterProp: 'children',
-        defaultValue,
         allowClear: true,
         className: selectWide ? styles.headerSelectFieldWide : styles.headerSelectField,
     };
@@ -55,7 +57,7 @@ const SearchBox = (props) => {
         <div className={singleField ? styles.masterListSearchForm : styles.selectSearchBg}>
             <Form onKeyPress={onKeyPressHandler} form={searchForm} layout={singleField ? 'horizontal' : 'vertical'} colon={false} autoComplete="off">
                 {!singleField && (
-                    <Form.Item name="searchType" initialValue={defaultValue} rules={[validateRequiredSelectField('parameter')]}>
+                    <Form.Item name="searchType" rules={[validateRequiredSelectField('parameter')]}>
                         <Select disabled={disabled} placeholder="Select Parameter" {...selectProps}>
                             {optionType?.map((item) => (
                                 <Option key={'st' + item.key} value={item.key}>
@@ -65,8 +67,8 @@ const SearchBox = (props) => {
                         </Select>
                     </Form.Item>
                 )}
-                <Form.Item label={label} {...searchParamRule} name={singleField && singleFieldKey ? singleFieldKey : 'searchParam'} rules={[validateRequiredInputField('search value')]} validateTrigger={['onChange', 'onSearch']}>
-                    <Search loading={isLoading} disabled={disabled} placeholder={placeholder} maxLength={25} value={filterString?.searchParam} allowClear onChange={handleChange} onSearch={singleField && handleSearchWithoutParameter ? handleSearchWithoutParameter : handleSearchParamSearch} className={singleField ? styles.headerSearchField : selectWide ? styles.headerSearchFieldWide : styles.headerSearchField} />
+                <Form.Item label={label} {...searchParamRule} name={singleField && singleFieldKey ? singleFieldKey : 'searchParam'} rules={[validateRequiredInputField('search value')]} validateTrigger={['onChange', 'onSearch']} className={selectWide ? styles.headerSearchFieldWide : ''}>
+                    <Search loading={isLoading} disabled={disabled} placeholder={placeholder} maxLength={25} value={filterString?.searchParam} allowClear onChange={handleChange} onSearch={singleField && handleSearchWithoutParameter ? handleSearchWithoutParameter : handleSearchParamSearch} className={styles.headerSearchField} />
                 </Form.Item>
             </Form>
         </div>

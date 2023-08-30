@@ -33,8 +33,8 @@ const ViewDetailMain = (props) => {
                             <Divider />
                             {formData?.partDetailsResponses?.map((element, i) => {
                                 return (
-                                    <div className={styles.accessInfo}>
-                                        <Collapse expandIcon={expandIcon} activeKey={myActiveKey} onChange={() => handleCollapses(i)} expandIconPosition="end" className={styles.innerCollapseBorder}>
+                                    <div className={styles.innerCollapse}>
+                                        <Collapse expandIcon={expandIcon} activeKey={myActiveKey} onChange={() => handleCollapses(i)} expandIconPosition="end">
                                             <Panel
                                                 header={
                                                     <Row justify="space-between">
@@ -52,6 +52,7 @@ const ViewDetailMain = (props) => {
                                                 }
                                                 key={i}
                                             >
+                                                <Divider />
                                                 <AccessoriesInformationCard formData={element} />
                                             </Panel>
                                         </Collapse>
@@ -67,7 +68,7 @@ const ViewDetailMain = (props) => {
                         </Panel>
                     </Collapse>
                     <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse('Amc')} expandIconPosition="end">
-                        <Panel header="Amc" key={'Amc'}>
+                        <Panel header="AMC" key={'Amc'}>
                             <Divider />
                             <AMCForm formActionType={formActionType} formData={formData} amcForm={amcForm} />
                         </Panel>
@@ -78,12 +79,12 @@ const ViewDetailMain = (props) => {
                             <RSAForm formActionType={formActionType} formData={formData} rsaForm={rsaForm} />
                         </Panel>
                     </Collapse>
-                    <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse('fMS')} expandIconPosition="end">
+                    {/* <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse('fMS')} expandIconPosition="end">
                         <Panel header="FMS" key={'fMS'}>
                             <Divider />
                             <FMSForm formActionType={formActionType} formData={formData} fmsForm={fmsForm} />
                         </Panel>
-                    </Collapse>
+                    </Collapse> */}
                 </Col>
             </Row>
         </div>

@@ -9,7 +9,7 @@ import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { DATA_TYPE } from 'constants/dataType';
 
 const ViewDetailMain = ({ formData, styles, parameterType, isLoading = false }) => {
-    const viewProps = {
+    const viewOneColProps = {
         bordered: false,
         colon: false,
         layout: 'vertical',
@@ -17,9 +17,9 @@ const ViewDetailMain = ({ formData, styles, parameterType, isLoading = false }) 
     };
 
     return (
-        <div className={styles.viewContainer}>
-            <>
-                <Descriptions {...viewProps}>
+        <>
+            <div className={styles.viewContainer}>
+                <Descriptions {...viewOneColProps}>
                     <Descriptions.Item label="State Name">{checkAndSetDefaultValue(formData?.stateName, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="District Name">{checkAndSetDefaultValue(formData?.districtName, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="Tehsil Code">{checkAndSetDefaultValue(formData?.code, isLoading)}</Descriptions.Item>
@@ -28,8 +28,8 @@ const ViewDetailMain = ({ formData, styles, parameterType, isLoading = false }) 
                     <Descriptions.Item label="Included On">{checkAndSetDefaultValue(formData?.includedOn, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                     <Descriptions.Item label="Status">{checkAndSetDefaultValue(formData?.status ? 'Active' : 'Inactive', isLoading)}</Descriptions.Item>
                 </Descriptions>
-            </>
-        </div>
+            </div>
+        </>
     );
 };
 

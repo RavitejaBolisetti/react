@@ -6,12 +6,11 @@
 import React from 'react';
 import { withModal } from 'components/withModal';
 import { ApplicationTree } from './ApplicationTree';
-import styles from 'components/common/Common.module.css';
-import { Spin } from 'antd';
+
 import { ModalButtons } from 'components/common/Button';
 
 const RoleApplicationModalrMain = (props) => {
-    const { handleSaveUserRoleAppliactions, handleCancelModal, isLoading } = props;
+    const { handleSaveUserRoleAppliactions, handleCancelModal } = props;
 
     const modalProps = {
         reset: true,
@@ -24,12 +23,10 @@ const RoleApplicationModalrMain = (props) => {
     };
     return (
         <>
-            {/* <Spin spinning={isLoading} > */}
-                <ApplicationTree {...props} />
-                <ModalButtons {...modalProps} />
-            {/* </Spin> */}
+            <ApplicationTree {...props} />
+            <ModalButtons {...modalProps} />
         </>
     );
 };
 
-export const RoleApplicationModal = withModal(RoleApplicationModalrMain, {width:'70%'});
+export const RoleApplicationModal = withModal(RoleApplicationModalrMain, { width: '70%' });

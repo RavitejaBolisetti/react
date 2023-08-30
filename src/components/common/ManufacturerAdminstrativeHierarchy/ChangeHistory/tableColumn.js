@@ -5,7 +5,8 @@
  */
 import { tblPrepareColumns, tblStatusColumn } from 'utils/tableColumn';
 import { convertDateTime } from 'utils/formatDateTime';
-import styles from 'components/common/ChangeHistory/ChangeHistory.module.css';
+import styles from 'components/common/ChangeHistory/ChangeHistory.module.scss';
+//import styles from 'components/common/ChangeHistory/ChangeHistory.module.css';
 
 export const tableColumnAdmin = [
     tblPrepareColumns({

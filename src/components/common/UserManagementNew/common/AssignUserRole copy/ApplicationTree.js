@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Input, Form, Col, Row, Divider, Collapse, Tabs, Typography } from 'antd';
 
 import { expandIcon } from 'utils/accordianExpandIcon';
@@ -12,9 +12,10 @@ import { DEVICE_TYPE } from 'constants/modules/UserManagement/deviceType';
 
 import LeftPanel from 'components/common/LeftPanel';
 
-import style from 'components/common/TreeView.module.css';
-import styles from 'components/common/Common.module.css';
-
+import style from '../../../../../components/common/TreeView.module.scss';
+//import style from 'components/common/TreeView.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
 const { Search } = Input;
@@ -58,10 +59,7 @@ const fnMapData = ({ data, fieldNames, selectedKeys }) =>
     );
 
 const ApplicationTreeMain = (props) => {
-    const { menuList} = props;
     const { checkedKeys, setCheckedKeys, webApplications, roleCode, setWebApplications, mobileApplications, setMobileApplications, deviceType, setDeviceType, setClosePanels, formData, onCloseAction, form, onFinish, formActionType: { addMode = false, viewMode = false, editMode = true } = undefined } = props;
-    console.log("🚀 ~ file: ApplicationTree.js:63 ~ ApplicationTreeMain ~ checkedKeys:", checkedKeys)
-    const { defaultCheckedKeysMangement, setdefaultCheckedKeysMangement } = props;
     const { buttonData, setButtonData, handleButtonClick } = props;
 
     const APPLICATION_WEB = DEVICE_TYPE?.WEB?.key;
@@ -104,13 +102,10 @@ const ApplicationTreeMain = (props) => {
     const onCheck =
         (currentKey) =>
         (checkedKeysValue, { halfCheckedKeys }) => {
-            // setdefaultCheckedKeysMangement({ ...defaultCheckedKeysMangement, [deviceType]: checkedKeysValue });
-            // handleFormValueChange();
             const selectedKeys = [...checkedKeysValue, ...halfCheckedKeys] || [];
-            // setCheckedKeys(selectedKeys.length !== 0 ? { ...checkedKeys, {...checkedKeys?.[deviceType], [deviceType]: { [currentKey]: [...selectedKeys] } }} : {});
             const deviceTypePrev = checkedKeys || {};
             const appPrev = checkedKeys?.[deviceType] ? checkedKeys[deviceType] : {};
-            setCheckedKeys(checkedKeysValue.length !== 0 ? {...deviceTypePrev, [deviceType]:{ ...appPrev, [currentKey]: [...checkedKeysValue] } }    : []);
+            setCheckedKeys(checkedKeysValue.length !== 0 ? { ...deviceTypePrev, [deviceType]: { ...appPrev, [currentKey]: [...checkedKeysValue] } } : []);
 
             const mapSelectedKeyData = (data) => {
                 return data?.map((item) =>
@@ -124,7 +119,7 @@ const ApplicationTreeMain = (props) => {
                 );
             };
             if (deviceType === APPLICATION_WEB) {
-                setWebApplications( mapSelectedKeyData(webApplications));
+                setWebApplications(mapSelectedKeyData(webApplications));
             } else if (deviceType === APPLICATION_MOBILE) {
                 setMobileApplications(mapSelectedKeyData(mobileApplications));
             }
@@ -132,23 +127,6 @@ const ApplicationTreeMain = (props) => {
 
     const handleSearchValue = (event) => {
         setSearchValue(event.target.value);
-    };
-
-    const handleDefaultCheckedKeys = (Mode, keys, checkedMenuKeys) => {
-        if (!Mode) {
-            let newCheckedKeys = [];
-            let checkedKey = [];
-            if (!viewMode) {
-                for (const key in checkedKeys[deviceType]) {
-                    newCheckedKeys = [...checkedKeys[deviceType][key]];
-                }
-            }
-            checkedKey = [...newCheckedKeys, ...checkedMenuKeys];
-
-            return checkedKey;
-        } else {
-            return defaultCheckedKeysMangement[deviceType];
-        }
     };
 
     const AccordianTreeUtils = ({ menuData, roleCode }) => {

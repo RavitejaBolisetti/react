@@ -8,12 +8,11 @@ import React, { useState } from 'react';
 import { Col, Input, Form, Row, Select, Card, Button } from 'antd';
 import { FiDownload } from 'react-icons/fi';
 
-import { validateRequiredInputField, validateRequiredSelectField, noWhiteSpaceinBeginning, validationFieldLetter } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetter } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
-
 import { UploadUtil } from 'utils/Upload';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 const AddEditFormMain = (props) => {
     const { typeData, formData, formActionType: { editMode } = undefined, showGlobalNotification, buttonData, setButtonData, fileList } = props;

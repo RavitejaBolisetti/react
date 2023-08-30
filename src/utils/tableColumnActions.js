@@ -6,7 +6,9 @@
 import React from 'react';
 import { Dropdown, Menu } from 'antd';
 import Icon from '@ant-design/icons';
-import styles from 'utils/tableColumn.module.css';
+
+import styles from 'utils/tableColumn.module.scss';
+//import styles from 'utils/tableColumn.module.css';
 
 const myMenuAction = (actions, moduleType) => (props) => (record) => {
     return (

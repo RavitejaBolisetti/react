@@ -6,7 +6,8 @@
 import React from 'react';
 import { Card } from 'antd';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 export const ViewTechnicalDocDetail = (props) => {
     return (
