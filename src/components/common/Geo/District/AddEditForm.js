@@ -8,7 +8,9 @@ import { Col, Input, Form, Row, Select, Switch } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { withDrawer } from 'components/withDrawer';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
+
 import { ViewDetail } from './ViewDetail';
 import { DrawerFormButton } from 'components/common/Button';
 

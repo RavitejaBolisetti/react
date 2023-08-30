@@ -4,7 +4,8 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
-import styles from 'components/common/Common.module.css';
+
+import styles from 'assets/sass/app.module.scss';
 
 export const tableColumn = (props) => {
     const { handleButtonClick, formActionType, bindCodeValue } = props;
@@ -29,7 +30,7 @@ export const tableColumn = (props) => {
         }),
     ];
     if (!formActionType?.viewMode) {
-        tableColumn.push(tblActionColumn({ handleButtonClick, styles, width: '15%', EditIcon: true, EyeIcon: false, DeleteIcon: true }));
+        tableColumn.push(tblActionColumn({ handleButtonClick, styles, width: '15%', EditIcon: true, canView: false, canDelete: true }));
     }
     return tableColumn;
 };

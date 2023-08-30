@@ -7,7 +7,8 @@ import React from 'react';
 import { Input, Form, Col, Row, Switch, Select, Button } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber, validateAlphanumericWithSpaceHyphenPeriod } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 import TreeSelectField from '../TreeSelectField';
 
 const { Option } = Select;

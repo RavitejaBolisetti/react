@@ -15,10 +15,11 @@ import { customSelectBox } from 'utils/customSelectBox';
 import { YES_NO_FLAG } from 'constants/yesNoFlag';
 import { FINANCE_ARRANGED_BY } from 'constants/financeArrangedBy';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 const AddEditFormMain = (props) => {
-    const { formData, FinanceLovData, typeData, form, formActionType, setFormData } = props;
+    const { formData, FinanceLovData, typeData, form, formActionType } = props;
     const [doReceived, setDoReceived] = useState();
     const [financeArrangedBy, setFinanceArrangedBy] = useState();
     const checkFinanceType = (type, key) => (type ? type === key : false);
@@ -72,7 +73,7 @@ const AddEditFormMain = (props) => {
                             <Card style={{ backgroundColor: '#F2F2F2' }}>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item name="financeArrangedBy" label="Finance Arranged By">
+                                        <Form.Item name="financeArrangedBy" label="Finance Arranged By" rules={[validateRequiredSelectField('finance arranged by')]}>
                                             {customSelectBox({ data: typeData['FNC_ARNGD'], onChange: handleFinanceArrangedBy })}
                                         </Form.Item>
                                     </Col>
@@ -128,13 +129,13 @@ const AddEditFormMain = (props) => {
                                                 {doReceived === YES_NO_FLAG?.YES?.key && (
                                                     <Row gutter={20}>
                                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                            <Form.Item label="D.O. Number" name="doNumber" rules={[validateRequiredInputField('doNumber')]}>
-                                                                <Input placeholder={preparePlaceholderText('d.o. number')}></Input>
+                                                            <Form.Item label="D.O. Number" name="doNumber" rules={[validateRequiredInputField('Number')]}>
+                                                                <Input placeholder={preparePlaceholderText('D.O. Number')}></Input>
                                                             </Form.Item>
                                                         </Col>
 
                                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                            <Form.Item label="D.O. Date" name="doDate">
+                                                            <Form.Item label="D.O. Date" name="doDate" rules={[validateRequiredInputField('Date')]}>
                                                                 <DatePicker format={dateFormat} disabledDate={disableFutureDate} placeholder={preparePlaceholderSelect('date')} style={datePickerStyle} />
                                                             </Form.Item>
                                                         </Col>

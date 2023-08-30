@@ -1,0 +1,96 @@
+@import url('./global.css');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* --------------------------------------Not Use-----------------------------------------------------------*/
+.ant-input-group-wrapper {
+    vertical-align: inherit;
+    margin-top: 13px;
+}
+.container {
+    padding: 20px;
+}
+
+/*Pincode hierarchy CSS*/
+.alignSearchButton {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin-top: 18px;
+}
+
+.alignSearchButton button {
+    margin-right: 10px;
+}
+.CardFormitemMargin {
+    width: 100%;
+    background: #f4f4f4;
+    margin-bottom: 20px;
+}
+
+.CardFormitemMargin :global .ant-card-body {
+    padding: 16px !important;
+}
+
+.CardFormitemMargin :global .ant-card-body .ant-form-item {
+    margin-bottom: 0px !important;
+}
+.notViewTiming {
+    display: none;
+}
+
+.modalIconSuccess {
+    color: #00a310;
+    padding-right: 8px;
+}
+
+.modalIconError {
+    color: #ff3e5b;
+    padding-right: 8px;
+}
+
+.productHierarchy .content {
+    height: 62.6vh;
+}
+.emptyContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: calc(100vh - 170px);
+    border: 1px solid #e8e8e8;
+    border-radius: 4px;
+}
+.viewAllowedTiming button {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+    padding-right: 0px;
+}
+.hideInViewMode {
+    visibility: hidden;
+}
+/* -------------------------------------------------------------------------------------------------*/
+
+
+
+
+
+
+
+

@@ -10,7 +10,6 @@ import { formattedCalendarDate, dateFormat } from 'utils/formatDateTime';
 import { validateNumberWithTwoDecimalPlaces } from 'utils/validation';
 import { disableFutureDate } from 'utils/disableDate';
 
-
 const AddEditFormMain = (props) => {
     const { formData, form } = props;
 
@@ -29,17 +28,17 @@ const AddEditFormMain = (props) => {
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item label="Insurance Company" name="insuranceCompany">
-                                    <Input placeholder={preparePlaceholderText('Insurance Company')} />
+                                    <Input placeholder={preparePlaceholderText('Insurance Company')} maxLength={55} />
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item label="Insurance Cover Note" name="insuranceCoverNote">
-                                    <Input placeholder={preparePlaceholderText('Insurance Cover Note')} />
+                                    <Input placeholder={preparePlaceholderText('Insurance Cover Note')} maxLength={55} />
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item label="Insurance Amount" name="insuranceAmount" rules={[validateNumberWithTwoDecimalPlaces('loan amount')]}>
-                                    <Input placeholder={preparePlaceholderText('Insurance Amount')} />
+                                <Form.Item label="Insurance Amount" name="insuranceAmount" rules={[validateNumberWithTwoDecimalPlaces('insurance amount')]}>
+                                    <Input placeholder={preparePlaceholderText('Insurance Amount')} maxLength={20} />
                                 </Form.Item>
                             </Col>
                         </Row>
@@ -51,7 +50,7 @@ const AddEditFormMain = (props) => {
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item label="Registration Number" name="registrationNumber">
-                                    <Input placeholder={preparePlaceholderText('Registration Number')} />
+                                    <Input placeholder={preparePlaceholderText('Registration Number')} maxLength={20} />
                                 </Form.Item>
                             </Col>
                         </Row>

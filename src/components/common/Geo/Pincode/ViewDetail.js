@@ -7,16 +7,16 @@ import React from 'react';
 import { Descriptions } from 'antd';
 
 export const ViewDetail = ({ formData, styles, parameterType }) => {
-    const viewProps = {
+    const viewOneColProps = {
         bordered: false,
         colon: false,
         layout: 'vertical',
         column: { xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 },
     };
     return (
-        <div className={styles.viewContainer}>
-            <>
-                <Descriptions {...viewProps}>
+        <>
+            <div className={styles.viewContainer}>
+                <Descriptions {...viewOneColProps}>
                     <Descriptions.Item label="PIN Code">{formData?.pinCode}</Descriptions.Item>
                     <Descriptions.Item label="PIN Category">{formData?.pinCategoryName || 'NA'}</Descriptions.Item>
                     <Descriptions.Item label="Locality">{formData?.localityName || 'NA'}</Descriptions.Item>
@@ -29,7 +29,7 @@ export const ViewDetail = ({ formData, styles, parameterType }) => {
                     <Descriptions.Item label="Status">{formData?.status ? 'Active' : 'Inactive'}</Descriptions.Item>
                     <Descriptions.Item label="Approval Status">{formData?.approvalStatus ? 'Approved' : 'Not Approved'}</Descriptions.Item>
                 </Descriptions>
-            </>
-        </div>
+            </div>
+        </>
     );
 };

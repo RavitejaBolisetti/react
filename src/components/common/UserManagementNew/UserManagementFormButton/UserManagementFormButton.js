@@ -7,7 +7,8 @@ import React from 'react';
 import { Button, Row, Col, Popover } from 'antd';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 export const UserManagementFormButton = ({ record, handleChangeHistory, onCloseAction, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection }) => {
     const content = <div>Coming Soon</div>;
@@ -41,7 +42,7 @@ export const UserManagementFormButton = ({ record, handleChangeHistory, onCloseA
                     )}
 
                     {buttonData?.nextBtn && !isLastSection && (
-                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.NEXT, record })} type="primary">
+                        <Button disabled={!buttonData?.formBtnActive} onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.NEXT, record })} type="primary">
                             Next
                         </Button>
                     )}

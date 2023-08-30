@@ -7,7 +7,9 @@ import React from 'react';
 import { Form, Select, Input } from 'antd';
 
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
-import styles from './SearchBox.module.css';
+
+import styles from './SearchBox.module.scss';
+//import styles from './SearchBox.module.css';
 
 const { Option } = Select;
 const { Search } = Input;

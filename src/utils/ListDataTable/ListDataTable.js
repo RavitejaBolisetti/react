@@ -10,7 +10,6 @@ import { LANGUAGE_EN } from 'language/en';
 
 export default function ListDataTable(props) {
     const { tableData, handleButtonClick, handleAdd, addTitle = 'Record', showAddButton = true, noDataMessage = '' } = props;
-    // addButtonOption = false,
     const noDataExistTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
     const noDataExistMessage = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.MESSAGE.replace('{NAME}', addTitle);
     const noDataInformation = (

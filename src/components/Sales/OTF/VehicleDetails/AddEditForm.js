@@ -21,13 +21,14 @@ import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { getCodeValue } from 'utils/getCodeValue';
 import { VEHICLE_TYPE } from 'constants/VehicleType';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 const { Text } = Typography;
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { toolTipContent, isVehicleLovDataLoading, handleFormValueChange, onHandleSelect, optionsServicesMapping, setoptionsServicesMapping, optionsServiceModified, setoptionsServiceModified, formData, openAccordian, isReadOnly, setIsReadOnly, setOpenAccordian, selectedOrderId, form, onErrorAction, showGlobalNotification, fetchList, userId, listShowLoading, saveData, onSuccessAction, ProductHierarchyData, typeData, formActionType } = props;
+    const { toolTipContent, isVehicleLovDataLoading, handleFormValueChange, onHandleSelect, optionsServicesMapping, setoptionsServicesMapping, optionsServiceModified, setoptionsServiceModified, formData, openAccordian, isReadOnly, setIsReadOnly, setOpenAccordian, selectedOrderId, form, onErrorAction, showGlobalNotification, fetchList, userId, listShowLoading, saveData, onSuccessAction, ProductHierarchyData, typeData, formActionType, vehicleServiceData } = props;
     const [optionForm] = Form.useForm();
     const findUsageType = (usage) => {
         const foundVal = typeData[PARAM_MASTER.VEHCL_TYPE.id]?.find((element, index) => element?.value === usage);
@@ -82,6 +83,7 @@ const AddEditFormMain = (props) => {
         optionsServiceModified,
         setoptionsServiceModified,
         handleFormValueChange,
+        vehicleServiceData,
     };
 
     return (
@@ -182,7 +184,7 @@ const AddEditFormMain = (props) => {
                 <Collapse onChange={() => handleCollapse(2)} expandIconPosition="end" expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={openAccordian}>
                     <Panel header="Tax Details" key="2">
                         <Divider />
-                        <DataTable tableColumn={taxDetailsColumn} tableData={formData['taxDetails']} pagination={false} />
+                        <DataTable tableColumn={taxDetailsColumn()} tableData={formData['taxDetails']} pagination={false} />
                     </Panel>
                 </Collapse>
                 <Collapse onChange={() => handleCollapse(3)} expandIconPosition="end" expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={openAccordian}>
@@ -190,7 +192,7 @@ const AddEditFormMain = (props) => {
                         header={
                             <Row>
                                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                    <Text strong>Charges</Text>
+                                    <Text strong>Other Charges</Text>
                                     <Button onClick={addContactHandeler} icon={<PlusOutlined />} type="primary" disabled={isReadOnly}>
                                         Add
                                     </Button>
@@ -201,7 +203,7 @@ const AddEditFormMain = (props) => {
                     >
                         {!isReadOnly && <Divider />}
                         {isReadOnly && <OptionServicesForm {...OptionServicesFormProps} />}
-                        <DataTable tableColumn={optionalServicesColumns} tableData={optionsServiceModified} pagination={false} />
+                        <DataTable tableColumn={optionalServicesColumns()} tableData={optionsServiceModified} pagination={false} />
                     </Panel>
                 </Collapse>
             </Col>

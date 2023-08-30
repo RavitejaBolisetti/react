@@ -51,7 +51,7 @@
         "clear_jest": "jest --clearCache",
         "lint": "eslint .",
         "prepare": "husky install",
-        "test:coverage": "cross-env BABEL_ENV=test --max-old-space-size=4096 jest --coverage -- -u",
+        "test:coverage": "cross-env BABEL_ENV=test --max-old-space-size=4096 jest --coverage",
         "sonar": "ts-node sonar-scanner.ts"
     },
     "eslintConfig": {

@@ -20,7 +20,8 @@ import { convertDateTime } from 'utils/formatDateTime';
 import { debounce } from 'utils/debounce';
 import { UploadUtil } from 'utils/Upload';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 const { TextArea, Search } = Input;
 

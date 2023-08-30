@@ -17,7 +17,10 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import { tableColumnSearchOTF } from './tableColumnSearchOTF';
 import { VEHICLE_TYPE } from 'constants/VehicleType';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
+//import style from 'components/utils/SearchBox/SearchBox.module.scss';
+import style from 'components/utils/SearchBox/SearchBox.module.css';
 
 const ViewDetailMain = (props) => {
     const { formData, isLoading, typeData, setFilterStringOTFSearch, searchForm, tableData } = props;

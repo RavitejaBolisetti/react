@@ -14,11 +14,12 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { AddEditForm } from './AddEditForm';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { VEHICLE_TYPE } from 'constants/VehicleType';
-
+import { ALLOT } from 'utils/btnVisiblity';
 import { vehicleAllotment } from 'store/actions/data/vehicleAllotment/VehicleAllotment';
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 import { BASE_URL_VEHICLE_ALLOTMENT as customURL } from 'constants/routingApi';
 import { tableColumn } from './tableColumn';
+import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 const mapStateToProps = (state) => {
     const {
@@ -64,19 +65,18 @@ const mapDispatchToProps = (dispatch) => ({
 const OTFAllotmentMasterBase = (props) => {
     const { listShowLoading, userId } = props;
     const { fetchVehicleAllotmentSearchedList, allotmentSearchedList, fetchModelList, productHierarchyData } = props;
-    const { typeData, showGlobalNotification } = props;
+    const { typeData, showGlobalNotification, saveData, setIsAllotVisible } = props;
     const { filterString, setFilterString } = props;
 
     const { selectedOrder, moduleTitle } = props;
-
-    const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: true, transferOTFBtn: true };
+    const defaultBtnVisiblity = {  cancelBtn: true, allotBtn: true };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const [searchParamValue, setSearchParamValue] = useState('');
     const [toggleButton, settoggleButton] = useState(VEHICLE_TYPE?.ALLOTED.key);
     const [page, setPage] = useState({ pageSize: 10, current: 1 });
-    const handleButtonClick = ({ record = null, buttonAction }) => {};
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
+    const [selectedVINDetails, setSelectedOrderVINDetails] = useState();
 
     const [advanceFilterForm] = Form.useForm();
     const dynamicPagination = true;
@@ -177,7 +177,103 @@ const OTFAllotmentMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
+        switch (buttonAction) {
+            case ALLOT:
+                handleVehicleAllotment(record, buttonAction);
+                break;
+            
+            default:
+                break;
+        }
+    };
+
+    const handleVehicleAllotment = (req, buttonAction) => {
+        if (!selectedVINDetails) {
+            showGlobalNotification({ message: 'Please select VIN' });
+            return false;
+        }
+
+        let updatedStatus = '';
+        if (buttonAction === FROM_ACTION_TYPE?.ALLOT) {
+            updatedStatus = VEHICLE_TYPE?.ALLOTED.key;
+        } else {
+            updatedStatus = VEHICLE_TYPE?.UNALLOTED.key;
+        }
+
+        // let data = { ...allotmentSummaryDetails, vehicleOTFDetails: selectedOTFDetails, allotmentStatus: updatedStatus };
+        
+        const { otfId, otfNumber } = selectedOrder;
+        const { vehicleIdentificationNumber } = selectedVINDetails;
+
+        // let data = { ...allotmentSummaryDetails, vehicleOTFDetails: selectedOTFDetails, allotmentStatus: updatedStatus };
+        let data = { otfId, otfNumber, allotmentStatus: updatedStatus, vehicleIdentificationNumber };
+
+        const onSuccess = (res) => {
+            setShowDataLoading(true);
+            setIsAllotVisible(false);
+            setSelectedOrderVINDetails();
+            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            fetchVehicleAllotmentSearchedList({ customURL: customURL + '/search', setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+            setButtonData({ ...buttonData, formBtnActive: false });
+            //setIsFormVisible(false);
+
+            // setConfirmRequest({
+            //     ...confirmRequest,
+            //     isVisible: false,
+            // });
+        };
+
+        const onError = (message) => {
+            setSelectedOrderVINDetails();
+            showGlobalNotification({ message });
+        };
+
+        const requestData = {
+            data: data,
+            method: buttonAction === FROM_ACTION_TYPE?.ALLOT ? 'post' : 'put',
+            setIsLoading: listShowLoading,
+            userId,
+            onError,
+            onSuccess,
+        };
+
+        saveData(requestData);
+    };
+
+    const handleResetFilter = (e) => {
+        setSearchParamValue();
+        setShowDataLoading(true);
+        setFilterString();
+        advanceFilterForm.resetFields();
+        setAdvanceSearchVisible(false);
+    };
+
+    const removeFilter = (key) => {
+        if (key === 'searchParam') {
+            const { searchType, searchParam, ...rest } = filterString;
+            setFilterString({ ...rest });
+        } else {
+            const { [key]: names, ...rest } = filterString;
+            setFilterString({ ...rest });
+        }
+    };
+
+    const rowSelection = {
+        selectedRowKeys: [selectedVINDetails?.vehicleIdentificationNumber],
+        type: 'radio',
+        onChange: (selectedRowKeys, selectedRows) => {
+            setSelectedOrderVINDetails(selectedRows?.[0]);
+        },
+        getCheckboxProps: (record) => {
+            // return {
+            //     disabled: formData?.allotmentStatus === VEHICLE_TYPE.ALLOTED.key,
+            // };
+        },
+    };
+
     const tableProps = {
+        srl: false,
         dynamicPagination,
         totalRecords: allotmentSearchedList?.totalRecords,
         page,
@@ -186,6 +282,10 @@ const OTFAllotmentMasterBase = (props) => {
         tableColumn: tableColumn(handleButtonClick),
         tableData: allotmentSearchedList?.paginationData,
         showAddButton: false,
+        rowKey: 'vehicleIdentificationNumber',
+        rowSelection: {
+            ...rowSelection,
+        },
     };
 
     const formProps = {
@@ -202,11 +302,14 @@ const OTFAllotmentMasterBase = (props) => {
         settoggleButton,
         isAdvanceSearchVisible,
         extraParams,
+        removeFilter,
 
         setAdvanceSearchVisible,
         advanceFilterForm,
         typeData,
         productHierarchyData,
+        handleResetFilter,
+        
     };
 
     return <AddEditForm {...formProps} />;

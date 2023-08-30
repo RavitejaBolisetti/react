@@ -5,8 +5,8 @@
  */
 import { tblPrepareColumns, tblStatusColumn, tblActionColumn } from 'utils/tableColumn';
 
-import styles from 'components/common/Common.module.css';
-
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 export const tableColumn = (handleButtonClick, page, pageSize) => {
     const tableColumn = [];
     tableColumn.push(
@@ -23,7 +23,7 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
         }),
 
         tblPrepareColumns({
-            title: 'Role Name',
+            title: 'Role Description',
             dataIndex: 'roleDescription',
             width: '14%',
         }),

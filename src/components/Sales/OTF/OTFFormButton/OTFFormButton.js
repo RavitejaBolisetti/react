@@ -7,7 +7,9 @@ import React from 'react';
 import { Button, Row, Col, Popover } from 'antd';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
-import styles from 'components/common/Common.module.css';
+
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 export const OTFFormButton = ({ record, handleChangeHistory, handleOtfSoMappingHistory, onCloseAction, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection }) => {
     const content = <div>Coming Soon</div>;
@@ -29,7 +31,7 @@ export const OTFFormButton = ({ record, handleChangeHistory, handleOtfSoMappingH
                 </Col>
 
                 <Col xs={24} sm={16} md={18} lg={20} xl={20} className={styles.buttonsGroupRight}>
-                    {buttonData?.otfSoMappingChangeHistory && (
+                    {buttonData?.otfSoMappingHistoryBtn && (
                         <Button onClick={handleOtfSoMappingHistory} danger>
                             OTF Mapping History
                         </Button>
@@ -46,11 +48,11 @@ export const OTFFormButton = ({ record, handleChangeHistory, handleOtfSoMappingH
                         </Button>
                     )}
 
-                    {/* {buttonData?.unAllotBtn && ( */}
-                    <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.UNALLOT, record })} type="primary">
-                        Un-Allot
-                    </Button>
-                    {/* )} */}
+                    {buttonData?.unAllotBtn && (
+                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.UNALLOT, record })} type="primary">
+                            Un-Allot
+                        </Button>
+                    )}
 
                     {buttonData?.invoiceBtn && (
                         <Popover content={content} trigger="hover">

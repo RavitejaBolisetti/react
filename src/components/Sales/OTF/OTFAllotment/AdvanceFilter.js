@@ -4,11 +4,12 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect } from 'react';
-import { Form, Button, Row, Col } from 'antd';
+import { Form, Button, Row, Col, Card } from 'antd';
 
 import { RxCross2 } from 'react-icons/rx';
 import { SearchBox } from 'components/utils/SearchBox';
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+// import styles from 'components/common/Common.module.css';
 
 export default function AdvanceFilter(props) {
     const { resetAdvanceFilter, setResetAdvanceFilter, setFilterString, handleResetFilter, advanceFilter, removeFilter, filterString, extraParams } = props;
@@ -28,11 +29,12 @@ export default function AdvanceFilter(props) {
         singleFieldKey: 'searchParam',
         setResetAdvanceFilter,
     };
+
     return (
         <>
-            <div className={styles.contentHeaderBackground}>
-                <Row gutter={20}>
-                    <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+            <Card>
+                <Row gutter={20} className={styles.marB20}>
+                    <Col xs={24} sm={8} md={8} lg={8} xl={8} className={styles.marB20}>
                         <SearchBox {...searchBoxProps} />
                     </Col>
                 </Row>
@@ -68,7 +70,7 @@ export default function AdvanceFilter(props) {
                         </Col>
                     </Row>
                 )}
-            </div>
+            </Card>
         </>
     );
 }

@@ -5,7 +5,8 @@
  */
 import React from 'react';
 import { Card, Descriptions } from 'antd';
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { getCodeValue } from 'utils/getCodeValue';
 import { DATA_TYPE } from 'constants/dataType';
@@ -15,7 +16,7 @@ const ViewDetailMain = (props) => {
 
     const viewProps = {
         bordered: false,
-        colon: false,   
+        colon: false,
         layout: 'vertical',
         column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
     };

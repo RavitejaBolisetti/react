@@ -1,7 +1,10 @@
 import React from 'react';
 import { Drawer, Button } from 'antd';
 import { connect } from 'react-redux';
-import styles from "./crudViewPage.module.css";
+
+import styles from "./crudViewPage.module.scss";
+//import styles from "./crudViewPage.module.css";
+
 import { IS_THEME_1 } from "constants/config";
 
 

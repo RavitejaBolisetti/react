@@ -6,21 +6,17 @@
 import React from 'react';
 import { Col, Row } from 'antd';
 import { IoBanOutline } from 'react-icons/io5';
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
-  
 const TokenErrorCard = ({ error }) => {
-
-
     return (
         <Row gutter={20}>
             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                 <div className={styles.dataDisplay}>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.errorDisplay}>
-                            <IoBanOutline />{" "}
-                            <span>{error}</span>
-                         </Col>
+                            <IoBanOutline /> <span>{error}</span>
+                        </Col>
                     </Row>
                 </div>
             </Col>

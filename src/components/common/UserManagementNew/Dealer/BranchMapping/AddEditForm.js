@@ -7,7 +7,8 @@ import React from 'react';
 import { Col, Row, Card, Divider, Empty, Checkbox, Typography } from 'antd';
 import { LANGUAGE_EN } from 'language/en';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 import { CardSkeleton } from 'components/common/Skeleton';
 const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
 
@@ -64,7 +65,7 @@ const AddEditForm = (props) => {
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.marB10}>
                                         {dealerBranches?.map((el, i) => {
                                             return (
-                                                <Row gutter={20}>
+                                                <Row key={el?.locationCode} gutter={20}>
                                                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className={styles.marB10}>
                                                         {el?.locationName}
                                                     </Col>

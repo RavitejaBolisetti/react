@@ -6,24 +6,21 @@
 import React from 'react';
 import { Row, Col, Form, Select, Card, Descriptions } from 'antd';
 
-import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
-import { validateRequiredSelectField } from 'utils/validation';
-import { customSelectBox } from 'utils/customSelectBox';
-
 import AdvanceFilter from './AdvanceFilter';
 import { AdvancedSearch } from './AdvancedSearch';
 import { ListDataTable } from 'utils/ListDataTable';
 import { withDrawer } from 'components/withDrawer';
-import { DrawerFormButton } from 'components/common/Button';
 import { checkAndSetDefaultValue, getStatus } from 'utils/checkAndSetDefaultValue';
+import { VehicleDetailFormButton } from 'components/Sales/VehicleDetail/VehicleDetailFormButton';
 import { convertDateTime } from 'utils/formatDateTime';
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+// import styles from 'components/common/Common.module.css';
 
 import { FilterIcon } from 'Icons';
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { filterString, setFilterString, toggleButton, settoggleButton, setAdvanceSearchVisible, extraParams } = props;
+    const { filterString, setFilterString, toggleButton, settoggleButton, setAdvanceSearchVisible, extraParams, handleResetFilter, removeFilter } = props;
     const { isAdvanceSearchVisible, advanceFilterForm, typeData, productHierarchyData } = props;
 
     const { formData, isLoading, selectedOrder, tableProps } = props;
@@ -36,7 +33,6 @@ const AddEditFormMain = (props) => {
         buttonData,
         setButtonData,
         handleButtonClick,
-        onFinishOTFTansfer,
     };
 
     const viewProps = {
@@ -54,6 +50,8 @@ const AddEditFormMain = (props) => {
         toggleButton,
         settoggleButton,
         setAdvanceSearchVisible,
+        handleResetFilter,
+        removeFilter,
     };
 
     const advanceFilterProps = {
@@ -73,7 +71,7 @@ const AddEditFormMain = (props) => {
             <Form form={otfTransferForm} data-testid="test" onFinish={onFinishOTFTansfer} layout="vertical" autocomplete="off" colon="false">
                 <Row gutter={20} className={styles.drawerBody}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Card className={styles.ExchangeCard}>
+                        <Card>
                             <Descriptions {...viewProps}>
                                 <Descriptions.Item label="OTF No.">{checkAndSetDefaultValue(selectedOrder?.otfNumber, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="OTF Date">{checkAndSetDefaultValue(convertDateTime(selectedOrder?.otfDate, 'DD MMM YYYY'), isLoading)}</Descriptions.Item>
@@ -83,13 +81,16 @@ const AddEditFormMain = (props) => {
                                 <Descriptions.Item label="Order Status">{getStatus(selectedOrder?.orderStatus)}</Descriptions.Item>
                             </Descriptions>
                         </Card>
-
-                        <AdvanceFilter {...advanceFilterResultProps} />
-                        <ListDataTable handleAdd={handleButtonClick} {...tableProps} showAddButton={false} />
-                        <AdvancedSearch {...advanceFilterProps} />
                     </Col>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                        <AdvanceFilter {...advanceFilterResultProps} />
+                    </Col>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                        <ListDataTable handleAdd={handleButtonClick} {...tableProps} showAddButton={false} />
+                    </Col>
+                    {/* <AdvancedSearch {...advanceFilterProps} /> */}
                 </Row>
-                <DrawerFormButton {...buttonProps} />
+                <VehicleDetailFormButton {...buttonProps} />
             </Form>
         </>
     );

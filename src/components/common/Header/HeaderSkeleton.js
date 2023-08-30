@@ -7,13 +7,14 @@ import { Col, Row, Space } from 'antd';
 import React from 'react';
 import { InputSkeleton } from '../Skeleton';
 
-import styles from './Header.module.css';
+import styles from './Header.module.scss';
+//import styles from './Header.module.css';
 
 export const HeaderSkeleton = () => {
     return (
         <Row gutter={20}>
             <Col xs={24} sm={24} md={10} lg={10} xl={10} xxl={10}>
-                <div className={styles.headerLeft} style={{ marginTop: '5px' }}>
+                <div className={styles.headerLeft}>
                     <Space>
                         <div className={styles.userAvatarSkeleton}>
                             <InputSkeleton width={40} height={40} />
@@ -27,7 +28,7 @@ export const HeaderSkeleton = () => {
             </Col>
             <Col xs={24} sm={24} md={14} lg={14} xl={14} xxl={14}>
                 <div className={styles.headerRight}>
-                    <div className={styles.mt10}>
+                    <div className={styles.marT0}>
                         <div className={styles.navbarNav}>
                             <div className={styles.welcomeUser} style={{ marginRight: '20px' }}>
                                 <Space>

@@ -8,21 +8,22 @@ import { Col, Input, Form, Row, Select, Button } from 'antd';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, validateNumberWithTwoDecimalPlaces, validateRequiredSelectField } from 'utils/validation';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 const OptionServicesFormMain = (props) => {
-    const { typeData, handleCancel, handleFormValueChange, optionsServicesMapping, setoptionsServicesMapping, optionsServiceModified, setoptionsServiceModified, showGlobalNotification, formData, optionForm } = props;
-    const [serviceOptions, setserviceOptions] = useState(typeData['OPT_SRV']);
+    const { typeData, vehicleServiceData, handleCancel, handleFormValueChange, optionsServicesMapping, setoptionsServicesMapping, optionsServiceModified, setoptionsServiceModified, selectedOrderId, formData, optionForm } = props;
+    const [serviceOptions, setserviceOptions] = useState(vehicleServiceData);
 
     useEffect(() => {
         const arr = [];
         if (serviceOptions && serviceOptions?.length) {
             optionsServiceModified?.map((element) => {
-                arr.push(element?.serviceName);
+                arr.push(element?.taxId);
             });
 
             setserviceOptions(
                 serviceOptions?.map((element) => {
-                    if (arr?.includes(element?.value) || arr?.includes(element?.key)) {
+                    if (arr?.includes(element?.id) || arr?.includes(element?.value)) {
                         return { ...element, disabled: true };
                     } else {
                         return { ...element, disabled: false };
@@ -34,27 +35,11 @@ const OptionServicesFormMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [optionsServiceModified]);
 
-    const isServiceNamePresent = (serviceName) => {
-        let found = false;
-        optionsServiceModified?.find((element, index) => {
-            if (element?.serviceName?.trim()?.toLowerCase() === serviceName?.trim()?.toLowerCase()) {
-                showGlobalNotification({ notificationType: 'error', title: 'ERROR', message: 'Duplicate service Name' });
-                found = true;
-                return false;
-            }
-            return false;
-        });
-        return found;
-    };
-
     const onFinish = () => {
         optionForm
             .validateFields()
             .then(() => {
                 const values = optionForm.getFieldsValue();
-                if (isServiceNamePresent(values?.serviceName)) {
-                    return;
-                }
 
                 const data = { ...values, id: '' };
                 setoptionsServiceModified([data, ...optionsServiceModified]);
@@ -72,9 +57,12 @@ const OptionServicesFormMain = (props) => {
                     <Form autoComplete="off" layout="vertical" form={optionForm} onFinish={onFinish} data-testid="logRole">
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8} xxl={8}>
-                                <Form.Item name="serviceName" label="Service Name" initialValue={formData?.serviceName} rules={[validateRequiredSelectField('Service Name')]}>
-                                    <Select options={serviceOptions} fieldNames={{ label: 'value', value: 'value' }} placeholder={preparePlaceholderSelect('Service Name')} allowClear />
+                                <Form.Item name="taxId" label="Service Name" rules={[validateRequiredSelectField('Service Name')]}>
+                                    <Select onChange={(value, selectedObj) => optionForm.setFieldsValue({ serviceName: selectedObj?.value })} options={serviceOptions} fieldNames={{ label: 'value', value: 'id' }} placeholder={preparePlaceholderSelect('Service Name')} allowClear />
                                 </Form.Item>
+                                <Form.Item hidden name="otfNumber" initialValue={selectedOrderId} />
+                                <Form.Item hidden name="otfId" initialValue={formData?.OtfId ?? ''} />
+                                <Form.Item hidden name="serviceName" />
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item label="Amount" name="amount" rules={[validateRequiredInputField('Amount'), validateNumberWithTwoDecimalPlaces('Amount')]}>

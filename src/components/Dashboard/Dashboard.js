@@ -13,7 +13,8 @@ import { BiLineChart } from 'react-icons/bi';
 import { TbSpeakerphone } from 'react-icons/tb';
 import { FaChartPie, FaChartArea, FaClock, FaChalkboard, FaBookOpen } from 'react-icons/fa';
 import { convertDateTime } from 'utils/formatDateTime';
-import styles from './Dashboard.module.css';
+import styles from './Dashboard.module.scss';
+//import styles from './Dashboard.module.css';
 import moment from 'moment';
 
 const mapStateToProps = (state) => {

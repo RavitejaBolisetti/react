@@ -17,7 +17,8 @@ import { otfAddOnDetailsDataActions } from 'store/actions/data/otf/addOnDetails'
 import { otfAddOnPartsDataActions } from 'store/actions/data/otf/addonParts';
 import { showGlobalNotification } from 'store/actions/notification';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -179,7 +180,7 @@ export const AddOnDetailsMasterMain = (props) => {
         };
 
         const onError = (message) => {
-            showGlobalNotification({ message });
+            // showGlobalNotification({ message });
         };
 
         const requestData = {
