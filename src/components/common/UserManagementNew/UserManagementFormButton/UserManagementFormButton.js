@@ -42,7 +42,7 @@ export const UserManagementFormButton = ({ record, handleChangeHistory, onCloseA
                     )}
 
                     {buttonData?.nextBtn && !isLastSection && (
-                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.NEXT, record })} type="primary">
+                        <Button disabled={!buttonData?.formBtnActive} onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.NEXT, record })} type="primary">
                             Next
                         </Button>
                     )}

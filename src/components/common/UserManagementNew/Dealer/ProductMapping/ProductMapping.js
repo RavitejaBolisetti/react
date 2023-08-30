@@ -9,7 +9,8 @@ import { Input, Form, Row, Col, Card, Empty, Typography, Divider } from 'antd';
 // import { generateList } from 'utils/generateList';
 import LeftPanel from 'components/common/LeftPanel';
 import styles from 'components/common/TreeView.module.css';
-import style from 'components/common/Common.module.css';
+// import style from 'components/common/Common.module.css';
+import style from 'assets/sass/app.module.scss';
 import { UserManagementFormButton } from '../../UserManagementFormButton/UserManagementFormButton';
 import { LANGUAGE_EN } from 'language/en';
 
@@ -19,27 +20,11 @@ const fieldNames = { title: 'productName', key: 'productCode', children: 'childr
 const defaultBtnVisiblity = { editBtn: false, saveBtn: false, next: false, nextBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: true, formBtnActive: false };
 const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
 
-const flattenData = (data) => {
-    const listItem = [];
-    const generateList = (data) => {
-        for (let node of data) {
-            listItem.push({
-                ...node,
-            });
-            if (node?.children) {
-                generateList(node?.children);
-            }
-        }
-
-        return listItem;
-    };
-    return generateList(data);
-};
 
 const moduleStatus = 'pending';
 
 const ProductMapping = (props) => {
-    const { productDataTree, productHierarchyData, viewMode, section, setButtonData } = props;
+    const { productDataTree, viewMode, section, setButtonData } = props;
     const [finalProductData, setFinalProductData] = useState([]);
     const [searchValue, setSearchValue] = useState();
     const [checkedKeys, setCheckedKeys] = useState([]);

@@ -31,7 +31,7 @@ export const OTFFormButton = ({ record, handleChangeHistory, handleOtfSoMappingH
                 </Col>
 
                 <Col xs={24} sm={16} md={18} lg={20} xl={20} className={styles.buttonsGroupRight}>
-                    {buttonData?.otfSoMappingChangeHistory && (
+                    {buttonData?.otfSoMappingHistoryBtn && (
                         <Button onClick={handleOtfSoMappingHistory} danger>
                             OTF Mapping History
                         </Button>

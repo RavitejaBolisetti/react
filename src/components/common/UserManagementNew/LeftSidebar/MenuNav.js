@@ -7,7 +7,6 @@ import React, { useEffect } from 'react';
 import { Timeline } from 'antd';
 import { BsRecordCircleFill } from 'react-icons/bs';
 import { FaCheckCircle } from 'react-icons/fa';
-// import { USER_ACCESS_SECTION } from 'constants/modules/UserManagement/userAccessSection';
 import { USER_ACCESS_SECTION_DEALER, USER_ACCESS_SECTION_MANUFACTURER } from 'constants/modules/UserManagement/userAccessSection';
 import { USER_TYPE_USER } from 'constants/modules/UserManagement/userType';
 
@@ -20,7 +19,6 @@ const MenuNav = (props) => {
         currentSection,
         setCurrentSection,
         formActionType: { addMode = true, editMode, viewMode },
-        selectedCustomerId,
     } = props;
     const profileOptions = userType === USER_TYPE_USER?.DEALER?.id ? USER_ACCESS_SECTION_DEALER : USER_ACCESS_SECTION_MANUFACTURER;
 
@@ -37,7 +35,6 @@ const MenuNav = (props) => {
                     TimeLineClass[i].lastChild.firstChild.style.color = '#0b0b0c';
                 }
             }
-            // console.log('TimeLineClass', TimeLineClass);
             TimeLineClass[TimeLineClass?.length - 1].firstChild.style.display = 'none';
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -52,15 +49,6 @@ const MenuNav = (props) => {
     const className = (item) => {
         return addMode && !item.enableOnAdd ? styles.cursorNotAllowed : styles.cursorPointer;
     };
-
-    // const items = Object.values(profileOptions)?.map((i) => ({
-    //     dot: addMode && !i.enableOnAdd ? <BsRecordCircleFill className={className(i)} color={'#B5B5B'} /> : i.id === currentSection.id ? <BsRecordCircleFill className={`${styles.activeForm} ${className(i)}`} /> : <FaCheckCircle className={className(i)} />,
-    //     children: (
-    //         <div className={className(i)} onClick={() => onHandle(i)}>
-    //             {i.title}
-    //         </div>
-    //     ),
-    // }));
 
     const items = Object.values(profileOptions)?.map((i) => ({
         dot: i.id === currentSection ? <BsRecordCircleFill className={`${styles.activeForm} ${i}`} /> : addMode && !i.enableOnAdd ? <BsRecordCircleFill className={className(i)} color={'grey'} /> : <FaCheckCircle className={className(i)} />,

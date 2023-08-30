@@ -261,3 +261,5 @@ export const BASE_URL_VEHICLE_RECEIPT_CHECKLIST_MASTER = BASE_URL_VEHICLE + 'rec
 export const BASE_URL_VEHICLE_ALLOTMENT = BASE_URL + 'vehicle/allotments';
 export const BASE_URL_VEHICLE_INVOICE_GENERATION = BASE_URL_OTF + 'vehicleinvoice/search';
 
+
+export const BASE_URL_VEHICLE_DETAILS_SERVICE = BASE_URL + 'otf/vehicledetails/optionalcharges';

@@ -320,10 +320,10 @@
 /* AntD Table Design Start*/
 :global {
 	.ant-table-wrapper {
-		table {
-			border: 1px solid $neutralGrey1;
-			border-radius: 4px;
-		}
+		// table {
+		// 	border: 1px solid $neutralGrey1;
+		// 	border-radius: 4px;
+		// }
 		.ant-table-expanded-row-fixed {
 			width: 100% !important;
 		}
@@ -1587,6 +1587,26 @@
 					border: 2px solid $neutralGrey1;
 				}
 			}
+			.ant-descriptions-row {
+				.ant-descriptions-item {
+					.ant-descriptions-item-container {
+						.ant-descriptions-item-content {
+							display: inline-block;
+							white-space: nowrap;
+							overflow: hidden;
+							text-overflow: ellipsis;
+							color: $primaryBlack;
+							font-weight: 400;
+							line-height: 23px;
+							align-items: center;
+							a {
+								color: $primaryBlack;
+								text-decoration: underline;
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 }
@@ -1634,16 +1654,16 @@
 
 /*------Margin------*/
 .marT0 {
-    @include space(margin, Top, $sp10);
+    @include space(margin, top, $sp10);
 }
 .marT20{
-	@include space(margin, Top, $sp20);
+	@include space(margin, top, $sp20);
 }
 .marT30{
-	@include space(margin, Top, $sp30);
+	@include space(margin, top, $sp30);
 }
 .marT6 {
-    @include space(margin, Top, $sp6);
+    @include space(margin, top, $sp6);
 }
 .marR0 {
     @include space(margin, right, $sp0);
