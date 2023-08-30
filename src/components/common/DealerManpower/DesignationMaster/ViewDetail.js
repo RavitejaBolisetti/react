@@ -5,8 +5,10 @@
  */
 import React from 'react';
 import { Descriptions } from 'antd';
+import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
+import { getCodeValue } from 'utils/getCodeValue';
 
-const ViewDetailBase = ({ formData, styles, parameterType }) => {
+const ViewDetailBase = ({ formData, styles, parameterType, typeData }) => {
     const viewOneColProps = {
         bordered: false,
         colon: false,
@@ -20,19 +22,16 @@ const ViewDetailBase = ({ formData, styles, parameterType }) => {
                     <Descriptions.Item label="Division Name">{formData?.divisionName}</Descriptions.Item>
                     <Descriptions.Item label="Department Name">{formData?.departmentName}</Descriptions.Item>
                     <Descriptions.Item label="Role Name">{formData?.roleDescription}</Descriptions.Item>
-                    <Descriptions.Item label="Designation Code">{formData?.designationCode}</Descriptions.Item>
-                    <Descriptions.Item label="Designation Name">{formData?.designationDescription}</Descriptions.Item>
+                    <Descriptions.Item label="Designation Type">{checkAndSetDefaultValue(getCodeValue(typeData?.DESG_TYP_ASGN_TO, formData?.designationType))}</Descriptions.Item>
+                    <Descriptions.Item label="Designation Name">{formData?.designationName}</Descriptions.Item>
+                    <Descriptions.Item label="Mile Skill">{formData?.mileSkillId}</Descriptions.Item>
                     <Descriptions.Item label="Status">{formData?.status ? 'Active' : 'Inactive'}</Descriptions.Item>
-                    <Descriptions.Item label="Common">{formData?.isCommonIndicatorRequired ? 'Yes' : 'No'}</Descriptions.Item>
                     <Descriptions.Item label="Manpower Required">{formData?.isManpowerIndicatorRequired ? 'Yes' : 'No'}</Descriptions.Item>
-                    <Descriptions.Item label="Leadership">{formData?.isLeadershipIndicatorRequired ? 'Yes' : 'No'}</Descriptions.Item>
                     <Descriptions.Item label="Accounts Data">{formData?.isAccountsDataIndicatorRequired ? 'Yes' : 'No'}</Descriptions.Item>
-                    <Descriptions.Item label="Dealer HR">{formData?.isDealerHrIndicatorRequired ? 'Yes' : 'No'}</Descriptions.Item>
-                    <Descriptions.Item label="Certified">{formData?.isCertifiedIndicatorRequired ? 'Yes' : 'No'}</Descriptions.Item>
-                    <Descriptions.Item label="NEFT Details">{formData?.isNeftDetailsIndicatorRequired ? 'Yes' : 'No'}</Descriptions.Item>
                     <Descriptions.Item label="Capability (L1/L2/L3)">{formData?.isCapabilityIndicatorRequired ? 'Yes' : 'No'}</Descriptions.Item>
-                    <Descriptions.Item label="FFT Department Approval">{formData?.isFftDepartmentApprovalIndicatorRequired ? 'Yes' : 'No'}</Descriptions.Item>
                     <Descriptions.Item label="Create User Id">{formData?.isCreateUserIdRequired ? 'Yes' : 'No'}</Descriptions.Item>
+                    {/* <Descriptions.Item label="Designation Code">{formData?.designationCode}</Descriptions.Item> */}
+                    {/* <Descriptions.Item label="Designation Type">{formData?.designationDescription}</Descriptions.Item> */}
                 </Descriptions>
             </div>
         </>

@@ -5,7 +5,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { Input, Form, Col, Row, Switch, Space, Collapse, Tabs, Typography } from 'antd';
+import { Input, Form, Col, Row, Switch, Space, Collapse, Tabs, Typography, Divider } from 'antd';
 
 import { productDataTree } from 'components/common/UserManagement/dummyData';
 import { validateAlphanumericWithSpaceHyphenPeriod, validateRequiredInputField, validationFieldLetterAndNumber } from 'utils/validation';
@@ -249,7 +249,7 @@ const AddEditFormMain = (props) => {
                     </>
                 ) : ( */}
                 <>
-                    <div className={styles.roleDescription}>
+                    <div>
                         <Row gutter={20}>
                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                                 <Form.Item initialValue={formData?.roleId} name="roleId" label="Role Id" rules={[validateRequiredInputField('id'), validationFieldLetterAndNumber('id')]}>
@@ -284,6 +284,7 @@ const AddEditFormMain = (props) => {
                             </Col>
                         </Row>
                     </div>
+                    <Divider />
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.subTitleSec}>
                             Application Access<span className={styles.mandatory}>*</span>
