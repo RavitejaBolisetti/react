@@ -80,14 +80,14 @@
           background: $primaryRed-dark !important;
       }*/
     &:disabled {
-        background-color: $neutralGrey2-dark;
-        border: 1px solid $neutralGrey2-dark;
+        background-color: $neutralGrey2-dark !important;
+        border: 1px solid $neutralGrey2-dark !important;
         opacity: 1;
-        @include font-style(16, 24, 600, $neutralGrey3-dark, $fontfamily, center);
+        @include font-style(16, 24, 600, $neutralGrey3-dark !important, $fontfamily, center);
 
         &:hover {
             background-color: $neutralGrey2-dark !important;
-            border: 1px solid $neutralGrey2-dark;
+            border: 1px solid $neutralGrey2-dark  !important;
             opacity: 1;
             @include font-style(16, normal, 600, $neutralGrey3-dark, $fontfamily, center);
         }
