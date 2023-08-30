@@ -7,37 +7,39 @@ import '@testing-library/jest-dom/extend-expect';
 import { Provider } from 'react-redux';
 import customRender from '@utils/test-utils';
 import createMockStore from '__mocks__/store';
-import { ListPartyMaster } from '@components/common/PartyMaster/ListPartyMaster';
+import { ListPartyMaster } from '@components/common/PartyMaster/listpartymaster';
 import { screen, fireEvent } from '@testing-library/react';
+import { act } from 'react-dom/test-utils';
+
 afterEach(() => {
     jest.restoreAllMocks();
 });
-const handler = jest.fn(() => Promise.resolve());
+
 describe('List party master Components', () => {
     it('should render list components', () => {
-        customRender(<ListPartyMaster handler={handler} />);
+        customRender(<ListPartyMaster />);
     });
 
     it('should render partyName text', () => {
-        customRender(<ListPartyMaster handler={handler} />);
+        customRender(<ListPartyMaster />);
         const partyName = screen.getByTitle('Party Name');
         expect(partyName).toBeInTheDocument();
     });
 
     it('should render search input field', () => {
-        customRender(<ListPartyMaster handler={handler} />);
+        customRender(<ListPartyMaster />);
         const search = screen.getByPlaceholderText('Search');
         expect(search).toBeInTheDocument();
     });
 
     it('should render button', async () => {
-        customRender(<ListPartyMaster handler={handler} />);
+        customRender(<ListPartyMaster />);
         const getButton = screen.getAllByRole('button');
         expect(getButton).toBeTruthy();
     });
 
     it('Is search Field Present or not', () => {
-        customRender(<ListPartyMaster handler={handler} />);
+        customRender(<ListPartyMaster />);
         const searchBtn = screen.findByPlaceholderText('Search');
         expect(searchBtn).toBeTruthy();
         expect(screen.getByRole('img', { name: 'search' })).toBeTruthy();
@@ -48,12 +50,14 @@ describe('List party master Components', () => {
     });
 
     it('should able to search data', async () => {
-        customRender(<ListPartyMaster handler={handler} />);
+        customRender(<ListPartyMaster />);
         const inputBox = screen.getByRole('textbox');
         fireEvent.change(inputBox, { target: { value: 'Dmstest' } });
         expect(inputBox.value.includes('Dmstest')).toBeTruthy();
         const searchButton = screen.getByRole('button', { name: /search/i });
-        fireEvent.click(searchButton);
+        await act(async () => {
+            fireEvent.click(searchButton);
+        });
     });
 
     it('should validate search', async () => {
@@ -68,7 +72,7 @@ describe('List party master Components', () => {
         });
         customRender(
             <Provider store={mockStore}>
-                <ListPartyMaster handler={handler} />
+                <ListPartyMaster />
             </Provider>
         );
         const inputBox = screen.getByRole('textbox');
@@ -80,4 +84,82 @@ describe('List party master Components', () => {
         expect(inputBox.value.includes('')).toBeTruthy();
         fireEvent.click(searchButton);
     });
+
+    it('should render component on data not loaded', async () => {
+        const mockStore = createMockStore({
+            auth: { userId: 123 },
+            data: {
+                PartyMaster: {
+                    isLoaded: false,
+                    data: [{ id: 1, name: 'test', partyName: 'Alice' }],
+                },
+            },
+        });
+        customRender(
+            <Provider store={mockStore}>
+                <ListPartyMaster />
+            </Provider>
+        );
+    });
+
+    it('add button should work', async () => {
+        const mockStore = createMockStore({
+            auth: { userId: 123 },
+            data: {
+                PartyMaster: {
+                    isLoaded: true,
+                    data: [{ id: 1, name: 'test', partyName: 'Alice' }],
+                },
+            },
+        });
+        customRender(
+            <Provider store={mockStore}>
+                <ListPartyMaster />
+            </Provider>
+        );
+        const btnClick = screen.getByRole('button', { name: 'plus Add', exact: false });
+        fireEvent.click(btnClick);
+    });
+
+    it('refresh button should work', async () => {
+        const mockStore = createMockStore({
+            auth: { userId: 123 },
+            data: {
+                PartyMaster: {
+                    isLoaded: true,
+                    data: [{ id: 1, name: 'test', partyName: 'Alice' }],
+                },
+            },
+        });
+        customRender(
+            <Provider store={mockStore}>
+                <ListPartyMaster />
+            </Provider>
+        );
+        const refreshbutton = screen.getByRole('button', { name: '', exact: false });
+        fireEvent.click(refreshbutton);
+    });
+
+    it('cancel button should work', async () => {
+        const mockStore = createMockStore({
+            auth: { userId: 123 },
+            data: {
+                PartyMaster: {
+                    isLoaded: true,
+                    data: [{ id: 1, name: 'test', partyName: 'Alice' }],
+                },
+            },
+        });
+        customRender(
+            <Provider store={mockStore}>
+                <ListPartyMaster />
+            </Provider>
+        );
+        customRender(<ListPartyMaster />);
+        const btnClick = screen.getByRole('button', { name: 'plus Add', exact: false });
+        fireEvent.click(btnClick);
+        const btnClick2 = screen.getByRole('button', { name: 'Cancel', exact: false });
+        fireEvent.click(btnClick2);
+    });
+    
 });

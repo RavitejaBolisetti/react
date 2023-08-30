@@ -20,9 +20,9 @@ export default function AdvanceFilter(props) {
     const [searchForm] = Form.useForm();
 
     useEffect(() => {
-        // searchForm.resetFields();
+        searchForm.resetFields();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [resetAdvanceFilter]);
+    }, [toggleButton]);
 
     const searchBoxProps = {
         singleField: true,

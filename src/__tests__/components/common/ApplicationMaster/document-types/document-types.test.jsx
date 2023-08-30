@@ -17,7 +17,7 @@ afterEach(() => {
 
 describe('Document Types Component', () => {
     it('should render document types component', async () => {
-        customRender(<DocumentTypes />);
+        customRender(<DocumentTypes onFinish={jest.fn()} />);
     });
 
     it('form fields should work', async () => {
@@ -45,6 +45,7 @@ describe('Document Types Component', () => {
         const submitButton = screen.getByRole('button', { name: 'plus Add', exact: false });
 
         fireEvent.click(submitButton);
+        // expect(setFinalFormdata).toHaveBeenCalled();
     });
 
     it('cancel button should work', async () => {
@@ -60,9 +61,7 @@ describe('Document Types Component', () => {
     });
 
     it('edit icon and save button should work', async () => {
-        const setFinalFormdata = jest.fn();
-        jest.spyOn(React, 'useState').mockReturnValue([null, setFinalFormdata]);
-        render(<DocumentTypes id={null} forceUpdate={jest.fn()} setfinalFormdata={setFinalFormdata} setCanFormSave={jest.fn()} setIsBtnDisabled={jest.fn()} finalFormdata={finalFormdata} />);
+        render(<DocumentTypes id={null} forceUpdate={jest.fn()} setCanFormSave={jest.fn()} setIsBtnDisabled={jest.fn()} finalFormdata={finalFormdata} />);
         const buttons = screen.getAllByRole('button', { name: '', exact: false });
         act(() => {
             fireEvent.click(buttons[0]);

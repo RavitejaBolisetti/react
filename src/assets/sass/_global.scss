@@ -60,9 +60,9 @@
         }
 
         &:disabled {
-            border-color: $neutralGrey2;
-            background-color: $neutralGrey1;
-            color: $neutralGrey2;
+            border-color: $primaryRed;
+            background-color: $primaryRed;
+            color: $primaryWhite;
 
             &:not(.ant-btn-icon-only) {
                 > .ant-btn-icon.ant-btn-loading-icon {
@@ -367,23 +367,19 @@
 /* AntD Tags Design End*/
 
 /* AntD Table Design Start*/
+
 :global {
     .ant-table-wrapper {
-        table {
+        .ant-table-container {
+            border-radius: 4px;
             border: 1px solid $neutralGrey1;
+        }
+        .ant-table {
             border-radius: 4px;
         }
-
         .ant-table-expanded-row-fixed {
             width: 100% !important;
         }
-
-        .ant-table {
-            .ant-table-content {
-                border-radius: 4px 4px 0 0;
-            }
-        }
-
         .ant-table-ping-left {
             &:not(.ant-table-has-fix-left) {
                 .ant-table-container {
@@ -393,7 +389,6 @@
                 }
             }
         }
-
         .ant-table-ping-right {
             &:not(.ant-table-has-fix-right) {
                 .ant-table-container {
@@ -403,7 +398,6 @@
                 }
             }
         }
-
         .ant-table-tbody {
             > tr {
                 &:last-child {
@@ -411,22 +405,18 @@
                         &:first-child {
                             border-radius: 0 0 0 4px;
                         }
-
                         &:last-child {
                             border-radius: 0 0 4px 0;
                         }
-
                         border-bottom: none;
                     }
                 }
-
                 > td {
                     padding: 10px 16px;
                     color: $neutralGrey4;
                     font-weight: 500;
                     line-height: 26px;
                     border-bottom: 1px solid $neutralGrey1;
-
                     &:last-child {
                         .ant-space {
                             .ant-space-item {
@@ -439,8 +429,12 @@
                         }
                     }
                 }
+                &:first-child.ant-table-row-selected {
+                    > td {
+                        border-top: 1px solid $neutralGrey1;
+                    }
+                }
             }
-
             > tr.ant-table-row {
                 &:last-child {
                     &:hover {
@@ -448,7 +442,6 @@
                             &:first-child {
                                 border-radius: 0 0 0 4px;
                             }
-
                             &:last-child {
                                 border-radius: 0 0 4px 0;
                             }
@@ -456,8 +449,35 @@
                     }
                 }
             }
+            > tr.ant-table-row-selected {
+                > td {
+                    background: $neutralGrey0;
+                }
+                &:hover {
+                    > td {
+                        background: $neutralGrey1;
+                    }
+                }
+            }
         }
-
+        table {
+            thead {
+                tr {
+                    th.ant-table-selection-column {
+                        background: $neutralGrey0;
+                    }
+                    td.ant-table-selection-column {
+                        background: $neutralGrey0;
+                    }
+                }
+            }
+        }
+        .ant-table-cell-scrollbar {
+            &:not([rowspan]) {
+                background: $neutralGrey0;
+                box-shadow: none;
+            }
+        }
         .ant-table-thead {
             > tr {
                 > th {
@@ -469,9 +489,12 @@
                 }
             }
         }
-
         thead {
             box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.15);
+        }
+        .ant-table-pagination.ant-pagination {
+            margin: 20px 0 0;
+            display: none;
         }
     }
 }
@@ -1887,9 +1910,30 @@
 }
 
 /* changes on menu list items on select/visited/focus End*/
+/*--------------RC Virtual--------------*/
+:global {
+    .rc-virtual-list-scrollbar.rc-virtual-list-scrollbar-show {
+        display: block !important;
+        background: $primaryWhite;
+    }
+    .rc-virtual-list-scrollbar-thumb {
+        width: 50% !important;
+        background: $neutralGrey2 !important;
+        border: 2px solid $primaryWhite;
+        &:hover {
+            border: 2px solid $neutralGrey2;
+        }
+    }
+    .rc-virtual-list-holder:has(+ div.rc-virtual-list-scrollbar-show) {
+        padding-right: 10px;
+    }
+}
 
 /*--------------Common--------------*/
-
+p {
+    margin-block-start: 0;
+    margin-block-end: 0;
+}
 /*------Margin------*/
 .marT0 {
     @include space(margin, top, $sp10);

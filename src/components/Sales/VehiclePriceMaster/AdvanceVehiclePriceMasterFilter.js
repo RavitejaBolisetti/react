@@ -93,7 +93,7 @@ export default function AdvanceVehiclePriceMasterFilter(props) {
                                                 {filter?.name}
                                                 {filter?.canRemove && (
                                                     <span>
-                                                        <RxCross2 onClick={() => removeFilter(filter?.key)} />
+                                                        <RxCross2 data-testid="removeFilterBtn" onClick={() => removeFilter(filter?.key)} />
                                                     </span>
                                                 )}
                                             </div>
