@@ -6,6 +6,7 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { DashboardPage } from 'pages/dashboard';
+
 import {
     ProductHierarchyPage,
     UserManagementPage,
@@ -116,7 +117,6 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_USER_DISCLAIMER} element={<CMSPage />} exact />
             <Route path={routing.ROUTING_USER_CONTACT} element={<CMSPage />} exact />
             <Route path={routing.ROUTING_OTF} element={<OTFMasterPage />} exact />
-            {/* <Route path={routing.ROUTING_VECHILE_DETAILS} element={<VehicleDetailMasterPage />} exact /> */}
             <Route path={routing.ROUTING_VECHILE_PURCHASE_ORDER} element={<VehiclePurchaseOrderMasterPage />} exact />
 
             <Route path={routing.ROUTING_RSM_APPROVAL} element={<RSMApprovalPage />} exact />
