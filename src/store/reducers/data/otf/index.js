@@ -25,6 +25,7 @@ import { AddonParts } from './addonParts';
 
 import { OtfSoMapping } from './otfSoMapping';
 import { OtfSoUserMapping } from './otfSoUserMapping';
+import { VehicleDetailsServiceLov } from './serviceLov';
 
 export const OTF = combineReducers({
     InvoiceDetail,
@@ -45,4 +46,5 @@ export const OTF = combineReducers({
     AddonParts,
     OtfSoMapping,
     OtfSoUserMapping,
+    VehicleDetailsServiceLov,
 });

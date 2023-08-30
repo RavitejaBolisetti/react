@@ -162,7 +162,7 @@ export const OtfMasterBase = (props) => {
         invoiceBtn: false,
         deliveryNote: false,
         changeHistory: true,
-        otfSoMappingChangeHistory: false,
+        otfSoMappingHistoryBtn: false,
     };
 
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });

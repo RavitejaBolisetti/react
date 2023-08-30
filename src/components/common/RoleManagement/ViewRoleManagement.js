@@ -6,7 +6,7 @@
 import React from 'react';
 import { Descriptions, Divider } from 'antd';
 
-const ViewRoleManagementMain = ({ formData, styles, menuTreeData, onTabChange, AccordianTreePanel }) => {
+const ViewRoleManagementMain = ({ formData, styles, menuTreeData, AccordianTreePanel }) => {
     const viewProps = {
         bordered: false,
         colon: false,
@@ -35,7 +35,7 @@ const ViewRoleManagementMain = ({ formData, styles, menuTreeData, onTabChange, A
                         <Descriptions.Item label="Status">{formData?.status ? 'Active' : 'InActive'}</Descriptions.Item>
                     </Descriptions>
                 </div>
-                <Divider />
+                {/* <Divider /> */}
                 <div className={styles.subTitleSec}>Application Access</div>
                 {AccordianTreePanel({ viewMode: true, menuTreeData })}
             </div>

@@ -16,7 +16,7 @@ const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewMacIdList = (props) => {
-    const { styles, macIdData, deleteContactHandeler, timeData, setTimeData, forceUpdate, setAllowedTimingSave, setEditingData, typeData } = props;
+    const { styles, macIdData, deleteContactHandeler, setEditingData, typeData } = props;
     const { isAdding, setShowAddEditForm, showAddEditForm, setMacIdData, macIdform, isEditing, setIsEditing, formActionType } = props;
 
     const [openAccordian, setOpenAccordian] = useState('');
@@ -31,15 +31,6 @@ const ViewMacIdList = (props) => {
         macIdform.setFieldsValue({ ...data, preferredContactTime: [formatTime(data?.preferredContactTimeFrom), formatTime(data?.preferredContactTimeTo)] });
     };
 
-    // const onTimingFormFinish = (values) => {
-    //     let preferredContactTimeFrom = values?.preferredContactTime?.[0]?.format('HH:mm');
-    //     let preferredContactTimeTo = values?.preferredContactTime[1]?.format('HH:mm');
-    //     setTimeData([...timeData, { preferredContactTimeFrom, preferredContactTimeTo }]);
-    //     timingForm.resetFields();
-    //     setAllowedTimingSave(true);
-    //     forceUpdate();
-    // };
-
     const handleCollapse = (key) => {
         if (isEditing) return;
         setOpenAccordian((prev) => (prev === key ? '' : key));
@@ -50,7 +41,6 @@ const ViewMacIdList = (props) => {
         setShowAddEditForm,
         showAddEditForm,
         setMacIdData,
-        // onFinish: onTimingFormFinish,
         form: timingForm,
         macIdform,
         isEditing,
@@ -65,7 +55,7 @@ const ViewMacIdList = (props) => {
             {macIdData?.length > 0 &&
                 macIdData?.map((data, i) => {
                     return (
-                        <Collapse key={data?.deviceType} onChange={() => handleCollapse(i)} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian} collapsible="icon">
+                        <Collapse key={data?.macId} onChange={() => handleCollapse(i)} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian} collapsible="icon">
                             <Panel
                                 key={i}
                                 header={
@@ -82,7 +72,7 @@ const ViewMacIdList = (props) => {
                                             <Col xs={10} sm={10} md={10} lg={10} xl={10}>
                                                 <div className={styles.floatRight}>
                                                     <Divider type="vertical" />
-                                                    <Text type="secondary">{data?.macId}</Text>
+                                                    <Text type="secondary">{data?.deviceType}</Text>
                                                 </div>
                                             </Col>
                                         )}

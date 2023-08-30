@@ -6,10 +6,10 @@
 import React from 'react';
 import { Collapse, Space, Avatar, Typography, Divider } from 'antd';
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 const { Panel } = Collapse;
-const { Text, Title } = Typography;
+const { Title } = Typography;
 const expandIcon = ({ isActive }) =>
     isActive ? (
         <>
@@ -67,7 +67,7 @@ const ProfileDetailCard = (props) => {
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    Mobile Number: <span>{'+91-' + selectedRecord?.mobileNumber || 'NA'}</span>
+                    Mobile Number: <span>{selectedRecord?.mobileNumber ? `+91-${selectedRecord?.mobileNumber?.slice(selectedRecord?.mobileNumber?.length - 10, selectedRecord?.mobileNumber?.length)}` : 'NA'}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>

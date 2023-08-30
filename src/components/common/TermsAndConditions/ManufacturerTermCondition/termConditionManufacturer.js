@@ -335,6 +335,7 @@ const TncManufacturer = ({ moduleTitle, saveData, userId, fetchTermCondition, Ma
         title,
         showAddButton: ManufacturerTermsConditionsData?.length > 0 ? true : false,
         showChangeHistoryButton: ManufacturerTermsConditionsData?.length > 0 ? true : false,
+        tableData: searchData,
         showChangeHistoryList,
     };
 

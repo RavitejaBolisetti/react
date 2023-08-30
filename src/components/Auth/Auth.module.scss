@@ -77,8 +77,8 @@
     background-color: $primaryRed-dark;
 
     /*&:hover {
-         background: $primaryRed-dark !important;
-     }*/
+          background: $primaryRed-dark !important;
+      }*/
     &:disabled {
         background-color: $neutralGrey2-dark;
         border: 1px solid $neutralGrey2-dark;
@@ -175,7 +175,7 @@
                 }
 
                 margin-inline-start: 12px;
-                margin-inline-end: 12px;
+                //  margin-inline-end: 12px;
                 color: $neutralGrey2-dark;
             }
         }
@@ -581,6 +581,9 @@
                 @include font-style(12, 20, 600, $primaryRed-dark, $fontfamily, right);
                 width: 100%;
                 margin-top: -16px;
+                z-index: 10;
+                position: absolute;
+                right: 10px;
 
                 a {
                     color: $primaryRed !important;
