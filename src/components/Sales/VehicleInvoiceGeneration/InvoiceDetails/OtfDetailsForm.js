@@ -64,12 +64,12 @@ const OtfDetailsForm = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={receiptData?.totalReceivedAmount} label="Tax Calculation" name="taxCalculation">
+                            <Form.Item initialValue={receiptData?.totalReceivedAmount} label="Tax Calculation" name="taxCalculationType">
                                 <Input placeholder={preparePlaceholderText('Tax Calculation')} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={receiptData?.totalReceivedAmount} label="Tax Payable On Reverse Charges?" name="taxPayable">
+                            <Form.Item initialValue={receiptData?.totalReceivedAmount} label="Tax Payable On Reverse Charges?" name="taxPayableOnReverseCharges">
                                 <Input placeholder={preparePlaceholderText('Tax Payable On Reverse Charges')} />
                             </Form.Item>
                         </Col>

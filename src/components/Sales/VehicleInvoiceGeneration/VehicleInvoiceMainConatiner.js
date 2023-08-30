@@ -11,14 +11,20 @@ import { VEHICLE_INVOICE_SECTION } from 'constants/VehicleInvoiceSection';
 import { LeftSidebar } from './LeftSidebar';
 
 import styles from 'assets/sass/app.module.scss';
+
+// import { InsuranceDetailsMaster } from './InsuranceDetails';
+// import { SchemeOfferDetailsMaster } from './SchemeOfferDetails';
+// import { VehicleInvoiceDetailMaster } from './VehicleDetails';
+// import { FinanceDetailsMaster } from './FinanceDetails';
+import { InsuranceDetailsMaster } from 'components/Sales/Common/InsuranceDetails';
+import { SchemeDetailsMaster } from 'components/Sales/Common/SchemeDetails';
+import { VehicleDetailsMaster } from 'components/Sales/Common/VehicleDetails';
+import { FinananceDetailsMaster } from 'components/Sales/Common/FinananceDetails';
+
 import { InvoiceDetailsMaster } from './InvoiceDetails';
-import { InsuranceDetailsMaster } from './InsuranceDetails';
 import { ExchangeDetailsMaster } from './ExchangeDetails';
 import { LoyaltySchemeMaster } from './LoyaltyScheme';
 import { ReferralsMaster } from './Referrals';
-import { FinanceDetailsMaster } from './FinanceDetails';
-import { SchemeOfferDetailsMaster } from './SchemeOfferDetails';
-import { VehicleInvoiceDetailMaster } from './VehicleDetails';
 
 const VehicleInvoiceMainConatinerMain = (props) => {
     const { currentSection } = props;
@@ -33,13 +39,13 @@ const VehicleInvoiceMainConatinerMain = (props) => {
                 return <InvoiceDetailsMaster {...myProps} />;
             }
             case VEHICLE_INVOICE_SECTION.VEHICLE_DETAILS.id: {
-                return <VehicleInvoiceDetailMaster {...myProps} />;
+                return <VehicleDetailsMaster {...myProps} />;
             }
             case VEHICLE_INVOICE_SECTION.SCHEME_OFFER_DETAILS.id: {
-                return <SchemeOfferDetailsMaster {...myProps} />;
+                return <SchemeDetailsMaster {...myProps} />;
             }
             case VEHICLE_INVOICE_SECTION.FINANACE_DETAILS.id: {
-                return <FinanceDetailsMaster {...myProps} />;
+                return <FinananceDetailsMaster {...myProps} />;
             }
             case VEHICLE_INVOICE_SECTION.INSURANCE_DETAILS.id: {
                 return <InsuranceDetailsMaster {...myProps} />;

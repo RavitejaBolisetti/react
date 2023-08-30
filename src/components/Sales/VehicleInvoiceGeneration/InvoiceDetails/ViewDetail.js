@@ -3,15 +3,19 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React from 'react';
-import { Card, Descriptions, Divider } from 'antd';
-import styles from 'assets/sass/app.module.scss';
+import React, { useState } from 'react';
+import { Col, Row, Collapse, Descriptions, Divider } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
-import { getCodeValue } from 'utils/getCodeValue';
+
+import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
+import { expandIcon } from 'utils/accordianExpandIcon';
+
+const { Panel } = Collapse;
 
 const ViewDetailMain = (props) => {
-    const { formData, isLoading, partySegmentType } = props;
-
+    const { formData, isLoading } = props;
+    const [activeKey, setactiveKey] = useState([]);
     const viewProps = {
         bordered: false,
         colon: false,
@@ -19,23 +23,60 @@ const ViewDetailMain = (props) => {
         column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
     };
 
+    const onChange = (values) => {
+        const isPresent = activeKey.includes(values);
+
+        if (isPresent) {
+            const newActivekeys = [];
+
+            activeKey.forEach((item) => {
+                if (item !== values) {
+                    newActivekeys.push(item);
+                }
+            });
+            setactiveKey(newActivekeys);
+        } else {
+            setactiveKey([...activeKey, values]);
+        }
+    };
+
     return (
         <div className={styles.viewDrawerContainer}>
-            <Card>
-                <Descriptions {...viewProps}>
-                    <Descriptions.Item label="Party Segment">{checkAndSetDefaultValue(getCodeValue(partySegmentType, formData?.partySegment, isLoading))}</Descriptions.Item>
-                    <Descriptions.Item label="Party ID">{checkAndSetDefaultValue(formData?.partyId, isLoading)}</Descriptions.Item>
-                </Descriptions>
-                <Divider />
-                <Descriptions {...viewProps}>
-                    <Descriptions.Item label="Party Name">{checkAndSetDefaultValue(formData?.customerName || formData?.partyName, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Address">{checkAndSetDefaultValue(formData?.address, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="City">{checkAndSetDefaultValue(formData?.city, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="State">{checkAndSetDefaultValue(formData?.state, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Phone">{checkAndSetDefaultValue(formData?.mobileNumber, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Mitra Type">{checkAndSetDefaultValue(formData?.mitraType, isLoading)}</Descriptions.Item>
-                </Descriptions>
-            </Card>
+            <Row gutter={20}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                    <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
+                        <Panel header="OTF Details" key="1">
+                            <Divider />
+                            <Descriptions {...viewProps}>
+                                <Descriptions.Item label="OTF Number">{checkAndSetDefaultValue(formData?.otfNumber, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="OTF Date">{checkAndSetDefaultValue(formData?.otfDate, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="DAR Number">{checkAndSetDefaultValue(formData?.darNumber, isLoading)}</Descriptions.Item> 
+                                {/* key darNumber */}
+                                <Descriptions.Item label="Sales Type">{checkAndSetDefaultValue(formData?.salesType, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Price Type">{checkAndSetDefaultValue(formData?.priceType, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Tax Calculation">{checkAndSetDefaultValue(formData?.taxCalculationType, isLoading)}</Descriptions.Item>
+                            
+                                <Descriptions.Item label="Tax Payable On Reverse Charges?">{checkAndSetDefaultValue(formData?.taxPayableOnReverseCharges, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Sales Consultant Name">{checkAndSetDefaultValue(formData?.modalDescription, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Tax Calculation">{checkAndSetDefaultValue(formData?.modalDescription, isLoading)}</Descriptions.Item>
+                            
+                            </Descriptions>
+                        </Panel>
+                    </Collapse>
+                    <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
+                        <Panel header="Booked Customer" key="2">
+                            <Divider />
+                            <Descriptions {...viewProps}></Descriptions>
+                        </Panel>
+                    </Collapse>
+                    <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(3)} expandIconPosition="end">
+                        <Panel header="Billing Customer" key="3">
+                            <Divider />
+                            <Descriptions {...viewProps}></Descriptions>
+                        </Panel>
+                    </Collapse>
+                </Col>
+            </Row>
         </div>
     );
 };
