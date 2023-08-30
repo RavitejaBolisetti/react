@@ -20,6 +20,7 @@ import { QUERY_BUTTONS_CONSTANTS } from './QueryButtons';
 import { vehicleInvoiceDataActions } from 'store/actions/data/invoiceGeneration/vehicleInvoiceGeneration';
 import { showGlobalNotification } from 'store/actions/notification';
 import { PARAM_MASTER } from 'constants/paramMaster';
+import { convertDateTime, monthDateFormat } from 'utils/formatDateTime';
 
 import { FilterIcon } from 'Icons';
 
@@ -30,7 +31,6 @@ const mapStateToProps = (state) => {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             VehicleInvoiceGeneration: {
                 VehicleInvoiceSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString },
-                // ReceiptDetails: { isLoaded: isDetailedDataLoaded = false, isLoading, data: receiptDetailData = [] },
             },
         },
     } = state;
@@ -56,11 +56,6 @@ const mapDispatchToProps = (dispatch) => ({
             fetchList: vehicleInvoiceDataActions.fetchList,
             listShowLoading: vehicleInvoiceDataActions.listShowLoading,
             setFilterString: vehicleInvoiceDataActions.setFilter,
-
-            // saveData: receiptDetailDataActions.saveData,
-            // fetchReceiptDetails: receiptDetailDataActions.fetchList,
-            // resetData: receiptDetailDataActions.reset,
-            // cancelReceipt: cancelReceiptDataActions.saveData,
             showGlobalNotification,
         },
         dispatch
@@ -143,19 +138,43 @@ export const VehicleInvoiceMasterBase = (props) => {
         return [
             {
                 key: 'searchType',
-                title: 'Value',
+                title: 'Type',
                 value: filterString?.searchType,
                 name: typeData?.[PARAM_MASTER.INV_SER.id]?.find((i) => i?.key === filterString?.searchType)?.value,
                 canRemove: false,
-                filter: false,
+                filter: true,
             },
             {
                 key: 'searchParam',
-                title: 'searchParam',
+                title: 'Value',
                 value: filterString?.searchParam,
                 name: filterString?.searchParam,
-                canRemove: false,
-                filter: false,
+                canRemove: true,
+                filter: true,
+            },
+            {
+                key: 'fromDate',
+                title: 'Start Date',
+                value: filterString?.fromDate,
+                name: filterString?.fromDate ? convertDateTime(filterString?.fromDate, monthDateFormat) : '',
+                canRemove: true,
+                filter: true,
+            },
+            {
+                key: 'toDate',
+                title: 'End Date',
+                value: filterString?.toDate,
+                name: filterString?.toDate ? convertDateTime(filterString?.toDate, monthDateFormat) : '',
+                canRemove: true,
+                filter: true,
+            },
+            {
+                key: 'digitalSignature',
+                title: 'Digital Signature',
+                value: filterString?.digitalSignature,
+                // name: typeData?.[PARAM_MASTER.YES_NO_FLG.id]?.find((i) => i?.key === filterString?.digitalSignature)?.value,
+                canRemove: true,
+                filter: true,
             },
             {
                 key: 'invoiceStatus',
