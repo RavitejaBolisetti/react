@@ -18,7 +18,6 @@ import { USER_TYPE_USER } from 'constants/modules/UserManagement/userType';
 // import { NEXT_ACTION } from 'utils/btnVisiblity';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
-
 const { Text } = Typography;
 const defaultBtnVisiblity = { editBtn: false, saveBtn: false, next: false, nextBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: true, formBtnActive: false };
 
@@ -49,7 +48,7 @@ export function chackedKeysMapData(treeData) {
 const AssignUserRole = (props) => {
     const { userId, userType, formData, setButtonData, showGlobalNotification } = props;
     const { formActionType, section, buttonData } = props;
-    const { roleListdata, handleButtonClick } = props;
+    const { roleListdata, handleButtonClick, isLastSection, onCloseAction } = props;
     const { fetchDLRUserRoleDataList, resetUsrDlrRoleAppDataList, usrRolelAppListShowLoading, saveDLRUserRoleDataList, fetchMNMUserRoleAppDataList, resetMnmUserRoleAppDataList, saveMNMUserRoleAppDataList } = props;
     const { isDlrAppLoaded, isDlrAppLoding, dlrAppList, isMnmAppLoaded, isMnmAppLoding, mnmAppList } = props;
     const { fetchUserRoleList, userRoleShowLoading, userRoleDataList, isUserRoleListLoding } = props;
@@ -306,7 +305,11 @@ const AssignUserRole = (props) => {
     };
 
     const onFinish = () => {
-        handleButtonClick({ buttonAction: FROM_ACTION_TYPE.NEXT });
+        if (isLastSection) {
+            onCloseAction();
+        } else {
+            handleButtonClick({ buttonAction: FROM_ACTION_TYPE.NEXT });
+        }
     };
 
     return (

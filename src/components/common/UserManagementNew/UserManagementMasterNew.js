@@ -375,12 +375,14 @@ const UserManagementMain = (props) => {
     };
 
     const onCloseAction = () => {
+        
         setIsFormVisible(false);
         setSelectedRecord([]);
         setDisabledSearch(true);
         setFilterString('');
         setselectedDealerCode('');
     };
+
 
     const drawerTitle = useMemo(() => {
         if (formActionType?.viewMode) {
@@ -391,7 +393,6 @@ const UserManagementMain = (props) => {
             return 'Add New ';
         }
     }, [formActionType]);
-
     const formProps = {
         ...props,
         filterString,
