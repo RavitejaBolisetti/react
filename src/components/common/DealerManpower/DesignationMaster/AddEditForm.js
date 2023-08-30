@@ -12,14 +12,15 @@ import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/prepareP
 import { ViewDetail } from './ViewDetail';
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
+import { customSelectBox } from 'utils/customSelectBox';
+import { PARAM_MASTER } from 'constants/paramMaster';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined, onFinish, onFinishFailed } = props;
+    const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined, onFinish, onFinishFailed, typeData } = props;
 
     const { buttonData, setButtonData, handleButtonClick, divisionData, departmentData, roleData } = props;
     const [filteredDepartmentData, setFilteredDepartmentData] = useState(departmentData?.filter((i) => i?.parentKey === formData?.divisionCode));
@@ -32,7 +33,6 @@ const AddEditFormMain = (props) => {
     const handleFormFieldChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
-
     const handleDivisionChange = (division) => {
         form.setFieldValue('departmentCode', undefined);
         form.setFieldValue('roleCode', undefined);
@@ -45,6 +45,7 @@ const AddEditFormMain = (props) => {
     };
 
     const viewProps = {
+        typeData,
         isVisible: viewMode,
         formData,
         styles,
@@ -62,7 +63,6 @@ const AddEditFormMain = (props) => {
         optionFilterProp: 'children',
         showSearch: true,
         allowClear: true,
-        // className: styles.headerSelectField,
     };
     return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
@@ -85,7 +85,7 @@ const AddEditFormMain = (props) => {
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={formData?.departmentCode} label="Department Name" name="departmentCode" rules={[validateRequiredSelectField('Department Name')]}>
+                                    <Form.Item initialValue={formData?.departmentCode} label="Department Name" name="departmentCode">
                                         <Select {...selectProps} placeholder={preparePlaceholderSelect('Department Name')} allowClear onChange={handleDepartmentChange}>
                                             {filteredDepartmentData?.map((item) => (
                                                 <Option key={item?.key} value={item?.key}>
@@ -98,7 +98,7 @@ const AddEditFormMain = (props) => {
                             </Row>
                             <Row gutter={16}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={formData?.roleCode} label="Role Name" name="roleCode" rules={[validateRequiredSelectField('Role Name')]}>
+                                    <Form.Item initialValue={formData?.roleCode} label="Role Description" name="roleCode">
                                         <Select {...selectProps} placeholder={preparePlaceholderSelect('Role Description')} allowClear>
                                             {filteredRoleData?.map((item) => (
                                                 <Option key={item?.key} value={item?.key}>
@@ -108,9 +108,14 @@ const AddEditFormMain = (props) => {
                                         </Select>
                                     </Form.Item>
                                 </Col>
-                                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                {/* <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                     <Form.Item initialValue={formData?.designationCode} label="Designation Code" name="designationCode" rules={[validateRequiredInputField('Designation Code')]}>
                                         <Input placeholder={preparePlaceholderText('Designation Code')} maxLength={6} disabled={editMode ? true : false} />
+                                    </Form.Item>
+                                </Col> */}
+                                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                    <Form.Item initialValue={formData?.designationType} label="Designation Type" name="designationType" rules={[validateRequiredSelectField('Designation Type')]}>
+                                        {customSelectBox({ data: typeData[PARAM_MASTER.DESG_TYP_ASGN_TO.id], placeholder: preparePlaceholderSelect('designation type') })}
                                     </Form.Item>
                                 </Col>
                             </Row>
@@ -121,25 +126,23 @@ const AddEditFormMain = (props) => {
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                    <Form.Item initialValue={formData?.mileSkillId} label="Mile Skill" name="mileSkillId">
+                                        {customSelectBox({ data: [], placeholder: preparePlaceholderSelect('mileSkill') })}
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                            <Row gutter={16}>
+                                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                     <Form.Item initialValue={editMode ? formData.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label="Status">
                                         <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} />
                                     </Form.Item>
                                 </Col>
                             </Row>
+
                             <Row gutter={16}>
-                                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={editMode ? formData.isCommonIndicatorRequired : false} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="isCommonIndicatorRequired">
-                                        <Checkbox>Common</Checkbox>
-                                    </Form.Item>
-                                </Col>
                                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                                     <Form.Item initialValue={editMode ? formData.isManpowerIndicatorRequired : false} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="isManpowerIndicatorRequired">
                                         <Checkbox>Manpower Required</Checkbox>
-                                    </Form.Item>
-                                </Col>
-                                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={editMode ? formData.isLeadershipIndicatorRequired : false} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="isLeadershipIndicatorRequired">
-                                        <Checkbox>Leadership</Checkbox>
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
@@ -148,28 +151,8 @@ const AddEditFormMain = (props) => {
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={editMode ? formData.isDealerHrIndicatorRequired : false} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="isDealerHrIndicatorRequired">
-                                        <Checkbox>Dealer HR</Checkbox>
-                                    </Form.Item>
-                                </Col>
-                                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={editMode ? formData.isCertifiedIndicatorRequired : false} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="isCertifiedIndicatorRequired">
-                                        <Checkbox>Certified</Checkbox>
-                                    </Form.Item>
-                                </Col>
-                                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={editMode ? formData.isNeftDetailsIndicatorRequired : false} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="isNeftDetailsIndicatorRequired">
-                                        <Checkbox>NEFT Details</Checkbox>
-                                    </Form.Item>
-                                </Col>
-                                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                                     <Form.Item initialValue={editMode ? formData.isCapabilityIndicatorRequired : false} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="isCapabilityIndicatorRequired">
                                         <Checkbox>Capability (L1/L2/L3)</Checkbox>
-                                    </Form.Item>
-                                </Col>
-                                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={editMode ? formData.isFftDepartmentApprovalIndicatorRequired : false} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="isFftDepartmentApprovalIndicatorRequired">
-                                        <Checkbox>FFT Department Approval</Checkbox>
                                     </Form.Item>
                                 </Col>
                             </Row>

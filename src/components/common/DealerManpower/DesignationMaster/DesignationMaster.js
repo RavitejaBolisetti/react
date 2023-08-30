@@ -33,6 +33,7 @@ const mapStateToProps = (state) => {
                 RoleMaster: { isFilteredListLoaded: isRoleDataLoaded = false, isRoleLoading, filteredListData: roleData = [] },
                 DesignationMaster: { isLoaded: isDataLoaded = false, isLoading, data },
             },
+            ConfigurableParameterEditing: { filteredListData: typeData = [] },
         },
     } = state;
 
@@ -53,6 +54,7 @@ const mapStateToProps = (state) => {
         departmentData,
         divisionData,
         moduleTitle,
+        typeData,
     };
     return returnValue;
 };
@@ -78,7 +80,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const DesignationMasterBase = (props) => {
-    const { data, saveData, fetchRoleLovList, resetData, roleData, isDivisionLoading, isRoleDataLoaded, fetchList, fetchDepartmentLovList, isDepartmentDataLoaded, departmentData, divisionData, fetchDivisionLovList, isDivisionDataLoaded, isDepartmentLoading, isRoleLoading, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
+    const { data, saveData, fetchRoleLovList, resetData, roleData, isDivisionLoading, isRoleDataLoaded, fetchList, fetchDepartmentLovList, isDepartmentDataLoaded, departmentData, divisionData, fetchDivisionLovList, isDivisionDataLoaded, isDepartmentLoading, isRoleLoading, userId, isDataLoaded, listShowLoading, showGlobalNotification, typeData } = props;
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
@@ -313,6 +315,7 @@ export const DesignationMasterBase = (props) => {
 
         setButtonData,
         handleButtonClick,
+        typeData,
     };
 
     const tableProps = {
