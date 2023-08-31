@@ -192,8 +192,8 @@ const ApplicationTreeMain = (props) => {
                     };
 
                     return (
-                        <div className={styles.accordianContainer}>
-                            <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(i)} expandIconPosition="end">
+                        <div>
+                            <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(i)} expandIconPosition="end" collapsible="icon">
                                 <Panel
                                     header={
                                         <Row type="flex" justify="space-between" align="middle" size="large">
@@ -254,8 +254,6 @@ const ApplicationTreeMain = (props) => {
                     <>{''}</>
                 ) : (
                     <>
-                        {/* <div className={styles.roleDescription}> </div> */}
-
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.subTitleSec}>
                                 Application Access<span className={styles.mandatory}>*</span>

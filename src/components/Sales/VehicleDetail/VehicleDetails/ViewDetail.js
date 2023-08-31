@@ -31,7 +31,7 @@ const ViewDetailMain = (props) => {
         <div className={styles.drawerCardView}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
+                    <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end" collapsible="icon">
                         <Panel header="Vehicle Details" key="1">
                             <Divider />
                             <Descriptions {...viewProps}>
@@ -69,7 +69,7 @@ const ViewDetailMain = (props) => {
                             </Descriptions>
                         </Panel>
                     </Collapse>
-                    <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
+                    <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end" collapsible="icon">
                         <Panel header="Registration Number Change Request" key="2">
                             <Divider />
                             <Card>

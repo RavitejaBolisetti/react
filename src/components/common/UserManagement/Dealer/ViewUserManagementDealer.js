@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Col, Input, Form, Descriptions, Row, Button, Space, Collapse } from 'antd';
+import { Col, Input, Form, Descriptions, Row, Button, Space, Collapse, Divider } from 'antd';
 
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { accordianExpandIcon } from 'utils/accordianExpandIcon';
@@ -47,24 +47,28 @@ const ViewUserManagementDealerMain = ({ formData, styles, DealerSearchvalue, han
                                 Access Management<span style={{ color: 'red' }}>*</span>
                             </Col>
                         </Row>
+                        <div>
+                            <Collapse onChange={() => handleCollapse(1)} expandIcon={accordianExpandIcon} activeKey={openAccordian} collapsible="icon">
+                                <Panel header="Assign User Roles" key="1">
+                                    <Divider />
+                                    <AssignUserRole userRoleOptions={DealerData?.roles} DealerSearchvalue={DealerSearchvalue} finalFormdata={finalFormdata} setfinalFormdata={setfinalFormdata} />
+                                </Panel>
+                            </Collapse>
 
-                        <Collapse onChange={() => handleCollapse(1)} expandIcon={accordianExpandIcon} activeKey={openAccordian}>
-                            <Panel header="Assign User Roles" key="1">
-                                <AssignUserRole userRoleOptions={DealerData?.roles} DealerSearchvalue={DealerSearchvalue} finalFormdata={finalFormdata} setfinalFormdata={setfinalFormdata} />
-                            </Panel>
-                        </Collapse>
+                            <Collapse onChange={() => handleCollapse(2)} expandIcon={accordianExpandIcon} activeKey={openAccordian} collapsible="icon">
+                                <Panel header="Branch Mapping" key="2">
+                                    <Divider />
+                                    <BranchMapping BranchMappingData={DealerData?.branches} finalFormdata={finalFormdata} setfinalFormdata={setfinalFormdata} />
+                                </Panel>
+                            </Collapse>
 
-                        <Collapse onChange={() => handleCollapse(2)} expandIcon={accordianExpandIcon} activeKey={openAccordian}>
-                            <Panel header="Branch Mapping" key="2">
-                                <BranchMapping BranchMappingData={DealerData?.branches} finalFormdata={finalFormdata} setfinalFormdata={setfinalFormdata} />
-                            </Panel>
-                        </Collapse>
-
-                        <Collapse onChange={() => handleCollapse(3)} expandIcon={accordianExpandIcon} activeKey={openAccordian}>
-                            <Panel header="Product Mapping" key="3">
-                                <ProductMapping ProductMappingData={DealerData?.products} productHierarchyData={productHierarchyData} finalFormdata={finalFormdata} setfinalFormdata={setfinalFormdata} />
-                            </Panel>
-                        </Collapse>
+                            <Collapse onChange={() => handleCollapse(3)} expandIcon={accordianExpandIcon} activeKey={openAccordian} collapsible="icon">
+                                <Panel header="Product Mapping" key="3">
+                                    <Divider />
+                                    <ProductMapping ProductMappingData={DealerData?.products} productHierarchyData={productHierarchyData} finalFormdata={finalFormdata} setfinalFormdata={setfinalFormdata} />
+                                </Panel>
+                            </Collapse>
+                        </div>
                     </Space>
                 </Descriptions>
             </div>

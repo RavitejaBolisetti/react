@@ -51,7 +51,7 @@ const ViewDetailMain = (props) => {
         <>
             {formData?.map((item, index) => (
                 <div className={styles.innerCollapse}>
-                    <Collapse defaultActiveKey={index} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(index)} expandIconPosition="end">
+                    <Collapse defaultActiveKey={index} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(index)} expandIconPosition="end" collapsible="icon">
                         <Panel
                             header={
                                 <>

@@ -58,7 +58,6 @@ const AuthorityDetailMain = ({ tokenValidationData, handleFormValueChange, viewM
 
     return (
         <>
-            <Divider />
             {!viewMode && <AddEditForm isMainForm={true} handleFormValueChange={handleFormValueChange} onFinish={onActionFormFinish} tokenValidate={tokenValidate} setTokenValidate={setTokenValidate} form={actionForm} setIsBtnDisabled={setIsBtnDisabled} isBtnDisabled={isBtnDisabled} setDocumentTypesList={setDocumentTypesList} documentTypesList={documentTypesList} selectedValueOnUpdate={selectedValueOnUpdate} setselectedValueOnUpdate={setselectedValueOnUpdate} errorMessage={errorMessage} setErrorMessage={setErrorMessage} formType={formType} setFormType={setFormType} />}
             {documentTypesList?.length > 0 &&
                 documentTypesList?.map((record, i) => {

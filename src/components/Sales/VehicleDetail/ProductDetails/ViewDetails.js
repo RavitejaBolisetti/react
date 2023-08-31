@@ -39,66 +39,62 @@ const ViewDetailMain = (props) => {
 
     return (
         <div className={styles.viewDrawerContainer}>
-            <Space style={{ display: 'flex' }} direction="vertical" size="middle">
-                <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse(1)} expandIconPosition="end" {...collapseProps}>
-                    <Panel header="Product Attribute Details" key="1">
-                        <Divider />
-                        <Descriptions {...viewProps}>
-                            <Descriptions.Item label="Product Division">{checkAndSetDefaultValue(productAttributeDetail?.productDivision, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Model Family">{checkAndSetDefaultValue(productAttributeDetail?.modelFamily, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Model Group">{checkAndSetDefaultValue(productAttributeDetail?.modelGroup, isLoading)}</Descriptions.Item>
+            <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse(1)} expandIconPosition="end" collapsible="icon" {...collapseProps}>
+                <Panel header="Product Attribute Details" key="1">
+                    <Divider />
+                    <Descriptions {...viewProps}>
+                        <Descriptions.Item label="Product Division">{checkAndSetDefaultValue(productAttributeDetail?.productDivision, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Model Family">{checkAndSetDefaultValue(productAttributeDetail?.modelFamily, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Model Group">{checkAndSetDefaultValue(productAttributeDetail?.modelGroup, isLoading)}</Descriptions.Item>
 
-                            <Descriptions.Item label="Model">
-                                {isLoading ? (
-                                    <InputSkeleton width={'100px'} height={20} theme={'card'} />
-                                ) : (
-                                    <div className={styles.tooltipAlign}>
-                                        {productAttributeDetail?.model}
-                                        {!productAttributeDetail?.model ? 'NA' : addToolTip(tooltTipText, 'bottom', '#D3EDFE', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}
-                                    </div>
-                                )}
-                            </Descriptions.Item>
-                            <Descriptions.Item label="Model Variant">{checkAndSetDefaultValue(productAttributeDetail?.modelVariant, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Manufacturer Invoice Date">{!isLoading ? productAttributeDetail?.manufacturerInvoiceDate?.slice(0, 10) ?? '-' : <InputSkeleton width={'100px'} height={20} theme={'card'} />}</Descriptions.Item>
-                            <Descriptions.Item label="Manufacturer Warrenty Start Date">{!isLoading ? productAttributeDetail?.manufacturerWarrantyStartDate?.slice(0, 10) ?? '-' : <InputSkeleton width={'100px'} height={20} theme={'card'} />}</Descriptions.Item>
-                        </Descriptions>
-                    </Panel>
-                </Collapse>
+                        <Descriptions.Item label="Model">
+                            {isLoading ? (
+                                <InputSkeleton width={'100px'} height={20} theme={'card'} />
+                            ) : (
+                                <div className={styles.tooltipAlign}>
+                                    {productAttributeDetail?.model}
+                                    {!productAttributeDetail?.model ? 'NA' : addToolTip(tooltTipText, 'bottom', '#D3EDFE', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}
+                                </div>
+                            )}
+                        </Descriptions.Item>
+                        <Descriptions.Item label="Model Variant">{checkAndSetDefaultValue(productAttributeDetail?.modelVariant, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Manufacturer Invoice Date">{!isLoading ? productAttributeDetail?.manufacturerInvoiceDate?.slice(0, 10) ?? '-' : <InputSkeleton width={'100px'} height={20} theme={'card'} />}</Descriptions.Item>
+                        <Descriptions.Item label="Manufacturer Warrenty Start Date">{!isLoading ? productAttributeDetail?.manufacturerWarrantyStartDate?.slice(0, 10) ?? '-' : <InputSkeleton width={'100px'} height={20} theme={'card'} />}</Descriptions.Item>
+                    </Descriptions>
+                </Panel>
+            </Collapse>
 
-                <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse(2)} expandIconPosition="end" style={{ paddinBottom: '20px' }} {...collapseProps}>
-                    <Panel header="Connected Vehicle" key="2">
-                        <Divider />
-
-                        <Space style={{ display: 'flex' }} direction="vertical" size="middle">
-                            {formData?.connectedVehicle?.map((element, index) => {
-                                return (
-                                    <Collapse expandIcon={expandIcon} activeKey={InnerCollapse} onChange={() => handleInnerCollapse(index)} expandIconPosition="end" {...collapseProps}>
-                                        <Panel header={`${element?.tcuId} | ${element?.esimNo}`} key={index}>
-                                            <Divider />
-
-                                            <Descriptions {...viewProps}>
-                                                <Descriptions.Item label="TCU ID">{checkAndSetDefaultValue(connectedVehicle && element?.tcuId, isLoading)}</Descriptions.Item>
-                                                <Descriptions.Item label="E-SIM No">{checkAndSetDefaultValue(connectedVehicle && element?.esimNo, isLoading)}</Descriptions.Item>
-                                                <Descriptions.Item label="E-SIM Status">{checkAndSetDefaultValue(bindStatus(element, 'esimStatus', { active: 'Active', inactive: 'Inctive' }), isLoading)}</Descriptions.Item>
-                                                <Descriptions.Item label="Prefered Mobile No 1">{checkAndSetDefaultValue(connectedVehicle && element?.preferredMobileNo1, isLoading)}</Descriptions.Item>
-                                                <Descriptions.Item label="Prefered Mobile No 2">{checkAndSetDefaultValue(connectedVehicle && element?.preferredMobileNo2, isLoading)}</Descriptions.Item>
-                                                <Descriptions.Item label="KYC Status">{checkAndSetDefaultValue(bindStatus(element, 'kycStatus', { active: 'Recieved', inactive: 'Not Recieved' }), isLoading)}</Descriptions.Item>
-                                            </Descriptions>
-                                        </Panel>
-                                    </Collapse>
-                                );
-                            })}
-                            {!formData?.connectedVehicle?.length && <NoDataFound informtion={'No connected Vehicle Data'} />}
-                        </Space>
-                    </Panel>
-                </Collapse>
-                <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse(3)} expandIconPosition="end" {...collapseProps}>
-                    <Panel header="Aggregates" key="3">
-                        <Divider />
-                        <DataTable tableColumn={tableColumn({ formActionType, bindCodeValue })} tableData={optionsServiceModified} pagination={false} />
-                    </Panel>
-                </Collapse>
-            </Space>
+            <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse(2)} expandIconPosition="end" collapsible="icon" style={{ paddinBottom: '20px' }} {...collapseProps}>
+                <Panel header="Connected Vehicle" key="2">
+                    <Divider />
+                    <div>
+                        {formData?.connectedVehicle?.map((element, index) => {
+                            return (
+                                <Collapse expandIcon={expandIcon} activeKey={InnerCollapse} onChange={() => handleInnerCollapse(index)} expandIconPosition="end" collapsible="icon" {...collapseProps}>
+                                    <Panel header={`${element?.tcuId} | ${element?.esimNo}`} key={index}>
+                                        <Divider />
+                                        <Descriptions {...viewProps}>
+                                            <Descriptions.Item label="TCU ID">{checkAndSetDefaultValue(connectedVehicle && element?.tcuId, isLoading)}</Descriptions.Item>
+                                            <Descriptions.Item label="E-SIM No">{checkAndSetDefaultValue(connectedVehicle && element?.esimNo, isLoading)}</Descriptions.Item>
+                                            <Descriptions.Item label="E-SIM Status">{checkAndSetDefaultValue(bindStatus(element, 'esimStatus', { active: 'Active', inactive: 'Inctive' }), isLoading)}</Descriptions.Item>
+                                            <Descriptions.Item label="Prefered Mobile No 1">{checkAndSetDefaultValue(connectedVehicle && element?.preferredMobileNo1, isLoading)}</Descriptions.Item>
+                                            <Descriptions.Item label="Prefered Mobile No 2">{checkAndSetDefaultValue(connectedVehicle && element?.preferredMobileNo2, isLoading)}</Descriptions.Item>
+                                            <Descriptions.Item label="KYC Status">{checkAndSetDefaultValue(bindStatus(element, 'kycStatus', { active: 'Recieved', inactive: 'Not Recieved' }), isLoading)}</Descriptions.Item>
+                                        </Descriptions>
+                                    </Panel>
+                                </Collapse>
+                            );
+                        })}
+                        {!formData?.connectedVehicle?.length && <NoDataFound informtion={'No connected Vehicle Data'} />}
+                    </div>
+                </Panel>
+            </Collapse>
+            <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse(3)} expandIconPosition="end" collapsible="icon" {...collapseProps}>
+                <Panel header="Aggregates" key="3">
+                    <Divider />
+                    <DataTable tableColumn={tableColumn({ formActionType, bindCodeValue })} tableData={optionsServiceModified} pagination={false} />
+                </Panel>
+            </Collapse>
         </div>
     );
 };

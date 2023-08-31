@@ -28,7 +28,7 @@ const ViewDetailBase = ({ formData, styles, parameterType, taxCharges, taxCatego
                     <Descriptions.Item label="Sale Type">{taxCategory?.saleType}</Descriptions.Item>
                     <div>
                         {taxCategory?.taxCategoryDetail?.length > 0 && (
-                            <Collapse expandIcon={expandIcon} className={styles.fullWidth}>
+                            <Collapse expandIcon={expandIcon} collapsible="icon" className={styles.fullWidth}>
                                 <Panel header="Tax & Charges Calculation" key="2">
                                     <Divider />
                                     {taxCategory?.taxCategoryDetail?.map((item, index) => (

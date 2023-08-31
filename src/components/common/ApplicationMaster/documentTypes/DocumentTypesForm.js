@@ -6,7 +6,8 @@
 import React from 'react';
 import { Input, Form, Col, Row, Switch, Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+// import styles from 'components/common/Common.module.css';
 
 import { duplicateValidator, validateAlphanumericWithSpace, validateRequiredInputField, validationFieldLetterAndNumber } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';

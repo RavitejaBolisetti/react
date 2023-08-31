@@ -309,4 +309,16 @@ export const PARAM_MASTER = {
         id: 'INVC_STATS',
         title: 'Invoice Status',
     },
+    DESG_TYP_ASGN_TO: {
+        id: 'DESG_TYP_ASGN_TO',
+        title: 'Designation Master',
+    },
+    DEL_INV_CAN_TYP: {
+        id: 'DEL_INV_CAN_TYP',
+        title: 'Invoice Delivey Note Request Type',
+    },
+    INV_DEL_NOT_REQ_TYP: {
+        id: 'INV_DEL_NOT_REQ_TYP',
+        title: 'Delivery Note/Invoice Request Status',
+    },
 };

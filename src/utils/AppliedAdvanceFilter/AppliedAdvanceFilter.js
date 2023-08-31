@@ -79,7 +79,7 @@ export default function AppliedAdvanceFilter(props) {
 
                             {tableData?.length > 0 && (
                                 <>
-                                    <Button icon={<TfiReload />} onClick={handleReferesh} danger />
+                                    <Button icon={<TfiReload />} onClick={handleReferesh} data-testid="refreshBtn" danger />
                                     {showAddButton && (
                                         <Button icon={<PlusOutlined />} type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
                                             Add

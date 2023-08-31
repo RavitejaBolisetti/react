@@ -55,7 +55,6 @@ const mapDispatchToProps = (dispatch) => ({
             fetchVehicleAllotmentDetails: vehicleAllotment.fetchDetail,
             saveData: vehicleAllotment.saveData,
             listShowLoading: vehicleAllotment.listShowLoading,
-            fetchModelList: productHierarchyDataActions.fetchFilteredList,
             showGlobalNotification,
         },
         dispatch
@@ -65,14 +64,14 @@ const mapDispatchToProps = (dispatch) => ({
 const OTFAllotmentMasterBase = (props) => {
     const { listShowLoading, userId } = props;
     const { fetchVehicleAllotmentSearchedList, allotmentSearchedList, fetchModelList, productHierarchyData } = props;
-    const { typeData, showGlobalNotification, saveData, setIsAllotVisible } = props;
+    const { typeData, showGlobalNotification, saveData, setIsAllotVisible, setRefreshData, setIsFormVisible } = props;
     const { filterString, setFilterString } = props;
 
     const { selectedOrder, moduleTitle } = props;
     const defaultBtnVisiblity = {  cancelBtn: true, allotBtn: true };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const [searchParamValue, setSearchParamValue] = useState('');
-    const [toggleButton, settoggleButton] = useState(VEHICLE_TYPE?.ALLOTED.key);
+    const [toggleButton, settoggleButton] = useState(VEHICLE_TYPE?.UNALLOTED.key);
     const [page, setPage] = useState({ pageSize: 10, current: 1 });
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
@@ -172,11 +171,6 @@ const OTFAllotmentMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, filterString, searchParamValue, toggleButton, extraParams]);
 
-    useEffect(() => {
-        fetchModelList({ setIsLoading: listShowLoading, userId, onSuccessAction, onErrorAction });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
         switch (buttonAction) {
             case ALLOT:
@@ -210,12 +204,15 @@ const OTFAllotmentMasterBase = (props) => {
         let data = { otfId, otfNumber, allotmentStatus: updatedStatus, vehicleIdentificationNumber };
 
         const onSuccess = (res) => {
+            handleResetFilter();
             setShowDataLoading(true);
             setIsAllotVisible(false);
             setSelectedOrderVINDetails();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            fetchVehicleAllotmentSearchedList({ customURL: customURL + '/search', setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+            //fetchVehicleAllotmentSearchedList({ customURL: customURL + '/search', setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
             setButtonData({ ...buttonData, formBtnActive: false });
+            setIsFormVisible(false);
+            setRefreshData();
             //setIsFormVisible(false);
 
             // setConfirmRequest({
@@ -245,8 +242,7 @@ const OTFAllotmentMasterBase = (props) => {
         setSearchParamValue();
         setShowDataLoading(true);
         setFilterString();
-        advanceFilterForm.resetFields();
-        setAdvanceSearchVisible(false);
+        setSelectedOrderVINDetails();
     };
 
     const removeFilter = (key) => {
@@ -309,6 +305,7 @@ const OTFAllotmentMasterBase = (props) => {
         typeData,
         productHierarchyData,
         handleResetFilter,
+        setSelectedOrderVINDetails,
         
     };
 

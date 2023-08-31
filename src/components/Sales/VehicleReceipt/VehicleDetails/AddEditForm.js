@@ -88,7 +88,7 @@ const AddEditFormMain = (props) => {
             <Form form={vehicleDetailForm} id="myAdd" onFinish={handleSave} autoComplete="off" layout="vertical" onFinishFailed={onFinishFailed}>
                 {formData?.map((item, index) => (
                     <div className={styles.innerCollapse}>
-                        <Collapse defaultActiveKey={index} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(index)} expandIconPosition="end" {...collapseProps}>
+                        <Collapse defaultActiveKey={index} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(index)} expandIconPosition="end" collapsible="icon" {...collapseProps}>
                             <Panel
                                 header={
                                     <>

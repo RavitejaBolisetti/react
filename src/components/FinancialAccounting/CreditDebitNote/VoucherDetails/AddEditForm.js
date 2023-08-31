@@ -5,7 +5,7 @@
  */
 
 import React, { useState } from 'react';
-import { Button, Collapse, Form, Typography, Row, Col } from 'antd';
+import { Button, Collapse, Form, Typography, Row, Col, Divider } from 'antd';
 
 import { PlusOutlined } from '@ant-design/icons';
 import { DataTable } from 'utils/dataTable';
@@ -129,6 +129,7 @@ const AddEditFormMain = (props) => {
                             }
                             key="voucher"
                         >
+                            <Divider />
                             <DataTable tableColumn={tableColumn({ handleButtonClick, formActionType, bindCodeValue })} tableData={voucherTableData} pagination={false} />
                         </Panel>
                     </Collapse>

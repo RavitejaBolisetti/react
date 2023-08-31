@@ -129,13 +129,13 @@ const AddEditFormMain = (props) => {
                                                 {doReceived === YES_NO_FLAG?.YES?.key && (
                                                     <Row gutter={20}>
                                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                            <Form.Item label="D.O. Number" name="doNumber" rules={[validateRequiredInputField('doNumber')]}>
-                                                                <Input placeholder={preparePlaceholderText('d.o. number')}></Input>
+                                                            <Form.Item label="D.O. Number" name="doNumber" rules={[validateRequiredInputField('Number')]}>
+                                                                <Input placeholder={preparePlaceholderText('D.O. Number')}></Input>
                                                             </Form.Item>
                                                         </Col>
 
                                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                            <Form.Item label="D.O. Date" name="doDate">
+                                                            <Form.Item label="D.O. Date" name="doDate" rules={[validateRequiredInputField('Date')]}>
                                                                 <DatePicker format={dateFormat} disabledDate={disableFutureDate} placeholder={preparePlaceholderSelect('date')} style={datePickerStyle} />
                                                             </Form.Item>
                                                         </Col>

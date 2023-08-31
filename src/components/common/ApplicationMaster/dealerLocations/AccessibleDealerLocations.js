@@ -13,7 +13,8 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { preparePlaceholderAutoComplete } from 'utils/preparePlaceholder';
 import { debounce } from 'utils/debounce';
 import { LANGUAGE_EN } from 'language/en';
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+// import styles from 'components/common/Common.module.css';
 
 const locationDeleteTitle = LANGUAGE_EN.GENERAL.REMOVE_DEALER_LOCATION.TITLE;
 const locationDeleteMessage = LANGUAGE_EN.GENERAL.REMOVE_DEALER_LOCATION.MESSAGE.replace('{NAME}', 'Location');
