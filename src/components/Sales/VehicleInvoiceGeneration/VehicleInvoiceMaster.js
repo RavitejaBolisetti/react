@@ -213,7 +213,7 @@ export const VehicleInvoiceMasterBase = (props) => {
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [searchValue, filterString, page]);
+    }, [searchValue, invoiceStatus, filterString, page]);
 
     // useEffect(() => {
     //     return () => {
@@ -229,7 +229,7 @@ export const VehicleInvoiceMasterBase = (props) => {
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, filterString, page]);
+    }, [userId, invoiceStatus, filterString, page]);
 
     // useEffect(() => {
     //     if (userId && selectedOrderId) {
@@ -586,7 +586,7 @@ export const VehicleInvoiceMasterBase = (props) => {
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <ListDataTable
                         // handleButtonClick={handleButtonClick}
-                        // isLoading={showDataLoading}
+                        isLoading={showDataLoading}
                         {...tableProps}
                         showAddButton={false}
                     />
