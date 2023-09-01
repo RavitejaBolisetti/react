@@ -422,7 +422,7 @@
                     }
 
                     input {
-                        background: transparent;
+                        background: $transparentColor;
                         color: $primaryWhite;
 
                         &::-ms-reveal {
@@ -450,7 +450,7 @@
 
                 .inputBox.disabledInput {
                     input {
-                        background: transparent;
+                        background: $transparentColor;
                         color: $neutralGrey4 !important;
                     }
 
