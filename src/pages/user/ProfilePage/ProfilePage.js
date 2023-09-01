@@ -8,8 +8,6 @@ import CMS from 'assets/images/comingsoon.svg';
 import { PageHeader } from 'pages/common/PageHeader';
 
 import styles from '../../cms/CMSPage.module.scss';
-//import styles from 'pages/cms/CMSPage.module.css';
-
 import { withLayoutMaster } from 'components/withLayoutMaster';
 
 const ProfilePageBase = (props) => {

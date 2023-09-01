@@ -13,7 +13,6 @@ import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import styles from './ConfirmationModal.module.css';
 
 const { TextArea } = Input;
-
 const ConfirmationModalMain = (props) => {
     const { onCloseAction, onSubmitAction, submitText = 'Submit', showField = false, text = '', content = '' } = props;
 

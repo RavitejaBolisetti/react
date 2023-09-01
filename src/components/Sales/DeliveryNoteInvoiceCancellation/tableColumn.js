@@ -6,9 +6,9 @@
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import { convertDate } from 'utils/formatDateTime';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
-import { getCodeValue } from 'utils/getCodeValue';  
+import { getCodeValue } from 'utils/getCodeValue';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 export const tableColumn = ({ handleButtonClick, typeData }) => {
     const tableColumn = [

@@ -8,8 +8,6 @@ import { Row, Col } from 'antd';
 import { withModal } from 'components/withModal';
 
 import styles from './SessionTimeoutModal.module.scss';
-//import styles from './SessionTimeoutModal.module.css';
-
 const OfflineModalMain = (props) => {
     return (
         <>

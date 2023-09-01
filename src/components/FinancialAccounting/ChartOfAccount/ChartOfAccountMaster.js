@@ -23,7 +23,7 @@ import { ATTRIBUTE_TYPE } from 'constants/modules/ChartOfAccount/attributeType';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 const { Search } = Input;
 

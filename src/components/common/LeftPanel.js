@@ -5,8 +5,8 @@
  */
 import { Tree } from 'antd';
 import { useMemo, useState, useEffect } from 'react';
+
 import styles from './TreeView.module.scss';
-//import styles from './TreeView.module.css';
 
 const LeftPanel = (props) => {
     const { selectedTreeKey, callOnForm = false, treeData, fieldNames, handleTreeViewClick, isOpenInModal, checkedKeys, expendedKeys: defaultExpandedKeys = [] } = props;

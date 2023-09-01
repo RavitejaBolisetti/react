@@ -20,7 +20,7 @@ import { receiptDataActions } from 'store/actions/data/receipt/receipt';
 import { receiptDetailDataActions } from 'store/actions/data/receipt/receiptDetails';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 import { showGlobalNotification } from 'store/actions/notification';
 

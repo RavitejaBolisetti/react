@@ -13,7 +13,6 @@ import { SupportingDocumentMaster } from './SupportingDocument';
 import { LeftSidebar } from './LeftSidebar';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 const VehicleRecieptMasterMainContainerMain = (props) => {
     const { currentSection } = props;

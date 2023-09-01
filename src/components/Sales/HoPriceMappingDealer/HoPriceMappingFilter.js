@@ -10,7 +10,7 @@ import { RxCross2 } from 'react-icons/rx';
 import { SearchBox } from 'components/utils/SearchBox';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 export default function HoPriceMappingFilter(props) {
     const { extraParams, removeFilter, handleResetFilter, advanceFilter = false, filterString, setFilterString, typeData, setAdvanceSearchVisible, searchForm } = props;

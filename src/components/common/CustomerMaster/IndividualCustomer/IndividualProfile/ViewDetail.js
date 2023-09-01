@@ -11,7 +11,6 @@ import { expandIcon } from 'utils/accordianExpandIcon';
 import { DATA_TYPE } from 'constants/dataType';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
 const ViewDetailMain = (props) => {

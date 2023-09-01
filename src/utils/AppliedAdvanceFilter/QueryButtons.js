@@ -6,7 +6,7 @@
 import { Button } from 'antd';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
+
 
 export const QueryButtons = ({ items = {}, onClick, currentItem = '' }) => {
     // console.log('🚀 ~ file: QueryButtons.js:10 ~ QueryButtons ~ items:', currentItem);

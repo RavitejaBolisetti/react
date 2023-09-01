@@ -30,7 +30,6 @@ import { tableColumn as manufacturerTableColumn } from './Manufacturer/tableColu
 import { manufacturerList, dealerList, dealerTokenData, dealerResData, manufacturerResData, productDataTree, adminDataTree, initialDealerBranches } from './dummyData';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 const mapStateToProps = (state) => {
     const {

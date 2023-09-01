@@ -17,7 +17,6 @@ import { disableFutureDate } from 'utils/disableDate';
 import { ModalButtons } from 'components/common/Button';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 export const AdvancedSearchFrom = (props) => {
     const { setAdvanceSearchVisible } = props;

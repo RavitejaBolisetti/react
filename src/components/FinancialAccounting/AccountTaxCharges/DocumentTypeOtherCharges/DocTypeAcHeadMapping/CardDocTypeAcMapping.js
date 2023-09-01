@@ -7,7 +7,7 @@ import React, { useEffect } from 'react';
 import { Card, Row, Button, Divider, Typography, Space } from 'antd';
 import { FiEdit, FiTrash } from 'react-icons/fi';
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
+
 import FormDocTypeAcMapping from './FormDocTypeAcMapping';
 
 const { Text } = Typography;

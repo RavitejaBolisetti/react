@@ -19,7 +19,6 @@ import { expandIcon } from 'utils/accordianExpandIcon';
 import { flattenData } from 'utils/flattenData';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 const { TextArea } = Input;
 const { Panel } = Collapse;

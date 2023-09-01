@@ -21,8 +21,6 @@ import { BiUser } from 'react-icons/bi';
 import { ROUTING_LOGIN } from 'constants/routing';
 import { validateRequiredInputField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
-import styles from '../Auth.module.scss';
-//import styles from '../Auth.module.css';
 
 import * as IMAGES from 'assets';
 import Footer from '../Footer';
@@ -30,6 +28,7 @@ import { forgotPasswordActions } from 'store/actions/data/forgotPassword';
 import { FiLock } from 'react-icons/fi';
 import { PasswordStrengthMeter } from 'utils/PasswordStrengthMeter';
 
+import styles from '../Auth.module.scss';
 const mapStateToProps = (state) => {
     const {
         data: {

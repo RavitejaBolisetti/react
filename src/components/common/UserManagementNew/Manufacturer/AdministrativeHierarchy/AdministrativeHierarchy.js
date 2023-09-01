@@ -7,15 +7,13 @@ import React, { useState } from 'react';
 import { Input, Form, Row, Col, Card } from 'antd';
 import LeftPanel from 'components/common/LeftPanel';
 
-import styles from 'components/common/TreeView.module.css';
-import style from 'components/common/Common.module.css';
-
 import { UserManagementFormButton } from '../../UserManagementFormButton/UserManagementFormButton';
+
+import styles from 'components/common/TreeView.module.css';
+import style from 'assets/sass/app.module.scss';
 
 const { Search } = Input;
 const fieldNames = { title: 'adminName', key: 'adminCode', children: 'children' };
-
-
 
 const AdministrativeHierarchy = (props) => {
     const { adminDataTree, formActionType, section } = props;
@@ -90,7 +88,7 @@ const AdministrativeHierarchy = (props) => {
         checkedKeys: checkedKeys,
     };
 
-    const buttonProps = {...props};
+    const buttonProps = { ...props };
 
     return (
         <>
@@ -113,7 +111,7 @@ const AdministrativeHierarchy = (props) => {
                     </Card>
                 </Col>
             </Row>
-            <UserManagementFormButton {...buttonProps}/>
+            <UserManagementFormButton {...buttonProps} />
         </>
     );
 };

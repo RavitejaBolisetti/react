@@ -8,7 +8,6 @@ import { convertDateMonthYear } from 'utils/formatDateTime';
 import { CopytoClipboard } from 'utils/CopytoClipboard';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 export const tableColumn = (handleButtonClick, page, pageSize) => {
     const tableColumn = [

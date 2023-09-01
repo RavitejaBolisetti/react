@@ -20,7 +20,6 @@ import { ROUTING_FORGOT_PASSWORD, ROUTING_UPDATE_PASSWORD } from 'constants/rout
 import { validateRequiredInputField } from 'utils/validation';
 
 import styles from '../Auth.module.scss';
-// import styles from 'App.module.css';
 import notificationStyles from 'App.module.css';
 
 import * as IMAGES from 'assets';

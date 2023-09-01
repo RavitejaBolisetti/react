@@ -6,7 +6,7 @@
 import React from 'react';
 import { Button, Col, Row, Space } from 'antd';
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
+
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 import { PlusOutlined } from '@ant-design/icons';

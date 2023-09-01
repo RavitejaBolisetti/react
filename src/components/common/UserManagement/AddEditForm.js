@@ -23,7 +23,6 @@ import AdministrativeHierarchy from './Manufacturer/AdministrativeHierarchy';
 import { USER_TYPE_USER } from 'constants/modules/UserManagement/userType';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 import style3 from './UserManagement.module.scss';
 //import style3 from './UserManagement.module.css';

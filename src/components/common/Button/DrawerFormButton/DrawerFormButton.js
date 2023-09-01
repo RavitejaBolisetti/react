@@ -5,10 +5,9 @@
  */
 import React from 'react';
 import { Button, Row, Col } from 'antd';
-
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
+
 import styles from './DrawerFormButton.module.scss';
-//import styles from './DrawerFormButton.module.css';
 
 const DrawerButtons = ({ formData, onCloseAction, buttonData, setButtonData, saveButtonName = 'Save', handleButtonClick, isLoadingOnSave, multipleForm = false }) => {
     return (

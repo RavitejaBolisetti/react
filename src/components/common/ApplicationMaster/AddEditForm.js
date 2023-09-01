@@ -6,7 +6,6 @@
 import React, { useEffect, useState } from 'react';
 import { Collapse, Divider, Spin } from 'antd';
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 import ApplicationDetails from './ApplicationDetails';
 import ApplicationActions from './actions/ApplicationActions';

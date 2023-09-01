@@ -6,7 +6,6 @@
 import { Button } from 'antd';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 export const QueryButtons = ({ items = {}, onClick, currentItem = items?.PENDING?.key }) => {
     return (

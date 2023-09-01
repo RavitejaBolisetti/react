@@ -14,7 +14,6 @@ import { VoucherDetailsMaster } from './VoucherDetails';
 import { ApportionDetailsMaster } from './ApportionDetails';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 const CreditDebitNoteMainContainerMain = (props) => {
     const { currentSection } = props;
