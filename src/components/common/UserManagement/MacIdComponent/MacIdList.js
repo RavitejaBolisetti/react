@@ -4,11 +4,10 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Col, Row, Button, Space, Card, Typography, Divider } from 'antd';
+import { Col, Row, Button, Card, Typography, Divider } from 'antd';
+import { AiOutlineClose } from 'react-icons/ai';
 
 import styles from './../UserManagement.module.scss';
-//import styles from './../UserManagement.module.css';
-import { AiOutlineClose } from 'react-icons/ai';
 
 const { Text } = Typography;
 

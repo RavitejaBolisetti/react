@@ -6,24 +6,22 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-
 import { Col, Row, Button, Alert, Form } from 'antd';
 
 import { searchValidator } from 'utils/validation';
 import { PlusOutlined } from '@ant-design/icons';
-// import { BsDownload } from 'react-icons/bs';
+
+import CurdSearchBox from './curdSearchBox';
 
 import { injectParams } from 'utils/inject';
 import { filteredData } from 'utils/listFilter';
 import { DisableItemComponent } from 'utils/disableItemComponent';
 import { sortObjectOfArray } from 'utils/sortObjectOfArray';
-import { PAGINATION } from 'constants/constants';
-
-import CurdSearchBox from './curdSearchBox';
 import { ListDataTable } from 'utils/ListDataTable';
 
+import { PAGINATION } from 'constants/constants';
+
 import styles from './crudListing.module.scss';
-//import styles from './crudListing.module.css';
 
 export const dependentDataLoader =
     (myKey) =>

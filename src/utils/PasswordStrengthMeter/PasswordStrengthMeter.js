@@ -11,7 +11,6 @@ import { FcCancel } from 'react-icons/fc';
 import { addToolTip } from 'utils/customMenuLink';
 
 import styles from './PasswordStrengthMeter.module.scss';
-//import styles from './PasswordStrengthMeter.module.css';
 
 const PasswordStrengthMeter = ({ password, beforeLogin = false, tooltipVisible }) => {
     const [passwordLevel, setPasswordLevel] = useState({ levelOne: false, levelTwo: false, levelThree: false });

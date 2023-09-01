@@ -5,8 +5,8 @@
  */
 import React from 'react';
 import { Button, Row, Col } from 'antd';
-
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
+
 import styles from './VehicleReceiptFormButton.module.css';
 
 export const VehicleReceiptFormButton = ({ formActionType, record, onCloseAction, onCancelReceipt, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection }) => {

@@ -3,13 +3,11 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { Col, Row, Space } from 'antd';
 import React from 'react';
+import { Col, Row, Space } from 'antd';
 import { InputSkeleton } from '../Skeleton';
 
 import styles from './Header.module.scss';
-//import styles from './Header.module.css';
-
 export const HeaderSkeleton = () => {
     return (
         <Row gutter={20}>
