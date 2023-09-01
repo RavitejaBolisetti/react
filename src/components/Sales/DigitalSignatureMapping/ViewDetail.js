@@ -8,7 +8,7 @@ import { Collapse, Descriptions, Row, Col } from 'antd';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { DataTable } from 'utils/dataTable';
 import { tableColumnAddEdit } from './tableColumnAddEdit';
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 
 const { Panel } = Collapse;

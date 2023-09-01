@@ -12,7 +12,7 @@ import { ATTRIBUTE_TYPE } from 'constants/modules/ChartOfAccount/attributeType';
 import { withDrawer } from 'components/withDrawer';
 import { customSelectBox } from 'utils/customSelectBox';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 const AddEditFormMain = (props) => {
     const { onCloseAction, chartOfAccountHierarchy, selectedTreeSelectKey, setSelectedTreeSelectKey } = props;
@@ -27,7 +27,7 @@ const AddEditFormMain = (props) => {
         setFormBtnActive(true);
     };
 
-    const onChange = (props) => {   
+    const onChange = (props) => {
         setAccountTyp(props);
 
         form.setFieldsValue({
