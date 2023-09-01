@@ -18,6 +18,7 @@ import { AggregateAddEditForm } from './AggregateAddEditForm';
 import { tableColumn } from './tableCoulmn';
 
 import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
+import { LANGUAGE_EN } from 'language/en';
 import { NoDataFound } from 'utils/noDataFound';
 
 import styles from 'assets/sass/app.module.scss';
@@ -40,6 +41,7 @@ const AddEditFormMain = (props) => {
     const [isEditing, setisEditing] = useState(false);
     const [AdvanceformData, setAdvanceformData] = useState();
     const AggregateModuleTitle = `Aggregates`;
+    const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
 
     useEffect(() => {
         if (formData?.productAttributeDetail) {
@@ -138,7 +140,7 @@ const AddEditFormMain = (props) => {
         <>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Collapse onChange={() => handleCollapse('Attribute')} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian} {...collapseProps}>
+                    <Collapse onChange={() => handleCollapse('Attribute')} expandIconPosition="end" collapsible="icon" expandIcon={expandIcon} activeKey={openAccordian} {...collapseProps}>
                         <Panel header="Product Attribute Details" key="Attribute">
                             <Divider />
                             <Row gutter={20}>
@@ -185,13 +187,13 @@ const AddEditFormMain = (props) => {
                             </Row>
                         </Panel>
                     </Collapse>
-                    <Form layout="vertical" autoComplete="off" form={connectedForm}>
-                        <Collapse onChange={() => handleCollapse('Vehicle')} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian} {...collapseProps}>
-                            <Panel header="Connected Vehicle" key="Vehicle">
+                    <Collapse onChange={() => handleCollapse('Vehicle')} expandIconPosition="end" collapsible="icon" expandIcon={expandIcon} activeKey={openAccordian} {...collapseProps}>
+                        <Panel header="Connected Vehicle" key="Vehicle">
+                            <Form layout="vertical" autoComplete="off" form={connectedForm}>
                                 <Divider />
                                 {formData?.connectedVehicle?.map((element, index) => {
                                     return (
-                                        <Collapse onChange={() => handleInnerCollapse(index)} expandIconPosition="end" expandIcon={expandIcon} activeKey={InnerCollapse} {...collapseProps}>
+                                        <Collapse onChange={() => handleInnerCollapse(index)} expandIconPosition="end" collapsible="icon" expandIcon={expandIcon} activeKey={InnerCollapse} {...collapseProps}>
                                             <Panel header={`${element?.tcuId} | ${element?.esimNo}`} key={index}>
                                                 <Divider />
                                                 <Row gutter={20}>
@@ -236,11 +238,11 @@ const AddEditFormMain = (props) => {
                                         </Collapse>
                                     );
                                 })}
-                                {!formData?.connectedVehicle?.length && <NoDataFound informtion={'No connected Vehicle Data'} />}
-                            </Panel>
-                        </Collapse>
-                    </Form>
-                    <Collapse onChange={() => handleCollapse('Aggregates')} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian} {...collapseProps}>
+                                {!formData?.connectedVehicle?.length && <NoDataFound informtion={noDataTitle} />}
+                            </Form>
+                        </Panel>
+                    </Collapse>
+                    <Collapse onChange={() => handleCollapse('Aggregates')} expandIconPosition="end" collapsible="icon" expandIcon={expandIcon} activeKey={openAccordian} {...collapseProps}>
                         <Panel
                             header={
                                 <Row>
@@ -265,6 +267,7 @@ const AddEditFormMain = (props) => {
                             }
                             key="Aggregates"
                         >
+                            <Divider />
                             <DataTable tableColumn={tableColumn({ handleButtonClick, formActionType, bindCodeValue })} tableData={optionsServiceModified} pagination={false} />
                         </Panel>
                     </Collapse>

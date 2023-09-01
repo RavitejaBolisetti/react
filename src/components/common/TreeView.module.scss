@@ -48,14 +48,14 @@
             font-weight: 500;
         }
 
-        .ant-tree-checkbox+span.ant-tree-node-selected {
+        .ant-tree-checkbox + span.ant-tree-node-selected {
             background-color: $transparentColor;
             color: $primaryRed;
             border-radius: 4px;
             font-weight: 500;
         }
 
-        .ant-tree-checkbox+span {
+        .ant-tree-checkbox + span {
             position: relative;
             z-index: auto;
             min-height: 24px;
@@ -151,12 +151,13 @@
     white-space: nowrap;
 }
 
-.panelVisible {
-    height: calc(100vh - 280px);
-}
+// .panelVisible {
+//     height: calc(100vh - 280px);
+// }
 
 .panelHidden {
     background: none;
+    // border: 1px solid red;
 }
 
 .treemenu {
@@ -168,16 +169,16 @@
     @include space(padding, bottom, $sp0);
     line-height: 2em;
     list-style: none;
-    background-color: transparent;
-    color: #0b0b0c;
+    background-color: $transparentColor;
+    color: $primaryBlack;
 }
 
 .treeCollapsibleButton {
     border-radius: 3px;
     @include space(padding, all, $sp5);
-    color: #ff3e5b;
+    color: $primaryRed;
     line-height: 2px;
-    background-color: #f4f4f4;
+    background-color: $neutralGrey0;
     font-weight: 400;
     cursor: pointer;
     float: left;
@@ -186,7 +187,7 @@
 }
 
 .bigblue {
-    color: red;
+    color: $primaryRed;
 }
 
 .searchField {

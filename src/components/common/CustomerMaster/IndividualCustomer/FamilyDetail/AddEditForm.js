@@ -8,13 +8,12 @@ import { Collapse, Card, Typography, Button, Row, Empty, Divider } from 'antd';
 
 import { PlusOutlined } from '@ant-design/icons';
 import { FiEdit } from 'react-icons/fi';
-
 import { ViewDetail } from './ViewDetail';
 import { FormContainer } from './FormContainer';
 
 import dayjs from 'dayjs';
 import { LANGUAGE_EN } from 'language/en';
-
+import { NoDataFound } from 'utils/noDataFound';
 import { expandIcon } from 'utils/accordianExpandIcon';
 
 import styles from 'assets/sass/app.module.scss';
@@ -32,6 +31,11 @@ const AddEditFormMain = (props) => {
     const [editedValues, setEditedValues] = useState({});
 
     const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
+    const addDataTitle = (
+        <p className={styles.textCenter}>
+            Please add familiy details using <br /> <strong>“Add”</strong> button at top
+        </p>
+    );
 
     const handleEdit = () => {
         setIsViewModeVisible(false);
@@ -182,15 +186,7 @@ const AddEditFormMain = (props) => {
                             </Collapse>
                         ))
                     ) : !showForm && !editedMode ? (
-                        <>
-                            <Empty
-                                image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                imageStyle={{
-                                    height: 60,
-                                }}
-                                description={<span>{noDataTitle}</span>}
-                            ></Empty>
-                        </>
+                        <NoDataFound informtion={VIEW_ACTION ? noDataTitle : addDataTitle} />
                     ) : null}
                 </Card>
             ) : (

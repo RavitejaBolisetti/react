@@ -14,8 +14,8 @@ import { showGlobalNotification } from 'store/actions/notification';
 
 import { tableColumn } from './tableColumn';
 import { AddEditForm } from './AddEditForm';
-// import { AddEditForm } from './AddEditFormTempBck';
 
+import { LANGUAGE_EN } from 'language/en';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { APPLICATION_DEVICE_TYPE } from 'utils/applicationDeviceType';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
@@ -39,7 +39,6 @@ const mapStateToProps = (state) => {
         userId,
         moduleTitle,
         menuTreeData: rolemenuData,
-        // menuTreeData: rolemenuData?.filter((i) => i?.value?.toLowerCase() === 'finac'),
         isDataLoading,
         isMenuLoading,
         isDataLoaded,
@@ -66,6 +65,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const RoleManagementMain = (props) => {
     const { saveData, fetchList, userId, isDataLoaded, listShowLoading, menuTreeData, showGlobalNotification, roleManagementData, fetchMenuList } = props;
+    const noApplicationValidationMessage = LANGUAGE_EN.GENERAL.APPLICATON_REQUIRE_VALIDATION;
 
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
@@ -96,7 +96,6 @@ export const RoleManagementMain = (props) => {
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
     const onSuccessAction = () => {
-        // refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         setRefershData(false);
         setShowDataLoading(false);
         setShowApplicationDataLoading(false);
@@ -145,11 +144,19 @@ export const RoleManagementMain = (props) => {
     const onFinish = (values) => {
         const recordId = formData?.id || '';
 
+        const filteredWebMenuData = unFilteredMenuData?.[APPLICATION_WEB]?.filter((i) => i?.checked) || [];
+        const filteredMobileMenuData = unFilteredMenuData?.[APPLICATION_MOBILE]?.filter((i) => i?.checked) || [];
+
+        if (!filteredWebMenuData?.length || filteredMobileMenuData?.length) {
+            showGlobalNotification({ message: noApplicationValidationMessage.MESSAGE.replace('{NAME}', 'application access'), placement: 'bottomRight' });
+            return;
+        }
+
         const data = {
             ...values,
             id: recordId,
-            webRoleManagementRequest: unFilteredMenuData?.[APPLICATION_WEB]?.filter((i) => i?.checked) || [],
-            mobileRoleManagementRequest: unFilteredMenuData?.[APPLICATION_MOBILE]?.filter((i) => i?.checked) || [],
+            webRoleManagementRequest: filteredWebMenuData,
+            mobileRoleManagementRequest: filteredMobileMenuData,
         };
 
         const onSuccess = (res) => {
@@ -183,7 +190,6 @@ export const RoleManagementMain = (props) => {
     };
 
     useEffect(() => {
-        // if (userId && deviceType && !unFilteredMenuData?.[deviceType]) {
         if (userId && deviceType && formData) {
             setShowApplicationDataLoading(true);
             const extraParams = [

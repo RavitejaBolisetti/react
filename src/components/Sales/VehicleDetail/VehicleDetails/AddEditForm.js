@@ -54,7 +54,7 @@ const AddEditFormMain = (props) => {
 
     return (
         <>
-            <Collapse defaultActiveKey={['1']} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
+            <Collapse defaultActiveKey={['1']} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end" collapsible="icon">
                 <Panel header="Vehicle Details" key="1">
                     <Divider />
                     <Row gutter={20}>
@@ -221,7 +221,7 @@ const AddEditFormMain = (props) => {
                     )}
                 </Panel>
             </Collapse>
-            <Collapse defaultActiveKey={['2']} bordered={false} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
+            <Collapse defaultActiveKey={['2']} bordered={false} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end" collapsible="icon">
                 <Panel header="Registration Number Change Request" key="2">
                     <Divider />
                     <div className={styles.marB20}>Coming Soon</div>

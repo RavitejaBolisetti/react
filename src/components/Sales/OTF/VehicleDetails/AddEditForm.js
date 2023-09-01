@@ -28,7 +28,7 @@ const { Text } = Typography;
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { toolTipContent, isVehicleLovDataLoading, handleFormValueChange, onHandleSelect, optionsServicesMapping, setoptionsServicesMapping, optionsServiceModified, setoptionsServiceModified, formData, openAccordian, isReadOnly, setIsReadOnly, setOpenAccordian, selectedOrderId, form, onErrorAction, showGlobalNotification, fetchList, userId, listShowLoading, saveData, onSuccessAction, ProductHierarchyData, typeData, formActionType } = props;
+    const { toolTipContent, isVehicleLovDataLoading, handleFormValueChange, onHandleSelect, optionsServicesMapping, setoptionsServicesMapping, optionsServiceModified, setoptionsServiceModified, formData, openAccordian, isReadOnly, setIsReadOnly, setOpenAccordian, selectedOrderId, form, onErrorAction, showGlobalNotification, fetchList, userId, listShowLoading, saveData, onSuccessAction, ProductHierarchyData, typeData, formActionType, vehicleServiceData } = props;
     const [optionForm] = Form.useForm();
     const findUsageType = (usage) => {
         const foundVal = typeData[PARAM_MASTER.VEHCL_TYPE.id]?.find((element, index) => element?.value === usage);
@@ -83,13 +83,15 @@ const AddEditFormMain = (props) => {
         optionsServiceModified,
         setoptionsServiceModified,
         handleFormValueChange,
+        vehicleServiceData,
     };
 
     return (
         <Row gutter={20}>
             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                <Collapse onChange={() => handleCollapse(1)} expandIconPosition="end" expandIcon={({ isActive }) => expandIconWithText(isActive, <FiEdit />, <FiEdit style={{ color: '#B5B5B6' }} />)} activeKey={openAccordian}>
+                <Collapse onChange={() => handleCollapse(1)} expandIconPosition="end" expandIcon={({ isActive }) => expandIconWithText(isActive, <FiEdit />, <FiEdit style={{ color: '#B5B5B6' }} />)} activeKey={openAccordian} collapsible="icon">
                     <Panel header="Vehicle Information" key="1">
+                        <Divider />
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item label="Vehicle Usage Type" name="vehicleUsageType" data-testid="usageType">
@@ -180,13 +182,13 @@ const AddEditFormMain = (props) => {
                         </Row>
                     </Panel>
                 </Collapse>
-                <Collapse onChange={() => handleCollapse(2)} expandIconPosition="end" expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={openAccordian}>
+                <Collapse onChange={() => handleCollapse(2)} expandIconPosition="end" expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={openAccordian} collapsible="icon">
                     <Panel header="Tax Details" key="2">
                         <Divider />
-                        <DataTable tableColumn={taxDetailsColumn} tableData={formData['taxDetails']} pagination={false} />
+                        <DataTable tableColumn={taxDetailsColumn()} tableData={formData['taxDetails']} pagination={false} />
                     </Panel>
                 </Collapse>
-                <Collapse onChange={() => handleCollapse(3)} expandIconPosition="end" expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={openAccordian}>
+                <Collapse onChange={() => handleCollapse(3)} expandIconPosition="end" expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={openAccordian} collapsible="icon">
                     <Panel
                         header={
                             <Row>
@@ -201,8 +203,13 @@ const AddEditFormMain = (props) => {
                         key="3"
                     >
                         {!isReadOnly && <Divider />}
-                        {isReadOnly && <OptionServicesForm {...OptionServicesFormProps} />}
-                        <DataTable tableColumn={optionalServicesColumns} tableData={optionsServiceModified} pagination={false} />
+                        {isReadOnly && (
+                            <>
+                                <Divider />
+                                <OptionServicesForm {...OptionServicesFormProps} />
+                            </>
+                        )}
+                        <DataTable tableColumn={optionalServicesColumns()} tableData={optionsServiceModified} pagination={false} />
                     </Panel>
                 </Collapse>
             </Col>

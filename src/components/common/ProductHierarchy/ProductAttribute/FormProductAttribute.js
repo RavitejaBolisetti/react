@@ -28,7 +28,6 @@ function FormProductAttribute(props) {
 
     return (
         <>
-            <Divider />
             <Form form={formEdit ? editForm : attributeForm} id="myForm" autoComplete="off" layout="vertical" onFinish={onAttributeFormFinish} onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
@@ -51,7 +50,7 @@ function FormProductAttribute(props) {
                     </Col>
 
                     {isVisible && (
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.marB20}>
                             <Button icon={<PlusOutlined />} type="primary" htmlType="submit">
                                 Add
                             </Button>

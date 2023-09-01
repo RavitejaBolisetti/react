@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { Input, Form, Col, Row, Switch, Space, Collapse, Tabs, Divider, Tag } from 'antd';
+import { Input, Form, Col, Row, Switch, Collapse, Tabs, Divider, Tag } from 'antd';
 
 import { DrawerFormButton } from 'components/common/Button';
 import { ViewRoleManagement } from './ViewRoleManagement';
@@ -121,7 +121,7 @@ const AddEditFormMain = (props) => {
     const AccordianTreeUtils = ({ menuData, viewMode = false }) => {
         const dataAvailable = menuData?.length;
         return dataAvailable ? (
-            <Space direction="vertical" size="middle">
+            <div>
                 {menuData?.map((el, i) => {
                     const treeData = el?.children;
                     const flatternData = flattenData(treeData);
@@ -138,7 +138,7 @@ const AddEditFormMain = (props) => {
                         checkable: true,
                         isTreeViewVisible: true,
                         onCheck: onCheck(el?.value),
-                        // disableCheckbox: viewMode,
+                        disabled: viewMode,
                         expendedKeys: expendedKeys?.map((i) => i.value),
                         checkedKeys: checkedKeys?.map((i) => i.value), // handleDefaultCheckedKeys(viewMode, defaultCheckedKeysMangement, checkedMenuKeys),
                     };
@@ -150,7 +150,7 @@ const AddEditFormMain = (props) => {
                                     header={
                                         <>
                                             {el?.label}
-                                            {allowedAccess?.length > 0 && <Tag color="default" className={styles.marL10}>{`${allowedAccess?.length >= 2 ? `${allowedAccess?.length} Accesses Provided` : `${allowedAccess?.length} Access Provided`}`}</Tag>}
+                                            {allowedAccess?.length > 0 && <Tag color="default" className={styles.marL20}>{`${allowedAccess?.length >= 2 ? `${allowedAccess?.length} Accesses Provided` : `${allowedAccess?.length} Access Provided`}`}</Tag>}
                                         </>
                                     }
                                     key={i}
@@ -175,11 +175,9 @@ const AddEditFormMain = (props) => {
                         </div>
                     );
                 })}
-            </Space>
+            </div>
         ) : (
-            <Space direction="vertical" size="middle">
-                No Application Available
-            </Space>
+            <div>No Application Available</div>
         );
     };
 
@@ -226,7 +224,7 @@ const AddEditFormMain = (props) => {
                             </>
                         ) : (
                             <>
-                                <div className={styles.roleDescription}>
+                                <div>
                                     <Row gutter={20}>
                                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                                             <Form.Item initialValue={formData?.roleId} name="roleId" label="Role Id" rules={[validateRequiredInputField('id'), validationFieldLetterAndNumber('id')]}>
@@ -262,7 +260,7 @@ const AddEditFormMain = (props) => {
                                         </Col>
                                     </Row>
                                 </div>
-                                <Divider />
+                                {/* <Divider /> */}
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.subTitleSec}>
                                         Application Access<span className={styles.mandatory}>*</span>

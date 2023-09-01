@@ -80,7 +80,7 @@
 		}
 
 		.ant-btn-default.ant-btn-dangerous.ant-btn-background-ghost {
-			background: transparent;
+			background: $transparentColor;
 		}
 
 		.ant-drawer.ant-drawer-body.ant-form-item {
@@ -401,9 +401,9 @@
 
 
 
-/******************************/
+/**********allowed Timing Alignment********************/
 .allowedTimingAlignment {
-	border-top: 1px solid #dedede;
+	border-top: 1px solid $neutralGrey1;
 	padding-top: 24px;
 	padding-left: 0 !important;
 	font-size: 14px;
@@ -428,22 +428,22 @@
 }
 
 .activeText {
-	color: #00a310;
+	color: $semanticSuccess;
 }
 
 .InactiveText {
-	color: #8e8585;
+	color: $neutralGrey3;
 }
 
 .modalIconAlert {
-	color: #ff7a00;
+	color: $semanticWarning;
 	padding-right: 8px;
 }
 
 .tableIcons {
 	border: none;
 	padding: 0px;
-	box-shadow: transparent !important;
+	box-shadow: $transparentColor !important;
 	width: 18px !important;
 }
 
@@ -463,7 +463,7 @@
 
 .subheading {
 	font-size: 16px;
-	color: #0b0c0c;
+	color: $primaryBlack;
 	padding-right: 0px !important;
 	padding-left: 0px !important;
 	display: flex;
@@ -476,14 +476,14 @@
 }
 
 .inputViewText {
-	color: #8e8585;
+	color: $neutralGrey5-dark;
 	text-align: left;
 	left: 0px;
 }
 
 .viewModeText {
-	background-color: #ffffff !important;
-	border-color: transparent !important;
+	background-color: $primaryWhite !important;
+	border-color: $transparentColor !important;
 	padding-left: 0px !important;
 	font-weight: 700;
 	font-size: 16px;
@@ -496,12 +496,12 @@
 
 
 .accordianHeader {
-	color: #e31837 !important;
+	color: $brandColor !important;
 }
 
 
 .viewMode :global(.ant-form-item .ant-form-item-label > label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before) {
-	color: #0b0c0c;
+	color: $primaryBlack;
 	display: none;
 }
 
@@ -511,13 +511,13 @@
 
 
 .viewMode :global(.ant-switch.ant-switch-checked .ant-switch-inner .ant-switch-inner-checked) {
-	color: #b5b5b6 !important;
+	color: $neutralGrey2 !important;
 	font-size: 16px !important;
 	font-weight: 700 !important;
 }
 
 .viewMode :global(.ant-switch .ant-switch-inner .ant-switch-inner-unchecked) {
-	color: #b5b5b6 !important;
+	color: $neutralGrey2 !important;
 	font-size: 16px !important;
 	font-weight: 700 !important;
 }

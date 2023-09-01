@@ -15,6 +15,9 @@ import { AccountCategory } from './accountCategory/accountCategory';
 import { ApplicationMenu } from './accountCategory/appilcationMenu';
 import { AccountCategoryDocumentDescription } from './accountCategory/accountCategoryDocumentDescription';
 import { DocumentTypeLedger } from './documentTypeLedger';
+// import { ChartOfAccountHierarchy } from './chartOfAccount/chartOfAccountHierarchy';
+// import { ChartOfAccount } from './chartOfAccount/chartOfAccount';
+import { ChartOfAccountMaster } from './chartOfAccount';
 
 export const FinancialAccounting = combineReducers({
     TaxCharges,
@@ -28,4 +31,7 @@ export const FinancialAccounting = combineReducers({
     ApplicationMenu,
     AccountCategoryDocumentDescription,
     DocumentTypeLedger,
+    // ChartOfAccountHierarchy,
+    // ChartOfAccount,
+    ChartOfAccountMaster,
 });

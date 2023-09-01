@@ -162,7 +162,7 @@ export const OtfMasterBase = (props) => {
         invoiceBtn: false,
         deliveryNote: false,
         changeHistory: true,
-        otfSoMappingChangeHistory: false,
+        otfSoMappingHistoryBtn: false,
     };
 
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -424,6 +424,9 @@ export const OtfMasterBase = (props) => {
                 editMode: buttonAction === EDIT_ACTION,
                 viewMode: buttonAction === VIEW_ACTION,
             });
+            if (buttonAction === ALLOT) {
+                setFormActionType({...formActionType, viewMode:true});
+            }
             setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction, orderStatus: record?.orderStatus }));
         }
     };
@@ -738,6 +741,8 @@ export const OtfMasterBase = (props) => {
         isVisible: isAllotVisible,
         setIsAllotVisible,
         onCloseAction: onCancelCloseAction,
+        setRefreshData,
+        setIsFormVisible,
     };
 
     return (

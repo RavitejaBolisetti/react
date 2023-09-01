@@ -22,14 +22,12 @@ const ViewDetailMain = (props) => {
 
     return (
         <div className={styles.viewDrawerContainer}>
-            <Space style={{ display: 'flex' }} direction="vertical" size="middle">
-                <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse(1)} expandIconPosition="end" {...collapseProps}>
-                    <Panel header="Apportion Details" key="1">
-                        <Divider />
-                        <DataTable scroll={{ x: 1000 }} tableColumn={tableColumn({ formActionType, bindCodeValue })} tableData={tableData} pagination={false} />
-                    </Panel>
-                </Collapse>
-            </Space>
+            <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse(1)} expandIconPosition="end" {...collapseProps}>
+                <Panel header="Apportion Details" key="1">
+                    <Divider />
+                    <DataTable scroll={{ x: 1000 }} tableColumn={tableColumn({ formActionType, bindCodeValue })} tableData={tableData} pagination={false} />
+                </Panel>
+            </Collapse>
         </div>
     );
 };

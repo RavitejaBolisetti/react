@@ -90,6 +90,7 @@ const ViewList = (props) => {
                                     </Row>
                                 }
                             >
+                                <Divider />
                                 <ViewContactDetail styles={styles} formData={data} index={i} {...detailProps} />
                             </Panel>
                         </Collapse>

@@ -154,7 +154,7 @@
                     padding: 0;
 
                     &:hover {
-                        background-color: transparent;
+                        background-color: $transparentColor;
                         color: $primaryRed;
                     }
                 }
@@ -164,18 +164,18 @@
                     padding: 0;
 
                     &:hover {
-                        background-color: transparent;
+                        background-color: $transparentColor;
                         color: $primaryRed;
                     }
                 }
 
                 .ant-dropdown-menu-item-active {
-                    background-color: transparent;
+                    background-color: $transparentColor;
                     color: $primaryRed;
                 }
 
                 .ant-dropdown-menu-submenu-title-active {
-                    background-color: transparent;
+                    background-color: $transparentColor;
                     color: $primaryRed;
                 }
 
@@ -201,18 +201,18 @@
                     padding: 0;
 
                     &:hover {
-                        background-color: transparent;
+                        background-color: $transparentColor;
                         color: $primaryRed;
                     }
                 }
 
                 .ant-dropdown-menu-item-active {
-                    background-color: transparent;
+                    background-color: $transparentColor;
                     color: $primaryRed;
                 }
 
                 .ant-dropdown-menu-submenu-title-active {
-                    background-color: transparent;
+                    background-color: $transparentColor;
                     color: $primaryRed;
                 }
 

@@ -64,7 +64,7 @@ export default function DataTable({ isLoading, rowSelection = undefined, showSiz
     };
 
     const showPaginator = tableData?.length > 0;
-    console.log('tablePagination', tablePagination);
+
     return (
         <div className={styles.marB20}>
             <div className={styles.mainDataTable}>

@@ -77,17 +77,17 @@
     background-color: $primaryRed-dark;
 
     /*&:hover {
-         background: $primaryRed-dark !important;
-     }*/
+          background: $primaryRed-dark !important;
+      }*/
     &:disabled {
-        background-color: $neutralGrey2-dark;
-        border: 1px solid $neutralGrey2-dark;
+        background-color: $neutralGrey2-dark !important;
+        border: 1px solid $neutralGrey2-dark !important;
         opacity: 1;
-        @include font-style(16, 24, 600, $neutralGrey3-dark, $fontfamily, center);
+        @include font-style(16, 24, 600, $neutralGrey3-dark !important, $fontfamily, center);
 
         &:hover {
             background-color: $neutralGrey2-dark !important;
-            border: 1px solid $neutralGrey2-dark;
+            border: 1px solid $neutralGrey2-dark !important;
             opacity: 1;
             @include font-style(16, normal, 600, $neutralGrey3-dark, $fontfamily, center);
         }
@@ -157,11 +157,11 @@
                 }
             }
 
-            >input.ant-input.disabledInput {
+            > input.ant-input.disabledInput {
                 color: $neutralGrey2-dark !important;
             }
 
-            >input.ant-input {
+            > input.ant-input {
                 @include breakpoint(md) {
                     padding: 2px 5px 3px 5px;
                 }
@@ -175,7 +175,7 @@
                 }
 
                 margin-inline-start: 12px;
-                margin-inline-end: 12px;
+                //  margin-inline-end: 12px;
                 color: $neutralGrey2-dark;
             }
         }
@@ -224,8 +224,8 @@
         }
 
         .g-recaptcha {
-            >div {
-                >div {
+            > div {
+                > div {
                     margin: 0px auto;
                 }
             }
@@ -384,7 +384,7 @@
                             }
 
                             .ant-checkbox {
-                                &:not(.ant-checkbox-checked)+span {
+                                &:not(.ant-checkbox-checked) + span {
                                     color: $neutralGrey3-dark !important;
 
                                     p {
@@ -422,7 +422,7 @@
                     }
 
                     input {
-                        background: transparent;
+                        background: $transparentColor;
                         color: $primaryWhite;
 
                         &::-ms-reveal {
@@ -450,7 +450,7 @@
 
                 .inputBox.disabledInput {
                     input {
-                        background: transparent;
+                        background: $transparentColor;
                         color: $neutralGrey4 !important;
                     }
 
@@ -555,14 +555,28 @@
                     }
                 }
 
-                .button {
-                    span {
-                        svg {
-                            margin-left: -24px;
-                            visibility: hidden;
-                        }
-                    }
-                }
+                // .button {
+                //     & :global {
+                //         .ant-btn-icon {
+                //             svg {
+                //                 margin-left: -24px;
+                //                 visibility: hidden;
+                //             }
+                //             .ant-icon-loading {
+                //                 svg {
+                //                     visibility: visible;
+                //                 }
+                //             }
+                //         }
+                //         .ant-btn-loading-icon {
+                //             .ant-icon-loading {
+                //                 svg {
+                //                     visibility: visible;
+                //                 }
+                //             }
+                //         }
+                //     }
+                // }
             }
 
             .verifyUser {
@@ -581,6 +595,9 @@
                 @include font-style(12, 20, 600, $primaryRed-dark, $fontfamily, right);
                 width: 100%;
                 margin-top: -16px;
+                z-index: 10;
+                position: absolute;
+                right: 10px;
 
                 a {
                     color: $primaryRed !important;
@@ -676,7 +693,7 @@
         padding: 20px 10px 10px;
 
         div {
-            >a {
+            > a {
                 padding: 0 32px 0 16px;
                 text-transform: uppercase;
                 color: $neutralGrey5-dark;
@@ -688,7 +705,7 @@
                 }
             }
 
-            >span {
+            > span {
                 color: $neutralGrey5-dark;
                 font-weight: 400;
                 font-size: 14px;
@@ -701,7 +718,7 @@
         padding: 20px 10px 10px;
 
         div {
-            >a {
+            > a {
                 padding: 0 32px 0 16px;
                 text-transform: uppercase;
                 color: $neutralGrey4;
@@ -713,7 +730,7 @@
                 }
             }
 
-            >span {
+            > span {
                 color: $neutralGrey4;
                 font-weight: 400;
                 font-size: 14px;
@@ -795,7 +812,7 @@
         color: $primaryWhite-dark;
     }
 
-    >input {
+    > input {
         &:focus-visible {
             margin-right: 10px;
         }

@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { Collapse, Typography, Row, Col } from 'antd';
+import { Collapse, Typography, Row, Col, Divider } from 'antd';
 import { HiOutlineCurrencyRupee } from 'react-icons/hi';
 
 import styles from 'assets/sass/app.module.scss';
@@ -67,6 +67,7 @@ const ViewList = (props) => {
                                     </Row>
                                 }
                             >
+                                <Divider />
                                 <ViewPaymentDetail styles={styles} formData={data} index={i} {...detailProps} />
                             </Panel>
                         </Collapse>

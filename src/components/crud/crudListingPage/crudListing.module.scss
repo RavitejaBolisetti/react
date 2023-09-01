@@ -519,7 +519,7 @@
 .advanceFilterTop {
     margin-top: 10px;
     padding-top: 8px;
-    border-top: solid 1px #e6e6e6;
+    border-top: solid 1px $neutralGrey1;
 }
 
 .advanceFilterContainer {
@@ -533,11 +533,11 @@
 }
 
 .activeText {
-    color: #00a310;
+    color: $semanticSuccess;
 }
 
 .inactiveText {
-    color: #8e8585;
+    color: $neutralGrey2;
 }
 
 .container {
@@ -638,7 +638,7 @@
     padding-bottom: 0px;
     line-height: 2em;
     list-style: none;
-    background-color: transparent;
+    background-color: $transparentColor;
     color: $primaryBlack;
 }
 

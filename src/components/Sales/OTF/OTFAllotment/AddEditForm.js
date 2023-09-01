@@ -3,28 +3,33 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Row, Col, Form, Select, Card, Descriptions } from 'antd';
 
 import AdvanceFilter from './AdvanceFilter';
-import { AdvancedSearch } from './AdvancedSearch';
 import { ListDataTable } from 'utils/ListDataTable';
 import { withDrawer } from 'components/withDrawer';
 import { checkAndSetDefaultValue, getStatus } from 'utils/checkAndSetDefaultValue';
 import { VehicleDetailFormButton } from 'components/Sales/VehicleDetail/VehicleDetailFormButton';
 import { convertDateTime } from 'utils/formatDateTime';
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+// import styles from 'components/common/Common.module.css';
 
 import { FilterIcon } from 'Icons';
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
     const { filterString, setFilterString, toggleButton, settoggleButton, setAdvanceSearchVisible, extraParams, handleResetFilter, removeFilter } = props;
-    const { isAdvanceSearchVisible, advanceFilterForm, typeData, productHierarchyData } = props;
+    const { isAdvanceSearchVisible, advanceFilterForm, typeData, productHierarchyData, setSelectedOrderVINDetails } = props;
 
     const { formData, isLoading, selectedOrder, tableProps } = props;
     const { otfTransferForm, onFinishOTFTansfer } = props;
     const { handleButtonClick, buttonData, setButtonData, onCloseAction } = props;
+
+    useEffect(() => {
+        setFilterString();
+        setSelectedOrderVINDetails();
+    },[]);
 
     const buttonProps = {
         formData,
