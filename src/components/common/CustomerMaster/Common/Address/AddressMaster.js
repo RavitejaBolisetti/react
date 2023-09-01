@@ -5,9 +5,7 @@
  */
 import React, { useState, useReducer, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Form, Space, Row, Col, Typography, Button, Empty, Card, Divider } from 'antd';
-
-import { UploadBoxIcon } from 'Icons';
+import { Form, Row, Col, Typography, Button, Empty, Card, Divider } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 
 import { geoPinCodeDataActions } from 'store/actions/data/geo/pincodes';
@@ -26,6 +24,7 @@ import { CustomerFormButton } from '../../CustomerFormButton';
 import ViewAddressList from './ViewAddressList';
 import { CardSkeleton } from 'components/common/Skeleton';
 import { LANGUAGE_EN } from 'language/en';
+import { NoDataFound } from 'utils/noDataFound';
 
 const { Text } = Typography;
 const mapStateToProps = (state) => {
@@ -96,6 +95,11 @@ const AddressMasterBase = (props) => {
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
     const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
+    const addDataTitle = (
+        <p className={styles.textCenter}>
+            Please add new address using <br /> <strong>“Add”</strong> button at top
+        </p>
+    );
 
     const extraParams = [
         {
@@ -275,24 +279,7 @@ const AddressMasterBase = (props) => {
                                     </Row>
                                     <Divider className={styles.marT20} />
                                     {!formActionType?.viewMode && showAddEditForm && <AddEditForm {...formProps} />}
-                                    {!addressData?.length && !isAdding ? (
-                                        <>
-                                            <Space direction="vertical" className={styles.verticallyCentered}>
-                                                <UploadBoxIcon />
-                                                <div className={styles.marB20}>
-                                                    {formActionType?.viewMode ? (
-                                                        <p className={styles.textCenter}>No records found</p>
-                                                    ) : (
-                                                        <p className={styles.textCenter}>
-                                                            Please add new address using <br /> <strong>“Add”</strong> button at top
-                                                        </p>
-                                                    )}
-                                                </div>
-                                            </Space>
-                                        </>
-                                    ) : (
-                                        <ViewAddressList {...formProps} />
-                                    )}
+                                    {!addressData?.length && !isAdding ? <NoDataFound informtion={formActionType?.viewMode ? noDataTitle : addDataTitle} /> : <ViewAddressList {...formProps} />}
                                 </>
                             )}
                         </Card>
