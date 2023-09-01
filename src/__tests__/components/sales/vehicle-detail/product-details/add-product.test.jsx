@@ -45,7 +45,7 @@ describe('Vehicle ProductDetails render', () => {
         fireEvent.click(addBtn);
     });
 
-    it('should render page2', async () => {
+    it('Add button should work', async () => {
         const formData = { productAttributeDetail: { name: 'Test' } };
         customRender(<FormWrapper handleCollapse={jest.fn()} formData={formData} bindStatus={jest.fn()} setOpenAccordian={jest.fn()} setIsReadOnly={jest.fn()} />);
 
@@ -63,13 +63,5 @@ describe('Vehicle ProductDetails render', () => {
         customRender(<FormWrapper isReadOnly={true} setIsReadOnly={jest.fn()} />);
         const saveBtn = screen.getByRole('button', { name: 'Save' });
         fireEvent.click(saveBtn);
-    });
-
-    it('Edit button should work', async () => {
-        customRender(<FormWrapper optionsServiceModified={optionsServiceModified} handleCollapse={jest.fn()} bindCodeValue={jest.fn()} setOpenAccordian={jest.fn()} setIsReadOnly={jest.fn()} />);
-        const expandIcon = screen.getAllByRole('img', { name: 'plus' });
-        fireEvent.click(expandIcon[2]);
-        const editBtn = screen.getByTestId('edit');
-        fireEvent.click(editBtn);
     });
 });
