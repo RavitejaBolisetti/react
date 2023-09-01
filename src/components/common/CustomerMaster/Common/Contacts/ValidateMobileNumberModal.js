@@ -8,8 +8,8 @@ import React from 'react';
 import { Row, Col, Button, Space } from 'antd';
 import { withModal } from '../../../../withModal/withModal';
 
-import styles from '../../../../../sass/drawer_two_pannel.scss';
-//import styles from '../../CustomertMaster.module.css';
+import styles from 'assets/sass/app.module.scss';
+
 
 const ValidateMobileModalMain = (props) => {
     const { onCloseAction, onCloseActionOnContinue } = props;
