@@ -13,15 +13,10 @@ import { otfCustomerDetailsAction } from 'store/actions/data/otf/customerDetails
 import { geoPinCodeDataActions } from 'store/actions/data/geo/pincodes';
 import { showGlobalNotification } from 'store/actions/notification';
 
-import { OTFStatusBar } from '../utils/OTFStatusBar';
-import { OTFFormButton } from '../OTFFormButton';
-
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
 
-import dayjs from 'dayjs';
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 const mapStateToProps = (state) => {
     const {
@@ -80,8 +75,9 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const CustomerDetailsMain = (props) => {
     const { resetData, saveData, isLoading, userId, isDataLoaded, fetchList, listShowLoading, customerFormData, showGlobalNotification, onFinishFailed } = props;
-    const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, pincodeData, formActionType, NEXT_ACTION, handleButtonClick, section } = props;
+    const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, pincodeData, formActionType, NEXT_ACTION, handleButtonClick } = props;
     const { setButtonData, buttonData, typeData, selectedOrderId } = props;
+
     const [form] = Form.useForm();
     const [billCstmForm] = Form.useForm();
     const [formData, setFormData] = useState('');

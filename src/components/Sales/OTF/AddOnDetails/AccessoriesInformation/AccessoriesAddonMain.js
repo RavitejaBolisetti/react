@@ -8,7 +8,6 @@ import { Divider, Form } from 'antd';
 
 import CardMapping from './CardMapping';
 import AddEditForm from './AddEditForm';
-import { Space } from 'antd';
 
 const AccessoriesAddonMain = ({ setIsBtnDisabled, openAccordian, setOpenAccordian, isEditing, setisEditing, selectedOrderId, handleFormValueChange, showGlobalNotification, setsearchData, searchData, setaddButtonDisabled, onSearchPart, AddonPartsData, addButtonDisabled, accessoryForm, isBtnDisabled, setFormBtnDisable, setAddOnItemInfo, addOnItemInfo, formData }) => {
     const [EditingForm] = Form.useForm();
@@ -47,16 +46,15 @@ const AccessoriesAddonMain = ({ setIsBtnDisabled, openAccordian, setOpenAccordia
             })
             .catch((err) => {});
     };
+
     const handleDelete = (index) => {
         setAddOnItemInfo(addOnItemInfo?.filter((element, i) => i !== index));
     };
+
     const onCancel = () => {
         accessoryForm.resetFields();
         setsearchData();
         setaddButtonDisabled({ ...addButtonDisabled, partDetailsResponses: false });
-        // if (!formData?.partDetailsResponses) {
-        //     setOpenAccordian([]);
-        // } Need to check
     };
 
     const onFieldsChange = () => {
