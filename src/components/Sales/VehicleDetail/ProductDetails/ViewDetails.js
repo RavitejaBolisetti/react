@@ -41,7 +41,7 @@ const ViewDetailMain = (props) => {
     };
 
     return (
-        <div className={styles.viewDrawerContainer}>
+        <div className={styles?.viewDrawerContainer}>
             <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse(1)} expandIconPosition="end" collapsible="icon" {...collapseProps}>
                 <Panel header="Product Attribute Details" key="1">
                     <Divider />
@@ -54,9 +54,9 @@ const ViewDetailMain = (props) => {
                             {isLoading ? (
                                 <InputSkeleton width={'100px'} height={20} theme={'card'} />
                             ) : (
-                                <div className={styles.tooltipAlign}>
+                                <div className={styles?.tooltipAlign}>
                                     {productAttributeDetail?.model}
-                                    {!productAttributeDetail?.model ? 'NA' : addToolTip(tooltTipText, 'bottom', '#D3EDFE', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}
+                                    {!productAttributeDetail?.model ? 'NA' : addToolTip(tooltTipText, 'bottom', '#D3EDFE', styles?.toolTip)(<AiOutlineInfoCircle className={styles?.infoIconColor} size={13} />)}
                                 </div>
                             )}
                         </Descriptions.Item>

@@ -10,32 +10,41 @@ const FormWrapper = (props) => {
     const myFormMock = {
         ...aggregateForm,
         setFieldsValue: jest.fn(),
-        validateFields: jest.fn().mockResolvedValue([{name: 'Kai'}]),
+        validateFields: jest.fn().mockResolvedValue([{ name: 'Kai' }]),
         resetFields: jest.fn(),
-        getFieldsValue: jest.fn().mockResolvedValue([{name: 'Kai'}]),
+        getFieldsValue: jest.fn().mockResolvedValue([{ name: 'Kai' }]),
     };
     return <AggregateAddEditForm aggregateForm={myFormMock} {...props} />;
 };
 
 describe('AdvanceForm', () => {
     it('submits form data when Save button is clicked', async () => {
-        customRender(<AggregateAddEditForm isVisible={true}/>);
-
+        customRender(<AggregateAddEditForm isVisible={true} />);
     });
 
     it('test1', async () => {
-        customRender(<FormWrapper AdvanceformData={true} isVisible={true} itemOptions={[{name: 'Test'}]} setitemOptions={jest.fn()} optionsServiceModified={[{name: 'Kai'}]}/>);
+        customRender(<FormWrapper AdvanceformData={true} isVisible={true} itemOptions={[{ name: 'Test' }]} setitemOptions={jest.fn()} optionsServiceModified={[{ name: 'Kai' }]} />);
     });
 
     it('test2', async () => {
-        customRender(<FormWrapper AdvanceformData={true} isVisible={true} itemOptions={[{name: 'Test'}]} setitemOptions={jest.fn()}/>);
-        const saveBtn=screen.getByRole('button', { name: 'Save' });
+        customRender(<FormWrapper AdvanceformData={true} isVisible={true} itemOptions={[{ name: 'Test' }]} setitemOptions={jest.fn()} />);
+        const saveBtn = screen.getByRole('button', { name: 'Save' });
         fireEvent.click(saveBtn);
     });
 
     it('test3', async () => {
-        customRender(<FormWrapper AdvanceformData={true} isVisible={true} itemOptions={[{name: 'Test'}]} setitemOptions={jest.fn()} isEditing={true}/>);
-        const saveBtn=screen.getByRole('button', { name: 'Save' });
+        customRender(<FormWrapper AdvanceformData={true} isVisible={true} itemOptions={[{ name: 'Test' }]} setitemOptions={jest.fn()} isEditing={true} />);
+
+        const Item = screen.getByRole('combobox', { name: 'Item' });
+        fireEvent.change(Item, { target: { value: 'front tyre' } });
+
+        const make = screen.getByRole('combobox', { name: 'Make' });
+        fireEvent.change(make, { target: { value: 'appolo' } });
+
+        const serialNo = screen.getByRole('textbox', { name: 'Serial No.' });
+        fireEvent.change(serialNo, { target: { value: 123 } });
+
+        const saveBtn = screen.getByRole('button', { name: 'Save' });
         fireEvent.click(saveBtn);
     });
 });
