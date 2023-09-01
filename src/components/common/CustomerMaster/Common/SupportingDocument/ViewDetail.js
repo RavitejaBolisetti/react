@@ -7,6 +7,8 @@ import React from 'react';
 
 import { Card } from 'antd';
 import { FiDownload, FiTrash } from 'react-icons/fi';
+import { LANGUAGE_EN } from 'language/en';
+import { NoDataFound } from 'utils/noDataFound';
 import styles from 'assets/sass/app.module.scss';
 //import styles from 'components/common/Common.module.css';
 
@@ -19,6 +21,8 @@ export const ViewDetail = (props) => {
         deleteFile,
         downloadFile,
     } = props;
+
+    const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
 
     const downloadFileFromButton = (uploadData) => {
         const extraParams = [
@@ -53,7 +57,7 @@ export const ViewDetail = (props) => {
                     })}
                 </>
             ) : (
-                viewMode && <div className={styles.marB20}>No Supporting Document Available</div>
+                viewMode && <NoDataFound informtion={noDataTitle} />
             )}
         </div>
     );

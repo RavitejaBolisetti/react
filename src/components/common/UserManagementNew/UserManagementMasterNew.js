@@ -39,7 +39,6 @@ import { tableColumn as manufacturerTableColumn } from './Manufacturer/tableColu
 
 import { productDataTree, adminDataTree, initialDealerBranches } from 'components/common/UserManagement/dummyData';
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 const { Option } = Select;
 
@@ -48,8 +47,8 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             UserManagement: {
-                SearchUser: { isLoaded: isDataLoaded = false, isLoading: isDataLoading, data: userDataList = {}, detailData: userDetailData },
-                RoleList: { isLoaded: isRoleListLoaded, isLoading: isRoleListLoding, data: roleListdata },
+                SearchUser: { isLoading: isDataLoading, data: userDataList = {}, detailData: userDetailData },
+                RoleList: { isLoading: isRoleListLoding, data: roleListdata },
                 RoleApplicaion: { isLoaded: isRoleApplicationLoaded, isLoading: isRoleApplicationLoding, data: roleApplicationData },
                 UserDealerApplicatin: { isLoaded: isDlrAppLoaded, isLoading: isDlrAppLoding, data: dlrAppList },
                 UserManufacturerApplication: { isLoaded: isMnmAppLoaded, isLoading: isMnmAppLoding, data: mnmAppList },
@@ -154,7 +153,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-// for token type select
+
 const typeData = [{ key: 'employeeCode', value: 'Token No.' }];
 
 const UserManagementMain = (props) => {
@@ -289,7 +288,6 @@ const UserManagementMain = (props) => {
         setError(res);
     };
     const onSuccessAction = (res) => {
-        // setFilterString('');
         setselectedDealerCode('');
         setError('');
     };
@@ -312,7 +310,7 @@ const UserManagementMain = (props) => {
         switch (buttonAction) {
             case FROM_ACTION_TYPE?.ADD:
                 setFormActionType((prev) => ({ ...prev, viewMode: false, editMode: false, addMode: true }));
-                setButtonData({ editBtn: false, nextBtn: true, cancelBtn: true });
+                setButtonData({ editBtn: true, nextBtn: true, cancelBtn: true });
                 setIsReadOnly(false);
                 record && setSelectedRecord(record);
                 record && setFormData(record);
@@ -321,7 +319,7 @@ const UserManagementMain = (props) => {
                 break;
             case FROM_ACTION_TYPE?.EDIT:
                 setFormActionType((prev) => ({ ...prev, addMode: false, viewMode: false, editMode: true }));
-                setButtonData({ saveBtn: false, editBtn: false, nextBtn: true, cancelBtn: true });
+                setButtonData({ saveBtn: true, editBtn: true, nextBtn: true, cancelBtn: true });
                 record && setSelectedRecord(record);
                 record && setFormData(record);
                 setIsReadOnly(false);
@@ -363,7 +361,6 @@ const UserManagementMain = (props) => {
     };
 
     const onChangeSearchHandler = (event) => {
-        // setValidateTokenData({});
         setError('');
     };
 
@@ -378,10 +375,14 @@ const UserManagementMain = (props) => {
     };
 
     const onCloseAction = () => {
+        
         setIsFormVisible(false);
         setSelectedRecord([]);
         setDisabledSearch(true);
+        setFilterString('');
+        setselectedDealerCode('');
     };
+
 
     const drawerTitle = useMemo(() => {
         if (formActionType?.viewMode) {
@@ -392,7 +393,6 @@ const UserManagementMain = (props) => {
             return 'Add New ';
         }
     }, [formActionType]);
-
     const formProps = {
         ...props,
         filterString,

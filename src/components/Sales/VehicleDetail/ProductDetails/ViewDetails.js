@@ -14,6 +14,7 @@ import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { tableColumn } from './tableCoulmn';
 
 import { expandIcon } from 'utils/accordianExpandIcon';
+import { LANGUAGE_EN } from 'language/en';
 import { NoDataFound } from 'utils/noDataFound';
 
 const { Panel } = Collapse;
@@ -22,6 +23,8 @@ const ViewDetailMain = (props) => {
     const { styles, bindCodeValue, bindStatus, formData, collapseProps, tooltTipText, isLoading, optionsServiceModified, formActionType } = props;
     const [openAccordian, setOpenAccordian] = useState([]);
     const [InnerCollapse, setInnerCollapse] = useState([]);
+
+    const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
 
     const handleCollapse = (key) => {
         setOpenAccordian((prev) => (prev === key ? '' : key));
@@ -85,7 +88,7 @@ const ViewDetailMain = (props) => {
                                 </Collapse>
                             );
                         })}
-                        {!formData?.connectedVehicle?.length && <NoDataFound informtion={'No connected Vehicle Data'} />}
+                        {!formData?.connectedVehicle?.length && <NoDataFound informtion={noDataTitle} />}
                     </div>
                 </Panel>
             </Collapse>
