@@ -18,21 +18,21 @@ const FormWrapper = (props) => {
 };
 
 describe('AdvanceForm', () => {
-    it('submits form data when Save button is clicked', async () => {
+    it('should render component', async () => {
         customRender(<AggregateAddEditForm isVisible={true} />);
     });
 
-    it('test1', async () => {
+    it('should render fields', async () => {
         customRender(<FormWrapper AdvanceformData={true} isVisible={true} itemOptions={[{ name: 'Test' }]} setitemOptions={jest.fn()} optionsServiceModified={[{ name: 'Kai' }]} />);
     });
 
-    it('test2', async () => {
+    it('Save button should work', async () => {
         customRender(<FormWrapper AdvanceformData={true} isVisible={true} itemOptions={[{ name: 'Test' }]} setitemOptions={jest.fn()} />);
         const saveBtn = screen.getByRole('button', { name: 'Save' });
         fireEvent.click(saveBtn);
     });
 
-    it('test3', async () => {
+    it('OnFinish should work', async () => {
         customRender(<FormWrapper AdvanceformData={true} isVisible={true} itemOptions={[{ name: 'Test' }]} setitemOptions={jest.fn()} isEditing={true} />);
 
         const Item = screen.getByRole('combobox', { name: 'Item' });

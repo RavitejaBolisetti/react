@@ -23,7 +23,6 @@ const FormWrapper = (props) => {
     const myFormMock = {
         ...form,
         setFieldsValue: jest.fn(),
-        // validateFields: jest.fn().mockResolvedValue([{ name: 'Kai' }]),
     };
     return <AddEditForm form={myFormMock} {...props} />;
 };
@@ -52,5 +51,25 @@ describe('Vehicle ProductDetails render', () => {
 
         const addBtn = screen.getByRole('button', { name: 'plus Add' });
         fireEvent.click(addBtn);
+    });
+
+    it('Cancel button should work', async () => {
+        customRender(<FormWrapper isReadOnly={true} setIsReadOnly={jest.fn()} />);
+        const cancelBtn = screen.getByRole('button', { name: 'Cancel' });
+        fireEvent.click(cancelBtn);
+    });
+
+    it('Save button should work', async () => {
+        customRender(<FormWrapper isReadOnly={true} setIsReadOnly={jest.fn()} />);
+        const saveBtn = screen.getByRole('button', { name: 'Save' });
+        fireEvent.click(saveBtn);
+    });
+
+    it('Edit button should work', async () => {
+        customRender(<FormWrapper optionsServiceModified={optionsServiceModified} handleCollapse={jest.fn()} bindCodeValue={jest.fn()} setOpenAccordian={jest.fn()} setIsReadOnly={jest.fn()} />);
+        const expandIcon = screen.getAllByRole('img', { name: 'plus' });
+        fireEvent.click(expandIcon[2]);
+        const editBtn = screen.getByTestId('edit');
+        fireEvent.click(editBtn);
     });
 });
