@@ -7,11 +7,12 @@ import React, { useState, useEffect } from 'react';
 import { Input, Form, Row, Col, Card, Empty, Typography, Divider } from 'antd';
 
 import LeftPanel from 'components/common/LeftPanel';
-import styles from 'components/common/TreeView.module.css';
-import style from 'assets/sass/app.module.scss';
 import CMS from 'assets/images/comingsoon.svg';
 import { UserManagementFormButton } from '../../UserManagementFormButton/UserManagementFormButton';
 import { LANGUAGE_EN } from 'language/en';
+
+import styles from 'components/common/TreeView.module.css';
+import style from 'assets/sass/app.module.scss';
 
 const { Text } = Typography;
 const { Search } = Input;

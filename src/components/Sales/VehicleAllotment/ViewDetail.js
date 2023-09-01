@@ -19,9 +19,6 @@ import { VEHICLE_TYPE } from 'constants/VehicleType';
 
 import styles from 'assets/sass/app.module.scss';
 
-//import style from 'components/utils/SearchBox/SearchBox.module.scss';
-import style from 'components/utils/SearchBox/SearchBox.module.css';
-
 const ViewDetailMain = (props) => {
     const { formData, isLoading, typeData, setFilterStringOTFSearch, searchForm, tableData } = props;
     const { resetAdvanceFilter, setResetAdvanceFilter, handleButtonClick, buttonData, setButtonData, onCloseAction, selectedOTFDetails, setSelectedOrderOTFDetails } = props;

@@ -9,8 +9,6 @@ import { Row, Col, Button, Space } from 'antd';
 import { withModal } from '../../../../withModal/withModal';
 
 import styles from '../../../../../sass/drawer_two_pannel.scss';
-//import styles from '../../CustomertMaster.module.css';
-
 const ValidateMobileModalMain = (props) => {
     const { onCloseAction, onCloseActionOnContinue } = props;
 
