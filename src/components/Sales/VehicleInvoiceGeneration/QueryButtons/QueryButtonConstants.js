@@ -19,7 +19,7 @@ export const QUERY_BUTTONS = {
     CANCELLATION_REQUEST: {
         id: 'cancellation request',
         title: 'Cancellation Request',
-        key: 'R',
+        key: 'CR',
         active: false,
     },
 };
