@@ -4,12 +4,12 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { Col, Row,  Collapse, Descriptions, Divider } from 'antd';
+import { Col, Row, Collapse, Descriptions, Divider } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { getCodeValue } from 'utils/getCodeValue';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
+
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
@@ -49,7 +49,7 @@ const ViewDetailMain = (props) => {
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end" className={styles.collapseContainer}>
                         <Panel header="Voucher Details" key="1">
-                            <Divider/>
+                            <Divider />
                             <Descriptions {...viewProps}>
                                 <Descriptions.Item label="Total Settled Amount">{checkAndSetDefaultValue(voucherDetailsDto?.totalSettledAmount, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Total Write-Off Amount">{checkAndSetDefaultValue(voucherDetailsDto?.totalWriteOffAmount, isLoading)}</Descriptions.Item>
@@ -61,7 +61,7 @@ const ViewDetailMain = (props) => {
                     </Collapse>
                     <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end" className={styles.collapseContainer}>
                         <Panel header="Party Details" key="2">
-                            <Divider/>
+                            <Divider />
                             <Descriptions {...viewProps}>
                                 <Descriptions.Item label="Party ID">{getCodeValue(typeData[PARAM_MASTER?.PARTY_CATEG?.id], partyDetailsDto?.partySegment)}</Descriptions.Item>
                                 <Descriptions.Item label="Party ID">{checkAndSetDefaultValue(partyDetailsDto?.partyId, isLoading)}</Descriptions.Item>

@@ -6,7 +6,6 @@
 import React from 'react';
 import { Card, Col, Row, Typography } from 'antd';
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 const { Text } = Typography;
 

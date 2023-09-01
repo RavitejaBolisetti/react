@@ -4,18 +4,17 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Col, Form, Row, Button, Space, Card, Collapse } from 'antd';
 import { withDrawer } from 'components/withDrawer';
 import { AiOutlinePlusSquare } from 'react-icons/ai';
+import { Col, Form, Row, Button, Space, Card, Collapse, Divider } from 'antd';
+
+import AssignProducts from './AssignProducts';
+import AssignUserRolesMunfacturer from './AssignUserRolesMunfacturer';
+import AdministrativeHierarchyAccess from './AdministrativeHierarchyAccess';
+import { ViewUserManagementDealer } from './ViewUserManagementDealer';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 import style4 from './UserManagementManufacturer.module.css';
-import AssignUserRolesMunfacturer from './AssignUserRolesMunfacturer';
-import AssignProducts from './AssignProducts';
-import AdministrativeHierarchyAccess from './AdministrativeHierarchyAccess';
-
-import { ViewUserManagementDealer } from './ViewUserManagementDealer';
 
 const { Panel } = Collapse;
 const AddEditFormMain = (props) => {
@@ -86,19 +85,19 @@ const AddEditFormMain = (props) => {
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                             <Collapse onChange={onChangeCollapse} expandIcon={() => <AiOutlinePlusSquare />} collapsible="icon">
                                 <Panel header="Assign User Roles" key="1">
-                                    <Divider/>
+                                    <Divider />
                                     <AssignUserRolesMunfacturer userRoleOptions={DealerData?.employeeRoles} DealerSearchvalue={DealerSearchvalue} />
                                 </Panel>
                             </Collapse>
                             <Collapse onChange={onChangeCollapse} expandIcon={() => <AiOutlinePlusSquare />} collapsible="icon">
                                 <Panel header="Administrative Hierarchy Access" key="2">
-                                    <Divider/>
+                                    <Divider />
                                     <AdministrativeHierarchyAccess BranchMappingData={DealerData?.branches} />
                                 </Panel>
                             </Collapse>
                             <Collapse onChange={onChangeCollapse} expandIcon={() => <AiOutlinePlusSquare />} collapsible="icon">
                                 <Panel header="Assign Products" key="3">
-                                    <Divider/>
+                                    <Divider />
                                     <AssignProducts ProductMappingData={DealerData?.products} productHierarchyData={productHierarchyData} />
                                 </Panel>
                             </Collapse>

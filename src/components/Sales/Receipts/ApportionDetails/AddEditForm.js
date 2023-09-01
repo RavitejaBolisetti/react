@@ -14,7 +14,6 @@ import { tableColumnApportion } from './tableColumnApportion';
 import { ModalApportionDetail } from './ModalApportionDetail';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 const { Text } = Typography;
 

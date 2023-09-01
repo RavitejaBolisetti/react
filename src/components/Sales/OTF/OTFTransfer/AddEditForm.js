@@ -16,7 +16,6 @@ import { checkAndSetDefaultValue, getStatus } from 'utils/checkAndSetDefaultValu
 import { convertDateTime } from 'utils/formatDateTime';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 const { Option } = Select;
 

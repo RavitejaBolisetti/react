@@ -17,7 +17,6 @@ import { VehicleCheckListbutton } from '../VehicleRecieptFormButton';
 import { tableColumn } from './tableCoulmn';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 const mapStateToProps = (state) => {
     const {

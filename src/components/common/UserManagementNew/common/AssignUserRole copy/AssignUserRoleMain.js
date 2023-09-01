@@ -10,7 +10,7 @@ import { tableColumn } from './tableColumn';
 import { PlusOutlined } from '@ant-design/icons';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
+
 import style from '../../../../../components/common/withModal.module.scss';
 //import style from 'components/withModal/withModal.module.css';
 import { RoleApplicationModal } from './RoleApplicationModal';

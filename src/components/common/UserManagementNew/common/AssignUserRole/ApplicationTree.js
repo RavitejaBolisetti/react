@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { Input, Form, Col, Row, Divider, Collapse, Tabs, Typography, Empty, Tag } from 'antd';
+import { Input, Form, Col, Row, Divider, Collapse, Tabs, Empty, Tag } from 'antd';
 
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { DEVICE_TYPE } from 'constants/modules/UserManagement/deviceType';
@@ -12,9 +12,7 @@ import LeftPanel from 'components/common/LeftPanel';
 import { LANGUAGE_EN } from 'language/en';
 
 import style from '../../../../../components/common/TreeView.module.scss';
-//import style from 'components/common/TreeView.module.css';
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
 
@@ -40,7 +38,7 @@ const fnMapData = ({ data, fieldNames, selectedKeys }) =>
     );
 
 const ApplicationTreeMain = (props) => {
-    const { checkedKeys, setCheckedKeys, webApplications, roleCode, setWebApplications, mobileApplications, setMobileApplications, deviceType, setDisableMdlSaveBtn, setDeviceType, form, onFinish, formActionType: { addMode = false, viewMode = false, editMode = true } = undefined } = props;
+    const { checkedKeys, setCheckedKeys, webApplications, roleCode, setWebApplications, mobileApplications, setMobileApplications, deviceType, setDisableMdlSaveBtn, setDeviceType, form, onFinish, formActionType: { viewMode = false } = undefined } = props;
 
     const APPLICATION_WEB = DEVICE_TYPE?.WEB?.key;
     const APPLICATION_MOBILE = DEVICE_TYPE?.MOBILE?.key;
@@ -61,6 +59,7 @@ const ApplicationTreeMain = (props) => {
 
     const onTabChange = (newActiveKey) => {
         setDeviceType(newActiveKey);
+        setActiveKey('');
         searchItem.setFieldValue('search', '');
     };
 
@@ -133,7 +132,7 @@ const ApplicationTreeMain = (props) => {
                                                 {allowedAccess?.length > 0 && <Tag color="default" className={styles.marL20}>{`${allowedAccess?.length >= 2 ? `${allowedAccess?.length} Accesses Provided` : `${allowedAccess?.length} Access Provided`}`}</Tag>}
                                             </>
                                         }
-                                        key={i}
+                                        key={el?.value}
                                     >
                                         <Divider />
                                         <Form layout="vertical" autoComplete="off" form={searchItem}>

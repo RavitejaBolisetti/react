@@ -16,7 +16,6 @@ import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/prepareP
 import { VEHICLE_RECEIPT_STATUS } from 'constants/VehicleReceiptStatus';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
 const { Text } = Typography;

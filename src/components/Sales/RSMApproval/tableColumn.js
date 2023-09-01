@@ -7,7 +7,6 @@ import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import { convertDate } from 'utils/formatDateTime';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 export const tableColumn = (handleButtonClick) => {
     const tableColumn = [

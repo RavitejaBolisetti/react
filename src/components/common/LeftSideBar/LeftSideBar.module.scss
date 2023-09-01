@@ -189,7 +189,7 @@
                 align-items: center;
                 justify-content: center;
                 margin-right: 8px;
-                border: 1px solid transparent !important;
+                border: 1px solid $transparentColor !important;
                 color: $primaryBlack !important;
 
                 svg {
@@ -216,7 +216,7 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                border: 1px solid transparent !important;
+                border: 1px solid $transparentColor !important;
                 color: $primaryBlack !important;
 
                 svg {
@@ -275,7 +275,7 @@
     li.subMenuItemNew {
         &:hover {
             color: $primaryRed !important;
-            background: transparent !important;
+            background: $transparentColor !important;
         }
     }
 

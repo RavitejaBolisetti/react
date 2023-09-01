@@ -18,7 +18,6 @@ import { AddEditForm } from './AddEditForm';
 import { CustomerFormButton } from '../../CustomerFormButton';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 const mapStateToProps = (state) => {
     const {

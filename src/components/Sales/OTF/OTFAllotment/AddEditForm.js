@@ -13,7 +13,6 @@ import { checkAndSetDefaultValue, getStatus } from 'utils/checkAndSetDefaultValu
 import { VehicleDetailFormButton } from 'components/Sales/VehicleDetail/VehicleDetailFormButton';
 import { convertDateTime } from 'utils/formatDateTime';
 import styles from 'assets/sass/app.module.scss';
-// import styles from 'components/common/Common.module.css';
 
 import { FilterIcon } from 'Icons';
 const { Option } = Select;
@@ -29,7 +28,7 @@ const AddEditFormMain = (props) => {
     useEffect(() => {
         setFilterString();
         setSelectedOrderVINDetails();
-    },[]);
+    }, []);
 
     const buttonProps = {
         formData,

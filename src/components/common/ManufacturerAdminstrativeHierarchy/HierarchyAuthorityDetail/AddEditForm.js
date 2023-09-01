@@ -17,7 +17,6 @@ import { hierarchyAttributeMasterDataActions } from 'store/actions/data/hierarch
 import { ManufactureAdminValidateToken } from 'store/actions/data/manufacturerAdminHierarchy/manufactureAdminValidateToken';
 
 import styles from 'assets/sass/app.module.scss';
-//import style from 'components/common/Common.module.css';
 
 const { Search } = Input;
 const { Text } = Typography;

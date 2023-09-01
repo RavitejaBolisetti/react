@@ -11,7 +11,6 @@ import { SearchBox } from 'components/utils/SearchBox';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 export default function AdvanceOTFFilter(props) {
     const { extraParams, removeFilter, handleResetFilter, advanceFilter = false, otfFilter = false, title, filterString, setFilterString, typeData, setAdvanceSearchVisible, searchForm } = props;

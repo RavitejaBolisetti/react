@@ -18,7 +18,6 @@ import { ComingSoonMaster } from './ComingSoon';
 import { LeftSidebar } from './LeftSidebar';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 const VehicleDetailMainContainerMain = (props) => {
     const { currentSection } = props;

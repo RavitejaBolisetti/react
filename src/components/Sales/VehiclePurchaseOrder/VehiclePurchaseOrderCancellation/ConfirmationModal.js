@@ -11,7 +11,6 @@ import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { validateRequiredSelectField } from 'utils/validation';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 export const ConfirmationModalFrom = (props) => {
     // const { handleCloseModal } = props;

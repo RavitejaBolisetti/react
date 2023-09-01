@@ -10,7 +10,7 @@ import { getCodeValue } from 'utils/getCodeValue';
 import { DATA_TYPE } from 'constants/dataType';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
+
 import { CopytoClipboard } from 'utils/CopytoClipboard';
 
 const { Panel } = Collapse;

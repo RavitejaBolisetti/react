@@ -7,15 +7,14 @@ import React, { useEffect, useState } from 'react';
 import { Col, Input, Form, Row } from 'antd';
 
 import { withModal } from 'components/withModal';
-import { preparePlaceholderText } from 'utils/preparePlaceholder';
-
-import { validateRequiredInputField } from 'utils/validation';
 import { ModalButtons } from 'components/common/Button';
-import { convertDateTimedayjs } from 'utils/formatDateTime';
-import styles from 'assets/sass/app.module.scss';
-// import styles from 'components/common/Common.module.css';
 
+import { preparePlaceholderText } from 'utils/preparePlaceholder';
+import { validateRequiredInputField } from 'utils/validation';
+import { convertDateTimedayjs } from 'utils/formatDateTime';
 import { MakeCheckResult, setCheckresultValue, BindFormItems } from './CheckListUtils';
+
+import styles from 'assets/sass/app.module.scss';
 
 export const ChecklistModalForms = (props) => {
     const { AdvanceformData, setAdvanceformData } = props;

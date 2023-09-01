@@ -18,7 +18,6 @@ import { DataTable } from 'utils/dataTable';
 import { MANUFACTURER_HIERARCHY_TYPE } from 'constants/manufacturerHierarchyType';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 const mapStateToProps = (state) => {
     const {

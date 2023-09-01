@@ -18,10 +18,10 @@ import { AggregateAddEditForm } from './AggregateAddEditForm';
 import { tableColumn } from './tableCoulmn';
 
 import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
+import { LANGUAGE_EN } from 'language/en';
 import { NoDataFound } from 'utils/noDataFound';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
@@ -40,6 +40,7 @@ const AddEditFormMain = (props) => {
     const [isEditing, setisEditing] = useState(false);
     const [AdvanceformData, setAdvanceformData] = useState();
     const AggregateModuleTitle = `Aggregates`;
+    const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
 
     useEffect(() => {
         if (formData?.productAttributeDetail) {
@@ -185,9 +186,9 @@ const AddEditFormMain = (props) => {
                             </Row>
                         </Panel>
                     </Collapse>
-                    <Form layout="vertical" autoComplete="off" form={connectedForm}>
-                        <Collapse onChange={() => handleCollapse('Vehicle')} expandIconPosition="end" collapsible="icon" expandIcon={expandIcon} activeKey={openAccordian} {...collapseProps}>
-                            <Panel header="Connected Vehicle" key="Vehicle">
+                    <Collapse onChange={() => handleCollapse('Vehicle')} expandIconPosition="end" collapsible="icon" expandIcon={expandIcon} activeKey={openAccordian} {...collapseProps}>
+                        <Panel header="Connected Vehicle" key="Vehicle">
+                            <Form layout="vertical" autoComplete="off" form={connectedForm}>
                                 <Divider />
                                 {formData?.connectedVehicle?.map((element, index) => {
                                     return (
@@ -236,10 +237,10 @@ const AddEditFormMain = (props) => {
                                         </Collapse>
                                     );
                                 })}
-                                {!formData?.connectedVehicle?.length && <NoDataFound informtion={'No connected Vehicle Data'} />}
-                            </Panel>
-                        </Collapse>
-                    </Form>
+                                {!formData?.connectedVehicle?.length && <NoDataFound informtion={noDataTitle} />}
+                            </Form>
+                        </Panel>
+                    </Collapse>
                     <Collapse onChange={() => handleCollapse('Aggregates')} expandIconPosition="end" collapsible="icon" expandIcon={expandIcon} activeKey={openAccordian} {...collapseProps}>
                         <Panel
                             header={

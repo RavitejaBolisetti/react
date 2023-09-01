@@ -11,7 +11,7 @@ import { QueryButtons } from 'components/Sales/VehicleRecieptChecklist/QueryButt
 
 import { DELIVERY_NOTE_INVOICE_STATUS } from './utils/DeliveryNoteInvoiceStatus';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 const { Search } = Input;
 
 export default function AdvanceFilter(props) {

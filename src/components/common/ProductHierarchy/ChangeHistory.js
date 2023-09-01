@@ -13,8 +13,8 @@ import { convertDateTime } from 'utils/formatDateTime';
 import { tblPrepareColumns, tblStatusColumn } from 'utils/tableColumn';
 import { withDrawer } from 'components/withDrawer';
 import { DataTable } from 'utils/dataTable';
+
 import styles from '../ChangeHistory/ChangeHistory.module.scss';
-//import styles from '../ChangeHistory/ChangeHistory.module.css';
 
 const mapStateToProps = (state) => {
     const {

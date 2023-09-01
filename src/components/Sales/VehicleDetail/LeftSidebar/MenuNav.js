@@ -9,7 +9,7 @@ import { BsRecordCircleFill } from 'react-icons/bs';
 import { FaCheckCircle } from 'react-icons/fa';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
+
 import { VEHICLE_DETAIL_SECTION } from 'constants/VehicleDetailSection';
 
 const MenuNav = (props) => {

@@ -15,7 +15,7 @@ import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import { ViewDetail } from './ViewDetail';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 const { Panel } = Collapse;
 

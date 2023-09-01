@@ -11,7 +11,6 @@ import { expandIcon } from 'utils/accordianExpandIcon';
 import { getCodeValue } from 'utils/getCodeValue';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
 

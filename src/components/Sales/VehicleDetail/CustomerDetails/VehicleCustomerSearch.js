@@ -10,7 +10,6 @@ import { withModal } from 'components/withModal';
 import { tableColumn } from './tableColumn';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 export const VehicleCustomerSearchForm = (props) => {
     const { onCloseAction } = props;
