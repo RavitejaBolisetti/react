@@ -9,7 +9,6 @@ import { PlusOutlined } from '@ant-design/icons';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, validateRequiredSelectField, duplicateProductValidator } from 'utils/validation';
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 function FormProductAttribute(props) {
     const { attributeForm, isVisible, productHierarchyAttributeData, onAttributeFormFinish, formEdit, editForm, skuAttributes } = props;

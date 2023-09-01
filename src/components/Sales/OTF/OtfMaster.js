@@ -36,7 +36,7 @@ import { FilterIcon } from 'Icons';
 import { ChangeHistory } from './ChangeHistory';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
+
 import { OtfSoMappingUnmappingChangeHistory } from './OtfSoMappingUnmappingChangeHistory';
 import { ConfirmationModal } from 'utils/ConfirmationModal';
 
@@ -425,7 +425,7 @@ export const OtfMasterBase = (props) => {
                 viewMode: buttonAction === VIEW_ACTION,
             });
             if (buttonAction === ALLOT) {
-                setFormActionType({...formActionType, viewMode:true});
+                setFormActionType({ ...formActionType, viewMode: true });
             }
             setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction, orderStatus: record?.orderStatus }));
         }

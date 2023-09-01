@@ -17,7 +17,6 @@ import { supplierInvoiceDataActions } from 'store/actions/data/vehicleReceipt/su
 import { showGlobalNotification } from 'store/actions/notification';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 const mapStateToProps = (state) => {
     const {

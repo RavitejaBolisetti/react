@@ -8,7 +8,6 @@ import { Row, Col, Button } from 'antd';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 export const HierarchyFormButton = ({ buttonData, handleButtonClick }) => {
     return (

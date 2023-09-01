@@ -10,7 +10,6 @@ import { validateRequiredInputField, validateRequiredSelectField, valueOfPer, va
 import { withDrawer } from 'components/withDrawer';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 import { TAX_CHARGES_TYPE } from 'constants/modules/taxChargesType';
 import { TAX_CHARGES_CALCULATION_TYPE } from 'constants/modules/taxChargesCalculationType';

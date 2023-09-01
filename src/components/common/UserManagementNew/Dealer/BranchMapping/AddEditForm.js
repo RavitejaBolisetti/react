@@ -8,7 +8,7 @@ import { Col, Row, Card, Divider, Empty, Checkbox, Typography } from 'antd';
 import { LANGUAGE_EN } from 'language/en';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
+
 import { CardSkeleton } from 'components/common/Skeleton';
 const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
 

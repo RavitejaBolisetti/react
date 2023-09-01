@@ -7,7 +7,7 @@ import React from 'react';
 import { Col, Row } from 'antd';
 import { IoBanOutline } from 'react-icons/io5';
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
+
 import { LANGUAGE_EN } from 'language/en';
 
 const TokenErrorCard = ({ filterString }) => {

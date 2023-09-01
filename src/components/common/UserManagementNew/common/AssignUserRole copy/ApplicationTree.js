@@ -15,7 +15,6 @@ import LeftPanel from 'components/common/LeftPanel';
 import style from '../../../../../components/common/TreeView.module.scss';
 //import style from 'components/common/TreeView.module.css';
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
 const { Search } = Input;

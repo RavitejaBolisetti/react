@@ -13,7 +13,6 @@ import { USER_TYPE } from 'constants/userType';
 import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
 

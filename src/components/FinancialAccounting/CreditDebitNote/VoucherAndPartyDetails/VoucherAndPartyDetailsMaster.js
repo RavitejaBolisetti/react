@@ -17,7 +17,6 @@ import { CreditDebitNoteFormButton } from '../CreditDebitFormButton';
 import { vehicleCustomerCommonDetailsDataAction } from 'store/actions/data/vehicle/customerCommonDetails';
 import { partyMasterDataActions } from 'store/actions/data/partyMaster';
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 const mapStateToProps = (state) => {
     const {

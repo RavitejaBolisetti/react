@@ -6,7 +6,7 @@
 import React from 'react';
 import { Button, Row, Col } from 'antd';
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
+
 import { TfiReload } from 'react-icons/tfi';
 import { PlusOutlined } from '@ant-design/icons';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';

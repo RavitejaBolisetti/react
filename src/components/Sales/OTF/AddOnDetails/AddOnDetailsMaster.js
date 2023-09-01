@@ -18,7 +18,7 @@ import { otfAddOnPartsDataActions } from 'store/actions/data/otf/addonParts';
 import { showGlobalNotification } from 'store/actions/notification';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
+
 const mapStateToProps = (state) => {
     const {
         auth: { userId },

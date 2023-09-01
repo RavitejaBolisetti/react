@@ -13,7 +13,6 @@ import { documentViewDataActions } from 'store/actions/data/customerMaster/docum
 import { HiCheck } from 'react-icons/hi';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 const { Text, Title } = Typography;
 const { Dragger } = Upload;

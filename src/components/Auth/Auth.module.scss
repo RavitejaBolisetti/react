@@ -87,7 +87,7 @@
 
         &:hover {
             background-color: $neutralGrey2-dark !important;
-            border: 1px solid $neutralGrey2-dark  !important;
+            border: 1px solid $neutralGrey2-dark !important;
             opacity: 1;
             @include font-style(16, normal, 600, $neutralGrey3-dark, $fontfamily, center);
         }
@@ -157,11 +157,11 @@
                 }
             }
 
-            >input.ant-input.disabledInput {
+            > input.ant-input.disabledInput {
                 color: $neutralGrey2-dark !important;
             }
 
-            >input.ant-input {
+            > input.ant-input {
                 @include breakpoint(md) {
                     padding: 2px 5px 3px 5px;
                 }
@@ -224,8 +224,8 @@
         }
 
         .g-recaptcha {
-            >div {
-                >div {
+            > div {
+                > div {
                     margin: 0px auto;
                 }
             }
@@ -384,7 +384,7 @@
                             }
 
                             .ant-checkbox {
-                                &:not(.ant-checkbox-checked)+span {
+                                &:not(.ant-checkbox-checked) + span {
                                     color: $neutralGrey3-dark !important;
 
                                     p {
@@ -422,7 +422,7 @@
                     }
 
                     input {
-                        background: transparent;
+                        background: $transparentColor;
                         color: $primaryWhite;
 
                         &::-ms-reveal {
@@ -450,7 +450,7 @@
 
                 .inputBox.disabledInput {
                     input {
-                        background: transparent;
+                        background: $transparentColor;
                         color: $neutralGrey4 !important;
                     }
 
@@ -555,14 +555,28 @@
                     }
                 }
 
-                .button {
-                    span {
-                        svg {
-                            margin-left: -24px;
-                            visibility: hidden;
-                        }
-                    }
-                }
+                // .button {
+                //     & :global {
+                //         .ant-btn-icon {
+                //             svg {
+                //                 margin-left: -24px;
+                //                 visibility: hidden;
+                //             }
+                //             .ant-icon-loading {
+                //                 svg {
+                //                     visibility: visible;
+                //                 }
+                //             }
+                //         }
+                //         .ant-btn-loading-icon {
+                //             .ant-icon-loading {
+                //                 svg {
+                //                     visibility: visible;
+                //                 }
+                //             }
+                //         }
+                //     }
+                // }
             }
 
             .verifyUser {
@@ -679,7 +693,7 @@
         padding: 20px 10px 10px;
 
         div {
-            >a {
+            > a {
                 padding: 0 32px 0 16px;
                 text-transform: uppercase;
                 color: $neutralGrey5-dark;
@@ -691,7 +705,7 @@
                 }
             }
 
-            >span {
+            > span {
                 color: $neutralGrey5-dark;
                 font-weight: 400;
                 font-size: 14px;
@@ -704,7 +718,7 @@
         padding: 20px 10px 10px;
 
         div {
-            >a {
+            > a {
                 padding: 0 32px 0 16px;
                 text-transform: uppercase;
                 color: $neutralGrey4;
@@ -716,7 +730,7 @@
                 }
             }
 
-            >span {
+            > span {
                 color: $neutralGrey4;
                 font-weight: 400;
                 font-size: 14px;
@@ -798,7 +812,7 @@
         color: $primaryWhite-dark;
     }
 
-    >input {
+    > input {
         &:focus-visible {
             margin-right: 10px;
         }

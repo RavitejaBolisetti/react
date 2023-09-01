@@ -17,7 +17,7 @@ import { AddEditForm } from './AddEditForm';
 import { BASE_URL_VEHICLE_CUSTOMER_COMMON_DETAIL as customURL } from 'constants/routingApi';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
+
 import { vehicleCustomerDetailsDataAction } from 'store/actions/data/vehicle/customerDetails';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { customerDetailDataActions } from 'store/actions/customer/customerDetail';

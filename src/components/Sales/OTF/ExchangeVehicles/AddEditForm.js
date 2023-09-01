@@ -7,7 +7,7 @@ import React, { useEffect } from 'react';
 import { Row, Col, Input, Form, Select, Card, Divider, Switch } from 'antd';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
+
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { CustomerListMaster } from 'components/utils/CustomerListModal';
 
