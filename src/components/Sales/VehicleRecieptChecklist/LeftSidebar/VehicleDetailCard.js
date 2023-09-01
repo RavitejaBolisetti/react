@@ -3,11 +3,13 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Collapse, Divider } from 'antd';
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
 import { CopytoClipboard } from 'utils/CopytoClipboard';
 import dayjs from 'dayjs';
+import { addToolTip } from 'utils/customMenuLink';
+import { AiOutlineInfoCircle } from 'react-icons/ai';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -27,16 +29,8 @@ const expandIcon = ({ isActive }) =>
     );
 
 const VehicleDetailCard = (props) => {
-    const { ProfileData, typeData } = props;
+    const { ProfileData, typeData, tooltTipText, VehicleLovCodeData } = props;
     const findStatus = (key) => typeData?.find((element) => element?.key === key)?.value || 'NA';
-    const [clipBoardClick, setClipboardClick] = useState(false);
-    useEffect(() => {
-        if (clipBoardClick)
-            setTimeout(() => {
-                setClipboardClick(false);
-            }, 500);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [clipBoardClick]);
 
     return (
         <Collapse bordered={true} defaultActiveKey={[1]} expandIcon={expandIcon} collapsible="icon">
@@ -78,7 +72,11 @@ const VehicleDetailCard = (props) => {
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    MODEL: <span>{ProfileData?.model || 'NA'}</span>
+                    MODEL:
+                    <span>
+                        {VehicleLovCodeData?.length ? VehicleLovCodeData[0]?.prodctShrtName || 'NA' : ProfileData?.model || 'NA'}
+                        {addToolTip(tooltTipText, 'bottom', '#D3EDFE', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}
+                    </span>
                 </div>
             </Panel>
         </Collapse>
