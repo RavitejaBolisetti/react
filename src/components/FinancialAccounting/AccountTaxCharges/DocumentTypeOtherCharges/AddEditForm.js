@@ -164,7 +164,7 @@ const AddEditFormMain = (props) => {
                                     </Form.Item>
                                 </Col>
                             </Row>
-                            <Collapse className={openAccordian === 1 ? styles.accordianHeader : ''} onChange={() => handleCollapse(1)} expandIcon={accordianExpandIcon}>
+                            <Collapse className={openAccordian === 1 ? styles.accordianHeader : ''} onChange={() => handleCollapse(1)} expandIcon={accordianExpandIcon} collapsible="icon">
                                 <Panel header=" Doc Type and A/C head Mapping" key="1">
                                     <Divider />
                                     <DocTypeAcMappingMaster {...masterTaxChargeCalProp} />

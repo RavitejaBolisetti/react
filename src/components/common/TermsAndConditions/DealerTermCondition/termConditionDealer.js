@@ -358,6 +358,7 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHi
         title,
         showAddButton: DealerTermsConditionsData?.length > 0 ? true : false,
         showChangeHistoryButton: DealerTermsConditionsData?.length > 0 ? true : false,
+        tableData: searchData,
         showChangeHistoryList,
     };
     const changeHistoryClose = () => {
@@ -368,7 +369,7 @@ const TncDealer = ({ moduleTitle, saveData, userId, fetchTermCondition, ChangeHi
         isVisible: isHistoryVisible,
         ChangeHistoryTermsConditionsData,
         onCloseAction: changeHistoryClose,
-        isChangeHistoryContainer: false,        
+        isChangeHistoryContainer: false,
         tableData: searchData,
     };
 

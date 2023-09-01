@@ -6,7 +6,6 @@
 import React from 'react';
 import { Collapse, Space, Avatar, Typography, Divider } from 'antd';
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
-// import styles from 'components/common/Common.module.css';
 import styles from 'assets/sass/app.module.scss';
 
 const { Panel } = Collapse;

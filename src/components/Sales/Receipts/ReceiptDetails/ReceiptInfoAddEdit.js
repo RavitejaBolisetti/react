@@ -35,12 +35,12 @@ const PaymentAddEdit = (props) => {
                 <Panel header="Receipt Information" key="1">
                     <Divider />
                     <Row gutter={16}>
-                        <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                             <Form.Item initialValue={formattedCalendarDate(receiptData?.receiptDate)} label="Actual Receipt Date" name="receiptDate" rules={[validateRequiredInputField('Actual Receipt Date')]}>
-                                <DatePicker format={dateFormat} placeholder={preparePlaceholderText('actual receipt date')} style={{ display: 'auto', width: '100%' }} disabled={formActionType?.editMode} />
+                                <DatePicker format={dateFormat} placeholder={preparePlaceholderText('actual receipt date')} disabled={formActionType?.editMode} />
                             </Form.Item>
                         </Col>
-                        <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                             <Form.Item initialValue={receiptData?.receiptType} label="Receipt Type" name="receiptType" rules={[validateRequiredSelectField('Receipt Type')]}>
                                 <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} onChange={handleChange} showSearch disabled={formActionType?.editMode}>
                                     {receiptType?.map((item) => (

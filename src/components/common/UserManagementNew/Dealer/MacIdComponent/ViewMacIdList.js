@@ -79,6 +79,7 @@ const ViewMacIdList = (props) => {
                                     </Row>
                                 }
                             >
+                                <Divider />
                                 <ViewMacIdDetail styles={styles} formData={data} index={i} {...detailProps} />
                             </Panel>
                         </Collapse>

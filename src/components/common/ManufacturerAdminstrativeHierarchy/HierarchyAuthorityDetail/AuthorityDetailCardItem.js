@@ -110,7 +110,7 @@ const AuthorityCardItemMain = (props) => {
     return (
         <>
             <Card className={styles.viewCardSize}>
-                <Row align="middle">
+                <Row align="middle" className={styles.marB20}>
                     <Col xs={colLeft} sm={colLeft} md={colLeft} lg={colLeft} xl={colLeft} xxl={colLeft}>
                         <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
                             <Text type="secondary">Authority : {getCodeValue(authTypeDropdownData, record?.authorityTypeCode)}</Text>

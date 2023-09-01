@@ -124,7 +124,7 @@ const ApplicationTreeMain = (props) => {
 
                         return (
                             <div className={styles.managementContainer}>
-                                <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={onChange} expandIconPosition="end">
+                                <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={onChange} expandIconPosition="end" collapsible="icon">
                                     <Panel
                                         header={
                                             <>

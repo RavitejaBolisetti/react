@@ -46,7 +46,7 @@ const ViewDetailMain = (props) => {
         <div className={styles.viewDrawerContainer}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
+                    <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end" collapsible="icon">
                         <Panel header="Owner Customer" key="1">
                             <Divider />
                             <Descriptions {...viewProps}>
@@ -63,7 +63,7 @@ const ViewDetailMain = (props) => {
                             </Descriptions>
                         </Panel>
                     </Collapse>
-                    <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
+                    <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end" collapsible="icon">
                         <Panel header="Billing Customer Details" key="2">
                             <Divider />
                             {/* <Checkbox>Same as Booking Customer</Checkbox> */}
@@ -81,7 +81,7 @@ const ViewDetailMain = (props) => {
                             </Descriptions>
                         </Panel>
                     </Collapse>
-                    <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(3)} expandIconPosition="end">
+                    <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(3)} expandIconPosition="end" collapsible="icon">
                         <Panel header="Key Account Details" key="3">
                             <Divider />
                             <Descriptions {...viewProps}>
@@ -93,7 +93,7 @@ const ViewDetailMain = (props) => {
                             </Descriptions>
                         </Panel>
                     </Collapse>
-                    <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(4)} expandIconPosition="end">
+                    <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(4)} expandIconPosition="end" collapsible="icon">
                         <Panel header="Loyalty Details" key="4">
                             <Divider />
                             <Descriptions {...viewProps}>
@@ -103,12 +103,12 @@ const ViewDetailMain = (props) => {
                             </Descriptions>
                         </Panel>
                     </Collapse>
-                    <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(5)} expandIconPosition="end">
+                    <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(5)} expandIconPosition="end" collapsible="icon">
                         <Panel header="Ownership Change Request" key="5">
                             <Divider />
-                            <Descriptions {...viewProps}>
-                                <Card>Coming Soon</Card>
-                            </Descriptions>
+                            <Card>
+                                <div className={styles.marB20}>Coming Soon</div>
+                            </Card>
                         </Panel>
                     </Collapse>
                 </Col>

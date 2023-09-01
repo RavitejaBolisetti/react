@@ -95,10 +95,9 @@ const CardProductAttribute = (props) => {
         <Card
             style={{
                 backgroundColor: '#BEBEBE1A',
-                marginTop: '12px',
             }}
         >
-            <Row align="middle">
+            <Row align="middle" className={styles.marB20}>
                 <Col xs={colLeft} sm={colLeft} md={colLeft} lg={colLeft} xl={colLeft} xxl={colLeft}>
                     <div>
                         <Text data-testid="code" strong>

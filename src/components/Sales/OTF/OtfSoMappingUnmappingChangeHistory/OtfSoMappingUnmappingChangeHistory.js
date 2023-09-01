@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -17,7 +17,8 @@ import { BASE_URL_OTF_SO_MAPPING_UNMAPPING_HISTORY as customURL } from 'constant
 
 import { Row, Button, Col } from 'antd';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+// import styles from 'components/common/Common.module.css';
 
 const mapStateToProps = (state) => {
     const {
@@ -92,12 +93,8 @@ const ChangeHistoryMain = ({ fetchOTFChangeHistory, onCloseAction, listShowChang
         tblPrepareColumns({
             title: 'SO Date',
             dataIndex: 'soDate',
-            render: (text) => [
-                <div>
-                    {convertDateTime(text, 'DD MMM YYYY')}
-                </div>,
-            ],
-        })
+            render: (text) => [<div>{convertDateTime(text, 'DD MMM YYYY')}</div>],
+        }),
     ];
 
     const tableProps = {

@@ -1676,6 +1676,10 @@
     margin-right: 12px;
 }
 
+.drawerBody .advanceFilterTop .advanceFilterItem {
+    height: 20px;
+}
+
 .advanceFilterTop .advanceFilterItem span {
     vertical-align: text-bottom;
     margin-left: 4px;

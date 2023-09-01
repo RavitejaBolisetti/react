@@ -104,7 +104,7 @@ const AddEditFormMain = (props) => {
 
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Collapse onChange={() => handleCollapse(1)} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian}>
+                            <Collapse onChange={() => handleCollapse(1)} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian} collapsible="icon">
                                 <Panel header="Assign User Roles" key="1">
                                     <Divider />
                                     <AssignUserRole {...accordianProps} userRoleOptions={dealerData?.roles} />
@@ -112,14 +112,14 @@ const AddEditFormMain = (props) => {
                             </Collapse>
 
                             {userType === USER_TYPE_USER?.DEALER?.id ? (
-                                <Collapse onChange={() => handleCollapse(2)} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian}>
+                                <Collapse onChange={() => handleCollapse(2)} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian} collapsible="icon">
                                     <Panel header="Branch Mapping" key="2">
                                         <Divider />
                                         <BranchMapping {...accordianProps} forceUpdate={forceUpdate} />
                                     </Panel>
                                 </Collapse>
                             ) : (
-                                <Collapse onChange={() => handleCollapse(2)} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian}>
+                                <Collapse onChange={() => handleCollapse(2)} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian} collapsible="icon">
                                     <Panel header="Administrative Hierarchy Mapping" key="2">
                                         <Divider />
                                         <AdministrativeHierarchy {...accordianProps} adminDataTree={adminDataTree} />
@@ -127,7 +127,7 @@ const AddEditFormMain = (props) => {
                                 </Collapse>
                             )}
 
-                            <Collapse onChange={() => handleCollapse(3)} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian}>
+                            <Collapse onChange={() => handleCollapse(3)} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian} collapsible="icon">
                                 <Panel header="Product Mapping" key="3">
                                     <Divider />
                                     <ProductMapping {...accordianProps} productDataTree={productDataTree} />

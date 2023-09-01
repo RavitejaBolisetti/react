@@ -38,7 +38,7 @@ const AddEditFormMain = (props) => {
             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                 {schemeData ? (
                     schemeData?.schemes?.map((schemeForm, index) => (
-                        <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(schemeForm?.id)} expandIconPosition="end">
+                        <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(schemeForm?.id)} expandIconPosition="end" collapsible="icon">
                             <Panel header={schemeForm?.schemeName} key={schemeForm?.id}>
                                 <Divider />
                                 <Row gutter={20}>

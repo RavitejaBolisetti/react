@@ -89,8 +89,9 @@ const AddEditFormMain = (props) => {
     return (
         <Row gutter={20}>
             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                <Collapse onChange={() => handleCollapse(1)} expandIconPosition="end" expandIcon={({ isActive }) => expandIconWithText(isActive, <FiEdit />, <FiEdit style={{ color: '#B5B5B6' }} />)} activeKey={openAccordian}>
+                <Collapse onChange={() => handleCollapse(1)} expandIconPosition="end" expandIcon={({ isActive }) => expandIconWithText(isActive, <FiEdit />, <FiEdit style={{ color: '#B5B5B6' }} />)} activeKey={openAccordian} collapsible="icon">
                     <Panel header="Vehicle Information" key="1">
+                        <Divider />
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item label="Vehicle Usage Type" name="vehicleUsageType" data-testid="usageType">
@@ -181,13 +182,13 @@ const AddEditFormMain = (props) => {
                         </Row>
                     </Panel>
                 </Collapse>
-                <Collapse onChange={() => handleCollapse(2)} expandIconPosition="end" expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={openAccordian}>
+                <Collapse onChange={() => handleCollapse(2)} expandIconPosition="end" expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={openAccordian} collapsible="icon">
                     <Panel header="Tax Details" key="2">
                         <Divider />
                         <DataTable tableColumn={taxDetailsColumn()} tableData={formData['taxDetails']} pagination={false} />
                     </Panel>
                 </Collapse>
-                <Collapse onChange={() => handleCollapse(3)} expandIconPosition="end" expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={openAccordian}>
+                <Collapse onChange={() => handleCollapse(3)} expandIconPosition="end" expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={openAccordian} collapsible="icon">
                     <Panel
                         header={
                             <Row>
@@ -202,7 +203,12 @@ const AddEditFormMain = (props) => {
                         key="3"
                     >
                         {!isReadOnly && <Divider />}
-                        {isReadOnly && <OptionServicesForm {...OptionServicesFormProps} />}
+                        {isReadOnly && (
+                            <>
+                                <Divider />
+                                <OptionServicesForm {...OptionServicesFormProps} />
+                            </>
+                        )}
                         <DataTable tableColumn={optionalServicesColumns()} tableData={optionsServiceModified} pagination={false} />
                     </Panel>
                 </Collapse>

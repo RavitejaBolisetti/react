@@ -6,6 +6,8 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { DashboardPage } from 'pages/dashboard';
+import * as routing from 'constants/routing';
+
 import {
     ProductHierarchyPage,
     UserManagementPage,
@@ -40,10 +42,10 @@ import {
     LessorCustomerCreationPage,
 } from 'pages/common';
 
-import { TaxChargesPage, TaxChargesCategoryPage, AccountCategoryPage, VehicleModelTaxChargesCategoryPage, DocumentTypeOtherChargesPage, CreditDebitNoteMasterPage } from 'pages/FinancialAccounting';
-import { OTFMasterPage, VehicleDetailMasterPage, VehiclePriceMasterPage, VehicleReceiptMasterPage, RSMApprovalPage, VehiclePurchaseOrderMasterPage, VehicleRecieptChecklistMaster, OtfSoMappingMasterPage, ReceiptMasterPage, VehicleAllotmentMasterPage } from 'pages/Sales';
+import { TaxChargesPage, TaxChargesCategoryPage, AccountCategoryPage, VehicleModelTaxChargesCategoryPage, DocumentTypeOtherChargesPage, CreditDebitNoteMasterPage, ChartOfAccountPage } from 'pages/FinancialAccounting';
 
-import * as routing from 'constants/routing';
+import { OTFMasterPage, VehicleDetailMasterPage, VehiclePriceMasterPage, VehicleReceiptMasterPage, RSMApprovalPage, DeliveryNoteInvoiceCancellationPage, VehiclePurchaseOrderMasterPage, VehicleRecieptChecklistMaster, OtfSoMappingMasterPage, ReceiptMasterPage, VehicleAllotmentMasterPage, DigitalSignatureMasterPage, HoPriceMappingMasterPage } from 'pages/Sales';
+
 import { SplashPage } from 'pages/splash';
 
 import { ProfilePage, SettingPage, FaqPage, TrainingPage } from 'pages/user';
@@ -116,10 +118,10 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_USER_DISCLAIMER} element={<CMSPage />} exact />
             <Route path={routing.ROUTING_USER_CONTACT} element={<CMSPage />} exact />
             <Route path={routing.ROUTING_OTF} element={<OTFMasterPage />} exact />
-            {/* <Route path={routing.ROUTING_VECHILE_DETAILS} element={<VehicleDetailMasterPage />} exact /> */}
             <Route path={routing.ROUTING_VECHILE_PURCHASE_ORDER} element={<VehiclePurchaseOrderMasterPage />} exact />
 
             <Route path={routing.ROUTING_RSM_APPROVAL} element={<RSMApprovalPage />} exact />
+            <Route path={routing.ROUTING_DELIVERY_NOTE_INVOICE_CANELLATION} element={<DeliveryNoteInvoiceCancellationPage />} exact />
             <Route path={routing.ROUTING_VEHICLE_DETAILS} element={<VehicleDetailMasterPage />} exact />
             <Route path={routing.ROUTING_VEHICLE_PRICE_MASTER} element={<VehiclePriceMasterPage />} exact />
             <Route path={routing.ROUTING_VEHICLE_RECEIPT} element={<VehicleReceiptMasterPage />} exact />
@@ -135,7 +137,10 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_CREDIT_DEBIT_NOTE} element={<CreditDebitNoteMasterPage />} exact />
             <Route path={routing.ROUTING_DOCUMENT_TYPE} element={<DocumentTypeOtherChargesPage />} exact />
             <Route path={routing.ROUTING_VEHICLE_RECIEPT_CHECKLIST} element={<VehicleRecieptChecklistMaster />} exact />
+            <Route path={routing.ROUTING_DIGITAL_SIGNATURE_MAPPING} element={<DigitalSignatureMasterPage />} exact />
+            <Route path={routing.ROUTING_FINANCIAL_ACCOUNTING_CHART_OF_ACCOUNT} element={<ChartOfAccountPage />} exact />
 
+            <Route path={routing.ROUTING_HO_PRICE_MAPPING} element={<HoPriceMappingMasterPage />} exact />
         </Routes>
     );
 };

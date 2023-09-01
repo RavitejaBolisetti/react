@@ -53,9 +53,10 @@ const ViewContactList = (props) => {
     return (
         <div>
             {contactData?.length > 0 &&
-                contactData?.map((data, i) => {
+                contactData?.map((data, i, { length }) => {
                     return (
-                        <Collapse className={styles.marB20} key={data?.purposeOfContact + data?.contactNameFirstName} onChange={() => handleCollapse(i)} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian} collapsible="icon">
+                        // className={i + 1 === length ? styles.marB20 : ''} (Do not remove this line as this might be used in future)
+                        <Collapse key={data?.purposeOfContact + data?.contactNameFirstName} onChange={() => handleCollapse(i)} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian} collapsible="icon">
                             <Panel
                                 key={i}
                                 header={
@@ -82,6 +83,7 @@ const ViewContactList = (props) => {
                                     </Row>
                                 }
                             >
+                                <Divider />
                                 <ViewDetail styles={styles} formData={data} index={i} {...detailProps} />
                             </Panel>
                         </Collapse>

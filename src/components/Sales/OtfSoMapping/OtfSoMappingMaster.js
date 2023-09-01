@@ -119,10 +119,14 @@ export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, sav
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataOrgLoaded, userId]);
 
+    const onErrorAction = (message) => {
+        resetData();
+        showGlobalNotification({ message });
+    };
+
     useEffect(() => {
         if (organizationId && userId) {
-            resetData();
-            fetchProductDataList({ setIsLoading: listProductLoading, userId, id: organizationId });
+            fetchProductDataList({ setIsLoading: listProductLoading, userId, id: organizationId, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, organizationId]);
@@ -286,7 +290,6 @@ export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, sav
         handleSelectTreeClick: (value) => {
             setSelectedTreeKey();
             setViewData(null);
-            resetData();
             setSelectedOrganizationId(value);
         },
         defaultValue: organizationId,
@@ -339,6 +342,10 @@ export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, sav
     const leftCol = productHierarchyData?.length > 0 ? 14 : 24;
     const rightCol = productHierarchyData?.length > 0 ? 10 : 24;
     const title = 'Hierarchy';
+
+    useEffect(() => {
+        console.log(selectedTreeKey, 'selectedTreeKey');
+    }, [selectedTreeKey]);
 
     return (
         <>
