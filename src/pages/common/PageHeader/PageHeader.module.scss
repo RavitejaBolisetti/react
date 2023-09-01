@@ -114,7 +114,7 @@
                 display: contents;
             }
 
-            .ant-modal-confirm-title+.ant-modal-confirm-content {
+            .ant-modal-confirm-title + .ant-modal-confirm-content {
                 max-width: 100%;
                 padding: 10px;
                 text-align: justify;
@@ -141,7 +141,7 @@
 
                 &:hover {
                     background-color: $primaryRed;
-                    border: 1px solid $primaryRed;
+                    border: 1px solid $primaryRed !important;
                     color: $primaryWhite !important;
                 }
             }

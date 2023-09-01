@@ -6,7 +6,6 @@
 
 //  common css
 
-
 .fullyCentered {
     display: flex;
     align-items: center;
@@ -106,6 +105,13 @@
 
 .borderRadiusSix {
     border-radius: 6px !important;
+}
+
+.descriptionText {
+    color: $neutralGrey4;
+    font-weight: 500;
+    line-height: 24px;
+    margin-bottom: 20px;
 }
 
 /*--------------status color change--------------*/
@@ -1543,7 +1549,7 @@
 
         span {
             color: $primaryBlack;
-            max-width: 132px;
+            max-width: 9.5vw;
             word-wrap: break-word;
         }
     }
@@ -2506,7 +2512,7 @@
             .ant-collapse-content-box {
                 .ant-form {
                     .ant-form-item {
-                        margin-bottom: 0;
+                        margin-bottom: 10px;
                     }
                 }
             }
