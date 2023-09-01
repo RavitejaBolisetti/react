@@ -28,8 +28,8 @@ const options = {
     'sonar.projectName': 'dms-ui-application',
 
     // Path is relative to the sonar-project.properties file. Defaults to .
-    'sonar.sources': 'src',
-    'sonar.coverage.exclusions':'**/components/common/UserManagement/**,**/components/common/UserManagementNew/**,**/components/Sales/VehiclePurchaseOrder/**,**/components/Sales/Receipts/**',
+    'sonar.sources': 'src/',
+    'sonar.coverage.exclusions':'src/components/common/UserManagementNew/**/*, src/components/Sales/VehiclePurchaseOrder/**/*,src/components/Sales/Receipts/**/*',
 
     // source language
     'sonar.language': 'js',
