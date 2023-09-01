@@ -33,6 +33,7 @@ const OTFMainConatinerMain = (props) => {
 
     const myProps = {
         ...props,
+        otfPageType: 'OTF',
     };
 
     const renderElement = () => {

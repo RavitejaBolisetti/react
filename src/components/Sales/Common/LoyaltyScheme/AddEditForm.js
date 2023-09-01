@@ -18,7 +18,7 @@ const AddEditFormMain = (props) => {
     const { formData, form } = props;
     const { schemeLovData, typeData, makeData } = props;
     const { isConfigLoading, isSchemeLovLoading, isMakeLoading, isModelLoading, isVariantLoading } = props;
-    const { filteredModelData, filteredVariantData, handleFilterChange, fnSetData, disabledProps } = props;
+    const { filteredModelData, filteredVariantData, handleFilterChange, fnSetData, disabledProps,  otfPageType } = props;
 
     const currentYear = new Date().getFullYear();
     const yearsList = [];
@@ -37,11 +37,11 @@ const AddEditFormMain = (props) => {
 
     return (
         <Card className={styles.ExchangeCard}>
-            <CustomerListMaster fnSetData={fnSetData} />
+            {otfPageType === 'OTF' && <CustomerListMaster fnSetData={fnSetData} />}
             <Row gutter={20} style={{ marginTop: '20px' }}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name="customerCode" label="Customer ID" rules={[validateRequiredInputField('customerId')]}>
-                        <Input placeholder={preparePlaceholderText('customer id')} maxLength={35} allowClear {...disabledProps} />
+                        <Input placeholder={preparePlaceholderText('customer id')} maxLength={35} allowClear {...disabledProps}  />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>

@@ -35,6 +35,7 @@ const VehicleInvoiceMainConatinerMain = (props) => {
 
     const myProps = {
         ...props,
+        pageType: 'Invoice'
     };
 
     const renderElement = () => {

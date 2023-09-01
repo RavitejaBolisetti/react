@@ -70,8 +70,6 @@ export const VehicleInvoiceMasterBase = (props) => {
     const [invoiceStatus, setInvoiceStatus] = useState(QUERY_BUTTONS_CONSTANTS.INVOICED.key);
     const [requestPayload, setRequestPayload] = useState({ partyDetails: {}, receiptsDetails: {}, apportionDetails: {} });
 
-    console.log('filterString', filterString);
-
     const [listFilterForm] = Form.useForm();
     const [cancelReceiptForm] = Form.useForm();
 

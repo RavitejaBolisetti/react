@@ -116,7 +116,7 @@ const LoyaltySchemeMasterMain = (props) => {
     const { typeData } = props;
     const { fetchMakeLovList, listMakeShowLoading, fetchModelLovList, listModelShowLoading, fetchVariantLovList, listVariantShowLoading } = props;
     const { isMakeLoading, makeData, isModelDataLoaded, isModelLoading, modelData, isVariantDataLoaded, isVariantLoading, variantData, saveData } = props;
-    const { schemeLovData, isSchemeLovLoading, fetchSchemeLovList, listSchemeLovShowLoading } = props;
+    const { schemeLovData, isSchemeLovLoading, fetchSchemeLovList, listSchemeLovShowLoading, pageType, otfPageType } = props;
     const { fetchCustomerList, listCustomerShowLoading } = props;
 
     const [filteredModelData, setfilteredModelData] = useState([]);
@@ -307,6 +307,7 @@ const LoyaltySchemeMasterMain = (props) => {
         fnSetData,
         disabledProps,
         handleFilterChange,
+        otfPageType,
     };
 
     const myProps = {
