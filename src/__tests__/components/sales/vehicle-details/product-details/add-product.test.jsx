@@ -2,7 +2,7 @@ import React from 'react';
 import { screen, fireEvent } from '@testing-library/react';
 import { AddEditForm } from '@components/Sales/VehicleDetail/ProductDetails/AddEditForm';
 import customRender from '@utils/test-utils';
-
+import { Form } from 'antd';
 
 beforeEach(() => {
     jest.clearAllMocks();
@@ -14,6 +14,16 @@ const formData = {
         { esimNo: 'ESIM002', esimStatus: true, kycStatus: true, preferredMobileNo1: '94181874', preferredMobileNo2: '942681879', tcuId: 'TCU002' },
     ],
     aggregates: { id: '657aab5c-5c07-4da9-879b-3733a26bb4b3', item: 'VIT002', itemValue: null, make: 'VIM002', makeValue: null, serialNo: '9876' },
+};
+
+const FormWrapper = (props) => {
+    const [form] = Form.useForm();
+
+    const myFormMock = {
+        ...form,
+        setFieldsValue: jest.fn(),
+    };
+    return <AddEditForm form={myFormMock} {...props} />;
 };
 
 describe('Vehicle ProductDetails render', () => {
@@ -39,10 +49,10 @@ describe('Vehicle ProductDetails render', () => {
     });
 
     it('should render page2', async () => {
-        const formData = [];
-        customRender(<AddEditForm handleCollapse={jest.fn()} formData={formData} bindStatus={jest.fn()} />);
+        const formData = {productAttributeDetail: {name: 'Test'}};
+        customRender(<FormWrapper handleCollapse={jest.fn()} formData={formData} bindStatus={jest.fn()} setOpenAccordian={jest.fn()} setIsReadOnly={jest.fn()} />);
 
-        const addBtn = screen.getByTestId('addBtn');
+        const addBtn = screen.getByRole('button', { name: 'plus Add' });
         fireEvent.click(addBtn);
     });
 });

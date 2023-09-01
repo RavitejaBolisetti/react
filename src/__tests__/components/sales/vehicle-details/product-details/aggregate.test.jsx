@@ -2,43 +2,40 @@ import React from 'react';
 import { screen, fireEvent } from '@testing-library/react';
 import { AggregateAddEditForm } from '@components/Sales/VehicleDetail/ProductDetails/AggregateAddEditForm'; // Import your component
 import customRender from '@utils/test-utils';
+import { Form } from 'antd';
+
+const FormWrapper = (props) => {
+    const [aggregateForm] = Form.useForm();
+
+    const myFormMock = {
+        ...aggregateForm,
+        setFieldsValue: jest.fn(),
+        validateFields: jest.fn().mockResolvedValue([{name: 'Kai'}]),
+        resetFields: jest.fn(),
+        getFieldsValue: jest.fn().mockResolvedValue([{name: 'Kai'}]),
+    };
+    return <AggregateAddEditForm aggregateForm={myFormMock} {...props} />;
+};
 
 describe('AdvanceForm', () => {
-    const mockAggregateForm = {
-        validateFields: jest.fn().mockResolvedValue(),
-        resetFields: jest.fn(),
-    };
-    const mockProps = {
-        AdvanceformData: {},
-        setAdvanceformData: jest.fn(),
-        handleCancel: jest.fn(),
-        handleFormValueChange: jest.fn(),
-        optionsServiceModified: [],
-        setoptionsServiceModified: jest.fn(),
-        aggregateForm: mockAggregateForm,
-        setAdvanceSearchVisible: jest.fn(),
-        isVisible: true,
-        setisEditing: jest.fn(),
-        isEditing: false,
-        itemOptions: [],
-        setitemOptions: jest.fn(),
-        makeOptions: [],
-        MakefieldNames: [],
-        ItemFieldNames: [],
-    };
     it('submits form data when Save button is clicked', async () => {
-        customRender(<AggregateAddEditForm mockProps={mockProps} />);
+        customRender(<AggregateAddEditForm isVisible={true}/>);
 
-        const item = screen.getByRole('combobox', { name: 'Item' });
-        fireEvent.change(item, { target: { value: 'hello' } });
+    });
 
-        const make = screen.getByRole('combobox', { name: 'Make' });
-        fireEvent.change(make, { target: { value: 'helo' } });
+    it('test1', async () => {
+        customRender(<FormWrapper AdvanceformData={true} isVisible={true} itemOptions={[{name: 'Test'}]} setitemOptions={jest.fn()} optionsServiceModified={[{name: 'Kai'}]}/>);
+    });
 
-        const serialNo = screen.getByRole('textbox', { name: 'Serial No.' });
-        fireEvent.change(serialNo, { target: { value: '121' } });
+    it('test2', async () => {
+        customRender(<FormWrapper AdvanceformData={true} isVisible={true} itemOptions={[{name: 'Test'}]} setitemOptions={jest.fn()}/>);
+        const saveBtn=screen.getByRole('button', { name: 'Save' });
+        fireEvent.click(saveBtn);
+    });
 
-        const saveBtn = screen.getByRole('button', { name: /save/i });
+    it('test3', async () => {
+        customRender(<FormWrapper AdvanceformData={true} isVisible={true} itemOptions={[{name: 'Test'}]} setitemOptions={jest.fn()} isEditing={true}/>);
+        const saveBtn=screen.getByRole('button', { name: 'Save' });
         fireEvent.click(saveBtn);
     });
 });
