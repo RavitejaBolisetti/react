@@ -2,17 +2,12 @@ import '@testing-library/jest-dom/extend-expect';
 import { ManufacturerOrgHierarchyChangeHistory } from '@components/common/ManufacturerOrganizationHierarchy/ManufacturerOrgHierarchyChangeHistory';
 import customRender from '@utils/test-utils';
 
-
-afterEach(() => {
-    jest.restoreAllMocks();
-});
-
 afterEach(() => {
     jest.restoreAllMocks();
 });
 
 const props = {
-    userId: 'CUS1687508157461',
+    userId: '123',
     fetchChangeHistoryList: jest.fn(),
     changeHistoryShowLoading: true,
     isHistoryLoaded: true,
