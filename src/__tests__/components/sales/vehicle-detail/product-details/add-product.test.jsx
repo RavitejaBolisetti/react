@@ -14,6 +14,7 @@ const formData = {
         { esimNo: 'ESIM002', esimStatus: true, kycStatus: true, preferredMobileNo1: '94181874', preferredMobileNo2: '942681879', tcuId: 'TCU002' },
     ],
     aggregates: { id: '657aab5c-5c07-4da9-879b-3733a26bb4b3', item: 'VIT002', itemValue: null, make: 'VIM002', makeValue: null, serialNo: '9876' },
+    productAttributeDetail: {},
 };
 
 const FormWrapper = (props) => {
@@ -29,7 +30,7 @@ const FormWrapper = (props) => {
 describe('Vehicle ProductDetails render', () => {
     it('should render page', async () => {
         const prop = { formActionType: { viewMode: false } };
-        customRender(<AddEditForm handleCollapse={jest.fn()} formData={formData} bindStatus={jest.fn()} isEditing={true} handleButtonClick={jest.fn()} />);
+        customRender(<FormWrapper handleCollapse={jest.fn()} formData={formData} bindStatus={jest.fn()} isEditing={true} handleButtonClick={jest.fn()} setOpenAccordian={jest.fn()} setIsReadOnly={jest.fn()} />);
 
         const firstPanelHeader = screen.getByText('Product Attribute Details');
         fireEvent.click(firstPanelHeader);
@@ -37,22 +38,30 @@ describe('Vehicle ProductDetails render', () => {
         const secondPanelHeader = screen.getByText('Connected Vehicle');
         fireEvent.click(secondPanelHeader);
 
-        const tcuId1Header = screen.getAllByText('TCU001 | ESIM001')[0];
-        fireEvent.click(tcuId1Header);
-        expect(tcuId1Header).toBeInTheDocument();
-
         const thirdPanelHeader = screen.getByText('Aggregates');
         fireEvent.click(thirdPanelHeader);
 
-        const addBtn = screen.getByTestId('addBtn');
+        const addBtn = screen.getByRole('button', { name: 'plus Add' });
         fireEvent.click(addBtn);
     });
 
-    it('should render page2', async () => {
-        const formData = {productAttributeDetail: {name: 'Test'}};
+    it('Add button should work', async () => {
+        const formData = { productAttributeDetail: { name: 'Test' } };
         customRender(<FormWrapper handleCollapse={jest.fn()} formData={formData} bindStatus={jest.fn()} setOpenAccordian={jest.fn()} setIsReadOnly={jest.fn()} />);
 
         const addBtn = screen.getByRole('button', { name: 'plus Add' });
         fireEvent.click(addBtn);
+    });
+
+    it('Cancel button should work', async () => {
+        customRender(<FormWrapper isReadOnly={true} setIsReadOnly={jest.fn()} />);
+        const cancelBtn = screen.getByRole('button', { name: 'Cancel' });
+        fireEvent.click(cancelBtn);
+    });
+
+    it('Save button should work', async () => {
+        customRender(<FormWrapper isReadOnly={true} setIsReadOnly={jest.fn()} />);
+        const saveBtn = screen.getByRole('button', { name: 'Save' });
+        fireEvent.click(saveBtn);
     });
 });

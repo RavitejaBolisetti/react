@@ -80,8 +80,7 @@ describe('Vehicle ProductDetails render', () => {
     });
 
     it('should validate fields on finish failed', async () => {
-        const mockStore = createMockStore({
-        });
+        const mockStore = createMockStore({});
         customRender(
             <Provider store={mockStore}>
                 <ProductDetailMaster typeData={typeData} setButtonData={jest.fn()} buttonData={defaultBtnVisiblity} setitemOptions={''} setIsReadOnly={false} isReadOnly={true} selectedRecordId="MAKGF1F57A7192176" {...props} ProductDetailsData={['t1', 't2']} userId={'123'} resetData={jest.fn()} moduleTitle={''} onCloseAction={jest.fn()} onSuccess={jest.fn()} handleFormValueChange={jest.fn()} handleFormFieldChange={jest.fn()} onFinish={jest.fn()} onFinishFailed={jest.fn()} />
@@ -95,5 +94,26 @@ describe('Vehicle ProductDetails render', () => {
 
         const saveNextBtn = screen.getByRole('button', { name: /save & next/i });
         fireEvent.click(saveNextBtn);
+    });
+
+    it('Edit button should work', async () => {
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+            data: {
+                Vehicle: {
+                    ProductDetails: { isLoaded: true, data: { connectedVehicle: [{ name: 'Kai' }], aggregates: [{ id: '106', item: 'Kai', itemValue: null, make: 'Kai', makeValue: null, serialNo: '106' }] } },
+                },
+                ConfigurableParameterEditing: { filteredListData: { VEH_MAKE: [{ name: 'Kai' }], VEH_ITEM: [{ name: 'Kai' }] } },
+            },
+        });
+        customRender(
+            <Provider store={mockStore}>
+                <ProductDetailMaster selectedRecordId={'Kai'} />
+            </Provider>
+        );
+        const expandIcon = screen.getAllByRole('img', { name: 'plus' });
+        fireEvent.click(expandIcon[2]);
+        const editBtn = screen.getByTestId('edit');
+        fireEvent.click(editBtn);
     });
 });
