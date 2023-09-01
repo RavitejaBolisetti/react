@@ -4,18 +4,17 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Col, Form, Row, Button, Space, Card, Collapse } from 'antd';
 import { withDrawer } from 'components/withDrawer';
 import { AiOutlinePlusSquare } from 'react-icons/ai';
+import { Col, Form, Row, Button, Space, Card, Collapse, Divider } from 'antd';
+
+import AssignProducts from './AssignProducts';
+import AssignUserRolesMunfacturer from './AssignUserRolesMunfacturer';
+import AdministrativeHierarchyAccess from './AdministrativeHierarchyAccess';
+import { ViewUserManagementDealer } from './ViewUserManagementDealer';
 
 import styles from 'assets/sass/app.module.scss';
-
 import style4 from './UserManagementManufacturer.module.css';
-import AssignUserRolesMunfacturer from './AssignUserRolesMunfacturer';
-import AssignProducts from './AssignProducts';
-import AdministrativeHierarchyAccess from './AdministrativeHierarchyAccess';
-
-import { ViewUserManagementDealer } from './ViewUserManagementDealer';
 
 const { Panel } = Collapse;
 const AddEditFormMain = (props) => {

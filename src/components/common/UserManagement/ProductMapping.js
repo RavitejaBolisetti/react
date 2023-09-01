@@ -3,32 +3,14 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Input, Form, Row, Col } from 'antd';
 
-// import { generateList } from 'utils/generateList';
 import LeftPanel from 'components/common/LeftPanel';
 import styles from 'components/common/TreeView.module.css';
 
 const { Search } = Input;
 const fieldNames = { title: 'productName', key: 'productCode', children: 'children' };
-
-const flattenData = (data) => {
-    const listItem = [];
-    const generateList = (data) => {
-        for (let node of data) {
-            listItem.push({
-                ...node,
-            });
-            if (node?.children) {
-                generateList(node?.children);
-            }
-        }
-
-        return listItem;
-    };
-    return generateList(data);
-};
 
 const ProductMapping = ({ productDataTree, productHierarchyData, viewMode }) => {
     const [finalProductData, setFinalProductData] = useState([]);
@@ -87,7 +69,6 @@ const ProductMapping = ({ productDataTree, productHierarchyData, viewMode }) => 
         isTreeViewVisible: true,
         onCheck: onCheck,
         disableCheckbox: viewMode,
-        // checkedKeys: handleDefaultCheckedKeys,
     };
 
     return (

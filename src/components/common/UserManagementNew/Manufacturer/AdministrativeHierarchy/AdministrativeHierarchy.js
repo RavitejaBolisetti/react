@@ -7,10 +7,10 @@ import React, { useState } from 'react';
 import { Input, Form, Row, Col, Card } from 'antd';
 import LeftPanel from 'components/common/LeftPanel';
 
+import { UserManagementFormButton } from '../../UserManagementFormButton/UserManagementFormButton';
+
 import styles from 'components/common/TreeView.module.css';
 import style from 'assets/sass/app.module.scss';
-
-import { UserManagementFormButton } from '../../UserManagementFormButton/UserManagementFormButton';
 
 const { Search } = Input;
 const fieldNames = { title: 'adminName', key: 'adminCode', children: 'children' };
