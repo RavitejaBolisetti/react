@@ -8,7 +8,7 @@ import { Button, Row, Col } from 'antd';
 import { FilterIcon } from 'Icons';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
+
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { SearchBox } from 'components/utils/SearchBox';
 import { RxCross2 } from 'react-icons/rx';

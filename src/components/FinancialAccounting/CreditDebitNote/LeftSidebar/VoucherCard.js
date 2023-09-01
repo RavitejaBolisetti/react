@@ -10,7 +10,6 @@ import { convertDate, monthDateFormat } from 'utils/formatDateTime';
 import dayjs from 'dayjs';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 const { Panel } = Collapse;
 

@@ -11,7 +11,7 @@ import { QueryButtons } from 'components/Sales/VehicleRecieptChecklist/QueryButt
 import { RSM_APPROVAL_STATUS } from './utils/RSMApprovalStatus';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
+
 const { Search } = Input;
 
 export default function AdvanceFilter(props) {

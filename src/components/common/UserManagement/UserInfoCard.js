@@ -9,7 +9,7 @@ import { Col, Row, Card, Typography, Divider } from 'antd';
 import { USER_TYPE_USER } from 'constants/modules/UserManagement/userType';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
+
 // import style from './UserManagement.module.css';
 
 const { Text } = Typography;

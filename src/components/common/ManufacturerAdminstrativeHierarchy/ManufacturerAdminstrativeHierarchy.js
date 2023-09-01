@@ -37,7 +37,6 @@ import { DisableParent } from 'components/common/ProductHierarchy/ProductHierarc
 import LeftPanel from '../LeftPanel';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 import { LANGUAGE_EN } from 'language/en';
 

@@ -8,7 +8,6 @@ import { Card } from 'antd';
 import { FiDownload } from 'react-icons/fi';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 export const ViewSupportingDocDetail = (props) => {
     const { downloadFileFromButton, documentData } = props;

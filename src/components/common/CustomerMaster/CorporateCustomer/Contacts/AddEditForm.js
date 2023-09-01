@@ -5,7 +5,6 @@ import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/prepareP
 import { validateRequiredInputField, validateRequiredSelectField, validatInstagramProfileUrl, validatFacebookProfileUrl, validatYoutubeProfileUrl, validattwitterProfileUrl } from 'utils/validation';
 
 import style from '../../../../../sass/drawer_two_pannel.scss';
-//import style from 'components/common/Common.module.css';
 
 import { contactPurpose, title, gender } from 'constants/modules/CustomerMaster/individualProfile';
 

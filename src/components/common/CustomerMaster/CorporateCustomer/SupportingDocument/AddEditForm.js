@@ -13,7 +13,6 @@ import { validateRequiredInputField } from 'utils/validation';
 import Svg from 'assets/images/Filter.svg';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 const { Option } = Select;
 const { Dragger } = Upload;

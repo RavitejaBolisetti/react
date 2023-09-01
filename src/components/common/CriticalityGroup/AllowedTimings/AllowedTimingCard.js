@@ -14,7 +14,6 @@ import { BsTrash3 } from 'react-icons/bs';
 import { LANGUAGE_EN } from 'language/en';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 const AllowedTimingCard = (props) => {
     const { id } = props;

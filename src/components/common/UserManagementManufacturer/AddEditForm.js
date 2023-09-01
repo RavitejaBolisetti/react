@@ -9,7 +9,7 @@ import { withDrawer } from 'components/withDrawer';
 import { AiOutlinePlusSquare } from 'react-icons/ai';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
+
 import style4 from './UserManagementManufacturer.module.css';
 import AssignUserRolesMunfacturer from './AssignUserRolesMunfacturer';
 import AssignProducts from './AssignProducts';
@@ -86,19 +86,19 @@ const AddEditFormMain = (props) => {
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                             <Collapse onChange={onChangeCollapse} expandIcon={() => <AiOutlinePlusSquare />} collapsible="icon">
                                 <Panel header="Assign User Roles" key="1">
-                                    <Divider/>
+                                    <Divider />
                                     <AssignUserRolesMunfacturer userRoleOptions={DealerData?.employeeRoles} DealerSearchvalue={DealerSearchvalue} />
                                 </Panel>
                             </Collapse>
                             <Collapse onChange={onChangeCollapse} expandIcon={() => <AiOutlinePlusSquare />} collapsible="icon">
                                 <Panel header="Administrative Hierarchy Access" key="2">
-                                    <Divider/>
+                                    <Divider />
                                     <AdministrativeHierarchyAccess BranchMappingData={DealerData?.branches} />
                                 </Panel>
                             </Collapse>
                             <Collapse onChange={onChangeCollapse} expandIcon={() => <AiOutlinePlusSquare />} collapsible="icon">
                                 <Panel header="Assign Products" key="3">
-                                    <Divider/>
+                                    <Divider />
                                     <AssignProducts ProductMappingData={DealerData?.products} productHierarchyData={productHierarchyData} />
                                 </Panel>
                             </Collapse>

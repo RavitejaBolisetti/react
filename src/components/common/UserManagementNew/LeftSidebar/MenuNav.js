@@ -11,7 +11,6 @@ import { USER_ACCESS_SECTION_DEALER, USER_ACCESS_SECTION_MANUFACTURER } from 'co
 import { USER_TYPE_USER } from 'constants/modules/UserManagement/userType';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 const MenuNav = (props) => {
     const {

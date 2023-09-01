@@ -18,7 +18,6 @@ import { BASE_URL_OTF_CHANGE_HISTORY as customURL } from 'constants/routingApi';
 import { Row, Button, Col } from 'antd';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 const mapStateToProps = (state) => {
     const {

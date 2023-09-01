@@ -17,7 +17,6 @@ import { ProductMapping } from './Dealer/ProductMapping';
 import { BranchMapping } from './Dealer/BranchMapping';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 const UserMainContainerMaster = (props) => {
     const { userType, currentSection } = props;

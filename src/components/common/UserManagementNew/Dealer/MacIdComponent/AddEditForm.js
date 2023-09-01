@@ -8,7 +8,6 @@ import { validationFieldLetterAndNumber, validateRequiredInputField, validateReq
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 const AddEditForm = (props) => {
     const { onSaveFormData, macIdform, setShowAddEditForm, setIsEditing, formActionType, handleFormValueChange, setIsAdding } = props;

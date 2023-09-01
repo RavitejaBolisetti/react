@@ -16,7 +16,6 @@ import { YES_NO_FLAG } from 'constants/yesNoFlag';
 import { FINANCE_ARRANGED_BY } from 'constants/financeArrangedBy';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 const AddEditFormMain = (props) => {
     const { formData, FinanceLovData, typeData, form, formActionType } = props;

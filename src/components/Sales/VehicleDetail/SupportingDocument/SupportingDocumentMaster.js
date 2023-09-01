@@ -18,7 +18,7 @@ import { VehicleDetailFormButton } from '../VehicleDetailFormButton';
 import AddEditForm from './AddEditForm';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
+
 import { getNameFromKey } from 'utils/checkAndSetDefaultValue';
 
 const mapStateToProps = (state) => {
