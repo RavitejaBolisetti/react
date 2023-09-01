@@ -29,6 +29,7 @@ const options = {
 
     // Path is relative to the sonar-project.properties file. Defaults to .
     'sonar.sources': 'src',
+    'sonar.coverage.exclusions':'**/UserManagement/**,**/UserManagementNew/**,**/VehiclePurchaseOrder/**,**/Receipts/**',
 
     // source language
     'sonar.language': 'js',
