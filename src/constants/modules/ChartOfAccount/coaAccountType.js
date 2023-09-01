@@ -4,13 +4,15 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 
-export const ATTRIBUTE_TYPE = [
-    {
+export const COA_ACCOUNT_TYPE = {
+    GROUP_ACCOUNT: {
+        id: 1,
         key: 'GRP',
-        value: 'Group Account',
+        title: 'Group Account',
     },
-    {
+    LEDGER_ACCOUNT: {
+        id: 2,
         key: 'LDGR',
-        value: 'Ledger Account',
+        title: 'Ledger Account',
     },
-];
+};
