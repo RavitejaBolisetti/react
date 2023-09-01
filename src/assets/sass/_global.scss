@@ -707,12 +707,41 @@
     }
 
     .ant-input-affix-wrapper-status-error {
-        &:not(.ant-input-affix-wrapper-disabled) {
-            &:not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper {
-                border-color: $semanticError;
-            }
-        }
-    }
+		&:not(.ant-input-affix-wrapper-disabled) {
+			&:not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper {
+				border-color: $semanticError !important;
+				box-shadow: none !important;
+				&:hover {
+					border-color: $semanticError !important;
+					box-shadow: none !important;
+				}
+			}
+			&:not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper-focused {
+				border-color: $semanticError !important;
+				box-shadow: none !important;
+			}
+		}
+	}
+	.ant-select-status-error {
+		&:not(.ant-select-disabled) {
+			&:not(.ant-select-customize-input) {
+				&:not(.ant-pagination-size-changer) {
+					.ant-select-selector {
+						border-color: $semanticError !important;
+						box-shadow: none !important;
+						border-color: $semanticError !important;
+						box-shadow: none !important;
+					}
+					&:hover {
+						.ant-select-selector {
+							border-color: $semanticError !important;
+							box-shadow: none !important;
+						}
+					}
+				}
+			}
+		}
+	}  
 
     .ant-input-group {
         border-radius: 4px;

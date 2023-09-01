@@ -18,6 +18,7 @@ import { MainPage } from './components/MainPage';
 import { AiOutlineCheckCircle, AiOutlineInfoCircle, AiOutlineCloseCircle } from 'react-icons/ai';
 import { FcCancel } from 'react-icons/fc';
 
+//import styles from './App.module.scss';
 import styles from './App.module.css';
 
 const mapStateToProps = (state) => ({});
