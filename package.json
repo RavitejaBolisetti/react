@@ -50,9 +50,12 @@
         "watch-tests": "cross-env BABEL_ENV=test jest --watch",
         "eject": "react-scripts eject",
         "clear_jest": "jest --clearCache",
-        "lint": "eslint .",
-        "prepare": "husky install",
         "test:coverage": "cross-env BABEL_ENV=test --max-old-space-size=4096 jest --coverage",
+        "prepare": "husky install",
+        "lint-staged": "lint-staged",
+        "pre-commit": "npm run lint-staged && git add .",
+        "lint": "eslint .",
+        "lint:fix": "eslint --fix",
         "sonar": "ts-node sonar-scanner.ts"
     },
     "eslintConfig": {
@@ -61,16 +64,19 @@
             "react-app/jest"
         ]
     },
-    "lint-staged": {
-        "*.{js,jsx}": [
-            "jest --bail --findRelatedTests",
-            "git add"
-        ]
-    },
     "husky": {
         "hooks": {
             "pre-commit": "lint-staged"
         }
+    },
+    "lint-staged": {
+        "*.{js,jsx}": [
+            "eslint --fix",
+            "prettier --write"
+        ],
+        "*.{js,jsx,ts,tsx,css,sass,scss,json,md,html,yml}": [
+            "prettier --write"
+        ]
     },
     "browserslist": {
         "production": [
@@ -103,10 +109,11 @@
         "@testing-library/react": "^14.0.0",
         "@testing-library/user-event": "^14.4.3",
         "babel-jest": "^27.5.1",
-        "husky": "^8.0.0",
+        "husky": "^8.0.3",
         "jest": "^27.5.1",
         "jest-environment-jsdom": "^27.5.1",
         "lint-staged": "^14.0.1",
+        "prettier": "^3.0.2",
         "react-app-rewired": "^2.2.1",
         "react-test-renderer": "^18.2.0",
         "redux-devtools-extension": "^2.13.9",

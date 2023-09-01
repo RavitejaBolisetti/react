@@ -147,7 +147,7 @@ export const RoleManagementMain = (props) => {
         const filteredWebMenuData = unFilteredMenuData?.[APPLICATION_WEB]?.filter((i) => i?.checked) || [];
         const filteredMobileMenuData = unFilteredMenuData?.[APPLICATION_MOBILE]?.filter((i) => i?.checked) || [];
 
-        if (!filteredWebMenuData?.length || filteredMobileMenuData?.length) {
+        if (!recordId && !filteredWebMenuData?.length && !filteredMobileMenuData?.length) {
             showGlobalNotification({ message: noApplicationValidationMessage.MESSAGE.replace('{NAME}', 'application access'), placement: 'bottomRight' });
             return;
         }

@@ -18,7 +18,7 @@ import styles from 'assets/sass/app.module.scss';
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined, onFinish, onFinishFailed } = props;
+    const { form, formData, onCloseAction, formActionType: { editMode, viewMode, addMode } = undefined, onFinish, onFinishFailed } = props;
 
     const { isDataCountryLoaded, countryData, defaultCountry } = props;
     const { buttonData, setButtonData, handleButtonClick } = props;
@@ -70,14 +70,14 @@ const AddEditFormMain = (props) => {
                                     </Form.Item>
                                 </Col>
 
-                                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={formData?.code} label="State Code" name="code" rules={[validateRequiredInputField('State Code')]}>
-                                        <Input placeholder={preparePlaceholderText('State Code')} maxLength={6} disabled={editMode ? true : false} />
-                                    </Form.Item>
-                                </Col>
-                            </Row>
+                                {!addMode && (
+                                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                        <Form.Item initialValue={formData?.code} label="State Code" name="code" rules={[validateRequiredInputField('State Code')]}>
+                                            <Input placeholder={preparePlaceholderText('State Code')} maxLength={6} disabled={editMode ? true : false} />
+                                        </Form.Item>
+                                    </Col>
+                                )}
 
-                            <Row gutter={16}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                     <Form.Item label="State Name" initialValue={formData?.name} rules={[validateRequiredInputField('State Name')]} name="name">
                                         <Input placeholder={preparePlaceholderText('State Name')} maxLength={50} />
@@ -89,9 +89,7 @@ const AddEditFormMain = (props) => {
                                         <Input placeholder={preparePlaceholderText('gst State Code')} maxLength={2} />
                                     </Form.Item>
                                 </Col>
-                            </Row>
 
-                            <Row gutter={16}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                     <Form.Item initialValue={editMode ? formData.status : true} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="status" label="Status">
                                         <Switch checkedChildren="Active" unCheckedChildren="Inactive" onChange={(checked) => (checked ? 1 : 0)} />
