@@ -3,14 +3,21 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Input, Form, Col, Row, Switch, Collapse, Tabs, Divider, Tag } from 'antd';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import { DrawerFormButton } from 'components/common/Button';
 import { ViewRoleManagement } from './ViewRoleManagement';
 import LeftPanel from 'components/common/LeftPanel';
 import { InputSkeleton } from '../Skeleton';
 import { withDrawer } from 'components/withDrawer';
+import { LANGUAGE_EN } from 'language/en';
+
+import { RoleManagementMenuDataActions } from 'store/actions/data/roleManagement/roleMenu';
+import { RoleListDataActions } from 'store/actions/data/roleManagement/roleList';
+import { showGlobalNotification } from 'store/actions/notification';
 
 import { validateAlphanumericWithSpaceHyphenPeriod, validateRequiredInputField, validationFieldLetterAndNumber } from 'utils/validation';
 import { APPLICATION_DEVICE_TYPE } from 'utils/applicationDeviceType';
@@ -40,20 +47,155 @@ const fnMapData = ({ data, fieldNames, selectedKeys }) =>
               }
     );
 
+const mapStateToProps = (state) => {
+    const {
+        auth: { userId },
+        data: {
+            RoleManagementData: {
+                RoleList: { isLoaded: isDataLoaded = false, isLoading: isDataLoading = false, data: roleManagementData = [] },
+                RoleMenu: { isLoaded: isMenuLoaded = false, isLoading: isMenuLoading = false, data: rolemenuData = [] },
+            },
+        },
+    } = state;
+
+    const moduleTitle = 'Role Management';
+    let returnValue = {
+        userId,
+        moduleTitle,
+        menuTreeData: rolemenuData,
+        isDataLoading,
+        isMenuLoading,
+        isDataLoaded,
+        isMenuLoaded,
+        roleManagementData,
+        rolemenuData,
+    };
+    return returnValue;
+};
+
+const mapDispatchToProps = (dispatch) => ({
+    dispatch,
+    ...bindActionCreators(
+        {
+            fetchList: RoleListDataActions.fetchList,
+            saveData: RoleManagementMenuDataActions.saveData,
+            listShowLoading: RoleListDataActions.listShowLoading,
+            fetchMenuList: RoleManagementMenuDataActions.fetchList,
+            showGlobalNotification,
+        },
+        dispatch
+    ),
+});
+
 const AddEditFormMain = (props) => {
-    const { deviceType, setDeviceType, setClosePanels, unFilteredMenuData, setUnFilteredMenuData, formData, onCloseAction, form, onFinish, formActionType: { viewMode, editMode } = undefined } = props;
-    const { showApplicationDataLoading, setShowApplicationDataLoading } = props;
+    const { deviceType, setDeviceType, setClosePanels, unFilteredMenuData, setUnFilteredMenuData, formData, onCloseAction, form, formActionType: { viewMode, addMode, editMode } = undefined } = props;
+    const { userId, fetchList, setIsFormVisible, fetchMenuList, listShowLoading, saveData, showGlobalNotification } = props;
 
     const APPLICATION_WEB = APPLICATION_DEVICE_TYPE?.WEB?.key;
     const APPLICATION_MOBILE = APPLICATION_DEVICE_TYPE?.MOBILE?.key;
 
     const [searchValue, setSearchValue] = useState();
     const [activeKey, setActiveKey] = useState();
+    const [showApplicationDataLoading, setShowApplicationDataLoading] = useState(true);
 
     const [searchItem] = Form.useForm();
     const fieldNames = { title: 'label', key: 'value', children: 'children' };
 
     const { buttonData, setButtonData, handleButtonClick } = props;
+
+    const onErrorAction = (message) => {
+        showGlobalNotification({ message });
+        setShowApplicationDataLoading(false);
+    };
+
+    useEffect(() => {
+        if (userId && formData) {
+            let menuData = {};
+            const loadDataFromServer = (device, index, arr) => {
+                const deviceType = device?.key;
+                setShowApplicationDataLoading(true);
+                const extraParams = [
+                    {
+                        key: 'menuType',
+                        title: 'menuType',
+                        value: deviceType,
+                        name: 'menuType',
+                    },
+                    {
+                        key: 'roleId',
+                        title: 'roleId',
+                        value: formData?.id,
+                        name: 'roleId',
+                    },
+                ];
+
+                fetchMenuList({
+                    setIsLoading: listShowLoading,
+                    userId,
+                    extraParams,
+                    onErrorAction,
+                    onSuccessAction: (response) => {
+                        setShowApplicationDataLoading(false);
+                        const menuTreeData = response?.data;
+                        menuData = { ...menuData, [deviceType]: menuTreeData };
+                        setUnFilteredMenuData(menuData);
+                    },
+                });
+            };
+            Object.values(APPLICATION_DEVICE_TYPE)?.forEach(loadDataFromServer);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, formData?.id]);
+
+    const noApplicationValidationMessage = LANGUAGE_EN.GENERAL.APPLICATON_REQUIRE_VALIDATION;
+
+    const onFinish = (values) => {
+        const recordId = formData?.id || '';
+
+        const filteredWebMenuData = unFilteredMenuData?.[APPLICATION_WEB]?.filter((i) => i?.checked) || [];
+        const filteredMobileMenuData = unFilteredMenuData?.[APPLICATION_MOBILE]?.filter((i) => i?.checked) || [];
+
+        if (!recordId && !filteredWebMenuData?.length && !filteredMobileMenuData?.length) {
+            showGlobalNotification({ message: noApplicationValidationMessage.MESSAGE.replace('{NAME}', 'application access'), placement: 'bottomRight' });
+            return;
+        }
+
+        const data = {
+            ...values,
+            id: recordId,
+            webRoleManagementRequest: filteredWebMenuData,
+            mobileRoleManagementRequest: filteredMobileMenuData,
+        };
+
+        const onSuccess = (res) => {
+            form.resetFields();
+            fetchList({ setIsLoading: listShowLoading, userId });
+            if (addMode && buttonData?.saveAndNewBtnClicked) {
+                setIsFormVisible(true);
+                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
+            } else {
+                setIsFormVisible(false);
+                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+                setUnFilteredMenuData([]);
+            }
+        };
+
+        const onError = (message) => {
+            listShowLoading(false);
+            showGlobalNotification({ notificationType: 'error', title: 'Error', message, placement: 'bottomRight' });
+        };
+
+        const requestData = {
+            data: data,
+            method: editMode ? 'put' : 'post',
+            setIsLoading: listShowLoading,
+            userId,
+            onError,
+            onSuccess,
+        };
+
+        saveData(requestData);
+    };
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
@@ -66,7 +208,6 @@ const AddEditFormMain = (props) => {
     const onFinishFailed = () => {};
 
     const onTabChange = (newActiveKey) => {
-        setShowApplicationDataLoading(true);
         setDeviceType(newActiveKey);
     };
 
@@ -93,8 +234,6 @@ const AddEditFormMain = (props) => {
         (checkedKeysValue, { halfCheckedKeys }) => {
             handleFormValueChange();
             const selectedKeys = [...checkedKeysValue, ...halfCheckedKeys] || [];
-            // const deviceTypePrev = checkedMenuKeys?.[deviceType] ? checkedMenuKeys[deviceType] : {};
-            // setCheckedMenuKeys(selectedKeys?.length > 0 ? { ...checkedMenuKeys, [deviceType]: { ...deviceTypePrev, [currentKey]: [currentKey, ...selectedKeys] } } : { ...checkedMenuKeys, [deviceType]: { ...deviceTypePrev } });
             const mapSelectedKeyData = (data) =>
                 data?.map((item) =>
                     item.value === currentKey
@@ -139,7 +278,7 @@ const AddEditFormMain = (props) => {
                         onCheck: onCheck(el?.value),
                         disabled: viewMode,
                         expendedKeys: expendedKeys?.map((i) => i.value),
-                        checkedKeys: checkedKeys?.map((i) => i.value), // handleDefaultCheckedKeys(viewMode, defaultCheckedKeysMangement, checkedMenuKeys),
+                        checkedKeys: checkedKeys?.map((i) => i.value),
                     };
 
                     return (
@@ -259,7 +398,6 @@ const AddEditFormMain = (props) => {
                                         </Col>
                                     </Row>
                                 </div>
-                                {/* <Divider /> */}
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.subTitleSec}>
                                         Application Access<span className={styles.mandatory}>*</span>
@@ -276,4 +414,4 @@ const AddEditFormMain = (props) => {
     );
 };
 
-export const AddEditForm = withDrawer(AddEditFormMain, {});
+export const AddEditForm = withDrawer(connect(mapStateToProps, mapDispatchToProps)(AddEditFormMain), {});
