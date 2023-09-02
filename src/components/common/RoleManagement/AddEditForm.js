@@ -96,6 +96,7 @@ const AddEditFormMain = (props) => {
 
     const [searchValue, setSearchValue] = useState();
     const [activeKey, setActiveKey] = useState();
+    console.log('🚀 ~ file: AddEditForm.js:99 ~ AddEditFormMain ~ activeKey:', activeKey);
     const [refreshMenu, setRefreshMenu] = useState(false);
     const [showApplicationDataLoading, setShowApplicationDataLoading] = useState(true);
 
@@ -292,7 +293,7 @@ const AddEditFormMain = (props) => {
                                             {allowedAccess?.length > 0 && <Tag color="default" className={styles.marL20}>{`${allowedAccess?.length >= 2 ? `${allowedAccess?.length} Accesses Provided` : `${allowedAccess?.length} Access Provided`}`}</Tag>}
                                         </>
                                     }
-                                    key={i}
+                                    key={el?.value}
                                 >
                                     <Divider />
                                     <Form layout="vertical" autoComplete="off" form={searchItem}>
