@@ -39,7 +39,7 @@ const AddEditFormMain = (props) => {
         if (formActionType?.editMode && formData) {
             form.setFieldsValue({
                 ...formData,
-                poDate: dayjs(formData?.podate?.substr(0, 10)).format('DD/MM/YYYY'),
+                poDate: dayjs(formData?.poDate?.substr(0, 10)).format('DD/MM/YYYY'),
                 vehicleUsageType: findUsageType(formData?.vehicleUsageType),
                 vehicleAllocatedStatus: getCodeValue(VEHICLE_TYPE, formData?.vehicleAllocatedStatus, 'title'),
             });
@@ -123,7 +123,7 @@ const AddEditFormMain = (props) => {
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item label="PO Number" name="ponumber">
+                                <Form.Item label="PO Number" name="poNumber">
                                     <Input {...disabledProp} placeholder={preparePlaceholderText('PO Number')} />
                                 </Form.Item>
                             </Col>
@@ -135,24 +135,24 @@ const AddEditFormMain = (props) => {
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item label="PO Status" name="postatus">
+                                <Form.Item label="PO Status" name="poStatus">
                                     <Input {...disabledProp} placeholder={preparePlaceholderText('PO Status')} />
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item label="SO Number" name="sonumber">
+                                <Form.Item label="SO Number" name="soNumber">
                                     <Input {...disabledProp} placeholder={preparePlaceholderText('SO Number')} />
                                 </Form.Item>
                             </Col>
                         </Row>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item label="SO Status" name="sostatus">
+                                <Form.Item label="SO Status" name="soStatus">
                                     <Input {...disabledProp} placeholder={preparePlaceholderText('SO Status')} />
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item label="VIN Number" name="vinnumber">
+                                <Form.Item label="VIN Number" name="vinNumber">
                                     <Input {...disabledProp} placeholder={preparePlaceholderText('VIN number')} />
                                 </Form.Item>
                             </Col>

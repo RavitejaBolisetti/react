@@ -8,14 +8,12 @@ import { connect } from 'react-redux';
 import { Col, Form, Row } from 'antd';
 import { bindActionCreators } from 'redux';
 
-import { RoleManagementMenuDataActions } from 'store/actions/data/roleManagement/roleMenu';
 import { RoleListDataActions } from 'store/actions/data/roleManagement/roleList';
 import { showGlobalNotification } from 'store/actions/notification';
 
 import { tableColumn } from './tableColumn';
 import { AddEditForm } from './AddEditForm';
 
-import { LANGUAGE_EN } from 'language/en';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { APPLICATION_DEVICE_TYPE } from 'utils/applicationDeviceType';
 import { AppliedAdvanceFilter } from 'utils/AppliedAdvanceFilter';
@@ -54,9 +52,7 @@ const mapDispatchToProps = (dispatch) => ({
     ...bindActionCreators(
         {
             fetchList: RoleListDataActions.fetchList,
-            saveData: RoleManagementMenuDataActions.saveData,
             listShowLoading: RoleListDataActions.listShowLoading,
-            fetchMenuList: RoleManagementMenuDataActions.fetchList,
             showGlobalNotification,
         },
         dispatch
@@ -64,17 +60,13 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const RoleManagementMain = (props) => {
-    const { saveData, fetchList, userId, isDataLoaded, listShowLoading, menuTreeData, showGlobalNotification, roleManagementData, fetchMenuList } = props;
-    const noApplicationValidationMessage = LANGUAGE_EN.GENERAL.APPLICATON_REQUIRE_VALIDATION;
+    const { fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, roleManagementData, fetchMenuList } = props;
 
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
 
     const APPLICATION_WEB = APPLICATION_DEVICE_TYPE?.WEB?.key;
-    const APPLICATION_MOBILE = APPLICATION_DEVICE_TYPE?.MOBILE?.key;
-
     const [showDataLoading, setShowDataLoading] = useState(true);
-    const [showApplicationDataLoading, setShowApplicationDataLoading] = useState(true);
     const [searchData, setSearchdata] = useState('');
     const [refershData, setRefershData] = useState(false);
 
@@ -98,13 +90,11 @@ export const RoleManagementMain = (props) => {
     const onSuccessAction = () => {
         setRefershData(false);
         setShowDataLoading(false);
-        setShowApplicationDataLoading(false);
     };
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
         setShowDataLoading(false);
-        setShowApplicationDataLoading(false);
     };
 
     useEffect(() => {
@@ -120,15 +110,6 @@ export const RoleManagementMain = (props) => {
     }, [formActionType]);
 
     useEffect(() => {
-        if (deviceType === APPLICATION_WEB && menuTreeData) {
-            setUnFilteredMenuData({ ...unFilteredMenuData, [deviceType]: menuTreeData });
-        } else if (deviceType === APPLICATION_MOBILE && menuTreeData) {
-            setUnFilteredMenuData({ ...unFilteredMenuData, [deviceType]: menuTreeData });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [deviceType, menuTreeData]);
-
-    useEffect(() => {
         if (isDataLoaded && roleManagementData && userId) {
             if (filterString) {
                 const keyword = filterString?.keyword;
@@ -140,85 +121,6 @@ export const RoleManagementMain = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, isDataLoaded, roleManagementData]);
-
-    const onFinish = (values) => {
-        const recordId = formData?.id || '';
-
-        const filteredWebMenuData = unFilteredMenuData?.[APPLICATION_WEB]?.filter((i) => i?.checked) || [];
-        const filteredMobileMenuData = unFilteredMenuData?.[APPLICATION_MOBILE]?.filter((i) => i?.checked) || [];
-
-        if (!filteredWebMenuData?.length || filteredMobileMenuData?.length) {
-            showGlobalNotification({ message: noApplicationValidationMessage.MESSAGE.replace('{NAME}', 'application access'), placement: 'bottomRight' });
-            return;
-        }
-
-        const data = {
-            ...values,
-            id: recordId,
-            webRoleManagementRequest: filteredWebMenuData,
-            mobileRoleManagementRequest: filteredMobileMenuData,
-        };
-
-        const onSuccess = (res) => {
-            form.resetFields();
-            fetchList({ setIsLoading: listShowLoading, userId });
-            if (buttonData?.saveAndNewBtnClicked) {
-                setIsFormVisible(true);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
-            } else {
-                setIsFormVisible(false);
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-                setUnFilteredMenuData([]);
-            }
-        };
-
-        const onError = (message) => {
-            listShowLoading(false);
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message, placement: 'bottomRight' });
-        };
-
-        const requestData = {
-            data: data,
-            method: formActionType?.editMode ? 'put' : 'post',
-            setIsLoading: listShowLoading,
-            userId,
-            onError,
-            onSuccess,
-        };
-
-        saveData(requestData);
-    };
-
-    useEffect(() => {
-        if (userId && deviceType && formData) {
-            setShowApplicationDataLoading(true);
-            const extraParams = [
-                {
-                    key: 'menuType',
-                    title: 'menuType',
-                    value: deviceType,
-                    name: 'menuType',
-                },
-                {
-                    key: 'roleId',
-                    title: 'roleId',
-                    value: formData?.id,
-                    name: 'roleId',
-                },
-            ];
-
-            fetchMenuList({
-                setIsLoading: listShowLoading,
-                userId,
-                extraParams,
-                onErrorAction,
-                onSuccessAction: () => {
-                    setShowApplicationDataLoading(false);
-                },
-            });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, deviceType, formData]);
 
     const handleReferesh = () => {
         setShowDataLoading(true);
@@ -262,6 +164,12 @@ export const RoleManagementMain = (props) => {
         form.validateFields().then((values) => {});
     };
 
+    const onCloseAction = () => {
+        form.resetFields();
+        setIsFormVisible(false);
+        setFormData([]);
+    };
+
     const drawerTitle = useMemo(() => {
         if (formActionType?.viewMode) {
             return 'View ';
@@ -285,35 +193,20 @@ export const RoleManagementMain = (props) => {
         setDeviceType,
         isVisible: isFormVisible,
         titleOverride: drawerTitle.concat('Role'),
-        onCloseAction: () => {
-            form.resetFields();
-            setIsFormVisible(false);
-            setFormData([]);
-            setUnFilteredMenuData([]);
-        },
+        onCloseAction,
+
         formData,
-        onFinish,
         deviceType,
 
         formActionType,
         setFormActionType,
         onFinishFailed,
-
-        tableData: searchData,
-
-        ADD_ACTION,
-        EDIT_ACTION,
-        VIEW_ACTION,
         buttonData,
 
         setButtonData,
         handleButtonClick,
 
-        APPLICATION_WEB,
-        APPLICATION_MOBILE,
-
-        showApplicationDataLoading,
-        setShowApplicationDataLoading,
+        setIsFormVisible,
     };
 
     const tableProps = {
@@ -327,7 +220,6 @@ export const RoleManagementMain = (props) => {
         advanceFilter: false,
         filterString,
         from: listFilterForm,
-        onFinish,
         onFinishFailed,
         onSearchHandle,
         handleResetFilter,

@@ -86,8 +86,7 @@ const VehicleDetailsMasterMain = (props) => {
     const { VehicleDetailsData, isVehicleLovDataLoading, VehicleLovData, resetProductLov, isVehicleLovDataLoaded, ProductHierarchyData, fetchProductLovCode, fetchProductLov, isLoading, saveData, ProductLovLoading, isProductHierarchyDataLoaded, typeData, fetchList, resetData, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
     const { form, selectedOrderId, section, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick } = props;
 
-    const { isVehicleServiceLoaded, isVehicleServiceLoading, vehicleServiceData, fetchServiceLov, serviceLoading } = props;
-    console.log('vehicleServiceData', vehicleServiceData);
+    const { refreshData, setRefreshData, vehicleServiceData, fetchServiceLov, serviceLoading, selectedOrder, setSelectedOrder } = props;
 
     const [activeKey, setactiveKey] = useState([1]);
     const [formData, setformData] = useState({});
@@ -100,8 +99,6 @@ const VehicleDetailsMasterMain = (props) => {
 
     const [ProductHierarchyDataOptions, setProductHierarchyDataOptions] = useState();
     const [modelData, setmodelData] = useState();
-
-    // const [modelCode, setmodelCode] = useState();
 
     const onSuccessAction = (res) => {
         //showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -230,7 +227,7 @@ const VehicleDetailsMasterMain = (props) => {
                 otfNumber: selectedOrderId || '',
                 OtfId: formData?.id || '',
                 id: formData?.id || '',
-                podate: dayjs(formData?.podate?.substr(0, 10)).format('DD/MM/YYYY'),
+                poDate: dayjs(formData?.poDate?.substr(0, 10)).format('DD/MM/YYYY'),
                 vehicleUsageType: VehicleDetailsData?.vehicleUsageType,
                 model: VehicleDetailsData?.model,
                 modelCode: VehicleDetailsData?.modelCode,
@@ -250,6 +247,8 @@ const VehicleDetailsMasterMain = (props) => {
             form.resetFields();
             resetData();
             handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
+            setRefreshData(!refreshData);
+            setSelectedOrder({ ...selectedOrder, model: res?.data?.model });
         };
 
         const onError = (message) => {

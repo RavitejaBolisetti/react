@@ -162,7 +162,7 @@ export const OtfMasterBase = (props) => {
         invoiceBtn: false,
         deliveryNote: false,
         changeHistory: true,
-        otfSoMappingHistoryBtn: false,
+        otfSoMappingHistoryBtn: true,
     };
 
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -308,16 +308,16 @@ export const OtfMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentSection, sectionName]);
 
-    const handleVehicleAllotment = (record, updatedStatus) => {
+    const handleVehicleAllotment = (record, updatedStatus, vinNumber) => {
         if (!record) {
             showGlobalNotification({ message: 'Please select OTF' });
             return false;
         }
 
         const { otfId, otfNumber } = record;
-        const { vinnumber } = VehicleDetailsData;
+        //const { vinnumber } = VehicleDetailsData;
 
-        let data = { otfId, otfNumber, allotmentStatus: updatedStatus, vehicleIdentificationNumber: vinnumber };
+        let data = { otfId, otfNumber, allotmentStatus: updatedStatus, vehicleIdentificationNumber: vinNumber };
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
@@ -386,17 +386,17 @@ export const OtfMasterBase = (props) => {
                 break;
             case UNALLOT:
                 if (userId && selectedOrderId) {
-                    const onSuccessAction = () => {
+                    const onSuccessAction = (resp) => {
                         setConfirmRequest({
                             isVisible: true,
                             titleOverride: 'Un-Allot OTF',
                             closable: true,
                             icon: false,
                             onCloseAction: onCloseConfirmationModalAction,
-                            onSubmitAction: () => handleVehicleAllotment(record, VEHICLE_TYPE?.UNALLOTED.key),
+                            onSubmitAction: () => handleVehicleAllotment(record, VEHICLE_TYPE?.UNALLOTED.key, resp?.data?.vinNumber),
                             submitText: 'Yes',
                             text: 'Are you sure want to Un-allot this OTF? ',
-                            content: VehicleDetailsData ? VehicleDetailsData?.vinnumber : '',
+                            content: resp?.data ? resp?.data?.vinNumber : '',
                         });
                     };
 
@@ -701,6 +701,8 @@ export const OtfMasterBase = (props) => {
         saveButtonName: !selectedOrderId ? 'Create Customer ID' : isLastSection ? 'Submit' : 'Save & Next',
         handleChangeHistory,
         handleOtfSoMappingHistory,
+        refreshData,
+        setRefreshData,
     };
 
     const onCancelCloseAction = () => {

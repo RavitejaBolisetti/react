@@ -42,7 +42,7 @@ const ViewList = (props) => {
     };
 
     return (
-        <div>
+        <>
             {paymentDataList?.length > 0 &&
                 paymentDataList?.map((data, i) => {
                     return (
@@ -72,7 +72,7 @@ const ViewList = (props) => {
                         </Collapse>
                     );
                 })}
-        </div>
+        </>
     );
 };
 

@@ -5,7 +5,7 @@
  */
 import React from 'react';
 import { Descriptions } from 'antd';
-import { ATTRIBUTE_TYPE } from 'constants/modules/ChartOfAccount/attributeType';
+import { COA_ACCOUNT_TYPE } from 'constants/modules/ChartOfAccount/coaAccountType';
 
 export const ViewMain = (props) => {
     const { viewTitle, viewData, styles } = props;
@@ -17,23 +17,22 @@ export const ViewMain = (props) => {
         column: { xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 },
     };
 
-    const accountType = viewData?.accountType === ATTRIBUTE_TYPE?.[0]?.key ? ATTRIBUTE_TYPE?.[0]?.value : viewData?.accountType === ATTRIBUTE_TYPE?.[1]?.key ? ATTRIBUTE_TYPE?.[1]?.value : null;
+    const accountTypeTitle = Object.values(COA_ACCOUNT_TYPE).find((i) => i.key === viewData?.accountType)?.title || '';
     const parentName = viewData?.parentAccountDescription ? viewData?.parentAccountDescription : 'DMS';
 
     return (
         <div className={styles.viewContainer}>
             <Descriptions {...viewProps}>
-                <Descriptions.Item label="Attribute Level">{accountType}</Descriptions.Item>
+                <Descriptions.Item label="Attribute Level">{accountTypeTitle}</Descriptions.Item>
                 <Descriptions.Item label="Parent">{parentName}</Descriptions.Item>
                 <Descriptions.Item label="Code">{viewData?.accountCode}</Descriptions.Item>
                 <Descriptions.Item label="Description">{viewData?.accountDescription}</Descriptions.Item>
-                {viewData?.accountType === ATTRIBUTE_TYPE?.[1]?.key && (
+                {viewData?.accountType === COA_ACCOUNT_TYPE?.LEDGER_ACCOUNT?.key && (
                     <>
                         <Descriptions.Item label="Opening Balance Cr.">{viewData?.openingBalanceCredit}</Descriptions.Item>
                         <Descriptions.Item label="Opening Balance Dr">{viewData?.openingBalanceDebit}</Descriptions.Item>
                     </>
                 )}
-
                 <Descriptions.Item label="Status">{viewData?.status === true ? 'Active' : 'Inactive'}</Descriptions.Item>
             </Descriptions>
         </div>

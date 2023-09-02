@@ -4,14 +4,15 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { Input, Form, Col, Row, Divider, Collapse, Tabs, Empty, Tag } from 'antd';
+import { Input, Form, Col, Row, Divider, Collapse, Tabs, Tag } from 'antd';
 
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { DEVICE_TYPE } from 'constants/modules/UserManagement/deviceType';
 import LeftPanel from 'components/common/LeftPanel';
 import { LANGUAGE_EN } from 'language/en';
+import { NoDataFound } from 'utils/noDataFound';
 
-import style from '../../../../../components/common/TreeView.module.scss';
+// import style from '../../../../../components/common/TreeView.module.scss';
 import styles from 'assets/sass/app.module.scss';
 
 const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
@@ -105,25 +106,25 @@ const ApplicationTreeMain = (props) => {
 
         return (
             <div className={styles.modalTree}>
-                {menuMapData?.length ? (
-                    menuMapData?.map((el, i) => {
-                        const treeData = el?.children;
-                        const allowedAccess = treeData?.filter((i) => i.checked);
+                <div className={styles.managementContainer}>
+                    {menuMapData?.length ? (
+                        menuMapData?.map((el, i) => {
+                            const treeData = el?.children;
+                            const allowedAccess = treeData?.filter((i) => i.checked);
 
-                        const myProps = {
-                            fieldNames,
-                            treeData,
-                            searchValue,
-                            setSearchValue,
-                            checkable: true,
-                            isTreeViewVisible: true,
-                            onCheck: onCheck(el?.value),
-                            disableCheckbox: viewMode,
-                            checkedKeys: checkedKeys?.[deviceType]?.[el?.value] || [],
-                        };
+                            const myProps = {
+                                fieldNames,
+                                treeData,
+                                searchValue,
+                                setSearchValue,
+                                checkable: true,
+                                isTreeViewVisible: true,
+                                onCheck: onCheck(el?.value),
+                                disableCheckbox: viewMode,
+                                checkedKeys: checkedKeys?.[deviceType]?.[el?.value] || [],
+                            };
 
-                        return (
-                            <div className={styles.managementContainer}>
+                            return (
                                 <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={onChange} expandIconPosition="end" collapsible="icon">
                                     <Panel
                                         header={
@@ -144,29 +145,19 @@ const ApplicationTreeMain = (props) => {
                                                 </Col>
                                             </Row>
                                             <Row gutter={20}>
-                                                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={style.roleTree}>
+                                                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={viewMode ? styles.viewModeTree : ''}>
                                                     <LeftPanel {...myProps} />
                                                 </Col>
                                             </Row>
                                         </Form>
                                     </Panel>
                                 </Collapse>
-                            </div>
-                        );
-                    })
-                ) : (
-                    <Empty
-                        image={Empty.PRESENTED_IMAGE_SIMPLE}
-                        imageStyle={{
-                            height: 60,
-                        }}
-                        description={
-                            <span>
-                                {noDataTitle} <br />
-                            </span>
-                        }
-                    ></Empty>
-                )}
+                            );
+                        })
+                    ) : (
+                        <NoDataFound informtion={noDataTitle} />
+                    )}
+                </div>
             </div>
         );
     };
