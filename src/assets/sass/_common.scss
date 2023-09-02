@@ -2713,21 +2713,23 @@
             .ant-tree-node-content-wrapper {
                 &:hover {
                     color: $neutralGrey3;
-                    // pointer-events: none;
+
                 }
             }
 
             .ant-tree-checkbox+span {
                 &:hover {
                     color: $neutralGrey3;
-                    // pointer-events: none;
+                    cursor: not-allowed;
+
                 }
             }
 
             .ant-tree-checkbox {
                 &:hover+span {
                     color: $neutralGrey3;
-                    // pointer-events: none;
+                    cursor: not-allowed;
+
                 }
 
                 .ant-tree-checkbox-inner {
@@ -2743,11 +2745,14 @@
 
                 &:not(.ant-tree-checkbox-disabled) {
                     &:hover {
-                        // pointer-events: none;
+
+
+                        cursor: not-allowed;
 
                         .ant-tree-checkbox-inner {
                             border-color: $neutralGrey2;
-                            pointer-events: none;
+
+                            cursor: not-allowed;
                         }
                     }
                 }
@@ -2756,14 +2761,18 @@
             .ant-tree-checkbox-checked+span {
                 &:hover {
                     color: $primaryRed;
-                    // pointer-events: none;
+
+
+                    cursor: not-allowed;
                 }
             }
 
             .ant-tree-checkbox-checked {
                 &:hover+span {
                     color: $primaryRed;
-                    // pointer-events: none;
+
+
+                    cursor: not-allowed;
                 }
 
                 .ant-tree-checkbox-inner {
@@ -2782,14 +2791,15 @@
             .ant-tree-checkbox-indeterminate+span {
                 &:hover {
                     color: $primaryBlack;
-                    // pointer-events: none;
+                    cursor: not-allowed;
                 }
             }
 
             .ant-tree-checkbox-indeterminate {
                 &:hover+span {
                     color: $primaryBlack;
-                    // pointer-events: none;
+                    cursor: not-allowed;
+
                 }
 
                 .ant-tree-checkbox-inner {
@@ -2804,11 +2814,11 @@
             .ant-tree-checkbox-wrapper {
                 &:not(.ant-tree-checkbox-wrapper-disabled) {
                     &:hover {
-                        // pointer-events: none;
+                        cursor: not-allowed;
 
                         .ant-tree-checkbox-inner {
                             border-color: $neutralGrey2;
-                            // pointer-events: none;
+                            cursor: not-allowed;
                         }
                     }
                 }

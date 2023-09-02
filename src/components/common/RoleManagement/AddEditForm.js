@@ -276,8 +276,8 @@ const AddEditFormMain = (props) => {
                         setSearchValue,
                         checkable: true,
                         isTreeViewVisible: true,
-                        onCheck: onCheck(el?.value),
-                        disabled: viewMode,
+                        onCheck: viewMode ? () => {} : onCheck(el?.value),
+                        // disabled: viewMode,
                         expendedKeys: expendedKeys?.map((i) => i.value),
                         checkedKeys: checkedKeys?.map((i) => i.value),
                     };
