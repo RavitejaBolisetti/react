@@ -96,6 +96,7 @@ const AddEditFormMain = (props) => {
 
     const [searchValue, setSearchValue] = useState();
     const [activeKey, setActiveKey] = useState();
+    const [refreshMenu, setRefreshMenu] = useState(false);
     const [showApplicationDataLoading, setShowApplicationDataLoading] = useState(true);
 
     const [searchItem] = Form.useForm();
@@ -145,7 +146,7 @@ const AddEditFormMain = (props) => {
             Object.values(APPLICATION_DEVICE_TYPE)?.forEach(loadDataFromServer);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, formData?.id]);
+    }, [userId, formData?.id, refreshMenu]);
 
     const noApplicationValidationMessage = LANGUAGE_EN.GENERAL.APPLICATON_REQUIRE_VALIDATION;
 
@@ -169,6 +170,7 @@ const AddEditFormMain = (props) => {
 
         const onSuccess = (res) => {
             form.resetFields();
+            setRefreshMenu(true);
             fetchList({ setIsLoading: listShowLoading, userId });
             if (addMode && buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
@@ -176,7 +178,6 @@ const AddEditFormMain = (props) => {
             } else {
                 setIsFormVisible(false);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-                setUnFilteredMenuData([]);
             }
         };
 
@@ -384,7 +385,7 @@ const AddEditFormMain = (props) => {
                                                         minRows: 2,
                                                         maxRows: 5,
                                                     }}
-                                                    maxLength={250}
+                                                    maxLength={90}
                                                     showCount
                                                 />
                                             </Form.Item>

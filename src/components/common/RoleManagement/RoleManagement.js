@@ -168,7 +168,6 @@ export const RoleManagementMain = (props) => {
         form.resetFields();
         setIsFormVisible(false);
         setFormData([]);
-        setUnFilteredMenuData([]);
     };
 
     const drawerTitle = useMemo(() => {
