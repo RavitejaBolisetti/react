@@ -24,7 +24,7 @@ export const tableColumn = (handleButtonClick) => {
             title: 'Role Description',
             dataIndex: 'roleDescription',
             ellipsis: true,
-            width: '20%',
+            width: '30%',
         }),
 
         tblStatusColumn({ styles, width: '15%' }),
