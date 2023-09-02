@@ -355,9 +355,7 @@ const AssignUserRole = (props) => {
                         </Card>
                     </Col>
                 </Row>
-                <div className={style.modalTree}>
-                    <RoleApplicationModal {...modalProps} />
-                </div>
+                <RoleApplicationModal {...modalProps} />
                 <UserManagementFormButton {...buttonProps} />
             </Form>
         </>

@@ -12,15 +12,15 @@ const { Text } = Typography;
 
 const CardAction = ({ status, actionName, actionId }) => {
     return (
-        <Card className={styles.viewCardSize}>
+        <Card className={styles.cardView}>
             <Row align="middle">
-                <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <Text type="secondary">Status: </Text> {status ? <Text type="success">Active</Text> : <Text type="secondary">Inactive</Text>}
                 </Col>
-                <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <Text strong>{actionName}</Text>
                 </Col>
-                <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <Text type="secondary">Action ID: {actionId}</Text>
                 </Col>
             </Row>

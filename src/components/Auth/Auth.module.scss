@@ -555,28 +555,28 @@
                     }
                 }
 
-                // .button {
-                //     & :global {
-                //         .ant-btn-icon {
-                //             svg {
-                //                 margin-left: -24px;
-                //                 visibility: hidden;
-                //             }
-                //             .ant-icon-loading {
-                //                 svg {
-                //                     visibility: visible;
-                //                 }
-                //             }
-                //         }
-                //         .ant-btn-loading-icon {
-                //             .ant-icon-loading {
-                //                 svg {
-                //                     visibility: visible;
-                //                 }
-                //             }
-                //         }
-                //     }
-                // }
+                .button {
+                    & :global {
+                        .ant-btn-icon {
+                            margin-inline-end: 6px;
+                            margin-left: -6px;
+                            svg {
+                                margin-left: -24px;
+                                visibility: hidden;
+                            }
+                        }
+                        .ant-btn-icon.ant-btn-loading-icon {
+                            margin-inline-end: 6px;
+                            .anticon {
+                                margin-left: -16px;
+                                svg {
+                                    margin-left: 0;
+                                    visibility: visible;
+                                }
+                            }
+                        }
+                    }
+                }
             }
 
             .verifyUser {

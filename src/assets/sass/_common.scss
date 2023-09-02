@@ -27,6 +27,10 @@
     flex-direction: column;
 }
 
+.textWrap {
+    white-space: break-spaces;
+}
+
 .hideInViewMode {
     visibility: hidden;
 }
@@ -198,6 +202,14 @@
     line-height: 24px;
 }
 
+.cardView {
+    & :global {
+        .ant-card-body {
+            padding: 12px 16px !important;
+        }
+    }
+}
+
 /*--------------Text Ellipsis--------------*/
 .txtEllipsis {
     white-space: nowrap;
@@ -246,6 +258,7 @@
     svg {
         color: $semanticInfo;
         position: absolute;
+        z-index: 99;
         right: 37px;
         top: 39px;
     }
@@ -499,7 +512,7 @@
         .ant-collapse {
             &:last-child {
                 &:not(:first-child) {
-                    margin-bottom: 60px;
+                    margin-bottom: 60px !important;
                 }
             }
         }
@@ -655,7 +668,7 @@
     background: $primaryWhite;
     left: 10px;
     bottom: 0px;
-    box-shadow: 0px -4px 4px rgba(0, 0, 0, 0.15);
+    box-shadow: 0px -1px 1px 0px rgba(0, 0, 0, 0.15);
 }
 
 /*--------------Form bottom Section Strat--------------*/
@@ -975,7 +988,7 @@
     font-size: 16px;
     line-height: 24px;
     font-weight: 700;
-    margin-bottom: 20px;
+    margin-bottom: 12px;
 
     .mandatory {
         color: $primaryRed;
@@ -2521,11 +2534,11 @@
                 }
             }
 
-            margin-bottom: 0px;
+            // margin-bottom: 10px !important;
 
-            &:last-child {
-                margin-bottom: 0px;
-            }
+            // &:last-child {
+            //     margin-bottom: 0px !important;
+            // }
 
             .ant-collapse-content {
                 > .ant-collapse-content-box {
@@ -2821,6 +2834,29 @@
                     }
                 }
             }
+        }
+    }
+}
+
+.modalTree {
+    max-height: 50vh !important;
+    min-height: 20vh;
+    overflow: auto;
+    // margin-bottom: 20px;
+    &::-webkit-scrollbar-track {
+        background-color: $primaryWhite;
+    }
+    &::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+        background-color: $primaryWhite;
+    }
+    &::-webkit-scrollbar-thumb {
+        background-color: $neutralGrey2;
+        border-radius: 10px;
+        border: 2px solid $primaryWhite;
+        &:hover {
+            border: 2px solid $neutralGrey2;
         }
     }
 }

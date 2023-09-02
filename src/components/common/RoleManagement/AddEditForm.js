@@ -17,12 +17,16 @@ import { APPLICATION_DEVICE_TYPE } from 'utils/applicationDeviceType';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { flattenData } from 'utils/flattenData';
+import { LANGUAGE_EN } from 'language/en';
+import { NoDataFound } from 'utils/noDataFound';
 
 import styles from 'assets/sass/app.module.scss';
 
 const { TextArea } = Input;
 const { Panel } = Collapse;
 const { Search } = Input;
+
+const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
 
 const checkKey = (data, key) => data?.includes(key);
 
@@ -120,7 +124,7 @@ const AddEditFormMain = (props) => {
     const AccordianTreeUtils = ({ menuData, viewMode = false }) => {
         const dataAvailable = menuData?.length;
         return dataAvailable ? (
-            <div>
+            <div className={styles.managementContainer}>
                 {menuData?.map((el, i) => {
                     const treeData = el?.children;
                     const flatternData = flattenData(treeData);
@@ -143,40 +147,38 @@ const AddEditFormMain = (props) => {
                     };
 
                     return (
-                        <div className={styles.managementContainer}>
-                            <Collapse expandIcon={expandIcon} collapsible="icon" activeKey={activeKey} onChange={onCollapseChange} expandIconPosition="end">
-                                <Panel
-                                    header={
-                                        <>
-                                            {el?.label}
-                                            {allowedAccess?.length > 0 && <Tag color="default" className={styles.marL20}>{`${allowedAccess?.length >= 2 ? `${allowedAccess?.length} Accesses Provided` : `${allowedAccess?.length} Access Provided`}`}</Tag>}
-                                        </>
-                                    }
-                                    key={i}
-                                >
-                                    <Divider />
-                                    <Form layout="vertical" autoComplete="off" form={searchItem}>
-                                        <Row>
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                                <Form.Item label={''} name="search" validateTrigger={['onSearch']}>
-                                                    <Search placeholder="Search" initialValue={searchValue} onChange={handleSearchValue} allowClear />
-                                                </Form.Item>
-                                            </Col>
-                                        </Row>
-                                        <Row>
-                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={viewMode ? styles.viewModeTree : ''}>
-                                                <LeftPanel {...myProps} />
-                                            </Col>
-                                        </Row>
-                                    </Form>
-                                </Panel>
-                            </Collapse>
-                        </div>
+                        <Collapse expandIcon={expandIcon} collapsible="icon" activeKey={activeKey} onChange={onCollapseChange} expandIconPosition="end">
+                            <Panel
+                                header={
+                                    <>
+                                        {el?.label}
+                                        {allowedAccess?.length > 0 && <Tag color="default" className={styles.marL20}>{`${allowedAccess?.length >= 2 ? `${allowedAccess?.length} Accesses Provided` : `${allowedAccess?.length} Access Provided`}`}</Tag>}
+                                    </>
+                                }
+                                key={i}
+                            >
+                                <Divider />
+                                <Form layout="vertical" autoComplete="off" form={searchItem}>
+                                    <Row>
+                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                            <Form.Item label={''} name="search" validateTrigger={['onSearch']}>
+                                                <Search placeholder="Search" initialValue={searchValue} onChange={handleSearchValue} allowClear />
+                                            </Form.Item>
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={viewMode ? styles.viewModeTree : ''}>
+                                            <LeftPanel {...myProps} />
+                                        </Col>
+                                    </Row>
+                                </Form>
+                            </Panel>
+                        </Collapse>
                     );
                 })}
             </div>
         ) : (
-            <div>No Application Available</div>
+            <NoDataFound informtion={noDataTitle} />
         );
     };
 
@@ -259,10 +261,10 @@ const AddEditFormMain = (props) => {
                                         </Col>
                                     </Row>
                                 </div>
-                                {/* <Divider /> */}
+                                <Divider />
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.subTitleSec}>
-                                        Application Access<span className={styles.mandatory}>*</span>
+                                        Application Access<span className={styles.mandatory}>&nbsp;*</span>
                                     </Col>
                                 </Row>
                                 {AccordianTreePanel({ menuTreeData: unFilteredMenuData })}
