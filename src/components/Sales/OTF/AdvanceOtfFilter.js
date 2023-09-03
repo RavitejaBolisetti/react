@@ -19,6 +19,7 @@ export default function AdvanceOTFFilter(props) {
         searchForm,
         filterString,
         optionType: typeData?.[PARAM_MASTER.OTF_SER.id],
+        defaultOption: 'customerName',
         setFilterString,
     };
 
