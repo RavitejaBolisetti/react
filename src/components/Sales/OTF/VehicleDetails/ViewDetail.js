@@ -28,8 +28,6 @@ const ViewDetailMain = (props) => {
         layout: 'vertical',
         column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
     };
-
-    console.log('typeData?.PO_STATS', typeData?.PO_STATS);
     return (
         <div className={styles?.viewDrawerContainer}>
             <Row gutter={20}>
