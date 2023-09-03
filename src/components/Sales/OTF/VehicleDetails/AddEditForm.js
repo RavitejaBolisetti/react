@@ -15,7 +15,7 @@ import dayjs from 'dayjs';
 
 import { DataTable } from 'utils/dataTable';
 import { taxDetailsColumn, optionalServicesColumns } from './tableColumn';
-import { expandIconWithText, dynamicExpandIcon } from 'utils/accordianExpandIcon';
+import { expandIcon, expandIconWithText } from 'utils/accordianExpandIcon';
 import { addToolTip } from 'utils/customMenuLink';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { getCodeValue } from 'utils/getCodeValue';
@@ -182,13 +182,13 @@ const AddEditFormMain = (props) => {
                         </Row>
                     </Panel>
                 </Collapse>
-                <Collapse onChange={() => handleCollapse(2)} expandIconPosition="end" expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={openAccordian} collapsible="icon">
+                <Collapse onChange={() => handleCollapse(2)} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian} collapsible="icon">
                     <Panel header="Tax Details" key="2">
                         <Divider />
                         <DataTable tableColumn={taxDetailsColumn()} tableData={formData['taxDetails']} pagination={false} />
                     </Panel>
                 </Collapse>
-                <Collapse onChange={() => handleCollapse(3)} expandIconPosition="end" expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={openAccordian} collapsible="icon">
+                <Collapse onChange={() => handleCollapse(3)} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian} collapsible="icon">
                     <Panel
                         header={
                             <Row>
@@ -202,7 +202,6 @@ const AddEditFormMain = (props) => {
                         }
                         key="3"
                     >
-                        {!isReadOnly && <Divider />}
                         {isReadOnly && (
                             <>
                                 <Divider />
