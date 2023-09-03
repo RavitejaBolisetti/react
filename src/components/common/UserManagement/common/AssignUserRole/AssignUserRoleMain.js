@@ -9,14 +9,13 @@ import DataTable from 'utils/dataTable/DataTable';
 import { tableColumn } from './tableColumn';
 import { PlusOutlined } from '@ant-design/icons';
 
-import styles from 'assets/sass/app.module.scss';
-import style from '../../../../../components/withModal/withModal.module.scss';
 import { RoleApplicationModal } from './RoleApplicationModal';
-import { DEVICE_TYPE } from 'constants/modules/UserManagement/deviceType';
+import { DEVICE_TYPE } from 'constants/modules/UserManagement/DeviceType';
 import { UserManagementFormButton } from '../../UserManagementFormButton/UserManagementFormButton';
 import { USER_TYPE_USER } from 'constants/modules/UserManagement/userType';
-// import { NEXT_ACTION } from 'utils/btnVisiblity';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
+
+import styles from 'assets/sass/app.module.scss';
 
 const { Text } = Typography;
 const defaultBtnVisiblity = { editBtn: false, saveBtn: false, next: false, nextBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: true, formBtnActive: false };

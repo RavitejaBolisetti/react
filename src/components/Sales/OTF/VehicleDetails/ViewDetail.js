@@ -53,7 +53,7 @@ const ViewDetailMain = (props) => {
                                 <Descriptions.Item label="Vehicle Allocated Status">{checkAndSetDefaultValue(getCodeValue(VEHICLE_TYPE, formData?.vehicleAllocatedStatus, 'title'), isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="PO Number">{checkAndSetDefaultValue(formData?.poNumber, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="PO Date">{checkAndSetDefaultValue(formData?.poDate ? formData?.poDate : undefined, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                                <Descriptions.Item label="PO Status">{checkAndSetDefaultValue(getCodeValue(typeData?.SPR_PO_STATS, formData?.poStatus, isLoading))}</Descriptions.Item>
+                                <Descriptions.Item label="PO Status">{checkAndSetDefaultValue(getCodeValue(typeData?.PO_STATS, formData?.poStatus, isLoading))}</Descriptions.Item>
                                 <Descriptions.Item label="SO Number">{checkAndSetDefaultValue(formData?.soNumber, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="SO Status">{checkAndSetDefaultValue(formData?.soStatus, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="VIN Number">{checkAndSetDefaultValue(formData?.vinNumber, isLoading)}</Descriptions.Item>

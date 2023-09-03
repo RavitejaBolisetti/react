@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 
-export const USER_ACCESS_SECTION_DEALER = {
+export const DEALER_USER_SECTION = {
     ASSIGN_USER_ROLES: {
         id: 1,
         title: 'Assign User Roles',
@@ -25,17 +25,4 @@ export const USER_ACCESS_SECTION_DEALER = {
         title: 'MAC ID',
         enableOnAdd: false,
     },
-};
-
-export const USER_ACCESS_SECTION_MANUFACTURER = {
-    ASSIGN_USER_ROLES: {
-        id: 1,
-        title: 'Assign User Roles',
-        enableOnAdd: false,
-    },
-    // ADMINISTRATION_HIERARCHY_MAPPING: {
-    //     id: 2,
-    //     title: 'Administrative Hierarchy Mapping',
-    //     enableOnAdd: false,
-    // },
 };

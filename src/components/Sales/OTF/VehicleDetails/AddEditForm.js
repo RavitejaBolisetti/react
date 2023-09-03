@@ -22,6 +22,7 @@ import { getCodeValue } from 'utils/getCodeValue';
 import { VEHICLE_TYPE } from 'constants/VehicleType';
 
 import styles from 'assets/sass/app.module.scss';
+import { customSelectBox } from 'utils/customSelectBox';
 
 const { Text } = Typography;
 const { Panel } = Collapse;
@@ -136,7 +137,7 @@ const AddEditFormMain = (props) => {
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item label="PO Status" name="poStatus">
-                                    <Input {...disabledProp} placeholder={preparePlaceholderText('PO Status')} />
+                                    {customSelectBox({ data: typeData?.PO_STATS, disabled: true })}
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>

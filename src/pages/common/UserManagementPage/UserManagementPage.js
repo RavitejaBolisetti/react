@@ -23,7 +23,7 @@ const mapStateToProps = (state) => {
     return returnValue;
 };
 
-export const UserManagementPageBase = (props) => {
+const UserManagementPageBase = (props) => {
     const pageTitle = 'User Management';
     const pageHeaderData = {
         pageTitle,

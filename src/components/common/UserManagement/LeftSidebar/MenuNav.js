@@ -7,8 +7,10 @@ import React, { useEffect } from 'react';
 import { Timeline } from 'antd';
 import { BsRecordCircleFill } from 'react-icons/bs';
 import { FaCheckCircle } from 'react-icons/fa';
-import { USER_ACCESS_SECTION_DEALER, USER_ACCESS_SECTION_MANUFACTURER } from 'constants/modules/UserManagement/userAccessSection';
+
 import { USER_TYPE_USER } from 'constants/modules/UserManagement/userType';
+import { DEALER_USER_SECTION } from 'constants/modules/UserManagement/DealerUserSection';
+import { MANUFACTURER_USER_SECTION } from 'constants/modules/UserManagement/ManufacturerUserSection';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -19,7 +21,7 @@ const MenuNav = (props) => {
         setCurrentSection,
         formActionType: { addMode = true, editMode, viewMode },
     } = props;
-    const profileOptions = userType === USER_TYPE_USER?.DEALER?.id ? USER_ACCESS_SECTION_DEALER : USER_ACCESS_SECTION_MANUFACTURER;
+    const profileOptions = userType === USER_TYPE_USER?.DEALER?.id ? DEALER_USER_SECTION : MANUFACTURER_USER_SECTION;
 
     useEffect(() => {
         if (currentSection) {

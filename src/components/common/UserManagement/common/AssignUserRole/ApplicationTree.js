@@ -7,12 +7,11 @@ import React, { useState } from 'react';
 import { Input, Form, Col, Row, Divider, Collapse, Tabs, Tag } from 'antd';
 
 import { expandIcon } from 'utils/accordianExpandIcon';
-import { DEVICE_TYPE } from 'constants/modules/UserManagement/deviceType';
+import { DEVICE_TYPE } from 'constants/modules/UserManagement/DeviceType';
 import LeftPanel from 'components/common/LeftPanel';
 import { LANGUAGE_EN } from 'language/en';
 import { NoDataFound } from 'utils/noDataFound';
 
-// import style from '../../../../../components/common/TreeView.module.scss';
 import styles from 'assets/sass/app.module.scss';
 
 const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;

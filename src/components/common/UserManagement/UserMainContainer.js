@@ -7,10 +7,11 @@ import React from 'react';
 import { Row, Col } from 'antd';
 import { withDrawer } from 'components/withDrawer';
 import { LeftSidebar } from './LeftSidebar';
-import { USER_ACCESS_SECTION_DEALER, USER_ACCESS_SECTION_MANUFACTURER } from 'constants/modules/UserManagement/userAccessSection';
-import { USER_TYPE_USER } from 'constants/modules/UserManagement/userType';
 
-// import UserInfoCard from './common/UserInfoCard';
+import { USER_TYPE_USER } from 'constants/modules/UserManagement/userType';
+import { DEALER_USER_SECTION } from 'constants/modules/UserManagement/DealerUserSection';
+import { MANUFACTURER_USER_SECTION } from 'constants/modules/UserManagement/ManufacturerUserSection';
+
 import { MacIdMaster } from './Dealer/MacIdComponent';
 import AssignUserRole from './common/AssignUserRole';
 import { ProductMapping } from './Dealer/ProductMapping';
@@ -32,16 +33,16 @@ const UserMainContainerMaster = (props) => {
         switch (userType) {
             case USER_TYPE_USER.DEALER.id: {
                 switch (currentSection) {
-                    case USER_ACCESS_SECTION_DEALER?.MAC_ID.id: {
+                    case DEALER_USER_SECTION?.MAC_ID.id: {
                         return <MacIdMaster {...myProps} />;
                     }
-                    case USER_ACCESS_SECTION_DEALER?.ASSIGN_USER_ROLES.id: {
+                    case DEALER_USER_SECTION?.ASSIGN_USER_ROLES.id: {
                         return <AssignUserRole {...myProps} />;
                     }
-                    case USER_ACCESS_SECTION_DEALER?.BRANCH_MAPPING.id: {
+                    case DEALER_USER_SECTION?.BRANCH_MAPPING.id: {
                         return <BranchMapping {...myProps} />; //
                     }
-                    case USER_ACCESS_SECTION_DEALER?.PRODUCT_MAPPING.id: {
+                    case DEALER_USER_SECTION?.PRODUCT_MAPPING.id: {
                         return <ProductMapping {...myProps} />;
                     }
                     default:
@@ -50,10 +51,10 @@ const UserMainContainerMaster = (props) => {
             }
             case USER_TYPE_USER.MANUFACTURER.id: {
                 switch (currentSection) {
-                    case USER_ACCESS_SECTION_MANUFACTURER?.ASSIGN_USER_ROLES.id: {
+                    case MANUFACTURER_USER_SECTION?.ASSIGN_USER_ROLES.id: {
                         return <AssignUserRole {...myProps} />;
                     }
-                    // case USER_ACCESS_SECTION_MANUFACTURER?.ADMINISTRATION_HIERARCHY_MAPPING.id: {
+                    // case MANUFACTURER_USER_SECTION?.ADMINISTRATION_HIERARCHY_MAPPING.id: {
                     //     return <AdministrativeHierarchy {...myProps} />;
                     // }
                     default: {

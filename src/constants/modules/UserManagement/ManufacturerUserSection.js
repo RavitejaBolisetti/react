@@ -3,15 +3,16 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-export const DEVICE_TYPE = {
-    WEB: {
+
+export const MANUFACTURER_USER_SECTION = {
+    ASSIGN_USER_ROLES: {
         id: 1,
-        title: 'Web',
-        key: 'W',
+        title: 'Assign User Roles',
+        enableOnAdd: false,
     },
-    MOBILE: {
-        id: 2,
-        title: 'Mobile',
-        key: 'M',
-    },
+    // ADMINISTRATION_HIERARCHY_MAPPING: {
+    //     id: 2,
+    //     title: 'Administrative Hierarchy Mapping',
+    //     enableOnAdd: false,
+    // },
 };

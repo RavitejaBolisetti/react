@@ -6,13 +6,12 @@
 import React, { useState, useEffect } from 'react';
 import { Input, Form, Row, Col, Card, Empty, Typography, Divider } from 'antd';
 
-import LeftPanel from 'components/common/LeftPanel';
 import CMS from 'assets/images/comingsoon.svg';
+import LeftPanel from 'components/common/LeftPanel';
 import { UserManagementFormButton } from '../../UserManagementFormButton/UserManagementFormButton';
 import { LANGUAGE_EN } from 'language/en';
 
-import styles from 'components/common/TreeView.module.css';
-import style from 'assets/sass/app.module.scss';
+import styles from 'assets/sass/app.module.scss';
 
 const { Text } = Typography;
 const { Search } = Input;
@@ -25,6 +24,7 @@ const moduleStatus = 'pending';
 const ProductMapping = (props) => {
     const { productDataTree, viewMode, section, setButtonData } = props;
     const [finalProductData, setFinalProductData] = useState([]);
+    console.log("🚀 ~ file: ProductMapping.js:27 ~ ProductMapping ~ finalProductData:", finalProductData)
     const [searchValue, setSearchValue] = useState();
     const [checkedKeys, setCheckedKeys] = useState([]);
 
@@ -96,13 +96,13 @@ const ProductMapping = (props) => {
 
     return (
         <>
-            <Row gutter={20} className={`${style.drawerBodyRight} ${style.fullyCentered}`}>
+            <Row gutter={20} className={`${styles.drawerBodyRight} ${styles.fullyCentered}`}>
                 {moduleStatus !== 'pending' ? (
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <h2>{section?.title}</h2>
                         <Card>
                             <Row>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={style.marB10}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.marB10}>
                                     <Text strong>{section?.title}</Text>
                                 </Col>
                             </Row>
@@ -113,7 +113,7 @@ const ProductMapping = (props) => {
                                         <Search placeholder="Search" initialValue={searchValue} onChange={handleSearchValue} allowClear />
                                     </Form.Item>
                                     <Row gutter={20}>
-                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={`${styles.roleTree} ${style.marB20}`}>
+                                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={`${styles.marB20}`}>
                                             <LeftPanel {...myProps} />
                                         </Col>
                                     </Row>
@@ -135,11 +135,11 @@ const ProductMapping = (props) => {
                     </Col>
                 ) : (
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <div className={style.cmsContainer}>
+                        <div className={styles.cmsContainer}>
                             <h1>
                                 <img src={CMS} alt="Coming Soon" />
                             </h1>
-                            <p className={style.horizontallyCentered}>This Page is Under Development</p>
+                            <p className={styles.horizontallyCentered}>This Page is Under Development</p>
                         </div>
                     </Col>
                 )}

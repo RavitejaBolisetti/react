@@ -23,6 +23,7 @@ const PaymentFormContainer = (props) => {
 
     useEffect(() => {
         setPaymentMode(formData?.paymentMode);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const handleCancelFormEdit = () => {

@@ -9,17 +9,15 @@ import DataTable from 'utils/dataTable/DataTable';
 import { tableColumn } from './tableColumn';
 import { PlusOutlined } from '@ant-design/icons';
 
-import styles from 'assets/sass/app.module.scss';
-
-import style from '../../../../../components/common/withModal.module.scss';
-//import style from 'components/withModal/withModal.module.css';
 import { RoleApplicationModal } from './RoleApplicationModal';
-import { DEVICE_TYPE } from 'constants/modules/UserManagement/deviceType';
+import { DEVICE_TYPE } from 'constants/modules/UserManagement/DeviceType';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { validateRequiredSelectField, duplicateValidator } from 'utils/validation';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { UserManagementFormButton } from '../../UserManagementFormButton/UserManagementFormButton';
 import { USER_TYPE_USER } from 'constants/modules/UserManagement/userType';
+
+import styles from 'assets/sass/app.module.scss';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
@@ -337,9 +335,8 @@ const AssignUserRole = (props) => {
                     </Collapse>
                 </Col>
             </Row>
-            <div className={style.modalTree}>
-                <RoleApplicationModal {...modalProps} />
-            </div>
+
+            <RoleApplicationModal {...modalProps} />
             <UserManagementFormButton {...buttonProps} />
         </>
     );
