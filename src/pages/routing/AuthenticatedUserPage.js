@@ -11,7 +11,6 @@ import * as routing from 'constants/routing';
 import {
     ProductHierarchyPage,
     UserManagementPage,
-    UserManagementPageNew,
     HierarchyAttributeMasterPage,
     ManufacturerAdministrativeHierarchyPage,
     ManufacturerOrgHierarchyPage,
@@ -67,7 +66,6 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_COMMON_PRODUCT_HIERARCHY} element={<ProductHierarchyPage />} />
             <Route path={routing.ROUTING_COMMON_CONFIG_PARAM_EDIT} element={<ConfigurableParameterEditingPage />} />
             <Route path={routing.ROUTING_COMMON_USER_MANAGEMENT} element={<UserManagementPage />} />
-            <Route path={routing.ROUTING_COMMON_USER_MANAGEMENT_NEW} element={<UserManagementPageNew />} />
             <Route path={routing.ROUTING_COMMON_HIERARCHY_ATTRIBUTE_MASTER} element={<HierarchyAttributeMasterPage />} exact />
             <Route path={routing.ROUTING_COMMON_MANUFACTURER_ADMINISTRATIVE_HIERARCHY} element={<ManufacturerAdministrativeHierarchyPage />} />
 

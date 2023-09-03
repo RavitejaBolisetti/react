@@ -266,3 +266,5 @@ export const BASE_URL_VEHICLE_INVOICE_GENERATION = BASE_URL_OTF + 'vehicleinvoic
 
 
 export const BASE_URL_VEHICLE_DETAILS_SERVICE = BASE_URL + 'otf/vehicledetails/optionalcharges';
+
+export const BASE_URL_MILE_SKILL = BASE_URL + 'dealer/mileskills';

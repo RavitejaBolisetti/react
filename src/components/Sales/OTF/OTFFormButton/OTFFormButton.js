@@ -30,14 +30,15 @@ export const OTFFormButton = ({ record, handleChangeHistory, handleOtfSoMappingH
                 </Col>
 
                 <Col xs={24} sm={16} md={18} lg={20} xl={20} className={styles.buttonsGroupRight}>
-                    {buttonData?.otfSoMappingHistoryBtn && (
-                        <Button onClick={handleOtfSoMappingHistory} danger>
-                            OTF Mapping History
-                        </Button>
-                    )}
                     {buttonData?.editBtn && (
                         <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record, openDefaultSection: false })} type="primary">
                             Edit
+                        </Button>
+                    )}
+
+                    {buttonData?.otfSoMappingHistoryBtn && (
+                        <Button onClick={handleOtfSoMappingHistory} type="primary">
+                            OTF Mapping History
                         </Button>
                     )}
 

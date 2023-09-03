@@ -10,7 +10,8 @@ import { withModal } from 'components/withModal';
 import { validateRequiredInputField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
-import styles from './ConfirmationModal.module.css';
+import styles from './ConfirmationModal.module.scss';
+//import styles from './ConfirmationModal.module.css';
 
 const { TextArea } = Input;
 const ConfirmationModalMain = (props) => {

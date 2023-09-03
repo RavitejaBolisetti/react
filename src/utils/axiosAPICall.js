@@ -70,7 +70,7 @@ const baseAPICall = (params) => {
                             handleErrorMessage({ onError, displayErrorTitle, errorTitle: response?.data?.errorTitle, errorMessage: response?.data?.errors || response?.data?.data?.responseMessage });
                         }
                     } else if (response?.statusCode === 401) {
-                        onUnAuthenticated && onUnAuthenticated(response?.errors || unAuthorizedMessage);
+                        onUnAuthenticated(response?.errors || unAuthorizedMessage);
                     } else if (response.statusCode === 403) {
                         onError && onError(response?.errors || unAuthorizedMessage);
                     } else if (response.statusCode === 500) {
@@ -81,7 +81,7 @@ const baseAPICall = (params) => {
                 }
             })
             .catch((error) => {
-                // onUnAuthenticated();
+                onUnAuthenticated();
                 // The following code is mostly copy/pasted from axios documentation at https://github.com/axios/axios#handling-errors
                 // Added support for handling timeout errors separately, dont use this code in production
                 //console.log('🚀 ~ file: axiosAPICall.js:84 ~ baseAPICall ~ error:', error);

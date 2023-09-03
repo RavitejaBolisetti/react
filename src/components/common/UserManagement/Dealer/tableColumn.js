@@ -6,6 +6,7 @@
 import React from 'react';
 import { Tag } from 'antd';
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
+
 import styles from 'assets/sass/app.module.scss';
 
 export const tableColumn = (handleButtonClick, page, pageSize) => {
@@ -27,20 +28,20 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
         }),
         tblPrepareColumns({
             title: 'User Roles',
-            dataIndex: 'useRoles',
+            dataIndex: 'userRoleCount',
             width: '14%',
         }),
         tblPrepareColumns({
             title: 'Branch',
-            dataIndex: 'brancheMapping',
+            dataIndex: 'branchMapping',
             width: '12%',
-            render: (text) => <Tag className={text ? styles.success : styles.warning}> {text ? 'Mapped' : 'Unmapped'}</Tag>,
+            render: (text) => (text ? <Tag color="success">Mapped</Tag> : <Tag color="warning">Unmapped</Tag>),
         }),
         tblPrepareColumns({
             title: 'Products',
-            dataIndex: 'productsMapping',
+            dataIndex: 'productMapping',
             width: '16%',
-            render: (text) => <Tag className={text ? styles.success : styles.warning}> {text ? 'Mapped' : 'Unmapped'}</Tag>,
+            render: (text) => (text ? <Tag color="success">Mapped</Tag> : <Tag color="warning">Unmapped</Tag>),
         }),
         tblActionColumn({ styles, handleButtonClick, width: '12%' }),
     ];
