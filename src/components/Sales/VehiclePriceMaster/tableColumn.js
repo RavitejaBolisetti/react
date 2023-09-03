@@ -26,7 +26,7 @@ export const tableColumn = (handleButtonClick) => {
             dataIndex: 'pricingCity',
             width: '15%',
         }),
-        tblActionColumn({ handleButtonClick, EditIcon: false, styles }),
+        tblActionColumn({ handleButtonClick, canEdit: false, styles }),
     ];
 
     return tableColumn;
