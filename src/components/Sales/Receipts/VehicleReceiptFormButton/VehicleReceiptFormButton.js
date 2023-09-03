@@ -4,12 +4,10 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Button, Row, Col } from 'antd'
+import { Button, Row, Col } from 'antd';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
-import styles from './VehicleReceiptFormButton.module.css';
-import styles from 'assets/sass/app.module.scss';
-// import styles from './VehicleReceiptFormButton.module.css';
 
+import styles from 'assets/sass/app.module.scss';
 export const VehicleReceiptFormButton = ({ formActionType, record, onCloseAction, onCancelReceipt, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection }) => {
     return (
         <Row gutter={20} className={styles.formFooter}>
