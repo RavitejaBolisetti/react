@@ -30,6 +30,7 @@ import { VEHICLE_TYPE } from 'constants/VehicleType';
 import { BASE_URL_OTF_DETAILS as baseURL, BASE_URL_OTF_TRANSFER as otfTransferURL, BASE_URL_OTF_CANCELLATION as otfCancelURL } from 'constants/routingApi';
 
 import { LANGUAGE_EN } from 'language/en';
+import { convertDateTime, monthDateFormat } from 'utils/formatDateTime';
 import { validateOTFMenu } from './utils/validateOTFMenu';
 
 import { FilterIcon } from 'Icons';
@@ -162,7 +163,7 @@ export const OtfMasterBase = (props) => {
         invoiceBtn: false,
         deliveryNote: false,
         changeHistory: true,
-        otfSoMappingHistoryBtn: true,
+        otfSoMappingHistoryBtn: false,
     };
 
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -218,7 +219,7 @@ export const OtfMasterBase = (props) => {
                 key: 'fromDate',
                 title: 'Start Date',
                 value: filterString?.fromDate,
-                name: filterString?.fromDate,
+                name: filterString?.fromDate ? convertDateTime(filterString?.fromDate, monthDateFormat) : '',
                 canRemove: true,
                 filter: true,
             },
@@ -226,7 +227,7 @@ export const OtfMasterBase = (props) => {
                 key: 'toDate',
                 title: 'End Date',
                 value: filterString?.toDate,
-                name: filterString?.toDate,
+                name: filterString?.toDate ? convertDateTime(filterString?.toDate, monthDateFormat) : '',
                 canRemove: true,
                 filter: true,
             },
@@ -374,8 +375,6 @@ export const OtfMasterBase = (props) => {
                 setLastSection(!nextSection?.id);
                 break;
             case CANCEL_ACTION:
-                //  setFormActionType(CANCEL_OTF)
-                // setIsFormVisible(false);
                 setIsCancelVisible(true);
                 break;
             case TRANSFER_ACTION:
@@ -419,13 +418,12 @@ export const OtfMasterBase = (props) => {
         }
 
         if (buttonAction !== NEXT_ACTION) {
-            setFormActionType({
-                addMode: buttonAction === ADD_ACTION,
-                editMode: buttonAction === EDIT_ACTION,
-                viewMode: buttonAction === VIEW_ACTION,
-            });
-            if (buttonAction === ALLOT) {
-                setFormActionType({ ...formActionType, viewMode: true });
+            if ([ADD_ACTION, EDIT_ACTION, VIEW_ACTION]?.includes(buttonAction)) {
+                setFormActionType({
+                    addMode: buttonAction === ADD_ACTION,
+                    editMode: buttonAction === EDIT_ACTION,
+                    viewMode: buttonAction === VIEW_ACTION,
+                });
             }
             setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction, orderStatus: record?.orderStatus }));
         }
