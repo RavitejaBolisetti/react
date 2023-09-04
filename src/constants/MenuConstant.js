@@ -283,6 +283,13 @@ export const MenuConstant = {
         parentMenuId: 'COMN-02',
     },
 
+    [getMenyKey('COMN-02.02')]: {
+        key: 'COMN-02.02',
+        link: routing.ROUTING_COMMON_USER_MANAGEMENT,
+        icon: undefined,
+        parentMenuId: 'COMN-02',
+    },
+
     [getMenyKey('COMN-03.02')]: {
         key: 'COMN-03.02',
         link: routing.ROUTING_COMMON_APPLICATION_MASTER,

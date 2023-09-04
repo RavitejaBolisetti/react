@@ -11,7 +11,7 @@ import { bindActionCreators } from 'redux';
 
 import { otfInvoiceDetailDataActions } from 'store/actions/data/otf/invoiceDetail';
 import { showGlobalNotification } from 'store/actions/notification';
-import { dynamicExpandIcon } from 'utils/accordianExpandIcon';
+import { expandIcon } from 'utils/accordianExpandIcon';
 
 import { DataTable } from 'utils/dataTable';
 import { OTFStatusBar } from '../utils/OTFStatusBar';
@@ -59,7 +59,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const InvoiceDetailsMasterBase = (props) => {
-    const { form, invoiceData, fetchList, userId, isDataLoaded, listShowLoading, handleButtonClick, NEXT_ACTION } = props;
+    const { form, invoiceData, fetchList, userId, typeData, listShowLoading, handleButtonClick, NEXT_ACTION } = props;
     const { section, selectedOrderId, selectedOrder: { orderStatus = false } = {} } = props;
 
     const [activeKey, setactiveKey] = useState([1]);
@@ -124,16 +124,16 @@ export const InvoiceDetailsMasterBase = (props) => {
                         </Col>
                     </Row>
                     {displaySection?.invoiceInformation && (
-                        <Collapse onChange={() => onChange(1)} expandIconPosition="end" expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={activeKey} collapsible="icon">
+                        <Collapse onChange={() => onChange(1)} expandIconPosition="end" expandIcon={expandIcon} activeKey={activeKey} collapsible="icon">
                             <Panel header="Invoice Information" key={1}>
                                 <Divider />
-                                <DataTable srlTitle={'#'} pagination={false} tableColumn={tableColumnInvoice()} tableData={invoiceData?.invoiceDetails} />
+                                <DataTable srlTitle={'#'} pagination={false} tableColumn={tableColumnInvoice(typeData)} tableData={invoiceData?.invoiceDetails} />
                             </Panel>
                         </Collapse>
                     )}
 
                     {displaySection?.deliveryInformation && (
-                        <Collapse onChange={() => onChange(2)} expandIconPosition="end" expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={activeKey} collapsible="icon">
+                        <Collapse onChange={() => onChange(2)} expandIconPosition="end" expandIcon={expandIcon} activeKey={activeKey} collapsible="icon">
                             <Panel header="Delivery Information" key={2}>
                                 <Divider />
                                 <DataTable srlTitle={'#'} pagination={false} tableColumn={tableColumnDelivery()} tableData={invoiceData?.deliveryDetails} />
