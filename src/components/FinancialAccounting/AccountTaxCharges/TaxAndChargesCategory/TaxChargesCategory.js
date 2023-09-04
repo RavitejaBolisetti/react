@@ -385,7 +385,7 @@ export const TaxChargesCategoryMain = (props) => {
         tableData: taxChargeCategoryData,
     };
 
-    const title = 'Tax & Charges Category';
+    const title = 'Tax & Charges Category Code';
 
     const advanceFilterResultProps = {
         advanceFilter: false,

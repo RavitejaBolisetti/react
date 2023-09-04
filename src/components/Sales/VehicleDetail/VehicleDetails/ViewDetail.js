@@ -11,6 +11,8 @@ import { USER_TYPE } from 'constants/userType';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 
 import { expandIcon } from 'utils/accordianExpandIcon';
+import { LANGUAGE_EN } from 'language/en';
+import { NoDataFound } from 'utils/noDataFound';
 
 import styles from 'assets/sass/app.module.scss';
 //import styles from 'components/common/Common.module.css';
@@ -19,6 +21,8 @@ const { Panel } = Collapse;
 
 const ViewDetailMain = (props) => {
     const { formData, isLoading, activeKey, onChange, userType } = props;
+
+    const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
 
     const viewProps = {
         bordered: false,
@@ -72,9 +76,7 @@ const ViewDetailMain = (props) => {
                     <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end" collapsible="icon">
                         <Panel header="Registration Number Change Request" key="2">
                             <Divider />
-                            <Card>
-                                <div className={styles.marB20}>Coming Soon</div>
-                            </Card>
+                            <NoDataFound informtion={noDataTitle} />
                         </Panel>
                     </Collapse>
                 </Col>

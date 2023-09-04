@@ -157,6 +157,7 @@
 
 .panelHidden {
     background: none;
+    // border: 1px solid red;
 }
 
 .treemenu {
@@ -168,7 +169,7 @@
     @include space(padding, bottom, $sp0);
     line-height: 2em;
     list-style: none;
-    background-color: transparent;
+    background-color: $transparentColor;
     color: $primaryBlack;
 }
 
