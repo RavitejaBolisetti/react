@@ -8,7 +8,7 @@ import { Descriptions } from 'antd';
 import { DATA_TYPE } from 'constants/dataType';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 
-import styles from 'assets/sass/drawer_two_pannel.scss';
+import styles from 'assets/sass/app.module.scss';
 
 const ViewDetailBase = (props) => {
     const { isLoading } = props;

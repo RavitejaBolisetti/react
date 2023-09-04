@@ -8,7 +8,7 @@ import { Button, Row, Col, Input, Form } from 'antd';
 import { FilterIcon } from 'Icons';
 import { RxCross2 } from 'react-icons/rx';
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
+
 const { Search } = Input;
 
 export default function AdvanceFilter(props) {

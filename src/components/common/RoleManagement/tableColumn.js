@@ -6,7 +6,6 @@
 import { tblPrepareColumns, tblStatusColumn, tblActionColumn } from 'utils/tableColumn';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 export const tableColumn = (handleButtonClick) => {
     const tableColumn = [];
@@ -25,7 +24,7 @@ export const tableColumn = (handleButtonClick) => {
             title: 'Role Description',
             dataIndex: 'roleDescription',
             ellipsis: true,
-            width: '20%',
+            width: '30%',
         }),
 
         tblStatusColumn({ styles, width: '15%' }),

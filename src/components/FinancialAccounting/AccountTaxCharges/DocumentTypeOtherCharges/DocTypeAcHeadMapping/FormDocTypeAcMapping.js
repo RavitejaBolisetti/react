@@ -10,7 +10,6 @@ import { validateRequiredSelectField } from 'utils/validation';
 import { customSelectBox } from 'utils/customSelectBox';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 function FormDocTypeAcMapping(props) {
     const { docTypeHeadMappingForm, typeData, addDocHeadMapping, formEdit, editForm, financialAccount } = props;

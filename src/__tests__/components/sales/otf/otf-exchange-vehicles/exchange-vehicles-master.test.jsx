@@ -6,29 +6,17 @@
 
 /* eslint-disable jest/no-mocks-import */
 import React from 'react';
-import { screen, fireEvent, waitFor } from '@testing-library/react';
+import { screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
 import { Provider } from 'react-redux';
 import createMockStore from '__mocks__/store';
 import { ExchangeVehiclesMaster } from '@components/Sales/OTF/ExchangeVehicles/ExchangeVehiclesMaster';
 import { Form } from 'antd';
-import { act } from 'react-dom/test-utils';
 
 afterEach(() => {
     jest.restoreAllMocks();
 });
-
-const FormWrapper = (props) => {
-    const [form] = Form.useForm();
-    const mockForm = {
-        ...form,
-        setFieldsValue: jest.fn(),
-        resetFields: jest.fn(),
-        validateFields: jest.fn(),
-    };
-    return <ExchangeVehiclesMaster form={mockForm} {...props} />;
-};
 
 const props = {
     formActionType: { addMode: false, editMode: false, viewMode: true },
@@ -125,48 +113,34 @@ describe('ExchangeVehiclesMaster component render', () => {
         );
 
         const close = screen.getByRole('button', { name: 'Close' });
-        act(() => {
-            fireEvent.click(close);
-        });
+
+        fireEvent.click(close);
 
         const cancel = screen.getByRole('button', { name: 'Cancel' });
-        act(() => {
-            fireEvent.click(cancel);
-        });
+        fireEvent.click(cancel);
 
         const allot = screen.getByRole('button', { name: 'Allot' });
-        act(() => {
-            fireEvent.click(allot);
-        });
+        fireEvent.click(allot);
 
         const unallot = screen.getByRole('button', { name: 'Un-Allot' });
-        act(() => {
-            fireEvent.click(unallot);
-        });
+
+        fireEvent.click(unallot);
 
         const invoice = screen.getByRole('button', { name: 'Invoice' });
-        act(() => {
-            fireEvent.click(invoice);
-        });
+        fireEvent.click(invoice);
 
         const transfer = screen.getByRole('button', { name: 'Transfer OTF' });
-        act(() => {
-            fireEvent.click(transfer);
-        });
+
+        fireEvent.click(transfer);
 
         const cancelOtf = screen.getByRole('button', { name: 'Cancel OTF' });
-        act(() => {
-            fireEvent.click(cancelOtf);
-        });
+
+        fireEvent.click(cancelOtf);
 
         const changeHistory = screen.getByRole('button', { name: 'Change History' });
-        act(() => {
-            fireEvent.click(changeHistory);
-        });
 
+        fireEvent.click(changeHistory);
         const saveNext = screen.getByRole('button', { name: 'Save & Next' });
-        act(() => {
-            fireEvent.click(saveNext);
-        });
+        fireEvent.click(saveNext);
     });
 });

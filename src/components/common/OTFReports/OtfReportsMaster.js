@@ -12,7 +12,6 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { convertDate } from 'utils/formatDateTime';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 import { BASE_URL_OTF_DOWNLAOD_REPORT } from 'constants/routingApi';
 

@@ -12,7 +12,6 @@ import { LANGUAGE_EN } from 'language/en';
 import { NoDataFound } from 'utils/noDataFound';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 export const ComingSoonMasterBase = (props) => {
     const { form, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, handleButtonClick, NEXT_ACTION } = props;

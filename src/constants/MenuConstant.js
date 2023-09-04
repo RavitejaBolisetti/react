@@ -322,6 +322,13 @@ export const MenuConstant = {
         parentMenuId: 'WEB',
     },
 
+    [getMenyKey('FINA-01.01')]: {
+        key: 'FINA-01.01',
+        link: routing.ROUTING_FINANCIAL_ACCOUNTING_CHART_OF_ACCOUNT,
+        icon: undefined,
+        parentMenuId: 'FINA-01',
+    },
+
     [getMenyKey('FINA-01.02')]: {
         key: 'FINA-01.02',
         link: routing.ROUTING_FINANCIAL_ACCOUNTING_ACCOUNT_CATEGORY,

@@ -9,7 +9,6 @@ import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/prepareP
 import { formattedCalendarDate } from 'utils/formatDateTime';
 
 import { expandIcon } from 'utils/accordianExpandIcon';
-// import styles from 'components/common/Common.module.css';
 
 const { TextArea } = Input;
 const { Panel } = Collapse;

@@ -10,7 +10,6 @@ import { FiDownload, FiTrash } from 'react-icons/fi';
 import { LANGUAGE_EN } from 'language/en';
 import { NoDataFound } from 'utils/noDataFound';
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 export const ViewDetail = (props) => {
     const {

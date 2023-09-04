@@ -13,7 +13,7 @@ import { validateRequiredInputField, validateRequiredSelectField, validateNegati
 
 import moment from 'moment';
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
+
 export const FORMTYPE_CONSTANTS = {
     DATE: {
         id: 'date',

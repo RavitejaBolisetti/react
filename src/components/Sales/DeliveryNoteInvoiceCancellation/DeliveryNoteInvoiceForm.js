@@ -13,7 +13,7 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import { validateRequiredInputField, validateRequiredSelectField, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
 import { customSelectBox } from 'utils/customSelectBox';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 export const DeliveryNoteInvoiceForm = (props) => {
     const { typeData } = props;

@@ -16,7 +16,7 @@ const { Search } = Input;
 
 const SearchBox = (props) => {
     const { selectWide, searchForm, optionType, searchParamRule, filterString, setFilterString, handleChange, disabled = false, isLoading, handleSearchWithoutParameter = undefined } = props;
-    const { singleField = false, label = '', placeholder = 'Search', singleFieldKey = 'searchParam' } = props;
+    const { singleField = false, label = '', placeholder = 'Search', singleFieldKey = 'searchParam', defaultOption = undefined } = props;
     const [validationRules, setValidationRules] = useState([validateRequiredInputField('searchType')]);
 
     const onKeyPressHandler = (e) => {
@@ -76,7 +76,7 @@ const SearchBox = (props) => {
         <div className={singleField ? styles.masterListSearchForm : styles.selectSearchBg}>
             <Form onKeyPress={onKeyPressHandler} form={searchForm} layout={singleField ? 'horizontal' : 'vertical'} colon={false} autoComplete="off">
                 {!singleField && (
-                    <Form.Item name="searchType" rules={[validateRequiredSelectField('parameter')]}>
+                    <Form.Item name="searchType" initialValue={defaultOption} rules={[validateRequiredSelectField('parameter')]}>
                         <Select onChange={handleValidation} disabled={disabled} placeholder="Select Parameter" {...selectProps}>
                             {optionType?.map((item) => (
                                 <Option key={'st' + item.key} value={item.key}>

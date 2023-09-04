@@ -18,7 +18,7 @@ import { ViewDetail } from './ViewDetail';
 
 import { VehicleReceiptFormButton } from '../VehicleReceiptFormButton';
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
+
 import PaymentAddEdit from './PaymentAddEdit';
 import ReceiptInfoAddEdit from './ReceiptInfoAddEdit';
 import { ReceiptType } from 'components/Sales/Receipts/utils/ReceiptType';

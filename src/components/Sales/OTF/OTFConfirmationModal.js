@@ -8,7 +8,6 @@ import { Row, Col, Form, Button, Select } from 'antd';
 import { withModal } from 'components/withModal';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 const { Option } = Select;
 

@@ -16,9 +16,6 @@ import { HiCheck } from 'react-icons/hi';
 import { UploadBoxIcon } from 'Icons';
 
 import styles from './UploadUtils.module.scss';
-//import styles from './UploadUtils.module.css';
-//import styles from '../../../../sass/drawer_two_pannel.scss';
-//import styles from 'components/common/Common.module.css';
 const { Dragger } = Upload;
 const { Text, Title } = Typography;
 

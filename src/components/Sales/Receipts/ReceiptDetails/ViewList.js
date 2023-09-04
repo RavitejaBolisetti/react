@@ -8,7 +8,6 @@ import { Collapse, Typography, Row, Col, Divider } from 'antd';
 import { HiOutlineCurrencyRupee } from 'react-icons/hi';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { getCodeValue } from 'utils/getCodeValue';
@@ -43,7 +42,7 @@ const ViewList = (props) => {
     };
 
     return (
-        <div>
+        <>
             {paymentDataList?.length > 0 &&
                 paymentDataList?.map((data, i) => {
                     return (
@@ -73,7 +72,7 @@ const ViewList = (props) => {
                         </Collapse>
                     );
                 })}
-        </div>
+        </>
     );
 };
 

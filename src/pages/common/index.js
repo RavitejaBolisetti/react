@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -13,7 +13,6 @@ import { ManufacturerOrgHierarchyPage } from './ManufacturerOrganizationHierarch
 import { ConfigurableParameterEditingPage } from './ConfigurableParameterEditing';
 import { ApplicationMasterPage } from './ApplicationMasterPage';
 import { UserManagementPage } from './UserManagementPage';
-import { UserManagementPageNew} from './UserManagementPageNew';
 import { StateCrudPage, StatePage, DistrictPage, TehsilPage, CityPage, PinCodePage } from './Geo';
 import { DealerLocationTypePage, DealerDivisionMasterPage, BayTypeMasterPage, DealerEmployeeDepartmentPage, DesignationMasterPage, RoleMasterPage } from './DealerManpower';
 import { PartyMasterPage } from './PartyMaster';
@@ -36,7 +35,6 @@ export {
     QualificationMasterPage,
     HierarchyAttributeMasterPage,
     UserManagementPage,
-    UserManagementPageNew,
     StateCrudPage,
     StatePage,
     DistrictPage,

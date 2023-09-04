@@ -1,14 +1,18 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
 import React from 'react';
 import { Row, Col, Button } from 'antd';
+import { Link } from 'react-router-dom';
+
+import * as IMAGES from 'assets';
+import Footer from '../Footer';
 
 import { ROUTING_LOGIN } from 'constants/routing';
 
-import * as IMAGES from 'assets';
 import styles from '../Auth.module.scss';
-// import styles from '../Auth.module.css';
-import { Link } from 'react-router-dom';
-import Footer from '../Footer';
-
 const Logout = (props) => {
     return (
         <div className={styles.loginSection}>

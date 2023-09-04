@@ -9,7 +9,6 @@ import { Form, Button, Row, Col, Card } from 'antd';
 import { RxCross2 } from 'react-icons/rx';
 import { SearchBox } from 'components/utils/SearchBox';
 import styles from 'assets/sass/app.module.scss';
-// import styles from 'components/common/Common.module.css';
 
 export default function AdvanceFilter(props) {
     const { resetAdvanceFilter, setResetAdvanceFilter, setFilterString, handleResetFilter, advanceFilter, removeFilter, filterString, extraParams } = props;

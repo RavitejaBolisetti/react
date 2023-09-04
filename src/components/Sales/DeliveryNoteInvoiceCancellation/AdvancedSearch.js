@@ -16,7 +16,7 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { ModalButtons } from 'components/common/Button';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 export const AdvancedSearchFrom = (props) => {
     const { setAdvanceSearchVisible, typeData, handleResetFilter } = props;

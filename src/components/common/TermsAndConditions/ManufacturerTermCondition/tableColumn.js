@@ -5,7 +5,7 @@
  */
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
+
 import { convertDateMonthYear } from 'utils/formatDateTime';
 
 export const tableColumn = (handleButtonClick, page, pageSize) => {

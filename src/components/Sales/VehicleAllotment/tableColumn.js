@@ -9,7 +9,6 @@ import { convertDateTime } from 'utils/formatDateTime';
 import { VEHICLE_TYPE } from 'constants/VehicleType';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 export const tableColumn = (handleButtonClick, allotmentStatus, fixedWith) => {
     const tableColumn = [

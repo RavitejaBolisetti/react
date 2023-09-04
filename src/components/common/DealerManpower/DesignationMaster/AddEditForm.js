@@ -20,9 +20,10 @@ import styles from 'assets/sass/app.module.scss';
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined, onFinish, onFinishFailed, typeData } = props;
+    const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined, onFinish, onFinishFailed, typeData, mileData } = props;
 
     const { buttonData, setButtonData, handleButtonClick, divisionData, departmentData, roleData } = props;
+
     const [filteredDepartmentData, setFilteredDepartmentData] = useState(departmentData?.filter((i) => i?.parentKey === formData?.divisionCode));
     const [filteredRoleData, setFilteredRoletData] = useState(roleData?.filter((i) => i?.parentKey === formData?.departmentCode));
 
@@ -127,7 +128,7 @@ const AddEditFormMain = (props) => {
                                 </Col>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                     <Form.Item initialValue={formData?.mileSkillId} label="Mile Skill" name="mileSkillId">
-                                        {customSelectBox({ data: [], placeholder: preparePlaceholderSelect('mileSkill') })}
+                                        {customSelectBox({ data: mileData || [], placeholder: preparePlaceholderSelect('mileSkill') })}
                                     </Form.Item>
                                 </Col>
                             </Row>

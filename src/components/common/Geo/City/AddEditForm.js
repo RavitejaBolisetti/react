@@ -14,12 +14,11 @@ import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined, onFinish, onFinishFailed } = props;
+    const { form, formData, onCloseAction, formActionType: { editMode, viewMode, addMode } = undefined, onFinish, onFinishFailed } = props;
 
     const { isDataCountryLoaded, countryData, defaultCountry } = props;
     const { buttonData, setButtonData, handleButtonClick } = props;
@@ -111,8 +110,6 @@ const AddEditFormMain = (props) => {
                                         </Select>
                                     </Form.Item>
                                 </Col>
-                            </Row>
-                            <Row gutter={16}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                     <Form.Item label="District Name" initialValue={formData?.districtCode} name="districtCode" rules={[validateRequiredSelectField('District Name')]}>
                                         <Select placeholder={preparePlaceholderSelect('District Name')} {...selectProps} onChange={handleDistrictChange}>
@@ -125,14 +122,14 @@ const AddEditFormMain = (props) => {
                                     </Form.Item>
                                 </Col>
 
-                                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={formData?.code} label="City Code" name="code" rules={[validateRequiredInputField('City Code')]}>
-                                        <Input placeholder={preparePlaceholderText('City Code')} maxLength={6} disabled={editMode ? true : false} />
-                                    </Form.Item>
-                                </Col>
-                            </Row>
+                                {!addMode && (
+                                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                        <Form.Item initialValue={formData?.code} label="City Code" name="code" rules={[validateRequiredInputField('City Code')]}>
+                                            <Input placeholder={preparePlaceholderText('City Code')} maxLength={6} disabled={editMode ? true : false} />
+                                        </Form.Item>
+                                    </Col>
+                                )}
 
-                            <Row gutter={16}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                     <Form.Item label="City Name" initialValue={formData?.name} rules={[validateRequiredInputField('City Name')]} name="name">
                                         <Input placeholder={preparePlaceholderText('City Name')} maxLength={50} />

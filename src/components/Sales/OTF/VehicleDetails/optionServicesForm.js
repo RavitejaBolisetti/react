@@ -9,7 +9,7 @@ import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/prepareP
 import { validateRequiredInputField, validateNumberWithTwoDecimalPlaces, validateRequiredSelectField } from 'utils/validation';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
+
 const OptionServicesFormMain = (props) => {
     const { typeData, vehicleServiceData, handleCancel, handleFormValueChange, optionsServicesMapping, setoptionsServicesMapping, optionsServiceModified, setoptionsServiceModified, selectedOrderId, formData, optionForm } = props;
     const [serviceOptions, setserviceOptions] = useState(vehicleServiceData);

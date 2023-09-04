@@ -11,7 +11,7 @@ import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/prepareP
 import { expandIcon } from 'utils/accordianExpandIcon';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
+
 import { ViewSupportingDocDetail } from './ViewSupportingDocDetail';
 import { ViewTechnicalDocDetail } from './ViewTechnicalDocDetail';
 import { UploadUtil } from 'utils/Upload';

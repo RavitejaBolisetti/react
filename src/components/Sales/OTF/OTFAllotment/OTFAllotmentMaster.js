@@ -5,20 +5,22 @@
  */
 
 import React, { useEffect, useState, useMemo } from 'react';
+import { Form } from 'antd';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Form } from 'antd';
-
-import { showGlobalNotification } from 'store/actions/notification';
 
 import { AddEditForm } from './AddEditForm';
+import { tableColumn } from './tableColumn';
+
+import { showGlobalNotification } from 'store/actions/notification';
+import { vehicleAllotment } from 'store/actions/data/vehicleAllotment/VehicleAllotment';
+
+import { BASE_URL_VEHICLE_ALLOTMENT as customURL } from 'constants/routingApi';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { VEHICLE_TYPE } from 'constants/VehicleType';
+
 import { ALLOT } from 'utils/btnVisiblity';
-import { vehicleAllotment } from 'store/actions/data/vehicleAllotment/VehicleAllotment';
-import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
-import { BASE_URL_VEHICLE_ALLOTMENT as customURL } from 'constants/routingApi';
-import { tableColumn } from './tableColumn';
+
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 const mapStateToProps = (state) => {
@@ -63,12 +65,12 @@ const mapDispatchToProps = (dispatch) => ({
 
 const OTFAllotmentMasterBase = (props) => {
     const { listShowLoading, userId } = props;
-    const { fetchVehicleAllotmentSearchedList, allotmentSearchedList, fetchModelList, productHierarchyData } = props;
+    const { fetchVehicleAllotmentSearchedList, allotmentSearchedList, productHierarchyData } = props;
     const { typeData, showGlobalNotification, saveData, setIsAllotVisible, setRefreshData, setIsFormVisible } = props;
     const { filterString, setFilterString } = props;
 
     const { selectedOrder, moduleTitle } = props;
-    const defaultBtnVisiblity = {  cancelBtn: true, allotBtn: true };
+    const defaultBtnVisiblity = { cancelBtn: true, allotBtn: true };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const [searchParamValue, setSearchParamValue] = useState('');
     const [toggleButton, settoggleButton] = useState(VEHICLE_TYPE?.UNALLOTED.key);
@@ -176,7 +178,7 @@ const OTFAllotmentMasterBase = (props) => {
             case ALLOT:
                 handleVehicleAllotment(record, buttonAction);
                 break;
-            
+
             default:
                 break;
         }
@@ -196,7 +198,7 @@ const OTFAllotmentMasterBase = (props) => {
         }
 
         // let data = { ...allotmentSummaryDetails, vehicleOTFDetails: selectedOTFDetails, allotmentStatus: updatedStatus };
-        
+
         const { otfId, otfNumber } = selectedOrder;
         const { vehicleIdentificationNumber } = selectedVINDetails;
 
@@ -306,7 +308,6 @@ const OTFAllotmentMasterBase = (props) => {
         productHierarchyData,
         handleResetFilter,
         setSelectedOrderVINDetails,
-        
     };
 
     return <AddEditForm {...formProps} />;

@@ -8,11 +8,12 @@ import { Col, Input, Form, Row, Button, Switch } from 'antd';
 import TreeSelectField from '../../common/TreeSelectField';
 import { validateRequiredInputField, validateRequiredSelectField, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
-import { ATTRIBUTE_TYPE } from 'constants/modules/ChartOfAccount/attributeType';
+import { COA_ACCOUNT_TYPE } from 'constants/modules/ChartOfAccount/coaAccountType';
+
 import { withDrawer } from 'components/withDrawer';
 import { customSelectBox } from 'utils/customSelectBox';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 const AddEditFormMain = (props) => {
     const { onCloseAction, chartOfAccountHierarchy, selectedTreeSelectKey, setSelectedTreeSelectKey } = props;
@@ -60,7 +61,7 @@ const AddEditFormMain = (props) => {
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Form.Item label="Attribute Level" name="accountType" rules={[validateRequiredSelectField('Attribute Level')]}>
-                                {customSelectBox({ data: ATTRIBUTE_TYPE, placeholder: preparePlaceholderSelect('Attribute Level'), onChange: onChange, disabled: !disable })}
+                                {customSelectBox({ data: Object.values(COA_ACCOUNT_TYPE), placeholder: preparePlaceholderSelect('Attribute Level'), onChange: onChange, disabled: !disable, fieldNames: { key: 'key', value: 'title' } })}
                             </Form.Item>
                         </Col>
                     </Row>
@@ -86,7 +87,7 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                     </Row>
-                    {accountTyp === ATTRIBUTE_TYPE?.[1]?.key && (
+                    {accountTyp === COA_ACCOUNT_TYPE?.LEDGER_ACCOUNT?.key && (
                         <>
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>

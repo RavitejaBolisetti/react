@@ -5,10 +5,11 @@
  */
 import React from 'react';
 import { Card, Descriptions, Row, Col } from 'antd';
-import styles from 'components/common/Common.module.css';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { DataTable } from 'utils/dataTable';
 import { tableColumnAddEdit } from './tableColumnAddEdit';
+
+import styles from 'assets/sass/app.module.scss';
 
 const ViewDetailMain = (props) => {
     const { formData, tableData, isLoading, handleButtonClick, typeData, formActionType } = props;
