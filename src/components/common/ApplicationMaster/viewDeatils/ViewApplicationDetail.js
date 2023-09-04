@@ -65,6 +65,8 @@ const ViewDealerDetailsMain = ({ applicationDetailsData, viewTitle = 'Applicatio
                                 </Panel>
                             </Collapse>
                         )}
+                    </div>
+                    <div>
                         {documentType.length > 0 && (
                             <Collapse onChange={() => handleCollapse(2)} expandIcon={accordianExpandIcon} collapsible="icon" activeKey={openAccordian}>
                                 <Panel
@@ -83,6 +85,8 @@ const ViewDealerDetailsMain = ({ applicationDetailsData, viewTitle = 'Applicatio
                                 </Panel>
                             </Collapse>
                         )}
+                    </div>
+                    <div>
                         {accessibleLocation?.length > 0 && (
                             <Collapse onChange={() => handleCollapse(3)} expandIcon={accordianExpandIcon} collapsible="icon" activeKey={openAccordian}>
                                 <Panel
