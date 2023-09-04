@@ -102,7 +102,6 @@ const mapDispatchToProps = (dispatch) => ({
             fetchVehicleDetail: otfvehicleDetailsDataActions.fetchList,
 
             updateVehicleAllotmentStatus: vehicleAllotment.saveData,
-            fetchVehicleAllotmentSearchedList: vehicleAllotment.fetchList,
 
             showGlobalNotification,
         },
@@ -757,10 +756,10 @@ export const OtfMasterBase = (props) => {
             </Row>
             <AdvancedSearch {...advanceFilterProps} />
             <OTFMainConatiner {...containerProps} />
-            <CancellationMaster {...cancelProps} />
-            <TransferMaster {...transferOTFProps} />
+            {isCancelVisible && <CancellationMaster {...cancelProps} />}
+            {isTransferVisible && <TransferMaster {...transferOTFProps} />}
             <ChangeHistory {...ChangeHistoryProps} />
-            <OTFAllotmentMaster {...allotOTFProps} />
+            {isAllotVisible && <OTFAllotmentMaster {...allotOTFProps} />}
             <OtfSoMappingUnmappingChangeHistory {...OtfSoMappingChangeHistoryProps} />
             <ConfirmationModal {...confirmRequest} />
         </>
