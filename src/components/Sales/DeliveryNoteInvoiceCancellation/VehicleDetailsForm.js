@@ -11,7 +11,7 @@ import { validateRequiredInputField, validateRequiredSelectField } from 'utils/v
 
 const { TextArea } = Input;
 
-export const VehicleDetailsForm = (props) => {
+export const VehicleDetailsForm = () => {
     return (
         <>
             <Row gutter={20}>
