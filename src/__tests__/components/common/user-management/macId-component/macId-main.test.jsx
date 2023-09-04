@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom/extend-expect';
-import MacIdMain from '@components/common/UserManagement/MacIdComponent/MacIdMain';
+import {MacIdMaster} from '@components/common/UserManagement/Dealer/MacIdComponent/MacIdMaster';
 import customRender from '@utils/test-utils';
 
 afterEach(() => {
@@ -8,6 +8,6 @@ afterEach(() => {
 
 describe('MacIdMain components', () => {
     it('should render MacIdMain components', () => {
-        customRender(<MacIdMain/>)
+        customRender(<MacIdMaster/>)
     });
 });
