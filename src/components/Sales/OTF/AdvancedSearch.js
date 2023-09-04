@@ -16,7 +16,7 @@ import { ModalButtons } from 'components/common/Button';
 import styles from 'assets/sass/app.module.scss';
 
 export const AdvancedSearchFrom = (props) => {
-    const { setAdvanceSearchVisible, otfStatusList } = props;
+    const { setAdvanceSearchVisible, otfStatusList, page, setPage } = props;
     const {
         filterString,
         setFilterString,
@@ -30,9 +30,11 @@ export const AdvancedSearchFrom = (props) => {
     }, [filterString]);
 
     const onFinish = (values) => {
+        setPage({ ...page, current: 1 });
         setFilterString({
             ...filterString,
             ...values,
+            current: 1,
             fromDate: formatDate(values?.fromDate),
             toDate: formatDate(values?.toDate),
             otfStatus: values?.otfStatus,
@@ -42,12 +44,17 @@ export const AdvancedSearchFrom = (props) => {
     };
 
     const handleResetFilter = (e) => {
+        const { pageSize } = filterString;
         advanceFilterForm.setFieldsValue({
             toDate: null,
             fromDate: null,
             otfStatus: null,
         });
-        setFilterString();
+
+        setFilterString({
+            current: 1,
+            pageSize,
+        });
     };
 
     const onFinishFailed = () => {

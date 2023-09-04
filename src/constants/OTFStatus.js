@@ -74,4 +74,11 @@ export const OTF_STATUS = {
         desc: 'Delivery Note',
         displayOnView: false,
     },
+    UNALLOTED: {
+        id: 2,
+        key: 'U',
+        title: 'Un-Allotted',
+        desc: 'Un-Allotted',
+        displayOnView: false,
+    },
 };

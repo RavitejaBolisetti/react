@@ -24,7 +24,7 @@ const moduleStatus = 'pending';
 const ProductMapping = (props) => {
     const { productDataTree, viewMode, section, setButtonData } = props;
     const [finalProductData, setFinalProductData] = useState([]);
-    console.log("🚀 ~ file: ProductMapping.js:27 ~ ProductMapping ~ finalProductData:", finalProductData)
+    console.log('🚀 ~ file: ProductMapping.js:27 ~ ProductMapping ~ finalProductData:', finalProductData);
     const [searchValue, setSearchValue] = useState();
     const [checkedKeys, setCheckedKeys] = useState([]);
 

@@ -43,18 +43,12 @@ const AddEditForm = (props) => {
                     <Row gutter={[20, 0]}>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                             <Form.Item label="Device Type" name="deviceType" rules={[validateRequiredSelectField('Device Type')]}>
-                                <Select
-                                    {...selectProps}
-                                    placeholder={preparePlaceholderSelect('Device Type')}
-                                    allowClear
-                                    options={options}
-                                    // fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement}  options={typeData['VH_CONTACT_TYPE']}
-                                ></Select>
+                                <Select {...selectProps} placeholder={preparePlaceholderSelect('Device Type')} allowClear options={options}></Select>
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                             <Form.Item label="Device Id" name="macId" rules={[validateRequiredInputField('Device Id"'), validationFieldLetterAndNumber('Device Id')]}>
-                                <Input maxLength={10} placeholder={preparePlaceholderText('Device Id"')} allowClear />
+                                <Input maxLength={25} placeholder={preparePlaceholderText('Device Id"')} allowClear />
                             </Form.Item>
                         </Col>
                     </Row>
