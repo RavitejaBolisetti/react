@@ -5,10 +5,10 @@
  */
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
-import { QualificationMasterPage } from '@pages/common/QualificationMaster/QualificationMasterPage';
+import { ConfigurableParameterEditingPage } from '@pages/common/ConfigurableParameterEditing/ConfigurableParameterEditingPage';
 
-describe('QualificationMasterPageBase Components', () => {
-    it('should render QualificationMasterPageBase components', () => {
-        customRender(<QualificationMasterPage />);
+describe('ConfigurableParameterEditingPage Components', () => {
+    it('should render Configurable Parameter Editing Page components', () => {
+        customRender(<ConfigurableParameterEditingPage />);
     });
 });

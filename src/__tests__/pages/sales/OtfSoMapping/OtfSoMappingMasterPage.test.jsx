@@ -5,10 +5,10 @@
  */
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
-import { QualificationMasterPage } from '@pages/common/QualificationMaster/QualificationMasterPage';
+import { OtfSoMappingMasterPage } from '@pages/Sales/OtfSoMapping/OtfSoMappingMasterPage';
 
-describe('QualificationMasterPageBase Components', () => {
-    it('should render QualificationMasterPageBase components', () => {
-        customRender(<QualificationMasterPage />);
+describe('OtfSoMappingMasterPage Components', () => {
+    it('should render Otf So Mapping Master Page components', () => {
+        customRender(<OtfSoMappingMasterPage />);
     });
 });
