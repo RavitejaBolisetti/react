@@ -30,7 +30,7 @@ export const tableColumn = (props) => {
         }),
     ];
     if (!formActionType?.viewMode) {
-        tableColumn.push(tblActionColumn({ handleButtonClick, styles, width: '15%', EditIcon: true, canView: false, canDelete: true }));
+        tableColumn.push(tblActionColumn({ handleButtonClick, styles, width: '15%', canEdit: true, canView: false, canDelete: true }));
     }
     return tableColumn;
 };

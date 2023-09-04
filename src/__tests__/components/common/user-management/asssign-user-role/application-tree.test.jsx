@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom/extend-expect';
-import { ApplicationTree } from '@components/common/UserManagement/AssignUserRole/ApplicationTree';
+import { ApplicationTree } from '@components/common/UserManagement/common/AssignUserRole/ApplicationTree';
 import customRender from '@utils/test-utils';
 import { Form } from 'antd';
 

@@ -5,8 +5,9 @@
  */
 import { tblPrepareColumns } from 'utils/tableColumn';
 import { convertDateMonthYear } from 'utils/formatDateTime';
+import { getCodeValue } from 'utils/getCodeValue';
 
-export const tableColumnInvoice = () => {
+export const tableColumnInvoice = (typeData) => {
     const tableColumn = [
         tblPrepareColumns({
             title: 'Invoice Number',
@@ -25,6 +26,7 @@ export const tableColumnInvoice = () => {
             title: 'Invoice Status',
             dataIndex: 'invoiceStatus',
             sorter: false,
+            render: (_, record) => getCodeValue(typeData?.INVC_STATS, record?.invoiceStatus),
         }),
     ];
 

@@ -58,8 +58,9 @@ export const tableColumn = (props) => {
             width: '10%',
         }),
     ];
+
     if (!formActionType?.viewMode) {
-        tableColumn.push(tblActionColumn({ handleButtonClick, styles, width: '15%', EditIcon: true, canView: false, canEdit: false, canServerDataEdit: true, canDelete: true }));
+        tableColumn.push(tblActionColumn({ handleButtonClick, styles, width: '15%', canView: false, canEdit: false, canServerDataEdit: true, canDelete: true }));
     }
     return tableColumn;
 };
