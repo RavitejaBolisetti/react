@@ -10,6 +10,7 @@ import { Button, Col, Row, Form, Empty, ConfigProvider } from 'antd';
 import { RxCross2 } from 'react-icons/rx';
 
 import { customerDetailDataActions } from 'store/actions/customer/customerDetail';
+import { BASE_URL_CUSTOMER_MASTER_NAME_CHANGE_HISTORY as customURL } from 'constants/routingApi';
 
 import { PlusOutlined } from '@ant-design/icons';
 import { tableColumn } from './tableColumn';
@@ -23,6 +24,9 @@ import { CUSTOMER_INDIVIDUAL_SECTION } from 'constants/CustomerIndividualSection
 import { CUSTOMER_CORPORATE_SECTION } from 'constants/CustomerCorporateSection';
 import { CUSTOMER_TYPE } from 'constants/CustomerType';
 import { documentViewDataActions } from 'store/actions/data/customerMaster/documentView';
+import { customerDetailsIndividualDataActions } from 'store/actions/data/customerMaster/customerDetailsIndividual';
+import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
+
 import { CustomerChangeHistory } from './CustomerChangeHistory';
 import { CustomerNameChangeHistory } from 'components/common/CustomerMaster/IndividualCustomer/CustomerDetail/CustomerNameChange';
 import DataTable from 'utils/dataTable/DataTable';
@@ -34,6 +38,10 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
+            SupportingDocument: { isLoaded: isSupportingDocumentDataLoaded = false, isSupportingDocumentLoading, data: supportingData },
+            CustomerMaster: {
+                CustomerDetailsIndividual: { detailData: historyData = [], isChangeHistoryLoaded, isChangeHistoryLoading, changeHistoryData },
+            },
         },
         customer: {
             customerDetail: { isLoaded: isDataLoaded = false, isLoading, data, filter: filterString },
@@ -48,9 +56,16 @@ const mapStateToProps = (state) => {
         data: data?.customerMasterDetails || [],
         totalRecords: data?.totalRecords || [],
         isLoading,
+        historyData,
         moduleTitle,
         typeData: typeData && typeData[PARAM_MASTER.CUST_MST.id],
         filterString,
+        isChangeHistoryLoaded,
+        isChangeHistoryLoading,
+        changeHistoryData,
+        isSupportingDocumentDataLoaded,
+        isSupportingDocumentLoading,
+        supportingData,
     };
     return returnValue;
 };
@@ -65,15 +80,22 @@ const mapDispatchToProps = (dispatch) => ({
             resetData: customerDetailDataActions.reset,
             listShowLoading: customerDetailDataActions.listShowLoading,
             resetViewData: documentViewDataActions.reset,
+
+            fetchCustomerChangeHistory: customerDetailsIndividualDataActions.changeHistory,
+            listShowChangeHistoryLoading: customerDetailsIndividualDataActions.listShowChangeHistoryLoading,
+            listDownloadShowLoading: supportingDocumentDataActions.listShowLoading,
+
+            downloadFile: supportingDocumentDataActions.downloadFile,
+            viewListShowLoading: documentViewDataActions.listShowLoading,
         },
         dispatch
     ),
 });
 
 const CustomerMasterMain = (props) => {
-    const { data, fetchList, userId, isLoading, listShowLoading, moduleTitle, typeData, resetData, totalRecords } = props;
+    const { data, fetchList, userId, isLoading, listShowLoading, changeHistoryData, viewListShowLoading, fetchCustomerChangeHistory, listShowChangeHistoryLoading, moduleTitle, typeData, resetData, totalRecords } = props;
     const { filterString, setFilterString, ChangeHistoryTitle } = props;
-    const { resetViewData } = props;
+    const { resetViewData, downloadFile, listDownloadShowLoading } = props;
 
     const [customerType, setCustomerType] = useState(CUSTOMER_TYPE?.INDIVIDUAL.id);
     const [selectedCustomer, setSelectedCustomer] = useState();
@@ -169,6 +191,22 @@ const CustomerMasterMain = (props) => {
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [defaultExtraParam, filterString]);
+
+    useEffect(() => {
+        if (selectedCustomerId && defaultExtraParam) {
+            const extraParams = [
+                ...defaultExtraParam,
+                {
+                    key: 'customerId',
+                    title: 'customerId',
+                    value: selectedCustomerId,
+                    name: 'Customer Id',
+                },
+            ];
+            fetchCustomerChangeHistory({ customURL, setIsLoading: listShowChangeHistoryLoading, userId, extraParams: extraParams || defaultExtraParam });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [selectedCustomerId, defaultExtraParam]);
 
     const onSuccessAction = (res) => {
         setShowDataLoading(false);
@@ -266,7 +304,7 @@ const CustomerMasterMain = (props) => {
         setIsFormVisible(true);
     };
 
-    const onFinish = (values, e) => {};
+    const onFinish = (values, e) => { };
 
     const onFinishFailed = (errorInfo) => {
         console.error(errorInfo);
@@ -342,6 +380,20 @@ const CustomerMasterMain = (props) => {
         searchForm.resetFields();
     };
 
+    const downloadFileFromButton = () => {
+        console.log(changeHistoryData?.customerNameChangeResponses[0].supportingDocuments[0].documentId, 'simran')
+        const extraParams = [
+            {
+                key: 'docId',
+                title: 'docId',
+                value: changeHistoryData?.customerNameChangeResponses[0].supportingDocuments[0].documentId,
+                name: 'docId',
+            },
+        ];
+        const supportingDocument = changeHistoryData?.customerNameChangeResponses[0].supportingDocuments[0].documentName;
+        downloadFile({ setIsLoading: listDownloadShowLoading, userId, extraParams, supportingDocument, onSuccessAction });
+    };
+
     const handleChange = (e) => {
         if (e.target.value.length > 2) {
             searchForm.validateFields(['code']);
@@ -381,7 +433,10 @@ const CustomerMasterMain = (props) => {
         },
         selectedCustomerId,
         customerType,
+        downloadFileFromButton,
+        changeHistoryData,
     };
+
 
     const containerProps = {
         record: selectedCustomer,
