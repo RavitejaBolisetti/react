@@ -10,7 +10,6 @@ import { validateRequiredSelectField, searchValidator } from 'utils/validation';
 import { withModal } from 'components/withModal';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 const { Option } = Select;
 

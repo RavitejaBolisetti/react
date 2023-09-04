@@ -10,7 +10,6 @@ import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { CustomerListMaster } from 'components/utils/CustomerListModal';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 export const AddressCommonForm = (props) => {
     const { formType, formData, handleOnChange, fnSetData, data, sameAsBookingCustomer } = props;

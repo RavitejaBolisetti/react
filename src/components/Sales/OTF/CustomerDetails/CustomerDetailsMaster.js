@@ -21,7 +21,6 @@ import { AddEditForm } from './AddEditForm';
 
 import dayjs from 'dayjs';
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 const mapStateToProps = (state) => {
     const {

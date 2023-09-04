@@ -13,7 +13,6 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 const { TextArea } = Input;
 
@@ -124,7 +123,7 @@ const AddEditFormMain = (props) => {
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.textareaError}>
                             <Form.Item name="manufactureAdminLongName" label="Long Description" initialValue={formData?.manufactureAdminLongName} rules={[validateRequiredInputField('long description')]}>
-                                <TextArea rows={1} maxLength={300} placeholder={preparePlaceholderText('long description')} showCount {...disabledProps} />
+                                <TextArea maxLength={300} placeholder={preparePlaceholderText('long description')} showCount {...disabledProps} />
                             </Form.Item>
                         </Col>
 

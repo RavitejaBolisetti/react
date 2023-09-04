@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect } from 'react';
-import { Row, Col, Form, Select, Card, Descriptions } from 'antd';
+import { Row, Col, Form, Card, Descriptions } from 'antd';
 
 import AdvanceFilter from './AdvanceFilter';
 import { ListDataTable } from 'utils/ListDataTable';
@@ -13,14 +13,10 @@ import { checkAndSetDefaultValue, getStatus } from 'utils/checkAndSetDefaultValu
 import { VehicleDetailFormButton } from 'components/Sales/VehicleDetail/VehicleDetailFormButton';
 import { convertDateTime } from 'utils/formatDateTime';
 import styles from 'assets/sass/app.module.scss';
-// import styles from 'components/common/Common.module.css';
-
-import { FilterIcon } from 'Icons';
-const { Option } = Select;
 
 const AddEditFormMain = (props) => {
     const { filterString, setFilterString, toggleButton, settoggleButton, setAdvanceSearchVisible, extraParams, handleResetFilter, removeFilter } = props;
-    const { isAdvanceSearchVisible, advanceFilterForm, typeData, productHierarchyData, setSelectedOrderVINDetails } = props;
+    const { setSelectedOrderVINDetails } = props;
 
     const { formData, isLoading, selectedOrder, tableProps } = props;
     const { otfTransferForm, onFinishOTFTansfer } = props;
@@ -29,7 +25,8 @@ const AddEditFormMain = (props) => {
     useEffect(() => {
         setFilterString();
         setSelectedOrderVINDetails();
-    },[]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const buttonProps = {
         formData,
@@ -58,18 +55,6 @@ const AddEditFormMain = (props) => {
         removeFilter,
     };
 
-    const advanceFilterProps = {
-        titleOverride: 'Advance Filters',
-        isVisible: isAdvanceSearchVisible,
-        icon: <FilterIcon size={20} />,
-        advanceFilterForm,
-        typeData,
-        filterString,
-        setFilterString,
-        setAdvanceSearchVisible,
-        productHierarchyData,
-    };
-
     return (
         <>
             <Form form={otfTransferForm} data-testid="test" onFinish={onFinishOTFTansfer} layout="vertical" autocomplete="off" colon="false">
@@ -92,7 +77,6 @@ const AddEditFormMain = (props) => {
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <ListDataTable handleAdd={handleButtonClick} {...tableProps} showAddButton={false} />
                     </Col>
-                    {/* <AdvancedSearch {...advanceFilterProps} /> */}
                 </Row>
                 <VehicleDetailFormButton {...buttonProps} />
             </Form>

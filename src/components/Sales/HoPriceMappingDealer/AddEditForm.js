@@ -14,7 +14,7 @@ import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/prepareP
 
 import { ViewDetail } from './ViewDetail';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 const AddEditFormMain = (props) => {
     const { form, formData, buttonData, setButtonData, typeData, handleButtonClick, onCloseAction, formActionType, onFinish, onFinishFailed } = props;

@@ -9,7 +9,6 @@ import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/prepareP
 import { CUSTOMER_TYPE } from 'constants/CustomerType';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 const AddEditForm = (props) => {
     const { isReadOnly = false, onSaveFormData, contactform, setShowAddEditForm, setIsEditing, typeData, customerType, uploadImgDocId, formActionType, handleFormValueChange, setIsAdding, contactData, editingData } = props;

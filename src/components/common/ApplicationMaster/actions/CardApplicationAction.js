@@ -67,7 +67,7 @@ const CardApplicationAction = (props) => {
 
     return (
         <>
-            <Card className={styles.viewCardSize} key={actionId}>
+            <Card key={actionId}>
                 <Row align="middle" className={styles.marB20}>
                     <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>

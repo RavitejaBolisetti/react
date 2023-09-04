@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Descriptions, Divider } from 'antd';
+import { Descriptions } from 'antd';
 
 const ViewRoleManagementMain = ({ formData, styles, menuTreeData, AccordianTreePanel }) => {
     const viewProps = {
@@ -35,7 +35,6 @@ const ViewRoleManagementMain = ({ formData, styles, menuTreeData, AccordianTreeP
                         <Descriptions.Item label="Status">{formData?.status ? 'Active' : 'InActive'}</Descriptions.Item>
                     </Descriptions>
                 </div>
-                {/* <Divider /> */}
                 <div className={styles.subTitleSec}>Application Access</div>
                 {AccordianTreePanel({ viewMode: true, menuTreeData })}
             </div>

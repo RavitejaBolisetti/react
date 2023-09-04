@@ -8,13 +8,11 @@ import customRender from '@utils/test-utils';
 import { screen, fireEvent } from '@testing-library/react';
 import { AddEditForm } from '@components/Sales/OTF/CustomerDetails/AddEditForm';
 
-const setActiveKey = true;
 const bookingCustomer = true;
 
 describe('Add Edit Form Components', () => {
     it('should Add Edit Form Component', () => {
         customRender(<AddEditForm />);
-        screen.debug();
     });
 
     it('should check panel title available', () => {
@@ -32,7 +30,7 @@ describe('Add Edit Form Components', () => {
         fireEvent.click(editIconBtn[1]);
     });
 
-    it('it should click on checkbox when user click', () => {
+    it('should click on checkbox when user click', () => {
         customRender(<AddEditForm formType="billingCustomer" activeKey={[1, 2]} setActiveKey={jest.fn()} setSameAsBookingCustomer={jest.fn()} />);
         const checkbox = screen.getByRole('checkbox', { name: 'Same as Booking Customer' });
         fireEvent.click(checkbox);

@@ -20,7 +20,6 @@ import { invoiceDetailsDataAction } from 'store/actions/data/financialAccounting
 import { showGlobalNotification } from 'store/actions/notification';
 import { tableColumnApportion } from './tableColumnApportion';
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 const mapStateToProps = (state) => {
     const {

@@ -3,15 +3,14 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, Fragment, useEffect } from 'react';
-import { Col, Card, Row, Button, Form, Divider, Typography, Space } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Col, Card, Row, Button, Form, Divider, Typography } from 'antd';
 import { FiEdit, FiTrash } from 'react-icons/fi';
-import styles from 'assets/sass/app.module.scss';
-//import styles from './../../Common.module.css';
 import DocumentTypesForm from './DocumentTypesForm';
 
-const { Text } = Typography;
+import styles from 'assets/sass/app.module.scss';
 
+const { Text } = Typography;
 const CardDocumentType = (prop) => {
     const { id, status, termAndConRequired, digitalSignatureRequired, documentTypeDescription, documentTypeCode, setfinalFormdata, setIsBtnDisabled, isBtnDisabled, onFieldsChange } = prop;
     const [form] = Form.useForm();

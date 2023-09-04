@@ -13,7 +13,7 @@ import { convertDateTime } from 'utils/formatDateTime';
 import { tblPrepareColumns, tblStatusColumn } from 'utils/tableColumn';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
+
 import { DataTable } from 'utils/dataTable';
 import { withDrawer } from 'components/withDrawer';
 

@@ -6,9 +6,9 @@
 import React from 'react';
 import { Card } from 'antd';
 
+import { NoDataFound } from 'utils/noDataFound';
 import { FiDownload } from 'react-icons/fi';
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 export const ViewSupportingDocDetail = (props) => {
     const { downloadFileFromButton, documentData } = props;
@@ -35,7 +35,7 @@ export const ViewSupportingDocDetail = (props) => {
                 </div>
             ) : (
                 // viewMode &&
-                <Card>No Supporting Document Available</Card>
+                <NoDataFound informtion={'No supporting documents found'} />
             )}
         </div>
     );

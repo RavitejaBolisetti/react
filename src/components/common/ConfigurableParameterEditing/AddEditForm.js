@@ -13,7 +13,6 @@ import { ViewConfigDetails } from './ViewConfigDetails';
 import { preparePlaceholderSelect, prepareDatePickerText } from 'utils/preparePlaceholder';
 import { dateFormat } from 'utils/formatDateTime';
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 const { TextArea } = Input;
 const AddEditFormMain = (props) => {

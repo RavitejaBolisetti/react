@@ -20,7 +20,6 @@ import { CustomerFormButton } from '../../CustomerFormButton';
 import { CustomerNameChangeHistory } from './CustomerNameChange';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 const mapStateToProps = (state) => {
     const {

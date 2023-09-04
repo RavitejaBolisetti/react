@@ -19,11 +19,11 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { AddEditForm } from './AddEditForm';
 import { ViewDetails } from './ViewDetails';
 import LeftPanel from 'components/common/LeftPanel';
-import { ATTRIBUTE_TYPE } from 'constants/modules/ChartOfAccount/attributeType';
+import { COA_ACCOUNT_TYPE } from 'constants/modules/ChartOfAccount/coaAccountType';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 const { Search } = Input;
 
@@ -102,7 +102,8 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
     const [disable, setDisable] = useState(true);
     const [recordId, setRecordId] = useState('');
     const [accountTyp, setAccountTyp] = useState(null);
-    const [childAdd, isChildAdd] = useState(null);
+    const [childAdd, isChildAdd] = useState(false);
+    const [updatedChartOfAccountData, setUpdatedChartOfAccountData] = useState(null);
 
     const defaultBtnVisiblity = { editBtn: true, childBtn: true, siblingBtn: true };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -146,9 +147,9 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
 
     useEffect(() => {
         setViewData(chartOfAccountData);
-        if (chartOfAccountData?.accountType === ATTRIBUTE_TYPE?.[1]?.key) {
+        if (chartOfAccountData?.accountType === COA_ACCOUNT_TYPE?.LEDGER_ACCOUNT?.key) {
             setButtonData({ ...defaultBtnVisiblity, childBtn: false });
-        } else if (chartOfAccountData?.accountType === ATTRIBUTE_TYPE?.[0]?.key) {
+        } else if (chartOfAccountData?.accountType === COA_ACCOUNT_TYPE?.GROUP_ACCOUNT?.key) {
             setButtonData({ ...defaultBtnVisiblity, childBtn: true });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -182,17 +183,27 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
             setSelectedTreeSelectKey(chartOfAccountData?.parentAccountDescription);
             setAccountTyp(chartOfAccountData?.accountType);
             form.setFieldsValue({
-                accountType: chartOfAccountData?.accountType === ATTRIBUTE_TYPE?.[0]?.key ? ATTRIBUTE_TYPE?.[0]?.value : ATTRIBUTE_TYPE?.[1]?.value,
+                accountType: chartOfAccountData?.accountType,
                 parentAccountCode: chartOfAccountData?.parentAccountCode,
                 accountCode: chartOfAccountData?.accountCode,
                 accountDescription: chartOfAccountData?.accountDescription,
-                openingBalanceCredit: chartOfAccountData?.accountType === ATTRIBUTE_TYPE?.[1]?.key ? chartOfAccountData?.openingBalanceCredit : null,
-                openingBalanceDebit: chartOfAccountData?.accountType === ATTRIBUTE_TYPE?.[1]?.key ? chartOfAccountData?.openingBalanceDebit : null,
+                openingBalanceCredit: chartOfAccountData?.accountType === COA_ACCOUNT_TYPE?.LEDGER_ACCOUNT?.key ? chartOfAccountData?.openingBalanceCredit : null,
+                openingBalanceDebit: chartOfAccountData?.accountType === COA_ACCOUNT_TYPE?.LEDGER_ACCOUNT?.key ? chartOfAccountData?.openingBalanceDebit : null,
                 status: chartOfAccountData?.status,
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formActionType, change]);
+
+    useEffect(() => {
+        setUpdatedChartOfAccountData(
+            chartOfAccountHierarchy?.map((i) => ({
+                ...i,
+                disabled: i?.accountType === COA_ACCOUNT_TYPE?.LEDGER_ACCOUNT?.key,
+            }))
+        );
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [chartOfAccountHierarchy]);
 
     const onChange = (e) => {
         setSearchValue(e.target.value);
@@ -220,8 +231,7 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
 
     const onFinish = (values) => {
         const parentCode = values?.parentAccountCode ? values?.parentAccountCode : '';
-        const accountTypeCode = formActionType === FROM_ACTION_TYPE?.EDIT ? (values?.accountType === ATTRIBUTE_TYPE?.[0]?.value ? ATTRIBUTE_TYPE?.[0]?.key : ATTRIBUTE_TYPE?.[1]?.key) : values?.accountType;
-        const data = { ...values, id: recordId, companyCode: companyCode, parentAccountCode: parentCode, accountType: accountTypeCode, addChild: childAdd };
+        const data = { ...values, id: recordId, companyCode: companyCode, parentAccountCode: parentCode, addChild: childAdd };
 
         const onSuccess = (res) => {
             form.resetFields();
@@ -300,7 +310,7 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
         isFormBtnActive,
         setFormBtnActive,
         form,
-        chartOfAccountHierarchy,
+        chartOfAccountHierarchy: updatedChartOfAccountData,
         selectedTreeSelectKey,
         disable,
         setSelectedTreeSelectKey,

@@ -13,13 +13,13 @@ import { ViewDetail } from './ViewDetail';
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
+
 import dayjs from 'dayjs';
 
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined, onFinish, onFinishFailed } = props;
+    const { form, formData, onCloseAction, formActionType: { editMode, viewMode, addMode } = undefined, onFinish, onFinishFailed } = props;
     const { tehsilCategoryData } = props;
 
     const { isDataCountryLoaded, countryData, defaultCountry } = props;
@@ -119,8 +119,6 @@ const AddEditFormMain = (props) => {
                                         </Select>
                                     </Form.Item>
                                 </Col>
-                            </Row>
-                            <Row gutter={16}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                     <Form.Item label="District Name" initialValue={formData?.districtCode} name="districtCode" rules={[validateRequiredSelectField('District Name')]}>
                                         <Select placeholder={preparePlaceholderSelect('District Name')} {...selectProps} onChange={handleDistrictChange}>
@@ -133,14 +131,14 @@ const AddEditFormMain = (props) => {
                                     </Form.Item>
                                 </Col>
 
-                                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item initialValue={formData?.code} label="Tehsil Code" name="code" rules={[validateRequiredInputField('Tehsil Code')]}>
-                                        <Input placeholder={preparePlaceholderText('Tehsil Code')} maxLength={6} disabled={editMode ? true : false} />
-                                    </Form.Item>
-                                </Col>
-                            </Row>
+                                {!addMode && (
+                                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                                        <Form.Item initialValue={formData?.code} label="Tehsil Code" name="code" rules={[validateRequiredInputField('Tehsil Code')]}>
+                                            <Input placeholder={preparePlaceholderText('Tehsil Code')} maxLength={6} disabled={editMode ? true : false} />
+                                        </Form.Item>
+                                    </Col>
+                                )}
 
-                            <Row gutter={16}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                     <Form.Item initialValue={formData?.name} label="Tehsil Name" name="name" rules={[validateRequiredInputField('Tehsil Name')]}>
                                         <Input placeholder={preparePlaceholderText('Tehsil Name')} maxLength={50} />
@@ -156,9 +154,7 @@ const AddEditFormMain = (props) => {
                                         </Select>
                                     </Form.Item>
                                 </Col>
-                            </Row>
 
-                            <Row gutter={20}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                     <Form.Item label="Included On" name="includedOn" {...dateInitialValue} rules={[validateRequiredInputField('Included On')]}>
                                         <DatePicker disabled format={dateFormat} style={{ display: 'auto', width: '100%' }} placeholder={preparePlaceholderSelect('Included On Date')} />

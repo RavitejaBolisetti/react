@@ -322,6 +322,13 @@ export const MenuConstant = {
         parentMenuId: 'WEB',
     },
 
+    [getMenyKey('FINA-01.01')]: {
+        key: 'FINA-01.01',
+        link: routing.ROUTING_FINANCIAL_ACCOUNTING_CHART_OF_ACCOUNT,
+        icon: undefined,
+        parentMenuId: 'FINA-01',
+    },
+
     [getMenyKey('FINA-01.02')]: {
         key: 'FINA-01.02',
         link: routing.ROUTING_FINANCIAL_ACCOUNTING_ACCOUNT_CATEGORY,
@@ -459,6 +466,13 @@ export const MenuConstant = {
         link: routing.ROUTING_VEHICLE_RECIEPT_CHECKLIST,
         icon: undefined,
         parentMenuId: 'SACT-04',
+    },
+
+    [getMenyKey('SACT-06.08')]: {
+        key: 'SACT-06.08',
+        link: routing.ROUTING_DELIVERY_NOTE_INVOICE_CANELLATION,
+        icon: undefined,
+        parentMenuId: 'SACT-06.07',
     },
 
     [getMenyKey('FINA-01.06')]: {

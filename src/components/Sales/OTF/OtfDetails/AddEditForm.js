@@ -7,15 +7,14 @@ import React from 'react';
 import { Row, Col, Input, Form, DatePicker, Switch, Card } from 'antd';
 
 import { formattedCalendarDate, dateFormat } from 'utils/formatDateTime';
-import { validateRequiredSelectField, validateRequiredInputField, noWhiteSpaceinBeginning } from 'utils/validation';
+import { validateRequiredSelectField, noWhiteSpaceinBeginning } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { customSelectBox } from 'utils/customSelectBox';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 const AddEditFormMain = (props) => {
-    const { formData, disabledProps, formActionType, typeData, salesConsultantLov, exchangeValue, loyaltyValue } = props;
+    const { formData, disabledProps, formActionType, typeData, salesConsultantLov } = props;
 
     return (
         <Card className={styles.drawerCardView}>

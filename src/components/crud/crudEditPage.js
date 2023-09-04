@@ -10,8 +10,6 @@ import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
-// import styles from './addEdit.module.css';
-
 export const crudEditPage = ({ mapStateToProps, dataActions, showGlobalNotification, editAction, name, title, AddEditForm, studySpecific, studySiteSpecific = false, customDataTransformer = (x) => x, customId = (x) => x.id, drawer = withDrawer, customSuccessAction = undefined, additionalMapDispatchToProps = undefined }) => {
     const mapDispatchToProps = {
         update: dataActions.update,

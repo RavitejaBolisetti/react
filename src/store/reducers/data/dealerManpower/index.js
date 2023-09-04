@@ -11,6 +11,7 @@ import { BayTypeMaster } from './bayMasterType';
 import { DesignationMaster } from './designationMaster';
 import { DealerEmployeeDepartmentMaster } from './dealerEmployeeDepartmentMaster';
 import { RoleMaster } from './roleMaster';
+import { MileSkill } from './mileSkill';
 
 export const DealerManpower = combineReducers({
     DealerLocationTypeMaster,
@@ -19,4 +20,5 @@ export const DealerManpower = combineReducers({
     DesignationMaster,
     DealerEmployeeDepartmentMaster,
     RoleMaster,
+    MileSkill,
 });

@@ -10,7 +10,6 @@ import { withDrawer } from 'components/withDrawer';
 import { ListDataTable } from 'utils/ListDataTable';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 import { convertDateMonthYear } from 'utils/formatDateTime';
 const ChangeHistoryMain = (props) => {

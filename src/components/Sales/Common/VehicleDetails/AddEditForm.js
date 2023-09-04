@@ -15,14 +15,14 @@ import dayjs from 'dayjs';
 
 import { DataTable } from 'utils/dataTable';
 import { taxDetailsColumn, optionalServicesColumns } from './tableColumn';
-import { expandIconWithText, dynamicExpandIcon } from 'utils/accordianExpandIcon';
+import { expandIcon, expandIconWithText } from 'utils/accordianExpandIcon';
 import { addToolTip } from 'utils/customMenuLink';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { getCodeValue } from 'utils/getCodeValue';
 import { VEHICLE_TYPE } from 'constants/VehicleType';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
+import { customSelectBox } from 'utils/customSelectBox';
 
 const { Text } = Typography;
 const { Panel } = Collapse;
@@ -40,7 +40,7 @@ const AddEditFormMain = (props) => {
         if (formActionType?.editMode && formData) {
             form.setFieldsValue({
                 ...formData,
-                poDate: dayjs(formData?.podate?.substr(0, 10)).format('DD/MM/YYYY'),
+                poDate: dayjs(formData?.poDate?.substr(0, 10)).format('DD/MM/YYYY'),
                 vehicleUsageType: findUsageType(formData?.vehicleUsageType),
                 vehicleAllocatedStatus: getCodeValue(VEHICLE_TYPE, formData?.vehicleAllocatedStatus, 'title'),
             });
@@ -124,7 +124,7 @@ const AddEditFormMain = (props) => {
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item label="PO Number" name="ponumber">
+                                <Form.Item label="PO Number" name="poNumber">
                                     <Input {...disabledProp} placeholder={preparePlaceholderText('PO Number')} />
                                 </Form.Item>
                             </Col>
@@ -136,24 +136,24 @@ const AddEditFormMain = (props) => {
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item label="PO Status" name="postatus">
-                                    <Input {...disabledProp} placeholder={preparePlaceholderText('PO Status')} />
+                                <Form.Item label="PO Status" name="poStatus">
+                                    {customSelectBox({ data: typeData?.PO_STATS, disabled: true })}
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item label="SO Number" name="sonumber">
+                                <Form.Item label="SO Number" name="soNumber">
                                     <Input {...disabledProp} placeholder={preparePlaceholderText('SO Number')} />
                                 </Form.Item>
                             </Col>
                         </Row>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item label="SO Status" name="sostatus">
+                                <Form.Item label="SO Status" name="soStatus">
                                     <Input {...disabledProp} placeholder={preparePlaceholderText('SO Status')} />
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item label="VIN Number" name="vinnumber">
+                                <Form.Item label="VIN Number" name="vinNumber">
                                     <Input {...disabledProp} placeholder={preparePlaceholderText('VIN number')} />
                                 </Form.Item>
                             </Col>
@@ -182,13 +182,13 @@ const AddEditFormMain = (props) => {
                         </Row>
                     </Panel>
                 </Collapse>
-                <Collapse onChange={() => handleCollapse(2)} expandIconPosition="end" expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={openAccordian} collapsible="icon">
+                <Collapse onChange={() => handleCollapse(2)} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian} collapsible="icon">
                     <Panel header="Tax Details" key="2">
                         <Divider />
                         <DataTable tableColumn={taxDetailsColumn()} tableData={formData['taxDetails']} pagination={false} />
                     </Panel>
                 </Collapse>
-                <Collapse onChange={() => handleCollapse(3)} expandIconPosition="end" expandIcon={({ isActive }) => dynamicExpandIcon(isActive)} activeKey={openAccordian} collapsible="icon">
+                <Collapse onChange={() => handleCollapse(3)} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian} collapsible="icon">
                     <Panel
                         header={
                             <Row>
@@ -202,7 +202,6 @@ const AddEditFormMain = (props) => {
                         }
                         key="3"
                     >
-                        {!isReadOnly && <Divider />}
                         {isReadOnly && (
                             <>
                                 <Divider />

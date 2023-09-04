@@ -8,38 +8,37 @@ import { OTFStatusTag } from './utils/OTFStatusTag';
 import { convertDateMonthYear } from 'utils/formatDateTime';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 
 export const tableColumn = (handleButtonClick, page, pageSize) => {
     const tableColumn = [
         tblPrepareColumns({
             title: 'OTF No.',
             dataIndex: 'otfNumber',
-            width: '14%',
+            width: '18%',
         }),
 
         tblPrepareColumns({
             title: 'OTF Date',
             dataIndex: 'otfDate',
-            width: '14%',
+            width: '12%',
             render: (_, record) => (record?.otfDate ? convertDateMonthYear(record?.otfDate) : ''),
         }),
         tblPrepareColumns({
             title: 'Customer Name',
             dataIndex: 'customerName',
-            width: '14%',
+            width: '20%',
         }),
 
-        tblPrepareColumns({
-            title: 'Mobile No.',
-            dataIndex: 'mobileNumber',
-            width: '14%',
-        }),
+        // tblPrepareColumns({
+        //     title: 'Mobile No.',
+        //     dataIndex: 'mobileNumber',
+        //     width: '14%',
+        // }),
 
         tblPrepareColumns({
             title: 'Model',
             dataIndex: 'model',
-            width: '14%',
+            width: '25%',
         }),
 
         tblPrepareColumns({

@@ -15,7 +15,7 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 const { TextArea } = Input;
 
