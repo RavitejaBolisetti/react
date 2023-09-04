@@ -307,7 +307,6 @@ const LoyaltySchemeMasterMain = (props) => {
         fnSetData,
         disabledProps,
         handleFilterChange,
-        otfPageType,
     };
 
     const myProps = {

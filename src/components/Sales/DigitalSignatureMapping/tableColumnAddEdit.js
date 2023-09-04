@@ -9,7 +9,7 @@ import { getCodeValue } from 'utils/getCodeValue';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
 export const tableColumnAddEdit = (props) => {
-    const { typeData, formActionType, handleUpdateStatus } = props;
+    const { typeData, formActionType } = props;
     const tableColumn = [
         tblPrepareColumns({
             title: 'Branch',

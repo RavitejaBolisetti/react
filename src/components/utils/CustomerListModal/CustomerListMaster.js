@@ -11,7 +11,6 @@ import { bindActionCreators } from 'redux';
 
 import { BASE_URL_CUSTOMER_MASTER_VEHICLE_LIST as customURL } from 'constants/routingApi';
 import { otfReferralsDataActions } from 'store/actions/data/otf/referrals';
-import { showGlobalNotification } from 'store/actions/notification';
 
 import { CustomerListModal } from './CustomerListModal';
 import { PARAM_MASTER } from 'constants/paramMaster';
@@ -47,14 +46,13 @@ const mapDispatchToProps = (dispatch) => ({
             listShowLoading: otfReferralsDataActions.listShowLoading,
             resetData: otfReferralsDataActions.reset,
             saveData: otfReferralsDataActions.saveData,
-            showGlobalNotification,
         },
         dispatch
     ),
 });
 
 const CustomerListBase = (props) => {
-    const { showGlobalNotification, listShowLoading, userId, referralData, fnSetData = undefined, disabled = false } = props;
+    const { listShowLoading, userId, referralData, fnSetData = undefined, disabled = false } = props;
     const { handleFormValueChange, fetchCustomerList, typeData } = props;
 
     const [searchForm] = Form.useForm();
@@ -123,10 +121,6 @@ const CustomerListBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString]);
-
-    const onErrorAction = (message) => {
-        showGlobalNotification({ message });
-    };
 
     const handleResetFilter = (e) => {
         setCusomerSearchVisible(false);
