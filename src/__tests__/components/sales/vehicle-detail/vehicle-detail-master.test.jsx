@@ -11,7 +11,7 @@ describe('Vehicle Detail Master Component', () => {
         customRender(<VehicleDetailMaster />)
     });
 
-    it('test1', () => {
+    it('clear button should work', () => {
         const mockStore = createMockStore({
             auth: { userId: 106 },
             data: {
@@ -32,9 +32,4 @@ describe('Vehicle Detail Master Component', () => {
         fireEvent.click(clearBtn);
     });
 
-    // it('test2', () => {
-    //     customRender(<VehicleDetailMaster />);
-    //     const addBtn=screen.getByRole('button', { name: 'plus Add' });
-    //     fireEvent.click(addBtn);
-    // });
 });
