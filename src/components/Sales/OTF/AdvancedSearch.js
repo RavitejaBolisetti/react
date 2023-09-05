@@ -14,6 +14,7 @@ import { validateRequiredSelectField } from 'utils/validation';
 import { ModalButtons } from 'components/common/Button';
 
 import styles from 'assets/sass/app.module.scss';
+import { customSelectBox } from 'utils/customSelectBox';
 
 export const AdvancedSearchFrom = (props) => {
     const { setAdvanceSearchVisible, otfStatusList } = props;
@@ -33,6 +34,7 @@ export const AdvancedSearchFrom = (props) => {
         setFilterString({
             ...filterString,
             ...values,
+            current: 1,
             fromDate: formatDate(values?.fromDate),
             toDate: formatDate(values?.toDate),
             otfStatus: values?.otfStatus,
@@ -42,23 +44,21 @@ export const AdvancedSearchFrom = (props) => {
     };
 
     const handleResetFilter = (e) => {
+        const { pageSize } = filterString;
         advanceFilterForm.setFieldsValue({
             toDate: null,
             fromDate: null,
             otfStatus: null,
         });
-        setFilterString();
+
+        setFilterString({
+            current: 1,
+            pageSize,
+        });
     };
 
     const onFinishFailed = () => {
         return;
-    };
-
-    const selectProps = {
-        optionFilterProp: 'children',
-        showSearch: true,
-        allowClear: true,
-        className: styles.headerSelectField,
     };
 
     const modalProps = {
@@ -87,7 +87,7 @@ export const AdvancedSearchFrom = (props) => {
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form.Item initialValue={filterString?.otfStatus} label="OTF Status" name="otfStatus">
-                        <Select placeholder={preparePlaceholderSelect('')} fieldNames={{ label: 'desc', value: 'key' }} options={otfStatusList} {...selectProps}></Select>
+                        {customSelectBox({ data: otfStatusList, fieldNames: { key: 'key', value: 'desc' }, placeholder: preparePlaceholderSelect('') })}
                     </Form.Item>
                 </Col>
             </Row>

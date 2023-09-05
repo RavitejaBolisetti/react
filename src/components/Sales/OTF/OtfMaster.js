@@ -30,6 +30,7 @@ import { VEHICLE_TYPE } from 'constants/VehicleType';
 import { BASE_URL_OTF_DETAILS as baseURL, BASE_URL_OTF_TRANSFER as otfTransferURL, BASE_URL_OTF_CANCELLATION as otfCancelURL } from 'constants/routingApi';
 
 import { LANGUAGE_EN } from 'language/en';
+import { convertDateTime, monthDateFormat } from 'utils/formatDateTime';
 import { validateOTFMenu } from './utils/validateOTFMenu';
 
 import { FilterIcon } from 'Icons';
@@ -102,7 +103,6 @@ const mapDispatchToProps = (dispatch) => ({
             fetchVehicleDetail: otfvehicleDetailsDataActions.fetchList,
 
             updateVehicleAllotmentStatus: vehicleAllotment.saveData,
-            fetchVehicleAllotmentSearchedList: vehicleAllotment.fetchList,
 
             showGlobalNotification,
         },
@@ -162,7 +162,7 @@ export const OtfMasterBase = (props) => {
         invoiceBtn: false,
         deliveryNote: false,
         changeHistory: true,
-        otfSoMappingHistoryBtn: true,
+        otfSoMappingHistoryBtn: false,
     };
 
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -170,7 +170,11 @@ export const OtfMasterBase = (props) => {
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
-    const [page, setPage] = useState({ pageSize: 10, current: 1 });
+    useEffect(() => {
+        setFilterString({ ...filterString, pageSize: 10, current: 1 });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     const dynamicPagination = true;
 
     const [formData, setFormData] = useState([]);
@@ -218,7 +222,7 @@ export const OtfMasterBase = (props) => {
                 key: 'fromDate',
                 title: 'Start Date',
                 value: filterString?.fromDate,
-                name: filterString?.fromDate,
+                name: filterString?.fromDate ? convertDateTime(filterString?.fromDate, monthDateFormat) : '',
                 canRemove: true,
                 filter: true,
             },
@@ -226,7 +230,7 @@ export const OtfMasterBase = (props) => {
                 key: 'toDate',
                 title: 'End Date',
                 value: filterString?.toDate,
-                name: filterString?.toDate,
+                name: filterString?.toDate ? convertDateTime(filterString?.toDate, monthDateFormat) : '',
                 canRemove: true,
                 filter: true,
             },
@@ -241,34 +245,34 @@ export const OtfMasterBase = (props) => {
             {
                 key: 'pageSize',
                 title: 'Value',
-                value: page?.pageSize,
+                value: filterString?.pageSize,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'pageNumber',
                 title: 'Value',
-                value: page?.current,
+                value: filterString?.current,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'sortBy',
                 title: 'Sort By',
-                value: page?.sortBy,
+                value: filterString?.sortBy,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'sortIn',
                 title: 'Sort Type',
-                value: page?.sortType,
+                value: filterString?.sortType,
                 canRemove: true,
                 filter: false,
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, page]);
+    }, [filterString]);
 
     useEffect(() => {
         return () => {
@@ -374,8 +378,6 @@ export const OtfMasterBase = (props) => {
                 setLastSection(!nextSection?.id);
                 break;
             case CANCEL_ACTION:
-                //  setFormActionType(CANCEL_OTF)
-                // setIsFormVisible(false);
                 setIsCancelVisible(true);
                 break;
             case TRANSFER_ACTION:
@@ -419,13 +421,12 @@ export const OtfMasterBase = (props) => {
         }
 
         if (buttonAction !== NEXT_ACTION) {
-            setFormActionType({
-                addMode: buttonAction === ADD_ACTION,
-                editMode: buttonAction === EDIT_ACTION,
-                viewMode: buttonAction === VIEW_ACTION,
-            });
-            if (buttonAction === ALLOT) {
-                setFormActionType({ ...formActionType, viewMode: true });
+            if ([ADD_ACTION, EDIT_ACTION, VIEW_ACTION]?.includes(buttonAction)) {
+                setFormActionType({
+                    addMode: buttonAction === ADD_ACTION,
+                    editMode: buttonAction === EDIT_ACTION,
+                    viewMode: buttonAction === VIEW_ACTION,
+                });
             }
             setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction, orderStatus: record?.orderStatus }));
         }
@@ -434,10 +435,11 @@ export const OtfMasterBase = (props) => {
     const onFinishSearch = (values) => {};
 
     const handleResetFilter = (e) => {
+        const { pageSize } = filterString;
         if (filterString) {
             setShowDataLoading(true);
         }
-        setFilterString();
+        setFilterString({ pageSize, current: 1 });
         advanceFilterForm.resetFields();
         setAdvanceSearchVisible(false);
     };
@@ -501,8 +503,9 @@ export const OtfMasterBase = (props) => {
 
     const tableProps = {
         dynamicPagination,
+        filterString,
         totalRecords,
-        setPage,
+        setPage: setFilterString,
         isLoading: showDataLoading,
         tableColumn: tableColumn(handleButtonClick),
         tableData: data,
@@ -614,10 +617,8 @@ export const OtfMasterBase = (props) => {
 
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
-
         icon: <FilterIcon size={20} />,
         titleOverride: 'Advance Filters',
-
         onCloseAction: onAdvanceSearchCloseAction,
         handleResetFilter,
         filterString,
@@ -757,10 +758,10 @@ export const OtfMasterBase = (props) => {
             </Row>
             <AdvancedSearch {...advanceFilterProps} />
             <OTFMainConatiner {...containerProps} />
-            <CancellationMaster {...cancelProps} />
-            <TransferMaster {...transferOTFProps} />
+            {isCancelVisible && <CancellationMaster {...cancelProps} />}
+            {isTransferVisible && <TransferMaster {...transferOTFProps} />}
             <ChangeHistory {...ChangeHistoryProps} />
-            <OTFAllotmentMaster {...allotOTFProps} />
+            {isAllotVisible && <OTFAllotmentMaster {...allotOTFProps} />}
             <OtfSoMappingUnmappingChangeHistory {...OtfSoMappingChangeHistoryProps} />
             <ConfirmationModal {...confirmRequest} />
         </>

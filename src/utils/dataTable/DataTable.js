@@ -10,7 +10,7 @@ import { tblSerialNumberColumn } from 'utils/tableColumn';
 
 import styles from 'assets/sass/app.module.scss';
 
-export default function DataTable({ isLoading, rowSelection = undefined, showSizeChanger = true, dynamicPagination = false, totalRecords = '10', pagination = true, removePagination = false, srl = true, srlTitle = '#', tableColumn, scroll = 'auto', tableData, rowKey = 'index', page = undefined, setPage = () => {} }) {
+export default function DataTable({ filterString, isLoading, rowSelection = undefined, showSizeChanger = true, dynamicPagination = false, totalRecords = '10', pagination = true, removePagination = false, srl = true, srlTitle = '#', tableColumn, scroll = 'auto', tableData, rowKey = 'index', page = undefined, setPage = () => {} }) {
     const [tablePagination, setPagination] = useState({
         pageSize: 10,
         current: 1,
@@ -21,9 +21,9 @@ export default function DataTable({ isLoading, rowSelection = undefined, showSiz
 
     useEffect(() => {
         if (dynamicPagination) {
-            setPagination({ ...tablePagination, total: totalRecords });
+            setPagination({ ...tablePagination, current: filterString?.current || tablePagination?.current, total: totalRecords });
         } else {
-            setPagination({ ...tablePagination, total: tableData?.length });
+            setPagination({ ...tablePagination, current: filterString?.current || tablePagination?.current, total: tableData?.length });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dynamicPagination, totalRecords, tableData, page]);

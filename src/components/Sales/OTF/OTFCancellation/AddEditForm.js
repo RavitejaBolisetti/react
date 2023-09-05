@@ -10,7 +10,7 @@ import { FiEye, FiTrash } from 'react-icons/fi';
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
 import TreeSelectField from 'components/common/TreeSelectField';
-import { productHierarchyData } from './ProductHierarchyJSON';
+//import { productHierarchyData } from './ProductHierarchyJSON';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
 import { preparePlaceholderText, preparePlaceholderSelect, preparePlaceholderAutoComplete } from 'utils/preparePlaceholder';
@@ -27,7 +27,7 @@ const { TextArea, Search } = Input;
 const AddEditFormMain = (props) => {
     const { otfCancellationForm, formData, selectedOrder, fieldNames, onFinishOTFCancellation } = props;
     const { handleButtonClick, buttonData, setButtonData, onCloseAction, handleFormValueChange, typeData, setUploadedFile, showGlobalNotification, viewDocument, setEmptyList } = props;
-    const { searchDealerValue, setSearchDealerValue, dealerDataList } = props;
+    const { searchDealerValue, setSearchDealerValue, dealerDataList, productHierarchyData } = props;
     const { uploadedFileName, setUploadedFileName, uploadedFile, parentAppCode, setparentAppCode, resetDealerList } = props;
 
     const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };

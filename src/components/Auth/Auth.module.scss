@@ -369,7 +369,7 @@
                         display: flex;
                         align-items: center;
                         padding: 0;
-                        @include font-style(14, 24, 500, $primaryRed-dark, $fontfamily, left);
+                        @include font-style(14, 24, 500, $primaryRed-dark !important, $fontfamily, left);
 
                         p {
                             padding-left: 0px !important;
