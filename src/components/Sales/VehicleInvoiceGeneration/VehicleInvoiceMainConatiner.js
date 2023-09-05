@@ -12,14 +12,6 @@ import { LeftSidebar } from './LeftSidebar';
 
 import styles from 'assets/sass/app.module.scss';
 
-// import { InsuranceDetailsMaster } from './InsuranceDetails';
-// import { SchemeOfferDetailsMaster } from './SchemeOfferDetails';
-// import { VehicleInvoiceDetailMaster } from './VehicleDetails';
-// import { FinanceDetailsMaster } from './FinanceDetails';
-// import { LoyaltySchemeMaster } from './LoyaltyScheme';
-// import { ReferralsMaster } from './Referrals';
-// import { ExchangeDetailsMaster } from './ExchangeDetails';
-
 import { InsuranceDetailsMaster } from 'components/Sales/Common/InsuranceDetails';
 import { SchemeDetailsMaster } from 'components/Sales/Common/SchemeDetails';
 import { VehicleDetailsMaster } from 'components/Sales/Common/VehicleDetails';

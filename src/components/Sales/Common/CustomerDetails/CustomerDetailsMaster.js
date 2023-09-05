@@ -201,24 +201,24 @@ export const CustomerDetailsMain = (props) => {
 
     return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-            <Row gutter={20} className={styles.drawerBodyRight}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Row>
+            {/* <Row gutter={20} className={styles.drawerBodyRight}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24}> */}
+                    {/* <Row>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <h2>{section?.title}</h2>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <OTFStatusBar status={props?.selectedOrder?.orderStatus} />
                         </Col>
-                    </Row>
+                    </Row> */}
                     {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
-                </Col>
-            </Row>
-            <Row>
+                {/* </Col>
+            </Row> */}
+            {/* <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <OTFFormButton {...props} />
                 </Col>
-            </Row>
+            </Row> */}
         </Form>
     );
 };

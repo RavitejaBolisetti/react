@@ -5,7 +5,6 @@
  */
 import React, { useEffect, useState } from 'react';
 import { Row, Col, AutoComplete, Form, Collapse, Divider, Select, Space } from 'antd';
-// import { CommonForm } from './CommonForm';
 import { expandIcon } from 'utils/accordianExpandIcon';
 
 import { convertDateToCalender } from 'utils/formatDateTime';
@@ -88,18 +87,6 @@ const AddEditFormMain = (props) => {
                             <OtfDetailsForm {...props} />
                         </Panel>
                     </Collapse>
-                    {/* <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
-                        <Panel header="Booked Customer" key="1">
-                            <Divider />
-                            <CommonForm key="3" {...bookingCustomerProps} isBillingCustmrForm={false} />
-                        </Panel>
-                    </Collapse>
-                    <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
-                        <Panel header="Billing Customer" key="2">
-                            <Divider />
-                            <CommonForm key="4" {...bilingCustomerProps} isBillingCustmrForm={true} />
-                        </Panel>
-                    </Collapse> */}
                 </Space>
             </Col>
         </Row>

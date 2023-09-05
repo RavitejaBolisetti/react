@@ -61,10 +61,8 @@ const InvoiceDetailsMasterBase = (props) => {
     const { userId, buttonData, setButtonData, showGlobalNotification, section, fetchCustomerDetail, fetchPartyDetail, resetData, listShowLoading, isDataLoaded, isLoading } = props;
     const { form, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick } = props;
     const { requestPayload, setRequestPayload } = props;
-    const [partySegment, setPartySegment] = useState('');
-    const [partyId, setPartyId] = useState();
     const [activeKey, setActiveKey] = useState([]);
-    const [otfNumber, setOtfNumber] = useState();
+    const [formData, setFormData] = useState('');
 
     // useEffect(() => {
     //     return () => {
@@ -86,38 +84,9 @@ const InvoiceDetailsMasterBase = (props) => {
     };
 
     const handleChange = (e) => {
-        setPartyId(e.target.value);
         setButtonData({ ...buttonData, formBtnActive: false });
     };
 
-    const handleSearch = () => {
-        if (partySegment && partyId) {
-            const onSuccessAction = (res) => {
-                setButtonData({ ...buttonData, formBtnActive: true });
-            };
-            if (partySegment === 'CUS') {
-                const extraParams = [
-                    {
-                        key: 'customerId',
-                        title: 'customerId',
-                        value: partyId,
-                        name: 'customerId',
-                    },
-                ];
-                fetchCustomerDetail({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
-            } else {
-                const extraParams = [
-                    {
-                        key: 'partyCode',
-                        title: 'partyCode',
-                        value: partyId,
-                        name: 'partyCode',
-                    },
-                ];
-                fetchPartyDetail({ setIsLoading: listShowLoading, userId, extraParams, customURL: BASE_URL_PARTY_MASTER, onSuccessAction, onErrorAction });
-            }
-        }
-    };
 
     const onFinish = (values) => {
         // const partyDetails = { ...values, id: '' };
@@ -135,26 +104,20 @@ const InvoiceDetailsMasterBase = (props) => {
         // onFinish,
         // onFinishFailed,
         partySegmentType,
-        partyId,
         handleChange,
-        handleSearch,
         formActionType,
 
         userId,
         isDataLoaded,
-        formData: partyDetailData,
+        formData,
         isLoading,
-        partySegment,
-        setPartySegment,
         setActiveKey,
         activeKey,
-        otfNumber,
-        setOtfNumber,
     };
 
     const viewProps = {
         typeData,
-        // formData: receiptDetailData.partyDetails,
+        formData,
         styles,
         partySegmentType,
         isLoading,
