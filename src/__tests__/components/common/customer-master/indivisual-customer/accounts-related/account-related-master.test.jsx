@@ -135,8 +135,8 @@ describe('AccountRelated Master  Component', () => {
 });
 
 describe('Component render when viewmode is true', () => {
-    const formActionType = { viewMode: true };
     it('should render addedit page', async () => {
-        customRender(<FormWrapper {...formActionType} onError={jest.fn()} showGlobalNotification={jest.fn()} resetData={jest.fn()} />);
+        const props = { formActionType: { viewMode: true } };
+        customRender(<AccountRelatedMaster {...props} />);
     });
 });

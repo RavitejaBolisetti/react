@@ -103,7 +103,6 @@ const mapDispatchToProps = (dispatch) => ({
             fetchVehicleDetail: otfvehicleDetailsDataActions.fetchList,
 
             updateVehicleAllotmentStatus: vehicleAllotment.saveData,
-            fetchVehicleAllotmentSearchedList: vehicleAllotment.fetchList,
 
             showGlobalNotification,
         },
@@ -171,7 +170,11 @@ export const OtfMasterBase = (props) => {
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
-    const [page, setPage] = useState({ pageSize: 10, current: 1 });
+    useEffect(() => {
+        setFilterString({ ...filterString, pageSize: 10, current: 1 });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     const dynamicPagination = true;
 
     const [formData, setFormData] = useState([]);
@@ -242,34 +245,34 @@ export const OtfMasterBase = (props) => {
             {
                 key: 'pageSize',
                 title: 'Value',
-                value: page?.pageSize,
+                value: filterString?.pageSize,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'pageNumber',
                 title: 'Value',
-                value: page?.current,
+                value: filterString?.current,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'sortBy',
                 title: 'Sort By',
-                value: page?.sortBy,
+                value: filterString?.sortBy,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'sortIn',
                 title: 'Sort Type',
-                value: page?.sortType,
+                value: filterString?.sortType,
                 canRemove: true,
                 filter: false,
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, page]);
+    }, [filterString]);
 
     useEffect(() => {
         return () => {
@@ -432,10 +435,11 @@ export const OtfMasterBase = (props) => {
     const onFinishSearch = (values) => {};
 
     const handleResetFilter = (e) => {
+        const { pageSize } = filterString;
         if (filterString) {
             setShowDataLoading(true);
         }
-        setFilterString();
+        setFilterString({ pageSize, current: 1 });
         advanceFilterForm.resetFields();
         setAdvanceSearchVisible(false);
     };
@@ -499,8 +503,9 @@ export const OtfMasterBase = (props) => {
 
     const tableProps = {
         dynamicPagination,
+        filterString,
         totalRecords,
-        setPage,
+        setPage: setFilterString,
         isLoading: showDataLoading,
         tableColumn: tableColumn(handleButtonClick),
         tableData: data,
@@ -612,10 +617,8 @@ export const OtfMasterBase = (props) => {
 
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
-
         icon: <FilterIcon size={20} />,
         titleOverride: 'Advance Filters',
-
         onCloseAction: onAdvanceSearchCloseAction,
         handleResetFilter,
         filterString,
@@ -755,10 +758,10 @@ export const OtfMasterBase = (props) => {
             </Row>
             <AdvancedSearch {...advanceFilterProps} />
             <OTFMainConatiner {...containerProps} />
-            <CancellationMaster {...cancelProps} />
-            <TransferMaster {...transferOTFProps} />
+            {isCancelVisible && <CancellationMaster {...cancelProps} />}
+            {isTransferVisible && <TransferMaster {...transferOTFProps} />}
             <ChangeHistory {...ChangeHistoryProps} />
-            <OTFAllotmentMaster {...allotOTFProps} />
+            {isAllotVisible && <OTFAllotmentMaster {...allotOTFProps} />}
             <OtfSoMappingUnmappingChangeHistory {...OtfSoMappingChangeHistoryProps} />
             <ConfirmationModal {...confirmRequest} />
         </>

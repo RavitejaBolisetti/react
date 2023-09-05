@@ -8,7 +8,8 @@ import { VEHICLE_DETAIL_STATUS } from 'constants/VehicleDetailStatus';
 
 import styles from 'assets/sass/app.module.scss';
 
-export const VehicleDetailStatusTag = (status) => {
+export const VehicleDetailStatusTag = (props) => {
+    const { status } = props;
     let tag = '';
     switch (status) {
         case VEHICLE_DETAIL_STATUS.BOOKED.title:

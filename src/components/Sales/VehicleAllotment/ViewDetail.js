@@ -71,15 +71,16 @@ const ViewDetailMain = (props) => {
 
     const tableDataItem = (formData?.vehicleOTFDetails && [formData?.vehicleOTFDetails]) || tableData;
 
+    const sorterPagination = formData?.allotmentStatus !== VEHICLE_TYPE.ALLOTED.key;
     const tableProps = {
         srl: false,
         rowKey: 'otfNumber',
         rowSelection: {
             ...rowSelection,
         },
-        tableColumn: tableColumnSearchOTF(),
+        tableColumn: tableColumnSearchOTF(sorterPagination),
         tableData: tableDataItem,
-        pagination: formData?.allotmentStatus !== VEHICLE_TYPE.UNALLOTED.key,
+        pagination: sorterPagination,
     };
 
     return (
@@ -103,7 +104,7 @@ const ViewDetailMain = (props) => {
                     <Card>
                         {formData?.allotmentStatus !== VEHICLE_TYPE.ALLOTED.key && (
                             <Row gutter={20}>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.marB20}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                     <SearchBox {...serachBoxProps} />
                                 </Col>
                             </Row>
