@@ -13,13 +13,9 @@ import { otfCustomerDetailsAction } from 'store/actions/data/otf/customerDetails
 import { geoPinCodeDataActions } from 'store/actions/data/geo/pincodes';
 import { showGlobalNotification } from 'store/actions/notification';
 
-import { OTFStatusBar } from '../utils/OTFStatusBar';
-import { OTFFormButton } from '../OTFFormButton';
-
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
 
-import dayjs from 'dayjs';
 import styles from 'assets/sass/app.module.scss';
 
 const mapStateToProps = (state) => {
@@ -79,8 +75,9 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const CustomerDetailsMain = (props) => {
     const { resetData, saveData, isLoading, userId, isDataLoaded, fetchList, listShowLoading, customerFormData, showGlobalNotification, onFinishFailed } = props;
-    const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, pincodeData, formActionType, NEXT_ACTION, handleButtonClick, section } = props;
+    const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, pincodeData, formActionType, NEXT_ACTION, handleButtonClick } = props;
     const { setButtonData, buttonData, typeData, selectedOrderId } = props;
+
     const [form] = Form.useForm();
     const [billCstmForm] = Form.useForm();
     const [formData, setFormData] = useState('');
@@ -201,24 +198,24 @@ export const CustomerDetailsMain = (props) => {
 
     return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-            <Row gutter={20} className={styles.drawerBodyRight}>
+            <Row gutter={20} className={styles.drawerBodyRight1}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Row>
+                    {/* <Row>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <h2>{section?.title}</h2>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <OTFStatusBar status={props?.selectedOrder?.orderStatus} />
                         </Col>
-                    </Row>
+                    </Row> */}
                     {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
                 </Col>
             </Row>
-            <Row>
+            {/* <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <OTFFormButton {...props} />
                 </Col>
-            </Row>
+            </Row> */}
         </Form>
     );
 };

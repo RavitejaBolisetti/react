@@ -9,6 +9,7 @@ import { Button, Row, Col, Popover } from 'antd';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 import styles from 'assets/sass/app.module.scss';
+//import styles from 'components/common/Common.module.css';
 
 export const OTFFormButton = ({ record, handleChangeHistory, handleOtfSoMappingHistory, onCloseAction, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection }) => {
     const content = <div>Coming Soon</div>;
@@ -30,15 +31,14 @@ export const OTFFormButton = ({ record, handleChangeHistory, handleOtfSoMappingH
                 </Col>
 
                 <Col xs={24} sm={16} md={18} lg={20} xl={20} className={styles.buttonsGroupRight}>
+                    {buttonData?.otfSoMappingHistoryBtn && (
+                        <Button onClick={handleOtfSoMappingHistory} danger>
+                            OTF Mapping History
+                        </Button>
+                    )}
                     {buttonData?.editBtn && (
                         <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record, openDefaultSection: false })} type="primary">
                             Edit
-                        </Button>
-                    )}
-
-                    {buttonData?.otfSoMappingHistoryBtn && (
-                        <Button onClick={handleOtfSoMappingHistory} type="primary">
-                            OTF Mapping History
                         </Button>
                     )}
 

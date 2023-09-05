@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect } from 'react';
-import { Col, Row, Collapse, AutoComplete, Divider } from 'antd';
+import { Col, Row, Space, Collapse, AutoComplete, Divider } from 'antd';
 
 import { FiEdit } from 'react-icons/fi';
 import { AddressCommonForm } from './AddressCommonForm';
@@ -77,18 +77,20 @@ const AddEditFormBase = (props) => {
     return (
         <Row gutter={20}>
             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                <Collapse collapsible="icon" expandIcon={({ isActive }) => expandIconWithText(isActive, <FiEdit />, <FiEdit style={{ color: '#B5B5B6' }} />)} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
-                    <Panel header="Booking Customer" key="1">
-                        <Divider />
-                        <AddressCommonForm key="3" {...bookingCustomerProps} isBillingCustmrForm={false} />
-                    </Panel>
-                </Collapse>
-                <Collapse collapsible="icon" expandIcon={({ isActive }) => expandIconWithText(isActive, <FiEdit />, <FiEdit style={{ color: '#B5B5B6' }} />)} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
-                    <Panel header="Billing Customer" key="2">
-                        <Divider />
-                        <AddressCommonForm key="4" {...bilingCustomerProps} isBillingCustmrForm={true} />
-                    </Panel>
-                </Collapse>
+                <Space style={{ display: 'flex' }} size="middle" direction="vertical">
+                    <Collapse collapsible="icon" expandIcon={({ isActive }) => expandIconWithText(isActive, <FiEdit />, <FiEdit style={{ color: '#B5B5B6' }} />)} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
+                        <Panel header="Booking Customer" key="1">
+                            <Divider />
+                            <AddressCommonForm {...bookingCustomerProps} isBillingCustmrForm={false} />
+                        </Panel>
+                    </Collapse>
+                    <Collapse collapsible="icon" expandIcon={({ isActive }) => expandIconWithText(isActive, <FiEdit />, <FiEdit style={{ color: '#B5B5B6' }} />)} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
+                        <Panel header="Billing Customer" key="2">
+                            <Divider />
+                            <AddressCommonForm {...bilingCustomerProps} isBillingCustmrForm={true} />
+                        </Panel>
+                    </Collapse>
+                </Space>
             </Col>
         </Row>
     );
