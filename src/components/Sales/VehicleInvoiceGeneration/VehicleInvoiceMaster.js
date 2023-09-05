@@ -131,7 +131,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         showGlobalNotification({ message });
         setShowDataLoading(false);
     };
-
+    
     const extraParams = useMemo(() => {
         return [
             {
@@ -321,7 +321,7 @@ export const VehicleInvoiceMasterBase = (props) => {
             } else {
                 const Visibility = btnVisiblity({ defaultBtnVisiblity, buttonAction });
                 setButtonData(Visibility);
-                setButtonData({ ...Visibility, cancelReceiptBtn: true });
+                // setButtonData({ ...Visibility, cancelReceiptBtn: true });
                 if (buttonAction === VIEW_ACTION) {
                     invoiceStatus === QUERY_BUTTONS_CONSTANTS.CANCELLED.key ? setButtonData({ ...Visibility, editBtn: false, cancelReceiptBtn: false }) : invoiceStatus === QUERY_BUTTONS_CONSTANTS.CANCELLATION_REQUEST.key ? setButtonData({ ...Visibility, editBtn: false, cancelReceiptBtn: true }) : setButtonData({ ...Visibility, editBtn: true, cancelReceiptBtn: true });
                 }
