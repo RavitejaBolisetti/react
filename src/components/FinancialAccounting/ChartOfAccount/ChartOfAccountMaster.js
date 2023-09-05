@@ -183,7 +183,7 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
             setDisable(false);
             setSelectedTreeSelectKey(chartOfAccountData?.parentAccountDescription);
             setAccountTyp(chartOfAccountData?.accountType);
-            if(chartOfAccountData?.subGroup?.length > 0){
+            if(chartOfAccountData?.isChildAvailable){
                 setDisableCheckBox(true);
             }
             form.setFieldsValue({
