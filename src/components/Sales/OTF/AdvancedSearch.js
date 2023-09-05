@@ -14,9 +14,10 @@ import { validateRequiredSelectField } from 'utils/validation';
 import { ModalButtons } from 'components/common/Button';
 
 import styles from 'assets/sass/app.module.scss';
+import { customSelectBox } from 'utils/customSelectBox';
 
 export const AdvancedSearchFrom = (props) => {
-    const { setAdvanceSearchVisible, otfStatusList, page, setPage } = props;
+    const { setAdvanceSearchVisible, otfStatusList } = props;
     const {
         filterString,
         setFilterString,
@@ -30,7 +31,6 @@ export const AdvancedSearchFrom = (props) => {
     }, [filterString]);
 
     const onFinish = (values) => {
-        setPage({ ...page, current: 1 });
         setFilterString({
             ...filterString,
             ...values,
@@ -61,13 +61,6 @@ export const AdvancedSearchFrom = (props) => {
         return;
     };
 
-    const selectProps = {
-        optionFilterProp: 'children',
-        showSearch: true,
-        allowClear: true,
-        className: styles.headerSelectField,
-    };
-
     const modalProps = {
         reset: true,
         submit: true,
@@ -94,7 +87,7 @@ export const AdvancedSearchFrom = (props) => {
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Form.Item initialValue={filterString?.otfStatus} label="OTF Status" name="otfStatus">
-                        <Select placeholder={preparePlaceholderSelect('')} fieldNames={{ label: 'desc', value: 'key' }} options={otfStatusList} {...selectProps}></Select>
+                        {customSelectBox({ data: otfStatusList, fieldNames: { key: 'key', value: 'desc' }, placeholder: preparePlaceholderSelect('') })}
                     </Form.Item>
                 </Col>
             </Row>
