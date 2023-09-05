@@ -15,14 +15,14 @@ const { TextArea, Search } = Input;
 const { Panel } = Collapse;
 const { Option } = Select;
 const OtfDetailsForm = (props) => {
-    const { receiptData, openAccordian, handleCollapse, otfNumber, setOtfNumber, setReceipt, formActionType } = props;
+    const { formData, openAccordian, handleCollapse, otfNumber, setOtfNumber, setReceipt, formActionType } = props;
 
     useEffect(() => {
-        if (receiptData?.receiptType) {
-            setReceipt(receiptData?.receiptType);
+        if (formData?.receiptType) {
+            setReceipt(formData?.receiptType);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [receiptData?.receiptType]);
+    }, [formData?.receiptType]);
 
     const handleChange = (value) => {
         setOtfNumber(value);
@@ -32,7 +32,7 @@ const OtfDetailsForm = (props) => {
         <>
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                    <Form.Item initialValue={receiptData?.receiptType} label="OTF Number" name="otfNumber" rules={[validateRequiredSelectField('OTF Number'), validationNumber('OTF Number')]}>
+                    <Form.Item initialValue={formData?.receiptType} label="OTF Number" name="otfNumber" rules={[validateRequiredSelectField('OTF Number'), validationNumber('OTF Number')]}>
                         <Search maxLength={50} placeholder={preparePlaceholderText('OTF Number')} onSearch={handleChange} allowClear />
                     </Form.Item>
                 </Col>
@@ -42,51 +42,51 @@ const OtfDetailsForm = (props) => {
                     <Divider />
                     <Row gutter={20}>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={receiptData?.totalApportionAmount} label="OTF Date" name="otfDate">
+                            <Form.Item initialValue={formData?.totalApportionAmount} label="OTF Date" name="otfDate">
                                 <DatePicker format={dateFormat} placeholder={preparePlaceholderText('otf date')} style={{ display: 'auto', width: '100%' }} disabled={true} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={receiptData?.totalReceivedAmount} label="DAR Number" name="darNumber">
+                            <Form.Item initialValue={formData?.totalReceivedAmount} label="DAR Number" name="darNumber">
                                 <Input placeholder={preparePlaceholderText('DAR Number')} disabled={true} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={receiptData?.totalWriteOffAmount} label="Sales Type" name="salesType">
+                            <Form.Item initialValue={formData?.totalWriteOffAmount} label="Sales Type" name="salesType">
                                 {customSelectBox({ placeholder: preparePlaceholderSelect('sale type') })}
                             </Form.Item>
                         </Col>
                     </Row>
                     <Row gutter={20}>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={receiptData?.totalWriteOffAmount} label="Price Type" name="priceType">
+                            <Form.Item initialValue={formData?.totalWriteOffAmount} label="Price Type" name="priceType">
                                 {customSelectBox({ placeholder: preparePlaceholderSelect('price type') })}
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={receiptData?.totalReceivedAmount} label="Tax Calculation" name="taxCalculationType">
+                            <Form.Item initialValue={formData?.totalReceivedAmount} label="Tax Calculation" name="taxCalculationType">
                                 <Input placeholder={preparePlaceholderText('Tax Calculation')} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={receiptData?.totalReceivedAmount} label="Tax Payable On Reverse Charges?" name="taxPayableOnReverseCharges">
+                            <Form.Item initialValue={formData?.totalReceivedAmount} label="Tax Payable On Reverse Charges?" name="taxPayableOnReverseCharges">
                                 <Input placeholder={preparePlaceholderText('Tax Payable On Reverse Charges')} />
                             </Form.Item>
                         </Col>
                     </Row>
                     <Row gutter={20}>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={receiptData?.totalWriteOffAmount} label="Sales Consultant Name" name="consultantName">
+                            <Form.Item initialValue={formData?.totalWriteOffAmount} label="Sales Consultant Name" name="consultantName">
                                 <Input placeholder={preparePlaceholderText('Influence/Mitra Type')} disabled={true} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={receiptData?.totalReceivedAmount} label="Influence/Mitra Type" name="mitraType">
+                            <Form.Item initialValue={formData?.totalReceivedAmount} label="Influence/Mitra Type" name="mitraType">
                                 <Input placeholder={preparePlaceholderText('Influence/Mitra Type')} disabled={true} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={receiptData?.totalReceivedAmount} label="Influence/Mitra Name" name="mitraName">
+                            <Form.Item initialValue={formData?.totalReceivedAmount} label="Influence/Mitra Name" name="mitraName">
                                 <Input placeholder={preparePlaceholderText('Influence/Mitra Name')} disabled={true} />
                             </Form.Item>
                         </Col>
