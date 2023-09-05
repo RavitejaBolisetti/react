@@ -74,7 +74,7 @@ const CardDocumentType = (prop) => {
 
     return (
         <>
-            <Card className={styles.viewCardSize} key={documentTypeCode}>
+            <Card key={documentTypeCode}>
                 <Row align="middle" className={styles.marB20}>
                     <Col xs={18} sm={18} md={18} lg={18} xl={18} xxl={18}>
                         <div>

@@ -110,23 +110,22 @@
     border-radius: 4px;
 
     &::-webkit-scrollbar-track {
-        background-color: $neutralGrey0;
+        background-color: $primaryWhite;
     }
 
     &::-webkit-scrollbar {
-        width: 5px;
-        height: 0px;
-        background-color: $neutralGrey0;
+        background-color: $primaryWhite;
+        width: 8px;
+        height: 8px;
     }
 
     &::-webkit-scrollbar-thumb {
         background-color: $neutralGrey2;
         border-radius: 10px;
-    }
+        border: 2px solid $primaryWhite;
 
-    &:hover {
-        &::-webkit-scrollbar {
-            width: 8px !important;
+        &:hover {
+            border: 2px solid $neutralGrey2;
         }
     }
 }
@@ -134,6 +133,8 @@
 /* modalView */
 .modalView {
     .scrollTreeData {
+        height: auto !important;
+
         &::-webkit-scrollbar-track {
             background-color: $primaryWhite;
         }
@@ -183,7 +184,9 @@
     cursor: pointer;
     float: left;
     will-change: box-shadow, transform;
-    transition: box-shadow 0.2s cubic-bezier(0.4, 0, 1, 1), background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    transition:
+        box-shadow 0.2s cubic-bezier(0.4, 0, 1, 1),
+        background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .bigblue {

@@ -34,6 +34,7 @@ export const UserManagementFormButton = ({ record, handleChangeHistory, onCloseA
                             Close
                         </Button>
                     )}
+
                     {buttonData?.editBtn && (
                         <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record, openDefaultSection: false })} type="primary">
                             Edit
@@ -41,7 +42,7 @@ export const UserManagementFormButton = ({ record, handleChangeHistory, onCloseA
                     )}
 
                     {buttonData?.nextBtn && !isLastSection && (
-                        <Button disabled={!buttonData?.formBtnActive} onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.NEXT, record })} type="primary">
+                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.NEXT, record })} type="primary">
                             Next
                         </Button>
                     )}

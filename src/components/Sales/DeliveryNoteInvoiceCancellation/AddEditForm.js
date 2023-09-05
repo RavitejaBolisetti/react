@@ -10,6 +10,7 @@ import { withDrawer } from 'components/withDrawer';
 import { RequestDetailsForm } from './RequestDetailsForm';
 import { DeliveryNoteInvoiceForm } from './DeliveryNoteInvoiceForm';
 import { formattedCalendarDate } from 'utils/formatDateTime';
+import { PARAM_MASTER } from 'constants/paramMaster';
 
 import { VehicleDetailsForm } from './VehicleDetailsForm';
 import { InvoiceCancellationButtons } from './InvoiceCancellationButtons';
@@ -22,9 +23,19 @@ const AddEditFormMain = (props) => {
     const { typeData, form, isDetailLoaded, requestDetailData, invoiceStatusType } = props;
     useEffect(() => {
         if (isDetailLoaded && requestDetailData) {
-            form.setFieldsValue({ ...requestDetailData, requestDate: formattedCalendarDate(requestDetailData?.requestDate), invoiceDate: formattedCalendarDate(requestDetailData?.invoiceDate) });
+            form.setFieldsValue({
+                ...requestDetailData,
+                requestType: typeData[PARAM_MASTER?.DEL_INV_CAN_TYP?.id]?.find((request) => requestDetailData?.requestType === request?.key)?.value,
+                invoiceStatus: typeData[PARAM_MASTER?.CDLR_INV_APP_STATUS?.id]?.find((status) => requestDetailData?.invoiceStatus === status?.key)?.value,
+                requestStatus: typeData[PARAM_MASTER?.INV_DEL_NOT_REQ_TYP?.id]?.find((reqStatus) => requestDetailData?.requestStatus === reqStatus?.key)?.value,
+                requestDate: formattedCalendarDate(requestDetailData?.requestDate),
+                invoiceDate: formattedCalendarDate(requestDetailData?.invoiceDate),
+                deliveryNoteDate: formattedCalendarDate(requestDetailData?.deliveryNoteDate),
+                cancelDate: formattedCalendarDate(requestDetailData?.cancelDate),
+            });
         }
-    }, [isDetailLoaded]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isDetailLoaded, requestDetailData]);
 
     const requestDetailFormProps = {
         invoiceStatusType,

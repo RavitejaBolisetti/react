@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom/extend-expect';
-import AssignUserRole from '@components/common/UserManagement/AssignUserRole/AssignUserRole';
+import AssignUserRole from '@components/common/UserManagement/common/AssignUserRole/AssignUserRoleMain';
 import customRender from '@utils/test-utils';
 
 afterEach(() => {
@@ -8,6 +8,6 @@ afterEach(() => {
 
 describe('AssignUser Role components', () => {
     it('should render AssignUser Role components', () => {
-        customRender(<AssignUserRole/>)
+        customRender(<AssignUserRole resetMnmUserRoleAppDataList={jest.fn()} resetUsrDlrRoleAppDataList={jest.fn()}/>)
     });
 });

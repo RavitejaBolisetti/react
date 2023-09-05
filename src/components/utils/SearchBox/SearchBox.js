@@ -17,6 +17,7 @@ const { Search } = Input;
 const SearchBox = (props) => {
     const { selectWide, searchForm, optionType, searchParamRule, filterString, setFilterString, handleChange, disabled = false, isLoading, handleSearchWithoutParameter = undefined } = props;
     const { singleField = false, label = '', placeholder = 'Search', singleFieldKey = 'searchParam', defaultOption = undefined } = props;
+
     const [validationRules, setValidationRules] = useState([validateRequiredInputField('searchType')]);
 
     const onKeyPressHandler = (e) => {
@@ -58,7 +59,7 @@ const SearchBox = (props) => {
             .validateFields()
             .then((values) => {
                 setValidationRules([validateRequiredInputField('searchType')]);
-                setFilterString({ ...values, advanceFilter: true });
+                setFilterString({ ...values, pageSize: filterString?.pageSize, current: 1, advanceFilter: true });
                 searchForm.resetFields();
             })
             .catch((err) => {

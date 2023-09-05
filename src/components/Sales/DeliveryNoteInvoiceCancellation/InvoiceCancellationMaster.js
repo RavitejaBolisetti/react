@@ -16,12 +16,14 @@ import { ListDataTable } from 'utils/ListDataTable';
 import { AdvancedSearch } from './AdvancedSearch';
 import { showGlobalNotification } from 'store/actions/notification';
 import { DELIVERY_NOTE_INVOICE_STATUS } from './utils/DeliveryNoteInvoiceStatus';
+import { REQUEST_STATUS_CONSTANT } from './utils/RequestStatusConstant';
 import { monthDateFormat, converDateDayjs } from 'utils/formatDateTime';
 import { BASE_URL_DELIVERY_NOTE_INVOICE_CANCELLATION_SEARCH as customURL } from 'constants/routingApi';
 
 import { LANGUAGE_EN } from 'language/en';
 import { PARAM_MASTER } from 'constants/paramMaster';
-import { getCodeValue } from 'utils/getCodeValue';  
+import { getCodeValue } from 'utils/getCodeValue';
+
 import { FilterIcon } from 'Icons';
 import { deliveryNoteInvoiceCancellationDataAction } from 'store/actions/data/sales/deliveryNoteInvoiceCancellation';
 import AddEditForm from './AddEditForm';
@@ -246,7 +248,7 @@ export const InvoiceCancellationMasterBase = (props) => {
     const handleCancelRequest = () => {
         const data = {
             id: formData?.id,
-            requestStatus: 'O',
+            requestStatus: REQUEST_STATUS_CONSTANT?.OPEN?.key,
         };
         const onSuccess = (res) => {
             setShowDataLoading(true);
@@ -286,7 +288,7 @@ export const InvoiceCancellationMasterBase = (props) => {
     const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
         setFormData([]);
-        record?.requestStatus === 'O' ? setButtonData({ ...defaultBtnVisiblity, cancelRequest: true }) : setButtonData({ ...defaultBtnVisiblity });
+        record?.requestStatus === REQUEST_STATUS_CONSTANT?.OPEN?.key && invoiceStatusType === DELIVERY_NOTE_INVOICE_STATUS?.PENDING?.key ? setButtonData({ ...defaultBtnVisiblity, cancelRequest: true }) : setButtonData({ ...defaultBtnVisiblity });
         setFormActionType({ viewMode: buttonAction === VIEW_ACTION });
         record && setFormData(record);
         setIsFormVisible(true);
@@ -384,7 +386,7 @@ export const InvoiceCancellationMasterBase = (props) => {
         isDetailLoaded,
         requestDetailData,
         onCloseAction,
-        titleOverride: 'Edit Invoice Cancellation Details',
+        titleOverride: 'Delivery Note/Invoice Cancellation Details',
         handleButtonClick,
         buttonData,
         setButtonData,

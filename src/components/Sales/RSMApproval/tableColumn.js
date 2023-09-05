@@ -64,7 +64,7 @@ export const tableColumn = (handleButtonClick) => {
             },
         }),
 
-        tblActionColumn({ handleButtonClick, styles, width: '8%', canEdit: false, EditIcon: false }),
+        tblActionColumn({ handleButtonClick, styles, width: '8%', canEdit: false }),
     ];
 
     return tableColumn;

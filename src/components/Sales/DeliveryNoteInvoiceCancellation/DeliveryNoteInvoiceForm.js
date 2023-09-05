@@ -6,17 +6,14 @@
 import React from 'react';
 import { Row, Col, Input, Form, DatePicker } from 'antd';
 
-import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
+import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { dateFormat } from 'utils/formatDateTime';
 import { disableFutureDate } from 'utils/disableDate';
-import { PARAM_MASTER } from 'constants/paramMaster';
-import { validateRequiredInputField, validateRequiredSelectField, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
-import { customSelectBox } from 'utils/customSelectBox';
+import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 
 import styles from 'assets/sass/app.module.scss';
 
-export const DeliveryNoteInvoiceForm = (props) => {
-    const { typeData } = props;
+export const DeliveryNoteInvoiceForm = () => {
     return (
         <>
             <Row gutter={20}>
@@ -26,7 +23,7 @@ export const DeliveryNoteInvoiceForm = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                    <Form.Item label="Request Date" name="requestDate" rules={[validateRequiredInputField('Request Date')]}>
+                    <Form.Item label="Delivery Note Date" name="deliveryNoteDate" rules={[validateRequiredInputField('Delivery Note Date')]}>
                         <DatePicker format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} disabled={true} />
                     </Form.Item>
                 </Col>
@@ -44,7 +41,7 @@ export const DeliveryNoteInvoiceForm = (props) => {
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
                     <Form.Item name="invoiceStatus" label="Invoice Status" rules={[validateRequiredInputField('Invoice Status')]}>
-                        {customSelectBox({ data: typeData[PARAM_MASTER?.CDLR_INV_APP_STATUS?.id], placeholder: preparePlaceholderSelect('Invoice Status'), disabled: true })}
+                        <Input maxLength={30} placeholder={preparePlaceholderText('Invoice ID')} disabled={true} />
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
