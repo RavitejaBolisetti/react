@@ -24,6 +24,8 @@ import { LANGUAGE_EN } from 'language/en';
 import { NoDataFound } from 'utils/noDataFound';
 
 import styles from 'assets/sass/app.module.scss';
+import { customerMobileDetailsDataActions } from 'store/actions/data/customerMaster/searchMobileNumber';
+import { forgotPasswordActions } from 'store/actions/data/forgotPassword';
 
 const { Text } = Typography;
 
@@ -37,6 +39,9 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
         },
+        CustomerMaster: {
+            customerMobileDetail: {isLoaded: isMoblieDataLoaded = false, isLoading, data: mobNoVerificationData, filter: filterString = {} }
+        }
     } = state;
 
     let returnValue = {
@@ -49,6 +54,8 @@ const mapStateToProps = (state) => {
         isCustomerIndDataLoaded,
         isCustomerIndDataLoading,
         customerIndData,
+        
+        mobNoVerificationData,
     };
     return returnValue;
 };
@@ -67,6 +74,15 @@ const mapDispatchToProps = (dispatch) => ({
             saveIndividualData: customerDetailIndividualDataActions.saveData,
             resetIndividualData: customerDetailIndividualDataActions.reset,
 
+
+            fetchContactMobileNoDetails: customerMobileDetailsDataActions.fetchList,
+            listContactMobileNoShowLoading: customerMobileDetailsDataActions.listShowLoading,
+            resetContactMobileNoData: customerMobileDetailsDataActions.reset,
+            verifyUser: forgotPasswordActions.verifyUser,
+            sendOTP: forgotPasswordActions.sendOTP,
+            validateOTP: forgotPasswordActions.validateOTP,
+
+
             showGlobalNotification,
         },
         dispatch
@@ -77,6 +93,7 @@ const ContactMain = (props) => {
     const { form, section, userId, customerType, resetData, fetchContactDetailsList, customerData, customerIndData, listContactDetailsShowLoading, saveData, showGlobalNotification, typeData } = props;
     const { isCustomerIndDataLoading, isCustomerDataLoading, selectedCustomer, fetchContactIndividualDetailsList, saveIndividualData, resetIndividualData } = props;
     const { buttonData, setButtonData, formActionType, handleButtonClick, NEXT_ACTION } = props;
+    const { fetchContactMobileNoDetails, listContactMobileNoShowLoading, mobNoVerificationData, resetContactMobileNoData, sendOTP, validateOTP } = props;
 
     const [contactform] = Form.useForm();
     const [contactData, setContactData] = useState([]);
@@ -200,6 +217,7 @@ const ContactMain = (props) => {
     };
 
     const formProps = {
+        userId,
         setShowAddEditForm,
         showAddEditForm,
         setContactData,
@@ -225,6 +243,14 @@ const ContactMain = (props) => {
         isAdding,
         setIsAdding,
         buttonData,
+
+        showGlobalNotification,
+        fetchContactMobileNoDetails,
+        listContactMobileNoShowLoading,
+        mobNoVerificationData,
+        resetContactMobileNoData,
+        sendOTP,
+        validateOTP,
     };
 
     const onFinish = () => {

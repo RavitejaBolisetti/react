@@ -45,6 +45,7 @@ import { UserManagement } from './userManagement';
 import { VehicleReceiptChecklist } from './VehicleReceiptCheckList';
 import { vehicleAllotmentData } from './vehicleAllotment';
 
+
 export const data = combineReducers({
     Menu,
     ProductHierarchy,

@@ -7,13 +7,71 @@ import { Button, Form, Row, Col, Select, Input, Checkbox } from 'antd';
 import { validateLettersWithWhitespaces, validateEmailField, validateRequiredInputField, validateRequiredSelectField, validateMobileNoField, duplicateValidator } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { CUSTOMER_TYPE } from 'constants/CustomerType';
+import { BiLockAlt } from 'react-icons/bi';
+import { CheckOutlined } from '@ant-design/icons';
 
 import styles from 'assets/sass/app.module.scss';
+import { useEffect, useState } from 'react';
+import { ValidateMobileNumberModal } from './ValidateMobileNumberModal';
+import { OtpVerification } from './OtpVerfication';
 
 const AddEditForm = (props) => {
-    const { isReadOnly = false, onSaveFormData, contactform, setShowAddEditForm, setIsEditing, typeData, customerType, uploadImgDocId, formActionType, handleFormValueChange, setIsAdding, contactData, editingData } = props;
+    const { userId,isReadOnly = false, onSaveFormData, contactform, setShowAddEditForm, setIsEditing, typeData, customerType, uploadImgDocId, formActionType, handleFormValueChange, setIsAdding, contactData, editingData,setContinueWithOldMobNo, continueWithOldMobNo } = props;
+    const { fetchContactMobileNoDetails, listContactMobileNoShowLoading, mobNoVerificationData, resetContactMobileNoData, showGlobalNotification, sendOTP, validateOTP } = props;
+    const RESEND_OTP_TIME = 60;
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [continueWithPreModalOpen, setContinueWithPreModalOpen] = useState(false);
+    const [mobileNumber, setMobileNumber] = useState(false);
+    const [mobileLoader, setmobileLoader] = useState(false);
+    const [otpInput, setOTPInput] = useState('');
+    const [numbValidatedSuccess, setNumbValidatedSuccess] = useState(false);
+    const [counter, setCounter] = useState();
 
     const disabledProps = { disabled: isReadOnly || formActionType?.viewMode };
+    useEffect(() => {
+        if (mobNoVerificationData?.customerMasterDetails?.length && mobileNumber?.length) {
+            setContinueWithPreModalOpen(true);
+        } else if ((!mobNoVerificationData?.customerMasterDetails?.length && !mobileLoader && mobileNumber) || continueWithOldMobNo) {
+            sendOTPVerificationCode()
+            setIsModalOpen(true);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [mobNoVerificationData, mobileLoader]);
+    useEffect(() => {
+        const timer = counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
+        return () => {
+            clearInterval(timer);
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [counter]);
+    const defaultExtraParam = [
+        {
+            key: 'customerType',
+            title: 'Customer Type',
+            value: customerType,
+            canRemove: true,
+        },
+        {
+            key: 'pageSize',
+            title: 'Value',
+            value: 1,
+            canRemove: true,
+        },
+        {
+            key: 'pageNumber',
+            title: 'Value',
+            value: 1,
+            canRemove: true,
+        },
+        {
+            key: 'searchType',
+            title: 'searchType',
+            value: 'mobileNumber',
+            canRemove: true,
+        },
+    ];
+
+
 
     const handleCancelFormEdit = () => {
         contactform.resetFields();
@@ -22,40 +80,117 @@ const AddEditForm = (props) => {
         setShowAddEditForm(false);
     };
 
-    const handleNumberValidation = (event) => {
+    		
+    const onSuccessAction = (res) => {
+        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        setmobileLoader(false);
+    };
+    const onErrorAction = (res) => {
+        showGlobalNotification({ message: res?.responseMessage });
+        setmobileLoader(false);
+    };
+    const onOnContinueWithOldMobNo = () => {
+        setContinueWithPreModalOpen(false);
+        setIsModalOpen(true);
+        setmobileLoader(false);
+        setContinueWithOldMobNo(true);
+        resetContactMobileNoData();
+        setOTPInput('');
+    };
+    const handleCancel = () => {
+        setIsModalOpen(false);
+        setContinueWithPreModalOpen(false);
+        setContinueWithOldMobNo(false);
+        setmobileLoader(false);
+        setIsAdding(false);
+        resetContactMobileNoData();
+        setOTPInput('');
+    };
+    const handleOnchangeMobNoInput = (event) => {
         const Mno = event.target.value;
         const regex = new RegExp('^([5-9]){1}([0-9]){9}$');
         if (Mno?.length === 10 && regex.test(Mno)) {
-            // setmobileLoader(true);
-            // setTimeout(() => {
-            //     setIsModalOpen(true);
-            // }, 1000);
-        } else {
-            // setmobileLoader(false);
+            setMobileNumber(Mno);
         }
     };
-
-    // const onCloseActionOnContinue = () => {
-    //     setIsModalOpen(false);
-    //     setmobileLoader(false);
-    //     setContinueWithOldMobNo(true);
-    // };
-
-    // const handleCancel = () => {
-    //     setIsModalOpen(false);
-    //     setmobileLoader(false);
-    //     setContinueWithOldMobNo(false);
-    //     setIsAdding(false);
-    // };
-
-    // const modalProps = {
-    //     isVisible: isModalOpen,
-    //     icon: <BiLockAlt />,
-    //     titleOverride: 'Mobile Number Validation',
-    //     closable: false,
-    //     onCloseAction: handleCancel,
-    //     onCloseActionOnContinue,
-    // };
+    const handleNumberValidation = () => {
+        if (mobileNumber) {
+            const mobNoParam = [
+                {
+                    key: 'searchParam',
+                    title: 'searchParam',
+                    value: mobileNumber,
+                    canRemove: true,
+                },
+            ];
+            setmobileLoader(true);
+            fetchContactMobileNoDetails({ setIsLoading: listContactMobileNoShowLoading, extraParams: [...defaultExtraParam, ...mobNoParam], userId, onSuccessAction, onErrorAction });
+        }
+    };
+    const sendOTPVerificationCode = () => {
+        const data = { userId: userId, sentOnMobile: true, sentOnEmail: true };
+        const onSuccess = (res) => {
+            setCounter(RESEND_OTP_TIME);
+            showGlobalNotification({ notificationType: 'warning', title: 'OTP Sent', message: res?.responseMessage });
+        };
+        const onError = (message) => {
+            showGlobalNotification({ title: 'ERROR', message: Array.isArray(message[0]) || message });
+            if (otpInput?.length === 6) {
+                setCounter(0);
+            }
+            // setInValidOTP(true);
+            // setDisableVerifyOTP(true);
+            // setSubmitButtonActive(true);
+        };
+        const requestData = {
+            data: data,
+            setIsLoading: () => {},
+            onSuccess,
+            onError,
+        };
+        sendOTP(requestData);
+    };
+    const handleVerifyOTP = () => {
+        if (userId) {
+            // hideGlobalNotification();
+            const data = { userId: userId, otp: otpInput };
+            const onSuccess = (res) => {
+                // setValidationKey(res?.data?.validationKey);
+                showGlobalNotification({ notificationType: 'successBeforeLogin', title: 'OTP Verified', message: res?.responseMessage });
+            };
+            const requestData = {
+                data: data,
+                setIsLoading: () => {},
+                onSuccess,
+                onError:err =>  console.log(err),
+            };
+            validateOTP(requestData);
+        }
+    };
+    const modalProps = {
+        isVisible: isModalOpen,
+        icon: <BiLockAlt />,
+        titleOverride: 'Mobile Number Validation',
+        closable: false,
+        onCloseAction: handleCancel,
+        // onOnContinueWithOldMobNo,
+        handleVerifyOTP,
+        sendOTPVerificationCode,
+        otpInput,
+        setOTPInput,
+        sendOTP,
+        validateOTP,
+        userId,
+        counter,
+    };
+    const modalContinueProps = {
+        isVisible: continueWithPreModalOpen,
+        icon: <BiLockAlt />,
+        titleOverride: 'Mobile Number Validation',
+        closable: false,
+        onCloseAction: handleCancel,
+        onOnContinueWithOldMobNo,
+    };
 
     return (
         <>
@@ -70,26 +205,25 @@ const AddEditForm = (props) => {
                     </Col>
                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                         <Form.Item label="Mobile Number" name="mobileNumber" rules={[validateRequiredInputField('mobile number'), validateMobileNoField('mobile number')]}>
-                            <Input
-                                maxLength={10}
-                                onChange={handleNumberValidation}
-                                placeholder={preparePlaceholderText('mobile number')}
-                                allowClear
-                                // enterButton="Send OTP"
-                                size="small"
-                                // suffix={
-                                //     <>
-                                //         {false ? (
-                                //             <Button loading={mobileLoader} onClick={showModal} type="link">
-                                //                 Validate
-                                //             </Button>
-                                //         ) : (
-                                //             <CheckOutlined style={{ color: '#70c922', fontSize: '16px', fotWeight: 'bold' }} />
-                                //         )}
-                                //         <ValidateMobileNumberModal {...modalProps} />
-                                //     </>
-                                // }
-                            />
+                        <Input
+                                    maxLength={10}
+                                    onChange={handleOnchangeMobNoInput}
+                                    placeholder={preparePlaceholderText('mobile number')}
+                                    allowClear
+                                    // enterButton="Send OTP"
+                                    size="small"
+                                    suffix={
+                                        <>
+                                            {!numbValidatedSuccess ? (
+                                                <Button loading={mobileLoader} onClick={handleNumberValidation} type="link">
+                                                    Validate
+                                                </Button>
+                                            ) : (
+                                                <CheckOutlined style={{ color: '#70c922', fontSize: '16px', fotWeight: 'bold' }} />
+                                            )}
+                                        </>
+                                    }
+                                />
                         </Form.Item>
                     </Col>
 
@@ -216,6 +350,8 @@ const AddEditForm = (props) => {
                     </Row>
                 )}
             </Form>
+            <ValidateMobileNumberModal {...modalContinueProps} />
+            <OtpVerification {...modalProps} />
         </>
     );
 };
