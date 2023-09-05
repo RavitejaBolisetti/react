@@ -38,10 +38,11 @@ const mapStateToProps = (state) => {
         },
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
+            CustomerMaster: {
+                customerMobileDetail: {isLoaded: isMoblieDataLoaded = false, isLoading, data: mobNoVerificationData, filter: filterString = {} }
+            }
         },
-        CustomerMaster: {
-            customerMobileDetail: {isLoaded: isMoblieDataLoaded = false, isLoading, data: mobNoVerificationData, filter: filterString = {} }
-        }
+       
     } = state;
 
     let returnValue = {
