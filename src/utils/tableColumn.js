@@ -73,7 +73,7 @@ export const tblStatusColumn = ({ width = '15%', fixed = '' }) => {
         title: 'Status',
         dataIndex: 'status',
         sorter: (a, b) => (a && b ? String(a['status']).localeCompare(String(b['status']), undefined, { sensitivity: 'base' }) : a),
-        render: (_, record) => (record?.status ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>),
+        render: (_, record) => (record?.status ? <Tag color="success">Active</Tag> : <Tag color="error">Inactive</Tag>),
         width,
         fixed: fixed,
         sortDirections: ['descend', 'ascend'],
