@@ -18,6 +18,7 @@ import { vehicleModelDetailsDataActions } from 'store/actions/data/vehicle/model
 import { vehicleVariantDetailsDataActions } from 'store/actions/data/vehicle/variantDetails';
 import { showGlobalNotification } from 'store/actions/notification';
 import { BASE_URL_CUSTOMER_MASTER_VEHICLE_LIST as customURL } from 'constants/routingApi';
+import VehiclePriorityAllotmentAlert from './VehiclePriorityAllotmentAlert';
 
 import { AddEditForm } from './AddEditForm';
 import { ViewDetail } from './ViewDetail';
@@ -135,6 +136,7 @@ const ExchangeVehiclesBase = (props) => {
     const [filteredVariantData, setfilteredVariantData] = useState([]);
     const [editableOnSearch, setEditableOnSearch] = useState(false);
     const [customerList, setCustomerList] = useState();
+    const [modalOpen, setModalOpen] = useState(false);
 
     const fnSetData = (data) => {
         if (data?.make) {
@@ -388,6 +390,11 @@ const ExchangeVehiclesBase = (props) => {
         financeLovData,
     };
 
+    const VehiclePriorityAlertProp = {
+        modalOpen,
+        setModalOpen
+    }
+
     return (
         <Form data-testid="exchangeVID" layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20} className={styles.drawerBodyRight}>
@@ -404,6 +411,7 @@ const ExchangeVehiclesBase = (props) => {
                     {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
                 </Col>
             </Row>
+            <VehiclePriorityAllotmentAlert {...VehiclePriorityAlertProp}/>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <OTFFormButton {...props} />
