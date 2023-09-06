@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Form, Row, Col } from 'antd';
 
 import { ViewDetail } from './ViewDetail';
@@ -57,11 +57,13 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const InvoiceDetailsMasterBase = (props) => {
-    const { setReceipt, typeData, partySegmentType, receiptDetailData, partyDetailData } = props;
-    const { userId, buttonData, setButtonData, showGlobalNotification, section, fetchCustomerDetail, fetchPartyDetail, resetData, listShowLoading, isDataLoaded, isLoading } = props;
-    const { form, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick } = props;
-    const { requestPayload, setRequestPayload } = props;
+    const { setReceipt, typeData, partySegmentType } = props;
+    const { userId, buttonData, setButtonData, showGlobalNotification, section, isDataLoaded, isLoading } = props;
+    const { form, formActionType, handleFormValueChange } = props;
+    // const { requestPayload, setRequestPayload } = props;
     const [activeKey, setActiveKey] = useState([]);
+    const [otfNumber, setOtfNumber] = useState();
+
     const [formData, setFormData] = useState('');
 
     // useEffect(() => {
@@ -86,7 +88,6 @@ const InvoiceDetailsMasterBase = (props) => {
     const handleChange = (e) => {
         setButtonData({ ...buttonData, formBtnActive: false });
     };
-
 
     const onFinish = (values) => {
         // const partyDetails = { ...values, id: '' };
@@ -113,6 +114,8 @@ const InvoiceDetailsMasterBase = (props) => {
         isLoading,
         setActiveKey,
         activeKey,
+        otfNumber,
+        setOtfNumber,
     };
 
     const viewProps = {
@@ -135,7 +138,13 @@ const InvoiceDetailsMasterBase = (props) => {
                             </h2>
                         </Col>
                     </Row>
-                    {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <><AddEditForm {...formProps} /> <CustomerDetailsMaster {...formProps}/> </>}
+                    {formActionType?.viewMode ? (
+                        <ViewDetail {...viewProps} />
+                    ) : (
+                        <>
+                            <AddEditForm {...formProps} /> <CustomerDetailsMaster {...formProps} />
+                        </>
+                    )}
                 </Col>
             </Row>
             <Row>

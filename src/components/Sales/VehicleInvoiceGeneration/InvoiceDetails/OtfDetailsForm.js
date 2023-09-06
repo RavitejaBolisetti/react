@@ -3,26 +3,17 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect } from 'react';
-import { Row, Col, Form, Select, DatePicker, Input, Collapse, Divider } from 'antd';
-import { expandIcon } from 'utils/accordianExpandIcon';
-import { formattedCalendarDate, dateFormat } from 'utils/formatDateTime';
-import { validateRequiredSelectField, validateRequiredInputField, validationNumber } from 'utils/validation';
+import React from 'react';
+import { Row, Col, Form, DatePicker, Input, Divider } from 'antd';
+import { dateFormat } from 'utils/formatDateTime';
+import { validateRequiredSelectField, validationNumber } from 'utils/validation';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { customSelectBox } from 'utils/customSelectBox';
 
-const { TextArea, Search } = Input;
-const { Panel } = Collapse;
-const { Option } = Select;
-const OtfDetailsForm = (props) => {
-    const { formData, openAccordian, handleCollapse, otfNumber, setOtfNumber, setReceipt, formActionType } = props;
+const { Search } = Input;
 
-    useEffect(() => {
-        if (formData?.receiptType) {
-            setReceipt(formData?.receiptType);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formData?.receiptType]);
+const OtfDetailsForm = (props) => {
+    const { formData, otfNumber, setOtfNumber } = props;
 
     const handleChange = (value) => {
         setOtfNumber(value);
