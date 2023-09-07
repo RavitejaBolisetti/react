@@ -104,6 +104,13 @@ const CompanyProfileBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedCustomer]);
 
+    useEffect(()=> {
+        return ()=> {
+            resetData();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[])
+
     useEffect(() => {
         if (userId && customerProfileData?.customerFormDocId) {
             const extraParams = [
