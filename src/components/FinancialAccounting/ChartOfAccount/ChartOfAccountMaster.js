@@ -185,6 +185,8 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
             setAccountTyp(chartOfAccountData?.accountType);
             if(chartOfAccountData?.isChildAvailable){
                 setDisableCheckBox(true);
+            } else{
+                setDisableCheckBox(false);
             }
             form.setFieldsValue({
                 accountType: chartOfAccountData?.accountType,
@@ -224,6 +226,7 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
     const handleAdd = () => {
         form.resetFields();
         setSelectedTreeSelectKey(null);
+        setDisableCheckBox(false);
         setIsFormVisible(true);
         setFormBtnActive(false);
     };
