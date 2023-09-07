@@ -17,6 +17,8 @@ import { ListDataTable } from 'utils/ListDataTable';
 import { AdvancedSearch } from './AdvancedSearch';
 import { CancelReceipt } from './CancelReceipt';
 import { QUERY_BUTTONS_CONSTANTS } from './QueryButtons';
+import { BASE_URL_OTF_DETAILS as customURL } from 'constants/routingApi';
+import { otfDataActions } from 'store/actions/data/otf/otf';
 import { vehicleInvoiceDataActions } from 'store/actions/data/invoiceGeneration/vehicleInvoiceGeneration';
 import { showGlobalNotification } from 'store/actions/notification';
 import { PARAM_MASTER } from 'constants/paramMaster';
@@ -32,6 +34,9 @@ const mapStateToProps = (state) => {
             VehicleInvoiceGeneration: {
                 VehicleInvoiceSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString },
             },
+            OTF: {
+                OtfSearchList: { isDetailLoaded: isDataLoaded, detailData: otfData = [] },
+            },
         },
     } = state;
     const moduleTitle = 'Invoice Generation';
@@ -44,6 +49,8 @@ const mapStateToProps = (state) => {
         moduleTitle,
         isSearchLoading,
         isSearchDataLoaded,
+        isDataLoaded,
+        otfData,
         filterString,
     };
     return returnValue;
@@ -54,6 +61,8 @@ const mapDispatchToProps = (dispatch) => ({
     ...bindActionCreators(
         {
             fetchList: vehicleInvoiceDataActions.fetchList,
+            fetchOTFDetail: otfDataActions.fetchDetail,
+            listShowLoading: otfDataActions.listShowLoading,
             listShowLoading: vehicleInvoiceDataActions.listShowLoading,
             setFilterString: vehicleInvoiceDataActions.setFilter,
             showGlobalNotification,
@@ -63,9 +72,9 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const VehicleInvoiceMasterBase = (props) => {
-    const { data, receiptDetailData, userId, fetchList, listShowLoading, showGlobalNotification } = props;
+    const { data, receiptDetailData, userId, fetchList, fetchOTFDetail, listShowLoading, showGlobalNotification } = props;
     const { typeData, receiptType, partySegmentType, paymentModeType, documentType, moduleTitle, totalRecords } = props;
-    const { filterString, setFilterString, invoiceStatusList } = props;
+    const { filterString, setFilterString, invoiceStatusList, otfData } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [invoiceStatus, setInvoiceStatus] = useState(QUERY_BUTTONS_CONSTANTS.INVOICED.key);
     const [requestPayload, setRequestPayload] = useState({ partyDetails: {}, receiptsDetails: {}, apportionDetails: {} });
@@ -77,6 +86,7 @@ export const VehicleInvoiceMasterBase = (props) => {
 
     const [selectedOrder, setSelectedOrder] = useState();
     const [selectedOrderId, setSelectedOrderId] = useState();
+    const [selectedOtfNumber, setSelectedOtfNumber] = useState();
 
     const [section, setSection] = useState();
     const [defaultSection, setDefaultSection] = useState();
@@ -265,6 +275,21 @@ export const VehicleInvoiceMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentSection, sectionName]);
 
+    useEffect(() => {
+        if (userId && selectedOtfNumber) {
+            const extraParams = [
+                {
+                    key: 'otfNumber',
+                    title: 'otfNumber',
+                    value: selectedOtfNumber,
+                    name: 'OTF Number',
+                },
+            ];
+            fetchOTFDetail({ customURL, setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, selectedOtfNumber]);
+
     const handleInvoiceTypeChange = (buttonName) => {
         setInvoiceStatus(buttonName?.key);
         searchForm.resetFields();
@@ -291,14 +316,15 @@ export const VehicleInvoiceMasterBase = (props) => {
             case EDIT_ACTION:
                 setSelectedOrder(record);
                 record && setSelectedOrderId(record?.id);
+                record && setSelectedOtfNumber(record?.otfNumber);
                 openDefaultSection && setCurrentSection(defaultSection);
 
                 break;
             case VIEW_ACTION:
                 setSelectedOrder(record);
                 record && setSelectedOrderId(record?.id);
+                record && setSelectedOtfNumber(record?.otfNumber);
                 defaultSection && setCurrentSection(defaultSection);
-
                 break;
             case NEXT_ACTION:
                 const nextSection = Object.values(sectionName)?.find((i) => i.id > currentSection);
@@ -551,6 +577,8 @@ export const VehicleInvoiceMasterBase = (props) => {
         setSelectedOrderId,
         selectedOrder,
         setSelectedOrder,
+        otfData,
+
         section,
         currentSection,
         sectionName,

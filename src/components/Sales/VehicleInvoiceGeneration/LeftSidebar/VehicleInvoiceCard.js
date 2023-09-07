@@ -31,7 +31,7 @@ const expandIcon = ({ isActive }) =>
     );
 
 const VehicleInvoiceCard = (props) => {
-    const { selectedOrder, formActionType, isLoading, typeData } = props;
+    const { selectedOrder, otfData, formActionType, isLoading, typeData } = props;
     const fullName = selectedOrder?.customerName?.split(' ');
     console.log('selectedOrder', selectedOrder);
     const userAvatar = fullName ? fullName[0]?.slice(0, 1) + (fullName[1] ? fullName[1].slice(0, 1) : '') : '';
@@ -44,7 +44,7 @@ const VehicleInvoiceCard = (props) => {
                             <Avatar size={50}>{userAvatar?.toUpperCase()}</Avatar>
                             <div>
                                 <Title level={5}>{selectedOrder?.customerName?.toLowerCase()}</Title>
-                                <Text>{checkAndSetDefaultValue(selectedOrder?.customerId)}</Text>
+                                <Text>{checkAndSetDefaultValue(otfData?.customerId)}</Text>
                             </div>
                         </Space>
                         <Divider />
@@ -73,7 +73,7 @@ const VehicleInvoiceCard = (props) => {
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    OTF Date: <span>{checkAndSetDefaultValue(selectedOrder?.otfDate, isLoading, DATA_TYPE?.DATE?.key) || 'NA'}</span>
+                    OTF Date: <span>{checkAndSetDefaultValue(otfData?.otfDate, isLoading, DATA_TYPE?.DATE?.key) || 'NA'}</span>
                 </div>
             </Panel>
         </Collapse>
