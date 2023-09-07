@@ -66,11 +66,6 @@ const VehicleInvoiceCard = (props) => {
                             Status: <span>{checkAndSetDefaultValue(getCodeValue(typeData[PARAM_MASTER.INVC_STATS.id], selectedOrder?.invoiceStatus))}</span>
                         </div>
                         <Divider />
-                        <div className={styles.detailCardText}>
-                            IRN Status: <Button>Generate</Button>
-                            {/* <span>{checkAndSetDefaultValue(getCodeValue(typeData[PARAM_MASTER.INVC_STATS.id], selectedOrder?.invoiceStatus))}</span> */}
-                        </div>
-                        <Divider />
                     </>
                 )}
                 <div className={styles.detailCardText}>
