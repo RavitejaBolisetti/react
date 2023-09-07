@@ -38,7 +38,7 @@ const VehicleInvoiceCard = (props) => {
                             <Avatar size={50}>{userAvatar?.toUpperCase()}</Avatar>
                             <div>
                                 <Title level={5}>{selectedOrder?.customerName?.toLowerCase()}</Title>
-                                <Text>{selectedOrder?.mobileNumber || 'NA'}</Text>
+                                <Text>{selectedOrder?.customerId || 'NA'}</Text>
                             </div>
                         </Space>
                         <Divider />

@@ -131,7 +131,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         showGlobalNotification({ message });
         setShowDataLoading(false);
     };
-    
+
     const extraParams = useMemo(() => {
         return [
             {
@@ -175,13 +175,6 @@ export const VehicleInvoiceMasterBase = (props) => {
                 filter: true,
             },
             {
-                key: 'invoiceStatus',
-                title: 'Invoice Status',
-                value: invoiceStatus,
-                canRemove: false,
-                filter: false,
-            },
-            {
                 key: 'pageNumber',
                 title: 'Value',
                 value: page?.current,
@@ -193,6 +186,13 @@ export const VehicleInvoiceMasterBase = (props) => {
                 title: 'Value',
                 value: page?.pageSize,
                 canRemove: true,
+                filter: false,
+            },
+            {
+                key: 'invoiceStatus',
+                title: 'Invoice Status',
+                value: invoiceStatus,
+                canRemove: false,
                 filter: false,
             },
             {
