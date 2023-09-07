@@ -428,9 +428,25 @@ export const MenuConstant = {
 
     [getMenyKey('RPT-BI')]: {
         key: 'RPT-BI',
-        link: routing.ROUTING_REPORT_BI_REPORT,
+        link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
         icon: undefined,
         parentMenuId: 'RPT',
+    },
+
+    [getMenyKey('RPT-OTF')]: {
+        key: 'RPT-OTF',
+        link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
+        icon: undefined,
+        parentMenuId: 'RPT',
+        slug: 'otf',
+    },
+
+    [getMenyKey('RPT-DLRNOTE')]: {
+        key: 'RPT-DLRNOTE',
+        link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
+        icon: undefined,
+        parentMenuId: 'RPT',
+        slug: 'delivery-note',
     },
 
     [getMenyKey('RPT-PG')]: {
