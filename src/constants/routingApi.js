@@ -194,6 +194,7 @@ export const BASE_URL_VEHICLE_ENTITELMENT = BASE_URL_VEHICLE + 'schemes';
 export const BASE_URL_VEHICLE_VARIANT = BASE_URL_VEHICLE + 'variant';
 export const BASE_URL_VEHICLE_MAKE = BASE_URL_VEHICLE + 'make';
 export const BASE_URL_VEHICLE_MODEL = BASE_URL_VEHICLE + 'model';
+export const BASE_URL_VEHICLE_TRACKING = BASE_URL_VEHICLE + 'tracking';
 
 export const BASE_URL_ACCOUNT_HEAD = BASE_URL + 'finance/financialaccountheads';
 export const BASE_URL_DOCUMENT_DESCRIPTION_SEARCH = BASE_URL + 'appmst/documenttypes/search';
