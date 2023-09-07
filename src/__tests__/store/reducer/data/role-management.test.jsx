@@ -1,5 +1,5 @@
 import { createStore } from 'redux';
-import { RoleManagement } from '@store/reducers/data/RoleManagement'; // Your reducer file
+import { RoleManagement } from '@store/reducers/data/roleManagement'; // Your reducer file
 
 describe('RoleManagement Reducer', () => {
     let store;
@@ -87,3 +87,4 @@ describe('RoleManagement Reducer', () => {
         expect(store.getState().isLoaded).toEqual(true);
     });
 });
+
