@@ -33,11 +33,11 @@ export const VehicleInvoiceFormButton = ({ formActionType, record, onCloseAction
                         Edit
                     </Button>
                 )}
-                {buttonData?.cancelReceiptBtn && (
+                {/* {buttonData?.cancelReceiptBtn && (
                     <Button onClick={onCancelReceipt} type="primary">
                         Cancel Receipt
                     </Button>
-                )}
+                )} */}
 
                 {buttonData?.nextBtn && !isLastSection && (
                     <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.NEXT, record })} type="primary">

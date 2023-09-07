@@ -6,7 +6,12 @@
 import React from 'react';
 import { Collapse, Space, Avatar, Typography, Divider } from 'antd';
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
+import { DATA_TYPE } from 'constants/dataType';
 import { monthDateFormat, convertDateTime } from 'utils/formatDateTime';
+import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
+import { getCodeValue } from 'utils/getCodeValue';
+import { PARAM_MASTER } from 'constants/paramMaster';
+
 import styles from 'assets/sass/app.module.scss';
 
 const { Panel } = Collapse;
@@ -26,8 +31,9 @@ const expandIcon = ({ isActive }) =>
     );
 
 const VehicleInvoiceCard = (props) => {
-    const { selectedOrder } = props;
+    const { selectedOrder, formActionType, isLoading, typeData } = props;
     const fullName = selectedOrder?.customerName?.split(' ');
+    console.log('selectedOrder', selectedOrder);
     const userAvatar = fullName ? fullName[0]?.slice(0, 1) + (fullName[1] ? fullName[1].slice(0, 1) : '') : '';
     return (
         <Collapse bordered={true} defaultActiveKey={[1]} expandIcon={expandIcon} collapsible="icon">
@@ -38,12 +44,12 @@ const VehicleInvoiceCard = (props) => {
                             <Avatar size={50}>{userAvatar?.toUpperCase()}</Avatar>
                             <div>
                                 <Title level={5}>{selectedOrder?.customerName?.toLowerCase()}</Title>
-                                <Text>{selectedOrder?.customerId || 'NA'}</Text>
+                                <Text>{checkAndSetDefaultValue(selectedOrder?.customerId)}</Text>
                             </div>
                         </Space>
                         <Divider />
                         <div className={styles.detailCardText}>
-                            Invoice No.: <span>{selectedOrder?.invoiceNumber}</span>
+                            Invoice No.: <span>{checkAndSetDefaultValue(selectedOrder?.invoiceNumber)}</span>
                         </div>
                     </>
                 }
@@ -51,15 +57,23 @@ const VehicleInvoiceCard = (props) => {
             >
                 <Divider />
                 <div className={styles.detailCardText}>
-                    Invoice Date: <span>{convertDateTime(selectedOrder?.invoiceDate, monthDateFormat) || 'NA'}</span>
+                    Invoice Date: <span>{checkAndSetDefaultValue(selectedOrder?.invoiceDate, isLoading, DATA_TYPE?.DATE?.key) || 'NA'}</span>
+                </div>
+                <Divider />
+                {formActionType?.viewMode && (
+                    <>
+                        <div className={styles.detailCardText}>
+                            Status: <span>{checkAndSetDefaultValue(getCodeValue(typeData[PARAM_MASTER.INVC_STATS.id], selectedOrder?.invoiceStatus))}</span>
+                        </div>
+                        <Divider />
+                    </>
+                )}
+                <div className={styles.detailCardText}>
+                    OTF No.: <span>{checkAndSetDefaultValue(selectedOrder?.otfNumber)}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    OTF No.: <span>{selectedOrder?.otfNumber || 'NA'}</span>
-                </div>
-                <Divider />
-                <div className={styles.detailCardText}>
-                    OTF Date: <span>{convertDateTime(selectedOrder?.otfDate, monthDateFormat) || 'NA'}</span>
+                    OTF Date: <span>{checkAndSetDefaultValue(selectedOrder?.otfDate, isLoading, DATA_TYPE?.DATE?.key) || 'NA'}</span>
                 </div>
             </Panel>
         </Collapse>
