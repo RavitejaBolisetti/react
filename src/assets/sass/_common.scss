@@ -1057,23 +1057,23 @@
 
 /*-------------Timing Card Item Section Strat--------------*/
 
-.cardItemBtn {
-    display: flex;
-    align-items: flex-end;
-    text-align: right;
-    float: right;
+// .cardItemBtn {
+//     display: flex;
+//     align-items: flex-end;
+//     text-align: right;
+//     float: right;
 
-    & :global {
-        .ant-btn-link {
-            padding: 0;
-            margin-left: 16px;
-        }
+//     & :global {
+//         .ant-btn-link {
+//             padding: 0;
+//             margin-left: 16px;
+//         }
 
-        .ant-btn-link.ant-btn-icon-only {
-            width: 16px;
-        }
-    }
-}
+//         .ant-btn-link.ant-btn-icon-only {
+//             width: 16px;
+//         }
+//     }
+// }
 
 ::-ms-reveal {
     display: none;
@@ -1241,7 +1241,7 @@
             .ant-form-item-explain-error {
                 position: absolute;
                 left: 0px;
-                top: 40px;
+                top: 32px;
                 z-index: 99;
                 background: $transparentErrorL;
                 color: $semanticError;

@@ -19,7 +19,7 @@ const baseURL = BASE_URL_DOCUMENT_TYPE_LEDGER;
 
 export const documentTypeLedgerDataActions = dataActions({
     baseURL,
-    moduleName: 'Document Type ,Other Charges & Ledger Mapping',
+    moduleName: 'Document Type, Other Charges & Ledger Mapping',
     RECEIVE_DATA_LOADING_ACTION_CONSTANT,
     RECEIVE_DATA_ACTION_CONSTANT,
     RECEIVE_DATA_ACTION_APPLY_FILTER_CONSTANT,
