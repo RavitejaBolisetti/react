@@ -93,6 +93,7 @@ export const ROUTING_OTF = ROUTING_SALES.concat('order-tracking-form');
 export const ROUTING_VECHILE_PURCHASE_ORDER = ROUTING_SALES.concat('vehicle-purchase-order');
 export const ROUTING_RSM_APPROVAL = ROUTING_SALES.concat('rsm-approval');
 export const ROUTING_DELIVERY_NOTE_INVOICE_CANELLATION = ROUTING_SALES.concat('delivery-note-invoice-cancellation');
+export const ROUTING_VEHICLE_TRACKING = ROUTING_SALES.concat('vehicle-tracking');
 export const ROUTING_VEHICLE_DETAILS = ROUTING_SALES.concat('vehicle-details');
 export const ROUTING_VEHICLE_PRICE_MASTER = ROUTING_SALES.concat('vehicle-price-master');
 export const ROUTING_VEHICLE_RECEIPT = ROUTING_SALES.concat('vehicle-receipt');
