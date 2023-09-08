@@ -74,8 +74,7 @@ const mapDispatchToProps = (dispatch) => ({
 export const DealerCompanyBase = (props) => {
     const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, isPinCodeLoading, pinCodeShowLoading } = props;
     const { dealerParentData, isDealerParentDataLoaded, fetchDealerParentLovList, listDealerParentShowLoading, pincodeData, fetchPincodeDetail } = props;
-
-    console.log(dealerParentData)
+    
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
     const [showDataLoading, setShowDataLoading] = useState(true);
