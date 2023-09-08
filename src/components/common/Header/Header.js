@@ -4,9 +4,10 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Space, Badge, Dropdown, Modal, Avatar } from 'antd';
+import { Row, Col, Space, Badge, Dropdown, Modal, Avatar, Popover } from 'antd';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 
 import Icon, { DownOutlined } from '@ant-design/icons';
 import { FaRegBell } from 'react-icons/fa';
@@ -14,21 +15,22 @@ import { IoIosLogOut } from 'react-icons/io';
 import { FiLock } from 'react-icons/fi';
 import { CgProfile } from 'react-icons/cg';
 
+import { setCollapsed } from 'store/actions/common/leftsidebar';
+import { showGlobalNotification } from 'store/actions/notification';
+import { headerDataActions } from 'store/actions/common/header';
+import { clearLocalStorageData, doLogoutAPI } from 'store/actions/auth';
+import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
+import { notificationDataActions } from 'store/actions/common/notification';
+
 import * as routing from 'constants/routing';
 import { USER_TYPE } from 'constants/userType';
-
-import { setCollapsed } from 'store/actions/common/leftsidebar';
 import customMenuLink, { addToolTip } from 'utils/customMenuLink';
-import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
-import { showGlobalNotification } from 'store/actions/notification';
 
-import { clearLocalStorageData, doLogoutAPI } from 'store/actions/auth';
-import { headerDataActions } from 'store/actions/common/header';
-import { Link, useNavigate } from 'react-router-dom';
+import { Notification } from './Notification';
 import { HeaderSkeleton } from './HeaderSkeleton';
 import { ChangePassword } from '../ChangePassword';
-import IMG_ICON from 'assets/img/icon.png';
 
+import IMG_ICON from 'assets/img/icon.png';
 import { HeadPhoneIcon, MenuArrow } from 'Icons';
 
 import styles from './Header.module.scss';
@@ -43,6 +45,9 @@ const mapStateToProps = (state) => {
         common: {
             Header: { data: loginUserData = [], isLoading, isLoaded: isDataLoaded = false },
             LeftSideBar: { collapsed = false },
+            Notification: {
+                NotificationCount: { data: notificationCount },
+            },
         },
     } = state;
 
@@ -57,6 +62,7 @@ const mapStateToProps = (state) => {
         collapsed,
         isTypeDataLoaded,
         isTypeDataLoading,
+        notificationCount,
     };
 };
 const mapDispatchToProps = (dispatch) => ({
@@ -70,8 +76,11 @@ const mapDispatchToProps = (dispatch) => ({
             fetchConfigList: configParamEditActions.fetchFilteredList,
             listConfigShowLoading: configParamEditActions.listShowLoading,
 
-            fetchEditConfigDataList: configParamEditActions.fetchDataList,
+            notificaionShowLoading: notificationDataActions.listShowLoading,
+            fetchNotificaionCountData: notificationDataActions.counts,
+            resetNotification: notificationDataActions.reset,
 
+            fetchEditConfigDataList: configParamEditActions.fetchDataList,
             showGlobalNotification,
         },
         dispatch
@@ -80,16 +89,26 @@ const mapDispatchToProps = (dispatch) => ({
 
 const HeaderMain = (props) => {
     const { isDataLoaded, isLoading, collapsed, setCollapsed, loginUserData, doLogout, fetchData, listShowLoading, showGlobalNotification, userId } = props;
-    const { fetchEditConfigDataList, fetchConfigList, listConfigShowLoading, isTypeDataLoaded, isTypeDataLoading } = props;
+    const { fetchEditConfigDataList, fetchConfigList, listConfigShowLoading, isTypeDataLoaded, isTypeDataLoading, fetchNotificaionCountData, notificaionShowLoading } = props;
+    const { notificationCount, resetNotification } = props;
 
     const navigate = useNavigate();
 
     const [isChangePasswordModalOpen, setChangePasswordModalOpen] = useState(false);
     const [confirms, setConfirm] = useState(false);
+    const [refreshCount, setRefreshCount] = useState(false);
 
-    const { firstName = '', lastName = '', dealerName, dealerLocation, notificationCount, userType = undefined } = loginUserData;
+    const { firstName = '', lastName = '', dealerName, dealerLocation, userType = undefined } = loginUserData;
     const fullName = firstName?.concat(lastName ? ' ' + lastName : '');
     const userAvatar = firstName?.slice(0, 1) + (lastName ? lastName?.slice(0, 1) : '');
+
+    useEffect(() => {
+        if (!userId) return;
+        fetchNotificaionCountData({ setIsLoading: () => {}, userId });
+        setRefreshCount(false);
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, refreshCount]);
 
     useEffect(() => {
         if (confirms || isChangePasswordModalOpen) {
@@ -268,11 +287,13 @@ const HeaderMain = (props) => {
                             <Col xs={10} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                 <div className={styles.headerRight}>
                                     <div className={styles.navbarNav}>
-                                        <div className={`${styles.floatLeft}`}>
+                                        <div className={`${styles.floatLeft} `}>
                                             <Link className={styles.navLink} data-toggle="dropdown">
-                                                <Badge size="small" count={notificationCount}>
-                                                    {addToolTip('Notification')(<FaRegBell size={20} />)}
-                                                </Badge>
+                                                <Popover trigger={'click'} placement="bottomRight" content={<Notification notificationCount={notificationCount} resetNotification={resetNotification} setRefreshCount={setRefreshCount} />} overlayClassName={styles.notificationContainer}>
+                                                    <Badge size="small" count={notificationCount?.inboxUnread}>
+                                                        {addToolTip('Notification')(<FaRegBell size={20} />)}
+                                                    </Badge>
+                                                </Popover>
                                             </Link>
                                         </div>
                                         <div className={`${styles.floatLeft}`}>
