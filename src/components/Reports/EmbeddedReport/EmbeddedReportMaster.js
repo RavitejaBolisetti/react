@@ -49,7 +49,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const EmbeddedReportMasterMain = (props) => {
-    const { userId, data, isDataLoaded, fetchList, listShowLoading, reportDetail } = props;
+    const { userId, data, fetchList, listShowLoading, reportDetail } = props;
     const [, setReport] = useState();
     const [sampleReportConfig, setReportConfig] = useState({
         type: 'report',

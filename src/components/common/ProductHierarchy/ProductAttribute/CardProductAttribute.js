@@ -13,7 +13,7 @@ import FormProductAttribute from './FormProductAttribute';
 const { Text } = Typography;
 
 const CardProductAttribute = (props) => {
-    const { isVisible, finalFormdata, attributeForm, forceUpdate, skuAttributes, setSKUAttributes, productHierarchyAttributeData, setFormBtnActive, showGlobalNotification, setDisabledEdit } = props;
+    const { isVisible, finalFormdata, forceUpdate, skuAttributes, setSKUAttributes, productHierarchyAttributeData, setFormBtnActive, showGlobalNotification, setDisabledEdit } = props;
     const [editForm] = Form.useForm();
     const [formEdit, setFormEdit] = useState(false);
 
