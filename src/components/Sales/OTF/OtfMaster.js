@@ -530,7 +530,7 @@ export const OtfMasterBase = (props) => {
         }
     };
 
-    const title = 'Search OTF';
+    const title = 'Search Booking';
 
     const fnOTFTransfer = ({ modalTitle, modalMessage, finalData, callBackMethod, customURL }) => {
         const onSuccess = (res) => {

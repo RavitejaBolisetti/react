@@ -46,7 +46,7 @@ const OTFDetailCard = (props) => {
                         </Space>
                         <Divider />
                         <div className={styles.detailCardText}>
-                            OTF No.: <span>{selectedOrder?.otfNumber}</span>
+                            Booking No.: <span>{selectedOrder?.otfNumber}</span>
                         </div>
                     </>
                 }
@@ -62,7 +62,7 @@ const OTFDetailCard = (props) => {
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    OTF Date: <span>{convertDateTime(selectedOrder?.otfDate, 'DD MMM YYYY') || 'NA'}</span>
+                    Booking Date: <span>{convertDateTime(selectedOrder?.otfDate, 'DD MMM YYYY') || 'NA'}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
