@@ -219,8 +219,8 @@ export const InvoiceCancellationMasterBase = (props) => {
     useEffect(() => {
         const extraParams = [
             {
-                key: 'id',
-                value: formData?.id,
+                key: 'invoiceId',
+                value: formData?.invoiceId,
             },
         ];
         if (userId && isFormVisible) {
@@ -247,7 +247,7 @@ export const InvoiceCancellationMasterBase = (props) => {
 
     const handleCancelRequest = () => {
         const data = {
-            id: formData?.id,
+            invoiceId: formData?.invoiceId,
             requestStatus: REQUEST_STATUS_CONSTANT?.OPEN?.key,
         };
         const onSuccess = (res) => {
