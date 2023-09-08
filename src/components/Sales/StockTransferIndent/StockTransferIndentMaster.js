@@ -55,7 +55,7 @@ export const OtfMasterBase = (props) => {
     const [isAddNewIndentVisible, setIsAddNewIndentVisible] = useState(false);
     const [filterString, setFilterString] = useState();
     const [toggleButton, settoggleButton] = useState(STOCK_TRANSFER?.RAISED.key);
-    const [openAccordian, setOpenAccordian] = useState('1');
+    const [openAccordian, setOpenAccordian] = useState('');
 
     const defaultBtnVisiblity = {
         editBtn: false,

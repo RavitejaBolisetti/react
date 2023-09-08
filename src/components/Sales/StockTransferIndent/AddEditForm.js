@@ -3,9 +3,10 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Row, Col, Input, Form, Card, Collapse, Divider, Button, Typography } from 'antd';
 import { FiPlus } from 'react-icons/fi';
+import { FilterIcon } from 'Icons';
 
 import { withDrawer } from 'components/withDrawer';
 import { VehicleDetailFormButton } from 'components/Sales/VehicleDetail/VehicleDetailFormButton';
@@ -14,6 +15,7 @@ import { customSelectBox } from 'utils/customSelectBox';
 import { expandIcon, accordianExpandIcon } from 'utils/accordianExpandIcon';
 import { tableColumnVehicleDetails } from './tableColumnVehicleDetails';
 import { DataTable } from 'utils/dataTable';
+import { AddVehicleDetailsModal } from './AddVehicleDetailsModal';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -28,6 +30,10 @@ const AddEditFormMain = (props) => {
     const { otfTransferForm, onFinishOTFTansfer, otfStatusList, openAccordian, setOpenAccordian } = props;
     const { handleButtonClick, buttonData, setButtonData, onCloseAction } = props;
     const { activeKey, setActiveKey } = props;
+
+    const [ addVehicleDetailsForm ] = Form.useForm();
+    const [ isAddVehicleDetailsVisible, setIsAddVehicleDetailsVisible ] = useState(false);
+    const [ tableDataItem, setTableDataItem ] = useState([]);
 
     useEffect(() => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -66,24 +72,47 @@ const AddEditFormMain = (props) => {
     };
 
     const handleAddVehicleDetails = () => {
-
+        setIsAddVehicleDetailsVisible(true);
     }
 
-    const tableDataItem = [{
-        "modelDescription" : "XUV003",
-        "modelCode":"5765",
-        "requestedQuantity":3,
+    const initialTableDataItem = {
+        "modelDescription" : "",
+        "modelCode" : "",
+        "requestedQuantity" : 0,
         "cancelledQuantity" :0,
         "issuedNNotReceivedQuantity" : 0,
-        "receivededQuantity":3,
-        "balanceQuantity":3,
-    }];
+        "receivededQuantity" : 0,
+        "balanceQuantity" : 0,
+    };
 
     const tableProps = {
         tableColumn: tableColumnVehicleDetails(false),
         tableData: tableDataItem,
         pagination: false,
     };
+    
+    const onCloseActionAddVehicleDetails = () => {
+        setIsAddVehicleDetailsVisible(false);
+    };
+
+    const onFinishAddVehicleDetails = (values) => {
+        if(tableDataItem.length === 0)
+            handleCollapse(1);
+        
+        setTableDataItem([...tableDataItem, { ...initialTableDataItem, ...values}]);
+        setIsAddVehicleDetailsVisible(false);
+        addVehicleDetailsForm.resetFields();
+    };
+
+    const addVehicleDetailsProps = {
+        isVisible: isAddVehicleDetailsVisible,
+        titleOverride: 'Add Vehicle Details',
+        addVehicleDetailsForm,
+        setIsAddVehicleDetailsVisible,
+        onCloseAction : onCloseActionAddVehicleDetails,  
+        onFinishAddVehicleDetails, 
+    };
+
 
     return (
         <>
@@ -125,15 +154,15 @@ const AddEditFormMain = (props) => {
                                             <Row>
                                                 Vehicle Details 
                                                 <Col xs={14} sm={14} md={6} lg={6} xl={6}>
-                                                        <Col xs={24} sm={24} md={6} lg={6} xl={6}>
-                                                            <Button type="primary" icon={<FiPlus/>} onClick={handleAddVehicleDetails}> Add </Button>
-                                                        </Col>
+                                                    <Col xs={24} sm={24} md={6} lg={6} xl={6}>
+                                                        <Button type="primary" icon={<FiPlus/>} onClick={handleAddVehicleDetails}> Add </Button>
+                                                    </Col>
                                                 </Col>
                                             </Row>
                                         }
                                     >
                                         <Divider />
-                                        <DataTable {...tableProps} />
+                                        {tableDataItem.length >0 && <DataTable {...tableProps} />}
                                         {/* <DataTable tableColumn={taxDetailsColumn()} tableData={formData['taxDetails']} pagination={false} /> */}
                                     </Panel>
                                 </Collapse>
@@ -142,8 +171,9 @@ const AddEditFormMain = (props) => {
                         
                     </Col>
                 </Row>
-                <VehicleDetailFormButton {...buttonProps} />
             </Form>
+            <AddVehicleDetailsModal {...addVehicleDetailsProps} />
+            <VehicleDetailFormButton {...buttonProps} />
         </>
     );
 };
