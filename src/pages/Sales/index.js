@@ -19,7 +19,7 @@ import DigitalSignatureMasterPage from './DigitalSignatureMapping';
 import HoPriceMappingMasterPage from './HoPriceMappingDealer';
 import DeliveryNoteInvoiceCancellationPage from './DeliveryNoteInvoiceCancellation';
 import VehicleInvoiceMasterPage from './VehicleInvoiceGeneration';
+import VehicleTrackingPage from './VehicleTracking';
 
-export { OTFMasterPage, VehicleDetailMasterPage, VehicleReceiptMasterPage, VehiclePriceMasterPage, VehicleRecieptChecklistMaster, RSMApprovalPage, VehiclePurchaseOrderMasterPage, OtfSoMappingMasterPage, VehicleAllotmentMasterPage, ReceiptMasterPage, VehicleInvoiceMasterPage,  DigitalSignatureMasterPage, HoPriceMappingMasterPage, DeliveryNoteInvoiceCancellationPage };
-
+export { OTFMasterPage, VehicleDetailMasterPage, VehicleReceiptMasterPage, VehiclePriceMasterPage, VehicleRecieptChecklistMaster, RSMApprovalPage, VehiclePurchaseOrderMasterPage, OtfSoMappingMasterPage, VehicleAllotmentMasterPage, ReceiptMasterPage, VehicleInvoiceMasterPage,  DigitalSignatureMasterPage, HoPriceMappingMasterPage, DeliveryNoteInvoiceCancellationPage, VehicleTrackingPage };
 

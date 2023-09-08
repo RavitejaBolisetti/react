@@ -9,6 +9,8 @@ import { Form, Select, Input } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField, validateMobileNoField, validateLettersWithWhitespaces } from 'utils/validation';
 
 import { SearchConstants } from './SearchBoxConstants';
+import { convertToUpperCase } from 'utils/convertToUpperCase';
+
 import styles from './SearchBox.module.scss';
 
 const { Option } = Select;
@@ -16,7 +18,7 @@ const { Search } = Input;
 
 const SearchBox = (props) => {
     const { selectWide, searchForm, optionType, searchParamRule, filterString, setFilterString, handleChange, disabled = false, isLoading, handleSearchWithoutParameter = undefined } = props;
-    const { singleField = false, label = '', placeholder = 'Search', singleFieldKey = 'searchParam', defaultOption = undefined } = props;
+    const { singleField = false, label = '', placeholder = 'Search', singleFieldKey = 'searchParam', defaultOption = undefined, captilized = undefined } = props;
 
     const [validationRules, setValidationRules] = useState([validateRequiredInputField('searchType')]);
 
@@ -88,7 +90,7 @@ const SearchBox = (props) => {
                     </Form.Item>
                 )}
                 <Form.Item label={label} {...searchParamRule} name={singleField && singleFieldKey ? singleFieldKey : 'searchParam'} rules={validationRules} validateTrigger={['onChange', 'onSearch']} className={selectWide ? styles.headerSearchFieldWide : ''}>
-                    <Search loading={isLoading} disabled={disabled} placeholder={placeholder} maxLength={25} value={filterString?.searchParam} allowClear onChange={handleChange} onSearch={singleField && handleSearchWithoutParameter ? handleSearchWithoutParameter : handleSearchParamSearch} className={styles.headerSearchField} />
+                    <Search onInput={captilized ? convertToUpperCase : undefined} loading={isLoading} disabled={disabled} placeholder={placeholder} maxLength={25} value={filterString?.searchParam} allowClear onChange={handleChange} onSearch={singleField && handleSearchWithoutParameter ? handleSearchWithoutParameter : handleSearchParamSearch} className={styles.headerSearchField} />
                 </Form.Item>
             </Form>
         </div>

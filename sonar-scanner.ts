@@ -31,6 +31,7 @@ const options = {
     'sonar.sources': 'src/',
     //'sonar.coverage.exclusions':'src/components/common/UserManagementNew/**/*, src/components/Sales/VehiclePurchaseOrder/**/*,src/components/Sales/Receipts/**/*',
     // source language
+    'sonar.coverage.exclusions':'src/__mocks__/**/*, src/mocks/**/*,src/__test__/**/*',
     'sonar.language': 'js',
 
     'sonar.javascript.lcov.reportPaths': 'src/coverage/lcov.info',

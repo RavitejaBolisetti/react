@@ -5,6 +5,7 @@
  */
 import React from 'react';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
+
 import 'react-loading-skeleton/dist/skeleton.css';
 
 export const InputSkeleton = ({ width = '100%', height = 35, theme = 'light', count = 1 }) => {
@@ -29,11 +30,18 @@ export const InputSkeleton = ({ width = '100%', height = 35, theme = 'light', co
             highlightColor = '#50535a';
             break;
     }
-    return [...Array(count)].map((e, i) => (
-        <div key={'list-skeleton-' + i} style={{ marginTop: i > 0 ? '10px' : '0px' }}>
-            <SkeletonTheme baseColor={baseColor} highlightColor={highlightColor} p>
-                <Skeleton width={width} height={height} />
-            </SkeletonTheme>
-        </div>
-    ));
+
+    const skeltonItem = (
+        <SkeletonTheme baseColor={baseColor} highlightColor={highlightColor}>
+            <Skeleton width={width} height={height} />
+        </SkeletonTheme>
+    );
+
+    return count === 1
+        ? skeltonItem
+        : [...Array(count)].map((e, i) => (
+              <div key={'list-skeleton-' + i} style={{ marginTop: i > 0 ? '10px' : '0px' }}>
+                  {skeltonItem}
+              </div>
+          ));
 };
