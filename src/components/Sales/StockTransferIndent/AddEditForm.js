@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect } from 'react';
-import { Row, Col, Input, Form, Card, Collapse, Divider, Button } from 'antd';
+import { Row, Col, Input, Form, Card, Collapse, Divider, Button, Typography } from 'antd';
 import { FiPlus } from 'react-icons/fi';
 
 import { withDrawer } from 'components/withDrawer';
@@ -12,12 +12,15 @@ import { VehicleDetailFormButton } from 'components/Sales/VehicleDetail/VehicleD
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { customSelectBox } from 'utils/customSelectBox';
 import { expandIcon, accordianExpandIcon } from 'utils/accordianExpandIcon';
+import { tableColumnVehicleDetails } from './tableColumnVehicleDetails';
+import { DataTable } from 'utils/dataTable';
 
 import styles from 'assets/sass/app.module.scss';
 
 
 const { TextArea } = Input;
 const { Panel } = Collapse;
+const { Text } = Typography;
 
 const AddEditFormMain = (props) => {
 
@@ -62,6 +65,26 @@ const AddEditFormMain = (props) => {
         setOpenAccordian((prev) => (prev === key ? '' : key));
     };
 
+    const handleAddVehicleDetails = () => {
+
+    }
+
+    const tableDataItem = [{
+        "modelDescription" : "XUV003",
+        "modelCode":"5765",
+        "requestedQuantity":3,
+        "cancelledQuantity" :0,
+        "issuedNNotReceivedQuantity" : 0,
+        "receivededQuantity":3,
+        "balanceQuantity":3,
+    }];
+
+    const tableProps = {
+        tableColumn: tableColumnVehicleDetails(false),
+        tableData: tableDataItem,
+        pagination: false,
+    };
+
     return (
         <>
             <Form form={otfTransferForm} data-testid="test" onFinish={onFinishOTFTansfer} layout="vertical" autocomplete="off" colon="false">
@@ -96,13 +119,21 @@ const AddEditFormMain = (props) => {
                         </Card>
 
                         <Row gutter={24}>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24}> 
                                 <Collapse onChange={() => handleCollapse(1)} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian} collapsible="icon">
-                                    <Panel header="Vehicle Details" key="1">
-                                        <Col xs={24} sm={24} md={6} lg={6} xl={6}>
-                                            <Button type="primary" icon={<FiPlus/>}> Add </Button>
-                                        </Col>
+                                    <Panel key="1" header={
+                                            <Row>
+                                                Vehicle Details 
+                                                <Col xs={14} sm={14} md={6} lg={6} xl={6}>
+                                                        <Col xs={24} sm={24} md={6} lg={6} xl={6}>
+                                                            <Button type="primary" icon={<FiPlus/>} onClick={handleAddVehicleDetails}> Add </Button>
+                                                        </Col>
+                                                </Col>
+                                            </Row>
+                                        }
+                                    >
                                         <Divider />
+                                        <DataTable {...tableProps} />
                                         {/* <DataTable tableColumn={taxDetailsColumn()} tableData={formData['taxDetails']} pagination={false} /> */}
                                     </Panel>
                                 </Collapse>
