@@ -20,6 +20,8 @@ import { QUERY_BUTTONS_CONSTANTS } from './QueryButtons';
 import { BASE_URL_OTF_DETAILS as customURL } from 'constants/routingApi';
 import { otfDataActions } from 'store/actions/data/otf/otf';
 import { vehicleInvoiceDataActions } from 'store/actions/data/invoiceGeneration/vehicleInvoiceGeneration';
+import { vehicleIrnGenerationDataActions } from 'store/actions/data/invoiceGeneration/irnGeneration';
+
 import { showGlobalNotification } from 'store/actions/notification';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { convertDateTime, monthDateFormat } from 'utils/formatDateTime';
@@ -33,6 +35,7 @@ const mapStateToProps = (state) => {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             VehicleInvoiceGeneration: {
                 VehicleInvoiceSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString },
+                VehicleIrnGeneration: { isLoaded: isIrnDataLoaded = false, isLoading: isIrnDataLoading, data: irnData = [] },
             },
             OTF: {
                 OtfSearchList: { isDetailLoaded: isDataLoaded, detailData: otfData = [] },
@@ -52,6 +55,9 @@ const mapStateToProps = (state) => {
         isDataLoaded,
         otfData,
         filterString,
+        isIrnDataLoaded,
+        isIrnDataLoading,
+        irnData,
     };
     return returnValue;
 };
@@ -60,9 +66,13 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchList: vehicleInvoiceDataActions.fetchList,
             fetchOTFDetail: otfDataActions.fetchDetail,
             listShowLoading: otfDataActions.listShowLoading,
+
+            fetchIrnGenerationDetail: vehicleIrnGenerationDataActions.fetchDetail,
+            listIrnShowLoading: vehicleIrnGenerationDataActions.listShowLoading,
+
+            fetchList: vehicleInvoiceDataActions.fetchList,
             listShowLoading: vehicleInvoiceDataActions.listShowLoading,
             setFilterString: vehicleInvoiceDataActions.setFilter,
             showGlobalNotification,
@@ -72,7 +82,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const VehicleInvoiceMasterBase = (props) => {
-    const { data, receiptDetailData, userId, fetchList, fetchOTFDetail, listShowLoading, showGlobalNotification } = props;
+    const { data, receiptDetailData, userId, isIrnDataLoaded, listIrnShowLoading, isIrnDataLoading, fetchIrnGenerationDetail, irnData, fetchList, fetchOTFDetail, listShowLoading, showGlobalNotification } = props;
     const { typeData, receiptType, partySegmentType, paymentModeType, documentType, moduleTitle, totalRecords } = props;
     const { filterString, setFilterString, invoiceStatusList, otfData } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
@@ -289,6 +299,12 @@ export const VehicleInvoiceMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedOtfNumber]);
+
+    //IRN generation
+    const generateIrn = () => {
+        console.log('HONEY');
+        fetchIrnGenerationDetail({ setIsLoading: listIrnShowLoading, userId, onErrorAction });
+    };
 
     const handleInvoiceTypeChange = (buttonName) => {
         setInvoiceStatus(buttonName?.key);
@@ -594,6 +610,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         onCancelReceipt,
         saveButtonName: isLastSection ? 'Submit' : 'Save & Next',
         setLastSection,
+        generateIrn,
     };
 
     const cancelReceiptProps = {

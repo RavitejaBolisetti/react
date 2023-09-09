@@ -23,10 +23,11 @@ import { LoyaltySchemeMaster } from 'components/Sales/Common/LoyaltyScheme';
 import { InvoiceDetailsMaster } from './InvoiceDetails';
 
 const VehicleInvoiceMainConatinerMain = (props) => {
-    const { currentSection } = props;
+    const { currentSection, generateIrn } = props;
 
     const myProps = {
         ...props,
+        generateIrn,
     };
 
     const renderElement = () => {
