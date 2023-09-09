@@ -195,24 +195,27 @@ export const OtfMasterBase = (props) => {
     };
 
     const onFinish = (values) => {
+        if(tableDataItem.length === 0){
+            let msg ="Please add Vehicle Details";
+            showGlobalNotification({msg});
+            return;
+        }
         setIsAddNewIndentVisible(false);
 
         //const recordId = formData?.parentId || form.getFieldValue('parentId');
         let data = { ...values, vehicleDetails: [ ...tableDataItem ] };
-        console.log(data, "file: StockTransferIndentMaster.js:194 ~ onFinish ~ values:", values)
 
         const onSuccess = (res) => {
             // form.resetFields();
             // setShowDataLoading(true);
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchIndentList({ customURL: customURL + '/search', setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
-            // fetchOTFDetail({ setIsLoading: listShowLoading, userId, onSuccessAction });
             // setButtonData({ ...buttonData, formBtnActive: false });
             // setIsFormVisible(false);
         };
 
         const onError = (message) => {
-            // showGlobalNotification({ message });
+            showGlobalNotification({ message });
         };
         const requestData = {
             data: data,

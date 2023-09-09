@@ -7,13 +7,13 @@ import React, { useEffect } from 'react';
 import { Row, Col, Form, Input, Button, Select } from 'antd';
 import { withModal } from 'components/withModal';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
+import { validateRequiredInputField, validateRequiredSelectField, validationNumber } from 'utils/validation';
 import { customSelectBox } from 'utils/customSelectBox';
 
 import styles from 'assets/sass/app.module.scss';
 
 export const AddVehicleDetailsModalFrom = (props) => {
     const { addVehicleDetailsForm, onFinishAddVehicleDetails } = props;
-    const disabledProp = { disabled: true };
 
     useEffect(() => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -23,25 +23,29 @@ export const AddVehicleDetailsModalFrom = (props) => {
         addVehicleDetailsForm.resetFields();
     }
 
+    const handleChangeModel = (value) => {
+
+    }
+
     const list = [];
     return (
 
         <Form autoComplete="off" layout="vertical" form={addVehicleDetailsForm} onFinish={onFinishAddVehicleDetails}>
             <Row gutter={24}>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                    <Form.Item label="Model Description" name="modelDescription">
-                        {customSelectBox({ data: list, fieldNames: { key: 'key', value: 'value' }, placeholder: preparePlaceholderSelect('Model Description'), onChange: handleChangeLocation  })}
+                    <Form.Item label="Model Description" name="modelDescription" rules={[validateRequiredSelectField('Requested Quantity')]}>
+                        {customSelectBox({ data: list, fieldNames: { key: 'key', value: 'value' }, placeholder: preparePlaceholderSelect('Model Description'), onChange: handleChangeModel  })}
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                    <Form.Item label="Model Code" name="modelCode" {...disabledProp}> 
-                        <Input placeholder={preparePlaceholderText('Model Code')} ></Input>
+                    <Form.Item label="Model Code" name="modelCode" > 
+                        <Input placeholder={preparePlaceholderText('Model Code')} disabled={true}></Input>
                     </Form.Item>
                 </Col>
             </Row>
             <Row gutter={24}>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                    <Form.Item label="Requested Quantity" name="requestedQuantity">
+                    <Form.Item label="Requested Quantity" name="requestedQuantity" rules={[validateRequiredInputField('Requested Quantity'), validationNumber('Quantity')]}>
                         <Input placeholder={preparePlaceholderText('Requested Quantity')} ></Input>
                     </Form.Item>
                 </Col>

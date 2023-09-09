@@ -11,6 +11,7 @@ import { FilterIcon } from 'Icons';
 import { withDrawer } from 'components/withDrawer';
 import { VehicleDetailFormButton } from 'components/Sales/VehicleDetail/VehicleDetailFormButton';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
+import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { customSelectBox } from 'utils/customSelectBox';
 import { expandIcon, accordianExpandIcon } from 'utils/accordianExpandIcon';
 import { tableColumnVehicleDetails } from './tableColumnVehicleDetails';
@@ -144,12 +145,12 @@ const AddEditFormMain = (props) => {
                         <Card>
                             <Row gutter={24}>
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item label="Indent To Location" name="indentToLocation">
+                                    <Form.Item label="Indent To Location" name="indentToLocation" rules={[validateRequiredSelectField('Indent To Location')]}>
                                     {customSelectBox({ data: indentLocationList, fieldNames: { key: 'locationCode', value: 'dealerLocationName' }, placeholder: preparePlaceholderSelect(''), onChange: handleChangeLocation  })}
                                     </Form.Item>
                                 </Col>
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item label="Requested by" name="requestedBy">
+                                    <Form.Item label="Requested by" name="requestedBy" rules={[validateRequiredSelectField('Requested by')]}>
                                         {customSelectBox({ data: requestedByDealerList, fieldNames: { key: 'key', value: 'value' }, placeholder: preparePlaceholderSelect('') })}
                                     </Form.Item>
                                 </Col>
