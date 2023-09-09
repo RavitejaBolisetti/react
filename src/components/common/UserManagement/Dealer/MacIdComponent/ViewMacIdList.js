@@ -60,13 +60,13 @@ const ViewMacIdList = (props) => {
                                 key={i}
                                 header={
                                     <Row justify="space-between">
-                                        <Col xs={14} sm={14} md={14} lg={14} xl={14}>
+                                        <Col xs={14} sm={14} md={14} lg={14} xl={14} className={styles.verticallyCentered}>
                                             <Text type="secondary">{data?.deviceType}</Text>
                                             <Divider type="vertical" />
                                             <Text strong>{data?.macId ? data?.macId : ''}</Text>
                                             {!formActionType?.viewMode && (
-                                                <Button onClick={(e) => editMacIdHandler(e, data, i)} type="link" icon={<FiEdit />} disabled={isEditing || isAdding}>
-                                                    Edit{' '}
+                                                <Button onClick={(e) => editMacIdHandler(e, data, i)} type="link" icon={<FiEdit />} disabled={isEditing || isAdding} className={styles.verticallyCentered}>
+                                                    Edit
                                                 </Button>
                                             )}
                                         </Col>

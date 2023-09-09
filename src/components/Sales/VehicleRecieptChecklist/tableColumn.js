@@ -19,7 +19,7 @@ export const tableColumn = ({ handleButtonClick, page, pageSize, actionButtonVis
             title: 'Receipt Date',
             dataIndex: 'grnDate',
             width: '14%',
-            render: (text) => (text ? convertDateTime(text, 'DD MMM YYYY') : 'NA'),
+            render: (text) => (text ? convertDateTime(text, dateFormatView) : 'NA'),
         }),
 
         tblPrepareColumns({

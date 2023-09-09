@@ -10,7 +10,8 @@ const utc = require('dayjs/plugin/utc');
 dayjs.extend(utc);
 
 export const dateFormat = 'DD/MM/YYYY';
-export const monthDateFormat = 'DD MMM YYYY';
+export const dateFormatView = 'DD MMM YYYY';
+export const timeFormatView = 'HH:mm a';
 
 export const formattedCalendarDate = (dateToConvert = '', dateFormat = 'YYYY-MM-DD') => {
     return dateToConvert ? dayjs(moment(dateToConvert).format(dateFormat), dateFormat) : null;

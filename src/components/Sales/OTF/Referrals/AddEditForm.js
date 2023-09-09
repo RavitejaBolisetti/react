@@ -30,7 +30,8 @@ const AddEditFormMain = (props) => {
     return (
         <Card>
             <CustomerListMaster fnSetData={fnSetData} />
-            <Row gutter={20} className={styles.marT20}>
+
+            <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name="registrationNumber" label="Vehicle Registration Number" initialValue={formData?.registrationNumber}>
                         <Input disabled={true} maxLength={30} placeholder={preparePlaceholderText('Vehicle Registration Number')} />

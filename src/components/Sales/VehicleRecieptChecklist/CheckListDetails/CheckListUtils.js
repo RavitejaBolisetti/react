@@ -38,9 +38,9 @@ export const MakeCheckResult = (props) => {
     switch (type) {
         case FORMTYPE_CONSTANTS?.DATE?.id: {
             if (data?.answerFromDate && data?.answerToDate) {
-                checkResult = checkResult.concat(data?.answerFromDate ? convertDateTimedayjs(data?.answerFromDate, 'DD MMM YYYY') : 'NA');
+                checkResult = checkResult.concat(data?.answerFromDate ? convertDateTimedayjs(data?.answerFromDate, dateFormatView) : 'NA');
                 checkResult = checkResult.concat('-');
-                checkResult = checkResult.concat(data?.answerToDate ? convertDateTimedayjs(data?.answerToDate, 'DD MMM YYYY') : 'NA');
+                checkResult = checkResult.concat(data?.answerToDate ? convertDateTimedayjs(data?.answerToDate, dateFormatView) : 'NA');
                 return checkResult;
             } else {
                 return 'NA';

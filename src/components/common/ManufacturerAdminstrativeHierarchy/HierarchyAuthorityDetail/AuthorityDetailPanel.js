@@ -8,7 +8,6 @@ import { Collapse, Divider } from 'antd';
 
 import AuthorityDetailMaster from './AuthorityDetailMaster';
 import { accordianExpandIcon } from 'utils/accordianExpandIcon';
-import styles from 'assets/sass/app.module.scss';
 
 const { Panel } = Collapse;
 

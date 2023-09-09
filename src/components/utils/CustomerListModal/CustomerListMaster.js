@@ -54,7 +54,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const CustomerListBase = (props) => {
-    const { showGlobalNotification, listShowLoading, userId, referralData, fnSetData = undefined, disabled = false } = props;
+    const { listShowLoading, userId, referralData, fnSetData = undefined, disabled = false } = props;
     const { handleFormValueChange, fetchCustomerList, typeData } = props;
 
     const [searchForm] = Form.useForm();
@@ -123,10 +123,6 @@ const CustomerListBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString]);
-
-    const onErrorAction = (message) => {
-        showGlobalNotification({ message });
-    };
 
     const handleResetFilter = (e) => {
         setCusomerSearchVisible(false);

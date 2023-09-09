@@ -4,11 +4,13 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { combineReducers } from 'redux';
+import { Notification } from './notification/notifications';
 import { LeftSideBar } from './leftsidebar';
 import { Header } from './header';
 import { Geo } from './Geo';
 
 export const common = combineReducers({
+    Notification,
     LeftSideBar,
     Header,
     Geo,

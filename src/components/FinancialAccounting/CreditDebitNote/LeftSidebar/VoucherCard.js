@@ -6,7 +6,7 @@
 import React from 'react';
 import { Collapse, Divider } from 'antd';
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
-import { convertDate, monthDateFormat } from 'utils/formatDateTime';
+import { convertDate, dateFormatView } from 'utils/formatDateTime';
 import dayjs from 'dayjs';
 
 import styles from 'assets/sass/app.module.scss';
@@ -38,7 +38,7 @@ const VoucherCard = (props) => {
                         </div>
                         <Divider />
                         <div className={`${styles.detailCardText} ${styles.marB5}`} style={{ fontSize: '14px' }}>
-                            Voucher Date: <span>{selectedRecord?.voucherDate ? convertDate(selectedRecord?.voucherDate, monthDateFormat) : dayjs().format(monthDateFormat)}</span>
+                            Voucher Date: <span>{selectedRecord?.voucherDate ? convertDate(selectedRecord?.voucherDate, dateFormatView) : dayjs().format(dateFormatView)}</span>
                         </div>
                     </>
                 }

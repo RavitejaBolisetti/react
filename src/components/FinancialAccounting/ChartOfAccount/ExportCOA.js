@@ -6,6 +6,8 @@
 import React from 'react';
 import { Modal, Col, Form, Row, DatePicker } from 'antd';
 import { validateRequiredSelectField } from 'utils/validation';
+import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
+import { dateFormat } from 'utils/formatDateTime';
 
 export const ExportCOA = (props) => {
     const { modalOpen, setModalOpen, exportCoaForm, onCoaFinish, onFinishFailed } = props;
@@ -15,13 +17,21 @@ export const ExportCOA = (props) => {
                 <Row xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                         <Form.Item label="From Date" name="fromDate" rules={[validateRequiredSelectField('From Date')]}>
-                            <DatePicker />
+                            <DatePicker 
+                                placeholder={preparePlaceholderSelect('From Date')}
+                                format={dateFormat}
+                                disabledDate={(current) => current > new Date()}
+                            />
                         </Form.Item>
                     </Col>
 
                     <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                         <Form.Item label="To Date" name="toDate" rules={[validateRequiredSelectField('To Date')]}>
-                            <DatePicker />
+                            <DatePicker
+                                placeholder={preparePlaceholderSelect('To Date')}
+                                format={dateFormat}
+                                disabledDate={(current) => current < exportCoaForm?.getFieldValue('fromDate') || current > new Date()}
+                            />
                         </Form.Item>
                     </Col>
                 </Row>

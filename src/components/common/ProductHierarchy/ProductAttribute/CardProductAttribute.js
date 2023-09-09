@@ -6,14 +6,13 @@
 import React, { useState, Fragment, useEffect } from 'react';
 import { Col, Card, Row, Button, Form, Divider, Typography } from 'antd';
 import { FiEdit, FiTrash } from 'react-icons/fi';
-import styles from 'assets/sass/app.module.scss';
 
 import FormProductAttribute from './FormProductAttribute';
+import styles from 'assets/sass/app.module.scss';
 
 const { Text } = Typography;
-
 const CardProductAttribute = (props) => {
-    const { isVisible, finalFormdata, attributeForm, forceUpdate, skuAttributes, setSKUAttributes, productHierarchyAttributeData, setFormBtnActive, showGlobalNotification, setDisabledEdit } = props;
+    const { isVisible, finalFormdata, forceUpdate, skuAttributes, setSKUAttributes, productHierarchyAttributeData, setFormBtnActive, showGlobalNotification, setDisabledEdit } = props;
     const [editForm] = Form.useForm();
     const [formEdit, setFormEdit] = useState(false);
 
@@ -92,11 +91,7 @@ const CardProductAttribute = (props) => {
     }, [formEdit]);
 
     return (
-        <Card
-            style={{
-                backgroundColor: '#BEBEBE1A',
-            }}
-        >
+        <Card>
             <Row align="middle" className={styles.marB20}>
                 <Col xs={colLeft} sm={colLeft} md={colLeft} lg={colLeft} xl={colLeft} xxl={colLeft}>
                     <div>
@@ -112,31 +107,29 @@ const CardProductAttribute = (props) => {
                 </Col>
 
                 {isVisible && (
-                    <Col xs={colRight} sm={colRight} md={colRight} lg={colRight} xl={colRight} xxl={colRight}>
+                    <Col xs={colRight} sm={colRight} md={colRight} lg={colRight} xl={colRight} xxl={colRight} className={styles.buttonsGroupRight}>
                         {!formEdit ? (
-                            <div className={styles.cardItemBtn}>
-                                <>
-                                    <Button
-                                        type="link"
-                                        data-testid="edit-button"
-                                        icon={<FiEdit />}
-                                        onClick={() => {
-                                            onAttributeEdit(props);
-                                        }}
-                                        disabled={props?.disabledEdit}
-                                    />
-                                    <Button data-testid="delete-button" onClick={() => onAttributeDelete(props)} type="link" icon={<FiTrash />} disabled={props?.disabledEdit || (props?.id ? true : false)} />
-                                </>
-                            </div>
+                            <>
+                                <Button
+                                    type="link"
+                                    data-testid="edit-button"
+                                    icon={<FiEdit />}
+                                    onClick={() => {
+                                        onAttributeEdit(props);
+                                    }}
+                                    disabled={props?.disabledEdit}
+                                />
+                                <Button data-testid="delete-button" onClick={() => onAttributeDelete(props)} type="link" icon={<FiTrash />} disabled={props?.disabledEdit || (props?.id ? true : false)} />
+                            </>
                         ) : (
-                            <div className={styles.cardItemBtn}>
-                                <Button type="link" data-testid="cancel" onClick={onAttributeCancel}>
-                                    Cancel
-                                </Button>
+                            <>
                                 <Button type="link" data-testid="save" onClick={onAttributeSave}>
                                     Save
                                 </Button>
-                            </div>
+                                <Button type="link" data-testid="cancel" onClick={onAttributeCancel}>
+                                    Cancel
+                                </Button>
+                            </>
                         )}
                     </Col>
                 )}

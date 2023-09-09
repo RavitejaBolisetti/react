@@ -43,7 +43,7 @@ import {
 
 import { TaxChargesPage, TaxChargesCategoryPage, AccountCategoryPage, VehicleModelTaxChargesCategoryPage, DocumentTypeOtherChargesPage, CreditDebitNoteMasterPage, ChartOfAccountPage } from 'pages/FinancialAccounting';
 
-import { OTFMasterPage, VehicleDetailMasterPage, VehiclePriceMasterPage, VehicleReceiptMasterPage, RSMApprovalPage, DeliveryNoteInvoiceCancellationPage, VehiclePurchaseOrderMasterPage, VehicleRecieptChecklistMaster, OtfSoMappingMasterPage, ReceiptMasterPage, VehicleAllotmentMasterPage, DigitalSignatureMasterPage, HoPriceMappingMasterPage } from 'pages/Sales';
+import { OTFMasterPage, VehicleDetailMasterPage, VehiclePriceMasterPage, VehicleReceiptMasterPage, RSMApprovalPage, DeliveryNoteInvoiceCancellationPage, VehiclePurchaseOrderMasterPage, VehicleRecieptChecklistMaster, OtfSoMappingMasterPage, ReceiptMasterPage, VehicleAllotmentMasterPage, DigitalSignatureMasterPage, HoPriceMappingMasterPage, VehicleTrackingPage } from 'pages/Sales';
 
 import { SplashPage } from 'pages/splash';
 
@@ -120,6 +120,7 @@ export const AuthenticatedUserPage = () => {
 
             <Route path={routing.ROUTING_RSM_APPROVAL} element={<RSMApprovalPage />} exact />
             <Route path={routing.ROUTING_DELIVERY_NOTE_INVOICE_CANELLATION} element={<DeliveryNoteInvoiceCancellationPage />} exact />
+            <Route path={routing.ROUTING_VEHICLE_TRACKING} element={<VehicleTrackingPage />} exact />
             <Route path={routing.ROUTING_VEHICLE_DETAILS} element={<VehicleDetailMasterPage />} exact />
             <Route path={routing.ROUTING_VEHICLE_PRICE_MASTER} element={<VehiclePriceMasterPage />} exact />
             <Route path={routing.ROUTING_VEHICLE_RECEIPT} element={<VehicleReceiptMasterPage />} exact />

@@ -40,7 +40,7 @@ export const tableColumn = ({ handleButtonClick, typeData }) => {
             dataIndex: 'requestDate',
             width: '12%',
             render: (value) => {
-                return convertDate(value, 'DD MMM YYYY');
+                return convertDate(value, dateFormatView);
             },
         }),
         tblPrepareColumns({

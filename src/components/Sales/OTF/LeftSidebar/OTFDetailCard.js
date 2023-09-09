@@ -6,7 +6,7 @@
 import React from 'react';
 import { Collapse, Space, Avatar, Typography, Divider } from 'antd';
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
-import { convertDateTime } from 'utils/formatDateTime';
+import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 import { getCodeValue } from 'utils/getCodeValue';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
@@ -46,7 +46,7 @@ const OTFDetailCard = (props) => {
                         </Space>
                         <Divider />
                         <div className={styles.detailCardText}>
-                            OTF No.: <span>{selectedOrder?.otfNumber}</span>
+                            Booking No.: <span>{selectedOrder?.otfNumber}</span>
                         </div>
                     </>
                 }
@@ -58,11 +58,11 @@ const OTFDetailCard = (props) => {
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    Mobile No.: <span>{selectedOrder?.mobileNumber ? '+91-' + selectedOrder?.mobileNumber : 'NA'}</span>
+                    Mobile No.: <span>{selectedOrder?.mobileNumber ? selectedOrder?.mobileNumber : 'NA'}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    OTF Date: <span>{convertDateTime(selectedOrder?.otfDate, 'DD MMM YYYY') || 'NA'}</span>
+                    Booking Date: <span>{convertDateTime(selectedOrder?.otfDate, dateFormatView) || 'NA'}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
@@ -70,7 +70,7 @@ const OTFDetailCard = (props) => {
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    CPD: <span>{convertDateTime(selectedOrder?.cpd, 'DD MMM YYYY') || 'NA'}</span>
+                    CPD: <span>{convertDateTime(selectedOrder?.cpd, dateFormatView) || 'NA'}</span>
                 </div>
             </Panel>
         </Collapse>

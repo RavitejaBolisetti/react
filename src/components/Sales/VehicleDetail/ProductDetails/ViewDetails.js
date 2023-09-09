@@ -5,7 +5,7 @@
  */
 
 import React, { useState } from 'react';
-import { Space, Collapse, Descriptions, Divider } from 'antd';
+import { Collapse, Descriptions, Divider } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { DataTable } from 'utils/dataTable';
 import { InputSkeleton } from 'components/common/Skeleton';

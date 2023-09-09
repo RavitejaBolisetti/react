@@ -9,7 +9,7 @@ import { PageHeader } from 'pages/common/PageHeader';
 import { DocumentTypeOtherChargesMaster } from 'components/FinancialAccounting';
 
 const DocumentTypeOtherChargesBase = (props) => {
-    const pageTitle = 'Document Type ,Other Charges & Ledger Mapping';
+    const pageTitle = 'Document Type, Other Charges & Ledger Mapping';
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,

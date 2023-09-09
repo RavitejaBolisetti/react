@@ -8,6 +8,7 @@ import { Form, Col, Row, Button } from 'antd';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { validateRequiredSelectField } from 'utils/validation';
 import { customSelectBox } from 'utils/customSelectBox';
+import { PlusOutlined } from '@ant-design/icons';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -37,10 +38,12 @@ function FormDocTypeAcMapping(props) {
                 <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
                     <Form.Item name="id" label="Id" />
                 </Col>
-                {!formEdit && (
+                {!props?.internalId && (
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Button
+                            disabled={formEdit}
                             type="primary"
+                            icon={<PlusOutlined />}
                             className={styles.marB20}
                             onClick={() => {
                                 addDocHeadMapping();

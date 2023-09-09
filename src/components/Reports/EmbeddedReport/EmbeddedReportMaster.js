@@ -14,7 +14,6 @@ import { reportDataActions } from 'store/actions/data/report/reports';
 import { showGlobalNotification } from 'store/actions/notification';
 
 import styles from './EmbeddedReportMaster.module.scss';
-//import styles from './EmbeddedReportMaster.module.css';
 
 const mapStateToProps = (state) => {
     const {
@@ -50,7 +49,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const EmbeddedReportMasterMain = (props) => {
-    const { userId, isDataLoaded, data, fetchList, listShowLoading } = props;
+    const { userId, data, fetchList, listShowLoading, reportDetail } = props;
     const [, setReport] = useState();
     const [sampleReportConfig, setReportConfig] = useState({
         type: 'report',
@@ -59,6 +58,7 @@ export const EmbeddedReportMasterMain = (props) => {
         accessToken: undefined,
         settings: undefined,
     });
+    console.log('sampleReportConfig', sampleReportConfig);
 
     const onSuccessAction = (res) => {
         // showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'File deleted Successfully' });
@@ -69,17 +69,33 @@ export const EmbeddedReportMasterMain = (props) => {
     };
 
     useEffect(() => {
-        if (userId && !isDataLoaded) {
-            fetchList({ setIsLoading: listShowLoading, userId, tempRespone: true, onSuccessAction, onErrorAction });
+        if (userId && reportDetail) {
+            const extraParams = [
+                {
+                    key: 'reportName',
+                    title: 'reportName',
+                    value: reportDetail?.key,
+                    name: 'Report Name',
+                },
+                {
+                    key: 'reportType',
+                    title: 'reportType',
+                    value: reportDetail?.type,
+                    name: 'Report Type',
+                },
+            ];
+            fetchList({ setIsLoading: listShowLoading, userId, tempRespone: true, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isDataLoaded]);
+    }, [userId, reportDetail]);
 
     useEffect(() => {
         setReportConfig({
             type: 'report',
+            id: data?.embedReports?.[0]?.reportId.substr(46, 92),
             embedUrl: data?.embedReports?.[0]?.embedUrl,
             accessToken: data.embedToken,
+            tokenType: models.TokenType.Embed,
             settings: {
                 panes: {
                     filters: {
@@ -96,7 +112,7 @@ export const EmbeddedReportMasterMain = (props) => {
         [
             'loaded',
             function () {
-               // console.log('Report has loaded');
+                // console.log('Report has loaded');
             },
         ],
         [
@@ -117,14 +133,16 @@ export const EmbeddedReportMasterMain = (props) => {
 
     return (
         <div>
-            <PowerBIEmbed
-                embedConfig={sampleReportConfig}
-                eventHandlers={eventHandlersMap}
-                cssClassName={styles.reportClass}
-                getEmbeddedComponent={(embedObject) => {
-                    setReport(embedObject);
-                }}
-            />
+            {sampleReportConfig?.accessToken && (
+                <PowerBIEmbed
+                    embedConfig={sampleReportConfig}
+                    eventHandlers={eventHandlersMap}
+                    cssClassName={styles.reportClass}
+                    getEmbeddedComponent={(embedObject) => {
+                        setReport(embedObject);
+                    }}
+                />
+            )}
         </div>
     );
 };

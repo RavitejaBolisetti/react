@@ -60,7 +60,7 @@ export const tableColumn = (handleButtonClick) => {
             dataIndex: 'requestedDate',
             width: '12%',
             render: (value) => {
-                return convertDate(value, 'DD MMM YYYY');
+                return convertDate(value, dateFormatView);
             },
         }),
 
