@@ -13,9 +13,6 @@ import { otfCustomerDetailsAction } from 'store/actions/data/otf/customerDetails
 import { geoPinCodeDataActions } from 'store/actions/data/geo/pincodes';
 import { showGlobalNotification } from 'store/actions/notification';
 
-import { OTFStatusBar } from '../utils/OTFStatusBar';
-import { OTFFormButton } from '../OTFFormButton';
-
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
 
@@ -203,7 +200,7 @@ export const CustomerDetailsMain = (props) => {
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             {/* <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}> */}
-                    {/* <Row>
+            {/* <Row>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <h2>{section?.title}</h2>
                         </Col>
@@ -211,8 +208,8 @@ export const CustomerDetailsMain = (props) => {
                             <OTFStatusBar status={props?.selectedOrder?.orderStatus} />
                         </Col>
                     </Row> */}
-                    {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
-                {/* </Col>
+            {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
+            {/* </Col>
             </Row> */}
             {/* <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>

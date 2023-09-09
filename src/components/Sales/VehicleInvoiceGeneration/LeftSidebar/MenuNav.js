@@ -13,7 +13,7 @@ import { VEHICLE_INVOICE_SECTION } from 'constants/VehicleInvoiceSection';
 import styles from 'assets/sass/app.module.scss';
 
 const MenuNav = (props) => {
-    const { currentSection, setCurrentSection, receipt, formActionType: { addMode } = undefined, selectedOrder: { orderStatus = false } = {} } = props;
+    const { currentSection, setCurrentSection } = props;
     const receiptSectionList = Object.values(VEHICLE_INVOICE_SECTION);
 
     const onHandle = (key) => {
@@ -23,12 +23,11 @@ const MenuNav = (props) => {
     const items = receiptSectionList
         ?.filter((i) => i?.displayOnList)
         ?.map((item) => ({
-            // validateReceiptMenu({ item, receipt }) && {
             dot: item?.id === currentSection ? <BsRecordCircleFill className={styles.activeForm} /> : <FaCheckCircle />,
             children: <p onClick={() => onHandle(item?.id)}>{item?.title}</p>,
             className: item?.id === currentSection ? 'active' : 'noactive',
-            // }
         }));
+
     const finalItem = items?.filter((i) => i);
 
     return finalItem && <Timeline items={finalItem} />;

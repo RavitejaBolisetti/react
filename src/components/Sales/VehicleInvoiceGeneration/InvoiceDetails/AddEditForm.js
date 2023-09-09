@@ -3,8 +3,8 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect, useState } from 'react';
-import { Row, Col, AutoComplete, Form, Collapse, Divider, Select, Space } from 'antd';
+import React, { useEffect } from 'react';
+import { Row, Col, Collapse, Divider, Space } from 'antd';
 import { expandIcon } from 'utils/accordianExpandIcon';
 
 import { convertDateToCalender } from 'utils/formatDateTime';
@@ -55,24 +55,24 @@ const AddEditFormMain = (props) => {
         }
     };
 
-    const bookingCustomerProps = {
-        ...props,
-        AutoComplete,
-        typeData,
-        formData: formData?.bookingCustomer,
-        formType: 'bookingCustomer',
-        handleOnChange: () => {},
-    };
+    // const bookingCustomerProps = {
+    //     ...props,
+    //     AutoComplete,
+    //     typeData,
+    //     formData: formData?.bookingCustomer,
+    //     formType: 'bookingCustomer',
+    //     handleOnChange: () => {},
+    // };
 
-    const bilingCustomerProps = {
-        ...props,
-        AutoComplete,
-        typeData,
-        formData: formData?.billingCustomer,
-        formType: 'billingCustomer',
-        disabledProps: { disabled: sameAsBookingCustomer },
-        handleOnChange,
-    };
+    // const bilingCustomerProps = {
+    //     ...props,
+    //     AutoComplete,
+    //     typeData,
+    //     formData: formData?.billingCustomer,
+    //     formType: 'billingCustomer',
+    //     disabledProps: { disabled: sameAsBookingCustomer },
+    //     handleOnChange,
+    // };
     // const handleSave = () => {};
 
     // const onFinishFailed = () => {};
