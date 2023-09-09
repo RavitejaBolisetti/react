@@ -15,7 +15,7 @@ import { STOCK_TRANSFER } from 'constants/StockTransfer';
 import { ADD_ACTION, VIEW_ACTION, CANCEL_ACTION, NEXT_ACTION, btnVisiblity } from 'utils/btnVisiblity';
 import { stockTransferIndent } from 'store/actions/data/sales/stockTransfer/StockTransferIndent';
 import { DealerBranchLocationDataActions } from 'store/actions/data/userManagement/dealerBranchLocation';
-import { BASE_URL_STOCK_TRANSFER as customURL } from 'constants/routingApi';
+import { BASE_URL_STOCK_TRANSFER as customURL, BASE_URL_USER_MANAGEMENT_DEALER as dealerURL } from 'constants/routingApi';
 
 import { ListDataTable } from 'utils/ListDataTable';
 import { showGlobalNotification } from 'store/actions/notification';
@@ -32,7 +32,7 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             UserManagement : {
-                DealerBranchLocation: {  data: indentLocationList },
+                DealerBranchLocation: {  data: indentLocationList, detailData: requestedByDealerList  },
             },
             stockTransferIndentData : {
                 stockTransferIndent: { isLoaded: isSearchDataLoaded = false, isLoading: isOTFSearchLoading, data, isDetailLoaded },
@@ -46,7 +46,8 @@ const mapStateToProps = (state) => {
         typeData,
         parentGroupCode,
         indentLocationList,
-        data
+        requestedByDealerList,
+        data,
     };
     return returnValue;
 };
@@ -56,6 +57,7 @@ const mapDispatchToProps = (dispatch) => ({
     ...bindActionCreators(
         {
             fetchIndentLocation: DealerBranchLocationDataActions.fetchList,
+            fetchRequestedByList: DealerBranchLocationDataActions.fetchDetail,
 
             listShowLoading: stockTransferIndent.listShowLoading,
             fetchIndentList: stockTransferIndent.fetchList,
@@ -68,8 +70,8 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const OtfMasterBase = (props) => {
     const { userId, typeData, parentGroupCode, showGlobalNotification } = props;
-    const { data, indentLocationList } = props;
-    const { fetchIndentList, fetchIndentLocation, listShowLoading, saveData } = props;
+    const { data, indentLocationList, requestedByDealerList } = props;
+    const { fetchIndentList, fetchIndentLocation, fetchRequestedByList, listShowLoading, saveData } = props;
 
     const [searchForm] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
@@ -254,6 +256,28 @@ export const OtfMasterBase = (props) => {
 
     };
 
+    const handleChangeLocation = (value) => {
+        let locationId = '';
+        indentLocationList?.forEach(function (temp) {
+            if(temp.locationCode === value)
+                locationId = temp.id;
+        });
+
+        const onSuccessActionFetchDealer = (resp) => {
+
+        }
+
+        const extraParamData = [
+            {
+                key: 'locationId',
+                value: locationId,
+            },
+        ];
+
+        fetchRequestedByList({ setIsLoading: listShowLoading, userId, onSuccessAction, onErrorAction, extraParams: extraParamData, customURL: dealerURL+"/employees" });
+
+    }
+
     const onAddIndentDetailsCloseAction = () => {
         setIsAddNewIndentVisible(false);
         addIndentDetailsForm.resetFields();
@@ -327,8 +351,10 @@ export const OtfMasterBase = (props) => {
         buttonData, 
         setButtonData,
         indentLocationList,
+        requestedByDealerList,
         tableDataItem, 
         setTableDataItem,
+        handleChangeLocation,
     };
    
     return (

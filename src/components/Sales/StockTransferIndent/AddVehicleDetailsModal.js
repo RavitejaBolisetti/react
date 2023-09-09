@@ -6,8 +6,8 @@
 import React, { useEffect } from 'react';
 import { Row, Col, Form, Input, Button, Select } from 'antd';
 import { withModal } from 'components/withModal';
-
-import { preparePlaceholderText } from 'utils/preparePlaceholder';
+import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
+import { customSelectBox } from 'utils/customSelectBox';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -23,13 +23,14 @@ export const AddVehicleDetailsModalFrom = (props) => {
         addVehicleDetailsForm.resetFields();
     }
 
+    const list = [];
     return (
 
         <Form autoComplete="off" layout="vertical" form={addVehicleDetailsForm} onFinish={onFinishAddVehicleDetails}>
             <Row gutter={24}>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                     <Form.Item label="Model Description" name="modelDescription">
-                        <Input placeholder={preparePlaceholderText('Model Description')} ></Input>
+                        {customSelectBox({ data: list, fieldNames: { key: 'key', value: 'value' }, placeholder: preparePlaceholderSelect('Model Description'), onChange: handleChangeLocation  })}
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>

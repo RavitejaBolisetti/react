@@ -28,8 +28,9 @@ const { Text } = Typography;
 const AddEditFormMain = (props) => {
 
     const { formData } = props;
-    const { addIndentDetailsForm, onFinish, indentLocationList, openAccordian, setOpenAccordian } = props;
-    const { handleButtonClick, buttonData, setButtonData, onCloseAction, tableDataItem, setTableDataItem } = props;
+    const { addIndentDetailsForm, onFinish, indentLocationList, requestedByDealerList,  openAccordian, setOpenAccordian } = props;
+    const { buttonData, setButtonData, onCloseAction, tableDataItem, setTableDataItem } = props;
+    const { handleButtonClick, handleChangeLocation } = props;
     const { activeKey, setActiveKey } = props;
 
     const [ addVehicleDetailsForm ] = Form.useForm();
@@ -144,12 +145,12 @@ const AddEditFormMain = (props) => {
                             <Row gutter={24}>
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                                     <Form.Item label="Indent To Location" name="indentToLocation">
-                                        {customSelectBox({ data: indentLocationList, fieldNames: { key: 'locationCode', value: 'dealerLocationName' }, placeholder: preparePlaceholderSelect('') })}
+                                    {customSelectBox({ data: indentLocationList, fieldNames: { key: 'locationCode', value: 'dealerLocationName' }, placeholder: preparePlaceholderSelect(''), onChange: handleChangeLocation  })}
                                     </Form.Item>
                                 </Col>
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                                     <Form.Item label="Requested by" name="requestedBy">
-                                        {customSelectBox({ data: indentLocationList, fieldNames: { key: 'locationCode', value: 'locationCode' }, placeholder: preparePlaceholderSelect('') })}
+                                        {customSelectBox({ data: requestedByDealerList, fieldNames: { key: 'key', value: 'value' }, placeholder: preparePlaceholderSelect('') })}
                                     </Form.Item>
                                 </Col>
                             </Row>
