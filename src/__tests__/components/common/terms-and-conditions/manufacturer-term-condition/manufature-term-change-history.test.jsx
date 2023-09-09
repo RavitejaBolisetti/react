@@ -8,7 +8,7 @@ afterEach(() => {
 });
 
 
-describe('Manufacturer Adminstrative Hierarchy Change History components', () => {
+describe('Manufacturer term Change History components', () => {
 
     const ChangeHistoryTermsConditionsData=[{id:'1', name:'kai'}]
 

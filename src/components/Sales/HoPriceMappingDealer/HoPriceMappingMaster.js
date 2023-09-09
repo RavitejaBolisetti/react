@@ -16,7 +16,7 @@ import { AddEditForm } from './AddEditForm';
 
 import { ListDataTable } from 'utils/ListDataTable';
 import { AdvancedSearch } from './AdvancedSearch';
-import { convertDateTime, monthDateFormat } from 'utils/formatDateTime';
+import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 import { receiptDataActions } from 'store/actions/data/receipt/receipt';
 import { receiptDetailDataActions } from 'store/actions/data/receipt/receiptDetails';
 
@@ -169,7 +169,7 @@ export const HoPriceMappingMasterBase = (props) => {
                 key: 'fromDate',
                 title: 'Start Date',
                 value: filterString?.fromDate,
-                name: filterString?.fromDate ? convertDateTime(filterString?.fromDate, monthDateFormat) : '',
+                name: filterString?.fromDate ? convertDateTime(filterString?.fromDate, dateFormatView) : '',
                 canRemove: true,
                 filter: true,
             },
@@ -177,7 +177,7 @@ export const HoPriceMappingMasterBase = (props) => {
                 key: 'toDate',
                 title: 'End Date',
                 value: filterString?.toDate,
-                name: filterString?.toDate ? convertDateTime(filterString?.toDate, monthDateFormat) : '',
+                name: filterString?.toDate ? convertDateTime(filterString?.toDate, dateFormatView) : '',
                 canRemove: true,
                 filter: true,
             },

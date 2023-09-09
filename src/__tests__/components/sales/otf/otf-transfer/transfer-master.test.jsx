@@ -143,10 +143,10 @@ describe('OTF transfer master render', () => {
         const closeImg = screen.getByRole('img', { name: 'close', exact: false });
         expect(closeImg).toBeTruthy();
 
-        const otfNo = screen.getByRole('columnheader', { name: 'OTF No.', exact: false });
+        const otfNo = screen.getByRole('columnheader', { name: 'Booking No.', exact: false });
         expect(otfNo).toBeTruthy();
 
-        const otfDate = screen.getByRole('columnheader', { name: 'OTF Date', exact: false });
+        const otfDate = screen.getByRole('columnheader', { name: 'Booking Date', exact: false });
         expect(otfDate).toBeTruthy();
 
         const customerName = screen.getByRole('columnheader', { name: 'Customer Name', exact: false });

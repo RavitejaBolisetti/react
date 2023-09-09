@@ -8,16 +8,15 @@ import { Row, Col, Collapse, Descriptions, Divider } from 'antd';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
-import { InputSkeleton } from 'components/common/Skeleton';
 
 import { addToolTip } from 'utils/customMenuLink';
 import { DataTable } from 'utils/dataTable';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { DATA_TYPE } from 'constants/dataType';
-import { VEHICLE_TYPE } from 'constants/VehicleType';
 
 import { taxDetailsColumn, optionalServicesColumns } from './tableColumn';
 import { getCodeValue } from 'utils/getCodeValue';
+import { prepareCaption } from 'utils/prepareCaption';
 
 const { Panel } = Collapse;
 const ViewDetailMain = (props) => {
@@ -36,30 +35,32 @@ const ViewDetailMain = (props) => {
                         <Panel header="Vehicle Information" key="1">
                             <Divider />
                             <Descriptions {...viewProps}>
-                                <Descriptions.Item label="Vehicle Usage Type ">{checkAndSetDefaultValue(formData?.vehicleUsageType, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Model">
-                                    {isLoading ? (
-                                        <InputSkeleton width={'100px'} height={20} theme={'card'} />
-                                    ) : (
-                                        <div className={styles?.tooltipAlign}>
-                                            {formData?.model}
-                                            {!formData?.model ? 'NA' : addToolTip(tooltTipText, 'bottom', '#D3EDFE', styles.toolTip)(<AiOutlineInfoCircle className={styles?.infoIconColor} size={13} />)}
-                                        </div>
-                                    )}
+                                <Descriptions.Item label="Model Description">
+                                    <div className={styles?.tooltipAlign}>
+                                        {checkAndSetDefaultValue(formData?.model, isLoading)}
+                                        {formData?.model && checkAndSetDefaultValue(addToolTip(tooltTipText, 'bottom', '#D3EDFE', styles.toolTip)(<AiOutlineInfoCircle className={styles?.infoIconColor} size={13} />), isLoading)}
+                                    </div>
                                 </Descriptions.Item>
                                 <Descriptions.Item label="Model Code">{checkAndSetDefaultValue(formData?.modelCode, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Available Stock">{checkAndSetDefaultValue(formData?.availableStock, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Vehicle Allocated Status">{checkAndSetDefaultValue(getCodeValue(VEHICLE_TYPE, formData?.vehicleAllocatedStatus, 'title'), isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="PO Number">{checkAndSetDefaultValue(formData?.poNumber, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="PO Date">{checkAndSetDefaultValue(formData?.poDate ? formData?.poDate : undefined, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                                 <Descriptions.Item label="PO Status">{checkAndSetDefaultValue(getCodeValue(typeData?.PO_STATS, formData?.poStatus), isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="SO Number">{checkAndSetDefaultValue(formData?.soNumber, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="SO Status">{checkAndSetDefaultValue(formData?.soStatus, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="VIN Number">{checkAndSetDefaultValue(formData?.vinNumber, isLoading)}</Descriptions.Item>
+                            </Descriptions>
+
+                            <Descriptions {...viewProps} title={prepareCaption('Price Information')}>
+                                <Descriptions.Item label="Sale Type">{checkAndSetDefaultValue(getCodeValue(typeData?.SALE_TYPE, formData?.saleType), isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Price Type">{checkAndSetDefaultValue(getCodeValue(typeData?.PRC_TYP, formData?.priceType), isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Vehicle Selling Price">{checkAndSetDefaultValue(formData?.vehicleSellingPrice, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Discount Amount">{checkAndSetDefaultValue(formData?.discountAmount, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Tax Amount">{checkAndSetDefaultValue(formData?.taxAmount, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Vehicle Amount">{checkAndSetDefaultValue(formData?.vehicleAmount, isLoading)}</Descriptions.Item>
+                            </Descriptions>
+
+                            <Descriptions {...viewProps} title={prepareCaption('Benefits')}>
+                                <Descriptions.Item label="Dealer Discount with TAX">{checkAndSetDefaultValue(formData?.discountAmount, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Consumer Scheme with TAX">{checkAndSetDefaultValue(formData?.taxAmount, isLoading)}</Descriptions.Item>
                             </Descriptions>
                         </Panel>
                     </Collapse>
@@ -72,7 +73,7 @@ const ViewDetailMain = (props) => {
                     </Collapse>
 
                     <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(3)} expandIconPosition="end" className={styles?.collapseContainer} collapsible="icon">
-                        <Panel header="Other Charges" key="3">
+                        <Panel header="Optional Services" key="3">
                             <Divider />
                             <DataTable tableColumn={optionalServicesColumns()} tableData={formData['optionalServices']} pagination={false} />
                         </Panel>

@@ -20,7 +20,7 @@ const { Panel } = Collapse;
 const { Text } = Typography;
 
 const AddEditFormMain = (props) => {
-    const { formData, accessoryForm, shieldForm, rsaForm, amcForm, fmsForm, addOnItemInfo, setAddOnItemInfo, formActionType, selectedOrderId, formDataSetter, setformDataSetter, handleFormValueChange, showGlobalNotification, onSearchPart, AddonPartsData, setsearchData, searchData } = props;
+    const { formData, accessoryForm, shieldForm, rsaForm, amcForm, fmsForm, fnSetData, addOnItemInfo, setAddOnItemInfo, formActionType, selectedOrderId, formDataSetter, setformDataSetter, handleFormValueChange, showGlobalNotification, onSearchPart, AddonPartsData, setsearchData, searchData } = props;
 
     const [openAccordian, setOpenAccordian] = useState(formData?.partDetailsResponses?.length ? ['ci'] : []);
 
@@ -58,8 +58,10 @@ const AddEditFormMain = (props) => {
         selectedOrderId,
         isEditing,
         setisEditing,
+        fnSetData,
         openAccordian,
         setOpenAccordian,
+        ...props,
     };
     const commonProps = {
         formData,
@@ -107,7 +109,6 @@ const AddEditFormMain = (props) => {
             </>
         );
     };
-
     return (
         <Row gutter={20}>
             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
