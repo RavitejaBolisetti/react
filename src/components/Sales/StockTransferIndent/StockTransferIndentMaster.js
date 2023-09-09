@@ -284,6 +284,7 @@ export const OtfMasterBase = (props) => {
     const onAddIndentDetailsCloseAction = () => {
         setIsAddNewIndentVisible(false);
         addIndentDetailsForm.resetFields();
+        handleChangeLocation('');
     };
 
     const onFinishSearch = (values) => {};
