@@ -93,7 +93,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const CustomerMasterMain = (props) => {
-    const { data, fetchList, userId, isLoading, listShowLoading, changeHistoryData, viewListShowLoading, fetchCustomerChangeHistory, listShowChangeHistoryLoading, moduleTitle, typeData, resetData, totalRecords } = props;
+    const { data, fetchList, userId, isLoading, listShowLoading, changeHistoryData, fetchCustomerChangeHistory, listShowChangeHistoryLoading, moduleTitle, typeData, resetData, totalRecords } = props;
     const { filterString, setFilterString, ChangeHistoryTitle } = props;
     const { resetViewData, downloadFile, listDownloadShowLoading } = props;
 
@@ -304,7 +304,7 @@ const CustomerMasterMain = (props) => {
         setIsFormVisible(true);
     };
 
-    const onFinish = (values, e) => { };
+    const onFinish = (values, e) => {};
 
     const onFinishFailed = (errorInfo) => {
         console.error(errorInfo);
@@ -381,7 +381,7 @@ const CustomerMasterMain = (props) => {
     };
 
     const downloadFileFromButton = () => {
-        console.log(changeHistoryData?.customerNameChangeResponses[0].supportingDocuments[0].documentId, 'simran')
+        console.log(changeHistoryData?.customerNameChangeResponses[0].supportingDocuments[0].documentId, 'simran');
         const extraParams = [
             {
                 key: 'docId',
@@ -436,7 +436,6 @@ const CustomerMasterMain = (props) => {
         downloadFileFromButton,
         changeHistoryData,
     };
-
 
     const containerProps = {
         record: selectedCustomer,

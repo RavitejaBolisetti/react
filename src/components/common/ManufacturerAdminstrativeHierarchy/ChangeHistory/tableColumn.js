@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { convertDateTime } from 'utils/formatDateTime';
+import { convertDateTime, dateFormatView, timeFormatView } from 'utils/formatDateTime';
 import { tblPrepareColumns, tblStatusColumn } from 'utils/tableColumn';
 
 import styles from 'components/common/ChangeHistory/ChangeHistory.module.scss';
@@ -15,9 +15,9 @@ export const tableColumnAdmin = [
         width: '15%',
         render: (text) => (
             <div>
-                {convertDateTime(text, 'DD MMM YYYY')}
+                {convertDateTime(text, dateFormatView)}
                 <br />
-                {convertDateTime(text, 'HH:mm a')}
+                {convertDateTime(text, timeFormatView)}
             </div>
         ),
     }),
@@ -57,9 +57,9 @@ export const tableColumnAuthority = [
 
         render: (text) => (
             <div>
-                {convertDateTime(text, 'DD MMM YYYY')}
+                {convertDateTime(text, dateFormatView)}
                 <br />
-                {convertDateTime(text, 'HH:mm a')}
+                {convertDateTime(text, timeFormatView)}
             </div>
         ),
     }),
