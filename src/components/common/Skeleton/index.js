@@ -6,5 +6,6 @@
 import { InputSkeleton } from './InputSkeleton';
 import { CardSkeleton } from './CardSkeleton';
 import { ListSkeleton } from './ListSkeleton';
+import { NotificationSkeleton } from './NotificationSkeleton';
 
-export { InputSkeleton, CardSkeleton, ListSkeleton };
+export { InputSkeleton, CardSkeleton, ListSkeleton, NotificationSkeleton };

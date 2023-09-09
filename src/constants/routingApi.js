@@ -270,5 +270,5 @@ export const BASE_URL_VEHICLE_DETAILS_SERVICE = BASE_URL + 'otf/vehicledetails/o
 
 export const BASE_URL_MILE_SKILL = BASE_URL + 'dealer/mileskills';
 
-export const BASE_URL_NOTIFICATION = BASE_URL + 'applications/notifications';
-export const BASE_URL_NOTIFICATION_COUNTS = BASE_URL + 'applications/notifications/counts';
+export const BASE_URL_NOTIFICATION = BASE_URL + 'applications/notifications'; 
+export const BASE_URL_NOTIFICATION_COUNTS = BASE_URL + 'applications/notifications/counts'; 
