@@ -181,6 +181,39 @@
     text-align: center;
 }
 
+
+.whiteBG {
+    background: $primaryWhite !important;
+    border: 1px solid black;
+
+    & :global {
+        .ant-card-body {
+            // padding: 16px !important;
+
+            .ant-form-item {
+                .ant-form-item-label {
+                    label {
+                        display: flex;
+
+                        align-items: center;
+                    }
+                }
+            }
+        }
+    }
+
+    .textCenter {
+        & :global {
+            .ant-divider-vertical {
+                height: 92%;
+
+                top: 36px;
+            }
+        }
+    }
+}
+
+
 /*--------------common change--------------*/
 .alignLeft {
     text-align: left;
@@ -294,6 +327,37 @@
 
 /*--------------drawer Body Section Strat--------------*/
 
+.drawerBody :global .ant-timeline.ant-timeline-label .ant-timeline-item-label {
+    width: 20%;
+    text-align: start;
+}
+
+.drawerBody :global .ant-timeline.ant-timeline-alternate .ant-timeline-item-left .ant-timeline-item-content,
+.drawerBody :global .ant-timeline.ant-timeline-right .ant-timeline-item-left .ant-timeline-item-content,
+.drawerBody :global .ant-timeline.ant-timeline-label .ant-timeline-item-left .ant-timeline-item-content {
+    inset-inline-start: 22%;
+    width: calc(78% - 16px);
+}
+
+.drawerBody :global .ant-timeline.ant-timeline-label .ant-timeline-item-head,
+.drawerBody :global .ant-timeline.ant-timeline-label .ant-timeline-item-head-custom,
+.drawerBody :global .ant-timeline.ant-timeline-label .ant-timeline-item-tail {
+    inset-inline-start: 22%;
+}
+
+.drawerBody .timelineCard :global .ant-card-body .ant-card {
+    margin-bottom: 10px !important;
+    box-shadow: 0px 1px 2px -1px rgba(0, 0, 0, 0.15);
+}
+
+.drawerBody .timelineCard :global .ant-card-body .ant-card:last-child {
+    margin-bottom: 0 !important;
+}
+
+.drawerBody .timelineCard :global .ant-card-body {
+    padding: 10px !important;
+}
+
 .drawerBody {
     padding: 30px 20px;
     margin-left: 0 !important;
@@ -305,6 +369,56 @@
     .advanceFilterTop {
         .advanceFilterItem {
             height: 20px;
+        }
+    }
+
+    .active {
+        .cursorPointer {
+            color: $primaryRed;
+        }
+
+        .cursorNotAllowed {
+            color: $primaryRed;
+        }
+
+        & :global {
+            .ant-timeline-item-tail {
+                background-color: $primaryRed !important;
+            }
+        }
+    }
+
+    .viewActive {
+        .cursorPointer {
+            color: $primaryBlack;
+        }
+
+        & :global {
+            .ant-timeline-item-tail {
+                background-color: $semanticSuccess !important;
+            }
+        }
+    }
+
+    .viewInActive {
+        .cursorPointer {
+            &:hover {
+                color: $primaryBlack;
+            }
+        }
+
+        & :global {
+            .ant-timeline-item-tail {
+                background-color: $semanticSuccess !important;
+            }
+        }
+    }
+
+    .inActive {
+        & :global {
+            .ant-timeline-item-tail {
+                background-color: $semanticSuccess !important;
+            }
         }
     }
 
