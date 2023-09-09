@@ -12,7 +12,7 @@ phases:
             # - codebuild-breakpoint
             - npm run test:coverage || true
 
-            - sonar-scanner -Dsonar.sources=src -Dsonar.projectKey=dms-ui-application -Dsonar.host.url=http://sonarqube.mahindradealerrise.com:9000/ -Dsonar.login=squ_08a656265331d08098cc29e9667bb18b322cb030
+            - sonar-scanner -Dsonar.sources=src -Dsonar.projectKey=dms-ui-application -Dsonar.host.url=${SONAR_URL} -Dsonar.login=${SONAR_TOKEN}
             #- npm run build
     post_build:
         commands:
@@ -24,3 +24,7 @@ artifacts:
 cache:
     paths:
         - 'node_modules/**/*'
+env:
+    secrets-manager:
+        SONAR_TOKEN: 'arn:aws:secretsmanager:${AWS_DEFAULT_REGION}:${AWS_ACCOUNT_ID}:secret:sonar-coverage-command-skip-zZ1e0B:SONAR_TOKEN'
+        SONAR_URL: 'arn:aws:secretsmanager:${AWS_DEFAULT_REGION}:${AWS_ACCOUNT_ID}:secret:sonar-coverage-command-skip-zZ1e0B:SONAR_URL'
