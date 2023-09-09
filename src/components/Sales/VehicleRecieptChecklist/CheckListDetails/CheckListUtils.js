@@ -4,14 +4,12 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { convertDateTimedayjs, formatDateToCalenderDate } from 'utils/formatDateTime';
+import moment from 'moment';
 import { Col, Input, Form, Row, DatePicker, InputNumber, Select } from 'antd';
 
+import { convertDateTimedayjs, formatDateToCalenderDate, dateFormatView } from 'utils/formatDateTime';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
-
 import { validateRequiredInputField, validateRequiredSelectField, validateNegativeNumber } from 'utils/validation';
-
-import moment from 'moment';
 import styles from 'assets/sass/app.module.scss';
 
 export const FORMTYPE_CONSTANTS = {

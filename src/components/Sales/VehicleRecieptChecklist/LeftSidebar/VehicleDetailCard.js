@@ -10,6 +10,7 @@ import { CopytoClipboard } from 'utils/CopytoClipboard';
 import dayjs from 'dayjs';
 import { addToolTip } from 'utils/customMenuLink';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
+import { dateFormatView } from 'utils/formatDateTime';
 
 import styles from 'assets/sass/app.module.scss';
 
