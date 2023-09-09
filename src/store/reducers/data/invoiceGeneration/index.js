@@ -5,8 +5,10 @@
  */
 import { combineReducers } from 'redux';
 import { VehicleInvoiceSearchList } from './vehicleInvoiceGeneration';
+import {VehicleIrnGeneration} from './irnGeneration'
 
 
 export const VehicleInvoiceGeneration = combineReducers({
     VehicleInvoiceSearchList,
+    VehicleIrnGeneration,
 });

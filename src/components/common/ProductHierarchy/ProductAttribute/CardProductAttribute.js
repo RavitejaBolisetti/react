@@ -6,14 +6,13 @@
 import React, { useState, Fragment, useEffect } from 'react';
 import { Col, Card, Row, Button, Form, Divider, Typography } from 'antd';
 import { FiEdit, FiTrash } from 'react-icons/fi';
-import styles from 'assets/sass/app.module.scss';
 
 import FormProductAttribute from './FormProductAttribute';
+import styles from 'assets/sass/app.module.scss';
 
 const { Text } = Typography;
-
 const CardProductAttribute = (props) => {
-    const { isVisible, finalFormdata, attributeForm, forceUpdate, skuAttributes, setSKUAttributes, productHierarchyAttributeData, setFormBtnActive, showGlobalNotification, setDisabledEdit } = props;
+    const { isVisible, finalFormdata, forceUpdate, skuAttributes, setSKUAttributes, productHierarchyAttributeData, setFormBtnActive, showGlobalNotification, setDisabledEdit } = props;
     const [editForm] = Form.useForm();
     const [formEdit, setFormEdit] = useState(false);
 

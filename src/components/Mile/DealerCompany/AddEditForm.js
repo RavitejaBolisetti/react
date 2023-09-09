@@ -142,6 +142,12 @@ const AddEditFormMain = (props) => {
         handleButtonClick,
     };
 
+    const selectProps = {
+        optionFilterProp: 'children',
+        showSearch: true,
+        allowClear: true,
+        className: styles.headerSelectField,
+    };
     return (
         <Form autoComplete="off" layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20} className={styles.drawerBody}>
@@ -153,7 +159,22 @@ const AddEditFormMain = (props) => {
                             <Row gutter={16}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                     <Form.Item initialValue={formData?.parentCode} label="Group Code" rules={[validateRequiredSelectField('Group Code')]} name="parentCode">
-                                        {customSelectBox({ data: dealerParentData, placeholder: preparePlaceholderSelect('Group Code'), onChange: parentName, disabled: editMode, fieldNames: { key: 'key', value: 'key' } })}
+                                        {/* <Select
+                                            placeholder={preparePlaceholderSelect('Group Code')}
+                                            style={{
+                                                width: '100%',
+                                            }}
+                                            {...selectProps}
+                                            onChange={parentName}
+                                            disabled={editMode}
+                                        >
+                                            {dealerParentData?.map((item) => (
+                                                <Option key={item?.key} value={item?.key}>
+                                                    {item?.key}
+                                                </Option>
+                                            ))}
+                                        </Select> */}
+                                    {customSelectBox({ data: dealerParentData, fieldNames: { key: 'key', value: 'key' }, onChange: parentName, placeholder: preparePlaceholderSelect('Group Code'), disabled: editMode })}
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>

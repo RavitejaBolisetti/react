@@ -45,6 +45,7 @@ import { UserManagement } from './userManagement';
 import { VehicleReceiptChecklist } from './VehicleReceiptCheckList';
 import { vehicleAllotmentData } from './vehicleAllotment';
 import { VehicleInvoiceGeneration } from './invoiceGeneration';
+import { UserAccess } from './userAccess';
 
 export const data = combineReducers({
     Menu,
@@ -86,4 +87,5 @@ export const data = combineReducers({
     VehicleReceiptChecklist,
     vehicleAllotmentData,
     VehicleInvoiceGeneration,
+    UserAccess,
 });

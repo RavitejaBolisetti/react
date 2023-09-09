@@ -20,10 +20,12 @@ import { QUERY_BUTTONS_CONSTANTS } from './QueryButtons';
 import { BASE_URL_OTF_DETAILS as customURL } from 'constants/routingApi';
 import { otfDataActions } from 'store/actions/data/otf/otf';
 import { vehicleInvoiceDataActions } from 'store/actions/data/invoiceGeneration/vehicleInvoiceGeneration';
+import { vehicleIrnGenerationDataActions } from 'store/actions/data/invoiceGeneration/irnGeneration';
+
 import { vehicleInvoiceGenerationDataActions } from 'store/actions/data/invoiceGeneration/vehicleInvoice';
 import { showGlobalNotification } from 'store/actions/notification';
 import { PARAM_MASTER } from 'constants/paramMaster';
-import { convertDateTime, monthDateFormat } from 'utils/formatDateTime';
+import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 
 import { FilterIcon } from 'Icons';
 
@@ -34,6 +36,7 @@ const mapStateToProps = (state) => {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             VehicleInvoiceGeneration: {
                 VehicleInvoiceSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString },
+                VehicleIrnGeneration: { isLoaded: isIrnDataLoaded = false, isLoading: isIrnDataLoading, data: irnData = [] },
             },
             OTF: {
                 OtfSearchList: { isDetailLoaded: isDataLoaded, detailData: otfData = [] },
@@ -53,6 +56,9 @@ const mapStateToProps = (state) => {
         isDataLoaded,
         otfData,
         filterString,
+        isIrnDataLoaded,
+        isIrnDataLoading,
+        irnData,
     };
     return returnValue;
 };
@@ -61,10 +67,14 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchList: vehicleInvoiceDataActions.fetchList,
             fetchOTFDetail: otfDataActions.fetchDetail,
             cancelInvoice: vehicleInvoiceGenerationDataActions.saveData,
             listShowLoading: otfDataActions.listShowLoading,
+
+            fetchIrnGenerationDetail: vehicleIrnGenerationDataActions.fetchDetail,
+            listIrnShowLoading: vehicleIrnGenerationDataActions.listShowLoading,
+
+            fetchList: vehicleInvoiceDataActions.fetchList,
             listShowLoading: vehicleInvoiceDataActions.listShowLoading,
             setFilterString: vehicleInvoiceDataActions.setFilter,
             showGlobalNotification,
@@ -74,7 +84,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const VehicleInvoiceMasterBase = (props) => {
-    const { data, receiptDetailData, userId, fetchList, fetchOTFDetail, listShowLoading, cancelInvoice, showGlobalNotification } = props;
+    const { data, receiptDetailData, userId, isIrnDataLoaded, listIrnShowLoading, isIrnDataLoading, fetchIrnGenerationDetail, irnData, fetchList, fetchOTFDetail, listShowLoading, showGlobalNotification } = props;
+    const { cancelInvoice } = props;
     const { typeData, receiptType, partySegmentType, paymentModeType, documentType, moduleTitle, totalRecords } = props;
     const { filterString, setFilterString, invoiceStatusList, otfData } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
@@ -167,7 +178,7 @@ export const VehicleInvoiceMasterBase = (props) => {
                 key: 'fromDate',
                 title: 'Start Date',
                 value: filterString?.fromDate,
-                name: filterString?.fromDate ? convertDateTime(filterString?.fromDate, monthDateFormat) : '',
+                name: filterString?.fromDate ? convertDateTime(filterString?.fromDate, dateFormatView) : '',
                 canRemove: true,
                 filter: true,
             },
@@ -175,7 +186,7 @@ export const VehicleInvoiceMasterBase = (props) => {
                 key: 'toDate',
                 title: 'End Date',
                 value: filterString?.toDate,
-                name: filterString?.toDate ? convertDateTime(filterString?.toDate, monthDateFormat) : '',
+                name: filterString?.toDate ? convertDateTime(filterString?.toDate, dateFormatView) : '',
                 canRemove: true,
                 filter: true,
             },
@@ -292,6 +303,11 @@ export const VehicleInvoiceMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedOtfNumber, otfNumber]);
+
+    //IRN generation
+    const generateIrn = () => {
+        fetchIrnGenerationDetail({ setIsLoading: listIrnShowLoading, userId, onSuccessAction, onErrorAction });
+    };
 
     const handleInvoiceTypeChange = (buttonName) => {
         setInvoiceStatus(buttonName?.key);
@@ -601,6 +617,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         setLastSection,
         otfNumber,
         setOtfNumber,
+        generateIrn,
     };
 
     const cancelInvoiceProps = {

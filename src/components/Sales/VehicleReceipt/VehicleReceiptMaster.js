@@ -11,7 +11,7 @@ import { Col, Form, Row } from 'antd';
 import { tableColumn } from './tableColumn';
 import VehicleReceiptFilter from './VehicleReceiptFilter';
 import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 'utils/btnVisiblity';
-import { convertDateTime, monthDateFormat } from 'utils/formatDateTime';
+import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 
 import { VehicleReceiptMainConatiner } from './VehicleReceiptMainConatiner';
 import { ListDataTable } from 'utils/ListDataTable';
@@ -184,7 +184,7 @@ export const VehicleReceiptMasterBase = (props) => {
                 key: 'grnFromDate',
                 title: 'Start Date',
                 value: filterString?.grnFromDate,
-                name: filterString?.grnFromDate ? convertDateTime(filterString?.grnFromDate, monthDateFormat) : '',
+                name: filterString?.grnFromDate ? convertDateTime(filterString?.grnFromDate, dateFormatView) : '',
                 canRemove: true,
                 filter: true,
             },
@@ -192,7 +192,7 @@ export const VehicleReceiptMasterBase = (props) => {
                 key: 'grnToDate',
                 title: 'End Date',
                 value: filterString?.grnToDate,
-                name: filterString?.grnToDate ? convertDateTime(filterString?.grnToDate, monthDateFormat) : '',
+                name: filterString?.grnToDate ? convertDateTime(filterString?.grnToDate, dateFormatView) : '',
                 canRemove: true,
                 filter: true,
             },

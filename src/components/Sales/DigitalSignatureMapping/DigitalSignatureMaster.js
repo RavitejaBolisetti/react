@@ -15,7 +15,7 @@ import { AddEditForm } from './AddEditForm';
 import { SearchBox } from 'components/utils/SearchBox';
 
 import { ListDataTable } from 'utils/ListDataTable';
-import { convertDateTime, monthDateFormat } from 'utils/formatDateTime';
+import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 import { receiptDataActions } from 'store/actions/data/receipt/receipt';
 import { receiptDetailDataActions } from 'store/actions/data/receipt/receiptDetails';
 import { PARAM_MASTER } from 'constants/paramMaster';
@@ -164,7 +164,7 @@ export const DigitalSignatureMasterBase = (props) => {
                 key: 'fromDate',
                 title: 'Start Date',
                 value: filterString?.fromDate,
-                name: filterString?.fromDate ? convertDateTime(filterString?.fromDate, monthDateFormat) : '',
+                name: filterString?.fromDate ? convertDateTime(filterString?.fromDate, dateFormatView) : '',
                 canRemove: true,
                 filter: true,
             },
@@ -172,7 +172,7 @@ export const DigitalSignatureMasterBase = (props) => {
                 key: 'toDate',
                 title: 'End Date',
                 value: filterString?.toDate,
-                name: filterString?.toDate ? convertDateTime(filterString?.toDate, monthDateFormat) : '',
+                name: filterString?.toDate ? convertDateTime(filterString?.toDate, dateFormatView) : '',
                 canRemove: true,
                 filter: true,
             },

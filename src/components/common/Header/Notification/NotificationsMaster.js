@@ -41,7 +41,7 @@ const mapDispatchToProps = (dispatch) => ({
     ...bindActionCreators(
         {
             saveData: notificationDataActions.saveData,
-            listShowLoading: notificationDataActions.saveFormShowLoading,
+            listShowLoading: notificationDataActions.listShowLoading,
         },
         dispatch
     ),
@@ -53,16 +53,7 @@ const NotificationsMasterMain = (props) => {
     const [data, setData] = useState([]);
     const [notificationType, setNotificationType] = useState('');
     const [page, setPage] = useState(defaultPagination);
-    const [refreshData, setRefreshData] = useState(false);
-
-    useEffect(() => {
-        return () => {
-            setData([]);
-            setPage(defaultPagination);
-        };
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    const [refreshData, setRefreshData] = useState(true);
 
     const onTabChange = (key) => {
         resetNotification();
@@ -70,12 +61,13 @@ const NotificationsMasterMain = (props) => {
         setData([]);
         setNotificationType(key === NOTIFICATION_TYPE?.ALL?.key ? undefined : key);
         setRefreshData(true);
-        setRefreshCount((prev) => !prev);
+        // setRefreshCount((prev) => !prev);
     };
 
     const handleMarkAllAsRead = () => {
         const onSuccess = (res) => {
             setData([]);
+            setPage(defaultPagination);
             setRefreshData(true);
         };
         const onError = (message) => {

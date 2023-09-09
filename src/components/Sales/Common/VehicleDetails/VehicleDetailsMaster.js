@@ -224,6 +224,7 @@ const VehicleDetailsMasterMain = (props) => {
         let data;
         if (!values.hasOwnProperty('vehicleUsageType')) {
             data = {
+                ...values,
                 otfNumber: selectedOrderId || '',
                 OtfId: formData?.id || '',
                 id: formData?.id || '',

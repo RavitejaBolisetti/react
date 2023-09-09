@@ -31,7 +31,7 @@ const expandIcon = ({ isActive }) =>
     );
 
 const VehicleInvoiceCard = (props) => {
-    const { selectedOrder, otfData, formActionType, isLoading, typeData } = props;
+    const { selectedOrder, otfData, formActionType, isLoading, typeData, generateIrn } = props;
     const fullName = selectedOrder?.customerName?.split(' ');
     console.log('selectedOrder', selectedOrder);
     const userAvatar = fullName ? fullName[0]?.slice(0, 1) + (fullName[1] ? fullName[1].slice(0, 1) : '') : '';
@@ -68,6 +68,15 @@ const VehicleInvoiceCard = (props) => {
                         <Divider />
                     </>
                 )}
+                <div className={styles.detailCardText}>
+                    IRN Status:
+                    <span>
+                        <Button style={{ height: '30px' }} onClick={generateIrn}>
+                            Generate
+                        </Button>
+                    </span>
+                </div>
+                <Divider />
                 <div className={styles.detailCardText}>
                     OTF No.: <span>{checkAndSetDefaultValue(selectedOrder?.otfNumber)}</span>
                 </div>

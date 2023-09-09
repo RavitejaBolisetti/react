@@ -17,10 +17,12 @@ import { CgProfile } from 'react-icons/cg';
 
 import { setCollapsed } from 'store/actions/common/leftsidebar';
 import { showGlobalNotification } from 'store/actions/notification';
+import { menuDataActions } from 'store/actions/data/menu';
 import { headerDataActions } from 'store/actions/common/header';
 import { clearLocalStorageData, doLogoutAPI } from 'store/actions/auth';
 import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
 import { notificationDataActions } from 'store/actions/common/notification';
+import { userAccessMasterDataAction } from 'store/actions/data/userAccess';
 
 import * as routing from 'constants/routing';
 import { USER_TYPE } from 'constants/userType';
@@ -41,6 +43,7 @@ const mapStateToProps = (state) => {
         auth: { token, isLoggedIn, userId, passwordStatus },
         data: {
             ConfigurableParameterEditing: { isFilteredListLoaded: isTypeDataLoaded = false, isLoading: isTypeDataLoading },
+            UserAccess: { isLoaded: isUserAccessLoaded = false, isLoading: isUserAccessLoading = false, data: userAccessData },
         },
         common: {
             Header: { data: loginUserData = [], isLoading, isLoaded: isDataLoaded = false },
@@ -55,6 +58,7 @@ const mapStateToProps = (state) => {
         passwordStatus,
         loginUserData,
         isDataLoaded,
+        isUserAccessLoaded,
         token,
         isLoggedIn,
         userId,
@@ -62,6 +66,8 @@ const mapStateToProps = (state) => {
         collapsed,
         isTypeDataLoaded,
         isTypeDataLoading,
+        isUserAccessLoading,
+        userAccessData,
         notificationCount,
     };
 };
@@ -73,6 +79,8 @@ const mapDispatchToProps = (dispatch) => ({
             doLogout: doLogoutAPI,
             fetchData: headerDataActions.fetchData,
             listShowLoading: headerDataActions.listShowLoading,
+            fetchMenuList: menuDataActions.fetchList,
+            listShowMenuLoading: menuDataActions.listShowLoading,
             fetchConfigList: configParamEditActions.fetchFilteredList,
             listConfigShowLoading: configParamEditActions.listShowLoading,
 
@@ -80,6 +88,8 @@ const mapDispatchToProps = (dispatch) => ({
             fetchNotificaionCountData: notificationDataActions.counts,
             resetNotification: notificationDataActions.reset,
 
+            updateUserAcess: userAccessMasterDataAction.saveData,
+            listUserAccessShowLoading: userAccessMasterDataAction.listShowLoading,
             fetchEditConfigDataList: configParamEditActions.fetchDataList,
             showGlobalNotification,
         },
@@ -88,19 +98,27 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const HeaderMain = (props) => {
-    const { isDataLoaded, isLoading, collapsed, setCollapsed, loginUserData, doLogout, fetchData, listShowLoading, showGlobalNotification, userId } = props;
+    const { isDataLoaded, isLoading, collapsed, setCollapsed, loginUserData, doLogout, fetchData, listShowLoading, showGlobalNotification, userId, listUserAccessShowLoading, updateUserAcess,fetchMenuList } = props;
     const { fetchEditConfigDataList, fetchConfigList, listConfigShowLoading, isTypeDataLoaded, isTypeDataLoading, fetchNotificaionCountData, notificaionShowLoading } = props;
-    const { notificationCount, resetNotification } = props;
+    const { notificationCount, resetNotification, listShowMenuLoading } = props;
 
     const navigate = useNavigate();
 
     const [isChangePasswordModalOpen, setChangePasswordModalOpen] = useState(false);
     const [confirms, setConfirm] = useState(false);
+    const [userAccess, setUserAccess] = useState(loginUserData?.userRoles?.find((user) => user?.isDefault === true)?.roleName);
     const [refreshCount, setRefreshCount] = useState(false);
 
-    const { firstName = '', lastName = '', dealerName, dealerLocation, userType = undefined } = loginUserData;
+    const { firstName = '', lastName = '', dealerLocations = [], dealerName, userType = undefined } = loginUserData;
+
+    const dealerLocation = dealerLocations?.find((i) => i?.isDefault)?.locationName;
     const fullName = firstName?.concat(lastName ? ' ' + lastName : '');
     const userAvatar = firstName?.slice(0, 1) + (lastName ? lastName?.slice(0, 1) : '');
+
+    useEffect(() => {
+        setUserAccess(loginUserData?.userRoles?.find((user) => user?.isDefault === true)?.roleName);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userAccess, loginUserData]);
 
     useEffect(() => {
         if (!userId) return;
@@ -148,6 +166,33 @@ const HeaderMain = (props) => {
         clearLocalStorageData();
     };
 
+    const handleUpdateUserAcess = ({ roleId = undefined, locationId = undefined }) => {
+        let data = { locationId, roleId };
+
+        const onSuccess = (res) => {
+            fetchData({ setIsLoading: listShowLoading, userId });
+            if (roleId) {
+                fetchMenuList({ setIsLoading: listShowMenuLoading, userId });
+                navigate(routing.ROUTING_DASHBOARD);
+            }
+        };
+
+        const onError = (message) => {
+            showGlobalNotification({ message });
+        };
+
+        const requestData = {
+            data: data,
+            method: 'Put',
+            setIsLoading: listUserAccessShowLoading,
+            userId,
+            onError,
+            onSuccess,
+        };
+
+        updateUserAcess(requestData);
+    };
+
     const showConfirm = () => {
         confirm({
             title: 'Logout',
@@ -180,24 +225,18 @@ const HeaderMain = (props) => {
         }),
     ];
 
-    const locationMenuOption = [
-        customMenuLink({
-            title: 'Gurgaon',
-        }),
-        customMenuLink({
-            title: 'Lajpat Nagar',
-        }),
-        customMenuLink({
-            title: 'Noida',
-        }),
-    ];
-
     const userSettingMenu = [
         customMenuLink({
-            key: '0',
+            key: 1,
             title: 'My Roles',
-            link: routing.ROUTING_USER_PROFILE,
             icon: <CgProfile size={18} />,
+            children: loginUserData?.userRoles?.map((role) => ({
+                key: role?.roleId,
+                label: role?.roleName,
+                onClick: () => handleUpdateUserAcess({ roleId: role?.roleId }),
+                // className: styles.dropdownIcon,
+                disabled: role?.isDefault,
+            })),
         }),
         // customMenuLink({
         //     key: '1',
@@ -259,7 +298,20 @@ const HeaderMain = (props) => {
                                             <div className={styles.dealerInfo}>
                                                 <span className={styles.dealerLocation}>{dealerLocation}</span>
                                                 {userType === USER_TYPE?.DEALER?.key && (
-                                                    <Dropdown className={styles.dropdownIcon} menu={{ items: locationMenuOption }}>
+                                                    <Dropdown
+                                                        trigger={['click']}
+                                                        className={styles.dropdownIcon}
+                                                        menu={{
+                                                            items: dealerLocations?.map((menu) => ({
+                                                                key: menu?.locationId,
+                                                                label: menu?.locationName,
+                                                                onClick: () => handleUpdateUserAcess({ locationId: menu?.locationId }),
+                                                                className: styles.dropdownIcon,
+                                                                disabled: menu?.isDefault,
+                                                                danger: menu?.isDefault,
+                                                            })),
+                                                        }}
+                                                    >
                                                         <DownOutlined />
                                                     </Dropdown>
                                                 )}{' '}
@@ -317,7 +369,7 @@ const HeaderMain = (props) => {
                                                 </div>
                                                 <div className={styles.userText}>
                                                     <div className={styles.userName}>{addToolTip(fullName)(fullName)}</div>
-                                                    <span className={styles.userRoleName}>{userType === USER_TYPE?.DEALER?.key ? 'Admin' : 'Super Admin'}</span>
+                                                    <span className={styles.userRoleName}>{userAccess}</span>
                                                 </div>
                                                 <div className={`${styles.webmenuDropDownArrow} ${styles.dropdownArrow}`}>
                                                     <Dropdown menu={{ items: userSettingMenu }} trigger={['click']}>
