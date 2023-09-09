@@ -9,7 +9,7 @@ import { Button, Row, Col } from 'antd';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import styles from 'assets/sass/app.module.scss';
 
-export const VehicleInvoiceFormButton = ({ formActionType, record, onCloseAction, onCancelReceipt, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection }) => {
+export const VehicleInvoiceFormButton = ({ formActionType, record, onCloseAction, onCancelInvoice, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection }) => {
     //console.log('formActionType', formActionType);
     return (
         <Row gutter={20} className={styles.formFooter}>
@@ -29,6 +29,11 @@ export const VehicleInvoiceFormButton = ({ formActionType, record, onCloseAction
 
             <Col xs={24} sm={16} md={18} lg={20} xl={20} className={styles.footerBtnRight}>
                 {buttonData?.editBtn && (
+                    <Button onClick={onCancelInvoice} type="primary">
+                        Cancel Invoice
+                    </Button>
+                )}
+                {buttonData?.editBtn && (
                     <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record, openDefaultSection: false })} type="primary">
                         Edit
                     </Button>
@@ -38,19 +43,16 @@ export const VehicleInvoiceFormButton = ({ formActionType, record, onCloseAction
                         Cancel Receipt
                     </Button>
                 )} */}
-
                 {buttonData?.nextBtn && !isLastSection && (
                     <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.NEXT, record })} type="primary">
                         Next
                     </Button>
                 )}
-
                 {buttonData?.saveBtn && (
                     <Button loading={isLoadingOnSave} disabled={!buttonData?.formBtnActive} onClick={(e) => setButtonData({ ...buttonData, saveAndNewBtnClicked: false })} htmlType="submit" type="primary">
                         {saveButtonName}
                     </Button>
                 )}
-
                 {}
             </Col>
         </Row>

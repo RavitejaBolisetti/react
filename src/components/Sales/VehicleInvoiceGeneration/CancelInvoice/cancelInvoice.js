@@ -7,24 +7,26 @@ import React from 'react';
 import { Col, Form, Row, Button, Input } from 'antd';
 
 import { withModal } from 'components/withModal';
-import { preparePlaceholderText } from 'utils/preparePlaceholder';
+import { customSelectBox } from 'utils/customSelectBox';
+import { PARAM_MASTER } from 'constants/paramMaster';
+import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { validateRequiredInputField } from 'utils/validation';
 
 import styles from 'assets/sass/app.module.scss';
 
 const { TextArea } = Input;
 
-export const CancelReceiptForm = ({ handleCloseReceipt, handleCancelReceipt, cancelReceiptForm }) => {
+export const CancelInvoiceForm = ({ handleCloseReceipt, handleCancelReceipt, cancelInvoiceForm, typeData }) => {
     const onFinishFailed = () => {
         return;
     };
 
     return (
-        <Form autoComplete="off" form={cancelReceiptForm} onFinish={handleCancelReceipt} layout="vertical" onFinishFailed={onFinishFailed}>
+        <Form autoComplete="off" form={cancelInvoiceForm} onFinish={handleCancelReceipt} layout="vertical" onFinishFailed={onFinishFailed}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <Form.Item label="Cancellation Remark" name="cancelRemarks" rules={[validateRequiredInputField('Cancel Remarks')]}>
-                        <TextArea showCount maxLength={300} placeholder={preparePlaceholderText('Remarks')} />
+                    <Form.Item label="Reason for Cancellation" name="cancelReason" rules={[validateRequiredInputField('Reason for Cancellation')]}>
+                        {customSelectBox({ data: typeData?.[PARAM_MASTER.INVOICE_CANCEL_REASON.id], placeholder: preparePlaceholderSelect('Reason for Cancellation') })}
                     </Form.Item>
                 </Col>
             </Row>
@@ -45,4 +47,4 @@ export const CancelReceiptForm = ({ handleCloseReceipt, handleCancelReceipt, can
     );
 };
 
-export const CancelReceipt = withModal(CancelReceiptForm, {});
+export const CancelInvoice = withModal(CancelInvoiceForm, {});
