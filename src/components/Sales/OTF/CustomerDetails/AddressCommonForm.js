@@ -56,18 +56,18 @@ export const AddressCommonForm = (props) => {
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name={[formType, 'email']} label="Email" initialValue={formData?.email} rules={[validateEmailField('Email')]}>
-                        <Input placeholder={preparePlaceholderText('Email')} maxLength={50} {...disabledProps} />
+                        <Input placeholder={preparePlaceholderText('Email')} maxLength={50} disabled={true} />
                     </Form.Item>
                 </Col>
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={formData?.gender} label="Gender" name="gender">
-                        {customSelectBox({ data: typeData['GENDER'] })}
+                        {customSelectBox({ data: typeData['GENDER'], disabled: true })}
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={formData?.ageGroup} label="Age Group" name="ageGroup">
-                        {customSelectBox({ data: typeData['AGE_GROUP'] })}
+                        {customSelectBox({ data: typeData['AGE_GROUP'], disabled: true })}
                     </Form.Item>
                 </Col>
             </Row>

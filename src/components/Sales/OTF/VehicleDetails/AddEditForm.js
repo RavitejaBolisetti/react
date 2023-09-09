@@ -23,6 +23,7 @@ import { VEHICLE_TYPE } from 'constants/VehicleType';
 
 import styles from 'assets/sass/app.module.scss';
 import { customSelectBox } from 'utils/customSelectBox';
+import { prepareCaption } from 'utils/prepareCaption';
 
 const { Text } = Typography;
 const { Panel } = Collapse;
@@ -86,6 +87,17 @@ const AddEditFormMain = (props) => {
         vehicleServiceData,
     };
 
+    // <Form.Item initialValue={formData?.saleType} name="saleType" label="Sale Type" rules={[validateRequiredSelectField('Sale Type')]}>
+    //     {customSelectBox({ data: typeData['SALE_TYPE'] })}
+    // </Form.Item>
+
+    // <Form.Item initialValue={formData?.priceType} label="Price Type" name="priceType">
+    //     {customSelectBox({ data: typeData['PRC_TYP'] })}
+    // </Form.Item>
+
+    // <Descriptions.Item label="Sale Type">{checkAndSetDefaultValue(getCodeValue(typeData?.SALE_TYPE, formData?.saleType), isLoading)}</Descriptions.Item>
+    // <Descriptions.Item label="Price Type">{checkAndSetDefaultValue(getCodeValue(typeData?.PRC_TYP, formData?.priceType), isLoading)}</Descriptions.Item>
+
     return (
         <Row gutter={20}>
             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -93,13 +105,13 @@ const AddEditFormMain = (props) => {
                     <Panel header="Vehicle Information" key="1">
                         <Divider />
                         <Row gutter={20}>
-                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                            {/* <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item label="Vehicle Usage Type" name="vehicleUsageType" data-testid="usageType">
                                     <Select placeholder="Select Vehicle Usage Type" allowClear options={typeData['VEHCL_TYPE']} fieldNames={{ label: 'value', value: 'key' }} />
                                 </Form.Item>
-                            </Col>
+                            </Col> */}
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item label="Model" name="model" data-testid="model" rules={[validateRequiredSelectField('Model')]}>
+                                <Form.Item label="Model Description" name="model" data-testid="model" rules={[validateRequiredSelectField('Model Description')]}>
                                     <Select loading={isVehicleLovDataLoading} onSelect={onHandleSelect} placeholder="Select" allowClear options={ProductHierarchyData} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }} showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
                                 </Form.Item>
                                 {toolTipContent && form.getFieldValue('model') && <div className={styles.modelTooltip}>{addToolTip(toolTipContent, 'bottom', '#FFFFFF', styles.toolTip)(<AiOutlineInfoCircle size={13} />)}</div>}
@@ -110,26 +122,21 @@ const AddEditFormMain = (props) => {
                                     <Input {...disabledProp} placeholder={preparePlaceholderText('Model Code')} />
                                 </Form.Item>
                             </Col>
-                        </Row>
 
-                        <Row gutter={20}>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item label="Available Stock" name="availableStock" data-testid="availableStock">
                                     <Input {...disabledProp} placeholder={preparePlaceholderText('Available Stock')} />
                                 </Form.Item>
                             </Col>
-                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item label="Vehicle Allocated Status" name="vehicleAllocatedStatus" data-testid="vehicleAllocatedStatus">
-                                    <Input {...disabledProp} placeholder={preparePlaceholderText('Vehicle Allocated Status')} />
-                                </Form.Item>
-                            </Col>
+                        </Row>
+
+                        <Row gutter={20}>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item label="PO Number" name="poNumber">
                                     <Input {...disabledProp} placeholder={preparePlaceholderText('PO Number')} />
                                 </Form.Item>
                             </Col>
-                        </Row>
-                        <Row gutter={20}>
+
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item label="PO Date" name="poDate">
                                     <Input {...disabledProp} placeholder={preparePlaceholderText('PO Date')} />
@@ -140,13 +147,15 @@ const AddEditFormMain = (props) => {
                                     {customSelectBox({ data: typeData?.PO_STATS, disabled: true })}
                                 </Form.Item>
                             </Col>
+                        </Row>
+
+                        <Row gutter={20}>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item label="SO Number" name="soNumber">
                                     <Input {...disabledProp} placeholder={preparePlaceholderText('SO Number')} />
                                 </Form.Item>
                             </Col>
-                        </Row>
-                        <Row gutter={20}>
+
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item label="SO Status" name="soStatus">
                                     <Input {...disabledProp} placeholder={preparePlaceholderText('SO Status')} />
@@ -157,26 +166,48 @@ const AddEditFormMain = (props) => {
                                     <Input {...disabledProp} placeholder={preparePlaceholderText('VIN number')} />
                                 </Form.Item>
                             </Col>
+                        </Row>
+                        <Row gutter={20}>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                {prepareCaption('Price Information')}
+                            </Col>
+                        </Row>
+                        <Row gutter={20}>
+                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                <Form.Item initialValue={formData?.saleType} name="saleType" label="Sale Type" rules={[validateRequiredSelectField('Sale Type')]}>
+                                    {customSelectBox({ data: typeData['SALE_TYPE'] })}
+                                </Form.Item>
+                            </Col>
+                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                <Form.Item initialValue={formData?.priceType} label="Price Type" name="priceType">
+                                    {customSelectBox({ data: typeData['PRC_TYP'] })}
+                                </Form.Item>
+                            </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item label="Vehicle Selling Price" name="vehicleSellingPrice">
                                     <Input {...disabledProp} placeholder={preparePlaceholderText('Vehicle Selling Price')} />
                                 </Form.Item>
                             </Col>
-                        </Row>
-                        <Row gutter={20}>
-                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item label="Discount Amount" name="discountAmount" rules={[validateNumberWithTwoDecimalPlaces('Discount Amount')]}>
-                                    <Input placeholder={preparePlaceholderText('Discount Amount')} />
-                                </Form.Item>
-                            </Col>
-                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item label="Tax Amount" name="taxAmount">
-                                    <Input {...disabledProp} placeholder={preparePlaceholderText('Tax Amount')} />
-                                </Form.Item>
-                            </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item label="Vehicle Amount" name="vehicleAmount">
                                     <Input {...disabledProp} placeholder={preparePlaceholderText('Vehicle Amount')} />
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                        <Row gutter={20}>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                {prepareCaption('Benefits')}
+                            </Col>
+                        </Row>
+                        <Row gutter={20}>
+                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                <Form.Item label="Dealer Discount with TAX" name="discountAmount" rules={[validateNumberWithTwoDecimalPlaces('Dealer Discount with TAX')]}>
+                                    <Input placeholder={preparePlaceholderText('Dealer Discount with TAX')} />
+                                </Form.Item>
+                            </Col>
+                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                <Form.Item label="Consumer Scheme with TAX" name="taxAmount">
+                                    <Input {...disabledProp} placeholder={preparePlaceholderText('Tax Amount')} />
                                 </Form.Item>
                             </Col>
                         </Row>
@@ -193,7 +224,7 @@ const AddEditFormMain = (props) => {
                         header={
                             <Row>
                                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                                    <Text strong>Other Charges</Text>
+                                    <Text strong>Optional Services</Text>
                                     <Button onClick={addContactHandeler} icon={<PlusOutlined />} type="primary" disabled={isReadOnly}>
                                         Add
                                     </Button>
