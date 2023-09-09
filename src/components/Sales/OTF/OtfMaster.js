@@ -284,7 +284,7 @@ export const OtfMasterBase = (props) => {
     }, []);
 
     useEffect(() => {
-        if (userId) {
+        if (userId && extraParams) {
             setShowDataLoading(true);
             fetchOTFSearchedList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
