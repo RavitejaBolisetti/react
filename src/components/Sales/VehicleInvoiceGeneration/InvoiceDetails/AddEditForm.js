@@ -13,13 +13,13 @@ import OtfDetailsForm from './OtfDetailsForm';
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { formData, typeData, setSameAsBookingCustomer, sameAsBookingCustomer, form } = props;
+    const { formData, otfFormData, typeData, setSameAsBookingCustomer, sameAsBookingCustomer, invoiceDetailForm } = props;
     const { activeKey, setActiveKey, formActionType: { editMode } = undefined } = props;
     const [corporateType, setCorporateType] = useState('');
 
     useEffect(() => {
         if (formData) {
-            form?.setFieldsValue({
+            invoiceDetailForm?.setFieldsValue({
                 ...formData,
                 bookingCustomer: { ...formData?.bookingCustomer, birthDate: convertDateToCalender(formData?.bookingCustomer?.birthDate) },
                 billingCustomer: { ...formData?.billingCustomer, birthDate: convertDateToCalender(formData?.billingCustomer?.birthDate) },
@@ -48,8 +48,8 @@ const AddEditFormMain = (props) => {
     const handleOnChange = (e) => {
         if (e.target.checked) {
             setSameAsBookingCustomer(true);
-            let bookingCustomer = form?.getFieldsValue()?.bookingCustomer;
-            form?.setFieldsValue({ billingCustomer: { ...bookingCustomer } });
+            let bookingCustomer = invoiceDetailForm?.getFieldsValue()?.bookingCustomer;
+            invoiceDetailForm?.setFieldsValue({ billingCustomer: { ...bookingCustomer } });
         } else {
             setSameAsBookingCustomer(false);
         }

@@ -57,14 +57,14 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const InvoiceDetailsMasterBase = (props) => {
-    const { setReceipt, typeData, partySegmentType } = props;
-    const { userId, buttonData, setButtonData, showGlobalNotification, section, isDataLoaded, isLoading } = props;
-    const { form, formActionType, handleFormValueChange } = props;
+    const { typeData, otfData } = props;
+    const { userId, buttonData, setButtonData, showGlobalNotification, section, isDataLoaded, isLoading, invoiceDetailForm } = props;
+    const { form, formActionType, handleFormValueChange, otfNumber, setOtfNumber } = props;
     // const { requestPayload, setRequestPayload } = props;
     const [activeKey, setActiveKey] = useState([]);
-    const [otfNumber, setOtfNumber] = useState();
 
     const [formData, setFormData] = useState('');
+    const [otfFormData, setOtfFormData] = useState('');
 
     // useEffect(() => {
     //     return () => {
@@ -104,12 +104,14 @@ const InvoiceDetailsMasterBase = (props) => {
         form,
         // onFinish,
         // onFinishFailed,
-        partySegmentType,
+        typeData,
         handleChange,
         formActionType,
 
         userId,
         isDataLoaded,
+        otfFormData: otfData,
+        setOtfFormData,
         formData,
         isLoading,
         setActiveKey,
@@ -122,12 +124,11 @@ const InvoiceDetailsMasterBase = (props) => {
         typeData,
         formData,
         styles,
-        partySegmentType,
         isLoading,
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={invoiceDetailForm} onValuesChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>

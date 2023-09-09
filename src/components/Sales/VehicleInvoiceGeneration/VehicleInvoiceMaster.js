@@ -103,11 +103,12 @@ export const VehicleInvoiceMasterBase = (props) => {
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
-    const [partyDetailForm] = Form.useForm();
+    const [invoiceDetailForm] = Form.useForm();
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [cancelInvoiceVisible, setCancelInvoiceVisible] = useState(false);
+    const [otfNumber, setOtfNumber] = useState();
 
     const [page, setPage] = useState({ pageSize: 10, current: 1 });
     const dynamicPagination = true;
@@ -278,19 +279,19 @@ export const VehicleInvoiceMasterBase = (props) => {
     }, [currentSection, sectionName]);
 
     useEffect(() => {
-        if (userId && selectedOtfNumber) {
+        if (userId && (selectedOtfNumber || otfNumber)) {
             const extraParams = [
                 {
                     key: 'otfNumber',
                     title: 'otfNumber',
-                    value: selectedOtfNumber,
+                    value: selectedOtfNumber ?? otfNumber,
                     name: 'OTF Number',
                 },
             ];
             fetchOTFDetail({ customURL, setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedOtfNumber]);
+    }, [userId, selectedOtfNumber, otfNumber]);
 
     const handleInvoiceTypeChange = (buttonName) => {
         setInvoiceStatus(buttonName?.key);
@@ -312,7 +313,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         switch (buttonAction) {
             case ADD_ACTION:
                 defaultSection && setCurrentSection(defaultSection);
-                partyDetailForm.resetFields();
+                invoiceDetailForm.resetFields();
                 setApportionList([]);
                 break;
             case EDIT_ACTION:
@@ -403,7 +404,9 @@ export const VehicleInvoiceMasterBase = (props) => {
         form.resetFields();
         form.setFieldsValue();
         setSelectedOrderId();
-        partyDetailForm.resetFields();
+        setSelectedOtfNumber();
+        setOtfNumber();
+        invoiceDetailForm.resetFields();
         setReceipt();
         setTotalReceivedAmount(0.0);
 
@@ -546,7 +549,7 @@ export const VehicleInvoiceMasterBase = (props) => {
     const containerProps = {
         record: selectedOrder,
         form,
-        partyDetailForm,
+        invoiceDetailForm,
         formActionType,
         setFormActionType,
         receiptOnFinish: onFinish,
@@ -596,6 +599,8 @@ export const VehicleInvoiceMasterBase = (props) => {
         onCancelInvoice,
         saveButtonName: isLastSection ? 'Submit' : 'Save & Next',
         setLastSection,
+        otfNumber,
+        setOtfNumber,
     };
 
     const cancelInvoiceProps = {

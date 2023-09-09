@@ -325,4 +325,8 @@ export const PARAM_MASTER = {
         id: 'INVOICE_CANCEL_REASON',
         title: 'Invoice Cancel Reason',
     },
+    TAX_CALCLTN_TYPE: {
+        id: 'TAX_CALCLTN_TYPE',
+        title: 'Tax Calculation Type',
+    },
 };
