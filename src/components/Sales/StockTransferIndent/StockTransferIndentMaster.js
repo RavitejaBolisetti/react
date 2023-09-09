@@ -50,6 +50,7 @@ export const OtfMasterBase = (props) => {
     const [searchForm] = Form.useForm();
 
     const [advanceFilterForm] = Form.useForm();
+    const [addIndentDetailsForm] = Form.useForm();
     
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [isAddNewIndentVisible, setIsAddNewIndentVisible] = useState(false);
@@ -156,6 +157,8 @@ export const OtfMasterBase = (props) => {
     };
 
     const onFinish = (values) => {
+        setIsAddNewIndentVisible(false);
+
         //const recordId = formData?.parentId || form.getFieldValue('parentId');
         //let data = { ...values, parentId: recordId };
 
@@ -196,6 +199,7 @@ export const OtfMasterBase = (props) => {
     };
 
     const handleOnAddIndentClick = () => {
+        setButtonData({ ...defaultBtnVisiblity, cancelBtn:true, saveBtn: true, formBtnActive: true });
         setIsAddNewIndentVisible(true);
     };
 
@@ -236,7 +240,6 @@ export const OtfMasterBase = (props) => {
         setFilterString,
         toggleButton, 
         settoggleButton,
-        onFinish,
         onFinishFailed,
 
         setAdvanceSearchVisible,
@@ -264,9 +267,13 @@ export const OtfMasterBase = (props) => {
     const addNewIndentProps = {
         isVisible: isAddNewIndentVisible,
         titleOverride: 'Add Indent Details',
+        addIndentDetailsForm,
+        onFinish,
         onCloseAction : onAddIndentDetailsCloseAction,
         openAccordian, 
         setOpenAccordian,
+        buttonData, 
+        setButtonData,
     };
    
     return (

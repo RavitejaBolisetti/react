@@ -101,7 +101,7 @@ const HeaderMain = (props) => {
 
     useEffect(() => {
         if (!isDataLoaded && userId) {
-            fetchData({ setIsLoading: listShowLoading, userId, onError });
+            //fetchData({ setIsLoading: listShowLoading, userId, onError });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, userId]);

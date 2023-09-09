@@ -27,7 +27,7 @@ const { Text } = Typography;
 const AddEditFormMain = (props) => {
 
     const { formData } = props;
-    const { otfTransferForm, onFinishOTFTansfer, otfStatusList, openAccordian, setOpenAccordian } = props;
+    const { addIndentDetailsForm, onFinish, otfStatusList, openAccordian, setOpenAccordian } = props;
     const { handleButtonClick, buttonData, setButtonData, onCloseAction } = props;
     const { activeKey, setActiveKey } = props;
 
@@ -40,6 +40,7 @@ const AddEditFormMain = (props) => {
     }, []);
 
     const buttonProps = {
+        saveButtonName:'Submit',
         formData,
         onCloseAction,
         buttonData,
@@ -98,7 +99,7 @@ const AddEditFormMain = (props) => {
     const onFinishAddVehicleDetails = (values) => {
         if(tableDataItem.length === 0)
             handleCollapse(1);
-        
+
         setTableDataItem([...tableDataItem, { ...initialTableDataItem, ...values}]);
         setIsAddVehicleDetailsVisible(false);
         addVehicleDetailsForm.resetFields();
@@ -116,7 +117,7 @@ const AddEditFormMain = (props) => {
 
     return (
         <>
-            <Form form={otfTransferForm} data-testid="test" onFinish={onFinishOTFTansfer} layout="vertical" autocomplete="off" colon="false">
+            <Form form={addIndentDetailsForm} data-testid="test" onFinish={onFinish} layout="vertical" autocomplete="off" colon="false">
                 <Row gutter={20} className={styles.drawerBody}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Card>
@@ -171,9 +172,12 @@ const AddEditFormMain = (props) => {
                         
                     </Col>
                 </Row>
+
+                <VehicleDetailFormButton {...buttonProps} />
+
             </Form>
+
             <AddVehicleDetailsModal {...addVehicleDetailsProps} />
-            <VehicleDetailFormButton {...buttonProps} />
         </>
     );
 };
