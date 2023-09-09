@@ -343,7 +343,7 @@ export const ConfigurableParameterEditingBase = ({ saveFormShowLoading, isLoadin
         isLoadingOnSave,
     };
 
-    const title = 'Configurable Parameter Editing';
+    const title = 'Control Description';
 
     return (
         <>

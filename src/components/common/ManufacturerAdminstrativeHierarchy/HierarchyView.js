@@ -19,7 +19,7 @@ export const HierarchyViewMain = ({ viewMode, isLoading, viewTitle, authTypeDrop
         column: { xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 },
     };
     const manufacturerAdminHierarchyDataFlat = generateList(manufacturerAdminHierarchyData, { children: 'subManufactureAdmin' });
-    const finalParentName = findParentName(manufacturerAdminHierarchyDataFlat, selectedTreeData?.manufactureAdminParntId) ?? HIERARCHY_DEFAULT_PARENT;
+    const finalParentName = findParentName(manufacturerAdminHierarchyDataFlat, selectedTreeData?.manufactureAdminParntId)?.data?.manufactureAdminShortName ?? HIERARCHY_DEFAULT_PARENT;
     const status = selectedTreeData?.status ? 'Active' : 'InActive';
     return (
         <>
