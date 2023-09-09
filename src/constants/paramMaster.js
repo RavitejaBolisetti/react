@@ -321,4 +321,8 @@ export const PARAM_MASTER = {
         id: 'INV_DEL_NOT_REQ_TYP',
         title: 'Delivery Note/Invoice Request Status',
     },
+    INVOICE_CANCEL_REASON: {
+        id: 'INVOICE_CANCEL_REASON',
+        title: 'Invoice Cancel Reason',
+    },
 };

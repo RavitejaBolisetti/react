@@ -15,11 +15,12 @@ import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 
 import { VehicleInvoiceMainConatiner } from './VehicleInvoiceMainConatiner';
 import { ListDataTable } from 'utils/ListDataTable';
 import { AdvancedSearch } from './AdvancedSearch';
-import { CancelReceipt } from './CancelReceipt';
+import { CancelInvoice } from './CancelInvoice';
 import { QUERY_BUTTONS_CONSTANTS } from './QueryButtons';
 import { BASE_URL_OTF_DETAILS as customURL } from 'constants/routingApi';
 import { otfDataActions } from 'store/actions/data/otf/otf';
 import { vehicleInvoiceDataActions } from 'store/actions/data/invoiceGeneration/vehicleInvoiceGeneration';
+import { vehicleInvoiceGenerationDataActions } from 'store/actions/data/invoiceGeneration/vehicleInvoice';
 import { showGlobalNotification } from 'store/actions/notification';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { convertDateTime, monthDateFormat } from 'utils/formatDateTime';
@@ -62,6 +63,7 @@ const mapDispatchToProps = (dispatch) => ({
         {
             fetchList: vehicleInvoiceDataActions.fetchList,
             fetchOTFDetail: otfDataActions.fetchDetail,
+            cancelInvoice: vehicleInvoiceGenerationDataActions.save,
             listShowLoading: otfDataActions.listShowLoading,
             listShowLoading: vehicleInvoiceDataActions.listShowLoading,
             setFilterString: vehicleInvoiceDataActions.setFilter,
@@ -72,7 +74,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const VehicleInvoiceMasterBase = (props) => {
-    const { data, receiptDetailData, userId, fetchList, fetchOTFDetail, listShowLoading, showGlobalNotification } = props;
+    const { data, receiptDetailData, userId, fetchList, fetchOTFDetail, listShowLoading, cancelInvoice, showGlobalNotification } = props;
     const { typeData, receiptType, partySegmentType, paymentModeType, documentType, moduleTitle, totalRecords } = props;
     const { filterString, setFilterString, invoiceStatusList, otfData } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
@@ -80,7 +82,7 @@ export const VehicleInvoiceMasterBase = (props) => {
     const [requestPayload, setRequestPayload] = useState({ partyDetails: {}, receiptsDetails: {}, apportionDetails: {} });
 
     const [listFilterForm] = Form.useForm();
-    const [cancelReceiptForm] = Form.useForm();
+    const [cancelInvoiceForm] = Form.useForm();
 
     const [searchValue, setSearchValue] = useState();
 
@@ -105,7 +107,7 @@ export const VehicleInvoiceMasterBase = (props) => {
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
-    const [cancelReceiptVisible, setCancelReceiptVisible] = useState(false);
+    const [cancelInvoiceVisible, setCancelInvoiceVisible] = useState(false);
 
     const [page, setPage] = useState({ pageSize: 10, current: 1 });
     const dynamicPagination = true;
@@ -412,7 +414,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         setApportionList([]);
         setSelectedOrder();
         setIsFormVisible(false);
-        setCancelReceiptVisible(false);
+        setCancelInvoiceVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
     };
 
@@ -434,8 +436,8 @@ export const VehicleInvoiceMasterBase = (props) => {
     };
 
     const onCancelCloseAction = () => {
-        setCancelReceiptVisible(false);
-        cancelReceiptForm.resetFields();
+        setCancelInvoiceVisible(false);
+        cancelInvoiceForm.resetFields();
     };
 
     const removeFilter = (key) => {
@@ -448,39 +450,39 @@ export const VehicleInvoiceMasterBase = (props) => {
         }
     };
 
-    const onCancelReceipt = () => {
-        setCancelReceiptVisible(true);
+    const onCancelInvoice = () => {
+        setCancelInvoiceVisible(true);
     };
 
     const handleCloseReceipt = () => {
-        setCancelReceiptVisible(false);
-        cancelReceiptForm.resetFields();
+        setCancelInvoiceVisible(false);
+        cancelInvoiceForm.resetFields();
     };
 
     const handleCancelReceipt = () => {
-        // const recordId = selectedOrderId;
-        // const cancelRemark = cancelReceiptForm.getFieldValue().cancelRemarks;
-        // const data = { id: recordId ?? '', receiptNumber: receiptDetailData?.receiptsDetails?.receiptNumber, cancelRemarks: cancelRemark };
-        // const onSuccess = (res) => {
-        //     setShowDataLoading(true);
-        //     showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-        //     fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
-        //     setButtonData({ ...buttonData, formBtnActive: false });
-        //     setIsFormVisible(false);
-        //     setCancelReceiptVisible(false);
-        // };
-        // const onError = (message) => {
-        //     showGlobalNotification({ message });
-        // };
-        // const requestData = {
-        //     data: data,
-        //     method: 'put',
-        //     setIsLoading: listShowLoading,
-        //     userId,
-        //     onError,
-        //     onSuccess,
-        // };
-        // cancelReceipt(requestData);
+        const recordId = selectedOrderId;
+        const cancelReason = cancelInvoiceForm.getFieldValue().cancelReason;
+        const data = { id: recordId ?? '', invoiceNumber: selectedOrder?.invoiceNumber, cancelReason: cancelReason };
+        const onSuccess = (res) => {
+            setShowDataLoading(true);
+            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
+            setButtonData({ ...buttonData, formBtnActive: false });
+            setIsFormVisible(false);
+            setCancelInvoiceVisible(false);
+        };
+        const onError = (message) => {
+            showGlobalNotification({ message });
+        };
+        const requestData = {
+            data: data,
+            method: 'put',
+            setIsLoading: listShowLoading,
+            userId,
+            onError,
+            onSuccess,
+        };
+        cancelInvoice(requestData);
     };
 
     const title = 'Invoice Generation';
@@ -591,18 +593,19 @@ export const VehicleInvoiceMasterBase = (props) => {
         partySegmentType,
         paymentModeType,
         documentType,
-        onCancelReceipt,
+        onCancelInvoice,
         saveButtonName: isLastSection ? 'Submit' : 'Save & Next',
         setLastSection,
     };
 
-    const cancelReceiptProps = {
-        isVisible: cancelReceiptVisible,
-        titleOverride: 'Receipt Cancellation',
+    const cancelInvoiceProps = {
+        isVisible: cancelInvoiceVisible,
+        titleOverride: 'Cancel Request',
         handleCloseReceipt,
         handleCancelReceipt,
-        cancelReceiptForm,
+        cancelInvoiceForm,
         onCloseAction: onCancelCloseAction,
+        typeData,
     };
 
     return (
@@ -620,7 +623,7 @@ export const VehicleInvoiceMasterBase = (props) => {
             </Row>
             <AdvancedSearch {...advanceFilterProps} />
             <VehicleInvoiceMainConatiner {...containerProps} />
-            <CancelReceipt {...cancelReceiptProps} />
+            <CancelInvoice {...cancelInvoiceProps} />
         </>
     );
 };
