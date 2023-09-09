@@ -4,19 +4,19 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState, useEffect } from 'react';
-import { Col, Input, Form, Row, Switch, Select, AutoComplete } from 'antd';
+import { Col, Input, Form, Row, Switch, AutoComplete } from 'antd';
 import { validateRequiredInputField, searchValidator, validatePanField, validateTan, validateTin, validateRequiredSelectField, validatePincodeField } from 'utils/validation';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { ViewDetail } from './ViewDetail';
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
 import styles from 'assets/sass/app.module.scss';
+import { customSelectBox } from 'utils/customSelectBox';
 
 const { TextArea } = Input;
-const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined, onFinish, onFinishFailed, listShowLoading, userId, dealerParentData, dealerLovData } = props;
+    const { form, formData, onCloseAction, formActionType: { editMode, viewMode } = undefined, onFinish, onFinishFailed, listShowLoading, userId, dealerParentData } = props;
     const { showGlobalNotification, isVisible, buttonData, setButtonData, handleButtonClick, pincodeData, fetchPincodeDetail, isPinCodeLoading, forceUpdate, pinCodeShowLoading } = props;
 
     const [options, setOptions] = useState(false);
@@ -47,23 +47,20 @@ const AddEditFormMain = (props) => {
     let groupValue = null;
     let parentGroupId = null;
     const parentName = (values) => {
-        if (values === undefined) {
-            groupValue = null;
-            parentGroupId = null;
+
+        const parentData = dealerParentData?.find((item) => item?.key === values);
+        if (parentData) {
+            groupValue = parentData?.value;
+            parentGroupId = parentData?.key;
             form.setFieldValue('dealerParentName', groupValue);
             form.setFieldValue('parentId', parentGroupId);
-        } else {
-            const parentData = dealerParentData?.find((item) => item?.code === values);
-            if (parentData) {
-                groupValue = parentData?.name;
-                parentGroupId = parentData?.id;
-                form.setFieldValue('dealerParentName', groupValue);
-                form.setFieldValue('parentId', parentGroupId);
-            }
         }
+        
     };
 
-    const onErrorAction = () => {};
+    const onErrorAction = () => {
+        showGlobalNotification({ message: 'No Pincode exists' });
+    };
     const onSuccessAction = () => {};
 
     const handleOnSelect = (key) => {
@@ -151,7 +148,6 @@ const AddEditFormMain = (props) => {
         allowClear: true,
         className: styles.headerSelectField,
     };
-
     return (
         <Form autoComplete="off" layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20} className={styles.drawerBody}>
@@ -163,7 +159,7 @@ const AddEditFormMain = (props) => {
                             <Row gutter={16}>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                                     <Form.Item initialValue={formData?.parentCode} label="Group Code" rules={[validateRequiredSelectField('Group Code')]} name="parentCode">
-                                        <Select
+                                        {/* <Select
                                             placeholder={preparePlaceholderSelect('Group Code')}
                                             style={{
                                                 width: '100%',
@@ -172,12 +168,13 @@ const AddEditFormMain = (props) => {
                                             onChange={parentName}
                                             disabled={editMode}
                                         >
-                                            {dealerLovData?.map((item) => (
+                                            {dealerParentData?.map((item) => (
                                                 <Option key={item?.key} value={item?.key}>
                                                     {item?.key}
                                                 </Option>
                                             ))}
-                                        </Select>
+                                        </Select> */}
+                                    {customSelectBox({ data: dealerParentData, fieldNames: { key: 'key', value: 'key' }, onChange: parentName, placeholder: preparePlaceholderSelect('Group Code'), disabled: editMode })}
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>

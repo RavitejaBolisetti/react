@@ -12,10 +12,16 @@ export const EMBEDDED_REPORTS = {
         module: 'otf',
     },
     VEHICLE_DELIVERY_NOTE: {
-        id: 1,
+        id: 2,
         key: 'Vehicle_Delivery_Note_Report',
         title: 'Vehicle Delivery Note Report',
         type: 'Report',
         module: 'delivery-note',
+    },
+    AMC_CETRIFICATE_DOCUMENT: {
+        id: 3,
+        key: 'AMC-Certificate_Document',
+        type: 'Document',
+        module: 'AMC-Certificate-Document',
     },
 };

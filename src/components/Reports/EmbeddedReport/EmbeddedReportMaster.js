@@ -58,6 +58,7 @@ export const EmbeddedReportMasterMain = (props) => {
         accessToken: undefined,
         settings: undefined,
     });
+    console.log('sampleReportConfig', sampleReportConfig);
 
     const onSuccessAction = (res) => {
         // showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'File deleted Successfully' });
@@ -91,8 +92,10 @@ export const EmbeddedReportMasterMain = (props) => {
     useEffect(() => {
         setReportConfig({
             type: 'report',
+            id: data?.embedReports?.[0]?.reportId.substr(46, 92),
             embedUrl: data?.embedReports?.[0]?.embedUrl,
             accessToken: data.embedToken,
+            tokenType: models.TokenType.Embed,
             settings: {
                 panes: {
                     filters: {
@@ -130,14 +133,16 @@ export const EmbeddedReportMasterMain = (props) => {
 
     return (
         <div>
-            <PowerBIEmbed
-                embedConfig={sampleReportConfig}
-                eventHandlers={eventHandlersMap}
-                cssClassName={styles.reportClass}
-                getEmbeddedComponent={(embedObject) => {
-                    setReport(embedObject);
-                }}
-            />
+            {sampleReportConfig?.accessToken && (
+                <PowerBIEmbed
+                    embedConfig={sampleReportConfig}
+                    eventHandlers={eventHandlersMap}
+                    cssClassName={styles.reportClass}
+                    getEmbeddedComponent={(embedObject) => {
+                        setReport(embedObject);
+                    }}
+                />
+            )}
         </div>
     );
 };

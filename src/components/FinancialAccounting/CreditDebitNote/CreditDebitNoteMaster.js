@@ -161,7 +161,7 @@ export const CreditDebitNoteMasterBase = (props) => {
                 key: 'searchType',
                 title: 'Type',
                 value: filterString?.searchType,
-                name: typeData[PARAM_MASTER.CRDR_SEARCH_PARAM.id]?.find((i) => i?.key === filterString?.searchType)?.value,
+                name: 'Voucher Number',
                 canRemove: false,
                 filter: true,
             },

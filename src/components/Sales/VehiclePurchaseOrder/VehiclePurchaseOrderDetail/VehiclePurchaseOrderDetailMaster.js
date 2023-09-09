@@ -134,36 +134,20 @@ const VehiclePurchaseOrderDetailMasterBase = (props) => {
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedRecordId, changeView] ); 
+    }, [userId, selectedRecordId, changeView]);
 
-    useEffect(() => {
-        if (userId && viewVehiclePODetails.dealerParentCode) {
-            const extraParams = [
-                {
-                    key: 'dealerParentCode',
-                    title: 'dealerParentCode',
-                    value: viewVehiclePODetails.dealerParentCode,
-                    name: 'Dealer Parent Code',
-                },
-            ];
-            fetchDealerLocation({ setIsLoading: listShowLoading, extraParams, onErrorAction });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, viewVehiclePODetails]);
-
-    const getDealerlocation = (dealerCode) => {        
-        if(dealerCode){      
+    const getDealerlocation = (dealerCode) => {
+        if (dealerCode) {
             const extraParams = [
                 {
                     key: 'dealerParentCode',
                     title: 'dealerParentCode',
                     value: dealerCode,
                     name: 'Dealer Parent Code',
-                }, 
+                },
             ];
             fetchDealerLocation({ setIsLoading: listShowLoading, extraParams, onErrorAction });
-
-        } 
+        }
     };
 
     const onFinish = (values) => {
