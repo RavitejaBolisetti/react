@@ -13,7 +13,7 @@ import { customSelectBox } from 'utils/customSelectBox';
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
 import { checkAndSetDefaultValue, getStatus } from 'utils/checkAndSetDefaultValue';
-import { convertDateTime } from 'utils/formatDateTime';
+import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 
 import styles from 'assets/sass/app.module.scss';
 

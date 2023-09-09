@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
-import { convertDate } from 'utils/formatDateTime';
+import { convertDate, dateFormatView } from 'utils/formatDateTime';
 
 import styles from 'assets/sass/app.module.scss';
 

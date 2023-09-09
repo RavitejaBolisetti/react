@@ -5,7 +5,7 @@
  */
 import { tblPrepareColumns } from 'utils/tableColumn';
 import { vehicleAllotmentStatusTag } from 'components/Sales/OTF/utils/VehicleAllotmentStatusTag';
-import { convertDateTime } from 'utils/formatDateTime';
+import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 
 export const tableColumn = (handleButtonClick, page, pageSize) => {
     const tableColumn = [

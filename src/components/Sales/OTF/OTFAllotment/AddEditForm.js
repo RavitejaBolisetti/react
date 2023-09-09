@@ -11,7 +11,8 @@ import { ListDataTable } from 'utils/ListDataTable';
 import { withDrawer } from 'components/withDrawer';
 import { checkAndSetDefaultValue, getStatus } from 'utils/checkAndSetDefaultValue';
 import { VehicleDetailFormButton } from 'components/Sales/VehicleDetail/VehicleDetailFormButton';
-import { convertDateTime } from 'utils/formatDateTime';
+import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
+
 import styles from 'assets/sass/app.module.scss';
 
 const AddEditFormMain = (props) => {
