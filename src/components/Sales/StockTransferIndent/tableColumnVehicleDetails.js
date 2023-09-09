@@ -3,10 +3,11 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { tblPrepareColumns } from 'utils/tableColumn';
+import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import { convertDateMonthYear } from 'utils/formatDateTime';
+import styles from 'assets/sass/app.module.scss';
 
-export const tableColumnVehicleDetails = (sorter) => {
+export const tableColumnVehicleDetails = (handleButtonClickVehicleDetails, sorter) => {
     const tableColumn = [
         tblPrepareColumns({
             title: 'Model Description',
@@ -56,6 +57,8 @@ export const tableColumnVehicleDetails = (sorter) => {
             width: '10%',
             sorter,
         }),
+
+        tblActionColumn({ handleButtonClick: handleButtonClickVehicleDetails , styles, width: '8%',  canView:false, canEdit: true, canDelete: true, }),
     ];
 
     return tableColumn;

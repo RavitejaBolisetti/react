@@ -266,3 +266,5 @@ export const BASE_URL_VEHICLE_ALLOTMENT = BASE_URL + 'vehicle/allotments';
 export const BASE_URL_VEHICLE_DETAILS_SERVICE = BASE_URL + 'otf/vehicledetails/optionalcharges';
 
 export const BASE_URL_MILE_SKILL = BASE_URL + 'dealer/mileskills';
+
+export const BASE_URL_STOCK_TRANSFER = BASE_URL_VEHICLE + 'stocktransfer';

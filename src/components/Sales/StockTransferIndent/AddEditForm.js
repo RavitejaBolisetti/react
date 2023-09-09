@@ -16,6 +16,7 @@ import { expandIcon, accordianExpandIcon } from 'utils/accordianExpandIcon';
 import { tableColumnVehicleDetails } from './tableColumnVehicleDetails';
 import { DataTable } from 'utils/dataTable';
 import { AddVehicleDetailsModal } from './AddVehicleDetailsModal';
+import { EDIT_ACTION, DELETE_ACTION  } from 'utils/btnVisiblity';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -27,17 +28,32 @@ const { Text } = Typography;
 const AddEditFormMain = (props) => {
 
     const { formData } = props;
-    const { addIndentDetailsForm, onFinish, otfStatusList, openAccordian, setOpenAccordian } = props;
-    const { handleButtonClick, buttonData, setButtonData, onCloseAction } = props;
+    const { addIndentDetailsForm, onFinish, indentLocationList, openAccordian, setOpenAccordian } = props;
+    const { handleButtonClick, buttonData, setButtonData, onCloseAction, tableDataItem, setTableDataItem } = props;
     const { activeKey, setActiveKey } = props;
 
     const [ addVehicleDetailsForm ] = Form.useForm();
     const [ isAddVehicleDetailsVisible, setIsAddVehicleDetailsVisible ] = useState(false);
-    const [ tableDataItem, setTableDataItem ] = useState([]);
 
     useEffect(() => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    const handleButtonClickVehicleDetails = ({ record = null, buttonAction, openDefaultSection = true, index }) => {
+        switch (buttonAction) {
+            case EDIT_ACTION:
+
+                break;
+            case DELETE_ACTION:
+                let arrayOfNumbers = [...tableDataItem];
+                arrayOfNumbers.splice(index, 1);
+                setTableDataItem([...arrayOfNumbers]);
+                break;
+            
+            default:
+                break;
+        }
+    };
 
     const buttonProps = {
         saveButtonName:'Submit',
@@ -81,13 +97,13 @@ const AddEditFormMain = (props) => {
         "modelCode" : "",
         "requestedQuantity" : 0,
         "cancelledQuantity" :0,
-        "issuedNNotReceivedQuantity" : 0,
-        "receivededQuantity" : 0,
-        "balanceQuantity" : 0,
+        "issuedAndNotReceivedQuantity" : 0,
+        "receivedQuantity" : 0,
+        "balancedQuantity" : 0,
     };
 
     const tableProps = {
-        tableColumn: tableColumnVehicleDetails(false),
+        tableColumn: tableColumnVehicleDetails( handleButtonClickVehicleDetails ),
         tableData: tableDataItem,
         pagination: false,
     };
@@ -100,7 +116,11 @@ const AddEditFormMain = (props) => {
         if(tableDataItem.length === 0)
             handleCollapse(1);
 
-        setTableDataItem([...tableDataItem, { ...initialTableDataItem, ...values}]);
+        setTableDataItem([...tableDataItem, { ...initialTableDataItem, ...values }]);
+
+        // let indentData = addIndentDetailsForm.getFieldsValue();
+        // addIndentDetailsForm?.setFieldsValue({ ...indentData, vehicleDetails: [ ...tableDataItem ] });
+
         setIsAddVehicleDetailsVisible(false);
         addVehicleDetailsForm.resetFields();
     };
@@ -122,26 +142,21 @@ const AddEditFormMain = (props) => {
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Card>
                             <Row gutter={24}>
-                                <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                    <Form.Item label="Indent To Parent" name="indentToParent">
-                                        {customSelectBox({ data: otfStatusList, fieldNames: { key: 'key', value: 'desc' }, placeholder: preparePlaceholderSelect('') })}
-                                    </Form.Item>
-                                </Col>
-                                <Col xs={8} sm={8} md={8} lg={8} xl={8}>
+                                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                                     <Form.Item label="Indent To Location" name="indentToLocation">
-                                        {customSelectBox({ data: otfStatusList, fieldNames: { key: 'key', value: 'desc' }, placeholder: preparePlaceholderSelect('') })}
+                                        {customSelectBox({ data: indentLocationList, fieldNames: { key: 'locationCode', value: 'dealerLocationName' }, placeholder: preparePlaceholderSelect('') })}
                                     </Form.Item>
                                 </Col>
-                                <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                    <Form.Item label="Requested by" name="requestedBY">
-                                        {customSelectBox({ data: otfStatusList, fieldNames: { key: 'key', value: 'desc' }, placeholder: preparePlaceholderSelect('') })}
+                                <Col xs={12} sm={12} md={12} lg={12} xl={12}>
+                                    <Form.Item label="Requested by" name="requestedBy">
+                                        {customSelectBox({ data: indentLocationList, fieldNames: { key: 'locationCode', value: 'locationCode' }, placeholder: preparePlaceholderSelect('') })}
                                     </Form.Item>
                                 </Col>
                             </Row>
 
                             <Row gutter={24}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.textareaError}>
-                                    <Form.Item name="remark" label="Remarks" >
+                                    <Form.Item name="remarks" label="Remarks" >
                                         <TextArea maxLength={300} placeholder={preparePlaceholderText('Remarks')} showCount />
                                     </Form.Item>
                                 </Col>

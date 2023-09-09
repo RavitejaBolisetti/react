@@ -12,7 +12,7 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
     const tableColumn = [
         tblPrepareColumns({
             title: 'Indent Number',
-            dataIndex: 'incidentNumber',
+            dataIndex: 'indentNumber',
             width: '18%',
         }),
 

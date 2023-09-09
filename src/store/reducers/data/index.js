@@ -45,6 +45,9 @@ import { UserManagement } from './userManagement';
 import { VehicleReceiptChecklist } from './VehicleReceiptCheckList';
 import { vehicleAllotmentData } from './vehicleAllotment';
 
+import { stockTransferIndentData } from './stockTransferIndent';
+
+
 export const data = combineReducers({
     Menu,
     ProductHierarchy,
@@ -84,4 +87,5 @@ export const data = combineReducers({
     Report,
     VehicleReceiptChecklist,
     vehicleAllotmentData,
+    stockTransferIndentData,
 });

@@ -13,6 +13,9 @@ import { tableColumn } from './tableColumn';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { STOCK_TRANSFER } from 'constants/StockTransfer';
 import { ADD_ACTION, VIEW_ACTION, CANCEL_ACTION, NEXT_ACTION, btnVisiblity } from 'utils/btnVisiblity';
+import { stockTransferIndent } from 'store/actions/data/sales/stockTransfer/StockTransferIndent';
+import { DealerBranchLocationDataActions } from 'store/actions/data/userManagement/dealerBranchLocation';
+import { BASE_URL_STOCK_TRANSFER as customURL } from 'constants/routingApi';
 
 import { ListDataTable } from 'utils/ListDataTable';
 import { showGlobalNotification } from 'store/actions/notification';
@@ -23,14 +26,27 @@ import { AddEditForm } from './AddEditForm';
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
+        common: { 
+            Header : { data: { parentGroupCode } },
+         },
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
-        
+            UserManagement : {
+                DealerBranchLocation: {  data: indentLocationList },
+            },
+            stockTransferIndentData : {
+                stockTransferIndent: { isLoaded: isSearchDataLoaded = false, isLoading: isOTFSearchLoading, data, isDetailLoaded },
+            }
         },
     } = state;
+    console.log("🚀 ~ file: StockTransferIndentMaster.js:39 ~ mapStateToProps ~ state:", state)
+    
     let returnValue = {
         userId,
-        typeData
+        typeData,
+        parentGroupCode,
+        indentLocationList,
+        data
     };
     return returnValue;
 };
@@ -39,6 +55,11 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
+            fetchIndentLocation: DealerBranchLocationDataActions.fetchList,
+
+            listShowLoading: stockTransferIndent.listShowLoading,
+            fetchIndentList: stockTransferIndent.fetchList,
+            saveData: stockTransferIndent.saveData,
             showGlobalNotification,
         },
         dispatch
@@ -46,9 +67,11 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const OtfMasterBase = (props) => {
-    const { userId, typeData } = props;
-    const [searchForm] = Form.useForm();
+    const { userId, typeData, parentGroupCode, showGlobalNotification } = props;
+    const { data, indentLocationList } = props;
+    const { fetchIndentList, fetchIndentLocation, listShowLoading, saveData } = props;
 
+    const [searchForm] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
     const [addIndentDetailsForm] = Form.useForm();
     
@@ -57,6 +80,7 @@ export const OtfMasterBase = (props) => {
     const [filterString, setFilterString] = useState();
     const [toggleButton, settoggleButton] = useState(STOCK_TRANSFER?.RAISED.key);
     const [openAccordian, setOpenAccordian] = useState('');
+    const [ tableDataItem, setTableDataItem ] = useState([]);
 
     const defaultBtnVisiblity = {
         editBtn: false,
@@ -70,10 +94,13 @@ export const OtfMasterBase = (props) => {
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
-    useEffect(() => {
-        setFilterString({ ...filterString, pageSize: 10, current: 1 });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    const onSuccessAction = (res) => {
+        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+    };
+
+    const onErrorAction = (message) => {
+        showGlobalNotification({ message });
+    };
 
     const extraParams = useMemo(() => {
         return [
@@ -125,6 +152,15 @@ export const OtfMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString]);
 
+    useEffect(() => {
+        setFilterString({ ...filterString, pageSize: 10, current: 1 });
+        if (userId) {
+            fetchIndentList({ customURL: customURL + '/search', setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+            //fetchVehicleAllotmentSearchedList({ customURL: customURL + '/search', setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId]);
+
     const onFinishFailed = (errorInfo) => {
         return;
     };
@@ -160,7 +196,8 @@ export const OtfMasterBase = (props) => {
         setIsAddNewIndentVisible(false);
 
         //const recordId = formData?.parentId || form.getFieldValue('parentId');
-        //let data = { ...values, parentId: recordId };
+        let data = { ...values, vehicleDetails: [ ...tableDataItem ] };
+        console.log(data, "file: StockTransferIndentMaster.js:194 ~ onFinish ~ values:", values)
 
         const onSuccess = (res) => {
             // form.resetFields();
@@ -174,18 +211,17 @@ export const OtfMasterBase = (props) => {
         const onError = (message) => {
             // showGlobalNotification({ message });
         };
-
         const requestData = {
-            //data: data,
-            //baseURL,
-            //method: formActionType?.editMode ? 'put' : 'post',
-            //setIsLoading: listShowLoading,
+            data: data,
+            customURL : customURL+ '/indent',
+            method: 'post',
+            setIsLoading: listShowLoading,
             userId,
             onError,
             onSuccess,
         };
 
-        //saveData(requestData);
+        saveData(requestData);
     };
 
     const onCloseAction = () => {
@@ -199,12 +235,27 @@ export const OtfMasterBase = (props) => {
     };
 
     const handleOnAddIndentClick = () => {
-        setButtonData({ ...defaultBtnVisiblity, cancelBtn:true, saveBtn: true, formBtnActive: true });
-        setIsAddNewIndentVisible(true);
+
+        const onSuccessActionFetchIndLoc = (res) => {
+            addIndentDetailsForm.resetFields();
+            setTableDataItem([]);
+            setButtonData({ ...defaultBtnVisiblity, cancelBtn:true, saveBtn: true, formBtnActive: true });
+            setIsAddNewIndentVisible(true);
+        };
+        const extraParamData = [
+            {
+                key: 'parentGroupCode',
+                value: parentGroupCode,
+            },
+        ];
+
+        fetchIndentLocation({ setIsLoading: listShowLoading, userId, onSuccessAction: onSuccessActionFetchIndLoc, onErrorAction, extraParams: extraParamData });
+
     };
 
     const onAddIndentDetailsCloseAction = () => {
         setIsAddNewIndentVisible(false);
+        addIndentDetailsForm.resetFields();
     };
 
     const onFinishSearch = (values) => {};
@@ -227,7 +278,7 @@ export const OtfMasterBase = (props) => {
         //setPage: setFilterString,
         isLoading: false, //showDataLoading,
         tableColumn: tableColumn(handleButtonClick),
-        //tableData: data,
+        tableData: data?.paginationData,
         showAddButton: false,
         //noDataMessage: LANGUAGE_EN.GENERAL.LIST_NO_DATA_FOUND.TITLE,
     };
@@ -274,6 +325,9 @@ export const OtfMasterBase = (props) => {
         setOpenAccordian,
         buttonData, 
         setButtonData,
+        indentLocationList,
+        tableDataItem, 
+        setTableDataItem,
     };
    
     return (
@@ -285,7 +339,7 @@ export const OtfMasterBase = (props) => {
                 </Col>
             </Row>
             <AdvancedSearch {...advanceSearchFilterProps} />
-            <AddEditForm {...addNewIndentProps} />;
+            <AddEditForm {...addNewIndentProps} />
         </>
     );
 };
