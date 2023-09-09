@@ -15,7 +15,6 @@ const { Panel } = Collapse;
 const AddEditFormMain = (props) => {
     const { formData, otfFormData, typeData, setSameAsBookingCustomer, sameAsBookingCustomer, invoiceDetailForm } = props;
     const { activeKey, setActiveKey, formActionType: { editMode } = undefined } = props;
-    const [corporateType, setCorporateType] = useState('');
 
     useEffect(() => {
         if (formData) {
