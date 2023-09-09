@@ -69,7 +69,7 @@ function AddEditForm({ onUpdate, isPresent, index, fnSetData, seteditCardForm, e
     };
 
     const handlePartSearch = (values) => {
-        accessoryForm.resetFields(['quantity', 'type', 'sellingPrice', 'mrp', 'partDescription']);
+        accessoryForm.resetFields(['requiredQuantity', 'type', 'sellingPrice', 'mrp', 'partDescription']);
     };
 
     const handleSelectedData = (e) => {
