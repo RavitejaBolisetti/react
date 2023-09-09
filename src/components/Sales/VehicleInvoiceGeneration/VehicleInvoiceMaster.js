@@ -63,7 +63,7 @@ const mapDispatchToProps = (dispatch) => ({
         {
             fetchList: vehicleInvoiceDataActions.fetchList,
             fetchOTFDetail: otfDataActions.fetchDetail,
-            cancelInvoice: vehicleInvoiceGenerationDataActions.save,
+            cancelInvoice: vehicleInvoiceGenerationDataActions.saveData,
             listShowLoading: otfDataActions.listShowLoading,
             listShowLoading: vehicleInvoiceDataActions.listShowLoading,
             setFilterString: vehicleInvoiceDataActions.setFilter,
