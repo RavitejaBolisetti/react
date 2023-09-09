@@ -4,11 +4,12 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Input, Form, Col, Row, Button, Select, Divider } from 'antd';
+import { Input, Form, Col, Row, Button, Select } from 'antd';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { customSelectBox } from 'utils/customSelectBox';
 import styles from 'assets/sass/app.module.scss';
+import { PlusOutlined } from '@ant-design/icons';
 
 function FormProductAttribute(props) {
     const { taxChargeCalForm, taxCharges, addTaxChargeCal, formEdit, editForm, handleCodeFunction, handleDescriptionChange, mainFomEdit, dropdownItems } = props;
@@ -43,10 +44,12 @@ function FormProductAttribute(props) {
                     <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
                         <Form.Item name="id" label="Id" />
                     </Col>
-                    {!formEdit && (
+                    {!props?.internalId && (
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.marB20}>
                             <Button
+                                disabled={formEdit}
                                 type="primary"
+                                icon={<PlusOutlined />}
                                 onClick={() => {
                                     addTaxChargeCal();
                                 }}

@@ -10,33 +10,28 @@ afterEach(() => {
 });
 
 describe('Term Condition Manufacturer Master components', () => {
-    it('should render change history components', () => {
-        customRender(<TermConditionManufacturerMaster/>)
+    it('should render components', () => {
+        customRender(<TermConditionManufacturerMaster />);
     });
 
     it('should validate fields', async () => {
-
-       
-
         const defaultBtnVisiblity = { editBtn: true, saveBtn: true, saveAndNewBtn: true, saveAndNewBtnClicked: false, closeBtn: true, cancelBtn: true, formBtnActive: true };
 
-        
         const mockStore = createMockStore({
             auth: { userId: 106 },
             data: {
                 TermCondition: {
                     ProductHierarchyData: { isLoaded: true },
-                    DocumentTypeData:{isLoaded: true},
-                    LanguageData:{isLoaded:true},
-                    ManufacturerTermsConditions:{isLoaded:true, data:[{id:'1'},{id:'2',name:'kaii'}]},
-                    ChangeHistoryManufacturerTermsConditions:{isLoaded:true, data:[{id:'1'},{id:'2',name:'kaii'}]}
+                    DocumentTypeData: { isLoaded: true },
+                    LanguageData: { isLoaded: true },
+                    ManufacturerTermsConditions: { isLoaded: true, data: [{ id: '1' }, { id: '2', name: 'kaii' }] },
+                    ChangeHistoryManufacturerTermsConditions: { isLoaded: true, data: [{ id: '1' }, { id: '2', name: 'kaii' }] },
                 },
-                
             },
         });
         customRender(
             <Provider store={mockStore}>
-                <TermConditionManufacturerMaster buttonData={defaultBtnVisiblity} onSuccessAction={jest.fn()} isVisible={true} onCloseAction={jest.fn()} isHistoryVisible={true} setIsHistoryVisible={true} showChangeHistoryList={jest.fn()} showAddButton={true} onSuccess={jest.fn()} setRefershData={jest.fn()} showDataLoading={false} handleButtonClick={jest.fn()} setIsFormVisible={true} setIsViewModeVisible={true}/>
+                <TermConditionManufacturerMaster buttonData={defaultBtnVisiblity} onSuccessAction={jest.fn()} isVisible={true} onCloseAction={jest.fn()} isHistoryVisible={true} setIsHistoryVisible={true} showChangeHistoryList={jest.fn()} showAddButton={true} onSuccess={jest.fn()} setRefershData={jest.fn()} showDataLoading={false} handleButtonClick={jest.fn()} setIsFormVisible={true} setIsViewModeVisible={true} />
             </Provider>
         );
         const searchBox = screen.getByRole('textbox', { name: 'Term & Condition' });
@@ -73,17 +68,16 @@ describe('Term Condition Manufacturer Master components', () => {
         const closeBtn = screen.getByRole('img', { name: /close-circle/i });
         fireEvent.click(closeBtn);
 
-        const addBtn = screen.getByRole('button',{name:'plus Add'});
+        const addBtn = screen.getByRole('button', { name: 'plus Add' });
         fireEvent.click(addBtn);
 
-        const historyBtn = screen.getByRole('button',{name:'Change History'});
+        const historyBtn = screen.getByRole('button', { name: 'Change History' });
         fireEvent.click(historyBtn);
 
-        const closeyBtn = screen.getByRole('img', { name:'close' });
+        const closeyBtn = screen.getByRole('img', { name: 'close' });
         fireEvent.click(closeyBtn);
 
         const refreshBtn = screen.getByTestId('refreshBtn');
         fireEvent.click(refreshBtn);
-       
     });
 });

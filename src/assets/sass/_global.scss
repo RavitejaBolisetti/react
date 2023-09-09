@@ -14,6 +14,19 @@
     }
 }
 
+:global .ant-descriptions .ant-descriptions-header {
+    margin-bottom: 0px
+}
+
+:global .ant-descriptions .ant-descriptions-row>td {
+    margin-bottom: 0px !important;
+}
+
+:global .ant-descriptions .ant-descriptions-item-container .ant-descriptions-item-content {
+    margin-bottom: 15px;
+}
+
+
 /* AntD Buttons Design Start*/
 :global {
     .ant-btn {
@@ -141,6 +154,10 @@
         width: auto;
         padding: 6px 15px;
         line-height: 12px;
+    }
+
+    .ant-btn.ant-btn-icon-only {
+        width: auto;
     }
 
     .ant-btn-primary.ant-btn-dangerous {
@@ -662,6 +679,7 @@
         &:hover {
             box-shadow: none;
             z-index: 0;
+            border-color: $primaryBlack;
         }
 
         &:focus {
@@ -673,6 +691,7 @@
             &:hover {
                 box-shadow: none;
                 z-index: 0;
+                border-color: $primaryBlack;
             }
         }
 
@@ -734,6 +753,11 @@
     .ant-input-affix-wrapper-focused {
         box-shadow: none;
         z-index: 0;
+        border-color: $primaryBlack;
+
+        &:hover {
+            border-color: $primaryBlack;
+        }
     }
 
     .ant-input-affix-wrapper-status-error {
@@ -755,13 +779,11 @@
         }
     }
 
-    .ant-select-status-error {
+    .ant-select.ant-select-status-error {
         &:not(.ant-select-disabled) {
             &:not(.ant-select-customize-input) {
                 &:not(.ant-pagination-size-changer) {
                     .ant-select-selector {
-                        border-color: $semanticError !important;
-                        box-shadow: none !important;
                         border-color: $semanticError !important;
                         box-shadow: none !important;
                     }
@@ -789,6 +811,14 @@
 
         .ant-input-affix-wrapper {
             border: none;
+        }
+
+        &:has(.ant-input-affix-wrapper-focused) {
+            border: 1px solid $primaryBlack;
+        }
+
+        &:has(.ant-input-affix-wrapper-status-error) {
+            border: 1px solid $semanticError;
         }
     }
 
@@ -892,6 +922,7 @@
 
         .ant-form-item-explain-error {
             color: $semanticError;
+            font-size: 12px;
         }
     }
 
@@ -980,27 +1011,36 @@
         }
     }
 
-    .ant-select-focused {
-        &:where(.css-dev-only-do-not-override-18twuw5).ant-select {
-            &:not(.ant-select-disabled) {
-                &:not(.ant-select-customize-input) {
-                    &:not(.ant-pagination-size-changer) {
-                        .ant-select-selector {
-                            border-color: $primaryBlack;
-                            box-shadow: none;
-                        }
+    .ant-select-focused.ant-select {
+        &:not(.ant-select-disabled) {
+            .ant-select-selector {
+                border-color: $primaryBlack !important;
+                box-shadow: none !important;
+            }
+
+            &:not(.ant-select-customize-input) {
+                &:not(.ant-pagination-size-changer) {
+                    .ant-select-selector {
+                        border-color: $primaryBlack;
+                        box-shadow: none;
                     }
                 }
             }
         }
+    }
 
+    .ant-select-status-success.ant-select-focused.ant-select {
+        &:not(.ant-select-disabled) {
+            .ant-select-selector {
+                border-color: $primaryBlack !important;
+                box-shadow: none !important;
+            }
+        }
+    }
+
+    .ant-select-focused {
         .ant-select {
             &:not(.ant-select-disabled) {
-                .ant-select-selector {
-                    border-color: $neutralGrey2 !important;
-                    box-shadow: none !important;
-                }
-
                 &:not(.ant-select-customize-input) {
                     &:not(.ant-pagination-size-changer) {
                         .ant-select-selector {
@@ -1405,6 +1445,7 @@
 
     .ant-picker-focused {
         box-shadow: none;
+        border-color: $primaryBlack;
     }
 
     .ant-picker.ant-picker-disabled {

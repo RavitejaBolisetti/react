@@ -7,6 +7,7 @@ import React from 'react';
 import { Card, Descriptions } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { getCodeValue } from 'utils/getCodeValue';
+import { prepareCaption } from 'utils/prepareCaption';
 
 const ViewDetailMain = (props) => {
     const { styles, formData, isLoading, makeData, modelData, variantData, typeData, schemeLovData, financeLovData } = props;
@@ -22,28 +23,35 @@ const ViewDetailMain = (props) => {
         <Card className={styles.drawerCardView}>
             <Descriptions {...viewProps}>
                 <Descriptions.Item label="Exchange">{checkAndSetDefaultValue(formData?.exchange ? 'Yes' : 'No', isLoading)}</Descriptions.Item>
-                {formData?.exchange && (
-                    <>
-                        <Descriptions.Item label="Customer ID">{checkAndSetDefaultValue(formData?.customerId, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Customer Name">{checkAndSetDefaultValue(formData?.customerName, isLoading)}</Descriptions.Item>
+            </Descriptions>
+            {formData?.exchange && (
+                <>
+                    <Descriptions {...viewProps} title={prepareCaption('Vehicle Details')}>
+                        <Descriptions.Item label="Old Reg. Number">{checkAndSetDefaultValue(formData?.oldRegistrationNumber, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Make">{checkAndSetDefaultValue(getCodeValue(makeData, formData?.make), isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Model Group">{checkAndSetDefaultValue(getCodeValue(modelData, formData?.modelGroup), isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Variant">{checkAndSetDefaultValue(getCodeValue(variantData, formData?.variant), isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Old Reg. Number">{checkAndSetDefaultValue(formData?.oldRegistrationNumber, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Old Chassis Number">{checkAndSetDefaultValue(formData?.oldChessisNumber, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Relationship">{checkAndSetDefaultValue(getCodeValue(typeData?.REL_TYPE, formData?.relationshipCode), isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Month of Registration">{checkAndSetDefaultValue(getCodeValue(typeData?.MONTH, formData?.monthOfRegistrationCode), isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Year of Registration">{checkAndSetDefaultValue(formData?.yearOfRegistrationCode, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="KMS">{checkAndSetDefaultValue(formData?.kilometer, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Usage">{checkAndSetDefaultValue(getCodeValue(typeData?.VEHCL_USAG, formData?.usageCode), isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Year of Registration">{checkAndSetDefaultValue(formData?.yearOfRegistrationCode, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Month of Registration">{checkAndSetDefaultValue(getCodeValue(typeData?.MONTH, formData?.monthOfRegistrationCode), isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Old Chassis Number">{checkAndSetDefaultValue(formData?.oldChessisNumber, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Hypothecated To">{checkAndSetDefaultValue(getCodeValue(financeLovData, formData?.hypothicatedToCode), isLoading)}</Descriptions.Item>
+                    </Descriptions>
+                    <Descriptions {...viewProps} title={prepareCaption('Customer Details')}>
+                        <Descriptions.Item label="Customer Name">{checkAndSetDefaultValue(formData?.customerName, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Relationship">{checkAndSetDefaultValue(getCodeValue(typeData?.REL_TYPE, formData?.relationshipCode), isLoading)}</Descriptions.Item>
+                    </Descriptions>
+                    <Descriptions {...viewProps} title={prepareCaption('Scheme')}>
                         <Descriptions.Item label="Scheme Name">{checkAndSetDefaultValue(getCodeValue(schemeLovData, formData?.schemeCode), isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Scheme Amount">{checkAndSetDefaultValue(formData?.schemeAmount, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="KMS">{checkAndSetDefaultValue(formData?.kilometer, isLoading)}</Descriptions.Item>
+                    </Descriptions>
+                    <Descriptions {...viewProps} title={prepareCaption('Price')}>
                         <Descriptions.Item label="Customer Expected Price">{checkAndSetDefaultValue(formData?.customerExpectedPrice, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Procurement Price">{checkAndSetDefaultValue(formData?.procurementPrice, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Hypothecated To">{checkAndSetDefaultValue(getCodeValue(financeLovData, formData?.hypothicatedToCode), isLoading)}</Descriptions.Item>
-                    </>
-                )}
-            </Descriptions>
+                    </Descriptions>
+                </>
+            )}
         </Card>
     );
 };

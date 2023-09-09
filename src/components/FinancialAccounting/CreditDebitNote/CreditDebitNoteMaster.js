@@ -15,7 +15,7 @@ import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 
 
 import { ListDataTable } from 'utils/ListDataTable';
 import { getCodeValue } from 'utils/getCodeValue';
-import { monthDateFormat, convertDateTimedayjs } from 'utils/formatDateTime';
+import { dateFormatView, convertDateTimedayjs } from 'utils/formatDateTime';
 import { CreditDebitNoteMainContainer } from './CreditDebitNoteMainContainer';
 import { AdvancedSearch } from './AdvancedSearch';
 import { showGlobalNotification } from 'store/actions/notification';
@@ -161,7 +161,7 @@ export const CreditDebitNoteMasterBase = (props) => {
                 key: 'searchType',
                 title: 'Type',
                 value: filterString?.searchType,
-                name: typeData[PARAM_MASTER.CRDR_SEARCH_PARAM.id]?.find((i) => i?.key === filterString?.searchType)?.value,
+                name: 'Voucher Number',
                 canRemove: false,
                 filter: true,
             },
@@ -194,7 +194,7 @@ export const CreditDebitNoteMasterBase = (props) => {
                 key: 'fromDate',
                 title: 'Start Date',
                 value: filterString?.fromDate,
-                name: convertDateTimedayjs(filterString?.fromDate, monthDateFormat, 'fromData'),
+                name: convertDateTimedayjs(filterString?.fromDate, dateFormatView, 'fromData'),
                 canRemove: true,
                 filter: true,
             },
@@ -202,7 +202,7 @@ export const CreditDebitNoteMasterBase = (props) => {
                 key: 'toDate',
                 title: 'End Date',
                 value: filterString?.toDate,
-                name: convertDateTimedayjs(filterString?.toDate, monthDateFormat, 'toDate'),
+                name: convertDateTimedayjs(filterString?.toDate, dateFormatView, 'toDate'),
                 canRemove: true,
                 filter: true,
             },

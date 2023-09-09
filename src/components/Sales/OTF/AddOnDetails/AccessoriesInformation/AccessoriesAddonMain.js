@@ -9,11 +9,11 @@ import { Divider, Form } from 'antd';
 import CardMapping from './CardMapping';
 import AddEditForm from './AddEditForm';
 
-const AccessoriesAddonMain = ({ setIsBtnDisabled, openAccordian, setOpenAccordian, isEditing, setisEditing, selectedOrderId, handleFormValueChange, showGlobalNotification, setsearchData, searchData, setaddButtonDisabled, onSearchPart, AddonPartsData, addButtonDisabled, accessoryForm, isBtnDisabled, setFormBtnDisable, setAddOnItemInfo, addOnItemInfo, formData }) => {
+const AccessoriesAddonMain = ({ setIsBtnDisabled, openAccordian, partNameSearchVisible, setPartNameSearchVisible, fnSetData, setOpenAccordian, isEditing, setisEditing, selectedOrderId, handleFormValueChange, showGlobalNotification, setsearchData, searchData, setaddButtonDisabled, onSearchPart, AddonPartsData, addButtonDisabled, accessoryForm, isBtnDisabled, setFormBtnDisable, setAddOnItemInfo, addOnItemInfo, formData }) => {
     const [EditingForm] = Form.useForm();
 
-    const isPresent = (partNumber, i = -1) => {
-        const isPartAlreadyExist = addOnItemInfo?.find((element, index) => element?.partNumber === partNumber && index !== i);
+    const isPresent = (partName, i = -1) => {
+        const isPartAlreadyExist = addOnItemInfo?.find((element, index) => element?.partName === partName && index !== i);
         if (isPartAlreadyExist) {
             showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Part number is already exist' });
             return true;
@@ -25,11 +25,11 @@ const AccessoriesAddonMain = ({ setIsBtnDisabled, openAccordian, setOpenAccordia
         accessoryForm
             .validateFields()
             .then((values) => {
-                if (isPresent(values?.partNumber, index)) {
+                if (isPresent(values?.partName, index)) {
                     return;
                 }
-                if (!values['type'] || !values['sellingPrice']) {
-                    showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Verify Part Number to continue' });
+                if (!values['type']) {
+                    showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Verify Part Name to continue' });
                     return;
                 }
                 addOnItemInfo?.map((element, i) => {
@@ -44,7 +44,7 @@ const AccessoriesAddonMain = ({ setIsBtnDisabled, openAccordian, setOpenAccordia
                 setisEditing(false);
                 handleFormValueChange();
             })
-            .catch((err) => {});
+            .catch((err) => { });
     };
     const handleDelete = (index) => {
         setAddOnItemInfo(addOnItemInfo?.filter((element, i) => i !== index));
@@ -84,6 +84,9 @@ const AccessoriesAddonMain = ({ setIsBtnDisabled, openAccordian, setOpenAccordia
         selectedOrderId,
         onUpdate,
         isPresent,
+        partNameSearchVisible,
+        setPartNameSearchVisible,
+        fnSetData,
     };
     return (
         <>

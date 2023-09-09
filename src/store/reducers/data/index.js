@@ -9,15 +9,12 @@ import { ProductHierarchy } from './productHierarchy';
 import { HierarchyAttributeMaster } from './hierarchyAttributeMaster';
 import { CriticalityGroup } from './criticalityGroup';
 import { RoleManagement } from './roleManagement';
-// import { ManufacturerAdminHierarchy } from './manufacturerAdminHierarchy';
 import { ManufacturerOrgHierarchy } from './manufacturerOrgHierarchy';
 import { ForgotPassword } from './forgotPassword';
 import { ChangePassword } from './changePassword';
 import { ConfigurableParameterEditing } from './configurableParamterEditing';
 import { ApplicationMaster } from './applicationMaster';
 import { QualificationMaster } from './qualificationMaster';
-// import { UserManagement } from './userManagement';
-// import { UserManagementManufacturer } from './UserManagementManufacturer';
 import { Geo } from './geo';
 import { Sales } from './sales';
 import { DealerManpower } from './dealerManpower';
@@ -44,9 +41,9 @@ import { Report } from './report';
 import { UserManagement } from './userManagement';
 import { VehicleReceiptChecklist } from './VehicleReceiptCheckList';
 import { vehicleAllotmentData } from './vehicleAllotment';
+import { UserAccess } from './userAccess';
 
 import { stockTransferIndentData } from './stockTransferIndent';
-
 
 export const data = combineReducers({
     Menu,
@@ -87,5 +84,6 @@ export const data = combineReducers({
     Report,
     VehicleReceiptChecklist,
     vehicleAllotmentData,
+    UserAccess,
     stockTransferIndentData,
 });

@@ -4,33 +4,38 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Space, Badge, Dropdown, Modal, Avatar } from 'antd';
+import { Row, Col, Space, Badge, Dropdown, Modal, Avatar, Popover } from 'antd';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+
 import Icon, { DownOutlined } from '@ant-design/icons';
 import { FaRegBell } from 'react-icons/fa';
 import { IoIosLogOut } from 'react-icons/io';
-import { FiLock, FiUser, FiSettings } from 'react-icons/fi';
+import { FiLock } from 'react-icons/fi';
 import { CgProfile } from 'react-icons/cg';
+
+import { setCollapsed } from 'store/actions/common/leftsidebar';
+import { showGlobalNotification } from 'store/actions/notification';
+import { menuDataActions } from 'store/actions/data/menu';
+import { headerDataActions } from 'store/actions/common/header';
+import { clearLocalStorageData, doLogoutAPI } from 'store/actions/auth';
+import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
+import { notificationDataActions } from 'store/actions/common/notification';
+import { userAccessMasterDataAction } from 'store/actions/data/userAccess';
 
 import * as routing from 'constants/routing';
 import { USER_TYPE } from 'constants/userType';
-
-import { setCollapsed } from 'store/actions/common/leftsidebar';
 import customMenuLink, { addToolTip } from 'utils/customMenuLink';
-import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
-import { showGlobalNotification } from 'store/actions/notification';
 
-import styles from './Header.module.scss';
-//import styles from './Header.module.css';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { clearLocalStorageData, doLogoutAPI } from 'store/actions/auth';
-import { headerDataActions } from 'store/actions/common/header';
-import { Link, useNavigate } from 'react-router-dom';
+import { Notification } from './Notification';
 import { HeaderSkeleton } from './HeaderSkeleton';
 import { ChangePassword } from '../ChangePassword';
-import IMG_ICON from 'assets/img/icon.png';
 
+import IMG_ICON from 'assets/img/icon.png';
 import { HeadPhoneIcon, MenuArrow } from 'Icons';
+
+import styles from './Header.module.scss';
 
 const { confirm } = Modal;
 const mapStateToProps = (state) => {
@@ -38,10 +43,14 @@ const mapStateToProps = (state) => {
         auth: { token, isLoggedIn, userId, passwordStatus },
         data: {
             ConfigurableParameterEditing: { isFilteredListLoaded: isTypeDataLoaded = false, isLoading: isTypeDataLoading },
+            UserAccess: { isLoaded: isUserAccessLoaded = false, isLoading: isUserAccessLoading = false, data: userAccessData },
         },
         common: {
             Header: { data: loginUserData = [], isLoading, isLoaded: isDataLoaded = false },
             LeftSideBar: { collapsed = false },
+            Notification: {
+                NotificationCount: { data: notificationCount },
+            },
         },
     } = state;
 
@@ -49,6 +58,7 @@ const mapStateToProps = (state) => {
         passwordStatus,
         loginUserData,
         isDataLoaded,
+        isUserAccessLoaded,
         token,
         isLoggedIn,
         userId,
@@ -56,6 +66,9 @@ const mapStateToProps = (state) => {
         collapsed,
         isTypeDataLoaded,
         isTypeDataLoading,
+        isUserAccessLoading,
+        userAccessData,
+        notificationCount,
     };
 };
 const mapDispatchToProps = (dispatch) => ({
@@ -66,11 +79,18 @@ const mapDispatchToProps = (dispatch) => ({
             doLogout: doLogoutAPI,
             fetchData: headerDataActions.fetchData,
             listShowLoading: headerDataActions.listShowLoading,
+            fetchMenuList: menuDataActions.fetchList,
+            listShowMenuLoading: menuDataActions.listShowLoading,
             fetchConfigList: configParamEditActions.fetchFilteredList,
             listConfigShowLoading: configParamEditActions.listShowLoading,
 
-            fetchEditConfigDataList: configParamEditActions.fetchDataList,
+            notificaionShowLoading: notificationDataActions.listShowLoading,
+            fetchNotificaionCountData: notificationDataActions.counts,
+            resetNotification: notificationDataActions.reset,
 
+            updateUserAcess: userAccessMasterDataAction.saveData,
+            listUserAccessShowLoading: userAccessMasterDataAction.listShowLoading,
+            fetchEditConfigDataList: configParamEditActions.fetchDataList,
             showGlobalNotification,
         },
         dispatch
@@ -78,17 +98,35 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const HeaderMain = (props) => {
-    const { isDataLoaded, isLoading, collapsed, setCollapsed, loginUserData, doLogout, fetchData, listShowLoading, showGlobalNotification, userId } = props;
-    const { fetchEditConfigDataList, fetchConfigList, listConfigShowLoading, isTypeDataLoaded, isTypeDataLoading } = props;
+    const { isDataLoaded, isLoading, collapsed, setCollapsed, loginUserData, doLogout, fetchData, listShowLoading, showGlobalNotification, userId, listUserAccessShowLoading, updateUserAcess,fetchMenuList } = props;
+    const { fetchEditConfigDataList, fetchConfigList, listConfigShowLoading, isTypeDataLoaded, isTypeDataLoading, fetchNotificaionCountData, notificaionShowLoading } = props;
+    const { notificationCount, resetNotification, listShowMenuLoading } = props;
 
     const navigate = useNavigate();
 
     const [isChangePasswordModalOpen, setChangePasswordModalOpen] = useState(false);
     const [confirms, setConfirm] = useState(false);
+    const [userAccess, setUserAccess] = useState(loginUserData?.userRoles?.find((user) => user?.isDefault === true)?.roleName);
+    const [refreshCount, setRefreshCount] = useState(false);
 
-    const { firstName = '', lastName = '', dealerName, dealerLocation, notificationCount, userType = undefined } = loginUserData;
+    const { firstName = '', lastName = '', dealerLocations = [], dealerName, userType = undefined } = loginUserData;
+
+    const dealerLocation = dealerLocations?.find((i) => i?.isDefault)?.locationName;
     const fullName = firstName?.concat(lastName ? ' ' + lastName : '');
     const userAvatar = firstName?.slice(0, 1) + (lastName ? lastName?.slice(0, 1) : '');
+
+    useEffect(() => {
+        setUserAccess(loginUserData?.userRoles?.find((user) => user?.isDefault === true)?.roleName);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userAccess, loginUserData]);
+
+    useEffect(() => {
+        if (!userId) return;
+        fetchNotificaionCountData({ setIsLoading: () => {}, userId });
+        setRefreshCount(false);
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, refreshCount]);
 
     useEffect(() => {
         if (confirms || isChangePasswordModalOpen) {
@@ -128,6 +166,33 @@ const HeaderMain = (props) => {
         clearLocalStorageData();
     };
 
+    const handleUpdateUserAcess = ({ roleId = undefined, locationId = undefined }) => {
+        let data = { locationId, roleId };
+
+        const onSuccess = (res) => {
+            fetchData({ setIsLoading: listShowLoading, userId });
+            if (roleId) {
+                fetchMenuList({ setIsLoading: listShowMenuLoading, userId });
+                navigate(routing.ROUTING_DASHBOARD);
+            }
+        };
+
+        const onError = (message) => {
+            showGlobalNotification({ message });
+        };
+
+        const requestData = {
+            data: data,
+            method: 'Put',
+            setIsLoading: listUserAccessShowLoading,
+            userId,
+            onError,
+            onSuccess,
+        };
+
+        updateUserAcess(requestData);
+    };
+
     const showConfirm = () => {
         confirm({
             title: 'Logout',
@@ -160,37 +225,31 @@ const HeaderMain = (props) => {
         }),
     ];
 
-    const locationMenuOption = [
-        customMenuLink({
-            title: 'Gurgaon',
-        }),
-        customMenuLink({
-            title: 'Lajpat Nagar',
-        }),
-        customMenuLink({
-            title: 'Noida',
-        }),
-    ];
-
     const userSettingMenu = [
         customMenuLink({
-            key: '0',
+            key: 1,
             title: 'My Roles',
-            link: routing.ROUTING_USER_PROFILE,
             icon: <CgProfile size={18} />,
+            children: loginUserData?.userRoles?.map((role) => ({
+                key: role?.roleId,
+                label: role?.roleName,
+                onClick: () => handleUpdateUserAcess({ roleId: role?.roleId }),
+                // className: styles.dropdownIcon,
+                disabled: role?.isDefault,
+            })),
         }),
-        customMenuLink({
-            key: '1',
-            title: 'My Profile',
-            link: routing.ROUTING_USER_PROFILE,
-            icon: <FiUser size={18} />,
-        }),
-        customMenuLink({
-            key: '2',
-            title: 'Account Settings',
-            link: routing.ROUTING_USER_SETTING,
-            icon: <FiSettings size={18} />,
-        }),
+        // customMenuLink({
+        //     key: '1',
+        //     title: 'My Profile',
+        //     link: routing.ROUTING_USER_PROFILE,
+        //     icon: <FiUser size={18} />,
+        // }),
+        // customMenuLink({
+        //     key: '2',
+        //     title: 'Account Settings',
+        //     link: routing.ROUTING_USER_SETTING,
+        //     icon: <FiSettings size={18} />,
+        // }),
     ];
 
     userType === USER_TYPE?.DEALER?.key &&
@@ -225,9 +284,8 @@ const HeaderMain = (props) => {
     return (
         <>
             <div className={styles.headerContainer}>
-            {!isLoading ? (
-                <>
-                    
+                {!isLoading ? (
+                    <>
                         <Row gutter={0}>
                             <Col xs={14} sm={isDashboard ? 9 : 16} md={isDashboard ? 9 : 16} lg={isDashboard ? 9 : 16} xl={isDashboard ? 9 : 16} xxl={isDashboard ? 9 : 16}>
                                 <div className={styles.headerLeft}>
@@ -240,7 +298,20 @@ const HeaderMain = (props) => {
                                             <div className={styles.dealerInfo}>
                                                 <span className={styles.dealerLocation}>{dealerLocation}</span>
                                                 {userType === USER_TYPE?.DEALER?.key && (
-                                                    <Dropdown className={styles.dropdownIcon} menu={{ items: locationMenuOption }}>
+                                                    <Dropdown
+                                                        trigger={['click']}
+                                                        className={styles.dropdownIcon}
+                                                        menu={{
+                                                            items: dealerLocations?.map((menu) => ({
+                                                                key: menu?.locationId,
+                                                                label: menu?.locationName,
+                                                                onClick: () => handleUpdateUserAcess({ locationId: menu?.locationId }),
+                                                                className: styles.dropdownIcon,
+                                                                disabled: menu?.isDefault,
+                                                                danger: menu?.isDefault,
+                                                            })),
+                                                        }}
+                                                    >
                                                         <DownOutlined />
                                                     </Dropdown>
                                                 )}{' '}
@@ -268,11 +339,13 @@ const HeaderMain = (props) => {
                             <Col xs={10} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                 <div className={styles.headerRight}>
                                     <div className={styles.navbarNav}>
-                                        <div className={`${styles.floatLeft}`}>
+                                        <div className={`${styles.floatLeft} `}>
                                             <Link className={styles.navLink} data-toggle="dropdown">
-                                                <Badge size="small" count={notificationCount}>
-                                                    {addToolTip('Notification')(<FaRegBell size={20} />)}
-                                                </Badge>
+                                                <Popover trigger={'click'} placement="bottomRight" content={<Notification notificationCount={notificationCount} resetNotification={resetNotification} setRefreshCount={setRefreshCount} />} overlayClassName={styles.notificationContainer}>
+                                                    <Badge size="small" count={notificationCount?.inboxUnread}>
+                                                        {addToolTip('Notification')(<FaRegBell size={20} />)}
+                                                    </Badge>
+                                                </Popover>
                                             </Link>
                                         </div>
                                         <div className={`${styles.floatLeft}`}>
@@ -296,7 +369,7 @@ const HeaderMain = (props) => {
                                                 </div>
                                                 <div className={styles.userText}>
                                                     <div className={styles.userName}>{addToolTip(fullName)(fullName)}</div>
-                                                    <span className={styles.userRoleName}>{userType === USER_TYPE?.DEALER?.key ? 'Admin' : 'Super Admin'}</span>
+                                                    <span className={styles.userRoleName}>{userAccess}</span>
                                                 </div>
                                                 <div className={`${styles.webmenuDropDownArrow} ${styles.dropdownArrow}`}>
                                                     <Dropdown menu={{ items: userSettingMenu }} trigger={['click']}>
@@ -313,11 +386,10 @@ const HeaderMain = (props) => {
                                 </div>
                             </Col>
                         </Row>
-                    
-                </>
-            ) : (
-                <HeaderSkeleton />
-            )}
+                    </>
+                ) : (
+                    <HeaderSkeleton />
+                )}
             </div>
             <div style={{ clear: 'both' }}></div>
             <ChangePassword title="Change Password" setModalOpen={setChangePasswordModalOpen} isOpen={isChangePasswordModalOpen} onOk={() => setChangePasswordModalOpen(false)} onCancel={() => console.log('onCancel', isChangePasswordModalOpen) || setChangePasswordModalOpen(false)} />

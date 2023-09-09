@@ -61,11 +61,11 @@ const ViewContactList = (props) => {
                                 key={i}
                                 header={
                                     <Row justify="space-between">
-                                        <Col xs={14} sm={14} md={14} lg={14} xl={14}>
+                                        <Col xs={14} sm={14} md={14} lg={14} xl={14} className={styles.verticallyCentered}>
                                             <Text strong> {`${data?.firstName ? data?.firstName : ''} ${data?.middleName ? data?.middleName : ''} ${data?.lastName ? data?.lastName : ''}`}</Text>{' '}
                                             {!formActionType?.viewMode && (
-                                                <Button onClick={(e) => editContactHandeler(e, data, i)} type="link" icon={<FiEdit />} disabled={isEditing || isAdding}>
-                                                    Edit{' '}
+                                                <Button onClick={(e) => editContactHandeler(e, data, i)} type="link" icon={<FiEdit />} disabled={isEditing || isAdding} className={styles.verticallyCentered}>
+                                                    Edit
                                                 </Button>
                                             )}
                                         </Col>
