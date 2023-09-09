@@ -202,7 +202,8 @@ export const OtfMasterBase = (props) => {
         const onSuccess = (res) => {
             // form.resetFields();
             // setShowDataLoading(true);
-            // showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            fetchIndentList({ customURL: customURL + '/search', setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
             // fetchOTFDetail({ setIsLoading: listShowLoading, userId, onSuccessAction });
             // setButtonData({ ...buttonData, formBtnActive: false });
             // setIsFormVisible(false);
