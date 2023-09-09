@@ -107,9 +107,8 @@ const AddEditFormMain = (props) => {
                                             )}
                                         </Row>
                                         {financeArrangedBy && checkFinanceType(financeArrangedBy, FINANCE_ARRANGED_BY?.DEALER?.key) && (
-                                            <>
-                                                <Row gutter={20}>
-                                                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                            <Row gutter={20}>
+                                                {/* <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                                         <Form.Item onChange={onLoanChange} label="Loan Amount" name="loanAmount" rules={[validateNumberWithTwoDecimalPlaces('loan amount')]}>
                                                             <Input placeholder={preparePlaceholderText('loan amount')} maxLength={10} />
                                                         </Form.Item>
@@ -118,15 +117,14 @@ const AddEditFormMain = (props) => {
                                                         <Form.Item label="EMI" name="emi" rules={[validateNumberWithTwoDecimalPlaces('emi'), { validator: (rule, value) => emiLessThanAmount(value) }]}>
                                                             <Input placeholder={preparePlaceholderText('emi')} maxLength={10} />
                                                         </Form.Item>
-                                                    </Col>
-                                                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                        <Form.Item label="D.O. Received" name="doReceived">
-                                                            {customSelectBox({ data: typeData?.YES_NO_FLG, onChange: handleDOChange })}
-                                                        </Form.Item>
-                                                    </Col>
-                                                </Row>
+                                                    </Col> */}
+                                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                                    <Form.Item label="D.O. Received" name="doReceived">
+                                                        {customSelectBox({ data: typeData?.YES_NO_FLG, onChange: handleDOChange })}
+                                                    </Form.Item>
+                                                </Col>
                                                 {doReceived === YES_NO_FLAG?.YES?.key && (
-                                                    <Row gutter={20}>
+                                                    <>
                                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                                             <Form.Item label="D.O. Number" name="doNumber" rules={[validateRequiredInputField('Number')]}>
                                                                 <Input placeholder={preparePlaceholderText('D.O. Number')}></Input>
@@ -138,9 +136,9 @@ const AddEditFormMain = (props) => {
                                                                 <DatePicker format={dateFormat} disabledDate={disableFutureDate} placeholder={preparePlaceholderSelect('date')} style={datePickerStyle} />
                                                             </Form.Item>
                                                         </Col>
-                                                    </Row>
+                                                    </>
                                                 )}
-                                            </>
+                                            </Row>
                                         )}
                                     </>
                                 )}
