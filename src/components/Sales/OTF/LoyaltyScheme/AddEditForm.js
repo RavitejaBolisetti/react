@@ -43,7 +43,7 @@ const AddEditFormMain = (props) => {
                     {prepareCaption('Vehicle Details')}
                 </Col>
             </Row>
-            <Row gutter={20} style={{ marginTop: '20px' }}>
+            <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name="registrationNumber" label="Old Reg. Number" initialValue={formData?.oldRegNumber}>
                         <Input {...disabledProps} placeholder={preparePlaceholderText('Old Reg. Number')} maxLength={50} />

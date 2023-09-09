@@ -67,7 +67,7 @@ export const AddressCommonForm = (props) => {
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={formData?.ageGroup} label="Age Group" name="ageGroup">
-                        {customSelectBox({ data: typeData['AGE_GROUP'], disabled: true })}
+                        {customSelectBox({ data: typeData['AGE_RANGE'], disabled: true })}
                     </Form.Item>
                 </Col>
             </Row>

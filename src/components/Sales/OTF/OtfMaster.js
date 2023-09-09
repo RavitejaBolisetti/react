@@ -30,7 +30,7 @@ import { VEHICLE_TYPE } from 'constants/VehicleType';
 import { BASE_URL_OTF_DETAILS as baseURL, BASE_URL_OTF_TRANSFER as otfTransferURL, BASE_URL_OTF_CANCELLATION as otfCancelURL } from 'constants/routingApi';
 
 import { LANGUAGE_EN } from 'language/en';
-import { convertDateTime, monthDateFormat } from 'utils/formatDateTime';
+import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 import { validateOTFMenu } from './utils/validateOTFMenu';
 
 import { FilterIcon } from 'Icons';
@@ -222,7 +222,7 @@ export const OtfMasterBase = (props) => {
                 key: 'fromDate',
                 title: 'Start Date',
                 value: filterString?.fromDate,
-                name: filterString?.fromDate ? convertDateTime(filterString?.fromDate, monthDateFormat) : '',
+                name: filterString?.fromDate ? convertDateTime(filterString?.fromDate, dateFormatView) : '',
                 canRemove: true,
                 filter: true,
             },
@@ -230,7 +230,7 @@ export const OtfMasterBase = (props) => {
                 key: 'toDate',
                 title: 'End Date',
                 value: filterString?.toDate,
-                name: filterString?.toDate ? convertDateTime(filterString?.toDate, monthDateFormat) : '',
+                name: filterString?.toDate ? convertDateTime(filterString?.toDate, dateFormatView) : '',
                 canRemove: true,
                 filter: true,
             },

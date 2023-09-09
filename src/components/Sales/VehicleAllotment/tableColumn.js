@@ -54,7 +54,7 @@ export const tableColumn = (handleButtonClick, allotmentStatus, fixedWith) => {
             render: (text, record) => [
                 <div>
                     {record?.invoiceId}
-                    {record?.oemInvoiceDate && <div style={{ fontSize: '12px', lineHeight: '20px' }}>Invoice Date: {convertDateTime(record?.oemInvoiceDate, 'DD MMM YYYY')}</div>}
+                    {record?.oemInvoiceDate && <div style={{ fontSize: '12px', lineHeight: '20px' }}>Invoice Date: {convertDateTime(record?.oemInvoiceDate, dateFormatView)}</div>}
                 </div>,
             ],
         }),

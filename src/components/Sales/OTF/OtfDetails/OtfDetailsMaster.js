@@ -128,7 +128,7 @@ const OtfDetailsMasterBase = (props) => {
         const recordId = otfData?.id || '';
         const otfNum = otfData?.otfNumber || '';
         const exchange = values?.exchange === true ? 1 : 0;
-        const data = { ...values, id: recordId, otfNumber: otfNum, loyaltyScheme: values?.loyaltyScheme === true ? 1 : 0, exchange: exchange, initialPromiseDeliveryDate: formatDate(values?.initialPromiseDeliveryDate), custExpectedDeliveryDate: formatDate(values?.custExpectedDeliveryDate) };
+        const data = { ...values, id: recordId, otfNumber: otfNum, loyaltyScheme: values?.loyaltyScheme === true ? 1 : 0, referral: values?.referral ? 'Y' : 'N', exchange: exchange, initialPromiseDeliveryDate: formatDate(values?.initialPromiseDeliveryDate), custExpectedDeliveryDate: formatDate(values?.custExpectedDeliveryDate) };
         delete data?.mitraName;
         delete data?.mitraType;
         delete data?.modeOfPAyment;

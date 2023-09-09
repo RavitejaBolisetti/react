@@ -17,7 +17,7 @@ import { AdvancedSearch } from './AdvancedSearch';
 import { showGlobalNotification } from 'store/actions/notification';
 import { DELIVERY_NOTE_INVOICE_STATUS } from './utils/DeliveryNoteInvoiceStatus';
 import { REQUEST_STATUS_CONSTANT } from './utils/RequestStatusConstant';
-import { monthDateFormat, converDateDayjs } from 'utils/formatDateTime';
+import { dateFormatView, converDateDayjs } from 'utils/formatDateTime';
 import { BASE_URL_DELIVERY_NOTE_INVOICE_CANCELLATION_SEARCH as customURL } from 'constants/routingApi';
 
 import { LANGUAGE_EN } from 'language/en';
@@ -144,7 +144,7 @@ export const InvoiceCancellationMasterBase = (props) => {
                 key: 'fromDate',
                 title: 'From Date',
                 value: filterString?.fromDate,
-                name: converDateDayjs(filterString?.fromDate, monthDateFormat),
+                name: converDateDayjs(filterString?.fromDate, dateFormatView),
                 canRemove: false,
                 filter: true,
             },
@@ -152,7 +152,7 @@ export const InvoiceCancellationMasterBase = (props) => {
                 key: 'toDate',
                 title: 'To Date',
                 value: filterString?.toDate,
-                name: converDateDayjs(filterString?.toDate, monthDateFormat),
+                name: converDateDayjs(filterString?.toDate, dateFormatView),
                 canRemove: true,
                 filter: true,
             },

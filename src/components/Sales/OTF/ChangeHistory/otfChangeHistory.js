@@ -6,7 +6,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { convertDateTime } from 'utils/formatDateTime';
+import { convertDateTime, dateFormatView, timeFormatView } from 'utils/formatDateTime';
 
 import { tblPrepareColumns } from 'utils/tableColumn';
 import { otfDataActions } from 'store/actions/data/otf/otf';
@@ -72,9 +72,9 @@ const ChangeHistoryMain = ({ fetchOTFChangeHistory, onCloseAction, listShowChang
             dataIndex: 'modifiedDate',
             render: (text) => [
                 <div>
-                    {convertDateTime(text, 'DD MMM YYYY')}
+                    {convertDateTime(text, dateFormatView)}
                     <br />
-                    {convertDateTime(text, 'HH:mm a')}
+                    {convertDateTime(text, timeFormatView)}
                 </div>,
             ],
         }),

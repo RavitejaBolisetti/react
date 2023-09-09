@@ -8,7 +8,6 @@ import { Row, Col, Collapse, Descriptions, Divider } from 'antd';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
-import { InputSkeleton } from 'components/common/Skeleton';
 
 import { addToolTip } from 'utils/customMenuLink';
 import { DataTable } from 'utils/dataTable';
@@ -35,16 +34,12 @@ const ViewDetailMain = (props) => {
                     <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end" className={styles?.collapseContainer} collapsible="icon">
                         <Panel header="Vehicle Information" key="1">
                             <Divider />
-                            <Descriptions {...viewProps} title={prepareCaption()}>
+                            <Descriptions {...viewProps}>
                                 <Descriptions.Item label="Model Description">
-                                    {isLoading ? (
-                                        <InputSkeleton width={'100px'} height={20} theme={'card'} />
-                                    ) : (
-                                        <div className={styles?.tooltipAlign}>
-                                            {formData?.model}
-                                            {!formData?.model ? 'NA' : addToolTip(tooltTipText, 'bottom', '#D3EDFE', styles.toolTip)(<AiOutlineInfoCircle className={styles?.infoIconColor} size={13} />)}
-                                        </div>
-                                    )}
+                                    <div className={styles?.tooltipAlign}>
+                                        {checkAndSetDefaultValue(formData?.model, isLoading)}
+                                        {formData?.model && checkAndSetDefaultValue(addToolTip(tooltTipText, 'bottom', '#D3EDFE', styles.toolTip)(<AiOutlineInfoCircle className={styles?.infoIconColor} size={13} />), isLoading)}
+                                    </div>
                                 </Descriptions.Item>
                                 <Descriptions.Item label="Model Code">{checkAndSetDefaultValue(formData?.modelCode, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Available Stock">{checkAndSetDefaultValue(formData?.availableStock, isLoading)}</Descriptions.Item>
@@ -60,7 +55,7 @@ const ViewDetailMain = (props) => {
                                 <Descriptions.Item label="Sale Type">{checkAndSetDefaultValue(getCodeValue(typeData?.SALE_TYPE, formData?.saleType), isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Price Type">{checkAndSetDefaultValue(getCodeValue(typeData?.PRC_TYP, formData?.priceType), isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Vehicle Selling Price">{checkAndSetDefaultValue(formData?.vehicleSellingPrice, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Vehicle Amount">{checkAndSetDefaultValue(formData?.vehicleAmount, isLoading)}</Descriptions.Item>{' '}
+                                <Descriptions.Item label="Vehicle Amount">{checkAndSetDefaultValue(formData?.vehicleAmount, isLoading)}</Descriptions.Item>
                             </Descriptions>
 
                             <Descriptions {...viewProps} title={prepareCaption('Benefits')}>

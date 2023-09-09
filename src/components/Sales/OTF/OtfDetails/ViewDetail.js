@@ -50,7 +50,7 @@ const ViewDetailMain = (props) => {
             </Descriptions>
 
             <Descriptions {...viewProps} title={prepareCaption('Other Details')}>
-                <Descriptions.Item label="Referral">{checkAndSetDefaultValue(getCodeValue(typeData?.RFRL, formData?.referral), isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Referral">{checkAndSetDefaultValue(formData?.referral === 'Y' ? <span className={styles.activeText}>Yes</span> : 'No', isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Loyality Scheme">{checkAndSetDefaultValue(formData?.loyaltyScheme ? <span className={styles.activeText}>Yes</span> : 'No', isLoading)}</Descriptions.Item>
             </Descriptions>
         </Card>
