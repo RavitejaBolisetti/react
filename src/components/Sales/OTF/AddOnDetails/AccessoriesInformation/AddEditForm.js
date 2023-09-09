@@ -3,19 +3,21 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Input, Form, Col, Row, Button, Divider } from 'antd';
 
 import { validateRequiredInputField, validationNumber } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import styles from 'assets/sass/app.module.scss';
+import { PartNameListModal } from './PartNameListModal';
 
 const { TextArea } = Input;
 const { Search } = Input;
 
-function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm, selectedOrderId, handleFormValueChange, showGlobalNotification, onSearchPart, setsearchData, searchData, addButtonDisabled, setaddButtonDisabled, setAddOnItemInfo, addOnItemInfo, AddonPartsData, onCancel, accessoryForm, onFieldsChange, onFinish, isEditing, isBtnDisabled, setIsBtnDisabled, finalFormdata, documentTypeDescription, documentTypeCode }) {
+function AddEditForm({ onUpdate, isPresent, index, fnSetData, seteditCardForm, editCardForm, formData, selectedOrderId, partNameSearchVisible, setPartNameSearchVisible, handleFormValueChange, showGlobalNotification, onSearchPart, setsearchData, searchData, addButtonDisabled, setaddButtonDisabled, setAddOnItemInfo, addOnItemInfo, AddonPartsData, onCancel, accessoryForm, onFieldsChange, onFinish, isEditing, isBtnDisabled, setIsBtnDisabled, finalFormdata, documentTypeDescription, documentTypeCode }) {
     const disableProp = { disabled: true };
+    const [selectedRowData, setSelectedRowData] = useState();
 
     useEffect(() => {
         if (searchData) {
@@ -29,11 +31,11 @@ function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm
         accessoryForm
             .validateFields()
             .then((values) => {
-                if (isPresent(values?.partNumber)) {
+                if (isPresent(values?.partName)) {
                     return;
                 }
 
-                if (!values?.partNumber) {
+                if (!values?.partName) {
                     showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Please provide part number' });
                     return;
                 }
@@ -50,7 +52,7 @@ function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm
                 setaddButtonDisabled({ ...addButtonDisabled, partDetailsResponses: false });
                 handleFormValueChange();
             })
-            .catch((err) => {});
+            .catch((err) => { });
     };
 
     const onFinishFailed = (err) => {
@@ -59,7 +61,7 @@ function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm
 
     const handleOnSearch = (value) => {
         if (isPresent(value)) {
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Duplicate Part Number' });
+            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Duplicate Part Name' });
             return;
         } else {
             onSearchPart(value);
@@ -67,9 +69,27 @@ function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm
     };
 
     const handlePartSearch = (values) => {
-        const { partNumber } = accessoryForm.getFieldsValue();
-        accessoryForm.setFieldsValue({ partNumber: partNumber?.trim() });
-        accessoryForm.resetFields(['type', 'sellingPrice', 'mrp', 'partDescription']);
+        accessoryForm.resetFields(['quantity', 'type', 'sellingPrice', 'mrp', 'partDescription']);
+    };
+
+    const handleSelectedData = (e) => {
+        fnSetData({ ...selectedRowData });
+        setSelectedRowData();
+        setPartNameSearchVisible(false);
+    };
+
+    const customerListProps = {
+        isVisible: partNameSearchVisible,
+        titleOverride: 'Search Result',
+        onCloseAction: () => {
+            setPartNameSearchVisible(false);
+        },
+        data: AddonPartsData,
+        handleFormValueChange,
+        fnSetData,
+        selectedRowData,
+        setSelectedRowData,
+        handleSelectedData,
     };
 
     return (
@@ -77,25 +97,25 @@ function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm
             <Form autoComplete="off" form={accessoryForm} onFieldsChange={onFieldsChange} layout="vertical" onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Part Number" name="partNumber" rules={[validateRequiredInputField('part number')]}>
-                            <Search placeholder={preparePlaceholderText('Part Number')} maxLength={55} allowClear type="text" onSearch={handleOnSearch} onChange={handlePartSearch} />
+                        <Form.Item label="Part Name" name="partName" rules={[validateRequiredInputField('part name')]}>
+                            <Search placeholder={preparePlaceholderText('Part Name')} maxLength={55} allowClear type="text" onSearch={handleOnSearch} onChange={handlePartSearch} />
                         </Form.Item>
                     </Col>
                 </Row>
                 <Divider />
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Part Type" name="type">
+                        <Form.Item label="Part Type" name="type" >
                             <Input {...disableProp} placeholder={preparePlaceholderText('part type')} />
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Selling Price" name="sellingPrice">
+                        <Form.Item label="Selling Price" name="sellingPrice" >
                             <Input {...disableProp} placeholder={preparePlaceholderText('selling price')} />
                         </Form.Item>
                     </Col>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="MRP" name="mrp">
+                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} >
+                        <Form.Item label="MRP" name="mrp" >
                             <Input {...disableProp} placeholder={preparePlaceholderText('mrp')} />
                         </Form.Item>
                     </Col>
@@ -146,6 +166,7 @@ function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm
                     )}
                 </Col>
             </Row>
+            <PartNameListModal {...customerListProps} />
         </>
     );
 }
