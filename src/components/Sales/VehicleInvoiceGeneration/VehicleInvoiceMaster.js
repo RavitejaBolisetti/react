@@ -25,7 +25,7 @@ import { vehicleIrnGenerationDataActions } from 'store/actions/data/invoiceGener
 import { vehicleInvoiceGenerationDataActions } from 'store/actions/data/invoiceGeneration/vehicleInvoice';
 import { showGlobalNotification } from 'store/actions/notification';
 import { PARAM_MASTER } from 'constants/paramMaster';
-import { convertDateTime, monthDateFormat } from 'utils/formatDateTime';
+import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 
 import { FilterIcon } from 'Icons';
 
@@ -177,7 +177,7 @@ export const VehicleInvoiceMasterBase = (props) => {
                 key: 'fromDate',
                 title: 'Start Date',
                 value: filterString?.fromDate,
-                name: filterString?.fromDate ? convertDateTime(filterString?.fromDate, monthDateFormat) : '',
+                name: filterString?.fromDate ? convertDateTime(filterString?.fromDate, dateFormatView) : '',
                 canRemove: true,
                 filter: true,
             },
@@ -185,7 +185,7 @@ export const VehicleInvoiceMasterBase = (props) => {
                 key: 'toDate',
                 title: 'End Date',
                 value: filterString?.toDate,
-                name: filterString?.toDate ? convertDateTime(filterString?.toDate, monthDateFormat) : '',
+                name: filterString?.toDate ? convertDateTime(filterString?.toDate, dateFormatView) : '',
                 canRemove: true,
                 filter: true,
             },

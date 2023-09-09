@@ -11,7 +11,7 @@ import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { dateFormat } from 'utils/formatDateTime';
 import { convertToUpperCase } from 'utils/convertToUpperCase';
 
-import { validateRequiredInputField, validateRequiredSelectField, validateEmailField, validatePincodeField, validateMobileNoField, validatePanField, validateAadhar, validateDrivingLicenseNoWithSpace, validateGSTIN } from 'utils/validation';
+import { validateEmailField, validateMobileNoField, validatePanField, validateAadhar, validateDrivingLicenseNoWithSpace, validateGSTIN } from 'utils/validation';
 
 export const AddressCommonForm = (props) => {
     const { formType, formData, disabledProps, handleOnChange } = props;
