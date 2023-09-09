@@ -21,7 +21,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { VEHICLE_RECIEPT_CHECKLIST_SECTION } from 'constants/VehicleRecieptCheckListSection';
 import { otfvehicleDetailsLovDataActions } from 'store/actions/data/otf/vehicleDetailsLov';
 
-import { formatDateToCalenderDate, convertDateTime } from 'utils/formatDateTime';
+import { formatDateToCalenderDate, convertDateTime, dateFormatView } from 'utils/formatDateTime';
 
 import { validateRequiredInputField } from 'utils/validation';
 import { LANGUAGE_EN } from 'language/en';
@@ -249,7 +249,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
                 key: 'fromDate',
                 title: 'Reciept From Date',
                 value: filterString?.fromDate,
-                name: convertDateTime(filterString?.fromDate, 'DD MMM YYYY', 'fromDate'),
+                name: convertDateTime(filterString?.fromDate, dateFormatView, 'fromDate'),
                 canRemove: true,
                 filter: true,
             },
@@ -257,7 +257,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
                 key: 'toDate',
                 title: 'Reciept To Date',
                 value: filterString?.toDate,
-                name: convertDateTime(filterString?.toDate, 'DD MMM YYYY', 'toDate'),
+                name: convertDateTime(filterString?.toDate, dateFormatView, 'toDate'),
                 canRemove: false,
                 filter: true,
             },

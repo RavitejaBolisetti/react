@@ -482,7 +482,7 @@ export const VehicleAllotmentMasterBase = (props) => {
         setAdvanceSearchVisible(false);
     };
 
-    const title = 'Search OTF';
+    const title = 'Search Booking';
 
     const advanceFilterResultProps = {
         extraParams,

@@ -5,7 +5,7 @@
  */
 import { tblPrepareColumns } from 'utils/tableColumn';
 import { vehicleAllotmentStatusTag } from 'components/Sales/OTF/utils/VehicleAllotmentStatusTag';
-import { convertDateTime } from 'utils/formatDateTime';
+import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 
 export const tableColumn = (handleButtonClick, page, pageSize) => {
     const tableColumn = [
@@ -44,7 +44,7 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
                     {record?.mnmInvoiceDate && (
                         <>
                             <br />
-                            Invoice Date: {convertDateTime(record?.mnmInvoiceDate, 'DD MMM YYYY')}
+                            Invoice Date: {convertDateTime(record?.mnmInvoiceDate, dateFormatView)}
                         </>
                     )}
                 </div>,
@@ -57,7 +57,6 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             width: '15%',
             render: (_, record) => vehicleAllotmentStatusTag(record.vehicleStatus),
         })
-
     );
 
     return tableColumn;

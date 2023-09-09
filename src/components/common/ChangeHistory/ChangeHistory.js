@@ -9,7 +9,7 @@ import { bindActionCreators } from 'redux';
 import { Row, Col, Button } from 'antd';
 
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
-import { convertDateTime } from 'utils/formatDateTime';
+import { convertDateTime, dateFormatView, timeFormatView } from 'utils/formatDateTime';
 import { tblPrepareColumns, tblStatusColumn } from 'utils/tableColumn';
 
 import styles from 'assets/sass/app.module.scss';
@@ -61,9 +61,9 @@ const ChangeHistoryMain = ({ onCloseAction, fetchChangeHistoryList, changeHistor
             dataIndex: 'changedDate',
             render: (text) => [
                 <div>
-                    {convertDateTime(text, 'DD MMM YYYY')}
+                    {convertDateTime(text, dateFormatView)}
                     <br />
-                    {convertDateTime(text, 'HH:mm a')}
+                    {convertDateTime(text, timeFormatView)}
                 </div>,
             ],
         }),

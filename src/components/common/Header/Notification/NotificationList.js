@@ -13,7 +13,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { RxDotFilled, RxDotsVertical } from 'react-icons/rx';
 
 import { notificationDataActions } from 'store/actions/common/notification';
-import { ListSkeleton } from 'components/common/Skeleton';
+import { NotificationSkeleton } from 'components/common/Skeleton';
 
 import { NOTIFICATION_STATUS } from 'constants/pushNotification';
 
@@ -89,7 +89,7 @@ const NotificationListMaster = (props) => {
 
     const onSuccessAction = () => {
         // setLoading(false);
-        // setRefreshData(false);
+        setRefreshData(false);
         setRefreshCount((prev) => !prev);
     };
 
@@ -99,22 +99,21 @@ const NotificationListMaster = (props) => {
 
     const loadMoreData = (data) => {
         if (!isLoading) {
-            // setLoading(true);
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onError });
         }
     };
 
     useEffect(() => {
+        if (!refreshData) return;
         loadMoreData();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [notificationType, refreshData]);
+    }, [refreshData]);
 
     const handleActionButton = (data, key) => {
         const onSuccess = (res) => {
             setData([]);
             setPage(defaultPagination);
             setRefreshData(true);
-            // fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onError });
         };
         const onError = (message) => {
             console.error(message);
@@ -136,7 +135,7 @@ const NotificationListMaster = (props) => {
         <div id="scrollableDiv" className={styles.notificationList}>
             {isLoading ? (
                 <div style={{ minHeight: '400px' }}>
-                    <ListSkeleton border={'none'} height={65} count={5} color={'#e2dfdf'} />
+                    <NotificationSkeleton border={'none'} count={5} color={'#e2dfdf'} />
                 </div>
             ) : (
                 <InfiniteScroll

@@ -10,6 +10,7 @@ import { validateMobileNoField, validateRequiredInputField, validateRequiredSele
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import { PARAM_MASTER } from 'constants/paramMaster';
+import { customSelectBox } from 'utils/customSelectBox';
 
 const AddEditFormMain = (props) => {
     const { typeData, formData, form, corporateLovData, formActionType: { editMode } = undefined, validateParentCode, customerType, customerParentCompanyData } = props;
@@ -137,10 +138,22 @@ const AddEditFormMain = (props) => {
                         </Form.Item>
                     </Col>
 
-                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                    {/* <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                         <Form.Item label="Corporate Name" initialValue={corporateType === 'NON-LIS' ? '' : formData?.corporateName} name="corporateName" data-testid="corporateName" rules={[validateRequiredSelectField('corporate name')]}>
                             {corporateType === 'NON-LIS' ? <Input placeholder={preparePlaceholderText('corporate name')} /> : <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} onSelect={onHandleSelect} disabled={false} loading={false} placeholder={preparePlaceholderSelect('corporate name')} fieldNames={{ label: 'value', value: 'key' }} options={corporateLovData} allowClear></Select>}
                         </Form.Item>
+                    </Col> */}
+
+                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                        {corporateType === 'NON-LIS' ? (
+                            <Form.Item label="Corporate Name" initialValue={formData?.corporateName} name="corporateName" data-testid="corporateName" rules={[validateRequiredSelectField('corporate name')]}>
+                                <Input placeholder={preparePlaceholderText('corporate name')} />
+                            </Form.Item>
+                        ) : (
+                            <Form.Item label="Corporate Name" initialValue={formData?.corporateName} name="corporateName" data-testid="corporateName" rules={[validateRequiredSelectField('corporate name')]}>
+                                {customSelectBox({ data: corporateLovData, placeholder: preparePlaceholderSelect('corporate name'), onChange: onHandleSelect })}
+                            </Form.Item>
+                        )}
                     </Col>
 
                     {(corporateType === 'LIS' || corporateType === '') && (

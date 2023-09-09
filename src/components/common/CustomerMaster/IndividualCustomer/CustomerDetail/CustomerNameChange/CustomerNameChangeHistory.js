@@ -13,7 +13,7 @@ import { customerDetailsIndividualDataActions } from 'store/actions/data/custome
 import { withDrawer } from 'components/withDrawer';
 
 import { tblPrepareColumns } from 'utils/tableColumn';
-import { convertDateTime } from 'utils/formatDateTime';
+import { convertDateTime, dateFormatView, timeFormatView } from 'utils/formatDateTime';
 import { DataTable } from 'utils/dataTable';
 import { BASE_URL_CUSTOMER_MASTER_NAME_CHANGE_HISTORY as customURL } from 'constants/routingApi';
 
@@ -125,9 +125,9 @@ const ChangeHistoryMain = ({ fetchCustomerChangeHistory, onCloseAction, listShow
             dataIndex: 'requestDate',
             render: (text) => [
                 <div>
-                    {convertDateTime(text, 'DD MMM YYYY')}
+                    {convertDateTime(text, dateFormatView)}
                     <br />
-                    {convertDateTime(text, 'HH:mm a')}
+                    {convertDateTime(text, timeFormatView)}
                 </div>,
             ],
         }),

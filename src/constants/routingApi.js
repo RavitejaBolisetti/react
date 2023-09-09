@@ -16,6 +16,8 @@ export const BASE_URL_LOGOUT = BASE_URL + 'logout';
 export const BASE_URL_USER_DETAIL = BASE_URL + 'users';
 
 export const BASE_URL_HEADER_DETAIL = BASE_URL + 'home/header';
+export const BASE_URL_USER_ACCESS = BASE_URL + 'users/defaultaccess';
+
 export const BASE_URL_MENU = BASE_URL + 'home/menus';
 export const BASE_URL_MENU_FAVOURITE = BASE_URL + 'home/favourites';
 
@@ -108,14 +110,14 @@ export const BASE_URL_USER_MANAGEMENT_DEALER = BASE_URL + 'users/dealer';
 export const BASE_URL_USER_MANAGEMENT_MANUFACTURER = BASE_URL + 'users/manufacturer';
 
 export const BASE_URL_TERM_CONDITION_PRODUCT_HIERARCHY = BASE_URL + 'product/lov';
-//export const BASE_URL_TERM_CONDITION_DOCUMENT_TYPE = BASE_URL + 'appmst/documenttypes?code=tns&type=DOCUMENT';
-export const BASE_URL_TERM_CONDITION_DOCUMENT_TYPE = BASE_URL + 'appmst/documenttypes?code=TERMS_CONDITIONS&type=MODULE&onlyActive=yes';
+//export const BASE_URL_TERM_CONDITION_DOCUMENT_TYPE = BASE_URL + 'applications/documenttypes?code=tns&type=DOCUMENT';
+export const BASE_URL_TERM_CONDITION_DOCUMENT_TYPE = BASE_URL + 'applications/documenttypes?code=TERMS_CONDITIONS&type=MODULE&onlyActive=yes';
 export const BASE_URL_TERM_CONDITION_LANGUAGE = BASE_URL + 'configurableparametertypes?parameterType=MOTHER_TOUNGE';
-export const BASE_URL_TERM_CONDITION_DEALER = BASE_URL + 'appmst/termconditiondealer';
+export const BASE_URL_TERM_CONDITION_DEALER = BASE_URL + 'applications/termconditiondealer';
 //export const BASE_URL_TERM_CONDITION_MANUFACTURER = BASE_URL + 'dealer/tncmanufracturer';
-export const BASE_URL_TERM_CONDITION_MANUFACTURER = BASE_URL + 'appmst/tncmanufracturer';
-export const BASE_URL_TERM_CONDITION_CHANGE_HISTORY = BASE_URL + 'appmst/termconditiondealerhistory';
-export const BASE_URL_TERM_CONDITION_MANUFACTURER_CHANGE_HISTORY = BASE_URL + 'appmst/tncmanufracturerhistory';
+export const BASE_URL_TERM_CONDITION_MANUFACTURER = BASE_URL + 'applications/tncmanufracturer';
+export const BASE_URL_TERM_CONDITION_CHANGE_HISTORY = BASE_URL + 'applications/termconditiondealerhistory';
+export const BASE_URL_TERM_CONDITION_MANUFACTURER_CHANGE_HISTORY = BASE_URL + 'applications/tncmanufracturerhistory';
 
 export const BASE_URL_LOYALTY_AND_SCHEME = BASE_URL + 'otf/loyalty/schemes';
 export const BASE_URL_FAMILY_DETAIL_SEARCH = BASE_URL + 'customers/individual';
@@ -197,8 +199,8 @@ export const BASE_URL_VEHICLE_MODEL = BASE_URL_VEHICLE + 'model';
 export const BASE_URL_VEHICLE_TRACKING = BASE_URL_VEHICLE + 'tracking';
 
 export const BASE_URL_ACCOUNT_HEAD = BASE_URL + 'finance/financialaccountheads';
-export const BASE_URL_DOCUMENT_DESCRIPTION_SEARCH = BASE_URL + 'appmst/documenttypes/search';
-export const BASE_URL_DOCUMENT_DESCRIPTION = BASE_URL + 'appmst/documenttypes';
+export const BASE_URL_DOCUMENT_DESCRIPTION_SEARCH = BASE_URL + 'applications/documenttypes/search';
+export const BASE_URL_DOCUMENT_DESCRIPTION = BASE_URL + 'applications/documenttypes';
 
 export const BASE_URL_FINANCIAL_ACC_TAX_CHARGE = BASE_URL + 'finance/tax/charges';
 export const BASE_URL_FINANCIAL_ACC_TAX_CHARGE_CATEGORY_SEARCH = BASE_URL + 'finance/tax/chargecategory/search';
@@ -209,7 +211,7 @@ export const BASE_URL_FINANCIAL_ACC_APPLICATION_MENU = BASE_URL + 'home/menus';
 export const BASE_URL_FINANCIAL_ACC_CHART_OF_ACCOUNT_HIERARCHY = BASE_URL + 'finance/chartofaccounts/hierarchy';
 export const BASE_URL_FINANCIAL_ACC_CHART_OF_ACCOUNT = BASE_URL + 'finance/chartofaccounts';
 
-export const BASE_URL_DOCUMENT_TYPE_LEDGER_SEARCH = BASE_URL + 'appmst/documenttypes/search';
+export const BASE_URL_DOCUMENT_TYPE_LEDGER_SEARCH = BASE_URL + 'applications/documenttypes/search';
 export const BASE_URL_DOCUMENT_TYPE_LEDGER = BASE_URL + 'finance/ledgermappings';
 
 export const BASE_URL_FINANCIAL_ACC_TAX_CHARGE_TYPE = BASE_URL + 'finance/tax/chargetypes/lov';
@@ -268,5 +270,5 @@ export const BASE_URL_VEHICLE_DETAILS_SERVICE = BASE_URL + 'otf/vehicledetails/o
 
 export const BASE_URL_MILE_SKILL = BASE_URL + 'dealer/mileskills';
 
-export const BASE_URL_NOTIFICATION = BASE_URL + 'appmst/notifications'; 
-export const BASE_URL_NOTIFICATION_COUNTS = BASE_URL + 'appmst/notifications/counts'; 
+export const BASE_URL_NOTIFICATION = BASE_URL + 'applications/notifications'; 
+export const BASE_URL_NOTIFICATION_COUNTS = BASE_URL + 'applications/notifications/counts'; 

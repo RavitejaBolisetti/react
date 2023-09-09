@@ -153,7 +153,7 @@ const AddEditFormMain = (props) => {
                         </Form.Item>
                     </Col>
                 </Row>
-                {/* <Divider /> */}
+
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                         <Form.Item label="Corporate Type" initialValue={formData?.corporateType} name="corporateType" data-testid="corporateType" rules={[validateRequiredSelectField('corporate type')]}>
@@ -162,9 +162,15 @@ const AddEditFormMain = (props) => {
                     </Col>
 
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                        <Form.Item label="Corporate Name" initialValue={formData?.corporateName} name="corporateName" data-testid="corporateName" rules={[validateRequiredSelectField('corporate name')]}>
-                            {corporateType === 'NON-LIS' ? <Input placeholder={preparePlaceholderText('corporate name')} /> : <> {customSelectBox({ data: corporateLovData, placeholder: preparePlaceholderSelect('corporate name'), onChange: onHandleSelect })}</>}
-                        </Form.Item>
+                        {corporateType === 'NON-LIS' ? (
+                            <Form.Item label="Corporate Name" initialValue={formData?.corporateName} name="corporateName" data-testid="corporateName" rules={[validateRequiredSelectField('corporate name')]}>
+                                <Input placeholder={preparePlaceholderText('corporate name')} />
+                            </Form.Item>
+                        ) : (
+                            <Form.Item label="Corporate Name" initialValue={formData?.corporateName} name="corporateName" data-testid="corporateName" rules={[validateRequiredSelectField('corporate name')]}>
+                                {customSelectBox({ data: corporateLovData, placeholder: preparePlaceholderSelect('corporate name'), onChange: onHandleSelect })}
+                            </Form.Item>
+                        )}
                     </Col>
 
                     {(corporateType === 'LIS' || corporateType === '') && (

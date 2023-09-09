@@ -5,6 +5,11 @@
  */
 
 //  common css
+.caption {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
 
 .fullyCentered {
     display: flex;
@@ -2444,7 +2449,7 @@
 
                         &:nth-child(even) {
                             .ant-descriptions-item {
-                                padding-bottom: 20px;
+                                padding-bottom: 0px;
                             }
                         }
                     }

@@ -10,6 +10,7 @@ import { CopytoClipboard } from 'utils/CopytoClipboard';
 import dayjs from 'dayjs';
 import { addToolTip } from 'utils/customMenuLink';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
+import { dateFormatView } from 'utils/formatDateTime';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -48,7 +49,7 @@ const VehicleDetailCard = (props) => {
             >
                 <Divider />
                 <div className={styles.detailCardText}>
-                    Checklist Date: <span>{ProfileData?.checklistDate ? dayjs(ProfileData?.checklistDate)?.format('DD MMM YYYY') : 'NA'}</span>
+                    Checklist Date: <span>{ProfileData?.checklistDate ? dayjs(ProfileData?.checklistDate)?.format(dateFormatView) : 'NA'}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
@@ -60,7 +61,7 @@ const VehicleDetailCard = (props) => {
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    GRN Date: <span>{ProfileData?.grnDate ? dayjs(ProfileData?.grnDate)?.format('DD MMM YYYY') : 'NA'}</span>
+                    GRN Date: <span>{ProfileData?.grnDate ? dayjs(ProfileData?.grnDate)?.format(dateFormatView) : 'NA'}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
