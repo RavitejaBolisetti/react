@@ -9,11 +9,10 @@ import { Col, Input, Form, Row, Card, Select } from 'antd';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, validateRequiredSelectField, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
 import { CustomerListMaster } from 'components/utils/CustomerListModal';
-import styles from 'assets/sass/app.module.scss';
 import { prepareCaption } from 'utils/prepareCaption';
 
+import styles from 'assets/sass/app.module.scss';
 const { TextArea } = Input;
-const { Search } = Input;
 
 const AddEditFormMain = (props) => {
     const { formData, form } = props;

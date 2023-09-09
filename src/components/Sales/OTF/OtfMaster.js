@@ -113,7 +113,7 @@ const mapDispatchToProps = (dispatch) => ({
 export const OtfMasterBase = (props) => {
     const { showGlobalNotification, fetchOTFDetail, saveData, listShowLoading, userId, fetchOTFSearchedList, data, totalRecords, otfData, resetData } = props;
     const { ChangeHistoryTitle, otfSoMappingChangeHistoryTitle } = props;
-    const { fetchVehicleDetail, updateVehicleAllotmentStatus, VehicleDetailsData } = props;
+    const { fetchVehicleDetail, updateVehicleAllotmentStatus } = props;
 
     const { typeData, moduleTitle, transferOTF } = props;
     const { filterString, setFilterString, otfStatusList } = props;

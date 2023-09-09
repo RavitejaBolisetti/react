@@ -4,9 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect } from 'react';
-import { Row, Col, Input, Form, Select, Card, Divider, Switch } from 'antd';
-
-import styles from 'assets/sass/app.module.scss';
+import { Row, Col, Input, Form, Select, Card, Switch } from 'antd';
 
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { CustomerListMaster } from 'components/utils/CustomerListModal';
@@ -14,7 +12,7 @@ import { CustomerListMaster } from 'components/utils/CustomerListModal';
 import { validateRequiredInputField, validateRequiredSelectField, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
 import { prepareCaption } from 'utils/prepareCaption';
 
-const { Search } = Input;
+import styles from 'assets/sass/app.module.scss';
 
 const AddEditFormMain = (props) => {
     const { formData, form, formActionType, editableOnSearch } = props;
@@ -30,10 +28,6 @@ const AddEditFormMain = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
-
-    const onHandleChange = () => {
-        form.setFieldsValue({ customerName: undefined });
-    };
 
     const currentYear = new Date().getFullYear();
     const yearsList = [];

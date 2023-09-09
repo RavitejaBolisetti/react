@@ -38,17 +38,17 @@ const AddEditFormMain = (props) => {
         setDoReceived(item);
     };
 
-    const onLoanChange = () => {
-        form.validateFields(['emi']);
-    };
+    // const onLoanChange = () => {
+    //     form.validateFields(['emi']);
+    // };
 
-    const emiLessThanAmount = (value) => {
-        if (Number(form.getFieldsValue(['loanAmount'])?.loanAmount) <= Number(value)) {
-            return Promise.reject('EMI cannot exceed loan amount');
-        } else {
-            return Promise.resolve();
-        }
-    };
+    // const emiLessThanAmount = (value) => {
+    //     if (Number(form.getFieldsValue(['loanAmount'])?.loanAmount) <= Number(value)) {
+    //         return Promise.reject('EMI cannot exceed loan amount');
+    //     } else {
+    //         return Promise.resolve();
+    //     }
+    // };
 
     const selectProps = {
         optionFilterProp: 'children',
