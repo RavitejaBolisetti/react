@@ -127,6 +127,15 @@ const CustomerMasterMain = (props) => {
     const [page, setPage] = useState({ pageSize: 10, current: 1 });
     const dynamicPagination = true;
 
+
+    useEffect(() => {
+        if (filterString) {
+            setPage({ ...page, current: 1 });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [filterString]);
+
+
     const defaultExtraParam = useMemo(() => {
         return [
             {
@@ -307,7 +316,7 @@ const CustomerMasterMain = (props) => {
         setIsFormVisible(true);
     };
 
-    const onFinish = (values, e) => {};
+    const onFinish = (values, e) => { };
 
     const onFinishFailed = (errorInfo) => {
         console.error(errorInfo);
