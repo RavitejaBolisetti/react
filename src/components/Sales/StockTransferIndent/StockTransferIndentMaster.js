@@ -194,7 +194,7 @@ export const StockTransferIndentMasterBase = (props) => {
                     setIsViewIndentVisible(true);
                     setSelectedOrder(res?.data);
                     setOpenAccordian(true);
-                    setButtonDataVehicleDetails({ ...btnVisiblityVehicleDetails, canView: false, canEdit: true, canDelete: false });
+                    setButtonDataVehicleDetails({ ...btnVisiblityVehicleDetails, canView: toggleButton === STOCK_TRANSFER?.RECEIVED.key, canEdit: toggleButton === STOCK_TRANSFER?.RAISED?.key, canDelete: false, });
                 };
                 const extraParamData = [
                     {
