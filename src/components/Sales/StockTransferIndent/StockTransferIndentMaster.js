@@ -23,22 +23,24 @@ import { AdvancedSearch } from './AdvancedSearch';
 import AdvanceFilter from './AdvanceFilter';
 import { AddEditForm } from './AddEditForm';
 import { ViewDetail } from './ViewDetail';
-
+import { CancellationIssue } from './CancellationIssue';
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
-        common: { 
-            Header : { data: { parentGroupCode } },
-         },
+        common: {
+            Header: {
+                data: { parentGroupCode },
+            },
+        },
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
-            UserManagement : {
-                DealerBranchLocation: {  data: indentLocationList, detailData: requestedByDealerList  },
+            UserManagement: {
+                DealerBranchLocation: { data: indentLocationList, detailData: requestedByDealerList },
             },
-            stockTransferIndentData : {
+            stockTransferIndentData: {
                 stockTransferIndent: { isLoaded: isSearchDataLoaded = false, isLoading: isOTFSearchLoading, data, isDetailLoaded },
-            }
+            },
         },
     } = state;
     //console.log("🚀 ~ file: StockTransferIndentMaster.js:39 ~ mapStateToProps ~ state:", state)
@@ -80,7 +82,7 @@ export const StockTransferIndentMasterBase = (props) => {
     const [searchForm] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
     const [addIndentDetailsForm] = Form.useForm();
-    
+
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [isAddNewIndentVisible, setIsAddNewIndentVisible] = useState(false);
     const [isViewIndentVisible, setIsViewIndentVisible] = useState(false);
@@ -88,14 +90,14 @@ export const StockTransferIndentMasterBase = (props) => {
     const [filterString, setFilterString] = useState();
     const [toggleButton, settoggleButton] = useState(STOCK_TRANSFER?.RAISED.key);
     const [openAccordian, setOpenAccordian] = useState('');
-    const [ tableDataItem, setTableDataItem ] = useState([]);
+    const [tableDataItem, setTableDataItem] = useState([]);
 
     const defaultBtnVisiblity = {
         editBtn: false,
         saveBtn: false,
         cancelBtn: false,
         closeBtn: false,
-        formBtnActive: false
+        formBtnActive: false,
     };
 
     const btnVisiblityVehicleDetails = {
@@ -200,13 +202,13 @@ export const StockTransferIndentMasterBase = (props) => {
                         value: 'STR1694237964174',
                     },
                 ];
-        
+
                 fetchIndentDetails({ customURL: customURL + '/indent', setIsLoading: listShowLoading, userId, onSuccessAction: onSuccessViewIndent, onErrorAction, extraParams: extraParamData });
 
                 break;
             case CANCEL_ACTION:
                 break;
-            
+
             default:
                 break;
         }
@@ -224,15 +226,15 @@ export const StockTransferIndentMasterBase = (props) => {
     };
 
     const onFinish = (values) => {
-        if(tableDataItem.length === 0){
-            let msg ="Please add Vehicle Details";
-            showGlobalNotification({msg});
+        if (tableDataItem.length === 0) {
+            let msg = 'Please add Vehicle Details';
+            showGlobalNotification({ msg });
             return;
         }
         setIsAddNewIndentVisible(false);
 
         //const recordId = formData?.parentId || form.getFieldValue('parentId');
-        let data = { ...values, vehicleDetails: [ ...tableDataItem ] };
+        let data = { ...values, vehicleDetails: [...tableDataItem] };
 
         const onSuccess = (res) => {
             // form.resetFields();
@@ -248,7 +250,7 @@ export const StockTransferIndentMasterBase = (props) => {
         };
         const requestData = {
             data: data,
-            customURL : customURL+ '/indent',
+            customURL: customURL + '/indent',
             method: 'post',
             setIsLoading: listShowLoading,
             userId,
@@ -270,7 +272,6 @@ export const StockTransferIndentMasterBase = (props) => {
     };
 
     const handleOnAddIndentClick = () => {
-
         const onSuccessActionFetchIndLoc = (res) => {
             addIndentDetailsForm.resetFields();
             setTableDataItem([]);
@@ -286,19 +287,15 @@ export const StockTransferIndentMasterBase = (props) => {
         ];
 
         fetchIndentLocation({ setIsLoading: listShowLoading, userId, onSuccessAction: onSuccessActionFetchIndLoc, onErrorAction, extraParams: extraParamData });
-
     };
 
     const handleChangeLocation = (value) => {
         let locationId = '';
         indentLocationList?.forEach(function (temp) {
-            if(temp.locationCode === value)
-                locationId = temp.id;
+            if (temp.locationCode === value) locationId = temp.id;
         });
 
-        const onSuccessActionFetchDealer = (resp) => {
-
-        }
+        const onSuccessActionFetchDealer = (resp) => {};
 
         const extraParamData = [
             {
@@ -307,9 +304,8 @@ export const StockTransferIndentMasterBase = (props) => {
             },
         ];
 
-        fetchRequestedByList({ setIsLoading: listShowLoading, userId, onSuccessAction, onErrorAction, extraParams: extraParamData, customURL: dealerURL+"/employees" });
-
-    }
+        fetchRequestedByList({ setIsLoading: listShowLoading, userId, onSuccessAction, onErrorAction, extraParams: extraParamData, customURL: dealerURL + '/employees' });
+    };
 
     const onAddIndentDetailsCloseAction = () => {
         setIsAddNewIndentVisible(false);
@@ -331,7 +327,7 @@ export const StockTransferIndentMasterBase = (props) => {
         // } else {
         //     return 'Add New ';
         // }
-    //}, [formActionType]);
+        //}, [formActionType]);
     }, []);
 
     const tableProps = {
@@ -352,7 +348,7 @@ export const StockTransferIndentMasterBase = (props) => {
         otfFilter: true,
         filterString,
         setFilterString,
-        toggleButton, 
+        toggleButton,
         settoggleButton,
         onFinishFailed,
 
@@ -383,15 +379,15 @@ export const StockTransferIndentMasterBase = (props) => {
         titleOverride: 'Add Indent Details',
         addIndentDetailsForm,
         onFinish,
-        onCloseAction : onAddIndentDetailsCloseAction,
-        openAccordian, 
+        onCloseAction: onAddIndentDetailsCloseAction,
+        openAccordian,
         setOpenAccordian,
         buttonDataVehicleDetails,
         buttonData, 
         setButtonData,
         indentLocationList,
         requestedByDealerList,
-        tableDataItem, 
+        tableDataItem,
         setTableDataItem,
         handleChangeLocation,
     };
@@ -405,7 +401,7 @@ export const StockTransferIndentMasterBase = (props) => {
         buttonDataVehicleDetails,
         onCloseAction : onCloseActionViewIndentDetails,
     };
-   
+
     return (
         <>
             <AdvanceFilter {...advanceFilterProps} />
@@ -415,8 +411,9 @@ export const StockTransferIndentMasterBase = (props) => {
                 </Col>
             </Row>
             <AdvancedSearch {...advanceSearchFilterProps} />
-            { isAddNewIndentVisible && <AddEditForm {...addNewIndentProps} /> }
-            { isViewIndentVisible && <ViewDetail {...viewIndentProps} /> }
+            {isAddNewIndentVisible && <AddEditForm {...addNewIndentProps} />}
+            {isViewIndentVisible && <ViewDetail {...viewIndentProps} />}
+            <CancellationIssue isVisible={true} onCloseAction={() => {}} titleOverride={'Issue Details'} setIsFormVisible={() => {}} />
         </>
     );
 };
