@@ -60,7 +60,7 @@ const InvoiceDetailsMasterBase = (props) => {
     const { typeData, otfData } = props;
     const { userId, buttonData, setButtonData, showGlobalNotification, section, isDataLoaded, isLoading, invoiceDetailForm } = props;
     const { form, formActionType, handleFormValueChange, otfNumber, setOtfNumber } = props;
-    // const { requestPayload, setRequestPayload } = props;
+    const { requestPayload, setRequestPayload } = props;
     const [activeKey, setActiveKey] = useState([]);
 
     const [formData, setFormData] = useState('');
@@ -90,8 +90,8 @@ const InvoiceDetailsMasterBase = (props) => {
     };
 
     const onFinish = (values) => {
-        // const partyDetails = { ...values, id: '' };
-        // setRequestPayload({ ...requestPayload, partyDetails: partyDetails });
+        const invoiceDetails = { ...values, id: '' };
+        setRequestPayload({ ...requestPayload, invoiceDetails: invoiceDetails });
         // handleButtonClick({ buttonAction: NEXT_ACTION });
         // setButtonData({ ...buttonData, formBtnActive: false });
     };
@@ -122,7 +122,9 @@ const InvoiceDetailsMasterBase = (props) => {
 
     const viewProps = {
         typeData,
+        otfFormData: otfData,
         formData,
+        formActionType,
         styles,
         isLoading,
     };
@@ -140,7 +142,10 @@ const InvoiceDetailsMasterBase = (props) => {
                         </Col>
                     </Row>
                     {formActionType?.viewMode ? (
-                        <ViewDetail {...viewProps} />
+                        <>
+                            <ViewDetail {...viewProps} />
+                            <CustomerDetailsMaster {...viewProps} />
+                        </>
                     ) : (
                         <>
                             <AddEditForm {...formProps} /> <CustomerDetailsMaster {...formProps} />

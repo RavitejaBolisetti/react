@@ -70,9 +70,11 @@ const VehicleInvoiceCard = (props) => {
                 <div className={styles.detailCardText}>
                     IRN Status:
                     <span>
-                        <Button style={{ height: '30px' }} onClick={generateIrn}>
-                            Generate
-                        </Button>
+                        {selectedOrder?.invoiceNumber && (
+                            <Button style={{ height: '30px' }} onClick={generateIrn}>
+                                Generate
+                            </Button>
+                        )}
                     </span>
                 </div>
                 <Divider />

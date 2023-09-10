@@ -14,7 +14,7 @@ import { expandIcon } from 'utils/accordianExpandIcon';
 const { Panel } = Collapse;
 
 const ViewDetailMain = (props) => {
-    const { formData, isLoading } = props;
+    const { formData, otfFormData, isLoading } = props;
     const [activeKey, setactiveKey] = useState([]);
     const viewProps = {
         bordered: false,
@@ -48,22 +48,22 @@ const ViewDetailMain = (props) => {
                         <Panel header="OTF Details" key="1">
                             <Divider />
                             <Descriptions {...viewProps}>
-                                <Descriptions.Item label="OTF Number">{checkAndSetDefaultValue(formData?.otfNumber, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="OTF Date">{checkAndSetDefaultValue(formData?.otfDate, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="DAR Number">{checkAndSetDefaultValue(formData?.darNumber, isLoading)}</Descriptions.Item> 
+                                <Descriptions.Item label="OTF Number">{checkAndSetDefaultValue(otfFormData?.otfNumber, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="OTF Date">{checkAndSetDefaultValue(otfFormData?.otfDate, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="DAR Number">{checkAndSetDefaultValue(otfFormData?.darNumber, isLoading)}</Descriptions.Item>
                                 {/* key darNumber */}
-                                <Descriptions.Item label="Sales Type">{checkAndSetDefaultValue(formData?.salesType, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Price Type">{checkAndSetDefaultValue(formData?.priceType, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Tax Calculation">{checkAndSetDefaultValue(formData?.taxCalculationType, isLoading)}</Descriptions.Item>
-                            
-                                <Descriptions.Item label="Tax Payable On Reverse Charges?">{checkAndSetDefaultValue(formData?.taxPayableOnReverseCharges, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Sales Consultant Name">{checkAndSetDefaultValue(formData?.modalDescription, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Tax Calculation">{checkAndSetDefaultValue(formData?.modalDescription, isLoading)}</Descriptions.Item>
-                            
+                                <Descriptions.Item label="Sales Type">{checkAndSetDefaultValue(otfFormData?.saleType, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Price Type">{checkAndSetDefaultValue(otfFormData?.priceType, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Tax Calculation">{checkAndSetDefaultValue(otfFormData?.taxCalculationType, isLoading)}</Descriptions.Item>
+
+                                <Descriptions.Item label="Tax Payable On Reverse Charges?">{checkAndSetDefaultValue(otfFormData?.taxPayableOnReverseCharges, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Sales Consultant Name">{checkAndSetDefaultValue(otfFormData?.saleConsultant, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Influence/Mitra Type">{checkAndSetDefaultValue(otfFormData?.mitraType, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Influence/Mitra Name">{checkAndSetDefaultValue(otfFormData?.mitraName, isLoading)}</Descriptions.Item>
                             </Descriptions>
                         </Panel>
                     </Collapse>
-                    <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
+                    {/* <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
                         <Panel header="Booked Customer" key="2">
                             <Divider />
                             <Descriptions {...viewProps}></Descriptions>
@@ -74,7 +74,7 @@ const ViewDetailMain = (props) => {
                             <Divider />
                             <Descriptions {...viewProps}></Descriptions>
                         </Panel>
-                    </Collapse>
+                    </Collapse> */}
                 </Col>
             </Row>
         </div>

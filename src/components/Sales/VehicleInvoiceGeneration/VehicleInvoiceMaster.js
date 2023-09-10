@@ -16,6 +16,7 @@ import { VehicleInvoiceMainConatiner } from './VehicleInvoiceMainConatiner';
 import { ListDataTable } from 'utils/ListDataTable';
 import { AdvancedSearch } from './AdvancedSearch';
 import { CancelInvoice } from './CancelInvoice';
+import { VEHICLE_INVOICE_SECTION } from 'constants/VehicleInvoiceSection';
 import { QUERY_BUTTONS_CONSTANTS } from './QueryButtons';
 import { BASE_URL_OTF_DETAILS as customURL } from 'constants/routingApi';
 import { otfDataActions } from 'store/actions/data/otf/otf';
@@ -71,7 +72,7 @@ const mapDispatchToProps = (dispatch) => ({
             cancelInvoice: vehicleInvoiceGenerationDataActions.saveData,
             listShowLoading: otfDataActions.listShowLoading,
 
-            fetchIrnGenerationDetail: vehicleIrnGenerationDataActions.fetchDetail,
+            irnGeneration: vehicleIrnGenerationDataActions.saveData,
             listIrnShowLoading: vehicleIrnGenerationDataActions.listShowLoading,
 
             fetchList: vehicleInvoiceDataActions.fetchList,
@@ -84,13 +85,13 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const VehicleInvoiceMasterBase = (props) => {
-    const { data, receiptDetailData, userId, isIrnDataLoaded, listIrnShowLoading, isIrnDataLoading, fetchIrnGenerationDetail, irnData, fetchList, fetchOTFDetail, listShowLoading, showGlobalNotification } = props;
+    const { data, receiptDetailData, userId, isIrnDataLoaded, listIrnShowLoading, isIrnDataLoading, irnGeneration, irnData, fetchList, fetchOTFDetail, listShowLoading, showGlobalNotification } = props;
     const { cancelInvoice } = props;
     const { typeData, receiptType, partySegmentType, paymentModeType, documentType, moduleTitle, totalRecords } = props;
     const { filterString, setFilterString, invoiceStatusList, otfData } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [invoiceStatus, setInvoiceStatus] = useState(QUERY_BUTTONS_CONSTANTS.INVOICED.key);
-    const [requestPayload, setRequestPayload] = useState({ partyDetails: {}, receiptsDetails: {}, apportionDetails: {} });
+    const [requestPayload, setRequestPayload] = useState({ invoiceDetails: {}, vehicleDetails: {}, financeDetails: {}, insuranceDetails: {} });
 
     const [listFilterForm] = Form.useForm();
     const [cancelInvoiceForm] = Form.useForm();
@@ -134,7 +135,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         formBtnActive: false,
         deliveryNote: false,
         nextBtn: false,
-        cancelReceiptBtn: false,
+        cancelInvoiceBtn: false,
     };
 
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -268,13 +269,13 @@ export const VehicleInvoiceMasterBase = (props) => {
     //     // eslint-disable-next-line react-hooks/exhaustive-deps
     // }, [userId, selectedOrderId]);
 
-    // useEffect(() => {
-    //     const defaultSection = RECEIPT_SECTION.PARTY_DETAILS.id;
-    //     setDefaultSection(defaultSection);
-    //     setSetionName(RECEIPT_SECTION);
-    //     setSection(defaultSection);
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, []);
+    useEffect(() => {
+        const defaultSection = VEHICLE_INVOICE_SECTION.INVOICE_DETAILS.id;
+        setDefaultSection(defaultSection);
+        setSetionName(VEHICLE_INVOICE_SECTION);
+        setSection(defaultSection);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     useEffect(() => {
         if (currentSection && sectionName) {
@@ -306,7 +307,27 @@ export const VehicleInvoiceMasterBase = (props) => {
 
     //IRN generation
     const generateIrn = () => {
-        fetchIrnGenerationDetail({ setIsLoading: listIrnShowLoading, userId, onSuccessAction, onErrorAction });
+        const data = { otfNumber: selectedOtfNumber, invoiceNumber: selectedOrder?.invoiceNumber };
+        const onSuccess = (res) => {
+            setShowDataLoading(true);
+            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
+            // setButtonData({ ...buttonData, formBtnActive: false });
+            // setIsFormVisible(false);
+        };
+        const onError = (message) => {
+            showGlobalNotification({ message });
+        };
+        const requestData = {
+            data: data,
+            method: 'put',
+            setIsLoading: listShowLoading,
+            userId,
+            onError,
+            onSuccess,
+        };
+        irnGeneration(requestData);
+        // irnGeneration({ setIsLoading: listIrnShowLoading, userId, onSuccessAction, onErrorAction });
     };
 
     const handleInvoiceTypeChange = (buttonName) => {
@@ -368,7 +389,7 @@ export const VehicleInvoiceMasterBase = (props) => {
                 setButtonData(Visibility);
                 // setButtonData({ ...Visibility, cancelReceiptBtn: true });
                 if (buttonAction === VIEW_ACTION) {
-                    invoiceStatus === QUERY_BUTTONS_CONSTANTS.CANCELLED.key ? setButtonData({ ...Visibility, editBtn: false, cancelReceiptBtn: false }) : invoiceStatus === QUERY_BUTTONS_CONSTANTS.CANCELLATION_REQUEST.key ? setButtonData({ ...Visibility, editBtn: false, cancelReceiptBtn: true }) : setButtonData({ ...Visibility, editBtn: true, cancelReceiptBtn: true });
+                    invoiceStatus === QUERY_BUTTONS_CONSTANTS.CANCELLED.key ? setButtonData({ ...Visibility, editBtn: false, cancelInvoiceBtn: false }) : invoiceStatus === QUERY_BUTTONS_CONSTANTS.CANCELLATION_REQUEST.key ? setButtonData({ ...Visibility, editBtn: false, cancelInvoiceBtn: false }) : setButtonData({ ...Visibility, editBtn: true, cancelInvoiceBtn: true });
                 }
             }
         }

@@ -28,19 +28,14 @@ export const VehicleInvoiceFormButton = ({ formActionType, record, onCloseAction
             </Col>
 
             <Col xs={24} sm={16} md={18} lg={20} xl={20} className={styles.footerBtnRight}>
-                {buttonData?.editBtn && (
+                {buttonData?.cancelInvoiceBtn && (
                     <Button onClick={onCancelInvoice} type="primary">
                         Cancel Invoice
                     </Button>
                 )}
-                {buttonData?.editBtn && (
+                {/* {buttonData?.editBtn && (
                     <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record, openDefaultSection: false })} type="primary">
                         Edit
-                    </Button>
-                )}
-                {/* {buttonData?.cancelReceiptBtn && (
-                    <Button onClick={onCancelReceipt} type="primary">
-                        Cancel Receipt
                     </Button>
                 )} */}
                 {buttonData?.nextBtn && !isLastSection && (
