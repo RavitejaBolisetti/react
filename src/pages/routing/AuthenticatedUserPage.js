@@ -41,10 +41,10 @@ import {
     LessorCustomerCreationPage,
 } from 'pages/common';
 
-import { TaxChargesPage, TaxChargesCategoryPage, AccountCategoryPage, VehicleModelTaxChargesCategoryPage, DocumentTypeOtherChargesPage, CreditDebitNoteMasterPage, ChartOfAccountPage  } from 'pages/FinancialAccounting';
-import { OTFMasterPage, VehicleDetailMasterPage, VehiclePriceMasterPage, VehicleReceiptMasterPage, RSMApprovalPage, DeliveryNoteInvoiceCancellationPage, VehiclePurchaseOrderMasterPage, VehicleRecieptChecklistMaster, OtfSoMappingMasterPage,VehicleInvoiceMasterPage, ReceiptMasterPage, VehicleAllotmentMasterPage, DigitalSignatureMasterPage, HoPriceMappingMasterPage, VehicleTrackingPage } from 'pages/Sales';
-import { SplashPage } from 'pages/splash';
+import { TaxChargesPage, TaxChargesCategoryPage, AccountCategoryPage, VehicleModelTaxChargesCategoryPage, DocumentTypeOtherChargesPage, CreditDebitNoteMasterPage, ChartOfAccountPage } from 'pages/FinancialAccounting';
+import { OTFMasterPage, VehicleDetailMasterPage, VehiclePriceMasterPage, VehicleReceiptMasterPage, RSMApprovalPage, DeliveryNoteInvoiceCancellationPage, VehiclePurchaseOrderMasterPage, VehicleRecieptChecklistMaster, OtfSoMappingMasterPage, VehicleInvoiceMasterPage, ReceiptMasterPage, VehicleAllotmentMasterPage, DigitalSignatureMasterPage, HoPriceMappingMasterPage, VehicleTrackingPage, OtfSoMappingUnmappingMasterPage } from 'pages/Sales';
 
+import { SplashPage } from 'pages/splash';
 import { ProfilePage, SettingPage, FaqPage, TrainingPage } from 'pages/user';
 import { BiReportPage } from 'pages/report/BiReport/BiReportPage';
 import { PaginatedReportPage } from 'pages/report/PaginatedReport/PaginatedReportPage';
@@ -127,6 +127,7 @@ export const AuthenticatedUserPage = () => {
 
             <Route path={routing.ROUTING_REPORT_OTF_REPORTS} element={<OtfReportsPage />} />
             <Route path={routing.ROUTING_OTF_SO_MAPPING_CONTROL_MASTER} element={<OtfSoMappingMasterPage />} />
+            <Route path={routing.ROUTING_SO_MAPPING_UNMAPPING} element={<OtfSoMappingUnmappingMasterPage />} />
 
             <Route path={routing.ROUTING_FINANCIAL_ACCOUNTING_TAX_CHARGES} element={<TaxChargesPage />} exact />
             <Route path={routing.ROUTING_FINANCIAL_ACCOUNTING_TAX_CHARGES_CATEGORY} element={<TaxChargesCategoryPage />} exact />
