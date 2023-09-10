@@ -157,7 +157,7 @@
 
     .changeTheme {
         display: flex;
-        position: absolute;
+        position: absolute !important;
         color: $primaryRed !important;
         background: $primaryWhite;
         width: 100%;
