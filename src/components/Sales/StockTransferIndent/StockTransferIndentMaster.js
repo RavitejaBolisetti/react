@@ -411,9 +411,9 @@ export const StockTransferIndentMasterBase = (props) => {
                 </Col>
             </Row>
             <AdvancedSearch {...advanceSearchFilterProps} />
-            {isAddNewIndentVisible && <AddEditForm {...addNewIndentProps} />}
-            {isViewIndentVisible && <ViewDetail {...viewIndentProps} />}
-            {/* <CancellationIssue isVisible={true} onCloseAction={() => {}} titleOverride={'Issue Details'} setIsFormVisible={() => {}} /> */}
+            <AddEditForm {...addNewIndentProps} />
+            <ViewDetail {...viewIndentProps} />
+            <CancellationIssue isVisible={false} onCloseAction={() => {}} titleOverride={'Issue Details'} setIsFormVisible={() => {}} />
         </>
     );
 };
