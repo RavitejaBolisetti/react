@@ -112,6 +112,7 @@ export const VehicleTrackingMain = ({ typeData, isLoading, viewTitle, userId, sh
     const handleSearchWithoutParameter = (values) => {
         setSearchCardVisible(true);
         if (values.trim() === '') {
+            searchForm.resetFields();
             return;
         }
         const extraParams = [
@@ -208,7 +209,7 @@ export const VehicleTrackingMain = ({ typeData, isLoading, viewTitle, userId, sh
                 </Row>
             )}
             {isFormVisible && <ViewTimeline {...viewTimelineProps} />}
-            {modifiedArray.length && isMapFormVisible && <ViewMap {...viewMapProps} />}
+            {modifiedArray.length > 0 && isMapFormVisible && <ViewMap {...viewMapProps} />}
         </>
     );
 };
