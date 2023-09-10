@@ -70,11 +70,10 @@ export const VehicleTrackingMain = ({ typeData, isLoading, viewTitle, userId, sh
 
     const [formData, setFormData] = useState([]);
     const [modifiedArray, setModifiedArray] = useState([]);
-    let modifiedArrays = [];
     const defaultBtnVisiblity = { closeBtn: true, editBtn: false, childBtn: false, siblingBtn: false, save: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
-    const handleButtonClick = (type) => {
+    const handleButtonClick = () => {
         setFormData([]);
         form.resetFields();
         setIsFormVisible(true);
@@ -90,9 +89,10 @@ export const VehicleTrackingMain = ({ typeData, isLoading, viewTitle, userId, sh
             <div>In order to "Track Vehicle", search</div>
             <div>OEM invoice number above</div>
         </>
-    );
+    );  
     const onErrorAction = (message) => {
-        setSearchCardVisible(true);
+        setSearchCardVisible(false);
+        setFormData([])
         showGlobalNotification({ notificationType: 'error', notificationTitle: 'Error', message });
     };
 
@@ -115,6 +115,7 @@ export const VehicleTrackingMain = ({ typeData, isLoading, viewTitle, userId, sh
             searchForm.resetFields();
             return;
         }
+        setModifiedArray([]);
         const extraParams = [
             {
                 key: 'oemNumber',
@@ -175,10 +176,8 @@ export const VehicleTrackingMain = ({ typeData, isLoading, viewTitle, userId, sh
         handleButtonClick,
         onCloseAction: () => {
             setIsMapFormVisible(false);
-            setModifiedArray([]);
         },
         modifiedArray,
-        modifiedArrays,
         styles,
     };
 

@@ -35,7 +35,7 @@ export const ViewDetails = (props) => {
     );
 
     return (
-        <Card className={styles.mainDisplay}>
+        <Card className={styles.whiteBG}>
             <Row gutter={20}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} className={styles.verticallyCentered}>
                     <Text strong>Shipment Details | VIN : {checkAndSetDefaultValue(formData?.vin, isLoading)} </Text>
