@@ -22,6 +22,8 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { AdvancedSearch } from './AdvancedSearch';
 import AdvanceFilter from './AdvanceFilter';
 import { AddEditForm } from './AddEditForm';
+import { ViewDetail } from './ViewDetail';
+
 
 const mapStateToProps = (state) => {
     const {
@@ -79,6 +81,8 @@ export const OtfMasterBase = (props) => {
     
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [isAddNewIndentVisible, setIsAddNewIndentVisible] = useState(false);
+    const [isViewIndentVisible, setIsViewIndentVisible] = useState(false);
+    const [selectedOrder, setSelectedOrder] = useState();
     const [filterString, setFilterString] = useState();
     const [toggleButton, settoggleButton] = useState(STOCK_TRANSFER?.RAISED.key);
     const [openAccordian, setOpenAccordian] = useState('');
@@ -172,8 +176,9 @@ export const OtfMasterBase = (props) => {
             case ADD_ACTION:
                 break;
             case VIEW_ACTION:
-                // setSelectedOrder(record);
-                // record && setSelectedOrderId(record?.otfNumber);
+                setIsViewIndentVisible(true);
+                setSelectedOrder(record);
+                //record && setSelectedOrderId(record?.otfNumber);
                 break;
             case CANCEL_ACTION:
                 break;
@@ -360,6 +365,13 @@ export const OtfMasterBase = (props) => {
         setTableDataItem,
         handleChangeLocation,
     };
+
+    const viewIndentProps = {
+        isVisible: isViewIndentVisible,
+        formData:selectedOrder,
+        openAccordian, 
+        setOpenAccordian,
+    };
    
     return (
         <>
@@ -370,7 +382,8 @@ export const OtfMasterBase = (props) => {
                 </Col>
             </Row>
             <AdvancedSearch {...advanceSearchFilterProps} />
-            <AddEditForm {...addNewIndentProps} />
+            { isAddNewIndentVisible && <AddEditForm {...addNewIndentProps} /> }
+            { isViewIndentVisible && <ViewDetail {...viewIndentProps} /> }
         </>
     );
 };
