@@ -25,7 +25,7 @@ import styles from 'assets/sass/app.module.scss';
 const { Panel } = Collapse;
 
 const ViewDetailMain = (props) => {
-    const { formData, isLoading, typeData, tableData } = props;
+    const { formData, isLoading, buttonDataVehicleDetails, tableData } = props;
     const {  openAccordian, setOpenAccordian , handleButtonClick, buttonData, setButtonData, onCloseAction} = props;
     const [filterString, setFilterString] = useState('');
 
@@ -33,14 +33,13 @@ const ViewDetailMain = (props) => {
         bordered: false,
         colon: false,
         layout: 'vertical',
-        column: { xs: 1, sm: 3, lg: 6, xl: 6, xxl: 6 },
+        column: { xs: 1, sm: 3, lg: 4, xl: 4, xxl: 4 },
     };
 
     useEffect(() => {
-        //setFilterStringOTFSearch({ ...filterString });
-        //setSelectedOrderOTFDetails();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString]);
+        // if(formData?.vehicleDetails?.length > 0)
+        //     handleCollapse(1);
+    }, []);
 
     const buttonProps = {
         formData,
@@ -56,8 +55,6 @@ const ViewDetailMain = (props) => {
 
     const tableDataItem = (formData?.vehicleOTFDetails && [formData?.vehicleOTFDetails]) || tableData;
 
-    const sorterPagination = formData?.allotmentStatus !== VEHICLE_TYPE.ALLOTED.key;
-
     const handleButtonClickVehicleDetails = ({ record = null, buttonAction, openDefaultSection = true, index }) => {
         switch (buttonAction) {
             case EDIT_ACTION:
@@ -70,10 +67,11 @@ const ViewDetailMain = (props) => {
                 break;
         }
     };
+    const sorterPagination = false;
 
     const tableProps = {
-        srl: false,
-        tableColumn: tableColumnVehicleDetails( handleButtonClickVehicleDetails ),
+        srl: true,
+        tableColumn: tableColumnVehicleDetails( handleButtonClickVehicleDetails, sorterPagination, buttonDataVehicleDetails ),
         tableData: formData?.vehicleDetails,
         pagination: sorterPagination,
     };
@@ -82,38 +80,39 @@ const ViewDetailMain = (props) => {
         <>
             <Row gutter={20} className={styles.drawerBody}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <h4 className={styles.marT0}>Indent Details</h4>
                     <Card>
                         <Descriptions {...viewProps}>
                             <Descriptions.Item label="Indent Number">{checkAndSetDefaultValue(formData?.indentNumber, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Indent Date">{checkAndSetDefaultValue(formData?.indentDate, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Indent Status">{checkAndSetDefaultValue(formData?.indentStatus ? 'Yes' : 'No', isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Indent Date">{checkAndSetDefaultValue(formData?.indentDate ? formData?.indentDate : undefined, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                            <Descriptions.Item label="Indent Status">{checkAndSetDefaultValue(formData?.indentStatus, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Indent To Parent">{checkAndSetDefaultValue(formData?.indentToParent, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Indent To Location">{checkAndSetDefaultValue(formData?.indentToLocation, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Requested By">{checkAndSetDefaultValue(formData?.requestedBy, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Remark">{checkAndSetDefaultValue(formData?.remarks, isLoading)}</Descriptions.Item>
                             </Descriptions>
                     </Card>
-                    <Row gutter={24}>
+
+                    <Card>
+                        <Row gutter={24}>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                <h4>Vehicle Details</h4>
+                                <Divider />
+                            </Col>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                <DataTable {...tableProps} />
+                            </Col> 
+                        </Row>
+                    </Card>
+                    {/* <Row gutter={24}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}> 
                                 <Collapse onChange={() => handleCollapse(1)} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian} collapsible="icon">
-                                    <Panel key="1" header={
-                                            <Row>
-                                                Vehicle Details 
-                                                <Col xs={14} sm={14} md={6} lg={6} xl={6}>
-                                                    <Col xs={24} sm={24} md={6} lg={6} xl={6}>
-                                                        {/* <Button type="primary" icon={<FiPlus/>} onClick={handleAddVehicleDetails}> Add </Button> */}
-                                                    </Col>
-                                                </Col>
-                                            </Row>
-                                        }
-                                    >
+                                    <Panel key="1" header={"Vehicle Details"}>
                                         <Divider />
                                         <DataTable {...tableProps} />
-                                        {/* <DataTable tableColumn={taxDetailsColumn()} tableData={formData['taxDetails']} pagination={false} /> */}
-                                    </Panel>
+                                     </Panel>
                                 </Collapse>
                             </Col>
-                        </Row>
+                        </Row> */}
 
 
                 </Col>

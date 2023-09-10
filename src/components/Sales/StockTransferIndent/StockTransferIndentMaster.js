@@ -41,7 +41,7 @@ const mapStateToProps = (state) => {
             }
         },
     } = state;
-    console.log("🚀 ~ file: StockTransferIndentMaster.js:39 ~ mapStateToProps ~ state:", state)
+    //console.log("🚀 ~ file: StockTransferIndentMaster.js:39 ~ mapStateToProps ~ state:", state)
     
     let returnValue = {
         userId,
@@ -71,9 +71,10 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const OtfMasterBase = (props) => {
+export const StockTransferIndentMasterBase = (props) => {
+    const { data } = props;
     const { userId, typeData, parentGroupCode, showGlobalNotification } = props;
-    const { data, indentLocationList, requestedByDealerList } = props;
+    const { indentLocationList, requestedByDealerList } = props;
     const { fetchIndentList, fetchIndentLocation,fetchIndentDetails, fetchRequestedByList, listShowLoading, saveData } = props;
 
     const [searchForm] = Form.useForm();
@@ -97,6 +98,13 @@ export const OtfMasterBase = (props) => {
         formBtnActive: false
     };
 
+    const btnVisiblityVehicleDetails = {
+        canView:false, 
+        canEdit: false, 
+        canDelete: false,
+    };
+
+    const [buttonDataVehicleDetails, setButtonDataVehicleDetails] = useState({ ...btnVisiblityVehicleDetails });
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
@@ -178,12 +186,13 @@ export const OtfMasterBase = (props) => {
                 break;
             case VIEW_ACTION:
                 const onSuccessViewIndent = (res) => {
-                    console.log("🚀 ~ file: StockTransferIndentMaster.js:181 ~ onSuccessViewIndent ~ res:", res)
                     //addIndentDetailsForm.resetFields();
                     //setTableDataItem([]);
                     //setButtonData({ ...defaultBtnVisiblity, cancelBtn:true, saveBtn: true, formBtnActive: true });
                     setIsViewIndentVisible(true);
                     setSelectedOrder(res?.data);
+                    setOpenAccordian(true);
+                    setButtonDataVehicleDetails({ ...btnVisiblityVehicleDetails, canView:false, canEdit: true, canDelete: false, });
                 };
                 const extraParamData = [
                     {
@@ -266,6 +275,7 @@ export const OtfMasterBase = (props) => {
             addIndentDetailsForm.resetFields();
             setTableDataItem([]);
             setButtonData({ ...defaultBtnVisiblity, cancelBtn:true, saveBtn: true, formBtnActive: true });
+            setButtonDataVehicleDetails({ ...btnVisiblityVehicleDetails, canView:false, canEdit: true, canDelete: true, });
             setIsAddNewIndentVisible(true);
         };
         const extraParamData = [
@@ -305,6 +315,10 @@ export const OtfMasterBase = (props) => {
         setIsAddNewIndentVisible(false);
         addIndentDetailsForm.resetFields();
         handleChangeLocation('');
+    };
+
+    const onCloseActionViewIndentDetails = () => {
+        setIsViewIndentVisible(false);
     };
 
     const onFinishSearch = (values) => {};
@@ -372,6 +386,7 @@ export const OtfMasterBase = (props) => {
         onCloseAction : onAddIndentDetailsCloseAction,
         openAccordian, 
         setOpenAccordian,
+        buttonDataVehicleDetails,
         buttonData, 
         setButtonData,
         indentLocationList,
@@ -383,10 +398,12 @@ export const OtfMasterBase = (props) => {
 
     const viewIndentProps = {
         isVisible: isViewIndentVisible,
+        titleOverride: 'View Indent Details',
         formData:selectedOrder,
         openAccordian, 
         setOpenAccordian,
-        onCloseAction : onAddIndentDetailsCloseAction,
+        buttonDataVehicleDetails,
+        onCloseAction : onCloseActionViewIndentDetails,
     };
    
     return (
@@ -404,4 +421,4 @@ export const OtfMasterBase = (props) => {
     );
 };
 
-export const StockTransferIndentMaster = connect(mapStateToProps, mapDispatchToProps)(OtfMasterBase);
+export const StockTransferIndentMaster = connect(mapStateToProps, mapDispatchToProps)(StockTransferIndentMasterBase);

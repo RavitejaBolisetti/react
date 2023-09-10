@@ -28,7 +28,7 @@ const { Text } = Typography;
 
 const AddEditFormMain = (props) => {
 
-    const { formData } = props;
+    const { formData, buttonDataVehicleDetails } = props;
     const { addIndentDetailsForm, onFinish, indentLocationList, requestedByDealerList,  openAccordian, setOpenAccordian } = props;
     const { buttonData, setButtonData, onCloseAction, tableDataItem, setTableDataItem } = props;
     const { handleButtonClick, handleChangeLocation } = props;
@@ -104,8 +104,10 @@ const AddEditFormMain = (props) => {
         "balancedQuantity" : 0,
     };
 
+    const sorterPagination = false;
+
     const tableProps = {
-        tableColumn: tableColumnVehicleDetails( handleButtonClickVehicleDetails ),
+        tableColumn: tableColumnVehicleDetails( handleButtonClickVehicleDetails, sorterPagination, buttonDataVehicleDetails ),
         tableData: tableDataItem,
         pagination: false,
     };

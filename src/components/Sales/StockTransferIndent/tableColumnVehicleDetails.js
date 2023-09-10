@@ -4,10 +4,9 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
-import { convertDateMonthYear } from 'utils/formatDateTime';
 import styles from 'assets/sass/app.module.scss';
 
-export const tableColumnVehicleDetails = (handleButtonClickVehicleDetails, sorter) => {
+export const tableColumnVehicleDetails = (handleButtonClickVehicleDetails, sorter, buttonDataVehicleDetails) => {
     const tableColumn = [
         tblPrepareColumns({
             title: 'Model Description',
@@ -35,30 +34,23 @@ export const tableColumnVehicleDetails = (handleButtonClickVehicleDetails, sorte
         }),
         tblPrepareColumns({
             title: 'Issued & Not Received Quantity',
-            dataIndex: 'issuedNNotReceivedQuantity',
+            dataIndex: 'issuedAndNotReceivedQuantity',
             width: '10%',
             sorter,
         }),
         tblPrepareColumns({
-            title: 'Receiveded Quantity',
-            dataIndex: 'receivededQuantity',
+            title: 'Received Quantity',
+            dataIndex: 'receivedQuantity',
             width: '10%',
             sorter,
         }),
         tblPrepareColumns({
             title: 'Balance Quantity',
-            dataIndex: 'balanceQuantity',
+            dataIndex: 'balancedQuantity',
             width: '10%',
             sorter,
         }),
-        tblPrepareColumns({
-            title: 'Action',
-            dataIndex: '',
-            width: '10%',
-            sorter,
-        }),
-
-        tblActionColumn({ handleButtonClick: handleButtonClickVehicleDetails , styles, width: '8%',  canView:false, canEdit: true, canDelete: true, }),
+        tblActionColumn({ handleButtonClick: handleButtonClickVehicleDetails , styles, width: '8%',  ...buttonDataVehicleDetails }),
     ];
 
     return tableColumn;
