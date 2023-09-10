@@ -516,7 +516,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         };
         const requestData = {
             data: data,
-            method: 'put',
+            method: 'post',
             setIsLoading: listShowLoading,
             userId,
             onError,
