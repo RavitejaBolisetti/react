@@ -69,7 +69,7 @@ const SoFormMasterMain = (props) => {
                                         <Col xs={11} sm={11} md={11} lg={11} xl={11} xxl={11}>
                                             <Space direction="vertical" size="small" className={SoStyles.flex}>
                                                 <Text className={SoStyles.headerBg}> OTF2</Text>
-                                                <Card className={`${styles.fullWidth} ${styles.whiteBG}`}>
+                                                <Card className={`${styles.fullWidth} ${styles.whiteBG} ${SoStyles.fullHeight}`}>
                                                     <AddEditForm {...props} disabledProps={disabledProps} formType={FORM_TYPE_CONSTANSTS?.FORM_2?.id} status={status} />
                                                 </Card>
                                             </Space>
