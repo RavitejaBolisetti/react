@@ -69,7 +69,8 @@ export const VehicleTrackingMain = ({ typeData, isLoading, viewTitle, userId, sh
     const [change, setChange] = useState(false);
 
     const [formData, setFormData] = useState([]);
-
+    const [modifiedArray, setModifiedArray] = useState([]);
+    let modifiedArrays = [];
     const defaultBtnVisiblity = { closeBtn: true, editBtn: false, childBtn: false, siblingBtn: false, save: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
@@ -97,6 +98,14 @@ export const VehicleTrackingMain = ({ typeData, isLoading, viewTitle, userId, sh
 
     const onSuccessAction = (res) => {
         setFormData(res?.data);
+        res?.data?.vehicleTrackingDeliveryStatus.length &&
+            res?.data.vehicleTrackingDeliveryStatus
+                ?.sort((a, b) => a?.order - b?.order)
+                ?.map((record) => {
+                    record?.vehicleTrackingLocationResponse?.map((locations) => {
+                        setModifiedArray((prev) => [...prev, { lat: +locations?.latitude, lng: +locations?.longitude }]);
+                    });
+                });
         setSearchCardVisible(true);
     };
 
@@ -163,7 +172,12 @@ export const VehicleTrackingMain = ({ typeData, isLoading, viewTitle, userId, sh
         buttonData,
         setButtonData,
         handleButtonClick,
-        onCloseAction: () => setIsMapFormVisible(false),
+        onCloseAction: () => {
+            setIsMapFormVisible(false);
+            setModifiedArray([]);
+        },
+        modifiedArray,
+        modifiedArrays,
         styles,
     };
 
@@ -194,7 +208,7 @@ export const VehicleTrackingMain = ({ typeData, isLoading, viewTitle, userId, sh
                 </Row>
             )}
             {isFormVisible && <ViewTimeline {...viewTimelineProps} />}
-            {isMapFormVisible && <ViewMap {...viewMapProps} />}
+            {modifiedArray.length && isMapFormVisible && <ViewMap {...viewMapProps} />}
         </>
     );
 };

@@ -98,8 +98,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const HeaderMain = (props) => {
-    const { isDataLoaded, isLoading, collapsed, setCollapsed, loginUserData, doLogout, fetchData, listShowLoading, showGlobalNotification, userId, listUserAccessShowLoading, updateUserAcess,fetchMenuList } = props;
-    const { fetchEditConfigDataList, fetchConfigList, listConfigShowLoading, isTypeDataLoaded, isTypeDataLoading, fetchNotificaionCountData, notificaionShowLoading } = props;
+    const { isDataLoaded, isLoading, collapsed, setCollapsed, loginUserData, doLogout, fetchData, listShowLoading, showGlobalNotification, userId, listUserAccessShowLoading, updateUserAcess, fetchMenuList } = props;
+    const { fetchEditConfigDataList, fetchConfigList, listConfigShowLoading, isTypeDataLoaded, isTypeDataLoading, fetchNotificaionCountData } = props;
     const { notificationCount, resetNotification, listShowMenuLoading } = props;
 
     const navigate = useNavigate();

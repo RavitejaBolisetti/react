@@ -114,3 +114,4 @@ export const ROUTING_VEHICLE_MODEL_TAX_CHARGES_CATEGORY = ROUTING_FINANCIAL_ACCO
 export const ROUTING_DIGITAL_SIGNATURE_MAPPING = ROUTING_SALES.concat('digital-signature');
 export const ROUTING_HO_PRICE_MAPPING = ROUTING_SALES.concat('ho-price-mapping');
 export const STOCK_TRANSFER_INDENT = ROUTING_SALES.concat('stock-transfer-indent');
+export const ROUTING_SO_MAPPING_UNMAPPING = ROUTING_SALES.concat('otf-so-mapping');

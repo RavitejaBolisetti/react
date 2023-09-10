@@ -156,8 +156,6 @@ const AddEditFormMain = (props) => {
                                         <Checkbox>Capability (L1/L2/L3)</Checkbox>
                                     </Form.Item>
                                 </Col>
-                            </Row>
-                            <Row gutter={16}>
                                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                                     <Form.Item initialValue={editMode ? formData.isCreateUserIdRequired : false} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="isCreateUserIdRequired">
                                         <Checkbox>Create User Id</Checkbox>

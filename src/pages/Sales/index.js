@@ -21,5 +21,6 @@ import HoPriceMappingMasterPage from './HoPriceMappingDealer';
 import DeliveryNoteInvoiceCancellationPage from './DeliveryNoteInvoiceCancellation';
 import StockTransferIndentMasterPage from './StockTransferIndent';
 import VehicleTrackingPage from './VehicleTracking';
+import OtfSoMappingUnmappingMasterPage from './OtfSoMappingUnmapping';
 
-export { OTFMasterPage, VehicleDetailMasterPage, VehicleReceiptMasterPage, VehiclePriceMasterPage, VehicleRecieptChecklistMaster, RSMApprovalPage, VehiclePurchaseOrderMasterPage, OtfSoMappingMasterPage, VehicleAllotmentMasterPage, ReceiptMasterPage, DigitalSignatureMasterPage, HoPriceMappingMasterPage, DeliveryNoteInvoiceCancellationPage, StockTransferIndentMasterPage, VehicleTrackingPage };
+export { OTFMasterPage, VehicleDetailMasterPage, VehicleReceiptMasterPage, VehiclePriceMasterPage, VehicleRecieptChecklistMaster, RSMApprovalPage, VehiclePurchaseOrderMasterPage, OtfSoMappingMasterPage, VehicleAllotmentMasterPage, ReceiptMasterPage, DigitalSignatureMasterPage, HoPriceMappingMasterPage, DeliveryNoteInvoiceCancellationPage, StockTransferIndentMasterPage, VehicleTrackingPage, OtfSoMappingUnmappingMasterPage };
