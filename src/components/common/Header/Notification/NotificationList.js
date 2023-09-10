@@ -8,7 +8,7 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { Divider, Typography, Button, Popover, List, Skeleton, Space } from 'antd';
+import { Divider, Typography, Button, Popover, List, Space } from 'antd';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { RxDotFilled, RxDotsVertical } from 'react-icons/rx';
 
@@ -57,7 +57,6 @@ const mapStateToProps = (state) => {
 const NotificationListMaster = (props) => {
     const { isLoading, notificationType, page, setPage, data, setData, setRefreshData, refreshData, setRefreshCount } = props;
     const { userId, fetchList, notificationDataList, pagination, listShowLoading, saveData } = props;
-
     const [hasMore, setHasMore] = useState(false);
 
     useEffect(() => {
@@ -88,13 +87,12 @@ const NotificationListMaster = (props) => {
     ];
 
     const onSuccessAction = () => {
-        // setLoading(false);
         setRefreshData(false);
         setRefreshCount((prev) => !prev);
     };
 
     const onError = () => {
-        // setLoading(false);
+        setRefreshData(false);
     };
 
     const loadMoreData = (data) => {
@@ -133,29 +131,12 @@ const NotificationListMaster = (props) => {
 
     return (
         <div id="scrollableDiv" className={styles.notificationList}>
-            {isLoading ? (
+            {isLoading && !data?.length ? (
                 <div style={{ minHeight: '400px' }}>
                     <NotificationSkeleton border={'none'} count={5} color={'#e2dfdf'} />
                 </div>
             ) : (
-                <InfiniteScroll
-                    height={400}
-                    dataLength={page?.totalRecords || 0}
-                    next={loadMoreData}
-                    hasMore={hasMore}
-                    loader={
-                        isLoading && (
-                            <Skeleton
-                                paragraph={{
-                                    rows: 1,
-                                }}
-                                active
-                            />
-                        )
-                    }
-                    endMessage={page?.totalRecords > 0 && <Divider plain>It is all, nothing more </Divider>}
-                    scrollableTarget="scrollableDiv"
-                >
+                <InfiniteScroll height={400} dataLength={page?.totalRecords || 0} next={loadMoreData} hasMore={hasMore} loader={isLoading && <NotificationSkeleton border={'none'} count={1} color={'#e2dfdf'} />} endMessage={page?.totalRecords > 0 && <Divider plain>It is all, nothing more </Divider>} scrollableTarget="scrollableDiv">
                     <List
                         bordered={false}
                         split={false}
@@ -184,9 +165,15 @@ const NotificationListMaster = (props) => {
                                     content={
                                         <>
                                             <Space direction="vertical">
-                                                <Button disabled={item?.status === NOTIFICATION_STATUS.ARCHIVE.key} onClick={() => handleActionButton(item, NOTIFICATION_STATUS.ARCHIVE.key)} type="link">
-                                                    Archive
-                                                </Button>
+                                                {item?.status === NOTIFICATION_STATUS.ARCHIVE.key ? (
+                                                    <Button onClick={() => handleActionButton(item, NOTIFICATION_STATUS.UNARCHIVE.key)} type="link">
+                                                        Un-Archive
+                                                    </Button>
+                                                ) : (
+                                                    <Button onClick={() => handleActionButton(item, NOTIFICATION_STATUS.ARCHIVE.key)} type="link">
+                                                        Archive
+                                                    </Button>
+                                                )}
                                                 <Button disabled={item?.isRead} onClick={() => handleActionButton(item, NOTIFICATION_STATUS.READ.key)} type="link">
                                                     Mark as read
                                                 </Button>

@@ -83,7 +83,8 @@ export const BASE_URL_MANUFACTURER_ADMIN_HIERARCHY_CHANGE_HISTORY = BASE_URL + '
 export const BASE_URL_MANUFACTURER_ADMIN_AUTHORITY_CHANGE_HISTORY = BASE_URL + 'manufacturer/admin/authority/changehistory';
 
 export const BASE_URL_MANUFACTURER_ADMIN_AUTHORITY_UPLOAD = BASE_URL + 'manufacturer/admin/authority';
-export const BASE_URL_MANUFACTURER_ADMIN_HIERARCHY_SEARCH = BASE_URL + 'users/manufacturer';
+// export const BASE_URL_MANUFACTURER_ADMIN_HIERARCHY_SEARCH = BASE_URL + 'users/manufacturer';
+export const BASE_URL_MANUFACTURER_ADMIN_HIERARCHY_SEARCH = BASE_URL + 'users/search';
 export const BASE_URL_MANUFACTURER_AUTHORITY_TYPE_DROPDOWN = BASE_URL + 'configurableparametertypes';
 
 export const BASE_URL_DEALER_HIERARCHY = BASE_URL + 'dealerhierarchy';
@@ -271,7 +272,7 @@ export const BASE_URL_VEHICLE_DETAILS_SERVICE = BASE_URL + 'otf/vehicledetails/o
 export const BASE_URL_MILE_SKILL = BASE_URL + 'dealer/mileskills';
 
 export const BASE_URL_NOTIFICATION = BASE_URL + 'applications/notifications'; 
-export const BASE_URL_NOTIFICATION_COUNTS = BASE_URL + 'applications/notifications/counts';
+export const BASE_URL_NOTIFICATION_COUNTS = BASE_URL + 'applications/notifications/counts'; 
 
 export const BASE_URL_OTF_SO_MAPPING_MAIN = BASE_URL + 'otf/somapunmap';
 export const BASE_URL_OTF_SO_MAPPING_SWAP = BASE_URL + 'otf/somapunmap/swap';
