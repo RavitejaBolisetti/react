@@ -5,23 +5,19 @@
  */
 import { fireEvent, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import  FormAccountAndDocumentMapping  from '@components/FinancialAccounting/AccountCategory/AccountAndDocumentMapping/FormAccountAndDocumentMapping';
+import FormDocTypeAcMapping from '@components/FinancialAccounting/AccountTaxCharges/DocumentTypeOtherCharges/DocTypeAcHeadMapping/FormDocTypeAcMapping';
 import customRender from '@utils/test-utils';
 import { Form } from 'antd';
 
-afterEach(() => {
-    jest.restoreAllMocks();
-});
-
 const FormWrapper = (props) =>{
-    const [accDocMapForm] = Form.useForm();
+    const [formEdit] = Form.useForm();
     const myMoock = {
-        ...accDocMapForm,
+        ...formEdit,
         validateFields:jest.fn(),
         getFieldsValue:jest.fn(),
         resetFields:jest.fn(),
     }
-    return <FormAccountAndDocumentMapping accDocMapForm={myMoock} {...props} />
+    return <FormDocTypeAcMapping formEdit={myMoock} {...props} />
 }
 
 const EditFormWrapper = (props) =>{
@@ -30,33 +26,37 @@ const EditFormWrapper = (props) =>{
         ...editForm,
         setFieldsValue:jest.fn(),
     }
-    return <FormAccountAndDocumentMapping editForm={myMoock} {...props} />
+    return <FormDocTypeAcMapping editForm={myMoock} {...props} />
 }
 
-describe('FormAccountAndDocumentMapping components', () => {
-    it('formEdit=false', () => {
-        customRender(<FormWrapper  formEdit={false} addDocAndMapp={jest.fn()}/>);
+afterEach(() => {
+    jest.restoreAllMocks();
+});
 
-        const desc = screen.getByRole('combobox', {name:'Document Description'});
+describe("FormDocTypeAcMapping Component", ()=>{
+    it('formEdit=false', () => {
+        customRender(<FormWrapper  formEdit={false} addDocHeadMapping={jest.fn()}/>);
+
+        const desc = screen.getByRole('combobox', {name:'Other Charges'});
         fireEvent.change(desc, {target:{value:'test'}})
 
         const head = screen.getByRole('combobox', {name:'Financial Account Head'});
         fireEvent.change(head, {target:{value:'test'}})
 
-        const addBtn = screen.getByRole('button', {name:'Add'});
+        const addBtn = screen.getByRole('button', {name:'plus Add'});
         fireEvent.click(addBtn);
     });
 
     it('formEdit=true', () => {
-        customRender(<EditFormWrapper  formEdit={false} addDocAndMapp={jest.fn()}/>);
+        customRender(<EditFormWrapper  formEdit={false} addDocHeadMapping={jest.fn()}/>);
 
-        const desc = screen.getByRole('combobox', {name:'Document Description'});
+        const desc = screen.getByRole('combobox', {name:'Other Charges'});
         fireEvent.change(desc, {target:{value:'test'}})
 
         const head = screen.getByRole('combobox', {name:'Financial Account Head'});
         fireEvent.change(head, {target:{value:'test'}})
 
-        const addBtn = screen.getByRole('button', {name:'Add'});
-        fireEvent.click(addBtn);
+        const plusImg = screen.getByRole('img', {name:'plus'});
+        fireEvent.click(plusImg);
     });
-});
+})
