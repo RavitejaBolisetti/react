@@ -58,7 +58,7 @@ export const tableColumnVehicleDetails = (handleButtonClickVehicleDetails, sorte
             sorter,
         }),
 
-        tblActionColumn({ handleButtonClick: handleButtonClickVehicleDetails , styles, width: '8%',  canView:false, canEdit: true, canDelete: true, }),
+        tblActionColumn({ handleButtonClick: handleButtonClickVehicleDetails, styles, width: '8%', canView: true, canEdit: true, canDelete: true }),
     ];
 
     return tableColumn;

@@ -17,25 +17,24 @@ import { expandIcon, accordianExpandIcon } from 'utils/accordianExpandIcon';
 import { tableColumnVehicleDetails } from './tableColumnVehicleDetails';
 import { DataTable } from 'utils/dataTable';
 import { AddVehicleDetailsModal } from './AddVehicleDetailsModal';
-import { EDIT_ACTION, DELETE_ACTION  } from 'utils/btnVisiblity';
+import { EDIT_ACTION, DELETE_ACTION } from 'utils/btnVisiblity';
+import { CancellationIssue } from './CancellationIssue';
 
 import styles from 'assets/sass/app.module.scss';
-
 
 const { TextArea } = Input;
 const { Panel } = Collapse;
 const { Text } = Typography;
 
 const AddEditFormMain = (props) => {
-
     const { formData } = props;
-    const { addIndentDetailsForm, onFinish, indentLocationList, requestedByDealerList,  openAccordian, setOpenAccordian } = props;
+    const { addIndentDetailsForm, onFinish, indentLocationList, requestedByDealerList, openAccordian, setOpenAccordian } = props;
     const { buttonData, setButtonData, onCloseAction, tableDataItem, setTableDataItem } = props;
     const { handleButtonClick, handleChangeLocation } = props;
     const { activeKey, setActiveKey } = props;
 
-    const [ addVehicleDetailsForm ] = Form.useForm();
-    const [ isAddVehicleDetailsVisible, setIsAddVehicleDetailsVisible ] = useState(false);
+    const [addVehicleDetailsForm] = Form.useForm();
+    const [isAddVehicleDetailsVisible, setIsAddVehicleDetailsVisible] = useState(false);
 
     useEffect(() => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -44,21 +43,20 @@ const AddEditFormMain = (props) => {
     const handleButtonClickVehicleDetails = ({ record = null, buttonAction, openDefaultSection = true, index }) => {
         switch (buttonAction) {
             case EDIT_ACTION:
-
                 break;
             case DELETE_ACTION:
                 let arrayOfNumbers = [...tableDataItem];
                 arrayOfNumbers.splice(index, 1);
                 setTableDataItem([...arrayOfNumbers]);
                 break;
-            
+
             default:
                 break;
         }
     };
 
     const buttonProps = {
-        saveButtonName:'Submit',
+        saveButtonName: 'Submit',
         formData,
         onCloseAction,
         buttonData,
@@ -92,31 +90,30 @@ const AddEditFormMain = (props) => {
 
     const handleAddVehicleDetails = () => {
         setIsAddVehicleDetailsVisible(true);
-    }
+    };
 
     const initialTableDataItem = {
-        "modelDescription" : "",
-        "modelCode" : "",
-        "requestedQuantity" : 0,
-        "cancelledQuantity" :0,
-        "issuedAndNotReceivedQuantity" : 0,
-        "receivedQuantity" : 0,
-        "balancedQuantity" : 0,
+        modelDescription: '',
+        modelCode: '',
+        requestedQuantity: 0,
+        cancelledQuantity: 0,
+        issuedAndNotReceivedQuantity: 0,
+        receivedQuantity: 0,
+        balancedQuantity: 0,
     };
 
     const tableProps = {
-        tableColumn: tableColumnVehicleDetails( handleButtonClickVehicleDetails ),
+        tableColumn: tableColumnVehicleDetails(handleButtonClickVehicleDetails),
         tableData: tableDataItem,
         pagination: false,
     };
-    
+
     const onCloseActionAddVehicleDetails = () => {
         setIsAddVehicleDetailsVisible(false);
     };
 
     const onFinishAddVehicleDetails = (values) => {
-        if(tableDataItem.length === 0)
-            handleCollapse(1);
+        if (tableDataItem.length === 0) handleCollapse(1);
 
         setTableDataItem([...tableDataItem, { ...initialTableDataItem, ...values }]);
 
@@ -132,10 +129,9 @@ const AddEditFormMain = (props) => {
         titleOverride: 'Add Vehicle Details',
         addVehicleDetailsForm,
         setIsAddVehicleDetailsVisible,
-        onCloseAction : onCloseActionAddVehicleDetails,  
-        onFinishAddVehicleDetails, 
+        onCloseAction: onCloseActionAddVehicleDetails,
+        onFinishAddVehicleDetails,
     };
-
 
     return (
         <>
@@ -146,7 +142,7 @@ const AddEditFormMain = (props) => {
                             <Row gutter={24}>
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                                     <Form.Item label="Indent To Location" name="indentToLocation" rules={[validateRequiredSelectField('Indent To Location')]}>
-                                    {customSelectBox({ data: indentLocationList, fieldNames: { key: 'locationCode', value: 'dealerLocationName' }, placeholder: preparePlaceholderSelect(''), onChange: handleChangeLocation  })}
+                                        {customSelectBox({ data: indentLocationList, fieldNames: { key: 'locationCode', value: 'dealerLocationName' }, placeholder: preparePlaceholderSelect(''), onChange: handleChangeLocation })}
                                     </Form.Item>
                                 </Col>
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
@@ -158,7 +154,7 @@ const AddEditFormMain = (props) => {
 
                             <Row gutter={24}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.textareaError}>
-                                    <Form.Item name="remarks" label="Remarks" >
+                                    <Form.Item name="remarks" label="Remarks">
                                         <TextArea maxLength={300} placeholder={preparePlaceholderText('Remarks')} showCount />
                                     </Form.Item>
                                 </Col>
@@ -166,35 +162,37 @@ const AddEditFormMain = (props) => {
                         </Card>
 
                         <Row gutter={24}>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24}> 
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <Collapse onChange={() => handleCollapse(1)} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian} collapsible="icon">
-                                    <Panel key="1" header={
+                                    <Panel
+                                        key="1"
+                                        header={
                                             <Row>
-                                                Vehicle Details 
+                                                Vehicle Details
                                                 <Col xs={14} sm={14} md={6} lg={6} xl={6}>
                                                     <Col xs={24} sm={24} md={6} lg={6} xl={6}>
-                                                        <Button type="primary" icon={<FiPlus/>} onClick={handleAddVehicleDetails}> Add </Button>
+                                                        <Button type="primary" icon={<FiPlus />} onClick={handleAddVehicleDetails}>
+                                                            Add
+                                                        </Button>
                                                     </Col>
                                                 </Col>
                                             </Row>
                                         }
                                     >
                                         <Divider />
-                                        {tableDataItem.length >0 && <DataTable {...tableProps} />}
+                                        {tableDataItem.length > 0 && <DataTable {...tableProps} />}
                                         {/* <DataTable tableColumn={taxDetailsColumn()} tableData={formData['taxDetails']} pagination={false} /> */}
                                     </Panel>
                                 </Collapse>
                             </Col>
                         </Row>
-                        
                     </Col>
                 </Row>
 
                 <VehicleDetailFormButton {...buttonProps} />
-
             </Form>
-
             <AddVehicleDetailsModal {...addVehicleDetailsProps} />
+       
         </>
     );
 };

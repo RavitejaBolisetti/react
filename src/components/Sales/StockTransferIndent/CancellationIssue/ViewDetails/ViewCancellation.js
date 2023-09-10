@@ -1,0 +1,52 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
+import React from 'react';
+import { Card, Descriptions } from 'antd';
+import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
+import { converDateDayjs } from 'utils/formatDateTime';
+import styles from 'assets/sass/app.module.scss';
+
+const ViewDetailMain = (props) => {
+    const { formData, isLoading = false } = props;
+
+    const viewProps = {
+        bordered: false,
+        colon: false,
+        layout: 'vertical',
+        column: { xs: 1, sm: 4, lg: 4, xl: 4, xxl: 4 },
+    };
+    const viewData = {
+        indentLocation: formData?.indentLocation,
+        indentNumber: formData?.indentNumber ?? 'NA',
+        indentDate: converDateDayjs(formData?.indentDate) ?? 'NA',
+        indentStatus: formData?.indentStatus,
+        requestedBy: formData?.requestedBy,
+        remarks: formData?.remarks,
+    };
+    return (
+        <Card className={styles.drawerCardView}>
+            <Descriptions {...viewProps}>
+                <Descriptions.Item label="Indent To Location">{checkAndSetDefaultValue(viewData?.indentLocation, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Indent Number">{checkAndSetDefaultValue(viewData?.indentNumber, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Indent Date">{checkAndSetDefaultValue(viewData?.indentDate, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Indent Status">{checkAndSetDefaultValue(viewData?.indentStatus, isLoading)}</Descriptions.Item>
+            </Descriptions>
+            <Descriptions {...viewProps}>
+                <Descriptions.Item label="Model Description">{checkAndSetDefaultValue(viewData?.indentLocation, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Model Code">{checkAndSetDefaultValue(viewData?.indentNumber, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Requested Quantity">{checkAndSetDefaultValue(viewData?.indentDate, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Cancelled Quantity">{checkAndSetDefaultValue(viewData?.indentStatus, isLoading)}</Descriptions.Item>
+            </Descriptions>
+            <Descriptions {...viewProps}>
+                <Descriptions.Item label="Issued & not received Quantity">{checkAndSetDefaultValue(viewData?.requestedBy, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="received Quantity">{checkAndSetDefaultValue(viewData?.remarks, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Balance Quantity">{checkAndSetDefaultValue(viewData?.remarks, isLoading)}</Descriptions.Item>
+            </Descriptions>
+        </Card>
+    );
+};
+
+export const ViewDetail = ViewDetailMain;
