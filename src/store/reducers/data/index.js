@@ -45,6 +45,7 @@ import { UserManagement } from './userManagement';
 import { VehicleReceiptChecklist } from './VehicleReceiptCheckList';
 import { vehicleAllotmentData } from './vehicleAllotment';
 import { UserAccess } from './userAccess';
+import { OTFSoMapping } from './otfSoMappingUnmapping';
 
 export const data = combineReducers({
     Menu,
@@ -86,4 +87,5 @@ export const data = combineReducers({
     VehicleReceiptChecklist,
     vehicleAllotmentData,
     UserAccess,
+    OTFSoMapping,
 });
