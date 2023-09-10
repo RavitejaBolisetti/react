@@ -24,6 +24,7 @@ import AdvanceFilter from './AdvanceFilter';
 import { AddEditForm } from './AddEditForm';
 import { ViewDetail } from './ViewDetail';
 import { CancellationIssue } from './CancellationIssue';
+import { DRAWER_TITLE_CONSTANT } from './CancellationIssue/Constants';
 
 const mapStateToProps = (state) => {
     const {
@@ -43,8 +44,6 @@ const mapStateToProps = (state) => {
             },
         },
     } = state;
-    //console.log("🚀 ~ file: StockTransferIndentMaster.js:39 ~ mapStateToProps ~ state:", state)
-    
     let returnValue = {
         userId,
         typeData,
@@ -77,7 +76,7 @@ export const StockTransferIndentMasterBase = (props) => {
     const { data } = props;
     const { userId, typeData, parentGroupCode, showGlobalNotification } = props;
     const { indentLocationList, requestedByDealerList } = props;
-    const { fetchIndentList, fetchIndentLocation,fetchIndentDetails, fetchRequestedByList, listShowLoading, saveData } = props;
+    const { fetchIndentList, fetchIndentLocation, fetchIndentDetails, fetchRequestedByList, listShowLoading, saveData } = props;
 
     const [searchForm] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
@@ -86,6 +85,7 @@ export const StockTransferIndentMasterBase = (props) => {
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [isAddNewIndentVisible, setIsAddNewIndentVisible] = useState(false);
     const [isViewIndentVisible, setIsViewIndentVisible] = useState(false);
+    const [cancellationIssueVisible, setCancellationIssueVisible] = useState(false);
     const [selectedOrder, setSelectedOrder] = useState();
     const [filterString, setFilterString] = useState();
     const [toggleButton, settoggleButton] = useState(STOCK_TRANSFER?.RAISED.key);
@@ -101,8 +101,8 @@ export const StockTransferIndentMasterBase = (props) => {
     };
 
     const btnVisiblityVehicleDetails = {
-        canView:false, 
-        canEdit: false, 
+        canView: false,
+        canEdit: false,
         canDelete: false,
     };
 
@@ -275,8 +275,8 @@ export const StockTransferIndentMasterBase = (props) => {
         const onSuccessActionFetchIndLoc = (res) => {
             addIndentDetailsForm.resetFields();
             setTableDataItem([]);
-            setButtonData({ ...defaultBtnVisiblity, cancelBtn:true, saveBtn: true, formBtnActive: true });
-            setButtonDataVehicleDetails({ ...btnVisiblityVehicleDetails, canView:false, canEdit: true, canDelete: true, });
+            setButtonData({ ...defaultBtnVisiblity, cancelBtn: true, saveBtn: true, formBtnActive: true });
+            setButtonDataVehicleDetails({ ...btnVisiblityVehicleDetails, canView: false, canEdit: true, canDelete: true });
             setIsAddNewIndentVisible(true);
         };
         const extraParamData = [
@@ -383,7 +383,7 @@ export const StockTransferIndentMasterBase = (props) => {
         openAccordian,
         setOpenAccordian,
         buttonDataVehicleDetails,
-        buttonData, 
+        buttonData,
         setButtonData,
         indentLocationList,
         requestedByDealerList,
@@ -395,11 +395,11 @@ export const StockTransferIndentMasterBase = (props) => {
     const viewIndentProps = {
         isVisible: isViewIndentVisible,
         titleOverride: 'View Indent Details',
-        formData:selectedOrder,
-        openAccordian, 
+        formData: selectedOrder,
+        openAccordian,
         setOpenAccordian,
         buttonDataVehicleDetails,
-        onCloseAction : onCloseActionViewIndentDetails,
+        onCloseAction: onCloseActionViewIndentDetails,
     };
 
     return (
@@ -413,7 +413,7 @@ export const StockTransferIndentMasterBase = (props) => {
             <AdvancedSearch {...advanceSearchFilterProps} />
             <AddEditForm {...addNewIndentProps} />
             <ViewDetail {...viewIndentProps} />
-            <CancellationIssue isVisible={false} onCloseAction={() => {}} titleOverride={'Issue Details'} setIsFormVisible={() => {}} />
+            <CancellationIssue isVisible={cancellationIssueVisible} onCloseAction={() => {}} titleOverride={DRAWER_TITLE_CONSTANT?.CANCELLATION?.name} setIsFormVisible={() => {}} />
         </>
     );
 };
