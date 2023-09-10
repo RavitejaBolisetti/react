@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import { tableColumnUnMapping } from './tableColumnUnmapping';
 import { connect } from 'react-redux';
 
@@ -71,7 +71,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const UnmappingAndCancellationMain = (props) => {
-    const { userId, dynamicPagination = true, listShowLoading, showGlobalNotification, moduleTitle, otfSomappingData, selectedKey, resetData, MappingUnmapping, saveData, isOtfSoMappingLoading } = props;
+    const { userId, dynamicPagination = true, listShowLoading, showGlobalNotification, otfSomappingData, selectedKey, MappingUnmapping, saveData, isOtfSoMappingLoading } = props;
     const [form] = Form.useForm();
 
     const pageIntialState = {
@@ -98,15 +98,11 @@ const UnmappingAndCancellationMain = (props) => {
         let name = '',
             key = '';
         if (record?.soStatusCode === OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.LIVE_TO_LIVE?.CRD_1) {
-            {
-                name = BUTTON_NAME?.CANCEL?.tableName;
-                key = BUTTON_NAME?.CANCEL?.key;
-            }
+            name = BUTTON_NAME?.CANCEL?.tableName;
+            key = BUTTON_NAME?.CANCEL?.key;
         } else if (record?.soStatusCode === OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.BILLED_TO_BILLED?.CRD_1) {
-            {
-                name = BUTTON_NAME?.UNMAP?.name;
-                key = BUTTON_NAME?.UNMAP?.key;
-            }
+            name = BUTTON_NAME?.UNMAP?.name;
+            key = BUTTON_NAME?.UNMAP?.key;
         } else {
             name = BUTTON_NAME?.UNMAP?.name;
             key = BUTTON_NAME?.UNMAP?.key;

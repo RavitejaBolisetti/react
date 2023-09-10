@@ -38,6 +38,7 @@ export const ViewTimelineMain = (props) => {
         const markers = [];
         modifiedArray.map((data) => {
             markers.push(new maps.Marker({ position: data, map }));
+            return undefined;
         });
         return markers;
     };

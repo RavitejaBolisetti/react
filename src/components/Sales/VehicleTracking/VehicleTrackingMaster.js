@@ -89,10 +89,10 @@ export const VehicleTrackingMain = ({ typeData, isLoading, viewTitle, userId, sh
             <div>In order to "Track Vehicle", search</div>
             <div>OEM invoice number above</div>
         </>
-    );  
+    );
     const onErrorAction = (message) => {
         setSearchCardVisible(false);
-        setFormData([])
+        setFormData([]);
         showGlobalNotification({ notificationType: 'error', notificationTitle: 'Error', message });
     };
 
@@ -104,7 +104,9 @@ export const VehicleTrackingMain = ({ typeData, isLoading, viewTitle, userId, sh
                 ?.map((record) => {
                     record?.vehicleTrackingLocationResponse?.map((locations) => {
                         setModifiedArray((prev) => [...prev, { lat: +locations?.latitude, lng: +locations?.longitude }]);
+                        return undefined;
                     });
+                    return undefined;
                 });
         setSearchCardVisible(true);
     };
