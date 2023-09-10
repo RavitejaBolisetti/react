@@ -80,7 +80,7 @@ const SchemeDetailsMasterBase = (props) => {
     };
 
     useEffect(() => {
-        if (userId && selectedOrderId) {
+        if (!isLoading && userId && selectedOrderId) {
             const extraParams = [
                 {
                     key: 'otfNumber',

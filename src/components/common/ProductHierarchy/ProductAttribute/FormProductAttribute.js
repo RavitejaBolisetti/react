@@ -4,12 +4,12 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { Input, Form, Col, Row, Button, Select, Divider } from 'antd';
+import { Input, Form, Col, Row, Button, Select } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, validateRequiredSelectField, duplicateProductValidator } from 'utils/validation';
-import styles from 'assets/sass/app.module.scss';
 
+import styles from 'assets/sass/app.module.scss';
 function FormProductAttribute(props) {
     const { attributeForm, isVisible, productHierarchyAttributeData, onAttributeFormFinish, formEdit, editForm, skuAttributes } = props;
     const [changeValue, setChangeValue] = useState(null);

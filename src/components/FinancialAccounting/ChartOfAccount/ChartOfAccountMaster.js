@@ -123,14 +123,18 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
         setCompanyCode(val);
         setViewData(null);
         setSelectedTreeKey(null);
+    };
+
+    useEffect(() => {
         const extraParams = [
             {
                 key: 'companyCode',
-                value: val,
+                value: companyCode ? companyCode : ' NO DATA ',
             },
         ];
         fetchChartOfAccountHierarchy({ setIsLoading: listShowLoadingChartOfAccountHierachy, extraParams });
-    };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [companyCode]);
 
     const extraParams = [
         {
@@ -205,7 +209,7 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
         setUpdatedChartOfAccountData(
             chartOfAccountHierarchy?.map((i) => ({
                 ...i,
-                disabled: i?.accountType === COA_ACCOUNT_TYPE?.LEDGER_ACCOUNT?.key,
+                disabled: i?.accountType === COA_ACCOUNT_TYPE?.LEDGER_ACCOUNT?.key || i?.status === false,
             }))
         );
         // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -11,7 +11,7 @@ import { Col, Row } from 'antd';
 
 export const ViewTimelineMain = (props) => {
     const { styles } = props;
-    const { buttonData, setButtonData, handleButtonClick, formData, onCloseAction } = props;
+    const { buttonData, setButtonData, handleButtonClick, formData, onCloseAction, modifiedArray } = props;
 
     const [googleMapKey, setGoogleMapKey] = useState();
     const buttonProps = {
@@ -34,11 +34,19 @@ export const ViewTimelineMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
 
+    const renderMarkers = (map, maps) => {
+        const markers = [];
+        modifiedArray.map((data) => {
+            markers.push(new maps.Marker({ position: data, map }));
+        });
+        return markers;
+    };
+
     return (
         <>
             <Row gutter={20} className={styles.drawerBody}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    {googleMapKey && <GoogleMapReact {...googleMapKey} />}
+                    {googleMapKey && <GoogleMapReact {...googleMapKey} yesIWantToUseGoogleMapApiInternals onGoogleApiLoaded={({ map, maps }) => renderMarkers(map, maps)} />}
                 </Col>
             </Row>
             <DrawerFormButton {...buttonProps} />

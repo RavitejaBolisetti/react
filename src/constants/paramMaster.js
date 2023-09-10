@@ -313,4 +313,12 @@ export const PARAM_MASTER = {
         id: 'INV_DEL_NOT_REQ_TYP',
         title: 'Delivery Note/Invoice Request Status',
     },
+    CDLR_INV_APP_STATUS: {
+        id: 'CDLR_INV_APP_STATUS',
+        title: 'Invoice Status in delivery note/invoice cancellation',
+    },
+    SO_MAP: {
+        id: 'SO_MAP',
+        title: 'OTF So mapping and Unmapping',
+    },
 };
