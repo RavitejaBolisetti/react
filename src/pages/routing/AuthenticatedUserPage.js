@@ -43,7 +43,7 @@ import {
 
 import { TaxChargesPage, TaxChargesCategoryPage, AccountCategoryPage, VehicleModelTaxChargesCategoryPage, DocumentTypeOtherChargesPage, CreditDebitNoteMasterPage, ChartOfAccountPage } from 'pages/FinancialAccounting';
 
-import { OTFMasterPage, VehicleDetailMasterPage, VehiclePriceMasterPage, VehicleReceiptMasterPage, RSMApprovalPage, DeliveryNoteInvoiceCancellationPage, VehiclePurchaseOrderMasterPage, VehicleRecieptChecklistMaster, OtfSoMappingMasterPage, ReceiptMasterPage, VehicleAllotmentMasterPage, DigitalSignatureMasterPage, HoPriceMappingMasterPage, VehicleTrackingPage } from 'pages/Sales';
+import { OTFMasterPage, VehicleDetailMasterPage, VehiclePriceMasterPage, VehicleReceiptMasterPage, RSMApprovalPage, DeliveryNoteInvoiceCancellationPage, VehiclePurchaseOrderMasterPage, VehicleRecieptChecklistMaster, OtfSoMappingMasterPage, ReceiptMasterPage, VehicleAllotmentMasterPage, DigitalSignatureMasterPage, HoPriceMappingMasterPage, VehicleTrackingPage, OtfSoMappingUnmappingMasterPage } from 'pages/Sales';
 
 import { SplashPage } from 'pages/splash';
 
@@ -127,6 +127,7 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_RECEIPTS} element={<ReceiptMasterPage />} exact />
             <Route path={routing.ROUTING_REPORT_OTF_REPORTS} element={<OtfReportsPage />} />
             <Route path={routing.ROUTING_OTF_SO_MAPPING_CONTROL_MASTER} element={<OtfSoMappingMasterPage />} />
+            <Route path={routing.ROUTING_SO_MAPPING_UNMAPPING} element={<OtfSoMappingUnmappingMasterPage />} />
 
             <Route path={routing.ROUTING_FINANCIAL_ACCOUNTING_TAX_CHARGES} element={<TaxChargesPage />} exact />
             <Route path={routing.ROUTING_FINANCIAL_ACCOUNTING_TAX_CHARGES_CATEGORY} element={<TaxChargesCategoryPage />} exact />
