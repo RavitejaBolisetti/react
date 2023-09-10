@@ -40,7 +40,7 @@ import styles from './Header.module.scss';
 const { confirm } = Modal;
 const mapStateToProps = (state) => {
     const {
-        auth: { token, isLoggedIn, userId, passwordStatus },
+        auth: { token, isLoggedIn, userId, refreshToken, passwordStatus },
         data: {
             ConfigurableParameterEditing: { isFilteredListLoaded: isTypeDataLoaded = false, isLoading: isTypeDataLoading },
             UserAccess: { isLoaded: isUserAccessLoaded = false, isLoading: isUserAccessLoading = false, data: userAccessData },
@@ -62,6 +62,7 @@ const mapStateToProps = (state) => {
         token,
         isLoggedIn,
         userId,
+        refreshToken,
         isLoading,
         collapsed,
         isTypeDataLoaded,
@@ -98,7 +99,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const HeaderMain = (props) => {
-    const { isDataLoaded, isLoading, collapsed, setCollapsed, loginUserData, doLogout, fetchData, listShowLoading, showGlobalNotification, userId, listUserAccessShowLoading, updateUserAcess, fetchMenuList } = props;
+    const { isDataLoaded, isLoading, collapsed, setCollapsed, loginUserData, doLogout, fetchData, listShowLoading, showGlobalNotification, userId, refreshToken, listUserAccessShowLoading, updateUserAcess, fetchMenuList } = props;
     const { fetchEditConfigDataList, fetchConfigList, listConfigShowLoading, isTypeDataLoaded, isTypeDataLoading, fetchNotificaionCountData } = props;
     const { notificationCount, resetNotification, listShowMenuLoading } = props;
 
