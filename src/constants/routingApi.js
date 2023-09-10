@@ -275,3 +275,8 @@ export const BASE_URL_MILE_SKILL = BASE_URL + 'dealer/mileskills';
 export const BASE_URL_NOTIFICATION = BASE_URL + 'applications/notifications';
 export const BASE_URL_NOTIFICATION_COUNTS = BASE_URL + 'applications/notifications/counts';
 export const BASE_URL_VEHICLE_INVOICE = BASE_URL_OTF + 'vehicleinvoice';
+
+export const BASE_URL_OTF_SO_MAPPING_MAIN = BASE_URL + 'otf/somapunmap';
+export const BASE_URL_OTF_SO_MAPPING_SWAP = BASE_URL + 'otf/somapunmap/swap';
+export const BASE_URL_SO_MAPPING_SEARCH = BASE_URL + 'otf/somapunmap/search';
+export const BASE_URL_SO_MAPPING_OTF_SEARCH = BASE_URL + 'otf/somapunmap/orders';

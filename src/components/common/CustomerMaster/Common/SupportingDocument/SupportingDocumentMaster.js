@@ -141,7 +141,7 @@ const SupportingDocumentBase = (props) => {
     // };
 
     const deleteFile = (uploadData) => {
-        const data = { customerId: uploadData?.customerId, status: false, docId: uploadData?.docId, documentTypeId: uploadData?.documentType, id: uploadData?.id, documentName: uploadData?.documentName };
+        const data = [{ customerId: uploadData?.customerId, status: false, docId: uploadData?.docId, documentTypeId: uploadData?.documentType, id: uploadData?.id, documentName: uploadData?.documentName }];
         const onSuccess = (res) => {
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'File deleted Successfully' });
             fetchList({ setIsLoading: listShowLoading, userId, extraParams });

@@ -329,4 +329,12 @@ export const PARAM_MASTER = {
         id: 'TAX_CALCLTN_TYPE',
         title: 'Tax Calculation Type',
     },
+    CDLR_INV_APP_STATUS: {
+        id: 'CDLR_INV_APP_STATUS',
+        title: 'Invoice Status in delivery note/invoice cancellation',
+    },
+    SO_MAP: {
+        id: 'SO_MAP',
+        title: 'OTF So mapping and Unmapping',
+    },
 };
