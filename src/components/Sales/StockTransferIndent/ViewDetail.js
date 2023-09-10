@@ -87,10 +87,10 @@ const ViewDetailMain = (props) => {
                         <Descriptions {...viewProps}>
                             <Descriptions.Item label="Indent Number">{checkAndSetDefaultValue(formData?.indentNumber, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Indent Date">{checkAndSetDefaultValue(formData?.indentDate, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Indent Status">{checkAndSetDefaultValue(formData?.pdiDone ? 'Yes' : 'No', isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Indent Status">{checkAndSetDefaultValue(formData?.indentStatus ? 'Yes' : 'No', isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Indent To Location">{checkAndSetDefaultValue(formData?.indentToLocation, isLoading)}</Descriptions.Item>
-                            <Descriptions.Item label="Requested By">{checkAndSetDefaultValue(formData?.mnmInvoiceDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                            <Descriptions.Item label="Remark">{checkAndSetDefaultValue(formData?.mnmInvoiceNo, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Requested By">{checkAndSetDefaultValue(formData?.requestedBy, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Remark">{checkAndSetDefaultValue(formData?.remarks, isLoading)}</Descriptions.Item>
                             </Descriptions>
                     </Card>
                     <Row gutter={24}>

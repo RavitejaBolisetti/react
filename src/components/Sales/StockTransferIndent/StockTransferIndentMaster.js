@@ -63,6 +63,7 @@ const mapDispatchToProps = (dispatch) => ({
 
             listShowLoading: stockTransferIndent.listShowLoading,
             fetchIndentList: stockTransferIndent.fetchList,
+            fetchIndentDetails: stockTransferIndent.fetchDetail,
             saveData: stockTransferIndent.saveData,
             showGlobalNotification,
         },
@@ -73,7 +74,7 @@ const mapDispatchToProps = (dispatch) => ({
 export const OtfMasterBase = (props) => {
     const { userId, typeData, parentGroupCode, showGlobalNotification } = props;
     const { data, indentLocationList, requestedByDealerList } = props;
-    const { fetchIndentList, fetchIndentLocation, fetchRequestedByList, listShowLoading, saveData } = props;
+    const { fetchIndentList, fetchIndentLocation,fetchIndentDetails, fetchRequestedByList, listShowLoading, saveData } = props;
 
     const [searchForm] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
@@ -176,9 +177,23 @@ export const OtfMasterBase = (props) => {
             case ADD_ACTION:
                 break;
             case VIEW_ACTION:
-                setIsViewIndentVisible(true);
-                setSelectedOrder(record);
-                //record && setSelectedOrderId(record?.otfNumber);
+                const onSuccessViewIndent = (res) => {
+                    console.log("🚀 ~ file: StockTransferIndentMaster.js:181 ~ onSuccessViewIndent ~ res:", res)
+                    //addIndentDetailsForm.resetFields();
+                    //setTableDataItem([]);
+                    //setButtonData({ ...defaultBtnVisiblity, cancelBtn:true, saveBtn: true, formBtnActive: true });
+                    setIsViewIndentVisible(true);
+                    setSelectedOrder(res?.data);
+                };
+                const extraParamData = [
+                    {
+                        key: 'indentNumber',
+                        value: 'STR1694237964174',
+                    },
+                ];
+        
+                fetchIndentDetails({ customURL: customURL + '/indent', setIsLoading: listShowLoading, userId, onSuccessAction: onSuccessViewIndent, onErrorAction, extraParams: extraParamData });
+
                 break;
             case CANCEL_ACTION:
                 break;
@@ -371,6 +386,7 @@ export const OtfMasterBase = (props) => {
         formData:selectedOrder,
         openAccordian, 
         setOpenAccordian,
+        onCloseAction : onAddIndentDetailsCloseAction,
     };
    
     return (
