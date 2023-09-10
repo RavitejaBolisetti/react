@@ -8,7 +8,10 @@ import { Collapse, Space, Button, Avatar, Typography, Divider } from 'antd';
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
 import { DATA_TYPE } from 'constants/dataType';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
+import { AiOutlineInfoCircle } from 'react-icons/ai';
+import { addToolTip } from 'utils/customMenuLink';
 import { getCodeValue } from 'utils/getCodeValue';
+import { QUERY_BUTTONS_CONSTANTS } from '../QueryButtons';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
 import styles from 'assets/sass/app.module.scss';
@@ -62,7 +65,29 @@ const VehicleInvoiceCard = (props) => {
                 {formActionType?.viewMode && (
                     <>
                         <div className={styles.detailCardText}>
-                            Status: <span>{checkAndSetDefaultValue(getCodeValue(typeData[PARAM_MASTER.INVC_STATS.id], selectedOrder?.invoiceStatus))}</span>
+                            Status:
+                            <span>
+                                {checkAndSetDefaultValue(getCodeValue(typeData[PARAM_MASTER.INVC_STATS.id], selectedOrder?.invoiceStatus))}
+                                <div className={styles.tooltipAlign}>
+                                    {selectedOrder?.invoiceStatus === QUERY_BUTTONS_CONSTANTS.CANCELLED.key &&
+                                        addToolTip(
+                                            <div>
+                                                <p>
+                                                    Cancelled Date: <span>{checkAndSetDefaultValue(otfData?.cancelDate, isLoading, DATA_TYPE?.DATE?.key ?? 'Na')}</span>
+                                                </p>
+                                                <p>
+                                                    Cancel By: <span>{otfData?.cancelBy ?? 'Na'}</span>
+                                                </p>
+                                                <p>
+                                                    Cancellation Reason: <span>{otfData?.cancelReason ?? 'Na'}</span>
+                                                </p>
+                                            </div>,
+                                            'bottom',
+                                            '#FFFFFF',
+                                            styles.toolTip
+                                        )(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}
+                                </div>
+                            </span>
                         </div>
                         <Divider />
                     </>
@@ -70,10 +95,33 @@ const VehicleInvoiceCard = (props) => {
                 <div className={styles.detailCardText}>
                     IRN Status:
                     <span>
-                        {selectedOrder?.invoiceNumber && (
+                        {selectedOrder?.invoiceNumber && !otfData?.irnStatus ? (
                             <Button style={{ height: '30px' }} onClick={generateIrn}>
                                 Generate
                             </Button>
+                        ) : (
+                            <>
+                                {checkAndSetDefaultValue(otfData?.irnStatus)}
+                                <div className={styles.tooltipAlign}>
+                                    {otfData?.irnStatus &&
+                                        addToolTip(
+                                            <div>
+                                                <p>
+                                                    IRN Date: <span>{checkAndSetDefaultValue(otfData?.irnDate, isLoading, DATA_TYPE?.DATE?.key ?? 'Na')}</span>
+                                                </p>
+                                                <p>
+                                                    IRN No.: <span>{otfData?.irnNumber ?? 'Na'}</span>
+                                                </p>
+                                                <p>
+                                                    Description: <span>{otfData?.irnDesc ?? 'Na'}</span>
+                                                </p>
+                                            </div>,
+                                            'bottom',
+                                            '#FFFFFF',
+                                            styles.toolTip
+                                        )(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}
+                                </div>
+                            </>
                         )}
                     </span>
                 </div>

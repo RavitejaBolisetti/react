@@ -312,6 +312,15 @@ export const VehicleInvoiceMasterBase = (props) => {
             setShowDataLoading(true);
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
+            const extraParam = [
+                {
+                    key: 'otfNumber',
+                    title: 'otfNumber',
+                    value: selectedOtfNumber ?? otfNumber,
+                    name: 'OTF Number',
+                },
+            ];
+            fetchOTFDetail({ customURL, setIsLoading: listShowLoading, userId, extraParams: extraParam, onErrorAction });
             // setButtonData({ ...buttonData, formBtnActive: false });
             // setIsFormVisible(false);
         };
@@ -320,7 +329,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         };
         const requestData = {
             data: data,
-            method: 'put',
+            method: 'post',
             setIsLoading: listShowLoading,
             userId,
             onError,
@@ -516,7 +525,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         };
         const requestData = {
             data: data,
-            method: 'post',
+            method: 'put',
             setIsLoading: listShowLoading,
             userId,
             onError,
