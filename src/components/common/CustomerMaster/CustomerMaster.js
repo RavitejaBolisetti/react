@@ -32,6 +32,7 @@ import { CustomerNameChangeHistory } from 'components/common/CustomerMaster/Indi
 import DataTable from 'utils/dataTable/DataTable';
 import { CustomerMainConatiner } from './CustomerMainConatiner';
 import styles from 'assets/sass/app.module.scss';
+import { UnsavedDataPopup } from './Common/UnsavedDataPopup';
 
 const mapStateToProps = (state) => {
     const {
@@ -115,6 +116,8 @@ const CustomerMasterMain = (props) => {
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [ChangeHistoryVisible, setChangeHistoryVisible] = useState(false);
     const [showNameChangeHistory, setShowNameChangeHistory] = useState(false);
+    const [isUnsavedDataPopup, setIsUnsavedDataPopup] = useState(false);
+    const [nextCurentSection, setNextCurrentSection] = useState('');
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false, changeHistory: true };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -123,6 +126,15 @@ const CustomerMasterMain = (props) => {
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
     const [page, setPage] = useState({ pageSize: 10, current: 1 });
     const dynamicPagination = true;
+
+
+    useEffect(() => {
+        if (filterString) {
+            setPage({ ...page, current: 1 });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [filterString]);
+
 
     const defaultExtraParam = useMemo(() => {
         return [
@@ -304,11 +316,17 @@ const CustomerMasterMain = (props) => {
         setIsFormVisible(true);
     };
 
-    const onFinish = (values, e) => {};
+    const onFinish = (values, e) => { };
 
     const onFinishFailed = (errorInfo) => {
         console.error(errorInfo);
         // form.validateFields().then((values) => {});
+    };
+
+    const handleOk = () => {
+        setIsUnsavedDataPopup(false);
+        setCurrentSection(nextCurentSection);
+        setButtonData({ ...buttonData, formBtnActive: false });
     };
 
     const tableProps = {
@@ -381,7 +399,6 @@ const CustomerMasterMain = (props) => {
     };
 
     const downloadFileFromButton = () => {
-        console.log(changeHistoryData?.customerNameChangeResponses[0].supportingDocuments[0].documentId, 'simran');
         const extraParams = [
             {
                 key: 'docId',
@@ -479,9 +496,21 @@ const CustomerMasterMain = (props) => {
         handleChangeHistory,
         handleResetFilter,
         setShowNameChangeHistory,
+        setIsUnsavedDataPopup,
+        nextCurentSection,
+        setNextCurrentSection,
     };
 
     const showAddButton = true;
+    const unsavedDataModalProps = {
+        isVisible: isUnsavedDataPopup,
+        titleOverride: 'Confirm',
+        information: 'You have modified this work section. You can discard your changes, or cancel to continue editing.',
+        handleCloseModal: () => setIsUnsavedDataPopup(false),
+        handleOk,
+        nextCurentSection,
+        setNextCurrentSection,
+    };
 
     return (
         <>
@@ -581,6 +610,7 @@ const CustomerMasterMain = (props) => {
                 </Col>
             </Row>
             <CustomerMainConatiner {...containerProps} />
+            <UnsavedDataPopup {...unsavedDataModalProps} />
             <CustomerChangeHistory {...changeHistoryProps} />
             <CustomerNameChangeHistory {...nameChangeHistoryProps} />
         </>

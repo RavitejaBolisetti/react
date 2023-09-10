@@ -4,31 +4,30 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect, useState, useRef } from 'react';
-import OTPInput from 'otp-input-react';
-import { useNavigate, Link } from 'react-router-dom';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-
 import { Form, Row, Col, Button, Input, Checkbox } from 'antd';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { useNavigate, Link } from 'react-router-dom';
+import OTPInput from 'otp-input-react';
 
+import { BiUser } from 'react-icons/bi';
+import { FiLock } from 'react-icons/fi';
 import { TbRefresh } from 'react-icons/tb';
 import { RxCrossCircled } from 'react-icons/rx';
 import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai';
+
 import { showGlobalNotification, hideGlobalNotification } from 'store/actions/notification';
-
-import { BiUser } from 'react-icons/bi';
-
-import { ROUTING_LOGIN } from 'constants/routing';
-import { validateRequiredInputField } from 'utils/validation';
-import { preparePlaceholderText } from 'utils/preparePlaceholder';
+import { forgotPasswordActions } from 'store/actions/data/forgotPassword';
 
 import * as IMAGES from 'assets';
 import Footer from '../Footer';
-import { forgotPasswordActions } from 'store/actions/data/forgotPassword';
-import { FiLock } from 'react-icons/fi';
+
+import { ROUTING_LOGIN } from 'constants/routing';
+import { validateRequiredInputField } from 'utils/validation';
 import { PasswordStrengthMeter } from 'utils/PasswordStrengthMeter';
 
 import styles from '../Auth.module.scss';
+
 const mapStateToProps = (state) => {
     const {
         data: {

@@ -8,7 +8,6 @@ import { Col, Form, Row, Select, Input } from 'antd';
 import { searchValidator, validateRequiredSelectField } from 'utils/validation';
 import { withModal } from 'components/withModal';
 import { ModalButtons } from 'components/common/Button';
-import styles from 'assets/sass/app.module.scss';
 
 const { Option } = Select;
 

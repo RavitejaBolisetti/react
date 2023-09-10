@@ -82,8 +82,9 @@ const mapDispatchToProps = (dispatch) => ({
 const VehiclePurchaseOrderDetailMasterBase = (props) => {
     const { typeData, fetchProductList, productHierarchyList, fetchDealerParentsLovList, viewVehiclePODetails, fetchDealerLocation, selectedRecord, setSelectedRecord, setIsFormVisible, showDataLoading } = props;
     const { userId, formActionType, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, saveData, isLoading } = props;
-    const { form, selectedRecordId, salesConsultantLov, NEXT_ACTION, handleButtonClick, fetchListView, extraParamsAfterSave, changeView } = props;
+    const { form, selectedRecordId, salesConsultantLov, NEXT_ACTION, handleButtonClick, dealerLocationList, fetchListView, extraParamsAfterSave, changeView } = props;
     const [activeKey, setactiveKey] = useState([1]);
+    const [dealerLocation, setDealerLocation] = useState();
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
@@ -148,6 +149,7 @@ const VehiclePurchaseOrderDetailMasterBase = (props) => {
             ];
             fetchDealerLocation({ setIsLoading: listShowLoading, extraParams, onErrorAction });
         }
+        setDealerLocation(dealerLocationList);
     };
 
     const onFinish = (values) => {
@@ -189,7 +191,7 @@ const VehiclePurchaseOrderDetailMasterBase = (props) => {
         saveData(requestData);
     };
 
-    const onFinishFailed = () => {};
+    const onFinishFailed = () => { };
 
     const formProps = {
         ...props,
@@ -212,6 +214,8 @@ const VehiclePurchaseOrderDetailMasterBase = (props) => {
         selectedRecord,
         setSelectedRecord,
         showDataLoading,
+        setDealerLocation,
+        dealerLocation,
         // viewVehiclePODetails,
     };
 

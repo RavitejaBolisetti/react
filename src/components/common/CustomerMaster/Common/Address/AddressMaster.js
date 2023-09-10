@@ -4,17 +4,14 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState, useReducer, useEffect } from 'react';
+import { Form, Row, Col, Typography, Button, Card, Divider } from 'antd';
 import { connect } from 'react-redux';
-import { Form, Row, Col, Typography, Button, Empty, Card, Divider } from 'antd';
+import { bindActionCreators } from 'redux';
 import { PlusOutlined } from '@ant-design/icons';
 
 import { geoPinCodeDataActions } from 'store/actions/data/geo/pincodes';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { CUSTOMER_TYPE } from 'constants/CustomerType';
-
-import styles from 'assets/sass/app.module.scss';
-
-import { bindActionCreators } from 'redux';
 import { showGlobalNotification } from 'store/actions/notification';
 import { addressIndividualDataActions } from 'store/actions/data/customerMaster/individual/address/individualAddress';
 import { addressCorporateDataActions } from 'store/actions/data/customerMaster/corporate/address/individualAddress';
@@ -24,8 +21,10 @@ import { CustomerFormButton } from '../../CustomerFormButton';
 import ViewAddressList from './ViewAddressList';
 import { CardSkeleton } from 'components/common/Skeleton';
 import { LANGUAGE_EN } from 'language/en';
+
 import { NoDataFound } from 'utils/noDataFound';
 
+import styles from 'assets/sass/app.module.scss';
 const { Text } = Typography;
 const mapStateToProps = (state) => {
     const {

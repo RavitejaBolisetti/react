@@ -72,7 +72,7 @@ const SupportingDocumentBase = (props) => {
     const { isViewDataLoaded, uploadDocumentFile, accessToken, token, onFinishFailed, form } = props;
 
     const { userId, showGlobalNotification, section, listShowLoading, typeData, saveData, fetchList, supportingData, fetchViewDocument, setIsFormVisible } = props;
-    const { buttonData, setButtonData, formActionType, handleFormValueChange } = props;
+    const { buttonData, setButtonData, formActionType } = props;
     const { selectedCustomerId, viewDocument, viewListShowLoading, downloadFile } = props;
 
     const [uploadedFile, setUploadedFile] = useState();
@@ -124,21 +124,18 @@ const SupportingDocumentBase = (props) => {
         payload.splice(index, 1);
     };
 
-    // const downloadFileFromButton = (uploadData) => {
-    //     const onSuccessAction = (res) => {
-    //         showGlobalNotification({ notificationType: 'success', title: 'Success', message: res.responseMessage });
-    //     };
-    //     const extraParams = [
-    //         {
-    //             key: 'docId',
-    //             title: 'docId',
-    //             value: uploadData?.docId,
-    //             name: 'docId',
-    //         },
-    //     ];
-    //     const supportingDocument = uploadData?.documentName;
-    //     downloadFile({ setIsLoading: viewListShowLoading, userId, extraParams, onSuccessAction });
-    // };
+    const handleFormValueChange = () => {
+        setButtonData({ ...buttonData, formBtnActive: true });
+        // setMandatoryFields(true);
+    };
+    const handleClearChange = () => {
+        if (!form.getFieldValue('documentTypeId') && !form.getFieldValue('documentName')) {
+            setMandatoryFields(false);
+            form.resetFields();
+        } else {
+            setMandatoryFields(true);
+        }
+    };
 
     const deleteFile = (uploadData) => {
         const data = [{ customerId: uploadData?.customerId, status: false, docId: uploadData?.docId, documentTypeId: uploadData?.documentType, id: uploadData?.id, documentName: uploadData?.documentName }];
@@ -193,12 +190,16 @@ const SupportingDocumentBase = (props) => {
 
             saveData(requestData);
         } else {
-            showGlobalNotification({ notificationType: 'success', title, message });
-            setFileList([]);
-            setEmptyList(false);
-            setUploadedFile();
-            form.resetFields();
-            setIsFormVisible(false);
+            if (mandatoryFields) {
+                showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Please upload at least one file to continue' });
+            } else {
+                showGlobalNotification({ notificationType: 'success', title, message });
+                setFileList([]);
+                setEmptyList(false);
+                setUploadedFile();
+                form.resetFields();
+                setIsFormVisible(false);
+            }
         }
     };
 
@@ -260,6 +261,7 @@ const SupportingDocumentBase = (props) => {
         mandatoryFields,
         setMandatoryFields,
         supportingDocs: true,
+        handleClearChange,
     };
 
     const myProps = {

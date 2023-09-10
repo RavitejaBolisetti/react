@@ -36,7 +36,7 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
 
         tblStatusColumn({ styles, width: '10%' }),
 
-        tblActionColumn({ handleButtonClick, styles })
+        tblActionColumn({ handleButtonClick, styles, canEdit: false })
     );
 
     return tableColumn;

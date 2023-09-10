@@ -61,34 +61,32 @@ export default function AppliedAdvanceFilter(props) {
                             )}
                         </Row>
                     </Col>
-                    {(showChangeHistoryButton || showAddButton) && (
-                        <Col className={styles.buttonsGroupRight} xs={24} sm={24} md={8} lg={8} xl={8}>
-                            {showChangeHistoryButton && (
-                                <>
-                                    <Button icon={<FaHistory />} className={styles.verticallyCentered} onClick={showChangeHistoryList} type="primary">
-                                        Change History
-                                    </Button>
-                                </>
-                            )}
-
-                            {advanceFilter && filterString?.advanceFilter && downloadReport && (
-                                <Button data-testid="downloadBtn" icon={<BsDownload />} onClick={handleDownloadReport} danger>
-                                    Download
+                    <Col className={styles.buttonsGroupRight} xs={24} sm={24} md={8} lg={8} xl={8}>
+                        {showChangeHistoryButton && (
+                            <>
+                                <Button icon={<FaHistory />} className={styles.verticallyCentered} onClick={showChangeHistoryList} type="primary">
+                                    Change History
                                 </Button>
-                            )}
+                            </>
+                        )}
 
-                            {tableData?.length > 0 && (
-                                <>
-                                    <Button icon={<TfiReload />} onClick={handleReferesh} data-testid="refreshBtn" danger />
-                                    {showAddButton && (
-                                        <Button icon={<PlusOutlined />} type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                                            Add
-                                        </Button>
-                                    )}
-                                </>
-                            )}
-                        </Col>
-                    )}
+                        {advanceFilter && filterString?.advanceFilter && downloadReport && (
+                            <Button data-testid="downloadBtn" icon={<BsDownload />} onClick={handleDownloadReport} danger>
+                                Download
+                            </Button>
+                        )}
+
+                        {tableData?.length > 0 && (
+                            <>
+                                <Button icon={<TfiReload />} onClick={handleReferesh} data-testid="refreshBtn" danger />
+                                {showAddButton && (
+                                    <Button icon={<PlusOutlined />} type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
+                                        Add
+                                    </Button>
+                                )}
+                            </>
+                        )}
+                    </Col>
                 </Row>
                 {advanceFilter && filterString?.advanceFilter && (
                     <Row gutter={20}>
