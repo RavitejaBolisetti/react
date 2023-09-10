@@ -41,7 +41,7 @@ const mapStateToProps = (state) => {
         userId,
         isDataAttributeLoaded,
         searchLoading,
-        tokenValidationData,
+        tokenValidationData: tokenValidationData?.userSearchResponse?.userDetails?.[0],
         authTypeDropdownData,
     };
     return returnValue;
@@ -67,7 +67,7 @@ const mapDispatchToProps = (dispatch) => ({
 const AuthorityFormMin = (props) => {
     const { isMainForm, handleFormValueChange, tokenValidationData, recordId = '', viewMode, userId, onFinish, form, isEditing, isBtnDisabled, listShowLoading, searchList, documentTypesList } = props;
     const { setselectedValueOnUpdate, searchLoading, authTypeDropdownData, errorMessage, setErrorMessage, formType, setFormType, resetData, record } = props;
-    const disableAddBtn = { disabled: isBtnDisabled || !tokenValidationData?.employeeName };
+    const disableAddBtn = { disabled: isBtnDisabled || !tokenValidationData?.manufacturerUserName };
     const onFinishFailed = (err) => {
         console.error(err);
     };
@@ -78,13 +78,18 @@ const AuthorityFormMin = (props) => {
 
     const onSearchHandle = (recordId) => (data) => {
         setFormType(isMainForm);
-
         const extraParams = [
             {
-                key: 'tokenNumber',
-                title: 'tokenNumber',
+                key: 'userType',
+                title: 'userType',
+                value: 'MNM',
+                name: 'userType',
+            },
+            {
+                key: 'employeeCode',
+                title: 'employeeCode',
                 value: data,
-                name: 'tokenNumber',
+                name: 'employeeCode',
             },
         ];
         data && searchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
@@ -127,13 +132,13 @@ const AuthorityFormMin = (props) => {
             </Row>
             {!viewMode && formType === !!isMainForm && (
                 <Row gutter={20}>
-                    {tokenValidationData?.employeeName && (
+                    {tokenValidationData?.manufacturerUserName && (
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.marB20}>
-                            <Text strong>Employee Name : {tokenValidationData?.employeeName} </Text>
+                            <Text strong>Employee Name : {tokenValidationData?.manufacturerUserName} </Text>
                         </Col>
                     )}
 
-                    {(record?.effectiveTo || tokenValidationData?.employeeName) && (
+                    {(record?.effectiveTo || tokenValidationData?.manufacturerUserName) && (
                         <>
                             <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                                 <Form.Item label="Effective From" name="effectiveFrom" rules={[validateRequiredSelectField('Date Required')]} initialValue={convertDateToCalender(record?.effectiveFrom)}>

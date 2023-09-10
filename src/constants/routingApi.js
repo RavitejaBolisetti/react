@@ -83,7 +83,8 @@ export const BASE_URL_MANUFACTURER_ADMIN_HIERARCHY_CHANGE_HISTORY = BASE_URL + '
 export const BASE_URL_MANUFACTURER_ADMIN_AUTHORITY_CHANGE_HISTORY = BASE_URL + 'manufacturer/admin/authority/changehistory';
 
 export const BASE_URL_MANUFACTURER_ADMIN_AUTHORITY_UPLOAD = BASE_URL + 'manufacturer/admin/authority';
-export const BASE_URL_MANUFACTURER_ADMIN_HIERARCHY_SEARCH = BASE_URL + 'users/manufacturer';
+// export const BASE_URL_MANUFACTURER_ADMIN_HIERARCHY_SEARCH = BASE_URL + 'users/manufacturer';
+export const BASE_URL_MANUFACTURER_ADMIN_HIERARCHY_SEARCH = BASE_URL + 'users/search';
 export const BASE_URL_MANUFACTURER_AUTHORITY_TYPE_DROPDOWN = BASE_URL + 'configurableparametertypes';
 
 export const BASE_URL_DEALER_HIERARCHY = BASE_URL + 'dealerhierarchy';
