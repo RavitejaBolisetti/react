@@ -40,12 +40,15 @@ const mapStateToProps = (state) => {
             VehicleInvoiceGeneration: {
                 VehicleInvoiceSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString },
                 VehicleIrnGeneration: { isLoaded: isIrnDataLoaded = false, isLoading: isIrnDataLoading, data: irnData = [] },
+                VehicleInvoiceDetail: { isLoaded: isVehicleInvoiceDataLoaded = false, isLoading: isVehicleInvoiceDataLoading, data: vehicleInvoiceData = [] },
+                VehicleDetails: { isLoaded: isVehicleDataLoaded = false, isLoading: isVehicleDataLoading, data: vehicleDetail = [] },
             },
             OTF: {
                 OtfSearchList: { isDetailLoaded: isDataLoaded, detailData: otfData = [] },
             },
         },
     } = state;
+    console.log('🚀 ~ file: VehicleInvoiceMaster.js:51 ~ mapStateToProps ~ state:', state);
     const moduleTitle = 'Invoice Generation';
     let returnValue = {
         userId,
@@ -61,7 +64,13 @@ const mapStateToProps = (state) => {
         filterString,
         isIrnDataLoaded,
         isIrnDataLoading,
+        isVehicleInvoiceDataLoaded,
+        isVehicleInvoiceDataLoading,
+        isVehicleDataLoaded,
+        isVehicleDataLoading,
         irnData,
+        vehicleInvoiceData,
+        vehicleDetail,
     };
     return returnValue;
 };
@@ -91,7 +100,9 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const VehicleInvoiceMasterBase = (props) => {
     const { data, receiptDetailData, userId, isIrnDataLoaded, listIrnShowLoading, isIrnDataLoading, irnGeneration, irnData, fetchList, fetchOTFDetail, fetchVehicleDetail, fetchVehicleInvoiceDetail, listShowLoading, showGlobalNotification } = props;
-    const { cancelInvoice } = props;
+    const { cancelInvoice, vehicleInvoiceData, vehicleDetail } = props;
+    // console.log('🚀 ~ file: VehicleInvoiceMaster.js:103 ~ VehicleInvoiceMasterBase ~ vehicleDetail:', vehicleDetail);
+    // console.log('🚀 ~ file: VehicleInvoiceMaster.js:103 ~ VehicleInvoiceMasterBase ~ vehicleInvoiceData:', vehicleInvoiceData);
     const { typeData, receiptType, partySegmentType, paymentModeType, documentType, moduleTitle, totalRecords } = props;
     const { filterString, setFilterString, invoiceStatusList, otfData } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
