@@ -27,8 +27,13 @@ describe('OTF finance view Details render', () => {
         fireEvent.click(taxDetails);
         expect(taxDetails).toBeTruthy();
 
-        const charges = screen.getByText('Charges');
+        const charges = screen.getByText('Optional Services');
         fireEvent.click(charges);
         expect(charges).toBeTruthy();
+
+        const plusBtn = screen.getAllByRole('img', { name: /plus/i });
+        fireEvent.click(plusBtn[0]);
+        fireEvent.click(plusBtn[1]);
+        fireEvent.click(plusBtn[2]);
     });
 });

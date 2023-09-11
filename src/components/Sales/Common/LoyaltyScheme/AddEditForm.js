@@ -10,6 +10,7 @@ import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/prepareP
 import { validateRequiredInputField, validateRequiredSelectField, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
 import { CustomerListMaster } from 'components/utils/CustomerListModal';
 import { prepareCaption } from 'utils/prepareCaption';
+import { PARAM_MASTER } from 'constants/paramMaster';
 
 import styles from 'assets/sass/app.module.scss';
 const { TextArea } = Input;
@@ -52,7 +53,7 @@ const AddEditFormMain = (props) => {
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item label="Make" name="make" data-testid="make" rules={[validateRequiredSelectField('make')]}>
-                        <Select {...disabledProps} placeholder="Select" loading={isMakeLoading} allowClear fieldNames={{ label: 'value', value: 'key' }} options={makeData} onChange={(value, selectobj) => handleFilterChange('make', value, selectobj)} />
+                        <Select {...disabledProps} placeholder="Select" allowClear fieldNames={{ label: 'value', value: 'key' }} options={typeData[PARAM_MASTER?.MAKE_NAME?.id]} />
                     </Form.Item>
                 </Col>
 

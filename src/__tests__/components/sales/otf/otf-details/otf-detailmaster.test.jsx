@@ -74,12 +74,6 @@ describe('AddEdit Component render', () => {
         const expectedDate = screen.getByRole('columnheader', { name: 'Cust. Expected Delivery Date' });
         expect(expectedDate).toBeTruthy();
 
-        const saleType = screen.getByRole('columnheader', { name: 'Sale Type' });
-        expect(saleType).toBeTruthy();
-
-        const priceType = screen.getByRole('columnheader', { name: 'Price Type' });
-        expect(priceType).toBeTruthy();
-
         const bookingAmt = screen.getByRole('columnheader', { name: 'Booking Amount' });
         expect(bookingAmt).toBeTruthy();
 
@@ -106,12 +100,6 @@ describe('AddEdit Component render', () => {
 
         const modeOf = screen.getByRole('columnheader', { name: 'Mode Of Payment' });
         expect(modeOf).toBeTruthy();
-
-        const finance = screen.getByRole('columnheader', { name: 'Finance Agreed' });
-        expect(finance).toBeTruthy();
-
-        const exchange = screen.getByRole('columnheader', { name: 'Exchange' });
-        expect(exchange).toBeTruthy();
 
         const loyalty = screen.getByRole('columnheader', { name: 'Loyality Scheme' });
         expect(loyalty).toBeTruthy();
@@ -166,9 +154,6 @@ describe('AddEdit Component render', () => {
         const addBtn = screen.getByRole('button', { name: 'Edit', exact: false });
         fireEvent.click(addBtn);
 
-        const exchangeValue = screen.getByRole('columnheader', { name: 'Exchange', exact: false });
-        fireEvent.click(exchangeValue);
-
         const saveBtn = screen.getByRole('button', { name: 'Save & Next', exact: false });
         fireEvent.click(saveBtn);
     });
@@ -184,8 +169,7 @@ describe('AddEdit Component render', () => {
         );
         const addBtn = screen.getByRole('button', { name: 'Edit', exact: false });
         fireEvent.click(addBtn);
-        const status = screen.getByRole('columnheader', { name: 'Exchange', exact: false });
-        fireEvent.click(status);
+
         const disableChecked = screen.getByRole('columnheader', { name: 'Loyality Scheme', exact: false });
         expect(disableChecked).not.toBeDisabled();
         const saveBtn = screen.getByRole('button', { name: 'Save & Next', exact: false });

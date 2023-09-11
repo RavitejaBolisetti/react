@@ -14,7 +14,8 @@ import { ReceiptMaster } from './Receipts';
 import { HoPriceMappingMaster } from './HoPriceMappingDealer';
 import { DigitalSignatureMaster } from './DigitalSignatureMapping';
 import { VehicleInvoiceMaster } from './VehicleInvoiceGeneration';
+import { VehicleAllotmentPriorityMaster } from './VehicleAllotmentPriorityMaster';
 import { VehicleTrackingMaster } from './VehicleTracking';
 import { OtfListMaster as OtfSoMappingUnmappingMaster } from './OtfSoMappingUnmapping';
 
-export { OtfMaster, VehicleDetailMaster, VehicleReceiptMaster, VehiclePurchaseOrderMaster, VehicleRecieptChecklistMaster, OtfSoMappingMaster, ReceiptMaster, VehicleInvoiceMaster, HoPriceMappingMaster, DigitalSignatureMaster, VehicleTrackingMaster, OtfSoMappingUnmappingMaster };
+export { OtfMaster, VehicleDetailMaster, VehicleReceiptMaster, VehiclePurchaseOrderMaster, VehicleRecieptChecklistMaster, OtfSoMappingMaster, ReceiptMaster, HoPriceMappingMaster, DigitalSignatureMaster, VehicleInvoiceMaster, VehicleAllotmentPriorityMaster, VehicleTrackingMaster, OtfSoMappingUnmappingMaster };

@@ -21,7 +21,6 @@ import { vehicleModelDetailsDataActions } from 'store/actions/data/vehicle/model
 import { vehicleVariantDetailsDataActions } from 'store/actions/data/vehicle/variantDetails';
 import { exchangeVehicleAlertDataAction } from 'store/actions/data/otf/exchangeVehicleAlert';
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
-
 import { showGlobalNotification } from 'store/actions/notification';
 
 import { BASE_URL_CUSTOMER_MASTER_VEHICLE_LIST as customURL } from 'constants/routingApi';
@@ -142,7 +141,6 @@ const mapDispatchToProps = (dispatch) => ({
 const ExchangeVehiclesBase = (props) => {
     const { exchangeData, isLoading, fetchList, userId, listShowLoading, showGlobalNotification, section, fetchProductLovCode, ProductLovCodeLoading, VehicleLovCodeData } = props;
     const { typeData, selectedOrder, fetchListVehicleExchangeAlert, listShowLoadingVehicleExchangeAlert, exchangeVehicleAlertData, resetVehicleExchangeAlert } = props;
-
     const { fetchMakeLovList, listMakeShowLoading, fetchModelLovList, listModelShowLoading, fetchVariantLovList, listVariantShowLoading } = props;
     const { isMakeLoading, makeData, isModelDataLoaded, isModelLoading, modelData, isVariantDataLoaded, isVariantLoading, variantData, saveData } = props;
     const { financeLovData, isFinanceLovLoading, fetchFinanceLovList, listFinanceLovShowLoading } = props;

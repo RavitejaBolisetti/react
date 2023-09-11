@@ -26,6 +26,12 @@ describe('Add Edit Form Component', () => {
         customRender(<AddEditForm />);
     });
 
+    it('view details button should work in modal', () => {
+        customRender(<AddEditForm  partNameSearchVisible={true} />);
+        const viewDetails=screen.getByRole('button', { name: 'View Details' });
+        fireEvent.click(viewDetails);
+    });
+
     it('add button should work if form submitted successfully', async () => {
         const addButtonDisabled = { 
             partDetailsResponses: true
@@ -35,7 +41,7 @@ describe('Add Edit Form Component', () => {
         const setAddOnItemInfo=jest.fn().mockReturnValue(searchData);
 
         render(<FormWrapper isPresent={jest.fn().mockReturnValue(false)} setsearchData={jest.fn()} setaddButtonDisabled={jest.fn()} setAddOnItemInfo={setAddOnItemInfo} showGlobalNotification={jest.fn()} addOnItemInfo={searchData} onFinishFailed={jest.fn()} searchData={searchData} addButtonDisabled={addButtonDisabled} onSearchPart={jest.fn()} handlePartSearch={jest.fn()} handleOnSearch={jest.fn()} handleAccesoriesForm={jest.fn()} isBtnDisabled={false} />);
-        const partNumber=screen.getByRole('textbox', { name: 'Part Number' });
+        const partNumber=screen.getByRole('textbox', { name: 'Part Name' });
         fireEvent.change(partNumber, { target: { value: 'HSN9605' }});
         const searchBtn=screen.getByRole('img', { name: 'search' });
         fireEvent.click(searchBtn);
@@ -51,7 +57,7 @@ describe('Add Edit Form Component', () => {
         const searchData= {partNumber:"HSN9605",type:"Suspension",sellingPrice:"900",mrp:"100000",quantity:"2",partDescription:"Suspension"};
 
         render(<FormWrapper isPresent={jest.fn().mockReturnValue(true)} showGlobalNotification={jest.fn()} addOnItemInfo={searchData} onFinishFailed={jest.fn()} searchData={searchData} addButtonDisabled={addButtonDisabled} onSearchPart={jest.fn()} handlePartSearch={jest.fn()} handleOnSearch={jest.fn()} handleAccesoriesForm={jest.fn()} isBtnDisabled={false} />);
-        const partNumber=screen.getByRole('textbox', { name: 'Part Number' });
+        const partNumber=screen.getByRole('textbox', { name: 'Part Name' });
         fireEvent.change(partNumber, { target: { value: 'HSN9605' }});
         const searchBtn=screen.getByRole('img', { name: 'search' });
         fireEvent.click(searchBtn);
@@ -69,7 +75,7 @@ describe('Add Edit Form Component', () => {
         const searchData= {};
 
         render(<FormWrapper isPresent={jest.fn()} showGlobalNotification={jest.fn()} addOnItemInfo={searchData} onFinishFailed={jest.fn()} searchData={searchData} addButtonDisabled={addButtonDisabled} onSearchPart={jest.fn()} handlePartSearch={jest.fn()} handleOnSearch={jest.fn()} handleAccesoriesForm={jest.fn()} isBtnDisabled={false} />);
-        const partNumber=screen.getByRole('textbox', { name: 'Part Number' });
+        const partNumber=screen.getByRole('textbox', { name: 'Part Name' });
         fireEvent.change(partNumber, { target: { value: 'HSN9605' }});
         const searchBtn=screen.getByRole('img', { name: 'search' });
         fireEvent.click(searchBtn);
@@ -87,7 +93,7 @@ describe('Add Edit Form Component', () => {
         const searchData= {partNumber:"HSN9605"};
 
         render(<FormWrapper isPresent={jest.fn().mockReturnValue(false)} showGlobalNotification={jest.fn()} addOnItemInfo={searchData} onFinishFailed={jest.fn()} searchData={searchData} addButtonDisabled={addButtonDisabled} onSearchPart={jest.fn()} handlePartSearch={jest.fn()} handleOnSearch={jest.fn()} handleAccesoriesForm={jest.fn()} isBtnDisabled={false} />);
-        const partNumber=screen.getByRole('textbox', { name: 'Part Number' });
+        const partNumber=screen.getByRole('textbox', { name: 'Part Name' });
         fireEvent.change(partNumber, { target: { value: 'HSN9605' }});
         const searchBtn=screen.getByRole('img', { name: 'search' });
         fireEvent.click(searchBtn);

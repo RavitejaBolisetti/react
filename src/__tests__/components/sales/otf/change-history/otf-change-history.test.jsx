@@ -6,10 +6,12 @@
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
 import  { ChangeHistory }  from "@components/Sales/OTF/ChangeHistory/otfChangeHistory";
-import { screen,fireEvent } from '@testing-library/react'
+import { screen,fireEvent } from '@testing-library/react';
+
 afterEach(() => {
     jest.restoreAllMocks();
-  }); 
+}); 
+
 describe('OTF otfChangeHistory component render', () => {
     const props = {
         fetchOTFChangeHistory:jest.fn(),
@@ -17,7 +19,7 @@ describe('OTF otfChangeHistory component render', () => {
         listShowChangeHistoryLoading:jest.fn(),
         isChangeHistoryLoading:false,
         isChangeHistoryLoaded:true,
-        selectedOrderId: "OTF1690452895135",
+        selectedOrderId: "123",
         isVisible:true,
         isChangeHistoryContainer:false,
         handleTableChange:jest.fn(),
@@ -27,9 +29,6 @@ describe('OTF otfChangeHistory component render', () => {
         customRender(<ChangeHistory {...props} />)
         const closeBtn = screen.getAllByRole("button", {name: 'Close', exact: false});
         fireEvent.click(closeBtn[0]);
-
-        const closeImg = screen.getByRole("img", {name: 'close', exact: false});
-        fireEvent.click(closeImg);
     });
 
 });

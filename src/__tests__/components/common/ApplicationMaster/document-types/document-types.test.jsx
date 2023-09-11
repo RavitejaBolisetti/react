@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, render, screen, act } from '@testing-library/react';
+import { fireEvent, render, screen, act, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
 import DocumentTypes from 'components/common/ApplicationMaster/documentTypes/DocumentTypes';
@@ -22,29 +22,21 @@ describe('Document Types Component', () => {
 
     it('form fields should work', async () => {
         const finalFormdata1 = { documentType: [] };
-        const setFinalFormdata = jest.fn();
-        jest.spyOn(React, 'useState').mockReturnValue([null, setFinalFormdata]);
+        const setFinalFormdata=jest.fn();
+
         render(<DocumentTypes finalFormdata={finalFormdata1} setFinalFormdata={setFinalFormdata} isBtnDisabled={false} setCanFormSave={jest.fn()} onDocumentFormFinish={jest.fn()} onFinishFailed={jest.fn()} onFinish={jest.fn()} />);
 
         const documentCode = screen.getByRole('textbox', { name: 'Code', exact: false });
-
         fireEvent.change(documentCode, { target: { value: '123' } });
 
         const documentName = screen.getByRole('textbox', { name: 'Document Name', exact: false });
-
         fireEvent.change(documentName, { target: { value: 'Test' } });
 
-        const termAndCon = screen.getByRole('switch', { name: 'T&C Required', exact: false });
-
-        fireEvent.click(termAndCon);
-
-        const digitalSignature = screen.getByRole('switch', { name: 'Digital Signature Required', exact: false });
-
-        fireEvent.click(digitalSignature);
-
         const submitButton = screen.getByRole('button', { name: 'plus Add', exact: false });
-
         fireEvent.click(submitButton);
+
+        await waitFor(() => expect(setFinalFormdata).toHaveBeenCalled());
+        setFinalFormdata.mock.calls[0][0]();
         // expect(setFinalFormdata).toHaveBeenCalled();
     });
 

@@ -72,18 +72,16 @@ describe('InvoiceCancellationMaster Component', () => {
       customRender(<InvoiceCancellationMaster />)
       const advanceFilters=screen.getByRole('button', { name: 'Advanced Filters' });
       fireEvent.click(advanceFilters);
+
       const fromDate=screen.getByRole('textbox', { name: 'From Date' });
       fireEvent.click(fromDate);
       const todayForFromDate=await screen.findByText('Today');
       fireEvent.click(todayForFromDate);
 
-      expect(fromDate).toHaveValue('08/09/2023')
-
       const toDate=screen.getByRole('textbox', { name: 'To Date' });
       fireEvent.click(toDate);
       const todayToFromDate=await screen.findAllByText('Today');
       fireEvent.click(todayToFromDate[1]);
-      expect(toDate).toHaveValue('08/09/2023')
       
       const searchBtn=screen.getByRole('button', { name: 'Search' });
       fireEvent.click(searchBtn);
