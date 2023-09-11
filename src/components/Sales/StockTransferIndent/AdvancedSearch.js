@@ -18,7 +18,7 @@ import styles from 'assets/sass/app.module.scss';
 import { customSelectBox } from 'utils/customSelectBox';
 
 export const AdvancedSearchFrom = (props) => {
-    const { setAdvanceSearchVisible, otfStatusList } = props;
+    const { setAdvanceSearchVisible, searchList, ProductLovLoading, indentLocationList } = props;
     const {
         filterString,
         setFilterString,
@@ -37,24 +37,21 @@ export const AdvancedSearchFrom = (props) => {
             ...filterString,
             ...values,
             current: 1,
-            // fromDate: formatDate(values?.fromDate),
-            // toDate: formatDate(values?.toDate),
-            // otfStatus: values?.otfStatus,
+            fromDate: formatDate(values?.fromDate),
+            toDate: formatDate(values?.toDate),
+            dealerLocation : values?.dealerLocation,
+            // indentRaisedTo : toggleButton === STOCK_TRANSFER?.RAISED.key ? values?.dealerLocation : undefined,
+            // indentRaisedFrom : toggleButton === STOCK_TRANSFER?.RECEIVED.key ? values?.dealerLocation : undefined,
             advanceFilter: true,
         });
         setAdvanceSearchVisible(false);
     };
 
     const handleResetFilter = (e) => {
-        const { pageSize } = filterString;
-        advanceFilterForm.setFieldsValue({
-            
-        });
-
-        setFilterString({
-            current: 1,
-            pageSize,
-        });
+       // const { pageSize } = filterString;
+        advanceFilterForm.resetFields();
+        //advanceFilterForm.setFieldsValue({});
+        //setFilterString({ current: 1, pageSize,});
     };
 
     const onFinishFailed = () => {
@@ -81,12 +78,12 @@ export const AdvancedSearchFrom = (props) => {
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item initialValue={filterString?.indent} label="Indent" name="indent">
-                        {customSelectBox({ data: otfStatusList, fieldNames: { key: 'key', value: 'desc' }, placeholder: preparePlaceholderSelect(placeHold.place) })}
+                        {customSelectBox({ data: searchList.filter(temp =>{ return toggleButton === STOCK_TRANSFER?.RAISED.key ? temp.key == "RAIS_TO" : temp.key == "REC_TO" }), fieldNames: { key: 'key', value: 'value' }, placeholder: preparePlaceholderSelect(placeHold.place) })}
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item initialValue={filterString?.dealerLocation} {...labelData} name="dealerLocation">
-                        {customSelectBox({ data: otfStatusList, fieldNames: { key: 'key', value: 'desc' }, placeholder: preparePlaceholderSelect('Dealer Location') })}
+                        {customSelectBox({ data: indentLocationList, fieldNames: { key: 'locationCode', value: 'dealerLocationName' }, placeholder: preparePlaceholderSelect('Dealer Location') })}
                     </Form.Item>
                 </Col>
             </Row>

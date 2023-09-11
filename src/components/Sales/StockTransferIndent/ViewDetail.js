@@ -35,10 +35,9 @@ const ViewDetailMain = (props) => {
     };
 
     const onFinish = (values) => {
-        
         setIsEditVehicleDetailsVisible(false);
-        updateVehicleDetails(values?.cancelledQuantity);
-        //const recordId = formData?.parentId || form.getFieldValue('parentId');
+        editVehicleDetailsForm.resetFields();
+        updateVehicleDetails({...editVehicleDetails, cancelledQuantity: values?.cancelledQuantity});
         let data = { ...values };
 
         const onSuccess = (res) => {
@@ -72,6 +71,7 @@ const ViewDetailMain = (props) => {
 
     const onCloseActionEditVehicleDetails = () => {
         setEditVehicleDetails({});
+        editVehicleDetailsForm.resetFields();
         setIsEditVehicleDetailsVisible(false);
     };
 

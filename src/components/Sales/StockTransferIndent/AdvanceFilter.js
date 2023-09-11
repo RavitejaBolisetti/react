@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button, Row, Col, Form } from 'antd';
 import { FilterIcon } from 'Icons';
 import { FiPlus } from 'react-icons/fi';
@@ -15,6 +15,11 @@ import styles from 'assets/sass/app.module.scss';
 
 export default function AdvanceOTFFilter(props) {
     const { extraParams, removeFilter, handleResetFilter, advanceFilter = false, filterString, setFilterString, toggleButton, settoggleButton, typeData, setAdvanceSearchVisible, searchForm, handleOnAddIndentClick } = props;
+
+    useEffect(() => {
+        searchForm.resetFields();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [toggleButton]);
 
     const serachBoxProps = {
         searchForm,

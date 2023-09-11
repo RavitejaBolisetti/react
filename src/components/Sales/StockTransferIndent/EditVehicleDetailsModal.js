@@ -36,7 +36,7 @@ export const EditVehicleDetailsModalFrom = (props) => {
 
             <Row gutter={24}>
                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                    <Form.Item label="Cancelled Quantity" name="cancelledQuantity" initialValue={0}  rules={[validateRequiredInputField('Cancelled Quantity'), validationNumber('Cancelled Quantity')]}>
+                    <Form.Item label="Cancelled Quantity" name="cancelledQuantity" initialValue={formData?.cancelledQuantity}  rules={[validateRequiredInputField('Cancelled Quantity'), validationNumber('Cancelled Quantity')]}>
                         <Input placeholder={preparePlaceholderText('Cancelled Quantity')}></Input>
                     </Form.Item>
                 </Col>

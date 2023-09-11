@@ -6,13 +6,13 @@
 export const STOCK_TRANSFER = {
     RAISED: {
         id: 1,
-        key: 'RAISED',
+        key: 'INDNT_RAISED',
         title: 'Indent Raised',
         desc: 'Indent Raised',
     },
     RECEIVED: {
         id: 2,
-        key: 'RECEIVED',
+        key: 'INDNT_RECV',
         title: 'Indent Received',
         desc: 'Indent Received',
     },

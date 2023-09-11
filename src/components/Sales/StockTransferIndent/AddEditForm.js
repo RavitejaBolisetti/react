@@ -36,6 +36,7 @@ const AddEditFormMain = (props) => {
 
     const [addVehicleDetailsForm] = Form.useForm();
     const [isAddVehicleDetailsVisible, setIsAddVehicleDetailsVisible] = useState(false);
+    const [selectedVehicle, setSelectedVehicle] = useState();
 
     useEffect(() => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -44,6 +45,9 @@ const AddEditFormMain = (props) => {
     const handleButtonClickVehicleDetails = ({ record = null, buttonAction, openDefaultSection = true, index }) => {
         switch (buttonAction) {
             case EDIT_ACTION:
+                addVehicleDetailsForm?.setFieldsValue({ ...record, index:index });
+                //setSelectedVehicle(record);
+                setIsAddVehicleDetailsVisible(true);
                 break;
             case DELETE_ACTION:
                 let arrayOfNumbers = [...tableDataItem];
@@ -113,12 +117,20 @@ const AddEditFormMain = (props) => {
 
     const onCloseActionAddVehicleDetails = () => {
         setIsAddVehicleDetailsVisible(false);
+        setSelectedVehicle();
+        addVehicleDetailsForm.resetFields();
     };
 
     const onFinishAddVehicleDetails = (values) => {
         if (tableDataItem.length === 0) handleCollapse(1);
 
-        setTableDataItem([...tableDataItem, { ...initialTableDataItem, ...values }]);
+        if(values?.index !== undefined){
+            let arrayOfNumbers = [...tableDataItem];
+            arrayOfNumbers[values?.index] = { ...initialTableDataItem, ...values };
+            setTableDataItem([...arrayOfNumbers]);
+        }
+        else
+            setTableDataItem([...tableDataItem, { ...initialTableDataItem, ...values }]);
 
         // let indentData = addIndentDetailsForm.getFieldsValue();
         // addIndentDetailsForm?.setFieldsValue({ ...indentData, vehicleDetails: [ ...tableDataItem ] });
@@ -134,7 +146,8 @@ const AddEditFormMain = (props) => {
         setIsAddVehicleDetailsVisible,
         onCloseAction: onCloseActionAddVehicleDetails,
         onFinishAddVehicleDetails,
-        ProductHierarchyData
+        ProductHierarchyData,
+        formData: selectedVehicle,
     };
 
     return (
