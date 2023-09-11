@@ -33,7 +33,7 @@ const expandIcon = ({ isActive }) =>
     );
 
 const VehicleInvoiceCard = (props) => {
-    const { selectedOrder, otfData, formActionType, isLoading, typeData, generateIrn } = props;
+    const { selectedOrder, otfData, formActionType, isLoading, typeData, generateIrn, irnStatusData } = props;
     const fullName = selectedOrder?.customerName?.split(' ');
     const userAvatar = fullName ? fullName[0]?.slice(0, 1) + (fullName[1] ? fullName[1].slice(0, 1) : '') : '';
     return (
@@ -94,15 +94,15 @@ const VehicleInvoiceCard = (props) => {
                 <div className={styles.detailCardText}>
                     IRN Status:
                     <span>
-                        {selectedOrder?.invoiceNumber && !otfData?.irnStatus ? (
-                            <Button style={{ height: '30px' }} onClick={generateIrn}>
+                        {selectedOrder?.invoiceNumber && !irnStatusData?.irnStatus ? (
+                            <Button danger onClick={generateIrn}>
                                 Generate
                             </Button>
                         ) : (
                             <>
-                                {checkAndSetDefaultValue(otfData?.irnStatus)}
+                                {checkAndSetDefaultValue(irnStatusData?.irnStatus)}
                                 <div className={styles.tooltipAlign}>
-                                    {otfData?.irnStatus &&
+                                    {irnStatusData?.irnStatus &&
                                         addToolTip(
                                             <div>
                                                 <p>

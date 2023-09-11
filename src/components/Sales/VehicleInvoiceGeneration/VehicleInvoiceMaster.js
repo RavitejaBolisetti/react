@@ -48,7 +48,6 @@ const mapStateToProps = (state) => {
             },
         },
     } = state;
-    console.log('🚀 ~ file: VehicleInvoiceMaster.js:51 ~ mapStateToProps ~ state:', state);
     const moduleTitle = 'Invoice Generation';
     let returnValue = {
         userId,
@@ -101,8 +100,6 @@ const mapDispatchToProps = (dispatch) => ({
 export const VehicleInvoiceMasterBase = (props) => {
     const { data, receiptDetailData, userId, isIrnDataLoaded, listIrnShowLoading, isIrnDataLoading, irnGeneration, irnData, fetchList, fetchOTFDetail, fetchVehicleDetail, fetchVehicleInvoiceDetail, listShowLoading, showGlobalNotification } = props;
     const { cancelInvoice, vehicleInvoiceData, vehicleDetail } = props;
-    // console.log('🚀 ~ file: VehicleInvoiceMaster.js:103 ~ VehicleInvoiceMasterBase ~ vehicleDetail:', vehicleDetail);
-    // console.log('🚀 ~ file: VehicleInvoiceMaster.js:103 ~ VehicleInvoiceMasterBase ~ vehicleInvoiceData:', vehicleInvoiceData);
     const { typeData, receiptType, partySegmentType, paymentModeType, documentType, moduleTitle, totalRecords } = props;
     const { filterString, setFilterString, invoiceStatusList, otfData } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
@@ -137,6 +134,7 @@ export const VehicleInvoiceMasterBase = (props) => {
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [cancelInvoiceVisible, setCancelInvoiceVisible] = useState(false);
     const [otfNumber, setOtfNumber] = useState();
+    const [irnStatusData, setIrnStatusData] = useState();
 
     const [page, setPage] = useState({ pageSize: 10, current: 1 });
     const dynamicPagination = true;
@@ -342,6 +340,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         const data = { otfNumber: selectedOtfNumber, invoiceNumber: selectedOrder?.invoiceNumber };
         const onSuccess = (res) => {
             setShowDataLoading(true);
+            setIrnStatusData(res?.data);
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
             const extraParam = [
@@ -497,6 +496,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         setIsFormVisible(false);
         setCancelInvoiceVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
+        setIrnStatusData();
     };
 
     const tableProps = {
@@ -680,6 +680,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         otfNumber,
         setOtfNumber,
         generateIrn,
+        irnStatusData,
     };
 
     const cancelInvoiceProps = {

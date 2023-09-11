@@ -84,7 +84,7 @@ export const AdvancedSearchFrom = (props) => {
 
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Form.Item initialValue={filterString?.receiptType} label="Digital Signature" name="digitalSignature">
+                    <Form.Item initialValue={filterString?.digitalSignature} label="Digital Signature" name="digitalSignature">
                         {customSelectBox({ data: typeData?.YES_NO_FLG, placeholder: preparePlaceholderSelect('Digital Signature') })}
                     </Form.Item>
                 </Col>
