@@ -15,11 +15,13 @@ export const tableColumn = (handleButtonClick) => {
             dataIndex: 'roleId',
             width: '15%',
         }),
+
         tblPrepareColumns({
             title: 'Role Name',
             dataIndex: 'roleName',
             width: '20%',
         }),
+
         tblPrepareColumns({
             title: 'Role Description',
             dataIndex: 'roleDescription',
@@ -28,6 +30,7 @@ export const tableColumn = (handleButtonClick) => {
         }),
 
         tblStatusColumn({ styles, width: '15%' }),
+
         tblActionColumn({ handleButtonClick, styles, width: '10%' })
     );
 

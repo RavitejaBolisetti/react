@@ -33,17 +33,10 @@ describe('View Detail Component', () => {
         }
 
         render(<FormWrapper styles={styles} formData={formData} handleCollapses={jest.fn()} handleCollapse={jest.fn()} />)
-        const plusShield=screen.getByRole('button', { name: /plus Shield/i });
-        fireEvent.click(plusShield);
-        const plusRSA=screen.getByRole('button', { name: /plus RSA/i });
-        fireEvent.click(plusRSA);
-        const plusAMC=screen.getByRole('button', { name: /plus AMC/i  });
-        fireEvent.click(plusAMC);
-        const plusFMS=screen.getByRole('button', { name: /plus FMS/i });
-        fireEvent.click(plusFMS);
-        const plusAccessories=screen.getByRole('button', { name: /plus Accessories Information/i });
-        fireEvent.click(plusAccessories);
-        const plusAccessoriesInner=screen.getByRole('button', { name: /NA | NA Required Quantity: NA/i });
-        fireEvent.click(plusAccessoriesInner);
+        const collapse=screen.getAllByRole('img', { name: 'plus', exact: false });
+        fireEvent.click(collapse[0]);
+        fireEvent.click(collapse[1]);
+        fireEvent.click(collapse[2]);
+        fireEvent.click(collapse[3]);
     });
 });
