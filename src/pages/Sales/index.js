@@ -15,12 +15,16 @@ import ReceiptMasterPage from './Receipts';
 import VehicleRecieptChecklistMaster from './VehicleRecieptMaster';
 import OtfSoMappingMasterPage from './OtfSoMapping';
 import RSMApprovalPage from './RSMApproval';
-
 import DigitalSignatureMasterPage from './DigitalSignatureMapping';
 import HoPriceMappingMasterPage from './HoPriceMappingDealer';
 import DeliveryNoteInvoiceCancellationPage from './DeliveryNoteInvoiceCancellation';
-import VehicleTrackingPage from './VehicleTracking';
 
+import VehicleAllotmentPriorityMasterPage from './VehicleAllotmentPriorityMaster';
+import VehicleTrackingPage from './VehicleTracking';
 import OtfSoMappingUnmappingMasterPage from './OtfSoMappingUnmapping';
 
-export { OTFMasterPage, VehicleDetailMasterPage, VehicleReceiptMasterPage, VehiclePriceMasterPage, VehicleRecieptChecklistMaster, RSMApprovalPage, VehiclePurchaseOrderMasterPage, OtfSoMappingMasterPage, VehicleAllotmentMasterPage, ReceiptMasterPage, DigitalSignatureMasterPage, HoPriceMappingMasterPage, DeliveryNoteInvoiceCancellationPage, VehicleTrackingPage, OtfSoMappingUnmappingMasterPage };
+
+export { OTFMasterPage, VehicleDetailMasterPage, VehicleReceiptMasterPage, VehiclePriceMasterPage, VehicleRecieptChecklistMaster, RSMApprovalPage, VehiclePurchaseOrderMasterPage, OtfSoMappingMasterPage, VehicleAllotmentMasterPage, ReceiptMasterPage, VehicleAllotmentPriorityMasterPage, DigitalSignatureMasterPage, HoPriceMappingMasterPage, DeliveryNoteInvoiceCancellationPage,VehicleTrackingPage,OtfSoMappingUnmappingMasterPage };
+
+
+
