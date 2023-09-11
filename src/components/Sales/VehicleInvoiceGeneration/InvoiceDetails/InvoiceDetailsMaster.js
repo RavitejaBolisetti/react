@@ -8,7 +8,6 @@ import { Form, Row, Col } from 'antd';
 
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
-import { VehicleInvoiceFormButton } from '../VehicleInvoiceFormButton';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -18,7 +17,6 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { CustomerDetailsMaster } from 'components/Sales/Common/CustomerDetails';
 import { vehicleInvoiceDetailDataActions } from 'store/actions/data/invoiceGeneration/vehicleInvoiceDetail';
 
-import { BASE_URL_PARTY_MASTER } from 'constants/routingApi';
 import styles from 'assets/sass/app.module.scss';
 
 const mapStateToProps = (state) => {
@@ -68,7 +66,8 @@ const InvoiceDetailsMasterBase = (props) => {
     const { typeData, otfData, selectedOrder, fetchInvoiceDetail, listShowLoading } = props;
     const { userId, buttonData, setButtonData, showGlobalNotification, section, isDataLoaded, isLoading, invoiceDetailForm } = props;
     const { form, formActionType, handleFormValueChange, selectedOtfNumber, setSelectedOtfNumber } = props;
-    const { requestPayload, setRequestPayload } = props;
+    const { FormActionButton, requestPayload, setRequestPayload, handleButtonClick, NEXT_ACTION } = props;
+    console.log('🚀 ~ file: InvoiceDetailsMaster.js:72 ~ InvoiceDetailsMasterBase ~ requestPayload:', requestPayload);
     const [activeKey, setActiveKey] = useState([]);
 
     const [formData, setFormData] = useState('');
@@ -113,16 +112,17 @@ const InvoiceDetailsMasterBase = (props) => {
     };
 
     const onFinish = (values) => {
-        const invoiceDetails = { ...values, id: '' };
-        setRequestPayload({ ...requestPayload, invoiceDetails: invoiceDetails });
-        // handleButtonClick({ buttonAction: NEXT_ACTION });
-        // setButtonData({ ...buttonData, formBtnActive: false });
+        const { otfDetailsRequest, ...bookingAndBillingCustomerDto } = values;
+        setRequestPayload({ ...requestPayload, invoiceDetails: { otfDetailsRequest, bookingAndBillingCustomerDto: { ...bookingAndBillingCustomerDto } } });
+        handleButtonClick({ buttonAction: NEXT_ACTION });
+        setButtonData({ ...buttonData, formBtnActive: false });
     };
 
     const onFinishFailed = () => {};
 
     const formProps = {
         ...props,
+        formName: 'otfDetailsRequest',
         form,
         typeData,
         handleChange,
@@ -156,10 +156,7 @@ const InvoiceDetailsMasterBase = (props) => {
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <h2>
-                                {/* Invoice Details */}
-                                {section?.title}
-                            </h2>
+                            <h2>{section?.title}</h2>
                         </Col>
                     </Row>
                     {formActionType?.viewMode ? (
@@ -177,7 +174,7 @@ const InvoiceDetailsMasterBase = (props) => {
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <VehicleInvoiceFormButton {...props} />
+                    <FormActionButton {...props} />
                 </Col>
             </Row>
         </Form>

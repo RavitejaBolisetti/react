@@ -16,8 +16,6 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { AddEditForm } from './AddEditForm';
 import { ViewDetail } from './ViewDetail';
 
-import { OTFFormButton } from '../OTFFormButton';
-import { OTFStatusBar } from '../utils/OTFStatusBar';
 import { formatDate } from 'utils/formatDateTime';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
@@ -70,6 +68,7 @@ const mapDispatchToProps = (dispatch) => ({
 const ReferralsMasterBase = (props) => {
     const { formActionType, fetchList, showGlobalNotification, saveData, listShowLoading, userId, referralData, isLoading } = props;
     const { form, selectedOrderId, section, handleFormValueChange, onFinishFailed, fetchCustomerList, typeData, handleButtonClick, NEXT_ACTION } = props;
+    const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, StatusBar } = props;
 
     const [searchForm] = Form.useForm();
     const [formData, setFormData] = useState();
@@ -163,27 +162,33 @@ const ReferralsMasterBase = (props) => {
 
     const onFinish = (values) => {
         const data = { ...values, otfNumber: selectedOrderId, dob: formatDate(values?.dob), id: referralData?.id };
-        const onSuccess = (res) => {
-            form.resetFields();
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
-            fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, errorAction: onError, userId });
-        };
+        if (onFinishCustom) {
+            onFinishCustom({ key: formKey, values: data });
+            handleButtonClick({ buttonAction: NEXT_ACTION });
+            setButtonData({ ...buttonData, formBtnActive: false });
+        } else {
+            const onSuccess = (res) => {
+                form.resetFields();
+                showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+                handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
+                fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, errorAction: onError, userId });
+            };
 
-        const onError = (message) => {
-            // showGlobalNotification({ message });
-        };
+            const onError = (message) => {
+                // showGlobalNotification({ message });
+            };
 
-        const requestData = {
-            data: data,
-            method: referralData?.id ? 'put' : 'post',
-            setIsLoading: listShowLoading,
-            userId,
-            onError,
-            onSuccess,
-        };
+            const requestData = {
+                data: data,
+                method: referralData?.id ? 'put' : 'post',
+                setIsLoading: listShowLoading,
+                userId,
+                onError,
+                onSuccess,
+            };
 
-        saveData(requestData);
+            saveData(requestData);
+        }
     };
 
     const onErrorAction = (message) => {
@@ -231,7 +236,7 @@ const ReferralsMasterBase = (props) => {
                                 <h2>{section?.title}</h2>
                             </Col>
                             <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                <OTFStatusBar status={props?.selectedOrder?.orderStatus} />
+                                {StatusBar && <StatusBar status={props?.selectedOrder?.orderStatus} />}
                             </Col>
                         </Row>
                         {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
@@ -239,7 +244,7 @@ const ReferralsMasterBase = (props) => {
                 </Row>
                 <Row>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <OTFFormButton {...props} />
+                        <FormActionButton {...props} />
                     </Col>
                 </Row>
             </Form>

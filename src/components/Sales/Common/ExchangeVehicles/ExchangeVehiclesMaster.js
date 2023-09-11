@@ -4,10 +4,13 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect, useState } from 'react';
+import { Row, Col, Form } from 'antd';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { Row, Col, Form } from 'antd';
+import { ViewDetail } from './ViewDetail';
+import { AddEditForm } from './AddEditForm';
+import VehiclePriorityAllotmentAlert from './VehiclePriorityAllotmentAlert';
 
 import { customerDetailDataActions } from 'store/actions/customer/customerDetail';
 import { financeLovDataActions } from 'store/actions/data/otf/financeLov';
@@ -17,14 +20,8 @@ import { vehicleMakeDetailsDataActions } from 'store/actions/data/vehicle/makeDe
 import { vehicleModelDetailsDataActions } from 'store/actions/data/vehicle/modelDetails';
 import { vehicleVariantDetailsDataActions } from 'store/actions/data/vehicle/variantDetails';
 import { showGlobalNotification } from 'store/actions/notification';
+
 import { BASE_URL_CUSTOMER_MASTER_VEHICLE_LIST as customURL } from 'constants/routingApi';
-import VehiclePriorityAllotmentAlert from './VehiclePriorityAllotmentAlert';
-
-import { AddEditForm } from './AddEditForm';
-import { ViewDetail } from './ViewDetail';
-
-import { OTFFormButton } from '../OTFFormButton';
-import { OTFStatusBar } from '../utils/OTFStatusBar';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -131,6 +128,8 @@ const ExchangeVehiclesBase = (props) => {
     const { schemeLovData, isSchemeLovLoading, fetchSchemeLovList, listSchemeLovShowLoading } = props;
     const { form, selectedOrderId, formActionType, handleFormValueChange, isDataLoaded, resetData } = props;
     const { fetchCustomerList, listCustomerShowLoading, handleButtonClick, NEXT_ACTION } = props;
+    const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, StatusBar } = props;
+
     const [formData, setFormData] = useState('');
     const [filteredModelData, setfilteredModelData] = useState([]);
     const [filteredVariantData, setfilteredVariantData] = useState([]);
@@ -271,22 +270,28 @@ const ExchangeVehiclesBase = (props) => {
         }
         const data = { ...values, exchange: values?.exchange ? 1 : 0, id: exchangeData?.id || '', otfNumber: selectedOrderId };
 
-        const onSuccess = (res) => {
-            form.resetFields();
-            fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, onErrorAction, userId });
-            handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
-        };
+        if (onFinishCustom) {
+            onFinishCustom({ key: formKey, values: data });
+            handleButtonClick({ buttonAction: NEXT_ACTION });
+            setButtonData({ ...buttonData, formBtnActive: false });
+        } else {
+            const onSuccess = (res) => {
+                form.resetFields();
+                fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, onErrorAction, userId });
+                handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
+            };
 
-        const requestData = {
-            data: data,
-            method: exchangeData?.id ? 'put' : 'post',
-            setIsLoading: listShowLoading,
-            userId,
-            onError: onErrorAction,
-            onSuccess,
-        };
+            const requestData = {
+                data: data,
+                method: exchangeData?.id ? 'put' : 'post',
+                setIsLoading: listShowLoading,
+                userId,
+                onError: onErrorAction,
+                onSuccess,
+            };
 
-        saveData(requestData);
+            saveData(requestData);
+        }
     };
 
     const onFinishFailed = (values1) => {
@@ -392,8 +397,8 @@ const ExchangeVehiclesBase = (props) => {
 
     const VehiclePriorityAlertProp = {
         modalOpen,
-        setModalOpen
-    }
+        setModalOpen,
+    };
 
     return (
         <Form data-testid="exchangeVID" layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
@@ -404,19 +409,18 @@ const ExchangeVehiclesBase = (props) => {
                             <h2>{section?.title}</h2>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <OTFStatusBar status={props?.selectedOrder?.orderStatus} />
+                            {StatusBar && <StatusBar status={props?.selectedOrder?.orderStatus} />}
                         </Col>
                     </Row>
-
                     {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
                 </Col>
             </Row>
-            <VehiclePriorityAllotmentAlert {...VehiclePriorityAlertProp}/>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <OTFFormButton {...props} />
+                    <FormActionButton {...props} />
                 </Col>
             </Row>
+            <VehiclePriorityAllotmentAlert {...VehiclePriorityAlertProp} />
         </Form>
     );
 };

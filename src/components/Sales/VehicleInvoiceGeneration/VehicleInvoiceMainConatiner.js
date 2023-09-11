@@ -9,9 +9,7 @@ import { withDrawer } from 'components/withDrawer';
 import { VEHICLE_INVOICE_SECTION } from 'constants/VehicleInvoiceSection';
 
 import { LeftSidebar } from './LeftSidebar';
-
-import styles from 'assets/sass/app.module.scss';
-
+import { InvoiceDetailsMaster } from './InvoiceDetails';
 import { InsuranceDetailsMaster } from 'components/Sales/Common/InsuranceDetails';
 import { SchemeDetailsMaster } from 'components/Sales/Common/SchemeDetails';
 import { VehicleDetailsMaster } from 'components/Sales/Common/VehicleDetails';
@@ -20,15 +18,24 @@ import { ReferralsMaster } from 'components/Sales/Common/Referrals';
 import { ExchangeVehiclesMaster } from 'components/Sales/Common/ExchangeVehicles';
 import { LoyaltySchemeMaster } from 'components/Sales/Common/LoyaltyScheme';
 
-import { InvoiceDetailsMaster } from './InvoiceDetails';
+import { VehicleInvoiceFormButton } from './VehicleInvoiceFormButton';
+
+import styles from 'assets/sass/app.module.scss';
 
 const VehicleInvoiceMainConatinerMain = (props) => {
-    const { currentSection, generateIrn } = props;
+    const { currentSection, generateIrn, selectedOtfNumber, requestPayload, setRequestPayload } = props;
+
+    const onFinishCustom = ({ key, values }) => {
+        setRequestPayload({ ...requestPayload, [key]: values });
+    };
 
     const myProps = {
         ...props,
         wrapForm: false,
         generateIrn,
+        onFinishCustom,
+        selectedOrderId: selectedOtfNumber,
+        FormActionButton: VehicleInvoiceFormButton,
     };
 
     const renderElement = () => {
@@ -37,25 +44,25 @@ const VehicleInvoiceMainConatinerMain = (props) => {
                 return <InvoiceDetailsMaster {...myProps} />;
             }
             case VEHICLE_INVOICE_SECTION.VEHICLE_DETAILS.id: {
-                return <VehicleDetailsMaster {...myProps} />;
+                return <VehicleDetailsMaster {...myProps} formKey={'vehicleDetails'} />;
             }
             case VEHICLE_INVOICE_SECTION.SCHEME_OFFER_DETAILS.id: {
-                return <SchemeDetailsMaster {...myProps} />;
+                return <SchemeDetailsMaster {...myProps} formKey={'schemeOfferDetails'} />;
             }
             case VEHICLE_INVOICE_SECTION.FINANACE_DETAILS.id: {
-                return <FinananceDetailsMaster {...myProps} />;
+                return <FinananceDetailsMaster {...myProps} formKey={'financeDetails'} />;
             }
             case VEHICLE_INVOICE_SECTION.INSURANCE_DETAILS.id: {
-                return <InsuranceDetailsMaster {...myProps} />;
+                return <InsuranceDetailsMaster {...myProps} formKey={'insuranceDetails'} />;
             }
             case VEHICLE_INVOICE_SECTION.EXCHANGE_DETAILS.id: {
-                return <ExchangeVehiclesMaster {...myProps} />;
+                return <ExchangeVehiclesMaster {...myProps} formKey={'exchangeDetails'} />;
             }
             case VEHICLE_INVOICE_SECTION.LOYALTY_SCHEME.id: {
-                return <LoyaltySchemeMaster {...myProps} />;
+                return <LoyaltySchemeMaster {...myProps} formKey={'loyaltyScheme'} />;
             }
             case VEHICLE_INVOICE_SECTION.REFERRALS.id: {
-                return <ReferralsMaster {...myProps} />;
+                return <ReferralsMaster {...myProps} formKey={'referrals'} />;
             }
             default: {
                 return <InvoiceDetailsMaster {...myProps} />;

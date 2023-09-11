@@ -4,26 +4,22 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect, useState } from 'react';
-import styles from 'assets/sass/app.module.scss';
-
-import { AddEditForm } from './AddEditForm';
 import { Form, Row, Col } from 'antd';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import { ViewDetail } from './ViewDetail';
+import { AddEditForm } from './AddEditForm';
+
 import { showGlobalNotification } from 'store/actions/notification';
 import { otfLoyaltySchemeDataActions } from 'store/actions/data/otf/loyaltyAndScheme';
-
 import { customerDetailDataActions } from 'store/actions/customer/customerDetail';
-import { financeLovDataActions } from 'store/actions/data/otf/financeLov';
 import { otfSchemeDetailDataActions } from 'store/actions/data/otf/schemeDetail';
-import { schemeDataActions } from 'store/actions/data/otf/exchangeVehicle';
 import { vehicleMakeDetailsDataActions } from 'store/actions/data/vehicle/makeDetails';
 import { vehicleModelDetailsDataActions } from 'store/actions/data/vehicle/modelDetails';
 import { vehicleVariantDetailsDataActions } from 'store/actions/data/vehicle/variantDetails';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { OTFStatusBar } from '../utils/OTFStatusBar';
-import { OTFFormButton } from '../OTFFormButton';
-import { ViewDetail } from './ViewDetail';
 
+import styles from 'assets/sass/app.module.scss';
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -117,7 +113,7 @@ const LoyaltySchemeMasterMain = (props) => {
     const { fetchMakeLovList, listMakeShowLoading, fetchModelLovList, listModelShowLoading, fetchVariantLovList, listVariantShowLoading } = props;
     const { isMakeLoading, makeData, isModelDataLoaded, isModelLoading, modelData, isVariantDataLoaded, isVariantLoading, variantData, saveData } = props;
     const { schemeLovData, isSchemeLovLoading, fetchSchemeLovList, listSchemeLovShowLoading } = props;
-    const { fetchCustomerList, listCustomerShowLoading } = props;
+    const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, StatusBar } = props;
 
     const [filteredModelData, setfilteredModelData] = useState([]);
     const [filteredVariantData, setfilteredVariantData] = useState([]);
@@ -163,7 +159,6 @@ const LoyaltySchemeMasterMain = (props) => {
     };
 
     const onFinish = (values) => {
-        console.log('values', values);
         const { customerName } = values;
         if (!customerName) {
             showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Verify Customer id to continue' });
@@ -171,22 +166,28 @@ const LoyaltySchemeMasterMain = (props) => {
         }
         const data = { ...values, id: LoyaltySchemeData?.id || '', otfNumber: selectedOrderId };
 
-        const onSuccess = (res) => {
-            form.resetFields();
-            fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, onErrorAction, userId });
-            handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
-        };
+        if (onFinishCustom) {
+            onFinishCustom({ key: formKey, values: data });
+            handleButtonClick({ buttonAction: NEXT_ACTION });
+            setButtonData({ ...buttonData, formBtnActive: false });
+        } else {
+            const onSuccess = (res) => {
+                form.resetFields();
+                fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, onErrorAction, userId });
+                handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
+            };
 
-        const requestData = {
-            data: data,
-            method: formData?.id ? 'put' : 'post',
-            setIsLoading: listShowLoading,
-            userId,
-            onError: onErrorAction,
-            onSuccess,
-        };
+            const requestData = {
+                data: data,
+                method: formData?.id ? 'put' : 'post',
+                setIsLoading: listShowLoading,
+                userId,
+                onError: onErrorAction,
+                onSuccess,
+            };
 
-        saveData(requestData);
+            saveData(requestData);
+        }
     };
 
     useEffect(() => {
@@ -329,7 +330,7 @@ const LoyaltySchemeMasterMain = (props) => {
                             <h2>{section?.title}</h2>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <OTFStatusBar status={props?.selectedOrder?.orderStatus} />
+                            {StatusBar && <StatusBar status={props?.selectedOrder?.orderStatus} />}
                         </Col>
                     </Row>
                     {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
@@ -337,7 +338,7 @@ const LoyaltySchemeMasterMain = (props) => {
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <OTFFormButton {...myProps} />
+                    <FormActionButton {...myProps} />
                 </Col>
             </Row>
         </Form>

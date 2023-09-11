@@ -14,13 +14,15 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 const { Search } = Input;
 
 const OtfDetailsForm = (props) => {
-    const { formData, invoiceDetailForm, otfFormData, typeData, selectedOtfNumber, setSelectedOtfNumber } = props;
+    const { formData, formName, invoiceDetailForm, otfFormData, typeData, selectedOtfNumber, setSelectedOtfNumber } = props;
 
     useEffect(() => {
         if (otfFormData) {
             invoiceDetailForm?.setFieldsValue({
-                ...otfFormData,
-                otfDate: formattedCalendarDate(otfFormData?.otfDate),
+                [formName]: {
+                    ...otfFormData,
+                    otfDate: formattedCalendarDate(otfFormData?.otfDate),
+                },
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -34,7 +36,7 @@ const OtfDetailsForm = (props) => {
         <>
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                    <Form.Item initialValue={otfFormData?.otfNumber} label="OTF Number" name="otfNumber" rules={[validateRequiredSelectField('OTF Number')]}>
+                    <Form.Item initialValue={otfFormData?.otfNumber} label="OTF Number" name={[formName, 'otfNumber']} rules={[validateRequiredSelectField('OTF Number')]}>
                         <Search maxLength={50} placeholder={preparePlaceholderText('OTF Number')} onSearch={handleChange} allowClear />
                     </Form.Item>
                 </Col>
@@ -44,51 +46,51 @@ const OtfDetailsForm = (props) => {
                     <Divider />
                     <Row gutter={20}>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={otfFormData?.otfDate} label="OTF Date" name="otfDate">
+                            <Form.Item initialValue={otfFormData?.otfDate} label="OTF Date" name={[formName, 'otfDate']}>
                                 <DatePicker format={dateFormat} placeholder={preparePlaceholderText('otf date')} style={{ display: 'auto', width: '100%' }} disabled={true} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={otfFormData?.totalReceivedAmount} label="DAR Number" name="darNumber">
+                            <Form.Item initialValue={otfFormData?.darNumber} label="DAR Number" name={[formName, 'darNumber']}>
                                 <Input placeholder={preparePlaceholderText('DAR Number')} disabled={true} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={otfFormData?.saleType} label="Sales Type" name="saleType">
+                            <Form.Item initialValue={otfFormData?.saleType} label="Sales Type" name={[formName, 'saleType']}>
                                 {customSelectBox({ data: typeData?.[PARAM_MASTER.SALE_TYPE.id], placeholder: preparePlaceholderSelect('Sales Type') })}
                             </Form.Item>
                         </Col>
                     </Row>
                     <Row gutter={20}>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={otfFormData?.priceType} label="Price Type" name="priceType">
+                            <Form.Item initialValue={otfFormData?.priceType} label="Price Type" name={[formName, 'priceType']}>
                                 {customSelectBox({ data: typeData?.[PARAM_MASTER.PRC_TYP.id], placeholder: preparePlaceholderSelect('Sales Type') })}
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={otfFormData?.taxCalculationType} label="Tax Calculation" name="taxCalculationType">
+                            <Form.Item initialValue={otfFormData?.taxCalculationType} label="Tax Calculation" name={[formName, 'taxCalculationType']}>
                                 {customSelectBox({ data: typeData?.[PARAM_MASTER.TAX_CALCLTN_TYPE.id], placeholder: preparePlaceholderSelect('Tax Calculation') })}
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={otfFormData?.taxPayableOnReverseCharges} label="Tax Payable On Reverse Charges?" name="taxPayableOnReverseCharges">
+                            <Form.Item initialValue={otfFormData?.taxPayableOnReverseCharges} label="Tax Payable On Reverse Charges?" name={[formName, 'taxPayableOnReverseCharges']}>
                                 {customSelectBox({ data: typeData?.[PARAM_MASTER.RFRL.id], placeholder: preparePlaceholderSelect('Tax Payable On Reverse Charges') })}
                             </Form.Item>
                         </Col>
                     </Row>
                     <Row gutter={20}>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={otfFormData?.saleConsultant} label="Sales Consultant Name" name="saleConsultant">
+                            <Form.Item initialValue={otfFormData?.saleConsultant} label="Sales Consultant Name" name={[formName, 'saleConsultant']}>
                                 <Input placeholder={preparePlaceholderText('Sales Consultant Name')} disabled={true} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={otfFormData?.mitraType} label="Influence/Mitra Type" name="mitraType">
+                            <Form.Item initialValue={otfFormData?.mitraType} label="Influence/Mitra Type" name={[formName, 'mitraType']}>
                                 <Input placeholder={preparePlaceholderText('Influence/Mitra Type')} disabled={true} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={otfFormData?.mitraName} label="Influence/Mitra Name" name="mitraName">
+                            <Form.Item initialValue={otfFormData?.mitraName} label="Influence/Mitra Name" name={[formName, 'mitraName']}>
                                 <Input placeholder={preparePlaceholderText('Influence/Mitra Name')} disabled={true} />
                             </Form.Item>
                         </Col>

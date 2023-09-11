@@ -5,23 +5,20 @@
  */
 import React, { useState, useEffect } from 'react';
 import { Form, Row, Col } from 'antd';
-
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+
+import { ViewDetail } from './ViewDetail';
+import { AddEditForm } from './AddEditForm';
+
 import { otfvehicleDetailsDataActions } from 'store/actions/data/otf/vehicleDetails';
 import { otfvehicleDetailsLovDataActions } from 'store/actions/data/otf/vehicleDetailsLov';
 import { otfvehicleDetailsServiceLovDataActions } from 'store/actions/data/otf/serviceLov';
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
-
 import { showGlobalNotification } from 'store/actions/notification';
-
-import styles from 'assets/sass/app.module.scss';
-import { AddEditForm } from './AddEditForm';
-import { ViewDetail } from './ViewDetail';
-import { OTFFormButton } from '../OTFFormButton';
-import { OTFStatusBar } from '../utils/OTFStatusBar';
 import dayjs from 'dayjs';
 
+import styles from 'assets/sass/app.module.scss';
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -36,6 +33,8 @@ const mapStateToProps = (state) => {
     } = state;
 
     const moduleTitle = 'Vehicle Details';
+
+    console.log('ProductHierarchyData', VehicleLovCodeData);
 
     let returnValue = {
         userId,
@@ -83,10 +82,10 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const VehicleDetailsMasterMain = (props) => {
-    const { wrapForm = true, VehicleDetailsData, isVehicleLovDataLoading, VehicleLovData, resetProductLov, isVehicleLovDataLoaded, ProductHierarchyData, fetchProductLovCode, fetchProductLov, isLoading, saveData, ProductLovLoading, isProductHierarchyDataLoaded, typeData, fetchList, resetData, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
-    const { form, selectedOrderId, section, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick } = props;
-
+    const { VehicleDetailsData, isVehicleLovDataLoading, VehicleLovData, resetProductLov, isVehicleLovDataLoaded, ProductHierarchyData, fetchProductLovCode, fetchProductLov, isLoading, saveData, ProductLovLoading, isProductHierarchyDataLoaded, typeData, fetchList, resetData, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
+    const { form, selectedOrderId, section, buttonData, setButtonData, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick } = props;
     const { refreshData, setRefreshData, vehicleServiceData, fetchServiceLov, serviceLoading, selectedOrder, setSelectedOrder } = props;
+    const { formKey, onFinishCustom = undefined, FormActionButton, StatusBar } = props;
 
     const [activeKey, setactiveKey] = useState([1]);
     const [formData, setformData] = useState({});
@@ -146,6 +145,7 @@ const VehicleDetailsMasterMain = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedOrderId]);
+
     useEffect(() => {
         return () => {
             resetData();
@@ -221,51 +221,57 @@ const VehicleDetailsMasterMain = (props) => {
     };
 
     const onFinish = (values) => {
-        let data;
-        if (!values.hasOwnProperty('vehicleUsageType')) {
-            data = {
-                ...values,
-                otfNumber: selectedOrderId || '',
-                OtfId: formData?.id || '',
-                id: formData?.id || '',
-                poDate: dayjs(formData?.poDate?.substr(0, 10)).format('DD/MM/YYYY'),
-                vehicleUsageType: VehicleDetailsData?.vehicleUsageType,
-                model: VehicleDetailsData?.model,
-                modelCode: VehicleDetailsData?.modelCode,
-                discountAmount: VehicleDetailsData?.discountAmount,
-                optionalServices: optionsServiceModified,
-            };
+        if (onFinishCustom) {
+            onFinishCustom({ key: formKey, values });
+            handleButtonClick({ buttonAction: NEXT_ACTION });
+            setButtonData({ ...buttonData, formBtnActive: false });
         } else {
-            data = { ...values, otfNumber: selectedOrderId, OtfId: formData?.id || '', id: formData?.id || '', optionalServices: optionsServicesMapping, model: ProductHierarchyData['0']['prodctShrtName'] };
+            let data;
+            if (!values.hasOwnProperty('vehicleUsageType')) {
+                data = {
+                    ...values,
+                    otfNumber: selectedOrderId || '',
+                    OtfId: formData?.id || '',
+                    id: formData?.id || '',
+                    poDate: dayjs(formData?.poDate?.substr(0, 10)).format('DD/MM/YYYY'),
+                    vehicleUsageType: VehicleDetailsData?.vehicleUsageType,
+                    model: VehicleDetailsData?.model,
+                    modelCode: VehicleDetailsData?.modelCode,
+                    discountAmount: VehicleDetailsData?.discountAmount,
+                    optionalServices: optionsServiceModified,
+                };
+            } else {
+                data = { ...values, otfNumber: selectedOrderId, OtfId: formData?.id || '', id: formData?.id || '', optionalServices: optionsServicesMapping, model: ProductHierarchyData['0']['prodctShrtName'] };
+            }
+
+            const onSuccess = (res) => {
+                setoptionsServicesMapping([]);
+                setoptionsServiceModified([]);
+                setformData({});
+                setOpenAccordian('1');
+                setIsReadOnly(false);
+                form.resetFields();
+                resetData();
+                handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
+                setRefreshData(!refreshData);
+                setSelectedOrder({ ...selectedOrder, model: res?.data?.model });
+            };
+
+            const onError = (message) => {
+                // showGlobalNotification({ message });
+            };
+
+            const requestData = {
+                data: data,
+                method: 'put',
+                setIsLoading: listShowLoading,
+                userId,
+                onError,
+                onSuccess,
+            };
+
+            saveData(requestData);
         }
-
-        const onSuccess = (res) => {
-            setoptionsServicesMapping([]);
-            setoptionsServiceModified([]);
-            setformData({});
-            setOpenAccordian('1');
-            setIsReadOnly(false);
-            form.resetFields();
-            resetData();
-            handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
-            setRefreshData(!refreshData);
-            setSelectedOrder({ ...selectedOrder, model: res?.data?.model });
-        };
-
-        const onError = (message) => {
-            // showGlobalNotification({ message });
-        };
-
-        const requestData = {
-            data: data,
-            method: 'put',
-            setIsLoading: listShowLoading,
-            userId,
-            onError,
-            onSuccess,
-        };
-
-        saveData(requestData);
     };
     const onFinishFailed = () => {
         form.validateFields()
@@ -321,7 +327,7 @@ const VehicleDetailsMasterMain = (props) => {
         isLoading,
     };
 
-    return wrapForm ? (
+    return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed} data-testid="logRole">
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -330,7 +336,7 @@ const VehicleDetailsMasterMain = (props) => {
                             <h2>{section?.title}</h2>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <OTFStatusBar status={props?.selectedOrder?.orderStatus} />
+                            {StatusBar && <StatusBar status={props?.selectedOrder?.orderStatus} />}
                         </Col>
                     </Row>
                     {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
@@ -338,26 +344,10 @@ const VehicleDetailsMasterMain = (props) => {
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <OTFFormButton {...props} />
+                    <FormActionButton {...props} />
                 </Col>
             </Row>
         </Form>
-    ) : (
-        <>
-            <Row gutter={20} className={styles.drawerBodyRight}>
-                <Row>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <h2>{section?.title}</h2>
-                    </Col>
-                </Row>
-                {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
-            </Row>
-            <Row>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <OTFFormButton {...props} />
-                </Col>
-            </Row>
-        </>
     );
 };
 export const VehicleDetailsMaster = connect(mapStateToProps, mapDispatchToProps)(VehicleDetailsMasterMain);

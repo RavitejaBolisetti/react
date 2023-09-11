@@ -68,12 +68,12 @@ export const AddressCommonForm = (props) => {
                 </Col>
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.gender} label="Gender" name="gender">
+                    <Form.Item name={[formType, 'gender']} label="Gender" initialValue={formData?.gender}>
                         {customSelectBox({ data: typeData['GENDER'], disabled: true })}
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.ageGroup} label="Age Group" name="ageGroup">
+                    <Form.Item name={[formType, 'ageGroup']} label="Age Group" initialValue={formData?.ageGroup}>
                         {customSelectBox({ data: typeData['AGE_RANGE'], disabled: true })}
                     </Form.Item>
                 </Col>
@@ -100,7 +100,7 @@ export const AddressCommonForm = (props) => {
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name={[formType, 'pincode']} label="PIN Code" initialValue={formData?.pincode}>
-                        <Input placeholder={preparePlaceholderText('PIN Code"')} maxLength={8} disabled={true} />
+                        <Input placeholder={preparePlaceholderText('PIN Code')} maxLength={8} disabled={true} />
                     </Form.Item>
                 </Col>
 

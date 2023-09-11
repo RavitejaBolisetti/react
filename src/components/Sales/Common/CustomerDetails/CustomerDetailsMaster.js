@@ -13,13 +13,9 @@ import { otfCustomerDetailsAction } from 'store/actions/data/otf/customerDetails
 import { geoPinCodeDataActions } from 'store/actions/data/geo/pincodes';
 import { showGlobalNotification } from 'store/actions/notification';
 
-import { OTFStatusBar } from '../utils/OTFStatusBar';
-import { OTFFormButton } from '../OTFFormButton';
-
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
 
-import dayjs from 'dayjs';
 import styles from 'assets/sass/app.module.scss';
 
 const mapStateToProps = (state) => {
@@ -80,7 +76,9 @@ const mapDispatchToProps = (dispatch) => ({
 export const CustomerDetailsMain = (props) => {
     const { wrapForm = true, resetData, saveData, isLoading, userId, isDataLoaded, fetchList, listShowLoading, customerFormData, showGlobalNotification, onFinishFailed } = props;
     const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, pincodeData, formActionType, NEXT_ACTION, handleButtonClick, section } = props;
-    const { setButtonData, buttonData, typeData, selectedOrderId } = props;
+    const { typeData, selectedOrderId } = props;
+    const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, StatusBar } = props;
+
     const [form] = Form.useForm();
     const [billCstmForm] = Form.useForm();
     const [formData, setFormData] = useState('');
@@ -138,25 +136,32 @@ export const CustomerDetailsMain = (props) => {
         } else {
             form.getFieldsValue();
             const data = { bookingCustomer: { ...values?.bookingCustomer, otfNumber: selectedOrderId, bookingAndBillingType: 'BOOKING', id: customerFormData?.bookingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer }, billingCustomer: { ...values?.billingCustomer, otfNumber: selectedOrderId, bookingAndBillingType: 'BILLING', id: customerFormData?.billingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer } };
-            const onSuccess = (res) => {
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-                fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, onError, extraParams });
-                handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
-            };
 
-            const onError = (message) => {
-                // showGlobalNotification({ message });
-            };
+            if (onFinishCustom) {
+                onFinishCustom({ key: formKey, values: data });
+                handleButtonClick({ buttonAction: NEXT_ACTION });
+                setButtonData({ ...buttonData, formBtnActive: false });
+            } else {
+                const onSuccess = (res) => {
+                    showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+                    fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, onError, extraParams });
+                    handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
+                };
 
-            const requestData = {
-                data: data,
-                method: 'put',
-                setIsLoading: listShowLoading,
-                userId,
-                onError,
-                onSuccess,
-            };
-            saveData(requestData);
+                const onError = (message) => {
+                    // showGlobalNotification({ message });
+                };
+
+                const requestData = {
+                    data: data,
+                    method: 'put',
+                    setIsLoading: listShowLoading,
+                    userId,
+                    onError,
+                    onSuccess,
+                };
+                saveData(requestData);
+            }
         }
     };
 
@@ -208,7 +213,7 @@ export const CustomerDetailsMain = (props) => {
                             <h2>{section?.title}</h2>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <OTFStatusBar status={props?.selectedOrder?.orderStatus} />
+                            {StatusBar && <StatusBar status={props?.selectedOrder?.orderStatus} />}
                         </Col>
                     </Row>
                     {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
@@ -216,7 +221,7 @@ export const CustomerDetailsMain = (props) => {
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <OTFFormButton {...props} />
+                    <FormActionButton {...props} />
                 </Col>
             </Row>
         </Form>
