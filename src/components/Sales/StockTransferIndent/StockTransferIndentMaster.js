@@ -14,8 +14,10 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import { STOCK_TRANSFER } from 'constants/StockTransfer';
 import { ADD_ACTION, VIEW_ACTION, CANCEL_ACTION, NEXT_ACTION, btnVisiblity } from 'utils/btnVisiblity';
 import { stockTransferIndent } from 'store/actions/data/sales/stockTransfer/StockTransferIndent';
+import { StockIndentIssueDataAction } from 'store/actions/data/sales/stockTransfer';
 import { DealerBranchLocationDataActions } from 'store/actions/data/userManagement/dealerBranchLocation';
 import { otfvehicleDetailsLovDataActions } from 'store/actions/data/otf/vehicleDetailsLov';
+import { vehicleDetailDataActions } from 'store/actions/data/vehicle/vehicleDetail';
 import { BASE_URL_STOCK_TRANSFER as customURL, BASE_URL_USER_MANAGEMENT_DEALER as dealerURL } from 'constants/routingApi';
 
 import { ListDataTable } from 'utils/ListDataTable';
@@ -42,9 +44,13 @@ const mapStateToProps = (state) => {
             },
             stockTransferIndentData: {
                 stockTransferIndent: { isLoaded: isSearchDataLoaded = false, isLoading: isOTFSearchLoading, data, filter: filterString },
+                IndentIssue: { isLoaded: indentIssueDataLoaded = false, isLoading: indentIssueDataLoading, data: indentIssueData },
             },
             OTF: {
-                VehicleDetailsLov: {filteredListData: ProductHierarchyData },
+                VehicleDetailsLov: { filteredListData: ProductHierarchyData },
+            },
+            Vehicle: {
+                VehicleDetail: { data: vehicleVinData },
             },
         },
     } = state;
@@ -56,7 +62,13 @@ const mapStateToProps = (state) => {
         indentLocationList,
         requestedByDealerList,
         data,
-        ProductHierarchyData
+        ProductHierarchyData,
+
+        vehicleVinData,
+
+        indentIssueData,
+        indentIssueDataLoading,
+        indentIssueDataLoaded,
     };
     return returnValue;
 };
@@ -66,6 +78,10 @@ const mapDispatchToProps = (dispatch) => ({
     ...bindActionCreators(
         {
             fetchIndentLocation: DealerBranchLocationDataActions.fetchList,
+
+            fetchVinDetails: vehicleDetailDataActions.fetchList,
+            resetVinDetails: vehicleDetailDataActions.reset,
+
             fetchRequestedByList: DealerBranchLocationDataActions.fetchDetail,
 
             fetchProductLov: otfvehicleDetailsLovDataActions.fetchFilteredList,
@@ -78,6 +94,11 @@ const mapDispatchToProps = (dispatch) => ({
             resetData: stockTransferIndent.reset,
 
             saveData: stockTransferIndent.saveData,
+
+            fetchIssueList: StockIndentIssueDataAction.fetchList,
+
+            saveIssueDetail: StockIndentIssueDataAction.saveData,
+
             showGlobalNotification,
         },
         dispatch
@@ -88,8 +109,8 @@ export const StockTransferIndentMasterBase = (props) => {
     const { data, filterString, setFilterString } = props;
     const { userId, typeData, parentGroupCode, showGlobalNotification } = props;
     const { indentLocationList, requestedByDealerList, ProductHierarchyData } = props;
-    const { fetchIndentList, fetchIndentLocation, fetchIndentDetails, fetchRequestedByList, listShowLoading, saveData, ProductLovLoading, fetchProductLov } = props;
-
+    const { fetchIndentList, fetchIndentLocation, fetchIndentDetails, fetchRequestedByList, listShowLoading, saveData, ProductLovLoading, fetchProductLov, fetchVinDetails, vehicleVinData, saveIssueDetail, resetVinDetails, fetchIssueList } = props;
+    const { indentIssueData, indentIssueDataLoading, indentIssueDataLoaded } = props;
     const [searchForm] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
     const [addIndentDetailsForm] = Form.useForm();
@@ -98,6 +119,7 @@ export const StockTransferIndentMasterBase = (props) => {
     const [isAddNewIndentVisible, setIsAddNewIndentVisible] = useState(false);
     const [isViewIndentVisible, setIsViewIndentVisible] = useState(false);
     const [cancellationIssueVisible, setCancellationIssueVisible] = useState(false);
+    const [cancellationData, setCancellationData] = useState([]);
     const [selectedOrder, setSelectedOrder] = useState();
     const [toggleButton, settoggleButton] = useState(STOCK_TRANSFER?.RAISED.key);
     const [openAccordian, setOpenAccordian] = useState('');
@@ -246,12 +268,12 @@ export const StockTransferIndentMasterBase = (props) => {
                     setIsViewIndentVisible(true);
                     setSelectedOrder(res?.data);
                     setOpenAccordian(true);
-                    setButtonDataVehicleDetails({ ...btnVisiblityVehicleDetails, canView: toggleButton === STOCK_TRANSFER?.RECEIVED.key, canEdit: toggleButton === STOCK_TRANSFER?.RAISED?.key, canDelete: false, });
+                    setButtonDataVehicleDetails({ ...btnVisiblityVehicleDetails, canView: toggleButton === STOCK_TRANSFER?.RECEIVED.key, canEdit: toggleButton === STOCK_TRANSFER?.RAISED?.key, canDelete: false });
                 };
                 const extraParamData = [
                     {
                         key: 'indentNumber',
-                        value: 'STR1694237964174', //record?.indentNumber,
+                        value: record?.indentNumber,
                     },
                 ];
 
@@ -417,6 +439,33 @@ export const StockTransferIndentMasterBase = (props) => {
     };
 
 
+    const handleVinSearch = (vinNumber) => {
+        if (!vinNumber) return;
+        const extraParams = [
+            {
+                key: 'searchType',
+                title: 'Type',
+                value: 'chassisNumber',
+            },
+            {
+                key: 'searchParam',
+                title: 'Value',
+                value: vinNumber,
+            },
+            {
+                key: 'pageSize',
+                title: 'Value',
+                value: 1000,
+            },
+            {
+                key: 'pageNumber',
+                title: 'Value',
+                value: 1,
+            },
+        ];
+        fetchVinDetails({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+    };
+
     const drawerTitle = useMemo(() => {
         // if (formActionType?.viewMode) {
         //     return 'View ';
@@ -489,7 +538,7 @@ export const StockTransferIndentMasterBase = (props) => {
         tableDataItem,
         setTableDataItem,
         handleChangeLocation,
-        ProductHierarchyData
+        ProductHierarchyData,
     };
 
     const viewIndentProps = {
@@ -502,6 +551,34 @@ export const StockTransferIndentMasterBase = (props) => {
         onCloseAction: onCloseActionViewIndentDetails,
         buttonData,
         updateVehicleDetails,
+        cancellationData,
+        setCancellationData,
+        cancellationIssueVisible,
+        setCancellationIssueVisible,
+    };
+    const CancellationIssueProps = {
+        isVisible: cancellationIssueVisible,
+        formData: selectedOrder,
+        onCloseAction: () => {
+            setCancellationData([]);
+            setCancellationIssueVisible(false);
+        },
+        titleOverride: DRAWER_TITLE_CONSTANT?.CANCELLATION?.name,
+        cancellationData,
+        setCancellationData,
+        cancellationIssueVisible,
+        setCancellationIssueVisible,
+        handleVinSearch,
+        vehicleVinData,
+        saveIssueDetail,
+        resetVinDetails,
+        showGlobalNotification,
+        listShowLoading,
+        userId,
+        fetchIssueList,
+        indentIssueData,
+        indentIssueDataLoading,
+        indentIssueDataLoaded,
     };
 
     return (
@@ -515,7 +592,7 @@ export const StockTransferIndentMasterBase = (props) => {
             <AdvancedSearch {...advanceSearchFilterProps} />
             <AddEditForm {...addNewIndentProps} />
             <ViewDetail {...viewIndentProps} />
-            <CancellationIssue isVisible={cancellationIssueVisible} onCloseAction={() => {}} titleOverride={DRAWER_TITLE_CONSTANT?.CANCELLATION?.name} setIsFormVisible={() => {}} />
+            <CancellationIssue {...CancellationIssueProps} />
         </>
     );
 };
