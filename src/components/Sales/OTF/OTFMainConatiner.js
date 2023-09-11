@@ -8,18 +8,16 @@ import { Col, Row } from 'antd';
 import { withDrawer } from 'components/withDrawer';
 import { OTF_SECTION } from 'constants/OTFSection';
 
-import { OtfDetailsMaster } from './OtfDetails';
 import { CustomerDetailsMaster } from './CustomerDetails';
-
-import { SchemeDetailsMaster } from 'components/Sales/Common/SchemeDetails';
-import { VehicleDetailsMaster } from 'components/Sales/Common/VehicleDetails';
-import { InsuranceDetailsMaster } from 'components/Sales/Common/InsuranceDetails';
-import { FinananceDetailsMaster } from 'components/Sales/Common/FinananceDetails';
-import { LoyaltySchemeMaster } from 'components/Sales/Common/LoyaltyScheme';
-import { ReferralsMaster } from 'components/Sales/Common/Referrals';
-import { ExchangeVehiclesMaster } from 'components/Sales/Common/ExchangeVehicles';
-
+import { SchemeDetailsMaster } from './SchemeDetails';
+import { InsuranceDetailsMaster } from './InsuranceDetails';
+import { VehicleDetailsMaster } from './VehicleDetails';
+import { FinananceDetailsMaster } from './FinananceDetails';
+import { LoyaltySchemeMaster } from './LoyaltyScheme';
+import { ReferralsMaster } from './Referrals';
+import { ExchangeVehiclesMaster } from './ExchangeVehicles';
 import { AddOnDetailsMaster } from './AddOnDetails';
+import { OtfDetailsMaster } from './OtfDetails';
 import { InvoiceDetailsMaster } from './InvoiceDetails';
 import { ThankYouMaster } from './ThankYou';
 
