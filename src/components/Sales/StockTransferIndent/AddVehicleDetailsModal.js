@@ -13,7 +13,7 @@ import { customSelectBox } from 'utils/customSelectBox';
 import styles from 'assets/sass/app.module.scss';
 
 export const AddVehicleDetailsModalFrom = (props) => {
-    const { addVehicleDetailsForm, onFinishAddVehicleDetails } = props;
+    const { addVehicleDetailsForm, onFinishAddVehicleDetails, ProductHierarchyData } = props;
 
     useEffect(() => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -24,7 +24,11 @@ export const AddVehicleDetailsModalFrom = (props) => {
     }
 
     const handleChangeModel = (value) => {
-
+        //let bookingCustomer = form?.getFieldsValue()?.bookingCustomer;
+        ProductHierarchyData?.forEach(function (temp) {
+            if (temp.prodctShrtName === value) addVehicleDetailsForm?.setFieldsValue({ modelCode: temp.prodctCode });
+        });
+        
     }
 
     const list = [];
@@ -32,19 +36,17 @@ export const AddVehicleDetailsModalFrom = (props) => {
 
         <Form autoComplete="off" layout="vertical" form={addVehicleDetailsForm} onFinish={onFinishAddVehicleDetails}>
             <Row gutter={24}>
-                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                     <Form.Item label="Model Description" name="modelDescription" rules={[validateRequiredSelectField('Requested Quantity')]}>
-                        {customSelectBox({ data: list, fieldNames: { key: 'key', value: 'value' }, placeholder: preparePlaceholderSelect('Model Description'), onChange: handleChangeModel  })}
+                        {customSelectBox({ data: ProductHierarchyData, fieldNames: { key: 'prodctShrtName', value: 'prodctShrtName' }, placeholder: preparePlaceholderSelect('Model Description'), onChange: handleChangeModel  })}
                     </Form.Item>
                 </Col>
-                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                     <Form.Item label="Model Code" name="modelCode" > 
                         <Input placeholder={preparePlaceholderText('Model Code')} disabled={true}></Input>
                     </Form.Item>
                 </Col>
-            </Row>
-            <Row gutter={24}>
-                <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                     <Form.Item label="Requested Quantity" name="requestedQuantity" rules={[validateRequiredInputField('Requested Quantity'), validationNumber('Quantity')]}>
                         <Input placeholder={preparePlaceholderText('Requested Quantity')} ></Input>
                     </Form.Item>
@@ -67,4 +69,4 @@ export const AddVehicleDetailsModalFrom = (props) => {
     );
 };
 
-export const AddVehicleDetailsModal = withModal(AddVehicleDetailsModalFrom, {});
+export const AddVehicleDetailsModal = withModal(AddVehicleDetailsModalFrom, {width: 800});

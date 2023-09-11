@@ -28,7 +28,7 @@ const { Text } = Typography;
 
 const AddEditFormMain = (props) => {
 
-    const { formData, buttonDataVehicleDetails } = props;
+    const { formData, buttonDataVehicleDetails, ProductHierarchyData } = props;
     const { addIndentDetailsForm, onFinish, indentLocationList, requestedByDealerList,  openAccordian, setOpenAccordian } = props;
     const { buttonData, setButtonData, onCloseAction, tableDataItem, setTableDataItem } = props;
     const { handleButtonClick, handleChangeLocation } = props;
@@ -134,6 +134,7 @@ const AddEditFormMain = (props) => {
         setIsAddVehicleDetailsVisible,
         onCloseAction: onCloseActionAddVehicleDetails,
         onFinishAddVehicleDetails,
+        ProductHierarchyData
     };
 
     return (

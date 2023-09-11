@@ -4,30 +4,28 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState, useEffect } from 'react';
-import { Card, Descriptions, Col, Row, Divider, Collapse, Button } from 'antd';
-import { FiPlus } from 'react-icons/fi';
+import { Card, Descriptions, Col, Row, Divider, Form } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
-import { getCodeValue } from 'utils/getCodeValue';
 
 import { DATA_TYPE } from 'constants/dataType';
 import { withDrawer } from 'components/withDrawer';
 import { VehicleDetailFormButton } from 'components/Sales/VehicleDetail/VehicleDetailFormButton';
-import { expandIcon } from 'utils/accordianExpandIcon';
+import { EditVehicleDetailsModal } from './EditVehicleDetailsModal';
 import { DataTable } from 'utils/dataTable';
-import { PARAM_MASTER } from 'constants/paramMaster';
 import { tableColumnVehicleDetails } from './tableColumnVehicleDetails';
-import { VEHICLE_TYPE } from 'constants/VehicleType';
 
-import { EDIT_ACTION, DELETE_ACTION  } from 'utils/btnVisiblity';
+import { EDIT_ACTION, VIEW_ACTION  } from 'utils/btnVisiblity';
 
 import styles from 'assets/sass/app.module.scss';
 
-const { Panel } = Collapse;
-
 const ViewDetailMain = (props) => {
-    const { formData, isLoading, buttonDataVehicleDetails, tableData } = props;
-    const {  openAccordian, setOpenAccordian , handleButtonClick, buttonData, setButtonData, onCloseAction} = props;
-    const [filterString, setFilterString] = useState('');
+    const { formData, isLoading, buttonDataVehicleDetails, updateVehicleDetails } = props;
+    const {  handleButtonClick, buttonData, setButtonData, onCloseAction} = props;
+
+    const [editVehicleDetailsForm] = Form.useForm();
+
+    const [ isEditVehicleDetailsVisible, setIsEditVehicleDetailsVisible ] = useState(false);
+    const [ editVehicleDetails, setEditVehicleDetails ] = useState({});
 
     const viewProps = {
         bordered: false,
@@ -36,10 +34,33 @@ const ViewDetailMain = (props) => {
         column: { xs: 1, sm: 3, lg: 4, xl: 4, xxl: 4 },
     };
 
-    useEffect(() => {
-        // if(formData?.vehicleDetails?.length > 0)
-        //     handleCollapse(1);
-    }, []);
+    const onFinish = (values) => {
+        
+        setIsEditVehicleDetailsVisible(false);
+        updateVehicleDetails(values?.cancelledQuantity);
+        //const recordId = formData?.parentId || form.getFieldValue('parentId');
+        let data = { ...values };
+
+        const onSuccess = (res) => {
+            // showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            // fetchIndentList({ customURL: customURL + '/search', setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+        };
+
+        const onError = (message) => {
+            //showGlobalNotification({ message });
+        };
+        const requestData = {
+            // data: data,
+            // customURL: customURL + '/indent',
+            // method: 'post',
+            // setIsLoading: listShowLoading,
+            // userId,
+            // onError,
+            // onSuccess,
+        };
+
+        //saveData(requestData);
+    };
 
     const buttonProps = {
         formData,
@@ -49,24 +70,26 @@ const ViewDetailMain = (props) => {
         handleButtonClick,
     };
 
-    const handleCollapse = (key) => {
-        setOpenAccordian((prev) => (prev === key ? '' : key));
+    const onCloseActionEditVehicleDetails = () => {
+        setEditVehicleDetails({});
+        setIsEditVehicleDetailsVisible(false);
     };
-
-    const tableDataItem = (formData?.vehicleOTFDetails && [formData?.vehicleOTFDetails]) || tableData;
 
     const handleButtonClickVehicleDetails = ({ record = null, buttonAction, openDefaultSection = true, index }) => {
         switch (buttonAction) {
             case EDIT_ACTION:
-
+                setEditVehicleDetails(record);
+                setIsEditVehicleDetailsVisible(true);
                 break;
-            case DELETE_ACTION:
+            case VIEW_ACTION:
+                
                 break;
             
             default:
                 break;
         }
     };
+
     const sorterPagination = false;
 
     const tableProps = {
@@ -74,6 +97,15 @@ const ViewDetailMain = (props) => {
         tableColumn: tableColumnVehicleDetails( handleButtonClickVehicleDetails, sorterPagination, buttonDataVehicleDetails ),
         tableData: formData?.vehicleDetails,
         pagination: sorterPagination,
+    };
+
+    const editVehicleDetailsProps = {
+        isVisible: isEditVehicleDetailsVisible,
+        titleOverride: 'Edit Vehicle Details',
+        editVehicleDetailsForm,
+        onFinish,
+        formData : editVehicleDetails,
+        onCloseAction: onCloseActionEditVehicleDetails,
     };
 
     return (
@@ -103,20 +135,10 @@ const ViewDetailMain = (props) => {
                             </Col> 
                         </Row>
                     </Card>
-                    {/* <Row gutter={24}>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={24}> 
-                                <Collapse onChange={() => handleCollapse(1)} expandIconPosition="end" expandIcon={expandIcon} activeKey={openAccordian} collapsible="icon">
-                                    <Panel key="1" header={"Vehicle Details"}>
-                                        <Divider />
-                                        <DataTable {...tableProps} />
-                                     </Panel>
-                                </Collapse>
-                            </Col>
-                        </Row> */}
-
-
+                    
                 </Col>
             </Row>
+            <EditVehicleDetailsModal {...editVehicleDetailsProps} />
             <VehicleDetailFormButton {...buttonProps} />
         </>
     );

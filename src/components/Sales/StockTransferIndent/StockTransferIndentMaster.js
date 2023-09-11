@@ -15,6 +15,7 @@ import { STOCK_TRANSFER } from 'constants/StockTransfer';
 import { ADD_ACTION, VIEW_ACTION, CANCEL_ACTION, NEXT_ACTION, btnVisiblity } from 'utils/btnVisiblity';
 import { stockTransferIndent } from 'store/actions/data/sales/stockTransfer/StockTransferIndent';
 import { DealerBranchLocationDataActions } from 'store/actions/data/userManagement/dealerBranchLocation';
+import { otfvehicleDetailsLovDataActions } from 'store/actions/data/otf/vehicleDetailsLov';
 import { BASE_URL_STOCK_TRANSFER as customURL, BASE_URL_USER_MANAGEMENT_DEALER as dealerURL } from 'constants/routingApi';
 
 import { ListDataTable } from 'utils/ListDataTable';
@@ -42,6 +43,9 @@ const mapStateToProps = (state) => {
             stockTransferIndentData: {
                 stockTransferIndent: { isLoaded: isSearchDataLoaded = false, isLoading: isOTFSearchLoading, data, isDetailLoaded },
             },
+            OTF: {
+                VehicleDetailsLov: {filteredListData: ProductHierarchyData },
+            },
         },
     } = state;
     let returnValue = {
@@ -51,6 +55,7 @@ const mapStateToProps = (state) => {
         indentLocationList,
         requestedByDealerList,
         data,
+        ProductHierarchyData
     };
     return returnValue;
 };
@@ -61,6 +66,9 @@ const mapDispatchToProps = (dispatch) => ({
         {
             fetchIndentLocation: DealerBranchLocationDataActions.fetchList,
             fetchRequestedByList: DealerBranchLocationDataActions.fetchDetail,
+
+            fetchProductLov: otfvehicleDetailsLovDataActions.fetchFilteredList,
+            ProductLovLoading: otfvehicleDetailsLovDataActions.listShowLoading,
 
             listShowLoading: stockTransferIndent.listShowLoading,
             fetchIndentList: stockTransferIndent.fetchList,
@@ -75,8 +83,8 @@ const mapDispatchToProps = (dispatch) => ({
 export const StockTransferIndentMasterBase = (props) => {
     const { data } = props;
     const { userId, typeData, parentGroupCode, showGlobalNotification } = props;
-    const { indentLocationList, requestedByDealerList } = props;
-    const { fetchIndentList, fetchIndentLocation, fetchIndentDetails, fetchRequestedByList, listShowLoading, saveData } = props;
+    const { indentLocationList, requestedByDealerList, ProductHierarchyData } = props;
+    const { fetchIndentList, fetchIndentLocation, fetchIndentDetails, fetchRequestedByList, listShowLoading, saveData, ProductLovLoading, fetchProductLov } = props;
 
     const [searchForm] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
@@ -190,7 +198,7 @@ export const StockTransferIndentMasterBase = (props) => {
                 const onSuccessViewIndent = (res) => {
                     //addIndentDetailsForm.resetFields();
                     //setTableDataItem([]);
-                    //setButtonData({ ...defaultBtnVisiblity, cancelBtn:true, saveBtn: true, formBtnActive: true });
+                    setButtonData({ ...defaultBtnVisiblity, cancelBtn: true, saveBtn: false });
                     setIsViewIndentVisible(true);
                     setSelectedOrder(res?.data);
                     setOpenAccordian(true);
@@ -285,7 +293,7 @@ export const StockTransferIndentMasterBase = (props) => {
                 value: parentGroupCode,
             },
         ];
-
+        fetchProductLov({ setIsLoading: ProductLovLoading, userId, onErrorAction });
         fetchIndentLocation({ setIsLoading: listShowLoading, userId, onSuccessAction: onSuccessActionFetchIndLoc, onErrorAction, extraParams: extraParamData });
     };
 
@@ -390,6 +398,7 @@ export const StockTransferIndentMasterBase = (props) => {
         tableDataItem,
         setTableDataItem,
         handleChangeLocation,
+        ProductHierarchyData
     };
 
     const viewIndentProps = {
@@ -400,6 +409,7 @@ export const StockTransferIndentMasterBase = (props) => {
         setOpenAccordian,
         buttonDataVehicleDetails,
         onCloseAction: onCloseActionViewIndentDetails,
+        buttonData,
     };
 
     return (
