@@ -129,6 +129,13 @@ export const VehicleDetailMasterBase = (props) => {
         setShowDataLoading(false);
     };
 
+    useEffect(() => {
+        if (filterString) {
+            setPage({ ...page, current: 1 });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [filterString]);
+
     const extraParams = useMemo(() => {
         return [
             {
@@ -281,7 +288,7 @@ export const VehicleDetailMasterBase = (props) => {
         setIsFormVisible(true);
     };
 
-    const onFinishSearch = (values) => {};
+    const onFinishSearch = (values) => { };
 
     const onFinish = (values) => {
         const recordId = formData?.parentId || form.getFieldValue('parentId');

@@ -123,6 +123,7 @@ export const ListTehsilBase = (props) => {
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
+    const VIEW_ONLY_ACTION = FROM_ACTION_TYPE?.VIEW_ONLY;
 
     const onSuccessAction = (res) => {
         refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -227,7 +228,7 @@ export const ListTehsilBase = (props) => {
         setFormData([]);
 
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
-        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
+        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction: buttonAction === VIEW_ACTION ? VIEW_ONLY_ACTION : buttonAction }));
 
         const tehsilCategory = tehsilCategoryData?.find((category) => category.key === record?.tehsilCategoryCode)?.value;
         record && setFormData({ ...record, tehsilCategory });
@@ -364,9 +365,11 @@ export const ListTehsilBase = (props) => {
         handleButtonClick,
     };
 
+    const showAddButton = false;
     const tableProps = {
         tableColumn: tableColumn(handleButtonClick),
         tableData: searchData,
+        showAddButton,
     };
 
     const onAdvanceSearchCloseAction = () => {
@@ -465,6 +468,7 @@ export const ListTehsilBase = (props) => {
         advanceFilterProps,
         title,
         tableData: searchData,
+        showAddButton,
     };
     return (
         <>

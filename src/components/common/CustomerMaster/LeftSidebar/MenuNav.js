@@ -15,7 +15,7 @@ import { CUSTOMER_TYPE } from 'constants/CustomerType';
 import styles from 'assets/sass/app.module.scss';
 
 const MenuNav = (props) => {
-    const { customerType, currentSection, setCurrentSection, formActionType: { addMode } = undefined, selectedCustomerId } = props;
+    const { customerType, currentSection, setCurrentSection, formActionType: { addMode } = undefined, selectedCustomerId, buttonData, setIsUnsavedDataPopup, setButtonData, setNextCurrentSection } = props;
 
     const profileOptions = customerType === CUSTOMER_TYPE?.INDIVIDUAL.id ? CUSTOMER_INDIVIDUAL_SECTION : CUSTOMER_CORPORATE_SECTION;
 
@@ -39,8 +39,15 @@ const MenuNav = (props) => {
     }, [currentSection]);
 
     const onHandle = (item) => {
-        if (selectedCustomerId) {
+    
+        if (selectedCustomerId && !buttonData.formBtnActive) {
+            console.log('not wanted');
             setCurrentSection(item?.id);
+            setButtonData({ ...buttonData, formBtnActive: false });
+        } else if (buttonData.formBtnActive) {
+            console.log('wanted');
+            setNextCurrentSection(item?.id)
+            setIsUnsavedDataPopup(true);
         }
     };
 

@@ -140,12 +140,6 @@ const AddEditFormMain = (props) => {
         handleButtonClick,
     };
 
-    // const selectProps = {
-    //     optionFilterProp: 'children',
-    //     showSearch: true,
-    //     allowClear: true,
-    //     className: styles.headerSelectField,
-    // };
     return (
         <Form autoComplete="off" layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20} className={styles.drawerBody}>
