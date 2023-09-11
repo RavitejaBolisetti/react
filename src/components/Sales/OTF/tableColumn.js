@@ -13,7 +13,7 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
     const tableColumn = [
         tblPrepareColumns({
             title: 'Booking No.',
-            dataIndex: 'otfNumber',
+            dataIndex: 'bookingNumber',
             width: '18%',
         }),
 
@@ -23,6 +23,7 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             width: '12%',
             render: (_, record) => (record?.otfDate ? convertDateMonthYear(record?.otfDate) : ''),
         }),
+
         tblPrepareColumns({
             title: 'Customer Name',
             dataIndex: 'customerName',
