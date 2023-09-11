@@ -137,7 +137,7 @@ const InvoiceDetailsMasterBase = (props) => {
         activeKey,
         selectedOtfNumber,
         setSelectedOtfNumber,
-        invoiceMode: true,
+        wrapForm: false,
     };
 
     const viewProps = {
@@ -147,7 +147,7 @@ const InvoiceDetailsMasterBase = (props) => {
         formActionType,
         styles,
         isLoading,
-        invoiceMode: true,
+        wrapForm: false,
     };
 
     return (

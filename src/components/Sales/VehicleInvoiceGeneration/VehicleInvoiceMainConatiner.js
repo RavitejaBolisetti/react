@@ -27,6 +27,7 @@ const VehicleInvoiceMainConatinerMain = (props) => {
 
     const myProps = {
         ...props,
+        wrapForm: false,
         generateIrn,
     };
 

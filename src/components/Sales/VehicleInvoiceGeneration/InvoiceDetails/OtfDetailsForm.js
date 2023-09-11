@@ -5,8 +5,8 @@
  */
 import React, { useEffect } from 'react';
 import { Row, Col, Form, DatePicker, Input, Divider } from 'antd';
-import { dateFormat } from 'utils/formatDateTime';
-import { validateRequiredSelectField, validationNumber } from 'utils/validation';
+import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
+import { validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { customSelectBox } from 'utils/customSelectBox';
 import { PARAM_MASTER } from 'constants/paramMaster';
@@ -14,11 +14,13 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 const { Search } = Input;
 
 const OtfDetailsForm = (props) => {
-    const { formData, invoiceDetailForm, otfFormData, typeData, otfNumber, setSelectedOtfNumber } = props;
+    const { formData, invoiceDetailForm, otfFormData, typeData, selectedOtfNumber, setSelectedOtfNumber } = props;
+
     useEffect(() => {
         if (otfFormData) {
             invoiceDetailForm?.setFieldsValue({
                 ...otfFormData,
+                otfDate: formattedCalendarDate(otfFormData?.otfDate),
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -37,7 +39,7 @@ const OtfDetailsForm = (props) => {
                     </Form.Item>
                 </Col>
             </Row>
-            {otfNumber && (
+            {selectedOtfNumber && (
                 <>
                     <Divider />
                     <Row gutter={20}>

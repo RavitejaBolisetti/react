@@ -133,7 +133,7 @@ const LoyaltySchemeMasterMain = (props) => {
             form.setFieldsValue({ ...data, customerCode: data?.customerId, oldChassisNumber: data?.chassisNumber, variantCode: data?.variant, vehicleModelGroup: data?.modelGroup });
         } else if (data === null) {
             showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'No data found' });
-            form.resetFields(['customerId', 'customerName', 'make', 'modelGroup', 'variant', 'oldRegNumber', 'oldChassisNumber', 'dob']);
+            form.resetFields(['customerCode', 'customerName', 'make', 'vehicleModelGroup', 'variantCode', 'registrationNumber', 'oldChassisNumber', 'customerDOB']);
         }
     };
 
