@@ -167,6 +167,7 @@ export const BASE_URL_OTF_CHANGE_HISTORY = BASE_URL_OTF + 'changehistory';
 export const BASE_URL_OTF_SO_MAPPING = BASE_URL_OTF + 'somapping';
 export const BASE_URL_OTF_SO_USER_MAPPING = BASE_URL_OTF + 'somapping/users';
 export const BASE_URL_OTF_SO_MAPPING_UNMAPPING_HISTORY = BASE_URL_OTF + 'somapping/history';
+export const BASE_URL_OTF_EXCHANGE_VEHICLE_ALERT = BASE_URL + 'vehicle/exchangevehicle/prioritymasteralert';
 
 export const BASE_URL_OTF_TRANSFER = BASE_URL_OTF + 'transfer';
 export const BASE_URL_OTF_CANCELLATION = BASE_URL_OTF + 'request/cancel';
@@ -271,10 +272,10 @@ export const BASE_URL_VEHICLE_DETAILS_SERVICE = BASE_URL + 'otf/vehicledetails/o
 
 export const BASE_URL_MILE_SKILL = BASE_URL + 'dealer/mileskills';
 
-export const BASE_URL_NOTIFICATION = BASE_URL + 'applications/notifications';
+export const BASE_URL_NOTIFICATION = BASE_URL + 'applications/notifications'; 
 export const BASE_URL_NOTIFICATION_COUNTS = BASE_URL + 'applications/notifications/counts';
 
 export const BASE_URL_OTF_SO_MAPPING_MAIN = BASE_URL + 'otf/somapunmap';
 export const BASE_URL_OTF_SO_MAPPING_SWAP = BASE_URL + 'otf/somapunmap/swap';
 export const BASE_URL_SO_MAPPING_SEARCH = BASE_URL + 'otf/somapunmap/search';
-export const BASE_URL_SO_MAPPING_OTF_SEARCH = BASE_URL + 'otf/somapunmap/orders';
+export const BASE_URL_SO_MAPPING_OTF_SEARCH = BASE_URL + 'otf/somapunmap/orders'; 

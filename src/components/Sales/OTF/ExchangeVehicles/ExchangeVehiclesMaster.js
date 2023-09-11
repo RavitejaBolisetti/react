@@ -16,6 +16,8 @@ import { schemeDataActions } from 'store/actions/data/otf/exchangeVehicle';
 import { vehicleMakeDetailsDataActions } from 'store/actions/data/vehicle/makeDetails';
 import { vehicleModelDetailsDataActions } from 'store/actions/data/vehicle/modelDetails';
 import { vehicleVariantDetailsDataActions } from 'store/actions/data/vehicle/variantDetails';
+import { exchangeVehicleAlertDataAction } from 'store/actions/data/otf/exchangeVehicleAlert'
+import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 import { showGlobalNotification } from 'store/actions/notification';
 import { BASE_URL_CUSTOMER_MASTER_VEHICLE_LIST as customURL } from 'constants/routingApi';
 import VehiclePriorityAllotmentAlert from './VehiclePriorityAllotmentAlert';
@@ -36,6 +38,7 @@ const mapStateToProps = (state) => {
                 ExchangeVehicle: { isLoaded: isDataLoaded = false, isLoading, data: exchangeData = [] },
                 FinanceLov: { isLoaded: isFinanceLovDataLoaded = false, isLoading: isFinanceLovLoading, data: financeLovData = [] },
                 SchemeDetail: { isFilteredListLoaded: isSchemeLovDataLoaded = false, isLoading: isSchemeLovLoading, filteredListData: schemeLovData = [] },
+                ExchangeVehicleAlert : { isLoaded: isExchangeVehicleAlertLoaded = false, isLoading: isExchangeVehicleAlertLoading = false, data: exchangeVehicleAlertData = [] },
             },
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             Vehicle: {
@@ -43,6 +46,7 @@ const mapStateToProps = (state) => {
                 ModelVehicleDetails: { isLoaded: isModelDataLoaded = false, isLoading: isModelLoading, data: modelData = [] },
                 VariantVehicleDetails: { isLoaded: isVariantDataLoaded = false, isLoading: isVariantLoading, data: variantData = [] },
             },
+            ProductHierarchy: { isFilteredListLoaded: isProductHierarchyDataLoaded = false, isLoading: isProductHierarchyLoading, filteredListData: VehicleLovCodeData = [] },
         },
         customer: {
             customerDetail: { isLoaded: isDataCustomerLoaded = false, isLoading: isCustomerLoading = false, data: customerDetail = [] },
@@ -83,6 +87,14 @@ const mapStateToProps = (state) => {
         isDataCustomerLoaded,
         isCustomerLoading,
         customerDetail,
+
+        isExchangeVehicleAlertLoaded,
+        isExchangeVehicleAlertLoading,
+        exchangeVehicleAlertData,
+
+        isProductHierarchyDataLoaded,
+        isProductHierarchyLoading,
+        VehicleLovCodeData,
     };
     return returnValue;
 };
@@ -115,6 +127,13 @@ const mapDispatchToProps = (dispatch) => ({
             listShowLoading: schemeDataActions.listShowLoading,
             saveData: schemeDataActions.saveData,
 
+            fetchListVehicleExchangeAlert : exchangeVehicleAlertDataAction.fetchList,
+            listShowLoadingVehicleExchangeAlert: exchangeVehicleAlertDataAction.listShowLoading,
+            resetVehicleExchangeAlert : exchangeVehicleAlertDataAction.reset,
+
+            fetchProductLovCode: productHierarchyDataActions.fetchFilteredList,
+            ProductLovCodeLoading: productHierarchyDataActions.listShowLoading,
+
             resetData: schemeDataActions.reset,
             showGlobalNotification,
         },
@@ -123,8 +142,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ExchangeVehiclesBase = (props) => {
-    const { exchangeData, isLoading, fetchList, userId, listShowLoading, showGlobalNotification, section } = props;
-    const { typeData } = props;
+    const { exchangeData, isLoading, fetchList, userId, listShowLoading, showGlobalNotification, section,fetchProductLovCode,ProductLovCodeLoading,VehicleLovCodeData } = props;
+    const { typeData,selectedOrder,fetchListVehicleExchangeAlert,listShowLoadingVehicleExchangeAlert,exchangeVehicleAlertData,resetVehicleExchangeAlert} = props;
     const { fetchMakeLovList, listMakeShowLoading, fetchModelLovList, listModelShowLoading, fetchVariantLovList, listVariantShowLoading } = props;
     const { isMakeLoading, makeData, isModelDataLoaded, isModelLoading, modelData, isVariantDataLoaded, isVariantLoading, variantData, saveData } = props;
     const { financeLovData, isFinanceLovLoading, fetchFinanceLovList, listFinanceLovShowLoading } = props;
@@ -137,6 +156,7 @@ const ExchangeVehiclesBase = (props) => {
     const [editableOnSearch, setEditableOnSearch] = useState(false);
     const [customerList, setCustomerList] = useState();
     const [modalOpen, setModalOpen] = useState(false);
+    const [ modelGroup, setModelGroup ] = useState(null);
 
     const fnSetData = (data) => {
         if (data?.make) {
@@ -263,6 +283,60 @@ const ExchangeVehiclesBase = (props) => {
             fetchVariantLovList({ setIsLoading: listVariantShowLoading, userId, extraParams: makeExtraParams('model', 'model', value, 'model') });
         }
     };
+
+    const showAlert = (val) => {
+        setModelGroup( (prev) => ({ ...prev, oldModelGroup:val}));
+    }
+
+    useEffect(() => {
+        const LovParams = [
+            {
+                key: 'prodctCode',
+                value: selectedOrder?.modelCode,
+            },
+        ];
+
+        fetchProductLovCode({ setIsLoading: ProductLovCodeLoading, userId, onErrorAction, extraparams: LovParams });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId]); 
+
+    useEffect(() => {
+        if (VehicleLovCodeData) {
+            setModelGroup( (prev) =>  ({...prev, newModelGroup : VehicleLovCodeData?.[0]?.modelGroupCode}) )
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [VehicleLovCodeData]);
+    
+    useEffect(() => {
+       
+        const extraParams = [
+            {
+                key: 'oldModelGroup',
+                value: modelGroup?.oldModelGroup,
+            },
+            {
+                key: 'newModelGroup',
+                value: modelGroup?.newModelGroup,
+            },
+        ];
+
+        if(modelGroup?.oldModelGroup){
+            resetVehicleExchangeAlert();
+            fetchListVehicleExchangeAlert({ setIsLoading: listShowLoadingVehicleExchangeAlert, extraParams, onSuccessAction, onErrorAction, userId })
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [modelGroup?.oldModelGroup]);   
+
+    useEffect( () => {
+        if(exchangeVehicleAlertData){
+            setModalOpen(true);
+        }
+        else{
+            setModalOpen(false);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[exchangeVehicleAlertData] )
+
     const onFinish = (values) => {
         const { customerName } = values;
         if (values?.exchange && !customerName) {
@@ -376,6 +450,7 @@ const ExchangeVehiclesBase = (props) => {
         setEditableOnSearch,
         fnSetData,
         customerList,
+        showAlert,
     };
 
     const viewProps = {

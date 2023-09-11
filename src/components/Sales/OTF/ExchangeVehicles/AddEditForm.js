@@ -15,7 +15,7 @@ import { prepareCaption } from 'utils/prepareCaption';
 import styles from 'assets/sass/app.module.scss';
 
 const AddEditFormMain = (props) => {
-    const { formData, form, formActionType, editableOnSearch } = props;
+    const { formData, form, formActionType, editableOnSearch,showAlert } = props;
     const { financeLovData, schemeLovData, typeData, makeData } = props;
     const { isConfigLoading, isSchemeLovLoading, isFinanceLovLoading, isMakeLoading, isModelLoading, isVariantLoading } = props;
     const { filteredModelData, filteredVariantData, handleFilterChange, fnSetData } = props;
@@ -66,7 +66,7 @@ const AddEditFormMain = (props) => {
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item label="Model Group" name="modelGroup" data-testid="modelGroup" rules={[validateRequiredSelectField('model group')]}>
-                                <Select placeholder="Select" loading={isModelLoading} allowClear fieldNames={{ label: 'value', value: 'key' }} options={filteredModelData} onChange={(value, selectobj) => handleFilterChange('modelGroup', value, selectobj)} />
+                                <Select placeholder="Select" loading={isModelLoading} allowClear fieldNames={{ label: 'value', value: 'key' }} options={filteredModelData} onChange={(value, selectobj) => {handleFilterChange('modelGroup', value, selectobj);showAlert(value)}} />
                             </Form.Item>
                         </Col>
                     </Row>
