@@ -14,18 +14,19 @@ import { EditVehicleDetailsModal } from './EditVehicleDetailsModal';
 import { DataTable } from 'utils/dataTable';
 import { tableColumnVehicleDetails } from './tableColumnVehicleDetails';
 
-import { EDIT_ACTION, VIEW_ACTION  } from 'utils/btnVisiblity';
+import { EDIT_ACTION, VIEW_ACTION } from 'utils/btnVisiblity';
 
 import styles from 'assets/sass/app.module.scss';
 
 const ViewDetailMain = (props) => {
     const { formData, isLoading, buttonDataVehicleDetails, updateVehicleDetails } = props;
-    const {  handleButtonClick, buttonData, setButtonData, onCloseAction} = props;
+    const { handleButtonClick, buttonData, setButtonData, onCloseAction } = props;
+    const { setCancellationData, setCancellationIssueVisible } = props;
 
     const [editVehicleDetailsForm] = Form.useForm();
 
-    const [ isEditVehicleDetailsVisible, setIsEditVehicleDetailsVisible ] = useState(false);
-    const [ editVehicleDetails, setEditVehicleDetails ] = useState({});
+    const [isEditVehicleDetailsVisible, setIsEditVehicleDetailsVisible] = useState(false);
+    const [editVehicleDetails, setEditVehicleDetails] = useState({});
 
     const viewProps = {
         bordered: false,
@@ -35,7 +36,6 @@ const ViewDetailMain = (props) => {
     };
 
     const onFinish = (values) => {
-        
         setIsEditVehicleDetailsVisible(false);
         updateVehicleDetails(values?.cancelledQuantity);
         //const recordId = formData?.parentId || form.getFieldValue('parentId');
@@ -82,9 +82,10 @@ const ViewDetailMain = (props) => {
                 setIsEditVehicleDetailsVisible(true);
                 break;
             case VIEW_ACTION:
-                
+                setCancellationData({ ...record, indentDetailId: record?.id, ...formData });
+                setCancellationIssueVisible(true);
                 break;
-            
+
             default:
                 break;
         }
@@ -94,7 +95,7 @@ const ViewDetailMain = (props) => {
 
     const tableProps = {
         srl: true,
-        tableColumn: tableColumnVehicleDetails( handleButtonClickVehicleDetails, sorterPagination, buttonDataVehicleDetails ),
+        tableColumn: tableColumnVehicleDetails(handleButtonClickVehicleDetails, sorterPagination, buttonDataVehicleDetails),
         tableData: formData?.vehicleDetails,
         pagination: sorterPagination,
     };
@@ -104,7 +105,7 @@ const ViewDetailMain = (props) => {
         titleOverride: 'Edit Vehicle Details',
         editVehicleDetailsForm,
         onFinish,
-        formData : editVehicleDetails,
+        formData: editVehicleDetails,
         onCloseAction: onCloseActionEditVehicleDetails,
     };
 
@@ -121,7 +122,7 @@ const ViewDetailMain = (props) => {
                             <Descriptions.Item label="Indent To Location">{checkAndSetDefaultValue(formData?.indentToLocation, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Requested By">{checkAndSetDefaultValue(formData?.requestedBy, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Remark">{checkAndSetDefaultValue(formData?.remarks, isLoading)}</Descriptions.Item>
-                            </Descriptions>
+                        </Descriptions>
                     </Card>
 
                     <Card>
@@ -132,10 +133,9 @@ const ViewDetailMain = (props) => {
                             </Col>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <DataTable {...tableProps} />
-                            </Col> 
+                            </Col>
                         </Row>
                     </Card>
-                    
                 </Col>
             </Row>
             <EditVehicleDetailsModal {...editVehicleDetailsProps} />

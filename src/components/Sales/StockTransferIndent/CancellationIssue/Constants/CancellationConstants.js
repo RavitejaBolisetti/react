@@ -17,3 +17,9 @@ export const DRAWER_TITLE_CONSTANT = {
         page: 'Stock Transfer Data',
     },
 };
+export const ISSUE_CONSTANT = {
+    CANCEL: {
+        id: 'Cancel',
+        key: 'CNCL',
+    },
+};

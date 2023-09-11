@@ -11,6 +11,7 @@ import styles from 'assets/sass/app.module.scss';
 
 const ViewDetailMain = (props) => {
     const { formData, isLoading = false } = props;
+    console.log('formData', formData);
 
     const viewProps = {
         bordered: false,
@@ -19,31 +20,27 @@ const ViewDetailMain = (props) => {
         column: { xs: 1, sm: 4, lg: 4, xl: 4, xxl: 4 },
     };
     const viewData = {
-        indentLocation: formData?.indentLocation,
-        indentNumber: formData?.indentNumber ?? 'NA',
-        indentDate: converDateDayjs(formData?.indentDate) ?? 'NA',
-        indentStatus: formData?.indentStatus,
-        requestedBy: formData?.requestedBy,
-        remarks: formData?.remarks,
+        ...formData,
+        indentDate: converDateDayjs(formData?.indentDate),
     };
     return (
         <Card className={styles.drawerCardView}>
             <Descriptions {...viewProps}>
-                <Descriptions.Item label="Indent To Location">{checkAndSetDefaultValue(viewData?.indentLocation, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Indent To Location">{checkAndSetDefaultValue(viewData?.indentToLocation, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Indent Number">{checkAndSetDefaultValue(viewData?.indentNumber, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Indent Date">{checkAndSetDefaultValue(viewData?.indentDate, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Indent Status">{checkAndSetDefaultValue(viewData?.indentStatus, isLoading)}</Descriptions.Item>
             </Descriptions>
             <Descriptions {...viewProps}>
-                <Descriptions.Item label="Model Description">{checkAndSetDefaultValue(viewData?.indentLocation, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Model Code">{checkAndSetDefaultValue(viewData?.indentNumber, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Requested Quantity">{checkAndSetDefaultValue(viewData?.indentDate, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Cancelled Quantity">{checkAndSetDefaultValue(viewData?.indentStatus, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Model Description">{checkAndSetDefaultValue(viewData?.modelDescription, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Model Code">{checkAndSetDefaultValue(viewData?.modelCode, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Requested Quantity">{checkAndSetDefaultValue(String(viewData?.requestedQuantity), isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Cancelled Quantity">{checkAndSetDefaultValue(String(viewData?.cancelledQuantity), isLoading)}</Descriptions.Item>
             </Descriptions>
             <Descriptions {...viewProps}>
-                <Descriptions.Item label="Issued & not received Quantity">{checkAndSetDefaultValue(viewData?.requestedBy, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="received Quantity">{checkAndSetDefaultValue(viewData?.remarks, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Balance Quantity">{checkAndSetDefaultValue(viewData?.remarks, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Issued & not received Quantity">{checkAndSetDefaultValue(String(viewData?.issuedAndNotReceivedQuantity), isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="received Quantity">{checkAndSetDefaultValue(String(viewData?.receivedQuantity), isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Balance Quantity">{checkAndSetDefaultValue(String(viewData?.balancedQuantity), isLoading)}</Descriptions.Item>
             </Descriptions>
         </Card>
     );

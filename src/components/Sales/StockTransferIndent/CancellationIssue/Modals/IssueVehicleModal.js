@@ -8,10 +8,10 @@ import { Row, Col, Input, Form } from 'antd';
 import { withModal } from 'components/withModal';
 import { ModalButtons } from 'components/common/Button';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
-import { validateRequiredInputField } from 'utils/validation';
+import { validateRequiredInputField, validationFieldLetterAndNumber, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
 const { Search } = Input;
 
-const IssueVehicleDetailsModalMain = ({ issueForm, onFinish, handleVinSearch, isReadonly = true, onCloseAction }) => {
+const IssueVehicleDetailsModalMain = ({ issueForm, onFinish, handleVinSearch, isReadonly = true, onCloseAction, vehicleVinData }) => {
     const modalProps = {
         reset: true,
         submit: true,
@@ -20,6 +20,7 @@ const IssueVehicleDetailsModalMain = ({ issueForm, onFinish, handleVinSearch, is
         handleResetFilter: onCloseAction,
     };
     const disabledProps = { disabled: isReadonly };
+
     return (
         <>
             <Form form={issueForm} data-testid="test" onFinish={onFinish} layout="vertical" autocomplete="off" colon="false">
@@ -30,8 +31,8 @@ const IssueVehicleDetailsModalMain = ({ issueForm, onFinish, handleVinSearch, is
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                        <Form.Item name="vinNumber" label="VIN" rules={[validateRequiredInputField('VIN')]}>
-                            <Search placeholder={preparePlaceholderText('vin number')} onClick={handleVinSearch} maxLength={50} />
+                        <Form.Item name="vinNumber" label="VIN" rules={[validateRequiredInputField('VIN'), validationFieldLetterAndNumber('VIN')]}>
+                            <Search placeholder={preparePlaceholderText('vin number')} onSearch={handleVinSearch} onChange={() => issueForm.resetFields(['engineNumber'])} maxLength={50} />
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8}>
@@ -42,12 +43,12 @@ const IssueVehicleDetailsModalMain = ({ issueForm, onFinish, handleVinSearch, is
                 </Row>
                 <Row gutter={24}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                        <Form.Item name="oemDate" label="OEN Invoice Date">
+                        <Form.Item name="invoiceDate" label="OEN Invoice Date">
                             <Input placeholder={preparePlaceholderText('OEN Invoice Date')} maxLength={50} {...disabledProps} />
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                        <Form.Item name="oemNumber" label="OEM Invoice Number">
+                        <Form.Item name="invoiceNumber" label="OEM Invoice Number">
                             <Input placeholder={preparePlaceholderText('OEM Invoice Number')} maxLength={50} {...disabledProps} />
                         </Form.Item>
                     </Col>
@@ -64,7 +65,7 @@ const IssueVehicleDetailsModalMain = ({ issueForm, onFinish, handleVinSearch, is
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                        <Form.Item name="issueCharges" label="Issue Charges" rules={[validateRequiredInputField('issue charges')]}>
+                        <Form.Item name="issueCharges" label="Issue Charges" rules={[validateRequiredInputField('issue charges'), validateNumberWithTwoDecimalPlaces('issue charges')]}>
                             <Input placeholder={preparePlaceholderText('Issue Charges')} maxLength={50} />
                         </Form.Item>
                     </Col>
@@ -81,4 +82,4 @@ const IssueVehicleDetailsModalMain = ({ issueForm, onFinish, handleVinSearch, is
     );
 };
 
-export const IssueVehicleDetailsModal = withModal(IssueVehicleDetailsModalMain, { width: '40%', footer: null });
+export const IssueVehicleDetailsModal = withModal(IssueVehicleDetailsModalMain, { width: '50%', footer: null });

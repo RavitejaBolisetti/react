@@ -7,7 +7,7 @@ import React, { useEffect, useState } from 'react';
 import { Row, Col, Button, Form, Collapse, Typography, Divider, Space } from 'antd';
 import { withDrawer } from 'components/withDrawer';
 import { ViewDetail, ViewIssueCard } from './ViewDetails';
-import { BUTTON_NAME_CONSTANTS, DRAWER_TITLE_CONSTANT } from './Constants';
+import { BUTTON_NAME_CONSTANTS, DRAWER_TITLE_CONSTANT, ISSUE_CONSTANT } from './Constants';
 import { expandIcon } from 'utils/accordianExpandIcon';
 // import { IssueVehicleDetailsModal, CancelConfirmModal } from './Modals';
 import { CancelConfirmModal, IssueVehicleDetailsModal } from './Modals';
@@ -17,27 +17,38 @@ const { Panel } = Collapse;
 const { Text } = Typography;
 
 const CancellationIssueMain = (props) => {
-    const { formData } = props;
+    const { cancellationData, handleVinSearch, vehicleVinData, setCancellationData, cancellationIssueVisible, setCancellationIssueVisible, saveIssueDetail, showGlobalNotification, resetVinDetails, listShowLoading, userId, fetchIssueList, indentIssueData, indentIssueDataLoading, indentIssueDataLoaded } = props;
 
     const [issueForm] = Form.useForm();
     const [issueModalOpen, setIssueModal] = useState(false);
     const [isConfirmationModal, setIsConfirmationModal] = useState(false);
     const [issueData, setIssueData] = useState([{}]);
     const [myActiveKey, setmyActiveKey] = useState([]);
+    useEffect(() => {
+        if (vehicleVinData?.vehicleSearch?.length && cancellationData) issueForm.setFieldsValue({ modelDescription: cancellationData?.modelDescription, ...vehicleVinData?.vehicleSearch[0] });
+        issueForm.setFieldsValue({ modelDescription: cancellationData?.modelDescription });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [issueModalOpen, cancellationData, vehicleVinData]);
 
     const handleCollapses = (values) => {
         myActiveKey?.includes(values) ? setmyActiveKey('') : setmyActiveKey([values]);
     };
-
+    const onErrorAction = (message) => {
+        showGlobalNotification({ message });
+    };
+    const onSuccessAction = (res) => {
+        showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+    };
     const onCloseAction = (key) => {
         setIssueModal(false);
         issueForm.resetFields();
+        resetVinDetails();
     };
     const handleCloseConfirmation = (key) => {
         setIsConfirmationModal(false);
     };
     const ViewDetailProps = {
-        formData,
+        formData: cancellationData,
     };
     const handleIssueAdd = () => {
         setIssueModal(true);
@@ -49,10 +60,76 @@ const CancellationIssueMain = (props) => {
     const handlePrintDownload = () => {};
 
     const onFinish = (values) => {
-        console.log(values);
+        if (!values?.engineNumber) {
+            showGlobalNotification({ notificationType: 'error', title: 'ERROR', message: 'Search VIN to continue' });
+            return;
+        }
+
+        let data = { ...values, indentHdrId: cancellationData?.id, id: '', modelCode: values?.modelCode, issueStatus: values?.issueStatus, issueDate: values?.issueDate };
+        console.log('Issue Detail', values);
+
+        const onSuccess = (res) => {
+            issueForm.resetFields();
+            setCancellationIssueVisible(false);
+            setIssueData({ ...issueData, values });
+            resetVinDetails();
+            // fetchIssueList({ setIsLoading: listShowLoading, userId, onSuccessAction, onErrorAction, extraParams });
+            // fetchIndentLocation({ setIsLoading: listShowLoading, userId, onSuccessAction: onSuccessActionFetchIndLoc, onErrorAction, extraParams: extraParamData });
+            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+        };
+
+        const onError = (message) => {
+            showGlobalNotification({ message });
+        };
+        const requestData = {
+            data: data,
+            method: 'post',
+            setIsLoading: listShowLoading,
+            userId,
+            onError,
+            onSuccess,
+        };
+
+        saveIssueDetail(requestData);
     };
-    const IssueVehicleDetailsProps = { onCloseAction, isVisible: issueModalOpen, titleOverride: DRAWER_TITLE_CONSTANT?.ISSUE?.name, issueForm, onFinish };
-    const cancellationIssueProps = { onCloseAction: handleCloseConfirmation, isVisible: isConfirmationModal, titleOverride: DRAWER_TITLE_CONSTANT?.CONFIRMATION?.name };
+    const handdleYes = () => {
+        let data = {
+            issueId: indentIssueData?.issueId,
+            indentDetailId: cancellationData?.indentDetailId,
+            indentHdrId: cancellationData?.id,
+            issueStatus: ISSUE_CONSTANT?.CANCEL?.key,
+        };
+        const onSuccess = (res) => {
+            resetVinDetails();
+            const extraParams = [
+                {
+                    key: 'indentNumber',
+                    title: 'Number',
+                    value: cancellationData?.indentNumber,
+                },
+            ];
+            fetchIssueList({ setIsLoading: listShowLoading, userId, onSuccessAction, onErrorAction, extraParams });
+            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+        };
+
+        const onError = (message) => {
+            showGlobalNotification({ message });
+        };
+        const requestData = {
+            data: data,
+            method: 'put',
+            setIsLoading: listShowLoading,
+            userId,
+            onError,
+            onSuccess,
+        };
+
+        saveIssueDetail(requestData);
+    };
+
+    const IssueVehicleDetailsProps = { onCloseAction, isVisible: issueModalOpen, titleOverride: DRAWER_TITLE_CONSTANT?.ISSUE?.name, issueForm, onFinish, cancellationData, handleVinSearch, vehicleVinData };
+    const cancellationIssueProps = { onCloseAction: handleCloseConfirmation, isVisible: isConfirmationModal, titleOverride: DRAWER_TITLE_CONSTANT?.CONFIRMATION?.name, handdleYes };
+
     return (
         <>
             <div className={styles.drawerBodyNew}>

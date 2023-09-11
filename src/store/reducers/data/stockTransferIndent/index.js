@@ -6,7 +6,9 @@
 import { combineReducers } from 'redux';
 
 import { stockTransferIndent } from './stockTransferIndent';
+import { IndentIssue } from './indentIssue';
 
 export const stockTransferIndentData = combineReducers({
     stockTransferIndent,
+    IndentIssue,
 });
