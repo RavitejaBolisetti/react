@@ -97,7 +97,7 @@ describe('Accessories Add On Component', () => {
         const searchData= [{partNumber:"HSN9605",type:"Suspension",sellingPrice:"900",mrp:"100000",quantity:"2",partDescription:"Suspension"}];
 
         render(<FormWrapper isPresent={jest.fn().mockReturnValue(true)} showGlobalNotification={jest.fn()} addOnItemInfo={searchData} onFinishFailed={jest.fn()} searchData={searchData} addButtonDisabled={addButtonDisabled} onSearchPart={jest.fn()} handlePartSearch={jest.fn()} handleOnSearch={jest.fn()} handleAccesoriesForm={jest.fn()} isBtnDisabled={false} />);
-        const partNumber=screen.getByRole('textbox', { name: 'Part Number' });
+        const partNumber=screen.getByRole('textbox', { name: 'Part Name' });
         fireEvent.change(partNumber, { target: { value: 'HSN9605' }});
         const searchBtn=screen.getByRole('img', { name: 'search' });
         fireEvent.click(searchBtn);

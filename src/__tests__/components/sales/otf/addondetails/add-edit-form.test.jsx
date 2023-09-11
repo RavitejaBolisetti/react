@@ -26,16 +26,12 @@ describe('Add Edit Form Component', () => {
         };
 
         render(<FormWrapper handleCollapse={jest.fn()} formData={formData} setformDataSetter={jest.fn()} />)
-        const plusShield=screen.getByRole('button', { name: 'plus Shield', exact: false });
-        fireEvent.click(plusShield);
-        const plusRSA=screen.getByRole('button', { name: 'plus RSA', exact: false });
-        fireEvent.click(plusRSA);
-        const plusAMC=screen.getByRole('button', { name: 'plus AMC', exact: false });
-        fireEvent.click(plusAMC);
-        const plusFMS=screen.getByRole('button', { name: 'plus FMS', exact: false });
-        fireEvent.click(plusFMS);
-        const plusAccessories=screen.getByRole('button', { name: 'plus Accessories Information plus Add', exact: false });
-        fireEvent.click(plusAccessories);
+        const collapse=screen.getAllByRole('img', { name: 'plus', exact: false });
+        fireEvent.click(collapse[0]);
+        fireEvent.click(collapse[1]);
+        fireEvent.click(collapse[2]);
+        fireEvent.click(collapse[3]);
+        fireEvent.click(collapse[4]);
         const plusAdd=screen.getByRole('button', { name: 'plus Add', exact: false });
         fireEvent.click(plusAdd);
     });
