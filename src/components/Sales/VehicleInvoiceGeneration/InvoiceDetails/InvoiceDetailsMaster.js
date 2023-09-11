@@ -185,4 +185,4 @@ const InvoiceDetailsMasterBase = (props) => {
     );
 };
 
-export const InvoiceDetailsMaster = connect(mapStateToProps, null)(InvoiceDetailsMasterBase);
+export const InvoiceDetailsMaster = connect(null, null)(InvoiceDetailsMasterBase);
