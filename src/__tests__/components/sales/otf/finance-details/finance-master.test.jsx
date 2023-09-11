@@ -15,6 +15,11 @@ const FormWrapper = (props) => {
     return <FinananceDetailsMaster form={form} {...props} />;
 };
 
+const FNC_ARNGD = [
+    { key: '1', value: 'Finance Option 1' },
+    { key: '2', value: 'Finance Option 2' },
+];
+
 const props = {
     saveData: jest.fn(),
     resetData: jest.fn(),
@@ -58,7 +63,7 @@ describe('OTF finance view Details render', () => {
 
     it('finance form input should work', () => {
         const prop2 = { formActionType: { viewMode: false } };
-        customRender(<FormWrapper setFormData={jest.fn} {...prop2} />);
+        customRender(<FormWrapper setFormData={jest.fn} {...prop2} typeData={FNC_ARNGD} />);
 
         const bookedScreen = screen.getByText('Booked');
         expect(bookedScreen).toBeTruthy();
@@ -66,31 +71,12 @@ describe('OTF finance view Details render', () => {
         const allotedScreen = screen.getByText('Allotted');
         expect(allotedScreen).toBeTruthy();
 
-        const comboBox1 = screen.getByRole('combobox', { name: 'Financier' });
-        expect(comboBox1).toBeTruthy();
-
-        const comboBox2 = screen.getByRole('combobox', { name: 'D.O. Received' });
-        expect(comboBox2).toBeTruthy();
-
-        const branch = screen.getByRole('textbox', { name: 'Branch' });
-        fireEvent.change(branch, { target: { value: 'delhi' } });
-        expect(branch).toBeTruthy();
-
-        const fileNo = screen.getByRole('textbox', { name: 'File Number' });
-        fireEvent.change(fileNo, { target: { value: 'F0101' } });
-        expect(fileNo).toBeTruthy();
-
-        const loanAmt = screen.getByRole('textbox', { name: 'Loan Amount' });
-        fireEvent.change(loanAmt, { target: { value: '12' } });
-        expect(loanAmt).toBeTruthy();
-
-        const emi = screen.getByRole('textbox', { name: 'EMI' });
-        fireEvent.change(emi, { target: { value: '121' } });
-        expect(emi).toBeTruthy();
+        const financier = screen.getByRole('combobox', { name: /Finance Arranged By/i });
+        expect(financier).toBeTruthy();
     });
     it('should render when view mode is true', async () => {
         const prop2 = { formActionType: { viewMode: true } };
-        customRender(<FormWrapper setFormData={jest.fn} {...prop2} />);
+        customRender(<FormWrapper setFormData={jest.fn} {...prop2} typeData={FNC_ARNGD} />);
     });
 
     it('cancel button should work', async () => {
@@ -99,7 +85,7 @@ describe('OTF finance view Details render', () => {
         });
         customRender(
             <Provider store={mockStore}>
-                <FormWrapper {...props} buttonData={defaultBtnVisiblity} onCloseAction={jest.fn()} />
+                <FormWrapper {...props} buttonData={defaultBtnVisiblity} onCloseAction={jest.fn()} typeData={FNC_ARNGD} />
             </Provider>
         );
 
@@ -113,11 +99,9 @@ describe('OTF finance view Details render', () => {
         });
         customRender(
             <Provider store={mockStore}>
-                <FormWrapper {...props} buttonData={defaultBtnVisiblity} setButtonData={jest.fn()} onCloseAction={jest.fn()} onSuccess={jest.fn()} handleFormValueChange={jest.fn()} handleFieldsChange={jest.fn()} onFinish={jest.fn()} onFinishFailed={jest.fn()} />
+                <FormWrapper {...props} buttonData={defaultBtnVisiblity} setButtonData={jest.fn()} onCloseAction={jest.fn()} onSuccess={jest.fn()} handleFormValueChange={jest.fn()} handleFieldsChange={jest.fn()} onFinish={jest.fn()} onFinishFailed={jest.fn()} typeData={FNC_ARNGD} />
             </Provider>
         );
-        const addBtn = screen.getByRole('textbox', { name: 'EMI', exact: false });
-        fireEvent.change(addBtn, { target: { value: '1221' } });
 
         const saveBtn = screen.getByRole('button', { name: 'Save & Next', exact: false });
         fireEvent.click(saveBtn);

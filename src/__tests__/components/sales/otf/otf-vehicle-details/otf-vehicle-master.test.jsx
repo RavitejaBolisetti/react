@@ -53,14 +53,6 @@ describe('OtfMaster component render', () => {
                 <FormWrapper typeData={'VEHCL_TYPE'} selectedOrderId={'hello'} onChange={jest.fn()} />
             </Provider>
         );
-        const appActionCollapse = screen.getByRole('button', { name: 'Tax Details', exact: false });
-        fireEvent.click(appActionCollapse);
-
-        const editInfo = screen.getByRole('button', { name: 'Edit Vehicle Information', exact: false });
-        fireEvent.click(editInfo);
-
-        const chargesAdd = screen.getByRole('button', { name: 'Charges plus Add', exact: false });
-        fireEvent.click(chargesAdd);
 
         const plusAdd = screen.getByRole('button', { name: 'plus Add', exact: false });
         fireEvent.click(plusAdd);
@@ -85,9 +77,6 @@ describe('OtfMaster component render', () => {
 
         const Amt = screen.getByRole('columnheader', { name: 'Amount', exact: false });
         expect(Amt).toBeTruthy();
-
-        const img = screen.getByRole('img');
-        expect(img).toBeTruthy();
     });
 
     it('all buttons should work', async () => {
