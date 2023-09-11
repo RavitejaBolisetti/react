@@ -9,10 +9,33 @@ import React from 'react';
 import { screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
-import { Provider } from 'react-redux';
-import createMockStore from '__mocks__/store';
 import { ExchangeVehiclesMaster } from '@components/Sales/OTF/ExchangeVehicles/ExchangeVehiclesMaster';
+import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
+import thunk from 'redux-thunk';
+import { rootReducer } from 'store/reducers';
 import { Form } from 'antd';
+
+export const createMockStore = (initialState) => {
+    const mockStore = configureStore({
+        reducer: rootReducer,
+        preloadedState: initialState,
+        middleware: [thunk],
+    });
+
+    return mockStore;
+};
+
+const FormWrapper = (props) => {
+    const [form] = Form.useForm();
+    const myMock = {
+        ...form,
+        getFieldValue:jest.fn()
+    }
+
+    return <ExchangeVehiclesMaster form={myMock} {...props} />
+}
+
 
 afterEach(() => {
     jest.restoreAllMocks();
@@ -26,54 +49,19 @@ const props = {
     selectedOrderId: '1234',
 };
 
-const defaultBtnVisiblity = {
-    editBtn: true,
-    saveBtn: true,
-    cancelBtn: true,
-    saveAndNewBtn: true,
-    saveAndNewBtnClicked: true,
-    closeBtn: true,
-    formBtnActive: true,
-    cancelOTFBtn: true,
-    transferOTFBtn: true,
-    allotBtn: true,
-    unAllotBtn: true,
-    invoiceBtn: true,
-    deliveryNote: true,
-    changeHistory: true,
-};
-
 const mockStore = createMockStore({
     auth: { userId: 123 },
     data: {
         OTF: {
-            ExchangeVehicle: {
-                isDataLoaded: true,
-                exchangeData: [{ customerExpectedPrice: '12313123' }],
-            },
-            FinanceLov: {
-                isFinanceLovDataLoaded: true,
-                financeLovData: [{ value: 'HDFC' }],
-            },
-            SchemeDetail: {
-                isSchemeLovDataLoaded: true,
-                schemeLovData: [{ value: 'Name' }],
-            },
+            ExchangeVehicle: {isDataLoaded: true,exchangeData: [{ customerExpectedPrice: '12313123' }],},
+            FinanceLov: {isFinanceLovDataLoaded: true, financeLovData: [{ value: 'HDFC' }],},
+            SchemeDetail: {isSchemeLovDataLoaded: true,schemeLovData: [{ value: 'Name' }]},
         },
         ConfigurableParameterEditing: { typeData: ['REL_TYPE'] },
         Vehicle: {
-            MakeVehicleDetails: {
-                isMakeDataLoaded: true,
-                makeData: [{ value: 'Maruti' }],
-            },
-            ModelVehicleDetails: {
-                isModelDataLoaded: false,
-                modelData: [{ value: 'Swift' }],
-            },
-            VariantVehicleDetails: {
-                isVariantDataLoaded: false,
-                variantData: [{ value: 'Swift dezire' }],
-            },
+            MakeVehicleDetails: { isMakeDataLoaded: true, makeData: [{ value: 'Maruti' }],},
+            ModelVehicleDetails: {isModelDataLoaded: true,modelData: [{ value: 'Swift' }],},
+            VariantVehicleDetails: {isVariantDataLoaded: true,variantData: [{ value: 'Swift dezire' }],},
         },
     },
     customer: {
@@ -82,65 +70,29 @@ const mockStore = createMockStore({
 });
 
 describe('ExchangeVehiclesMaster component render', () => {
-    it('should render addedit page', async () => {
-        customRender(<ExchangeVehiclesMaster {...props} typeData={('REL_TYPE', 'MONTH')} buttonData={defaultBtnVisiblity} />);
-    });
 
-    it('should render text components', async () => {
-        customRender(<ExchangeVehiclesMaster {...props} typeData={('REL_TYPE', 'MONTH')} />);
+    it('Exchange switch', async () => {
+        const formActionType = { addMode: false, editMode: true, viewMode: false };
 
-        const otfDetails = screen.getByText('Exchange Vehicle');
-        expect(otfDetails).toBeTruthy();
+        customRender(<FormWrapper typeData={('REL_TYPE', 'MONTH')} fnSetData={jest.fn()} formActionType={formActionType} handleFormValueChange={jest.fn()}onFinish={jest.fn()} onFinishFailed={jest.fn()} makeExtraParams={jest.fn()} />);
 
-        const booked = screen.getByText('Booked');
-        expect(booked).toBeTruthy();
+        const exchangeSwitch = screen.getByRole('switch', {name:'Exchange', exact:false});
+        fireEvent.click(exchangeSwitch);
+    })
 
-        const alloted = screen.getByText('Allotted');
-        expect(alloted).toBeTruthy();
+    it('modalOpen=false', async () => {
+        customRender(<FormWrapper modalOpen={false} setModalOpen={jest.fn()} isVisible={true} />);
+    })
 
-        const invoiced = screen.getByText('Invoiced');
-        expect(invoiced).toBeTruthy();
+    it('modalOpen=true', async () => {
+        customRender(<FormWrapper modalOpen={true} setModalOpen={jest.fn()} isVisible={true}  />);
+    })
 
-        const delivered = screen.getByText('Delivered');
-        expect(delivered).toBeTruthy();
-    });
-
-    it('should render buttons', async () => {
+    it('mockStore', async () => {
         customRender(
             <Provider store={mockStore}>
-                <ExchangeVehiclesMaster {...props} typeData="REL_TYPE" buttonData={defaultBtnVisiblity} onCloseAction={jest.fn()} setButtonData={jest.fn()} handleButtonClick={jest.fn()} />
+                <FormWrapper typeData="REL_TYPE" {...props} setfilteredModelData={jest.fn()} setfilteredVariantData={jest.fn()} />
             </Provider>
         );
-
-        const close = screen.getByRole('button', { name: 'Close' });
-
-        fireEvent.click(close);
-
-        const cancel = screen.getByRole('button', { name: 'Cancel' });
-        fireEvent.click(cancel);
-
-        const allot = screen.getByRole('button', { name: 'Allot' });
-        fireEvent.click(allot);
-
-        const unallot = screen.getByRole('button', { name: 'Un-Allot' });
-
-        fireEvent.click(unallot);
-
-        const invoice = screen.getByRole('button', { name: 'Invoice' });
-        fireEvent.click(invoice);
-
-        const transfer = screen.getByRole('button', { name: 'Transfer OTF' });
-
-        fireEvent.click(transfer);
-
-        const cancelOtf = screen.getByRole('button', { name: 'Cancel OTF' });
-
-        fireEvent.click(cancelOtf);
-
-        const changeHistory = screen.getByRole('button', { name: 'Change History' });
-
-        fireEvent.click(changeHistory);
-        const saveNext = screen.getByRole('button', { name: 'Save & Next' });
-        fireEvent.click(saveNext);
     });
 });

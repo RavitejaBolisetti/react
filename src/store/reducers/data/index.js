@@ -44,6 +44,7 @@ import { Report } from './report';
 import { UserManagement } from './userManagement';
 import { VehicleReceiptChecklist } from './VehicleReceiptCheckList';
 import { vehicleAllotmentData } from './vehicleAllotment';
+import { VehicleInvoiceGeneration } from './invoiceGeneration';
 import { UserAccess } from './userAccess';
 import { OTFSoMapping } from './otfSoMappingUnmapping';
 
@@ -86,6 +87,7 @@ export const data = combineReducers({
     Report,
     VehicleReceiptChecklist,
     vehicleAllotmentData,
+    VehicleInvoiceGeneration,
     UserAccess,
     OTFSoMapping,
 });

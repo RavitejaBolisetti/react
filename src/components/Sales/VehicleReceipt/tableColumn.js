@@ -55,7 +55,7 @@ export const tableColumn = ({ handleButtonClick, page, pageSize, tableIconsVisib
             title: 'GRN Number',
             dataIndex: 'grnNumber',
             width: '12%',
-            render: (text) => text ?? 'NA',
+            render: (text) => text ?? '-',
             localSort: false,
         }),
 
@@ -64,7 +64,7 @@ export const tableColumn = ({ handleButtonClick, page, pageSize, tableIconsVisib
             title: 'GRN Date',
             dataIndex: 'grnDate',
             width: '12%',
-            render: (text) => (text ? convertDateMonthYear(text) : 'NA'),
+            render: (text) => (text ? convertDateMonthYear(text) : '-'),
         }),
 
         tblPrepareColumns({

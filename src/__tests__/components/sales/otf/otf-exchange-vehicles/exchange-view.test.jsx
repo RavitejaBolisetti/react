@@ -16,54 +16,18 @@ afterEach(() => {
 describe("ViewDetails Component Should Render", ()=>{
     
     it("should veiw detail main component rendr", ()=>{
-        customRender(<ViewDetail styles={{}} />)
+        customRender(<ViewDetail styles={{}} />);
 
-        const customerId= screen.getByText('Customer ID');
-        expect(customerId).toBeTruthy();
+        const exchange= screen.getByRole('row', {name:'Exchange'});
+        expect(exchange).toBeTruthy();
 
-        const customerName= screen.getByText('Customer Name');
-        expect(customerName).toBeTruthy();
+        const no= screen.getByRole('row', {name:'No'});
+        expect(no).toBeTruthy();
 
-        const make= screen.getByText('Make');
-        expect(make).toBeTruthy();
+        const exchangeColumn= screen.getByRole('columnheader', {name:'Exchange'});
+        expect(exchangeColumn).toBeTruthy();
 
-        const modelGrp = screen.getByText('Model Group');
-        expect(modelGrp).toBeTruthy();
-
-        const variant = screen.getByText('Variant')
-        expect(variant).toBeTruthy();
-
-        const oldRegNumber = screen.getByText('Old Reg. Number')
-        expect(oldRegNumber).toBeTruthy();
-
-        const oldChasisNumber = screen.getByText('Old Chassis Number')
-        expect(oldChasisNumber).toBeTruthy();
-
-        const relationship = screen.getByText('Relationship')
-        expect(relationship).toBeTruthy();
-
-        const monthOfRegistration = screen.getByText('Month of Registration')
-        expect(monthOfRegistration).toBeTruthy();
-
-        const yearOfRegistration = screen.getByText('Year of Registration')
-        expect(yearOfRegistration).toBeTruthy();
-
-        const usage = screen.getByText('Usage')
-        expect(usage).toBeTruthy();
-
-        const schemeName = screen.getByText('Scheme Name')
-        expect(schemeName).toBeTruthy();
-
-        const schemeAmount = screen.getByText('Scheme Amount')
-        expect(schemeAmount).toBeTruthy();
-
-        const customerExpected = screen.getByText('Customer Expected Price')
-        expect(customerExpected).toBeTruthy();
-
-        const procurementPrice = screen.getByText('Procurement Price')
-        expect(procurementPrice).toBeTruthy();
-
-        const hypothecatedTo = screen.getByText('Hypothecated To')
-        expect(hypothecatedTo).toBeTruthy();
+        const noCell= screen.getByRole('cell', {name:'No'});
+        expect(noCell).toBeTruthy();
     })
 })

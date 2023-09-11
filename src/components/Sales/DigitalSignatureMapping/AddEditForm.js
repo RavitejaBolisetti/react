@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Row, Col, Input, Form, Button, Collapse, Switch } from 'antd';
+import { Row, Col, Input, Form, Button, Collapse } from 'antd';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
@@ -21,21 +21,6 @@ const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
     const { form, formData, buttonData, setButtonData, typeData, handleButtonClick, onCloseAction, formActionType, onFinish, onFinishFailed, handleSave } = props;
-    const { isLoading } = props;
-    // useEffect(() => {
-    //     partyDetailForm.setFieldsValue({
-    //         ...formData,
-    //     });
-    //     partyDetailForm.setFieldsValue({
-    //         partyName: formData?.partyName ?? formData?.customerName,
-    //         address: formData?.address,
-    //         city: formData?.city,
-    //         state: formData?.state,
-    //         mobileNumber: formData?.mobileNumber,
-    //         mitraType: formData?.mitraType,
-    //     });
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [formData]);
 
     const tableData = [
         {

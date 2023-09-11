@@ -4,8 +4,25 @@ import { Provider } from 'react-redux';
 import { CancellationMaster } from '@components/Sales/OTF/OTFCancellation/CancellationMaster';
 import customRender from '@utils/test-utils';
 import { Form } from 'antd';
-import createMockStore from '__mocks__/store';
-import { act } from 'react-dom/test-utils';
+import { configureStore } from '@reduxjs/toolkit';
+import thunk from 'redux-thunk';
+import { rootReducer } from 'store/reducers';
+
+export const createMockStore = (initialState) => {
+
+    const mockStore = configureStore({
+
+        reducer: rootReducer,
+
+        preloadedState: initialState,
+
+        middleware: [thunk],
+
+    }); 
+
+    return mockStore;
+
+};
 
 afterEach(() => {
     jest.restoreAllMocks();

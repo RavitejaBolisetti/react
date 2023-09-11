@@ -16,6 +16,10 @@ const FormWrapper = (props) => {
     return <AddEditForm form={myFormMock} {...props} />;
 };
 
+const countryData = [{"countryCode":"IND","countryName":"INDIA","continentName":"ASIA","status":true}];
+const stateData = [{"key":"106","value":"TestState","parentKey":"IND", "status":true}];
+const districtData = [{"key":"106","value":"TestDistrict","parentKey":"106", "status":true}];
+
 describe('Add Edit Form Component', () => {
 
     it('should render add edit form component', async () => {
@@ -25,7 +29,7 @@ describe('Add Edit Form Component', () => {
         customRender(<AddEditForm formActionType={formActionType} isVisible={true}/>);
     });
 
-    it('country select should work', async () => {
+    it('all fields select should work', async () => {
         const formActionType={
             editMode: true,
         };
@@ -33,11 +37,7 @@ describe('Add Edit Form Component', () => {
             status: 'Active',
             countryCode: 'TEST'
         };
-        const stateData=[{
-            parentKey: 'IND'
-        }];
-        const countryData = [{"countryCode":"IND","countryName":"INDIA","continentName":"ASIA","status":true}];
-        customRender(<FormWrapper formActionType={formActionType} formData={formData} countryData={countryData} stateData={stateData} setButtonData={jest.fn()} isVisible={true}/>);
+        customRender(<FormWrapper formActionType={formActionType} formData={formData} countryData={countryData} stateData={stateData} districtData={districtData} setButtonData={jest.fn()} isVisible={true}/>);
 
         const countrySelect=screen.getByRole('combobox', { name: /Country/i });
         act(() => {
@@ -45,6 +45,27 @@ describe('Add Edit Form Component', () => {
             const countryOptionSelect= screen.getByText(/INDIA/i);
             fireEvent.click(countryOptionSelect);
         });
+
+        const stateSelect=screen.getByRole('combobox', { name: /State/i });
+        act(() => {
+            fireEvent.change(stateSelect, { target: { value: 'TestState' } });
+            const stateOptionSelect= screen.getByText(/TestState/i);
+            fireEvent.click(stateOptionSelect);
+        });
+
+        const districtSelect=screen.getByRole('combobox', { name: /District/i });
+        act(() => {
+            fireEvent.change(districtSelect, { target: { value: 'TestDistrict' } });
+            const districtOptionSelect= screen.getByText(/TestDistrict/i);
+            fireEvent.click(districtOptionSelect);
+        });
+
+        const cityName=screen.getByRole('textbox', { name: "City Name" });
+        fireEvent.change(cityName, { target: { value: 'TestCity' } });
+
+        const status=screen.getByRole('switch', { name: 'Status' });
+        fireEvent.click(status);
+        
     });
 
 });

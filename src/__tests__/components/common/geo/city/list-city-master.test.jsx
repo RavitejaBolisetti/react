@@ -35,54 +35,6 @@ describe('List City Master Component', () => {
         );
         const refreshBtn=screen.getByTestId(/refreshBtn/i);
         fireEvent.click(refreshBtn);
-        const addBtn=screen.getByRole('button', { name: /plus Add/i });
-        fireEvent.click(addBtn);
-        const closeBtn=screen.getByRole('button', { name: /Close/i });
-        fireEvent.click(closeBtn);
-    });
-
-    it('add city should work', async () => {
-        const mockStore = createMockStore({
-            auth: { userId: 106 },
-            data: {
-                Geo: {
-                    Country: { isLoaded: true, data: countryData },
-                    State: { isFilteredListLoaded: true, filteredListData: stateData },
-                    District: { isFilteredListLoaded: true, filteredListData: districtData },
-                    City: { isLoaded: true, data: cityData },
-                },
-            },
-        });
-        customRender(
-            <Provider store={mockStore}>
-                <ListCityMaster />
-            </Provider>
-        );
-        const addBtn=screen.getByRole('button', { name: /plus Add/i });
-        fireEvent.click(addBtn);
-
-        const stateSelect=screen.getByRole('combobox', { name: /State/i });
-        act(() => {
-            fireEvent.change(stateSelect, { target: { value: 'TestState' } });
-            const stateOptionSelect= screen.getAllByText(/TestState/i);
-            fireEvent.click(stateOptionSelect[1]);
-        });
-
-        const districtSelect=screen.getByRole('combobox', { name: /District/i });
-        act(() => {
-            fireEvent.change(districtSelect, { target: { value: 'TestDistrict' } });
-            const districtOptionSelect= screen.getAllByText(/TestDistrict/i);
-            fireEvent.click(districtOptionSelect[1]);
-        });
-
-        const cityName=screen.getAllByRole('textbox', { name: "City Name" });
-        fireEvent.change(cityName[1], { target: { value: 'TestCity' } });
-
-        const status=screen.getByRole('switch', { name: 'Status' });
-        fireEvent.click(status);
-
-        const saveBtn=screen.getByRole('button', { name: "Save" });
-        fireEvent.click(saveBtn);
     });
 
     it('search should work', async () => {

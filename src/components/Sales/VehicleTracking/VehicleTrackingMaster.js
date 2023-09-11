@@ -114,7 +114,7 @@ export const VehicleTrackingMain = ({ typeData, isLoading, viewTitle, userId, sh
     const handleSearchWithoutParameter = (values) => {
         setSearchCardVisible(true);
         if (values.trim() === '') {
-            searchForm.resetFields();
+            console.log('values', values);
             return;
         }
         setModifiedArray([]);
@@ -126,7 +126,7 @@ export const VehicleTrackingMain = ({ typeData, isLoading, viewTitle, userId, sh
         ];
         searchForm
             .validateFields()
-            .then((values) => {
+            .then(() => {
                 if (userId) {
                     fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
                 }
@@ -136,16 +136,27 @@ export const VehicleTrackingMain = ({ typeData, isLoading, viewTitle, userId, sh
             });
     };
 
+    const handleChange = (e) => {
+        if (e?.target?.value === '' && e?.nativeEvent?.type === 'click') {
+            setSearchCardVisible(false);
+            setFormData([]);
+            searchForm.resetFields();
+        } else if (e?.target?.value === '' && e?.nativeEvent?.type === 'input') {
+            searchForm.resetFields();
+        }
+    };
+
     const title = 'Search';
 
     const searchBoxProps = {
         singleField: true,
         searchForm,
         selectWide: false,
-        placeholder: 'Search By OEM Number',
+        placeholder: 'OEM Invoice Number',
         label: title,
         handleSearchWithoutParameter,
         captilized: false,
+        handleChange,
     };
 
     const viewProps = {
