@@ -321,4 +321,8 @@ export const PARAM_MASTER = {
         id: 'SO_MAP',
         title: 'OTF So mapping and Unmapping',
     },
+    MAKE_NAME: {
+        id: 'MAKE_NAME',
+        title: 'Make in loyalty',
+    },
 };
