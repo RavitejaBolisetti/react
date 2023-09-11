@@ -5,27 +5,24 @@
  */
 import React from 'react';
 import { Timeline } from 'antd';
-import { BsRecordCircleFill } from 'react-icons/bs';
-import { FaCheckCircle } from 'react-icons/fa';
-
 import { VEHICLE_INVOICE_SECTION } from 'constants/VehicleInvoiceSection';
 
-import styles from 'assets/sass/app.module.scss';
+import { getSelectedMenuAttribute } from 'utils/getSelectedMenuAttribute';
 
 const MenuNav = (props) => {
-    const { currentSection, setCurrentSection } = props;
+    const { currentSection, setCurrentSection, selectedOtfNumber, formActionType } = props;
     const receiptSectionList = Object.values(VEHICLE_INVOICE_SECTION);
 
     const onHandle = (key) => {
-        setCurrentSection(key);
+        selectedOtfNumber && setCurrentSection(key);
     };
 
     const items = receiptSectionList
         ?.filter((i) => i?.displayOnList)
         ?.map((item) => ({
-            dot: item?.id === currentSection ? <BsRecordCircleFill className={styles.activeForm} /> : <FaCheckCircle />,
+            dot: getSelectedMenuAttribute({ id: item?.id, currentSection, formActionType })?.menuNavIcon,
             children: <p onClick={() => onHandle(item?.id)}>{item?.title}</p>,
-            className: item?.id === currentSection ? 'active' : 'noactive',
+            className: getSelectedMenuAttribute({ id: item?.id, currentSection, formActionType })?.activeClassName,
         }));
 
     const finalItem = items?.filter((i) => i);

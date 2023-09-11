@@ -89,7 +89,7 @@ const mapDispatchToProps = (dispatch) => ({
             fetchVehicleInvoiceDetail: vehicleDetailsDataActions.fetchList,
 
             fetchList: vehicleInvoiceDataActions.fetchList,
-            listShowLoading: vehicleInvoiceDataActions.listShowLoading,
+            listInvoiceDetailShowLoading: vehicleInvoiceDataActions.listInvoiceDetailShowLoading,
             setFilterString: vehicleInvoiceDataActions.setFilter,
             showGlobalNotification,
         },
@@ -98,10 +98,11 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const VehicleInvoiceMasterBase = (props) => {
-    const { data, receiptDetailData, userId, isIrnDataLoaded, listIrnShowLoading, isIrnDataLoading, irnGeneration, irnData, fetchList, fetchOTFDetail, fetchVehicleDetail, fetchVehicleInvoiceDetail, listShowLoading, showGlobalNotification } = props;
-    const { cancelInvoice, vehicleInvoiceData, vehicleDetail } = props;
+    const { data, receiptDetailData, userId, irnGeneration, fetchList, fetchOTFDetail, fetchVehicleDetail, fetchVehicleInvoiceDetail, listShowLoading, showGlobalNotification } = props;
+    const { cancelInvoice } = props;
     const { typeData, receiptType, partySegmentType, paymentModeType, documentType, moduleTitle, totalRecords } = props;
     const { filterString, setFilterString, invoiceStatusList, otfData } = props;
+
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [invoiceStatus, setInvoiceStatus] = useState(QUERY_BUTTONS_CONSTANTS.INVOICED.key);
     const [requestPayload, setRequestPayload] = useState({ invoiceDetails: {}, vehicleDetails: {}, financeDetails: {}, insuranceDetails: {} });
@@ -114,6 +115,7 @@ export const VehicleInvoiceMasterBase = (props) => {
     const [selectedOrder, setSelectedOrder] = useState();
     const [selectedOrderId, setSelectedOrderId] = useState();
     const [selectedOtfNumber, setSelectedOtfNumber] = useState();
+    console.log('selectedOrderId:', selectedOrderId, 'selectedOtfNumber', selectedOtfNumber);
 
     const [section, setSection] = useState();
     const [defaultSection, setDefaultSection] = useState();
@@ -121,9 +123,6 @@ export const VehicleInvoiceMasterBase = (props) => {
     const [sectionName, setSetionName] = useState();
     const [isLastSection, setLastSection] = useState(false);
     const [receipt, setReceipt] = useState('');
-    const [totalReceivedAmount, setTotalReceivedAmount] = useState(0.0);
-
-    const [apportionList, setApportionList] = useState([]);
 
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
@@ -133,7 +132,6 @@ export const VehicleInvoiceMasterBase = (props) => {
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [cancelInvoiceVisible, setCancelInvoiceVisible] = useState(false);
-    const [otfNumber, setOtfNumber] = useState();
     const [irnStatusData, setIrnStatusData] = useState();
 
     const [page, setPage] = useState({ pageSize: 10, current: 1 });
@@ -156,8 +154,6 @@ export const VehicleInvoiceMasterBase = (props) => {
 
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
-
-    const [formData, setFormData] = useState([]);
 
     const onSuccessAction = (res) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -252,14 +248,6 @@ export const VehicleInvoiceMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchValue, invoiceStatus, filterString, page]);
 
-    // useEffect(() => {
-    //     return () => {
-    //         resetData();
-    //         setFilterString();
-    //     };
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, []);
-
     useEffect(() => {
         if (userId) {
             setShowDataLoading(true);
@@ -267,21 +255,6 @@ export const VehicleInvoiceMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, invoiceStatus, filterString, page]);
-
-    // useEffect(() => {
-    //     if (userId && selectedOrderId) {
-    //         const extraParams = [
-    //             {
-    //                 key: 'id',
-    //                 title: 'id',
-    //                 value: selectedOrderId,
-    //                 name: 'id',
-    //             },
-    //         ];
-    //         fetchReceiptDetails({ setIsLoading: listShowLoading, userId, extraParams });
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [userId, selectedOrderId]);
 
     useEffect(() => {
         const defaultSection = VEHICLE_INVOICE_SECTION.INVOICE_DETAILS.id;
@@ -305,19 +278,19 @@ export const VehicleInvoiceMasterBase = (props) => {
     }, [currentSection, sectionName]);
 
     useEffect(() => {
-        if (userId && (selectedOtfNumber || otfNumber)) {
+        if (userId && selectedOtfNumber) {
             const extraParams = [
                 {
                     key: 'otfNumber',
                     title: 'otfNumber',
-                    value: selectedOtfNumber ?? otfNumber,
+                    value: selectedOtfNumber,
                     name: 'OTF Number',
                 },
             ];
             fetchOTFDetail({ customURL, setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedOtfNumber, otfNumber]);
+    }, [userId, selectedOtfNumber]);
 
     useEffect(() => {
         if (userId && selectedOrder?.invoiceNumber) {
@@ -335,7 +308,6 @@ export const VehicleInvoiceMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedOrder?.invoiceNumber]);
 
-    //IRN generation
     const generateIrn = () => {
         const data = { otfNumber: selectedOtfNumber, invoiceNumber: selectedOrder?.invoiceNumber };
         const onSuccess = (res) => {
@@ -343,21 +315,22 @@ export const VehicleInvoiceMasterBase = (props) => {
             setIrnStatusData(res?.data);
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
+
             const extraParam = [
                 {
                     key: 'otfNumber',
                     title: 'otfNumber',
-                    value: selectedOtfNumber ?? otfNumber,
+                    value: selectedOtfNumber,
                     name: 'OTF Number',
                 },
             ];
             fetchOTFDetail({ customURL, setIsLoading: listShowLoading, userId, extraParams: extraParam, onErrorAction });
-            // setButtonData({ ...buttonData, formBtnActive: false });
-            // setIsFormVisible(false);
         };
+
         const onError = (message) => {
             showGlobalNotification({ message });
         };
+
         const requestData = {
             data: data,
             method: 'post',
@@ -367,7 +340,6 @@ export const VehicleInvoiceMasterBase = (props) => {
             onSuccess,
         };
         irnGeneration(requestData);
-        // irnGeneration({ setIsLoading: listIrnShowLoading, userId, onSuccessAction, onErrorAction });
     };
 
     const handleInvoiceTypeChange = (buttonName) => {
@@ -391,18 +363,17 @@ export const VehicleInvoiceMasterBase = (props) => {
             case ADD_ACTION:
                 defaultSection && setCurrentSection(defaultSection);
                 invoiceDetailForm.resetFields();
-                setApportionList([]);
                 break;
             case EDIT_ACTION:
                 setSelectedOrder(record);
-                record && setSelectedOrderId(record?.id);
+                record && setSelectedOrderId(record?.invoiceNumber);
                 record && setSelectedOtfNumber(record?.otfNumber);
                 openDefaultSection && setCurrentSection(defaultSection);
 
                 break;
             case VIEW_ACTION:
                 setSelectedOrder(record);
-                record && setSelectedOrderId(record?.id);
+                record && setSelectedOrderId(record?.invoiceNumber);
                 record && setSelectedOtfNumber(record?.otfNumber);
                 defaultSection && setCurrentSection(defaultSection);
                 break;
@@ -477,21 +448,16 @@ export const VehicleInvoiceMasterBase = (props) => {
     };
 
     const onCloseAction = () => {
-        // resetData();
         form.resetFields();
         form.setFieldsValue();
         setSelectedOrderId();
         setSelectedOtfNumber();
-        setOtfNumber();
         invoiceDetailForm.resetFields();
-        setReceipt();
-        setTotalReceivedAmount(0.0);
 
         advanceFilterForm.resetFields();
         advanceFilterForm.setFieldsValue();
         setAdvanceSearchVisible(false);
 
-        setApportionList([]);
         setSelectedOrder();
         setIsFormVisible(false);
         setCancelInvoiceVisible(false);
@@ -642,15 +608,11 @@ export const VehicleInvoiceMasterBase = (props) => {
         NEXT_ACTION,
         buttonData,
         receiptDetailData,
-        apportionList,
-        setApportionList,
         requestPayload,
         setRequestPayload,
         receipt,
         setReceipt,
         invoiceStatus,
-        totalReceivedAmount,
-        setTotalReceivedAmount,
 
         setButtonData,
         handleButtonClick,
@@ -660,13 +622,14 @@ export const VehicleInvoiceMasterBase = (props) => {
         setSelectedOrderId,
         selectedOrder,
         setSelectedOrder,
-        otfData,
+        selectedOtfNumber,
+        setSelectedOtfNumber,
 
+        otfData,
         section,
         currentSection,
         sectionName,
         setCurrentSection,
-        setFormData,
         handleFormValueChange,
         isLastSection,
         typeData,
@@ -677,8 +640,6 @@ export const VehicleInvoiceMasterBase = (props) => {
         onCancelInvoice,
         saveButtonName: isLastSection ? 'Submit' : 'Save & Next',
         setLastSection,
-        otfNumber,
-        setOtfNumber,
         generateIrn,
         irnStatusData,
     };

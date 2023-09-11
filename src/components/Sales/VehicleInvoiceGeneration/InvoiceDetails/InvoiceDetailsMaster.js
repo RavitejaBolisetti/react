@@ -67,7 +67,7 @@ const mapDispatchToProps = (dispatch) => ({
 const InvoiceDetailsMasterBase = (props) => {
     const { typeData, otfData, selectedOrder, fetchInvoiceDetail, listShowLoading } = props;
     const { userId, buttonData, setButtonData, showGlobalNotification, section, isDataLoaded, isLoading, invoiceDetailForm } = props;
-    const { form, formActionType, handleFormValueChange, otfNumber, setOtfNumber } = props;
+    const { form, formActionType, handleFormValueChange, selectedOtfNumber, setSelectedOtfNumber } = props;
     const { requestPayload, setRequestPayload } = props;
     const [activeKey, setActiveKey] = useState([]);
 
@@ -123,14 +123,10 @@ const InvoiceDetailsMasterBase = (props) => {
 
     const formProps = {
         ...props,
-
         form,
-        // onFinish,
-        // onFinishFailed,
         typeData,
         handleChange,
         formActionType,
-
         userId,
         isDataLoaded,
         otfFormData: otfData,
@@ -139,8 +135,9 @@ const InvoiceDetailsMasterBase = (props) => {
         isLoading,
         setActiveKey,
         activeKey,
-        otfNumber,
-        setOtfNumber,
+        selectedOtfNumber,
+        setSelectedOtfNumber,
+        invoiceMode: true,
     };
 
     const viewProps = {
@@ -150,6 +147,7 @@ const InvoiceDetailsMasterBase = (props) => {
         formActionType,
         styles,
         isLoading,
+        invoiceMode: true,
     };
 
     return (
@@ -159,8 +157,8 @@ const InvoiceDetailsMasterBase = (props) => {
                     <Row>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <h2>
-                                Invoice Details
-                                {/* {section?.title} */}
+                                {/* Invoice Details */}
+                                {section?.title}
                             </h2>
                         </Col>
                     </Row>
@@ -171,7 +169,8 @@ const InvoiceDetailsMasterBase = (props) => {
                         </>
                     ) : (
                         <>
-                            <AddEditForm {...formProps} /> <CustomerDetailsMaster {...formProps} />
+                            <AddEditForm {...formProps} />
+                            <CustomerDetailsMaster {...formProps} />
                         </>
                     )}
                 </Col>
