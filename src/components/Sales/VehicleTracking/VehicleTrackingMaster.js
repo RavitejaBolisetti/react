@@ -70,11 +70,10 @@ export const VehicleTrackingMain = ({ typeData, isLoading, viewTitle, userId, sh
 
     const [formData, setFormData] = useState([]);
     const [modifiedArray, setModifiedArray] = useState([]);
-    let modifiedArrays = [];
     const defaultBtnVisiblity = { closeBtn: true, editBtn: false, childBtn: false, siblingBtn: false, save: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
-    const handleButtonClick = (type) => {
+    const handleButtonClick = () => {
         setFormData([]);
         form.resetFields();
         setIsFormVisible(true);
@@ -92,7 +91,8 @@ export const VehicleTrackingMain = ({ typeData, isLoading, viewTitle, userId, sh
         </>
     );
     const onErrorAction = (message) => {
-        setSearchCardVisible(true);
+        setSearchCardVisible(false);
+        setFormData([]);
         showGlobalNotification({ notificationType: 'error', notificationTitle: 'Error', message });
     };
 
@@ -104,7 +104,9 @@ export const VehicleTrackingMain = ({ typeData, isLoading, viewTitle, userId, sh
                 ?.map((record) => {
                     record?.vehicleTrackingLocationResponse?.map((locations) => {
                         setModifiedArray((prev) => [...prev, { lat: +locations?.latitude, lng: +locations?.longitude }]);
+                        return undefined;
                     });
+                    return undefined;
                 });
         setSearchCardVisible(true);
     };
@@ -112,8 +114,10 @@ export const VehicleTrackingMain = ({ typeData, isLoading, viewTitle, userId, sh
     const handleSearchWithoutParameter = (values) => {
         setSearchCardVisible(true);
         if (values.trim() === '') {
+            searchForm.resetFields();
             return;
         }
+        setModifiedArray([]);
         const extraParams = [
             {
                 key: 'oemNumber',
@@ -174,10 +178,8 @@ export const VehicleTrackingMain = ({ typeData, isLoading, viewTitle, userId, sh
         handleButtonClick,
         onCloseAction: () => {
             setIsMapFormVisible(false);
-            setModifiedArray([]);
         },
         modifiedArray,
-        modifiedArrays,
         styles,
     };
 
@@ -208,7 +210,7 @@ export const VehicleTrackingMain = ({ typeData, isLoading, viewTitle, userId, sh
                 </Row>
             )}
             {isFormVisible && <ViewTimeline {...viewTimelineProps} />}
-            {modifiedArray.length && isMapFormVisible && <ViewMap {...viewMapProps} />}
+            {modifiedArray.length > 0 && isMapFormVisible && <ViewMap {...viewMapProps} />}
         </>
     );
 };

@@ -155,12 +155,12 @@ const LeftSideBarMain = (props) => {
             const isParentMenu = parentMenuId === 'Web';
 
             return subMenu?.length ? (
-                <SubMenu key={menuId} title={prepareLink({ id: menuId, title: menuTitle, menuOrgTitle, tooltip: true, icon: true, captlized: isParentMenu, showTitle: collapsed ? !isParentMenu : true })} className={isParentMenu ? styles.subMenuParent : styles.subMenuItem}>
+                <SubMenu key={menuId} title={prepareLink({ id: menuId, title: menuTitle, menuOrgTitle: menuTitle, tooltip: true, icon: true, captlized: isParentMenu, showTitle: collapsed ? !isParentMenu : true })} className={isParentMenu ? styles.subMenuParent : styles.subMenuItem}>
                     {prepareMenuItem(subMenu)}
                 </SubMenu>
             ) : (
                 <Item key={menuId} className={isParentMenu ? styles.subMenuParent : styles.subMenuItem}>
-                    {prepareLink({ id: menuId, title: menuTitle, menuOrgTitle, tooltip: true, icon: true, captlized: isParentMenu, isParentMenu, showTitle: collapsed ? !isParentMenu : true })}
+                    {prepareLink({ id: menuId, title: menuTitle, menuOrgTitle: menuTitle, tooltip: true, icon: true, captlized: isParentMenu, isParentMenu, showTitle: collapsed ? !isParentMenu : true })}
                 </Item>
             );
         });
@@ -255,7 +255,6 @@ const LeftSideBarMain = (props) => {
                                 }
                             }}
                             style={{
-                                // paddingLeft: collapsed ? '18px' : '24px',
                                 paddingLeft: collapsed ? '18px' : '14px',
                             }}
                         >
@@ -267,28 +266,26 @@ const LeftSideBarMain = (props) => {
                 )}
                 <div
                     className={styles.changeTheme}
-                    onClick={handleThemeChange}
-                    style={{
-                        padding: collapsed ? '10px' : '10px 14px',
-                        position: collapsed ? 'relative' : 'absolute',
-                    }}
+                    // onClick={handleThemeChange}
+                 
                 >
-                    {/* <div className={styles.changeThemeBorder} style={{ padding: collapsed ? '9px 10px' : '5px' }}> */}
-                    <div className={styles.changeThemeBorder}>
+                    <div className={styles.changeThemeBorder} style={{ padding: collapsed ? '9px 10px' : '5px' }}>
                         {collapsed ? (
                             theme === 'light' ? (
                                 <BsSun size={20} className={styles.sun} />
                             ) : (
-                                <BsMoon size={20} className={styles.moon} />
+                                <Popover content={'Coming Soon'} trigger="hover">
+                                    <BsMoon size={20} className={styles.moon} />
+                                </Popover>
                             )
                         ) : (
                             <>
-                                <Button className={theme === 'light' ? styles.lightThemeActive : styles.lightTheme} danger onClick={() => handleThemeChange()}>
+                                <Button className={theme === 'light' ? styles.lightThemeActive : styles.lightTheme} danger>
                                     <BsSun size={20} /> Light Mode
                                 </Button>
 
                                 <Popover content={'Coming Soon'} trigger="hover">
-                                    <Button className={theme === 'dark' ? styles.darkThemeActive : styles.darkTheme} danger onClick={() => handleThemeChange()}>
+                                    <Button className={theme === 'dark' ? styles.darkThemeActive : styles.darkTheme} danger>
                                         <BsMoon size={20} /> Dark Mode
                                     </Button>
                                 </Popover>

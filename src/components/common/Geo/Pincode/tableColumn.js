@@ -50,7 +50,7 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             width: '200px',
         }),
 
-        tblActionColumn({ handleButtonClick, styles, fixed: 'right', width: '10%' })
+        tblActionColumn({ handleButtonClick, styles, fixed: 'right', width: '10%', canEdit: false })
     );
 
     return tableColumn;

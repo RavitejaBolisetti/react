@@ -18,7 +18,7 @@ import styles from 'assets/sass/app.module.scss';
 
 const { Search } = Input;
 const AddEditFormMain = (props) => {
-    const { buttonData, setButtonData, formActionType, onFinish, onFinishFailed, productHierarchyList, getDealerlocation, dealerLocationList } = props;
+    const { buttonData, setButtonData, formActionType, onFinish, onFinishFailed, productHierarchyList, getDealerlocation, setDealerLocation, dealerLocation } = props;
     const { form, formData, typeData, isReadOnly = true } = props;
     const disabledProps = { disabled: isReadOnly };
     const [dealerFlag, setDealerFlag] = useState();
@@ -47,7 +47,7 @@ const AddEditFormMain = (props) => {
     const handleOnClear = (e) => {
         if (!e.target.value) {
             // form.resetFields();
-            form.setFieldsValue({ dealerLocation: undefined });
+            setDealerLocation(undefined);
         }
     };
 
@@ -78,7 +78,7 @@ const AddEditFormMain = (props) => {
                                                 <Select placeholder="Select Location" showSearch options={dealerLocationList} fieldNames={{ label: 'dealerLocationName', value: 'id' }} />
                                             </Form.Item> */}
                                             <Form.Item initialValue={formData?.dealerLocation} name="dealerLocation" label="Dealer Location" rules={[validateRequiredSelectField('Dealer Location')]}>
-                                                {customSelectBox({ data: dealerLocationList, fieldNames: { key: 'id', value: 'dealerLocationName' }, placeholder: preparePlaceholderSelect('Location') })}
+                                                {customSelectBox({ data: dealerLocation, fieldNames: { key: 'id', value: 'dealerLocationName' }, placeholder: preparePlaceholderSelect('Location') })}
                                             </Form.Item>
                                         </Col>
                                     </>

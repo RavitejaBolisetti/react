@@ -238,7 +238,7 @@ export const doRefreshToken = withAuthToken((params) => ({ token, accessToken, u
     axiosAPICall(apiCallParams);
 });
 
-export const doLogoutAPI = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
+export const doLogoutAPI = withAuthToken((params) => ({ token, accessToken, userId, refreshToken }) => (dispatch) => {
     const { onSuccess, onError } = params;
     const url = BASE_URL_LOGOUT;
 
@@ -253,7 +253,7 @@ export const doLogoutAPI = withAuthToken((params) => ({ token, accessToken, user
         token,
         accessToken,
         userId,
-        data: { userId },
+        data: { userId, refreshToken },
         onSuccess: onSuccessAction,
         onError: onError,
         onTimeout: () => dispatch(authUserLogout()),

@@ -5,25 +5,21 @@
  */
 import { fireEvent, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import { ApportionDetailsMaster } from '@components/FinancialAccounting/CreditDebitNote/ApportionDetails/ApportionDetailsMaster';
+import FormProductAttribute from '@components/FinancialAccounting/AccountTaxCharges/TaxAndChargesCategory/TaxAndChargesCalculation/FormTaxAndChargeCal';
 import customRender from '@utils/test-utils';
 
 afterEach(() => {
     jest.restoreAllMocks();
 });
 
-describe('ApportionDetailsMaster component', () => {
-    it('plus image', () => {
-        customRender(<ApportionDetailsMaster />);
+describe('FormProductAttribute component', () => {
+    it('render', () => {
+        customRender(<FormProductAttribute addTaxChargeCal={jest.fn()} />);
         
-        const plusImg = screen.getAllByRole('img', {name:"plus"});
-        fireEvent.click(plusImg[0]);
-    });
+        const desc = screen.getByRole('textbox', {namea:'Description'});
+        fireEvent.change(desc, {target:{value:'test'}});
 
-    it('add plus button', () => {
-        customRender(<ApportionDetailsMaster />);
-        
-        const plusAddBtn = screen.getByRole('button', {name:"plus Add"});
+        const plusAddBtn = screen.getByRole('button', {name:'plus Add'});
         fireEvent.click(plusAddBtn);
     });
-});
+})

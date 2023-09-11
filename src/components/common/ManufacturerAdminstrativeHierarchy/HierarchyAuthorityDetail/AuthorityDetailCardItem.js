@@ -29,7 +29,7 @@ const mapStateToProps = (state) => {
     } = state;
 
     let returnValue = {
-        tokenValidationData,
+        tokenValidationData: tokenValidationData?.userSearchResponse?.userDetails?.[0],
     };
     return returnValue;
 };
@@ -64,7 +64,7 @@ const AuthorityCardItemMain = (props) => {
         const tokenNo = form.getFieldValue('authorityEmployeeTokenNo');
         const isPreviousTokenNo = record?.authorityEmployeeTokenNo === tokenNo;
 
-        if (!isPreviousTokenNo && !tokenValidationData?.employeeName) {
+        if (!isPreviousTokenNo && !tokenValidationData?.manufacturerUserName) {
             return showGlobalNotification({ notificationType: 'warning', title: 'Warning', message: 'Validate token to proceed' });
         }
 
@@ -73,7 +73,7 @@ const AuthorityCardItemMain = (props) => {
                 setDocumentTypesList((prev) => {
                     const updatedData = [...prev];
                     const index = updatedData?.findIndex((el) => el?.authorityEmployeeTokenNo === record?.authorityEmployeeTokenNo);
-                    updatedData?.splice(index, 1, { ...data, effectiveTo: data?.effectiveTo, effectiveFrom: data?.effectiveFrom, authorityEmployeeTokenNo: tokenValidationData?.authorityEmployeeTokenNo || data?.authorityEmployeeTokenNo, employeeName: tokenValidationData?.employeeName || data?.employeeName, isModified: !!data?.id });
+                    updatedData?.splice(index, 1, { ...data, effectiveTo: data?.effectiveTo, effectiveFrom: data?.effectiveFrom, authorityEmployeeTokenNo: tokenValidationData?.employeeCode || data?.authorityEmployeeTokenNo, employeeName: tokenValidationData?.manufacturerUserName || data?.employeeName, isModified: !!data?.id });
                     return updatedData;
                 });
                 forceUpdate();

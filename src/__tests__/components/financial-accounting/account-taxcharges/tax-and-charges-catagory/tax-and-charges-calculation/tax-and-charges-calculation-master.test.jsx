@@ -5,7 +5,7 @@
  */
 import { fireEvent, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import { DocTypeAcMappingMaster } from '@components/FinancialAccounting/AccountTaxCharges/DocumentTypeOtherCharges/DocTypeAcHeadMapping/DocTypeAcMappingMaster';
+import { TaxAndChargesCalculationMaster } from '@components/FinancialAccounting/AccountTaxCharges/TaxAndChargesCategory/TaxAndChargesCalculation/TaxAndChargesCalculationMaster';
 import customRender from '@utils/test-utils';
 import { Form } from 'antd';
 
@@ -14,24 +14,23 @@ afterEach(() => {
 });
 
 const FormWrapper = (props) =>{
-    const [docTypeHeadMappingForm] = Form.useForm();
+    const [editForm] = Form.useForm();
     const myMock = {
-        ...docTypeHeadMappingForm,
-        validateFields:jest.fn()
+        ...editForm,
+        setFieldsValue:jest.fn()
     }
 
-    return <DocTypeAcMappingMaster docTypeHeadMappingForm={myMock} {...props} />
+    return <TaxAndChargesCalculationMaster editForm={myMock} {...props} />
 }
 
-describe('Render components', () => {
+describe('TaxAndChargesCalculationMaster component', () => {
     const formProductAttributeProps = {
         formActionType: {addMode: false, editMode: true, viewMode: false},
         isVisible: true,
         viewMode: false,
         disableSaveButton: false,
         buttonData: {cancelBtn: true, formBtnActive: false, editBtn: false, saveBtn: true, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false,},
-        financialAccountData:[{id: '123', key: 'UDAII', value: 'UDAII', parentKey: null}],
-        handleSelectTreeClick:jest.fn()
+        taxCharges:[{id: null, taxType: 'WCESS', taxCode: null, taxDescription: 'Cess on WCT'}],
     }
 
     it('pass formProductAttributeProps and formEdit = false', () => {
@@ -39,11 +38,19 @@ describe('Render components', () => {
     });
 
     it('pass formProductAttributeProps and formEdit = true', () => {
-        customRender(<FormWrapper mainFomEdit={false}  {...formProductAttributeProps} formEdit={true} />);
+        customRender(<FormWrapper mainFomEdit={false}  {...formProductAttributeProps} formEdit={true}  />);
     });
 
-    it('should render components', () => {
-        const docTypeHeadMappingList = [{chargeCode:'123', internalId:'321', id:'34', financialAccountHeadId:'ac001', financialAccountHeadDesc:'34ac', chargeCodeDesc:'12test'}]
-        customRender(<FormWrapper docTypeHeadMappingList={docTypeHeadMappingList}/>);
+    it('should render taxChargeCalList', () => {
+        const taxChargeCalList = [{
+            chargeCode:"CPA18",
+            chargeDescription: "Central GST 9%",
+            chargeType: "CGST",
+            id: "311",
+            internalId: '1234',
+            taxMasterId: "123",
+        }];
+        
+        customRender(<FormWrapper taxChargeCalList={taxChargeCalList}/>);
     });
 });

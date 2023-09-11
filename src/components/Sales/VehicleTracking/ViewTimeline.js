@@ -25,6 +25,7 @@ export const ViewTimelineMain = (props) => {
         setButtonData,
         handleButtonClick,
     };
+
     const modifiedData = formData?.vehicleTrackingDeliveryStatus
         ?.sort((a, b) => a?.order - b?.order)
         ?.map((record) => {

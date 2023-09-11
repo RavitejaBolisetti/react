@@ -10,7 +10,7 @@ import { bindActionCreators } from 'redux';
 import { Col, Form, Row } from 'antd';
 import { tableColumn } from './tableColumn';
 import HoPriceMappingFilter from './HoPriceMappingFilter';
-import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 'utils/btnVisiblity';
+import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, btnVisiblity } from 'utils/btnVisiblity';
 
 import { AddEditForm } from './AddEditForm';
 
