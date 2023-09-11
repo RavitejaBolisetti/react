@@ -33,7 +33,7 @@ const expandIcon = ({ isActive }) =>
     );
 
 const VehicleInvoiceCard = (props) => {
-    const { selectedOrder, otfData, formActionType, isLoading, typeData, generateIrn, irnStatusData } = props;
+    const { selectedOrder, otfData, formActionType, isLoading, typeData, handleIRNGeneration, irnStatusData } = props;
     const fullName = selectedOrder?.customerName?.split(' ');
     const userAvatar = fullName ? fullName[0]?.slice(0, 1) + (fullName[1] ? fullName[1].slice(0, 1) : '') : '';
     return (
@@ -93,9 +93,9 @@ const VehicleInvoiceCard = (props) => {
                 )}
                 <div className={styles.detailCardText}>
                     IRN Status:
-                    <span>
+                    <div className={styles.buttonsGroupRight}>
                         {selectedOrder?.invoiceNumber && !irnStatusData?.irnStatus ? (
-                            <Button danger onClick={generateIrn}>
+                            <Button type="primary" onClick={handleIRNGeneration} style={{ color: '#ffffff !important' }}>
                                 Generate
                             </Button>
                         ) : (
@@ -122,7 +122,7 @@ const VehicleInvoiceCard = (props) => {
                                 </div>
                             </>
                         )}
-                    </span>
+                    </div>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>

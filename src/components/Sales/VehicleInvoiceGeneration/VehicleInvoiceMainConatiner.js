@@ -23,7 +23,7 @@ import { VehicleInvoiceFormButton } from './VehicleInvoiceFormButton';
 import styles from 'assets/sass/app.module.scss';
 
 const VehicleInvoiceMainConatinerMain = (props) => {
-    const { currentSection, generateIrn, selectedOtfNumber, requestPayload, setRequestPayload } = props;
+    const { currentSection, handleIRNGeneration, selectedOtfNumber, requestPayload, setRequestPayload } = props;
 
     const onFinishCustom = ({ key, values }) => {
         setRequestPayload({ ...requestPayload, [key]: values });
@@ -32,7 +32,7 @@ const VehicleInvoiceMainConatinerMain = (props) => {
     const myProps = {
         ...props,
         wrapForm: false,
-        generateIrn,
+        handleIRNGeneration,
         onFinishCustom,
         selectedOrderId: selectedOtfNumber,
         FormActionButton: VehicleInvoiceFormButton,

@@ -309,7 +309,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedOrder?.invoiceNumber]);
 
-    const generateIrn = () => {
+    const handleIRNGeneration = () => {
         const data = { otfNumber: selectedOtfNumber, invoiceNumber: selectedOrder?.invoiceNumber };
         const onSuccess = (res) => {
             setShowDataLoading(true);
@@ -641,7 +641,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         onCancelInvoice,
         saveButtonName: isLastSection ? 'Submit' : 'Save & Next',
         setLastSection,
-        generateIrn,
+        handleIRNGeneration,
         irnStatusData,
     };
 
