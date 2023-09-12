@@ -220,12 +220,12 @@ const AddEditFormMain = (props) => {
                     )}
                 </Panel>
             </Collapse>
-            <Collapse defaultActiveKey={['2']} bordered={false} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end" collapsible="icon">
+            {/* <Collapse defaultActiveKey={['2']} bordered={false} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end" collapsible="icon">
                 <Panel header="Registration Number Change Request" key="2">
                     <Divider />
                     <div className={styles.marB20}>Coming Soon</div>
                 </Panel>
-            </Collapse>
+            </Collapse> */}
         </>
     );
 };

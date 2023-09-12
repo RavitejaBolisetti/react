@@ -44,6 +44,7 @@ import { vehicleAllotmentData } from './vehicleAllotment';
 import { VehicleInvoiceGeneration } from './invoiceGeneration';
 import { UserAccess } from './userAccess';
 import { OTFSoMapping } from './otfSoMappingUnmapping';
+import { VehicleDeliveryNote } from './vehicleDeliveryNote';
 
 import { stockTransferIndentData } from './stockTransferIndent';
 
@@ -89,5 +90,6 @@ export const data = combineReducers({
     VehicleInvoiceGeneration,
     UserAccess,
     stockTransferIndentData,
-    OTFSoMapping
+    OTFSoMapping,
+    VehicleDeliveryNote,
 });

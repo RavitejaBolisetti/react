@@ -23,5 +23,6 @@ import VehicleAllotmentPriorityMasterPage from './VehicleAllotmentPriorityMaster
 import VehicleTrackingPage from './VehicleTracking';
 import OtfSoMappingUnmappingMasterPage from './OtfSoMappingUnmapping';
 import StockTransferIndentMasterPage from './StockTransferIndent';
+import VehicleDeliveryNoteMasterPage from './VehicleDeliveryNote';
 
-export { OTFMasterPage, VehicleDetailMasterPage, VehicleReceiptMasterPage, VehiclePriceMasterPage, VehicleRecieptChecklistMaster, RSMApprovalPage, VehiclePurchaseOrderMasterPage, OtfSoMappingMasterPage, VehicleAllotmentMasterPage, ReceiptMasterPage, VehicleInvoiceMasterPage, DigitalSignatureMasterPage, HoPriceMappingMasterPage, DeliveryNoteInvoiceCancellationPage, VehicleAllotmentPriorityMasterPage, VehicleTrackingPage, OtfSoMappingUnmappingMasterPage, StockTransferIndentMasterPage };
+export { OTFMasterPage, VehicleDetailMasterPage, VehicleReceiptMasterPage, VehiclePriceMasterPage, VehicleRecieptChecklistMaster, RSMApprovalPage, VehiclePurchaseOrderMasterPage, OtfSoMappingMasterPage, VehicleAllotmentMasterPage, ReceiptMasterPage, VehicleInvoiceMasterPage, DigitalSignatureMasterPage, HoPriceMappingMasterPage, DeliveryNoteInvoiceCancellationPage, VehicleAllotmentPriorityMasterPage, VehicleTrackingPage, OtfSoMappingUnmappingMasterPage, StockTransferIndentMasterPage, VehicleDeliveryNoteMasterPage };
