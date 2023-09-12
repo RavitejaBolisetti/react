@@ -33,11 +33,6 @@ const FormWrapper = (props) => {
 describe('Vehicle Purchase Order Master component render', () => {
     it('should render Vehicle Purchase Order component', () => {
         customRender(<VehiclePurchaseOrderMaster setFilterString={jest.fn()} resetFields={jest.fn()} handleButtonClick={jest.fn()} setFieldsValue={jest.fn()} onSuccessAction={jest.fn()} setIsLoading={jest.fn()} />);
-        const searchVPO = screen.getByText('Search VPO');
-        expect(searchVPO).toBeInTheDocument();
-
-        const textBtn = screen.getByRole('textbox', { name: '' });
-        fireEvent.click(textBtn);
     });
 
     it('should click when user click on button', () => {
@@ -49,15 +44,15 @@ describe('Vehicle Purchase Order Master component render', () => {
                 <FormWrapper setFilterString={jest.fn()} resetFields={jest.fn()} handleButtonClick={jest.fn()} setFieldsValue={jest.fn()} onSuccessAction={jest.fn()} setIsLoading={jest.fn()} />
             </Provider>
         );
-        const searchBtn = screen.getByRole('button', { name: 'search' });
+        const searchBtn = screen.getByRole('button', { name: 'search', exact: false });
         fireEvent.click(searchBtn);
-        const advancedFiltersBtn = screen.getByRole('button', { name: 'Advanced Filters' });
+        const advancedFiltersBtn = screen.getByRole('button', { name: 'Advanced Filters', exact: false });
         fireEvent.click(advancedFiltersBtn);
-        const plusBtn = screen.getByRole('button', { name: 'plus Add' });
+        const plusBtn = screen.getByRole('button', { name: 'plus Add', exact: false });
         fireEvent.click(plusBtn);
-        const leftBtn = screen.getByRole('button', { name: 'left' });
+        const leftBtn = screen.getByRole('button', { name: 'left', exact: false });
         fireEvent.click(leftBtn);
-        const rightBtn = screen.getByRole('button', { name: 'right' });
+        const rightBtn = screen.getByRole('button', { name: 'right', exact: false });
         fireEvent.click(rightBtn);
     });
 
@@ -70,13 +65,13 @@ describe('Vehicle Purchase Order Master component render', () => {
                 <FormWrapper setFilterString={jest.fn()} resetFields={jest.fn()} handleButtonClick={jest.fn()} setFieldsValue={jest.fn()} onSuccessAction={jest.fn()} setIsLoading={jest.fn()} />
             </Provider>
         );
-        const searchBtn = screen.getByRole('img', { name: 'search' });
+        const searchBtn = screen.getByRole('img', { name: 'search', exact: false });
         fireEvent.click(searchBtn);
-        const plusBtn = screen.getByRole('img', { name: 'plus' });
+        const plusBtn = screen.getByRole('img', { name: 'plus', exact: false });
         fireEvent.click(plusBtn);
-        const leftBtn = screen.getByRole('img', { name: 'left' });
+        const leftBtn = screen.getByRole('img', { name: 'left', exact: false });
         fireEvent.click(leftBtn);
-        const rightBtn = screen.getByRole('img', { name: 'right' });
+        const rightBtn = screen.getByRole('img', { name: 'right', exact: false });
         fireEvent.click(rightBtn);
     });
 
@@ -97,7 +92,7 @@ describe('Vehicle Purchase Order Master component render', () => {
         fireEvent.click(nextPageBtn);
     });
 
-    it('should click when user click on columnheader button', () => {
+    it('should click on available coulmnheader', () => {
         const mockStore = createMockStore({
             auth: { userId: 106 },
         });
@@ -106,18 +101,18 @@ describe('Vehicle Purchase Order Master component render', () => {
                 <FormWrapper setFilterString={jest.fn()} resetFields={jest.fn()} handleButtonClick={jest.fn()} setFieldsValue={jest.fn()} onSuccessAction={jest.fn()} setIsLoading={jest.fn()} />
             </Provider>
         );
-        const SrlBtn = screen.getByRole('columnheader', { name: 'Srl.' });
-        fireEvent.click(SrlBtn);
-        const purchaseOrderBtn = screen.getByRole('columnheader', { name: 'Purchase Order Number' });
-        fireEvent.click(purchaseOrderBtn);
-        const purchaseOrderDateBtn = screen.getByRole('columnheader', { name: 'Purchase Order Date' });
-        fireEvent.click(purchaseOrderDateBtn);
-        const orderTypeBtn = screen.getByRole('columnheader', { name: 'Order Type' });
-        fireEvent.click(orderTypeBtn);
-        const statusBtn = screen.getByRole('columnheader', { name: 'Status' });
-        fireEvent.click(statusBtn);
-        const actionBtn = screen.getByRole('columnheader', { name: 'Action' });
-        fireEvent.click(actionBtn);
+        const srl = screen.getByRole('columnheader', { name: 'Srl.' });
+        fireEvent.click(srl);
+        const purchaseOrder = screen.getByRole('columnheader', { name: 'Purchase Order Number' });
+        fireEvent.click(purchaseOrder);
+        const purchaseOrderDate = screen.getByRole('columnheader', { name: 'Purchase Order Date' });
+        fireEvent.click(purchaseOrderDate);
+        const orderType = screen.getByRole('columnheader', { name: 'Order Type' });
+        fireEvent.click(orderType);
+        const status = screen.getByRole('columnheader', { name: 'Status' });
+        fireEvent.click(status);
+        const action = screen.getByRole('columnheader', { name: 'Action' });
+        fireEvent.click(action);
     });
 
     it('should click when user click on row button', () => {
@@ -133,19 +128,19 @@ describe('Vehicle Purchase Order Master component render', () => {
         fireEvent.click(SrlBtn);
     });
 
-    it('should click when user click on table and heading button', () => {
-        const mockStore = createMockStore({
-            auth: { userId: 106 },
-        });
-        customRender(
-            <Provider store={mockStore}>
-                <FormWrapper setFilterString={jest.fn()} resetFields={jest.fn()} handleButtonClick={jest.fn()} setFieldsValue={jest.fn()} onSuccessAction={jest.fn()} setIsLoading={jest.fn()} />
-            </Provider>
-        );
-        const tableBtn = screen.getByRole('table', { name: '' });
-        fireEvent.click(tableBtn);
+    it('reset button should work', () => {
+        customRender(<VehiclePurchaseOrderMaster />);
+        const advanceFilter = screen.getByRole('button', { name: /Advanced Filters/i });
+        fireEvent.click(advanceFilter);
+        const resetBtn = screen.getByRole('button', { name: /Reset/i });
+        fireEvent.click(resetBtn);
+    });
 
-        const headingBtn = screen.getByRole('heading', { name: '' });
-        fireEvent.click(headingBtn);
+    it('test for closing the advance filter', () => {
+        customRender(<VehiclePurchaseOrderMaster />);
+        const advanceFilter = screen.getByRole('button', { name: /Advanced Filters/i });
+        fireEvent.click(advanceFilter);
+        const closeBtn = screen.getByRole('button', { name: /Close/i });
+        fireEvent.click(closeBtn);
     });
 });

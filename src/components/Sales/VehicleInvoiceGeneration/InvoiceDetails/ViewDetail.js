@@ -8,13 +8,12 @@ import { Col, Row, Collapse, Descriptions, Divider } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 import { expandIcon } from 'utils/accordianExpandIcon';
 
 const { Panel } = Collapse;
 
 const ViewDetailMain = (props) => {
-    const { formData, otfFormData, isLoading } = props;
+    const { otfFormData, isLoading } = props;
     const [activeKey, setactiveKey] = useState([]);
     const viewProps = {
         bordered: false,
@@ -48,14 +47,12 @@ const ViewDetailMain = (props) => {
                         <Panel header="OTF Details" key="1">
                             <Divider />
                             <Descriptions {...viewProps}>
-                                <Descriptions.Item label="OTF Number">{checkAndSetDefaultValue(otfFormData?.otfNumber, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="OTF Date">{checkAndSetDefaultValue(otfFormData?.otfDate, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Booking Number">{checkAndSetDefaultValue(otfFormData?.bookingNumber || otfFormData?.otfNumber, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Booking Date">{checkAndSetDefaultValue(otfFormData?.otfDate, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="DAR Number">{checkAndSetDefaultValue(otfFormData?.darNumber, isLoading)}</Descriptions.Item>
-                                {/* key darNumber */}
                                 <Descriptions.Item label="Sales Type">{checkAndSetDefaultValue(otfFormData?.saleType, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Price Type">{checkAndSetDefaultValue(otfFormData?.priceType, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Tax Calculation">{checkAndSetDefaultValue(otfFormData?.taxCalculationType, isLoading)}</Descriptions.Item>
-
                                 <Descriptions.Item label="Tax Payable On Reverse Charges?">{checkAndSetDefaultValue(otfFormData?.taxPayableOnReverseCharges, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Sales Consultant Name">{checkAndSetDefaultValue(otfFormData?.saleConsultant, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Influence/Mitra Type">{checkAndSetDefaultValue(otfFormData?.mitraType, isLoading)}</Descriptions.Item>
@@ -63,18 +60,6 @@ const ViewDetailMain = (props) => {
                             </Descriptions>
                         </Panel>
                     </Collapse>
-                    {/* <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
-                        <Panel header="Booked Customer" key="2">
-                            <Divider />
-                            <Descriptions {...viewProps}></Descriptions>
-                        </Panel>
-                    </Collapse>
-                    <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(3)} expandIconPosition="end">
-                        <Panel header="Billing Customer" key="3">
-                            <Divider />
-                            <Descriptions {...viewProps}></Descriptions>
-                        </Panel>
-                    </Collapse> */}
                 </Col>
             </Row>
         </div>

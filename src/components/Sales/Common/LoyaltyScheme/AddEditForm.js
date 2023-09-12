@@ -17,8 +17,8 @@ const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
     const { formData, form } = props;
-    const { schemeLovData, typeData, makeData } = props;
-    const { isConfigLoading, isSchemeLovLoading, isMakeLoading, isModelLoading, isVariantLoading } = props;
+    const { schemeLovData, typeData } = props;
+    const { isConfigLoading, isSchemeLovLoading, isModelLoading, isVariantLoading } = props;
     const { filteredModelData, filteredVariantData, handleFilterChange, fnSetData, disabledProps } = props;
 
     const currentYear = new Date().getFullYear();

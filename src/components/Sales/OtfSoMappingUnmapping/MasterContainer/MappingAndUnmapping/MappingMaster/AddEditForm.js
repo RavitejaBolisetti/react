@@ -28,7 +28,7 @@ const AddEditFormMain = (props) => {
     return (
         <>
             <div className={styles.drawerBodyNew}>
-                <Form form={form} autoComplete="off" layout="vertical" colon={false} >
+                <Form form={form} autoComplete="off" layout="vertical" colon={false}>
                     <Row gutter={20}>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item name="soNumber" label="SO Number">
@@ -52,7 +52,7 @@ const AddEditFormMain = (props) => {
                         </Col>
                     </Row>
                 </Form>
-                <Search placeholder="Search OTF Number" onSearch={handleOtfSearch} className={`${styles.searchField} ${SoStyles.marginBottom}`} />
+                <Search placeholder="Search Booking Number" onSearch={handleOtfSearch} className={`${styles.searchField} ${SoStyles.marginBottom}`} />
                 <ListDataTable {...SearchTableProps} />
             </div>
         </>

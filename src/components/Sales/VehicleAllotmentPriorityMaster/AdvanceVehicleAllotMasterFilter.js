@@ -7,16 +7,12 @@ import React, { useEffect } from 'react';
 import { Button, Row, Col, Form } from 'antd';
 import { FilterIcon } from 'Icons';
 import { RxCross2 } from 'react-icons/rx';
-import { FaHistory } from 'react-icons/fa';
 
 import { SearchBox } from 'components/utils/SearchBox';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
-import { TfiReload } from 'react-icons/tfi';
 import { PlusOutlined } from '@ant-design/icons';
 
 import styles from 'assets/sass/app.module.scss';
-// import styles from 'components/common/Common.module.css';
-
 export default function AdvanceVehicleAllotMasterFilter(props) {
     const {
         extraParams,
@@ -31,14 +27,8 @@ export default function AdvanceVehicleAllotMasterFilter(props) {
         setAdvanceSearchVisible,
         searchForm,
         searchForm: { setFieldsValue },
-        handleOnClick,
-        tableData = [],
         showAddButton = true,
-        handleRefresh,
         handleButtonClick,
-        showChangeHistoryList,
-        handleChangeHistory,
-        buttonData,
     } = props;
 
     const serachBoxProps = {
@@ -85,29 +75,15 @@ export default function AdvanceVehicleAllotMasterFilter(props) {
                     </Form>
                 </Col>
 
-                {/* {buttonData?.changeHistory && ( */}
-                    {/* <Col className={styles.buttonsGroupRight} xs={24} sm={24} md={4} lg={4} xl={4}>
-                        <>
-                            <Button icon={<FaHistory />} className={styles.verticallyCentered} onClick={handleChangeHistory} type="primary">
-                                Change History
-                            </Button>
-                        </>
-                    </Col> */}
-                {/* )} */}
-
-                {/* {tableData?.length > 0 && ( */}
-                <>
-                    {showAddButton && (
-                        <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.buttonsGroupRight}>
-                            <Button icon={<PlusOutlined />} type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                                Add
-                            </Button>
-                        </Col>
-                    )}
-                </>
-                {/* )} */}
+                {showAddButton && (
+                    <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.buttonsGroupRight}>
+                        <Button icon={<PlusOutlined />} type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
+                            Add
+                        </Button>
+                    </Col>
+                )}
             </Row>
-             {advanceFilter && filterString?.advanceFilter && extraParams.find((i) => i.name) && (
+            {advanceFilter && filterString?.advanceFilter && extraParams.find((i) => i.name) && (
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.advanceFilterTop}>
                         <Row gutter={20}>

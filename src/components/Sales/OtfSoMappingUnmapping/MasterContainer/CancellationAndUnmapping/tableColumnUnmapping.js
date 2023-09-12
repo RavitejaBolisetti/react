@@ -38,7 +38,7 @@ export const tableColumnUnMapping = ({ handleButtonClick, actionButtonVisibility
             width: '10%',
         }),
         tblPrepareColumns({
-            title: 'OTF Number',
+            title: 'Booking Number',
             dataIndex: 'otfNumber',
             width: '10%',
         }),

@@ -376,7 +376,7 @@ export const OtfListMasterBase = (props) => {
             soStatusCode: values[FORM_TYPE_CONSTANSTS?.FORM_2?.id]?.soStatusCode,
         };
         if (handleNullcheck(form_1_Values, form_2_Values, status?.key === OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.RESERVE_QUOTA?.key)) {
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Validate Otf Number to continue' });
+            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Validate booking number to continue' });
             return;
         }
         const finalData = { mapStatusCode: selectedKey, dealerLocationCode, parentGroupCode, resonCategoryCode, reasonDescriptionCode, soDetails: [form_1_Values, form_2_Values] };
