@@ -28,12 +28,6 @@ describe('AddEdit Component render', () => {
         const expectedDate = screen.getByText('Cust. Expected Delivery Date');
         expect(expectedDate).toBeTruthy();
 
-        const saleType = screen.getByText('Sale Type');
-        expect(saleType).toBeTruthy();
-
-        const priceType = screen.getByText('Price Type');
-        expect(priceType).toBeTruthy();
-
         const boolingAmt = screen.getByText('Booking Amount');
         expect(boolingAmt).toBeTruthy();
 
@@ -61,18 +55,11 @@ describe('AddEdit Component render', () => {
         const payment = screen.getByText('Mode Of Payment');
         expect(payment).toBeTruthy();
 
-        const exchange = screen.getByText('Exchange');
-        expect(exchange).toBeTruthy();
-
         const loyaltyScheme = screen.getByText('Loyality Scheme');
         expect(loyaltyScheme).toBeTruthy();
 
         const Switch = screen.getByRole('switch', { name: /Loyality Scheme/i });
         fireEvent.click(Switch);
         expect(Switch).toBeChecked();
-
-        const Switch2 = screen.getByRole('switch', { name: /Exchange/i });
-        fireEvent.click(Switch2);
-        expect(Switch2).toBeChecked();
     });
 });

@@ -11,12 +11,12 @@ export const SearchtableColumnMapping = ({ handleButtonClick, actionButtonVisibi
     const tableColumn = [];
     tableColumn.push(
         tblPrepareColumns({
-            title: 'OTF Number',
+            title: 'Booking Number',
             dataIndex: 'otfNumber',
             width: '10%',
         }),
         tblPrepareColumns({
-            title: 'OTF Date',
+            title: 'Booking Date',
             dataIndex: 'otfDate',
             width: '20%',
             render: (text) => converDateDayjs(text),

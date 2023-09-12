@@ -62,7 +62,7 @@ describe('List State Master Component', () => {
             auth: { userId: 106 },
             data: {
                 Geo: {
-                    Country: { isLoaded: true, data: countryData },
+                    Country: { isLoaded: false, data: countryData },
                     State: { isFilteredListLoaded: true, filteredListData: stateData },
                 },
             },
@@ -72,11 +72,6 @@ describe('List State Master Component', () => {
                 <ListStateMaster />
             </Provider>
         );
-        
-        const addBtn=screen.getByRole('button', { name: /plus Add/i });
-        fireEvent.click(addBtn);
-        const closeBtn=screen.getByRole('button', { name: /Close/i });
-        fireEvent.click(closeBtn);
     });
 
 

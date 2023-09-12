@@ -159,6 +159,8 @@ export const ReceiptMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString]);
 
+   
+
     const extraParams = useMemo(() => {
         return [
             {

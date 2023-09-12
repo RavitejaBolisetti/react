@@ -22,13 +22,11 @@ describe('View Application Detail Component', () => {
         const styles={
             contentHeaderRightBackground:'Hello'
         }
-        customRender(<ViewApplicationDetail applicationDetailsData={applicationDetailsData} styles={styles} />);
+        const { container }=customRender(<ViewApplicationDetail applicationDetailsData={applicationDetailsData} styles={styles} />);
 
-        const appActionCollapse = screen.getByRole("button", {name: 'Application Actions *', exact: false});
-        fireEvent.click(appActionCollapse);
-        const docTypeCollapse = screen.getByRole("button", {name: 'Document Type *', exact: false});
-        fireEvent.click(docTypeCollapse);
-        const accDealerLocationCollapse = screen.getByRole("button", {name: 'Accessible Dealer Location *', exact: false});
-        fireEvent.click(accDealerLocationCollapse );
+        const collapseBtn=container.getElementsByClassName('ant-collapse-expand-icon');
+        fireEvent.click(collapseBtn[0]);
+        fireEvent.click(collapseBtn[1]);
+        fireEvent.click(collapseBtn[2]);
      });
 });

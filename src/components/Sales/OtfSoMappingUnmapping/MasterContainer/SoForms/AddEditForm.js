@@ -29,12 +29,12 @@ const AddEditFormMain = ({ formType, disabledProps, handleSearchChange, isLoadin
                 </Form.Item>
             )}
             {!hideFields && (
-                <Form.Item label="OTF No." name={[formType, 'otfNumber']} rules={[validateRequiredInputField('OTF number'), validationFieldLetterAndNumber('OTF number')]}>
-                    <Search placeholder="Search by OTF Number" allowClear onSearch={(value) => handleSearchChange(value, formType)} onChange={() => handleResetData(formType)} className={styles.headerSearchField} />
+                <Form.Item label="Booking No." name={[formType, 'otfNumber']} rules={[validateRequiredInputField('Booking number'), validationFieldLetterAndNumber('Booking number')]}>
+                    <Search placeholder="Search by Booking Number" allowClear onSearch={(value) => handleSearchChange(value, formType)} onChange={() => handleResetData(formType)} className={styles.headerSearchField} />
                 </Form.Item>
             )}
             {!hideFields && (
-                <Form.Item label="OTF DATE" name={[formType, 'otfDate']}>
+                <Form.Item label="Booking Date" name={[formType, 'otfDate']}>
                     <Input {...disabledProps} />
                 </Form.Item>
             )}
