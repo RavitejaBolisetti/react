@@ -361,4 +361,20 @@ export const PARAM_MASTER = {
         id: 'MAKE_NAME',
         title: 'Make in loyalty',
     },
+    DLVR_SER: {
+        id: 'DLVR_SER',
+        title: 'Delivery Note Search',
+    },
+    DLVR_NT_STS: {
+        id: 'DLVR_NT_STS',
+        title: 'Delivery Note Status',
+    },
+    DLVR_DLY_RSN: {
+        id: 'DLVR_DLY_RSN',
+        title: 'Delivery Note Reason for Delay',
+    },
+    DLVR_SALE_TYP: {
+        id: 'DLVR_SALE_TYP',
+        title: 'Delivery Note Reason for Delay',
+    }, 
 };

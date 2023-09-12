@@ -6,6 +6,8 @@
 import React from 'react';
 import { Collapse, Divider } from 'antd';
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
+import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
+
 import styles from 'assets/sass/app.module.scss';
 
 const { Panel } = Collapse;
@@ -63,7 +65,7 @@ const VehicleDetailCard = (props) => {
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    MFG Warranty: <span>{selectedRecord?.mfgWarranty || 'NA'}</span>
+                    MFG Warranty: <span>{convertDateTime(selectedRecord?.mfgWarranty, dateFormatView) || 'NA'}</span>
                 </div>
             </Panel>
         </Collapse>

@@ -35,6 +35,7 @@ import { ThankYouMaster } from './ThankYou';
 import { LeftSidebar } from './LeftSidebar';
 import { OTFFormButton } from './OTFFormButton';
 import { OTFStatusBar } from './utils/OTFStatusBar';
+import { PAGE_TYPE } from 'components/Sales/VehicleDeliveryNote/utils/pageType';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -45,6 +46,7 @@ const OTFMainConatinerMain = (props) => {
         ...props,
         FormActionButton: OTFFormButton,
         StatusBar: OTFStatusBar,
+        pageType: PAGE_TYPE?.OTF_PAGE_TYPE?.key,
     };
 
     const renderElement = () => {

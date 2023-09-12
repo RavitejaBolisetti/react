@@ -9,14 +9,14 @@ export const VEHICLE_DETAIL_SECTION = {
         title: 'Vehicle Details',
         displayOnList: true,
     },
-    CUSTOMER_DETAILS: {
+    PRODUCT_DETAILS: {
         id: 2,
-        title: 'Customer Details',
+        title: 'Product Details',
         displayOnList: true,
     },
-    PRODUCT_DETAILS: {
+    CUSTOMER_DETAILS: {
         id: 3,
-        title: 'Product Details',
+        title: 'Customer Details',
         displayOnList: true,
     },
     CONTACTS: {
@@ -29,21 +29,21 @@ export const VEHICLE_DETAIL_SECTION = {
         title: 'Entitlements & Schemes',
         displayOnList: true,
     },
-    SERVICE_APPOINTMENTS_HISTORY: {
-        id: 6,
-        title: 'Service Appointments & History',
-        displayOnList: true,
-    },
-    SERVICE_ACTION_RECALL_DETAILS: {
-        id: 7,
-        title: 'Service Action/Recall Details',
-        displayOnList: true,
-    },
-    FEEDBACK: {
-        id: 8,
-        title: 'Feedback',
-        displayOnList: true,
-    },
+    // SERVICE_APPOINTMENTS_HISTORY: {
+    //     id: 6,
+    //     title: 'Service Appointments & History',
+    //     displayOnList: true,
+    // },
+    // SERVICE_ACTION_RECALL_DETAILS: {
+    //     id: 7,
+    //     title: 'Service Action/Recall Details',
+    //     displayOnList: true,
+    // },
+    // FEEDBACK: {
+    //     id: 8,
+    //     title: 'Feedback',
+    //     displayOnList: true,
+    // },
     DOCUMENTS: {
         id: 9,
         title: 'Documents',

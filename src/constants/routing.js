@@ -111,6 +111,7 @@ export const ROUTING_REPORT_OTF_REPORTS = ROUTING_REPORT.concat('otf-reports');
 export const ROUTING_VEHICLE_ALLOTMENT = ROUTING_SALES.concat('order-delivery/vehicle-allotment');
 export const ROUTING_VEHICLE_RECIEPT_CHECKLIST = ROUTING_SALES.concat('receipt-checklist');
 export const ROUTING_VEHICLE_INVOICE_GENERATION = ROUTING_SALES.concat('vehicle-invoice-generation');
+export const ROUTING_VEHICLE_DELIVERY_NOTE = ROUTING_SALES.concat('vehicle-delivery-note');
 
 export const ROUTING_VEHICLE_MODEL_TAX_CHARGES_CATEGORY = ROUTING_FINANCIAL_ACCOUNTING.concat('vehicle-model-tax-and-charges-category');
 export const ROUTING_VEHICLE_VEHICLE_ALLOTMENT_PRIORITY_MASTER = ROUTING_SALES.concat('vehicle-allotment-priority-master');
