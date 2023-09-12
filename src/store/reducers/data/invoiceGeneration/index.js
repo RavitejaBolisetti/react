@@ -8,10 +8,11 @@ import { VehicleInvoiceSearchList } from './vehicleInvoiceGeneration';
 import { VehicleIrnGeneration } from './irnGeneration';
 import { VehicleInvoiceDetail } from './vehicleInvoiceDetail';
 import { VehicleDetails } from './vehicleDetails';
-
+import { VehicleInvoice } from './vehicleInvoice'
 export const VehicleInvoiceGeneration = combineReducers({
     VehicleInvoiceSearchList,
     VehicleIrnGeneration,
     VehicleInvoiceDetail,
     VehicleDetails,
+    VehicleInvoice,
 });

@@ -42,6 +42,7 @@ const mapStateToProps = (state) => {
                 VehicleIrnGeneration: { isLoaded: isIrnDataLoaded = false, isLoading: isIrnDataLoading, data: irnData = [] },
                 VehicleInvoiceDetail: { isLoaded: isVehicleInvoiceDataLoaded = false, isLoading: isVehicleInvoiceDataLoading, data: vehicleInvoiceData = [] },
                 VehicleDetails: { isLoaded: isVehicleDataLoaded = false, isLoading: isVehicleDataLoading, data: vehicleDetail = [] },
+                VehicleInvoice: { isLoaded: isInvoiceDataLoaded = false, isLoading: isInvoiceDataLoading, data: invoiceData = [] }
             },
             OTF: {
                 OtfSearchList: { isDetailLoaded: isDataLoaded, detailData: otfData = [] },
@@ -58,6 +59,9 @@ const mapStateToProps = (state) => {
         moduleTitle,
         isSearchLoading,
         isSearchDataLoaded,
+        isInvoiceDataLoaded,
+        isInvoiceDataLoading,
+        invoiceData,
         isDataLoaded,
         otfData,
         filterString,
@@ -82,6 +86,9 @@ const mapDispatchToProps = (dispatch) => ({
             cancelInvoice: vehicleInvoiceGenerationDataActions.saveData,
             listShowLoading: otfDataActions.listShowLoading,
 
+            saveData: vehicleInvoiceDetailDataActions.saveData,
+            listInvoiceShowLoading: vehicleInvoiceDetailDataActions.listShowLoading,
+
             irnGeneration: vehicleIrnGenerationDataActions.saveData,
             listIrnShowLoading: vehicleIrnGenerationDataActions.listShowLoading,
 
@@ -100,7 +107,7 @@ const mapDispatchToProps = (dispatch) => ({
 export const VehicleInvoiceMasterBase = (props) => {
     const { data, receiptDetailData, userId, irnGeneration, fetchList, fetchOTFDetail, fetchVehicleDetail, fetchVehicleInvoiceDetail, listShowLoading, showGlobalNotification } = props;
     const { cancelInvoice } = props;
-    const { typeData, receiptType, partySegmentType, paymentModeType, documentType, moduleTitle, totalRecords } = props;
+    const { typeData, receiptType, partySegmentType, listInvoiceShowLoading, saveData, paymentModeType, documentType, moduleTitle, totalRecords } = props;
     const { filterString, setFilterString, invoiceStatusList, otfData } = props;
 
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
@@ -408,7 +415,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         setIsFormVisible(true);
     };
 
-    const onFinishSearch = (values) => {};
+    const onFinishSearch = (values) => { };
 
     const handleResetFilter = (e) => {
         setShowDataLoading(false);
@@ -417,27 +424,27 @@ export const VehicleInvoiceMasterBase = (props) => {
     };
 
     const onFinish = (receiptData) => {
-        // const data = { ...requestPayload, apportionDetails: apportionList, receiptsDetails: receiptData.hasOwnProperty('receiptType') ? receiptData : requestPayload?.receiptsDetails };
-        // const onSuccess = (res) => {
-        //     form.resetFields();
-        //     setShowDataLoading(true);
-        //     showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage + 'Receipt No.:' + res?.data?.receiptsDetails?.receiptNumber });
-        //     fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
-        //     setButtonData({ ...buttonData, formBtnActive: false });
-        //     setIsFormVisible(false);
-        // };
-        // const onError = (message) => {
-        //     showGlobalNotification({ message });
-        // };
-        // const requestData = {
-        //     data: data,
-        //     method: 'post',
-        //     setIsLoading: listShowLoading,
-        //     userId,
-        //     onError,
-        //     onSuccess,
-        // };
-        // saveData(requestData);
+        const data = { ...requestPayload };
+        const onSuccess = (res) => {
+            form.resetFields();
+            setShowDataLoading(true);
+            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage + 'Receipt No.:' + res?.data?.receiptsDetails?.receiptNumber });
+            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
+            setButtonData({ ...buttonData, formBtnActive: false });
+            setIsFormVisible(false);
+        };
+        const onError = (message) => {
+            showGlobalNotification({ message });
+        };
+        const requestData = {
+            data: data,
+            method: 'post',
+            setIsLoading: listInvoiceShowLoading,
+            userId,
+            onError,
+            onSuccess,
+        };
+        saveData(requestData);
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -597,7 +604,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         invoiceDetailForm,
         formActionType,
         setFormActionType,
-        receiptOnFinish: onFinish,
+        onFinish,
         onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
