@@ -28,7 +28,6 @@ const AddEditFormMain = (props) => {
     const { addIndentDetailsForm, onFinish, indentLocationList, requestedByDealerList, openAccordian, setOpenAccordian } = props;
     const { buttonData, setButtonData, onCloseAction, tableDataItem, setTableDataItem } = props;
     const { handleButtonClick, handleChangeLocation } = props;
-    const { activeKey, setActiveKey } = props;
 
     const [addVehicleDetailsForm] = Form.useForm();
     const [isAddVehicleDetailsVisible, setIsAddVehicleDetailsVisible] = useState(false);
@@ -64,7 +63,7 @@ const AddEditFormMain = (props) => {
         setButtonData,
         handleButtonClick,
     };
-    
+
     const handleCollapse = (key) => {
         setOpenAccordian((prev) => (prev === key ? '' : key));
     };

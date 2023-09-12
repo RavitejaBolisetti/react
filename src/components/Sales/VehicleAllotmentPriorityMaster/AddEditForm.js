@@ -4,33 +4,29 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 
-import React, { useState } from 'react';
-import { Card, Col, Form, Row, DatePicker, Divider, Space, Typography } from 'antd';   // Collapse
-import { prepareDatePickerText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
+import React from 'react';
+import { Card, Col, Form, Row, DatePicker, Divider, Space, Typography } from 'antd';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
 import { ViewDetail } from './ViewDetail';
 import { withDrawer } from 'components/withDrawer';
 import { dateFormat, formatDateToCalenderDate } from 'utils/formatDateTime';
-// import { accordianExpandIcon } from 'utils/accordianExpandIcon';
+
 import { documentTypeLedgerDataActions } from 'store/actions/data/financialAccounting/documentTypeLedger';
- 
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import { showGlobalNotification } from 'store/actions/notification';
 
 import { DrawerFormButton } from 'components/common/Button';
 import { NotificationDetailMaster } from './NotificationDetails';
 
-import { showGlobalNotification } from 'store/actions/notification';
-
-import { validateRequiredInputField } from 'utils/validation';
- 
 import { disablePastDate } from 'utils/disableDate';
-import styles from 'assets/sass/app.module.scss';
- import { customSelectBox } from 'utils/customSelectBox';
-//import styles from 'components/common/Common.module.css';
+import { customSelectBox } from 'utils/customSelectBox';
+import { validateRequiredInputField } from 'utils/validation';
+import { prepareDatePickerText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
-// const { Panel } = Collapse;
+import styles from 'assets/sass/app.module.scss';
+
 const { Text } = Typography;
- 
 
 const mapStateToProps = (state) => {
     const {
@@ -64,21 +60,19 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const AddEditFormMain = (props) => {
- 
-    const { form, formData, onCloseAction, formActionType, formActionType: { viewMode } = undefined, onFinish, onFinishFailed, typeData,  } = props;
-    const { buttonData, setButtonData, handleButtonClick,  } = props;
-    const { data, productHierarchyList, viewVehicleAllotData, roleData, } = props;
+    const { form, formData, onCloseAction, formActionType, formActionType: { viewMode } = undefined, onFinish, onFinishFailed, typeData } = props;
+    const { buttonData, setButtonData, handleButtonClick } = props;
+    const { data, productHierarchyList, viewVehicleAllotData, roleData } = props;
     // const{ formEdit, setFormEdit, editForm} = props;
     // const { filterDesignationList, setFilterDesignationList, } = props;
     // const [openAccordian, setOpenAccordian] = useState(1);
-    
-    const getRoleName = (value) => {         
-    return roleData?.find((i) => i?.key === value)?.value;
- };
-    const getDesignationName = (value) => {       
-    return data?.find((i) => i?.designationCode === value)?.designationDescription;
- };
- 
+
+    const getRoleName = (value) => {
+        return roleData?.find((i) => i?.key === value)?.value;
+    };
+    const getDesignationName = (value) => {
+        return data?.find((i) => i?.designationCode === value)?.designationDescription;
+    };
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
@@ -149,20 +143,20 @@ const AddEditFormMain = (props) => {
                                     <NotificationDetailMaster {...props} />
                                 </Panel>
                             </Collapse> */}
- 
+
                             {formActionType.editMode === true && (
                                 <>
-                                {viewVehicleAllotData?.roleData?.map((item, index) => (
-                                     <Card style={{ backgroundColor: '#BEBEBE1A' }}>
-                                        <Row align="middle" justify="space-between" className={styles.marB20}>
-                                            <Space>
-                                            <Text> {getRoleName(item?.roleCode) }</Text>
-                                                <Divider type="vertical" />
-                                                <Text> {getDesignationName(item?.designationCode) }</Text>
-                                            </Space> 
-                                        </Row>
-                                    </Card>
-                                ))}
+                                    {viewVehicleAllotData?.roleData?.map((item, index) => (
+                                        <Card style={{ backgroundColor: '#BEBEBE1A' }}>
+                                            <Row align="middle" justify="space-between" className={styles.marB20}>
+                                                <Space>
+                                                    <Text> {getRoleName(item?.roleCode)}</Text>
+                                                    <Divider type="vertical" />
+                                                    <Text> {getDesignationName(item?.designationCode)}</Text>
+                                                </Space>
+                                            </Row>
+                                        </Card>
+                                    ))}
                                 </>
                             )}
                             {formActionType.addMode === true && (
@@ -172,7 +166,6 @@ const AddEditFormMain = (props) => {
                                     </Row>
                                 </Card>
                             )}
- 
                         </>
                     )}
                 </Col>

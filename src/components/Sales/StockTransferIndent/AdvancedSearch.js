@@ -30,7 +30,7 @@ export const AdvancedSearchFrom = (props) => {
     } = props;
 
     const indentSaerchList = searchList?.filter((i) => {
-        return i?.key.includes(toggleButton === STOCK_TRANSFER?.RAISED.key ?  "RAIS_TO" : "REC_TO");
+        return i?.key.includes(toggleButton === STOCK_TRANSFER?.RAISED.key ? 'RAIS_TO' : 'REC_TO');
     });
 
     useEffect(() => {
@@ -45,7 +45,7 @@ export const AdvancedSearchFrom = (props) => {
             current: 1,
             fromDate: formatDate(values?.fromDate),
             toDate: formatDate(values?.toDate),
-            dealerLocation : values?.dealerLocation,
+            dealerLocation: values?.dealerLocation,
             advanceFilter: true,
         });
         setAdvanceSearchVisible(false);
@@ -93,7 +93,7 @@ export const AdvancedSearchFrom = (props) => {
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item initialValue={formatDateToCalenderDate(filterString?.fromDate)} label="Indent From Date" name="fromDate" rules={[validateRequiredSelectField('Indent From Date')]} className={styles?.datePicker}>
-                        <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate}  onChange={() => advanceFilterForm.setFieldsValue({ toDate: undefined })} />
+                        <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} onChange={() => advanceFilterForm.setFieldsValue({ toDate: undefined })} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
