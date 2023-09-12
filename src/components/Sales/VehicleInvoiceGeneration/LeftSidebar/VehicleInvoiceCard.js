@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React from 'react';
+import React, { useState } from 'react';
 import { Collapse, Space, Button, Avatar, Typography, Divider } from 'antd';
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
 import { DATA_TYPE } from 'constants/dataType';
@@ -15,6 +15,7 @@ import { QUERY_BUTTONS_CONSTANTS } from '../QueryButtons';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
 import styles from 'assets/sass/app.module.scss';
+import { ConfirmationModal } from 'utils/ConfirmationModal';
 
 const { Panel } = Collapse;
 const { Text, Title } = Typography;
@@ -36,6 +37,24 @@ const VehicleInvoiceCard = (props) => {
     const { selectedOrder, otfData, formActionType, isLoading, typeData, handleIRNGeneration, irnStatusData } = props;
     const fullName = selectedOrder?.customerName?.split(' ');
     const userAvatar = fullName ? fullName[0]?.slice(0, 1) + (fullName[1] ? fullName[1].slice(0, 1) : '') : '';
+    const [confirmRequest, setConfirmRequest] = useState(false);
+
+    const showConfirmation = () => {
+        setConfirmRequest(true);
+    };
+
+    const onConfirmationCloseAction = () => {
+        setConfirmRequest(false);
+    };
+
+    const confirmModalRequest = {
+        isVisible: confirmRequest,
+        titleOverride: 'IRN Generation Confirmation',
+        text: 'Do you want to generate IRN?',
+        onCloseAction: onConfirmationCloseAction,
+        onSubmitAction: handleIRNGeneration,
+    };
+
     return (
         <Collapse bordered={true} defaultActiveKey={[1]} expandIcon={expandIcon} collapsible="icon">
             <Panel
@@ -95,9 +114,12 @@ const VehicleInvoiceCard = (props) => {
                     IRN Status:
                     <div className={styles.buttonsGroupRight}>
                         {selectedOrder?.invoiceNumber && !irnStatusData?.irnStatus ? (
-                            <Button type="primary" onClick={handleIRNGeneration} style={{ color: '#ffffff !important' }}>
-                                Generate
-                            </Button>
+                            <>
+                                <Button onClick={showConfirmation} type="primary" style={{ color: '#ffffff !important' }}>
+                                    Generate
+                                </Button>
+                                <ConfirmationModal {...confirmModalRequest} />
+                            </>
                         ) : (
                             <>
                                 {checkAndSetDefaultValue(irnStatusData?.irnStatus)}
@@ -126,11 +148,11 @@ const VehicleInvoiceCard = (props) => {
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    OTF No.: <span>{checkAndSetDefaultValue(selectedOrder?.otfNumber)}</span>
+                    Booking No.: <span>{checkAndSetDefaultValue(selectedOrder?.bookingNumber || selectedOrder?.otfNumber)}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    OTF Date: <span>{checkAndSetDefaultValue(otfData?.otfDate, isLoading, DATA_TYPE?.DATE?.key) || 'NA'}</span>
+                    Booking Date: <span>{checkAndSetDefaultValue(otfData?.otfDate, isLoading, DATA_TYPE?.DATE?.key) || 'NA'}</span>
                 </div>
             </Panel>
         </Collapse>

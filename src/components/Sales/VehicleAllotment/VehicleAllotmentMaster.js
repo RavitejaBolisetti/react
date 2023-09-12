@@ -317,7 +317,7 @@ export const VehicleAllotmentMasterBase = (props) => {
                     onSubmitAction: () => handleVehicleAllotment(record, buttonAction),
                     submitText: 'Yes',
                     text: 'Are you sure want to Un-allot this OTF? ',
-                    content: selectedOTFDetails ? selectedOTFDetails?.otfNumber : '',
+                    content: selectedOTFDetails ? selectedOTFDetails?.bookingNumber || selectedOTFDetails?.otfNumber : '',
                 });
 
                 break;

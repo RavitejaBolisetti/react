@@ -51,7 +51,7 @@ const AddEditFormMain = (props) => {
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item name="otfNumber" label="OTF Number">
+                        <Form.Item name="otfNumber" label="Booking Number">
                             <Input {...disableProps} placeholder={preparePlaceholderText('otfNumber')} />
                         </Form.Item>
                     </Col>

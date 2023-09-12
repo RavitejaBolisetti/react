@@ -12,6 +12,7 @@ export const tableColumnSearchOTF = (sorter) => {
             title: 'Booking No.',
             dataIndex: 'otfNumber',
             width: '20%',
+            render: (_, record) => record?.bookingNumber || record?.otfNumber,
             sorter,
         }),
         tblPrepareColumns({

@@ -35,7 +35,7 @@ const mapStateToProps = (state) => {
                 ExchangeVehicle: { isLoaded: isDataLoaded = false, isLoading, data: exchangeData = [] },
                 FinanceLov: { isLoaded: isFinanceLovDataLoaded = false, isLoading: isFinanceLovLoading, data: financeLovData = [] },
                 SchemeDetail: { isFilteredListLoaded: isSchemeLovDataLoaded = false, isLoading: isSchemeLovLoading, filteredListData: schemeLovData = [] },
-                ExchangeVehicleAlert: { isLoaded: isExchangeVehicleAlertLoaded = false, isLoading: isExchangeVehicleAlertLoading = false, data: exchangeVehicleAlertData = [] },
+                ExchangeVehicleAlert: { isLoaded: isExchangeVehicleAlertLoaded = false, isLoading: isExchangeVehicleAlertLoading = false, data: exchangeVehicleAlertData = false },
             },
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             Vehicle: {
@@ -197,7 +197,7 @@ const ExchangeVehiclesBase = (props) => {
             key: 'otfNumber',
             title: 'otfNumber',
             value: selectedOrderId,
-            name: 'OTF Number',
+            name: 'Booking Number',
         },
     ];
 
@@ -326,7 +326,7 @@ const ExchangeVehiclesBase = (props) => {
     }, [modelGroup?.oldModelGroup]);
 
     useEffect(() => {
-        if (exchangeVehicleAlertData) {
+        if (exchangeVehicleAlertData === true) {
             setModalOpen(true);
         } else {
             setModalOpen(false);
