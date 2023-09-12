@@ -31,6 +31,7 @@ export const ViewTimelineMain = (props) => {
     const handleVisiblity = () => {
         setLocationVisiblity(!locationVisiblity);
     };
+    const checkboxStatus = Object.values(DELIVERY_STATUS_CONSTANT).find((status) => status?.title === formData?.shipmentStatus);
 
     const mapIconAndClass = (id) => {
         let activeClassName = '';
@@ -58,22 +59,19 @@ export const ViewTimelineMain = (props) => {
         return { activeClassName, menuNavIcon };
     };
 
-    const checkboxStatus = Object.values(DELIVERY_STATUS_CONSTANT).find((status) => status?.title === formData?.shipmentStatus);
-
     const addKeys = (value) => {
         const id = value?.length;
         switch (true) {
             case id === 1: {
-                value.push({ order: 2, title: 'In Transit' }, { order: 3, title: 'Delivered' }, { order: 4, title: 'Received' });
+                value.push({ order: 2, title: 'In Transit', vehicleTrackingLocationResponse: [{ time: '12:00' }] }, { order: 3, title: 'Delivered', vehicleTrackingLocationResponse: [{ time: '12:00' }] }, { order: 4, title: 'Received', vehicleTrackingLocationResponse: [] });
                 break;
             }
             case id === 2: {
-                value.push({ order: 3, title: 'Delivered' }, { order: 4, title: 'Received' });
+                value.push({ order: 3, title: 'Delivered', vehicleTrackingLocationResponse: [{ time: '12:00' }] }, { order: 4, title: 'Received', vehicleTrackingLocationResponse: [] });
                 break;
             }
             case id === 3: {
-                value.push({ order: 4, title: 'Received' });
-
+                value.push({ order: 4, title: 'Received', vehicleTrackingLocationResponse: [] });
                 break;
             }
             default: {
@@ -92,8 +90,8 @@ export const ViewTimelineMain = (props) => {
                 className: mapIconAndClass(record?.order)?.activeClassName,
                 label: (
                     <>
-                        <div>{checkAndSetDefaultValue(moment(record?.vehicleTrackingLocationResponse[0]?.dateAndTime).format('L'), false, DATA_TYPE?.DATE?.key)}</div>
-                        <div>{moment(record?.vehicleTrackingLocationResponse[0]?.dateAndTime).format('LT')}</div>
+                        <div>{record?.vehicleTrackingLocationResponse?.length > 0 && record?.vehicleTrackingLocationResponse[0]?.dateAndTime && checkAndSetDefaultValue(moment(record?.vehicleTrackingLocationResponse[0]?.dateAndTime).format('L'), false, DATA_TYPE?.DATE?.key)}</div>
+                        <div>{record?.vehicleTrackingLocationResponse?.length > 0 && record?.vehicleTrackingLocationResponse[0]?.dateAndTime && moment(record?.vehicleTrackingLocationResponse[0]?.dateAndTime).format('LT')}</div>
                     </>
                 ),
                 children: (
@@ -121,9 +119,11 @@ export const ViewTimelineMain = (props) => {
                                                     <span>{locations?.locationName}</span>
                                                 </Card>
                                             )}
-                                            <Button icon={locationVisiblity ? <SlArrowUp /> : <SlArrowDown />} onClick={handleVisiblity} type="link">
-                                                {locationVisiblity ? 'See Less' : 'See More'}
-                                            </Button>
+                                            {!locationVisiblity && (
+                                                <Button icon={locationVisiblity ? <SlArrowUp /> : <SlArrowDown />} onClick={handleVisiblity} type="link">
+                                                    {locationVisiblity ? 'See Less' : 'See More'}
+                                                </Button>
+                                            )}
                                         </>
                                     );
                                 } else if (index > 2) {
@@ -133,6 +133,11 @@ export const ViewTimelineMain = (props) => {
                                                 <Card>
                                                     <span>{locations?.locationName}</span>
                                                 </Card>
+                                            )}
+                                            {locationVisiblity && (
+                                                <Button icon={locationVisiblity ? <SlArrowUp /> : <SlArrowDown />} onClick={handleVisiblity} type="link">
+                                                    {locationVisiblity ? 'See Less' : 'See More'}
+                                                </Button>
                                             )}
                                         </>
                                     );
