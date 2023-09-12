@@ -125,6 +125,7 @@ export const OtfMasterBase = (props) => {
 
     const [selectedOrder, setSelectedOrder] = useState();
     const [selectedOrderId, setSelectedOrderId] = useState();
+    const [selectedBookingId, setSelectedBookingId] = useState();
 
     const [section, setSection] = useState();
     const [defaultSection, setDefaultSection] = useState();
@@ -365,11 +366,13 @@ export const OtfMasterBase = (props) => {
             case EDIT_ACTION:
                 setSelectedOrder(record);
                 record && setSelectedOrderId(record?.otfNumber);
+                record && setSelectedBookingId(record?.bookingNumber);
                 openDefaultSection && setCurrentSection(defaultSection);
                 break;
             case VIEW_ACTION:
                 setSelectedOrder(record);
                 record && setSelectedOrderId(record?.otfNumber);
+                record && setSelectedBookingId(record?.bookingNumber);
                 defaultSection && setCurrentSection(defaultSection);
                 break;
             case NEXT_ACTION:
@@ -650,6 +653,7 @@ export const OtfMasterBase = (props) => {
         buttonData,
         ChangeHistoryTitle,
         selectedOrderId,
+        selectedBookingId,
     };
     const OtfSoMappingChangeHistoryProps = {
         isVisible: OtfSoMappingHistoryVisible,
@@ -688,6 +692,8 @@ export const OtfMasterBase = (props) => {
         defaultBtnVisiblity,
         selectedOrderId,
         setSelectedOrderId,
+        selectedBookingId,
+        setSelectedBookingId,
         selectedOrder,
         setSelectedOrder,
         section,

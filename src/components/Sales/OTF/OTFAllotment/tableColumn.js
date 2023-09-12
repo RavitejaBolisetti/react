@@ -15,7 +15,6 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             width: '20%',
         }),
     ];
-
     tableColumn.push(
         tblPrepareColumns({
             title: 'Model Description',

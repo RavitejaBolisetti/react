@@ -23,9 +23,10 @@ export const tableColumn = (handleButtonClick, allotmentStatus, fixedWith) => {
     if (allotmentStatus === VEHICLE_TYPE.ALLOTED.key) {
         tableColumn.push(
             tblPrepareColumns({
-                title: 'OTF no.',
+                title: 'Booking Number.',
                 dataIndex: 'otfNumber',
                 width: fixedWith ? '202px' : '20%',
+                render: (_, record) => record?.bookingNumber || record?.otfNumber,
             })
         );
     }

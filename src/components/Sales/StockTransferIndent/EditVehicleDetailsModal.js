@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Row, Col, Form, Input, Button } from 'antd';
 import { withModal } from 'components/withModal';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
@@ -14,7 +14,6 @@ import styles from 'assets/sass/app.module.scss';
 export const EditVehicleDetailsModalFrom = (props) => {
     const { onCloseAction, formData, editVehicleDetailsForm, onFinish } = props;
     return (
-
         <Form autoComplete="off" layout="vertical" form={editVehicleDetailsForm} onFinish={onFinish}>
             <Row gutter={24}>
                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
@@ -23,7 +22,7 @@ export const EditVehicleDetailsModalFrom = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                    <Form.Item label="Model Code" name="modelCode" initialValue={formData?.modelCode}> 
+                    <Form.Item label="Model Code" name="modelCode" initialValue={formData?.modelCode}>
                         <Input placeholder={preparePlaceholderText('Model Code')} disabled={true}></Input>
                     </Form.Item>
                 </Col>
@@ -36,12 +35,12 @@ export const EditVehicleDetailsModalFrom = (props) => {
 
             <Row gutter={24}>
                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                    <Form.Item label="Cancelled Quantity" name="cancelledQuantity" initialValue={formData?.cancelledQuantity}  rules={[validateRequiredInputField('Cancelled Quantity'), validationNumber('Cancelled Quantity')]}>
+                    <Form.Item label="Cancelled Quantity" name="cancelledQuantity" initialValue={formData?.cancelledQuantity} rules={[validateRequiredInputField('Cancelled Quantity'), validationNumber('Cancelled Quantity')]}>
                         <Input placeholder={preparePlaceholderText('Cancelled Quantity')}></Input>
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                    <Form.Item label="Issued And Not Received Quantity" name="issuedAndNotReceivedQuantity" initialValue={formData?.issuedAndNotReceivedQuantity}> 
+                    <Form.Item label="Issued And Not Received Quantity" name="issuedAndNotReceivedQuantity" initialValue={formData?.issuedAndNotReceivedQuantity}>
                         <Input placeholder={preparePlaceholderText('Issued And Not Received Quantity')} disabled={true}></Input>
                     </Form.Item>
                 </Col>
@@ -53,7 +52,7 @@ export const EditVehicleDetailsModalFrom = (props) => {
             </Row>
             <Row gutter={24}>
                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                    <Form.Item label="Balanced Quantity" name="balancedQuantity" initialValue={formData?.balancedQuantity} >
+                    <Form.Item label="Balanced Quantity" name="balancedQuantity" initialValue={formData?.balancedQuantity}>
                         <Input placeholder={preparePlaceholderText('Balanced Quantity')} disabled={true}></Input>
                     </Form.Item>
                 </Col>
@@ -75,4 +74,4 @@ export const EditVehicleDetailsModalFrom = (props) => {
     );
 };
 
-export const EditVehicleDetailsModal = withModal(EditVehicleDetailsModalFrom, {width: 800});
+export const EditVehicleDetailsModal = withModal(EditVehicleDetailsModalFrom, { width: 800 });
