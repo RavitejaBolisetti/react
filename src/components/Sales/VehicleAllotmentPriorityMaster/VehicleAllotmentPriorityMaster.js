@@ -12,39 +12,34 @@ import { bindActionCreators } from 'redux';
 import { FilterIcon } from 'Icons';
 import { financialAccountHeadDataActions } from 'store/actions/data/financialAccounting/financialAccountHead';
 import { documentTypeLedgerDataActions } from 'store/actions/data/financialAccounting/documentTypeLedger';
-import { tableColumn } from './tableColumn';
-import { FROM_ACTION_TYPE } from 'constants/formActionType';
-// import { BASE_URL_DOCUMENT_TYPE_LEDGER_SEARCH as customURL } from 'constants/routingApi';
-
-import { showGlobalNotification } from 'store/actions/notification';
-import { ListDataTable } from 'utils/ListDataTable';
-import { btnVisiblity } from 'utils/btnVisiblity';
-import { AddEditForm } from './AddEditForm';
-import AdvanceVehicleAllotMasterFilter from './AdvanceVehicleAllotMasterFilter';
-import { AdvancedSearch } from './AdvancedSearch';
-import { ChangeHistory } from './ChangeHistory';
 import { tncProductHierarchyDataActions } from 'store/actions/data/termsConditions/tncProductHierarchy';
 import { dealerManpowerDesignationMasterDataActions } from 'store/actions/data/dealerManpower/designationMaster';
 import { roleMasterDataActions } from 'store/actions/data/dealerManpower/roleMaster';
 import { vehicleAllotPriorityActions } from 'store/actions/data/vehicle/vehicleAllotmentPriorityAction';
 import { vehicleAllotPrioritySaveActions } from 'store/actions/data/vehicle/vehicleAllotPriorityAllotAction';
+import { showGlobalNotification } from 'store/actions/notification';
 
+import { tableColumn } from './tableColumn';
+import { AddEditForm } from './AddEditForm';
+import { ChangeHistory } from './ChangeHistory';
+import { AdvancedSearch } from './AdvancedSearch';
+import { FROM_ACTION_TYPE } from 'constants/formActionType';
+import AdvanceVehicleAllotMasterFilter from './AdvanceVehicleAllotMasterFilter';
+
+import { ListDataTable } from 'utils/ListDataTable';
+import { btnVisiblity } from 'utils/btnVisiblity';
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
-            FinancialAccounting: {
-                // DocumentTypeLedger: { isLoaded: isDocumentTypeLedgerLoaded = false, isLoading: isDocumentTypeLedgerLoading = false, data: docTypeLedgerData = [] },
-                // FinancialAccountHead: { isLoaded: isFinancialAccountHeadLoaded = false, data: financialAccount = [] },
-            },
             TermCondition: {
                 ProductHierarchyData: { data: productHierarchyList },
             },
             Vehicle: {
-                VehicleAllotPriorityDetail: { data:vehicleAllotData, filter: filterString },                
-                VehicleAllotPriorDetail: { data:viewVehicleAllotData },
+                VehicleAllotPriorityDetail: { data: vehicleAllotData, filter: filterString },
+                VehicleAllotPriorDetail: { data: viewVehicleAllotData },
             },
             DealerManpower: {
                 // DealerDivisionMaster: { isFilteredListLoaded: isDivisionDataLoaded = false, isLoading: isDivisionLoading, filteredListData: divisionData = [] },
@@ -53,30 +48,20 @@ const mapStateToProps = (state) => {
                 DesignationMaster: { data },
                 // MileSkill: { isFilteredListLoaded: isMileDataLoaded = false, isLoading: isMileLoading, filteredListData: mileData },
             },
-        
         },
     } = state;
 
     const moduleTitle = 'Vehicle Allotment Priority Master';
-    const ChangeHistoryTitle = 'Vehicle Priority Master History ';
-
     let returnValue = {
         userId,
         moduleTitle,
-        // isDocumentTypeLedgerLoaded,
-        // isDocumentTypeLedgerLoading,
-        // isFinancialAccountHeadLoaded,
-        typeData: typeData,    
-        // financialAccount,
-        // docTypeLedgerData: docTypeLedgerData?.paginationData,
-        // totalRecords: docTypeLedgerData?.totalRecords,
+        typeData: typeData,
         productHierarchyList,
         vehicleAllotData,
         viewVehicleAllotData,
         filterString,
         roleData,
         data,
-        
     };
     return returnValue;
 };
@@ -94,13 +79,13 @@ const mapDispatchToProps = (dispatch) => ({
 
             fetchVehicleList: vehicleAllotPrioritySaveActions.fetchList,
             saveDataAllot: vehicleAllotPrioritySaveActions.saveData,
-            resetData:vehicleAllotPrioritySaveActions.reset,
+            resetData: vehicleAllotPrioritySaveActions.reset,
             listShowAllotLoading: vehicleAllotPrioritySaveActions.listShowLoading,
 
             fetchFinancialAccountHead: financialAccountHeadDataActions.fetchList,
 
             fetchVehicleAllotList: vehicleAllotPriorityActions.fetchList,
-            resetDataList:vehicleAllotPriorityActions.reset,
+            resetDataList: vehicleAllotPriorityActions.reset,
 
             fetchList: dealerManpowerDesignationMasterDataActions.fetchList,
             // saveData: dealerManpowerDesignationMasterDataActions.saveData,
@@ -118,11 +103,10 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const VehicleAllotmentPriorityMasterMain = (props) => {
-    const { moduleTitle, ChangeHistoryTitle, saveData, userId, showGlobalNotification, typeData, taxChargeCategoryTypeData, totalRecords, } = props;
-    const {fetchProductList, productHierarchyList, listShowLoading, listShowAllotLoading, saveDataAllot,} = props;
-    const { resetDataList,vehicleAllotData, fetchVehicleAllotList, fetchVehicleList,viewVehicleAllotData,} = props;
-    const { data, fetchList, roleData, fetchRoleLovList, } = props;
-    // const { filterString, setFilterString, resetDataList} = props;
+    const { moduleTitle, ChangeHistoryTitle, userId, showGlobalNotification, typeData, taxChargeCategoryTypeData, totalRecords } = props;
+    const { fetchProductList, productHierarchyList, listShowLoading, listShowAllotLoading, saveDataAllot } = props;
+    const { resetDataList, vehicleAllotData, fetchVehicleAllotList, fetchVehicleList, viewVehicleAllotData } = props;
+    const { data, fetchList, roleData, fetchRoleLovList } = props;
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
     const [listFilterForm] = Form.useForm();
@@ -179,7 +163,6 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
-    
 
     const matchDesignationList = [];
     const handleRoleFunction = (value) => {
@@ -191,20 +174,19 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
         //     editForm?.setFieldsValue(obj);
         // } else {
         //     taxChargeCalForm?.setFieldsValue(obj);
-        // }    
+        // }
         const designationArray = data;
         designationArray.forEach((item) => {
-            if (item.roleCode === value) {                        
-                matchDesignationList.push(item);                  
+            if (item.roleCode === value) {
+                matchDesignationList.push(item);
             } else {
-                notificationDetailForm.setFieldValue('designationCode', undefined );
+                notificationDetailForm.setFieldValue('designationCode', undefined);
             }
         });
         setFilterDesignationList(matchDesignationList);
-        console.log('setFilterDesignationList',filterDesignationList);
+        console.log('setFilterDesignationList', filterDesignationList);
     };
-    
-    
+
     const extraParams = useMemo(() => {
         return [
             {
@@ -238,20 +220,20 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
                 name: filterString?.newModelGroup,
                 canRemove: false,
                 filter: false,
-            },             
+            },
             {
                 key: 'effectiveFromDate',
                 title: 'From Date',
                 value: filterString?.effectiveFromDate,
-                name: filterString?.effectiveFromDate,  
+                name: filterString?.effectiveFromDate,
                 canRemove: true,
                 filter: true,
             },
             {
                 key: 'effectiveToDate',
                 title: 'To Date',
-                value: filterString?.effectiveToDate, 
-                name: filterString?.effectiveToDate,   
+                value: filterString?.effectiveToDate,
+                name: filterString?.effectiveToDate,
                 canRemove: true,
                 filter: true,
             },
@@ -268,7 +250,7 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
                 value: page?.current,
                 canRemove: true,
                 filter: false,
-            },            
+            },
             {
                 key: 'sortBy',
                 title: 'Sort By',
@@ -305,11 +287,11 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
 
     useEffect(() => {
         if (userId) {
-            fetchRoleLovList({setIsLoading: listShowLoading, userId, onSuccessAction });
-            fetchList({setIsLoading: listShowLoading, userId, onSuccessAction });
+            fetchRoleLovList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
         }
     }, [userId]);
-     
+
     const handleButtonClick = ({ record = null, buttonAction }) => {
         form.resetFields();
         setFormData([]);
@@ -333,21 +315,20 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
             fetchVehicleList({ setIsLoading: listShowLoading, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, formData] ); 
-
+    }, [userId, formData]);
 
     const onFinish = (values) => {
-        console.log('docTypeHeadMappingList',docTypeHeadMappingList);
+        console.log('docTypeHeadMappingList', docTypeHeadMappingList);
         // const recordId = formData?.id || '';
         const tempdata = { ...values, id: formData?.id || '', roleData: docTypeHeadMappingList };
         const { applicationName, documentTypeName, documentTypeCode, ...data } = tempdata;
         const onSuccess = (res) => {
-            console.log('res',res);
+            console.log('res', res);
             form.resetFields();
             setShowDataLoading(true);
             setIsFormVisible(false);
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            setButtonData({ ...buttonData, formBtnActive: false });             
+            setButtonData({ ...buttonData, formBtnActive: false });
         };
         const onError = (message) => {
             showGlobalNotification({ message });
@@ -361,7 +342,6 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
             onSuccess,
         };
         saveDataAllot(requestData);
-        
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -426,7 +406,7 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
     const handleChangeHistory = () => {
         setChangeHistoryVisible(true);
     };
- 
+
     const drawerTitle = useMemo(() => {
         if (formActionType?.viewMode) {
             return 'View ';
@@ -471,7 +451,10 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
         productHierarchyList,
         viewVehicleAllotData,
         handleRoleFunction,
-        data, fetchList, roleData, fetchRoleLovList,
+        data,
+        fetchList,
+        roleData,
+        fetchRoleLovList,
         filterDesignationList,
         setFilterDesignationList,
     };
@@ -494,7 +477,7 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
         onFinishFailed,
         advanceFilterForm,
         setAdvanceSearchVisible,
-        typeData: typeData?.['VEH_PR_MOD_GR'],    
+        typeData: typeData?.['VEH_PR_MOD_GR'],
         searchForm,
         handleChangeHistory,
         removeFilter,
@@ -536,10 +519,8 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
         setPage,
         // isLoading: showDataLoading,
         tableColumn: tableColumn(handleButtonClick),
-        tableData: vehicleAllotData?.paginationData,  
+        tableData: vehicleAllotData?.paginationData,
         showAddButton: false,
-               
-        
     };
 
     return (
@@ -558,4 +539,3 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
 };
 
 export const VehicleAllotmentPriorityMaster = connect(mapStateToProps, mapDispatchToProps)(VehicleAllotmentPriorityMasterMain);
-

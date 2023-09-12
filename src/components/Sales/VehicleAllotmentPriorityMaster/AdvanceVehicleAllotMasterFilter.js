@@ -75,27 +75,13 @@ export default function AdvanceVehicleAllotMasterFilter(props) {
                     </Form>
                 </Col>
 
-                {/* {buttonData?.changeHistory && ( */}
-                {/* <Col className={styles.buttonsGroupRight} xs={24} sm={24} md={4} lg={4} xl={4}>
-                        <>
-                            <Button icon={<FaHistory />} className={styles.verticallyCentered} onClick={handleChangeHistory} type="primary">
-                                Change History
-                            </Button>
-                        </>
-                    </Col> */}
-                {/* )} */}
-
-                {/* {tableData?.length > 0 && ( */}
-                <>
-                    {showAddButton && (
-                        <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.buttonsGroupRight}>
-                            <Button icon={<PlusOutlined />} type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                                Add
-                            </Button>
-                        </Col>
-                    )}
-                </>
-                {/* )} */}
+                {showAddButton && (
+                    <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.buttonsGroupRight}>
+                        <Button icon={<PlusOutlined />} type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
+                            Add
+                        </Button>
+                    </Col>
+                )}
             </Row>
             {advanceFilter && filterString?.advanceFilter && extraParams.find((i) => i.name) && (
                 <Row gutter={20}>

@@ -6,30 +6,26 @@
 import React, { useEffect, useState } from 'react';
 import { Row, Col, Input, Form, Card, Collapse, Divider, Button, Typography } from 'antd';
 import { FiPlus } from 'react-icons/fi';
-import { FilterIcon } from 'Icons';
 
 import { withDrawer } from 'components/withDrawer';
 import { VehicleDetailFormButton } from 'components/Sales/VehicleDetail/VehicleDetailFormButton';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
-import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
+import { validateRequiredSelectField } from 'utils/validation';
 import { customSelectBox } from 'utils/customSelectBox';
-import { expandIcon, accordianExpandIcon } from 'utils/accordianExpandIcon';
+import { expandIcon } from 'utils/accordianExpandIcon';
 import { tableColumnVehicleDetails } from './tableColumnVehicleDetails';
 import { DataTable } from 'utils/dataTable';
 import { AddVehicleDetailsModal } from './AddVehicleDetailsModal';
 import { EDIT_ACTION, DELETE_ACTION } from 'utils/btnVisiblity';
-import { CancellationIssue } from './CancellationIssue';
 
 import styles from 'assets/sass/app.module.scss';
 
 const { TextArea } = Input;
 const { Panel } = Collapse;
-const { Text } = Typography;
 
 const AddEditFormMain = (props) => {
-
     const { formData, buttonDataVehicleDetails, ProductHierarchyData } = props;
-    const { addIndentDetailsForm, onFinish, indentLocationList, requestedByDealerList,  openAccordian, setOpenAccordian } = props;
+    const { addIndentDetailsForm, onFinish, indentLocationList, requestedByDealerList, openAccordian, setOpenAccordian } = props;
     const { buttonData, setButtonData, onCloseAction, tableDataItem, setTableDataItem } = props;
     const { handleButtonClick, handleChangeLocation } = props;
     const { activeKey, setActiveKey } = props;
@@ -45,7 +41,7 @@ const AddEditFormMain = (props) => {
     const handleButtonClickVehicleDetails = ({ record = null, buttonAction, openDefaultSection = true, index }) => {
         switch (buttonAction) {
             case EDIT_ACTION:
-                addVehicleDetailsForm?.setFieldsValue({ ...record, index:index });
+                addVehicleDetailsForm?.setFieldsValue({ ...record, index: index });
                 //setSelectedVehicle(record);
                 setIsAddVehicleDetailsVisible(true);
                 break;
@@ -69,27 +65,7 @@ const AddEditFormMain = (props) => {
         handleButtonClick,
     };
 
-    const onChange = (values) => {
-        const isPresent = activeKey.includes(values);
-
-        if (isPresent) {
-            const newActivekeys = [];
-
-            activeKey.forEach((item) => {
-                if (item !== values) {
-                    newActivekeys.push(item);
-                }
-            });
-            setActiveKey(newActivekeys);
-        } else {
-            setActiveKey([...activeKey, values]);
-        }
-    };
-
     const handleCollapse = (key) => {
-        // if (key !== 3 && isReadOnly) {
-        //     setIsReadOnly(false);
-        // }
         setOpenAccordian((prev) => (prev === key ? '' : key));
     };
 
@@ -110,7 +86,7 @@ const AddEditFormMain = (props) => {
     const sorterPagination = false;
 
     const tableProps = {
-        tableColumn: tableColumnVehicleDetails( handleButtonClickVehicleDetails, sorterPagination, buttonDataVehicleDetails ),
+        tableColumn: tableColumnVehicleDetails(handleButtonClickVehicleDetails, sorterPagination, buttonDataVehicleDetails),
         tableData: tableDataItem,
         pagination: false,
     };
@@ -124,13 +100,11 @@ const AddEditFormMain = (props) => {
     const onFinishAddVehicleDetails = (values) => {
         if (tableDataItem.length === 0) handleCollapse(1);
 
-        if(values?.index !== undefined){
+        if (values?.index !== undefined) {
             let arrayOfNumbers = [...tableDataItem];
             arrayOfNumbers[values?.index] = { ...initialTableDataItem, ...values };
             setTableDataItem([...arrayOfNumbers]);
-        }
-        else
-            setTableDataItem([...tableDataItem, { ...initialTableDataItem, ...values }]);
+        } else setTableDataItem([...tableDataItem, { ...initialTableDataItem, ...values }]);
 
         // let indentData = addIndentDetailsForm.getFieldsValue();
         // addIndentDetailsForm?.setFieldsValue({ ...indentData, vehicleDetails: [ ...tableDataItem ] });
@@ -209,7 +183,6 @@ const AddEditFormMain = (props) => {
                 <VehicleDetailFormButton {...buttonProps} />
             </Form>
             <AddVehicleDetailsModal {...addVehicleDetailsProps} />
-       
         </>
     );
 };

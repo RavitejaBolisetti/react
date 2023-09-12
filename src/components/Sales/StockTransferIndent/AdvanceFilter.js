@@ -14,7 +14,7 @@ import { STOCK_TRANSFER } from 'constants/StockTransfer';
 import styles from 'assets/sass/app.module.scss';
 
 export default function AdvanceOTFFilter(props) {
-    const { extraParams, removeFilter, handleResetFilter, advanceFilter = false, filterString, setFilterString, toggleButton, settoggleButton, typeData, setAdvanceSearchVisible, searchForm, handleOnAddIndentClick } = props;
+    const { extraParams, removeFilter, handleResetFilter, advanceFilter = false, filterString, setFilterString, toggleButton, settoggleButton, setAdvanceSearchVisible, searchForm, handleOnAddIndentClick } = props;
 
     useEffect(() => {
         searchForm.resetFields();
@@ -26,7 +26,7 @@ export default function AdvanceOTFFilter(props) {
         filterString,
         setFilterString,
         singleField: true,
-        placeholder :'Search indent no.'
+        placeholder: 'Search indent no.',
     };
 
     return (
@@ -37,7 +37,6 @@ export default function AdvanceOTFFilter(props) {
                         <Form.Item>
                             <Row gutter={24}>
                                 <Col xs={24} sm={24} md={14} lg={14} xl={14} className={styles.verticallyCentered}>
-
                                     <div className={`${styles.userManagement} ${styles.headingToggle}`}>
                                         {Object.values(STOCK_TRANSFER)?.map((item) => {
                                             return (
@@ -52,20 +51,19 @@ export default function AdvanceOTFFilter(props) {
                                     </Col>
 
                                     {advanceFilter && (
-                                    <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.verticallyCentered}>
-                                        <Button
-                                            type="link"
-                                            icon={<FilterIcon />}
-                                            className={styles.verticallyCentered}
-                                            onClick={() => {
-                                                setAdvanceSearchVisible(true);
-                                            }}
-                                        >
-                                            Advanced Filters
-                                        </Button>
-                                    </Col>
-                                )}
-                                
+                                        <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.verticallyCentered}>
+                                            <Button
+                                                type="link"
+                                                icon={<FilterIcon />}
+                                                className={styles.verticallyCentered}
+                                                onClick={() => {
+                                                    setAdvanceSearchVisible(true);
+                                                }}
+                                            >
+                                                Advanced Filters
+                                            </Button>
+                                        </Col>
+                                    )}
                                 </Col>
                             </Row>
                         </Form.Item>
@@ -73,7 +71,7 @@ export default function AdvanceOTFFilter(props) {
                 </Col>
 
                 <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.buttonsGroupRight}>
-                    <Button type="primary" icon={<FiPlus/>} onClick={handleOnAddIndentClick}>
+                    <Button type="primary" icon={<FiPlus />} onClick={handleOnAddIndentClick}>
                         Add Indent
                     </Button>
                 </Col>

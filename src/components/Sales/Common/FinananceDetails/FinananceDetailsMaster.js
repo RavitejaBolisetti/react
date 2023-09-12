@@ -79,21 +79,6 @@ export const FinananceDetailsMasterBase = (props) => {
 
     const [formData, setFormData] = useState();
 
-    const ValidKeys = {
-        financier: null,
-        branch: null,
-        fileNumber: null,
-        loanAmount: null,
-        emi: null,
-        financeDone: null,
-        financierCode: null,
-        doReceived: null,
-        doNumber: null,
-        financeArrangedBy: null,
-        printHypothecationDetails: null,
-        doDate: null,
-    };
-
     useEffect(() => {
         if (financeData) {
             form.setFieldsValue({ ...financeData, doDate: convertDateToCalender(financeData?.doDate) });
