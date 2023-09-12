@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { getAuthToken, getAuthAccessToken, getUserId } from '../store/state/auth';
+import { getAuthToken, getAuthRefreshToken, getAuthAccessToken, getUserId } from '../store/state/auth';
 
 export const withAuthToken = (fn) => {
     return (...params) =>
@@ -11,6 +11,7 @@ export const withAuthToken = (fn) => {
             const token = getAuthToken(getState());
             const userId = getUserId(getState());
             const accessToken = getAuthAccessToken(getState());
-            return fn(...params)({ token, accessToken, userId })(dispatch);
+            const refreshToken = getAuthRefreshToken(getState());
+            return fn(...params)({ token, accessToken, userId, refreshToken })(dispatch);
         };
 };

@@ -144,6 +144,11 @@ const SupplierInvoiceDetailsMasterBase = (props) => {
         isLoading,
     };
 
+    const buttonProps = {
+        ...props,
+        buttonData: { ...props.buttonData, editBtn: false, nextBtn: true, saveBtn: false },
+    };
+
     return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20} className={styles.drawerBodyRight}>
@@ -158,7 +163,7 @@ const SupplierInvoiceDetailsMasterBase = (props) => {
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <VehicleReceiptFormButton {...props} />
+                    <VehicleReceiptFormButton {...buttonProps} />
                 </Col>
             </Row>
         </Form>

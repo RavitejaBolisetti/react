@@ -20,7 +20,7 @@ export const DELIVERY_STATUS_CONSTANT = {
         key: 'Delivered',
     },
     RECEIVED: {
-        id: 2,
+        id: 4,
         title: 'Received',
         key: 'Received',
     },

@@ -5,8 +5,10 @@
  */
 import React from 'react';
 import { Descriptions } from 'antd';
+import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
+import { getCodeValue } from 'utils/getCodeValue';
 
-const ViewDetailBase = ({ formData, styles, parameterType }) => {
+const ViewDetailBase = ({ formData, styles, parameterType,typeData }) => {
     const viewOneColProps = {
         bordered: false,
         colon: false,
@@ -19,7 +21,7 @@ const ViewDetailBase = ({ formData, styles, parameterType }) => {
                 <Descriptions {...viewOneColProps}>
                     <Descriptions.Item label="Group Code">{formData?.code}</Descriptions.Item>
                     <Descriptions.Item label="Group Name">{formData?.name}</Descriptions.Item>
-                    <Descriptions.Item label="Title">{formData?.title}</Descriptions.Item>
+                    <Descriptions.Item label="Title">{checkAndSetDefaultValue(getCodeValue(typeData, formData?.title))}</Descriptions.Item>
                     <Descriptions.Item label="Owner Name">{formData?.ownerName}</Descriptions.Item>
                     <Descriptions.Item label="Contact Number">{formData?.mobileNumber}</Descriptions.Item>
                     <Descriptions.Item label="Email ID">{formData?.emailId}</Descriptions.Item>

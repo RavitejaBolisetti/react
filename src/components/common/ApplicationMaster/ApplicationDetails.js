@@ -122,6 +122,28 @@ const ApplicationDetails = ({ setCanFormSave, form, onFinishFailed = () => {}, p
                             <Switch checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" />
                         </Form.Item>
                     </Col>
+
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} name="termAndConRequired" label="T&C Required" valuePropName="checked">
+                            <Switch checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} name="digitalSignatureRequired" label="Digital Signature Required" valuePropName="checked">
+                            <Switch checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} name="isFinanceRelated" label="Is Finance Related" valuePropName="checked">
+                            <Switch checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} name="irnIntegrationRequired" label="IRN Integration Required" valuePropName="checked">
+                            <Switch checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" />
+                        </Form.Item>
+                    </Col>
+
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item hidden name="id">
                             <Input />

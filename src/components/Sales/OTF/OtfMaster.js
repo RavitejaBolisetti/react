@@ -245,7 +245,7 @@ export const OtfMasterBase = (props) => {
             {
                 key: 'pageSize',
                 title: 'Value',
-                value: filterString?.pageSize,
+                value: filterString?.pageSize ?? 10,
                 canRemove: true,
                 filter: false,
             },
@@ -284,7 +284,7 @@ export const OtfMasterBase = (props) => {
     }, []);
 
     useEffect(() => {
-        if (userId && extraParams) {
+        if (userId && extraParams?.find((i) => i.key === 'pageNumber')?.value > 0) {
             setShowDataLoading(true);
             fetchOTFSearchedList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }

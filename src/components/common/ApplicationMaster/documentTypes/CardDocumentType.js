@@ -78,15 +78,6 @@ const CardDocumentType = (prop) => {
                 <Row align="middle" className={styles.marB20}>
                     <Col xs={18} sm={18} md={18} lg={18} xl={18} xxl={18}>
                         <div>
-                            <span>
-                                <Text type="secondary">T&C Required:</Text> {termAndConRequired ? <Text type="success">Active</Text> : <Text type="secondary">Inactive</Text>}
-                            </span>
-                            <Divider type="vertical" />
-                            <span>
-                                <Text type="secondary">Signature:</Text> {digitalSignatureRequired ? <Text type="success">Active</Text> : <Text type="secondary"> Inactive</Text>}
-                            </span>
-                        </div>
-                        <div>
                             <Text strong>{documentTypeDescription}</Text>
                         </div>
                         <div>

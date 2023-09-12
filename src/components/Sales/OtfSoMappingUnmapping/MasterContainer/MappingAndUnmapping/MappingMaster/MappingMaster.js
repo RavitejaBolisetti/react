@@ -51,8 +51,6 @@ const mapStateToProps = (state) => {
 
         otfSomappingData,
         isOtfSoMappingLoading,
-        otfSomappingData,
-
         isOtfSoMappingLoaded,
     };
 

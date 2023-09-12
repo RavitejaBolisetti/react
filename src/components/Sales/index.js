@@ -13,8 +13,10 @@ import { OtfSoMappingMaster } from './OtfSoMapping';
 import { ReceiptMaster } from './Receipts';
 import { HoPriceMappingMaster } from './HoPriceMappingDealer';
 import { DigitalSignatureMaster } from './DigitalSignatureMapping';
-import { StockTransferIndentMaster } from './StockTransferIndent';
+import { VehicleInvoiceMaster } from './VehicleInvoiceGeneration';
+import { VehicleAllotmentPriorityMaster } from './VehicleAllotmentPriorityMaster';
 import { VehicleTrackingMaster } from './VehicleTracking';
 import { OtfListMaster as OtfSoMappingUnmappingMaster } from './OtfSoMappingUnmapping';
+import { StockTransferIndentMaster } from './StockTransferIndent';
 
-export { OtfMaster, VehicleDetailMaster, VehicleReceiptMaster, VehiclePurchaseOrderMaster, VehicleRecieptChecklistMaster, OtfSoMappingMaster, ReceiptMaster, HoPriceMappingMaster, DigitalSignatureMaster, VehicleTrackingMaster, StockTransferIndentMaster, OtfSoMappingUnmappingMaster };
+export { OtfMaster, VehicleDetailMaster, VehicleReceiptMaster, VehiclePurchaseOrderMaster, VehicleRecieptChecklistMaster, OtfSoMappingMaster, ReceiptMaster, HoPriceMappingMaster, DigitalSignatureMaster, VehicleInvoiceMaster, VehicleAllotmentPriorityMaster, VehicleTrackingMaster, OtfSoMappingUnmappingMaster, StockTransferIndentMaster };

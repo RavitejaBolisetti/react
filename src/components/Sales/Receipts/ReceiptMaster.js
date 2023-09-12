@@ -140,8 +140,6 @@ export const ReceiptMasterBase = (props) => {
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
-    const [formData, setFormData] = useState([]);
-
     const onSuccessAction = (res) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
@@ -160,6 +158,8 @@ export const ReceiptMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString]);
+
+   
 
     const extraParams = useMemo(() => {
         return [
@@ -613,7 +613,6 @@ export const ReceiptMasterBase = (props) => {
         currentSection,
         sectionName,
         setCurrentSection,
-        setFormData,
         handleFormValueChange,
         isLastSection,
         typeData,

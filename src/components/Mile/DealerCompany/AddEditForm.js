@@ -47,7 +47,6 @@ const AddEditFormMain = (props) => {
     let groupValue = null;
     let parentGroupId = null;
     const parentName = (values) => {
-
         const parentData = dealerParentData?.find((item) => item?.key === values);
         if (parentData) {
             groupValue = parentData?.value;
@@ -55,7 +54,6 @@ const AddEditFormMain = (props) => {
             form.setFieldValue('dealerParentName', groupValue);
             form.setFieldValue('parentId', parentGroupId);
         }
-        
     };
 
     const onErrorAction = () => {
@@ -142,12 +140,6 @@ const AddEditFormMain = (props) => {
         handleButtonClick,
     };
 
-    const selectProps = {
-        optionFilterProp: 'children',
-        showSearch: true,
-        allowClear: true,
-        className: styles.headerSelectField,
-    };
     return (
         <Form autoComplete="off" layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20} className={styles.drawerBody}>
@@ -174,7 +166,7 @@ const AddEditFormMain = (props) => {
                                                 </Option>
                                             ))}
                                         </Select> */}
-                                    {customSelectBox({ data: dealerParentData, fieldNames: { key: 'key', value: 'key' }, onChange: parentName, placeholder: preparePlaceholderSelect('Group Code'), disabled: editMode })}
+                                        {customSelectBox({ data: dealerParentData, fieldNames: { key: 'key', value: 'key' }, onChange: parentName, placeholder: preparePlaceholderSelect('Group Code'), disabled: editMode })}
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={12} md={12} lg={12} xl={12}>

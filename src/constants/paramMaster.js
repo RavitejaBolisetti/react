@@ -301,6 +301,14 @@ export const PARAM_MASTER = {
         id: 'CHK_STATS',
         title: 'Vehicle Receipt checlist status',
     },
+    INV_SER: {
+        id: 'INV_SER',
+        title: 'Invoice Search',
+    },
+    INVC_STATS: {
+        id: 'INVC_STATS',
+        title: 'Invoice Status',
+    },
     DESG_TYP_ASGN_TO: {
         id: 'DESG_TYP_ASGN_TO',
         title: 'Designation Master',
@@ -313,13 +321,13 @@ export const PARAM_MASTER = {
         id: 'INV_DEL_NOT_REQ_TYP',
         title: 'Delivery Note/Invoice Request Status',
     },
-    CDLR_INV_APP_STATUS: {
-        id: 'CDLR_INV_APP_STATUS',
-        title: 'Invoice Status in delivery note/invoice cancellation',
+    INVOICE_CANCEL_REASON: {
+        id: 'INVOICE_CANCEL_REASON',
+        title: 'Invoice Cancel Reason',
     },
-    SO_MAP: {
-        id: 'SO_MAP',
-        title: 'OTF So mapping and Unmapping',
+    TAX_CALCLTN_TYPE: {
+        id: 'TAX_CALCLTN_TYPE',
+        title: 'Tax Calculation Type',
     },
     CDLR_INV_APP_STATUS: {
         id: 'CDLR_INV_APP_STATUS',
@@ -336,5 +344,9 @@ export const PARAM_MASTER = {
     INDENT: {
         id: 'INDENT',
         title: 'Stock Transfer Indent',
+    },
+    MAKE_NAME: {
+        id: 'MAKE_NAME',
+        title: 'Make in loyalty',
     },
 };

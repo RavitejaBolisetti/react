@@ -22,7 +22,7 @@ const mapStateToProps = (state) => {
     } = state;
 
     let returnValue = {
-        tokenValidationData,
+        tokenValidationData: tokenValidationData?.userSearchResponse?.userDetails?.[0],
     };
     return returnValue;
 };
@@ -48,7 +48,7 @@ const AuthorityDetailMain = ({ tokenValidationData, handleFormValueChange, viewM
         actionForm
             .validateFields()
             .then((val) => {
-                setDocumentTypesList((prev) => [...prev, { ...val, effectiveFrom: val?.effectiveFrom, effectiveTo: val?.effectiveTo, isModified: val?.isModified ?? false, employeeName: tokenValidationData?.employeeName }]);
+                setDocumentTypesList((prev) => [...prev, { ...val, effectiveFrom: val?.effectiveFrom, effectiveTo: val?.effectiveTo, isModified: val?.isModified ?? false, employeeName: tokenValidationData?.manufacturerUserName }]);
                 actionForm.resetFields();
                 forceUpdate();
                 resetData();
