@@ -15,6 +15,7 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             title: 'Booking No.',
             dataIndex: 'otfNumber',
             width: '18%',
+            render: (_, record) => record?.bookingNumber || record?.otfNumber,
         }),
 
         tblPrepareColumns({

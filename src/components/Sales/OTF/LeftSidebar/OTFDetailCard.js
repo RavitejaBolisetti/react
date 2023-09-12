@@ -46,7 +46,7 @@ const OTFDetailCard = (props) => {
                         </Space>
                         <Divider />
                         <div className={styles.detailCardText}>
-                            Booking No.: <span>{selectedOrder?.otfNumber}</span>
+                            Booking No.: <span>{selectedOrder?.bookingNumber || selectedOrder?.otfNumber}</span>
                         </div>
                     </>
                 }
