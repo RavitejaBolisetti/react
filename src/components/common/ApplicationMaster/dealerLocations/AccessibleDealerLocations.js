@@ -91,7 +91,7 @@ const AccessibleDealerLocationMain = ({ setCanFormSave, userId, dealerLocations,
     );
 
     useEffect(() => {
-        if (!searchValue?.length > 2) {
+        if (!searchValue || searchValue?.length < 3) {
             setDealerLocationList([]);
         } else {
             setDealerLocationList(highlightFinalLocatonList(dealerLocations) || []);
@@ -119,7 +119,7 @@ const AccessibleDealerLocationMain = ({ setCanFormSave, userId, dealerLocations,
 
     const onSearchLocation = debounce(function (text) {
         setSearchValue(text?.trim());
-    }, 300);
+    }, 400);
 
     const handleDeleteLocation = (values) => {
         setFinalFormdata((prev) => {
@@ -132,12 +132,18 @@ const AccessibleDealerLocationMain = ({ setCanFormSave, userId, dealerLocations,
         forceUpdate();
     };
 
+    const handleClearInput = (val) => {
+        if (val.target?.value) return;
+        setSearchValue('');
+        setDealerLocationList([]);
+    };
+
     return (
         <>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.marB20}>
-                    <AutoComplete options={dealerLocationsList} backfill={false} onSelect={handleSelect} onSearch={onSearchLocation} allowSearch notFoundContent="No location found">
-                        <Input.Search size="large" allowClear placeholder={preparePlaceholderAutoComplete('')} />
+                    <AutoComplete options={dealerLocationsList} backfill={false} onSelect={handleSelect} onSearch={onSearchLocation} allowSearch notFoundContent={searchValue ? "No location found" : ''} >
+                        <Input.Search onChange={handleClearInput} size="large" allowClear placeholder={preparePlaceholderAutoComplete('')} />
                     </AutoComplete>
                 </Col>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
