@@ -16,7 +16,7 @@ export const SearchtableColumnMapping = ({ handleButtonClick, actionButtonVisibi
             width: '10%',
         }),
         tblPrepareColumns({
-            title: 'OTF Date',
+            title: 'Booking Date',
             dataIndex: 'otfDate',
             width: '20%',
             render: (text) => converDateDayjs(text),

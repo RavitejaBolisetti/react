@@ -14,13 +14,14 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 const { Search } = Input;
 
 const OtfDetailsForm = (props) => {
-    const { formData, formName, invoiceDetailForm, otfFormData, typeData, selectedOtfNumber, setSelectedOtfNumber } = props;
+    const { formName, invoiceDetailForm, otfFormData, typeData, selectedOtfNumber, setSelectedOtfNumber } = props;
 
     useEffect(() => {
         if (otfFormData) {
             invoiceDetailForm?.setFieldsValue({
                 [formName]: {
                     ...otfFormData,
+                    otfNumber: otfFormData?.bookingNumber || otfFormData?.otfNumber,
                     otfDate: formattedCalendarDate(otfFormData?.otfDate),
                 },
             });
@@ -36,7 +37,7 @@ const OtfDetailsForm = (props) => {
         <>
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                    <Form.Item initialValue={otfFormData?.otfNumber} label="Booking Number" name={[formName, 'otfNumber']} rules={[validateRequiredSelectField('Booking Number')]}>
+                    <Form.Item initialValue={otfFormData?.bookingNumber || otfFormData?.otfNumber} label="Booking Number" name={[formName, 'otfNumber']} rules={[validateRequiredSelectField('Booking Number')]}>
                         <Search maxLength={50} placeholder={preparePlaceholderText('Booking Number')} onSearch={handleChange} allowClear />
                     </Form.Item>
                 </Col>
@@ -46,8 +47,8 @@ const OtfDetailsForm = (props) => {
                     <Divider />
                     <Row gutter={20}>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={otfFormData?.otfDate} label="OTF Date" name={[formName, 'otfDate']}>
-                                <DatePicker format={dateFormat} placeholder={preparePlaceholderText('otf date')} style={{ display: 'auto', width: '100%' }} disabled={true} />
+                            <Form.Item initialValue={otfFormData?.otfDate} label="Booking Date" name={[formName, 'otfDate']}>
+                                <DatePicker format={dateFormat} placeholder={preparePlaceholderText('booking date')} style={{ display: 'auto', width: '100%' }} disabled={true} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>

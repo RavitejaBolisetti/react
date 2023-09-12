@@ -13,8 +13,8 @@ import OtfDetailsForm from './OtfDetailsForm';
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { formData, otfFormData, typeData, setSameAsBookingCustomer, sameAsBookingCustomer, invoiceDetailForm } = props;
-    const { activeKey, setActiveKey, formActionType: { editMode } = undefined } = props;
+    const { formData, invoiceDetailForm } = props;
+    const { activeKey, setActiveKey } = props;
 
     useEffect(() => {
         if (formData) {
@@ -43,38 +43,6 @@ const AddEditFormMain = (props) => {
             setActiveKey([...activeKey, values]);
         }
     };
-
-    const handleOnChange = (e) => {
-        if (e.target.checked) {
-            setSameAsBookingCustomer(true);
-            let bookingCustomer = invoiceDetailForm?.getFieldsValue()?.bookingCustomer;
-            invoiceDetailForm?.setFieldsValue({ billingCustomer: { ...bookingCustomer } });
-        } else {
-            setSameAsBookingCustomer(false);
-        }
-    };
-
-    // const bookingCustomerProps = {
-    //     ...props,
-    //     AutoComplete,
-    //     typeData,
-    //     formData: formData?.bookingCustomer,
-    //     formType: 'bookingCustomer',
-    //     handleOnChange: () => {},
-    // };
-
-    // const bilingCustomerProps = {
-    //     ...props,
-    //     AutoComplete,
-    //     typeData,
-    //     formData: formData?.billingCustomer,
-    //     formType: 'billingCustomer',
-    //     disabledProps: { disabled: sameAsBookingCustomer },
-    //     handleOnChange,
-    // };
-    // const handleSave = () => {};
-
-    // const onFinishFailed = () => {};
 
     return (
         <Row gutter={20}>
