@@ -58,7 +58,7 @@ const ChangeHistoryMain = ({ fetchOTFChangeHistory, onCloseAction, listShowChang
                     key: 'otfNumber',
                     title: 'otfNumber',
                     value: selectedOrderId,
-                    name: 'OTF Number',
+                    name: 'Booking Number',
                 },
             ];
             fetchOTFChangeHistory({ customURL, setIsLoading: listShowChangeHistoryLoading, userId, extraParams });
@@ -110,7 +110,7 @@ const ChangeHistoryMain = ({ fetchOTFChangeHistory, onCloseAction, listShowChang
         <>
             <Row gutter={20} className={styles.drawerBody}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <h4 className={styles.marT0}>OTF NUMBER: {selectedOrderId}</h4>
+                    <h4 className={styles.marT0}>Booking Number: {selectedOrderId}</h4>
                     <DataTable {...tableProps} />
                 </Col>
             </Row>

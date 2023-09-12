@@ -143,7 +143,7 @@ const LoyaltySchemeMasterMain = (props) => {
             key: 'otfNumber',
             title: 'otfNumber',
             value: selectedOrderId,
-            name: 'OTF Number',
+            name: 'Booking Number',
         },
     ];
     const makeExtraParams = (key, title, value, name) => {
@@ -197,7 +197,7 @@ const LoyaltySchemeMasterMain = (props) => {
                     key: 'otfNumber',
                     title: 'otfNumber',
                     value: selectedOrderId,
-                    name: 'OTF Number',
+                    name: 'Booking Number',
                 },
             ];
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
