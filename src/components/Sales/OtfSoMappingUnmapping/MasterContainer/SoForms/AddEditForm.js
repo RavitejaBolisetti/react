@@ -34,7 +34,7 @@ const AddEditFormMain = ({ formType, disabledProps, handleSearchChange, isLoadin
                 </Form.Item>
             )}
             {!hideFields && (
-                <Form.Item label="OTF DATE" name={[formType, 'otfDate']}>
+                <Form.Item label="Booking Date" name={[formType, 'otfDate']}>
                     <Input {...disabledProps} />
                 </Form.Item>
             )}

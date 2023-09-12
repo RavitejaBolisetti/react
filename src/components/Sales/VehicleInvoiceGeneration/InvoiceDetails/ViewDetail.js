@@ -49,13 +49,11 @@ const ViewDetailMain = (props) => {
                             <Divider />
                             <Descriptions {...viewProps}>
                                 <Descriptions.Item label="Booking Number">{checkAndSetDefaultValue(otfFormData?.bookingNumber || otfFormData?.otfNumber, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="OTF Date">{checkAndSetDefaultValue(otfFormData?.otfDate, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Booking Date">{checkAndSetDefaultValue(otfFormData?.otfDate, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="DAR Number">{checkAndSetDefaultValue(otfFormData?.darNumber, isLoading)}</Descriptions.Item>
-                                {/* key darNumber */}
                                 <Descriptions.Item label="Sales Type">{checkAndSetDefaultValue(otfFormData?.saleType, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Price Type">{checkAndSetDefaultValue(otfFormData?.priceType, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Tax Calculation">{checkAndSetDefaultValue(otfFormData?.taxCalculationType, isLoading)}</Descriptions.Item>
-
                                 <Descriptions.Item label="Tax Payable On Reverse Charges?">{checkAndSetDefaultValue(otfFormData?.taxPayableOnReverseCharges, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Sales Consultant Name">{checkAndSetDefaultValue(otfFormData?.saleConsultant, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Influence/Mitra Type">{checkAndSetDefaultValue(otfFormData?.mitraType, isLoading)}</Descriptions.Item>
