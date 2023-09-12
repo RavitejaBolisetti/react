@@ -8,13 +8,12 @@ import { Col, Row, Collapse, Descriptions, Divider } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 import { expandIcon } from 'utils/accordianExpandIcon';
 
 const { Panel } = Collapse;
 
 const ViewDetailMain = (props) => {
-    const { formData, otfFormData, isLoading } = props;
+    const { otfFormData, isLoading } = props;
     const [activeKey, setactiveKey] = useState([]);
     const viewProps = {
         bordered: false,
@@ -61,18 +60,6 @@ const ViewDetailMain = (props) => {
                             </Descriptions>
                         </Panel>
                     </Collapse>
-                    {/* <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
-                        <Panel header="Booked Customer" key="2">
-                            <Divider />
-                            <Descriptions {...viewProps}></Descriptions>
-                        </Panel>
-                    </Collapse>
-                    <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(3)} expandIconPosition="end">
-                        <Panel header="Billing Customer" key="3">
-                            <Divider />
-                            <Descriptions {...viewProps}></Descriptions>
-                        </Panel>
-                    </Collapse> */}
                 </Col>
             </Row>
         </div>

@@ -14,7 +14,7 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 const { Search } = Input;
 
 const OtfDetailsForm = (props) => {
-    const { formData, formName, invoiceDetailForm, otfFormData, typeData, selectedOtfNumber, setSelectedOtfNumber } = props;
+    const { formName, invoiceDetailForm, otfFormData, typeData, selectedOtfNumber, setSelectedOtfNumber } = props;
 
     useEffect(() => {
         if (otfFormData) {
