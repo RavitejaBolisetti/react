@@ -14,6 +14,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { insuranceDetailDataActions } from 'store/actions/data/otf/insuranceDetail';
 
 import styles from 'assets/sass/app.module.scss';
+import { partyMasterDataActions } from 'store/actions/data/partyMaster';
 
 const mapStateToProps = (state) => {
     const {
@@ -22,6 +23,8 @@ const mapStateToProps = (state) => {
             OTF: {
                 InsuranceDetail: { isLoaded: isDataLoaded = false, isLoading, data: insuranceData = [] },
             },
+            PartyMaster: { isFilteredListLoaded: isInsuranceCompanyDataLoaded = false, isLoading: isPartyLoading, filteredListData: insuranceCompanies },
+            
         },
     } = state;
 
@@ -33,6 +36,8 @@ const mapStateToProps = (state) => {
         insuranceData,
         isLoading,
         moduleTitle,
+        isInsuranceCompanyDataLoaded,
+        insuranceCompanies
     };
     return returnValue;
 };
@@ -45,6 +50,9 @@ const mapDispatchToProps = (dispatch) => ({
             listShowLoading: insuranceDetailDataActions.listShowLoading,
             resetData: insuranceDetailDataActions.reset,
             saveData: insuranceDetailDataActions.saveData,
+
+            fetchInsuranceCompanyList: partyMasterDataActions.fetchFilteredList,
+            listInsuranceShowLoading: partyMasterDataActions.listShowLoading,
             showGlobalNotification,
         },
         dispatch
@@ -55,6 +63,8 @@ const InsuranceDetailsMasterBase = (props) => {
     const { insuranceData, onCloseAction, fetchList, formActionType, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
     const { form, selectedOrderId, handleFormValueChange, section, isLoading, NEXT_ACTION, handleButtonClick, onFinishFailed, saveData } = props;
     const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, StatusBar, pageType } = props;
+const {isInsuranceCompanyDataLoaded, listInsuranceShowLoading,fetchInsuranceCompanyList,insuranceCompanies} = props;
+console.log('insuranceCompanies',insuranceCompanies);
 
     const [formData, setFormData] = useState();
 
@@ -64,6 +74,26 @@ const InsuranceDetailsMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [insuranceData]);
+
+
+    useEffect(() => {
+        if (userId) {
+            const extraParams = [
+                {
+                    key: 'partyType',
+                    title: 'partyType',
+                    value: 'Co-Dealer',
+                    name: 'Party Type',
+                },
+            ];
+            
+            if (!isInsuranceCompanyDataLoaded) {
+                fetchInsuranceCompanyList({ setIsLoading: listInsuranceShowLoading, userId ,extraParams});
+            }
+           
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, isInsuranceCompanyDataLoaded]);
 
     const extraParams = [
         {
