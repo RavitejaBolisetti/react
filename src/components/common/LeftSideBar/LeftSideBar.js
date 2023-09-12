@@ -267,7 +267,6 @@ const LeftSideBarMain = (props) => {
                 <div
                     className={styles.changeTheme}
                     // onClick={handleThemeChange}
-                 
                 >
                     <div className={styles.changeThemeBorder} style={{ padding: collapsed ? '9px 10px' : '5px' }}>
                         {collapsed ? (

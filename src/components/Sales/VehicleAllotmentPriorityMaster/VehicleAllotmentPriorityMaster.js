@@ -464,7 +464,6 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
         setAdvanceSearchVisible,
         typeData: typeData?.['VEH_PR_MOD_GR'],
         searchForm,
-        handleChangeHistory,
         removeFilter,
         handleResetFilter,
     };
