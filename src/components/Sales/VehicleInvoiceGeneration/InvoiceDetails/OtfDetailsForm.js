@@ -36,8 +36,8 @@ const OtfDetailsForm = (props) => {
         <>
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                    <Form.Item initialValue={otfFormData?.otfNumber} label="OTF Number" name={[formName, 'otfNumber']} rules={[validateRequiredSelectField('OTF Number')]}>
-                        <Search maxLength={50} placeholder={preparePlaceholderText('OTF Number')} onSearch={handleChange} allowClear />
+                    <Form.Item initialValue={otfFormData?.otfNumber} label="Booking Number" name={[formName, 'otfNumber']} rules={[validateRequiredSelectField('Booking Number')]}>
+                        <Search maxLength={50} placeholder={preparePlaceholderText('Booking Number')} onSearch={handleChange} allowClear />
                     </Form.Item>
                 </Col>
             </Row>

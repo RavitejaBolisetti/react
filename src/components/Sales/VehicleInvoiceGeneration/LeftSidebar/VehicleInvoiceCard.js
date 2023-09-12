@@ -148,11 +148,11 @@ const VehicleInvoiceCard = (props) => {
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    OTF No.: <span>{checkAndSetDefaultValue(selectedOrder?.otfNumber)}</span>
+                    Booking No.: <span>{checkAndSetDefaultValue(selectedOrder?.bookingNumber || selectedOrder?.otfNumber)}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    OTF Date: <span>{checkAndSetDefaultValue(otfData?.otfDate, isLoading, DATA_TYPE?.DATE?.key) || 'NA'}</span>
+                    Booking Date: <span>{checkAndSetDefaultValue(otfData?.otfDate, isLoading, DATA_TYPE?.DATE?.key) || 'NA'}</span>
                 </div>
             </Panel>
         </Collapse>

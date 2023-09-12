@@ -285,7 +285,7 @@ export const VehicleInvoiceMasterBase = (props) => {
                     key: 'otfNumber',
                     title: 'otfNumber',
                     value: selectedOtfNumber,
-                    name: 'OTF Number',
+                    name: 'Booking Number',
                 },
             ];
             fetchOTFDetail({ customURL, setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
@@ -322,7 +322,7 @@ export const VehicleInvoiceMasterBase = (props) => {
                     key: 'otfNumber',
                     title: 'otfNumber',
                     value: selectedOtfNumber,
-                    name: 'OTF Number',
+                    name: 'Booking Number',
                 },
             ];
             fetchOTFDetail({ customURL, setIsLoading: listShowLoading, userId, extraParams: extraParam, onErrorAction });

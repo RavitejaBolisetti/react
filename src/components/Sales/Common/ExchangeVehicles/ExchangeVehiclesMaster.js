@@ -197,7 +197,7 @@ const ExchangeVehiclesBase = (props) => {
             key: 'otfNumber',
             title: 'otfNumber',
             value: selectedOrderId,
-            name: 'OTF Number',
+            name: 'Booking Number',
         },
     ];
 

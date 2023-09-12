@@ -59,7 +59,7 @@ const ChangeHistoryMain = ({ fetchOTFChangeHistory, onCloseAction, listShowChang
                     key: 'otfNumber',
                     title: 'otfNumber',
                     value: selectedOrderId,
-                    name: 'OTF Number',
+                    name: 'Booking Number',
                 },
             ];
             fetchOTFChangeHistory({ customURL, setIsLoading: listShowChangeHistoryLoading, userId, extraParams });

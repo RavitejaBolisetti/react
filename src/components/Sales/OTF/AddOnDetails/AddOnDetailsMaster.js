@@ -107,11 +107,14 @@ export const AddOnDetailsMasterMain = (props) => {
             },
         ];
         fetchSearchPartList({
-            setIsLoading: partListLoading, userId, extraParams, onErrorAction, onSuccessAction: (res) => {
+            setIsLoading: partListLoading,
+            userId,
+            extraParams,
+            onErrorAction,
+            onSuccessAction: (res) => {
                 if (res?.data?.length > 1) {
                     setPartNameSearchVisible(true);
-                }
-                else {
+                } else {
                     fnSetData(res?.data[0]);
                 }
             },
@@ -127,7 +130,7 @@ export const AddOnDetailsMasterMain = (props) => {
             key: 'otfNumber',
             title: 'otfNumber',
             value: selectedOrderId,
-            name: 'OTF Number',
+            name: 'Booking Number',
         },
     ];
 
@@ -174,14 +177,14 @@ export const AddOnDetailsMasterMain = (props) => {
 
     const fnSetData = (data) => {
         setformData(data);
-            accessoryForm.setFieldsValue({
-                mrp: data?.mrp,
-                partDescription: data?.partDescription,
-                quantity: data?.quantity,
-                sellingPrice: data?.sellingPrice,
-                type: data?.type,
-                partName: data?.type
-            })
+        accessoryForm.setFieldsValue({
+            mrp: data?.mrp,
+            partDescription: data?.partDescription,
+            quantity: data?.quantity,
+            sellingPrice: data?.sellingPrice,
+            type: data?.type,
+            partName: data?.type,
+        });
         handleFormValueChange();
     };
 
@@ -217,7 +220,6 @@ export const AddOnDetailsMasterMain = (props) => {
         };
         saveData(requestData);
     };
-
 
     const viewProps = {
         formData,

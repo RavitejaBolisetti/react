@@ -94,6 +94,7 @@ export const EmbeddedReportMasterMain = (props) => {
             type: 'report',
             id: data?.embedReports?.[0]?.reportId.substr(46, 92),
             embedUrl: data?.embedReports?.[0]?.embedUrl,
+            // embedUrl: data?.embedReports?.[0]?.embedUrl ? data?.embedReports?.[0]?.embedUrl.concat('?rp:sa_od_invoice_hdr_id=3452fd40-3e43-453a-a7b7-85b1f280f016') : '',
             accessToken: data.embedToken,
             tokenType: models.TokenType.Embed,
             settings: {

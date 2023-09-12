@@ -11,7 +11,7 @@ export const SearchtableColumnMapping = ({ handleButtonClick, actionButtonVisibi
     const tableColumn = [];
     tableColumn.push(
         tblPrepareColumns({
-            title: 'OTF Number',
+            title: 'Booking Number',
             dataIndex: 'otfNumber',
             width: '10%',
         }),

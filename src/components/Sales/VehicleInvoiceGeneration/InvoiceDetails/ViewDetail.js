@@ -48,7 +48,7 @@ const ViewDetailMain = (props) => {
                         <Panel header="OTF Details" key="1">
                             <Divider />
                             <Descriptions {...viewProps}>
-                                <Descriptions.Item label="OTF Number">{checkAndSetDefaultValue(otfFormData?.otfNumber, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Booking Number">{checkAndSetDefaultValue(otfFormData?.bookingNumber || otfFormData?.otfNumber, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="OTF Date">{checkAndSetDefaultValue(otfFormData?.otfDate, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="DAR Number">{checkAndSetDefaultValue(otfFormData?.darNumber, isLoading)}</Descriptions.Item>
                                 {/* key darNumber */}
