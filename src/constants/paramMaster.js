@@ -345,6 +345,18 @@ export const PARAM_MASTER = {
         id: 'INDENT',
         title: 'Stock Transfer Indent',
     },
+    INDNT_REC: {
+        id: 'INDNT_REC',
+        title: 'Issue status or not Stock transfer',
+    },
+    INDNT_RAS: {
+        id: 'INDNT_RAS',
+        title: 'Stock Transfer Indent Status',
+    },
+    ISS_STS: {
+        id: 'ISS_STS',
+        title: 'Stock Transfer Indent Issue Status',
+    },
     MAKE_NAME: {
         id: 'MAKE_NAME',
         title: 'Make in loyalty',

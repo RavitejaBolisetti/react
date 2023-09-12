@@ -22,4 +22,12 @@ export const ISSUE_CONSTANT = {
         id: 'Cancel',
         key: 'CNCL',
     },
+    RECEIVED: {
+        id: 'Received',
+        key: 'REC',
+    },
+    RETURNED: {
+        id: 'Returned',
+        key: 'RET',
+    },
 };

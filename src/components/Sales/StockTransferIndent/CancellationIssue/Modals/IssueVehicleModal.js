@@ -11,7 +11,7 @@ import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, validationFieldLetterAndNumber, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
 const { Search } = Input;
 
-const IssueVehicleDetailsModalMain = ({ issueForm, onFinish, handleVinSearch, isReadonly = true, onCloseAction, vehicleVinData }) => {
+const IssueVehicleDetailsModalMain = ({ issueForm, onFinish, handleVinSearch, isReadonly = true, onCloseAction, cancellationData }) => {
     const modalProps = {
         reset: true,
         submit: true,
@@ -26,12 +26,12 @@ const IssueVehicleDetailsModalMain = ({ issueForm, onFinish, handleVinSearch, is
             <Form form={issueForm} data-testid="test" onFinish={onFinish} layout="vertical" autocomplete="off" colon="false">
                 <Row gutter={24}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                        <Form.Item name="modelDescription" label="Model Description">
+                        <Form.Item initialValue={cancellationData?.modelDescription} name="modelDescription" label="Model Description">
                             <Input placeholder={preparePlaceholderText('Model Description')} maxLength={50} {...disabledProps} />
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                        <Form.Item name="vinNumber" label="VIN" rules={[validateRequiredInputField('VIN'), validationFieldLetterAndNumber('VIN')]}>
+                        <Form.Item name="vin" label="VIN" rules={[validateRequiredInputField('VIN'), validationFieldLetterAndNumber('VIN')]}>
                             <Search placeholder={preparePlaceholderText('vin number')} onSearch={handleVinSearch} onChange={() => issueForm.resetFields(['engineNumber'])} maxLength={50} />
                         </Form.Item>
                     </Col>
@@ -43,7 +43,7 @@ const IssueVehicleDetailsModalMain = ({ issueForm, onFinish, handleVinSearch, is
                 </Row>
                 <Row gutter={24}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                        <Form.Item name="invoiceDate" label="OEN Invoice Date">
+                        <Form.Item name="invoiceDate" label="OEM Invoice Date">
                             <Input placeholder={preparePlaceholderText('OEN Invoice Date')} maxLength={50} {...disabledProps} />
                         </Form.Item>
                     </Col>
