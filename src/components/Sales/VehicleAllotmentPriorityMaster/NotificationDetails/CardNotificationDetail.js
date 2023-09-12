@@ -5,7 +5,7 @@
  */
 import React, { useEffect } from 'react';
 import { Card, Row, Button, Divider, Typography, Space } from 'antd';
-import { FiEdit, FiTrash } from 'react-icons/fi';
+import { FiTrash } from 'react-icons/fi';  //FiEdit
 
 import FormNotificationDetail from './FormNotificationDetail';
 
@@ -13,23 +13,29 @@ import styles from 'assets/sass/app.module.scss';
 const { Text } = Typography;
 
 const CardNotificationDetail = (props) => {
-    const { finalFormdata, notificationDetailForm, forceUpdate, taxCharges, financialAccount, typeData, productHierarchyAttributeData, docTypeHeadMappingList, setDocTypeHeadMappingList, objTaxCharge, setOpenAccordian, changeValue, setChangeValue, editForm, formEdit, setFormEdit, uniqueCardEdit, setuniqueCardEdit, buttonData, setButtonData, dropdownItems, setDropdownItems, viewMode } = props;
-    const { filterDesignationList, roleData } = props;
+
+    const { finalFormdata, notificationDetailForm, forceUpdate, taxCharges, financialAccount, typeData, productHierarchyAttributeData, docTypeHeadMappingList, setDocTypeHeadMappingList, objTaxCharge, setOpenAccordian, changeValue, setChangeValue, editForm, formEdit, setFormEdit, uniqueCardEdit, buttonData, setButtonData, dropdownItems, setDropdownItems,  } = props;
+const {filterDesignationList, roleData,} = props;
+
+// const { viewMode,setuniqueCardEdit,handleRoleFunction, formData,formActionType,} = props;
+ 
 
     const currentRole = roleData?.find((i) => i?.key === props?.roleCode)?.value;
     const currentDestination = filterDesignationList?.find((i) => i?.designationCode === props?.designationCode)?.designationDescription;
 
-    const docTypeHeadMappingEdit = (props) => {
-        setuniqueCardEdit(props?.internalId);
-        setFormEdit(true);
-        setButtonData({ ...buttonData, formBtnActive: true });
-
-        editForm.setFieldsValue({
-            roleCode: props?.roleCode,
-            internalId: props?.internalId,
-            designationCode: props?.designationCode,
-        });
-    };
+ 
+    // const docTypeHeadMappingEdit = (props) => {
+    //     setuniqueCardEdit(props?.internalId);
+    //     setFormEdit(true);
+    //     setButtonData({ ...buttonData, formBtnActive: true });
+    //     editForm.setFieldsValue({
+    //         roleCode: props?.roleCode,
+    //         internalId: props?.internalId,
+    //         designationCode: props?.designationCode,
+    //     });
+    //     // handleCodeFunction(props?.financialAccountHead);
+    // };
+ 
 
     const docTypeHeadMappingSave = () => {
         let newFormData = editForm?.getFieldsValue();
@@ -94,47 +100,51 @@ const CardNotificationDetail = (props) => {
 
     // const chargeCodeDescName = typeData?.find((e) => e?.key === props?.chargeCode)?.value;
     // const financialAccountHeadName = financialAccount?.find((e) => e?.id === props?.financialAccountHeadId)?.value;
-    // const { handleRoleFunction, } = props;
     return (
+
         <Card
             style={{
-                backgroundColor: '#BEBEBE1A',
+                backgroundColor: '#BEBEBE1A',width:'100%',
             }}
         >
-            <Row align="middle" justify="space-between" className={styles.marB20}>
-                {/* {formActionType?.viewMode && (
-                    <>                        
-                    <Space>formActionType</Space>
-                    </>
-                    ) ) */}
-
+            <Row align="middle" justify="space-between" className={styles.marB20}>              
                 <Space>
                     {/* <Text>{props?.roleCode}</Text> */}
                     <Text>{currentRole}</Text>
                     <Divider type="vertical" />
                     <Text>{currentDestination}</Text>
                     {/* <Text>{props?.designationCode ? props?.designationCode : formData.designationCode} </Text> */}
-
-                    {/* <Text>{props?.designationCode ? props?.designationCode : financialAccountHeadName} AA</Text> */}
+                     {/* <Text>{props?.designationCode ? props?.designationCode : financialAccountHeadName} </Text> */}
                 </Space>
 
                 {/* {viewMode === false ? ( */}
-                <Row>
-                    <div className={styles.cardItemBtn}>
-                        {!formEdit && (
-                            <>
-                                <Button
-                                    type="link"
-                                    icon={<FiEdit />}
-                                    onClick={() => {
-                                        docTypeHeadMappingEdit(props);
-                                    }}
-                                    //disabled={props?.disabledEdit}
-                                />
-                                <Button onClick={() => onDocTypeHeadMappingDelete(props)} type="link" icon={<FiTrash />} disabled={props?.id ? true : false} />
-                            </>
+                    <Row>
+                        <div className={styles.cardItemBtn}>
+                            {!formEdit && (
+                                <>
+                                    {/* <Button
+                                        type="link"
+                                        icon={<FiEdit />}
+                                        onClick={() => {
+                                            docTypeHeadMappingEdit(props);
+                                        }}
+                                        //disabled={props?.disabledEdit}
+                                    /> */}
+                                    <Button onClick={() => onDocTypeHeadMappingDelete(props)} type="link" icon={<FiTrash />} disabled={props?.id ? true : false} />
+                                </>
+                            )}
+                        </div>
+                        {formEdit && props?.internalId === uniqueCardEdit && (
+                            <div className={styles.cardItemBtn}>
+                                <Button type="link" onClick={onDocTypeHeadMappingCancel}>
+                                    Cancel
+                                </Button>
+                                <Button type="link" onClick={docTypeHeadMappingSave}>
+                                    Save
+                                </Button>
+                            </div>
                         )}
-                    </div>
+                    
                     {formEdit && props?.internalId === uniqueCardEdit && (
                         <div className={styles.cardItemBtn}>
                             <Button type="link" onClick={onDocTypeHeadMappingCancel}>

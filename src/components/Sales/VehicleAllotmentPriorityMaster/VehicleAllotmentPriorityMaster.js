@@ -12,28 +12,28 @@ import { bindActionCreators } from 'redux';
 import { FilterIcon } from 'Icons';
 import { financialAccountHeadDataActions } from 'store/actions/data/financialAccounting/financialAccountHead';
 import { documentTypeLedgerDataActions } from 'store/actions/data/financialAccounting/documentTypeLedger';
+import { tableColumn } from './tableColumn';
+import { FROM_ACTION_TYPE } from 'constants/formActionType';
+// import { BASE_URL_DOCUMENT_TYPE_LEDGER_SEARCH as customURL } from 'constants/routingApi';
+
+import { showGlobalNotification } from 'store/actions/notification';
+import { ListDataTable } from 'utils/ListDataTable';
+import { btnVisiblity } from 'utils/btnVisiblity'; 
+import { AddEditForm } from './AddEditForm';
+import AdvanceVehicleAllotMasterFilter from './AdvanceVehicleAllotMasterFilter';
+import { AdvancedSearch } from './AdvancedSearch';
+// import { ChangeHistory } from './ChangeHistory';
 import { tncProductHierarchyDataActions } from 'store/actions/data/termsConditions/tncProductHierarchy';
 import { dealerManpowerDesignationMasterDataActions } from 'store/actions/data/dealerManpower/designationMaster';
 import { roleMasterDataActions } from 'store/actions/data/dealerManpower/roleMaster';
 import { vehicleAllotPriorityActions } from 'store/actions/data/vehicle/vehicleAllotmentPriorityAction';
 import { vehicleAllotPrioritySaveActions } from 'store/actions/data/vehicle/vehicleAllotPriorityAllotAction';
-import { showGlobalNotification } from 'store/actions/notification';
-
-import { tableColumn } from './tableColumn';
-import { AddEditForm } from './AddEditForm';
-import { ChangeHistory } from './ChangeHistory';
-import { AdvancedSearch } from './AdvancedSearch';
-import { FROM_ACTION_TYPE } from 'constants/formActionType';
-import AdvanceVehicleAllotMasterFilter from './AdvanceVehicleAllotMasterFilter';
-
-import { ListDataTable } from 'utils/ListDataTable';
-import { btnVisiblity } from 'utils/btnVisiblity';
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ConfigurableParameterEditing: { filteredListData: typeData = [] },
+            ConfigurableParameterEditing: { filteredListData: typeData = [] },            
             TermCondition: {
                 ProductHierarchyData: { data: productHierarchyList },
             },
@@ -52,10 +52,16 @@ const mapStateToProps = (state) => {
     } = state;
 
     const moduleTitle = 'Vehicle Allotment Priority Master';
+ 
+    // const ChangeHistoryTitle = 'Vehicle Priority Master History ';
+
     let returnValue = {
         userId,
-        moduleTitle,
-        typeData: typeData,
+        moduleTitle,        
+        typeData: typeData,    
+        // financialAccount,
+        // docTypeLedgerData: docTypeLedgerData?.paginationData,
+        totalRecords: vehicleAllotData?.totalRecords, 
         productHierarchyList,
         vehicleAllotData,
         viewVehicleAllotData,
@@ -103,10 +109,11 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const VehicleAllotmentPriorityMasterMain = (props) => {
-    const { moduleTitle, ChangeHistoryTitle, userId, showGlobalNotification, typeData, taxChargeCategoryTypeData, totalRecords } = props;
-    const { fetchProductList, productHierarchyList, listShowLoading, listShowAllotLoading, saveDataAllot } = props;
-    const { resetDataList, vehicleAllotData, fetchVehicleAllotList, fetchVehicleList, viewVehicleAllotData } = props;
-    const { data, fetchList, roleData, fetchRoleLovList } = props;
+    const { moduleTitle, userId, showGlobalNotification, typeData, taxChargeCategoryTypeData, totalRecords, } = props;
+    const {fetchProductList, productHierarchyList, listShowLoading, listShowAllotLoading, saveDataAllot,} = props;
+    const { resetDataList,vehicleAllotData, fetchVehicleAllotList, fetchVehicleList,viewVehicleAllotData,} = props;
+    const { data, fetchList, roleData, fetchRoleLovList, } = props;
+    // const { filterString, setFilterString, resetDataList} = props;
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
     const [listFilterForm] = Form.useForm();
@@ -180,13 +187,19 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
             if (item.roleCode === value) {
                 matchDesignationList.push(item);
             } else {
-                notificationDetailForm.setFieldValue('designationCode', undefined);
+                notificationDetailForm.setFieldValue('designationCode', undefined );
+                
+
             }
         });
+        if(matchDesignationList.length>0){
         setFilterDesignationList(matchDesignationList);
-        console.log('setFilterDesignationList', filterDesignationList);
-    };
-
+        } else {
+            onErrorAction('Designations are not exist.');
+        }
+     };
+    
+    
     const extraParams = useMemo(() => {
         return [
             {
@@ -209,18 +222,18 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
                 key: 'oldModelGroup',
                 title: 'Old Model',
                 value: filterString?.oldModelGroup,
-                name: filterString?.oldModelGroup,
-                canRemove: false,
-                filter: false,
+                name:  productHierarchyList?.find((i) => i?.prodctCode === filterString?.oldModelGroup)?.prodctShrtName,
+                canRemove: true,
+                filter: true,
             },
             {
                 key: 'newModelGroup',
                 title: 'New Model',
                 value: filterString?.newModelGroup,
-                name: filterString?.newModelGroup,
-                canRemove: false,
-                filter: false,
-            },
+                name: productHierarchyList?.find((i) => i?.prodctCode === filterString?.newModelGroup)?.prodctShrtName,
+                canRemove: true,
+                filter: true,
+            },             
             {
                 key: 'effectiveFromDate',
                 title: 'From Date',
@@ -318,13 +331,12 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
     }, [userId, formData]);
 
     const onFinish = (values) => {
-        console.log('docTypeHeadMappingList', docTypeHeadMappingList);
-        // const recordId = formData?.id || '';
-        const tempdata = { ...values, id: formData?.id || '', roleData: docTypeHeadMappingList };
+
+          const tempdata = { ...values, id: formData?.id || '', roleData: docTypeHeadMappingList };
+         
         const { applicationName, documentTypeName, documentTypeCode, ...data } = tempdata;
         const onSuccess = (res) => {
-            console.log('res', res);
-            form.resetFields();
+             form.resetFields();
             setShowDataLoading(true);
             setIsFormVisible(false);
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
@@ -347,6 +359,7 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
     const onFinishFailed = (errorInfo) => {
         form.validateFields().then((values) => {});
     };
+    
     const removeFilter = (key) => {
         if (key === 'searchParam') {
             const { searchType, searchParam, ...rest } = filterString;
@@ -505,11 +518,11 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
         onCloseAction: () => {
             setChangeHistoryVisible(false);
         },
-        titleOverride: ChangeHistoryTitle,
+        titleOverride: '', //ChangeHistoryTitle,
         formData,
         setIsFormVisible,
         buttonData,
-        ChangeHistoryTitle,
+        // ChangeHistoryTitle,
     };
 
     const tableProps = {
@@ -533,7 +546,7 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
             </Row>
             <AdvancedSearch {...advanceFilterProps} />
             <AddEditForm {...formProps} />
-            <ChangeHistory {...ChangeHistoryProps} />
+            {/* <ChangeHistory {...ChangeHistoryProps} /> */}
         </>
     );
 };

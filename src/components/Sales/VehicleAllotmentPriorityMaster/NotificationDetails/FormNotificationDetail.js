@@ -15,10 +15,8 @@ import styles from 'assets/sass/app.module.scss';
 function FormNotificationDetail(props) {
     
     const { notificationDetailForm, addDocHeadMapping, formEdit, editForm } = props;
-    const { roleData, handleRoleFunction, data, filterDesignationList, setFilterDesignationList,} = props;
-     const typeData = data;
-
-    console.log('form filterDesignationList',filterDesignationList);
+    const { roleData, handleRoleFunction, data, filterDesignationList, } = props;
+    //  const typeData = data;
 
      
     return (

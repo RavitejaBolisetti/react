@@ -9,16 +9,16 @@ import { convertDateMonthYear } from 'utils/formatDateTime';
 import styles from 'assets/sass/app.module.scss';
 // import styles from 'components/common/Common.module.css';
 
-export const tableColumn = (handleButtonClick) => {
+export const tableColumn = (handleButtonClick, page, pageSize) => {
     const tableColumn = [
         tblPrepareColumns({
-            title: 'Old Model Group',
+            title: 'Old Model',
             dataIndex: 'oldModelGroup',
             width: '15%',
         }),
 
         tblPrepareColumns({
-            title: 'New Model Group',
+            title: 'New Model',
             dataIndex: 'newModelGroup',
             width: '15%',
         }),
