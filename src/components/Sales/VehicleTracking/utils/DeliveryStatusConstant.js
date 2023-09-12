@@ -11,7 +11,7 @@ export const DELIVERY_STATUS_CONSTANT = {
     },
     INTRANSIT: {
         id: 2,
-        title: 'InTransit',
+        title: 'In Transit',
         key: 'InTransit',
     },
     DELIVERED: {
