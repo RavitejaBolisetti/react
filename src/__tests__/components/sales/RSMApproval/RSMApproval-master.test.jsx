@@ -9,12 +9,16 @@ afterEach(() => {
     jest.restoreAllMocks();
 });
 
+jest.mock('store/actions/data/sales/rsmApprovalSearch', () => ({
+    rsmApprovalSearchDataAction: {},
+}));
+
 describe('RSMApprovalMaster Component', () => {
     it('should render RSMApproval master component UI', () => {
-        customRender(<RSMApprovalMaster />);
+        customRender(<RSMApprovalMaster setFilterString={jest.fn()} />);
     });
     it('reset button should work', () => {
-        customRender(<RSMApprovalMaster />);
+        customRender(<RSMApprovalMaster setFilterString={jest.fn()} />);
 
         const advanceFilter = screen.getByRole('button', { name: /Advanced Filters/i });
         fireEvent.click(advanceFilter);
@@ -23,7 +27,7 @@ describe('RSMApprovalMaster Component', () => {
     });
 
     it('test for closing the advance filter', () => {
-        customRender(<RSMApprovalMaster />);
+        customRender(<RSMApprovalMaster setFilterString={jest.fn()} />);
 
         const advanceFilter = screen.getByRole('button', { name: /Advanced Filters/i });
         fireEvent.click(advanceFilter);
@@ -39,11 +43,26 @@ describe('RSMApprovalMaster Component', () => {
                 },
             },
         });
+
+        const fetchList = jest.fn();
+
         customRender(
             <Provider store={mockStore}>
-                <RSMApprovalMaster />
+                <RSMApprovalMaster fetchList={fetchList} setFilterString={jest.fn()} />
             </Provider>
         );
+
+        fetchList.mock.calls[0][0].onSuccessAction();
+        fetchList.mock.calls[0][0].onErrorAction();
+
+        const approved = screen.getByRole('button', { name: 'Approved' });
+        fireEvent.click(approved);
+
+        const searchBox = screen.getByRole('textbox', { name: '' });
+        fireEvent.change(searchBox, { target: { value: 'Kai' } });
+
+        const searchBtn = screen.getByRole('button', { name: 'search' });
+        fireEvent.click(searchBtn);
 
         const advanceFilter = screen.getByPlaceholderText(/Search by dealer/i);
         fireEvent.change(advanceFilter, { target: { value: 'Test' } });

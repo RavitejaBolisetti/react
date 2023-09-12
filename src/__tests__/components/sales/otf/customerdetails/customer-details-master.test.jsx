@@ -6,7 +6,7 @@
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
 import { screen, fireEvent, cleanup } from '@testing-library/react';
-import { CustomerDetailsMaster } from '@components/Sales/OTF/CustomerDetails/CustomerDetailsMaster';
+import { CustomerDetailsMaster } from '@components/Sales/Common/CustomerDetails/CustomerDetailsMaster';
 import { Provider } from 'react-redux';
 import createMockStore from '__mocks__/store';
 import { Form } from 'antd';

@@ -160,8 +160,5 @@ describe('OTF transfer master render', () => {
 
         const order = screen.getByRole('columnheader', { name: 'Order Status', exact: false });
         expect(order).toBeTruthy();
-        fireEvent.click(container.querySelector('#otfTransferLocation'));
-        fireEvent.click(container.querySelector('#salesConsultant'));
-        fireEvent.click(container.querySelector('#transferReason'));
     });
 });

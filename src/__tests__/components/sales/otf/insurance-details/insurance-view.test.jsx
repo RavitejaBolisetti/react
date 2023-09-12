@@ -1,6 +1,6 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
-import { ViewDetail } from '@components/Sales/OTF/InsuranceDetails/ViewDetail';
+import { ViewDetail } from '@components/Sales/Common/InsuranceDetails/ViewDetail';
 import customRender from '@utils/test-utils';
 
 beforeEach(() => {
