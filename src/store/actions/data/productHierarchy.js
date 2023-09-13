@@ -21,9 +21,16 @@ export const PRODUCT_HIERARCHY_ATTRIBUTE_NAME_DROPDOWN = 'PRODUCT_HIERARCHY_ATTR
 export const PRODUCT_HIERARCHY_SELECTED_ORGANIZATION_ID = 'PRODUCT_HIERARCHY_SELECTED_ORGANIZATION_ID';
 export const PRODUCT_HIERARCHY_RESET_DATA = 'PRODUCT_HIERARCHY_RESET_DATA';
 export const PRODUCT_HIERARCHY_FILTERED_DATA_ACTION_CONSTANT = 'PRODUCT_HIERARCHY_FILTERED_DATA_ACTION_CONSTANT';
+export const PRODUCT_HIERARCHY_DETAIL_DATA = 'PRODUCT_HIERARCHY_DETAIL_DATA';
 
 const receiveProductHierarchyData = (data) => ({
     type: PRODUCT_HIERARCHY_DATA_LOADED,
+    isLoaded: true,
+    data,
+});
+
+const receiveProductHierarchyDetailData = (data) => ({
+    type: PRODUCT_HIERARCHY_DETAIL_DATA,
     isLoaded: true,
     data,
 });
@@ -109,6 +116,42 @@ productHierarchyDataActions.fetchList = withAuthToken((params) => ({ token, acce
         data,
         method: 'get',
         url: BASE_URL_PRODUCT_HIERARCHY + (id ? '?manufactureOrgCode=' + id : ''),
+        token,
+        accessToken,
+        userId,
+        onSuccess,
+        onError: onErrorAction,
+        onTimeout: () => onError('Request timed out, Please try again'),
+        onUnAuthenticated: () => dispatch(doLogout()),
+        onUnauthorized: (message) => dispatch(unAuthenticateUser(message)),
+        postRequest: () => setIsLoading(false),
+    };
+
+    axiosAPICall(apiCallParams);
+});
+
+productHierarchyDataActions.fetchDetail = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
+    const { setIsLoading, onError, data, code } = params;
+    setIsLoading(true);
+
+    const onSuccess = (res) => {
+        if (res?.data) {
+            dispatch(receiveProductHierarchyDetailData(res?.data));
+        } else {
+            dispatch(receiveProductHierarchyDetailData([]));
+            onError && onError();
+        }
+    };
+
+    const onErrorAction = () => {
+        dispatch(receiveProductHierarchyDetailData([]));
+        onError && onError();
+    };
+
+    const apiCallParams = {
+        data,
+        method: 'get',
+        url: BASE_URL_PRODUCT_HIERARCHY + (code ? '?prodctCode=' + code : ''),
         token,
         accessToken,
         userId,

@@ -3,10 +3,10 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Col, Input, Form, Row, Select, Button, Collapse, Typography, Divider } from 'antd';
 import { validateRequiredSelectField, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
-import { preparePlaceholderText } from 'utils/preparePlaceholder';
+import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { PlusOutlined } from '@ant-design/icons';
 import { FiEdit } from 'react-icons/fi';
 import { PARAM_MASTER } from 'constants/paramMaster';
@@ -21,15 +21,19 @@ import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { getCodeValue } from 'utils/getCodeValue';
 import { VEHICLE_TYPE } from 'constants/VehicleType';
 
-import styles from 'assets/sass/app.module.scss';
+import TreeSelectField from 'components/common/TreeSelectField';
+
 import { customSelectBox } from 'utils/customSelectBox';
 import { prepareCaption } from 'utils/prepareCaption';
+import styles from 'assets/sass/app.module.scss';
 
 const { Text } = Typography;
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { toolTipContent, isVehicleLovDataLoading, handleFormValueChange, onHandleSelect, optionsServicesMapping, setoptionsServicesMapping, optionsServiceModified, setoptionsServiceModified, formData, openAccordian, isReadOnly, setIsReadOnly, setOpenAccordian, selectedOrderId, form, onErrorAction, showGlobalNotification, fetchList, userId, listShowLoading, saveData, onSuccessAction, ProductHierarchyData, typeData, formActionType, vehicleServiceData } = props;
+    const { productHierarchyData, toolTipContent, isVehicleLovDataLoading, handleFormValueChange, onHandleSelect, optionsServicesMapping, setoptionsServicesMapping, optionsServiceModified, setoptionsServiceModified, formData, openAccordian, isReadOnly, setIsReadOnly, setOpenAccordian, selectedOrderId, form, onErrorAction, showGlobalNotification, fetchList, userId, listShowLoading, saveData, onSuccessAction, ProductHierarchyData, typeData, formActionType, vehicleServiceData } = props;
+    const [productModelCode, setProductModelCode] = useState();
+
     const [optionForm] = Form.useForm();
     const findUsageType = (usage) => {
         const foundVal = typeData[PARAM_MASTER.VEHCL_TYPE.id]?.find((element, index) => element?.value === usage);
@@ -87,6 +91,11 @@ const AddEditFormMain = (props) => {
         vehicleServiceData,
     };
 
+    const handleSelectTreeClick = (value) => {
+        setProductModelCode(value);
+        // otfCancellationForm.setFieldValue('productCode', value);
+    };
+
     // <Form.Item initialValue={formData?.saleType} name="saleType" label="Sale Type" rules={[validateRequiredSelectField('Sale Type')]}>
     //     {customSelectBox({ data: typeData['SALE_TYPE'] })}
     // </Form.Item>
@@ -98,6 +107,19 @@ const AddEditFormMain = (props) => {
     // <Descriptions.Item label="Sale Type">{checkAndSetDefaultValue(getCodeValue(typeData?.SALE_TYPE, formData?.saleType), isLoading)}</Descriptions.Item>
     // <Descriptions.Item label="Price Type">{checkAndSetDefaultValue(getCodeValue(typeData?.PRC_TYP, formData?.priceType), isLoading)}</Descriptions.Item>
 
+    const fieldNames = { title: 'prodctShrtName', key: 'prodctCode', children: 'subProdct' };
+    const treeFieldNames = { ...fieldNames, label: fieldNames.title, value: fieldNames.key };
+
+    const treeSelectFieldProps = {
+        treeFieldNames,
+        treeData: productHierarchyData,
+        defaultParent: false,
+        selectedTreeSelectKey: productModelCode,
+        handleSelectTreeClick,
+        defaultValue: null,
+        placeholder: preparePlaceholderSelect('Parent'),
+    };
+
     return (
         <Row gutter={20}>
             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -108,11 +130,12 @@ const AddEditFormMain = (props) => {
                             {/* <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item label="Vehicle Usage Type" name="vehicleUsageType" data-testid="usageType">
                                     <Select placeholder="Select Vehicle Usage Type" allowClear options={typeData['VEHCL_TYPE']} fieldNames={{ label: 'value', value: 'key' }} />
-                                </Form.Item>
-                            </Col> */}
-                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item label="Model Description" name="model" data-testid="model" rules={[validateRequiredSelectField('Model Description')]}>
+                                    </Form.Item>
                                     <Select loading={isVehicleLovDataLoading} onSelect={onHandleSelect} placeholder="Select" allowClear options={ProductHierarchyData} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }} showSearch filterOption={(input, option) => (option?.prodctShrtName ?? '').toLowerCase().includes(input.toLowerCase())} />
+                            </Col> */}
+                            <Col xs={24} sm={24} md={16} lg={16} xl={16}>
+                                <Form.Item label="Model Description" name="model" data-testid="model" rules={[validateRequiredSelectField('Model Description')]}>
+                                    <TreeSelectField {...treeSelectFieldProps} />
                                 </Form.Item>
                                 {toolTipContent && form.getFieldValue('model') && <div className={styles.modelTooltip}>{addToolTip(toolTipContent, 'bottom', '#FFFFFF', styles.toolTip)(<AiOutlineInfoCircle size={13} />)}</div>}
                             </Col>
@@ -122,15 +145,15 @@ const AddEditFormMain = (props) => {
                                     <Input {...disabledProp} placeholder={preparePlaceholderText('Model Code')} />
                                 </Form.Item>
                             </Col>
+                        </Row>
 
+                        <Row gutter={20}>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item label="Available Stock" name="availableStock" data-testid="availableStock">
                                     <Input {...disabledProp} placeholder={preparePlaceholderText('Available Stock')} />
                                 </Form.Item>
                             </Col>
-                        </Row>
 
-                        <Row gutter={20}>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item label="PO Number" name="poNumber">
                                     <Input {...disabledProp} placeholder={preparePlaceholderText('PO Number')} />
@@ -147,9 +170,7 @@ const AddEditFormMain = (props) => {
                                     {customSelectBox({ data: typeData?.PO_STATS, disabled: true })}
                                 </Form.Item>
                             </Col>
-                        </Row>
 
-                        <Row gutter={20}>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item label="SO Number" name="soNumber">
                                     <Input {...disabledProp} placeholder={preparePlaceholderText('SO Number')} />

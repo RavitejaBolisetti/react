@@ -28,7 +28,7 @@ const mapStateToProps = (state) => {
                 VehicleDetailsLov: { isFilteredListLoaded: isVehicleLovDataLoaded = false, isLoading: isVehicleLovDataLoading, filteredListData: VehicleLovData },
                 VehicleDetailsServiceLov: { isFilteredListLoaded: isVehicleServiceLoaded = false, isLoading: isVehicleServiceLoading, filteredListData: vehicleServiceData },
             },
-            ProductHierarchy: { isFilteredListLoaded: isProductHierarchyDataLoaded = false, isLoading: isProductHierarchyLoading, filteredListData: VehicleLovCodeData = [] },
+            ProductHierarchy: { isFilteredListLoaded: isProductHierarchyDataLoaded = false, isLoading: isProductHierarchyLoading, filteredListData: VehicleLovCodeData = [], data: productHierarchyData = [] },
         },
     } = state;
 
@@ -52,6 +52,7 @@ const mapStateToProps = (state) => {
         isVehicleServiceLoaded,
         isVehicleServiceLoading,
         vehicleServiceData,
+        productHierarchyData,
     };
     return returnValue;
 };
@@ -63,6 +64,7 @@ const mapDispatchToProps = (dispatch) => ({
             fetchList: otfvehicleDetailsDataActions.fetchList,
             saveData: otfvehicleDetailsDataActions.saveData,
 
+            fetchProductList: productHierarchyDataActions.fetchList,
             fetchProductLovCode: productHierarchyDataActions.fetchFilteredList,
             fetchProductLov: otfvehicleDetailsLovDataActions.fetchFilteredList,
 
@@ -86,6 +88,8 @@ const VehicleDetailsMasterMain = (props) => {
     const { form, selectedOrderId, section, buttonData, setButtonData, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick } = props;
     const { refreshData, setRefreshData, vehicleServiceData, fetchServiceLov, serviceLoading, selectedOrder, setSelectedOrder } = props;
     const { formKey, onFinishCustom = undefined, FormActionButton, StatusBar } = props;
+    const { fetchProductList, productHierarchyData } = props;
+    console.log('🚀 ~ file: VehicleDetailsMaster.js:92 ~ VehicleDetailsMasterMain ~ productHierarchyData:', productHierarchyData);
 
     const [activeKey, setactiveKey] = useState([1]);
     const [formData, setformData] = useState({});
@@ -120,6 +124,7 @@ const VehicleDetailsMasterMain = (props) => {
         fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
         fetchProductLov({ setIsLoading: ProductLovLoading, userId, onErrorAction });
         fetchServiceLov({ setIsLoading: serviceLoading, userId, onErrorAction });
+        fetchProductList({ setIsLoading: listShowLoading, userId, id: 'IS', onErrorAction });
     };
 
     const onChange = (values) => {

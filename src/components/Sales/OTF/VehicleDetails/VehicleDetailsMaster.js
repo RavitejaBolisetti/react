@@ -31,7 +31,7 @@ const mapStateToProps = (state) => {
                 VehicleDetailsLov: { isFilteredListLoaded: isVehicleLovDataLoaded = false, isLoading: isVehicleLovDataLoading, filteredListData: VehicleLovData },
                 VehicleDetailsServiceLov: { isFilteredListLoaded: isVehicleServiceLoaded = false, isLoading: isVehicleServiceLoading, filteredListData: vehicleServiceData },
             },
-            ProductHierarchy: { isFilteredListLoaded: isProductHierarchyDataLoaded = false, isLoading: isProductHierarchyLoading, filteredListData: VehicleLovCodeData = [] },
+            ProductHierarchy: { isFilteredListLoaded: isProductHierarchyDataLoaded = false, isLoading: isProductHierarchyLoading, filteredListData: VehicleLovCodeData = [], data: productHierarchyData = [] },
         },
     } = state;
 
@@ -64,6 +64,7 @@ const mapDispatchToProps = (dispatch) => ({
             fetchList: otfvehicleDetailsDataActions.fetchList,
             saveData: otfvehicleDetailsDataActions.saveData,
 
+            fetchProductList: productHierarchyDataActions.fetchList,
             fetchProductLovCode: productHierarchyDataActions.fetchFilteredList,
             fetchProductLov: otfvehicleDetailsLovDataActions.fetchFilteredList,
 
@@ -83,9 +84,10 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const VehicleDetailsMasterMain = (props) => {
-    const { VehicleDetailsData, isVehicleLovDataLoading, VehicleLovData, resetProductLov, isVehicleLovDataLoaded, ProductHierarchyData, fetchProductLovCode, fetchProductLov, isLoading, saveData, ProductLovLoading, isProductHierarchyDataLoaded, typeData, fetchList, resetData, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
+    const { VehicleDetailsData, isVehicleLovDataLoading, VehicleLovData, resetProductLov, isVehicleLovDataLoaded, ProductHierarchyData, fetchProductList, fetchProductLovCode, fetchProductLov, isLoading, saveData, ProductLovLoading, isProductHierarchyDataLoaded, typeData, fetchList, resetData, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
     const { form, selectedOrderId, section, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick } = props;
-
+    const { productHierarchyData } = props;
+    console.log('🚀 ~ file: VehicleDetailsMaster.js:90 ~ VehicleDetailsMasterMain ~ productHierarchyData:', productHierarchyData);
     const { refreshData, setRefreshData, vehicleServiceData, fetchServiceLov, serviceLoading, selectedOrder, setSelectedOrder } = props;
 
     const [activeKey, setactiveKey] = useState([1]);
@@ -118,9 +120,11 @@ const VehicleDetailsMasterMain = (props) => {
     ];
 
     const loadDependependentData = () => {
+        console.log('loadDependependentData', loadDependependentData);
         fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
         fetchProductLov({ setIsLoading: ProductLovLoading, userId, onErrorAction });
         fetchServiceLov({ setIsLoading: serviceLoading, userId, onErrorAction });
+        fetchProductList({ setIsLoading: listShowLoading, userId, id: 'IG', onErrorAction });
     };
 
     const onChange = (values) => {
@@ -143,6 +147,7 @@ const VehicleDetailsMasterMain = (props) => {
     useEffect(() => {
         if (userId && selectedOrderId) {
             loadDependependentData();
+            console.log('Kuldeep', selectedOrderId);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedOrderId]);
