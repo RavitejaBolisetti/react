@@ -20,10 +20,12 @@ import { VEHICLE_INVOICE_SECTION } from 'constants/VehicleInvoiceSection';
 import { QUERY_BUTTONS_CONSTANTS } from './QueryButtons';
 import { BASE_URL_OTF_DETAILS as customURL } from 'constants/routingApi';
 import { otfDataActions } from 'store/actions/data/otf/otf';
+
 import { vehicleInvoiceDataActions } from 'store/actions/data/invoiceGeneration/vehicleInvoiceGeneration';
 import { vehicleIrnGenerationDataActions } from 'store/actions/data/invoiceGeneration/irnGeneration';
 
 import { vehicleInvoiceGenerationDataActions } from 'store/actions/data/invoiceGeneration/vehicleInvoice';
+
 import { vehicleInvoiceDetailDataActions } from 'store/actions/data/invoiceGeneration/vehicleInvoiceDetail';
 import { vehicleDetailsDataActions } from 'store/actions/data/invoiceGeneration/vehicleDetails';
 import { showGlobalNotification } from 'store/actions/notification';
@@ -42,7 +44,7 @@ const mapStateToProps = (state) => {
                 VehicleIrnGeneration: { isLoaded: isIrnDataLoaded = false, isLoading: isIrnDataLoading, data: irnData = [] },
                 VehicleInvoiceDetail: { isLoaded: isVehicleInvoiceDataLoaded = false, isLoading: isVehicleInvoiceDataLoading, data: vehicleInvoiceData = [] },
                 VehicleDetails: { isLoaded: isVehicleDataLoaded = false, isLoading: isVehicleDataLoading, data: vehicleDetail = [] },
-                VehicleInvoice: { isLoaded: isInvoiceDataLoaded = false, isLoading: isInvoiceDataLoading, data: invoiceData = [] }
+                VehicleInvoice: { isLoaded: isInvoiceDataLoaded = false, isLoading: isInvoiceDataLoading, data: invoiceData = [] },
             },
             OTF: {
                 OtfSearchList: { isDetailLoaded: isDataLoaded, detailData: otfData = [] },
@@ -83,10 +85,10 @@ const mapDispatchToProps = (dispatch) => ({
     ...bindActionCreators(
         {
             fetchOTFDetail: otfDataActions.fetchDetail,
+            saveData: vehicleInvoiceGenerationDataActions.saveData,
             cancelInvoice: vehicleInvoiceGenerationDataActions.saveData,
             listShowLoading: otfDataActions.listShowLoading,
-
-            saveData: vehicleInvoiceDetailDataActions.saveData,
+            // saveData: vehicleInvoiceDetailDataActions.saveData,
             listInvoiceShowLoading: vehicleInvoiceDetailDataActions.listShowLoading,
 
             irnGeneration: vehicleIrnGenerationDataActions.saveData,
@@ -367,6 +369,12 @@ export const VehicleInvoiceMasterBase = (props) => {
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
         form.resetFields();
         form.setFieldsValue(undefined);
+
+        if (isLastSection) {
+            generateInvoice();
+            return false;
+        }
+
         switch (buttonAction) {
             case ADD_ACTION:
                 defaultSection && setCurrentSection(defaultSection);
@@ -415,7 +423,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         setIsFormVisible(true);
     };
 
-    const onFinishSearch = (values) => { };
+    const onFinishSearch = (values) => {};
 
     const handleResetFilter = (e) => {
         setShowDataLoading(false);
@@ -423,7 +431,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         advanceFilterForm.resetFields();
     };
 
-    const onFinish = (receiptData) => {
+    const generateInvoice = () => {
         const data = { ...requestPayload };
         const onSuccess = (res) => {
             form.resetFields();
@@ -552,7 +560,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         filterString,
         setFilterString,
         from: listFilterForm,
-        onFinish,
+        // onFinish,
         onFinishFailed,
         handleResetFilter,
         advanceFilterForm,
@@ -604,7 +612,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         invoiceDetailForm,
         formActionType,
         setFormActionType,
-        onFinish,
+        // onFinish,
         onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
