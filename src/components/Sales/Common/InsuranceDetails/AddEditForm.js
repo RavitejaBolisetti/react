@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect } from 'react';
-import { Col, Input, Form, Row, DatePicker, Space, Card } from 'antd';
+import { Col, Input, Form, Row, DatePicker, Space, Card, Select } from 'antd';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { formattedCalendarDate, dateFormat } from 'utils/formatDateTime';
 import { validateNumberWithTwoDecimalPlaces } from 'utils/validation';
@@ -13,7 +13,8 @@ import { customSelectBox } from 'utils/customSelectBox';
 import { PAGE_TYPE } from 'components/Sales/VehicleDeliveryNote/utils/pageType';
 
 const AddEditFormMain = (props) => {
-    const { formData, form, pageType } = props;
+    const { formData, form, pageType,insuranceCompanies } = props;
+    const { Option } = Select;
 
     useEffect(() => {
         if (formData) {
@@ -30,12 +31,12 @@ const AddEditFormMain = (props) => {
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item label="Insurance Company" name="insuranceCompany">
-                                    {pageType === PAGE_TYPE?.OTF_PAGE_TYPE?.key ? (
-                                        <>
-                                            <Input placeholder={preparePlaceholderText('Insurance Company')} maxLength={55} />{' '}
-                                        </>
-                                    ) : (
-                                        <>{customSelectBox({ placeholder: preparePlaceholderSelect('Insurance Company') })}</>
+                                    {pageType === PAGE_TYPE?.OTF_PAGE_TYPE?.key && (
+                                        <Select placeholder={preparePlaceholderSelect('Insurance Company')}>
+                                            {insuranceCompanies?.map((item) => (
+                                                <Option value={item?.partyName} key={'ic' +item?.partyCode}>{item?.partyName}</Option>
+                                            ))}
+                                        </Select>
                                     )}
                                 </Form.Item>
                             </Col>

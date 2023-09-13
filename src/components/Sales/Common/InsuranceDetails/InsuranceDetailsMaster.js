@@ -23,11 +23,10 @@ const mapStateToProps = (state) => {
             OTF: {
                 InsuranceDetail: { isLoaded: isDataLoaded = false, isLoading, data: insuranceData = [] },
             },
-            PartyMaster: { isFilteredListLoaded: isInsuranceCompanyDataLoaded = false, isLoading: isPartyLoading, filteredListData: insuranceCompanies },
+            PartyMaster: { isFilteredListLoaded: isInsuranceCompanyDataLoaded = false, isLoading: isPartyLoading, detailData: insuranceCompanies },
             
         },
     } = state;
-
     const moduleTitle = 'Insurance Details';
 
     let returnValue = {
@@ -51,7 +50,7 @@ const mapDispatchToProps = (dispatch) => ({
             resetData: insuranceDetailDataActions.reset,
             saveData: insuranceDetailDataActions.saveData,
 
-            fetchInsuranceCompanyList: partyMasterDataActions.fetchFilteredList,
+            fetchInsuranceCompanyList: partyMasterDataActions.fetchDetail,
             listInsuranceShowLoading: partyMasterDataActions.listShowLoading,
             showGlobalNotification,
         },
@@ -63,8 +62,7 @@ const InsuranceDetailsMasterBase = (props) => {
     const { insuranceData, onCloseAction, fetchList, formActionType, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
     const { form, selectedOrderId, handleFormValueChange, section, isLoading, NEXT_ACTION, handleButtonClick, onFinishFailed, saveData } = props;
     const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, StatusBar, pageType } = props;
-const {isInsuranceCompanyDataLoaded, listInsuranceShowLoading,fetchInsuranceCompanyList,insuranceCompanies} = props;
-console.log('insuranceCompanies',insuranceCompanies);
+    const {isInsuranceCompanyDataLoaded, listInsuranceShowLoading,fetchInsuranceCompanyList,insuranceCompanies} = props;
 
     const [formData, setFormData] = useState();
 
@@ -77,23 +75,20 @@ console.log('insuranceCompanies',insuranceCompanies);
 
 
     useEffect(() => {
-        if (userId) {
+        
             const extraParams = [
                 {
                     key: 'partyType',
                     title: 'partyType',
-                    value: 'Co-Dealer',
+                    value: 'IN',
                     name: 'Party Type',
                 },
             ];
-            
-            if (!isInsuranceCompanyDataLoaded) {
-                fetchInsuranceCompanyList({ setIsLoading: listInsuranceShowLoading, userId ,extraParams});
-            }
-           
+            if (userId && !isInsuranceCompanyDataLoaded) {
+            fetchInsuranceCompanyList({ setIsLoading: listInsuranceShowLoading, userId, extraParams });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isInsuranceCompanyDataLoaded]);
+    }, [userId, !isInsuranceCompanyDataLoaded]);
 
     const extraParams = [
         {
@@ -144,6 +139,7 @@ console.log('insuranceCompanies',insuranceCompanies);
         isLoading,
         formData,
         pageType,
+        insuranceCompanies,
     };
 
     const myProps = {
@@ -153,7 +149,6 @@ console.log('insuranceCompanies',insuranceCompanies);
     const onFinish = (values) => {
         const recordId = insuranceData?.id || '';
         const data = { ...values, id: recordId, otfNumber: selectedOrderId };
-
         if (onFinishCustom) {
             onFinishCustom({ key: formKey, values: data });
             handleButtonClick({ buttonAction: NEXT_ACTION });
