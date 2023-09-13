@@ -202,6 +202,14 @@ export const StockTransferIndentMasterBase = (props) => {
                 filter: true,
             },
             {
+                key: toggleButton === STOCK_TRANSFER?.RAISED.key ? 'indentRaisedTo' : 'indentRaisedFrom',
+                title: 'Value',
+                value: filterString?.dealerLocation,
+                name: indentLocationList?.find((i) => i?.locationCode === filterString?.dealerLocation)?.dealerLocationName,
+                canRemove: true,
+                filter: true,
+            },
+            {
                 key: 'fromDate',
                 title: 'Value',
                 value: filterString?.fromDate,
@@ -217,14 +225,7 @@ export const StockTransferIndentMasterBase = (props) => {
                 canRemove: true,
                 filter: true,
             },
-            {
-                key: toggleButton === STOCK_TRANSFER?.RAISED.key ? 'indentRaisedTo' : 'indentRaisedFrom',
-                title: 'Value',
-                value: filterString?.dealerLocation,
-                name: indentLocationList?.find((i) => i?.locationCode === filterString?.dealerLocation)?.dealerLocationName,
-                canRemove: true,
-                filter: true,
-            },
+
             {
                 key: 'pageSize',
                 title: 'Value',
@@ -431,6 +432,23 @@ export const StockTransferIndentMasterBase = (props) => {
         setIsViewIndentVisible(false);
     };
 
+    const removeFilter = (key) => {
+        console.log('dkey', key);
+        if (key === 'searchParam') {
+            const { searchType, searchParam, ...rest } = filterString;
+            setFilterString({ ...rest });
+        } else if (key === 'indentRaisedTo' || key === 'indentRaisedFrom') {
+            const { indentRaisedTo, indentRaisedFrom, ...rest } = filterString;
+            setFilterString({ ...rest });
+        } else if (key === 'fromDate' || key === 'toDate') {
+            setFilterString();
+            advanceFilterForm.resetFields();
+        } else {
+            const { [key]: names, ...rest } = filterString;
+            setFilterString({ ...rest });
+        }
+    };
+
     const onFinishSearch = (values) => {};
 
     const handleResetFilter = (e) => {
@@ -492,6 +510,7 @@ export const StockTransferIndentMasterBase = (props) => {
 
     const advanceFilterProps = {
         extraParams,
+        removeFilter,
         advanceFilter: true,
         otfFilter: true,
         filterString,
