@@ -10,13 +10,10 @@ import { InputSkeleton } from '../Skeleton';
 import styles from './Header.module.scss';
 export const HeaderSkeleton = () => {
     return (
-        <Row gutter={20}>
+        <Row gutter={0}>
             <Col xs={24} sm={24} md={10} lg={10} xl={10} xxl={10}>
                 <div className={styles.headerLeft}>
                     <Space>
-                        <div className={styles.userAvatarSkeleton}>
-                            <InputSkeleton width={40} height={40} />
-                        </div>
                         <div className={styles.userTypeSkeleton}>
                             <InputSkeleton width={250} height={15} />
                             <InputSkeleton width={250} height={15} />
@@ -30,19 +27,15 @@ export const HeaderSkeleton = () => {
                         <div className={styles.navbarNav}>
                             <div className={styles.welcomeUser} style={{ marginRight: '20px' }}>
                                 <Space>
-                                    <div className={styles.bellSkeleton}>
-                                        <InputSkeleton width={35} height={35} />
+                                    <div className={styles.bellSkeleton} style={{ marginTop: '3px' }}>
+                                        <InputSkeleton width={20} height={20} />
                                     </div>
                                 </Space>
                             </div>
-                            <div className={styles.welcomeUser} style={{ marginRight: '10px' }}>
+                            <div className={styles.welcomeUser} style={{ marginRight: '20px' }}>
                                 <Space>
                                     <div className={styles.userAvatarSkeleton}>
-                                        <InputSkeleton width={35} height={35} />
-                                    </div>
-                                    <div className={styles.userTextSkeleton}>
-                                        <InputSkeleton width={60} height={10} />
-                                        <InputSkeleton width={80} height={10} />
+                                        <InputSkeleton width={25} height={30} />
                                     </div>
                                 </Space>
                             </div>
@@ -52,8 +45,8 @@ export const HeaderSkeleton = () => {
                                         <InputSkeleton width={35} height={35} />
                                     </div>
                                     <div className={styles.userTextSkeleton}>
-                                        <InputSkeleton width={60} height={10} />
-                                        <InputSkeleton width={80} height={10} />
+                                        <InputSkeleton width={120} height={15} />
+                                        <InputSkeleton width={100} height={15} />
                                     </div>
                                 </Space>
                             </div>

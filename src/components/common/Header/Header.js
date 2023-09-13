@@ -284,114 +284,114 @@ const HeaderMain = (props) => {
 
     return (
         <>
-            <div className={styles.headerContainer}>
-                {!isLoading ? (
-                    <>
-                        <Row gutter={0}>
-                            <Col xs={14} sm={isDashboard ? 9 : 16} md={isDashboard ? 9 : 16} lg={isDashboard ? 9 : 16} xl={isDashboard ? 9 : 16} xxl={isDashboard ? 9 : 16}>
-                                <div className={styles.headerLeft}>
-                                    <Space>
-                                        <div className={`${styles.floatLeft} ${styles.mrt6} ${styles.menuIcon}`} onClick={handleCollapse}>
-                                            <img width={20} src={IMG_ICON} alt="brandImage" className={styles.brandImage} /> <Icon component={MenuArrow} />
-                                        </div>
-                                        <div className={styles.userText}>
-                                            <div className={styles.dealerName}>{dealerName}</div>
-                                            <div className={styles.dealerInfo}>
-                                                <span className={styles.dealerLocation}>{dealerLocation}</span>
-                                                {userType === USER_TYPE?.DEALER?.key && (
-                                                    <Dropdown
-                                                        trigger={['click']}
-                                                        className={styles.dropdownIcon}
-                                                        menu={{
-                                                            items: dealerLocations?.map((menu) => ({
-                                                                key: menu?.locationId,
-                                                                label: menu?.locationName,
-                                                                onClick: () => handleUpdateUserAcess({ locationId: menu?.locationId }),
-                                                                className: styles.dropdownIcon,
-                                                                disabled: menu?.isDefault,
-                                                                danger: menu?.isDefault,
-                                                            })),
-                                                        }}
-                                                    >
+            {isLoading ? (
+                <div className={styles.headerContainer}>
+                    <Row>
+                        <Col xs={14} sm={isDashboard ? 9 : 16} md={isDashboard ? 9 : 16} lg={isDashboard ? 9 : 16} xl={isDashboard ? 9 : 16} xxl={isDashboard ? 9 : 16}>
+                            <div className={styles.headerLeft}>
+                                <Space>
+                                    <div className={`${styles.floatLeft} ${styles.mrt6} ${styles.menuIcon}`} onClick={handleCollapse}>
+                                        <img width={20} src={IMG_ICON} alt="brandImage" className={styles.brandImage} /> <Icon component={MenuArrow} />
+                                    </div>
+                                    <div className={styles.userText}>
+                                        <div className={styles.dealerName}>{dealerName}</div>
+                                        <div className={styles.dealerInfo}>
+                                            <span className={styles.dealerLocation}>{dealerLocation}</span>
+                                            {userType === USER_TYPE?.DEALER?.key && (
+                                                <Dropdown
+                                                    trigger={['click']}
+                                                    className={styles.dropdownIcon}
+                                                    menu={{
+                                                        items: dealerLocations?.map((menu) => ({
+                                                            key: menu?.locationId,
+                                                            label: menu?.locationName,
+                                                            onClick: () => handleUpdateUserAcess({ locationId: menu?.locationId }),
+                                                            className: styles.dropdownIcon,
+                                                            disabled: menu?.isDefault,
+                                                            danger: menu?.isDefault,
+                                                        })),
+                                                    }}
+                                                >
+                                                    <DownOutlined />
+                                                </Dropdown>
+                                            )}{' '}
+                                            {userType === USER_TYPE?.DEALER?.key && (
+                                                <>
+                                                    <span className={styles.seprator}>|</span>
+                                                    <span className={styles.dealerLocation}>FY2023</span>
+                                                    <Dropdown className={styles.dropdownIcon} menu={{ items: fyMenuOption }} /*trigger={['click']}*/>
                                                         <DownOutlined />
                                                     </Dropdown>
-                                                )}{' '}
-                                                {userType === USER_TYPE?.DEALER?.key && (
-                                                    <>
-                                                        <span className={styles.seprator}>|</span>
-                                                        <span className={styles.dealerLocation}>FY2023</span>
-                                                        <Dropdown className={styles.dropdownIcon} menu={{ items: fyMenuOption }} /*trigger={['click']}*/>
-                                                            <DownOutlined />
-                                                        </Dropdown>
-                                                    </>
-                                                )}
-                                            </div>
+                                                </>
+                                            )}
                                         </div>
-                                    </Space>
-                                </div>
-                            </Col>
-                            {/* {pagePath === routing.ROUTING_DASHBOARD && (
+                                    </div>
+                                </Space>
+                            </div>
+                        </Col>
+                        {/* {pagePath === routing.ROUTING_DASHBOARD && (
                                 <Col xs={0} sm={0} md={7} lg={7} xl={7} xxl={7}>
                                     <div className={styles.headerRight} >
                                         <Search data-testid="search" allowClear placeholder="Search by Doc ID" onSearch={onSearch} />
                                     </div>
                                 </Col>
                             )} */}
-                            <Col xs={10} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                <div className={styles.headerRight}>
-                                    <div className={styles.navbarNav}>
-                                        <div className={`${styles.floatLeft} `}>
-                                            <Link className={styles.navLink} data-toggle="dropdown">
-                                                <Popover trigger={'click'} placement="bottomRight" content={<Notification notificationCount={notificationCount} resetNotification={resetNotification} setRefreshCount={setRefreshCount} />} overlayClassName={styles.notificationContainer}>
-                                                    <Badge size="small" count={notificationCount?.inboxUnread}>
-                                                        {addToolTip('Notification')(<FaRegBell size={20} />)}
-                                                    </Badge>
-                                                </Popover>
-                                            </Link>
-                                        </div>
-                                        <div className={`${styles.floatLeft}`}>
-                                            <Link className={styles.navLink} data-toggle="dropdown" target="_blank" to={process.env.REACT_APP_SUPPORT_URL}>
-                                                <Icon component={HeadPhoneIcon} />
-                                            </Link>
-                                        </div>
-                                        <div className={styles.welcomeUser}>
-                                            <Space>
-                                                <div className={styles.userAvatar}>
-                                                    <Avatar className={styles.userAvatarInside}>{userAvatar}</Avatar>
-                                                    <span className={`${styles.mobmenuDropDownArrow} ${styles.dropdownArrow}`}>
-                                                        <Dropdown menu={{ items: userSettingMenu }}>
-                                                            <Link to={routing.ROUTING_DASHBOARD} className={styles.navLink} onClick={(e) => e.preventDefault()}>
-                                                                <Space>
-                                                                    <DownOutlined />
-                                                                </Space>
-                                                            </Link>
-                                                        </Dropdown>
-                                                    </span>
-                                                </div>
-                                                <div className={styles.userText}>
-                                                    <div className={styles.userName}>{addToolTip(fullName)(fullName)}</div>
-                                                    <span className={styles.userRoleName}>{userAccess}</span>
-                                                </div>
-                                                <div className={`${styles.webmenuDropDownArrow} ${styles.dropdownArrow}`}>
-                                                    <Dropdown menu={{ items: userSettingMenu }} trigger={['click']}>
+                        <Col xs={10} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                            <div className={styles.headerRight}>
+                                <div className={styles.navbarNav}>
+                                    <div className={`${styles.floatLeft} `}>
+                                        <Link className={styles.navLink} data-toggle="dropdown">
+                                            <Popover trigger={'click'} placement="bottomRight" content={<Notification notificationCount={notificationCount} resetNotification={resetNotification} setRefreshCount={setRefreshCount} />} overlayClassName={styles.notificationContainer}>
+                                                <Badge size="small" count={notificationCount?.inboxUnread}>
+                                                    {addToolTip('Notification')(<FaRegBell size={20} />)}
+                                                </Badge>
+                                            </Popover>
+                                        </Link>
+                                    </div>
+                                    <div className={`${styles.floatLeft}`}>
+                                        <Link className={styles.navLink} data-toggle="dropdown" target="_blank" to={process.env.REACT_APP_SUPPORT_URL}>
+                                            <Icon component={HeadPhoneIcon} />
+                                        </Link>
+                                    </div>
+                                    <div className={styles.welcomeUser}>
+                                        <Space>
+                                            <div className={styles.userAvatar}>
+                                                <Avatar className={styles.userAvatarInside}>{userAvatar}</Avatar>
+                                                <span className={`${styles.mobmenuDropDownArrow} ${styles.dropdownArrow}`}>
+                                                    <Dropdown menu={{ items: userSettingMenu }}>
                                                         <Link to={routing.ROUTING_DASHBOARD} className={styles.navLink} onClick={(e) => e.preventDefault()}>
                                                             <Space>
                                                                 <DownOutlined />
                                                             </Space>
                                                         </Link>
                                                     </Dropdown>
-                                                </div>
-                                            </Space>
-                                        </div>
+                                                </span>
+                                            </div>
+                                            <div className={styles.userText}>
+                                                <div className={styles.userName}>{addToolTip(fullName)(fullName)}</div>
+                                                <span className={styles.userRoleName}>{userAccess}</span>
+                                            </div>
+                                            <div className={`${styles.webmenuDropDownArrow} ${styles.dropdownArrow}`}>
+                                                <Dropdown menu={{ items: userSettingMenu }} trigger={['click']}>
+                                                    <Link to={routing.ROUTING_DASHBOARD} className={styles.navLink} onClick={(e) => e.preventDefault()}>
+                                                        <Space>
+                                                            <DownOutlined />
+                                                        </Space>
+                                                    </Link>
+                                                </Dropdown>
+                                            </div>
+                                        </Space>
                                     </div>
                                 </div>
-                            </Col>
-                        </Row>
-                    </>
-                ) : (
+                            </div>
+                        </Col>
+                    </Row>
+                </div>
+            ) : (
+                <div style={{ padding: '10px 20px 0 32px' }}>
                     <HeaderSkeleton />
-                )}
-            </div>
+                </div>
+            )}
             <div style={{ clear: 'both' }}></div>
             <ChangePassword title="Change Password" setModalOpen={setChangePasswordModalOpen} isOpen={isChangePasswordModalOpen} onOk={() => setChangePasswordModalOpen(false)} onCancel={() => console.log('onCancel', isChangePasswordModalOpen) || setChangePasswordModalOpen(false)} />
         </>
