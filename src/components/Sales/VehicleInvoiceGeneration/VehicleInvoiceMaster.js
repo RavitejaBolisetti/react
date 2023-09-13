@@ -20,10 +20,12 @@ import { VEHICLE_INVOICE_SECTION } from 'constants/VehicleInvoiceSection';
 import { QUERY_BUTTONS_CONSTANTS } from './QueryButtons';
 import { BASE_URL_OTF_DETAILS as customURL } from 'constants/routingApi';
 import { otfDataActions } from 'store/actions/data/otf/otf';
+
 import { vehicleInvoiceDataActions } from 'store/actions/data/invoiceGeneration/vehicleInvoiceGeneration';
 import { vehicleIrnGenerationDataActions } from 'store/actions/data/invoiceGeneration/irnGeneration';
 
 import { vehicleInvoiceGenerationDataActions } from 'store/actions/data/invoiceGeneration/vehicleInvoice';
+
 import { vehicleInvoiceDetailDataActions } from 'store/actions/data/invoiceGeneration/vehicleInvoiceDetail';
 import { vehicleDetailsDataActions } from 'store/actions/data/invoiceGeneration/vehicleDetails';
 import { showGlobalNotification } from 'store/actions/notification';
@@ -42,6 +44,7 @@ const mapStateToProps = (state) => {
                 VehicleIrnGeneration: { isLoaded: isIrnDataLoaded = false, isLoading: isIrnDataLoading, data: irnData = [] },
                 VehicleInvoiceDetail: { isLoaded: isVehicleInvoiceDataLoaded = false, isLoading: isVehicleInvoiceDataLoading, data: vehicleInvoiceData = [] },
                 VehicleDetails: { isLoaded: isVehicleDataLoaded = false, isLoading: isVehicleDataLoading, data: vehicleDetail = [] },
+                VehicleInvoice: { isLoaded: isInvoiceDataLoaded = false, isLoading: isInvoiceDataLoading, data: invoiceData = [] },
             },
             OTF: {
                 OtfSearchList: { isDetailLoaded: isDataLoaded, detailData: otfData = [] },
@@ -58,6 +61,9 @@ const mapStateToProps = (state) => {
         moduleTitle,
         isSearchLoading,
         isSearchDataLoaded,
+        isInvoiceDataLoaded,
+        isInvoiceDataLoading,
+        invoiceData,
         isDataLoaded,
         otfData,
         filterString,
@@ -79,8 +85,11 @@ const mapDispatchToProps = (dispatch) => ({
     ...bindActionCreators(
         {
             fetchOTFDetail: otfDataActions.fetchDetail,
+            saveData: vehicleInvoiceGenerationDataActions.saveData,
             cancelInvoice: vehicleInvoiceGenerationDataActions.saveData,
             listShowLoading: otfDataActions.listShowLoading,
+            // saveData: vehicleInvoiceDetailDataActions.saveData,
+            listInvoiceShowLoading: vehicleInvoiceDetailDataActions.listShowLoading,
 
             irnGeneration: vehicleIrnGenerationDataActions.saveData,
             listIrnShowLoading: vehicleIrnGenerationDataActions.listShowLoading,
@@ -100,7 +109,7 @@ const mapDispatchToProps = (dispatch) => ({
 export const VehicleInvoiceMasterBase = (props) => {
     const { data, receiptDetailData, userId, irnGeneration, fetchList, fetchOTFDetail, fetchVehicleDetail, fetchVehicleInvoiceDetail, listShowLoading, showGlobalNotification } = props;
     const { cancelInvoice } = props;
-    const { typeData, receiptType, partySegmentType, paymentModeType, documentType, moduleTitle, totalRecords } = props;
+    const { typeData, receiptType, partySegmentType, listInvoiceShowLoading, saveData, paymentModeType, documentType, moduleTitle, totalRecords } = props;
     const { filterString, setFilterString, invoiceStatusList, otfData } = props;
 
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
@@ -360,6 +369,12 @@ export const VehicleInvoiceMasterBase = (props) => {
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
         form.resetFields();
         form.setFieldsValue(undefined);
+
+        if (isLastSection) {
+            generateInvoice();
+            return false;
+        }
+
         switch (buttonAction) {
             case ADD_ACTION:
                 defaultSection && setCurrentSection(defaultSection);
@@ -416,28 +431,28 @@ export const VehicleInvoiceMasterBase = (props) => {
         advanceFilterForm.resetFields();
     };
 
-    const onFinish = (receiptData) => {
-        // const data = { ...requestPayload, apportionDetails: apportionList, receiptsDetails: receiptData.hasOwnProperty('receiptType') ? receiptData : requestPayload?.receiptsDetails };
-        // const onSuccess = (res) => {
-        //     form.resetFields();
-        //     setShowDataLoading(true);
-        //     showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage + 'Receipt No.:' + res?.data?.receiptsDetails?.receiptNumber });
-        //     fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
-        //     setButtonData({ ...buttonData, formBtnActive: false });
-        //     setIsFormVisible(false);
-        // };
-        // const onError = (message) => {
-        //     showGlobalNotification({ message });
-        // };
-        // const requestData = {
-        //     data: data,
-        //     method: 'post',
-        //     setIsLoading: listShowLoading,
-        //     userId,
-        //     onError,
-        //     onSuccess,
-        // };
-        // saveData(requestData);
+    const generateInvoice = () => {
+        const data = { ...requestPayload };
+        const onSuccess = (res) => {
+            form.resetFields();
+            setShowDataLoading(true);
+            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage + 'Receipt No.:' + res?.data?.receiptsDetails?.receiptNumber });
+            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
+            setButtonData({ ...buttonData, formBtnActive: false });
+            setIsFormVisible(false);
+        };
+        const onError = (message) => {
+            showGlobalNotification({ message });
+        };
+        const requestData = {
+            data: data,
+            method: 'post',
+            setIsLoading: listInvoiceShowLoading,
+            userId,
+            onError,
+            onSuccess,
+        };
+        saveData(requestData);
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -545,7 +560,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         filterString,
         setFilterString,
         from: listFilterForm,
-        onFinish,
+        // onFinish,
         onFinishFailed,
         handleResetFilter,
         advanceFilterForm,
@@ -597,7 +612,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         invoiceDetailForm,
         formActionType,
         setFormActionType,
-        receiptOnFinish: onFinish,
+        // onFinish,
         onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
