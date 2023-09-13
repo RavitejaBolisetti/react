@@ -9,11 +9,11 @@ import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/prepareP
 import { formattedCalendarDate, dateFormat } from 'utils/formatDateTime';
 import { validateNumberWithTwoDecimalPlaces } from 'utils/validation';
 import { disableFutureDate } from 'utils/disableDate';
-import { customSelectBox } from 'utils/customSelectBox';
-import { PAGE_TYPE } from 'components/Sales/VehicleDeliveryNote/utils/pageType';
+// import { customSelectBox } from 'utils/customSelectBox';
+// import { PAGE_TYPE } from 'components/Sales/VehicleDeliveryNote/utils/pageType';
 
 const AddEditFormMain = (props) => {
-    const { formData, form, pageType,insuranceCompanies } = props;
+    const { formData, form, insuranceCompanies } = props;
     const { Option } = Select;
 
     useEffect(() => {
@@ -31,13 +31,13 @@ const AddEditFormMain = (props) => {
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item label="Insurance Company" name="insuranceCompany">
-                                    {pageType === PAGE_TYPE?.OTF_PAGE_TYPE?.key && (
-                                        <Select placeholder={preparePlaceholderSelect('Insurance Company')}>
-                                            {insuranceCompanies?.map((item) => (
-                                                <Option value={item?.partyName} key={'ic' +item?.partyCode}>{item?.partyName}</Option>
-                                            ))}
-                                        </Select>
-                                    )}
+                                    <Select placeholder={preparePlaceholderSelect('Insurance Company')}>
+                                        {insuranceCompanies?.map((item) => (
+                                            <Option value={item?.partyName} key={'ic' + item?.partyCode}>
+                                                {item?.partyName}
+                                            </Option>
+                                        ))}
+                                    </Select>
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
@@ -45,25 +45,25 @@ const AddEditFormMain = (props) => {
                                     <Input placeholder={preparePlaceholderText('Insurance Cover Note')} maxLength={55} />
                                 </Form.Item>
                             </Col>
-                            {pageType != PAGE_TYPE?.OTF_PAGE_TYPE?.key && (
+                            {/* {pageType !== PAGE_TYPE?.OTF_PAGE_TYPE?.key && (
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Form.Item label="Cover Note Date" name="coverNoteDate">
                                         <DatePicker disabledDate={disableFutureDate} format={dateFormat} placeholder={preparePlaceholderSelect('Cover Note Date')} />
                                     </Form.Item>
                                 </Col>
-                            )}
+                            )} */}
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item label="Insurance Amount" name="insuranceAmount" rules={[validateNumberWithTwoDecimalPlaces('insurance amount')]}>
                                     <Input placeholder={preparePlaceholderText('Insurance Amount')} maxLength={20} />
                                 </Form.Item>
                             </Col>
-                            {pageType === PAGE_TYPE?.OTF_PAGE_TYPE?.key && (
-                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item label="Date" name="insuranceDate">
-                                        <DatePicker disabledDate={disableFutureDate} format={dateFormat} placeholder={preparePlaceholderSelect('Date')} />
-                                    </Form.Item>
-                                </Col>
-                            )}
+
+                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                <Form.Item label="Date" name="insuranceDate">
+                                    <DatePicker disabledDate={disableFutureDate} format={dateFormat} placeholder={preparePlaceholderSelect('Date')} />
+                                </Form.Item>
+                            </Col>
+
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item label="Registration Number" name="registrationNumber">
                                     <Input placeholder={preparePlaceholderText('Registration Number')} maxLength={20} />
