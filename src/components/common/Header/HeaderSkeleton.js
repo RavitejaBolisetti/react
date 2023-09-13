@@ -15,8 +15,8 @@ export const HeaderSkeleton = () => {
                 <div className={styles.headerLeft}>
                     <Space>
                         <div className={styles.userTypeSkeleton}>
-                            <InputSkeleton width={250} height={15} />
-                            <InputSkeleton width={250} height={15} />
+                            <InputSkeleton width={220} height={20} />
+                            <InputSkeleton width={180} height={15} />
                         </div>
                     </Space>
                 </div>

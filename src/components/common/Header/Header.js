@@ -284,7 +284,7 @@ const HeaderMain = (props) => {
 
     return (
         <>
-            {isLoading ? (
+            {!isLoading ? (
                 <div className={styles.headerContainer}>
                     <Row>
                         <Col xs={14} sm={isDashboard ? 9 : 16} md={isDashboard ? 9 : 16} lg={isDashboard ? 9 : 16} xl={isDashboard ? 9 : 16} xxl={isDashboard ? 9 : 16}>
