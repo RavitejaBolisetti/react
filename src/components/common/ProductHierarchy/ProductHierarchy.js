@@ -459,9 +459,9 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
                         {selectedTreeData && selectedTreeData?.id ? (
                             <>
                                 <ViewProductDetail {...viewProps} />
-                                <div className={styles.viewContainerFooter}>
+                                {/* <div className={styles.viewContainerFooter}>
                                     <HierarchyFormButton {...viewProps} />
-                                </div>
+                                </div> */}
                             </>
                         ) : (
                             <div className={styles.emptyContainer}>
