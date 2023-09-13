@@ -20,6 +20,8 @@ import { CustomerFormButton } from '../../CustomerFormButton';
 import { CustomerNameChangeHistory } from './CustomerNameChange';
 
 import styles from 'assets/sass/app.module.scss';
+import { forgotPasswordActions } from 'store/actions/data/forgotPassword';
+import { customerMobileDetailsDataActions } from 'store/actions/data/customerMaster/searchMobileNumber';
 
 const mapStateToProps = (state) => {
     const {
@@ -29,6 +31,8 @@ const mapStateToProps = (state) => {
                 CustomerDetailsIndividual: { isLoaded: isDataLoaded = false, isLoading, data },
                 Corporate: { isFilteredListLoaded: isCorporateLovDataLoaded = false, isLoading: isCorporateLovLoading, filteredListData: corporateLovData },
                 ViewDocument: { isLoaded: isViewDataLoaded = false, data: viewDocument },
+                customerMobileDetail: {isLoaded: isMoblieDataLoaded = false, isMobileLoading, data: mobNoVerificationData, filter: filterString = {} }
+
             },
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             SupportingDocument: { isLoaded: isSupportingDocumentDataLoaded = false, isSupportingDocumentLoading, data: supportingData },
@@ -49,6 +53,7 @@ const mapStateToProps = (state) => {
         isCorporateLovDataLoaded,
         isCorporateLovLoading,
         corporateLovData,
+        mobNoVerificationData
     };
     return returnValue;
 };
@@ -67,6 +72,15 @@ const mapDispatchToProps = (dispatch) => ({
             downloadFile: supportingDocumentDataActions.downloadFile,
             listSupportingDocumentShowLoading: supportingDocumentDataActions.listShowLoading,
 
+            fetchContactMobileNoDetails: customerMobileDetailsDataActions.fetchList,
+            listContactMobileNoShowLoading: customerMobileDetailsDataActions.listShowLoading,
+            resetContactMobileNoData: customerMobileDetailsDataActions.reset,
+
+            verifyUser: forgotPasswordActions.verifyUser,
+            sendOTP: forgotPasswordActions.sendOTP,
+            validateOTP: forgotPasswordActions.validateOTP,
+
+
             fetchList: customerDetailsIndividualDataActions.fetchList,
             listShowLoading: customerDetailsIndividualDataActions.listShowLoading,
             saveData: customerDetailsIndividualDataActions.saveData,
@@ -79,12 +93,12 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const CustomerDetailMasterBase = (props) => {
-    const { setRefreshCustomerList, handleResetFilter, typeData, fetchCorporateLovList, isCorporateLovDataLoaded, listCorporateLovShowLoading, corporateLovData } = props;
+    const { setRefreshCustomerList, handleResetFilter, typeData, fetchCorporateLovList, isCorporateLovDataLoaded, listCorporateLovShowLoading, corporateLovData, fetchContactMobileNoDetails, listContactMobileNoShowLoading, resetContactMobileNoData } = props;
     const { userId, showGlobalNotification, section, fetchList, listShowLoading, data, saveData, isLoading, resetData, form, handleFormValueChange, onFinishFailed } = props;
-    const { selectedCustomer, selectedCustomerId, setSelectedCustomerId } = props;
+    const { selectedCustomer, selectedCustomerId, setSelectedCustomerId,mobNoVerificationData } = props;
     const { buttonData, setButtonData, formActionType, setFormActionType, handleButtonClick, NEXT_ACTION } = props;
     const { fetchViewDocument, viewListShowLoading, listSupportingDocumentShowLoading, isSupportingDocumentDataLoaded, supportingData, isViewDataLoaded, viewDocument } = props;
-
+    const {sendOTP,validateOTP} = props;
     const [refreshData, setRefreshData] = useState(false);
     const [showForm, setShowForm] = useState(false);
     const [status, setStatus] = useState(null);
@@ -95,13 +109,16 @@ const CustomerDetailMasterBase = (props) => {
     const [editedMode, setEditedMode] = useState(false);
     const [uploadedFile, setUploadedFile] = useState();
     const [formData, setFormData] = useState();
+    const [continueWithOldMobNo, setContinueWithOldMobNo] = useState(false);
     const [uploadImgDocId, setUploadImgDocId] = useState('');
     const [customerNameList, setCustomerNameList] = useState({});
     const [supportingDataView, setSupportingDataView] = useState();
     const [isHistoryVisible, setIsHistoryVisible] = useState(false);
     const [activeKey, setactiveKey] = useState([]);
+    const [inValidOTP, setInValidOTP] = useState(false);
     const [nameChangeRequested, setNameChangeRequested] = useState(false);
     const [whatsAppConfiguration, setWhatsAppConfiguration] = useState({ contactOverWhatsApp: null, contactOverWhatsAppActive: null, sameMobileNoAsWhatsApp: null, sameMobileNoAsWhatsAppActive: null });
+    
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
@@ -367,6 +384,17 @@ const CustomerDetailMasterBase = (props) => {
         setNameChangeRequested,
         refreshData,
         setRefreshData,
+        sendOTP,
+        validateOTP,
+        showGlobalNotification,
+        fetchContactMobileNoDetails,
+        listContactMobileNoShowLoading,
+        selectedCustomer,
+        setContinueWithOldMobNo,
+        resetContactMobileNoData,
+        mobNoVerificationData,
+        setInValidOTP,
+        inValidOTP,
     };
 
     const viewProps = {

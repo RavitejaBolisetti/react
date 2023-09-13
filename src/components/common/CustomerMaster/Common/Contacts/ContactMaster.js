@@ -252,6 +252,7 @@ const ContactMain = (props) => {
         resetContactMobileNoData,
         sendOTP,
         validateOTP,
+        selectedCustomer,
     };
 
     const onFinish = () => {

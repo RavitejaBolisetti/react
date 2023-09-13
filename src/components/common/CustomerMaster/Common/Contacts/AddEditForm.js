@@ -17,7 +17,7 @@ import { OtpVerification } from './OtpVerfication';
 
 const AddEditForm = (props) => {
     const { userId,isReadOnly = false, onSaveFormData, contactform, setShowAddEditForm, setIsEditing, typeData, customerType, uploadImgDocId, formActionType, handleFormValueChange, setIsAdding, contactData, editingData,setContinueWithOldMobNo, continueWithOldMobNo } = props;
-    const { fetchContactMobileNoDetails, listContactMobileNoShowLoading, mobNoVerificationData, resetContactMobileNoData, showGlobalNotification, sendOTP, validateOTP } = props;
+    const { fetchContactMobileNoDetails,selectedCustomer, listContactMobileNoShowLoading, mobNoVerificationData, resetContactMobileNoData, showGlobalNotification, sendOTP, validateOTP } = props;
     const RESEND_OTP_TIME = 60;
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [continueWithPreModalOpen, setContinueWithPreModalOpen] = useState(false);
@@ -128,7 +128,7 @@ const AddEditForm = (props) => {
         }
     };
     const sendOTPVerificationCode = () => {
-        const data = { userId: userId, sentOnMobile: true, sentOnEmail: true };
+        const data = { userId: selectedCustomer?.customerId, mobileNumber: selectedCustomer?.mobileNumber, sentOnMobile: true, sentOnEmail: false, functionality: 'CUST' };
         const onSuccess = (res) => {
             setCounter(RESEND_OTP_TIME);
             showGlobalNotification({ notificationType: 'warning', title: 'OTP Sent', message: res?.responseMessage });
@@ -153,7 +153,7 @@ const AddEditForm = (props) => {
     const handleVerifyOTP = () => {
         if (userId) {
             // hideGlobalNotification();
-            const data = { userId: userId, otp: otpInput };
+            const data = { userId: selectedCustomer?.customerId, mobileNumber: selectedCustomer?.mobileNumber, otp: otpInput };
             const onSuccess = (res) => {
                 // setValidationKey(res?.data?.validationKey);
                 showGlobalNotification({ notificationType: 'successBeforeLogin', title: 'OTP Verified', message: res?.responseMessage });

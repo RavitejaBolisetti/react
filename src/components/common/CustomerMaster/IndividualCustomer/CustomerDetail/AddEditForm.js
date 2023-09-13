@@ -5,18 +5,33 @@
  */
 
 import { useEffect, useState } from 'react';
-import { Col, Input, Form, Row, Select, Card, Divider, Switch } from 'antd';
+import { Col, Input, Form, Row, Select, Card, Divider, Switch, Button } from 'antd';
 import { validateEmailField, validateMobileNoField, validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 
+import { CheckOutlined } from '@ant-design/icons';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { CustomerNameChangeMaster } from './CustomerNameChange';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { customSelectBox } from 'utils/customSelectBox';
+import { BiLockAlt } from 'react-icons/bi';
+import { OtpVerification } from '../../Common/Contacts/OtpVerfication';
 
 const AddEditFormMain = (props) => {
     const { whatsAppConfiguration, setWhatsAppConfiguration, handleFormFieldChange } = props;
-    const { form, typeData, formData, corporateLovData, formActionType: { editMode } = undefined, data, customerType } = props;
+    const { form, typeData, formData, corporateLovData, formActionType: { editMode } = undefined, data, customerType, selectedCustomer, validateOTP, sendOTP, userId, showGlobalNotification, fetchContactMobileNoDetails, listContactMobileNoShowLoading, mobNoVerificationData, resetContactMobileNoData, continueWithOldMobNo, setContinueWithOldMobNo,setInValidOTP } = props;
     const { contactOverWhatsApp, contactOverWhatsAppActive, sameMobileNoAsWhatsApp, sameMobileNoAsWhatsAppActive } = whatsAppConfiguration;
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [mobileNumber, setMobileNumber] = useState(false);
+    const [mobileLoader, setmobileLoader] = useState(false);
+    const RESEND_OTP_TIME = 60;
+
+    const [otpInput, setOTPInput] = useState('');
+    const [continueWithPreModalOpen, setContinueWithPreModalOpen] = useState(false);
+    const [numbValidatedSuccess, setNumbValidatedSuccess] = useState(false);
+    const [validationKey, setValidationKey] = useState();
+    const [counter, setCounter] = useState(RESEND_OTP_TIME);
+
+    
 
     const [corporateType, setCorporateType] = useState('');
 
@@ -24,6 +39,15 @@ const AddEditFormMain = (props) => {
         setCorporateType(formData?.corporateType);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData?.corporateType]);
+    useEffect(() => {
+        if (mobNoVerificationData?.customerMasterDetails?.length && mobileNumber?.length) {
+            setContinueWithPreModalOpen(true);
+        } else if ((!mobNoVerificationData?.customerMasterDetails?.length && mobileNumber) || continueWithOldMobNo) {
+            sendOTPVerificationCode()
+            setIsModalOpen(true);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [mobNoVerificationData]);
 
     useEffect(() => {
         form.setFieldsValue({
@@ -39,6 +63,39 @@ const AddEditFormMain = (props) => {
         handleFormFieldChange();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
+    useEffect(() => {
+        const timer = counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
+        return () => {
+            clearInterval(timer);
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [counter]);
+    const defaultExtraParam = [
+        {
+            key: 'customerType',
+            title: 'Customer Type',
+            value: customerType,
+            canRemove: true,
+        },
+        {
+            key: 'pageSize',
+            title: 'Value',
+            value: 1,
+            canRemove: true,
+        },
+        {
+            key: 'pageNumber',
+            title: 'Value',
+            value: 1,
+            canRemove: true,
+        },
+        {
+            key: 'searchType',
+            title: 'searchType',
+            value: 'mobileNumber',
+            canRemove: true,
+        },
+    ];
 
     const handleCorporateChange = (value) => {
         setCorporateType(value);
@@ -67,6 +124,111 @@ const AddEditFormMain = (props) => {
         } else {
             return Promise.resolve('');
         }
+    };
+    const onOnContinueWithOldMobNo = () => {
+        setContinueWithPreModalOpen(false);
+        setIsModalOpen(true);
+        setmobileLoader(false);
+        setContinueWithOldMobNo(true);
+        resetContactMobileNoData();
+        setOTPInput('');
+    };
+    const handleCancel = () => {
+        setIsModalOpen(false);
+        // setContinueWithPreModalOpen(false);
+        setContinueWithOldMobNo(false);
+        setmobileLoader(false);
+        // setIsAdding(false);
+        resetContactMobileNoData();
+        setOTPInput('');
+    };
+    const handleOnchangeMobNoInput = (event) => {
+        const Mno = event.target.value;
+        const regex = new RegExp('^([5-9]){1}([0-9]){9}$');
+        if (Mno?.length === 10 && regex.test(Mno)) {
+            setMobileNumber(Mno);
+        }
+    };
+    const handleNumberValidation = () => {
+        if (mobileNumber) {
+            const mobNoParam = [
+                {
+                    key: 'searchParam',
+                    title: 'searchParam',
+                    value: mobileNumber,
+                    canRemove: true,
+                },
+            ];
+            setmobileLoader(true);
+            fetchContactMobileNoDetails({ setIsLoading: listContactMobileNoShowLoading, extraParams: [...defaultExtraParam, ...mobNoParam], userId });
+        }
+    };
+    const sendOTPVerificationCode = () => {
+        const data = { userId: selectedCustomer?.customerId, mobileNumber: selectedCustomer?.mobileNumber, sentOnMobile: true, sentOnEmail: false, functionality: 'CUST' };
+        const onSuccess = (res) => {
+            setCounter(RESEND_OTP_TIME);
+            showGlobalNotification({ notificationType: 'warning', title: 'OTP Sent', message: res?.responseMessage });
+        };
+        const onError = (message) => {
+            showGlobalNotification({ title: 'ERROR', message: Array.isArray(message[0]) || message });
+            if (otpInput?.length === 6) {
+                setCounter(0);
+            }
+            setInValidOTP(true);
+            // setDisableVerifyOTP(true);
+            // setSubmitButtonActive(true);
+        };
+        const requestData = {
+            data: data,
+            setIsLoading: () => {},
+            onSuccess,
+            onError,
+        };
+        sendOTP(requestData);
+    };
+    const handleVerifyOTP = () => {
+        if (userId) {
+            // hideGlobalNotification();
+            const data = { userId: selectedCustomer?.customerId, mobileNumber: selectedCustomer?.mobileNumber, otp: otpInput };
+            const onSuccess = (res) => {
+                setValidationKey(res?.data?.validationKey);
+                showGlobalNotification({ notificationType: 'successBeforeLogin', title: 'OTP Verified', message: res?.responseMessage });
+                setIsModalOpen(false);
+                setNumbValidatedSuccess(true);
+
+            };
+            const requestData = {
+                data: data,
+                setIsLoading: () => {},
+                onSuccess,
+                onError:err =>  console.log(err),
+            };
+            validateOTP(requestData);
+        }
+    };
+    const modalProps = {
+        isVisible: isModalOpen,
+        icon: <BiLockAlt />,
+        titleOverride: 'Mobile Number Validation',
+        closable: false,
+        // onCloseAction: handleCancel,
+        // onOnContinueWithOldMobNo,
+        handleVerifyOTP,
+        sendOTPVerificationCode,
+        otpInput,
+        setOTPInput,
+        sendOTP,
+        validateOTP,
+        userId,
+        counter,
+    };
+    const modalContinueProps = {
+        isVisible: continueWithPreModalOpen,
+        icon: <BiLockAlt />,
+        titleOverride: 'Mobile Number Validation',
+        closable: false,
+        onCloseAction: handleCancel,
+        onOnContinueWithOldMobNo,
     };
 
     return (
@@ -99,7 +261,23 @@ const AddEditFormMain = (props) => {
                                
                             )} */}
                         <Form.Item label="Mobile Number" initialValue={formData?.mobileNumber} name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField('mobile number'), validateRequiredInputField('mobile number')]}>
-                            <Input placeholder={preparePlaceholderText('mobile number')} maxLength={10} size="small" />
+                            <Input
+                                placeholder={preparePlaceholderText('mobile number')}
+                                maxLength={10}
+                                size="small"
+                                onChange={handleOnchangeMobNoInput}
+                                suffix={
+                                    <>
+                                        {!numbValidatedSuccess ? (
+                                            <Button onClick={handleNumberValidation} type="link" style={{ transform: 'scale(-1,1)' }}>
+                                                Verify
+                                            </Button>
+                                        ) : (
+                                            <CheckOutlined style={{ color: '#70c922', fontSize: '16px', fotWeight: 'bold', transform: 'scale(-1,1)' }} />
+                                        )}
+                                    </>
+                                }
+                            />
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
@@ -193,6 +371,7 @@ const AddEditFormMain = (props) => {
                     </Col> */}
                 </Row>
             </Card>
+            <OtpVerification {...modalProps} />
         </>
     );
 };
