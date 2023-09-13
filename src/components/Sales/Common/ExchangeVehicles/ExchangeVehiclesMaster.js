@@ -297,7 +297,7 @@ const ExchangeVehiclesBase = (props) => {
 
         fetchProductLovCode({ setIsLoading: ProductLovCodeLoading, userId, onErrorAction, extraparams: LovParams });
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId]);
+    }, [selectedOrder?.modelCode]);
 
     useEffect(() => {
         if (VehicleLovCodeData) {
