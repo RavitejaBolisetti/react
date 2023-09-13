@@ -7,7 +7,7 @@ import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 
 import styles from 'assets/sass/app.module.scss';
 
-import { convertDate, monthDateFormat } from 'utils/formatDateTime';
+import { convertDate, dateFormatView } from 'utils/formatDateTime';
 
 export const tableColumn = (props) => {
     const { handleButtonClick, formActionType } = props;
@@ -28,7 +28,7 @@ export const tableColumn = (props) => {
             title: 'Document Date',
             dataIndex: 'documentDate',
             render: (value) => {
-                return convertDate(value?.documentDate, monthDateFormat);
+                return convertDate(value?.documentDate, dateFormatView);
             },
             width: '10%',
         }),

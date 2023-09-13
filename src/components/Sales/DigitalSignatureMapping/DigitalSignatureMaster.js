@@ -9,13 +9,13 @@ import { bindActionCreators } from 'redux';
 
 import { Col, Form, Row } from 'antd';
 import { tableColumn } from './tableColumn';
-import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 'utils/btnVisiblity';
+import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, btnVisiblity } from 'utils/btnVisiblity';
 
 import { AddEditForm } from './AddEditForm';
 import { SearchBox } from 'components/utils/SearchBox';
 
 import { ListDataTable } from 'utils/ListDataTable';
-import { convertDateTime, monthDateFormat } from 'utils/formatDateTime';
+import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 import { receiptDataActions } from 'store/actions/data/receipt/receipt';
 import { receiptDetailDataActions } from 'store/actions/data/receipt/receiptDetails';
 import { PARAM_MASTER } from 'constants/paramMaster';
@@ -70,10 +70,9 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const DigitalSignatureMasterBase = (props) => {
-    const { fetchList, saveData, listShowLoading, userId, fetchReceiptDetails, data, resetData } = props;
+    const { fetchList, listShowLoading, userId, fetchReceiptDetails, data, resetData } = props;
     const { typeData, moduleTitle, totalRecords, showGlobalNotification } = props;
     const { filterString, setFilterString } = props;
-    const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
 
     const [searchValue, setSearchValue] = useState();
 
@@ -164,7 +163,7 @@ export const DigitalSignatureMasterBase = (props) => {
                 key: 'fromDate',
                 title: 'Start Date',
                 value: filterString?.fromDate,
-                name: filterString?.fromDate ? convertDateTime(filterString?.fromDate, monthDateFormat) : '',
+                name: filterString?.fromDate ? convertDateTime(filterString?.fromDate, dateFormatView) : '',
                 canRemove: true,
                 filter: true,
             },
@@ -172,7 +171,7 @@ export const DigitalSignatureMasterBase = (props) => {
                 key: 'toDate',
                 title: 'End Date',
                 value: filterString?.toDate,
-                name: filterString?.toDate ? convertDateTime(filterString?.toDate, monthDateFormat) : '',
+                name: filterString?.toDate ? convertDateTime(filterString?.toDate, dateFormatView) : '',
                 canRemove: true,
                 filter: true,
             },
@@ -228,34 +227,34 @@ export const DigitalSignatureMasterBase = (props) => {
         setIsFormVisible(true);
     };
 
-    const onFinish = (values) => {
-        const data = { ...values };
+    // const onFinish = (values) => {
+    //     const data = { ...values };
 
-        const onSuccess = (res) => {
-            form.resetFields();
-            setShowDataLoading(true);
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage + 'Receipt No.:' + res?.data?.receiptsDetails?.receiptNumber });
-            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
-            setButtonData({ ...buttonData, formBtnActive: false });
-            setIsFormVisible(false);
-        };
+    //     const onSuccess = (res) => {
+    //         form.resetFields();
+    //         setShowDataLoading(true);
+    //         showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage + 'Receipt No.:' + res?.data?.receiptsDetails?.receiptNumber });
+    //         fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
+    //         setButtonData({ ...buttonData, formBtnActive: false });
+    //         setIsFormVisible(false);
+    //     };
 
-        const onError = (message) => {
-            showGlobalNotification({ message });
-        };
+    //     const onError = (message) => {
+    //         showGlobalNotification({ message });
+    //     };
 
-        const requestData = {
-            data: data,
-            method: 'post',
-            setIsLoading: listShowLoading,
-            userId,
-            onError,
-            errorData: true,
-            onSuccess,
-        };
+    //     const requestData = {
+    //         data: data,
+    //         method: 'post',
+    //         setIsLoading: listShowLoading,
+    //         userId,
+    //         onError,
+    //         errorData: true,
+    //         onSuccess,
+    //     };
 
-        saveData(requestData);
-    };
+    //     saveData(requestData);
+    // };
 
     const onCloseAction = () => {
         resetData();
@@ -266,7 +265,6 @@ export const DigitalSignatureMasterBase = (props) => {
 
         advanceFilterForm.resetFields();
         advanceFilterForm.setFieldsValue();
-        setAdvanceSearchVisible(false);
 
         setSelectedOrder();
         setIsFormVisible(false);

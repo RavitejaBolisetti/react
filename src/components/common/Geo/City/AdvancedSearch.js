@@ -3,13 +3,13 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Col, Form, Row, Select, Input } from 'antd';
 import { validateRequiredSelectField, searchValidator } from 'utils/validation';
 import { withModal } from 'components/withModal';
 import { ModalButtons } from 'components/common/Button';
-import styles from 'assets/sass/app.module.scss';
 
+import styles from 'assets/sass/app.module.scss';
 const { Option } = Select;
 
 export const AdvancedSearchFrom = (props) => {

@@ -30,7 +30,7 @@ import { VEHICLE_TYPE } from 'constants/VehicleType';
 import { BASE_URL_OTF_DETAILS as baseURL, BASE_URL_OTF_TRANSFER as otfTransferURL, BASE_URL_OTF_CANCELLATION as otfCancelURL } from 'constants/routingApi';
 
 import { LANGUAGE_EN } from 'language/en';
-import { convertDateTime, monthDateFormat } from 'utils/formatDateTime';
+import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 import { validateOTFMenu } from './utils/validateOTFMenu';
 
 import { FilterIcon } from 'Icons';
@@ -113,7 +113,7 @@ const mapDispatchToProps = (dispatch) => ({
 export const OtfMasterBase = (props) => {
     const { showGlobalNotification, fetchOTFDetail, saveData, listShowLoading, userId, fetchOTFSearchedList, data, totalRecords, otfData, resetData } = props;
     const { ChangeHistoryTitle, otfSoMappingChangeHistoryTitle } = props;
-    const { fetchVehicleDetail, updateVehicleAllotmentStatus, VehicleDetailsData } = props;
+    const { fetchVehicleDetail, updateVehicleAllotmentStatus } = props;
 
     const { typeData, moduleTitle, transferOTF } = props;
     const { filterString, setFilterString, otfStatusList } = props;
@@ -125,6 +125,7 @@ export const OtfMasterBase = (props) => {
 
     const [selectedOrder, setSelectedOrder] = useState();
     const [selectedOrderId, setSelectedOrderId] = useState();
+    const [selectedBookingId, setSelectedBookingId] = useState();
 
     const [section, setSection] = useState();
     const [defaultSection, setDefaultSection] = useState();
@@ -222,7 +223,7 @@ export const OtfMasterBase = (props) => {
                 key: 'fromDate',
                 title: 'Start Date',
                 value: filterString?.fromDate,
-                name: filterString?.fromDate ? convertDateTime(filterString?.fromDate, monthDateFormat) : '',
+                name: filterString?.fromDate ? convertDateTime(filterString?.fromDate, dateFormatView) : '',
                 canRemove: true,
                 filter: true,
             },
@@ -230,7 +231,7 @@ export const OtfMasterBase = (props) => {
                 key: 'toDate',
                 title: 'End Date',
                 value: filterString?.toDate,
-                name: filterString?.toDate ? convertDateTime(filterString?.toDate, monthDateFormat) : '',
+                name: filterString?.toDate ? convertDateTime(filterString?.toDate, dateFormatView) : '',
                 canRemove: true,
                 filter: true,
             },
@@ -245,7 +246,7 @@ export const OtfMasterBase = (props) => {
             {
                 key: 'pageSize',
                 title: 'Value',
-                value: filterString?.pageSize,
+                value: filterString?.pageSize ?? 10,
                 canRemove: true,
                 filter: false,
             },
@@ -284,7 +285,7 @@ export const OtfMasterBase = (props) => {
     }, []);
 
     useEffect(() => {
-        if (userId) {
+        if (userId && extraParams?.find((i) => i.key === 'pageNumber')?.value > 0) {
             setShowDataLoading(true);
             fetchOTFSearchedList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
@@ -365,11 +366,13 @@ export const OtfMasterBase = (props) => {
             case EDIT_ACTION:
                 setSelectedOrder(record);
                 record && setSelectedOrderId(record?.otfNumber);
+                record && setSelectedBookingId(record?.bookingNumber);
                 openDefaultSection && setCurrentSection(defaultSection);
                 break;
             case VIEW_ACTION:
                 setSelectedOrder(record);
                 record && setSelectedOrderId(record?.otfNumber);
+                record && setSelectedBookingId(record?.bookingNumber);
                 defaultSection && setCurrentSection(defaultSection);
                 break;
             case NEXT_ACTION:
@@ -410,7 +413,7 @@ export const OtfMasterBase = (props) => {
                             key: 'otfNumber',
                             title: 'otfNumber',
                             value: selectedOrderId,
-                            name: 'OTF Number',
+                            name: 'Booking Number',
                         },
                     ];
                     fetchVehicleDetail({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction, onSuccessAction });
@@ -530,7 +533,7 @@ export const OtfMasterBase = (props) => {
         }
     };
 
-    const title = 'Search OTF';
+    const title = 'Search Booking';
 
     const fnOTFTransfer = ({ modalTitle, modalMessage, finalData, callBackMethod, customURL }) => {
         const onSuccess = (res) => {
@@ -650,6 +653,7 @@ export const OtfMasterBase = (props) => {
         buttonData,
         ChangeHistoryTitle,
         selectedOrderId,
+        selectedBookingId,
     };
     const OtfSoMappingChangeHistoryProps = {
         isVisible: OtfSoMappingHistoryVisible,
@@ -688,6 +692,8 @@ export const OtfMasterBase = (props) => {
         defaultBtnVisiblity,
         selectedOrderId,
         setSelectedOrderId,
+        selectedBookingId,
+        setSelectedBookingId,
         selectedOrder,
         setSelectedOrder,
         section,

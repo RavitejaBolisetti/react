@@ -49,7 +49,7 @@ const ProfileDetailCard = (props) => {
             >
                 <Divider />
                 <div className={styles.detailCardText}>
-                    Mobile No.: <span>{'+91-' + selectedCustomer?.mobileNumber || 'NA'}</span>
+                    Mobile No.: <span>{selectedCustomer?.mobileNumber || 'NA'}</span>
                 </div>
             </Panel>
         </Collapse>

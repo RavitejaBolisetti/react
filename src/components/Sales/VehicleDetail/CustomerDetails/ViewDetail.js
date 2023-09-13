@@ -83,7 +83,7 @@ const ViewDetailMain = (props) => {
                             </Descriptions>
                         </Panel>
                     </Collapse>
-                    <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(3)} expandIconPosition="end" collapsible="icon">
+                    {/* <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(3)} expandIconPosition="end" collapsible="icon">
                         <Panel header="Key Account Details" key="3">
                             <Divider />
                             <Descriptions {...viewProps}>
@@ -94,7 +94,7 @@ const ViewDetailMain = (props) => {
                                 <Descriptions.Item label="Key Account Mapping Date">{checkAndSetDefaultValue(vehicleKeyAccountDetails?.keyAccountMappingDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                             </Descriptions>
                         </Panel>
-                    </Collapse>
+                    </Collapse> */}
                     <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(4)} expandIconPosition="end" collapsible="icon">
                         <Panel header="Loyalty Details" key="4">
                             <Divider />
@@ -105,12 +105,12 @@ const ViewDetailMain = (props) => {
                             </Descriptions>
                         </Panel>
                     </Collapse>
-                    <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(5)} expandIconPosition="end" collapsible="icon">
+                    {/* <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(5)} expandIconPosition="end" collapsible="icon">
                         <Panel header="Ownership Change Request" key="5">
                             <Divider />
                             <NoDataFound informtion={noDataTitle} />
                         </Panel>
-                    </Collapse>
+                    </Collapse> */}
                 </Col>
             </Row>
         </div>

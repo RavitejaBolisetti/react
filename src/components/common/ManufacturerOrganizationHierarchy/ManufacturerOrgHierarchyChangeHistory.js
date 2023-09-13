@@ -9,12 +9,12 @@ import { bindActionCreators } from 'redux';
 import { Row, Col, Button } from 'antd';
 
 import { manufacturerOrgHierarchyDataActions } from 'store/actions/data/manufacturerOrgHierarchy';
-import { convertDateTime } from 'utils/formatDateTime';
+import { convertDateTime, dateFormatView, timeFormatView } from 'utils/formatDateTime';
 import { tblPrepareColumns, tblStatusColumn } from 'utils/tableColumn';
-import styles from '../ChangeHistory/ChangeHistory.module.scss';
 //import styles from '../ChangeHistory/ChangeHistory.module.css';
 import { DataTable } from 'utils/dataTable';
 import { withDrawer } from 'components/withDrawer';
+import styles from '../ChangeHistory/ChangeHistory.module.scss';
 
 const mapStateToProps = (state) => {
     const {
@@ -60,9 +60,9 @@ const ManufacturerOrgHierarchyChangeHistoryMain = ({ onCloseAction, fetchChangeH
             dataIndex: 'changedDate',
             render: (text) => [
                 <div>
-                    {convertDateTime(text, 'DD MMM YYYY')}
+                    {convertDateTime(text, dateFormatView)}
                     <br />
-                    {convertDateTime(text, 'HH:mm a')}
+                    {convertDateTime(text, timeFormatView)}
                 </div>,
             ],
         }),

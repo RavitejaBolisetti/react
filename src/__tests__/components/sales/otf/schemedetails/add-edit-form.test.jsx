@@ -6,10 +6,10 @@
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
 import { screen, fireEvent } from '@testing-library/react';
-import { AddEditForm } from '@components/Sales/OTF/SchemeDetails/AddEditForm';
+import { AddEditForm } from '@components/Sales/Common/SchemeDetails/AddEditForm';
 afterEach(() => {
     jest.restoreAllMocks();
-  }); 
+});
 const props = {
     defaultFormActionType: { addMode: false, editMode: false, viewMode: false },
     userId: undefined,
@@ -43,16 +43,20 @@ const props = {
 };
 
 describe('Add Edit Form Components', () => {
-    it('it should render addeditform components', () => {
+    it('should render addeditform components', () => {
         customRender(<AddEditForm />);
     });
 
-    it('it should click when user click on button', () => {
+    it('should click when user click on button', () => {
         customRender(<AddEditForm {...props} />);
-        const plusIconBtn = screen.getAllByRole('img', { name: 'plus' });
-        fireEvent.click(plusIconBtn[0]);
+        const minusIconBtn = screen.getAllByRole('img', { name: 'plus' });
+        fireEvent.click(minusIconBtn[0]);
+        fireEvent.click(minusIconBtn[1]);
 
-        const plusscheme1btn = screen.getAllByRole('button', { Name: 'plus scheme1' });
-        fireEvent.click(plusscheme1btn[0]);
+        const calendarbtn = screen.getAllByRole('img', { Name: 'calendar' });
+        fireEvent.click(calendarbtn[0]);
+        fireEvent.click(calendarbtn[1]);
+        fireEvent.click(calendarbtn[2]);
+        fireEvent.click(calendarbtn[3]);
     });
 });

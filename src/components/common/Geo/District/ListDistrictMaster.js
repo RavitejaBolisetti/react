@@ -109,6 +109,7 @@ export const ListDistrictBase = (props) => {
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
+    const VIEW_ONLY_ACTION = FROM_ACTION_TYPE?.VIEW_ONLY;
 
     const onSuccessAction = (res) => {
         refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -198,7 +199,7 @@ export const ListDistrictBase = (props) => {
         setFormData([]);
 
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
-        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
+        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction: buttonAction === VIEW_ACTION ? VIEW_ONLY_ACTION : buttonAction }));
 
         record && setFormData(record);
         setIsFormVisible(true);
@@ -314,9 +315,11 @@ export const ListDistrictBase = (props) => {
         handleButtonClick,
     };
 
+    const showAddButton = false;
     const tableProps = {
         tableColumn: tableColumn(handleButtonClick),
         tableData: searchData,
+        showAddButton,
     };
 
     const onAdvanceSearchCloseAction = () => {
@@ -409,6 +412,7 @@ export const ListDistrictBase = (props) => {
         advanceFilterProps,
         title,
         tableData: searchData,
+        showAddButton,
     };
     return (
         <>

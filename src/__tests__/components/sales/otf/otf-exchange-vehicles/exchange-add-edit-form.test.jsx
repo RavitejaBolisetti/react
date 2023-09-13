@@ -8,7 +8,7 @@ import React from "react";
 import { screen, fireEvent } from "@testing-library/react";
 import '@testing-library/jest-dom/extend-expect';
 import customRender from "@utils/test-utils";
-import { AddEditForm } from "@components/Sales/OTF/ExchangeVehicles/AddEditForm"
+import { AddEditForm } from "@components/Sales/Common/ExchangeVehicles/AddEditForm"
 import { Form } from 'antd';
 
 afterEach(() => {
@@ -19,7 +19,8 @@ const FormWrapper = (props) => {
     const [form]=Form.useForm();
     const mockForm = {
         ...form,
-        setFieldsValue: jest.fn()
+        setFieldsValue: jest.fn(),
+        getFieldValue:jest.fn()
     };
     return <AddEditForm form={mockForm} {...props} />
 }
@@ -27,15 +28,14 @@ const FormWrapper = (props) => {
 describe("AddEditForm component render", ()=>{
     const props = {
         formActionType:{ addMode: false, editMode: true, viewMode: false },
-        formData:[{
-            exchange: 1,
-        }],
+        formData:[{exchange: 1}],
+        fnSetData:jest.fn()
     }
 
     it("switch Exchange", async()=>{
-        customRender( <FormWrapper {...props} /> )
-
-        const exchangeSwitch = screen.getByRole('switch', {name:'Exchange', exact:false});
+        customRender( <FormWrapper {...props} /> );
+        
+        const exchangeSwitch = screen.getByRole('switch', {name:'Exchange'});
         fireEvent.click(exchangeSwitch)
     })
 })

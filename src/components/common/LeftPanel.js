@@ -11,7 +11,7 @@ import styles from './TreeView.module.scss';
 const LeftPanel = (props) => {
     const { selectedTreeKey, callOnForm = false, treeData, fieldNames, handleTreeViewClick, isOpenInModal, checkedKeys, expendedKeys: defaultExpandedKeys = [] } = props;
     const { isTreeViewVisible, checkable, onCheck = () => {}, selectable = true } = props;
-    const { searchValue, setSearchValue, disabled = false } = props;
+    const { isLoading = false, searchValue, setSearchValue, disabled = false } = props;
 
     const [expandedKeys, setExpandedKeys] = useState([]);
     const [autoExpandParent, setAutoExpandParent] = useState(true);
@@ -113,9 +113,7 @@ const LeftPanel = (props) => {
         <div className={`${styles.leftpanel} ${panelParentClass}`}>
             {isTreeViewVisible ? (
                 <div className={isOpenInModal ? styles.modalView : ''}>
-                    <div className={mainClass}>
-                        <Tree onCheck={onCheck} checkable={checkable} checkedKeys={checkedKeys} expandedKeys={expandedKeys} selectedKeys={selectedTreeKey} onSelect={handleTreeViewClick} showLine={true} showIcon={true} onExpand={onExpand} autoExpandParent={autoExpandParent} treeData={finalTreeData} selectable={selectable} />
-                    </div>
+                    <div className={mainClass}>{isLoading ? 'show loading' : <Tree onCheck={onCheck} checkable={checkable} checkedKeys={checkedKeys} expandedKeys={expandedKeys} selectedKeys={selectedTreeKey} onSelect={handleTreeViewClick} showLine={true} showIcon={true} onExpand={onExpand} autoExpandParent={autoExpandParent} treeData={finalTreeData} selectable={selectable} />}</div>
                 </div>
             ) : undefined}
         </div>

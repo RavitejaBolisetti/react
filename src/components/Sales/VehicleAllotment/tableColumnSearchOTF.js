@@ -9,13 +9,14 @@ import { convertDateMonthYear } from 'utils/formatDateTime';
 export const tableColumnSearchOTF = (sorter) => {
     const tableColumn = [
         tblPrepareColumns({
-            title: 'OTF No.',
+            title: 'Booking No.',
             dataIndex: 'otfNumber',
             width: '20%',
+            render: (_, record) => record?.bookingNumber || record?.otfNumber,
             sorter,
         }),
         tblPrepareColumns({
-            title: 'OTF Date',
+            title: 'Booking Date',
             dataIndex: 'otfDate',
             render: (text) => (text ? convertDateMonthYear(text) : ''),
             width: '15%',

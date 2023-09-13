@@ -5,7 +5,7 @@
  */
 
 import React, { useState } from 'react';
-import { Space, Collapse, Descriptions, Divider } from 'antd';
+import { Collapse, Descriptions, Divider } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { DataTable } from 'utils/dataTable';
 import { InputSkeleton } from 'components/common/Skeleton';
@@ -61,13 +61,13 @@ const ViewDetailMain = (props) => {
                             )}
                         </Descriptions.Item>
                         <Descriptions.Item label="Model Variant">{checkAndSetDefaultValue(productAttributeDetail?.modelVariant, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Manufacturer Invoice Date">{!isLoading ? productAttributeDetail?.manufacturerInvoiceDate?.slice(0, 10) ?? '-' : <InputSkeleton width={'100px'} height={20} theme={'card'} />}</Descriptions.Item>
-                        <Descriptions.Item label="Manufacturer Warrenty Start Date">{!isLoading ? productAttributeDetail?.manufacturerWarrantyStartDate?.slice(0, 10) ?? '-' : <InputSkeleton width={'100px'} height={20} theme={'card'} />}</Descriptions.Item>
+                        {/* <Descriptions.Item label="Manufacturer Invoice Date">{!isLoading ? productAttributeDetail?.manufacturerInvoiceDate?.slice(0, 10) ?? '-' : <InputSkeleton width={'100px'} height={20} theme={'card'} />}</Descriptions.Item>
+                        <Descriptions.Item label="Manufacturer Warrenty Start Date">{!isLoading ? productAttributeDetail?.manufacturerWarrantyStartDate?.slice(0, 10) ?? '-' : <InputSkeleton width={'100px'} height={20} theme={'card'} />}</Descriptions.Item> */}
                     </Descriptions>
                 </Panel>
             </Collapse>
 
-            <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse(2)} expandIconPosition="end" collapsible="icon" style={{ paddinBottom: '20px' }} {...collapseProps}>
+            {/* <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse(2)} expandIconPosition="end" collapsible="icon" style={{ paddinBottom: '20px' }} {...collapseProps}>
                 <Panel header="Connected Vehicle" key="2">
                     <Divider />
                     <div>
@@ -91,7 +91,7 @@ const ViewDetailMain = (props) => {
                         {!formData?.connectedVehicle?.length && <NoDataFound informtion={noDataTitle} />}
                     </div>
                 </Panel>
-            </Collapse>
+            </Collapse> */}
             <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse(3)} expandIconPosition="end" collapsible="icon" {...collapseProps}>
                 <Panel header="Aggregates" key="3">
                     <Divider />

@@ -301,6 +301,14 @@ export const PARAM_MASTER = {
         id: 'CHK_STATS',
         title: 'Vehicle Receipt checlist status',
     },
+    INV_SER: {
+        id: 'INV_SER',
+        title: 'Invoice Search',
+    },
+    INVC_STATS: {
+        id: 'INVC_STATS',
+        title: 'Invoice Status',
+    },
     DESG_TYP_ASGN_TO: {
         id: 'DESG_TYP_ASGN_TO',
         title: 'Designation Master',
@@ -313,4 +321,60 @@ export const PARAM_MASTER = {
         id: 'INV_DEL_NOT_REQ_TYP',
         title: 'Delivery Note/Invoice Request Status',
     },
+    INVOICE_CANCEL_REASON: {
+        id: 'INVOICE_CANCEL_REASON',
+        title: 'Invoice Cancel Reason',
+    },
+    TAX_CALCLTN_TYPE: {
+        id: 'TAX_CALCLTN_TYPE',
+        title: 'Tax Calculation Type',
+    },
+    CDLR_INV_APP_STATUS: {
+        id: 'CDLR_INV_APP_STATUS',
+        title: 'Invoice Status in delivery note/invoice cancellation',
+    },
+    SO_MAP: {
+        id: 'SO_MAP',
+        title: 'OTF So mapping and Unmapping',
+    },
+    INDNT_TYP: {
+        id: 'INDNT_TYP',
+        title: 'Stock Transfer Indent',
+    },
+    INDENT: {
+        id: 'INDENT',
+        title: 'Stock Transfer Indent',
+    },
+    INDNT_REC: {
+        id: 'INDNT_REC',
+        title: 'Issue status or not Stock transfer',
+    },
+    INDNT_RAS: {
+        id: 'INDNT_RAS',
+        title: 'Stock Transfer Indent Status',
+    },
+    ISS_STS: {
+        id: 'ISS_STS',
+        title: 'Stock Transfer Indent Issue Status',
+    },
+    MAKE_NAME: {
+        id: 'MAKE_NAME',
+        title: 'Make in loyalty',
+    },
+    DLVR_SER: {
+        id: 'DLVR_SER',
+        title: 'Delivery Note Search',
+    },
+    DLVR_NT_STS: {
+        id: 'DLVR_NT_STS',
+        title: 'Delivery Note Status',
+    },
+    DLVR_DLY_RSN: {
+        id: 'DLVR_DLY_RSN',
+        title: 'Delivery Note Reason for Delay',
+    },
+    DLVR_SALE_TYP: {
+        id: 'DLVR_SALE_TYP',
+        title: 'Delivery Note Reason for Delay',
+    }, 
 };

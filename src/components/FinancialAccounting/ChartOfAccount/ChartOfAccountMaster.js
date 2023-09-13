@@ -104,6 +104,7 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
     const [accountTyp, setAccountTyp] = useState(null);
     const [childAdd, isChildAdd] = useState(false);
     const [updatedChartOfAccountData, setUpdatedChartOfAccountData] = useState(null);
+    const [disableCheckBox, setDisableCheckBox] = useState(false);
 
     const defaultBtnVisiblity = { editBtn: true, childBtn: true, siblingBtn: true };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -122,14 +123,18 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
         setCompanyCode(val);
         setViewData(null);
         setSelectedTreeKey(null);
+    };
+
+    useEffect(() => {
         const extraParams = [
             {
                 key: 'companyCode',
-                value: val,
+                value: companyCode ? companyCode : ' NO DATA ',
             },
         ];
         fetchChartOfAccountHierarchy({ setIsLoading: listShowLoadingChartOfAccountHierachy, extraParams });
-    };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [companyCode]);
 
     const extraParams = [
         {
@@ -182,6 +187,11 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
             setDisable(false);
             setSelectedTreeSelectKey(chartOfAccountData?.parentAccountDescription);
             setAccountTyp(chartOfAccountData?.accountType);
+            if(chartOfAccountData?.isChildAvailable){
+                setDisableCheckBox(true);
+            } else{
+                setDisableCheckBox(false);
+            }
             form.setFieldsValue({
                 accountType: chartOfAccountData?.accountType,
                 parentAccountCode: chartOfAccountData?.parentAccountCode,
@@ -199,7 +209,7 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
         setUpdatedChartOfAccountData(
             chartOfAccountHierarchy?.map((i) => ({
                 ...i,
-                disabled: i?.accountType === COA_ACCOUNT_TYPE?.LEDGER_ACCOUNT?.key,
+                disabled: i?.accountType === COA_ACCOUNT_TYPE?.LEDGER_ACCOUNT?.key || i?.status === false,
             }))
         );
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -220,6 +230,7 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
     const handleAdd = () => {
         form.resetFields();
         setSelectedTreeSelectKey(null);
+        setDisableCheckBox(false);
         setIsFormVisible(true);
         setFormBtnActive(false);
     };
@@ -317,6 +328,7 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
         accountTyp,
         setAccountTyp,
         isChildAdd,
+        disableCheckBox,
     };
 
     const viewProps = {

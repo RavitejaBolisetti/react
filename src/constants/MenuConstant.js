@@ -55,6 +55,13 @@ export const MenuConstant = {
         parentMenuId: 'OTD',
     },
 
+    [getMenyKey('SACT-04.10')]: {
+        key: 'SACT-04.10',
+        link: routing.STOCK_TRANSFER_INDENT,
+        icon: undefined,
+        parentMenuId: 'SACT-04',
+    },
+
     [getMenyKey('COMN-10.01')]: {
         key: 'COMN-10.01',
         link: routing.ROUTING_COMMON_CUSTOMER_MASTER,
@@ -428,9 +435,25 @@ export const MenuConstant = {
 
     [getMenyKey('RPT-BI')]: {
         key: 'RPT-BI',
-        link: routing.ROUTING_REPORT_BI_REPORT,
+        link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
         icon: undefined,
         parentMenuId: 'RPT',
+    },
+
+    [getMenyKey('RPT-OTF')]: {
+        key: 'RPT-OTF',
+        link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
+        icon: undefined,
+        parentMenuId: 'RPT',
+        slug: 'otf',
+    },
+
+    [getMenyKey('RPT-DLRNOTE')]: {
+        key: 'RPT-DLRNOTE',
+        link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
+        icon: undefined,
+        parentMenuId: 'RPT',
+        slug: 'delivery-note',
     },
 
     [getMenyKey('RPT-PG')]: {
@@ -459,6 +482,13 @@ export const MenuConstant = {
         link: routing.ROUTING_COMMON_APPLICATION_MASTER,
         icon: undefined,
         parentMenuId: 'ADMN',
+    },
+
+    [getMenyKey('SACT-04.03')]: {
+        key: 'SACT-04.03',
+        link: routing.ROUTING_VEHICLE_TRACKING,
+        icon: undefined,
+        parentMenuId: 'SACT-04',
     },
 
     [getMenyKey('SACT-04.08')]: {

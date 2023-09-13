@@ -12,17 +12,19 @@ import styles from 'assets/sass/app.module.scss';
 export const tableColumn = (handleButtonClick, page, pageSize) => {
     const tableColumn = [
         tblPrepareColumns({
-            title: 'OTF No.',
+            title: 'Booking No.',
             dataIndex: 'otfNumber',
             width: '18%',
+            render: (_, record) => record?.bookingNumber || record?.otfNumber,
         }),
 
         tblPrepareColumns({
-            title: 'OTF Date',
+            title: 'Booking Date',
             dataIndex: 'otfDate',
             width: '12%',
             render: (_, record) => (record?.otfDate ? convertDateMonthYear(record?.otfDate) : ''),
         }),
+
         tblPrepareColumns({
             title: 'Customer Name',
             dataIndex: 'customerName',

@@ -172,7 +172,7 @@ const AddEditFormMain = (props) => {
                                     </Form.Item>
                                 </Col>
                             </Row>
-                            <Row gutter={20}>
+                            {/* <Row gutter={20}>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                     <Form.Item label="Manufacturer Invoice Date" name="manufacturerInvoiceDate">
                                         <DatePicker format={dateFormat} {...disabledProps} />
@@ -183,10 +183,10 @@ const AddEditFormMain = (props) => {
                                         <DatePicker format={dateFormat} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
-                            </Row>
+                            </Row> */}
                         </Panel>
                     </Collapse>
-                    <Collapse onChange={() => handleCollapse('Vehicle')} expandIconPosition="end" collapsible="icon" expandIcon={expandIcon} activeKey={openAccordian} {...collapseProps}>
+                    {/* <Collapse onChange={() => handleCollapse('Vehicle')} expandIconPosition="end" collapsible="icon" expandIcon={expandIcon} activeKey={openAccordian} {...collapseProps}>
                         <Panel header="Connected Vehicle" key="Vehicle">
                             <Form layout="vertical" autoComplete="off" form={connectedForm}>
                                 <Divider />
@@ -240,7 +240,7 @@ const AddEditFormMain = (props) => {
                                 {!formData?.connectedVehicle?.length && <NoDataFound informtion={noDataTitle} />}
                             </Form>
                         </Panel>
-                    </Collapse>
+                    </Collapse> */}
                     <Collapse onChange={() => handleCollapse('Aggregates')} expandIconPosition="end" collapsible="icon" expandIcon={expandIcon} activeKey={openAccordian} {...collapseProps}>
                         <Panel
                             header={

@@ -13,7 +13,7 @@ import { UploadUtil } from 'utils/Upload';
 const { Option } = Select;
 
 const AddEditForm = (uploadProps) => {
-    const { typeData, mandatoryFields } = uploadProps;
+    const { typeData, mandatoryFields, handleClearChange } = uploadProps;
 
     const selectProps = {
         optionFilterProp: 'children',
@@ -27,7 +27,7 @@ const AddEditForm = (uploadProps) => {
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                     <Form.Item label="Document Type" name="documentTypeId" rules={mandatoryFields ? [validateRequiredInputField('document type')] : ''} placeholder={preparePlaceholderSelect('document type')}>
-                        <Select loading={!(typeData?.length !== 0)} placeholder="Select" {...selectProps}>
+                        <Select loading={!(typeData?.length !== 0)} onChange={handleClearChange} placeholder="Select" {...selectProps}>
                             {typeData?.map((item) => (
                                 <Option key={item?.key} value={item?.key}>
                                     {item?.value}
@@ -38,7 +38,7 @@ const AddEditForm = (uploadProps) => {
                 </Col>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                     <Form.Item label="File Name" name="documentName" rules={mandatoryFields ? [validateRequiredInputField('file name')] : ''}>
-                        <Input placeholder={preparePlaceholderText('File Name')} allowClear />
+                        <Input onChange={handleClearChange} placeholder={preparePlaceholderText('File Name')} allowClear />
                     </Form.Item>
                 </Col>
             </Row>

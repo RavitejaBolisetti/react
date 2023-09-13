@@ -3,20 +3,19 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Row, Col, Input, Form, Select, Card, Descriptions, AutoComplete } from 'antd';
 import { FiEye, FiTrash } from 'react-icons/fi';
 
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
 import TreeSelectField from 'components/common/TreeSelectField';
-//import { productHierarchyData } from './ProductHierarchyJSON';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
 import { preparePlaceholderText, preparePlaceholderSelect, preparePlaceholderAutoComplete } from 'utils/preparePlaceholder';
 import { validateRequiredSelectField, validateRequiredInputField } from 'utils/validation';
 import { checkAndSetDefaultValue, getStatus } from 'utils/checkAndSetDefaultValue';
-import { convertDateTime } from 'utils/formatDateTime';
+import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 import { debounce } from 'utils/debounce';
 import { UploadUtil } from 'utils/Upload';
 
@@ -97,7 +96,7 @@ const AddEditFormMain = (props) => {
 
     useEffect(() => {
         if (searchDealerValue?.length > 2) {
-            if (Object.values(dealerDataList)?.length == 0) {
+            if (Object.values(dealerDataList)?.length === 0) {
                 setDealerList([
                     {
                         value: '',
@@ -105,14 +104,16 @@ const AddEditFormMain = (props) => {
                         disabled: true, // disable this option
                     },
                 ]);
-            } else setDealerList(highlightFinalLocatonList(dealerDataList) || []);
+            } else {
+                setDealerList(highlightFinalLocatonList(dealerDataList) || []);
+            }
         } else {
             setDealerList([]);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dealerDataList, searchDealerValue]);
 
-    const highlightFinalLocatonList = useMemo(() => (data) => {
+    const highlightFinalLocatonList = (data) => {
         if (Object.values(data)?.length === 0) return [];
         else {
             let finalLocations = Object.values(dealerDataList)?.map((item) => {
@@ -123,7 +124,7 @@ const AddEditFormMain = (props) => {
             });
             return finalLocations;
         }
-    });
+    };
 
     const handleSelectTreeClick = (value) => {
         setparentAppCode(value);
@@ -170,8 +171,8 @@ const AddEditFormMain = (props) => {
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Card className={styles.marB20}>
                             <Descriptions {...viewProps}>
-                                <Descriptions.Item label="OTF No.">{checkAndSetDefaultValue(selectedOrder?.otfNumber, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="OTF Date">{checkAndSetDefaultValue(convertDateTime(selectedOrder?.otfDate, 'DD MMM YYYY'), isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Booking No.">{checkAndSetDefaultValue(selectedOrder?.bookingNumber || selectedOrder?.otfNumber, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Booking Date">{checkAndSetDefaultValue(convertDateTime(selectedOrder?.otfDate, dateFormatView), isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Customer Name">{checkAndSetDefaultValue(selectedOrder?.customerName, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Mobile No.">{checkAndSetDefaultValue(selectedOrder?.mobileNumber, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Model">{checkAndSetDefaultValue(selectedOrder?.model, isLoading)}</Descriptions.Item>

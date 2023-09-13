@@ -15,6 +15,7 @@ export const CANCEL_ACTION = FROM_ACTION_TYPE?.CANCEL_OTF;
 export const TRANSFER_ACTION = FROM_ACTION_TYPE?.TRANSFER_OTF;
 export const ALLOT = FROM_ACTION_TYPE?.ALLOT;
 export const UNALLOT = FROM_ACTION_TYPE?.UNALLOT;
+export const DELETE_ACTION = FROM_ACTION_TYPE?.DELETE;
 
 export const btnVisiblity = ({ defaultBtnVisiblity, buttonAction, saveAndNewBtn = true, orderStatus = false }) => {
     let btnVisibility = defaultBtnVisiblity;

@@ -16,9 +16,6 @@ import IMG_LOGO from 'assets/images/RobinLightTheme.svg';
 import { menuDataActions } from 'store/actions/data/menu';
 import { setCollapsed, setIsMobile, setSelectKeyToScroll } from 'store/actions/common/leftsidebar';
 
-
-import styles from './LeftSideBar.module.scss';
-//import styles from './LeftSideBar.module.css';
 import * as routing from 'constants/routing';
 
 import { getMenuValue } from 'utils/menuKey';
@@ -26,21 +23,16 @@ import { getHierarchyParents } from 'utils/getHierarchyParents';
 import { MenuConstant } from 'constants/MenuConstant';
 import { ListSkeleton } from '../Skeleton';
 
+import styles from './LeftSideBar.module.scss';
+
 const { SubMenu, Item } = Menu;
 const { Sider } = Layout;
 
-const prepareLink = ({ menuOrgTitle = '', title, id, tooltip = true, icon = true, showTitle = true, isParentMenu = false, captlized = false }) =>
-    id && getMenuValue(MenuConstant, id, 'link') ? (
-        <Link to={getMenuValue(MenuConstant, id, 'link')} title={tooltip ? menuOrgTitle : ''}>
-            <span className={styles.menuIcon}>{icon && getMenuValue(MenuConstant, id, 'icon')}</span>
-            {(showTitle || isParentMenu) && (
-                <span id={id} className={styles.menuTitle}>
-                    {title}
-                </span>
-            )}
-        </Link>
-    ) : (
-        <Link to="#" title={tooltip ? menuOrgTitle : ''}>
+const prepareLink = ({ menuOrgTitle = '', title, id, tooltip = true, icon = true, showTitle = true, isParentMenu = false, captlized = false }) => {
+    const menuLink = id && getMenuValue(MenuConstant, id, 'link') ? getMenuValue(MenuConstant, id, 'link').replace(':type', getMenuValue(MenuConstant, id, 'slug')) : '#';
+
+    return (
+        <Link to={menuLink} title={tooltip ? menuOrgTitle : ''}>
             <span className={styles.menuIcon}>{icon && getMenuValue(MenuConstant, id, 'icon')}</span>
             {(showTitle || isParentMenu) && (
                 <span id={id} className={styles.menuTitle}>
@@ -49,6 +41,7 @@ const prepareLink = ({ menuOrgTitle = '', title, id, tooltip = true, icon = true
             )}
         </Link>
     );
+};
 
 const mapStateToProps = (state) => {
     const {
@@ -162,12 +155,12 @@ const LeftSideBarMain = (props) => {
             const isParentMenu = parentMenuId === 'Web';
 
             return subMenu?.length ? (
-                <SubMenu key={menuId} title={prepareLink({ id: menuId, title: menuTitle, menuOrgTitle, tooltip: true, icon: true, captlized: isParentMenu, showTitle: collapsed ? !isParentMenu : true })} className={isParentMenu ? styles.subMenuParent : styles.subMenuItem}>
+                <SubMenu key={menuId} title={prepareLink({ id: menuId, title: menuTitle, menuOrgTitle: menuTitle, tooltip: true, icon: true, captlized: isParentMenu, showTitle: collapsed ? !isParentMenu : true })} className={isParentMenu ? styles.subMenuParent : styles.subMenuItem}>
                     {prepareMenuItem(subMenu)}
                 </SubMenu>
             ) : (
                 <Item key={menuId} className={isParentMenu ? styles.subMenuParent : styles.subMenuItem}>
-                    {prepareLink({ id: menuId, title: menuTitle, menuOrgTitle, tooltip: true, icon: true, captlized: isParentMenu, isParentMenu, showTitle: collapsed ? !isParentMenu : true })}
+                    {prepareLink({ id: menuId, title: menuTitle, menuOrgTitle: menuTitle, tooltip: true, icon: true, captlized: isParentMenu, isParentMenu, showTitle: collapsed ? !isParentMenu : true })}
                 </Item>
             );
         });
@@ -196,7 +189,8 @@ const LeftSideBarMain = (props) => {
     const onSelect = (menuId, label) => {
         menuForm.setFieldValue('searchKeyword', undefined);
         if (menuId && getMenuValue(MenuConstant, menuId, 'link')) {
-            navigate(getMenuValue(MenuConstant, menuId, 'link'));
+            const menuLink = menuId && getMenuValue(MenuConstant, menuId, 'link') ? getMenuValue(MenuConstant, menuId, 'link').replace(':type', getMenuValue(MenuConstant, menuId, 'slug')) : '#';
+            navigate(menuLink);
         }
 
         setSelectedMenuId(menuId);
@@ -261,7 +255,6 @@ const LeftSideBarMain = (props) => {
                                 }
                             }}
                             style={{
-                                // paddingLeft: collapsed ? '18px' : '24px',
                                 paddingLeft: collapsed ? '18px' : '14px',
                             }}
                         >
@@ -273,28 +266,25 @@ const LeftSideBarMain = (props) => {
                 )}
                 <div
                     className={styles.changeTheme}
-                    onClick={handleThemeChange}
-                    style={{
-                        padding: collapsed ? '10px' : '10px 14px',
-                        position: collapsed ? 'relative' : 'absolute',
-                    }}
+                    // onClick={handleThemeChange}
                 >
-                    {/* <div className={styles.changeThemeBorder} style={{ padding: collapsed ? '9px 10px' : '5px' }}> */}
-                    <div className={styles.changeThemeBorder}>
+                    <div className={styles.changeThemeBorder} style={{ padding: collapsed ? '9px 10px' : '5px' }}>
                         {collapsed ? (
                             theme === 'light' ? (
                                 <BsSun size={20} className={styles.sun} />
                             ) : (
-                                <BsMoon size={20} className={styles.moon} />
+                                <Popover content={'Coming Soon'} trigger="hover">
+                                    <BsMoon size={20} className={styles.moon} />
+                                </Popover>
                             )
                         ) : (
                             <>
-                                <Button className={theme === 'light' ? styles.lightThemeActive : styles.lightTheme} danger onClick={() => handleThemeChange()}>
+                                <Button className={theme === 'light' ? styles.lightThemeActive : styles.lightTheme} danger>
                                     <BsSun size={20} /> Light Mode
                                 </Button>
 
-                                <Popover content={"Coming Soon"} trigger="hover">
-                                    <Button className={theme === 'dark' ? styles.darkThemeActive : styles.darkTheme} danger onClick={() => handleThemeChange()}>
+                                <Popover content={'Coming Soon'} trigger="hover">
+                                    <Button className={theme === 'dark' ? styles.darkThemeActive : styles.darkTheme} danger>
                                         <BsMoon size={20} /> Dark Mode
                                     </Button>
                                 </Popover>

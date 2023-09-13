@@ -67,7 +67,7 @@ const ProfileDetailCard = (props) => {
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    Mobile Number: <span>{selectedRecord?.mobileNumber ? `+91-${selectedRecord?.mobileNumber?.slice(selectedRecord?.mobileNumber?.length - 10, selectedRecord?.mobileNumber?.length)}` : 'NA'}</span>
+                    Mobile Number: <span>{selectedRecord?.mobileNumber ? `${selectedRecord?.mobileNumber?.slice(selectedRecord?.mobileNumber?.length - 10, selectedRecord?.mobileNumber?.length)}` : 'NA'}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>

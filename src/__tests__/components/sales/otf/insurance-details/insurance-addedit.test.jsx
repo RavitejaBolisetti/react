@@ -1,6 +1,6 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
-import { AddEditForm } from '@components/Sales/OTF/InsuranceDetails/AddEditForm';
+import { AddEditForm } from '@components/Sales/Common/InsuranceDetails/AddEditForm';
 import customRender from '@utils/test-utils';
 
 beforeEach(() => {

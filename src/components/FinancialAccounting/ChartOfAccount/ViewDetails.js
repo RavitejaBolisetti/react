@@ -29,8 +29,8 @@ export const ViewMain = (props) => {
                 <Descriptions.Item label="Description">{viewData?.accountDescription}</Descriptions.Item>
                 {viewData?.accountType === COA_ACCOUNT_TYPE?.LEDGER_ACCOUNT?.key && (
                     <>
-                        <Descriptions.Item label="Opening Balance Cr.">{viewData?.openingBalanceCredit}</Descriptions.Item>
-                        <Descriptions.Item label="Opening Balance Dr">{viewData?.openingBalanceDebit}</Descriptions.Item>
+                        <Descriptions.Item label="Opening Balance Cr.">{viewData?.openingBalanceCredit?.toFixed(2)}</Descriptions.Item>
+                        <Descriptions.Item label="Opening Balance Dr">{viewData?.openingBalanceDebit?.toFixed(2)}</Descriptions.Item>
                     </>
                 )}
                 <Descriptions.Item label="Status">{viewData?.status === true ? 'Active' : 'Inactive'}</Descriptions.Item>

@@ -14,7 +14,7 @@ const CardDocument = ({ termAndConRequired, digitalSignatureRequired, documentTy
         <>
             <Card className={styles.cardView}>
                 <Row align="middle">
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.textWrap}>
+                    {/* <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.textWrap}>
                         <span>
                             <Text type="secondary">T&C Required:</Text> {termAndConRequired ? <Text type="success">Active</Text> : <Text type="secondary">Inactive</Text>}
                         </span>
@@ -22,7 +22,7 @@ const CardDocument = ({ termAndConRequired, digitalSignatureRequired, documentTy
                         <span>
                             <Text type="secondary">Signature:</Text> {digitalSignatureRequired ? <Text type="success">Active</Text> : <Text type="secondary"> Inactive</Text>}
                         </span>
-                    </Col>
+                    </Col> */}
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Text strong>{documentTypeDescription}</Text>
                     </Col>

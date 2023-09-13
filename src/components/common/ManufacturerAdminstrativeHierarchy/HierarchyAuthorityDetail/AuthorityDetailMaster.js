@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { Form, Divider } from 'antd';
+import { Form } from 'antd';
 import AuthorityDetailCardItem from './AuthorityDetailCardItem';
 import { AddEditForm } from './AddEditForm';
 
@@ -22,7 +22,7 @@ const mapStateToProps = (state) => {
     } = state;
 
     let returnValue = {
-        tokenValidationData,
+        tokenValidationData: tokenValidationData?.userSearchResponse?.userDetails?.[0],
     };
     return returnValue;
 };
@@ -48,7 +48,7 @@ const AuthorityDetailMain = ({ tokenValidationData, handleFormValueChange, viewM
         actionForm
             .validateFields()
             .then((val) => {
-                setDocumentTypesList((prev) => [...prev, { ...val, effectiveFrom: val?.effectiveFrom, effectiveTo: val?.effectiveTo, isModified: val?.isModified ?? false, employeeName: tokenValidationData?.employeeName }]);
+                setDocumentTypesList((prev) => [...prev, { ...val, effectiveFrom: val?.effectiveFrom, effectiveTo: val?.effectiveTo, isModified: val?.isModified ?? false, employeeName: tokenValidationData?.manufacturerUserName }]);
                 actionForm.resetFields();
                 forceUpdate();
                 resetData();

@@ -3,9 +3,10 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import { vehicleAllotmentStatusTag } from 'components/Sales/OTF/utils/VehicleAllotmentStatusTag';
-import { convertDateTime } from 'utils/formatDateTime';
+
+import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
+import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 import { VEHICLE_TYPE } from 'constants/VehicleType';
 
 import styles from 'assets/sass/app.module.scss';
@@ -22,9 +23,10 @@ export const tableColumn = (handleButtonClick, allotmentStatus, fixedWith) => {
     if (allotmentStatus === VEHICLE_TYPE.ALLOTED.key) {
         tableColumn.push(
             tblPrepareColumns({
-                title: 'OTF no.',
+                title: 'Booking Number.',
                 dataIndex: 'otfNumber',
                 width: fixedWith ? '202px' : '20%',
+                render: (_, record) => record?.bookingNumber || record?.otfNumber,
             })
         );
     }
@@ -54,7 +56,7 @@ export const tableColumn = (handleButtonClick, allotmentStatus, fixedWith) => {
             render: (text, record) => [
                 <div>
                     {record?.invoiceId}
-                    {record?.oemInvoiceDate && <div style={{ fontSize: '12px', lineHeight: '20px' }}>Invoice Date: {convertDateTime(record?.oemInvoiceDate, 'DD MMM YYYY')}</div>}
+                    {record?.oemInvoiceDate && <div style={{ fontSize: '12px', lineHeight: '20px' }}>Invoice Date: {convertDateTime(record?.oemInvoiceDate, dateFormatView)}</div>}
                 </div>,
             ],
         }),

@@ -8,29 +8,45 @@ import { Col, Row } from 'antd';
 import { withDrawer } from 'components/withDrawer';
 import { OTF_SECTION } from 'constants/OTFSection';
 
-import { CustomerDetailsMaster } from './CustomerDetails';
-import { SchemeDetailsMaster } from './SchemeDetails';
-import { InsuranceDetailsMaster } from './InsuranceDetails';
-import { VehicleDetailsMaster } from './VehicleDetails';
-import { FinananceDetailsMaster } from './FinananceDetails';
-import { LoyaltySchemeMaster } from './LoyaltyScheme';
-import { ReferralsMaster } from './Referrals';
-import { ExchangeVehiclesMaster } from './ExchangeVehicles';
-import { AddOnDetailsMaster } from './AddOnDetails';
 import { OtfDetailsMaster } from './OtfDetails';
+import { CustomerDetailsMaster } from 'components/Sales/Common/CustomerDetails';
+import { VehicleDetailsMaster } from 'components/Sales/Common/VehicleDetails';
+import { InsuranceDetailsMaster } from 'components/Sales/Common/InsuranceDetails';
+import { SchemeDetailsMaster } from 'components/Sales/Common/SchemeDetails';
+import { FinananceDetailsMaster } from 'components/Sales/Common/FinananceDetails';
+import { ExchangeVehiclesMaster } from 'components/Sales/Common/ExchangeVehicles';
+import { LoyaltySchemeMaster } from 'components/Sales/Common/LoyaltyScheme';
+import { ReferralsMaster } from 'components/Sales/Common/Referrals';
+
+// import { OtfDetailsMaster } from './OtfDetails';
+// import { CustomerDetailsMaster } from './CustomerDetails';
+// import { VehicleDetailsMaster } from './VehicleDetails';
+// import { SchemeDetailsMaster } from './SchemeDetails';
+// import { InsuranceDetailsMaster } from './InsuranceDetails';
+// import { FinananceDetailsMaster } from './FinananceDetails';
+// import { ExchangeVehiclesMaster } from './ExchangeVehicles';
+// import { LoyaltySchemeMaster } from './LoyaltyScheme';
+// import { ReferralsMaster } from './Referrals';
+
+import { AddOnDetailsMaster } from './AddOnDetails';
 import { InvoiceDetailsMaster } from './InvoiceDetails';
 import { ThankYouMaster } from './ThankYou';
 
 import { LeftSidebar } from './LeftSidebar';
+import { OTFFormButton } from './OTFFormButton';
+import { OTFStatusBar } from './utils/OTFStatusBar';
+import { PAGE_TYPE } from 'components/Sales/VehicleDeliveryNote/utils/pageType';
 
 import styles from 'assets/sass/app.module.scss';
 
 const OTFMainConatinerMain = (props) => {
-    //console.log(props);
     const { currentSection } = props;
 
     const myProps = {
         ...props,
+        FormActionButton: OTFFormButton,
+        StatusBar: OTFStatusBar,
+        pageType: PAGE_TYPE?.OTF_PAGE_TYPE?.key,
     };
 
     const renderElement = () => {

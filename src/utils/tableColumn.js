@@ -73,7 +73,7 @@ export const tblStatusColumn = ({ width = '15%', fixed = '' }) => {
         title: 'Status',
         dataIndex: 'status',
         sorter: (a, b) => (a && b ? String(a['status']).localeCompare(String(b['status']), undefined, { sensitivity: 'base' }) : a),
-        render: (_, record) => (record?.status ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>),
+        render: (_, record) => (record?.status ? <Tag color="success">Active</Tag> : <Tag color="error">Inactive</Tag>),
         width,
         fixed: fixed,
         sortDirections: ['descend', 'ascend'],
@@ -102,7 +102,27 @@ export const tblActionColumnCurd =
         };
     };
 
-export const tblActionColumn = ({ title = 'Action', handleButtonClick, width = '8%', fixed = '', canEdit = true, canView = true, canDelete = false, canServerDataEdit = false, canAdd = false }) => {
+export const tblActionColumn = ({
+    title = 'Action',
+    handleButtonClick,
+    width = '8%',
+    fixed = '',
+    canEdit = true,
+    canView = true,
+    canDelete = false,
+    canServerDataEdit = false,
+    canAdd = false,
+    customButton = false,
+    customButtonProperties = {
+        customName: 'Action',
+        customkey: 'ACT',
+        handleCustomButtonClick: () => {},
+        handleName: () => {},
+        icon: undefined,
+        buttonType: 'link',
+        customAction: 'customButton',
+    },
+}) => {
     return {
         title: 'Action',
         dataIndex: '',
@@ -134,6 +154,11 @@ export const tblActionColumn = ({ title = 'Action', handleButtonClick, width = '
                 {canDelete && !record?.id && (
                     <Button data-testid="delete" type="link" aria-label="fa-trash" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.DELETE, record, index })}>
                         {addToolTip('Delete')(<FiTrash />)}
+                    </Button>
+                )}
+                {customButton && (
+                    <Button data-testid="customButton" type={customButtonProperties?.buttonType} icon={customButtonProperties?.icon} onClick={(e) => customButtonProperties?.handleCustomButtonClick({ buttonAction: customButtonProperties?.hasOwnProperty('handleName') ? customButtonProperties?.handleName({ name: customButtonProperties?.customName, record, index })?.key : customButtonProperties?.customkey, record, index })}>
+                        {customButtonProperties?.hasOwnProperty('handleName') ? customButtonProperties?.handleName({ name: customButtonProperties?.customName, record, index })?.name : customButtonProperties?.customName}
                     </Button>
                 )}
             </Space>,
