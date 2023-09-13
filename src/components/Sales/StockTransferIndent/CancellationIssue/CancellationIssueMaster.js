@@ -12,6 +12,7 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { handleBtnVisibility } from './utils';
 import { CancelConfirmModal, IssueVehicleDetailsModal } from './Modals';
+import {converDateDayjs} from 'utils/formatDateTime'
 
 import styles from 'assets/sass/app.module.scss';
 const { Panel } = Collapse;
@@ -41,7 +42,7 @@ const CancellationIssueMain = (props) => {
     };
 
     useEffect(() => {
-        if (issueModalOpen && vehicleVinData?.vehicleSearch?.length) issueForm.setFieldsValue({ ...vehicleVinData?.vehicleSearch[0], modelDescription: cancellationData?.modelDescription });
+        if (issueModalOpen && vehicleVinData?.vehicleSearch?.length) issueForm.setFieldsValue({ ...vehicleVinData?.vehicleSearch[0], modelDescription: cancellationData?.modelDescription,invoiceDate:converDateDayjs(vehicleVinData?.vehicleSearch[0]?.invoiceDate),grnDate:converDateDayjs(vehicleVinData?.vehicleSearch[0]?.grnDate) });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [vehicleVinData]);
 
