@@ -170,13 +170,13 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
         designationArray.forEach((item) => {
             if (item.roleCode === value) {
                 matchDesignationList.push(item);
-            } else {
-                notificationDetailForm.setFieldValue('designationCode', undefined);
-            }
+            }  
         });
         if (matchDesignationList.length > 0) {
             setFilterDesignationList(matchDesignationList);
         } else {
+            notificationDetailForm.setFieldValue('designationCode', undefined);
+            setFilterDesignationList();
             onErrorAction('Designations are not exist.');
         }
     };
@@ -292,6 +292,12 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
         setFormData([]);
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
         setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
+        if(buttonAction === 'view'){
+            setButtonData({ ...defaultBtnVisiblity, editBtn:false, closeBtn: true });
+        }
+        if(buttonAction === 'add'){
+            setButtonData({ ...defaultBtnVisiblity,  saveBtn:true, saveAndNewBtn: false, closeBtn: true });
+        }       
         record && setFormData(record);
         setIsFormVisible(true);
         setFormBtnActive(false);
@@ -356,7 +362,7 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
         }
         setFilterString();
         advanceFilterForm.resetFields();
-        setAdvanceSearchVisible(false);
+        // setAdvanceSearchVisible(false);
     };
     const onCloseAction = () => {
         setFormEdit(false);
