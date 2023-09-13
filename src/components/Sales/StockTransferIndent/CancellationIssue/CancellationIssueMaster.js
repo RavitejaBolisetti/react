@@ -10,7 +10,7 @@ import { ViewDetail, ViewIssueCard } from './ViewDetails';
 import { BUTTON_NAME_CONSTANTS, DRAWER_TITLE_CONSTANT, ISSUE_CONSTANT } from './Constants';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { expandIcon } from 'utils/accordianExpandIcon';
-// import { IssueVehicleDetailsModal, CancelConfirmModal } from './Modals';
+import { handleBtnVisibility } from './utils';
 import { CancelConfirmModal, IssueVehicleDetailsModal } from './Modals';
 
 import styles from 'assets/sass/app.module.scss';
@@ -18,14 +18,21 @@ const { Panel } = Collapse;
 const { Text } = Typography;
 
 const CancellationIssueMain = (props) => {
-    const { cancellationData, handleVinSearch, vehicleVinData, saveIssueDetail, showGlobalNotification, resetVinDetails, listShowLoading, userId, fetchIssueList, indentIssueData, resetIssueList, indentIssueDataLoaded, typeData, indentIssueDataLoading } = props;
-
+    const { cancellationData, handleVinSearch, vehicleVinData, saveIssueDetail, showGlobalNotification, resetVinDetails, listShowLoading, userId, fetchIssueList, indentIssueData, resetIssueList, indentIssueDataLoaded, typeData, indentIssueDataLoading, toggleButton } = props;
+    const defaultVisibility = {
+        canCancel: true,
+        canReturn: false,
+        canReceive: false,
+        canPrint: true,
+    };
     const [issueForm] = Form.useForm();
     const [issueModalOpen, setIssueModal] = useState(false);
     const [isConfirmationModal, setIsConfirmationModal] = useState(false);
     const [issueData, setIssueData] = useState([]);
     const [myActiveKey, setmyActiveKey] = useState([]);
     const [issueCanceData, setIssueCanceData] = useState('');
+    const [ModalButtonName, setModalButtonName] = useState('');
+
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
@@ -69,6 +76,7 @@ const CancellationIssueMain = (props) => {
     };
     const handleCloseConfirmation = () => {
         setIsConfirmationModal(false);
+        setModalButtonName('');
     };
     const ViewDetailProps = {
         formData: cancellationData,
@@ -77,7 +85,23 @@ const CancellationIssueMain = (props) => {
         setIssueModal(true);
     };
 
-    const handleCancellationRequest = (data) => {
+    const handleRequest = (data, key = ISSUE_CONSTANT?.CANCEL?.key) => {
+        switch (key) {
+            case ISSUE_CONSTANT?.CANCEL?.key: {
+                setModalButtonName(ISSUE_CONSTANT?.CANCEL);
+                break;
+            }
+            case ISSUE_CONSTANT?.RETURNED?.key: {
+                setModalButtonName(ISSUE_CONSTANT?.RETURNED);
+                break;
+            }
+            case ISSUE_CONSTANT?.RECEIVED?.key: {
+                setModalButtonName(ISSUE_CONSTANT?.RECEIVED);
+                break;
+            }
+            default:
+                break;
+        }
         setIsConfirmationModal(true);
         setIssueCanceData(data);
     };
@@ -93,7 +117,6 @@ const CancellationIssueMain = (props) => {
         const onSuccess = (res) => {
             issueForm.resetFields();
             setIssueModal(false);
-            setIssueData([...issueData, values]);
             resetVinDetails();
             const extraParams = [
                 {
@@ -125,13 +148,14 @@ const CancellationIssueMain = (props) => {
             issueId: issueCanceData?.issueNumber,
             indentDetailId: cancellationData?.indentDetailId,
             indentHdrId: cancellationData?.id,
-            issueStatus: ISSUE_CONSTANT?.CANCEL?.key,
+            issueStatus: ModalButtonName?.key,
         };
 
         const onSuccess = (res) => {
             resetVinDetails();
             setIsConfirmationModal(false);
             setIssueCanceData('');
+            setModalButtonName('');
             const extraParams = [
                 {
                     key: 'indentNumber',
@@ -159,24 +183,21 @@ const CancellationIssueMain = (props) => {
     };
 
     const IssueVehicleDetailsProps = { onCloseAction, isVisible: issueModalOpen, titleOverride: DRAWER_TITLE_CONSTANT?.ISSUE?.name, issueForm, onFinish, cancellationData, handleVinSearch, vehicleVinData, typeData };
-    const cancellationIssueProps = { onCloseAction: handleCloseConfirmation, isVisible: isConfirmationModal, titleOverride: DRAWER_TITLE_CONSTANT?.CONFIRMATION?.name, handdleYes };
-    const handleCancelButton = (btnKey) => {
-        if (btnKey === ISSUE_CONSTANT?.CANCEL?.key || btnKey === ISSUE_CONSTANT?.RECEIVED?.key) {
-            return false;
-        }
-        return true;
-    };
+    const cancellationIssueProps = { onCloseAction: handleCloseConfirmation, isVisible: isConfirmationModal, titleOverride: DRAWER_TITLE_CONSTANT?.CONFIRMATION?.name, handdleYes, AcceptButtonName: ModalButtonName };
+
     return (
         <>
             <div className={styles.drawerBodyNew}>
                 <ViewDetail {...ViewDetailProps} />
-                <Row className={styles.marB20} gutter={20} justify="start">
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <Button type="primary" onClick={handleIssueAdd}>
-                            {BUTTON_NAME_CONSTANTS?.ADD?.name}
-                        </Button>
-                    </Col>
-                </Row>
+                {cancellationData?.balancedQuantity > 0 && cancellationData?.balancedQuantity !== null && (
+                    <Row className={styles.marB20} gutter={20} justify="start">
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                            <Button type="primary" onClick={handleIssueAdd}>
+                                {BUTTON_NAME_CONSTANTS?.ADD?.name}
+                            </Button>
+                        </Col>
+                    </Row>
+                )}
                 <div className={styles.viewDrawerContainer}>
                     {issueData?.map((element, i) => {
                         return (
@@ -184,22 +205,24 @@ const CancellationIssueMain = (props) => {
                                 <Panel
                                     header={
                                         <Row justify="space-between">
-                                            <Col xs={14} sm={14} md={14} lg={14} xl={14}>
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                                 <Space size="middle" style={{ display: 'flex' }}>
                                                     <Text> {`ST issue Note No. ${element?.issueNumber ? element?.issueNumber : 'NA'} `}</Text>
-                                                    <Text> {`|`}</Text>
-                                                    <Text> {`${element?.vin ? element?.vin : 'NA'} `}</Text>
-                                                    {handleCancelButton(element?.issueStatus) && (
-                                                        <Button type="primary" onClick={() => handleCancellationRequest(element)}>
+                                                    <Text>|</Text>
+                                                    <Text> VIN: {element?.vin ? element?.vin : 'NA'}</Text>
+                                                    {handleBtnVisibility({ toggleButton, checkKey: element?.issueStatus, defaultVisibility })?.canCancel && (
+                                                        <Button type="primary" onClick={() => handleRequest(element, ISSUE_CONSTANT?.CANCEL?.key)}>
                                                             {BUTTON_NAME_CONSTANTS?.CANCEL?.name}
                                                         </Button>
                                                     )}
-                                                    <Button danger onClick={() => handlePrintDownload(element)}>
-                                                        {BUTTON_NAME_CONSTANTS?.PRINT?.name}
-                                                    </Button>
+                                                    {handleBtnVisibility({ toggleButton, checkKey: element?.issueStatus, defaultVisibility })?.canPrint && (
+                                                        <Button danger onClick={() => handlePrintDownload(element)}>
+                                                            {BUTTON_NAME_CONSTANTS?.PRINT?.name}
+                                                        </Button>
+                                                    )}
                                                 </Space>
                                                 <Row>
-                                                    <Text className={styles.subSection}> {`Status: ${typeData[PARAM_MASTER?.ISS_STS?.id]?.find((i) => i?.key === element?.issueStatus)?.value} `}</Text>
+                                                    <Text type="secondary">{`Status: ${typeData[PARAM_MASTER?.ISS_STS?.id]?.find((i) => i?.key === element?.issueStatus)?.value} `}</Text>
                                                 </Row>
                                             </Col>
                                         </Row>
@@ -207,7 +230,7 @@ const CancellationIssueMain = (props) => {
                                     key={i}
                                 >
                                     <Divider />
-                                    <ViewIssueCard typeData={typeData} formData={element} />
+                                    <ViewIssueCard typeData={typeData} formData={element} handleRequest={handleRequest} handleBtnVisibility={handleBtnVisibility} toggleButton={toggleButton} />
                                 </Panel>
                             </Collapse>
                         );

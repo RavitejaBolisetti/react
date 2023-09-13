@@ -21,6 +21,22 @@ export const ISSUE_CONSTANT = {
     CANCEL: {
         id: 'Cancel',
         key: 'CNCL',
+        modalButtonName: 'Yes',
+    },
+    RECEIVED: {
+        id: 'Received',
+        key: 'REC',
+        modalButtonName: 'Yes Recieve',
+    },
+    RETURNED: {
+        id: 'Returned',
+        key: 'RET',
+        modalButtonName: 'Yes Return',
+    },
+    ISSUED: {
+        id: 'Issued',
+        key: 'I',
+        modalButtonName: 'Yes Return',
     },
     RECEIVED: {
         id: 'Received',

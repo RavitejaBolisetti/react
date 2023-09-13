@@ -4,14 +4,15 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Card, Descriptions } from 'antd';
+import { Card, Descriptions, Button, Row, Col } from 'antd';
 import { converDateDayjs } from 'utils/formatDateTime';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import styles from 'assets/sass/app.module.scss';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { getCodeValue } from 'utils/getCodeValue';
+import { BUTTON_NAME_CONSTANTS, ISSUE_CONSTANT } from '../Constants';
 
-export const ViewIssueCard = ({ formData, isLoading = false, typeData }) => {
+export const ViewIssueCard = ({ formData, isLoading = false, typeData, handleRequest, handleBtnVisibility, toggleButton }) => {
     const viewProps = {
         bordered: false,
         colon: false,
@@ -47,6 +48,20 @@ export const ViewIssueCard = ({ formData, isLoading = false, typeData }) => {
                 <Descriptions.Item label="Issue Charges">{checkAndSetDefaultValue(viewData?.issueCharges, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Net Dealer Price">{checkAndSetDefaultValue(viewData?.netDealerPrice, isLoading)}</Descriptions.Item>
             </Descriptions>
+            <Row gutter={20}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{ display: 'flex' }}>
+                    {handleBtnVisibility({ toggleButton, checkKey: formData?.issueStatus })?.canReceive && (
+                        <Button style={{ marginRight: '10px' }} type="primary" onClick={() => handleRequest(formData, ISSUE_CONSTANT?.RECEIVED?.key)}>
+                            {BUTTON_NAME_CONSTANTS?.RECEIEVED?.name}
+                        </Button>
+                    )}
+                    {handleBtnVisibility({ toggleButton, checkKey: formData?.issueStatus })?.canReturn && (
+                        <Button danger onClick={() => handleRequest(formData, ISSUE_CONSTANT?.RETURNED?.key)}>
+                            {BUTTON_NAME_CONSTANTS?.RETURN?.name}
+                        </Button>
+                    )}
+                </Col>
+            </Row>
         </Card>
     );
 };

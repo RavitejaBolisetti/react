@@ -28,6 +28,7 @@ import { AddEditForm } from './AddEditForm';
 import { ViewDetail } from './ViewDetail';
 import { CancellationIssue } from './CancellationIssue';
 import { DRAWER_TITLE_CONSTANT } from './CancellationIssue/Constants';
+import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 
 const mapStateToProps = (state) => {
     const {
@@ -148,7 +149,7 @@ export const StockTransferIndentMasterBase = (props) => {
 
     const onSuccessAction = (res) => {
         setShowDataLoading(false);
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
 
     const onErrorAction = (message) => {
@@ -204,7 +205,7 @@ export const StockTransferIndentMasterBase = (props) => {
                 key: 'fromDate',
                 title: 'Value',
                 value: filterString?.fromDate,
-                name: filterString?.fromDate,
+                name: filterString?.fromDate ? convertDateTime(filterString?.fromDate, dateFormatView) : '',
                 canRemove: true,
                 filter: true,
             },
@@ -212,15 +213,15 @@ export const StockTransferIndentMasterBase = (props) => {
                 key: 'toDate',
                 title: 'Value',
                 value: filterString?.toDate,
-                name: filterString?.toDate,
+                name: filterString?.fromDate ? convertDateTime(filterString?.fromDate, dateFormatView) : '',
                 canRemove: true,
                 filter: true,
             },
             {
-                key: toggleButton === STOCK_TRANSFER?.RAISED.key ? 'indentRaisedTo': 'indentRaisedFrom',
+                key: toggleButton === STOCK_TRANSFER?.RAISED.key ? 'indentRaisedTo' : 'indentRaisedFrom',
                 title: 'Value',
                 value: filterString?.dealerLocation,
-                name: indentLocationList?.find((i) => i?.locationCode === filterString?.dealerLocation)?.dealerLocationName, 
+                name: indentLocationList?.find((i) => i?.locationCode === filterString?.dealerLocation)?.dealerLocationName,
                 canRemove: true,
                 filter: true,
             },
@@ -324,7 +325,6 @@ export const StockTransferIndentMasterBase = (props) => {
         const onSuccess = (res) => {
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchIndentList({ customURL: customURL + '/search', setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
-           
         };
 
         const onError = (message) => {
@@ -383,7 +383,6 @@ export const StockTransferIndentMasterBase = (props) => {
         advanceFilterForm.resetFields();
         advanceFilterForm.setFieldsValue();
         setAdvanceSearchVisible(false);
-
     };
 
     const handleOnAddIndentClick = () => {
@@ -583,6 +582,7 @@ export const StockTransferIndentMasterBase = (props) => {
         indentIssueDataLoaded,
         resetIssueList,
         typeData,
+        toggleButton,
     };
 
     return (

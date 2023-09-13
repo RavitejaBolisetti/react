@@ -28,6 +28,7 @@ const AddEditFormMain = (props) => {
     const { addIndentDetailsForm, onFinish, indentLocationList, requestedByDealerList, openAccordian, setOpenAccordian } = props;
     const { buttonData, setButtonData, onCloseAction, tableDataItem, setTableDataItem } = props;
     const { handleButtonClick, handleChangeLocation } = props;
+    const { activeKey, setActiveKey } = props;
 
     const [addVehicleDetailsForm] = Form.useForm();
     const [isAddVehicleDetailsVisible, setIsAddVehicleDetailsVisible] = useState(false);
@@ -65,6 +66,9 @@ const AddEditFormMain = (props) => {
     };
 
     const handleCollapse = (key) => {
+        // if (key !== 3 && isReadOnly) {
+        //     setIsReadOnly(false);
+        // }
         setOpenAccordian((prev) => (prev === key ? '' : key));
     };
 
@@ -157,7 +161,7 @@ const AddEditFormMain = (props) => {
                                     <Panel
                                         key="1"
                                         header={
-                                            <Row>
+                                            <Row gutter={20} className={styles.verticallyCentered}>
                                                 Vehicle Details
                                                 <Col xs={14} sm={14} md={6} lg={6} xl={6}>
                                                     <Col xs={24} sm={24} md={6} lg={6} xl={6}>

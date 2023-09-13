@@ -12,6 +12,14 @@ export const BUTTON_NAME_CONSTANTS = {
         name: 'Cancel',
         page: 'Cancellation Issue Master',
     },
+    RECEIEVED: {
+        name: 'Received',
+        page: 'View Issue Card',
+    },
+    RETURN: {
+        name: 'Return',
+        page: 'View issue Card',
+    },
     PRINT: {
         name: 'Print/Download',
         page: 'Cancellation Issue Master',
