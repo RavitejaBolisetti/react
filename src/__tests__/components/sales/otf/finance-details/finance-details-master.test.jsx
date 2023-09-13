@@ -1,7 +1,7 @@
 import React from 'react';
 import { screen, fireEvent } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import FinananceDetailsMaster from '@components/Sales/OTF/FinananceDetails/FinananceDetailsMaster';
+import FinananceDetailsMaster  from '@components/Sales/Common/FinananceDetails/FinananceDetailsMaster';
 import customRender from '@utils/test-utils';
 import { Form } from 'antd';
 import createMockStore from '__mocks__/store';

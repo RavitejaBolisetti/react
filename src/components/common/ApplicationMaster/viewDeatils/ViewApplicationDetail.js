@@ -49,7 +49,7 @@ const ViewDealerDetailsMain = ({ applicationDetailsData, viewTitle = 'Applicatio
                     <Descriptions.Item label="T&C Required">{rest?.termAndConRequired ? <Text type="success"> Yes </Text> : <Text>No</Text>}</Descriptions.Item>
                     <Descriptions.Item label="Digital Signature Required">{rest?.digitalSignatureRequired ? <Text type="success"> Yes </Text> : <Text>No</Text>}</Descriptions.Item>
                     <Descriptions.Item label="Is Finance Related">{rest?.isFinanceRelated ? <Text type="success"> Yes </Text> : <Text>No</Text>}</Descriptions.Item>
-                    <Descriptions.Item label="IRN Integration Required">{rest?.isIrnIntegrationRequired ? <Text type="success"> Yes </Text> : <Text>No</Text>}</Descriptions.Item>
+                    <Descriptions.Item label="IRN Integration Required">{rest?.irnIntegrationRequired ? <Text type="success"> Yes </Text> : <Text>No</Text>}</Descriptions.Item>
 
                     <div>
                         {applicationAction.length > 0 && (

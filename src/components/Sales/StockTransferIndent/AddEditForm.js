@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Input, Form, Card, Collapse, Divider, Button, Typography } from 'antd';
+import { Row, Col, Input, Form, Card, Collapse, Divider, Button } from 'antd';
 import { FiPlus } from 'react-icons/fi';
 
 import { withDrawer } from 'components/withDrawer';
@@ -28,7 +28,6 @@ const AddEditFormMain = (props) => {
     const { addIndentDetailsForm, onFinish, indentLocationList, requestedByDealerList, openAccordian, setOpenAccordian } = props;
     const { buttonData, setButtonData, onCloseAction, tableDataItem, setTableDataItem } = props;
     const { handleButtonClick, handleChangeLocation } = props;
-    const { activeKey, setActiveKey } = props;
 
     const [addVehicleDetailsForm] = Form.useForm();
     const [isAddVehicleDetailsVisible, setIsAddVehicleDetailsVisible] = useState(false);

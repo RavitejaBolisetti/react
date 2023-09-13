@@ -15,7 +15,7 @@ const { Text } = Typography;
 
 // const expandIcon = ({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />);
 const ViewDetailBase = (props) => {
-    const { formData, styles, isLoading,roleData, data, } = props;
+    const { formData, styles, isLoading,roleData, data,productHierarchyList, } = props;
     
     // const currentRole = formData?.roleData?.find((i) => i?.key === props?.roleCode)?.value;
     // const currentDestination =  filterDesignationList?.find((i) => i?.designationCode === props?.designationCode)?.designationDescription;
@@ -27,24 +27,35 @@ const ViewDetailBase = (props) => {
         column: { xxl: 2, xl: 2, lg: 2, md: 2, sm: 2, xs: 2 },
     };
 
-    const getRoleName = (value) => {    console.log('value',value);     
+    const getRoleName = (value) => {     
        return roleData?.find((i) => i?.key === value)?.value;
     };
-    const getDesignationName = (value) => {    console.log('value',value);     
+    const getDesignationName = (value) => {  
     return data?.find((i) => i?.designationCode === value)?.designationDescription;
  };
+
+ const getOldModelGroup = (value) => {     
+    return productHierarchyList?.find((i) => i?.prodctCode === value)?.prodctShrtName;
+ };
+ 
+ const getNewModelGroup = (value) => {     
+    return productHierarchyList?.find((i) => i?.prodctCode === value)?.prodctShrtName;
+ };
+ 
     
     return (
         <>
             <div className={styles.viewContainer}>
                 <Descriptions {...viewOneColProps}>
-                    <Descriptions.Item label="Old Model">{checkAndSetDefaultValue(formData?.oldModelGroup, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="New Model">{checkAndSetDefaultValue(formData?.newModelGroup, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Old Model">{checkAndSetDefaultValue(getOldModelGroup(formData?.oldModelGroup), isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="New Model">{checkAndSetDefaultValue(getNewModelGroup(formData?.newModelGroup), isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="Effective From Date">{checkAndSetDefaultValue(formData?.effectiveFromDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                     <Descriptions.Item label="Effective To Date">{checkAndSetDefaultValue(formData?.effectiveToDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                    {/* <Descriptions.Item label="Status">
-                        <span className={formData?.activeIndicator ? styles.activeText : styles?.inactiveText}>{formData?.activeIndicator ? 'Active' : 'Inactive'}</span>
-                    </Descriptions.Item> */}
+                    
+                    {/* <Descriptions.Item label="Old Model">{checkAndSetDefaultValue(formData?.oldModelGroup, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="New Model">{checkAndSetDefaultValue(formData?.newModelGroup, isLoading)}</Descriptions.Item> */}
+                    
+                    
                 </Descriptions>
             </div>
             {formData?.roleData?.length > 0 && (

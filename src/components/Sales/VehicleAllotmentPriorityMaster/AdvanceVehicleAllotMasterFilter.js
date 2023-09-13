@@ -3,11 +3,9 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect } from 'react';
 import { Button, Row, Col, Form } from 'antd';
 import { FilterIcon } from 'Icons';
 import { RxCross2 } from 'react-icons/rx';
-
 import { SearchBox } from 'components/utils/SearchBox';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { PlusOutlined } from '@ant-design/icons';
@@ -27,8 +25,14 @@ export default function AdvanceVehicleAllotMasterFilter(props) {
         setAdvanceSearchVisible,
         searchForm,
         searchForm: { setFieldsValue },
+        // handleOnClick,
+        // tableData = [],
         showAddButton = true,
+        // handleRefresh,
         handleButtonClick,
+        // showChangeHistoryList,
+        // handleChangeHistory,
+        // buttonData,
     } = props;
 
     const serachBoxProps = {
@@ -38,10 +42,10 @@ export default function AdvanceVehicleAllotMasterFilter(props) {
         setFilterString,
     };
 
-    useEffect(() => {
-        setFieldsValue({ searchParam: filterString?.searchParam, searchType: filterString?.searchType });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString]);
+    // useEffect(() => {
+    //     setFieldsValue({ searchParam: filterString?.searchParam, searchType: filterString?.searchType });
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [filterString]);
 
     return (
         <div className={styles.contentHeaderBackground}>

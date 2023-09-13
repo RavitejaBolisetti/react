@@ -1,6 +1,6 @@
 import React from 'react';
-import { fireEvent, screen } from '@testing-library/react';
-import { InsuranceDetailsMaster } from '@components/Sales/OTF/InsuranceDetails/InsuranceDetailsMaster';
+import { screen } from '@testing-library/react';
+import { InsuranceDetailsMaster } from '@components/Sales/Common/InsuranceDetails/InsuranceDetailsMaster';
 import customRender from '@utils/test-utils';
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';

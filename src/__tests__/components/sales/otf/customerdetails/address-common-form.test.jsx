@@ -6,7 +6,7 @@
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
 import { screen, fireEvent } from '@testing-library/react';
-import { AddressCommonForm } from '@components/Sales/OTF/CustomerDetails/AddressCommonForm';
+import { AddressCommonForm } from '@components/Sales/Common/CustomerDetails/AddressCommonForm';
 
 describe('address common form Components', () => {
     it('should render form components', () => {
@@ -42,10 +42,10 @@ describe('address common form Components', () => {
 
         const email = screen.getByLabelText('Email');
         fireEvent.change(email, { target: { value: 'Dmsemail' } });
-    
+
         const pan = screen.getByLabelText('PAN');
         fireEvent.change(pan, { target: { value: 'Dmspan' } });
- 
+
         const gstin = screen.getByLabelText('GSTIN');
         fireEvent.change(gstin, { target: { value: 'Dmsgstin' } });
 

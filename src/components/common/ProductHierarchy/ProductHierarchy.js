@@ -18,10 +18,10 @@ import { manufacturerOrgHierarchyDataActions } from 'store/actions/data/manufact
 import { showGlobalNotification } from 'store/actions/notification';
 import { AddEditForm } from './AddEditForm';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
-import { ChangeHistory } from './ChangeHistory';
+// import { ChangeHistory } from './ChangeHistory';
 import LeftPanel from '../LeftPanel';
 import TreeSelectField from '../TreeSelectField';
-import { FaHistory } from 'react-icons/fa';
+// import { FaHistory } from 'react-icons/fa';
 import { ViewProductDetail } from './ViewProductDetail';
 import { LANGUAGE_EN } from 'language/en';
 import { DisableParent } from './ProductHierarchyUtils';
@@ -108,7 +108,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     const defaultBtnVisiblity = { editBtn: false, childBtn: false, siblingBtn: false, enable: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const [disabledEdit, setDisabledEdit] = useState(false);
-    const organizationFieldNames = { title: 'manufactureOrgShrtName', key: 'id', children: 'subManufactureOrg' };
+    const organizationFieldNames = { title: 'manufactureOrgShrtName', key: 'manufactureOrgCode', children: 'subManufactureOrg' };
     const fieldNames = { title: 'prodctShrtName', key: 'id', children: 'subProdct' };
     const onCloseAction = () => {
         form.resetFields();
@@ -408,13 +408,13 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
                             </Form.Item>
                         </Form>
                     </Col>
-                    {organizationId && (
+                    {/* {organizationId && (
                         <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.buttonsGroupRight}>
                             <Button icon={<FaHistory />} type="primary" className={styles.verticallyCentered} onClick={changeHistoryModelOpen}>
                                 Change History
                             </Button>
                         </Col>
-                    )}
+                    )} */}
                 </Row>
             </div>
             <Row gutter={20} span={24}>
@@ -438,13 +438,13 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
                                     )
                                 }
                             >
-                                {organizationId && (
+                                {/* {organizationId && (
                                     <div>
                                         <Button icon={<PlusOutlined />} type="primary" onClick={handleAdd}>
                                             Add
                                         </Button>
                                     </div>
-                                )}
+                                )} */}
                             </Empty>
                         </div>
                     ) : (
@@ -482,7 +482,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
                     </Col>
                 )}
             </Row>
-            <ChangeHistory />
+            {/* <ChangeHistory /> */}
             <AddEditForm {...formProps} />
         </>
     );

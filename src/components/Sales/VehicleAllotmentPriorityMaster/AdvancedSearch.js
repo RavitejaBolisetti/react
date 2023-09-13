@@ -17,8 +17,9 @@ import styles from 'assets/sass/app.module.scss';
 // import styles from 'components/common/Common.module.css';
 
 export const AdvancedSearchFrom = (props) => {
-    const { filterString, setFilterString, typeData, advanceFilterForm, handleResetFilter, setAdvanceSearchVisible } = props;
+    const { filterString, setFilterString, advanceFilterForm, handleResetFilter, setAdvanceSearchVisible } = props;
     const { productHierarchyList, advanceFilterForm: { resetFields },  } = props;
+    // const {typeData, } = props;
     useEffect(() => {
         resetFields();
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -42,12 +43,12 @@ export const AdvancedSearchFrom = (props) => {
     const onFinishFailed = () => {
         return;
     };
-    const selectProps = {
-        optionFilterProp: 'children',
-        showSearch: true,
-        allowClear: true,
-        // className: styles.headerSelectField,
-    };
+    // const selectProps = {
+    //     optionFilterProp: 'children',
+    //     showSearch: true,
+    //     allowClear: true,
+    //     // className: styles.headerSelectField,
+    // };
     const modalProps = {
         reset: true,
         submit: true,
@@ -59,13 +60,13 @@ export const AdvancedSearchFrom = (props) => {
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                {/* rules={[validateRequiredSelectField('old model group')]} */}
-                    <Form.Item initialValue={filterString?.oldModelGroup} label="Old Model Group" name="oldModelGroup" >
+                 
+                    <Form.Item initialValue={filterString?.oldModelGroup} label="Old Model" name="oldModelGroup" rules={[validateRequiredSelectField('Old Model')]}>
                         {customSelectBox({ data: productHierarchyList, fieldNames: { key: 'prodctCode', value: 'prodctShrtName' }, placeholder: preparePlaceholderSelect('Old Model Group') })}
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={filterString?.newModelGroup} label="New Model Group" name="newModelGroup" >
+                    <Form.Item initialValue={filterString?.newModelGroup} label="New Model" name="newModelGroup" rules={[validateRequiredSelectField('New Model')]}>
                         {customSelectBox({ data: productHierarchyList, fieldNames: { key: 'prodctCode', value: 'prodctShrtName' }, placeholder: preparePlaceholderSelect('New Model Group') })}
                     </Form.Item>
                 </Col>

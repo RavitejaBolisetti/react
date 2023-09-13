@@ -6,7 +6,7 @@
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
 import { screen, fireEvent } from '@testing-library/react';
-import { AddEditForm } from '@components/Sales/OTF/CustomerDetails/AddEditForm';
+import { AddEditForm } from '@components/Sales/Common/CustomerDetails/AddEditForm';
 
 const bookingCustomer = true;
 

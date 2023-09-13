@@ -32,7 +32,6 @@ describe('RSM Advance Search components', () => {
 
         fireEvent.click(todayForFromDate);
 
-
         const toDate = screen.getByRole('textbox', { name: 'To Date' });
 
         fireEvent.click(toDate);
@@ -41,5 +40,14 @@ describe('RSM Advance Search components', () => {
 
         fireEvent.click(todayToFromDate[1]);
 
+        const searchBtn = screen.getByRole('button', { name: /search/i });
+        fireEvent.click(searchBtn);
+    });
+
+    it('test for onfinish failed', async () => {
+        customRender(<FormWrapper isVisible={true} />);
+
+        const searchBtn = screen.getByRole('button', { name: /search/i });
+        fireEvent.click(searchBtn);
     });
 });

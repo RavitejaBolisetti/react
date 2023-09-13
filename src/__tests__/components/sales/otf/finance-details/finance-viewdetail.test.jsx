@@ -1,5 +1,5 @@
 import React from 'react';
-import { ViewDetail } from '@components/Sales/OTF/FinananceDetails/ViewDetail';
+import { ViewDetail } from '@components/Sales/Common/FinananceDetails/ViewDetail';
 import customRender from '@utils/test-utils';
 
 beforeEach(() => {

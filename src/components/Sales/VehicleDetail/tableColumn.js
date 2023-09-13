@@ -12,30 +12,30 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
         tblPrepareColumns({
             title: 'VIN',
             dataIndex: 'vehicleIdentificationNumber',
-            width: '14%',
+            width: '18%',
         }),
+
         tblPrepareColumns({
             title: 'Registration No.',
             dataIndex: 'registrationNumber',
-            width: '14%',
+            width: '18%',
         }),
 
         tblPrepareColumns({
             title: 'Customer Name',
             dataIndex: 'customerName',
-            width: '14%',
+            width: '25%',
         }),
 
-        tblPrepareColumns({
-            title: 'Mobile Number',
-            dataIndex: 'mobileNumber',
-            width: '14%',
-        }),
+        // tblPrepareColumns({
+        //     title: 'Mobile Number',
+        //     dataIndex: 'mobileNumber',
+        //     width: '14%',
+        // }),
 
         tblPrepareColumns({
             title: 'Model Description',
             dataIndex: 'model',
-            width: '14%',
         }),
 
         tblActionColumn({ handleButtonClick, styles, width: '8%' }),

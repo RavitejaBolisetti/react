@@ -278,8 +278,8 @@ export const BASE_URL_GET_VEHICLE_ALLOTMENT_PRIORITY = BASE_URL + 'vehicle/allot
 export const BASE_URL_VEHICLE_ALLOTMENT_PRIORITY = BASE_URL + 'vehicle/allotments/prioritymaster';
 
 export const BASE_URL_NOTIFICATION = BASE_URL + 'applications/notifications';
-export const BASE_URL_NOTIFICATION_COUNTS = BASE_URL + 'applications/notifications/counts';
 
+export const BASE_URL_NOTIFICATION_COUNTS = BASE_URL + 'applications/notifications/counts';
 export const BASE_URL_VEHICLE_INVOICE = BASE_URL_OTF + 'vehicleinvoice';
 
 export const BASE_URL_OTF_SO_MAPPING_MAIN = BASE_URL + 'otf/somapunmap';
@@ -289,3 +289,9 @@ export const BASE_URL_SO_MAPPING_OTF_SEARCH = BASE_URL + 'otf/somapunmap/orders'
 
 export const BASE_URL_STOCK_TRANSFER = BASE_URL_VEHICLE + 'stocktransfer';
 export const BASE_URL_STOCK_TRANSFER_INDENT_ISSUE = BASE_URL_VEHICLE + 'stocktransfer/indent/issue';
+
+export const BASE_URL_VEHICLE_DELIVERY_NOTE = BASE_URL_OTF + 'deliverynote/';
+export const BASE_URL_VEHICLE_DELIVERY_NOTE_SEARCH = BASE_URL_VEHICLE_DELIVERY_NOTE + 'search';
+export const BASE_URL_VEHICLE_INVOICE_DETAILS = BASE_URL_VEHICLE_DELIVERY_NOTE + 'vehicledetail';
+export const BASE_URL_VEHICLE_ADD_ON_DETAILS = BASE_URL_VEHICLE_DELIVERY_NOTE + 'addondetail';
+export const BASE_URL_RELATIONSHIP_MANAGER = BASE_URL_USER_MANAGEMENT_APPLICATIONS_DEALER + '/employees';

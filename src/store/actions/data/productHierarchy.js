@@ -108,7 +108,7 @@ productHierarchyDataActions.fetchList = withAuthToken((params) => ({ token, acce
     const apiCallParams = {
         data,
         method: 'get',
-        url: BASE_URL_PRODUCT_HIERARCHY + (id ? '?manufactureOrgId=' + id : ''),
+        url: BASE_URL_PRODUCT_HIERARCHY + (id ? '?manufactureOrgCode=' + id : ''),
         token,
         accessToken,
         userId,

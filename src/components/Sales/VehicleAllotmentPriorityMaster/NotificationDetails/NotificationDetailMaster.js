@@ -20,14 +20,14 @@ export const NotificationDetailMaster = (props) => {
             .validateFields()
             .then(() => {
                 let data = notificationDetailForm.getFieldsValue();
-                let updateData = { ...data, };
+                let updateData = { ...data, id:'' };
                 // let updateData = { ...data, internalId: Math.floor(Math.random() * 100000000 + 1), id: '' };
 
                 setDocTypeHeadMappingList((item) => [updateData, ...item]);
                 notificationDetailForm.resetFields();
                 forceUpdate();
                 setButtonData({ ...buttonData, formBtnActive: true });
-                // handleCodeFunction();
+                // handleRoleFunction();
             })
             .catch((error) => console.log(error));
 
@@ -79,18 +79,31 @@ export const NotificationDetailMaster = (props) => {
     };
 
     useEffect(() => {
-        if (vehiclePriority?.accountLedgerMappingDtoList?.length > 0) {
+        if (formData?.roleData?.length > 0) {
             setDocTypeHeadMappingList(() => []);
-            let len = vehiclePriority?.accountLedgerMappingDtoList?.length;
+            let len = formData?.roleData?.length;
             for (let i = 0; i < len; i++) {
                 let internalId = Math.floor(Math.random() * 100000000 + 1);
                 setDocTypeHeadMappingList((item) => {
-                    return [...item, { ...vehiclePriority?.accountLedgerMappingDtoList[i], internalId: internalId }];
+                    return [...item, { ...formData?.roleData[i], internalId: internalId }];
                 });
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [vehiclePriority]);
+    }, [formData]);
+
+    // useEffect(() => {
+    //     if (vehiclePriority?.accountLedgerMappingDtoList?.length > 0) {
+    //         setDocTypeHeadMappingList(() => []);
+    //         let len = vehiclePriority?.accountLedgerMappingDtoList?.length;
+    //         for (let i = 0; i < len; i++) {
+    //             let internalId = Math.floor(Math.random() * 100000000 + 1);
+    //             setDocTypeHeadMappingList((item) => {
+    //                 return [...item, { ...vehiclePriority?.accountLedgerMappingDtoList[i], internalId: internalId }];
+    //             });
+    //         }
+    //     }
+    // }, [vehiclePriority]);
 
     useEffect(() => {
         if (formEdit) {

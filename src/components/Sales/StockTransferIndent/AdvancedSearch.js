@@ -7,11 +7,13 @@ import React, { useEffect } from 'react';
 import { Col, Form, Row, DatePicker } from 'antd';
 
 import { withModal } from 'components/withModal';
+import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
+import { disableFutureDate } from 'utils/disableDate';
+
 import { ModalButtons } from 'components/common/Button';
 import { STOCK_TRANSFER } from 'constants/StockTransfer';
 
 import { dateFormat, formatDate, formatDateToCalenderDate } from 'utils/formatDateTime';
-import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { validateRequiredSelectField } from 'utils/validation';
 import { customSelectBox } from 'utils/customSelectBox';
 
@@ -27,6 +29,10 @@ export const AdvancedSearchFrom = (props) => {
         advanceFilterForm: { resetFields },
     } = props;
 
+    const indentSaerchList = searchList?.filter((i) => {
+        return i?.key.includes(toggleButton === STOCK_TRANSFER?.RAISED.key ? 'RAIS_TO' : 'REC_TO');
+    });
+
     useEffect(() => {
         resetFields();
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -40,18 +46,13 @@ export const AdvancedSearchFrom = (props) => {
             fromDate: formatDate(values?.fromDate),
             toDate: formatDate(values?.toDate),
             dealerLocation: values?.dealerLocation,
-            // indentRaisedTo : toggleButton === STOCK_TRANSFER?.RAISED.key ? values?.dealerLocation : undefined,
-            // indentRaisedFrom : toggleButton === STOCK_TRANSFER?.RECEIVED.key ? values?.dealerLocation : undefined,
             advanceFilter: true,
         });
         setAdvanceSearchVisible(false);
     };
 
     const handleResetFilter = (e) => {
-        // const { pageSize } = filterString;
         advanceFilterForm.resetFields();
-        //advanceFilterForm.setFieldsValue({});
-        //setFilterString({ current: 1, pageSize,});
     };
 
     const onFinishFailed = () => {
@@ -78,13 +79,8 @@ export const AdvancedSearchFrom = (props) => {
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item initialValue={filterString?.indent} label="Indent" name="indent">
-                        {customSelectBox({
-                            data: searchList.filter((temp) => {
-                                return toggleButton === STOCK_TRANSFER?.RAISED.key ? temp.key === 'RAIS_TO' : temp.key === 'REC_TO';
-                            }),
-                            fieldNames: { key: 'key', value: 'value' },
-                            placeholder: preparePlaceholderSelect(placeHold.place),
-                        })}
+                        {/* {customSelectBox({ data: searchList.filter(temp =>{ return toggleButton === STOCK_TRANSFER?.RAISED.key ? temp.key == "RAIS_TO" : temp.key == "REC_TO" }), fieldNames: { key: 'key', value: 'value' }, placeholder: preparePlaceholderSelect(placeHold.place) })} */}
+                        {customSelectBox({ data: indentSaerchList, fieldNames: { key: 'key', value: 'value' }, placeholder: preparePlaceholderSelect(placeHold.place) })}
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
@@ -97,7 +93,7 @@ export const AdvancedSearchFrom = (props) => {
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item initialValue={formatDateToCalenderDate(filterString?.fromDate)} label="Indent From Date" name="fromDate" rules={[validateRequiredSelectField('Indent From Date')]} className={styles?.datePicker}>
-                        <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} className={styles.fullWidth} onChange={() => advanceFilterForm.setFieldsValue({ toDate: undefined })} />
+                        <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} onChange={() => advanceFilterForm.setFieldsValue({ toDate: undefined })} />
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>

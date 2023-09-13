@@ -79,9 +79,6 @@ const mapDispatchToProps = (dispatch) => ({
         {
             fetchIndentLocation: DealerBranchLocationDataActions.fetchList,
 
-            fetchVinDetails: vehicleDetailDataActions.fetchList,
-            resetVinDetails: vehicleDetailDataActions.reset,
-
             fetchRequestedByList: DealerBranchLocationDataActions.fetchDetail,
 
             fetchProductLov: otfvehicleDetailsLovDataActions.fetchFilteredList,
@@ -95,9 +92,11 @@ const mapDispatchToProps = (dispatch) => ({
 
             saveData: stockTransferIndent.saveData,
 
+            fetchVinDetails: vehicleDetailDataActions.fetchList,
+            resetVinDetails: vehicleDetailDataActions.reset,
             fetchIssueList: StockIndentIssueDataAction.fetchList,
-
             saveIssueDetail: StockIndentIssueDataAction.saveData,
+            resetIssueList: StockIndentIssueDataAction.reset,
 
             showGlobalNotification,
         },
@@ -109,7 +108,7 @@ export const StockTransferIndentMasterBase = (props) => {
     const { data, filterString, setFilterString } = props;
     const { userId, typeData, parentGroupCode, showGlobalNotification } = props;
     const { indentLocationList, requestedByDealerList, ProductHierarchyData } = props;
-    const { fetchIndentList, fetchIndentLocation, fetchIndentDetails, fetchRequestedByList, listShowLoading, saveData, ProductLovLoading, fetchProductLov, fetchVinDetails, vehicleVinData, saveIssueDetail, resetVinDetails, fetchIssueList } = props;
+    const { fetchIndentList, fetchIndentLocation, fetchIndentDetails, fetchRequestedByList, listShowLoading, saveData, ProductLovLoading, fetchProductLov, fetchVinDetails, vehicleVinData, saveIssueDetail, resetVinDetails, fetchIssueList, resetIssueList } = props;
     const { indentIssueData, indentIssueDataLoading, indentIssueDataLoaded } = props;
     const [searchForm] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
@@ -127,7 +126,7 @@ export const StockTransferIndentMasterBase = (props) => {
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [page, setPage] = useState({ pageSize: 10, current: 1 });
     const dynamicPagination = true;
-    
+
     const defaultBtnVisiblity = {
         editBtn: false,
         saveBtn: false,
@@ -163,8 +162,7 @@ export const StockTransferIndentMasterBase = (props) => {
     }, [filterString, toggleButton]);
 
     useEffect(() => {
-
-        const onSuccessActionFetchIndLoc = (res) => {}
+        const onSuccessActionFetchIndLoc = (res) => {};
         const extraParamData = [
             {
                 key: 'parentGroupCode',
@@ -172,7 +170,7 @@ export const StockTransferIndentMasterBase = (props) => {
             },
         ];
         fetchIndentLocation({ setIsLoading: listShowLoading, userId, onSuccessAction: onSuccessActionFetchIndLoc, onErrorAction, extraParams: extraParamData });
-    
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isAdvanceSearchVisible]);
 
@@ -278,8 +276,6 @@ export const StockTransferIndentMasterBase = (props) => {
                 break;
             case VIEW_ACTION:
                 const onSuccessViewIndent = (res) => {
-                    //addIndentDetailsForm.resetFields();
-                    //setTableDataItem([]);
                     setButtonData({ ...defaultBtnVisiblity, cancelBtn: true, saveBtn: false });
                     setIsViewIndentVisible(true);
                     setSelectedOrder(res?.data);
@@ -323,16 +319,12 @@ export const StockTransferIndentMasterBase = (props) => {
         }
         setIsAddNewIndentVisible(false);
 
-        //const recordId = formData?.parentId || form.getFieldValue('parentId');
         let data = { ...values, vehicleDetails: [...tableDataItem] };
 
         const onSuccess = (res) => {
-            // form.resetFields();
-            // setShowDataLoading(true);
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchIndentList({ customURL: customURL + '/search', setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
-            // setButtonData({ ...buttonData, formBtnActive: false });
-            // setIsFormVisible(false);
+           
         };
 
         const onError = (message) => {
@@ -353,7 +345,7 @@ export const StockTransferIndentMasterBase = (props) => {
 
     const updateVehicleDetails = (values) => {
         //setIsAddNewIndentVisible(false);
-        let data = { ...selectedOrder, vehicleDetails: [{...values}] };
+        let data = { ...selectedOrder, vehicleDetails: [{ ...values }] };
 
         const onSuccess = (res) => {
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
@@ -385,16 +377,13 @@ export const StockTransferIndentMasterBase = (props) => {
         };
 
         saveData(requestData);
-    }
+    };
 
     const onCloseAction = () => {
         advanceFilterForm.resetFields();
         advanceFilterForm.setFieldsValue();
         setAdvanceSearchVisible(false);
 
-        //setSelectedOrder();
-        //setIsFormVisible(false);
-        //setButtonData({ ...defaultBtnVisiblity });
     };
 
     const handleOnAddIndentClick = () => {
@@ -446,14 +435,11 @@ export const StockTransferIndentMasterBase = (props) => {
     const onFinishSearch = (values) => {};
 
     const handleResetFilter = (e) => {
-        //setSearchParamValue();
-        //setShowDataLoading(true);
         setFilterString();
         advanceFilterForm.resetFields();
         searchForm.resetFields();
         setAdvanceSearchVisible(false);
     };
-
 
     const handleVinSearch = (vinNumber) => {
         if (!vinNumber) return;
@@ -497,14 +483,12 @@ export const StockTransferIndentMasterBase = (props) => {
         dynamicPagination,
         filterString,
         totalRecords: data?.totalRecords,
-        //setPage: setFilterString,
         page,
         setPage,
         isLoading: showDataLoading,
         tableColumn: tableColumn(handleButtonClick),
         tableData: data?.paginationData,
         showAddButton: false,
-        //noDataMessage: LANGUAGE_EN.GENERAL.LIST_NO_DATA_FOUND.TITLE,
     };
 
     const advanceFilterProps = {
@@ -571,12 +555,14 @@ export const StockTransferIndentMasterBase = (props) => {
         setCancellationData,
         cancellationIssueVisible,
         setCancellationIssueVisible,
+        typeData,
     };
     const CancellationIssueProps = {
         isVisible: cancellationIssueVisible,
         formData: selectedOrder,
         onCloseAction: () => {
             setCancellationData([]);
+            resetIssueList();
             setCancellationIssueVisible(false);
         },
         titleOverride: DRAWER_TITLE_CONSTANT?.CANCELLATION?.name,
@@ -595,6 +581,8 @@ export const StockTransferIndentMasterBase = (props) => {
         indentIssueData,
         indentIssueDataLoading,
         indentIssueDataLoaded,
+        resetIssueList,
+        typeData,
     };
 
     return (

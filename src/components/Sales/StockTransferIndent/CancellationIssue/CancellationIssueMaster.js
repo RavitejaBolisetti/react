@@ -8,6 +8,7 @@ import { Row, Col, Button, Form, Collapse, Typography, Divider, Space } from 'an
 import { withDrawer } from 'components/withDrawer';
 import { ViewDetail, ViewIssueCard } from './ViewDetails';
 import { BUTTON_NAME_CONSTANTS, DRAWER_TITLE_CONSTANT, ISSUE_CONSTANT } from './Constants';
+import { PARAM_MASTER } from 'constants/paramMaster';
 import { expandIcon } from 'utils/accordianExpandIcon';
 // import { IssueVehicleDetailsModal, CancelConfirmModal } from './Modals';
 import { CancelConfirmModal, IssueVehicleDetailsModal } from './Modals';
@@ -17,34 +18,56 @@ const { Panel } = Collapse;
 const { Text } = Typography;
 
 const CancellationIssueMain = (props) => {
-    const { cancellationData, handleVinSearch, vehicleVinData, setCancellationData, cancellationIssueVisible, setCancellationIssueVisible, saveIssueDetail, showGlobalNotification, resetVinDetails, listShowLoading, userId, fetchIssueList, indentIssueData, indentIssueDataLoading, indentIssueDataLoaded } = props;
+    const { cancellationData, handleVinSearch, vehicleVinData, saveIssueDetail, showGlobalNotification, resetVinDetails, listShowLoading, userId, fetchIssueList, indentIssueData, resetIssueList, indentIssueDataLoaded, typeData, indentIssueDataLoading } = props;
 
     const [issueForm] = Form.useForm();
     const [issueModalOpen, setIssueModal] = useState(false);
     const [isConfirmationModal, setIsConfirmationModal] = useState(false);
-    const [issueData, setIssueData] = useState([{}]);
+    const [issueData, setIssueData] = useState([]);
     const [myActiveKey, setmyActiveKey] = useState([]);
-    useEffect(() => {
-        if (vehicleVinData?.vehicleSearch?.length && cancellationData) issueForm.setFieldsValue({ modelDescription: cancellationData?.modelDescription, ...vehicleVinData?.vehicleSearch[0] });
-        issueForm.setFieldsValue({ modelDescription: cancellationData?.modelDescription });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [issueModalOpen, cancellationData, vehicleVinData]);
-
-    const handleCollapses = (values) => {
-        myActiveKey?.includes(values) ? setmyActiveKey('') : setmyActiveKey([values]);
-    };
+    const [issueCanceData, setIssueCanceData] = useState('');
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
     const onSuccessAction = (res) => {
         showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
     };
-    const onCloseAction = (key) => {
-        setIssueModal(false);
-        issueForm.resetFields();
-        resetVinDetails();
+
+    useEffect(() => {
+        if (issueModalOpen && vehicleVinData?.vehicleSearch?.length) issueForm.setFieldsValue({ ...vehicleVinData?.vehicleSearch[0], modelDescription: cancellationData?.modelDescription });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [vehicleVinData]);
+
+    useEffect(() => {
+        if (!indentIssueDataLoading && indentIssueData && indentIssueDataLoaded) setIssueData(indentIssueData);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [indentIssueDataLoading, indentIssueData, indentIssueDataLoaded]);
+
+    useEffect(() => {
+        const extraParams = [
+            {
+                key: 'indentNumber',
+                title: 'Number',
+                value: cancellationData?.indentNumber,
+            },
+        ];
+        fetchIssueList({ setIsLoading: listShowLoading, userId, onSuccessAction, onErrorAction, extraParams });
+        return () => {
+            resetIssueList();
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    const handleCollapses = (values) => {
+        myActiveKey?.includes(values) ? setmyActiveKey('') : setmyActiveKey([values]);
     };
-    const handleCloseConfirmation = (key) => {
+
+    const onCloseAction = () => {
+        resetVinDetails();
+        issueForm.resetFields();
+        setIssueModal(false);
+    };
+    const handleCloseConfirmation = () => {
         setIsConfirmationModal(false);
     };
     const ViewDetailProps = {
@@ -54,8 +77,9 @@ const CancellationIssueMain = (props) => {
         setIssueModal(true);
     };
 
-    const handleCancellationRequest = () => {
+    const handleCancellationRequest = (data) => {
         setIsConfirmationModal(true);
+        setIssueCanceData(data);
     };
     const handlePrintDownload = () => {};
 
@@ -64,17 +88,21 @@ const CancellationIssueMain = (props) => {
             showGlobalNotification({ notificationType: 'error', title: 'ERROR', message: 'Search VIN to continue' });
             return;
         }
-
-        let data = { ...values, indentHdrId: cancellationData?.id, id: '', modelCode: values?.modelCode, issueStatus: values?.issueStatus, issueDate: values?.issueDate };
-        console.log('Issue Detail', values);
-
+        const { invoiceDate, invoiceNumber, ...rest } = values;
+        let data = { ...rest, oemInvoiceDate: invoiceDate, oemInvoiceNumber: invoiceNumber, indentHdrId: cancellationData?.id, id: '', modelCode: cancellationData?.modelCode, issueStatus: cancellationData?.issueStatus, issueDate: cancellationData?.issueDate };
         const onSuccess = (res) => {
             issueForm.resetFields();
-            setCancellationIssueVisible(false);
-            setIssueData({ ...issueData, values });
+            setIssueModal(false);
+            setIssueData([...issueData, values]);
             resetVinDetails();
-            // fetchIssueList({ setIsLoading: listShowLoading, userId, onSuccessAction, onErrorAction, extraParams });
-            // fetchIndentLocation({ setIsLoading: listShowLoading, userId, onSuccessAction: onSuccessActionFetchIndLoc, onErrorAction, extraParams: extraParamData });
+            const extraParams = [
+                {
+                    key: 'indentNumber',
+                    title: 'Number',
+                    value: cancellationData?.indentNumber,
+                },
+            ];
+            fetchIssueList({ setIsLoading: listShowLoading, userId, onSuccessAction, onErrorAction, extraParams });
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
         };
 
@@ -92,15 +120,18 @@ const CancellationIssueMain = (props) => {
 
         saveIssueDetail(requestData);
     };
-    const handdleYes = () => {
-        let data = {
-            issueId: indentIssueData?.issueId,
+    const handdleYes = (values) => {
+        const data = {
+            issueId: issueCanceData?.issueNumber,
             indentDetailId: cancellationData?.indentDetailId,
             indentHdrId: cancellationData?.id,
             issueStatus: ISSUE_CONSTANT?.CANCEL?.key,
         };
+
         const onSuccess = (res) => {
             resetVinDetails();
+            setIsConfirmationModal(false);
+            setIssueCanceData('');
             const extraParams = [
                 {
                     key: 'indentNumber',
@@ -127,9 +158,14 @@ const CancellationIssueMain = (props) => {
         saveIssueDetail(requestData);
     };
 
-    const IssueVehicleDetailsProps = { onCloseAction, isVisible: issueModalOpen, titleOverride: DRAWER_TITLE_CONSTANT?.ISSUE?.name, issueForm, onFinish, cancellationData, handleVinSearch, vehicleVinData };
+    const IssueVehicleDetailsProps = { onCloseAction, isVisible: issueModalOpen, titleOverride: DRAWER_TITLE_CONSTANT?.ISSUE?.name, issueForm, onFinish, cancellationData, handleVinSearch, vehicleVinData, typeData };
     const cancellationIssueProps = { onCloseAction: handleCloseConfirmation, isVisible: isConfirmationModal, titleOverride: DRAWER_TITLE_CONSTANT?.CONFIRMATION?.name, handdleYes };
-
+    const handleCancelButton = (btnKey) => {
+        if (btnKey === ISSUE_CONSTANT?.CANCEL?.key || btnKey === ISSUE_CONSTANT?.RECEIVED?.key) {
+            return false;
+        }
+        return true;
+    };
     return (
         <>
             <div className={styles.drawerBodyNew}>
@@ -150,18 +186,20 @@ const CancellationIssueMain = (props) => {
                                         <Row justify="space-between">
                                             <Col xs={14} sm={14} md={14} lg={14} xl={14}>
                                                 <Space size="middle" style={{ display: 'flex' }}>
-                                                    <Text className={styles.headText}> {`${element?.partDescription ? element?.partDescription : 'NA'} `}</Text>
-                                                    <Text className={styles.headText}> {`|`}</Text>
-                                                    <Text className={styles.headText}> {`${element?.partNumber ? element?.partNumber : 'NA'} `}</Text>
+                                                    <Text> {`ST issue Note No. ${element?.issueNumber ? element?.issueNumber : 'NA'} `}</Text>
+                                                    <Text> {`|`}</Text>
+                                                    <Text> {`${element?.vin ? element?.vin : 'NA'} `}</Text>
+                                                    {handleCancelButton(element?.issueStatus) && (
+                                                        <Button type="primary" onClick={() => handleCancellationRequest(element)}>
+                                                            {BUTTON_NAME_CONSTANTS?.CANCEL?.name}
+                                                        </Button>
+                                                    )}
                                                     <Button danger onClick={() => handlePrintDownload(element)}>
                                                         {BUTTON_NAME_CONSTANTS?.PRINT?.name}
                                                     </Button>
-                                                    <Button type="primary" onClick={() => handleCancellationRequest(element)}>
-                                                        {BUTTON_NAME_CONSTANTS?.CANCEL?.name}
-                                                    </Button>
                                                 </Space>
                                                 <Row>
-                                                    <Text className={styles.subSection}> {`Status: ${'Issued'} `}</Text>
+                                                    <Text className={styles.subSection}> {`Status: ${typeData[PARAM_MASTER?.ISS_STS?.id]?.find((i) => i?.key === element?.issueStatus)?.value} `}</Text>
                                                 </Row>
                                             </Col>
                                         </Row>
@@ -169,7 +207,7 @@ const CancellationIssueMain = (props) => {
                                     key={i}
                                 >
                                     <Divider />
-                                    <ViewIssueCard formData={element} />
+                                    <ViewIssueCard typeData={typeData} formData={element} />
                                 </Panel>
                             </Collapse>
                         );

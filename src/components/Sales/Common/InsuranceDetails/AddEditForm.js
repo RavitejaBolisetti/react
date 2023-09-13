@@ -9,9 +9,11 @@ import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/prepareP
 import { formattedCalendarDate, dateFormat } from 'utils/formatDateTime';
 import { validateNumberWithTwoDecimalPlaces } from 'utils/validation';
 import { disableFutureDate } from 'utils/disableDate';
+import { customSelectBox } from 'utils/customSelectBox';
+import { PAGE_TYPE } from 'components/Sales/VehicleDeliveryNote/utils/pageType';
 
 const AddEditFormMain = (props) => {
-    const { formData, form } = props;
+    const { formData, form, pageType } = props;
 
     useEffect(() => {
         if (formData) {
@@ -28,7 +30,13 @@ const AddEditFormMain = (props) => {
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item label="Insurance Company" name="insuranceCompany">
-                                    <Input placeholder={preparePlaceholderText('Insurance Company')} maxLength={55} />
+                                    {pageType === PAGE_TYPE?.OTF_PAGE_TYPE?.key ? (
+                                        <>
+                                            <Input placeholder={preparePlaceholderText('Insurance Company')} maxLength={55} />{' '}
+                                        </>
+                                    ) : (
+                                        <>{customSelectBox({ placeholder: preparePlaceholderSelect('Insurance Company') })}</>
+                                    )}
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
@@ -36,18 +44,25 @@ const AddEditFormMain = (props) => {
                                     <Input placeholder={preparePlaceholderText('Insurance Cover Note')} maxLength={55} />
                                 </Form.Item>
                             </Col>
+                            {pageType != PAGE_TYPE?.OTF_PAGE_TYPE?.key && (
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item label="Cover Note Date" name="coverNoteDate">
+                                        <DatePicker disabledDate={disableFutureDate} format={dateFormat} placeholder={preparePlaceholderSelect('Cover Note Date')} />
+                                    </Form.Item>
+                                </Col>
+                            )}
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item label="Insurance Amount" name="insuranceAmount" rules={[validateNumberWithTwoDecimalPlaces('insurance amount')]}>
                                     <Input placeholder={preparePlaceholderText('Insurance Amount')} maxLength={20} />
                                 </Form.Item>
                             </Col>
-                        </Row>
-                        <Row gutter={20}>
-                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item label="Date" name="insuranceDate">
-                                    <DatePicker disabledDate={disableFutureDate} format={dateFormat} placeholder={preparePlaceholderSelect('Date')} />
-                                </Form.Item>
-                            </Col>
+                            {pageType === PAGE_TYPE?.OTF_PAGE_TYPE?.key && (
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item label="Date" name="insuranceDate">
+                                        <DatePicker disabledDate={disableFutureDate} format={dateFormat} placeholder={preparePlaceholderSelect('Date')} />
+                                    </Form.Item>
+                                </Col>
+                            )}
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item label="Registration Number" name="registrationNumber">
                                     <Input placeholder={preparePlaceholderText('Registration Number')} maxLength={20} />

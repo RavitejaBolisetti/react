@@ -8,17 +8,18 @@ import { Col, Input, Form, Row, Select, Card, DatePicker, Space, Switch } from '
 
 import { disableFutureDate } from 'utils/disableDate';
 import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
-import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { customSelectBox } from 'utils/customSelectBox';
 
 import { YES_NO_FLAG } from 'constants/yesNoFlag';
 import { FINANCE_ARRANGED_BY } from 'constants/financeArrangedBy';
+import { PAGE_TYPE } from 'components/Sales/VehicleDeliveryNote/utils/pageType';
 
 import styles from 'assets/sass/app.module.scss';
 
 const AddEditFormMain = (props) => {
-    const { formData, FinanceLovData, typeData, form, formActionType } = props;
+    const { formData, FinanceLovData, typeData, form, formActionType, pageType } = props;
     const [doReceived, setDoReceived] = useState();
     const [financeArrangedBy, setFinanceArrangedBy] = useState();
     const checkFinanceType = (type, key) => (type ? type === key : false);
@@ -38,17 +39,17 @@ const AddEditFormMain = (props) => {
         setDoReceived(item);
     };
 
-    // const onLoanChange = () => {
-    //     form.validateFields(['emi']);
-    // };
+    const onLoanChange = () => {
+        form.validateFields(['emi']);
+    };
 
-    // const emiLessThanAmount = (value) => {
-    //     if (Number(form.getFieldsValue(['loanAmount'])?.loanAmount) <= Number(value)) {
-    //         return Promise.reject('EMI cannot exceed loan amount');
-    //     } else {
-    //         return Promise.resolve();
-    //     }
-    // };
+    const emiLessThanAmount = (value) => {
+        if (Number(form.getFieldsValue(['loanAmount'])?.loanAmount) <= Number(value)) {
+            return Promise.reject('EMI cannot exceed loan amount');
+        } else {
+            return Promise.resolve();
+        }
+    };
 
     const selectProps = {
         optionFilterProp: 'children',
@@ -76,13 +77,13 @@ const AddEditFormMain = (props) => {
                                             {customSelectBox({ data: typeData['FNC_ARNGD'], onChange: handleFinanceArrangedBy })}
                                         </Form.Item>
                                     </Col>
-                                    {financeArrangedBy && !checkFinanceType(financeArrangedBy, FINANCE_ARRANGED_BY?.CASH?.key) && (
+                                    {/* {financeArrangedBy && !checkFinanceType(financeArrangedBy, FINANCE_ARRANGED_BY?.CASH?.key) && (
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8} xxl={8}>
                                             <Form.Item initialValue={formActionType?.editMode ? (formData?.printHyptheticatedDetail === 1 ? true : false) : false} labelAlign="left" wrapperCol={{ span: 24 }} name="printHypothecationDetails" label="Print Hypothecation Details?" valuePropName="checked">
                                                 <Switch checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" onChange={(checked) => (checked ? 1 : 0)} />
                                             </Form.Item>
                                         </Col>
-                                    )}
+                                    )} */}
                                 </Row>
                                 {financeArrangedBy && !checkFinanceType(financeArrangedBy, FINANCE_ARRANGED_BY?.CASH?.key) && (
                                     <>
@@ -108,16 +109,26 @@ const AddEditFormMain = (props) => {
                                         </Row>
                                         {financeArrangedBy && checkFinanceType(financeArrangedBy, FINANCE_ARRANGED_BY?.DEALER?.key) && (
                                             <Row gutter={20}>
-                                                {/* <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                        <Form.Item onChange={onLoanChange} label="Loan Amount" name="loanAmount" rules={[validateNumberWithTwoDecimalPlaces('loan amount')]}>
-                                                            <Input placeholder={preparePlaceholderText('loan amount')} maxLength={10} />
-                                                        </Form.Item>
-                                                    </Col>
-                                                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                        <Form.Item label="EMI" name="emi" rules={[validateNumberWithTwoDecimalPlaces('emi'), { validator: (rule, value) => emiLessThanAmount(value) }]}>
-                                                            <Input placeholder={preparePlaceholderText('emi')} maxLength={10} />
-                                                        </Form.Item>
-                                                    </Col> */}
+                                                {pageType != PAGE_TYPE?.OTF_PAGE_TYPE?.key && (
+                                                    <>
+                                                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                                            <Form.Item onChange={onLoanChange} label="Loan Amount" name="loanAmount" rules={[validateNumberWithTwoDecimalPlaces('loan amount')]}>
+                                                                <Input placeholder={preparePlaceholderText('loan amount')} maxLength={10} />
+                                                            </Form.Item>
+                                                        </Col>
+                                                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                                            <Form.Item label="EMI" name="emi" rules={[validateNumberWithTwoDecimalPlaces('emi'), { validator: (rule, value) => emiLessThanAmount(value) }]}>
+                                                                <Input placeholder={preparePlaceholderText('emi')} maxLength={10} />
+                                                            </Form.Item>
+                                                        </Col>
+
+                                                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                                            <Form.Item label="Finance Done" name="financeDone">
+                                                                {customSelectBox({ data: typeData?.YES_NO_FLG })}
+                                                            </Form.Item>
+                                                        </Col>
+                                                    </>
+                                                )}
                                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                                     <Form.Item label="D.O. Received" name="doReceived">
                                                         {customSelectBox({ data: typeData?.YES_NO_FLG, onChange: handleDOChange })}

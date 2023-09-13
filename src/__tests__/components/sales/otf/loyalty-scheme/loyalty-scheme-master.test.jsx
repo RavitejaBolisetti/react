@@ -1,7 +1,7 @@
 import React from 'react';
 import { screen, fireEvent } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { LoyaltySchemeMaster } from '@components/Sales/OTF/LoyaltyScheme/LoyaltySchemeMaster';
+import { LoyaltySchemeMaster } from '@components/Sales/Common/LoyaltyScheme/LoyaltySchemeMaster';
 import customRender from '@utils/test-utils';
 import { Form } from 'antd';
 import { configureStore } from '@reduxjs/toolkit';
@@ -9,19 +9,15 @@ import thunk from 'redux-thunk';
 import { rootReducer } from 'store/reducers';
 
 export const createMockStore = (initialState) => {
-
     const mockStore = configureStore({
-
         reducer: rootReducer,
 
         preloadedState: initialState,
 
         middleware: [thunk],
-
-    }); 
+    });
 
     return mockStore;
-
 };
 
 afterEach(() => {
@@ -134,8 +130,8 @@ describe('OTF loyalty scheme master render', () => {
             </Provider>
         );
 
-        const search = screen.getByPlaceholderText('Search')
-        fireEvent.change(search, { target: { value: 'tsetId' } })
+        const search = screen.getByPlaceholderText('Search');
+        fireEvent.change(search, { target: { value: 'tsetId' } });
 
         const customerName = screen.getByRole('textbox', { name: 'Customer Name', exact: false });
         fireEvent.change(customerName, { target: { value: 'testName' } });
@@ -157,7 +153,6 @@ describe('OTF loyalty scheme master render', () => {
     });
 
     it('Should render loyalty scheme submit button', () => {
-
         const buttonData = {
             changeHistory: true,
             cancelBtn: true,
@@ -170,39 +165,27 @@ describe('OTF loyalty scheme master render', () => {
             saveAndNewBtnClicked: false,
         };
 
-        const formData ={
+        const formData = {
             id: 123,
-            schemeAmount: "100",
-            schemeCode: "7657",
+            schemeAmount: '100',
+            schemeCode: '7657',
             relationship: 'test',
-            customerName: "test"
-        }
+            customerName: 'test',
+        };
 
         customRender(
             <Provider store={mockStore}>
-                <FormWrapper
-                    setFormData={jest.fn} {...props}
-                    handleFormValueChange={jest.fn()}
-                    formActionType={formActionTypeAdd}
-                    buttonData={buttonData}
-                    saveButtonName={'Save & Next'}
-                    setButtonData={jest.fn()}
-                    setEditable={jest.fn()}
-                    onFinish={jest.fn()}
-                    setformData={jest.fn()}
-                    handleFilterChange={jest.fn()}
-                    formData={formData}
-                />
+                <FormWrapper setFormData={jest.fn} {...props} handleFormValueChange={jest.fn()} formActionType={formActionTypeAdd} buttonData={buttonData} saveButtonName={'Save & Next'} setButtonData={jest.fn()} setEditable={jest.fn()} onFinish={jest.fn()} setformData={jest.fn()} handleFilterChange={jest.fn()} formData={formData} />
             </Provider>
         );
 
-        const saveNext = screen.getByRole('button', { name: 'Save & Next'});
+        const saveNext = screen.getByRole('button', { name: 'Save & Next' });
         fireEvent.click(saveNext);
 
-        const changeHistory = screen.getByRole('button', { name: 'Change History'});
-        fireEvent.click(changeHistory);       
+        const changeHistory = screen.getByRole('button', { name: 'Change History' });
+        fireEvent.click(changeHistory);
 
         const cancel = screen.getByRole('button', { name: 'Cancel' });
         fireEvent.click(cancel);
-    })
+    });
 });

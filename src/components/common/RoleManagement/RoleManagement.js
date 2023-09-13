@@ -66,7 +66,7 @@ export const RoleManagementMain = (props) => {
     const [listFilterForm] = Form.useForm();
 
     const APPLICATION_WEB = APPLICATION_DEVICE_TYPE?.WEB?.key;
-    const [showDataLoading, setShowDataLoading] = useState(true);
+    const [showDataLoading, setShowDataLoading] = useState(false);
     const [searchData, setSearchdata] = useState('');
     const [refershData, setRefershData] = useState(false);
 
@@ -98,11 +98,12 @@ export const RoleManagementMain = (props) => {
     };
 
     useEffect(() => {
-        if (userId && (!isDataLoaded || refershData)) {
+        if (userId && (!showDataLoading || refershData)) {
+            setShowDataLoading(false);
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isDataLoaded, refershData]);
+    }, [userId, refershData]);
 
     useEffect(() => {
         setDeviceType(APPLICATION_WEB);

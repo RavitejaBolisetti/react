@@ -15,6 +15,7 @@ import { VIEW_ACTION, ALLOT, UNALLOT } from 'utils/btnVisiblity';
 
 import { ViewDetail } from './ViewDetail';
 import { ListDataTable } from 'utils/ListDataTable';
+import { defaultPageProps } from 'utils/defaultPageProps';
 import { OTF_STATUS } from 'constants/OTFStatus';
 
 import { showGlobalNotification } from 'store/actions/notification';
@@ -25,7 +26,6 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import { VEHICLE_TYPE } from 'constants/VehicleType';
 import { BASE_URL_VEHICLE_ALLOTMENT as customURL } from 'constants/routingApi';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
-import { ConfirmationModal } from 'utils/ConfirmationModal';
 
 import { FilterIcon } from 'Icons';
 
@@ -50,6 +50,7 @@ const mapStateToProps = (state) => {
         typeData,
         isDataLoaded: isDetailLoaded,
         data: data?.otfDetails,
+        totalOTFRecords: data?.totalRecords,
         otfStatusList: Object.values(OTF_STATUS),
         isLoading: !isDetailLoaded,
         moduleTitle,
@@ -57,7 +58,6 @@ const mapStateToProps = (state) => {
         isSearchDataLoaded,
         filterString,
         allotmentSummaryDetails,
-        // allotmentSummaryDetails: { ...allotmentSummaryDetails, allotmentStatus: allotmentSummaryDetails?.allotmentStatus || 'D' },
         allotmentSearchedList,
         productHierarchyData,
     };
@@ -84,8 +84,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const VehicleAllotmentMasterBase = (props) => {
-    const { fetchList, saveData, listShowLoading, userId, fetchVehicleAllotmentDetails, allotmentSummaryDetails, data, resetData } = props;
-    const { fetchOTFSearchedList, fetchVehicleAllotmentSearchedList, allotmentSearchedList, resetOTFSearchedList, fetchModelList, productHierarchyData } = props;
+    const { fetchList, saveData, listShowLoading, userId, fetchVehicleAllotmentDetails, allotmentSummaryDetails, data, totalOTFRecords, resetData } = props;
+    const { fetchVehicleAllotmentSearchedList, allotmentSearchedList, resetOTFSearchedList, fetchModelList, productHierarchyData } = props;
     const { typeData, showGlobalNotification } = props;
     const { filterString, setFilterString, otfStatusList, isOTFSearchLoading } = props;
 
@@ -109,6 +109,7 @@ export const VehicleAllotmentMasterBase = (props) => {
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [page, setPage] = useState({ pageSize: 10, current: 1 });
+
     const dynamicPagination = true;
 
     const defaultBtnVisiblity = {
@@ -161,7 +162,9 @@ export const VehicleAllotmentMasterBase = (props) => {
     }, [filterString, toggleButton]);
 
     const extraParams = useMemo(() => {
+        const defaultPage = defaultPageProps(page);
         return [
+            ...defaultPage,
             {
                 key: 'searchType',
                 title: 'Type',
@@ -202,34 +205,6 @@ export const VehicleAllotmentMasterBase = (props) => {
                 canRemove: true,
                 filter: true,
             },
-            {
-                key: 'pageSize',
-                title: 'Value',
-                value: page?.pageSize,
-                canRemove: true,
-                filter: false,
-            },
-            {
-                key: 'pageNumber',
-                title: 'Value',
-                value: page?.current,
-                canRemove: true,
-                filter: false,
-            },
-            {
-                key: 'sortBy',
-                title: 'Sort By',
-                value: page?.sortBy,
-                canRemove: true,
-                filter: false,
-            },
-            {
-                key: 'sortIn',
-                title: 'Sort Type',
-                value: page?.sortType,
-                canRemove: true,
-                filter: false,
-            },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [page, filterString, searchParamValue, toggleButton]);
@@ -249,49 +224,6 @@ export const VehicleAllotmentMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, extraParams]);
-
-    const searchOTFExtraParams = useMemo(() => {
-        return [
-            {
-                key: 'searchType',
-                title: 'Type',
-                value: filterStringOTFSearch?.searchType,
-                name: toggleButton,
-            },
-            {
-                key: 'searchParam',
-                title: 'Value',
-                value: filterStringOTFSearch?.searchParam,
-            },
-            {
-                key: 'otfStatus',
-                title: 'Status',
-                value: OTF_STATUS?.BOOKED?.key,
-            },
-            {
-                key: 'pageSize',
-                title: 'Value',
-                value: 10,
-                canRemove: true,
-                filter: false,
-            },
-            {
-                key: 'pageNumber',
-                title: 'Value',
-                value: 1,
-                canRemove: true,
-                filter: false,
-            },
-        ];
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterStringOTFSearch]);
-
-    useEffect(() => {
-        if (userId && toggleButton === VEHICLE_TYPE.UNALLOTED.key) {
-            fetchOTFSearchedList({ setIsLoading: listShowLoading, userId, extraParams: searchOTFExtraParams, onSuccessAction, onErrorAction });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [searchOTFExtraParams]);
 
     const onCloseConfirmationModalAction = () => {
         setConfirmRequest({
@@ -465,12 +397,12 @@ export const VehicleAllotmentMasterBase = (props) => {
     const fixedWith = toggleButton === VEHICLE_TYPE.ALLOTED.key;
     const tableProps = {
         dynamicPagination,
-        totalRecords: allotmentSearchedList?.totalRecords,
         page,
         setPage,
         isLoading: showDataLoading,
         tableColumn: tableColumn(handleButtonClick, toggleButton, fixedWith),
         tableData: allotmentSearchedList?.paginationData,
+        totalRecords: allotmentSearchedList?.totalRecords,
         showAddButton: false,
         scroll: fixedWith ? { x: 1400 } : '',
     };
@@ -550,6 +482,7 @@ export const VehicleAllotmentMasterBase = (props) => {
         onCloseAction,
         titleOverride: drawerTitle.concat('Allotment Details'),
         tableData: data,
+        totalOTFRecords,
         buttonData,
         setButtonData,
         handleButtonClick,
@@ -576,8 +509,7 @@ export const VehicleAllotmentMasterBase = (props) => {
                 </Col>
             </Row>
             <AdvancedSearch {...advanceFilterProps} />
-            <ViewDetail {...containerProps} />
-            <ConfirmationModal {...confirmRequest} />
+            {isFormVisible && <ViewDetail {...containerProps} />}
         </>
     );
 };

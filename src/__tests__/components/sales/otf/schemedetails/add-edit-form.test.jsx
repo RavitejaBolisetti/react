@@ -6,7 +6,7 @@
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
 import { screen, fireEvent } from '@testing-library/react';
-import { AddEditForm } from '@components/Sales/OTF/SchemeDetails/AddEditForm';
+import { AddEditForm } from '@components/Sales/Common/SchemeDetails/AddEditForm';
 afterEach(() => {
     jest.restoreAllMocks();
 });

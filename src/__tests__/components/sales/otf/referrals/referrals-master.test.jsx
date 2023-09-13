@@ -1,7 +1,7 @@
 import React from 'react';
 import { screen, fireEvent } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { ReferralsMaster } from '@components/Sales/OTF/Referrals/ReferralsMaster';
+import { ReferralsMaster } from '@components/Sales/Common/Referrals/ReferralsMaster';
 import customRender from '@utils/test-utils';
 import { Form } from 'antd';
 import createMockStore from '__mocks__/store';
@@ -21,9 +21,8 @@ const FormWrapper = (props) => {
 };
 
 describe('OTF Referrals Master Component', () => {
-
     it('should render referrals add edit form', async () => {
-        customRender(<FormWrapper /> );
+        customRender(<FormWrapper />);
     });
 
     it('test 1', async () => {
@@ -39,19 +38,19 @@ describe('OTF Referrals Master Component', () => {
 
     it('test 2', async () => {
         const buttonData = {
-            saveBtn: true
-        }
+            saveBtn: true,
+        };
 
         const mockStore = createMockStore({
             auth: { userId: 106 },
             data: {
                 OTF: {
-                    Referrals: { 
-                        data: [{name: 'test106'}],
+                    Referrals: {
+                        data: [{ name: 'test106' }],
                         filter: {
                             searchType: 'test106',
-                            searchParam: 'test106'
-                        }
+                            searchParam: 'test106',
+                        },
                     },
                 },
             },
@@ -61,19 +60,16 @@ describe('OTF Referrals Master Component', () => {
                 <FormWrapper buttonData={buttonData} />
             </Provider>
         );
-        const saveBtn=screen.getByRole('button', { name: 'Save & Next' });
+        const saveBtn = screen.getByRole('button', { name: 'Save & Next' });
         fireEvent.click(saveBtn);
     });
-
 });
 
 describe('OTF Referrals View Details Component', () => {
-
     it('should render referrals add edit form', async () => {
-        const formActionType={
-            viewMode: true
-        }
-        customRender(<FormWrapper formActionType={formActionType} /> );
+        const formActionType = {
+            viewMode: true,
+        };
+        customRender(<FormWrapper formActionType={formActionType} />);
     });
-
 });

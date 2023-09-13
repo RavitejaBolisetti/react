@@ -70,11 +70,13 @@ export default function AdvanceOTFFilter(props) {
                     </Form>
                 </Col>
 
-                <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.buttonsGroupRight}>
-                    <Button type="primary" icon={<FiPlus />} onClick={handleOnAddIndentClick}>
-                        Add Indent
-                    </Button>
-                </Col>
+                {toggleButton === STOCK_TRANSFER?.RAISED.key && (
+                    <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.buttonsGroupRight}>
+                        <Button type="primary" icon={<FiPlus />} onClick={handleOnAddIndentClick}>
+                            Add Indent
+                        </Button>
+                    </Col>
+                )}
             </Row>
             {advanceFilter && filterString?.advanceFilter && extraParams.find((i) => i.name) && (
                 <Row gutter={20}>

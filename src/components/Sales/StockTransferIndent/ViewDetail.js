@@ -11,6 +11,8 @@ import { DATA_TYPE } from 'constants/dataType';
 import { withDrawer } from 'components/withDrawer';
 import { VehicleDetailFormButton } from 'components/Sales/VehicleDetail/VehicleDetailFormButton';
 import { EditVehicleDetailsModal } from './EditVehicleDetailsModal';
+import { PARAM_MASTER } from 'constants/paramMaster';
+import { getCodeValue } from 'utils/getCodeValue';
 import { DataTable } from 'utils/dataTable';
 import { tableColumnVehicleDetails } from './tableColumnVehicleDetails';
 
@@ -21,7 +23,7 @@ import styles from 'assets/sass/app.module.scss';
 const ViewDetailMain = (props) => {
     const { formData, isLoading, buttonDataVehicleDetails, updateVehicleDetails } = props;
     const { handleButtonClick, buttonData, setButtonData, onCloseAction } = props;
-    const { setCancellationData, setCancellationIssueVisible } = props;
+    const { setCancellationData, setCancellationIssueVisible, typeData } = props;
 
     const [editVehicleDetailsForm] = Form.useForm();
 
@@ -118,7 +120,7 @@ const ViewDetailMain = (props) => {
                         <Descriptions {...viewProps}>
                             <Descriptions.Item label="Indent Number">{checkAndSetDefaultValue(formData?.indentNumber, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Indent Date">{checkAndSetDefaultValue(formData?.indentDate ? formData?.indentDate : undefined, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                            <Descriptions.Item label="Indent Status">{checkAndSetDefaultValue(formData?.indentStatus, isLoading)}</Descriptions.Item>
+                            <Descriptions.Item label="Indent Status">{checkAndSetDefaultValue(getCodeValue(typeData[PARAM_MASTER.INDNT_RAS.id], formData?.indentStatus), isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Indent To Parent">{checkAndSetDefaultValue(formData?.indentToParent, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Indent To Location">{checkAndSetDefaultValue(formData?.indentToLocation, isLoading)}</Descriptions.Item>
                             <Descriptions.Item label="Requested By">{checkAndSetDefaultValue(formData?.requestedBy, isLoading)}</Descriptions.Item>

@@ -8,7 +8,7 @@ import React from "react";
 import { screen, fireEvent } from "@testing-library/react";
 import '@testing-library/jest-dom/extend-expect';
 import customRender from "@utils/test-utils";
-import { AddEditForm } from "@components/Sales/OTF/ExchangeVehicles/AddEditForm"
+import { AddEditForm } from "@components/Sales/Common/ExchangeVehicles/AddEditForm"
 import { Form } from 'antd';
 
 afterEach(() => {
