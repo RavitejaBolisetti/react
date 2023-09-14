@@ -12,13 +12,13 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { handleBtnVisibility } from './utils';
 import { CancelConfirmModal, IssueVehicleDetailsModal } from './Modals';
-import {converDateDayjs} from 'utils/formatDateTime'
+import { converDateDayjs } from 'utils/formatDateTime';
 
 import styles from 'assets/sass/app.module.scss';
 const { Panel } = Collapse;
 const { Text } = Typography;
 
-const CancellationIssueMain = (props) => {
+const IssueIndentMasterMain = (props) => {
     const { cancellationData, handleVinSearch, vehicleVinData, saveIssueDetail, showGlobalNotification, resetVinDetails, listShowLoading, userId, fetchIssueList, indentIssueData, resetIssueList, indentIssueDataLoaded, typeData, indentIssueDataLoading, toggleButton } = props;
     const defaultVisibility = {
         canCancel: true,
@@ -42,7 +42,9 @@ const CancellationIssueMain = (props) => {
     };
 
     useEffect(() => {
-        if (issueModalOpen && vehicleVinData?.vehicleSearch?.length) issueForm.setFieldsValue({ ...vehicleVinData?.vehicleSearch[0], modelDescription: cancellationData?.modelDescription,invoiceDate:converDateDayjs(vehicleVinData?.vehicleSearch[0]?.invoiceDate),grnDate:converDateDayjs(vehicleVinData?.vehicleSearch[0]?.grnDate) });
+        if (issueModalOpen && vehicleVinData?.vehicleSearch?.length) {
+            issueForm.setFieldsValue({ ...vehicleVinData?.vehicleSearch[0], modelDescription: cancellationData?.modelDescription, invoiceDate: converDateDayjs(vehicleVinData?.vehicleSearch[0]?.invoiceDate), grnDate: converDateDayjs(vehicleVinData?.vehicleSearch[0]?.grnDate) });
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [vehicleVinData]);
 
@@ -114,6 +116,7 @@ const CancellationIssueMain = (props) => {
             return;
         }
         const { invoiceDate, invoiceNumber, ...rest } = values;
+
         let data = { ...rest, oemInvoiceDate: invoiceDate, oemInvoiceNumber: invoiceNumber, indentHdrId: cancellationData?.id, id: '', modelCode: cancellationData?.modelCode, issueStatus: cancellationData?.issueStatus, issueDate: cancellationData?.issueDate };
         const onSuccess = (res) => {
             issueForm.resetFields();
@@ -184,7 +187,7 @@ const CancellationIssueMain = (props) => {
     };
 
     const IssueVehicleDetailsProps = { onCloseAction, isVisible: issueModalOpen, titleOverride: DRAWER_TITLE_CONSTANT?.ISSUE?.name, issueForm, onFinish, cancellationData, handleVinSearch, vehicleVinData, typeData };
-    const cancellationIssueProps = { onCloseAction: handleCloseConfirmation, isVisible: isConfirmationModal, titleOverride: DRAWER_TITLE_CONSTANT?.CONFIRMATION?.name, handdleYes, AcceptButtonName: ModalButtonName };
+    const cancelIssueProps = { onCloseAction: handleCloseConfirmation, isVisible: isConfirmationModal, titleOverride: DRAWER_TITLE_CONSTANT?.CONFIRMATION?.name, handdleYes, AcceptButtonName: ModalButtonName };
 
     return (
         <>
@@ -238,10 +241,10 @@ const CancellationIssueMain = (props) => {
                     })}
                 </div>
             </div>
-            <CancelConfirmModal {...cancellationIssueProps} />
+            <CancelConfirmModal {...cancelIssueProps} />
             <IssueVehicleDetailsModal {...IssueVehicleDetailsProps} />
         </>
     );
 };
 
-export const CancellationIssue = withDrawer(CancellationIssueMain, { width: '90%', footer: null });
+export const IssueIndentMaster = withDrawer(IssueIndentMasterMain, { width: '90%', footer: null });
