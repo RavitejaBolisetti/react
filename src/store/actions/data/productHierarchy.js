@@ -130,42 +130,6 @@ productHierarchyDataActions.fetchList = withAuthToken((params) => ({ token, acce
     axiosAPICall(apiCallParams);
 });
 
-productHierarchyDataActions.fetchDetail = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-    const { setIsLoading, onError, data, code } = params;
-    setIsLoading(true);
-
-    const onSuccess = (res) => {
-        if (res?.data) {
-            dispatch(receiveProductHierarchyDetailData(res?.data));
-        } else {
-            dispatch(receiveProductHierarchyDetailData([]));
-            onError && onError();
-        }
-    };
-
-    const onErrorAction = () => {
-        dispatch(receiveProductHierarchyDetailData([]));
-        onError && onError();
-    };
-
-    const apiCallParams = {
-        data,
-        method: 'get',
-        url: BASE_URL_PRODUCT_HIERARCHY + (code ? '?prodctCode=' + code : ''),
-        token,
-        accessToken,
-        userId,
-        onSuccess,
-        onError: onErrorAction,
-        onTimeout: () => onError('Request timed out, Please try again'),
-        onUnAuthenticated: () => dispatch(doLogout()),
-        onUnauthorized: (message) => dispatch(unAuthenticateUser(message)),
-        postRequest: () => setIsLoading(false),
-    };
-
-    axiosAPICall(apiCallParams);
-});
-
 productHierarchyDataActions.fetchChangeHistoryList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
     const { setIsLoading, onError, data, manufactureOrgId } = params;
     setIsLoading(true);

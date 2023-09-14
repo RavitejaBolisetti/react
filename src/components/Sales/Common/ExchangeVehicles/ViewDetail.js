@@ -24,7 +24,7 @@ const ViewDetailMain = (props) => {
             <Descriptions {...viewProps}>
                 <Descriptions.Item label="Exchange">{checkAndSetDefaultValue(formData?.exchange ? 'Yes' : 'No', isLoading)}</Descriptions.Item>
             </Descriptions>
-            {formData?.exchange && (
+            {formData?.exchange === 1 && (
                 <>
                     <Descriptions {...viewProps} title={prepareCaption('Vehicle Details')}>
                         <Descriptions.Item label="Old Reg. Number">{checkAndSetDefaultValue(formData?.oldRegistrationNumber, isLoading)}</Descriptions.Item>
