@@ -12,7 +12,7 @@ import { FilterIcon } from 'Icons';
 import { tableColumn } from './tableColumn';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { STOCK_TRANSFER } from 'constants/StockTransfer';
-import { ADD_ACTION, VIEW_ACTION, CANCEL_ACTION, NEXT_ACTION, btnVisiblity } from 'utils/btnVisiblity';
+import { ADD_ACTION, VIEW_ACTION, CANCEL_ACTION } from 'utils/btnVisiblity';
 import { stockTransferIndent } from 'store/actions/data/sales/stockTransfer/StockTransferIndent';
 import { StockIndentIssueDataAction } from 'store/actions/data/sales/stockTransfer';
 import { DealerBranchLocationDataActions } from 'store/actions/data/userManagement/dealerBranchLocation';
@@ -428,19 +428,16 @@ export const StockTransferIndentMasterBase = (props) => {
     };
 
     const removeFilter = (key) => {
-        console.log('dkey', key);
         if (key === 'indentNo') {
             const { indentNo, searchParam, ...rest } = filterString;
             setFilterString({ ...rest });
         } else if (key === 'indentRaisedTo' || key === 'indentRaisedFrom') {
             const { dealerLocation, ...rest } = filterString;
             setFilterString({ ...rest });
-        }
-        // else if (key === 'fromDate' || key === 'toDate') {
-        //     setFilterString();
-        //     advanceFilterForm.resetFields();
-        // }
-        else {
+        } else if (key === 'fromDate' || key === 'toDate') {
+            setFilterString();
+            advanceFilterForm.resetFields();
+        } else {
             const { [key]: names, ...rest } = filterString;
             setFilterString({ ...rest });
         }
