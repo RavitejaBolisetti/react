@@ -7,7 +7,7 @@ import { ISSUE_CONSTANT } from '../Constants';
 import { STOCK_TRANSFER } from 'constants/StockTransfer';
 
 export const handleBtnVisibility = ({ toggleButton = undefined, checkKey = undefined, defaultVisibility }) => {
-    console.log('checkKey', checkKey,toggleButton);
+    console.log('checkKey', checkKey, toggleButton);
     switch (toggleButton) {
         case STOCK_TRANSFER?.RAISED?.key: {
             switch (checkKey) {
@@ -21,10 +21,10 @@ export const handleBtnVisibility = ({ toggleButton = undefined, checkKey = undef
                     return { canReceive: false, canCancel: false, canReturn: false, canPrint: true };
                 }
                 case ISSUE_CONSTANT?.ISSUED?.key: {
-                    return { canReceive: false, canCancel: true, canReturn: false, canPrint: true };
+                    return { canReceive: true, canCancel: false, canReturn: true, canPrint: true };
                 }
                 default: {
-                    return { ...defaultVisibility };
+                    return { ...defaultVisibility, canAdd: false };
                 }
             }
         }
@@ -48,7 +48,7 @@ export const handleBtnVisibility = ({ toggleButton = undefined, checkKey = undef
             }
         }
         default: {
-            return { canReceive: false, canCancel: false, canReturn: false, canPrint: false };
+            return { ...defaultVisibility };
         }
     }
 };

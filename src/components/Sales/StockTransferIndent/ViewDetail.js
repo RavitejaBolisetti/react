@@ -40,7 +40,7 @@ const ViewDetailMain = (props) => {
     const onFinish = (values) => {
         setIsEditVehicleDetailsVisible(false);
         editVehicleDetailsForm.resetFields();
-        updateVehicleDetails({...editVehicleDetails, cancelledQuantity: values?.cancelledQuantity});
+        updateVehicleDetails({ ...editVehicleDetails, cancelledQuantity: values?.cancelledQuantity });
         let data = { ...values };
 
         const onSuccess = (res) => {
@@ -98,6 +98,7 @@ const ViewDetailMain = (props) => {
 
     const tableProps = {
         srl: true,
+        isLoading: isLoading,
         tableColumn: tableColumnVehicleDetails(handleButtonClickVehicleDetails, sorterPagination, buttonDataVehicleDetails),
         tableData: formData?.vehicleDetails,
         pagination: sorterPagination,

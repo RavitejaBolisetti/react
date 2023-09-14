@@ -22,28 +22,23 @@ export const ISSUE_CONSTANT = {
         id: 'Cancel',
         key: 'CNCL',
         modalButtonName: 'Yes',
+        modelMessage: 'Do you want to cancel this issue ?',
     },
     RECEIVED: {
         id: 'Received',
         key: 'REC',
         modalButtonName: 'Yes Recieve',
+        modelMessage: 'Do you want to receive this ?',
     },
     RETURNED: {
         id: 'Returned',
         key: 'RET',
         modalButtonName: 'Yes Return',
+        modelMessage: 'Do you want to return this ?',
     },
     ISSUED: {
         id: 'Issued',
         key: 'I',
         modalButtonName: 'Yes Return',
-    },
-    RECEIVED: {
-        id: 'Received',
-        key: 'REC',
-    },
-    RETURNED: {
-        id: 'Returned',
-        key: 'RET',
     },
 };

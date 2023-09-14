@@ -6,6 +6,7 @@
 export const BUTTON_NAME_CONSTANTS = {
     ADD: {
         name: 'ADD',
+        key: 'ADD',
         page: 'Cancellation Issue Master',
     },
     CANCEL: {
@@ -13,7 +14,7 @@ export const BUTTON_NAME_CONSTANTS = {
         page: 'Cancellation Issue Master',
     },
     RECEIEVED: {
-        name: 'Received',
+        name: 'Receive',
         page: 'View Issue Card',
     },
     RETURN: {

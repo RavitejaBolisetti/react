@@ -9,9 +9,11 @@ import { withModal } from 'components/withModal';
 import { ModalButtons } from 'components/common/Button';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, validationFieldLetterAndNumber, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
+import { isIssuePriceValid } from '../utils';
+
 const { Search } = Input;
 
-const IssueVehicleDetailsModalMain = ({ issueForm, onFinish, handleVinSearch, isReadonly = true, onCloseAction, cancellationData }) => {
+const IssueVehicleDetailsModalMain = ({ issueForm, onFinish, handleVinSearch, isReadonly = true, onCloseAction, cancellationData, vehicleVinDataLoading }) => {
     const modalProps = {
         reset: true,
         submit: true,
@@ -20,6 +22,10 @@ const IssueVehicleDetailsModalMain = ({ issueForm, onFinish, handleVinSearch, is
         handleResetFilter: onCloseAction,
     };
     const disabledProps = { disabled: isReadonly };
+    const handleDependentReset = () => {
+        issueForm.resetFields(['engineNumber', 'invoiceDate', 'invoiceNumber', 'grnDate', 'grnNumber', 'netDealerPrice']);
+    };
+    console.log('vehicleVinDataLoading', vehicleVinDataLoading);
 
     return (
         <>
@@ -32,7 +38,7 @@ const IssueVehicleDetailsModalMain = ({ issueForm, onFinish, handleVinSearch, is
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8}>
                         <Form.Item name="vin" label="VIN" rules={[validateRequiredInputField('VIN'), validationFieldLetterAndNumber('VIN')]}>
-                            <Search placeholder={preparePlaceholderText('vin number')} onSearch={handleVinSearch} onChange={() => issueForm.resetFields(['engineNumber'])} maxLength={50} />
+                            <Search loading={vehicleVinDataLoading} placeholder={preparePlaceholderText('vin number')} onSearch={handleVinSearch} onChange={handleDependentReset} maxLength={50} />
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8}>
@@ -65,7 +71,7 @@ const IssueVehicleDetailsModalMain = ({ issueForm, onFinish, handleVinSearch, is
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                        <Form.Item name="issueCharges" label="Issue Charges" rules={[validateRequiredInputField('issue charges'), validateNumberWithTwoDecimalPlaces('issue charges')]}>
+                        <Form.Item name="issueCharges" label="Issue Charges" rules={[validateRequiredInputField('issue charges'), validateNumberWithTwoDecimalPlaces('issue charges'), { validator: (_, value) => isIssuePriceValid(value, issueForm.getFieldValue('netDealerPrice')) }]}>
                             <Input placeholder={preparePlaceholderText('Issue Charges')} maxLength={50} />
                         </Form.Item>
                     </Col>

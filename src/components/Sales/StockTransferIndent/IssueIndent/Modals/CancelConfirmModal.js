@@ -6,7 +6,7 @@
 import React from 'react';
 import { Row, Col, Button } from 'antd';
 import { withModal } from 'components/withModal';
-import { ISSUE_CONSTANT,BUTTON_NAME_CONSTANTS } from '../Constants';
+import { ISSUE_CONSTANT, BUTTON_NAME_CONSTANTS } from '../Constants';
 import styles from 'assets/sass/app.module.scss';
 
 const CancelConfirmModalMain = ({ handdleYes, onCloseAction, AcceptButtonName = ISSUE_CONSTANT?.CANCEL }) => {
@@ -14,7 +14,7 @@ const CancelConfirmModalMain = ({ handdleYes, onCloseAction, AcceptButtonName = 
         <>
             <Row gutter={20} className={styles.marB20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <p>Do you want to cancel the issue</p>
+                    <p>{AcceptButtonName?.modelMessage}</p>
                 </Col>
             </Row>
             <Row gutter={20}>

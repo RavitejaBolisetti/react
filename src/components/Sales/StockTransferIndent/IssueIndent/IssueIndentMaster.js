@@ -12,19 +12,20 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { handleBtnVisibility } from './utils';
 import { CancelConfirmModal, IssueVehicleDetailsModal } from './Modals';
-import { converDateDayjs } from 'utils/formatDateTime';
+import { converDateDayjs, formatDate } from 'utils/formatDateTime';
 
 import styles from 'assets/sass/app.module.scss';
 const { Panel } = Collapse;
 const { Text } = Typography;
 
 const IssueIndentMasterMain = (props) => {
-    const { cancellationData, handleVinSearch, vehicleVinData, saveIssueDetail, showGlobalNotification, resetVinDetails, listShowLoading, userId, fetchIssueList, indentIssueData, resetIssueList, indentIssueDataLoaded, typeData, indentIssueDataLoading, toggleButton } = props;
+    const { cancellationData, handleVinSearch, vehicleVinData, saveIssueDetail, showGlobalNotification, resetVinDetails, listShowLoading, userId, fetchIssueList, indentIssueData, resetIssueList, indentIssueDataLoaded, typeData, indentIssueDataLoading, toggleButton, vehicleVinDataLoading } = props;
     const defaultVisibility = {
         canCancel: true,
         canReturn: false,
         canReceive: false,
         canPrint: true,
+        canAdd: true,
     };
     const [issueForm] = Form.useForm();
     const [issueModalOpen, setIssueModal] = useState(false);
@@ -83,9 +84,7 @@ const IssueIndentMasterMain = (props) => {
     };
     const ViewDetailProps = {
         formData: cancellationData,
-    };
-    const handleIssueAdd = () => {
-        setIssueModal(true);
+        typeData,
     };
 
     const handleRequest = (data, key = ISSUE_CONSTANT?.CANCEL?.key) => {
@@ -102,8 +101,12 @@ const IssueIndentMasterMain = (props) => {
                 setModalButtonName(ISSUE_CONSTANT?.RECEIVED);
                 break;
             }
+            case BUTTON_NAME_CONSTANTS?.ADD?.key: {
+                setIssueModal(true);
+                return;
+            }
             default:
-                break;
+                return false;
         }
         setIsConfirmationModal(true);
         setIssueCanceData(data);
@@ -117,7 +120,8 @@ const IssueIndentMasterMain = (props) => {
         }
         const { invoiceDate, invoiceNumber, ...rest } = values;
 
-        let data = { ...rest, oemInvoiceDate: invoiceDate, oemInvoiceNumber: invoiceNumber, indentHdrId: cancellationData?.id, id: '', modelCode: cancellationData?.modelCode, issueStatus: cancellationData?.issueStatus, issueDate: cancellationData?.issueDate };
+        let data = { ...rest, oemInvoiceDate: formatDate(invoiceDate), oemInvoiceNumber: invoiceNumber, indentHdrId: cancellationData?.id, id: '', modelCode: cancellationData?.modelCode, issueStatus: cancellationData?.issueStatus, issueDate: formatDate(cancellationData?.issueDate), grnDate: formatDate(values?.grnDate) };
+
         const onSuccess = (res) => {
             issueForm.resetFields();
             setIssueModal(false);
@@ -186,22 +190,23 @@ const IssueIndentMasterMain = (props) => {
         saveIssueDetail(requestData);
     };
 
-    const IssueVehicleDetailsProps = { onCloseAction, isVisible: issueModalOpen, titleOverride: DRAWER_TITLE_CONSTANT?.ISSUE?.name, issueForm, onFinish, cancellationData, handleVinSearch, vehicleVinData, typeData };
-    const cancelIssueProps = { onCloseAction: handleCloseConfirmation, isVisible: isConfirmationModal, titleOverride: DRAWER_TITLE_CONSTANT?.CONFIRMATION?.name, handdleYes, AcceptButtonName: ModalButtonName };
+    const IssueVehicleDetailsProps = { onCloseAction, isVisible: issueModalOpen, titleOverride: DRAWER_TITLE_CONSTANT?.ISSUE?.name, issueForm, onFinish, cancellationData, handleVinSearch, vehicleVinData, typeData, vehicleVinDataLoading };
+    const cancelIssueProps = { onCloseAction: handleCloseConfirmation, isVisible: isConfirmationModal, titleOverride: DRAWER_TITLE_CONSTANT?.CONFIRMATION?.name, handdleYes, AcceptButtonName: ModalButtonName, typeData };
 
     return (
         <>
             <div className={styles.drawerBodyNew}>
                 <ViewDetail {...ViewDetailProps} />
-                {cancellationData?.balancedQuantity > 0 && cancellationData?.balancedQuantity !== null && (
+                {cancellationData?.balancedQuantity > 0 && cancellationData?.balancedQuantity !== null && handleBtnVisibility({ toggleButton, checkKey: undefined, defaultVisibility })?.canAdd && (
                     <Row className={styles.marB20} gutter={20} justify="start">
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                            <Button type="primary" onClick={handleIssueAdd}>
+                            <Button type="primary" onClick={() => handleRequest(undefined, BUTTON_NAME_CONSTANTS?.ADD?.key)}>
                                 {BUTTON_NAME_CONSTANTS?.ADD?.name}
                             </Button>
                         </Col>
                     </Row>
                 )}
+
                 <div className={styles.viewDrawerContainer}>
                     {issueData?.map((element, i) => {
                         return (
