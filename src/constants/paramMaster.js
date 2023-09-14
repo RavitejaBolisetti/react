@@ -376,5 +376,9 @@ export const PARAM_MASTER = {
     DLVR_SALE_TYP: {
         id: 'DLVR_SALE_TYP',
         title: 'Delivery Note Reason for Delay',
-    }, 
+    },
+    PARTY_TYPE: {
+        id: 'PARTY_TYPE',
+        title: 'Supplier Party Type',
+    },
 };
