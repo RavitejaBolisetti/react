@@ -26,8 +26,8 @@ import { AdvancedSearch } from './AdvancedSearch';
 import AdvanceFilter from './AdvanceFilter';
 import { AddEditForm } from './AddEditForm';
 import { ViewDetail } from './ViewDetail';
-import { CancellationIssue } from './CancellationIssue';
-import { DRAWER_TITLE_CONSTANT } from './CancellationIssue/Constants';
+import { IssueIndentMaster } from './IssueIndent';
+import { DRAWER_TITLE_CONSTANT } from './IssueIndent/Constants';
 import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 
 const mapStateToProps = (state) => {
@@ -575,7 +575,8 @@ export const StockTransferIndentMasterBase = (props) => {
         setCancellationIssueVisible,
         typeData,
     };
-    const CancellationIssueProps = {
+
+    const IndentIssueProps = {
         isVisible: cancellationIssueVisible,
         formData: selectedOrder,
         onCloseAction: () => {
@@ -615,7 +616,7 @@ export const StockTransferIndentMasterBase = (props) => {
             <AdvancedSearch {...advanceSearchFilterProps} />
             <AddEditForm {...addNewIndentProps} />
             <ViewDetail {...viewIndentProps} />
-            <CancellationIssue {...CancellationIssueProps} />
+            {isViewIndentVisible && <IssueIndentMaster {...IndentIssueProps} />}
         </>
     );
 };
