@@ -108,7 +108,7 @@ export const AdvancedSearchFrom = (props) => {
 
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Form.Item initialValue={filterString?.otfStatus} label="OTF Status" name="otfStatus">
+                    <Form.Item initialValue={filterString?.otfStatus} label="Booking Status" name="otfStatus">
                         {customSelectBox({ data: otfStatusList, fieldNames: { key: 'key', value: 'desc' }, placeholder: preparePlaceholderSelect('') })}
                     </Form.Item>
                 </Col>
