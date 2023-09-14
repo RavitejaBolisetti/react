@@ -19,7 +19,7 @@ import { withModal } from 'components/withModal';
 import styles from 'components/Auth/Auth.module.scss'
 const OtpVarificationModalMain = (props) => {
     const { userId, sendOTP, selectedUserId, validateOTP, isLoading, onCloseAction, titleOverride, icon = '', closable = true, onOk = () => {}, otpInput, setOTPInput } = props;
-    const { showGlobalNotification, onError, setInValidOTP, inValidOTP, counter, setCounter, sendOTPVerificationCode, handleVerifyOTP } = props;
+    const { showGlobalNotification, onError, setInValidOTP, inValidOTP, counter, setCounter, sendOTPVerificationCode, handleVerifyOTP, RESEND_OTP_TIME, selectedCustomer } = props;
 
     const [form] = Form.useForm();
 
@@ -33,32 +33,32 @@ const OtpVarificationModalMain = (props) => {
         setInValidOTP(false);
         setDisableVerifyOTP(true);
 
-        // let otpSentOnMobile = '';
+        let otpSentOnMobile = '';
         // let otpSentOnEmail = '';
 
-        // if (values) {
-        //     otpSentOnMobile = values?.otpSentOn.includes('sentOnMobile');
-        //     otpSentOnEmail = values?.otpSentOn?.includes('sentOnEmail');
-        // } else {
-        //     otpSentOnMobile = form.getFieldValue('otpSentOn').includes('sentOnMobile');
-        //     otpSentOnEmail = form.getFieldValue('otpSentOn')?.includes('sentOnEmail');
-        // }
+        if (values) {
+            otpSentOnMobile = values?.otpSentOn.includes('sentOnMobile');
+            // otpSentOnEmail = values?.otpSentOn?.includes('sentOnEmail');
+        } else {
+            otpSentOnMobile = form.getFieldValue('otpSentOn').includes('sentOnMobile');
+            // otpSentOnEmail = form.getFieldValue('otpSentOn')?.includes('sentOnEmail');
+        }
 
-        // if (otpSentOnMobile || otpSentOnEmail) {
-        // const data = { userId: userId, sentOnMobile: true, sentOnEmail: true };
-        // const onSuccess = (res) => {
-        //     setCounter(RESEND_OTP_TIME);
-        //     showGlobalNotification({ notificationType: 'warning', title: 'OTP Sent', message: res?.responseMessage });
-        //     setOTPMessage(res?.data?.message);
-        // };
-        // const requestData = {
-        //     data: data,
-        //     setIsLoading: () => {},
-        //     onSuccess,
-        //     onError,
-        // };
-        // sendOTP(requestData);
-        // }
+        if (otpSentOnMobile) {
+        const data = { userId: selectedCustomer?.customerId, sentOnMobile: true};
+        const onSuccess = (res) => {
+            setCounter(RESEND_OTP_TIME);
+            showGlobalNotification({ notificationType: 'warning', title: 'OTP Sent', message: res?.responseMessage });
+            setOTPMessage(res?.data?.message);
+        };
+        const requestData = {
+            data: data,
+            setIsLoading: () => {},
+            onSuccess,
+            onError,
+        };
+        sendOTP(requestData);
+        }
     };
     const handleOTPInput = (value) => {
         setOTPInput(value);
@@ -66,6 +66,8 @@ const OtpVarificationModalMain = (props) => {
             setDisableVerifyOTP(false);
         }
     };
+   
+
 
     return (
         <div className={styles.centerInner}>

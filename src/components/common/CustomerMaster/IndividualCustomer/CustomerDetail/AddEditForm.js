@@ -23,6 +23,8 @@ const AddEditFormMain = (props) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [mobileNumber, setMobileNumber] = useState(false);
     const [mobileLoader, setmobileLoader] = useState(false);
+    const [otpVerified, setOtpVerified] = useState(false);
+    const [otpValue, setOtpValue] = useState('');
     const RESEND_OTP_TIME = 60;
 
     const [otpInput, setOTPInput] = useState('');
@@ -111,6 +113,7 @@ const AddEditFormMain = (props) => {
         }
     };
 
+
     const onHandleSelect = (value) => {
         form.setFieldsValue({
             corporateCode: value,
@@ -160,11 +163,13 @@ const AddEditFormMain = (props) => {
                 },
             ];
             setmobileLoader(true);
+            setOtpVerified(true);
             fetchContactMobileNoDetails({ setIsLoading: listContactMobileNoShowLoading, extraParams: [...defaultExtraParam, ...mobNoParam], userId });
         }
     };
     const sendOTPVerificationCode = () => {
-        const data = { userId: selectedCustomer?.customerId, mobileNumber: selectedCustomer?.mobileNumber, sentOnMobile: true, sentOnEmail: false, functionality: 'CUST' };
+        const data = { userId: selectedCustomer?.customerId, mobileNumber:form.getFieldsValue(mobileNumber), sentOnMobile: true, sentOnEmail: false, functionality: 'CUST' };
+      
         const onSuccess = (res) => {
             setCounter(RESEND_OTP_TIME);
             showGlobalNotification({ notificationType: 'warning', title: 'OTP Sent', message: res?.responseMessage });
@@ -206,6 +211,11 @@ const AddEditFormMain = (props) => {
             validateOTP(requestData);
         }
     };
+    const handleEditClick = () => {
+        setOtpValue('');
+        setOtpVerified(false);
+      }
+   
     const modalProps = {
         isVisible: isModalOpen,
         icon: <BiLockAlt />,
@@ -266,8 +276,14 @@ const AddEditFormMain = (props) => {
                                 maxLength={10}
                                 size="small"
                                 onChange={handleOnchangeMobNoInput}
+                                disabled={otpVerified}
                                 suffix={
                                     <>
+                                        {otpVerified && (
+                                            <button onClick={handleEditClick} type="link" style={{ transform: 'scale(-1,1)' }}>
+                                                Edit
+                                            </button>
+                                        )}
                                         {!numbValidatedSuccess ? (
                                             <Button onClick={handleNumberValidation} type="link" style={{ transform: 'scale(-1,1)' }}>
                                                 Verify
