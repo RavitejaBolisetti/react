@@ -7,7 +7,7 @@ import { dataActions } from 'store/actions/crud/dataAction';
 import { BASE_URL_SO_MAPPING_OTF_SEARCH as baseURL } from 'constants/routingApi';
 
 const PREFIX = 'OTF_SO_MAPPING_OTF_SEARCH';
-const moduleName = 'OTF SO MAPPING';
+const moduleName = 'BOOKING SO MAPPING';
 
 export const RECEIVE_DATA_LOADING_ACTION_CONSTANT = PREFIX + 'LOADING_DATA';
 export const RECEIVE_DATA_ACTION_CONSTANT = PREFIX + 'LIST_RECIEVE_DATA';

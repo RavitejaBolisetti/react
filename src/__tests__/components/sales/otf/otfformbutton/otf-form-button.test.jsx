@@ -21,8 +21,8 @@ const buttonData = {
     formBtnActive: true,
 };
 
-describe('OTF Form Button Component', () => {
-    it('should render otf form button component', () => {
+describe('Booking Form Button Component', () => {
+    it('should render Booking form button component', () => {
         customRender(<OTFFormButton />);
     });
 

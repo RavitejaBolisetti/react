@@ -17,7 +17,7 @@ const FormWrapper = (props) => {
     return <OptionServicesForm optionForm={optionForm} {...props} />;
 };
 
-describe('OTF Vehicle optional Component render', () => {
+describe('Booking Vehicle optional Component render', () => {
     it('should render optional service form', async () => {
         customRender(<FormWrapper typeData={'OPT_SRV'} />);
     });

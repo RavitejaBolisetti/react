@@ -9,19 +9,15 @@ import thunk from 'redux-thunk';
 import { rootReducer } from 'store/reducers';
 
 export const createMockStore = (initialState) => {
-
     const mockStore = configureStore({
-
         reducer: rootReducer,
 
         preloadedState: initialState,
 
         middleware: [thunk],
-
-    }); 
+    });
 
     return mockStore;
-
 };
 
 afterEach(() => {
@@ -242,7 +238,7 @@ const props = {
     onErrorAction: jest.fn(),
 };
 
-describe('OTF cancellation master render', () => {
+describe('Booking cancellation master render', () => {
     const mockStore = createMockStore({
         auth: { userId: 132, accessToken: 'testaccesstoken', token: 'testToken' },
         data: {
@@ -292,7 +288,7 @@ describe('OTF cancellation master render', () => {
         const uploadFile = screen.getByRole('button', { name: 'Upload File', exact: false });
         fireEvent.change(uploadFile);
 
-        const cancelOtf = screen.getByRole('button', { name: 'Cancel OTF', exact: false });
+        const cancelBooking = screen.getByRole('button', { name: 'Cancel OTF', exact: false });
         fireEvent.click(cancelOtf);
 
         const cancel = screen.getByRole('button', { name: 'Cancel', exact: false });

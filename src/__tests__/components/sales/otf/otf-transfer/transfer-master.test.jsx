@@ -109,7 +109,7 @@ const props = {
     setIsLoading: false,
 };
 
-describe('OTF transfer master render', () => {
+describe('Booking transfer master render', () => {
     const mockStore = createMockStore({
         auth: { userId: 132, accessToken: 'tetsT', token: 'testToken' },
         data: {
@@ -136,7 +136,7 @@ describe('OTF transfer master render', () => {
 
         fireEvent.click(cancel);
 
-        const transferOtf = screen.getByRole('button', { name: 'Transfer OTF', exact: false });
+        const transferBooking = screen.getByRole('button', { name: 'Transfer OTF', exact: false });
 
         fireEvent.click(transferOtf);
 

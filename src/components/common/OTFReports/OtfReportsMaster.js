@@ -27,7 +27,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'OTF Reports';
+    const moduleTitle = 'Booking Reports';
 
     let returnValue = {
         userId,

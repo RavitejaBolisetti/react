@@ -54,9 +54,9 @@ const mapStateToProps = (state) => {
             },
         },
     } = state;
-    const moduleTitle = 'Order Tracking Form';
-    const ChangeHistoryTitle = 'OTF Change History ';
-    const otfSoMappingChangeHistoryTitle = 'OTF - SO Mapping & Un-mapping History';
+    const moduleTitle = 'Booking Form';
+    const ChangeHistoryTitle = 'Booking Change History ';
+    const otfSoMappingChangeHistoryTitle = 'Booking - SO Mapping & Un-mapping History';
 
     let returnValue = {
         userId,
@@ -237,7 +237,7 @@ export const OtfMasterBase = (props) => {
             },
             {
                 key: 'otfStatus',
-                title: 'OTF Status',
+                title: 'Booking Status',
                 value: filterString?.otfStatus,
                 name: otfStatusList?.find((i) => i?.key === filterString?.otfStatus)?.desc,
                 canRemove: true,
@@ -578,7 +578,7 @@ export const OtfMasterBase = (props) => {
 
     const onFinishOTFTansfer = (values) => {
         fnOTFTransfer({
-            modalTitle: 'OTF Transfer',
+            modalTitle: 'Booking Transfer',
             modalMessage: `Do you want to transfer this ${otfData?.otfNumber}`,
             finalData: { ...values, id: otfData?.id, otfNumber: otfData?.otfNumber },
             callBackMethod: transferOTF,
@@ -588,7 +588,7 @@ export const OtfMasterBase = (props) => {
 
     const onFinishOTFCancellation = (values) => {
         fnOTFTransfer({
-            modalTitle: 'OTF Cancel',
+            modalTitle: 'Booking Cancel',
             modalMessage: `Do you want to cancel this ${otfData?.otfNumber}`,
             finalData: { dealerCode: '', oemCode: '', productCode: '', ...values, id: otfData?.id, otfNumber: otfData?.otfNumber, uploadCancellationLetterDocId: uploadedFile },
             callBackMethod: transferOTF,

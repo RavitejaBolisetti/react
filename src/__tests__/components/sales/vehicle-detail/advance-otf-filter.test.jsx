@@ -3,7 +3,7 @@ import customRender from '@utils/test-utils';
 import { screen, fireEvent } from '@testing-library/react';
 import AdvanceOTFFilter from 'components/Sales/VehicleDetail/AdvanceOtfFilter';
 
-describe('Advanced OTF Filter Component', () => {
+describe('Advanced Booking Filter Component', () => {
 
     it('should render advance otf filter component', () => {
         customRender(<AdvanceOTFFilter advanceFilter={true} setAdvanceSearchVisible={jest.fn()} />);

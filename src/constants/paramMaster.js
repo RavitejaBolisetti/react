@@ -335,7 +335,7 @@ export const PARAM_MASTER = {
     },
     SO_MAP: {
         id: 'SO_MAP',
-        title: 'OTF So mapping and Unmapping',
+        title: 'Booking So mapping and Unmapping',
     },
     INDNT_TYP: {
         id: 'INDNT_TYP',

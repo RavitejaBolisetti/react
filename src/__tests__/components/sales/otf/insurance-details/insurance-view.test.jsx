@@ -7,7 +7,7 @@ beforeEach(() => {
     jest.clearAllMocks();
 });
 
-describe('OTF Insurance view Details render', () => {
+describe('Booking Insurance view Details render', () => {
     it('should render view details page', async () => {
         customRender(<ViewDetail />);
     });
