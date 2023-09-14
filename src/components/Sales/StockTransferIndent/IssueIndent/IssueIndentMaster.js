@@ -187,7 +187,7 @@ const IssueIndentMasterMain = (props) => {
     };
 
     const IssueVehicleDetailsProps = { onCloseAction, isVisible: issueModalOpen, titleOverride: DRAWER_TITLE_CONSTANT?.ISSUE?.name, issueForm, onFinish, cancellationData, handleVinSearch, vehicleVinData, typeData };
-    const cancellationIssueProps = { onCloseAction: handleCloseConfirmation, isVisible: isConfirmationModal, titleOverride: DRAWER_TITLE_CONSTANT?.CONFIRMATION?.name, handdleYes, AcceptButtonName: ModalButtonName };
+    const cancelIssueProps = { onCloseAction: handleCloseConfirmation, isVisible: isConfirmationModal, titleOverride: DRAWER_TITLE_CONSTANT?.CONFIRMATION?.name, handdleYes, AcceptButtonName: ModalButtonName };
 
     return (
         <>
@@ -241,7 +241,7 @@ const IssueIndentMasterMain = (props) => {
                     })}
                 </div>
             </div>
-            <CancelConfirmModal {...cancellationIssueProps} />
+            <CancelConfirmModal {...cancelIssueProps} />
             <IssueVehicleDetailsModal {...IssueVehicleDetailsProps} />
         </>
     );
