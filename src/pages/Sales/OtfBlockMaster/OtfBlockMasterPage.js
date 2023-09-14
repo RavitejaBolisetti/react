@@ -9,7 +9,7 @@ import { PageHeader } from 'pages/common/PageHeader';
 import { OtfBlockMaster } from 'components/Sales';
 
 const OtfBlockMasterBase = (props) => {
-    const pageTitle = 'OTF Block Master';
+    const pageTitle = 'Booking Block Master';
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,

@@ -119,10 +119,10 @@ describe('AddEdit Component render', () => {
         const invoice = screen.getByRole('button', { name: 'Invoice' });
         fireEvent.click(invoice);
 
-        const cancelOtf = screen.getByRole('button', { name: 'Cancel OTF' });
+        const cancelOtf = screen.getByRole('button', { name: 'Cancel Booking' });
         fireEvent.click(cancelOtf);
 
-        const transfer = screen.getByRole('button', { name: 'Transfer OTF' });
+        const transfer = screen.getByRole('button', { name: 'Transfer Booking' });
         fireEvent.click(transfer);
 
         const unAllot = screen.getByRole('button', { name: 'Un-Allot' });

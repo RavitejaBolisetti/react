@@ -233,7 +233,7 @@ const props = {
     handleButtonClick: jest.fn(),
     isChangeHistoryData: [],
     onCloseAction: jest.fn(),
-    titleOverride: 'Cancel OTF',
+    titleOverride: 'Cancel Booking',
     otfStatusList: otfStatusList,
     onErrorAction: jest.fn(),
 };
@@ -288,8 +288,8 @@ describe('Booking cancellation master render', () => {
         const uploadFile = screen.getByRole('button', { name: 'Upload File', exact: false });
         fireEvent.change(uploadFile);
 
-        const cancelBooking = screen.getByRole('button', { name: 'Cancel OTF', exact: false });
-        fireEvent.click(cancelOtf);
+        const cancelBooking = screen.getByRole('button', { name: 'Cancel Booking', exact: false });
+        fireEvent.click(cancelBooking);
 
         const cancel = screen.getByRole('button', { name: 'Cancel', exact: false });
         fireEvent.click(cancel);

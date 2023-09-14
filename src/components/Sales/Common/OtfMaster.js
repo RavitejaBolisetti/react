@@ -314,7 +314,7 @@ export const OtfMasterBase = (props) => {
 
     const handleVehicleAllotment = (record, updatedStatus, vinNumber) => {
         if (!record) {
-            showGlobalNotification({ message: 'Please select OTF' });
+            showGlobalNotification({ message: 'Please select Booking' });
             return false;
         }
 
@@ -391,13 +391,13 @@ export const OtfMasterBase = (props) => {
                     const onSuccessAction = (resp) => {
                         setConfirmRequest({
                             isVisible: true,
-                            titleOverride: 'Un-Allot OTF',
+                            titleOverride: 'Un-Allot Booking',
                             closable: true,
                             icon: false,
                             onCloseAction: onCloseConfirmationModalAction,
                             onSubmitAction: () => handleVehicleAllotment(record, VEHICLE_TYPE?.UNALLOTED.key, resp?.data?.vinNumber),
                             submitText: 'Yes',
-                            text: 'Are you sure want to Un-allot this OTF? ',
+                            text: 'Are you sure want to Un-allot this Booking? ',
                             content: resp?.data ? resp?.data?.vinNumber : '',
                         });
                     };

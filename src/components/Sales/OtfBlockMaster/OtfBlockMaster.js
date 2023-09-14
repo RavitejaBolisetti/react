@@ -57,8 +57,8 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'OTF Block Detail';
-    const viewTitle = 'OTF Block';
+    const moduleTitle = 'Booking Block Detail';
+    const viewTitle = 'Booking Block';
 
     let returnValue = {
         collapsed,
@@ -129,7 +129,7 @@ export const OtfBlockMasterMain = (props) => {
 
     const [selectedTreeKey, setSelectedTreeKey] = useState([]);
     const [selectedProductCode, setSelectedProductCode] = useState();
-    const [options, setOptions] = useState([])
+    const [options, setOptions] = useState([]);
     const [selectedOrganizationCode, setSelectedOrganizationCode] = useState();
     const [selectedProductName, setSelectedProductName] = useState();
     const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState([]);
@@ -177,8 +177,6 @@ export const OtfBlockMasterMain = (props) => {
         });
         return extraParams;
     };
-    ;
-
     useEffect(() => {
         if (searchDealerValue && userId) {
             const extraParams = [
@@ -210,8 +208,6 @@ export const OtfBlockMasterMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, organizationId]);
 
-
-
     useEffect(() => {
         if (productHierarchyData?.attributeKey) {
             const prodctShrtName = flatternData.find((i) => productHierarchyData?.manufactureOrgParntId === i.key)?.data?.prodctShrtName;
@@ -236,18 +232,15 @@ export const OtfBlockMasterMain = (props) => {
         if (formData?.id) {
             setSelectedTreeSelectKey([otfBlockMasterData?.hierarchyMstId]);
             form.setFieldsValue({ hierarchyMstId: otfBlockMasterData?.hierarchyMstName });
-        }
-        else {
+        } else {
             setSelectedTreeSelectKey(null);
             form.setFieldsValue({ hierarchyMstId: null });
-            form.resetFields()
+            form.resetFields();
             setOptions([]);
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
-
-
 
     const onChange = (e) => {
         setSearchValue(e.target.value);
@@ -299,7 +292,6 @@ export const OtfBlockMasterMain = (props) => {
     };
 
     const handleSelectTreeClick = (value) => {
-
         form.setFieldsValue({ hierarchyMstId: value });
 
         if (value === selectedTreeKey[0]) {
@@ -383,7 +375,7 @@ export const OtfBlockMasterMain = (props) => {
         saveOTFBlockData(requestData);
     };
 
-    const onFinishFailed = (errorInfo) => { };
+    const onFinishFailed = (errorInfo) => {};
 
     const myProps = {
         isTreeViewVisible,
@@ -444,7 +436,6 @@ export const OtfBlockMasterMain = (props) => {
         form,
         setOptions,
         options,
-
     };
 
     const viewProps = {
@@ -484,7 +475,7 @@ export const OtfBlockMasterMain = (props) => {
         onSelects: (value, treeObj, obj) => {
             resetData();
             setSelectedOrganizationId(value);
-            setSelectedOrganizationCode(treeObj?.id)
+            setSelectedOrganizationCode(treeObj?.id);
             !value && resetData();
         },
         HandleClear: () => {
@@ -495,8 +486,7 @@ export const OtfBlockMasterMain = (props) => {
         placeholder: preparePlaceholderSelect('Organization Hierarchy'),
     };
     const title = 'Hierarchy';
-    const onfinishHeader = (value) => { };
-
+    const onfinishHeader = (value) => {};
 
     return (
         <>

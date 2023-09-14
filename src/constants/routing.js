@@ -98,9 +98,8 @@ export const ROUTING_VEHICLE_DETAILS = ROUTING_SALES.concat('vehicle-details');
 export const ROUTING_VEHICLE_PRICE_MASTER = ROUTING_SALES.concat('vehicle-price-master');
 export const ROUTING_VEHICLE_RECEIPT = ROUTING_SALES.concat('vehicle-receipt');
 export const ROUTING_RECEIPTS = ROUTING_SALES.concat('receipts');
-export const ROUTING_OTF_SO_MAPPING_CONTROL_MASTER = ROUTING_SALES.concat('otf-so-mapping-control-master');
-export const ROUTING_OTF_BLOCK_MASTER = ROUTING_SALES.concat('otf-block-master');
-
+export const ROUTING_OTF_SO_MAPPING_CONTROL_MASTER = ROUTING_SALES.concat('booking-so-mapping-control-master');
+export const ROUTING_OTF_BLOCK_MASTER = ROUTING_SALES.concat('booking-block-master');
 
 export const ROUTING_FINANCIAL_ACCOUNTING_TAX_CHARGES = ROUTING_FINANCIAL_ACCOUNTING.concat('tax-charges');
 export const ROUTING_FINANCIAL_ACCOUNTING_TAX_CHARGES_CATEGORY = ROUTING_FINANCIAL_ACCOUNTING.concat('tax-charges-category');
@@ -109,7 +108,7 @@ export const ROUTING_FINANCIAL_ACCOUNTING_ACCOUNT_CATEGORY = ROUTING_FINANCIAL_A
 export const ROUTING_DOCUMENT_TYPE = ROUTING_FINANCIAL_ACCOUNTING.concat('docment-type-other-charges-ledger-mapping');
 export const ROUTING_FINANCIAL_ACCOUNTING_CHART_OF_ACCOUNT = ROUTING_FINANCIAL_ACCOUNTING.concat('chart-of-account');
 
-export const ROUTING_REPORT_OTF_REPORTS = ROUTING_REPORT.concat('otf-reports');
+export const ROUTING_REPORT_OTF_REPORTS = ROUTING_REPORT.concat('booking-reports');
 export const ROUTING_VEHICLE_ALLOTMENT = ROUTING_SALES.concat('order-delivery/vehicle-allotment');
 export const ROUTING_VEHICLE_RECIEPT_CHECKLIST = ROUTING_SALES.concat('receipt-checklist');
 export const ROUTING_VEHICLE_INVOICE_GENERATION = ROUTING_SALES.concat('vehicle-invoice-generation');
@@ -120,4 +119,4 @@ export const ROUTING_VEHICLE_VEHICLE_ALLOTMENT_PRIORITY_MASTER = ROUTING_SALES.c
 export const ROUTING_DIGITAL_SIGNATURE_MAPPING = ROUTING_SALES.concat('digital-signature');
 export const ROUTING_HO_PRICE_MAPPING = ROUTING_SALES.concat('ho-price-mapping');
 export const STOCK_TRANSFER_INDENT = ROUTING_SALES.concat('stock-transfer-indent');
-export const ROUTING_SO_MAPPING_UNMAPPING = ROUTING_SALES.concat('otf-so-mapping');
+export const ROUTING_SO_MAPPING_UNMAPPING = ROUTING_SALES.concat('booking-so-mapping');

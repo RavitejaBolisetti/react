@@ -136,7 +136,7 @@ describe('Booking transfer master render', () => {
 
         fireEvent.click(cancel);
 
-        const transferBooking = screen.getByRole('button', { name: 'Transfer OTF', exact: false });
+        const transferBooking = screen.getByRole('button', { name: 'Transfer Booking', exact: false });
 
         fireEvent.click(transferOtf);
 

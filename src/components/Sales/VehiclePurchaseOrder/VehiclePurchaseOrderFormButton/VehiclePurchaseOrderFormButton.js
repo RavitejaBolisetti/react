@@ -47,7 +47,7 @@ export const VehiclePurchaseOrderFormButton = ({ record, onCloseAction, buttonDa
 
                     {buttonData?.cancelOtfBtn && (
                         <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.CANCEL_OTF, record })} type="primary">
-                            Cancel OTF
+                            Cancel Booking
                         </Button>
                     )}
 
@@ -59,7 +59,7 @@ export const VehiclePurchaseOrderFormButton = ({ record, onCloseAction, buttonDa
 
                     {buttonData?.cancelOtfBtn && (
                         <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.CANCEL_OTF, record })} type="primary">
-                            Cancel OTF
+                            Cancel Booking
                         </Button>
                     )}
 
