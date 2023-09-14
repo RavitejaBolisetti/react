@@ -22,7 +22,7 @@ export default function AppliedAdvanceFilter(props) {
         searchForm,
         filterString,
         setFilterString,
-        placeholder: 'Search By PO Number',
+        placeholder: 'Search By Vehicle Purchase Order',
         singleFieldKey: 'purchaseOrderNumber',
     };
     return (
