@@ -94,6 +94,7 @@ const CardNotificationDetail = (props) => {
                 </Space>
                 <Row>
                     <div className={styles.cardItemBtn}>{!formEdit && <Button onClick={() => onDocTypeHeadMappingDelete(props)} type="link" icon={<FiTrash />} disabled={props?.id ? true : false} />}</div>
+                    /* Duplicate code comment
                     {formEdit && props?.internalId === uniqueCardEdit && (
                         <div className={styles.cardItemBtn}>
                             <Button type="link" onClick={onDocTypeHeadMappingCancel}>
@@ -104,7 +105,7 @@ const CardNotificationDetail = (props) => {
                             </Button>
                         </div>
                     )}
-
+                    */
                     {formEdit && props?.internalId === uniqueCardEdit && (
                         <div className={styles.cardItemBtn}>
                             <Button type="link" onClick={onDocTypeHeadMappingCancel}>

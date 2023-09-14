@@ -12,10 +12,24 @@ afterEach(() => {
     jest.restoreAllMocks();
 });
 
+const props = {
+    formEdit: true,
+    ADD_ACTION: 'add',
+    EDIT_ACTION: 'edit',
+    VIEW_ACTION: 'view',
+    formActionType: { addMode: false, editMode: false, viewMode: false },
+};
 
 describe('card notification detail component', () => {
     it('should card notification detail component', () => {
-        customRender(<CardNotificationDetail isVIsible={true}  />);
-        screen.getByRole('test');
+        customRender(<CardNotificationDetail setDocTypeHeadMappingList={[...upd_obj]} {...props} setButtonData={jest.fn()} />);
+
+        const cancelBtn = screen.getAllByRole('button', { name: 'Cancel' });
+        fireEvent.click(cancelBtn[0]);
+        fireEvent.click(cancelBtn[1]);
+
+        const saveBtn = screen.getAllByRole('button', { name: 'Save' });
+        fireEvent.click(saveBtn[0]);
+        fireEvent.click(saveBtn[1]);
     });
 });

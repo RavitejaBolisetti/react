@@ -9,14 +9,26 @@ import { screen, fireEvent } from '@testing-library/react';
 import { AddEditForm } from '@components/Sales/VehicleAllotmentPriorityMaster/AddEditForm';
 
 describe('add edit form component', () => {
+    const viewVehicleAllotData = {
+        roleData: [
+            {
+                getRoleName: '',
+                getDesignationName: '',
+                setButtonData: jest.fn(),
+                formBtnActive: true,
+            },
+        ],
+    };
+
     it('should render add edit form component', () => {
-        customRender(<AddEditForm isVisible={true} />);
+        const formActionType = { editMode: true };
+        customRender(<AddEditForm isVisible={true} viewVehicleAllotData={viewVehicleAllotData} formActionType={formActionType} />);
     });
 
     it('it should click when user click on button ', () => {
         const formActionType = { editMode: true };
 
-        customRender(<AddEditForm isVisible={true} formActionType={formActionType} />);
+        customRender(<AddEditForm viewVehicleAllotData={viewVehicleAllotData} isVisible={true} formActionType={formActionType} />);
         const closeBtn = screen.getByRole('button', { name: 'Close' });
         fireEvent.click(closeBtn);
 

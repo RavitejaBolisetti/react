@@ -7,6 +7,15 @@ import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
 import { screen, fireEvent } from '@testing-library/react';
 import { VehicleAllotmentPriorityMaster } from '@components/Sales/VehicleAllotmentPriorityMaster/VehicleAllotmentPriorityMaster';
+import { Form } from 'antd';
+
+afterEach(() => {
+    jest.restoreAllMocks();
+});
+const FormWrapper = (props) => {
+    const [advanceFilterForm] = Form.useForm();
+    return <VehicleAllotmentPriorityMaster advanceFilterForm={advanceFilterForm} {...props} />;
+};
 
 const FROM_ACTION_TYPE = {
     ADD: 'add',
@@ -37,12 +46,21 @@ const buttonData = {
     cancelOtfBtn: true,
 };
 
+const typeData = {
+    VEH_PR_MOD_GR: {
+        id: '123',
+        key: 'test',
+        parentKey: 'VEH_PR_MOD_GR',
+        value: 'New Model Group',
+    },
+};
+
 describe('vehicle allotment priority master component', () => {
     it('should render vehicle allotment priority master component', () => {
-        customRender(<VehicleAllotmentPriorityMaster FROM_ACTION_TYPE={FROM_ACTION_TYPE} buttonData={buttonData} />);
+        customRender(<FormWrapper typeData={typeData} FROM_ACTION_TYPE={FROM_ACTION_TYPE} buttonData={buttonData} />);
     });
     it('button should work', () => {
-        customRender(<VehicleAllotmentPriorityMaster FROM_ACTION_TYPE={FROM_ACTION_TYPE} buttonData={buttonData} />);
+        customRender(<FormWrapper typeData={typeData} handleButtonClick={jest.fn()} FROM_ACTION_TYPE={FROM_ACTION_TYPE} buttonData={buttonData} />);
         const searchBtn = screen.getByRole('button', { name: 'search' });
         fireEvent.click(searchBtn);
         const plusAdd = screen.getByRole('button', { name: 'plus Add' });
@@ -65,20 +83,34 @@ describe('vehicle allotment priority master component', () => {
     });
 
     it('should render column header text', () => {
-        customRender(<VehicleAllotmentPriorityMaster FROM_ACTION_TYPE={FROM_ACTION_TYPE} buttonData={buttonData} />);
-        const SrlBtn = screen.getByRole('img', { name: 'Srl.' });
+        customRender(<FormWrapper typeData={typeData} handleButtonClick={jest.fn()} FROM_ACTION_TYPE={FROM_ACTION_TYPE} buttonData={buttonData} />);
+        const SrlBtn = screen.getByRole('columnheader', { name: 'Srl.' });
         fireEvent.click(SrlBtn);
-        const oldModel = screen.getByRole('img', { name: 'Old Model' });
+        const oldModel = screen.getByRole('columnheader', { name: 'Old Model' });
         fireEvent.click(oldModel);
-        const newModel = screen.getByRole('img', { name: 'New Model' });
+        const newModel = screen.getByRole('columnheader', { name: 'New Model' });
         fireEvent.click(newModel);
-        const effectiveFromDate = screen.getByRole('img', { name: 'Effective From Date' });
+        const effectiveFromDate = screen.getByRole('columnheader', { name: 'Effective From Date' });
         fireEvent.click(effectiveFromDate);
-        const effectiveToDate = screen.getByRole('img', { name: 'Effective To Date' });
+        const effectiveToDate = screen.getByRole('columnheader', { name: 'Effective To Date' });
         fireEvent.click(effectiveToDate);
-        const action = screen.getByRole('img', { name: 'Action' });
+        const action = screen.getByRole('columnheader', { name: 'Action' });
         fireEvent.click(action);
         const noRecordsFound = screen.getByRole('cell', { name: 'No records found' });
         fireEvent.click(noRecordsFound);
+        const previosPage = screen.getByRole('listitem', { name: 'Previous Page' });
+        fireEvent.click(previosPage);
+        const one = screen.getByRole('listitem', { name: '1' });
+        fireEvent.click(one);
+        const nextPage = screen.getByRole('listitem', { name: 'Next Page' });
+        fireEvent.click(nextPage);
+        const newModelEffective = screen.getByRole('row', { name: 'Srl. Old Model New Model Effective From Date Effective To Date Action' });
+        fireEvent.click(newModelEffective);
+    });
+
+    it('should render form text', () => {
+        customRender(<FormWrapper titleOverride={'Advance Filters'} typeData={typeData} handleButtonClick={jest.fn()} FROM_ACTION_TYPE={FROM_ACTION_TYPE} buttonData={buttonData} />);
+        const SrlBtn = screen.getByRole('columnheader', { name: 'Srl.' });
+        fireEvent.click(SrlBtn);
     });
 });
