@@ -13,7 +13,7 @@ const props = {
     formActionType: { addMode: false, editMode: false, viewMode: true },
     listConsultantShowLoading: jest.fn(),
     showGlobalNotification: jest.fn(),
-    section: { displayOnList: true, id: 1, title: 'OTF Details' },
+    section: { displayOnList: true, id: 1, title: 'Booking Details' },
     fetchOTFDetail: jest.fn(),
     listShowLoading: jest.fn(),
     isDataLoaded: true,
@@ -52,7 +52,7 @@ describe('AddEdit Component render', () => {
 
     it('should render text components', async () => {
         customRender(<OtfDetailsMaster {...props} typeData={('SALE_TYP', 'PRC_TYP')} />);
-        const otfDetails = screen.getByText('OTF Details');
+        const otfDetails = screen.getByText('Booking Details');
         expect(otfDetails).toBeTruthy();
 
         const booked = screen.getByText('Booked');
