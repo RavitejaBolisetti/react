@@ -89,7 +89,6 @@ export const ROUTING_ADMIN_USER_MANAGEMENT = ROUTING_ADMIN.concat('user-manageme
 export const ROUTING_USER_MANAGEMENT_DEALER = ROUTING_ADMIN_USER_MANAGEMENT.concat('dealer');
 export const ROUTING_USER_MANAGEMENT_MANUFACTURER = ROUTING_ADMIN_USER_MANAGEMENT.concat('manufacturer');
 export const ROUTING_OTF = ROUTING_SALES.concat('booking-form');
-// export const ROUTING_VECHILE_DETAILS = ROUTING_SALES.concat('vehicle-details');
 export const ROUTING_VECHILE_PURCHASE_ORDER = ROUTING_SALES.concat('vehicle-purchase-order');
 export const ROUTING_RSM_APPROVAL = ROUTING_SALES.concat('rsm-approval');
 export const ROUTING_DELIVERY_NOTE_INVOICE_CANELLATION = ROUTING_SALES.concat('delivery-note-invoice-cancellation');

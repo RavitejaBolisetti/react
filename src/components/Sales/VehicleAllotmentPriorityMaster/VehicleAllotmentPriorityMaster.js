@@ -28,6 +28,7 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 import { ListDataTable } from 'utils/ListDataTable';
 import { btnVisiblity } from 'utils/btnVisiblity';
+import { TbUserExclamation } from 'react-icons/tb';
 
 const mapStateToProps = (state) => {
     const {
@@ -320,14 +321,25 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
 
     const onFinish = (values) => {
         const tempdata = { ...values, id: formData?.id || '', roleData: docTypeHeadMappingList };
+        // const { applicationName, documentTypeName, documentTypeCode, ...data } = tempdata;
+        if(tempdata?.roleData?.length>0){
+        const {...data } = tempdata;
+        } else {
+            onErrorAction('Please select role and designation.');
+            return false;
+        }
+         
+        console.log('tempdata',tempdata);
 
-        const { applicationName, documentTypeName, documentTypeCode, ...data } = tempdata;
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
             setIsFormVisible(false);
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            fetchVehicleAllotList({ setIsLoading: listShowLoading, userId, onSuccessAction, onErrorAction });
+
             setButtonData({ ...buttonData, formBtnActive: false });
+
         };
         const onError = (message) => {
             showGlobalNotification({ message });
@@ -340,7 +352,7 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
             onError,
             onSuccess,
         };
-        saveDataAllot(requestData);
+        // saveDataAllot(requestData);
     };
 
     const onFinishFailed = (errorInfo) => {

@@ -7,7 +7,6 @@ import { ISSUE_CONSTANT } from '../Constants';
 import { STOCK_TRANSFER } from 'constants/StockTransfer';
 
 export const handleBtnVisibility = ({ toggleButton = undefined, checkKey = undefined, defaultVisibility }) => {
-    console.log('checkKey', checkKey, toggleButton);
     switch (toggleButton) {
         case STOCK_TRANSFER?.RAISED?.key: {
             switch (checkKey) {

@@ -52,6 +52,7 @@ export const NotificationDetailMaster = (props) => {
                     setDocTypeHeadMappingList((item) => [updateData, ...item]);
                     notificationDetailForm.resetFields();
                     forceUpdate();
+                    setFilterDesignationList();
                     setButtonData({ ...buttonData, formBtnActive: true });
                 }
             })

@@ -38,13 +38,13 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
         // }),
 
         tblPrepareColumns({
-            title: 'Model',
+            title: 'Model Description',
             dataIndex: 'model',
             width: '25%',
         }),
 
         tblPrepareColumns({
-            title: 'Order Status',
+            title: 'Booking Status',
             dataIndex: 'orderStatus',
             width: '14%',
             render: (_, record) => OTFStatusTag(record.orderStatus),

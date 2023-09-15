@@ -101,6 +101,8 @@ const mapDispatchToProps = (dispatch) => ({
             fetchVinDetails: vehicleDetailDataActions.fetchList,
             resetVinDetails: vehicleDetailDataActions.reset,
             fetchIssueList: StockIndentIssueDataAction.fetchList,
+            listIssueLoading: StockIndentIssueDataAction.listShowLoading,
+
             saveIssueDetail: StockIndentIssueDataAction.saveData,
             resetIssueList: StockIndentIssueDataAction.reset,
 
@@ -114,7 +116,7 @@ export const StockTransferIndentMasterBase = (props) => {
     const { data, filterString, setFilterString, isFetchDataLoading } = props;
     const { userId, typeData, parentGroupCode, showGlobalNotification } = props;
     const { indentLocationList, requestedByDealerList, ProductHierarchyData, isLoadingDealerLoc, indentLocationLoading } = props;
-    const { fetchIndentList, fetchIndentLocation, fetchIndentDetails, fetchRequestedByList, listShowLoading, saveData, ProductLovLoading, fetchProductLov, fetchVinDetails, vehicleVinData, saveIssueDetail, resetVinDetails, fetchIssueList, resetIssueList } = props;
+    const { fetchIndentList, fetchIndentLocation, fetchIndentDetails, fetchRequestedByList, listShowLoading, saveData, ProductLovLoading, fetchProductLov, fetchVinDetails, vehicleVinData, saveIssueDetail, resetVinDetails, fetchIssueList, resetIssueList, listIssueLoading } = props;
     const { indentIssueData, indentIssueDataLoading, indentIssueDataLoaded } = props;
     const [searchForm] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
@@ -401,6 +403,7 @@ export const StockTransferIndentMasterBase = (props) => {
 
     const handleChangeLocation = (value) => {
         let locationId = '';
+        addIndentDetailsForm.setFieldsValue({ requestedBy: '' });
         indentLocationList?.forEach(function (temp) {
             if (temp.locationCode === value) locationId = temp.id;
         });
@@ -591,7 +594,7 @@ export const StockTransferIndentMasterBase = (props) => {
         saveIssueDetail,
         resetVinDetails,
         showGlobalNotification,
-        listShowLoading,
+        listShowLoading: listIssueLoading,
         userId,
         fetchIssueList,
         indentIssueData,
