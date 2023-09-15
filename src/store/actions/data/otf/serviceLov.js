@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -7,7 +7,7 @@ import { dataActions } from 'store/actions/crud/dataAction';
 import { BASE_URL_VEHICLE_DETAILS_SERVICE as baseURL } from 'constants/routingApi';
 
 const PREFIX = 'OTF_VEHICLE_DETAILS_SERVICE_LOV_';
-const moduleName = 'OTF Vehicle Details';
+const moduleName = 'Booking Vehicle Details';
 
 export const RECEIVE_DATA_LOADING_ACTION_CONSTANT = PREFIX + 'LOADING_DATA';
 export const RECEIVE_DATA_ACTION_CONSTANT = PREFIX + 'LIST_RECIEVE_DATA';
@@ -28,4 +28,3 @@ export const otfvehicleDetailsServiceLovDataActions = dataActions({
     SAVE_DATA_ACTION_CONSTANT,
     RESET_DATA_ACTION_CONSTANT,
 });
-

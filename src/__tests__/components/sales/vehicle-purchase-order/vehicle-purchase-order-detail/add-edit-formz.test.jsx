@@ -86,7 +86,7 @@ describe('add edit form Components', () => {
         fireEvent.click(cancelPOBtn);
         const cancelVPOBtn = screen.getByRole('button', { name: 'Cancel VPO', exact: false });
         fireEvent.click(cancelVPOBtn);
-        const cancelOTFBtn = screen.getAllByRole('button', { name: 'Cancel OTF', exact: false });
+        const cancelOTFBtn = screen.getAllByRole('button', { name: 'Cancel Booking', exact: false });
         fireEvent.click(cancelOTFBtn[0]);
         fireEvent.click(cancelOTFBtn[1]);
         const nextBtn = screen.getByRole('button', { name: 'Next', exact: false });

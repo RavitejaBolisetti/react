@@ -112,28 +112,30 @@ export const VehicleTrackingMain = ({ typeData, isLoading, viewTitle, userId, sh
     };
 
     const handleSearchWithoutParameter = (values) => {
-        setSearchCardVisible(true);
         if (values.trim() === '') {
-            console.log('values', values);
+            setSearchCardVisible(false);
+            searchForm.resetFields();
             return;
+        } else {
+            const extraParams = [
+                {
+                    key: 'oemNumber',
+                    value: values.trim(),
+                },
+            ];
+            searchForm
+                .validateFields()
+                .then(() => {
+                    if (userId) {
+                        fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+                    }
+                })
+                .catch((err) => {
+                    return;
+                });
         }
         setModifiedArray([]);
-        const extraParams = [
-            {
-                key: 'oemNumber',
-                value: values.trim(),
-            },
-        ];
-        searchForm
-            .validateFields()
-            .then(() => {
-                if (userId) {
-                    fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
-                }
-            })
-            .catch((err) => {
-                return;
-            });
+        setSearchCardVisible(true);
     };
 
     const handleChange = (e) => {

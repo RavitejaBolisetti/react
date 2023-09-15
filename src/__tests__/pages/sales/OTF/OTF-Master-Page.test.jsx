@@ -8,7 +8,7 @@ import customRender from '@utils/test-utils';
 import { OTFMasterPage } from '@pages/Sales/OTF/OTFMasterPage';
 
 describe('OTFMasterPage Components', () => {
-    it('should render OTF Maste Page components', () => {
+    it('should render Booking Maste Page components', () => {
         customRender(<OTFMasterPage />);
     });
 });

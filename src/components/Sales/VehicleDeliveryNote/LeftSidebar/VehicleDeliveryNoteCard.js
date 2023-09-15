@@ -74,7 +74,7 @@ const VehicleDeliveryNoteCard = (props) => {
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    OTF Number: <span> {checkAndSetDefaultValue(selectedOrder?.otfNumber)}</span>
+                    Booking Number: <span> {checkAndSetDefaultValue(selectedOrder?.otfNumber)}</span>
                 </div>
             </Panel>
         </Collapse>

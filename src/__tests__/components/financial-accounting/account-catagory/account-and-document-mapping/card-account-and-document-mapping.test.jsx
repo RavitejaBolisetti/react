@@ -28,6 +28,7 @@ const EditFormWrapper = (props) =>{
     const myMoock = {
         ...editForm,
         setFieldsValue:jest.fn(),
+        getFieldsValue:jest.fn()
     }
     return <CardAccountAndDocumentMapping editForm={myMoock} {...props} />
 }
@@ -42,7 +43,13 @@ describe('Render CardAccountAndDocumentMapping component', () => {
     }
 
     const accountDocumentMaps = [{
-        internalId:'123', accountDocumentMapId:'45', applicationId:'23',applicationMenu:'op', documentTypeCode:'xy00',documentDescription:'desc', financialAccountHeadCode:'ac00', financialAccountHead:'fgh', selectedTreeSelectKey:'ac', applicationName:'tst'
+        internalId : '123',
+        applicationId : "test",
+        documentTypeCode : "test",
+        financialAccountHeadCode : "test", 
+        applicationName : "test", 
+        documentDescription : "test", 
+        financialAccountHead : "test", 
     }]
 
     it('Cancel Button', () => {
@@ -52,6 +59,15 @@ describe('Render CardAccountAndDocumentMapping component', () => {
 
         const cancelBtn = screen.getByRole('button', {name:'Cancel'});
         fireEvent.click(cancelBtn);
+    })
+
+    it('Save Button', () => {
+        const uniqueCardEdit = '1234';
+        const internalId = '1234';
+        customRender(<EditFormWrapper formEdit={true} internalId={internalId} uniqueCardEdit={uniqueCardEdit} setButtonData={jest.fn()} {...cardProps} setFormEdit={jest.fn()} setDropdownItems={jest.fn()} onAccountDocumentMapsSave={jest.fn()} accountDocumentMaps={accountDocumentMaps} setAccountDocumentMaps={jest.fn()} />);
+
+        const saveBtn = screen.getByRole('button', {name:'Save'});
+        fireEvent.click(saveBtn);
     })
 
     it('edit button', ()=>{
@@ -67,4 +83,6 @@ describe('Render CardAccountAndDocumentMapping component', () => {
         const deletBtn = screen.getAllByRole('button', {name:""});
         fireEvent.click(deletBtn[1]);
     })
+
+    
 });

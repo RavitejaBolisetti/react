@@ -22,7 +22,7 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             width: '14%',
         }),
         tblPrepareColumns({
-            title: 'OTF No.',
+            title: 'Booking No.',
             dataIndex: 'otfNumber',
             width: '14%',
         }),

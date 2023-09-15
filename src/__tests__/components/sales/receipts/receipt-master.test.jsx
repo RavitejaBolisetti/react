@@ -92,8 +92,8 @@ describe('Receipts Component', () => {
 
         const advanceFilter = screen.getByPlaceholderText(/Search Receipt No./i);
         fireEvent.change(advanceFilter, { target: { value: 'Test' } });
-        const removeFilter = screen.getByTestId('removeFilter');
-        fireEvent.click(removeFilter);
+        const removeFilter = screen.getAllByTestId('removeFilter');
+        fireEvent.click(removeFilter[0]);
         const clearBtn = screen.getByRole('button', { name: /Clear/i });
         fireEvent.click(clearBtn);
     });

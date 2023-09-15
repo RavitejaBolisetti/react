@@ -6,7 +6,7 @@
 export const OTF_SECTION = {
     OTF_DETAILS: {
         id: 1,
-        title: 'OTF Details',
+        title: 'Booking Details',
         displayOnList: true,
     },
     CUSTOMER_DETAILS: {

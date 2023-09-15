@@ -67,7 +67,7 @@ const props = {
     selectedOrderId: 'testid',
 };
 
-describe('OTF loyalty scheme master render', () => {
+describe('Booking loyalty scheme master render', () => {
     const mockStore = createMockStore({
         auth: { userId: '123456' },
         data: {

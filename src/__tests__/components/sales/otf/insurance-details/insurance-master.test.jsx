@@ -26,7 +26,7 @@ const props = {
     onErrorAction: jest.fn(),
 };
 
-describe('OTF Insurance Details Component render', () => {
+describe('Booking Insurance Details Component render', () => {
     it('should render addedit form', async () => {
         customRender(<InsuranceDetailsMaster {...props} />);
     });

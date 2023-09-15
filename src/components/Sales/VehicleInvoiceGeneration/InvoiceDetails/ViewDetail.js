@@ -44,7 +44,7 @@ const ViewDetailMain = (props) => {
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
-                        <Panel header="OTF Details" key="1">
+                        <Panel header="Booking Details" key="1">
                             <Divider />
                             <Descriptions {...viewProps}>
                                 <Descriptions.Item label="Booking Number">{checkAndSetDefaultValue(otfFormData?.bookingNumber || otfFormData?.otfNumber, isLoading)}</Descriptions.Item>

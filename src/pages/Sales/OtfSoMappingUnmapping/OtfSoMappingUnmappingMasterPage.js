@@ -9,7 +9,7 @@ import { PageHeader } from 'pages/common/PageHeader';
 import { OtfSoMappingUnmappingMaster } from 'components/Sales';
 
 const OtfSoMappingUnmappingMasterBase = (props) => {
-    const pageTitle = 'OTF SO Mapping And Unmapping';
+    const pageTitle = 'Booking SO Mapping And Unmapping';
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,

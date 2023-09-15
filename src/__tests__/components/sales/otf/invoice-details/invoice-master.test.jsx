@@ -22,7 +22,7 @@ const props = {
     displaySection: { invoiceInformation: true, deliveryInformation: true },
 };
 
-describe('OTF Invoice Details render', () => {
+describe('Booking Invoice Details render', () => {
     it('should render table details page', async () => {
         customRender(<InvoiceDetailsMaster {...props} />);
     });
