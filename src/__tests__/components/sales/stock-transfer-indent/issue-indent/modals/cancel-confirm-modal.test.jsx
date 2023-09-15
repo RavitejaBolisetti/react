@@ -5,7 +5,7 @@
  */
 import { fireEvent, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import { CancelConfirmModal } from '@components/Sales/StockTransferIndent/CancellationIssue/Modals/CancelConfirmModal';
+import { CancelConfirmModal } from '@components/Sales/StockTransferIndent/IssueIndent/Modals/CancelConfirmModal';
 import customRender from '@utils/test-utils';
 
 describe("CancelConfirmModal component", ()=>{

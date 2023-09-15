@@ -10,27 +10,21 @@ import customRender from '@utils/test-utils';
 
 describe("StockTransferIndentMaster component", ()=>{
 
-    // it("columnheader", ()=>{
-    //     customRender(<StockTransferIndentMaster />);
+    it("Indent Raised Button", ()=>{
+        customRender(<StockTransferIndentMaster settoggleButton={jest.fn()} />);
 
-    //     const indentNo = screen.getByRole('columnheader', {name:'Indent Number'});
-    //     expect(indentNo).toBeTruthy();
+        const raisedBtn = screen.getByRole('button', {name:'Indent Raised'});
+        fireEvent.click(raisedBtn);
+    });
 
-    //     const indentDate = screen.getByRole('columnheader', {name:'Indent Date'});
-    //     expect(indentDate).toBeTruthy();
 
-    //     const fromLocation = screen.getByRole('columnheader', {name:'From Location'});
-    //     expect(fromLocation).toBeTruthy();
+    it("Indent Received", ()=>{
+        customRender(<StockTransferIndentMaster settoggleButton={jest.fn()} />);
 
-    //     const toLocation = screen.getByRole('columnheader', {name:'To Location'});
-    //     expect(toLocation).toBeTruthy();
+        const idendtBtn = screen.getByRole('button', {name:'Indent Received'});
+        fireEvent.click(idendtBtn);
+    });
 
-    //     const requestedBy = screen.getByRole('columnheader', {name:'Requested By'});
-    //     expect(requestedBy).toBeTruthy();
-
-    //     const action = screen.getByRole('columnheader', {name:'Action'});
-    //     expect(action).toBeTruthy();
-    // });
 
     it("Advanced Filters Button", ()=>{
         customRender(<StockTransferIndentMaster setAdvanceSearchVisible={jest.fn()} />);
