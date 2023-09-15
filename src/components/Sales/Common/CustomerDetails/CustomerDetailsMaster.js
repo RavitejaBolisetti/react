@@ -194,6 +194,7 @@ export const CustomerDetailsMain = (props) => {
         isLoading,
         activeKey,
         setActiveKey,
+        formActionType,
     };
 
     const handleFormValueChange = () => {

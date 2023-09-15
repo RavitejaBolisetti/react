@@ -24,7 +24,7 @@ export const btnVisiblity = ({ defaultBtnVisiblity, buttonAction, saveAndNewBtn 
     } else if (buttonAction === VIEW_ONLY_ACTION) {
         btnVisibility = { ...btnVisibility, saveBtn: false, cancelBtn: false, closeBtn: true };
     } else if (buttonAction === EDIT_ACTION) {
-        btnVisibility = { ...btnVisibility, saveBtn: true, cancelBtn: true };
+        btnVisibility = { ...btnVisibility, saveBtn: true, cancelBtn: true, nextBtn: true };
     } else {
         btnVisibility = { ...btnVisibility, saveBtn: true, saveAndNewBtn: saveAndNewBtn, cancelBtn: true };
     }

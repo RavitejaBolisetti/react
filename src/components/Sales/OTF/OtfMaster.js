@@ -705,7 +705,7 @@ export const OtfMasterBase = (props) => {
         isLastSection,
         typeData,
         otfData,
-        saveButtonName: !selectedOrderId ? 'Create Customer ID' : isLastSection ? 'Submit' : 'Save & Next',
+        saveButtonName: 'Save',
         handleChangeHistory,
         handleOtfSoMappingHistory,
         refreshData,
