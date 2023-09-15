@@ -5,4 +5,5 @@
  */
 import { handleBtnVisibility } from './handleBtnVisibility';
 import { isIssuePriceValid } from './validation';
-export { handleBtnVisibility,isIssuePriceValid };
+
+export { handleBtnVisibility, isIssuePriceValid };

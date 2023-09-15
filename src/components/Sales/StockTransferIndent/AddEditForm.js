@@ -65,11 +65,10 @@ const AddEditFormMain = (props) => {
         handleButtonClick,
     };
 
-    const handleCollapse = (key) => {
-        // if (key !== 3 && isReadOnly) {
-        //     setIsReadOnly(false);
-        // }
-        setOpenAccordian((prev) => (prev === key ? '' : key));
+    const handleCollapse = (key, isOpen) => {
+        if (tableDataItem.length === 0 && !isOpen) return;
+        else if (isOpen) setOpenAccordian(1);
+        else setOpenAccordian((prev) => (prev === key ? '' : key));
     };
 
     const handleAddVehicleDetails = () => {
@@ -101,7 +100,7 @@ const AddEditFormMain = (props) => {
     };
 
     const onFinishAddVehicleDetails = (values) => {
-        if (tableDataItem.length === 0) handleCollapse(1);
+        if (tableDataItem.length === 0) handleCollapse(1, true);
 
         if (values?.index !== undefined) {
             let arrayOfNumbers = [...tableDataItem];

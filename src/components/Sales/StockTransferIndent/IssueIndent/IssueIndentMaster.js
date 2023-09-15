@@ -12,7 +12,7 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { handleBtnVisibility } from './utils';
 import { CancelConfirmModal, IssueVehicleDetailsModal } from './Modals';
-import { converDateDayjs, formatDate } from 'utils/formatDateTime';
+import { converDateDayjs } from 'utils/formatDateTime';
 
 import styles from 'assets/sass/app.module.scss';
 const { Panel } = Collapse;
@@ -44,7 +44,7 @@ const IssueIndentMasterMain = (props) => {
 
     useEffect(() => {
         if (issueModalOpen && vehicleVinData?.vehicleSearch?.length) {
-            issueForm.setFieldsValue({ ...vehicleVinData?.vehicleSearch[0], modelDescription: cancellationData?.modelDescription, invoiceDate: converDateDayjs(vehicleVinData?.vehicleSearch[0]?.invoiceDate), grnDate: converDateDayjs(vehicleVinData?.vehicleSearch[0]?.grnDate) });
+            issueForm.setFieldsValue({ ...vehicleVinData?.vehicleSearch[0], modelDescription: cancellationData?.modelDescription ?? '', invoiceDate: converDateDayjs(vehicleVinData?.vehicleSearch[0]?.invoiceDate), grnDate: converDateDayjs(vehicleVinData?.vehicleSearch[0]?.grnDate) });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [vehicleVinData]);
@@ -120,7 +120,7 @@ const IssueIndentMasterMain = (props) => {
         }
         const { invoiceDate, invoiceNumber, ...rest } = values;
 
-        let data = { ...rest, oemInvoiceDate: formatDate(invoiceDate), oemInvoiceNumber: invoiceNumber, indentHdrId: cancellationData?.id, id: '', modelCode: cancellationData?.modelCode, issueStatus: cancellationData?.issueStatus, issueDate: formatDate(cancellationData?.issueDate), grnDate: formatDate(values?.grnDate) };
+        const data = { ...rest, grnDate: vehicleVinData?.vehicleSearch[0]?.grnDate, oemInvoiceDate: vehicleVinData?.vehicleSearch[0]?.invoiceDate, oemInvoiceNumber: values?.invoiceNumber ?? '', indentHdrId: cancellationData?.id ?? '', id: '', modelCode: cancellationData?.modelCode ?? '', issueStatus: cancellationData?.issueStatus ?? '', issueDate: cancellationData?.issueDate ?? '', indentDetailId: cancellationData?.indentDetailId ?? '', issueNumber: '' };
 
         const onSuccess = (res) => {
             issueForm.resetFields();
@@ -197,7 +197,7 @@ const IssueIndentMasterMain = (props) => {
         <>
             <div className={styles.drawerBodyNew}>
                 <ViewDetail {...ViewDetailProps} />
-                {cancellationData?.balancedQuantity > 0 && cancellationData?.balancedQuantity !== null && handleBtnVisibility({ toggleButton, checkKey: undefined, defaultVisibility })?.canAdd && (
+                {cancellationData?.balancedQuantity > 0 && cancellationData?.balancedQuantity && handleBtnVisibility({ toggleButton, checkKey: undefined, defaultVisibility })?.canAdd && (
                     <Row className={styles.marB20} gutter={20} justify="start">
                         <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                             <Button type="primary" onClick={() => handleRequest(undefined, BUTTON_NAME_CONSTANTS?.ADD?.key)}>
