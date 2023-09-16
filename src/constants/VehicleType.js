@@ -12,7 +12,7 @@ export const VEHICLE_TYPE = {
     },
     UNALLOTED: {
         id: 2,
-        key: 'D',
+        key: 'C',
         title: 'Un-Allotted',
         desc: 'Un-Allotted',
     },
