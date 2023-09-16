@@ -36,17 +36,11 @@ const IssueIndentMasterMain = (props) => {
     const [issueModalOpen, setIssueModal] = useState(false);
     const [issueData, setIssueData] = useState([]);
     const [myActiveKey, setmyActiveKey] = useState([]);
-    const [issueCanceData, setIssueCanceData] = useState('');
-    const [ModalButtonName, setModalButtonName] = useState('');
     const [confirmRequest, setConfirmRequest] = useState();
     const [refershData, setRefershData] = useState(false);
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
-    };
-
-    const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
     };
 
     useEffect(() => {
@@ -154,8 +148,6 @@ const IssueIndentMasterMain = (props) => {
         const onSuccess = (res) => {
             resetVinDetails();
             setConfirmRequest({ isVisible: false });
-            setIssueCanceData('');
-            setModalButtonName('');
             setRefershData(!refershData);
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
         };

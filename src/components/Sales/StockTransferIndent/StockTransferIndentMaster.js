@@ -128,7 +128,7 @@ export const StockTransferIndentMasterBase = (props) => {
     const [cancellationIssueVisible, setCancellationIssueVisible] = useState(false);
     const [cancellationData, setCancellationData] = useState([]);
     const [selectedOrder, setSelectedOrder] = useState();
-    const [toggleButton, settoggleButton] = useState(STOCK_TRANSFER?.RAISED.key);
+    const [toggleButton, setToggleButton] = useState(STOCK_TRANSFER?.RAISED.key);
     const [openAccordian, setOpenAccordian] = useState('');
     const [tableDataItem, setTableDataItem] = useState([]);
     const [showDataLoading, setShowDataLoading] = useState(true);
@@ -405,8 +405,6 @@ export const StockTransferIndentMasterBase = (props) => {
             if (temp.locationCode === value) locationId = temp.id;
         });
 
-        const onSuccessActionFetchDealer = (resp) => {};
-
         const extraParamData = [
             {
                 key: 'locationId',
@@ -511,7 +509,7 @@ export const StockTransferIndentMasterBase = (props) => {
         filterString,
         setFilterString,
         toggleButton,
-        settoggleButton,
+        setToggleButton,
         onFinishFailed,
         handleResetFilter,
         setAdvanceSearchVisible,
@@ -571,6 +569,7 @@ export const StockTransferIndentMasterBase = (props) => {
         cancellationIssueVisible,
         setCancellationIssueVisible,
         typeData,
+        toggleButton,
     };
 
     const IndentIssueProps = {
