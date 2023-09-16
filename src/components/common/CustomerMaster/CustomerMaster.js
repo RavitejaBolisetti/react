@@ -425,6 +425,7 @@ const CustomerMasterMain = (props) => {
         setFilterString,
         optionType: typeData,
         handleChange,
+        allowClear: false,
     };
 
     const changeHistoryProps = {
