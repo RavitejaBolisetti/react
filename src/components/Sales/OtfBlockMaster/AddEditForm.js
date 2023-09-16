@@ -109,14 +109,7 @@ const AddEditFormMain = (props) => {
     let treeCodeReadOnly = false;
     if (formActionType === EDIT_ACTION || formActionType === VIEW_ACTION) {
         treeCodeId = formData?.parntProdctId;
-    } else if (formActionType === FROM_ACTION_TYPE.CHILD) {
-        treeCodeId = selectedTreeKey && selectedTreeKey[0];
-        treeCodeReadOnly = true;
-    } else if (formActionType === FROM_ACTION_TYPE.SIBLING) {
-        treeCodeReadOnly = true;
-        const treeCodeData = flatternData.find((i) => i.key === selectedTreeKey[0]);
-        treeCodeId = treeCodeData && treeCodeData?.data?.parntProdctId;
-    }
+    } 
 
     const treeSelectFieldProps = {
         treeFieldNames,
