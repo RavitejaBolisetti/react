@@ -9,7 +9,7 @@ import FormNotificationDetail from './FormNotificationDetail';
 
 export const NotificationDetailMaster = (props) => {
     const { isVisible, selectedTreeData, showGlobalNotification, taxChargeCategoryTypeData, vehiclePriority, form, editForm, notificationDetailForm, formEdit, setFormEdit, docTypeHeadMappingList, setDocTypeHeadMappingList, buttonData, setButtonData, viewMode, dropdownItems, setDropdownItems, typeData, financialAccount } = props;
-    const { roleData,handleRoleFunction,data, filterDesignationList, setFilterDesignationList,formData } = props;
+    const { roleData,handleRoleFunction,data, filterDesignationList, setFilterDesignationList,formData,filterDesignationDropdownList,setFilterDesignationDropdownList, } = props;
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [disableSaveButton, setDisableSaveButton] = useState(false);
     const [changeValue, setChangeValue] = useState(null);
@@ -19,7 +19,6 @@ export const NotificationDetailMaster = (props) => {
         showGlobalNotification({ message });
     };
     const addDocHeadMapping = (val) => {
-        console.log('val',val)
         notificationDetailForm
             .validateFields()
             .then(() => {
@@ -52,6 +51,8 @@ export const NotificationDetailMaster = (props) => {
                     setDocTypeHeadMappingList((item) => [updateData, ...item]);
                     notificationDetailForm.resetFields();
                     forceUpdate();
+                    
+                    notificationDetailForm.setFieldValue('designationCode', undefined);
                     setFilterDesignationList();
                     setButtonData({ ...buttonData, formBtnActive: true });
                 }
@@ -93,6 +94,8 @@ export const NotificationDetailMaster = (props) => {
         data,
         roleData,
         filterDesignationList,
+        filterDesignationDropdownList,setFilterDesignationDropdownList,
+       
         
     };
 
@@ -101,6 +104,7 @@ export const NotificationDetailMaster = (props) => {
         roleData,
         filterDesignationList, setFilterDesignationList,
         formData,
+        
         
     };
 
