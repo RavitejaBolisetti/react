@@ -233,9 +233,9 @@ export const DealerParentBase = (props) => {
     };
 
     const tableProps = {
-        tableColumn: tableColumn({handleButtonClick}),
+        tableColumn: tableColumn({ handleButtonClick, typeData }),
         tableData: searchData,
-        typeData
+        typeData,
     };
 
     const title = 'Group Name';
