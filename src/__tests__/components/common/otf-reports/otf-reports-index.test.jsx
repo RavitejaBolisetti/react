@@ -6,8 +6,8 @@ afterEach(() => {
     jest.restoreAllMocks();
 });
 
-describe('OTF Reports components', () => {
+describe('Booking Reports components', () => {
     it('should render OTFReports components', () => {
-        customRender(<OtfReportsMaster/>)
+        customRender(<OtfReportsMaster />);
     });
 });

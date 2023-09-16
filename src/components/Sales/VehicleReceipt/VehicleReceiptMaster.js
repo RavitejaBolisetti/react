@@ -161,10 +161,11 @@ export const VehicleReceiptMasterBase = (props) => {
             {
                 key: 'grnNumber',
                 title: 'grnNumber',
-                value: searchValue,
-                name: searchValue,
-                canRemove: false,
-                filter: false,
+                value: filterString?.grnNumber,
+                name: filterString?.grnNumber,
+                // searchValue
+                canRemove: true,
+                filter: true,
             },
             {
                 key: 'pageNumber',
@@ -430,7 +431,7 @@ export const VehicleReceiptMasterBase = (props) => {
     };
 
     const handleSearch = (value) => {
-        setFilterString({ ...filterString, grnNumber: value });
+        setFilterString({ ...filterString, grnNumber: value, advanceFilter: true });
         setSearchValue(value);
     };
 

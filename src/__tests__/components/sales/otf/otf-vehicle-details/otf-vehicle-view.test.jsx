@@ -10,7 +10,7 @@ const props = {
     onChange: jest.fn(),
     tooltTipText: undefined,
 };
-describe('OTF finance view Details render', () => {
+describe('Booking finance view Details render', () => {
     it('should render view details page', async () => {
         customRender(<ViewDetail {...props} />);
         screen.debug();

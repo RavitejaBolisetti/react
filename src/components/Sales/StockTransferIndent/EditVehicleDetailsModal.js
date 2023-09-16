@@ -7,12 +7,13 @@ import React from 'react';
 import { Row, Col, Form, Input, Button } from 'antd';
 import { withModal } from 'components/withModal';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
-import { validateRequiredInputField, validationNumber } from 'utils/validation';
+import { validateRequiredInputField, validationNumber, isValidQunatity } from 'utils/validation';
 
 import styles from 'assets/sass/app.module.scss';
 
 export const EditVehicleDetailsModalFrom = (props) => {
     const { onCloseAction, formData, editVehicleDetailsForm, onFinish } = props;
+
     return (
         <Form autoComplete="off" layout="vertical" form={editVehicleDetailsForm} onFinish={onFinish}>
             <Row gutter={24}>
@@ -35,7 +36,7 @@ export const EditVehicleDetailsModalFrom = (props) => {
 
             <Row gutter={24}>
                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                    <Form.Item label="Cancelled Quantity" name="cancelledQuantity" initialValue={formData?.cancelledQuantity} rules={[validateRequiredInputField('Cancelled Quantity'), validationNumber('Cancelled Quantity')]}>
+                    <Form.Item label="Cancelled Quantity" name="cancelledQuantity" initialValue={formData?.cancelledQuantity} rules={[validateRequiredInputField('Cancelled Quantity'), validationNumber('Cancelled Quantity'), { validator: (_, value) => isValidQunatity(value, editVehicleDetailsForm.getFieldValue('balancedQuantity')) }]}>
                         <Input placeholder={preparePlaceholderText('Cancelled Quantity')}></Input>
                     </Form.Item>
                 </Col>

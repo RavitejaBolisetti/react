@@ -47,13 +47,13 @@ const DrawerButtons = ({ formData, onCloseAction, buttonData, setButtonData, sav
 
                 {buttonData?.cancelOTFBtn && (
                     <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.CANCEL_OTF })} type="primary" htmlType="submit">
-                        Cancel OTF
+                        Cancel Booking
                     </Button>
                 )}
 
                 {buttonData?.transferOTFBtn && (
                     <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.TRANSFER_OTF })} type="primary" htmlType="submit">
-                        Transfer OTF
+                        Transfer Booking
                     </Button>
                 )}
             </Col>

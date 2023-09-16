@@ -4,15 +4,23 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect } from 'react';
-import { Row, Col, Input, Form, DatePicker, Card } from 'antd';
+import { Row, Col, Input, Form, DatePicker, Card, Select } from 'antd';
 
 import { formattedCalendarDate, dateFormat } from 'utils/formatDateTime';
-import { preparePlaceholderText } from 'utils/preparePlaceholder';
+import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
 import styles from 'assets/sass/app.module.scss';
 
+const { Option } = Select;
+
 const AddEditFormMain = (props) => {
-    const { formData, form, buttonData, setButtonData } = props;
+    const { formData, form, buttonData, setButtonData, supplierTypeData } = props;
+
+    const selectProps = {
+        optionFilterProp: 'children',
+        showSearch: true,
+        allowClear: true,
+    };
 
     useEffect(() => {
         setButtonData({ ...buttonData, formBtnActive: true });
@@ -32,7 +40,14 @@ const AddEditFormMain = (props) => {
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={formData?.supplierType} label="Supplier Type" name="supplierType">
-                        <Input maxLength={10} placeholder={preparePlaceholderText('Supplier Type')} disabled={true} />
+                        <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} {...selectProps} disabled={true}>
+                            {supplierTypeData?.map((item) => (
+                                <Option key={'dv' + item.key} value={item.key}>
+                                    {item.value}
+                                </Option>
+                            ))}
+                        </Select>
+                        {/* <Input maxLength={10} placeholder={preparePlaceholderText('Supplier Type')} disabled={true} /> */}
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>

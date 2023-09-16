@@ -27,14 +27,14 @@ const AddEditFormMain = (props) => {
         yearsList.push({ key: i, value: i });
     }
 
-    useEffect(() => {
-        if (formData) {
-            form.setFieldsValue({
-                ...formData,
-            });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formData]);
+    // useEffect(() => {
+    //     if (formData) {
+    //         form.setFieldsValue({
+    //             ...formData,
+    //         });
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [formData]);
 
     return (
         <Card className={styles.ExchangeCard}>

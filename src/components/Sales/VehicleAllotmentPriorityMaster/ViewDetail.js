@@ -24,7 +24,7 @@ const ViewDetailBase = (props) => {
         bordered: false,
         colon: false,
         layout: 'vertical',
-        column: { xxl: 2, xl: 2, lg: 2, md: 2, sm: 2, xs: 2 },
+        column: { xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 },
     };
 
     const getRoleName = (value) => {     

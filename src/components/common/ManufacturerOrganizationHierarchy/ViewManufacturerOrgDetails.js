@@ -12,13 +12,13 @@ export const ViewManufacturerOrgtDetailMain = ({ viewTitle, buttonData, attribut
         bordered: false,
         colon: false,
         layout: 'vertical',
-        title: <div className={styles.viewContainerHeader}>{viewTitle}</div>,
+        title: <div className={styles?.viewContainerHeader}>{viewTitle}</div>,
         column: { xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 },
     };
 
     return (
         <>
-            <div className={styles.viewContainer}>
+            <div className={styles?.viewContainer}>
                 <Descriptions {...viewOneColProps}>
                     <Descriptions.Item label="Attribute Level">{selectedTreeData?.hierarchyAttribueName}</Descriptions.Item>
                     <Descriptions.Item label="Parent">{selectedTreeData?.parentName || HIERARCHY_DEFAULT_PARENT}</Descriptions.Item>

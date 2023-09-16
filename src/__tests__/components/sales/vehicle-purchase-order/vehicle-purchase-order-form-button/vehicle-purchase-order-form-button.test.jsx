@@ -47,7 +47,7 @@ describe('Vehicle Purchase Order Form Button Components', () => {
         fireEvent.click(nextBtn);
         const cancelPOBtn = screen.getByRole('button', { name: 'Cancel PO', exact: false });
         fireEvent.click(cancelPOBtn);
-        const cancelOtfBtn = screen.getAllByRole('button', { name: 'Cancel OTF', exact: false });
+        const cancelOtfBtn = screen.getAllByRole('button', { name: 'Cancel Booking', exact: false });
         fireEvent.click(cancelOtfBtn[0]);
         fireEvent.click(cancelOtfBtn[1]);
         const cancelVpoBtn = screen.getByRole('button', { name: 'Cancel VPO', exact: false });

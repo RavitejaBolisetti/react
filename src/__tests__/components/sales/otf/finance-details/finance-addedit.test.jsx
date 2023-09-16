@@ -30,7 +30,7 @@ const props = {
     emiLessThanAmount: jest.fn(),
 };
 
-describe('OTF Finance Details Component render', () => {
+describe('Booking Finance Details Component render', () => {
     it('should render addedit form', async () => {
         customRender(<AddEditForm {...props} FinanceLovData={FinanceLovDataMock} setDoReceived={jest.fn} typeData={(typeDataMock, FNC_ARNGD)} />);
     });

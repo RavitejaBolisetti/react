@@ -91,7 +91,7 @@ export const VehicleAllotmentMasterBase = (props) => {
 
     const [filterStringOTFSearch, setFilterStringOTFSearch] = useState('');
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
-    const [toggleButton, settoggleButton] = useState(VEHICLE_TYPE?.UNALLOTED.key);
+    const [toggleButton, settoggleButton] = useState(VEHICLE_TYPE?.ALLOTED.key);
     const [searchParamValue, setSearchParamValue] = useState('');
     const [confirmRequest, setConfirmRequest] = useState();
 
@@ -242,13 +242,13 @@ export const VehicleAllotmentMasterBase = (props) => {
             case UNALLOT:
                 setConfirmRequest({
                     isVisible: true,
-                    titleOverride: 'Un-Allot OTF',
+                    titleOverride: 'Un-Allot Booking',
                     closable: true,
                     icon: false,
                     onCloseAction: onCloseConfirmationModalAction,
                     onSubmitAction: () => handleVehicleAllotment(record, buttonAction),
                     submitText: 'Yes',
-                    text: 'Are you sure want to Un-allot this OTF? ',
+                    text: 'Are you sure want to Un-allot this Booking? ',
                     content: selectedOTFDetails ? selectedOTFDetails?.bookingNumber || selectedOTFDetails?.otfNumber : '',
                 });
 
@@ -295,7 +295,7 @@ export const VehicleAllotmentMasterBase = (props) => {
 
     const handleVehicleAllotment = (req, buttonAction) => {
         if (!selectedOTFDetails) {
-            showGlobalNotification({ message: 'Please select OTF' });
+            showGlobalNotification({ message: 'Please select Booking' });
             return false;
         }
 

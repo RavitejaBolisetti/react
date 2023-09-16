@@ -8,7 +8,7 @@ import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
 import { OtfMaster } from 'components/Sales';
 const OtfMasterBase = (props) => {
-    const pageTitle = 'Order Tracking Form';
+    const pageTitle = 'Booking Form';
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,

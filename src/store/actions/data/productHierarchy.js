@@ -95,7 +95,7 @@ productHierarchyDataActions.cardBtnDisableAction = (value) => ({
 });
 
 productHierarchyDataActions.fetchList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-    const { setIsLoading, onError, data, id } = params;
+    const { setIsLoading, onError, data, extraParams } = params;
     setIsLoading(true);
 
     const onSuccess = (res) => {
@@ -112,46 +112,17 @@ productHierarchyDataActions.fetchList = withAuthToken((params) => ({ token, acce
         onError && onError();
     };
 
-    const apiCallParams = {
-        data,
-        method: 'get',
-        url: BASE_URL_PRODUCT_HIERARCHY + (id ? '?manufactureOrgCode=' + id : ''),
-        token,
-        accessToken,
-        userId,
-        onSuccess,
-        onError: onErrorAction,
-        onTimeout: () => onError('Request timed out, Please try again'),
-        onUnAuthenticated: () => dispatch(doLogout()),
-        onUnauthorized: (message) => dispatch(unAuthenticateUser(message)),
-        postRequest: () => setIsLoading(false),
-    };
+    let sExtraParamsString = '?';
+    extraParams?.forEach((item, index) => {
+        sExtraParamsString += item?.value && item?.key ? item?.value && item?.key + '=' + item?.value + '&' : '';
+    });
 
-    axiosAPICall(apiCallParams);
-});
-
-productHierarchyDataActions.fetchDetail = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-    const { setIsLoading, onError, data, code } = params;
-    setIsLoading(true);
-
-    const onSuccess = (res) => {
-        if (res?.data) {
-            dispatch(receiveProductHierarchyDetailData(res?.data));
-        } else {
-            dispatch(receiveProductHierarchyDetailData([]));
-            onError && onError();
-        }
-    };
-
-    const onErrorAction = () => {
-        dispatch(receiveProductHierarchyDetailData([]));
-        onError && onError();
-    };
+    sExtraParamsString = sExtraParamsString.substring(0, sExtraParamsString.length - 1);
 
     const apiCallParams = {
         data,
         method: 'get',
-        url: BASE_URL_PRODUCT_HIERARCHY + (code ? '?prodctCode=' + code : ''),
+        url: BASE_URL_PRODUCT_HIERARCHY + sExtraParamsString,
         token,
         accessToken,
         userId,

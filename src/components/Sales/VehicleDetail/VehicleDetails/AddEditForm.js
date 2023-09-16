@@ -63,6 +63,11 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                            <Form.Item initialValue={formData?.manufactureKM} label="Expiry KM" name="manufactureKM">
+                                <Input {...disabledProps} />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item initialValue={formattedCalendarDate(formData?.deliveryDate)} label="Delivery Date" name="deliveryDate">
                                 <DatePicker disabledDate={disablePastDate} format={dateFormat} {...disabledProps} />
                             </Form.Item>
@@ -104,11 +109,11 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
 
-                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                        {/* <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item initialValue={formattedCalendarDate(formData?.pucExpiryDate)} label="PUC Expiry Date" name="pucExpiryDate">
                                 <DatePicker disabledDate={disablePastDate} format={dateFormat} {...disabledProps} />
                             </Form.Item>
-                        </Col>
+                        </Col> */}
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item initialValue={formattedCalendarDate(formData?.insuranceExpiryDate)} label="Insurance Expiry Date" name="insuranceExpiryDate">
                                 <DatePicker disabledDate={disablePastDate} format={dateFormat} {...disabledProps} />

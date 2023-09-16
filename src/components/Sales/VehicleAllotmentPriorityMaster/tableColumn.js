@@ -38,7 +38,7 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             sorter: false,
         }),
 
-        tblActionColumn({ handleButtonClick, EditIcon: false, styles }),
+        tblActionColumn({ handleButtonClick, EditIcon: false, styles,canEdit: false }),
     ];
 
     return tableColumn;

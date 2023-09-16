@@ -4,10 +4,11 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState, useEffect, useMemo } from 'react';
-import { Card, Descriptions, Col, Row, Divider } from 'antd';
+import { Card, Descriptions, Col, Row, Divider, Button } from 'antd';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
+import { RxCross2 } from 'react-icons/rx';
 import { getCodeValue } from 'utils/getCodeValue';
 import { OTF_STATUS } from 'constants/OTFStatus';
 import { DATA_TYPE } from 'constants/dataType';
@@ -59,6 +60,7 @@ const mapDispatchToProps = (dispatch) => ({
     ...bindActionCreators(
         {
             fetchOTFSearchedList: otfDataActions.fetchList,
+            resetOTFData: otfDataActions.reset,
             listShowLoading: otfDataActions.listShowLoading,
             resetOTFSearchedList: otfDataActions.reset,
             showGlobalNotification,
@@ -68,7 +70,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ViewDetailMain = (props) => {
-    const { userId, isOTFSearchLoading, fetchOTFSearchedList, listShowLoading, toggleButton, formData, isLoading, typeData, searchForm, totalOTFRecords, tableData } = props;
+    const { userId, isOTFSearchLoading, resetOTFData, fetchOTFSearchedList, listShowLoading, toggleButton, formData, isLoading, typeData, searchForm, totalOTFRecords, tableData } = props;
     const { resetAdvanceFilter, setResetAdvanceFilter, handleButtonClick, buttonData, setButtonData, onCloseAction, selectedOTFDetails, setSelectedOrderOTFDetails } = props;
     const [filterString, setFilterString] = useState('');
     const [filterStringOTFSearch, setFilterStringOTFSearch] = useState('');
@@ -90,13 +92,16 @@ const ViewDetailMain = (props) => {
             {
                 key: 'searchType',
                 title: 'Type',
-                value: filterStringOTFSearch?.searchType,
-                name: toggleButton,
+                name: filterStringOTFSearch?.searchType,
+                value: filterString?.searchType ? typeData?.[PARAM_MASTER.OTF_SER.id]?.find((i) => i?.key === filterString?.searchType)?.value : '',
+                filter: true,
             },
             {
                 key: 'searchParam',
                 title: 'Value',
+                name: filterStringOTFSearch?.searchParam,
                 value: filterStringOTFSearch?.searchParam,
+                filter: true,
             },
             {
                 key: 'otfStatus',
@@ -138,7 +143,7 @@ const ViewDetailMain = (props) => {
 
     useEffect(() => {
         searchForm.resetFields();
-        setFilterStringOTFSearch({ ...filterString });
+        setFilterStringOTFSearch({ ...filterString, advanceFilter: true });
         setSelectedOrderOTFDetails();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString]);
@@ -152,6 +157,7 @@ const ViewDetailMain = (props) => {
         resetAdvanceFilter,
         setResetAdvanceFilter,
         defaultOption: 'otfNumber',
+        allowClear: false,
     };
 
     const buttonProps = {
@@ -193,6 +199,11 @@ const ViewDetailMain = (props) => {
         pagination: sorterPagination,
     };
 
+    const handleResetFilter = () => {
+        resetOTFData();
+        setFilterStringOTFSearch();
+    };
+
     return (
         <>
             <Row gutter={20} className={styles.drawerBody}>
@@ -210,14 +221,16 @@ const ViewDetailMain = (props) => {
                         </Descriptions>
                     </Card>
                     <Divider className={styles.marT20} />
-                    <h4>Allot OTF</h4>
+                    <h4>Allot Booking</h4>
                     <Card>
                         {formData?.allotmentStatus !== VEHICLE_TYPE.ALLOTED.key && (
-                            <Row gutter={20}>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    <SearchBox {...serachBoxProps} />
-                                </Col>
-                            </Row>
+                            <>
+                                <Row gutter={20}>
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                        <SearchBox {...serachBoxProps} />
+                                    </Col>
+                                </Row>
+                            </>
                         )}
                         {tableDataItem?.length > 0 && <DataTable {...tableProps} />}
                     </Card>

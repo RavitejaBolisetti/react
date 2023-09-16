@@ -128,11 +128,11 @@ const CustomerMasterMain = (props) => {
     const dynamicPagination = true;
 
     useEffect(() => {
-        if (filterString) {
-            setPage({ ...page, current: 1 });
-        }
+        //if (filterString) {
+        setPage({ pageSize: 10, current: 1 });
+        //}
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString]);
+    }, [customerType, filterString]);
 
     const defaultExtraParam = useMemo(() => {
         return [
@@ -330,6 +330,7 @@ const CustomerMasterMain = (props) => {
     const tableProps = {
         dynamicPagination,
         totalRecords,
+        page,
         setPage,
         isLoading: isLoading,
         tableData: data,
@@ -425,6 +426,7 @@ const CustomerMasterMain = (props) => {
         setFilterString,
         optionType: typeData,
         handleChange,
+        allowClear: false,
     };
 
     const changeHistoryProps = {

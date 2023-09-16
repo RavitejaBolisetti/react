@@ -9,31 +9,49 @@ import FormNotificationDetail from './FormNotificationDetail';
 
 export const NotificationDetailMaster = (props) => {
     const { isVisible, selectedTreeData, showGlobalNotification, taxChargeCategoryTypeData, vehiclePriority, form, editForm, notificationDetailForm, formEdit, setFormEdit, docTypeHeadMappingList, setDocTypeHeadMappingList, buttonData, setButtonData, viewMode, dropdownItems, setDropdownItems, typeData, financialAccount } = props;
-    const { roleData,handleRoleFunction,data, filterDesignationList, setFilterDesignationList,formData } = props;
+    const { roleData, handleRoleFunction, data, filterDesignationList, setFilterDesignationList, formData, filterDesignationDropdownList, setFilterDesignationDropdownList } = props;
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
     const [disableSaveButton, setDisableSaveButton] = useState(false);
     const [changeValue, setChangeValue] = useState(null);
     const [uniqueCardEdit, setuniqueCardEdit] = useState(null);
     const [mainFomEdit, setMainFormEdit] = useState(false);
+    const onErrorAction = (message) => {
+        showGlobalNotification({ message });
+    };
     const addDocHeadMapping = (val) => {
         notificationDetailForm
             .validateFields()
             .then(() => {
                 let data = notificationDetailForm.getFieldsValue();
-                let updateData = { ...data, id:'' };
-                // let updateData = { ...data, internalId: Math.floor(Math.random() * 100000000 + 1), id: '' };
+                let updateData = { ...data, id: '' };
+                let flagExistValue = false;
+                if (docTypeHeadMappingList?.length > 0) {
+                    for (let i = 0; i < docTypeHeadMappingList?.length; i++) {
+                        if (updateData?.roleCode === docTypeHeadMappingList[i]?.roleCode && updateData?.designationCode === docTypeHeadMappingList[i]?.designationCode) {
+                            flagExistValue = true;
+                            break;
+                        }
+                    }
+                    if (!flagExistValue) {
+                        setDocTypeHeadMappingList((item) => [updateData, ...item]);
+                        notificationDetailForm.resetFields();
+                        forceUpdate();
+                        setButtonData({ ...buttonData, formBtnActive: true });
+                    } else {
+                        onErrorAction('Desigination has been already added.');
+                    }
+                } else {
+                    setDocTypeHeadMappingList((item) => [updateData, ...item]);
+                    notificationDetailForm.resetFields();
+                    forceUpdate();
 
-                setDocTypeHeadMappingList((item) => [updateData, ...item]);
-                notificationDetailForm.resetFields();
-                forceUpdate();
-                setButtonData({ ...buttonData, formBtnActive: true });
-                // handleRoleFunction();
+                    notificationDetailForm.setFieldValue('designationCode', undefined);
+                    setFilterDesignationList();
+                    setButtonData({ ...buttonData, formBtnActive: true });
+                }
             })
             .catch((error) => console.log(error));
-
     };
-
-    
 
     const cardAttributeProps = {
         notificationDetailForm,
@@ -67,15 +85,16 @@ export const NotificationDetailMaster = (props) => {
         data,
         roleData,
         filterDesignationList,
-        
+        filterDesignationDropdownList,
+        setFilterDesignationDropdownList,
     };
 
     const formProductAttributeProps = {
         ...cardAttributeProps,
         roleData,
-        filterDesignationList, setFilterDesignationList,
+        filterDesignationList,
+        setFilterDesignationList,
         formData,
-        
     };
 
     useEffect(() => {
@@ -92,19 +111,6 @@ export const NotificationDetailMaster = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
 
-    // useEffect(() => {
-    //     if (vehiclePriority?.accountLedgerMappingDtoList?.length > 0) {
-    //         setDocTypeHeadMappingList(() => []);
-    //         let len = vehiclePriority?.accountLedgerMappingDtoList?.length;
-    //         for (let i = 0; i < len; i++) {
-    //             let internalId = Math.floor(Math.random() * 100000000 + 1);
-    //             setDocTypeHeadMappingList((item) => {
-    //                 return [...item, { ...vehiclePriority?.accountLedgerMappingDtoList[i], internalId: internalId }];
-    //             });
-    //         }
-    //     }
-    // }, [vehiclePriority]);
-
     useEffect(() => {
         if (formEdit) {
             setMainFormEdit(true);
@@ -120,7 +126,7 @@ export const NotificationDetailMaster = (props) => {
 
             {docTypeHeadMappingList?.length > 0 &&
                 docTypeHeadMappingList?.map((action) => {
-                    return <CardNotificationDetail {...cardAttributeProps}  internalId={action?.internalId} id={action?.id} financialAccountHeadId={action?.financialAccountHeadId} roleCode={action?.roleCode}  designationCode= {action?.designationCode}/>;
+                    return <CardNotificationDetail {...cardAttributeProps} internalId={action?.internalId} id={action?.id} financialAccountHeadId={action?.financialAccountHeadId} roleCode={action?.roleCode} designationCode={action?.designationCode} />;
                 })}
         </>
     );

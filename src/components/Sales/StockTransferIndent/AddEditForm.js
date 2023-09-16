@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Row, Col, Input, Form, Card, Collapse, Divider, Button } from 'antd';
 import { FiPlus } from 'react-icons/fi';
 
@@ -16,7 +16,7 @@ import { expandIcon } from 'utils/accordianExpandIcon';
 import { tableColumnVehicleDetails } from './tableColumnVehicleDetails';
 import { DataTable } from 'utils/dataTable';
 import { AddVehicleDetailsModal } from './AddVehicleDetailsModal';
-import { EDIT_ACTION, DELETE_ACTION } from 'utils/btnVisiblity';
+import { VIEW_ACTION, EDIT_ACTION, DELETE_ACTION } from 'utils/btnVisiblity';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -24,25 +24,23 @@ const { TextArea } = Input;
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { formData, buttonDataVehicleDetails, ProductHierarchyData } = props;
-    const { addIndentDetailsForm, onFinish, indentLocationList, requestedByDealerList, openAccordian, setOpenAccordian } = props;
+    const { formData, buttonDataVehicleDetails, productHierarchyData } = props;
+    const { addIndentDetailsForm, onFinish, indentLocationList, isLoadingDealerLoc, requestedByDealerList, openAccordian, setOpenAccordian } = props;
     const { buttonData, setButtonData, onCloseAction, tableDataItem, setTableDataItem } = props;
     const { handleButtonClick, handleChangeLocation } = props;
-    const { activeKey, setActiveKey } = props;
 
     const [addVehicleDetailsForm] = Form.useForm();
     const [isAddVehicleDetailsVisible, setIsAddVehicleDetailsVisible] = useState(false);
     const [selectedVehicle, setSelectedVehicle] = useState();
 
-    useEffect(() => {
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
     const handleButtonClickVehicleDetails = ({ record = null, buttonAction, openDefaultSection = true, index }) => {
         switch (buttonAction) {
+            case VIEW_ACTION:
+                addVehicleDetailsForm?.setFieldsValue({ ...record, index: index });
+                setIsAddVehicleDetailsVisible(true);
+                break;
             case EDIT_ACTION:
                 addVehicleDetailsForm?.setFieldsValue({ ...record, index: index });
-                //setSelectedVehicle(record);
                 setIsAddVehicleDetailsVisible(true);
                 break;
             case DELETE_ACTION:
@@ -65,11 +63,10 @@ const AddEditFormMain = (props) => {
         handleButtonClick,
     };
 
-    const handleCollapse = (key) => {
-        // if (key !== 3 && isReadOnly) {
-        //     setIsReadOnly(false);
-        // }
-        setOpenAccordian((prev) => (prev === key ? '' : key));
+    const handleCollapse = (key, isOpen) => {
+        if (tableDataItem.length === 0 && !isOpen) return;
+        else if (isOpen) setOpenAccordian(1);
+        else setOpenAccordian((prev) => (prev === key ? '' : key));
     };
 
     const handleAddVehicleDetails = () => {
@@ -101,17 +98,16 @@ const AddEditFormMain = (props) => {
     };
 
     const onFinishAddVehicleDetails = (values) => {
-        if (tableDataItem.length === 0) handleCollapse(1);
-
+        if (tableDataItem.length === 0) {
+            handleCollapse(1, true);
+        }
         if (values?.index !== undefined) {
             let arrayOfNumbers = [...tableDataItem];
             arrayOfNumbers[values?.index] = { ...initialTableDataItem, ...values };
             setTableDataItem([...arrayOfNumbers]);
-        } else setTableDataItem([...tableDataItem, { ...initialTableDataItem, ...values }]);
-
-        // let indentData = addIndentDetailsForm.getFieldsValue();
-        // addIndentDetailsForm?.setFieldsValue({ ...indentData, vehicleDetails: [ ...tableDataItem ] });
-
+        } else {
+            setTableDataItem([...tableDataItem, { ...initialTableDataItem, ...values }]);
+        }
         setIsAddVehicleDetailsVisible(false);
         addVehicleDetailsForm.resetFields();
     };
@@ -123,7 +119,7 @@ const AddEditFormMain = (props) => {
         setIsAddVehicleDetailsVisible,
         onCloseAction: onCloseActionAddVehicleDetails,
         onFinishAddVehicleDetails,
-        ProductHierarchyData,
+        productHierarchyData,
         formData: selectedVehicle,
     };
 
@@ -136,7 +132,7 @@ const AddEditFormMain = (props) => {
                             <Row gutter={24}>
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                                     <Form.Item label="Indent To Location" name="indentToLocation" rules={[validateRequiredSelectField('Indent To Location')]}>
-                                        {customSelectBox({ data: indentLocationList, fieldNames: { key: 'locationCode', value: 'dealerLocationName' }, placeholder: preparePlaceholderSelect(''), onChange: handleChangeLocation })}
+                                        {customSelectBox({ data: indentLocationList, loading: isLoadingDealerLoc, fieldNames: { key: 'locationCode', value: 'dealerLocationName' }, placeholder: preparePlaceholderSelect(''), onChange: handleChangeLocation })}
                                     </Form.Item>
                                 </Col>
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
@@ -175,17 +171,15 @@ const AddEditFormMain = (props) => {
                                     >
                                         <Divider />
                                         {tableDataItem.length > 0 && <DataTable {...tableProps} />}
-                                        {/* <DataTable tableColumn={taxDetailsColumn()} tableData={formData['taxDetails']} pagination={false} /> */}
                                     </Panel>
                                 </Collapse>
                             </Col>
                         </Row>
                     </Col>
                 </Row>
-
                 <VehicleDetailFormButton {...buttonProps} />
             </Form>
-            <AddVehicleDetailsModal {...addVehicleDetailsProps} />
+            {isAddVehicleDetailsVisible && <AddVehicleDetailsModal {...addVehicleDetailsProps} />}
         </>
     );
 };

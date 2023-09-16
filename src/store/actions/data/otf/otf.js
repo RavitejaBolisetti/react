@@ -11,7 +11,7 @@ import { axiosAPICall } from 'utils/axiosAPICall';
 import { withAuthToken } from 'utils/withAuthToken';
 
 const PREFIX = 'OTF_SEARCH_';
-const moduleName = 'OTF Search';
+const moduleName = 'Booking Search';
 
 export const RECEIVE_DATA_LOADING_ACTION_CONSTANT = PREFIX + 'LOADING_DATA';
 export const RECEIVE_DATA_ACTION_CONSTANT = PREFIX + 'LIST_RECIEVE_DATA';
