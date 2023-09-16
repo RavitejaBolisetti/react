@@ -158,6 +158,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         deliveryNote: false,
         nextBtn: false,
         cancelInvoiceBtn: false,
+        approveCancelBtn: false,
     };
 
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -416,7 +417,7 @@ export const VehicleInvoiceMasterBase = (props) => {
                 setButtonData(Visibility);
                 // setButtonData({ ...Visibility, cancelReceiptBtn: true });
                 if (buttonAction === VIEW_ACTION) {
-                    invoiceStatus === QUERY_BUTTONS_CONSTANTS.CANCELLED.key ? setButtonData({ ...Visibility, editBtn: false, cancelInvoiceBtn: false }) : invoiceStatus === QUERY_BUTTONS_CONSTANTS.CANCELLATION_REQUEST.key ? setButtonData({ ...Visibility, editBtn: false, cancelInvoiceBtn: false }) : setButtonData({ ...Visibility, editBtn: true, cancelInvoiceBtn: true });
+                    invoiceStatus === QUERY_BUTTONS_CONSTANTS.CANCELLED.key ? setButtonData({ ...Visibility, editBtn: false, cancelInvoiceBtn: false, approveCancelBtn: false }) : invoiceStatus === QUERY_BUTTONS_CONSTANTS.CANCELLATION_REQUEST.key ? setButtonData({ ...Visibility, editBtn: false, cancelInvoiceBtn: false, approveCancelBtn: true }) : setButtonData({ ...Visibility, editBtn: true, cancelInvoiceBtn: true, approveCancelBtn: false });
                 }
             }
         }

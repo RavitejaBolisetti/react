@@ -9,7 +9,7 @@ import { Button, Row, Col } from 'antd';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import styles from 'assets/sass/app.module.scss';
 
-export const VehicleInvoiceFormButton = ({ formActionType, record, onCloseAction, onCancelInvoice, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection }) => {
+export const VehicleInvoiceFormButton = ({ formActionType, record, onCloseAction, onCancelInvoice, onApproveCancel, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection }) => {
     //console.log('formActionType', formActionType);
     return (
         <Row gutter={20} className={styles.formFooter}>
@@ -31,6 +31,11 @@ export const VehicleInvoiceFormButton = ({ formActionType, record, onCloseAction
                 {buttonData?.cancelInvoiceBtn && (
                     <Button onClick={onCancelInvoice} type="primary">
                         Cancel Invoice
+                    </Button>
+                )}
+                {buttonData?.approveCancelBtn && (
+                    <Button onClick={onApproveCancel} type="primary">
+                        Approve
                     </Button>
                 )}
                 {/* {buttonData?.editBtn && (
