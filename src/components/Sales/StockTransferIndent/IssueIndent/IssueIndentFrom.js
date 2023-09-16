@@ -8,12 +8,11 @@ import { Row, Col, Input, Form } from 'antd';
 import { withModal } from 'components/withModal';
 import { ModalButtons } from 'components/common/Button';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
-import { validateRequiredInputField, validationFieldLetterAndNumber, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
-import { isIssuePriceValid } from '../utils';
+import { isIssuePriceValid, validateRequiredInputField, validationFieldLetterAndNumber, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
 
 const { Search } = Input;
 
-const IssueVehicleDetailsModalMain = ({ issueForm, onFinish, handleVinSearch, isReadonly = true, onCloseAction, cancellationData, vehicleVinDataLoading }) => {
+const IssueIndentFromMain = ({ issueForm, onFinish, handleVinSearch, isReadonly = true, onCloseAction, cancellationData, vehicleVinDataLoading }) => {
     const modalProps = {
         reset: true,
         submit: true,
@@ -22,10 +21,10 @@ const IssueVehicleDetailsModalMain = ({ issueForm, onFinish, handleVinSearch, is
         handleResetFilter: onCloseAction,
     };
     const disabledProps = { disabled: isReadonly };
+
     const handleDependentReset = () => {
         issueForm.resetFields(['engineNumber', 'invoiceDate', 'invoiceNumber', 'grnDate', 'grnNumber', 'netDealerPrice']);
     };
-    console.log('vehicleVinDataLoading', vehicleVinDataLoading);
 
     return (
         <>
@@ -88,4 +87,4 @@ const IssueVehicleDetailsModalMain = ({ issueForm, onFinish, handleVinSearch, is
     );
 };
 
-export const IssueVehicleDetailsModal = withModal(IssueVehicleDetailsModalMain, { width: '50%', footer: null });
+export const IssueIndentFrom = withModal(IssueIndentFromMain, { width: '50%', footer: null });

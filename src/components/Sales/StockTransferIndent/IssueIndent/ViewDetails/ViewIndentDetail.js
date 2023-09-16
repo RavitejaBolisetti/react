@@ -10,7 +10,7 @@ import { converDateDayjs } from 'utils/formatDateTime';
 import styles from 'assets/sass/app.module.scss';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
-const ViewDetailMain = (props) => {
+const ViewIndentDetailMain = (props) => {
     const { formData, isLoading = false, typeData } = props;
 
     const viewProps = {
@@ -24,7 +24,7 @@ const ViewDetailMain = (props) => {
         indentDate: converDateDayjs(formData?.indentDate),
         indentStatus: typeData[PARAM_MASTER?.INDNT_RAS?.id]?.find((i) => i?.key === formData?.indentStatus)?.value || '-',
     };
-    console.log('sjaka', typeData);
+
     return (
         <Card className={styles.drawerCardView}>
             <Descriptions {...viewProps}>
@@ -48,4 +48,4 @@ const ViewDetailMain = (props) => {
     );
 };
 
-export const ViewDetail = ViewDetailMain;
+export const ViewIndentDetail = ViewIndentDetailMain;

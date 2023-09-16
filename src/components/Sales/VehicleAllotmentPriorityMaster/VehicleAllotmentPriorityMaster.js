@@ -28,6 +28,7 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 import { ListDataTable } from 'utils/ListDataTable';
 import { btnVisiblity } from 'utils/btnVisiblity';
+import { TbUserExclamation } from 'react-icons/tb';
 
 const mapStateToProps = (state) => {
     const {
@@ -119,6 +120,7 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [isFormBtnActive, setFormBtnActive] = useState(false);
     const [filterDesignationList, setFilterDesignationList] = useState();
+
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
@@ -134,6 +136,7 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
     const [docTypeHeadMappingList, setDocTypeHeadMappingList] = useState([]);
     const [dropdownItems, setDropdownItems] = useState([]);
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
+    const [filterDesignationDropdownList, setFilterDesignationDropdownList] = useState();
 
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
@@ -174,10 +177,11 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
         });
         if (matchDesignationList.length > 0) {
             setFilterDesignationList(matchDesignationList);
-        } else {
+            setFilterDesignationDropdownList(matchDesignationList);
+         } else {
             notificationDetailForm.setFieldValue('designationCode', undefined);
-            setFilterDesignationList();
-            onErrorAction('Designations are not exist.');
+            // setFilterDesignationList();
+             onErrorAction('Designations are not exist.');
         }
     };
 
@@ -319,22 +323,31 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
     }, [userId, formData]);
 
     const onFinish = (values) => {
-        const tempdata = { ...values, id: formData?.id || '', roleData: docTypeHeadMappingList };
-
-        const { applicationName, documentTypeName, documentTypeCode, ...data } = tempdata;
+        const reqdata = { ...values, id: formData?.id || '', roleData: docTypeHeadMappingList };
+        // const { applicationName, documentTypeName, documentTypeCode, ...data } = reqdata;
+        if(reqdata?.roleData?.length>0){
+        const {...data } = reqdata;
+        } else {
+            onErrorAction('Please select role and designation.');
+            return false;
+        }
+         
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
             setIsFormVisible(false);
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            fetchVehicleAllotList({ setIsLoading: listShowLoading, userId, onSuccessAction, onErrorAction });
+
             setButtonData({ ...buttonData, formBtnActive: false });
+
         };
         const onError = (message) => {
             showGlobalNotification({ message });
         };
         const requestData = {
-            data: data,
-            method: data?.roleData?.find((i) => i?.id) ? 'put' : 'post',
+            data: reqdata,   //data,
+            method: reqdata?.roleData?.find((i) => i?.id) ? 'put' : 'post',
             setIsLoading: listShowAllotLoading,
             userId,
             onError,
@@ -448,6 +461,11 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
         fetchRoleLovList,
         filterDesignationList,
         setFilterDesignationList,
+        matchDesignationList,
+        filterDesignationDropdownList,
+        setFilterDesignationDropdownList
+         
+        
     };
 
     const title = 'Vehicle Allotment List';

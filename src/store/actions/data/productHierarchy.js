@@ -95,7 +95,7 @@ productHierarchyDataActions.cardBtnDisableAction = (value) => ({
 });
 
 productHierarchyDataActions.fetchList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-    const { setIsLoading, onError, data, id } = params;
+    const { setIsLoading, onError, data, id, extraParams } = params;
     setIsLoading(true);
 
     const onSuccess = (res) => {
@@ -112,10 +112,17 @@ productHierarchyDataActions.fetchList = withAuthToken((params) => ({ token, acce
         onError && onError();
     };
 
+    let sExtraParamsString = '?';
+    extraParams?.forEach((item, index) => {
+        sExtraParamsString += item?.value && item?.key ? item?.value && item?.key + '=' + item?.value + '&' : '';
+    });
+
+    sExtraParamsString = sExtraParamsString.substring(0, sExtraParamsString.length - 1);
+
     const apiCallParams = {
         data,
         method: 'get',
-        url: BASE_URL_PRODUCT_HIERARCHY + (id ? '?manufactureOrgCode=' + id : ''),
+        url: BASE_URL_PRODUCT_HIERARCHY + sExtraParamsString,
         token,
         accessToken,
         userId,

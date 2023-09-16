@@ -18,7 +18,7 @@ const { Search } = Input;
 
 const SearchBox = (props) => {
     const { selectWide, searchForm, optionType, searchParamRule, filterString, setFilterString, handleChange, disabled = false, isLoading, handleSearchWithoutParameter = undefined } = props;
-    const { singleField = false, label = '', placeholder = 'Search', singleFieldKey = 'searchParam', defaultOption = undefined, captilized = undefined } = props;
+    const { allowClear = true, singleField = false, label = '', placeholder = 'Search', singleFieldKey = 'searchParam', defaultOption = undefined, captilized = undefined } = props;
 
     const [validationRules, setValidationRules] = useState([validateRequiredInputField('searchType')]);
 
@@ -71,7 +71,7 @@ const SearchBox = (props) => {
 
     const selectProps = {
         optionFilterProp: 'children',
-        allowClear: true,
+        allowClear: allowClear,
         className: selectWide ? styles.headerSelectFieldWide : styles.headerSelectField,
     };
 
