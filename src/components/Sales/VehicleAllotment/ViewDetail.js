@@ -92,8 +92,8 @@ const ViewDetailMain = (props) => {
             {
                 key: 'searchType',
                 title: 'Type',
-                name: filterStringOTFSearch?.searchType,
-                value: filterString?.searchType ? typeData?.[PARAM_MASTER.OTF_SER.id]?.find((i) => i?.key === filterString?.searchType)?.value : '',
+                name: filterString?.searchType ? typeData?.[PARAM_MASTER.OTF_SER.id]?.find((i) => i?.key === filterString?.searchType)?.value : '',
+                value: filterStringOTFSearch?.searchType,
                 filter: true,
             },
             {
