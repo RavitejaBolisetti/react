@@ -32,12 +32,13 @@ export const AdvancedSearchFrom = (props) => {
     }, [filterString]);
 
     const onFinish = (values) => {
+        console.log('values', values);
         setFilterString({
             ...filterString,
             ...values,
             fromDate: formatDate(values?.fromDate),
             toDate: formatDate(values?.toDate),
-            digitalSignature: values?.digitalSignature,
+            digitalSignature: values?.digitalSignature ?? null,
             advanceFilter: true,
         });
         setAdvanceSearchVisible(false);
@@ -48,6 +49,7 @@ export const AdvancedSearchFrom = (props) => {
     };
 
     const CheckDateEffectiveTo = (value, effectiveFrom) => {
+        if (!value) return Promise.resolve();
         const bool = dayjs(value).format('YYYY-MM-DD') >= dayjs(effectiveFrom).format('YYYY-MM-DD');
         if (bool) {
             return Promise.resolve();
@@ -72,7 +74,7 @@ export const AdvancedSearchFrom = (props) => {
                         rules={[
                             {
                                 validator: (_, value) => {
-                                    return advanceFilterForm.getFieldValue('fromDate') ? CheckDateEffectiveTo(value, advanceFilterForm?.getFieldValue('fromDate')) : null;
+                                    return advanceFilterForm.getFieldValue('fromDate') ? CheckDateEffectiveTo(value, advanceFilterForm?.getFieldValue('fromDate')) : Promise.resolve();
                                 },
                             },
                         ]}
