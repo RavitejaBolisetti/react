@@ -15,22 +15,48 @@ export const NotificationDetailMaster = (props) => {
     const [changeValue, setChangeValue] = useState(null);
     const [uniqueCardEdit, setuniqueCardEdit] = useState(null);
     const [mainFomEdit, setMainFormEdit] = useState(false);
+    const onErrorAction = (message) => {
+        showGlobalNotification({ message });
+    };
     const addDocHeadMapping = (val) => {
+        console.log('val',val)
         notificationDetailForm
             .validateFields()
             .then(() => {
                 let data = notificationDetailForm.getFieldsValue();
                 let updateData = { ...data, id:'' };
                 // let updateData = { ...data, internalId: Math.floor(Math.random() * 100000000 + 1), id: '' };
+                let flagExistValue = false;
+                if(docTypeHeadMappingList?.length > 0){                    
+                    for(let i =0; i< docTypeHeadMappingList?.length ; i++){
+                        if(updateData?.roleCode === docTypeHeadMappingList[i]?.roleCode && updateData?.designationCode === docTypeHeadMappingList[i]?.designationCode){
+                             flagExistValue= true;
+                            break;
+                        }
+                    }
+                    if(!flagExistValue){
+                        setDocTypeHeadMappingList((item) => [updateData, ...item]);
+                        notificationDetailForm.resetFields();                        
+                        forceUpdate();
+                        // notificationDetailForm.setFieldValue('designationCode', undefined);
+                        // setFilterDesignationList();
+                        setButtonData({ ...buttonData, formBtnActive: true });
+                        
+                    } else {
+                        // notificationDetailForm.setFieldValue('designationCode', undefined);
+                        // setFilterDesignationList();
+                        onErrorAction('Desigination has been already added.');
+                    }
 
-                setDocTypeHeadMappingList((item) => [updateData, ...item]);
-                notificationDetailForm.resetFields();
-                forceUpdate();
-                setButtonData({ ...buttonData, formBtnActive: true });
-                // handleRoleFunction();
+                } else {
+                    setDocTypeHeadMappingList((item) => [updateData, ...item]);
+                    notificationDetailForm.resetFields();
+                    forceUpdate();
+                    setFilterDesignationList();
+                    setButtonData({ ...buttonData, formBtnActive: true });
+                }
             })
             .catch((error) => console.log(error));
-
     };
 
     

@@ -210,7 +210,7 @@ const ViewDetailMain = (props) => {
                         </Descriptions>
                     </Card>
                     <Divider className={styles.marT20} />
-                    <h4>Allot OTF</h4>
+                    <h4>Allot Booking</h4>
                     <Card>
                         {formData?.allotmentStatus !== VEHICLE_TYPE.ALLOTED.key && (
                             <Row gutter={20}>

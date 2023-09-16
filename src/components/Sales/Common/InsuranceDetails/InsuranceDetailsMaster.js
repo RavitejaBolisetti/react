@@ -14,6 +14,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { insuranceDetailDataActions } from 'store/actions/data/otf/insuranceDetail';
 
 import styles from 'assets/sass/app.module.scss';
+import { partyMasterDataActions } from 'store/actions/data/partyMaster';
 
 const mapStateToProps = (state) => {
     const {
@@ -22,9 +23,9 @@ const mapStateToProps = (state) => {
             OTF: {
                 InsuranceDetail: { isLoaded: isDataLoaded = false, isLoading, data: insuranceData = [] },
             },
+            PartyMaster: { isFilteredListLoaded: isInsuranceCompanyDataLoaded = false, isLoading: isPartyLoading, detailData: insuranceCompanies },
         },
     } = state;
-
     const moduleTitle = 'Insurance Details';
 
     let returnValue = {
@@ -33,6 +34,8 @@ const mapStateToProps = (state) => {
         insuranceData,
         isLoading,
         moduleTitle,
+        isInsuranceCompanyDataLoaded,
+        insuranceCompanies,
     };
     return returnValue;
 };
@@ -45,6 +48,9 @@ const mapDispatchToProps = (dispatch) => ({
             listShowLoading: insuranceDetailDataActions.listShowLoading,
             resetData: insuranceDetailDataActions.reset,
             saveData: insuranceDetailDataActions.saveData,
+
+            fetchInsuranceCompanyList: partyMasterDataActions.fetchDetail,
+            listInsuranceShowLoading: partyMasterDataActions.listShowLoading,
             showGlobalNotification,
         },
         dispatch
@@ -55,6 +61,7 @@ const InsuranceDetailsMasterBase = (props) => {
     const { insuranceData, onCloseAction, fetchList, formActionType, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
     const { form, selectedOrderId, handleFormValueChange, section, isLoading, NEXT_ACTION, handleButtonClick, onFinishFailed, saveData } = props;
     const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, StatusBar, pageType } = props;
+    const { isInsuranceCompanyDataLoaded, listInsuranceShowLoading, fetchInsuranceCompanyList, insuranceCompanies } = props;
 
     const [formData, setFormData] = useState();
 
@@ -64,6 +71,21 @@ const InsuranceDetailsMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [insuranceData]);
+
+    useEffect(() => {
+        const extraParams = [
+            {
+                key: 'partyType',
+                title: 'partyType',
+                value: 'IN',
+                name: 'Party Type',
+            },
+        ];
+        if (userId && !isInsuranceCompanyDataLoaded) {
+            fetchInsuranceCompanyList({ setIsLoading: listInsuranceShowLoading, userId, extraParams });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, !isInsuranceCompanyDataLoaded]);
 
     const extraParams = [
         {
@@ -114,6 +136,7 @@ const InsuranceDetailsMasterBase = (props) => {
         isLoading,
         formData,
         pageType,
+        insuranceCompanies,
     };
 
     const myProps = {
@@ -123,7 +146,6 @@ const InsuranceDetailsMasterBase = (props) => {
     const onFinish = (values) => {
         const recordId = insuranceData?.id || '';
         const data = { ...values, id: recordId, otfNumber: selectedOrderId };
-
         if (onFinishCustom) {
             onFinishCustom({ key: formKey, values: data });
             handleButtonClick({ buttonAction: NEXT_ACTION });

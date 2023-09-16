@@ -44,8 +44,8 @@ describe('DrawerFormButton', () => {
         expect(getByText('Save')).toBeInTheDocument();
         expect(getByText('Save & Add New')).toBeInTheDocument();
         expect(getByText('Edit')).toBeInTheDocument();
-        expect(getByText('Cancel OTF')).toBeInTheDocument();
-        expect(getByText('Transfer OTF')).toBeInTheDocument();
+        expect(getByText('Cancel Booking')).toBeInTheDocument();
+        expect(getByText('Transfer Booking')).toBeInTheDocument();
     });
 });
 
@@ -57,10 +57,10 @@ describe('DrawerFormButton components', () => {
     it('should check all button click events', async () => {
         customRender(<DrawerFormButton formData={{}} onCloseAction={jest.fn()} buttonData={buttonData} setButtonData={jest.fn()} saveButtonName={saveButtonName} handleButtonClick={jest.fn()} isLoadingOnSave={isLoadingOnSave} saveAndNewBtnClicked={saveAndNewBtnClicked} />);
 
-        const cancleButton = screen.getByRole('button', { name: 'Cancel OTF', exact: false });
+        const cancleButton = screen.getByRole('button', { name: 'Cancel Booking', exact: false });
         fireEvent.click(cancleButton);
 
-        const transferButton = screen.getByRole('button', { name: 'Transfer OTF', exact: false });
+        const transferButton = screen.getByRole('button', { name: 'Transfer Booking', exact: false });
         fireEvent.click(transferButton);
 
         const saveButton = screen.getByRole('button', { name: 'Save', exact: false });

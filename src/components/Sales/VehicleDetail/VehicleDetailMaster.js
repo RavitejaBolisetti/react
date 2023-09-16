@@ -172,7 +172,7 @@ export const VehicleDetailMasterBase = (props) => {
             },
             {
                 key: 'otfStatus',
-                title: 'OTF Status',
+                title: 'Booking Status',
                 value: filterString?.otfStatus,
                 name: vehicleDetailStatusList?.find((i) => i?.title === filterString?.otfStatus)?.desc,
                 canRemove: true,

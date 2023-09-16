@@ -94,17 +94,7 @@ const CardNotificationDetail = (props) => {
                 </Space>
                 <Row>
                     <div className={styles.cardItemBtn}>{!formEdit && <Button onClick={() => onDocTypeHeadMappingDelete(props)} type="link" icon={<FiTrash />} disabled={props?.id ? true : false} />}</div>
-                    {formEdit && props?.internalId === uniqueCardEdit && (
-                        <div className={styles.cardItemBtn}>
-                            <Button type="link" onClick={onDocTypeHeadMappingCancel}>
-                                Cancel
-                            </Button>
-                            <Button type="link" onClick={docTypeHeadMappingSave}>
-                                Save
-                            </Button>
-                        </div>
-                    )}
-
+                    
                     {formEdit && props?.internalId === uniqueCardEdit && (
                         <div className={styles.cardItemBtn}>
                             <Button type="link" onClick={onDocTypeHeadMappingCancel}>

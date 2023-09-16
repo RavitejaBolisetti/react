@@ -28,13 +28,13 @@ const mapStateToProps = (state) => {
                 VehicleDetailsLov: { isFilteredListLoaded: isVehicleLovDataLoaded = false, isLoading: isVehicleLovDataLoading, filteredListData: VehicleLovData },
                 VehicleDetailsServiceLov: { isFilteredListLoaded: isVehicleServiceLoaded = false, isLoading: isVehicleServiceLoading, filteredListData: vehicleServiceData },
             },
-            ProductHierarchy: { isFilteredListLoaded: isProductHierarchyDataLoaded = false, isLoading: isProductHierarchyLoading, filteredListData: VehicleLovCodeData = [] },
+            ProductHierarchy: { isFilteredListLoaded: isProductHierarchyDataLoaded = false, isLoading: isProductHierarchyLoading, filteredListData: VehicleLovCodeData = [], isLoaded: isProductDataLoaded = false, isLoading: isProductDataLoading = false, data: productHierarchyData = [] },
         },
     } = state;
 
     const moduleTitle = 'Vehicle Details';
 
-    console.log('ProductHierarchyData', VehicleLovCodeData);
+    console.log('isProductDataLoaded', isProductDataLoaded, 'productHierarchyData', productHierarchyData);
 
     let returnValue = {
         userId,
@@ -52,6 +52,10 @@ const mapStateToProps = (state) => {
         isVehicleServiceLoaded,
         isVehicleServiceLoading,
         vehicleServiceData,
+
+        isProductDataLoaded,
+        isProductDataLoading: !isProductDataLoaded,
+        productHierarchyData,
     };
     return returnValue;
 };
@@ -63,6 +67,7 @@ const mapDispatchToProps = (dispatch) => ({
             fetchList: otfvehicleDetailsDataActions.fetchList,
             saveData: otfvehicleDetailsDataActions.saveData,
 
+            fetchProductList: productHierarchyDataActions.fetchList,
             fetchProductLovCode: productHierarchyDataActions.fetchFilteredList,
             fetchProductLov: otfvehicleDetailsLovDataActions.fetchFilteredList,
 
@@ -82,10 +87,12 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const VehicleDetailsMasterMain = (props) => {
-    const { VehicleDetailsData, isVehicleLovDataLoading, VehicleLovData, resetProductLov, isVehicleLovDataLoaded, ProductHierarchyData, fetchProductLovCode, fetchProductLov, isLoading, saveData, ProductLovLoading, isProductHierarchyDataLoaded, typeData, fetchList, resetData, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
+    const { VehicleDetailsData, isVehicleLovDataLoading, VehicleLovData, resetProductLov, isVehicleLovDataLoaded, ProductHierarchyData, fetchProductLovCode, fetchProductLov, isLoading, saveData, ProductLovLoading } = props;
+    const { isProductHierarchyDataLoaded, typeData, fetchList, resetData, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
     const { form, selectedOrderId, section, buttonData, setButtonData, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick } = props;
     const { refreshData, setRefreshData, vehicleServiceData, fetchServiceLov, serviceLoading, selectedOrder, setSelectedOrder } = props;
     const { formKey, onFinishCustom = undefined, FormActionButton, StatusBar } = props;
+    const { isProductDataLoaded, isProductDataLoading, productHierarchyData, fetchProductList } = props;
 
     const [activeKey, setactiveKey] = useState([1]);
     const [formData, setformData] = useState({});
@@ -118,9 +125,44 @@ const VehicleDetailsMasterMain = (props) => {
 
     const loadDependependentData = () => {
         fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
-        fetchProductLov({ setIsLoading: ProductLovLoading, userId, onErrorAction });
         fetchServiceLov({ setIsLoading: serviceLoading, userId, onErrorAction });
     };
+
+    useEffect(() => {
+        if (userId && !isProductDataLoaded) {
+            const extraParams = [
+                {
+                    key: 'unit',
+                    value: 'Sales',
+                },
+                {
+                    key: 'productDivision',
+                    value: 'IS',
+                },
+            ];
+            // fetchProductList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
+            fetchProductList({ setIsLoading: listShowLoading, userId, id: 'IS', onErrorAction });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, !isProductDataLoaded]);
+
+    useEffect(() => {
+        if (userId && !isProductDataLoaded) {
+            const extraParams = [
+                {
+                    key: 'unit',
+                    value: 'Sales',
+                },
+                {
+                    key: 'productDivision',
+                    value: 'IS',
+                },
+            ];
+            // fetchProductList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
+            fetchProductList({ setIsLoading: listShowLoading, userId, id: 'IS', onErrorAction });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, !isProductDataLoaded]);
 
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);

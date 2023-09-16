@@ -21,8 +21,8 @@ const buttonData = {
     formBtnActive: true,
 };
 
-describe('OTF Form Button Component', () => {
-    it('should render otf form button component', () => {
+describe('Booking Form Button Component', () => {
+    it('should render Booking form button component', () => {
         customRender(<OTFFormButton />);
     });
 
@@ -42,9 +42,9 @@ describe('OTF Form Button Component', () => {
         fireEvent.click(invoiceBtn);
         const deliveryNoteBtn = screen.getByRole('button', { name: 'Delivery Note' });
         fireEvent.click(deliveryNoteBtn);
-        const transferOTFBtn = screen.getByRole('button', { name: 'Transfer OTF' });
+        const transferOTFBtn = screen.getByRole('button', { name: 'Transfer Booking' });
         fireEvent.click(transferOTFBtn);
-        const cancelOTFBtn = screen.getByRole('button', { name: 'Cancel OTF' });
+        const cancelOTFBtn = screen.getByRole('button', { name: 'Cancel Booking' });
         fireEvent.click(cancelOTFBtn);
         const changeHistory = screen.getByRole('button', { name: 'Change History' });
         fireEvent.click(changeHistory);

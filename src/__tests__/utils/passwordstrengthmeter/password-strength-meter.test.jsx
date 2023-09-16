@@ -8,7 +8,16 @@ import customRender from '@utils/test-utils';
 import PasswordStrengthMeter from '@utils/PasswordStrengthMeter/PasswordStrengthMeter';
 
 describe('PasswordStrengthMeter Components', () => {
+
     it('should render password strength meter components', () => {
         customRender(<PasswordStrengthMeter />);
     });
+
+    it('should check password strength', () => {
+        customRender(<PasswordStrengthMeter password={'Kai@123456'} />);
+        customRender(<PasswordStrengthMeter password={'Kai'} />);
+        customRender(<PasswordStrengthMeter password={'12345678'} />);
+        customRender(<PasswordStrengthMeter password={'Kai123456'} />);
+    });
+
 });

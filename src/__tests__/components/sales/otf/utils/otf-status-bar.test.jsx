@@ -4,8 +4,8 @@ import { screen, fireEvent, act } from '@testing-library/react';
 import { OTFStatusBar } from 'components/Sales/OTF/utils/OTFStatusBar';
 afterEach(() => {
     jest.restoreAllMocks();
-  }); 
-describe('OTF Form Button Component', () => {
+});
+describe('Booking Form Button Component', () => {
     it('should render otf form button component', () => {
         customRender(<OTFStatusBar />);
     });

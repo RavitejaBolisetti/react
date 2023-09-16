@@ -19,7 +19,7 @@ const FormWrapper = (props) => {
     };
     return <AddEditForm form={myFormMock} {...props} />;
 };
-describe('OTF Vehicle Details Component render', () => {
+describe('Booking Vehicle Details Component render', () => {
     it('should render addedit form', async () => {
         customRender(<FormWrapper typeData={typeDataMock} formData={'taxDetails'} setOpenAccordian={jest.fn()} toolTipContent={true} />);
     });

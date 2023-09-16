@@ -13,7 +13,9 @@ const { Panel } = Collapse;
 
 const expandIcon = ({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />);
 
-export const ViewProductDetailMain = ({ form, skuAttributes, setSKUAttributes, isAddBtnDisabled, setAddBtnDisabled, onActionFormFinish, viewTitle, buttonData, attributeData, selectedTreeData, handleEditBtn, handleRootChildBtn, handleChildBtn, handleSiblingBtn, setClosePanels, styles, setDisabledEdit }) => {
+export const ViewProductDetailMain = ({ form, skuAttributes, setSKUAttributes, isAddBtnDisabled, setAddBtnDisabled, onActionFormFinish, viewTitle, buttonData, attributeData, selectedTreeData, handleEditBtn, handleRootChildBtn, handleChildBtn, handleSiblingBtn, setClosePanels, styles, setDisabledEdit, viewData }) => {
+    
+   
     const viewOneColProps = {
         bordered: false,
         colon: false,
@@ -34,18 +36,24 @@ export const ViewProductDetailMain = ({ form, skuAttributes, setSKUAttributes, i
         <>
             <div className={styles.viewContainer}>
                 <Descriptions {...viewOneColProps}>
-                    <Descriptions.Item label="Attribute Level">{selectedTreeData.hierarchyAttribueName}</Descriptions.Item>
+                    {/* <Descriptions.Item label="Attribute Level">{selectedTreeData.hierarchyAttribueName}</Descriptions.Item>
                     <Descriptions.Item label="Parent">{selectedTreeData.parentName || HIERARCHY_DEFAULT_PARENT}</Descriptions.Item>
                     <Descriptions.Item label="Code">{selectedTreeData.prodctCode}</Descriptions.Item>
                     <Descriptions.Item label="Short Description">{selectedTreeData?.prodctShrtName}</Descriptions.Item>
                     <Descriptions.Item label="Long Description">{selectedTreeData?.prodctLongName}</Descriptions.Item>
-                    <Descriptions.Item label="Status">{selectedTreeData?.active === true ? 'Active' : 'InActive'}</Descriptions.Item>
+                    <Descriptions.Item label="Status">{selectedTreeData?.active === true ? 'Active' : 'InActive'}</Descriptions.Item> */}
+                    <Descriptions.Item label="Attribute Level">{viewData?.[0]?.attributeName}</Descriptions.Item>
+                    <Descriptions.Item label="Parent">{viewData?.parentName}</Descriptions.Item>
+                    <Descriptions.Item label="Code">{viewData?.[0]?.prodctCode}</Descriptions.Item>
+                    <Descriptions.Item label="Short Description">{viewData?.[0]?.prodctShrtName}</Descriptions.Item>
+                    <Descriptions.Item label="Long Description">{viewData?.[0]?.prodctLongName}</Descriptions.Item>
+                    <Descriptions.Item label="Status">{viewData?.[0]?.active === true ? 'Active' : 'InActive'}</Descriptions.Item>
                     <div>
-                        {selectedTreeData?.skuAttributes?.length > 0 && (
+                        {viewData?.[0]?.skuAttributes?.length > 0 && (
                             <Collapse expandIcon={expandIcon} collapsible="icon">
                                 <Panel header="Product SKU" key="2">
                                     <Divider />
-                                    {skuAttributes?.map((item) => (
+                                    {viewData?.[0]?.skuAttributes?.map((item) => (
                                         <CardProductAttribute key={'sku' + item?.code} code={item?.code} value={item?.value} id={item?.id} setDisabledEdit={setDisabledEdit} />
                                     ))}
                                 </Panel>

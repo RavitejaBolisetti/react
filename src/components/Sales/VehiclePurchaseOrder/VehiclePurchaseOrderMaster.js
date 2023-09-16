@@ -381,7 +381,7 @@ export const VehiclePurchaseOrderMasterBase = (props) => {
         advanceFilterForm.resetFields();
     };
 
-    const title = 'Search VPO';
+    const title = 'Search Vehicle Purchase Order';
 
     const advanceFilterResultProps = {
         extraParams,

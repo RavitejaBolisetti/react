@@ -6,7 +6,7 @@ beforeEach(() => {
     jest.clearAllMocks();
 });
 
-describe('OTF finance view Details render', () => {
+describe('Booking finance view Details render', () => {
     it('should render view details page', async () => {
         const checkFinanceType = { key: 'cash', value: '1' };
         customRender(<ViewDetail checkFinanceType={checkFinanceType} />);

@@ -294,10 +294,10 @@ const ExchangeVehiclesBase = (props) => {
                 value: selectedOrder?.modelCode,
             },
         ];
-
+        resetVehicleExchangeAlert();
         fetchProductLovCode({ setIsLoading: ProductLovCodeLoading, userId, onErrorAction, extraparams: LovParams });
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId]);
+    }, [selectedOrder?.modelCode]);
 
     useEffect(() => {
         if (VehicleLovCodeData) {
@@ -319,7 +319,6 @@ const ExchangeVehiclesBase = (props) => {
         ];
 
         if (modelGroup?.oldModelGroup) {
-            resetVehicleExchangeAlert();
             fetchListVehicleExchangeAlert({ setIsLoading: listShowLoadingVehicleExchangeAlert, extraParams, onSuccessAction, onErrorAction, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps

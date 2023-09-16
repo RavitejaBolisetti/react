@@ -27,7 +27,7 @@ const mapStateToProps = (state) => {
             },
         },
     } = state;
-    const moduleTitle = 'Transfer OTF';
+    const moduleTitle = 'Transfer Booking';
 
     let returnValue = {
         userId,
@@ -77,7 +77,6 @@ const TransferMasterBase = (props) => {
         if (userId) {
             reset();
             fetchDealerLocations({ setIsLoading: locationDataLoding, userId });
-            
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
@@ -85,7 +84,7 @@ const TransferMasterBase = (props) => {
     const handleOtfTransferLocationChange = (value) => {
         if (!value) {
             otfTransferForm.resetFields(['salesConsultant']);
-            reset()
+            reset();
         } else {
             const extraParams = [
                 {

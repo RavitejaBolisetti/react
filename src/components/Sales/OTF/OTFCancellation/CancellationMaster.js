@@ -27,7 +27,7 @@ const mapStateToProps = (state) => {
             },
         },
     } = state;
-    const moduleTitle = 'Cancel OTF';
+    const moduleTitle = 'Cancel Booking';
 
     let returnValue = {
         userId,

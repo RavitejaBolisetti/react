@@ -21,9 +21,16 @@ export const PRODUCT_HIERARCHY_ATTRIBUTE_NAME_DROPDOWN = 'PRODUCT_HIERARCHY_ATTR
 export const PRODUCT_HIERARCHY_SELECTED_ORGANIZATION_ID = 'PRODUCT_HIERARCHY_SELECTED_ORGANIZATION_ID';
 export const PRODUCT_HIERARCHY_RESET_DATA = 'PRODUCT_HIERARCHY_RESET_DATA';
 export const PRODUCT_HIERARCHY_FILTERED_DATA_ACTION_CONSTANT = 'PRODUCT_HIERARCHY_FILTERED_DATA_ACTION_CONSTANT';
+export const PRODUCT_HIERARCHY_DETAIL_DATA = 'PRODUCT_HIERARCHY_DETAIL_DATA';
 
 const receiveProductHierarchyData = (data) => ({
     type: PRODUCT_HIERARCHY_DATA_LOADED,
+    isLoaded: true,
+    data,
+});
+
+const receiveProductHierarchyDetailData = (data) => ({
+    type: PRODUCT_HIERARCHY_DETAIL_DATA,
     isLoaded: true,
     data,
 });
@@ -88,7 +95,7 @@ productHierarchyDataActions.cardBtnDisableAction = (value) => ({
 });
 
 productHierarchyDataActions.fetchList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-    const { setIsLoading, onError, data, id } = params;
+    const { setIsLoading, onError, data, id, extraParams } = params;
     setIsLoading(true);
 
     const onSuccess = (res) => {
@@ -105,10 +112,17 @@ productHierarchyDataActions.fetchList = withAuthToken((params) => ({ token, acce
         onError && onError();
     };
 
+    let sExtraParamsString = '?';
+    extraParams?.forEach((item, index) => {
+        sExtraParamsString += item?.value && item?.key ? item?.value && item?.key + '=' + item?.value + '&' : '';
+    });
+
+    sExtraParamsString = sExtraParamsString.substring(0, sExtraParamsString.length - 1);
+
     const apiCallParams = {
         data,
         method: 'get',
-        url: BASE_URL_PRODUCT_HIERARCHY + (id ? '?manufactureOrgCode=' + id : ''),
+        url: BASE_URL_PRODUCT_HIERARCHY + sExtraParamsString,
         token,
         accessToken,
         userId,
