@@ -233,7 +233,7 @@ export const DealerParentBase = (props) => {
     };
 
     const tableProps = {
-        tableColumn: tableColumn(handleButtonClick),
+        tableColumn: tableColumn({handleButtonClick}),
         tableData: searchData,
         typeData
     };
