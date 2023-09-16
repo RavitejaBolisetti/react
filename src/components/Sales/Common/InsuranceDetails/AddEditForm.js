@@ -33,8 +33,8 @@ const AddEditFormMain = (props) => {
                                 <Form.Item label="Insurance Company" name="insuranceCompany">
                                     <Select placeholder={preparePlaceholderSelect('Insurance Company')}>
                                         {insuranceCompanies?.map((item) => (
-                                            <Option value={item?.partyName} key={'ic' + item?.partyCode}>
-                                                {item?.partyName}
+                                            <Option value={item?.value} key={item?.key}>
+                                                {item?.value}
                                             </Option>
                                         ))}
                                     </Select>

@@ -34,7 +34,7 @@ const VoucherCard = (props) => {
                 header={
                     <>
                         <div className={styles.detailCardText} style={{ fontSize: '14px' }}>
-                            Voucher No: <span>{selectedRecord?.voucherNumber || 'NA'}</span>
+                            Voucher No: <span>{selectedRecord?.voucherNumber || '-'}</span>
                         </div>
                         <Divider />
                         <div className={`${styles.detailCardText} ${styles.marB5}`} style={{ fontSize: '14px' }}>
@@ -46,7 +46,7 @@ const VoucherCard = (props) => {
             >
                 <Divider />
                 <div className={styles.detailCardText}>
-                    Voucher Type: <span>{selectedRecord?.voucherType || 'NA'}</span>
+                    Voucher Type: <span>{selectedRecord?.voucherType || '-'}</span>
                 </div>
             </Panel>
         </Collapse>

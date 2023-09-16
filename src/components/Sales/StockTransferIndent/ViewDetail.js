@@ -26,7 +26,6 @@ const ViewDetailMain = (props) => {
     const { setCancellationData, setCancellationIssueVisible, typeData } = props;
 
     const [editVehicleDetailsForm] = Form.useForm();
-
     const [isEditVehicleDetailsVisible, setIsEditVehicleDetailsVisible] = useState(false);
     const [editVehicleDetails, setEditVehicleDetails] = useState({});
 
@@ -41,27 +40,6 @@ const ViewDetailMain = (props) => {
         setIsEditVehicleDetailsVisible(false);
         editVehicleDetailsForm.resetFields();
         updateVehicleDetails({ ...editVehicleDetails, cancelledQuantity: values?.cancelledQuantity });
-        let data = { ...values };
-
-        const onSuccess = (res) => {
-            // showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            // fetchIndentList({ customURL: customURL + '/search', setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
-        };
-
-        const onError = (message) => {
-            //showGlobalNotification({ message });
-        };
-        const requestData = {
-            // data: data,
-            // customURL: customURL + '/indent',
-            // method: 'post',
-            // setIsLoading: listShowLoading,
-            // userId,
-            // onError,
-            // onSuccess,
-        };
-
-        //saveData(requestData);
     };
 
     const buttonProps = {

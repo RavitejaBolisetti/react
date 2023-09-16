@@ -2,10 +2,6 @@ import '@testing-library/jest-dom/extend-expect';
 import { AddEditForm } from '@components/Mile/DealerCompany/AddEditForm';
 import customRender from '@utils/test-utils';
 import { screen, fireEvent } from "@testing-library/react";
-import { Provider } from 'react-redux';
-import { configureStore } from '@reduxjs/toolkit';
-import thunk from 'redux-thunk';
-import { rootReducer } from 'store/reducers';
 import { Form } from 'antd';
 
 
@@ -18,24 +14,42 @@ const FormWrapper = (props) => {
     const myFormMock = {
         ...form,
         setFieldsValue: jest.fn(),
+        validateFields: jest.fn()
     };
     return <AddEditForm form={myFormMock} {...props} />;
 };
 
-
 describe('Dealer company components', () => {
     it('Should render add edit form components', () => {
         const formActionType = { viewMode: false, editMode: true }
-        const formData = { companyCode: "test", parentCode: "test", status: true }
+        const pattern = /^\d{6}(?:\s*,\s*\d{6})*$/;
+        const formData = { companyCode: "test", parentCode: "test", status: true, pinCode: [{ key: 1, value: "test" }, { key: 2, value: "test" }] }
+        const pincodeData = [{ key: 1, id: 1, value: "test", pinCode: "4545" }, { key: 2, id: 2, pinCode: "4545", value: "test" }]
         customRender(
-            <FormWrapper isVisible={true} formData={formData} formActionType={formActionType} setButtonData={jest.fn()} handleFormValueChange={jest.fn()} />
+            <FormWrapper isVisible={true}
+                showGlobalNotification={jest.fn()}
+                formData={formData}
+                formActionType={formActionType}
+                setButtonData={jest.fn()}
+                handleFormValueChange={jest.fn()}
+                fetchPincodeDetail={jest.fn()}
+                pattern={pattern}
+                pincodeData={pincodeData}
+                checked={true}
+            />
         )
 
         const searchInput = screen.getByPlaceholderText('Search');
-        fireEvent.change(searchInput, { target: { value: 'test' } })        
+        fireEvent.change(searchInput, { target: { value: '123456' } })
 
-        const search = screen.getByRole('img', { name: 'search' });
-        fireEvent.click(search);
+        const pinCode = screen.getByRole('combobox', { name: 'Pin Code' });
+        fireEvent.change(pinCode, { target: { value: '123456' } })
+
+        const searchBtn = screen.getByRole('button', { name: 'search' });
+        fireEvent.click(searchBtn);
+
+        const closeCircle = screen.getByRole('img', { name: 'close-circle' });
+        fireEvent.click(closeCircle);
 
         const groupCode = screen.getByRole('combobox', { name: 'Group Code' });
         fireEvent.change(groupCode, { target: { value: 'test' } })
@@ -83,8 +97,11 @@ describe('Dealer company components', () => {
         const buttonData = { saveAndNewBtn: true, cancelBtn: true, closeBtn: true }
         const formData = { companyCode: "test", parentCode: "test", status: true }
         customRender(
-            <FormWrapper isVisible={true} formData={formData} buttonData={buttonData} handleButtonClick={jest.fn()} onCloseAction={jest.fn()} setButtonData={jest.fn()} handleFormValueChange={jest.fn()} formActionType={formActionType} />
+            <FormWrapper checked={true} isVisible={true} formData={formData} buttonData={buttonData} handleButtonClick={jest.fn()} onCloseAction={jest.fn()} setButtonData={jest.fn()} handleFormValueChange={jest.fn()} formActionType={formActionType} />
         )
+
+        const status = screen.getByRole('switch', { name: 'Status' });
+        fireEvent.click(status)
 
         const saveAnd = screen.getByRole('button', { name: 'Save & Add New' });
         fireEvent.click(saveAnd);
