@@ -95,7 +95,7 @@ productHierarchyDataActions.cardBtnDisableAction = (value) => ({
 });
 
 productHierarchyDataActions.fetchList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-    const { setIsLoading, onError, data, id, extraParams } = params;
+    const { setIsLoading, onError, data, extraParams } = params;
     setIsLoading(true);
 
     const onSuccess = (res) => {
