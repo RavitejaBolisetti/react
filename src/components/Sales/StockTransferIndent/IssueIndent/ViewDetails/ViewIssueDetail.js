@@ -5,20 +5,24 @@
  */
 import React from 'react';
 import { Card, Descriptions, Button, Row, Col } from 'antd';
+
+import { PARAM_MASTER } from 'constants/paramMaster';
+import { BUTTON_NAME_CONSTANTS, ISSUE_ACTION_LIST } from '../../constants';
+
+import { handleBtnVisibility } from '../../utils';
 import { converDateDayjs } from 'utils/formatDateTime';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
-import styles from 'assets/sass/app.module.scss';
-import { PARAM_MASTER } from 'constants/paramMaster';
-import { getCodeValue } from 'utils/getCodeValue';
-import { BUTTON_NAME_CONSTANTS, ISSUE_CONSTANT } from '../Constants';
 
-export const ViewIssueCard = ({ formData, isLoading = false, typeData, handleRequest, handleBtnVisibility, toggleButton }) => {
+import styles from 'assets/sass/app.module.scss';
+
+export const ViewIssueDetail = ({ formData, isLoading = false, typeData, handleRequest, toggleButton }) => {
     const viewProps = {
         bordered: false,
         colon: false,
         layout: 'vertical',
         column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
     };
+
     const viewData = {
         ...formData,
         issueDate: converDateDayjs(formData?.issueDate),
@@ -26,6 +30,8 @@ export const ViewIssueCard = ({ formData, isLoading = false, typeData, handleReq
         grnDate: converDateDayjs(formData?.grnDate),
         issueStatus: typeData[PARAM_MASTER?.ISS_STS?.id]?.find((i) => i?.key === formData?.issueStatus)?.value,
     };
+
+    const buttonVisibility = handleBtnVisibility({ toggleButton, checkKey: formData?.issueStatus });
     return (
         <Card className={styles.drawerCardView}>
             <Descriptions {...viewProps}>
@@ -50,13 +56,13 @@ export const ViewIssueCard = ({ formData, isLoading = false, typeData, handleReq
             </Descriptions>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{ display: 'flex' }}>
-                    {handleBtnVisibility({ toggleButton, checkKey: formData?.issueStatus })?.canReceive && (
-                        <Button style={{ marginRight: '10px' }} type="primary" onClick={() => handleRequest(formData, ISSUE_CONSTANT?.RECEIVED?.key)}>
+                    {buttonVisibility?.canReceive && (
+                        <Button style={{ marginRight: '10px' }} type="primary" onClick={() => handleRequest(formData, ISSUE_ACTION_LIST?.RECEIVED)}>
                             {BUTTON_NAME_CONSTANTS?.RECEIEVED?.name}
                         </Button>
                     )}
-                    {handleBtnVisibility({ toggleButton, checkKey: formData?.issueStatus })?.canReturn && (
-                        <Button danger onClick={() => handleRequest(formData, ISSUE_CONSTANT?.RETURNED?.key)}>
+                    {buttonVisibility?.canReturn && (
+                        <Button danger onClick={() => handleRequest(formData, ISSUE_ACTION_LIST?.RETURNED)}>
                             {BUTTON_NAME_CONSTANTS?.RETURN?.name}
                         </Button>
                     )}

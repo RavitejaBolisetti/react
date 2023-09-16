@@ -29,7 +29,7 @@ import { ViewDetail } from './ViewDetail';
 
 import { IssueIndentMaster } from 'components/Sales/StockTransferIndent/IssueIndent';
 
-import { DRAWER_TITLE_CONSTANT } from './IssueIndent/Constants';
+import { INDENT_ACTION_LIST } from './constants';
 import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 
 const mapStateToProps = (state) => {
@@ -50,7 +50,7 @@ const mapStateToProps = (state) => {
                 IndentIssue: { isLoaded: indentIssueDataLoaded = false, isLoading: indentIssueDataLoading, data: indentIssueData },
             },
             OTF: {
-                VehicleDetailsLov: { filteredListData: ProductHierarchyData },
+                VehicleDetailsLov: { filteredListData: productHierarchyData },
             },
             Vehicle: {
                 VehicleDetail: { data: vehicleVinData, isLoading: vehicleVinDataLoading = false },
@@ -69,7 +69,7 @@ const mapStateToProps = (state) => {
 
         isFetchDataLoading,
         data,
-        ProductHierarchyData,
+        productHierarchyData,
         vehicleVinData,
         indentIssueData,
         indentIssueDataLoading,
@@ -115,7 +115,7 @@ const mapDispatchToProps = (dispatch) => ({
 export const StockTransferIndentMasterBase = (props) => {
     const { data, filterString, setFilterString, isFetchDataLoading } = props;
     const { userId, typeData, parentGroupCode, showGlobalNotification } = props;
-    const { indentLocationList, requestedByDealerList, ProductHierarchyData, isLoadingDealerLoc, indentLocationLoading } = props;
+    const { indentLocationList, requestedByDealerList, productHierarchyData, isLoadingDealerLoc, indentLocationLoading } = props;
     const { fetchIndentList, fetchIndentLocation, fetchIndentDetails, fetchRequestedByList, listShowLoading, saveData, ProductLovLoading, fetchProductLov, fetchVinDetails, vehicleVinData, saveIssueDetail, resetVinDetails, fetchIssueList, resetIssueList, listIssueLoading } = props;
     const { indentIssueData, indentIssueDataLoading, indentIssueDataLoaded } = props;
     const [searchForm] = Form.useForm();
@@ -269,11 +269,9 @@ export const StockTransferIndentMasterBase = (props) => {
     }, [page, filterString]);
 
     useEffect(() => {
-        //setFilterString({ ...filterString, pageSize: 10, current: 1 });
         if (userId) {
             setShowDataLoading(true);
             fetchIndentList({ customURL: customURL + '/search', setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
-            //fetchVehicleAllotmentSearchedList({ customURL: customURL + '/search', setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, extraParams]);
@@ -316,8 +314,8 @@ export const StockTransferIndentMasterBase = (props) => {
             showGlobalNotification({ msg });
             return;
         }
-        setIsAddNewIndentVisible(false);
 
+        setIsAddNewIndentVisible(false);
         let data = { ...values, vehicleDetails: [...tableDataItem] };
 
         const onSuccess = (res) => {
@@ -342,7 +340,6 @@ export const StockTransferIndentMasterBase = (props) => {
     };
 
     const updateVehicleDetails = (values) => {
-        //setIsAddNewIndentVisible(false);
         let data = { ...selectedOrder, vehicleDetails: [{ ...values }] };
 
         const onSuccess = (res) => {
@@ -555,7 +552,7 @@ export const StockTransferIndentMasterBase = (props) => {
         tableDataItem,
         setTableDataItem,
         handleChangeLocation,
-        ProductHierarchyData,
+        productHierarchyData,
     };
 
     const viewIndentProps = {
@@ -584,7 +581,7 @@ export const StockTransferIndentMasterBase = (props) => {
             resetIssueList();
             setCancellationIssueVisible(false);
         },
-        titleOverride: DRAWER_TITLE_CONSTANT?.CANCELLATION?.name,
+        titleOverride: INDENT_ACTION_LIST.CANCELLATION?.name,
         cancellationData,
         setCancellationData,
         cancellationIssueVisible,

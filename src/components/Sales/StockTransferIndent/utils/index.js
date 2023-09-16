@@ -3,7 +3,6 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { handleBtnVisibility } from './handleBtnVisibility';
-import { isIssuePriceValid } from './validation';
 
-export { handleBtnVisibility, isIssuePriceValid };
+import { handleBtnVisibility } from './handleBtnVisibility';
+export { handleBtnVisibility };

@@ -7,19 +7,12 @@ import React from 'react';
 import { Row, Col, Form, Input, Button } from 'antd';
 import { withModal } from 'components/withModal';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
-import { validateRequiredInputField, validationNumber } from 'utils/validation';
+import { validateRequiredInputField, validationNumber, isValidQunatity } from 'utils/validation';
 
 import styles from 'assets/sass/app.module.scss';
 
 export const EditVehicleDetailsModalFrom = (props) => {
     const { onCloseAction, formData, editVehicleDetailsForm, onFinish } = props;
-
-    const isValidQunatity = (value, balancedQuantity) => {
-        if (!value) return Promise.resolve();
-        else if (!balancedQuantity || balancedQuantity === null) return Promise.reject(new Error(`Balance Quantity is not present`));
-        else if (value > balancedQuantity) return Promise.reject(`Cancelled Quantity can't be greater than Balance Quantity`);
-        else return Promise.resolve();
-    };
 
     return (
         <Form autoComplete="off" layout="vertical" form={editVehicleDetailsForm} onFinish={onFinish}>
