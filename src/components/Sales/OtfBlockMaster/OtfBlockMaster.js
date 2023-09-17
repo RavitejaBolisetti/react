@@ -495,7 +495,6 @@ export const OtfBlockMasterMain = (props) => {
     };
     const title = 'Hierarchy';
     const onfinishHeader = (value) => { };
-    console.log(organizationId, productHierarchyData);
     return (
         <>
             <div className={styles.contentHeaderBackground}>
