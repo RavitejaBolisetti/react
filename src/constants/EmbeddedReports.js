@@ -7,7 +7,7 @@ export const EMBEDDED_REPORTS = {
     OTF: {
         id: 1,
         key: 'OTF_Report',
-        title: 'OTF Report',
+        title: 'Booking Report',
         type: 'Report',
         module: 'otf',
     },

@@ -335,7 +335,7 @@ export const PARAM_MASTER = {
     },
     SO_MAP: {
         id: 'SO_MAP',
-        title: 'OTF So mapping and Unmapping',
+        title: 'Booking So mapping and Unmapping',
     },
     INDNT_TYP: {
         id: 'INDNT_TYP',
@@ -376,5 +376,9 @@ export const PARAM_MASTER = {
     DLVR_SALE_TYP: {
         id: 'DLVR_SALE_TYP',
         title: 'Delivery Note Reason for Delay',
-    }, 
+    },
+    PARTY_TYPE: {
+        id: 'PARTY_TYPE',
+        title: 'Supplier Party Type',
+    },
 };

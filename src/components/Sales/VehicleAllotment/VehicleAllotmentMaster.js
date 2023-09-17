@@ -108,7 +108,6 @@ export const VehicleAllotmentMasterBase = (props) => {
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
-    const [page, setPage] = useState({ pageSize: 10, current: 1 });
 
     const dynamicPagination = true;
 
@@ -129,6 +128,11 @@ export const VehicleAllotmentMasterBase = (props) => {
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
     const [formData, setFormData] = useState([]);
+
+    useEffect(() => {
+        setFilterString({ ...filterString, pageSize: 10, current: 1 });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const onSuccessAction = (res) => {
         // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -156,13 +160,8 @@ export const VehicleAllotmentMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [allotmentSummaryDetails]);
 
-    useEffect(() => {
-        setPage({ ...page, current: 1 });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, toggleButton]);
-
     const extraParams = useMemo(() => {
-        const defaultPage = defaultPageProps(page);
+        const defaultPage = defaultPageProps(filterString);
         return [
             ...defaultPage,
             {
@@ -207,7 +206,7 @@ export const VehicleAllotmentMasterBase = (props) => {
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [page, filterString, searchParamValue, toggleButton]);
+    }, [filterString, searchParamValue, toggleButton]);
 
     useEffect(() => {
         return () => {
@@ -218,7 +217,7 @@ export const VehicleAllotmentMasterBase = (props) => {
     }, []);
 
     useEffect(() => {
-        if (userId && !isOTFSearchLoading) {
+        if (userId && !isOTFSearchLoading && extraParams) {
             setShowDataLoading(true);
             fetchVehicleAllotmentSearchedList({ customURL: customURL + '/search', setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
@@ -242,13 +241,13 @@ export const VehicleAllotmentMasterBase = (props) => {
             case UNALLOT:
                 setConfirmRequest({
                     isVisible: true,
-                    titleOverride: 'Un-Allot OTF',
+                    titleOverride: 'Un-Allot Booking',
                     closable: true,
                     icon: false,
                     onCloseAction: onCloseConfirmationModalAction,
                     onSubmitAction: () => handleVehicleAllotment(record, buttonAction),
                     submitText: 'Yes',
-                    text: 'Are you sure want to Un-allot this OTF? ',
+                    text: 'Are you sure want to Un-allot this Booking? ',
                     content: selectedOTFDetails ? selectedOTFDetails?.bookingNumber || selectedOTFDetails?.otfNumber : '',
                 });
 
@@ -276,6 +275,8 @@ export const VehicleAllotmentMasterBase = (props) => {
     const onFinishSearch = (values) => {};
 
     const handleResetFilter = (e) => {
+        const { pageSize } = filterString;
+        setFilterString({ pageSize, current: 1 });
         setSearchParamValue();
         setShowDataLoading(true);
         setFilterString();
@@ -295,7 +296,7 @@ export const VehicleAllotmentMasterBase = (props) => {
 
     const handleVehicleAllotment = (req, buttonAction) => {
         if (!selectedOTFDetails) {
-            showGlobalNotification({ message: 'Please select OTF' });
+            showGlobalNotification({ message: 'Please select Booking' });
             return false;
         }
 
@@ -397,8 +398,8 @@ export const VehicleAllotmentMasterBase = (props) => {
     const fixedWith = toggleButton === VEHICLE_TYPE.ALLOTED.key;
     const tableProps = {
         dynamicPagination,
-        page,
-        setPage,
+        filterString,
+        setPage: setFilterString,
         isLoading: showDataLoading,
         tableColumn: tableColumn(handleButtonClick, toggleButton, fixedWith),
         tableData: allotmentSearchedList?.paginationData,

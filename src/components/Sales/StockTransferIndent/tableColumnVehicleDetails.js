@@ -6,7 +6,7 @@
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import styles from 'assets/sass/app.module.scss';
 
-export const tableColumnVehicleDetails = (handleButtonClickVehicleDetails, sorter, buttonDataVehicleDetails) => {
+export const tableColumnVehicleDetails = (handleButtonClickVehicleDetails, canEdit, sorter = false, canDelete = false) => {
     const tableColumn = [
         tblPrepareColumns({
             title: 'Model Description',
@@ -14,43 +14,50 @@ export const tableColumnVehicleDetails = (handleButtonClickVehicleDetails, sorte
             width: '20%',
             sorter,
         }),
+
         tblPrepareColumns({
             title: 'Model Code',
             dataIndex: 'modelCode',
             width: '15%',
             sorter,
         }),
+
         tblPrepareColumns({
             title: 'Requested Quantity',
             dataIndex: 'requestedQuantity',
             width: '10%',
             sorter,
         }),
+
         tblPrepareColumns({
             title: 'Cancelled Quantity',
             dataIndex: 'cancelledQuantity',
             width: '10%',
             sorter,
         }),
+
         tblPrepareColumns({
             title: 'Issued & Not Received Quantity',
             dataIndex: 'issuedAndNotReceivedQuantity',
             width: '10%',
             sorter,
         }),
+
         tblPrepareColumns({
             title: 'Received Quantity',
             dataIndex: 'receivedQuantity',
             width: '10%',
             sorter,
         }),
+
         tblPrepareColumns({
             title: 'Balance Quantity',
             dataIndex: 'balancedQuantity',
             width: '10%',
             sorter,
         }),
-        tblActionColumn({ handleButtonClick: handleButtonClickVehicleDetails , styles, width: '8%',  ...buttonDataVehicleDetails }),
+
+        tblActionColumn({ handleButtonClick: handleButtonClickVehicleDetails, styles, canEdit, canDelete }),
     ];
 
     return tableColumn;

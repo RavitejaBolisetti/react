@@ -20,7 +20,7 @@ const FormWrapper = (props) => {
     return <ReferralsMaster handleFormValueChange={jest.fn()} form={myFormMock} {...props} />;
 };
 
-describe('OTF Referrals Master Component', () => {
+describe('Booking Referrals Master Component', () => {
     it('should render referrals add edit form', async () => {
         customRender(<FormWrapper />);
     });
@@ -65,7 +65,7 @@ describe('OTF Referrals Master Component', () => {
     });
 });
 
-describe('OTF Referrals View Details Component', () => {
+describe('Booking Referrals View Details Component', () => {
     it('should render referrals add edit form', async () => {
         const formActionType = {
             viewMode: true,

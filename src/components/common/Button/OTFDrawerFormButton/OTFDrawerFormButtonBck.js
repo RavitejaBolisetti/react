@@ -32,7 +32,7 @@ const OTFFormButton = ({ buttonData, id = { edit: 'edit', transfer: 'transfer', 
                     )}
                     {buttonData?.cancelBtn && (
                         <Button type="primary" onClick={() => handleButtonClick({ buttonAction: OTF_FORM_ACTION_TYPE.CANCEL, record: formData })}>
-                            Cancel OTF
+                            Cancel Booking
                         </Button>
                     )}
 

@@ -159,4 +159,15 @@ describe('Vehicle Allotment Master Component', () => {
     fireEvent.click(removeFilter[0]);
   });
 
+
+  it.only("Should render list data table components", () => {
+    const formData = { allotmentStatus: "", vehicleOTFDetails: {} }
+    const tableDataItem = []
+
+    customRender(<VehicleAllotmentMaster showAddButton={true} isVisible={true} handleButtonClick={jest.fn()} tableData={tableDataItem} formData={formData} />)
+
+    const unAllotted = screen.getByRole('button', { name: 'Un-Allotted' });
+    fireEvent.click(unAllotted)
+  })
+
 });

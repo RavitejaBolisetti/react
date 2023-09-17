@@ -27,7 +27,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'OTF Reports';
+    const moduleTitle = 'Booking Reports';
 
     let returnValue = {
         userId,
@@ -102,7 +102,7 @@ export const OtfReportsMasterBase = (props) => {
                 let url = window.URL.createObjectURL(blob);
                 let a = document.createElement('a');
                 a.href = url;
-                a.download = 'OTF-Report-' + convertDate(undefined, 'YYYY-MM-DD_HH:mm:ss') + '.csv';
+                a.download = 'Booking-Report-' + convertDate(undefined, 'YYYY-MM-DD_HH:mm:ss') + '.csv';
                 a.click();
                 // form.resetFields();
                 showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: 'Your download should start automatically in a few seconds' });

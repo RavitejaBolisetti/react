@@ -49,7 +49,7 @@ const AddEditFormMain = (props) => {
             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                 <Space style={{ display: 'flex' }} size="middle" direction="vertical">
                     <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(3)} expandIconPosition="end">
-                        <Panel header="OTF Details" key="3">
+                        <Panel header="Booking Details" key="3">
                             <Divider />
                             <OtfDetailsForm {...props} />
                         </Panel>

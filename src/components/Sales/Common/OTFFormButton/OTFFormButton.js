@@ -38,7 +38,7 @@ export const OTFFormButton = ({ record, handleChangeHistory, handleOtfSoMappingH
 
                     {buttonData?.otfSoMappingHistoryBtn && (
                         <Button onClick={handleOtfSoMappingHistory} type="primary">
-                            OTF Mapping History
+                            Booking Mapping History
                         </Button>
                     )}
 
@@ -72,13 +72,13 @@ export const OTFFormButton = ({ record, handleChangeHistory, handleOtfSoMappingH
 
                     {buttonData?.transferOTFBtn && (
                         <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.TRANSFER_OTF, record })} type="primary">
-                            Transfer OTF
+                            Transfer Booking
                         </Button>
                     )}
 
                     {buttonData?.cancelOTFBtn && (
                         <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.CANCEL_OTF, record })} type="primary">
-                            Cancel OTF
+                            Cancel Booking
                         </Button>
                     )}
 

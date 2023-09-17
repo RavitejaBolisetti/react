@@ -141,7 +141,7 @@ export const ProductHierarchyMain = ({ isLoading, moduleTitle, viewTitle, skulis
 
     useEffect(() => {
         if (organizationId && userId) {
-            fetchList({ setIsLoading: listShowLoading, userId, onCloseAction, id: organizationId, onErrorAction });
+            fetchList({ setIsLoading: listShowLoading, userId, onCloseAction, extraParams: [{ key: 'id', value: organizationId }], onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, organizationId]);
