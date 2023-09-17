@@ -19,12 +19,13 @@ import { AddVehicleDetailsModal } from './AddVehicleDetailsModal';
 import { VIEW_ACTION, EDIT_ACTION, DELETE_ACTION } from 'utils/btnVisiblity';
 
 import styles from 'assets/sass/app.module.scss';
+import { STOCK_TRANSFER } from 'constants/StockTransfer';
 
 const { TextArea } = Input;
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { formData, buttonDataVehicleDetails, productHierarchyData } = props;
+    const { formData, toggleButton, productHierarchyData } = props;
     const { addIndentDetailsForm, onFinish, indentLocationList, isLoadingDealerLoc, requestedByDealerList, openAccordian, setOpenAccordian } = props;
     const { buttonData, setButtonData, onCloseAction, tableDataItem, setTableDataItem } = props;
     const { handleButtonClick, handleChangeLocation } = props;
@@ -81,10 +82,8 @@ const AddEditFormMain = (props) => {
         balancedQuantity: 0,
     };
 
-    const sorterPagination = false;
-
     const tableProps = {
-        tableColumn: tableColumnVehicleDetails(handleButtonClickVehicleDetails, sorterPagination, buttonDataVehicleDetails),
+        tableColumn: tableColumnVehicleDetails(handleButtonClickVehicleDetails, toggleButton === STOCK_TRANSFER?.RAISED.key, toggleButton === STOCK_TRANSFER?.RAISED.key),
         tableData: tableDataItem,
         pagination: false,
     };
