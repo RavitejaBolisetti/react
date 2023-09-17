@@ -4,11 +4,10 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState, useEffect, useMemo } from 'react';
-import { Card, Descriptions, Col, Row, Divider, Button } from 'antd';
+import { Card, Descriptions, Col, Row, Divider } from 'antd';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
-import { RxCross2 } from 'react-icons/rx';
 import { getCodeValue } from 'utils/getCodeValue';
 import { OTF_STATUS } from 'constants/OTFStatus';
 import { DATA_TYPE } from 'constants/dataType';
@@ -74,7 +73,7 @@ const ViewDetailMain = (props) => {
     const { resetAdvanceFilter, setResetAdvanceFilter, handleButtonClick, buttonData, setButtonData, onCloseAction, selectedOTFDetails, setSelectedOrderOTFDetails } = props;
     const [filterString, setFilterString] = useState('');
     const [filterStringOTFSearch, setFilterStringOTFSearch] = useState('');
-    const [showDataLoading, setShowDataLoading] = useState(true);
+    const [showDataLoading, setShowDataLoading] = useState(false);
     const [page, setPage] = useState({ pageSize: 10, current: 1 });
 
     const dynamicPagination = true;
@@ -88,12 +87,11 @@ const ViewDetailMain = (props) => {
     const searchOTFExtraParams = useMemo(() => {
         const defaultPage = defaultPageProps(page);
         return [
-            ...defaultPage,
             {
                 key: 'searchType',
                 title: 'Type',
-                name: filterStringOTFSearch?.searchType,
-                value: filterString?.searchType ? typeData?.[PARAM_MASTER.OTF_SER.id]?.find((i) => i?.key === filterString?.searchType)?.value : '',
+                name: filterString?.searchType ? typeData?.[PARAM_MASTER.OTF_SER.id]?.find((i) => i?.key === filterString?.searchType)?.value : '',
+                value: filterStringOTFSearch?.searchType,
                 filter: true,
             },
             {
@@ -113,6 +111,7 @@ const ViewDetailMain = (props) => {
                 title: 'Model Code',
                 value: formData?.modelCode || formData?.modelCd,
             },
+            ...defaultPage,
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterStringOTFSearch, formData, page]);
@@ -129,6 +128,7 @@ const ViewDetailMain = (props) => {
 
     useEffect(() => {
         if (userId && toggleButton === VEHICLE_TYPE.UNALLOTED.key && !isOTFSearchLoading && formData) {
+            setShowDataLoading(true);
             fetchOTFSearchedList({ setIsLoading: listShowLoading, userId, extraParams: searchOTFExtraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps

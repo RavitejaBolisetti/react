@@ -64,9 +64,7 @@ const AddEditFormMain = (props) => {
     };
 
     const handleCollapse = (key, isOpen) => {
-        if (tableDataItem.length === 0 && !isOpen) return;
-        else if (isOpen) setOpenAccordian(1);
-        else setOpenAccordian((prev) => (prev === key ? '' : key));
+        setOpenAccordian((prev) => (prev === key ? '' : key));
     };
 
     const handleAddVehicleDetails = () => {
@@ -98,9 +96,7 @@ const AddEditFormMain = (props) => {
     };
 
     const onFinishAddVehicleDetails = (values) => {
-        if (tableDataItem.length === 0) {
-            handleCollapse(1, true);
-        }
+        setOpenAccordian(1);
         if (values?.index !== undefined) {
             let arrayOfNumbers = [...tableDataItem];
             arrayOfNumbers[values?.index] = { ...initialTableDataItem, ...values };
@@ -170,7 +166,7 @@ const AddEditFormMain = (props) => {
                                         }
                                     >
                                         <Divider />
-                                        {tableDataItem.length > 0 && <DataTable {...tableProps} />}
+                                        <DataTable {...tableProps} />
                                     </Panel>
                                 </Collapse>
                             </Col>
@@ -179,7 +175,7 @@ const AddEditFormMain = (props) => {
                 </Row>
                 <VehicleDetailFormButton {...buttonProps} />
             </Form>
-            {isAddVehicleDetailsVisible && <AddVehicleDetailsModal {...addVehicleDetailsProps} />}
+            <AddVehicleDetailsModal {...addVehicleDetailsProps} />
         </>
     );
 };
