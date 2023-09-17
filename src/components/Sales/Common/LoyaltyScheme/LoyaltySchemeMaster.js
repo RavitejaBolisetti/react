@@ -121,7 +121,7 @@ const LoyaltySchemeMasterMain = (props) => {
     const [formData, setformData] = useState([]);
     const [editable, setEditable] = useState();
 
-    const disabledProps = { disabled: editable };
+    const disabledProps = { disabled: true };
 
     const fnSetData = (data) => {
         if (data && Object?.keys(data)?.length > 0) {

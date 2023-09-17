@@ -60,12 +60,12 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item label="Make" name="make" data-testid="make" rules={[validateRequiredSelectField('make')]}>
+                            <Form.Item label="Make" name="make" data-testid="make">
                                 <Select placeholder="Select" loading={isMakeLoading} allowClear fieldNames={{ label: 'value', value: 'key' }} options={makeData} onChange={(value, selectobj) => handleFilterChange('make', value, selectobj)} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item label="Model Group" name="modelGroup" data-testid="modelGroup" rules={[validateRequiredSelectField('model group')]}>
+                            <Form.Item label="Model Group" name="modelGroup" data-testid="modelGroup">
                                 <Select
                                     placeholder="Select"
                                     loading={isModelLoading}
@@ -82,7 +82,7 @@ const AddEditFormMain = (props) => {
                     </Row>
                     <Row gutter={20}>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item label="Variant" name="variant" data-testid="variant" rules={[validateRequiredSelectField('Variant')]}>
+                            <Form.Item label="Variant" name="variant" data-testid="variant">
                                 <Select placeholder="Select" loading={isVariantLoading} allowClear fieldNames={{ label: 'value', value: 'key' }} options={filteredVariantData} />
                             </Form.Item>
                         </Col>

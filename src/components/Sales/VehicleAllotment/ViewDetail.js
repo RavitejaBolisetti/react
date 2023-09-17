@@ -87,7 +87,6 @@ const ViewDetailMain = (props) => {
     const searchOTFExtraParams = useMemo(() => {
         const defaultPage = defaultPageProps(page);
         return [
-            ...defaultPage,
             {
                 key: 'searchType',
                 title: 'Type',
@@ -112,6 +111,7 @@ const ViewDetailMain = (props) => {
                 title: 'Model Code',
                 value: formData?.modelCode || formData?.modelCd,
             },
+            ...defaultPage,
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterStringOTFSearch, formData, page]);

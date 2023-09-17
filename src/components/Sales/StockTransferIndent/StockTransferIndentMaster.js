@@ -31,6 +31,7 @@ import { IssueIndentMaster } from 'components/Sales/StockTransferIndent/IssueInd
 
 import { INDENT_ACTION_LIST } from './constants';
 import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
+import { defaultPageProps } from 'utils/defaultPageProps';
 
 const mapStateToProps = (state) => {
     const {
@@ -46,7 +47,7 @@ const mapStateToProps = (state) => {
                 DealerBranchLocation: { isLoading: isLoadingDealerLoc, data: indentLocationList, detailData: requestedByDealerList },
             },
             stockTransferIndentData: {
-                stockTransferIndent: { isLoaded: isFetchDataLoaded = false, isLoading: isFetchDataLoading, data, filter: filterString },
+                stockTransferIndent: { isLoading: isFetchDataLoading, data, filter: filterString },
                 IndentIssue: { isLoaded: indentIssueDataLoaded = false, isLoading: indentIssueDataLoading, data: indentIssueData },
             },
             OTF: {
@@ -152,8 +153,6 @@ export const StockTransferIndentMasterBase = (props) => {
 
     const [buttonDataVehicleDetails, setButtonDataVehicleDetails] = useState({ ...btnVisiblityVehicleDetails });
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
-    const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
-    const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
     const onSuccessAction = (res) => {
         setshowVinLoading(false);
@@ -173,19 +172,20 @@ export const StockTransferIndentMasterBase = (props) => {
     }, [filterString, toggleButton]);
 
     useEffect(() => {
-        const onSuccessActionFetchIndLoc = (res) => {};
-        const extraParamData = [
-            {
-                key: 'parentGroupCode',
-                value: parentGroupCode,
-            },
-        ];
-        fetchIndentLocation({ setIsLoading: listShowLoading, userId, onSuccessAction: onSuccessActionFetchIndLoc, onErrorAction, extraParams: extraParamData });
-
+        if (userId && parentGroupCode) {
+            const extraParamData = [
+                {
+                    key: 'parentGroupCode',
+                    value: parentGroupCode,
+                },
+            ];
+            fetchIndentLocation({ setIsLoading: listShowLoading, userId, onErrorAction, extraParams: extraParamData });
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isAdvanceSearchVisible]);
+    }, [userId, parentGroupCode]);
 
     const extraParams = useMemo(() => {
+        const defaultPage = defaultPageProps(page);
         return [
             {
                 key: 'searchType',
@@ -235,35 +235,7 @@ export const StockTransferIndentMasterBase = (props) => {
                 canRemove: true,
                 filter: true,
             },
-
-            {
-                key: 'pageSize',
-                title: 'Value',
-                value: page?.pageSize,
-                canRemove: true,
-                filter: false,
-            },
-            {
-                key: 'pageNumber',
-                title: 'Value',
-                value: page?.current,
-                canRemove: true,
-                filter: false,
-            },
-            {
-                key: 'sortBy',
-                title: 'Sort By',
-                value: page?.sortBy,
-                canRemove: true,
-                filter: false,
-            },
-            {
-                key: 'sortIn',
-                title: 'Sort Type',
-                value: page?.sortType,
-                canRemove: true,
-                filter: false,
-            },
+            ...defaultPage,
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [page, filterString]);
@@ -386,16 +358,6 @@ export const StockTransferIndentMasterBase = (props) => {
         setButtonData({ ...defaultBtnVisiblity, cancelBtn: true, saveBtn: true, formBtnActive: true });
         setButtonDataVehicleDetails({ ...btnVisiblityVehicleDetails, canView: false, canEdit: true, canDelete: true });
         setIsAddNewIndentVisible(true);
-
-        const onSuccessActionFetchIndLoc = (res) => {};
-        const extraParamData = [
-            {
-                key: 'parentGroupCode',
-                value: parentGroupCode,
-            },
-        ];
-        fetchProductLov({ setIsLoading: ProductLovLoading, userId, onErrorAction });
-        fetchIndentLocation({ setIsLoading: indentLocationLoading, userId, onSuccessAction: onSuccessActionFetchIndLoc, onErrorAction, extraParams: extraParamData });
     };
 
     const handleChangeLocation = (value) => {

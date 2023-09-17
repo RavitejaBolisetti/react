@@ -75,8 +75,9 @@ const ViewDetailMain = (props) => {
 
     const tableProps = {
         srl: true,
+        pagination: false,
         isLoading: isLoading,
-        tableColumn: tableColumnVehicleDetails(handleButtonClickVehicleDetails, toggleButton === STOCK_TRANSFER?.RAISED.key),
+        tableColumn: tableColumnVehicleDetails(handleButtonClickVehicleDetails, toggleButton === STOCK_TRANSFER?.RAISED.key, toggleButton === STOCK_TRANSFER?.RAISED.key),
         tableData: formData?.vehicleDetails,
     };
 
