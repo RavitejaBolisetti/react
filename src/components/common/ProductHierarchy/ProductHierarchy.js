@@ -94,7 +94,6 @@ export const ProductHierarchyMain = ({ isLoading, moduleTitle, viewTitle, skulis
     const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState([]);
     const [formActionType, setFormActionType] = useState('');
     const [formData, setFormData] = useState([]);
-    //const [selectedTreeData, setSelectedTreeData] = useState([]);
     const [isChecked, setIsChecked] = useState(formData?.isActive === 'Y' ? true : false);
     const [isFormBtnActive, setFormBtnActive] = useState(false);
     const [searchValue, setSearchValue] = useState('');
@@ -125,13 +124,6 @@ export const ProductHierarchyMain = ({ isLoading, moduleTitle, viewTitle, skulis
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    // useEffect(() => {
-    //     if (userId) {
-    //         hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: 'Product Hierarchy', onErrorAction });
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [userId]);
-
     useEffect(() => {
         if (!isDataOrgLoaded && userId) {
             fetchOrgList({ setIsLoading: listShowLoading, userId, onCloseAction, onErrorAction });
@@ -150,13 +142,6 @@ export const ProductHierarchyMain = ({ isLoading, moduleTitle, viewTitle, skulis
         manufacturerOrgHierarchyData?.map((i) => DisableParent(i));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [manufacturerOrgHierarchyData]);
-
-    // useEffect(() => {
-    //     if (userId) {
-    //         fetchListHierarchyAttributeName({ userId, setIsLoading: listShowLoading, onErrorAction });
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [userId]);
 
     useEffect(() => {
         setCollapsableView(!isChildAllowed);
@@ -201,7 +186,18 @@ export const ProductHierarchyMain = ({ isLoading, moduleTitle, viewTitle, skulis
         setViewData([]);
 
         if (keys) {
-            fetchProductDetail({ setIsLoading: listShowLoading, userId, onCloseAction, code: keys, onErrorAction });
+            const extraParams = [
+                {
+                    key: 'unit',
+                    value: 'Sales',
+                },
+                {
+                    key: 'prodctCode',
+                    value: keys,
+                },
+            ];
+
+            fetchProductDetail({ setIsLoading: listShowLoading, userId, onCloseAction, extraParams, onErrorAction });
         }
 
         setSelectedTreeKey(keys);

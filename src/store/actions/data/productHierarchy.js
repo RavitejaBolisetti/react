@@ -137,6 +137,49 @@ productHierarchyDataActions.fetchList = withAuthToken((params) => ({ token, acce
     axiosAPICall(apiCallParams);
 });
 
+productHierarchyDataActions.fetchDetail = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
+    const { setIsLoading, onError, data, extraParams } = params;
+    setIsLoading(true);
+
+    const onSuccess = (res) => {
+        if (res?.data) {
+            dispatch(receiveProductHierarchyDetailData(res?.data));
+        } else {
+            dispatch(receiveProductHierarchyDetailData([]));
+            onError && onError();
+        }
+    };
+
+    const onErrorAction = () => {
+        dispatch(receiveProductHierarchyDetailData([]));
+        onError && onError();
+    };
+
+    let sExtraParamsString = '?';
+    extraParams?.forEach((item, index) => {
+        sExtraParamsString += item?.value && item?.key ? item?.value && item?.key + '=' + item?.value + '&' : '';
+    });
+
+    sExtraParamsString = sExtraParamsString.substring(0, sExtraParamsString.length - 1);
+
+    const apiCallParams = {
+        data,
+        method: 'get',
+        url: BASE_URL_PRODUCT_HIERARCHY + sExtraParamsString,
+        token,
+        accessToken,
+        userId,
+        onSuccess,
+        onError: onErrorAction,
+        onTimeout: () => onError('Request timed out, Please try again'),
+        onUnAuthenticated: () => dispatch(doLogout()),
+        onUnauthorized: (message) => dispatch(unAuthenticateUser(message)),
+        postRequest: () => setIsLoading(false),
+    };
+
+    axiosAPICall(apiCallParams);
+});
+
 productHierarchyDataActions.fetchChangeHistoryList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
     const { setIsLoading, onError, data, manufactureOrgId } = params;
     setIsLoading(true);
@@ -252,7 +295,7 @@ productHierarchyDataActions.fetchAttributeNameList = withAuthToken((params) => (
     axiosAPICall(apiCallParams);
 });
 productHierarchyDataActions.fetchFilteredList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-    const { setIsLoading, data, extraparams } = params;
+    const { setIsLoading, data, extraParams } = params;
     setIsLoading(true);
     const onError = (errorMessage) => message.error(errorMessage);
 
@@ -264,10 +307,18 @@ productHierarchyDataActions.fetchFilteredList = withAuthToken((params) => ({ tok
         }
     };
 
+    let sExtraParamsString = '?';
+    extraParams?.forEach((item, index) => {
+        sExtraParamsString += item?.value && item?.key ? item?.value && item?.key + '=' + item?.value + '&' : '';
+    });
+
+    sExtraParamsString = sExtraParamsString.substring(0, sExtraParamsString.length - 1);
+
     const apiCallParams = {
         data,
         method: 'get',
-        url: BASE_URL_PRODUCT_HIERARCHY + '/lov' + (extraparams ? '?' + extraparams['0']['key'] + '=' + extraparams['0']['value'] : ''),
+        url: BASE_URL_PRODUCT_HIERARCHY + '/lov' + sExtraParamsString,
+        // url: BASE_URL_PRODUCT_HIERARCHY + '/lov' + (extraparams ? '?' + extraparams['0']['key'] + '=' + extraparams['0']['value'] : ''),
         token,
         accessToken,
         userId,
