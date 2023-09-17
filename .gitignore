@@ -13,6 +13,8 @@ src/coverage
 
 # production
 /build
+.env.production
+.env.development
 
 # misc
 .DS_Store
