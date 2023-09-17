@@ -14,7 +14,7 @@ import { STOCK_TRANSFER } from 'constants/StockTransfer';
 import styles from 'assets/sass/app.module.scss';
 
 export default function AdvanceOTFFilter(props) {
-    const { extraParams, removeFilter, handleResetFilter, advanceFilter = false, filterString, setFilterString, toggleButton, settoggleButton, setAdvanceSearchVisible, searchForm, handleOnAddIndentClick } = props;
+    const { extraParams, removeFilter, handleResetFilter, advanceFilter = false, filterString, setFilterString, toggleButton, setToggleButton, setAdvanceSearchVisible, searchForm, handleOnAddIndentClick } = props;
 
     useEffect(() => {
         searchForm.resetFields();
@@ -40,7 +40,7 @@ export default function AdvanceOTFFilter(props) {
                                     <div className={`${styles.userManagement} ${styles.headingToggle}`}>
                                         {Object.values(STOCK_TRANSFER)?.map((item) => {
                                             return (
-                                                <Button type={toggleButton === item?.key ? 'primary' : 'link'} onClick={() => settoggleButton(item?.key)}>
+                                                <Button type={toggleButton === item?.key ? 'primary' : 'link'} onClick={() => setToggleButton(item?.key)}>
                                                     {item?.title}
                                                 </Button>
                                             );

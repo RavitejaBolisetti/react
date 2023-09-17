@@ -12,6 +12,7 @@ export const OTF_STATUS = {
         title: 'Booked',
         desc: 'Booked',
         displayOnView: true,
+        filter: true,
     },
     ALLOTED: {
         id: 2,
@@ -19,6 +20,7 @@ export const OTF_STATUS = {
         title: 'Allotted',
         desc: 'Allotted',
         displayOnView: true,
+        filter: true,
     },
     CANCELLED: {
         id: 3,
@@ -26,6 +28,7 @@ export const OTF_STATUS = {
         title: 'Cancelled',
         desc: 'Cancelled',
         displayOnView: true,
+        filter: true,
     },
     INVOICED: {
         id: 4,
@@ -33,6 +36,7 @@ export const OTF_STATUS = {
         title: 'Invoiced',
         desc: 'Invoiced',
         displayOnView: true,
+        filter: true,
     },
     DELIVERED: {
         id: 5,
@@ -40,6 +44,7 @@ export const OTF_STATUS = {
         title: 'Delivered',
         desc: 'Delivered',
         displayOnView: true,
+        filter: true,
     },
     TRANSFERRED: {
         id: 6,
@@ -47,6 +52,7 @@ export const OTF_STATUS = {
         title: 'Transferred',
         desc: 'Transferred',
         displayOnView: false,
+        filter: true,
     },
     PENDING_FOR_CANCELLATION: {
         id: 7,
@@ -74,6 +80,13 @@ export const OTF_STATUS = {
         key: 'N',
         title: 'Delivery Note',
         desc: 'Delivery Note',
+        displayOnView: false,
+    },
+    UNALLOTED: {
+        id: 10,
+        key: 'UN',
+        title: 'Un-Alloted',
+        desc: 'Un-Alloted',
         displayOnView: false,
     },
 };
