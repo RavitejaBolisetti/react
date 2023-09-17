@@ -432,6 +432,11 @@ export const StockTransferIndentMasterBase = (props) => {
                 value: 1000,
             },
             {
+                key: 'pageSize',
+                title: 'Value',
+                value: 1000,
+            },
+            {
                 key: 'pageNumber',
                 title: 'Value',
                 value: 1,
@@ -497,6 +502,7 @@ export const StockTransferIndentMasterBase = (props) => {
     };
 
     const addNewIndentProps = {
+        toggleButton,
         isVisible: isAddNewIndentVisible,
         titleOverride: 'Add Indent Details',
         addIndentDetailsForm,

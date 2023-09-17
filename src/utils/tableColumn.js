@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { Button, Space, Tag, Switch } from 'antd';
-import { FiEdit, FiTrash } from 'react-icons/fi';
+import { FiEdit } from 'react-icons/fi';
 import { FaRegEye } from 'react-icons/fa';
 
 import { addToolTip } from 'utils/addToolTip';
@@ -157,7 +157,7 @@ export const tblActionColumn = ({
 
                 {canDelete && !record?.id && (
                     <Button data-testid="delete" type="link" aria-label="fa-trash" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.DELETE, record, index })}>
-                        {addToolTip('Delete')(<RxCross2 />)}
+                        {addToolTip('Delete')(<RxCross2 size={} />)}
                     </Button>
                 )}
 
