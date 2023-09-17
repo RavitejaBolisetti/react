@@ -5,7 +5,7 @@ import { OTFStatusTag } from 'components/Sales/OTF/utils/OTFStatusTag';
 afterEach(() => {
     jest.restoreAllMocks();
   }); 
-describe('OTF Form Button Component', () => {
+describe('Booking Form Button Component', () => {
     it('should render otf form button component', () => {
         customRender(<OTFStatusTag />);
     });

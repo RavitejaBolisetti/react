@@ -37,6 +37,11 @@ export const ViewTimelineMain = (props) => {
         let activeClassName = '';
         let menuNavIcon = '';
         switch (true) {
+            case id === checkboxStatus.id && checkboxStatus.id === DELIVERY_STATUS_CONSTANT?.RECEIVED?.id: {
+                activeClassName = styles.inActive;
+                menuNavIcon = <FaCheckCircle style={{ color: '#70C922' }} size={20} />;
+                break;
+            }
             case id === checkboxStatus.id: {
                 activeClassName = styles.active;
                 menuNavIcon = <BsRecordCircleFill size={20} className={styles.activeForm} />;

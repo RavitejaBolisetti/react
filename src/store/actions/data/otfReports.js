@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -7,7 +7,7 @@ import { dataActions } from 'store/actions/crud/dataAction';
 import { BASE_URL_OTF_REPORTS as baseURL } from 'constants/routingApi';
 
 const PREFIX = 'OTF_REPORTS_';
-const moduleName = 'OTF Reports';
+const moduleName = 'Booking Reports';
 
 export const RECEIVE_DATA_LOADING_ACTION_CONSTANT = PREFIX + 'LOADING_DATA';
 export const RECEIVE_DATA_ACTION_CONSTANT = PREFIX + 'LIST_RECIEVE_DATA';

@@ -52,14 +52,14 @@ export const ViewDetails = (props) => {
                 <Descriptions.Item label="Transporter Name">{checkAndSetDefaultValue(formData?.transporterName, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Mode of transport">{checkAndSetDefaultValue(formData?.modeOfTransport, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Last Updated Location">{checkAndSetDefaultValue(formData?.lastUpdatedLocation, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Last Update Date & Time">{`${checkAndSetDefaultValue(formData?.lastUpdatedDateAndTime, isLoading, DATA_TYPE?.DATE?.key)} ${moment(formData?.lastUpdatedDateAndTime).format('LT')}`}</Descriptions.Item>
+                <Descriptions.Item label="Last Update Date & Time">{checkAndSetDefaultValue(`${checkAndSetDefaultValue(formData?.lastUpdatedDateAndTime, isLoading, DATA_TYPE?.DATE?.key)} ${moment(formData?.lastUpdatedDateAndTime).format('LT')}`, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="OEM Invoice Number">{checkAndSetDefaultValue(formData?.oemInvoiceNumber, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="OEM Invoice Date">{checkAndSetDefaultValue(formData?.oemInvoiceDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                 <Descriptions.Item label="Shipment Status">{checkAndSetDefaultValue(formData?.shipmentStatus, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Current Latitude">{checkAndSetDefaultValue(formData?.currentLatitude, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Current Logitude">{checkAndSetDefaultValue(formData?.currentLongitude, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="ETA Date & Time">{`${checkAndSetDefaultValue(formData?.etaDateAndTime, isLoading, DATA_TYPE?.DATE?.key)} ${moment(formData?.etaDateAndTime).format('LT')}`}</Descriptions.Item>
-                <Descriptions.Item label="Shipment Delivery Date & Time">{`${checkAndSetDefaultValue(formData?.shipmentDeliveryDateAndTime, isLoading, DATA_TYPE?.DATE?.key)} ${moment(formData?.shipmentDeliveryDateAndTime).format('LT')}`}</Descriptions.Item>
+                <Descriptions.Item label="ETA Date & Time">{checkAndSetDefaultValue(`${checkAndSetDefaultValue(formData?.etaDateAndTime, isLoading, DATA_TYPE?.DATE?.key)} ${moment(formData?.etaDateAndTime).format('LT')}`, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Shipment Delivery Date & Time">{checkAndSetDefaultValue(`${checkAndSetDefaultValue(formData?.shipmentDeliveryDateAndTime, isLoading, DATA_TYPE?.DATE?.key)} ${moment(formData?.shipmentDeliveryDateAndTime).format('LT')}`, isLoading)}</Descriptions.Item>
             </Descriptions>
         </Card>
     );

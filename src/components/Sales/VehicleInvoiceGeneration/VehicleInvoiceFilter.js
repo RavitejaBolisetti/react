@@ -10,13 +10,10 @@ import { PlusOutlined } from '@ant-design/icons';
 import { RxCross2 } from 'react-icons/rx';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { QueryButtons } from 'components/Sales/VehicleRecieptChecklist/QueryButtons';
-import { QUERY_BUTTONS_CONSTANTS } from './QueryButtons';
 import { SearchBox } from 'components/utils/SearchBox';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
 import styles from 'assets/sass/app.module.scss';
-
-const { Search } = Input;
 
 export default function VehicleInvoiceFilter(props) {
     const { extraParams, removeFilter, typeData, invoiceStatusList, searchForm, filterString, setFilterString, handleResetFilter, advanceFilter = false, handleInvoiceTypeChange, setAdvanceSearchVisible, handleButtonClick, invoiceStatus } = props;
@@ -26,6 +23,7 @@ export default function VehicleInvoiceFilter(props) {
         filterString,
         optionType: typeData?.[PARAM_MASTER.INV_SER.id],
         setFilterString,
+        allowClear: false,
     };
 
     return (

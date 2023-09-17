@@ -7,7 +7,7 @@ beforeEach(() => {
     jest.clearAllMocks();
 });
 
-describe('OTF Finance Details Component render', () => {
+describe('Booking Finance Details Component render', () => {
     it('should render addedit form', async () => {
         customRender(<AddEditForm />);
     });

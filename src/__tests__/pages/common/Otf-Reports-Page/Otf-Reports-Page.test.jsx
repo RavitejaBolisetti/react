@@ -8,7 +8,7 @@ import customRender from '@utils/test-utils';
 import OtfReportsPage from '@pages/common/OTFReports/OtfReportsPage';
 
 describe('OtfReportsPage Components', () => {
-    it('should render Otf Reports Page components', () => {
+    it('should render booking Reports Page components', () => {
         customRender(<OtfReportsPage />);
     });
 });

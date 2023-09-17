@@ -57,10 +57,10 @@ export const OTF_SO_MAPPING_UNMAPPING_CONSTANTS = {
 export const FORM_TYPE_CONSTANSTS = {
     FORM_1: {
         id: 'FORM_1',
-        key: 'OTF SO FORM CONSTANTS',
+        key: 'BOOKING SO FORM CONSTANTS',
     },
     FORM_2: {
         id: 'FORM_2',
-        key: 'OTF SO FORM CONSTANTS',
+        key: 'BOOKING SO FORM CONSTANTS',
     },
 };

@@ -39,7 +39,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'OTF SO Mapping And Unmapping';
+    const moduleTitle = 'Booking SO Mapping And Unmapping';
 
     let returnValue = {
         collapsed,

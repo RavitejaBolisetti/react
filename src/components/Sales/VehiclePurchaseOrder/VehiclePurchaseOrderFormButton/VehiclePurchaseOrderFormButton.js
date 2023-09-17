@@ -31,7 +31,7 @@ export const VehiclePurchaseOrderFormButton = ({ record, onCloseAction, buttonDa
                     {(record?.purchaseOrderStatusCode === VEHICLE_PURCHASE_ORDER_STATUS?.PO_SUBMITTED?.key || record?.purchaseOrderStatusCode === VEHICLE_PURCHASE_ORDER_STATUS?.SO_GENERATED?.key) && (
                         <>
                             <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.CANCEL_OTF, record, openDefaultSection: false })} type="primary">
-                                Cancel VPO
+                                Cancel Vehicle Purchase Order
                             </Button>
                             {/* <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record, openDefaultSection: false })} type="primary">
                         Edit
@@ -47,7 +47,7 @@ export const VehiclePurchaseOrderFormButton = ({ record, onCloseAction, buttonDa
 
                     {buttonData?.cancelOtfBtn && (
                         <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.CANCEL_OTF, record })} type="primary">
-                            Cancel OTF
+                            Cancel Booking
                         </Button>
                     )}
 
@@ -59,7 +59,7 @@ export const VehiclePurchaseOrderFormButton = ({ record, onCloseAction, buttonDa
 
                     {buttonData?.cancelOtfBtn && (
                         <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.CANCEL_OTF, record })} type="primary">
-                            Cancel OTF
+                            Cancel Booking
                         </Button>
                     )}
 

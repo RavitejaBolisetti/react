@@ -67,7 +67,7 @@ export const VehicleDetailFormButton = ({ record, onCloseAction, buttonData, set
 
                     {buttonData?.cancelOtfBtn && (
                         <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.CANCEL_OTF, record })} type="primary">
-                            Cancel OTF
+                            Cancel Booking
                         </Button>
                     )}
 

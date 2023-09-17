@@ -18,10 +18,10 @@ import { showGlobalNotification } from 'store/actions/notification';
 
 import { DrawerFormButton } from 'components/common/Button';
 import { NotificationDetailMaster } from './NotificationDetails';
-
+import dayjs from 'dayjs';
 import { disablePastDate } from 'utils/disableDate';
 import { customSelectBox } from 'utils/customSelectBox';
-import { validateRequiredInputField } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { prepareDatePickerText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
 import styles from 'assets/sass/app.module.scss';
@@ -62,7 +62,7 @@ const mapDispatchToProps = (dispatch) => ({
 const AddEditFormMain = (props) => {
     const { form, formData, onCloseAction, formActionType, formActionType: { viewMode } = undefined, onFinish, onFinishFailed, typeData } = props;
     const { buttonData, setButtonData, handleButtonClick } = props;
-    const { data, productHierarchyList, viewVehicleAllotData, roleData } = props;
+    const { data, productHierarchyList, viewVehicleAllotData, roleData, filterDesignationDropdownList,setFilterDesignationDropdownList } = props;
     // const{ formEdit, setFormEdit, editForm} = props;
     // const { filterDesignationList, setFilterDesignationList, } = props;
     // const [openAccordian, setOpenAccordian] = useState(1);
@@ -105,6 +105,13 @@ const AddEditFormMain = (props) => {
         setButtonData,
         handleButtonClick,
     };
+    const CheckDateEffectiveTo = (value, effectiveFrom) => {
+        const bool = dayjs(value).format('YYYY-MM-DD') >= dayjs(effectiveFrom).format('YYYY-MM-DD');
+        if (bool) {
+            return Promise.resolve();
+        }
+        return Promise.reject(new Error('Date cant be less than Effective from date'));
+    };
 
     return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
@@ -127,13 +134,30 @@ const AddEditFormMain = (props) => {
                                 </Col>
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                                     <Form.Item label="Effective From Date" initialValue={formatDateToCalenderDate(formData?.effectiveFromDate)} name="effectiveFromDate" rules={[validateRequiredInputField('Effective From Date')]}>
-                                        <DatePicker disabled={formActionType?.editMode ? true : false} disabledDate={disablePastDate} format={dateFormat} placeholder={prepareDatePickerText(dateFormat)} />
+                                        <DatePicker disabled={formActionType?.editMode ? true : false} disabledDate={disablePastDate} format={dateFormat} placeholder={prepareDatePickerText(dateFormat)} onChange={() => form.setFieldsValue({ effectiveToDate: undefined })} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                                    <Form.Item label="Effective To Date" initialValue={formatDateToCalenderDate(formData?.effectiveToDate)} name="effectiveToDate" rules={[validateRequiredInputField('Effective To Date')]}>
+                                    {/* <Form.Item label="Effective To Date" initialValue={formatDateToCalenderDate(formData?.effectiveToDate)} name="effectiveToDate" rules={[validateRequiredInputField('Effective To Date')]}>
                                         <DatePicker disabled={formActionType?.editMode ? true : false} disabledDate={disablePastDate} format={dateFormat} placeholder={prepareDatePickerText(dateFormat)} />
-                                    </Form.Item>
+                                    </Form.Item> */}
+                    <Form.Item
+                        initialValue={formatDateToCalenderDate(formData?.effectiveToDate)}
+                        label="Effective To Date"
+                        name="effectiveToDate"
+                        rules={[
+                            validateRequiredSelectField('Effective To Date'),
+                            {
+                                validator: (_, value) => {
+                                    return form.getFieldValue('effectiveFromDate') ? CheckDateEffectiveTo(value, form?.getFieldValue('effectiveFromDate')) : null;
+                                },
+                            },
+                        ]}
+                        className={styles?.datePicker}
+                        
+                    >
+                        <DatePicker format={dateFormat} placeholder={prepareDatePickerText(dateFormat)} disabledDate={disablePastDate} className={styles.fullWidth} />
+                    </Form.Item>
                                 </Col>
                             </Row>
 
@@ -159,12 +183,10 @@ const AddEditFormMain = (props) => {
                                     ))}
                                 </>
                             )}
-                            {formActionType.addMode === true && (
+                            {formActionType.addMode === true && (                                 
                                 <Card style={{ backgroundColor: '#BEBEBE1A' }}>
-                                    <Row align="middle" justify="space-between" className={styles.marB20}>
-                                        <NotificationDetailMaster {...props} />
-                                    </Row>
-                                </Card>
+                                    <NotificationDetailMaster {...props} />
+                                </Card>                                
                             )}
                         </>
                     )}

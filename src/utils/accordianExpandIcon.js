@@ -8,6 +8,7 @@ import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
 
 import styles from 'assets/sass/app.module.scss';
+import { FiEdit } from 'react-icons/fi';
 
 export const accordianExpandIcon = ({ isActive }) => (isActive ? <MinusBorderedIcon /> : <PlusBorderedIcon />);
 
@@ -27,4 +28,19 @@ export const dynamicExpandIcon = (isActive, ExpandIcon = <AiOutlinePlus classNam
         return InactiveIcon;
     }
     return ExpandIcon;
+};
+
+export const expandActionIcon = (isActive, formActionType = undefined, editIcon = true) => {
+    if (formActionType?.editMode && editIcon) {
+        return (
+            <div className={styles.accordianIconWithText}>
+                <div className={isActive ? styles.activeTextColor : ''}>
+                    <FiEdit />
+                    Edit
+                </div>
+            </div>
+        );
+    } else {
+        return isActive ? <MinusOutlined className={styles.iconsColor} /> : <PlusOutlined className={styles.iconsColor} />;
+    }
 };

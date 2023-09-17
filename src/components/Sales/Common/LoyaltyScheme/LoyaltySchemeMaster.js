@@ -20,6 +20,7 @@ import { vehicleModelDetailsDataActions } from 'store/actions/data/vehicle/model
 import { vehicleVariantDetailsDataActions } from 'store/actions/data/vehicle/variantDetails';
 
 import styles from 'assets/sass/app.module.scss';
+import { VEHICLE_COMPANY_MAKE } from 'constants/OTFStatus';
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -120,13 +121,13 @@ const LoyaltySchemeMasterMain = (props) => {
     const [formData, setformData] = useState([]);
     const [editable, setEditable] = useState();
 
-    const disabledProps = { disabled: editable };
+    const disabledProps = { disabled: true };
 
     const fnSetData = (data) => {
         if (data && Object?.keys(data)?.length > 0) {
             if (data?.customerId) setEditable(true);
             else setEditable(false);
-            form.setFieldsValue({ ...data, customerCode: data?.customerId, oldChassisNumber: data?.chassisNumber, variantCode: data?.variant, vehicleModelGroup: data?.modelGroup });
+            form.setFieldsValue({ ...data, customerCode: data?.customerId, oldChassisNumber: data?.chassisNumber, variantCode: data?.variant, vehicleModelGroup: data?.modelGroup, make: data?.make || VEHICLE_COMPANY_MAKE });
         } else if (data === null) {
             showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'No data found' });
             form.resetFields(['customerCode', 'customerName', 'make', 'vehicleModelGroup', 'variantCode', 'registrationNumber', 'oldChassisNumber', 'customerDOB']);

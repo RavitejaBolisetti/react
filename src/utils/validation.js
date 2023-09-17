@@ -239,3 +239,33 @@ export const validateNegativeNumber = (fieldName) => ({
     pattern: /^\d+$/,
     message: fieldName + ' Does not accept negative numbers',
 });
+
+export const isIssuePriceValid = (value, dealerPrice) => {
+    if (!value) return Promise.resolve();
+    else if (!dealerPrice) return Promise.reject(new Error(`Net Dealer Price not present`));
+    else if (value > dealerPrice) return Promise.reject(`Issue charge can't be greater than dealer price`);
+    else return Promise.resolve();
+};
+
+export const isValidQunatity = (value, balancedQuantity) => {
+    if (!value) return Promise.resolve();
+    else if (!balancedQuantity || balancedQuantity === null) return Promise.reject(new Error(`Balance quantity is not present`));
+    else if (value > balancedQuantity) return Promise.reject(`It can't be greater than balance quantity`);
+    else return Promise.resolve();
+};
+
+const campareDate = (value, compareTo, title) => {
+    const bool = dayjs(value).format('YYYY-MM-DD') >= dayjs(compareTo).format('YYYY-MM-DD');
+    if (bool) {
+        return Promise.resolve();
+    }
+    return Promise.reject(new Error('Date cant be less than from date'));
+};
+
+export const compareFromToDate = (compareTo) => {
+    return {
+        validator: (_, value) => {
+            return compareTo ? campareDate(value, compareTo) : null;
+        },
+    };
+};

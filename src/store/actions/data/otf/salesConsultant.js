@@ -7,7 +7,7 @@ import { dataActions } from 'store/actions/crud/dataAction';
 import { BASE_URL_SALES_CONSULTANT as baseURL } from 'constants/routingApi';
 
 const PREFIX = 'SALES_CONSULTANT';
-const moduleName = 'OTF Details';
+const moduleName = 'Booking Details';
 
 export const RECEIVE_DATA_LOADING_ACTION_CONSTANT = PREFIX + 'LOADING_DATA';
 export const RECEIVE_DATA_ACTION_CONSTANT = PREFIX + 'LIST_RECIEVE_DATA';

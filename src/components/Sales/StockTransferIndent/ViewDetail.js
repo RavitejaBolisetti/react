@@ -19,14 +19,14 @@ import { tableColumnVehicleDetails } from './tableColumnVehicleDetails';
 import { EDIT_ACTION, VIEW_ACTION } from 'utils/btnVisiblity';
 
 import styles from 'assets/sass/app.module.scss';
+import { STOCK_TRANSFER } from 'constants/StockTransfer';
 
 const ViewDetailMain = (props) => {
-    const { formData, isLoading, buttonDataVehicleDetails, updateVehicleDetails } = props;
+    const { toggleButton, formData, isLoading, buttonDataVehicleDetails, updateVehicleDetails } = props;
     const { handleButtonClick, buttonData, setButtonData, onCloseAction } = props;
     const { setCancellationData, setCancellationIssueVisible, typeData } = props;
 
     const [editVehicleDetailsForm] = Form.useForm();
-
     const [isEditVehicleDetailsVisible, setIsEditVehicleDetailsVisible] = useState(false);
     const [editVehicleDetails, setEditVehicleDetails] = useState({});
 
@@ -40,28 +40,7 @@ const ViewDetailMain = (props) => {
     const onFinish = (values) => {
         setIsEditVehicleDetailsVisible(false);
         editVehicleDetailsForm.resetFields();
-        updateVehicleDetails({...editVehicleDetails, cancelledQuantity: values?.cancelledQuantity});
-        let data = { ...values };
-
-        const onSuccess = (res) => {
-            // showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            // fetchIndentList({ customURL: customURL + '/search', setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
-        };
-
-        const onError = (message) => {
-            //showGlobalNotification({ message });
-        };
-        const requestData = {
-            // data: data,
-            // customURL: customURL + '/indent',
-            // method: 'post',
-            // setIsLoading: listShowLoading,
-            // userId,
-            // onError,
-            // onSuccess,
-        };
-
-        //saveData(requestData);
+        updateVehicleDetails({ ...editVehicleDetails, cancelledQuantity: values?.cancelledQuantity });
     };
 
     const buttonProps = {
@@ -94,13 +73,12 @@ const ViewDetailMain = (props) => {
         }
     };
 
-    const sorterPagination = false;
-
     const tableProps = {
         srl: true,
-        tableColumn: tableColumnVehicleDetails(handleButtonClickVehicleDetails, sorterPagination, buttonDataVehicleDetails),
+        pagination: false,
+        isLoading: isLoading,
+        tableColumn: tableColumnVehicleDetails(handleButtonClickVehicleDetails, toggleButton === STOCK_TRANSFER?.RAISED.key, toggleButton === STOCK_TRANSFER?.RAISED.key),
         tableData: formData?.vehicleDetails,
-        pagination: sorterPagination,
     };
 
     const editVehicleDetailsProps = {

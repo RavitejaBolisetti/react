@@ -95,7 +95,7 @@ export const CustomerDetailsMasterBase = (props) => {
     //         key: 'otfNumber',
     //         title: 'otfNumber',
     //         value: selectedOrderId,
-    //         name: 'OTF Number',
+    //         name: 'Booking Number',
     //     },
     // ];
 

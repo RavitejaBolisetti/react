@@ -9,7 +9,7 @@ import { withLayoutMaster } from 'components/withLayoutMaster';
 import { PageHeader } from 'pages/common/PageHeader';
 
 export const OtfReportsBase = (props) => {
-    const pageTitle = 'OTF Reports';
+    const pageTitle = 'Booking Reports';
     const pageHeaderData = {
         pageTitle,
         canMarkFavourite: true,

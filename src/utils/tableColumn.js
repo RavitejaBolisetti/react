@@ -130,19 +130,21 @@ export const tblActionColumn = ({
         fixed: fixed,
         render: (text, record, index) => [
             <Space size="middle">
-                {canView && (
-                    <Button data-testid="view" type="link" aria-label="ai-view" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.VIEW, record, index })}>
-                        {addToolTip('View')(<FaRegEye />)}
+                {canAdd && (
+                    <Button data-testid="add" type="link" aria-label="fa-add" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD, record, index })}>
+                        {addToolTip('Add')(<PlusOutlined />)}
                     </Button>
                 )}
+
                 {canEdit && (
                     <Button data-testid="edit" type="link" aria-label="fa-edit" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.EDIT, record, index })}>
                         {addToolTip('Edit')(<FiEdit />)}
                     </Button>
                 )}
-                {canAdd && (
-                    <Button data-testid="add" type="link" aria-label="fa-add" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD, record, index })}>
-                        {addToolTip('Add')(<PlusOutlined />)}
+
+                {canView && (
+                    <Button data-testid="view" type="link" aria-label="ai-view" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.VIEW, record, index })}>
+                        {addToolTip('View')(<FaRegEye />)}
                     </Button>
                 )}
 
@@ -151,11 +153,13 @@ export const tblActionColumn = ({
                         {addToolTip('Edit')(<FiEdit />)}
                     </Button>
                 )}
+
                 {canDelete && !record?.id && (
                     <Button data-testid="delete" type="link" aria-label="fa-trash" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.DELETE, record, index })}>
                         {addToolTip('Delete')(<FiTrash />)}
                     </Button>
                 )}
+
                 {customButton && (
                     <Button data-testid="customButton" type={customButtonProperties?.buttonType} icon={customButtonProperties?.icon} onClick={(e) => customButtonProperties?.handleCustomButtonClick({ buttonAction: customButtonProperties?.hasOwnProperty('handleName') ? customButtonProperties?.handleName({ name: customButtonProperties?.customName, record, index })?.key : customButtonProperties?.customkey, record, index })}>
                         {customButtonProperties?.hasOwnProperty('handleName') ? customButtonProperties?.handleName({ name: customButtonProperties?.customName, record, index })?.name : customButtonProperties?.customName}

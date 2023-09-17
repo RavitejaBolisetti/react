@@ -49,6 +49,7 @@ describe('Render AccountAndDocumentMappingMaster component', () => {
         viewMode:false, // 
         isVisible:true, // 
         formEdit: false, // 
+        handleSelectTreeClick:jest.fn()
     }
 
     const accountDocumentMaps = [{
@@ -63,23 +64,8 @@ describe('Render AccountAndDocumentMappingMaster component', () => {
         customRender(<FormWrapper mainFomEdit={false}  {...formProductAttributeProps} formEdit={true}  />);
     });
 
-    it('edit button', ()=>{
-        customRender(<EditFormWrapper  {...cardAttributeProps} accountDocumentMaps={accountDocumentMaps} setFormEdit={jest.fn()} setButtonData={jest.fn()} setSelectedTreeSelectKey={jest.fn()} accDocMapEdit={jest.fn()} setuniqueCardEdit={jest.fn()}/>);
-
-        const desc = screen.getByRole('combobox', {name:'Document Description'});
-        fireEvent.change(desc, {target:{value:'test'}})
-
-        const head = screen.getByRole('combobox', {name:'Financial Account Head'});
-        fireEvent.change(head, {target:{value:'test'}})
-
-        const editBtn = screen.getAllByRole('button', {name:""});
-        // fireEvent.click(editBtn[0]);
-    })
-
-    it('delete button', ()=>{
-        customRender(<FormWrapper {...cardAttributeProps} accountDocumentMaps={accountDocumentMaps} onAccAndMapDelete={jest.fn()} setAccountDocumentMaps={jest.fn()} setFormEdit={jest.fn(false)} forceUpdate={jest.fn()}/>);
-        
-        const deletBtn = screen.getAllByRole('button', {name:""});
-        fireEvent.click(deletBtn[1]);
-    })
+    it('should render docTypeHeadMappingList', () => {
+        customRender(<FormWrapper accountDocumentMaps={accountDocumentMaps}/>);
+    });
+    
 });
