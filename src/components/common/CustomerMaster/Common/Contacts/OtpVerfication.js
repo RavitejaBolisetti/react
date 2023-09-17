@@ -11,8 +11,9 @@ import { Form, Row, Col, Button } from 'antd';
 
 import { TbRefresh } from 'react-icons/tb';
 import { RxCrossCircled } from 'react-icons/rx';
-import { FiLock } from 'react-icons/fi';
+//import { FiLock } from 'react-icons/fi';
 import { withModal } from 'components/withModal';
+
 
 // import styles from 'components/common/Common.module.css';
 // import style from './../../../Auth/Auth.module.css';
@@ -27,6 +28,8 @@ const OtpVarificationModalMain = (props) => {
     // const [cou; nter, setCounter] = useState(RESEND_OTP_TIME);
     // const [otpInput, setOTPInput] = useState();
     const [disableVerifyOTP, setDisableVerifyOTP] = useState(true);
+
+
 
     const handleSendOTP = (values = '') => {
         setOTPInput();
@@ -73,7 +76,7 @@ const OtpVarificationModalMain = (props) => {
         <div className={styles.centerInner}>
             <div className={styles.loginForm}>
                 <div className={styles.loginHeading}>
-                    <h1>OTP Verification</h1>
+                    <div className={styles.titleOTP}>Please enter the 6 digit OTP sent to your mobile number +91-981 XXX XXXX</div>
                     <div className={styles.loginSubHeading}>{otpMessage}</div>
                 </div>
                 <Row gutter={20}>
@@ -113,8 +116,8 @@ const OtpVarificationModalMain = (props) => {
                         </Row>
                     </Col>
                 </Row>
-                <Button icon={<FiLock size={18} />} onClick={handleVerifyOTP} disabled={disableVerifyOTP} loading={false} className={styles.button} type="primary">
-                    Verify OTP
+                <Button   onClick={handleVerifyOTP} disabled={disableVerifyOTP} loading={false} className={styles.button} type="primary">
+                    Verify OTP 
                 </Button>
 
                 <Row gutter={20}>
