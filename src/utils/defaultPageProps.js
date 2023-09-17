@@ -8,7 +8,7 @@ export const defaultPageProps = (page) => {
         {
             key: 'pageSize',
             title: 'Value',
-            value: page?.pageSize,
+            value: page?.pageSize ?? 10,
             canRemove: true,
             filter: false,
         },

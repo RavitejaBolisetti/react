@@ -13,14 +13,15 @@ import { convertToUpperCase } from 'utils/convertToUpperCase';
 
 import { validateEmailField, validateMobileNoField, validatePanField, validateGSTIN } from 'utils/validation';
 import { customSelectBox } from 'utils/customSelectBox';
-import { showGlobalNotification } from 'store/actions/notification';
 
 export const AddressCommonForm = (props) => {
     const { formType, formData, disabledProps, handleOnChange, typeData } = props;
 
-    const aletranteNumberCheck = (e) => {
-        if (formData?.mobileNumber && e?.target?.value && e?.target?.value === formData?.mobileNumber) {
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Alternative and Mobile Number cannot be same' });
+    const alternateNumberCheck = (value) => {
+        if (formData?.mobileNumber && value && value === formData?.mobileNumber) {
+            return Promise.reject('Alternative and Mobile Number cannot be same');
+        } else {
+            return Promise.resolve();
         }
     };
     return (
@@ -105,7 +106,7 @@ export const AddressCommonForm = (props) => {
                 </Col>
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name={[formType, 'alternateNumber']} label="Alternate Number" initialValue={formData?.alternateNumber} onChange={aletranteNumberCheck} rules={[validateMobileNoField('alternate Number')]}>
+                    <Form.Item name={[formType, 'alternateNumber']} label="Alternate Number" initialValue={formData?.alternateNumber} rules={[validateMobileNoField('alternate Number'), { validator: (rule, value) => alternateNumberCheck(value) }]}>
                         <Input maxLength={10} placeholder={preparePlaceholderText('alternate Number')} {...disabledProps} />
                     </Form.Item>
                 </Col>

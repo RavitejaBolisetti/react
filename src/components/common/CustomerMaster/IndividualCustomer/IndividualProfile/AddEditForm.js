@@ -232,7 +232,7 @@ const AddEditFormMain = (props) => {
                                     </Form.Item>
                                 </Col>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                    <Form.Item label="Aadhar No." name="adharNumber" initialValue={formData?.adharNumber} rules={[validateAadhar('aadhar'), validateRequiredInputField('aadhar')]}>
+                                    <Form.Item label="Aadhar No." name="adharNumber" initialValue={formData?.adharNumber} rules={[validateAadhar('aadhar')]}>
                                         <Input maxLength={12} placeholder={preparePlaceholderText('aadhar number')} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
