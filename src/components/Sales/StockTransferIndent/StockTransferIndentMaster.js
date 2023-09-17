@@ -179,6 +179,7 @@ export const StockTransferIndentMasterBase = (props) => {
                     value: parentGroupCode,
                 },
             ];
+            fetchProductLov({ setIsLoading: ProductLovLoading, userId, onErrorAction });
             fetchIndentLocation({ setIsLoading: listShowLoading, userId, onErrorAction, extraParams: extraParamData });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps

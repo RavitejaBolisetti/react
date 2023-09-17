@@ -99,10 +99,10 @@ const AddEditFormMain = (props) => {
         setOpenAccordian(1);
         if (values?.index !== undefined) {
             let arrayOfNumbers = [...tableDataItem];
-            arrayOfNumbers[values?.index] = { ...initialTableDataItem, ...values };
+            arrayOfNumbers[values?.index] = { ...initialTableDataItem, ...values, modelDescription: values?.modelDescriptionName };
             setTableDataItem([...arrayOfNumbers]);
         } else {
-            setTableDataItem([...tableDataItem, { ...initialTableDataItem, ...values }]);
+            setTableDataItem([...tableDataItem, { ...initialTableDataItem, ...values, modelDescription: values?.modelDescriptionName }]);
         }
         setIsAddVehicleDetailsVisible(false);
         addVehicleDetailsForm.resetFields();
@@ -141,7 +141,7 @@ const AddEditFormMain = (props) => {
                             <Row gutter={24}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.textareaError}>
                                     <Form.Item name="remarks" label="Remarks">
-                                        <TextArea maxLength={300} placeholder={preparePlaceholderText('Remarks')} showCount />
+                                        <TextArea maxLength={90} placeholder={preparePlaceholderText('Remarks')} showCount />
                                     </Form.Item>
                                 </Col>
                             </Row>
