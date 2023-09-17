@@ -129,40 +129,25 @@ const VehicleDetailsMasterMain = (props) => {
     };
 
     useEffect(() => {
-        if (userId && !isProductDataLoaded) {
+        if (userId && !isProductDataLoaded && VehicleDetailsData?.modelCode) {
             const extraParams = [
                 {
                     key: 'unit',
                     value: 'Sales',
                 },
                 {
-                    key: 'productDivision',
-                    value: 'IS',
-                },
-            ];
-            // fetchProductList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
-            fetchProductList({ setIsLoading: listShowLoading, userId, id: 'IS', onErrorAction });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, !isProductDataLoaded]);
-
-    useEffect(() => {
-        if (userId && !isProductDataLoaded) {
-            const extraParams = [
-                {
-                    key: 'unit',
-                    value: 'Sales',
+                    key: 'prodctCode',
+                    value: VehicleDetailsData?.modelCode,
                 },
                 {
-                    key: 'productDivision',
-                    value: 'IS',
+                    key: 'hierarchyNode',
+                    value: 'MV',
                 },
             ];
-            // fetchProductList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
-            fetchProductList({ setIsLoading: listShowLoading, userId, id: 'IS', onErrorAction });
+            fetchProductList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, !isProductDataLoaded]);
+    }, [userId, !isProductDataLoaded, VehicleDetailsData?.modelCode]);
 
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);
