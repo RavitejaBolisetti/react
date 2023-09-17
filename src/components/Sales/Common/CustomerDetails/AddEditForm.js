@@ -53,6 +53,7 @@ const AddEditFormBase = (props) => {
             form?.setFieldsValue({ billingCustomer: { ...bookingCustomer } });
         } else {
             setSameAsBookingCustomer(false);
+            form?.setFieldsValue({ billingCustomer: null });
         }
     };
 

@@ -125,6 +125,7 @@ const InsuranceDetailsMasterBase = (props) => {
         formData,
         isLoading,
         pageType,
+        insuranceCompanies,
     };
 
     const formProps = {

@@ -6,8 +6,8 @@
 import { dataActions } from 'store/actions/crud/dataAction';
 import { BASE_URL_OTF_EXCHANGE_VEHICLE_ALERT as baseURL } from 'constants/routingApi';
 
-const PREFIX = 'OTF_EXCANGE_ALERT_';
-const moduleName = 'Exchange Vehicle';
+const PREFIX = 'OTF_EXCHANGE_ALERT_';
+const moduleName = 'Exchange Vehicle Alert';
 
 export const RECEIVE_DATA_LOADING_ACTION_CONSTANT = PREFIX + 'LOADING_DATA';
 export const RECEIVE_DATA_ACTION_CONSTANT = PREFIX + 'LIST_RECIEVE_DATA';

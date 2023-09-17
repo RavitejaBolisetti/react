@@ -6,7 +6,7 @@
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import styles from 'assets/sass/app.module.scss';
 
-export const tableColumnVehicleDetails = (handleButtonClickVehicleDetails, canEdit, sorter = false, canDelete = false) => {
+export const tableColumnVehicleDetails = ({ handleButtonClick, canEdit = false, canDelete = false, sorter = false, canView = true }) => {
     const tableColumn = [
         tblPrepareColumns({
             title: 'Model Description',
@@ -57,7 +57,7 @@ export const tableColumnVehicleDetails = (handleButtonClickVehicleDetails, canEd
             sorter,
         }),
 
-        tblActionColumn({ handleButtonClick: handleButtonClickVehicleDetails, styles, canEdit, canDelete }),
+        tblActionColumn({ handleButtonClick, styles, canEdit, canDelete, canView }),
     ];
 
     return tableColumn;

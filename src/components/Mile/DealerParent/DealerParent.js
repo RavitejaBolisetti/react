@@ -76,6 +76,7 @@ export const DealerParentBase = (props) => {
     const ADD_ACTION = FROM_ACTION_TYPE?.ADD;
     const EDIT_ACTION = FROM_ACTION_TYPE?.EDIT;
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
+    const VIEW_ONLY_ACTION = FROM_ACTION_TYPE?.VIEW_ONLY;
 
     const onSuccessAction = (res) => {
         refershData && showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -129,7 +130,7 @@ export const DealerParentBase = (props) => {
         setFormData([]);
 
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
-        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
+        setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction: buttonAction === VIEW_ACTION ? VIEW_ONLY_ACTION : buttonAction }));
 
         record && setFormData(record);
         setIsFormVisible(true);
@@ -229,13 +230,15 @@ export const DealerParentBase = (props) => {
         setButtonData,
         handleButtonClick,
         handleResetFilter,
+        VIEW_ONLY_ACTION,
         typeData,
     };
-
+    const showAddButton = false;
     const tableProps = {
         tableColumn: tableColumn({ handleButtonClick, typeData }),
         tableData: searchData,
         typeData,
+        showAddButton,
     };
 
     const title = 'Group Name';
@@ -253,6 +256,7 @@ export const DealerParentBase = (props) => {
         handleButtonClick,
         title,
         tableData: searchData,
+        showAddButton,
     };
 
     return (

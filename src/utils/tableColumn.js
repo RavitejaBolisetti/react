@@ -4,8 +4,9 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { Button, Space, Tag, Switch } from 'antd';
-import { FiEdit, FiTrash } from 'react-icons/fi';
+import { FiEdit } from 'react-icons/fi';
 import { FaRegEye } from 'react-icons/fa';
+import { RxCross1 } from 'react-icons/rx';
 
 import { addToolTip } from 'utils/addToolTip';
 
@@ -15,10 +16,7 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { DisableItemComponent } from 'utils/disableItemComponent';
 import { PlusOutlined } from '@ant-design/icons';
 
-// import { handleEdit, handleCustomEdit } from 'components/crud/crudListingPage/tableColumnActionEdit';
-
 import styles from './tableColumn.module.scss';
-//import styles from './tableColumn.module.css';
 
 const onFilterFn = (value, record) => {
     if (record.ChangeDate !== undefined) {
@@ -156,10 +154,10 @@ export const tblActionColumn = ({
 
                 {canDelete && !record?.id && (
                     <Button data-testid="delete" type="link" aria-label="fa-trash" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.DELETE, record, index })}>
-                        {addToolTip('Delete')(<FiTrash />)}
+                        {addToolTip('Delete')(<RxCross1 size={18} />)}
                     </Button>
                 )}
-
+                
                 {customButton && (
                     <Button data-testid="customButton" type={customButtonProperties?.buttonType} icon={customButtonProperties?.icon} onClick={(e) => customButtonProperties?.handleCustomButtonClick({ buttonAction: customButtonProperties?.hasOwnProperty('handleName') ? customButtonProperties?.handleName({ name: customButtonProperties?.customName, record, index })?.key : customButtonProperties?.customkey, record, index })}>
                         {customButtonProperties?.hasOwnProperty('handleName') ? customButtonProperties?.handleName({ name: customButtonProperties?.customName, record, index })?.name : customButtonProperties?.customName}

@@ -179,6 +179,8 @@ export const StockTransferIndentMasterBase = (props) => {
                     value: parentGroupCode,
                 },
             ];
+
+            fetchProductLov({ setIsLoading: ProductLovLoading, userId, onErrorAction });
             fetchIndentLocation({ setIsLoading: listShowLoading, userId, onErrorAction, extraParams: extraParamData });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -431,6 +433,11 @@ export const StockTransferIndentMasterBase = (props) => {
                 value: 1000,
             },
             {
+                key: 'pageSize',
+                title: 'Value',
+                value: 1000,
+            },
+            {
                 key: 'pageNumber',
                 title: 'Value',
                 value: 1,
@@ -496,6 +503,7 @@ export const StockTransferIndentMasterBase = (props) => {
     };
 
     const addNewIndentProps = {
+        toggleButton,
         isVisible: isAddNewIndentVisible,
         titleOverride: 'Add Indent Details',
         addIndentDetailsForm,

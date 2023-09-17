@@ -77,7 +77,7 @@ const ViewDetailMain = (props) => {
         srl: true,
         pagination: false,
         isLoading: isLoading,
-        tableColumn: tableColumnVehicleDetails(handleButtonClickVehicleDetails, toggleButton === STOCK_TRANSFER?.RAISED.key, toggleButton === STOCK_TRANSFER?.RAISED.key),
+        tableColumn: tableColumnVehicleDetails({ handleButtonClick: handleButtonClickVehicleDetails, canView: true, canEdit: toggleButton === STOCK_TRANSFER?.RAISED.key }),
         tableData: formData?.vehicleDetails,
     };
 
