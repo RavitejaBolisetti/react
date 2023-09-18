@@ -8,9 +8,10 @@ import { Timeline } from 'antd';
 import { VEHICLE_INVOICE_SECTION } from 'constants/VehicleInvoiceSection';
 
 import { getSelectedMenuAttribute } from 'utils/getSelectedMenuAttribute';
+import { validateOTFMenu } from 'components/Sales/OTF/utils/validateOTFMenu';
 
 const MenuNav = (props) => {
-    const { currentSection, setCurrentSection, selectedOtfNumber, formActionType } = props;
+    const { currentSection, setCurrentSection, selectedOtfNumber, formActionType, VehicleInvoiceMasterData, selectedOrder: { orderStatus = false } = {} } = props;
     const receiptSectionList = Object.values(VEHICLE_INVOICE_SECTION);
 
     const onHandle = (key) => {
@@ -19,11 +20,14 @@ const MenuNav = (props) => {
 
     const items = receiptSectionList
         ?.filter((i) => i?.displayOnList)
-        ?.map((item) => ({
-            dot: getSelectedMenuAttribute({ id: item?.id, currentSection, formActionType })?.menuNavIcon,
-            children: <p onClick={() => onHandle(item?.id)}>{item?.title}</p>,
-            className: getSelectedMenuAttribute({ id: item?.id, currentSection, formActionType })?.activeClassName,
-        }));
+        ?.map(
+            (item) =>
+                validateOTFMenu({ item, status: orderStatus, otfData: VehicleInvoiceMasterData?.invoiceDetails?.otfDetailsRequest }) && {
+                    dot: getSelectedMenuAttribute({ id: item?.id, currentSection, formActionType })?.menuNavIcon,
+                    children: <p onClick={() => onHandle(item?.id)}>{item?.title}</p>,
+                    className: getSelectedMenuAttribute({ id: item?.id, currentSection, formActionType })?.activeClassName,
+                }
+        );
 
     const finalItem = items?.filter((i) => i);
 
