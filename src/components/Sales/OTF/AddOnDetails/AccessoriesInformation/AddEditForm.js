@@ -140,8 +140,22 @@ function AddEditForm({ onUpdate, isPresent, index, fnSetData, seteditCardForm, e
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Required Quantity" name="requiredQuantity" rules={[validateRequiredInputField('required quantity'), validationNumber('required quantity')]}>
-                            <Input type="number" maxLength={2} placeholder={preparePlaceholderText('required quantity')} />
+                        <Form.Item
+                            label="Required Quantity"
+                            name="requiredQuantity"
+                            rules={[
+                                validateRequiredInputField('required quantity'),
+                                validationNumber('required quantity'),
+                                {
+                                    validator: (_, value) => {
+                                        if (value > 50) {
+                                            return Promise.reject(new Error('Required quantity should be less than 50'));
+                                        } else return Promise.resolve;
+                                    },
+                                },
+                            ]}
+                        >
+                            <Input type="number" max={50} placeholder={preparePlaceholderText('required quantity')} />
                         </Form.Item>
                     </Col>
 
