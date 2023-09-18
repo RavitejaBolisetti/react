@@ -6,7 +6,9 @@
 import React, { useEffect } from 'react';
 import { withDrawer } from 'components/withDrawer';
 import styles from 'assets/sass/app.module.scss';
-import SoStyles from 'components/Sales/OtfSoMappingUnmapping/Somapping.module.css';
+//import SoStyles from 'components/Sales/OtfSoMappingUnmapping/Somapping.module.css';
+import SoStyles from 'components/Sales/OtfSoMappingUnmapping/Somapping.module.scss';
+
 
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { converDateDayjs } from 'utils/formatDateTime';

@@ -29,7 +29,9 @@ import { DisableParent } from 'components/common/ProductHierarchy/ProductHierarc
 import { BASE_URL_OTF_CANCELLATION_DEALER_SEARCH as customURL } from 'constants/routingApi';
 
 import LeftPanel from 'components/common/LeftPanel';
-import styles from 'components/common/Common.module.css';
+//import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+
 
 import { LANGUAGE_EN } from 'language/en';
 

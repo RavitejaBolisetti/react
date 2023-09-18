@@ -19,7 +19,9 @@ import { debounce } from 'utils/debounce';
 
 import { withDrawer } from 'components/withDrawer';
 
-import styles from 'components/common/Common.module.css';
+//import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+
 const { Search } = Input;
 
 const mapStateToProps = (state) => {

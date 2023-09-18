@@ -14,7 +14,7 @@ import AdministrativeHierarchyAccess from './AdministrativeHierarchyAccess';
 import { ViewUserManagementDealer } from './ViewUserManagementDealer';
 
 import styles from 'assets/sass/app.module.scss';
-import style4 from './UserManagementManufacturer.module.css';
+//import style4 from './UserManagementManufacturer.module.css';
 
 const { Panel } = Collapse;
 const AddEditFormMain = (props) => {
