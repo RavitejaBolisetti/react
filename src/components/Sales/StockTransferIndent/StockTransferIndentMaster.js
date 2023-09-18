@@ -116,7 +116,7 @@ const mapDispatchToProps = (dispatch) => ({
 export const StockTransferIndentMasterBase = (props) => {
     const { data, filterString, setFilterString, isFetchDataLoading } = props;
     const { userId, typeData, parentGroupCode, showGlobalNotification } = props;
-    const { indentLocationList, requestedByDealerList, productHierarchyData, isLoadingDealerLoc, indentLocationLoading } = props;
+    const { indentLocationList, requestedByDealerList, productHierarchyData, isLoadingDealerLoc } = props;
     const { fetchIndentList, fetchIndentLocation, fetchIndentDetails, fetchRequestedByList, listShowLoading, saveData, ProductLovLoading, fetchProductLov, fetchVinDetails, vehicleVinData, saveIssueDetail, resetVinDetails, fetchIssueList, resetIssueList, listIssueLoading } = props;
     const { indentIssueData, indentIssueDataLoading, indentIssueDataLoaded } = props;
     const [searchForm] = Form.useForm();
@@ -179,6 +179,8 @@ export const StockTransferIndentMasterBase = (props) => {
                     value: parentGroupCode,
                 },
             ];
+
+            fetchProductLov({ setIsLoading: ProductLovLoading, userId, onErrorAction });
             fetchIndentLocation({ setIsLoading: listShowLoading, userId, onErrorAction, extraParams: extraParamData });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -431,6 +433,11 @@ export const StockTransferIndentMasterBase = (props) => {
                 value: 1000,
             },
             {
+                key: 'pageSize',
+                title: 'Value',
+                value: 1000,
+            },
+            {
                 key: 'pageNumber',
                 title: 'Value',
                 value: 1,
@@ -439,17 +446,6 @@ export const StockTransferIndentMasterBase = (props) => {
         setshowVinLoading(true);
         fetchVinDetails({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
     };
-
-    const drawerTitle = useMemo(() => {
-        // if (formActionType?.viewMode) {
-        //     return 'View ';
-        // } else if (formActionType?.editMode) {
-        //     return 'Edit ';
-        // } else {
-        //     return 'Add New ';
-        // }
-        //}, [formActionType]);
-    }, []);
 
     const tableProps = {
         dynamicPagination,
@@ -496,6 +492,7 @@ export const StockTransferIndentMasterBase = (props) => {
     };
 
     const addNewIndentProps = {
+        toggleButton,
         isVisible: isAddNewIndentVisible,
         titleOverride: 'Add Indent Details',
         addIndentDetailsForm,

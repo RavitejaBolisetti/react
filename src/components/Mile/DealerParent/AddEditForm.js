@@ -30,6 +30,7 @@ const AddEditFormMain = (props) => {
         isVisible: viewMode,
         formData,
         styles,
+        typeData,
     };
 
     const buttonProps = {

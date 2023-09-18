@@ -19,12 +19,13 @@ import { AddVehicleDetailsModal } from './AddVehicleDetailsModal';
 import { VIEW_ACTION, EDIT_ACTION, DELETE_ACTION } from 'utils/btnVisiblity';
 
 import styles from 'assets/sass/app.module.scss';
+import { STOCK_TRANSFER } from 'constants/StockTransfer';
 
 const { TextArea } = Input;
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { formData, buttonDataVehicleDetails, productHierarchyData } = props;
+    const { formData, toggleButton, productHierarchyData } = props;
     const { addIndentDetailsForm, onFinish, indentLocationList, isLoadingDealerLoc, requestedByDealerList, openAccordian, setOpenAccordian } = props;
     const { buttonData, setButtonData, onCloseAction, tableDataItem, setTableDataItem } = props;
     const { handleButtonClick, handleChangeLocation } = props;
@@ -81,10 +82,8 @@ const AddEditFormMain = (props) => {
         balancedQuantity: 0,
     };
 
-    const sorterPagination = false;
-
     const tableProps = {
-        tableColumn: tableColumnVehicleDetails(handleButtonClickVehicleDetails, sorterPagination, buttonDataVehicleDetails),
+        tableColumn: tableColumnVehicleDetails({ handleButtonClick: handleButtonClickVehicleDetails, canEdit: toggleButton === STOCK_TRANSFER?.RAISED.key, canDelete: toggleButton === STOCK_TRANSFER?.RAISED.key, canView: false }),
         tableData: tableDataItem,
         pagination: false,
     };
@@ -99,10 +98,10 @@ const AddEditFormMain = (props) => {
         setOpenAccordian(1);
         if (values?.index !== undefined) {
             let arrayOfNumbers = [...tableDataItem];
-            arrayOfNumbers[values?.index] = { ...initialTableDataItem, ...values };
+            arrayOfNumbers[values?.index] = { ...initialTableDataItem, ...values, modelDescription: values?.modelDescriptionName };
             setTableDataItem([...arrayOfNumbers]);
         } else {
-            setTableDataItem([...tableDataItem, { ...initialTableDataItem, ...values }]);
+            setTableDataItem([...tableDataItem, { ...initialTableDataItem, ...values, modelDescription: values?.modelDescriptionName }]);
         }
         setIsAddVehicleDetailsVisible(false);
         addVehicleDetailsForm.resetFields();
@@ -141,7 +140,7 @@ const AddEditFormMain = (props) => {
                             <Row gutter={24}>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.textareaError}>
                                     <Form.Item name="remarks" label="Remarks">
-                                        <TextArea maxLength={300} placeholder={preparePlaceholderText('Remarks')} showCount />
+                                        <TextArea maxLength={90} placeholder={preparePlaceholderText('Remarks')} showCount />
                                     </Form.Item>
                                 </Col>
                             </Row>

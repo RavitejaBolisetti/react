@@ -31,17 +31,17 @@ function AddEditForm({ onUpdate, isPresent, index, fnSetData, seteditCardForm, e
         accessoryForm
             .validateFields()
             .then((values) => {
-                if (isPresent(values?.partName)) {
+                if (isPresent(values?.partNumber)) {
                     return;
                 }
 
-                if (!values?.partName) {
+                if (!values?.partNumber) {
                     showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Please provide part number' });
                     return;
                 }
 
                 const myvalues = { ...values, otfNumber: selectedOrderId, isDeleting: true, id: '' };
-                if (!values?.type) {
+                if (!values?.partNumber) {
                     showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Verify Part Number to continue' });
                     return;
                 }
@@ -52,7 +52,7 @@ function AddEditForm({ onUpdate, isPresent, index, fnSetData, seteditCardForm, e
                 setaddButtonDisabled({ ...addButtonDisabled, partDetailsResponses: false });
                 handleFormValueChange();
             })
-            .catch((err) => { });
+            .catch((err) => {});
     };
 
     const onFinishFailed = (err) => {
@@ -97,35 +97,15 @@ function AddEditForm({ onUpdate, isPresent, index, fnSetData, seteditCardForm, e
             <Form autoComplete="off" form={accessoryForm} onFieldsChange={onFieldsChange} layout="vertical" onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Part Name" name="partName" rules={[validateRequiredInputField('part name')]}>
+                        <Form.Item label="Part Name" name="partName">
                             <Search placeholder={preparePlaceholderText('Part Name')} maxLength={55} allowClear type="text" onSearch={handleOnSearch} onChange={handlePartSearch} />
                         </Form.Item>
                     </Col>
                 </Row>
                 <Divider />
                 <Row gutter={20}>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Part Type" name="type" >
-                            <Input {...disableProp} placeholder={preparePlaceholderText('part type')} />
-                        </Form.Item>
-                    </Col>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Selling Price" name="sellingPrice" >
-                            <Input {...disableProp} placeholder={preparePlaceholderText('selling price')} />
-                        </Form.Item>
-                    </Col>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} >
-                        <Form.Item label="MRP" name="mrp" >
-                            <Input {...disableProp} placeholder={preparePlaceholderText('mrp')} />
-                        </Form.Item>
-                    </Col>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Required Quantity" name="requiredQuantity" rules={[validateRequiredInputField('required quantity'), validationNumber('required quantity')]}>
-                            <Input type="number" placeholder={preparePlaceholderText('required quantity')} />
-                        </Form.Item>
-                    </Col>
                     <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
-                        <Form.Item label="Part Description" name="partDescription">
+                        <Form.Item label="Part Name" name="partDescription">
                             <TextArea
                                 placeholder={preparePlaceholderText('Part Description')}
                                 {...disableProp}
@@ -134,10 +114,35 @@ function AddEditForm({ onUpdate, isPresent, index, fnSetData, seteditCardForm, e
                                     maxRows: 2,
                                 }}
                                 maxLength={300}
-                                showCount
                             />
                         </Form.Item>
                     </Col>
+                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                        <Form.Item label="Part Number" name="partNumber">
+                            <Input {...disableProp} placeholder={preparePlaceholderText('part number')} />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                        <Form.Item label="Part Type" name="type">
+                            <Input {...disableProp} placeholder={preparePlaceholderText('part type')} />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                        <Form.Item label="Selling Price" name="sellingPrice">
+                            <Input {...disableProp} placeholder={preparePlaceholderText('selling price')} />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                        <Form.Item label="MRP" name="mrp">
+                            <Input {...disableProp} placeholder={preparePlaceholderText('mrp')} />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                        <Form.Item label="Required Quantity" name="requiredQuantity" rules={[validateRequiredInputField('required quantity'), validationNumber('required quantity')]}>
+                            <Input type="number" placeholder={preparePlaceholderText('required quantity')} />
+                        </Form.Item>
+                    </Col>
+
                     <Form.Item hidden name="id">
                         <Input />
                     </Form.Item>

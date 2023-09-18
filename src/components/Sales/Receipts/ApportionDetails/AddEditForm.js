@@ -69,9 +69,7 @@ const AddEditFormMain = (props) => {
             .validateFields()
             .then(() => {
                 const values = apportionForm.getFieldsValue();
-                // if (parseFloat(values?.apportionedAmount) + parseFloat(totalApportionAmount) > parseFloat(totalReceivedAmount)) {
-                //     console.log('Apportion amount more');
-                // }
+
                 if (!isEditing) {
                     const data = { ...values, id: '' };
                     setApportionList([data, ...apportionList]);

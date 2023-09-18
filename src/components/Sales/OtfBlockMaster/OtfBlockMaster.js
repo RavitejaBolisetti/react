@@ -157,6 +157,13 @@ export const OtfBlockMasterMain = (props) => {
         resetData();
         showGlobalNotification({ message });
     };
+
+    const onCloseAction = () => {
+        form.resetFields();
+        setIsFormVisible(false);
+        setButtonData({ ...defaultBtnVisiblity });
+    };
+
     useEffect(() => {
         return () => {
             resetData();
@@ -203,7 +210,7 @@ export const OtfBlockMasterMain = (props) => {
 
     useEffect(() => {
         if (organizationId && userId) {
-            fetchProductDataList({ setIsLoading: listProductLoading, userId, id: organizationId });
+            fetchProductDataList({ setIsLoading: listProductLoading, userId, onCloseAction, extraParams: [{ key: 'manufactureOrgCode', value: organizationId }] });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, organizationId]);
@@ -308,16 +315,7 @@ export const OtfBlockMasterMain = (props) => {
 
     const handleButtonClick = (type) => {
         switch (type) {
-            case FROM_ACTION_TYPE.CHILD: {
-                form.resetFields();
-                setFormData([]);
-                break;
-            }
-            case FROM_ACTION_TYPE.SIBLING: {
-                form.resetFields();
-                setFormData([]);
-                break;
-            }
+
             case FROM_ACTION_TYPE.EDIT: {
                 setFormData(otfBlockMasterData);
                 break;
@@ -338,7 +336,7 @@ export const OtfBlockMasterMain = (props) => {
 
     const onFinish = (values) => {
         const recordId = formData?.id || '';
-        const data = { ...values, id: recordId };
+        const data = { ...values, id: recordId, modelGroupCode: selectedProductCode, hierarchyMstId: formData?.id ? selectedTreeSelectKey[0] : selectedTreeSelectKey }
         const onSuccess = (res) => {
             form.resetFields();
 
@@ -375,7 +373,7 @@ export const OtfBlockMasterMain = (props) => {
         saveOTFBlockData(requestData);
     };
 
-    const onFinishFailed = (errorInfo) => {};
+    const onFinishFailed = (errorInfo) => { };
 
     const myProps = {
         isTreeViewVisible,
@@ -406,7 +404,6 @@ export const OtfBlockMasterMain = (props) => {
         setSelectedTreeSelectKey,
         isVisible: isFormVisible,
         onCloseAction: () => {
-            setSelectedTreeSelectKey(null);
             setIsFormVisible(false);
             setOptions([]);
             form.setFieldsValue({ hierarchyMstId: null });
@@ -478,16 +475,17 @@ export const OtfBlockMasterMain = (props) => {
             setSelectedOrganizationCode(treeObj?.id);
             !value && resetData();
         },
-        HandleClear: () => {
-            setSelectedOrganizationId(null);
-            setSelectedTreeKey(null);
+        handleSelectTreeClick: (value) => {
+            setSelectedTreeKey();
+            setSelectedTreeSelectKey();
+            setSelectedOrganizationId(value);
+            !value && resetData();
         },
         defaultValue: 'organizationId',
         placeholder: preparePlaceholderSelect('Organization Hierarchy'),
     };
     const title = 'Hierarchy';
-    const onfinishHeader = (value) => {};
-
+    const onfinishHeader = (value) => { };
     return (
         <>
             <div className={styles.contentHeaderBackground}>
@@ -512,7 +510,7 @@ export const OtfBlockMasterMain = (props) => {
             </div>
             <Row gutter={20} span={24}>
                 <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol}>
-                    {!productHierarchyData?.length ? (
+                    {productHierarchyData?.length <= 0 ? (
                         <div className={styles.emptyContainer}>
                             <Empty
                                 image={Empty.PRESENTED_IMAGE_SIMPLE}
@@ -531,11 +529,11 @@ export const OtfBlockMasterMain = (props) => {
                                     )
                                 }
                             >
-                                {organizationId && (
+                                {/* {organizationId && (
                                     <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
                                         Add
                                     </Button>
-                                )}
+                                )} */}
                             </Empty>
                         </div>
                     ) : (

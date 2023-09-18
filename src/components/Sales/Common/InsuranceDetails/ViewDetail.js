@@ -9,9 +9,10 @@ import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { DATA_TYPE } from 'constants/dataType';
 
 import styles from 'assets/sass/app.module.scss';
+import { getCodeValue } from 'utils/getCodeValue';
 
 const ViewDetailMain = (props) => {
-    const { formData, isLoading } = props;
+    const { formData, isLoading, insuranceCompanies } = props;
     const viewProps = {
         bordered: false,
         colon: false,
@@ -22,10 +23,10 @@ const ViewDetailMain = (props) => {
     return (
         <Card className={styles.drawerCardView}>
             <Descriptions {...viewProps}>
-                <Descriptions.Item label="Insurance Company">{checkAndSetDefaultValue(formData?.insuranceCompany, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Insurance Company">{checkAndSetDefaultValue(getCodeValue(insuranceCompanies, formData?.insuranceCompany), isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Insurance Cover Note">{checkAndSetDefaultValue(formData?.insuranceCoverNote, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Insurance Amount">{checkAndSetDefaultValue(formData?.insuranceAmount, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Date">{checkAndSetDefaultValue(formData?.insuranceDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                <Descriptions.Item label="Insurance Cover Note Date">{checkAndSetDefaultValue(formData?.insuranceDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                 <Descriptions.Item label="Registration Number">{checkAndSetDefaultValue(formData?.registrationNumber, isLoading)}</Descriptions.Item>
             </Descriptions>
         </Card>

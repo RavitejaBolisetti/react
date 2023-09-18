@@ -153,7 +153,6 @@ const VehiclePurchaseOrderDetailMasterBase = (props) => {
     };
 
     const onFinish = (values) => {
-        //console.log('save');
         const recordId = viewVehiclePODetails?.id || '';
 
         const onSuccess = (res) => {

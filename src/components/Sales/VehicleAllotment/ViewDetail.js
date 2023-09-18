@@ -34,7 +34,7 @@ const mapStateToProps = (state) => {
                 OtfSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isOTFSearchLoading, data, isDetailLoaded },
             },
             vehicleAllotmentData: {
-                vehicleAllotment: { detailData: allotmentSummaryDetails, data: allotmentSearchedList, filter: filterString },
+                vehicleAllotment: { detailData: allotmentSummaryDetails, isLdata: allotmentSearchedList, filter: filterString },
             },
         },
     } = state;
@@ -69,7 +69,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ViewDetailMain = (props) => {
-    const { userId, isOTFSearchLoading, resetOTFData, fetchOTFSearchedList, listShowLoading, toggleButton, formData, isLoading, typeData, searchForm, totalOTFRecords, tableData } = props;
+    const { userId, isOTFSearchLoading, fetchOTFSearchedList, listShowLoading, toggleButton, formData, isLoading, typeData, searchForm, totalOTFRecords, tableData } = props;
     const { resetAdvanceFilter, setResetAdvanceFilter, handleButtonClick, buttonData, setButtonData, onCloseAction, selectedOTFDetails, setSelectedOrderOTFDetails } = props;
     const [filterString, setFilterString] = useState('');
     const [filterStringOTFSearch, setFilterStringOTFSearch] = useState('');
@@ -199,10 +199,10 @@ const ViewDetailMain = (props) => {
         pagination: sorterPagination,
     };
 
-    const handleResetFilter = () => {
-        resetOTFData();
-        setFilterStringOTFSearch();
-    };
+    // const handleResetFilter = () => {
+    //     resetOTFData();
+    //     setFilterStringOTFSearch();
+    // };
 
     return (
         <>

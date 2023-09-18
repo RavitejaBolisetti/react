@@ -20,7 +20,6 @@ const AddEditFormMain = (props) => {
     const disableProps = { disabled: isReadOnly };
     const showFields = BUTTON_NAME?.CANCEL?.key === buttonType;
     useEffect(() => {
-        console.log(formData);
         if (formData) {
             form.setFieldsValue({ ...formData, soDate: converDateDayjs(formData?.soDate), CancellationDate: converDateDayjs(Date()) });
         }

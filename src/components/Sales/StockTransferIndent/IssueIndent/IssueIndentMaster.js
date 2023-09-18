@@ -138,6 +138,7 @@ const IssueIndentMasterMain = (props) => {
     };
 
     const onStatusChange = (values) => {
+        setConfirmRequest({ isVisible: false });
         const data = {
             issueId: values?.issueNumber,
             indentDetailId: cancellationData?.indentDetailId,
@@ -147,7 +148,6 @@ const IssueIndentMasterMain = (props) => {
 
         const onSuccess = (res) => {
             resetVinDetails();
-            setConfirmRequest({ isVisible: false });
             setRefershData(!refershData);
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
         };
