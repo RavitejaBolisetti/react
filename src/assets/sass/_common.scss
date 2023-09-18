@@ -272,6 +272,7 @@
     }
 }
 
+
 .toolTip {
     & :global {
         .ant-tooltip-content {
@@ -296,7 +297,12 @@
         }
     }
 }
-
+.leftPannelButton{
+    line-height: 14px !important;
+    font-weight: 500;
+    height: auto;
+    padding: 5px 16px !important;
+}
 /*--------------Model Section Strat--------------*/
 .modelTooltip {
     svg {
@@ -1708,7 +1714,7 @@
         color: $neutralGrey4;
 
         span {
-            color: $primaryBlack;
+            // color: $primaryBlack;
             max-width: 9.5vw;
             word-wrap: break-word;
         }
@@ -2076,6 +2082,9 @@
                     gap: 10px !important;
                 }
             }
+        }
+        .drawerGap{
+            margin-bottom: 10px !important;
         }
     }
 

@@ -85,9 +85,9 @@ const VehicleInvoiceCard = (props) => {
                     <>
                         <div className={styles.detailCardText}>
                             Status:
-                            <span>
-                                {checkAndSetDefaultValue(getCodeValue(typeData[PARAM_MASTER.INVC_STATS.id], selectedOrder?.invoiceStatus))}
-                                <div className={styles.tooltipAlign}>
+                            <span className={styles.tooltipAlign}>
+                                 {checkAndSetDefaultValue(getCodeValue(typeData[PARAM_MASTER.INVC_STATS.id], selectedOrder?.invoiceStatus))} 
+                                <span className={styles.marL5} >
                                     {selectedOrder?.invoiceStatus === QUERY_BUTTONS_CONSTANTS.CANCELLED.key &&
                                         addToolTip(
                                             <div>
@@ -105,18 +105,22 @@ const VehicleInvoiceCard = (props) => {
                                             '#FFFFFF',
                                             styles.toolTip
                                         )(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}
-                                </div>
+                                </span>
                             </span>
                         </div>
                         <Divider />
                     </>
                 )}
-                <div className={styles.detailCardText}>
+                <div className={styles.detailCardText} >
                     IRN Status:
                     <div className={styles.buttonsGroupRight}>
-                        {selectedOrder?.invoiceNumber && !irnStatusData?.irnStatus ? (
+                     {checkAndSetDefaultValue(irnStatusData?.irnStatus)} 
+
+
+
+                         {selectedOrder?.invoiceNumber && !irnStatusData?.irnStatus ? (
                             <>
-                                <Button onClick={showConfirmation} type="primary" style={{ color: '#ffffff !important' }}>
+                                <Button onClick={showConfirmation} danger className={styles.leftPannelButton}>
                                     Generate
                                 </Button>
                                 <ConfirmationModal {...confirmModalRequest} />
@@ -144,7 +148,7 @@ const VehicleInvoiceCard = (props) => {
                                         )(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}
                                 </div>
                             </>
-                        )}
+                        )} 
                     </div>
                 </div>
                 <Divider />
