@@ -4,12 +4,12 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Col, Card, Row, Divider, Typography } from 'antd';
+import { Col, Card, Row, Typography } from 'antd';
 import styles from 'assets/sass/app.module.scss';
 
 const { Text } = Typography;
 
-const CardDocument = ({ termAndConRequired, digitalSignatureRequired, documentTypeDescription, documentTypeCode }) => {
+const CardDocument = ({ documentTypeDescription, documentTypeCode }) => {
     return (
         <>
             <Card className={styles.cardView}>

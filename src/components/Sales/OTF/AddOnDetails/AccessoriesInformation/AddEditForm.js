@@ -31,17 +31,17 @@ function AddEditForm({ onUpdate, isPresent, index, fnSetData, seteditCardForm, e
         accessoryForm
             .validateFields()
             .then((values) => {
-                if (isPresent(values?.partName)) {
+                if (isPresent(values?.partNumber)) {
                     return;
                 }
 
-                if (!values?.partName) {
+                if (!values?.partNumber) {
                     showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Please provide part number' });
                     return;
                 }
 
                 const myvalues = { ...values, otfNumber: selectedOrderId, isDeleting: true, id: '' };
-                if (!values?.type) {
+                if (!values?.partNumber) {
                     showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Verify Part Number to continue' });
                     return;
                 }
@@ -104,6 +104,24 @@ function AddEditForm({ onUpdate, isPresent, index, fnSetData, seteditCardForm, e
                 </Row>
                 <Divider />
                 <Row gutter={20}>
+                    <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
+                        <Form.Item label="Part Name" name="partDescription">
+                            <TextArea
+                                placeholder={preparePlaceholderText('Part Description')}
+                                {...disableProp}
+                                autoSize={{
+                                    minRows: 1,
+                                    maxRows: 2,
+                                }}
+                                maxLength={300}
+                            />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                        <Form.Item label="Part Number" name="partNumber">
+                            <Input {...disableProp} placeholder={preparePlaceholderText('part number')} />
+                        </Form.Item>
+                    </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item label="Part Type" name="type">
                             <Input {...disableProp} placeholder={preparePlaceholderText('part type')} />
@@ -124,20 +142,7 @@ function AddEditForm({ onUpdate, isPresent, index, fnSetData, seteditCardForm, e
                             <Input type="number" placeholder={preparePlaceholderText('required quantity')} />
                         </Form.Item>
                     </Col>
-                    <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
-                        <Form.Item label="Part Description" name="partDescription">
-                            <TextArea
-                                placeholder={preparePlaceholderText('Part Description')}
-                                {...disableProp}
-                                autoSize={{
-                                    minRows: 1,
-                                    maxRows: 2,
-                                }}
-                                maxLength={300}
-                                showCount
-                            />
-                        </Form.Item>
-                    </Col>
+
                     <Form.Item hidden name="id">
                         <Input />
                     </Form.Item>
