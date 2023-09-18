@@ -63,33 +63,22 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const InvoiceDetailsMasterBase = (props) => {
-    const { typeData, otfData, selectedOrder, fetchInvoiceDetail, listShowLoading } = props;
+    const { typeData, otfData, selectedOrder, fetchInvoiceDetail, listShowLoading, vehicleInvoiceMasterData } = props;
     const { userId, buttonData, setButtonData, showGlobalNotification, section, isDataLoaded, isLoading, invoiceDetailForm } = props;
     const { form, formActionType, handleFormValueChange, selectedOtfNumber, setSelectedOtfNumber } = props;
     const { FormActionButton, requestPayload, setRequestPayload, handleButtonClick, NEXT_ACTION, handleBookingNumberSearch } = props;
 
     const [activeKey, setActiveKey] = useState([]);
-    const [formData, setFormData] = useState('');
-    const [otfFormData, setOtfFormData] = useState('');
-
-    // useEffect(() => {
-    //     return () => {
-    //         resetData();
-    //     };
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, []);
-
-    // useEffect(() => {
-    //     if (receiptDetailData.partyDetails) {
-    //         setRequestPayload({ ...requestPayload, partyDetails: receiptDetailData.partyDetails });
-    //     }
-    //     setReceipt(receiptDetailData?.receiptsDetails?.receiptType);
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [userId, receiptDetailData.partyDetails]);
+    const { formData, setFormData } = useState();
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
+
+    useEffect(() => {
+        setFormData(setFormData?.otfDetailsRequest);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [vehicleInvoiceMasterData]);
 
     useEffect(() => {
         if (userId && selectedOrder?.invoiceNumber) {
@@ -128,9 +117,8 @@ const InvoiceDetailsMasterBase = (props) => {
         formActionType,
         userId,
         isDataLoaded,
-        otfFormData: otfData,
-        setOtfFormData,
-        formData,
+        otfFormData: formData?.otfDetailsRequest,
+
         isLoading,
         setActiveKey,
         activeKey,
@@ -142,8 +130,7 @@ const InvoiceDetailsMasterBase = (props) => {
 
     const viewProps = {
         typeData,
-        otfFormData: otfData,
-        formData,
+        formData: formData?.otfDetailsRequest,
         formActionType,
         styles,
         isLoading,
