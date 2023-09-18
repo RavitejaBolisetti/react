@@ -54,8 +54,8 @@ const AddEditFormBase = (props) => {
     const handleOnChange = (e) => {
         if (e.target.checked) {
             setSameAsBookingCustomer(true);
-            let ownerCustomer = formData?.ownerCustomer;
-            form?.setFieldsValue({ billingCustomer: { ...ownerCustomer } });
+            let bookingCustomer = formData?.bookingCustomer;
+            form?.setFieldsValue({ billingCustomer: { ...bookingCustomer } });
         } else {
             setSameAsBookingCustomer(false);
             form?.resetFields();
