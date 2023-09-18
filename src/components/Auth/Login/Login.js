@@ -279,7 +279,7 @@ const Login = (props) => {
                                                 </Row>
 
                                                 <Row gutter={20}>
-                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.mt20}>
                                                         <Button icon={<FiLock size={18} />} data-testid="Login" disabled={loginButtonDisabled} className={styles.button} type="primary" htmlType="submit" loading={isLoading}>
                                                             Login
                                                         </Button>

@@ -83,8 +83,8 @@
                 }
             }
 
-            >.ant-input-group {
-                >.ant-input-group-addon {
+            > .ant-input-group {
+                > .ant-input-group-addon {
                     &:last-child {
                         .ant-input-search-button {
                             &:not(.ant-btn-primary) {
@@ -544,7 +544,7 @@
     padding: 20px;
 }
 
-.mb10 {
+.mb20 {
     margin-bottom: 20px;
 }
 
@@ -623,7 +623,7 @@
     }
 }
 
-.mb10 {
+.mb20 {
     margin-bottom: 20px;
 }
 
