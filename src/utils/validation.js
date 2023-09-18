@@ -265,7 +265,7 @@ const campareDate = (value, compareTo, title) => {
 export const compareFromToDate = (compareTo) => {
     return {
         validator: (_, value) => {
-            return compareTo ? campareDate(value, compareTo) : null;
+            return compareTo ? campareDate(value, compareTo) : Promise.resolve();
         },
     };
 };
