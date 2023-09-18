@@ -16,8 +16,8 @@ import { customSelectBox } from 'utils/customSelectBox';
 import { CustomerListMaster } from 'components/utils/CustomerListModal';
 
 export const AddressCommonForm = (props) => {
-    const { formType, formData, disabledProps, handleOnChange, fnSetData, typeData, sameAsBookingCustomer } = props;
-    const canUpdate = (formType === 'bookingCustomer' && !formData?.billingCustomer?.customerId) || formType === 'billingCustomer';
+    const { formType, formData, disabledProps, handleOnChange, fnSetData, typeData, sameAsBookingCustomer, viewOnly = false } = props;
+    const canUpdate = ((formType === 'bookingCustomer' && !formData?.billingCustomer?.customerId) || formType === 'billingCustomer') && !viewOnly;
 
     const alternateNumberCheck = (value) => {
         if (formData?.mobileNumber && value && value === formData?.mobileNumber) {
@@ -35,7 +35,7 @@ export const AddressCommonForm = (props) => {
                     </Col>
                 </Row>
             )}
-            {formType === 'billingCustomer' && (
+            {!viewOnly && formType === 'billingCustomer' && (
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Form.Item name={[formType, 'sameAsBookingCustomer']} label="" initialValue={formData?.sameAsBookingCustomer}>

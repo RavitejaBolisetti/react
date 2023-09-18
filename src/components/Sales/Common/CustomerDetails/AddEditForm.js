@@ -15,7 +15,7 @@ import { VehicleCustomerSearch } from '../../VehicleDetail/CustomerDetails/Vehic
 const { Panel } = Collapse;
 
 const AddEditFormBase = (props) => {
-    const { form, formData, sameAsBookingCustomer, setSameAsBookingCustomer } = props;
+    const { form, formData, sameAsBookingCustomer, setSameAsBookingCustomer, viewOnly = false } = props;
     const { typeData, activeKey, setActiveKey, formActionType, fnSetData } = props;
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -70,7 +70,9 @@ const AddEditFormBase = (props) => {
         formData: formData?.bookingCustomer,
         formType: 'bookingCustomer',
         handleOnChange: () => {},
+        disabledProps: { disabled: viewOnly },
         fnSetData: (data) => fnSetData(data, 'bookingCustomer'),
+        viewOnly,
     };
 
     const bilingCustomerProps = {
@@ -79,9 +81,10 @@ const AddEditFormBase = (props) => {
         typeData,
         formData: formData?.billingCustomer,
         formType: 'billingCustomer',
-        disabledProps: { disabled: sameAsBookingCustomer },
         handleOnChange,
+        disabledProps: { disabled: sameAsBookingCustomer || viewOnly },
         fnSetData: (data) => fnSetData(data, 'billingCustomer'),
+        viewOnly,
     };
 
     const modalProps = {

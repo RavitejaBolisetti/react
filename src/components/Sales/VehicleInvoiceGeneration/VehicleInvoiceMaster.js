@@ -40,7 +40,7 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             VehicleInvoiceGeneration: {
-                VehicleInvoiceSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString, detailData: VehicleInvoiceMasterData = [] },
+                VehicleInvoiceSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString, detailData: vehicleInvoiceMasterData = [] },
                 VehicleIrnGeneration: { isLoaded: isIrnDataLoaded = false, isLoading: isIrnDataLoading, data: irnData = [] },
                 VehicleInvoiceDetail: { isLoaded: isVehicleInvoiceDataLoaded = false, isLoading: isVehicleInvoiceDataLoading, data: vehicleInvoiceData = [] },
                 VehicleDetails: { isLoaded: isVehicleDataLoaded = false, isLoading: isVehicleDataLoading, data: vehicleDetail = [] },
@@ -76,8 +76,7 @@ const mapStateToProps = (state) => {
         irnData,
         vehicleInvoiceData,
         vehicleDetail,
-
-        VehicleInvoiceMasterData,
+        vehicleInvoiceMasterData,
     };
     return returnValue;
 };
@@ -113,11 +112,12 @@ export const VehicleInvoiceMasterBase = (props) => {
     const { data, receiptDetailData, userId, irnGeneration, fetchList, fetchOTFDetail, fetchVehicleDetail, fetchVehicleInvoiceDetail, listShowLoading, showGlobalNotification, fetchInvoiceMasterData } = props;
     const { cancelInvoice } = props;
     const { typeData, receiptType, partySegmentType, listInvoiceShowLoading, saveData, paymentModeType, documentType, moduleTitle, totalRecords } = props;
-    const { filterString, setFilterString, invoiceStatusList, otfData, VehicleInvoiceMasterData } = props;
+    const { filterString, setFilterString, invoiceStatusList, otfData, vehicleInvoiceMasterData } = props;
 
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [invoiceStatus, setInvoiceStatus] = useState(QUERY_BUTTONS_CONSTANTS.INVOICED.key);
     const [requestPayload, setRequestPayload] = useState({ invoiceDetails: {}, vehicleDetails: {}, financeDetails: {}, insuranceDetails: {} });
+    console.log('🚀 ~ file: VehicleInvoiceMaster.js:120 ~ VehicleInvoiceMasterBase ~ requestPayload:', requestPayload);
 
     const [listFilterForm] = Form.useForm();
     const [cancelInvoiceForm] = Form.useForm();
@@ -166,7 +166,7 @@ export const VehicleInvoiceMasterBase = (props) => {
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
-    console.log('VehicleInvoiceMasterData', VehicleInvoiceMasterData);
+    console.log('vehicleInvoiceMasterData', vehicleInvoiceMasterData);
 
     const onSuccessAction = (res) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -679,6 +679,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         setLastSection,
         handleIRNGeneration,
         handleBookingNumberSearch,
+        vehicleInvoiceMasterData,
     };
 
     const cancelInvoiceProps = {

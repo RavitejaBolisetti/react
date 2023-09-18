@@ -12,7 +12,7 @@ import { LeftSidebar } from './LeftSidebar';
 import { InvoiceDetailsMaster } from './InvoiceDetails';
 import { InsuranceDetailsMaster } from 'components/Sales/Common/InsuranceDetails';
 import { SchemeDetailsMaster } from 'components/Sales/Common/SchemeDetails';
-import { VehicleDetailsMaster } from 'components/Sales/Common/VehicleDetails';
+import { VehicleDetailsMaster } from 'components/Sales/VehicleInvoiceGeneration/VehicleDetails';
 import { FinananceDetailsMaster } from 'components/Sales/Common/FinananceDetails';
 import { ReferralsMaster } from 'components/Sales/Common/Referrals';
 import { ExchangeVehiclesMaster } from 'components/Sales/Common/ExchangeVehicles';
