@@ -34,7 +34,7 @@ const expandIcon = ({ isActive }) =>
     );
 
 const VehicleInvoiceCard = (props) => {
-    const { selectedOrder, otfData, formActionType, isLoading, typeData, handleIRNGeneration, irnStatusData } = props;
+    const { selectedOrder, otfData, formActionType, isLoading, typeData, handleIRNGeneration } = props;
     const fullName = selectedOrder?.customerName?.split(' ');
     const userAvatar = fullName ? fullName[0]?.slice(0, 1) + (fullName[1] ? fullName[1].slice(0, 1) : '') : '';
     const [confirmRequest, setConfirmRequest] = useState(false);
@@ -86,8 +86,8 @@ const VehicleInvoiceCard = (props) => {
                         <div className={styles.detailCardText}>
                             Status:
                             <span className={styles.tooltipAlign}>
-                                 {checkAndSetDefaultValue(getCodeValue(typeData[PARAM_MASTER.INVC_STATS.id], selectedOrder?.invoiceStatus))} 
-                                <span className={styles.marL5} >
+                                {checkAndSetDefaultValue(getCodeValue(typeData[PARAM_MASTER.INVC_STATS.id], selectedOrder?.invoiceStatus))}
+                                <span className={styles.marL5}>
                                     {selectedOrder?.invoiceStatus === QUERY_BUTTONS_CONSTANTS.CANCELLED.key &&
                                         addToolTip(
                                             <div>
@@ -111,47 +111,47 @@ const VehicleInvoiceCard = (props) => {
                         <Divider />
                     </>
                 )}
-                <div className={styles.detailCardText} >
-                    IRN Status:
-                    <div className={styles.buttonsGroupRight}>
-                     {checkAndSetDefaultValue(irnStatusData?.irnStatus)} 
-
-
-
-                         {selectedOrder?.invoiceNumber && !irnStatusData?.irnStatus ? (
-                            <>
-                                <Button onClick={showConfirmation} danger className={styles.leftPannelButton}>
-                                    Generate
-                                </Button>
-                                <ConfirmationModal {...confirmModalRequest} />
-                            </>
-                        ) : (
-                            <>
-                                {checkAndSetDefaultValue(irnStatusData?.irnStatus)}
-                                <div className={styles.tooltipAlign}>
-                                    {irnStatusData?.irnStatus &&
-                                        addToolTip(
-                                            <div>
-                                                <p>
-                                                    IRN Date: <span>{checkAndSetDefaultValue(otfData?.irnDate, isLoading, DATA_TYPE?.DATE?.key ?? 'Na')}</span>
-                                                </p>
-                                                <p>
-                                                    IRN No.: <span>{otfData?.irnNumber ?? 'Na'}</span>
-                                                </p>
-                                                <p>
-                                                    Description: <span>{otfData?.irnDesc ?? 'Na'}</span>
-                                                </p>
-                                            </div>,
-                                            'bottom',
-                                            '#FFFFFF',
-                                            styles.toolTip
-                                        )(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}
-                                </div>
-                            </>
-                        )} 
-                    </div>
-                </div>
-                <Divider />
+                {formActionType?.viewMode && (
+                    <>
+                        <div className={styles.detailCardText}>
+                            IRN Status:
+                            <div className={styles.buttonsGroupRight}>
+                                {selectedOrder?.invoiceNumber && !otfData?.irnStatus && selectedOrder?.invoiceStatus !== QUERY_BUTTONS_CONSTANTS.CANCELLED.key ? (
+                                    <>
+                                        <Button onClick={showConfirmation} danger className={styles.leftPannelButton}>
+                                            Generate
+                                        </Button>
+                                        <ConfirmationModal {...confirmModalRequest} />
+                                    </>
+                                ) : (
+                                    <>
+                                        {checkAndSetDefaultValue(otfData?.irnStatus)}
+                                        <div className={styles.tooltipAlign}>
+                                            {otfData?.irnStatus &&
+                                                addToolTip(
+                                                    <div>
+                                                        <p>
+                                                            IRN Date: <span>{checkAndSetDefaultValue(otfData?.irnDate, isLoading, DATA_TYPE?.DATE?.key ?? 'Na')}</span>
+                                                        </p>
+                                                        <p>
+                                                            IRN No.: <span>{otfData?.irnNumber ?? 'Na'}</span>
+                                                        </p>
+                                                        <p>
+                                                            Description: <span>{otfData?.irnDesc ?? 'Na'}</span>
+                                                        </p>
+                                                    </div>,
+                                                    'bottom',
+                                                    '#FFFFFF',
+                                                    styles.toolTip
+                                                )(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}
+                                        </div>
+                                    </>
+                                )}
+                            </div>
+                        </div>
+                        <Divider />
+                    </>
+                )}
                 <div className={styles.detailCardText}>
                     Booking No.: <span>{checkAndSetDefaultValue(selectedOrder?.bookingNumber || selectedOrder?.otfNumber)}</span>
                 </div>
