@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -20,11 +20,11 @@ export const FindprodctCode = (node, prodctCode, key) => {
     return foundduplicate;
 };
 
-export const DisableParent = (node) => {
+export const DisableParent = (node, key = 'subManufactureOrg') => {
     function datas(node) {
-        if (node?.subManufactureOrg && node?.subManufactureOrg.length) {
+        if (node?.[key] && node?.[key].length) {
             node['disabled'] = true;
-            node?.subManufactureOrg?.forEach((child) => {
+            node?.[key]?.forEach((child) => {
                 datas(child);
             });
         } else {

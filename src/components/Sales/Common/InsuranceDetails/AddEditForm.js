@@ -33,7 +33,7 @@ const AddEditFormMain = (props) => {
                                 <Form.Item label="Insurance Company" name="insuranceCompany">
                                     <Select placeholder={preparePlaceholderSelect('Insurance Company')}>
                                         {insuranceCompanies?.map((item) => (
-                                            <Option value={item?.value} key={item?.key}>
+                                            <Option value={item?.key} key={item?.key}>
                                                 {item?.value}
                                             </Option>
                                         ))}
@@ -59,7 +59,7 @@ const AddEditFormMain = (props) => {
                             </Col>
 
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item label="Date" name="insuranceDate">
+                                <Form.Item label="Insurance Cover Note Date" name="insuranceDate">
                                     <DatePicker disabledDate={disableFutureDate} format={dateFormat} placeholder={preparePlaceholderSelect('Date')} />
                                 </Form.Item>
                             </Col>

@@ -3,6 +3,8 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
+export const VEHICLE_COMPANY_MAKE = 'MAL';
+
 export const OTF_STATUS = {
     BOOKED: {
         id: 1,
@@ -10,6 +12,7 @@ export const OTF_STATUS = {
         title: 'Booked',
         desc: 'Booked',
         displayOnView: true,
+        filter: true,
     },
     ALLOTED: {
         id: 2,
@@ -17,6 +20,7 @@ export const OTF_STATUS = {
         title: 'Allotted',
         desc: 'Allotted',
         displayOnView: true,
+        filter: true,
     },
     CANCELLED: {
         id: 3,
@@ -24,6 +28,7 @@ export const OTF_STATUS = {
         title: 'Cancelled',
         desc: 'Cancelled',
         displayOnView: true,
+        filter: true,
     },
     INVOICED: {
         id: 4,
@@ -31,6 +36,7 @@ export const OTF_STATUS = {
         title: 'Invoiced',
         desc: 'Invoiced',
         displayOnView: true,
+        filter: true,
     },
     DELIVERED: {
         id: 5,
@@ -38,6 +44,7 @@ export const OTF_STATUS = {
         title: 'Delivered',
         desc: 'Delivered',
         displayOnView: true,
+        filter: true,
     },
     TRANSFERRED: {
         id: 6,
@@ -45,6 +52,7 @@ export const OTF_STATUS = {
         title: 'Transferred',
         desc: 'Transferred',
         displayOnView: false,
+        filter: true,
     },
     PENDING_FOR_CANCELLATION: {
         id: 7,
@@ -75,10 +83,10 @@ export const OTF_STATUS = {
         displayOnView: false,
     },
     UNALLOTED: {
-        id: 2,
-        key: 'U',
-        title: 'Un-Allotted',
-        desc: 'Un-Allotted',
+        id: 10,
+        key: 'UN',
+        title: 'Un-Alloted',
+        desc: 'Un-Alloted',
         displayOnView: false,
     },
 };

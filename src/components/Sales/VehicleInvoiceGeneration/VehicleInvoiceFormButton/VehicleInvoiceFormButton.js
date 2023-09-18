@@ -12,7 +12,8 @@ import styles from 'assets/sass/app.module.scss';
 export const VehicleInvoiceFormButton = ({ formActionType, record, onCloseAction, onCancelInvoice, onApproveCancel, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection }) => {
     //console.log('formActionType', formActionType);
     return (
-        <Row gutter={20} className={styles.formFooter}>
+        <div className={styles.formFooter}>
+        <Row gutter={20} >
             <Col xs={24} sm={8} md={6} lg={4} xl={4} className={styles.footerBtnLeft}>
                 {buttonData?.closeBtn && (
                     <Button danger onClick={onCloseAction}>
@@ -56,5 +57,6 @@ export const VehicleInvoiceFormButton = ({ formActionType, record, onCloseAction
                 {}
             </Col>
         </Row>
+        </div>
     );
 };

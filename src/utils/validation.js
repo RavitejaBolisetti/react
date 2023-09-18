@@ -243,7 +243,7 @@ export const validateNegativeNumber = (fieldName) => ({
 export const isIssuePriceValid = (value, dealerPrice) => {
     if (!value) return Promise.resolve();
     else if (!dealerPrice) return Promise.reject(new Error(`Net Dealer Price not present`));
-    else if (value < dealerPrice) return Promise.reject(`Issue charge can't be greater than dealer price`);
+    else if (value > dealerPrice) return Promise.reject(`Issue charge can't be greater than dealer price`);
     else return Promise.resolve();
 };
 

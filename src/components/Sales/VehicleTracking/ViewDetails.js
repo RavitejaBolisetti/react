@@ -52,7 +52,7 @@ export const ViewDetails = (props) => {
                 <Descriptions.Item label="Transporter Name">{checkAndSetDefaultValue(formData?.transporterName, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Mode of transport">{checkAndSetDefaultValue(formData?.modeOfTransport, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Last Updated Location">{checkAndSetDefaultValue(formData?.lastUpdatedLocation, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Last Update Date & Time">{checkAndSetDefaultValue(`${checkAndSetDefaultValue(formData?.lastUpdatedDateAndTime, isLoading, DATA_TYPE?.DATE?.key)} ${moment(formData?.lastUpdatedDateAndTime).format('LT')}}`, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Last Update Date & Time">{checkAndSetDefaultValue(`${checkAndSetDefaultValue(formData?.lastUpdatedDateAndTime, isLoading, DATA_TYPE?.DATE?.key)} ${moment(formData?.lastUpdatedDateAndTime).format('LT')}`, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="OEM Invoice Number">{checkAndSetDefaultValue(formData?.oemInvoiceNumber, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="OEM Invoice Date">{checkAndSetDefaultValue(formData?.oemInvoiceDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                 <Descriptions.Item label="Shipment Status">{checkAndSetDefaultValue(formData?.shipmentStatus, isLoading)}</Descriptions.Item>

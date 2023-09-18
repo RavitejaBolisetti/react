@@ -7,7 +7,8 @@ import React from 'react';
 import { Row, Col, Input, Form, DatePicker, Switch, Card } from 'antd';
 
 import { formattedCalendarDate, dateFormat } from 'utils/formatDateTime';
-import { noWhiteSpaceinBeginning } from 'utils/validation';
+import { noWhiteSpaceinBeginning, validateRequiredSelectField } from 'utils/validation';
+
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { customSelectBox } from 'utils/customSelectBox';
 import { prepareCaption } from 'utils/prepareCaption';
@@ -83,7 +84,7 @@ const AddEditFormMain = (props) => {
 
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.saleConsultant} name="saleConsultant" label="Sales Consultant">
+                    <Form.Item initialValue={formData?.saleConsultant} name="saleConsultant" label="Sales Consultant" rules={[validateRequiredSelectField('sales consultant')]}>
                         {customSelectBox({ data: salesConsultantLov })}
                     </Form.Item>
                 </Col>
@@ -112,7 +113,7 @@ const AddEditFormMain = (props) => {
                 </Col>
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formActionType?.editMode ? (formData?.loyaltyScheme === 1 ? true : false) : false} labelAlign="left" wrapperCol={{ span: 24 }} name="loyaltyScheme" label="Loyality Scheme" valuePropName="checked">
+                    <Form.Item initialValue={formActionType?.editMode ? (formData?.loyaltyScheme === 1 ? true : false) : false} labelAlign="left" wrapperCol={{ span: 24 }} name="loyaltyScheme" label="Loyalty Scheme" valuePropName="checked">
                         <Switch checkedChildren="Yes" unCheckedChildren="No" valuePropName="checked" onChange={(checked) => (checked ? 1 : 0)} />
                     </Form.Item>
                 </Col>

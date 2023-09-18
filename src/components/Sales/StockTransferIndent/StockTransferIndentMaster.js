@@ -31,6 +31,7 @@ import { IssueIndentMaster } from 'components/Sales/StockTransferIndent/IssueInd
 
 import { INDENT_ACTION_LIST } from './constants';
 import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
+import { defaultPageProps } from 'utils/defaultPageProps';
 
 const mapStateToProps = (state) => {
     const {
@@ -46,7 +47,7 @@ const mapStateToProps = (state) => {
                 DealerBranchLocation: { isLoading: isLoadingDealerLoc, data: indentLocationList, detailData: requestedByDealerList },
             },
             stockTransferIndentData: {
-                stockTransferIndent: { isLoaded: isFetchDataLoaded = false, isLoading: isFetchDataLoading, data, filter: filterString },
+                stockTransferIndent: { isLoading: isFetchDataLoading, data, filter: filterString },
                 IndentIssue: { isLoaded: indentIssueDataLoaded = false, isLoading: indentIssueDataLoading, data: indentIssueData },
             },
             OTF: {
@@ -115,7 +116,7 @@ const mapDispatchToProps = (dispatch) => ({
 export const StockTransferIndentMasterBase = (props) => {
     const { data, filterString, setFilterString, isFetchDataLoading } = props;
     const { userId, typeData, parentGroupCode, showGlobalNotification } = props;
-    const { indentLocationList, requestedByDealerList, productHierarchyData, isLoadingDealerLoc, indentLocationLoading } = props;
+    const { indentLocationList, requestedByDealerList, productHierarchyData, isLoadingDealerLoc } = props;
     const { fetchIndentList, fetchIndentLocation, fetchIndentDetails, fetchRequestedByList, listShowLoading, saveData, ProductLovLoading, fetchProductLov, fetchVinDetails, vehicleVinData, saveIssueDetail, resetVinDetails, fetchIssueList, resetIssueList, listIssueLoading } = props;
     const { indentIssueData, indentIssueDataLoading, indentIssueDataLoaded } = props;
     const [searchForm] = Form.useForm();
@@ -128,7 +129,7 @@ export const StockTransferIndentMasterBase = (props) => {
     const [cancellationIssueVisible, setCancellationIssueVisible] = useState(false);
     const [cancellationData, setCancellationData] = useState([]);
     const [selectedOrder, setSelectedOrder] = useState();
-    const [toggleButton, settoggleButton] = useState(STOCK_TRANSFER?.RAISED.key);
+    const [toggleButton, setToggleButton] = useState(STOCK_TRANSFER?.RAISED.key);
     const [openAccordian, setOpenAccordian] = useState('');
     const [tableDataItem, setTableDataItem] = useState([]);
     const [showDataLoading, setShowDataLoading] = useState(true);
@@ -152,8 +153,6 @@ export const StockTransferIndentMasterBase = (props) => {
 
     const [buttonDataVehicleDetails, setButtonDataVehicleDetails] = useState({ ...btnVisiblityVehicleDetails });
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
-    const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
-    const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
     const onSuccessAction = (res) => {
         setshowVinLoading(false);
@@ -173,19 +172,22 @@ export const StockTransferIndentMasterBase = (props) => {
     }, [filterString, toggleButton]);
 
     useEffect(() => {
-        const onSuccessActionFetchIndLoc = (res) => {};
-        const extraParamData = [
-            {
-                key: 'parentGroupCode',
-                value: parentGroupCode,
-            },
-        ];
-        fetchIndentLocation({ setIsLoading: listShowLoading, userId, onSuccessAction: onSuccessActionFetchIndLoc, onErrorAction, extraParams: extraParamData });
+        if (userId && parentGroupCode) {
+            const extraParamData = [
+                {
+                    key: 'parentGroupCode',
+                    value: parentGroupCode,
+                },
+            ];
 
+            fetchProductLov({ setIsLoading: ProductLovLoading, userId, onErrorAction });
+            fetchIndentLocation({ setIsLoading: listShowLoading, userId, onErrorAction, extraParams: extraParamData });
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isAdvanceSearchVisible]);
+    }, [userId, parentGroupCode]);
 
     const extraParams = useMemo(() => {
+        const defaultPage = defaultPageProps(page);
         return [
             {
                 key: 'searchType',
@@ -235,35 +237,7 @@ export const StockTransferIndentMasterBase = (props) => {
                 canRemove: true,
                 filter: true,
             },
-
-            {
-                key: 'pageSize',
-                title: 'Value',
-                value: page?.pageSize,
-                canRemove: true,
-                filter: false,
-            },
-            {
-                key: 'pageNumber',
-                title: 'Value',
-                value: page?.current,
-                canRemove: true,
-                filter: false,
-            },
-            {
-                key: 'sortBy',
-                title: 'Sort By',
-                value: page?.sortBy,
-                canRemove: true,
-                filter: false,
-            },
-            {
-                key: 'sortIn',
-                title: 'Sort Type',
-                value: page?.sortType,
-                canRemove: true,
-                filter: false,
-            },
+            ...defaultPage,
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [page, filterString]);
@@ -386,16 +360,6 @@ export const StockTransferIndentMasterBase = (props) => {
         setButtonData({ ...defaultBtnVisiblity, cancelBtn: true, saveBtn: true, formBtnActive: true });
         setButtonDataVehicleDetails({ ...btnVisiblityVehicleDetails, canView: false, canEdit: true, canDelete: true });
         setIsAddNewIndentVisible(true);
-
-        const onSuccessActionFetchIndLoc = (res) => {};
-        const extraParamData = [
-            {
-                key: 'parentGroupCode',
-                value: parentGroupCode,
-            },
-        ];
-        fetchProductLov({ setIsLoading: ProductLovLoading, userId, onErrorAction });
-        fetchIndentLocation({ setIsLoading: indentLocationLoading, userId, onSuccessAction: onSuccessActionFetchIndLoc, onErrorAction, extraParams: extraParamData });
     };
 
     const handleChangeLocation = (value) => {
@@ -404,8 +368,6 @@ export const StockTransferIndentMasterBase = (props) => {
         indentLocationList?.forEach(function (temp) {
             if (temp.locationCode === value) locationId = temp.id;
         });
-
-        const onSuccessActionFetchDealer = (resp) => {};
 
         const extraParamData = [
             {
@@ -471,6 +433,11 @@ export const StockTransferIndentMasterBase = (props) => {
                 value: 1000,
             },
             {
+                key: 'pageSize',
+                title: 'Value',
+                value: 1000,
+            },
+            {
                 key: 'pageNumber',
                 title: 'Value',
                 value: 1,
@@ -479,17 +446,6 @@ export const StockTransferIndentMasterBase = (props) => {
         setshowVinLoading(true);
         fetchVinDetails({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
     };
-
-    const drawerTitle = useMemo(() => {
-        // if (formActionType?.viewMode) {
-        //     return 'View ';
-        // } else if (formActionType?.editMode) {
-        //     return 'Edit ';
-        // } else {
-        //     return 'Add New ';
-        // }
-        //}, [formActionType]);
-    }, []);
 
     const tableProps = {
         dynamicPagination,
@@ -511,7 +467,7 @@ export const StockTransferIndentMasterBase = (props) => {
         filterString,
         setFilterString,
         toggleButton,
-        settoggleButton,
+        setToggleButton,
         onFinishFailed,
         handleResetFilter,
         setAdvanceSearchVisible,
@@ -536,6 +492,7 @@ export const StockTransferIndentMasterBase = (props) => {
     };
 
     const addNewIndentProps = {
+        toggleButton,
         isVisible: isAddNewIndentVisible,
         titleOverride: 'Add Indent Details',
         addIndentDetailsForm,
@@ -571,6 +528,7 @@ export const StockTransferIndentMasterBase = (props) => {
         cancellationIssueVisible,
         setCancellationIssueVisible,
         typeData,
+        toggleButton,
     };
 
     const IndentIssueProps = {

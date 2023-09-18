@@ -6,7 +6,7 @@
 import { doLogout, unAuthenticateUser } from 'store/actions/auth';
 import { axiosAPICall } from 'utils/axiosAPICall';
 import { withAuthToken } from 'utils/withAuthToken';
-import { BASE_URL_PRODUCT_HIERARCHY, BASE_URL_PRODUCT_HIERARCHY_CHANGE_HISTORY, BASE_URL_PRODUCT_HIERARCHY_SAVE, BASE_URL_PRODUCT_HIERARCHY_SKU, BASE_URL_PRODUCT_NAME_DROPDOWN } from 'constants/routingApi';
+import { BASE_URL_PRODUCT_HIERARCHY, BASE_URL_PRODUCT_HIERARCHY_DETAIL, BASE_URL_PRODUCT_HIERARCHY_CHANGE_HISTORY, BASE_URL_PRODUCT_HIERARCHY_SAVE, BASE_URL_PRODUCT_HIERARCHY_SKU, BASE_URL_PRODUCT_NAME_DROPDOWN } from 'constants/routingApi';
 import { message } from 'antd';
 import { LANGUAGE_EN } from 'language/en';
 
@@ -23,10 +23,11 @@ export const PRODUCT_HIERARCHY_RESET_DATA = 'PRODUCT_HIERARCHY_RESET_DATA';
 export const PRODUCT_HIERARCHY_FILTERED_DATA_ACTION_CONSTANT = 'PRODUCT_HIERARCHY_FILTERED_DATA_ACTION_CONSTANT';
 export const PRODUCT_HIERARCHY_DETAIL_DATA = 'PRODUCT_HIERARCHY_DETAIL_DATA';
 
-const receiveProductHierarchyData = (data) => ({
+const receiveProductHierarchyData = (data, productCode) => ({
     type: PRODUCT_HIERARCHY_DATA_LOADED,
     isLoaded: true,
     data,
+    productCode,
 });
 
 const receiveProductHierarchyDetailData = (data) => ({
@@ -95,12 +96,17 @@ productHierarchyDataActions.cardBtnDisableAction = (value) => ({
 });
 
 productHierarchyDataActions.fetchList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-    const { setIsLoading, onError, data, id, extraParams } = params;
+    const { setIsLoading, onError, data, extraParams } = params;
     setIsLoading(true);
 
     const onSuccess = (res) => {
         if (res?.data) {
-            dispatch(receiveProductHierarchyData(res?.data));
+            const productCode = extraParams?.find((i) => i?.key === 'prodctCode');
+            if (productCode) {
+                dispatch(receiveProductHierarchyData(res?.data, productCode?.value));
+            } else {
+                dispatch(receiveProductHierarchyData(res?.data));
+            }
         } else {
             dispatch(receiveProductHierarchyData([]));
             onError && onError();
@@ -123,6 +129,49 @@ productHierarchyDataActions.fetchList = withAuthToken((params) => ({ token, acce
         data,
         method: 'get',
         url: BASE_URL_PRODUCT_HIERARCHY + sExtraParamsString,
+        token,
+        accessToken,
+        userId,
+        onSuccess,
+        onError: onErrorAction,
+        onTimeout: () => onError('Request timed out, Please try again'),
+        onUnAuthenticated: () => dispatch(doLogout()),
+        onUnauthorized: (message) => dispatch(unAuthenticateUser(message)),
+        postRequest: () => setIsLoading(false),
+    };
+
+    axiosAPICall(apiCallParams);
+});
+
+productHierarchyDataActions.fetchDetail = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
+    const { setIsLoading, onError, data, extraParams } = params;
+    setIsLoading(true);
+
+    const onSuccess = (res) => {
+        if (res?.data) {
+            dispatch(receiveProductHierarchyDetailData(res?.data));
+        } else {
+            dispatch(receiveProductHierarchyDetailData([]));
+            onError && onError();
+        }
+    };
+
+    const onErrorAction = () => {
+        dispatch(receiveProductHierarchyDetailData([]));
+        onError && onError();
+    };
+
+    let sExtraParamsString = '?';
+    extraParams?.forEach((item, index) => {
+        sExtraParamsString += item?.value && item?.key ? item?.value && item?.key + '=' + item?.value + '&' : '';
+    });
+
+    sExtraParamsString = sExtraParamsString.substring(0, sExtraParamsString.length - 1);
+
+    const apiCallParams = {
+        data,
+        method: 'get',
+        url: BASE_URL_PRODUCT_HIERARCHY_DETAIL + sExtraParamsString,
         token,
         accessToken,
         userId,
@@ -252,7 +301,7 @@ productHierarchyDataActions.fetchAttributeNameList = withAuthToken((params) => (
     axiosAPICall(apiCallParams);
 });
 productHierarchyDataActions.fetchFilteredList = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-    const { setIsLoading, data, extraparams } = params;
+    const { setIsLoading, data, extraParams } = params;
     setIsLoading(true);
     const onError = (errorMessage) => message.error(errorMessage);
 
@@ -264,10 +313,18 @@ productHierarchyDataActions.fetchFilteredList = withAuthToken((params) => ({ tok
         }
     };
 
+    let sExtraParamsString = '?';
+    extraParams?.forEach((item, index) => {
+        sExtraParamsString += item?.value && item?.key ? item?.value && item?.key + '=' + item?.value + '&' : '';
+    });
+
+    sExtraParamsString = sExtraParamsString.substring(0, sExtraParamsString.length - 1);
+
     const apiCallParams = {
         data,
         method: 'get',
-        url: BASE_URL_PRODUCT_HIERARCHY + '/lov' + (extraparams ? '?' + extraparams['0']['key'] + '=' + extraparams['0']['value'] : ''),
+        url: BASE_URL_PRODUCT_HIERARCHY + '/lov' + sExtraParamsString,
+        // url: BASE_URL_PRODUCT_HIERARCHY + '/lov' + (extraparams ? '?' + extraparams['0']['key'] + '=' + extraparams['0']['value'] : ''),
         token,
         accessToken,
         userId,

@@ -16,7 +16,7 @@ import styles from 'assets/sass/app.module.scss';
 const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
-    const { formData, form } = props;
+    const { form, formData } = props;
     const { schemeLovData, typeData } = props;
     const { isConfigLoading, isSchemeLovLoading, isModelLoading, isVariantLoading } = props;
     const { filteredModelData, filteredVariantData, handleFilterChange, fnSetData, disabledProps } = props;
@@ -38,7 +38,7 @@ const AddEditFormMain = (props) => {
 
     return (
         <Card className={styles.ExchangeCard}>
-            <CustomerListMaster fnSetData={fnSetData} />
+            <CustomerListMaster fnSetData={fnSetData} defaultOption={'registrationNumber'} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     {prepareCaption('Vehicle Details')}
@@ -53,20 +53,20 @@ const AddEditFormMain = (props) => {
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item label="Make" name="make" data-testid="make" rules={[validateRequiredSelectField('make')]}>
-                        <Select {...disabledProps} placeholder="Select" allowClear fieldNames={{ label: 'value', value: 'key' }} options={typeData[PARAM_MASTER?.MAKE_NAME?.id]} />
+                        <Select placeholder="Select" allowClear fieldNames={{ label: 'value', value: 'key' }} options={typeData[PARAM_MASTER?.MAKE_NAME?.id]} />
                     </Form.Item>
                 </Col>
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item label="Model Group" name="vehicleModelGroup" data-testid="modelGroup" rules={[validateRequiredSelectField('model group')]}>
-                        <Select {...disabledProps} placeholder="Select" loading={isModelLoading} allowClear fieldNames={{ label: 'value', value: 'key' }} options={filteredModelData} onChange={(value, selectobj) => handleFilterChange('modelGroup', value, selectobj)} />
+                        <Select placeholder="Select" loading={isModelLoading} allowClear fieldNames={{ label: 'value', value: 'key' }} options={filteredModelData} onChange={(value, selectobj) => handleFilterChange('modelGroup', value, selectobj)} />
                     </Form.Item>
                 </Col>
             </Row>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item label="Variant" name="variantCode" data-testid="variant" rules={[validateRequiredSelectField('Variant')]}>
-                        <Select {...disabledProps} placeholder="Select" loading={isVariantLoading} allowClear fieldNames={{ label: 'value', value: 'key' }} options={filteredVariantData} />
+                        <Select placeholder="Select" loading={isVariantLoading} allowClear fieldNames={{ label: 'value', value: 'key' }} options={filteredVariantData} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -118,6 +118,12 @@ const AddEditFormMain = (props) => {
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name="relationCode" label="Relationship" initialValue={formData?.relationship}>
                         <Select placeholder="Select" loading={isConfigLoading} allowClear fieldNames={{ label: 'value', value: 'key' }} options={typeData['REL_TYPE']} />
+                    </Form.Item>
+                </Col>
+
+                <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
+                    <Form.Item hidden name="customerCode" initialValue={formData?.customerCode}>
+                        <Input />
                     </Form.Item>
                 </Col>
             </Row>

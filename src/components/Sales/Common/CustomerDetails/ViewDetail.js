@@ -66,7 +66,7 @@ const ViewDetailMain = (props) => {
         </Descriptions>
     );
     return (
-        <div className={styles.viewDrawerContainer}>
+        <div  className={styles.viewDrawerContainer} >
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Collapse expandIcon={expandIcon} collapsible="icon" activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">

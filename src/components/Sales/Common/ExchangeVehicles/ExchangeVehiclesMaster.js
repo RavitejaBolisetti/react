@@ -325,7 +325,7 @@ const ExchangeVehiclesBase = (props) => {
     }, [modelGroup?.oldModelGroup]);
 
     useEffect(() => {
-        if (exchangeVehicleAlertData === true) {
+        if (exchangeVehicleAlertData === true && modelGroup?.oldModelGroup && modelGroup?.newModelGroup) {
             setModalOpen(true);
         } else {
             setModalOpen(false);

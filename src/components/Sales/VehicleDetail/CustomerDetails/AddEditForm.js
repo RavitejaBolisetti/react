@@ -29,10 +29,6 @@ const AddEditFormBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
 
-    const onSearch = (event) => {
-        // console.log('THIS IS SEARCH', event?.target?.value);
-    };
-
     const handleOnChange = (e) => {
         if (e.target.checked) {
             setSameAsBookingCustomer(true);
@@ -51,7 +47,6 @@ const AddEditFormBase = (props) => {
         typeData,
         formData: formData?.ownerCustomer,
         formType: 'ownerCustomer',
-        onSearch,
         searchForm,
         fnSetData: (data) => fnSetData(data, 'ownerCustomer'),
     };
@@ -119,7 +114,7 @@ const AddEditFormBase = (props) => {
                         </Panel>
                     </Collapse> */}
                     <Collapse expandIcon={({ isActive }) => expandIconWithText(isActive, <FiEdit />, <FiEdit style={{ color: '#B5B5B6' }} />)} expandIconPosition="end" collapsible="icon" onChange={() => handleCollapse(4)} activeKey={activeKey}>
-                        <Panel header=" Loyalty Details" key="4">
+                        <Panel header="Loyalty Details" key="4">
                             <Divider />
                             <LoyalityDetails key="4" {...loyaltyProps} />
                         </Panel>

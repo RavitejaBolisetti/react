@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Input, Form, Select, DatePicker, InputNumber } from 'antd';
+import { Row, Col, Input, Form, DatePicker, InputNumber } from 'antd';
 
 import { withDrawer } from 'components/withDrawer';
 import { validateRequiredSelectField, validateOnlyPositiveNumber } from 'utils/validation';
@@ -14,6 +14,7 @@ import { ViewDetail } from './ViewDetail';
 import { disablePastDate } from 'utils/disableDate';
 import { customSelectBox } from 'utils/customSelectBox';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
+
 import styles from 'assets/sass/app.module.scss';
 
 const { Search } = Input;
@@ -60,7 +61,7 @@ const AddEditFormMain = (props) => {
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
                                     <Form.Item name="orderTypeCode" label="Order Type" initialValue={formData?.orderTypeCode} rules={[validateRequiredSelectField('Order Type')]}>
-                                        <Select onChange={handleChangeOrderType} placeholder="Select Order Type" allowClear options={typeData['PO_TYPE']} fieldNames={{ label: 'value', value: 'key' }} />
+                                        {customSelectBox({ data: typeData['PO_TYPE'], fieldNames: { key: 'key', value: 'value' }, onChange: handleChangeOrderType })}
                                     </Form.Item>
                                 </Col>
                             </Row>
@@ -74,9 +75,6 @@ const AddEditFormMain = (props) => {
                                         </Col>
 
                                         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
-                                            {/* <Form.Item name="dealerLocation" label="Dealer Location" initialValue={formData?.dealerLocation} rules={[validateRequiredSelectField('Dealer Location')]}>
-                                                <Select placeholder="Select Location" showSearch options={dealerLocationList} fieldNames={{ label: 'dealerLocationName', value: 'id' }} />
-                                            </Form.Item> */}
                                             <Form.Item initialValue={formData?.dealerLocation} name="dealerLocation" label="Dealer Location" rules={[validateRequiredSelectField('Dealer Location')]}>
                                                 {customSelectBox({ data: dealerLocation, fieldNames: { key: 'id', value: 'dealerLocationName' }, placeholder: preparePlaceholderSelect('Location') })}
                                             </Form.Item>
@@ -111,7 +109,7 @@ const AddEditFormMain = (props) => {
                                 </Col>
                                 <Col xs={24} sm={24} md={14} lg={14} xl={14} xxl={14}>
                                     <Form.Item name="modelCode" label="Model" initialValue={formData?.modelCode} rules={[validateRequiredSelectField('Model')]}>
-                                        <Select placeholder="Select Model" allowClear options={productHierarchyList} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }} />
+                                        {customSelectBox({ data: productHierarchyList, fieldNames: { key: 'prodctCode', value: 'prodctShrtName' }, placeholder: preparePlaceholderSelect('Model Code') })}
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} sm={24} md={10} lg={10} xl={10} xxl={10}>

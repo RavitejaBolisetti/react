@@ -28,7 +28,7 @@ const AddEditFormMain = (props) => {
 
     return (
         <Card>
-            <CustomerListMaster fnSetData={fnSetData} />
+            <CustomerListMaster fnSetData={fnSetData} defaultOption={'customerName'} />
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name="registrationNumber" label="Vehicle Registration Number" initialValue={formData?.registrationNumber}>
