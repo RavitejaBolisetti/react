@@ -22,40 +22,39 @@ const AddEditFormMain = (props) => {
     }, [formData]);
 
     return (
-        <div className={styles.drawerBodyNew}>
             <Form form={form} autoComplete="off" layout="vertical" colon={false} onFinish={onFinish}>
-                <Row gutter={20}>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                <Row gutter={20} className={styles.drawerBody}>
+                <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
                         <Form.Item name="soNumber" label="SO Number">
                             <Input {...disableProps} placeholder={preparePlaceholderText('soNumber')} />
                         </Form.Item>
                     </Col>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                    <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
                         <Form.Item name="poNumber" label="PO Number">
                             <Input {...disableProps} placeholder={preparePlaceholderText('poNumber')} />
                         </Form.Item>
                     </Col>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                    <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
                         <Form.Item name="soDate" label="Date">
                             <Input {...disableProps} placeholder={preparePlaceholderText('date')} />
                         </Form.Item>
                     </Col>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                    <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
                         <Form.Item name="modelDescription" label="Model Description">
                             <Input {...disableProps} placeholder={preparePlaceholderText('modelDescription')} />
                         </Form.Item>
                     </Col>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                    <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
                         <Form.Item name="chasisNumber" label="Chassis Number">
                             <Input {...disableProps} placeholder={preparePlaceholderText('chassisNumber')} />
                         </Form.Item>
                     </Col>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                    <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
                         <Form.Item name="otfNumber" label="Booking Number">
                             <Input {...disableProps} placeholder={preparePlaceholderText('otfNumber')} />
                         </Form.Item>
                     </Col>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                    <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
                         <Form.Item name="customerName" label="Customer Name">
                             <Input {...disableProps} placeholder={preparePlaceholderText('customerName')} />
                         </Form.Item>
@@ -63,8 +62,8 @@ const AddEditFormMain = (props) => {
                 </Row>
                 <DrawerFormButton {...props} />
             </Form>
-        </div>
+        
     );
 };
 
-export const AddEditForm = withDrawer(AddEditFormMain, { width: '50%' });
+export const AddEditForm = withDrawer(AddEditFormMain, {});

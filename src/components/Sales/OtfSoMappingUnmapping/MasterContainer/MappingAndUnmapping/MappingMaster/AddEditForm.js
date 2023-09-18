@@ -10,7 +10,7 @@ import SoStyles from 'components/Sales/OtfSoMappingUnmapping/Somapping.module.cs
 
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { converDateDayjs } from 'utils/formatDateTime';
-import { Row, Col, Form, Input } from 'antd';
+import { Row, Col, Form, Input, Divider } from 'antd';
 import { ListDataTable } from 'utils/ListDataTable';
 
 const { Search } = Input;
@@ -52,8 +52,16 @@ const AddEditFormMain = (props) => {
                         </Col>
                     </Row>
                 </Form>
-                <Search placeholder="Search Booking Number" onSearch={handleOtfSearch} className={`${styles.searchField} ${SoStyles.marginBottom}`} />
-                <ListDataTable {...SearchTableProps} />
+                <Divider />
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.marB20}>
+                        <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
+                            <p className={styles.allowedTimingAlignment}>Search OTF</p>
+                        </Col>
+                        <Search placeholder="Search Booking Number" onSearch={handleOtfSearch} className={`${styles.searchField} ${SoStyles.marginBottom}`} />
+                        <ListDataTable {...SearchTableProps} />
+                    </Col>
+                </Row>
             </div>
         </>
     );
