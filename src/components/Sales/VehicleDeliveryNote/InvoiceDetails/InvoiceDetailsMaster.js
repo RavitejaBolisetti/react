@@ -69,8 +69,7 @@ export const InvoiceDetailsMasterBase = (props) => {
     const { typeData, form, selectedOrderId, selectedOrder, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION, section } = props;
 
     const [isFormVisible, setIsFormVisible] = useState(false);
-    console.log('🚀 ~ file: InvoiceDetailsMaster.js:28 ~ mapStateToProps ~ relationshipManagerData:', relationshipManagerData);
-
+   
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 

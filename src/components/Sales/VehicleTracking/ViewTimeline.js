@@ -159,8 +159,7 @@ export const ViewTimelineMain = (props) => {
                 ),
             };
         });
-    console.log('modifiedData', modifiedData);
-    console.log('formData   ', formData);
+
     return (
         <>
             <Row gutter={20} className={styles.drawerBody}>

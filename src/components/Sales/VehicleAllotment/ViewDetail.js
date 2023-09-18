@@ -34,7 +34,7 @@ const mapStateToProps = (state) => {
                 OtfSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isOTFSearchLoading, data, isDetailLoaded },
             },
             vehicleAllotmentData: {
-                vehicleAllotment: { detailData: allotmentSummaryDetails, data: allotmentSearchedList, filter: filterString },
+                vehicleAllotment: { detailData: allotmentSummaryDetails, isLdata: allotmentSearchedList, filter: filterString },
             },
         },
     } = state;
@@ -59,6 +59,7 @@ const mapDispatchToProps = (dispatch) => ({
     ...bindActionCreators(
         {
             fetchOTFSearchedList: otfDataActions.fetchList,
+            resetOTFData: otfDataActions.reset,
             listShowLoading: otfDataActions.listShowLoading,
             resetOTFSearchedList: otfDataActions.reset,
             showGlobalNotification,
@@ -72,7 +73,7 @@ const ViewDetailMain = (props) => {
     const { resetAdvanceFilter, setResetAdvanceFilter, handleButtonClick, buttonData, setButtonData, onCloseAction, selectedOTFDetails, setSelectedOrderOTFDetails } = props;
     const [filterString, setFilterString] = useState('');
     const [filterStringOTFSearch, setFilterStringOTFSearch] = useState('');
-    const [showDataLoading, setShowDataLoading] = useState(true);
+    const [showDataLoading, setShowDataLoading] = useState(false);
     const [page, setPage] = useState({ pageSize: 10, current: 1 });
 
     const dynamicPagination = true;
@@ -86,17 +87,19 @@ const ViewDetailMain = (props) => {
     const searchOTFExtraParams = useMemo(() => {
         const defaultPage = defaultPageProps(page);
         return [
-            ...defaultPage,
             {
                 key: 'searchType',
                 title: 'Type',
+                name: filterString?.searchType ? typeData?.[PARAM_MASTER.OTF_SER.id]?.find((i) => i?.key === filterString?.searchType)?.value : '',
                 value: filterStringOTFSearch?.searchType,
-                name: toggleButton,
+                filter: true,
             },
             {
                 key: 'searchParam',
                 title: 'Value',
+                name: filterStringOTFSearch?.searchParam,
                 value: filterStringOTFSearch?.searchParam,
+                filter: true,
             },
             {
                 key: 'otfStatus',
@@ -108,6 +111,7 @@ const ViewDetailMain = (props) => {
                 title: 'Model Code',
                 value: formData?.modelCode || formData?.modelCd,
             },
+            ...defaultPage,
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterStringOTFSearch, formData, page]);
@@ -124,6 +128,7 @@ const ViewDetailMain = (props) => {
 
     useEffect(() => {
         if (userId && toggleButton === VEHICLE_TYPE.UNALLOTED.key && !isOTFSearchLoading && formData) {
+            setShowDataLoading(true);
             fetchOTFSearchedList({ setIsLoading: listShowLoading, userId, extraParams: searchOTFExtraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -138,7 +143,7 @@ const ViewDetailMain = (props) => {
 
     useEffect(() => {
         searchForm.resetFields();
-        setFilterStringOTFSearch({ ...filterString });
+        setFilterStringOTFSearch({ ...filterString, advanceFilter: true });
         setSelectedOrderOTFDetails();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString]);
@@ -152,6 +157,7 @@ const ViewDetailMain = (props) => {
         resetAdvanceFilter,
         setResetAdvanceFilter,
         defaultOption: 'otfNumber',
+        allowClear: false,
     };
 
     const buttonProps = {
@@ -193,6 +199,11 @@ const ViewDetailMain = (props) => {
         pagination: sorterPagination,
     };
 
+    // const handleResetFilter = () => {
+    //     resetOTFData();
+    //     setFilterStringOTFSearch();
+    // };
+
     return (
         <>
             <Row gutter={20} className={styles.drawerBody}>
@@ -213,11 +224,13 @@ const ViewDetailMain = (props) => {
                     <h4>Allot Booking</h4>
                     <Card>
                         {formData?.allotmentStatus !== VEHICLE_TYPE.ALLOTED.key && (
-                            <Row gutter={20}>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                    <SearchBox {...serachBoxProps} />
-                                </Col>
-                            </Row>
+                            <>
+                                <Row gutter={20}>
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                                        <SearchBox {...serachBoxProps} />
+                                    </Col>
+                                </Row>
+                            </>
                         )}
                         {tableDataItem?.length > 0 && <DataTable {...tableProps} />}
                     </Card>

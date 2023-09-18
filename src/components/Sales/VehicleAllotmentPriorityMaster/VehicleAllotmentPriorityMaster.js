@@ -173,15 +173,15 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
         designationArray.forEach((item) => {
             if (item.roleCode === value) {
                 matchDesignationList.push(item);
-            }  
+            }
         });
         if (matchDesignationList.length > 0) {
             setFilterDesignationList(matchDesignationList);
             setFilterDesignationDropdownList(matchDesignationList);
-         } else {
+        } else {
             notificationDetailForm.setFieldValue('designationCode', undefined);
             // setFilterDesignationList();
-             onErrorAction('Designations are not exist.');
+            onErrorAction('Designations are not exist.');
         }
     };
 
@@ -296,12 +296,12 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
         setFormData([]);
         setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
         setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
-        if(buttonAction === 'view'){
-            setButtonData({ ...defaultBtnVisiblity, editBtn:false, closeBtn: true });
+        if (buttonAction === 'view') {
+            setButtonData({ ...defaultBtnVisiblity, editBtn: false, closeBtn: true });
         }
-        if(buttonAction === 'add'){
-            setButtonData({ ...defaultBtnVisiblity,  saveBtn:true, saveAndNewBtn: false, closeBtn: true });
-        }       
+        if (buttonAction === 'add') {
+            setButtonData({ ...defaultBtnVisiblity, saveBtn: true, saveAndNewBtn: false, closeBtn: true });
+        }
         record && setFormData(record);
         setIsFormVisible(true);
         setFormBtnActive(false);
@@ -324,14 +324,11 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
 
     const onFinish = (values) => {
         const reqdata = { ...values, id: formData?.id || '', roleData: docTypeHeadMappingList };
-        // const { applicationName, documentTypeName, documentTypeCode, ...data } = reqdata;
-        if(reqdata?.roleData?.length>0){
-        const {...data } = reqdata;
-        } else {
+        if (reqdata?.roleData?.length <= 0) {
             onErrorAction('Please select role and designation.');
             return false;
         }
-         
+
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
@@ -340,13 +337,13 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
             fetchVehicleAllotList({ setIsLoading: listShowLoading, userId, onSuccessAction, onErrorAction });
 
             setButtonData({ ...buttonData, formBtnActive: false });
-
         };
         const onError = (message) => {
             showGlobalNotification({ message });
         };
+
         const requestData = {
-            data: reqdata,   //data,
+            data: reqdata,
             method: reqdata?.roleData?.find((i) => i?.id) ? 'put' : 'post',
             setIsLoading: listShowAllotLoading,
             userId,
@@ -463,9 +460,7 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
         setFilterDesignationList,
         matchDesignationList,
         filterDesignationDropdownList,
-        setFilterDesignationDropdownList
-         
-        
+        setFilterDesignationDropdownList,
     };
 
     const title = 'Vehicle Allotment List';

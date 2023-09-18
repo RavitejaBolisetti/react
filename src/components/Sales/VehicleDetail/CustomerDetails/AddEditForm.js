@@ -29,10 +29,6 @@ const AddEditFormBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
 
-    const onSearch = (event) => {
-        // console.log('THIS IS SEARCH', event?.target?.value);
-    };
-
     const handleOnChange = (e) => {
         if (e.target.checked) {
             setSameAsBookingCustomer(true);
@@ -51,7 +47,6 @@ const AddEditFormBase = (props) => {
         typeData,
         formData: formData?.ownerCustomer,
         formType: 'ownerCustomer',
-        onSearch,
         searchForm,
         fnSetData: (data) => fnSetData(data, 'ownerCustomer'),
     };
