@@ -9,8 +9,9 @@ import { withDrawer } from 'components/withDrawer';
 import { OTF_SECTION } from 'constants/OTFSection';
 
 import { OtfDetailsMaster } from './OtfDetails';
-import { CustomerDetailsMaster } from 'components/Sales/Common/CustomerDetails';
-import { VehicleDetailsMaster } from 'components/Sales/Common/VehicleDetails';
+import { CustomerDetailsMaster } from 'components/Sales/OTF/CustomerDetails';
+import { VehicleDetailsMaster } from 'components/Sales/OTF/VehicleDetails';
+
 import { InsuranceDetailsMaster } from 'components/Sales/Common/InsuranceDetails';
 import { SchemeDetailsMaster } from 'components/Sales/Common/SchemeDetails';
 import { FinananceDetailsMaster } from 'components/Sales/Common/FinananceDetails';

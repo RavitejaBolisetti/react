@@ -5,14 +5,27 @@
  */
 import React from 'react';
 import { Timeline } from 'antd';
-import { VEHICLE_INVOICE_SECTION } from 'constants/VehicleInvoiceSection';
 
+import { VEHICLE_INVOICE_SECTION } from 'constants/VehicleInvoiceSection';
 import { getSelectedMenuAttribute } from 'utils/getSelectedMenuAttribute';
-import { validateOTFMenu } from 'components/Sales/OTF/utils/validateOTFMenu';
+
+export const validateOTFMenu = ({ item, status, otfData }) => {
+    switch (item?.id) {
+        case VEHICLE_INVOICE_SECTION.EXCHANGE_DETAILS.id:
+            return otfData?.loyaltyScheme !== 1;
+        case VEHICLE_INVOICE_SECTION.REFERRALS.id:
+            return otfData?.referral === 'Y';
+        case VEHICLE_INVOICE_SECTION.LOYALTY_SCHEME.id:
+            return otfData?.exchange !== 1 && otfData?.loyaltyScheme === 1;
+        default:
+            return true;
+    }
+};
 
 const MenuNav = (props) => {
-    const { currentSection, setCurrentSection, selectedOtfNumber, formActionType, VehicleInvoiceMasterData, selectedOrder: { orderStatus = false } = {} } = props;
+    const { currentSection, setCurrentSection, selectedOtfNumber, formActionType, vehicleInvoiceMasterData, selectedOrder: { orderStatus = false } = {} } = props;
     const receiptSectionList = Object.values(VEHICLE_INVOICE_SECTION);
+    const otfData = vehicleInvoiceMasterData?.invoiceDetails?.otfDetailsRequest;
 
     const onHandle = (key) => {
         selectedOtfNumber && setCurrentSection(key);
@@ -22,7 +35,7 @@ const MenuNav = (props) => {
         ?.filter((i) => i?.displayOnList)
         ?.map(
             (item) =>
-                validateOTFMenu({ item, status: orderStatus, otfData: VehicleInvoiceMasterData?.invoiceDetails?.otfDetailsRequest }) && {
+                validateOTFMenu({ item, status: orderStatus, otfData }) && {
                     dot: getSelectedMenuAttribute({ id: item?.id, currentSection, formActionType })?.menuNavIcon,
                     children: <p onClick={() => onHandle(item?.id)}>{item?.title}</p>,
                     className: getSelectedMenuAttribute({ id: item?.id, currentSection, formActionType })?.activeClassName,

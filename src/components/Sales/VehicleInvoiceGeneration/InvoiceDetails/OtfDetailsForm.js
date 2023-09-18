@@ -10,6 +10,7 @@ import { validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { customSelectBox } from 'utils/customSelectBox';
 import { PARAM_MASTER } from 'constants/paramMaster';
+import { prepareCaption } from 'utils/prepareCaption';
 
 const { Search } = Input;
 
@@ -22,7 +23,7 @@ const OtfDetailsForm = (props) => {
                 [formName]: {
                     ...formData,
                     otfNumber: formData?.bookingNumber || formData?.otfNumber,
-                    otfDate: formattedCalendarDate(formData?.otfDate),
+                    otfDate: formattedCalendarDate(formData?.orderDate),
                 },
             });
         }
@@ -42,6 +43,11 @@ const OtfDetailsForm = (props) => {
                 <>
                     <Divider />
                     <Row gutter={20}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                            {prepareCaption('Price Information')}
+                        </Col>
+                    </Row>
+                    <Row gutter={20}>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item initialValue={formData?.otfDate} label="Booking Date" name={[formName, 'otfDate']}>
                                 <DatePicker format={dateFormat} placeholder={preparePlaceholderText('booking date')} style={{ display: 'auto', width: '100%' }} disabled={true} />
@@ -59,6 +65,11 @@ const OtfDetailsForm = (props) => {
                         </Col>
                     </Row>
 
+                    <Row gutter={20}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                            {prepareCaption('Sales Details')}
+                        </Col>
+                    </Row>
                     <Row gutter={20}>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item initialValue={formData?.saleConsultant} label="Sales Consultant Name" name={[formName, 'saleConsultant']}>
