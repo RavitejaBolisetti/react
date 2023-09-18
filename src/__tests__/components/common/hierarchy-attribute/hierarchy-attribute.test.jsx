@@ -1,13 +1,18 @@
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
-import { screen, fireEvent, act } from '@testing-library/react';
+import { screen, fireEvent, act, waitFor } from '@testing-library/react';
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
 import { HierarchyAttribute } from 'components/common/HierarchyAttribute';
+import { hierarchyAttributeMasterDataActions } from 'store/actions/data/hierarchyAttributeMaster';
 
 beforeEach(() => {
     jest.clearAllMocks();
 });  
+
+jest.mock('store/actions/data/hierarchyAttributeMaster', () => ({
+    hierarchyAttributeMasterDataActions: {},
+}))
 
 describe('Hierarchy Attribute - Add edit form component', () => {
 
@@ -22,11 +27,18 @@ describe('Hierarchy Attribute - Add edit form component', () => {
                 },
             },
         });
+
+        const hierarchyAttributeFetchList=jest.fn();
+
         customRender(
             <Provider store={mockStore}>
-                <HierarchyAttribute />
+                <HierarchyAttribute hierarchyAttributeFetchList={hierarchyAttributeFetchList} resetData={jest.fn()} />
             </Provider>
         );
+
+        hierarchyAttributeFetchList.mock.calls[0][0].onSuccessAction();
+        hierarchyAttributeFetchList.mock.calls[0][0].onErrorAction();
+
         const addBtn=screen.getByRole('button', { name: 'plus Add' });
         fireEvent.click(addBtn);
         const codeInput=screen.getByRole('textbox', { name: 'Code' });
@@ -48,19 +60,30 @@ describe('Hierarchy Attribute - Add edit form component', () => {
                 },
             },
         });
+
+        const hierarchyAttributeSaveData=jest.fn();
+
         customRender(
             <Provider store={mockStore}>
-                <HierarchyAttribute onFinish={jest.fn()} onFinishFailed={jest.fn()}/>
+                <HierarchyAttribute hierarchyAttributeFetchList={jest.fn()} hierarchyAttributeSaveData={hierarchyAttributeSaveData} />
             </Provider>
         );
+
         const addBtn=screen.getByRole('button', { name: 'plus Add' });
         fireEvent.click(addBtn);
+
         const codeInput=screen.getByRole('textbox', { name: 'Code' });
-        fireEvent.change(codeInput, { target: { value: 'Hello World' } });
+        fireEvent.change(codeInput, { target: { value: '106' } });
+
         const nameInput=screen.getByRole('textbox', { name: 'Name' });
         fireEvent.change(nameInput, { target: { value: 'Hello World' } });
-        // const saveBtn=screen.getByRole('button', { name: 'Save' });
-        // fireEvent.click(saveBtn);
+
+        const saveBtn=screen.getByRole('button', { name: 'Save & Add New' });
+        fireEvent.click(saveBtn);
+
+        await waitFor(() => expect(hierarchyAttributeSaveData).toHaveBeenCalled());
+
+        hierarchyAttributeSaveData.mock.calls[0][0].onSuccess();
     });
 
 });
@@ -85,7 +108,7 @@ describe('Hierarchy Attribute Master component', () => {
         });
         customRender(
             <Provider store={mockStore}>
-                <HierarchyAttribute onFinish={jest.fn()} />
+                <HierarchyAttribute hierarchyAttributeFetchList={jest.fn()} hierarchyAttributeFetchDetailList={jest.fn()} />
             </Provider>
         );
 
@@ -120,7 +143,7 @@ describe('Hierarchy Attribute Master component', () => {
         });
         customRender(
             <Provider store={mockStore}>
-                <HierarchyAttribute onFinish={jest.fn()} />
+                <HierarchyAttribute hierarchyAttributeFetchList={jest.fn()} hierarchyAttributeFetchDetailList={jest.fn()} />
             </Provider>
         );
         const hierarchyType=screen.getByRole('combobox', { name: '' });

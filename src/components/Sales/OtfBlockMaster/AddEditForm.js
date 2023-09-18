@@ -62,6 +62,7 @@ const AddEditFormMain = (props) => {
     const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed, form } = props;
     const organizationFieldNames = { title: 'manufactureAdminShortName', key: 'id', children: 'subManufactureAdmin' };
     const treeFieldNames = { ...organizationFieldNames, label: organizationFieldNames.title, value: organizationFieldNames.key };
+    
     useEffect(() => {
         if (dealerDataList) {
 
@@ -119,7 +120,6 @@ const AddEditFormMain = (props) => {
         defaultValue: treeCodeId,
         placeholder: preparePlaceholderSelect('parent'),
     };
-
     const handleOnSelect = (key) => {
         setOptions();
     };
@@ -141,7 +141,7 @@ const AddEditFormMain = (props) => {
                             </Col>
 
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <Form.Item initialValue={formData?.hierarchyMstName} label="Manufacturer Administrative Hierarchy" name="hierarchyMstId" rules={[validateRequiredSelectField('Manufacturer Administrative Hierarchy')]}>
+                                <Form.Item initialValue={formData?.hierarchyMstId} label="Manufacturer Administrative Hierarchy" name="hierarchyMstId" rules={[validateRequiredSelectField('Manufacturer Administrative Hierarchy')]}>
                                     <TreeSelectField {...treeSelectFieldProps} />
                                 </Form.Item>
                             </Col>
