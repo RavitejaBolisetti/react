@@ -12,7 +12,7 @@ import { customerDetailsIndividualDataActions } from 'store/actions/data/custome
 import { documentViewDataActions } from 'store/actions/data/customerMaster/documentView';
 import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
 import { corporateDataActions } from 'store/actions/data/customerMaster/corporate';
-import { showGlobalNotification } from 'store/actions/notification';
+import { showGlobalNotification, hideGlobalNotification } from 'store/actions/notification';
 
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
@@ -86,6 +86,7 @@ const mapDispatchToProps = (dispatch) => ({
             saveData: customerDetailsIndividualDataActions.saveData,
             resetData: customerDetailsIndividualDataActions.reset,
 
+            hideGlobalNotification,
             showGlobalNotification,
         },
         dispatch
@@ -97,7 +98,7 @@ const CustomerDetailMasterBase = (props) => {
     const { userId, showGlobalNotification, section, fetchList, listShowLoading, data, saveData, isLoading, resetData, form, handleFormValueChange, onFinishFailed } = props;
     const { selectedCustomer, selectedCustomerId, setSelectedCustomerId,mobNoVerificationData } = props;
     const { buttonData, setButtonData, formActionType, setFormActionType, handleButtonClick, NEXT_ACTION } = props;
-    const { fetchViewDocument, viewListShowLoading, listSupportingDocumentShowLoading, isSupportingDocumentDataLoaded, supportingData, isViewDataLoaded, viewDocument } = props;
+    const { fetchViewDocument, viewListShowLoading, listSupportingDocumentShowLoading, isSupportingDocumentDataLoaded, supportingData, isViewDataLoaded, viewDocument, hideGlobalNotification } = props;
     const {sendOTP,validateOTP} = props;
     const [refreshData, setRefreshData] = useState(false);
     const [showForm, setShowForm] = useState(false);
@@ -118,6 +119,7 @@ const CustomerDetailMasterBase = (props) => {
     const [inValidOTP, setInValidOTP] = useState(false);
     const [nameChangeRequested, setNameChangeRequested] = useState(false);
     const [whatsAppConfiguration, setWhatsAppConfiguration] = useState({ contactOverWhatsApp: null, contactOverWhatsAppActive: null, sameMobileNoAsWhatsApp: null, sameMobileNoAsWhatsAppActive: null });
+    const [numbValidatedSuccess, setNumbValidatedSuccess] = useState(false);
     
 
     const onErrorAction = (message) => {
@@ -221,6 +223,10 @@ const CustomerDetailMasterBase = (props) => {
     };
 
     const onFinish = (values) => {
+        if(!numbValidatedSuccess){
+            showGlobalNotification({message: 'Please verify mobile number to proceed.'});
+            return;
+        }
         setFileList([]);
         setEmptyList(false);
         setUploadedFile();
@@ -251,6 +257,8 @@ const CustomerDetailMasterBase = (props) => {
             setButtonData({ ...buttonData, formBtnActive: false });
             setRefreshCustomerList(true);
             handleResetFilter();
+            setNumbValidatedSuccess(false);
+
 
             if (res.data) {
                 handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
@@ -395,6 +403,9 @@ const CustomerDetailMasterBase = (props) => {
         mobNoVerificationData,
         setInValidOTP,
         inValidOTP,
+        hideGlobalNotification,
+        numbValidatedSuccess,
+        setNumbValidatedSuccess,
     };
 
     const viewProps = {

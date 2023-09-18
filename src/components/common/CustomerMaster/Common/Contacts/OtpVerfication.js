@@ -20,14 +20,18 @@ import { withModal } from 'components/withModal';
 import styles from 'components/Auth/Auth.module.scss'
 const OtpVarificationModalMain = (props) => {
     const { userId, sendOTP, selectedUserId, validateOTP, isLoading, onCloseAction, titleOverride, icon = '', closable = true, onOk = () => {}, otpInput, setOTPInput } = props;
-    const { showGlobalNotification, onError, setInValidOTP, inValidOTP, counter, setCounter, sendOTPVerificationCode, handleVerifyOTP, RESEND_OTP_TIME, selectedCustomer } = props;
+    const { showGlobalNotification, onError, setInValidOTP, inValidOTP, counter, setCounter, sendOTPVerificationCode, handleVerifyOTP, RESEND_OTP_TIME, selectedCustomer, otpMessage, setOTPMessage, disableVerifyOTP, setDisableVerifyOTP,hideGlobalNotification } = props;
 
     const [form] = Form.useForm();
 
-    const [otpMessage, setOTPMessage] = useState();
     // const [cou; nter, setCounter] = useState(RESEND_OTP_TIME);
     // const [otpInput, setOTPInput] = useState();
-    const [disableVerifyOTP, setDisableVerifyOTP] = useState(true);
+    // const onSentOTP = (values) => {
+    //     if (values) {
+    //         hideGlobalNotification();
+    //         handleSendOTP(values);
+    //     }
+    // };
 
 
 
@@ -35,6 +39,7 @@ const OtpVarificationModalMain = (props) => {
         setOTPInput();
         setInValidOTP(false);
         setDisableVerifyOTP(true);
+        handleSendOTP(values);
 
         let otpSentOnMobile = '';
         // let otpSentOnEmail = '';
@@ -58,15 +63,17 @@ const OtpVarificationModalMain = (props) => {
             data: data,
             setIsLoading: () => {},
             onSuccess,
-            onError,
         };
         sendOTP(requestData);
         }
     };
     const handleOTPInput = (value) => {
         setOTPInput(value);
+        setInValidOTP(false);
         if (value?.length === 6) {
             setDisableVerifyOTP(false);
+        } else {
+            setDisableVerifyOTP(true);
         }
     };
    
@@ -76,7 +83,6 @@ const OtpVarificationModalMain = (props) => {
         <div className={styles.centerInner}>
             <div className={styles.loginForm}>
                 <div className={styles.loginHeading}>
-                    <div className={styles.titleOTP}>Please enter the 6 digit OTP sent to your mobile number +91-981 XXX XXXX</div>
                     <div className={styles.loginSubHeading}>{otpMessage}</div>
                 </div>
                 <Row gutter={20}>
@@ -109,7 +115,7 @@ const OtpVarificationModalMain = (props) => {
                                 )}
                             </Col>
                             <Col xs={10} sm={10} md={8} lg={8} xl={8}>
-                                <div onClick={false} className={counter ? styles.resendDisabled : styles.resendEnabled} type="radio">
+                                <div onClick={() => handleSendOTP()} className={counter ? styles.resendDisabled : styles.resendEnabled} type="radio">
                                     <TbRefresh /> Resend OTP
                                 </div>
                             </Col>
