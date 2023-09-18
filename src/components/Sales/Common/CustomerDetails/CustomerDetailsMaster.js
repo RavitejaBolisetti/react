@@ -10,8 +10,10 @@ import { Row, Col, Form } from 'antd';
 
 import { bindActionCreators } from 'redux';
 import { otfCustomerDetailsAction } from 'store/actions/data/otf/customerDetails';
+import { customerDetailsIndividualDataActions } from 'store/actions/data/customerMaster/customerDetailsIndividual';
 import { geoPinCodeDataActions } from 'store/actions/data/geo/pincodes';
 import { showGlobalNotification } from 'store/actions/notification';
+import { BASE_URL_VEHICLE_CUSTOMER_COMMON_DETAIL as customURL } from 'constants/routingApi';
 
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
@@ -68,6 +70,7 @@ const mapDispatchToProps = (dispatch) => ({
 
             listPinCodeShowLoading: geoPinCodeDataActions.listShowLoading,
             fetchPincodeDetail: geoPinCodeDataActions.fetchList,
+            fetchCustomerDetailData: customerDetailsIndividualDataActions.fetchData,
         },
         dispatch
     ),
@@ -75,7 +78,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const CustomerDetailsMain = (props) => {
     const { wrapForm = true, resetData, saveData, isLoading, userId, isDataLoaded, fetchList, listShowLoading, customerFormData, showGlobalNotification, onFinishFailed } = props;
-    const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, pincodeData, formActionType, NEXT_ACTION, handleButtonClick, section } = props;
+    const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, pincodeData, formActionType, NEXT_ACTION, handleButtonClick, section, fetchCustomerDetailData } = props;
     const { typeData, selectedOrderId } = props;
     const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, StatusBar } = props;
 
@@ -165,6 +168,29 @@ export const CustomerDetailsMain = (props) => {
         }
     };
 
+    const fnSetData = (data, type) => {
+        if (data?.customerId) {
+            const extraParams = [
+                {
+                    key: 'customerId',
+                    title: 'customerId',
+                    value: data?.customerId,
+                    name: 'Customer ID',
+                },
+            ];
+            fetchCustomerDetailData({
+                customURL,
+                setIsLoading: () => {},
+                extraParams,
+                userId,
+                onSuccessAction: (response) => {
+                    setFormData({ ...formData, [type]: { ...response?.data, birthDate: response?.data?.dateOfBirth } });
+                },
+                onErrorAction,
+            });
+        }
+    };
+
     const formProps = {
         ...props,
         form,
@@ -186,6 +212,7 @@ export const CustomerDetailsMain = (props) => {
         isLoading,
         activeKey,
         setActiveKey,
+        fnSetData,
     };
 
     const viewProps = {

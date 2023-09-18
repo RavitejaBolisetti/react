@@ -683,6 +683,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         handleIRNGeneration,
         irnStatusData,
         handleBookingNumberSearch,
+        VehicleInvoiceMasterData,
     };
 
     const cancelInvoiceProps = {

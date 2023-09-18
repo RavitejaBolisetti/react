@@ -48,23 +48,6 @@ const OtfDetailsForm = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={otfFormData?.darNumber} label="DAR Number" name={[formName, 'darNumber']}>
-                                <Input placeholder={preparePlaceholderText('DAR Number')} disabled={true} />
-                            </Form.Item>
-                        </Col>
-                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={otfFormData?.saleType} label="Sales Type" name={[formName, 'saleType']}>
-                                {customSelectBox({ data: typeData?.[PARAM_MASTER.SALE_TYPE.id], placeholder: preparePlaceholderSelect('Sales Type') })}
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                    <Row gutter={20}>
-                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={otfFormData?.priceType} label="Price Type" name={[formName, 'priceType']}>
-                                {customSelectBox({ data: typeData?.[PARAM_MASTER.PRC_TYP.id], placeholder: preparePlaceholderSelect('Sales Type') })}
-                            </Form.Item>
-                        </Col>
-                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item initialValue={otfFormData?.taxCalculationType} label="Tax Calculation" name={[formName, 'taxCalculationType']}>
                                 {customSelectBox({ data: typeData?.[PARAM_MASTER.TAX_CALCLTN_TYPE.id], placeholder: preparePlaceholderSelect('Tax Calculation') })}
                             </Form.Item>
@@ -75,6 +58,7 @@ const OtfDetailsForm = (props) => {
                             </Form.Item>
                         </Col>
                     </Row>
+
                     <Row gutter={20}>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item initialValue={otfFormData?.saleConsultant} label="Sales Consultant Name" name={[formName, 'saleConsultant']}>

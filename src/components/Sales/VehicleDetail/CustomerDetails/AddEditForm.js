@@ -114,7 +114,7 @@ const AddEditFormBase = (props) => {
                         </Panel>
                     </Collapse> */}
                     <Collapse expandIcon={({ isActive }) => expandIconWithText(isActive, <FiEdit />, <FiEdit style={{ color: '#B5B5B6' }} />)} expandIconPosition="end" collapsible="icon" onChange={() => handleCollapse(4)} activeKey={activeKey}>
-                        <Panel header=" Loyalty Details" key="4">
+                        <Panel header="Loyalty Details" key="4">
                             <Divider />
                             <LoyalityDetails key="4" {...loyaltyProps} />
                         </Panel>
