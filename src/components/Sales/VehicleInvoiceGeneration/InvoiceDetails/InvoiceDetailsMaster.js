@@ -69,16 +69,10 @@ const InvoiceDetailsMasterBase = (props) => {
     const { FormActionButton, requestPayload, setRequestPayload, handleButtonClick, NEXT_ACTION, handleBookingNumberSearch } = props;
 
     const [activeKey, setActiveKey] = useState([]);
-    const { formData, setFormData } = useState();
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
-
-    useEffect(() => {
-        setFormData(setFormData?.otfDetailsRequest);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [vehicleInvoiceMasterData]);
 
     useEffect(() => {
         if (userId && selectedOrder?.invoiceNumber) {
@@ -117,8 +111,6 @@ const InvoiceDetailsMasterBase = (props) => {
         formActionType,
         userId,
         isDataLoaded,
-        otfFormData: formData?.otfDetailsRequest,
-
         isLoading,
         setActiveKey,
         activeKey,
@@ -130,7 +122,6 @@ const InvoiceDetailsMasterBase = (props) => {
 
     const viewProps = {
         typeData,
-        formData: formData?.otfDetailsRequest,
         formActionType,
         styles,
         isLoading,
@@ -148,13 +139,13 @@ const InvoiceDetailsMasterBase = (props) => {
                     </Row>
                     {formActionType?.viewMode ? (
                         <>
-                            <ViewDetail {...viewProps} />
-                            <CustomerDetailsMaster {...viewProps} />
+                            <ViewDetail {...viewProps} formData={vehicleInvoiceMasterData?.otfDetailsRequest} />
+                            <CustomerDetailsMaster {...viewProps} formData={vehicleInvoiceMasterData?.bookingAndBillingCustomerDto} />
                         </>
                     ) : (
                         <>
-                            <AddEditForm {...formProps} />
-                            <CustomerDetailsMaster {...formProps} />
+                            <AddEditForm {...formProps} formData={vehicleInvoiceMasterData?.otfDetailsRequest} />
+                            <CustomerDetailsMaster {...formProps} formData={vehicleInvoiceMasterData?.bookingAndBillingCustomerDto} />
                         </>
                     )}
                 </Col>
