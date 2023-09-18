@@ -27,11 +27,12 @@ function AddEditForm({ onUpdate, isPresent, index, fnSetData, seteditCardForm, e
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchData]);
+
     const handleAccesoriesForm = () => {
         accessoryForm
             .validateFields()
             .then((values) => {
-                if (isPresent(values?.partNumber)) {
+                if (isPresent(values?.partName)) {
                     return;
                 }
 
@@ -40,13 +41,14 @@ function AddEditForm({ onUpdate, isPresent, index, fnSetData, seteditCardForm, e
                     return;
                 }
 
-                const myvalues = { ...values, otfNumber: selectedOrderId, isDeleting: true, id: '' };
+                const data = { ...values, otfNumber: selectedOrderId, isDeleting: true, id: '' };
+
                 if (!values?.partNumber) {
                     showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Verify Part Number to continue' });
                     return;
                 }
 
-                setAddOnItemInfo((prev) => (prev ? [myvalues, ...prev] : [myvalues]));
+                setAddOnItemInfo((prev) => (prev ? [data, ...prev] : [data]));
                 accessoryForm.resetFields();
                 setsearchData();
                 setaddButtonDisabled({ ...addButtonDisabled, partDetailsResponses: false });
@@ -139,7 +141,7 @@ function AddEditForm({ onUpdate, isPresent, index, fnSetData, seteditCardForm, e
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item label="Required Quantity" name="requiredQuantity" rules={[validateRequiredInputField('required quantity'), validationNumber('required quantity')]}>
-                            <Input type="number" placeholder={preparePlaceholderText('required quantity')} />
+                            <Input type="number" maxLength={2} placeholder={preparePlaceholderText('required quantity')} />
                         </Form.Item>
                     </Col>
 
