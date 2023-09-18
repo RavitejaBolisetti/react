@@ -34,8 +34,7 @@ const ViewDetailMain = (props) => {
             <Descriptions {...viewProps} title={prepareCaption('Customer Details')}>
                 <Descriptions.Item label="Customer Name">{checkAndSetDefaultValue(customerForm?.customerName, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Relationship">{checkAndSetDefaultValue(customerForm?.relationName, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Date of Birth">{checkAndSetDefaultValue(customerForm?.customerDOB, isLoading)}</Descriptions.Item>
-            </Descriptions>
+              </Descriptions>
             <Descriptions {...viewProps} title={prepareCaption('Scheme')}>
                 <Descriptions.Item label="Scheme Name">{checkAndSetDefaultValue(customerForm?.schemeName, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Scheme Amount">{checkAndSetDefaultValue(customerForm?.schemeAmount, isLoading)}</Descriptions.Item>

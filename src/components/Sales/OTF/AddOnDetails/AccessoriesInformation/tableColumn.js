@@ -7,6 +7,18 @@ import { tblPrepareColumns } from 'utils/tableColumn';
 
 export const tableColumn = [
     tblPrepareColumns({
+        title: 'Part Number',
+        dataIndex: 'partNumber',
+        width: '180px',
+    }),
+
+    tblPrepareColumns({
+        title: 'Part Name',
+        dataIndex: 'partDescription',
+        width: '180px',
+    }),
+
+    tblPrepareColumns({
         title: 'Part Type',
         dataIndex: 'type',
         width: '170px',
@@ -22,17 +34,5 @@ export const tableColumn = [
         title: 'MRP',
         dataIndex: 'mrp',
         width: '120px',
-    }),
-
-    tblPrepareColumns({
-        title: 'Required Quantity',
-        dataIndex: 'quantity',
-        width: '160px',
-    }),
-
-    tblPrepareColumns({
-        title: 'Part Descriptionr',
-        dataIndex: 'partDescription',
-        width: '180px',
     }),
 ];
