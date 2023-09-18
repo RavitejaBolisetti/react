@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { Col, Input, Form, Row, Card, Select } from 'antd';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
@@ -16,7 +16,7 @@ import styles from 'assets/sass/app.module.scss';
 const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
-    const { formData } = props;
+    const { form, formData } = props;
     const { schemeLovData, typeData } = props;
     const { isConfigLoading, isSchemeLovLoading, isModelLoading, isVariantLoading } = props;
     const { filteredModelData, filteredVariantData, handleFilterChange, fnSetData, disabledProps } = props;
@@ -27,14 +27,14 @@ const AddEditFormMain = (props) => {
         yearsList.push({ key: i, value: i });
     }
 
-    // useEffect(() => {
-    //     if (formData) {
-    //         form.setFieldsValue({
-    //             ...formData,
-    //         });
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [formData]);
+    useEffect(() => {
+        if (formData) {
+            form.setFieldsValue({
+                ...formData,
+            });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formData]);
 
     return (
         <Card className={styles.ExchangeCard}>
