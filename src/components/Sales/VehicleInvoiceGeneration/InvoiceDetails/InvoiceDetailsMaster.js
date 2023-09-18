@@ -66,8 +66,8 @@ const InvoiceDetailsMasterBase = (props) => {
     const { typeData, otfData, selectedOrder, fetchInvoiceDetail, listShowLoading } = props;
     const { userId, buttonData, setButtonData, showGlobalNotification, section, isDataLoaded, isLoading, invoiceDetailForm } = props;
     const { form, formActionType, handleFormValueChange, selectedOtfNumber, setSelectedOtfNumber } = props;
-    const { FormActionButton, requestPayload, setRequestPayload, handleButtonClick, NEXT_ACTION } = props;
-   
+    const { FormActionButton, requestPayload, setRequestPayload, handleButtonClick, NEXT_ACTION, handleBookingNumberSearch } = props;
+
     const [activeKey, setActiveKey] = useState([]);
     const [formData, setFormData] = useState('');
     const [otfFormData, setOtfFormData] = useState('');
@@ -137,6 +137,7 @@ const InvoiceDetailsMasterBase = (props) => {
         selectedOtfNumber,
         setSelectedOtfNumber,
         wrapForm: false,
+        handleBookingNumberSearch,
     };
 
     const viewProps = {

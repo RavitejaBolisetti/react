@@ -14,7 +14,7 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 const { Search } = Input;
 
 const OtfDetailsForm = (props) => {
-    const { formName, invoiceDetailForm, otfFormData, typeData, selectedOtfNumber, setSelectedOtfNumber } = props;
+    const { formName, invoiceDetailForm, otfFormData, typeData, selectedOtfNumber, handleBookingNumberSearch } = props;
 
     useEffect(() => {
         if (otfFormData) {
@@ -29,16 +29,12 @@ const OtfDetailsForm = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [otfFormData]);
 
-    const handleChange = (value) => {
-        setSelectedOtfNumber(value);
-    };
-
     return (
         <>
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                     <Form.Item initialValue={otfFormData?.bookingNumber || otfFormData?.otfNumber} label="Booking Number" name={[formName, 'otfNumber']} rules={[validateRequiredSelectField('Booking Number')]}>
-                        <Search maxLength={50} placeholder={preparePlaceholderText('Booking Number')} onSearch={handleChange} allowClear />
+                        <Search maxLength={50} placeholder={preparePlaceholderText('Booking Number')} onSearch={handleBookingNumberSearch} allowClear />
                     </Form.Item>
                 </Col>
             </Row>
