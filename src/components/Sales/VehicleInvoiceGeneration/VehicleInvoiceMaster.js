@@ -143,7 +143,6 @@ export const VehicleInvoiceMasterBase = (props) => {
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [cancelInvoiceVisible, setCancelInvoiceVisible] = useState(false);
-    const [irnStatusData, setIrnStatusData] = useState();
 
     const [page, setPage] = useState({ pageSize: 10, current: 1 });
     const dynamicPagination = true;
@@ -345,7 +344,6 @@ export const VehicleInvoiceMasterBase = (props) => {
         const data = { otfNumber: selectedOtfNumber, invoiceNumber: selectedOrder?.invoiceNumber };
         const onSuccess = (res) => {
             setShowDataLoading(true);
-            setIrnStatusData(res?.data);
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
 
@@ -502,7 +500,6 @@ export const VehicleInvoiceMasterBase = (props) => {
         setIsFormVisible(false);
         setCancelInvoiceVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
-        setIrnStatusData();
     };
 
     const tableProps = {
@@ -681,7 +678,6 @@ export const VehicleInvoiceMasterBase = (props) => {
         saveButtonName: isLastSection ? 'Submit' : 'Save & Next',
         setLastSection,
         handleIRNGeneration,
-        irnStatusData,
         handleBookingNumberSearch,
         vehicleInvoiceMasterData,
     };
