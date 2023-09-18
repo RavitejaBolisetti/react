@@ -51,7 +51,7 @@ export const AdvancedSearchFrom = (props) => {
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Form.Item initialValue={filterString?.otfStatus} label="Model" name="model">
+                    <Form.Item initialValue={filterString?.model} label="Model" name="model">
                         {customSelectBox({ data: productHierarchyData, placeholder: preparePlaceholderSelect('Model'), fieldNames: { key: 'prodctCode', value: 'prodctShrtName' } })}
                     </Form.Item>
                 </Col>

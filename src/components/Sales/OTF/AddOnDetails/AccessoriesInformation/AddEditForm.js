@@ -54,7 +54,8 @@ function AddEditForm({ onUpdate, isPresent, index, fnSetData, seteditCardForm, e
                 setaddButtonDisabled({ ...addButtonDisabled, partDetailsResponses: false });
                 handleFormValueChange();
             })
-            .catch((err) => {});
+            .catch((err) => {
+            });
     };
 
     const onFinishFailed = (err) => {
@@ -148,9 +149,11 @@ function AddEditForm({ onUpdate, isPresent, index, fnSetData, seteditCardForm, e
                                 validationNumber('required quantity'),
                                 {
                                     validator: (_, value) => {
-                                        if (value > 50) {
+                                        if (value > 50 && value < 0) {
                                             return Promise.reject(new Error('Required quantity should be less than 50'));
-                                        } else return Promise.resolve;
+                                        } else {
+                                            return Promise.resolve();
+                                        }
                                     },
                                 },
                             ]}

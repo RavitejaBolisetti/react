@@ -280,7 +280,6 @@ export const VehicleAllotmentMasterBase = (props) => {
         setFilterString({ pageSize, current: 1 });
         setSearchParamValue();
         setShowDataLoading(true);
-        setFilterString();
         advanceFilterForm.resetFields();
         setAdvanceSearchVisible(false);
     };
