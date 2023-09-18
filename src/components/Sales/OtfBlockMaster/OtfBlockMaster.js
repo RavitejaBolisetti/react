@@ -315,16 +315,7 @@ export const OtfBlockMasterMain = (props) => {
 
     const handleButtonClick = (type) => {
         switch (type) {
-            case FROM_ACTION_TYPE.CHILD: {
-                form.resetFields();
-                setFormData([]);
-                break;
-            }
-            case FROM_ACTION_TYPE.SIBLING: {
-                form.resetFields();
-                setFormData([]);
-                break;
-            }
+
             case FROM_ACTION_TYPE.EDIT: {
                 setFormData(otfBlockMasterData);
                 break;
@@ -345,7 +336,7 @@ export const OtfBlockMasterMain = (props) => {
 
     const onFinish = (values) => {
         const recordId = formData?.id || '';
-        const data = { ...values, id: recordId };
+        const data = { ...values, id: recordId, modelGroupCode: selectedProductCode, hierarchyMstId: formData?.id ? selectedTreeSelectKey[0] : selectedTreeSelectKey }
         const onSuccess = (res) => {
             form.resetFields();
 
@@ -413,7 +404,6 @@ export const OtfBlockMasterMain = (props) => {
         setSelectedTreeSelectKey,
         isVisible: isFormVisible,
         onCloseAction: () => {
-            setSelectedTreeSelectKey(null);
             setIsFormVisible(false);
             setOptions([]);
             form.setFieldsValue({ hierarchyMstId: null });
@@ -488,6 +478,7 @@ export const OtfBlockMasterMain = (props) => {
         handleSelectTreeClick: (value) => {
             setSelectedTreeKey();
             setSelectedTreeSelectKey();
+            setSelectedOrganizationId(value);
             !value && resetData();
         },
         defaultValue: 'organizationId',
