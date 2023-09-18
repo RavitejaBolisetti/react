@@ -122,7 +122,7 @@ const AddEditFormMain = (props) => {
                 </Col>
 
                 <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
-                    <Form.Item hidden name="customerId" initialValue={formData?.customerId}>
+                    <Form.Item hidden name="customerCode" initialValue={formData?.customerCode}>
                         <Input />
                     </Form.Item>
                 </Col>
