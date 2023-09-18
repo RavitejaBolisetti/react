@@ -14,7 +14,7 @@ import { EMBEDDED_REPORTS } from 'constants/EmbeddedReports';
 const EmbeddedReportPageBase = (props) => {
     const params = useParams();
 
-    const reportDetail = Object.values(EMBEDDED_REPORTS)?.find((i) => i.module === params?.type);
+    const reportDetail = Object.values(EMBEDDED_REPORTS)?.find((i) => i.slug === params?.slug);
 
     const pageHeaderData = {
         pageTitle: reportDetail?.title,

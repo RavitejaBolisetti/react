@@ -4,16 +4,13 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Row, Col, Form, Button, Select } from 'antd';
+import { Row, Col, Form, Button } from 'antd';
 import { withModal } from 'components/withModal';
 
 import styles from 'assets/sass/app.module.scss';
 
-const { Option } = Select;
-
 export const OTFConfirmationModalFrom = (props) => {
     const { information, form, handleCloseModal } = props;
-    // console.log('msg'.msg);
 
     return (
         <Form autoComplete="off" layout="vertical" form={form}>

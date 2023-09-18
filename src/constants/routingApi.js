@@ -60,6 +60,7 @@ export const BASE_URL_ROLE_MANAGEMENT = BASE_URL + 'application/rolemaster';
 export const BASE_URL_ROLE_MANAGEMENT_ROLES_MENU = BASE_URL + 'application/roles';
 
 export const BASE_URL_PRODUCT_HIERARCHY = BASE_URL + 'product';
+export const BASE_URL_PRODUCT_HIERARCHY_DETAIL = BASE_URL + 'product/details';
 export const BASE_URL_PRODUCT_HIERARCHY_SAVE = BASE_URL + 'product';
 export const BASE_URL_PRODUCT_HIERARCHY_CHANGE_HISTORY = BASE_URL + 'product/hierarchychangehistory';
 export const BASE_URL_PRODUCT_HIERARCHY_SKU = BASE_URL + 'product/skuattribute';

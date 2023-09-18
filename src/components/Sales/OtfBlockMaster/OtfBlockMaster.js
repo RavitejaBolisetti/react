@@ -157,6 +157,13 @@ export const OtfBlockMasterMain = (props) => {
         resetData();
         showGlobalNotification({ message });
     };
+
+    const onCloseAction = () => {
+        form.resetFields();
+        setIsFormVisible(false);
+        setButtonData({ ...defaultBtnVisiblity });
+    };
+
     useEffect(() => {
         return () => {
             resetData();
@@ -203,7 +210,7 @@ export const OtfBlockMasterMain = (props) => {
 
     useEffect(() => {
         if (organizationId && userId) {
-            fetchProductDataList({ setIsLoading: listProductLoading, userId, id: organizationId });
+            fetchProductDataList({ setIsLoading: listProductLoading, userId, onCloseAction, extraParams: [{ key: 'manufactureOrgCode', value: organizationId }] });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, organizationId]);
@@ -375,7 +382,7 @@ export const OtfBlockMasterMain = (props) => {
         saveOTFBlockData(requestData);
     };
 
-    const onFinishFailed = (errorInfo) => {};
+    const onFinishFailed = (errorInfo) => { };
 
     const myProps = {
         isTreeViewVisible,
@@ -478,16 +485,16 @@ export const OtfBlockMasterMain = (props) => {
             setSelectedOrganizationCode(treeObj?.id);
             !value && resetData();
         },
-        HandleClear: () => {
-            setSelectedOrganizationId(null);
-            setSelectedTreeKey(null);
+        handleSelectTreeClick: (value) => {
+            setSelectedTreeKey();
+            setSelectedTreeSelectKey();
+            !value && resetData();
         },
         defaultValue: 'organizationId',
         placeholder: preparePlaceholderSelect('Organization Hierarchy'),
     };
     const title = 'Hierarchy';
-    const onfinishHeader = (value) => {};
-
+    const onfinishHeader = (value) => { };
     return (
         <>
             <div className={styles.contentHeaderBackground}>
@@ -512,7 +519,7 @@ export const OtfBlockMasterMain = (props) => {
             </div>
             <Row gutter={20} span={24}>
                 <Col xs={24} sm={24} md={leftCol} lg={leftCol} xl={leftCol}>
-                    {!productHierarchyData?.length ? (
+                    {productHierarchyData?.length <= 0 ? (
                         <div className={styles.emptyContainer}>
                             <Empty
                                 image={Empty.PRESENTED_IMAGE_SIMPLE}
@@ -531,11 +538,11 @@ export const OtfBlockMasterMain = (props) => {
                                     )
                                 }
                             >
-                                {organizationId && (
+                                {/* {organizationId && (
                                     <Button icon={<PlusOutlined />} className={styles.actionbtn} type="primary" danger onClick={handleAdd}>
                                         Add
                                     </Button>
-                                )}
+                                )} */}
                             </Empty>
                         </div>
                     ) : (

@@ -79,7 +79,6 @@ const AddEditFormMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dealerDataList]);
 
-    console.log(selectedOrganizationCode);
     useEffect(() => {
         if (organizationId && userId) {
             if (!organizationId) return;

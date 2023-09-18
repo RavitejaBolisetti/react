@@ -6,17 +6,15 @@
 import React, { useEffect } from 'react';
 import { Col, Row, Collapse, AutoComplete, Divider } from 'antd';
 
-import { FiEdit } from 'react-icons/fi';
 import { AddressCommonForm } from './AddressCommonForm';
 import { formattedCalendarDate } from 'utils/formatDateTime';
 
-import { expandIconWithText, expandIcon, expandActionIcon } from 'utils/accordianExpandIcon';
+import { expandActionIcon } from 'utils/accordianExpandIcon';
 const { Panel } = Collapse;
 
 const AddEditFormBase = (props) => {
     const { form, formData, sameAsBookingCustomer, setSameAsBookingCustomer } = props;
     const { typeData, activeKey, setActiveKey, formActionType } = props;
-    console.log('🚀 ~ file: AddEditForm.js:19 ~ AddEditFormBase ~ formActionType:', formActionType);
 
     useEffect(() => {
         if (formData) {
@@ -53,6 +51,7 @@ const AddEditFormBase = (props) => {
             form?.setFieldsValue({ billingCustomer: { ...bookingCustomer } });
         } else {
             setSameAsBookingCustomer(false);
+            form?.setFieldsValue({ billingCustomer: null });
         }
     };
 

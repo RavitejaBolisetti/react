@@ -18,7 +18,7 @@ import { AdvancedSearch } from './AdvancedSearch';
 import { CancelInvoice } from './CancelInvoice';
 import { VEHICLE_INVOICE_SECTION } from 'constants/VehicleInvoiceSection';
 import { QUERY_BUTTONS_CONSTANTS } from './QueryButtons';
-import { BASE_URL_OTF_DETAILS as customURL } from 'constants/routingApi';
+import { BASE_URL_OTF_DETAILS as customURL, BASE_URL_INVOICE_DETAIL as InvoiceDetailsURL } from 'constants/routingApi';
 import { otfDataActions } from 'store/actions/data/otf/otf';
 
 import { vehicleInvoiceDataActions } from 'store/actions/data/invoiceGeneration/vehicleInvoiceGeneration';
@@ -40,7 +40,7 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             VehicleInvoiceGeneration: {
-                VehicleInvoiceSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString },
+                VehicleInvoiceSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString, detailData: VehicleInvoiceMasterData = [] },
                 VehicleIrnGeneration: { isLoaded: isIrnDataLoaded = false, isLoading: isIrnDataLoading, data: irnData = [] },
                 VehicleInvoiceDetail: { isLoaded: isVehicleInvoiceDataLoaded = false, isLoading: isVehicleInvoiceDataLoading, data: vehicleInvoiceData = [] },
                 VehicleDetails: { isLoaded: isVehicleDataLoaded = false, isLoading: isVehicleDataLoading, data: vehicleDetail = [] },
@@ -76,6 +76,8 @@ const mapStateToProps = (state) => {
         irnData,
         vehicleInvoiceData,
         vehicleDetail,
+
+        VehicleInvoiceMasterData,
     };
     return returnValue;
 };
@@ -98,6 +100,7 @@ const mapDispatchToProps = (dispatch) => ({
             fetchVehicleInvoiceDetail: vehicleDetailsDataActions.fetchList,
 
             fetchList: vehicleInvoiceDataActions.fetchList,
+            fetchInvoiceMasterData: vehicleInvoiceDataActions.fetchDetail,
             listInvoiceDetailShowLoading: vehicleInvoiceDataActions.listInvoiceDetailShowLoading,
             setFilterString: vehicleInvoiceDataActions.setFilter,
             showGlobalNotification,
@@ -107,15 +110,14 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const VehicleInvoiceMasterBase = (props) => {
-    const { data, receiptDetailData, userId, irnGeneration, fetchList, fetchOTFDetail, fetchVehicleDetail, fetchVehicleInvoiceDetail, listShowLoading, showGlobalNotification } = props;
+    const { data, receiptDetailData, userId, irnGeneration, fetchList, fetchOTFDetail, fetchVehicleDetail, fetchVehicleInvoiceDetail, listShowLoading, showGlobalNotification, fetchInvoiceMasterData } = props;
     const { cancelInvoice } = props;
     const { typeData, receiptType, partySegmentType, listInvoiceShowLoading, saveData, paymentModeType, documentType, moduleTitle, totalRecords } = props;
-    const { filterString, setFilterString, invoiceStatusList, otfData } = props;
+    const { filterString, setFilterString, invoiceStatusList, otfData, VehicleInvoiceMasterData } = props;
 
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [invoiceStatus, setInvoiceStatus] = useState(QUERY_BUTTONS_CONSTANTS.INVOICED.key);
     const [requestPayload, setRequestPayload] = useState({ invoiceDetails: {}, vehicleDetails: {}, financeDetails: {}, insuranceDetails: {} });
-    console.log('🚀 ~ file: VehicleInvoiceMaster.js:109 ~ VehicleInvoiceMasterBase ~ requestPayload:', requestPayload);
 
     const [listFilterForm] = Form.useForm();
     const [cancelInvoiceForm] = Form.useForm();
@@ -125,7 +127,6 @@ export const VehicleInvoiceMasterBase = (props) => {
     const [selectedOrder, setSelectedOrder] = useState();
     const [selectedOrderId, setSelectedOrderId] = useState();
     const [selectedOtfNumber, setSelectedOtfNumber] = useState();
-    console.log('selectedOrderId:', selectedOrderId, 'selectedOtfNumber', selectedOtfNumber);
 
     const [section, setSection] = useState();
     const [defaultSection, setDefaultSection] = useState();
@@ -165,6 +166,8 @@ export const VehicleInvoiceMasterBase = (props) => {
 
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
+
+    console.log('VehicleInvoiceMasterData', VehicleInvoiceMasterData);
 
     const onSuccessAction = (res) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -289,7 +292,7 @@ export const VehicleInvoiceMasterBase = (props) => {
     }, [currentSection, sectionName]);
 
     useEffect(() => {
-        if (userId && selectedOtfNumber) {
+        if (userId && selectedOtfNumber && !formActionType?.addMode) {
             const extraParams = [
                 {
                     key: 'otfNumber',
@@ -302,6 +305,25 @@ export const VehicleInvoiceMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedOtfNumber]);
+
+    const handleBookingNumberSearch = (otfNumber) => {
+        if (!otfNumber) return false;
+        setSelectedOtfNumber(otfNumber);
+        const extraParams = [
+            {
+                key: 'otfNumber',
+                title: 'otfNumber',
+                value: otfNumber,
+                name: 'Booking Number',
+            },
+            {
+                key: 'invoiceNumber',
+                value: selectedOrderId ?? 'INV1694281207008',
+                name: 'Invoice Number',
+            },
+        ];
+        fetchInvoiceMasterData({ customURL: InvoiceDetailsURL, setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
+    };
 
     useEffect(() => {
         if (userId && selectedOrder?.invoiceNumber) {
@@ -660,6 +682,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         setLastSection,
         handleIRNGeneration,
         irnStatusData,
+        handleBookingNumberSearch,
     };
 
     const cancelInvoiceProps = {

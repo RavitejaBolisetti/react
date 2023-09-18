@@ -52,7 +52,7 @@ function AddEditForm({ onUpdate, isPresent, index, fnSetData, seteditCardForm, e
                 setaddButtonDisabled({ ...addButtonDisabled, partDetailsResponses: false });
                 handleFormValueChange();
             })
-            .catch((err) => { });
+            .catch((err) => {});
     };
 
     const onFinishFailed = (err) => {
@@ -97,7 +97,7 @@ function AddEditForm({ onUpdate, isPresent, index, fnSetData, seteditCardForm, e
             <Form autoComplete="off" form={accessoryForm} onFieldsChange={onFieldsChange} layout="vertical" onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Part Name" name="partName" rules={[validateRequiredInputField('part name')]}>
+                        <Form.Item label="Part Name" name="partName">
                             <Search placeholder={preparePlaceholderText('Part Name')} maxLength={55} allowClear type="text" onSearch={handleOnSearch} onChange={handlePartSearch} />
                         </Form.Item>
                     </Col>
@@ -105,17 +105,17 @@ function AddEditForm({ onUpdate, isPresent, index, fnSetData, seteditCardForm, e
                 <Divider />
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Part Type" name="type" >
+                        <Form.Item label="Part Type" name="type">
                             <Input {...disableProp} placeholder={preparePlaceholderText('part type')} />
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Selling Price" name="sellingPrice" >
+                        <Form.Item label="Selling Price" name="sellingPrice">
                             <Input {...disableProp} placeholder={preparePlaceholderText('selling price')} />
                         </Form.Item>
                     </Col>
-                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} >
-                        <Form.Item label="MRP" name="mrp" >
+                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                        <Form.Item label="MRP" name="mrp">
                             <Input {...disableProp} placeholder={preparePlaceholderText('mrp')} />
                         </Form.Item>
                     </Col>

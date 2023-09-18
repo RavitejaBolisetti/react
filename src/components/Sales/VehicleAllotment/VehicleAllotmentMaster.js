@@ -28,6 +28,7 @@ import { BASE_URL_VEHICLE_ALLOTMENT as customURL } from 'constants/routingApi';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 import { FilterIcon } from 'Icons';
+import { ConfirmationModal } from 'utils/ConfirmationModal';
 
 const mapStateToProps = (state) => {
     const {
@@ -91,7 +92,7 @@ export const VehicleAllotmentMasterBase = (props) => {
 
     const [filterStringOTFSearch, setFilterStringOTFSearch] = useState('');
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
-    const [toggleButton, settoggleButton] = useState(VEHICLE_TYPE?.ALLOTED.key);
+    const [toggleButton, settoggleButton] = useState(VEHICLE_TYPE?.UNALLOTED.key);
     const [searchParamValue, setSearchParamValue] = useState('');
     const [confirmRequest, setConfirmRequest] = useState();
 
@@ -108,7 +109,6 @@ export const VehicleAllotmentMasterBase = (props) => {
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
-    const [page, setPage] = useState({ pageSize: 10, current: 1 });
 
     const dynamicPagination = true;
 
@@ -129,6 +129,11 @@ export const VehicleAllotmentMasterBase = (props) => {
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
     const [formData, setFormData] = useState([]);
+
+    useEffect(() => {
+        setFilterString({ ...filterString, pageSize: 10, current: 1 });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const onSuccessAction = (res) => {
         // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -156,13 +161,8 @@ export const VehicleAllotmentMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [allotmentSummaryDetails]);
 
-    useEffect(() => {
-        setPage({ ...page, current: 1 });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, toggleButton]);
-
     const extraParams = useMemo(() => {
-        const defaultPage = defaultPageProps(page);
+        const defaultPage = defaultPageProps(filterString);
         return [
             ...defaultPage,
             {
@@ -207,7 +207,7 @@ export const VehicleAllotmentMasterBase = (props) => {
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [page, filterString, searchParamValue, toggleButton]);
+    }, [filterString, searchParamValue, toggleButton]);
 
     useEffect(() => {
         return () => {
@@ -218,7 +218,7 @@ export const VehicleAllotmentMasterBase = (props) => {
     }, []);
 
     useEffect(() => {
-        if (userId && !isOTFSearchLoading) {
+        if (userId && !isOTFSearchLoading && extraParams) {
             setShowDataLoading(true);
             fetchVehicleAllotmentSearchedList({ customURL: customURL + '/search', setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
@@ -276,6 +276,8 @@ export const VehicleAllotmentMasterBase = (props) => {
     const onFinishSearch = (values) => {};
 
     const handleResetFilter = (e) => {
+        const { pageSize } = filterString;
+        setFilterString({ pageSize, current: 1 });
         setSearchParamValue();
         setShowDataLoading(true);
         setFilterString();
@@ -397,8 +399,8 @@ export const VehicleAllotmentMasterBase = (props) => {
     const fixedWith = toggleButton === VEHICLE_TYPE.ALLOTED.key;
     const tableProps = {
         dynamicPagination,
-        page,
-        setPage,
+        filterString,
+        setPage: setFilterString,
         isLoading: showDataLoading,
         tableColumn: tableColumn(handleButtonClick, toggleButton, fixedWith),
         tableData: allotmentSearchedList?.paginationData,
@@ -510,6 +512,7 @@ export const VehicleAllotmentMasterBase = (props) => {
             </Row>
             <AdvancedSearch {...advanceFilterProps} />
             {isFormVisible && <ViewDetail {...containerProps} />}
+            <ConfirmationModal {...confirmRequest} />
         </>
     );
 };

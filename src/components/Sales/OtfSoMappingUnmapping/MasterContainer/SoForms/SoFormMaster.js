@@ -92,7 +92,7 @@ const SoFormMasterMain = (props) => {
                                             <Button onClick={handleCancel}>Cancel</Button>
                                             <Button onClick={handleClear}>Clear</Button>
                                             <Button htmlType="submit" type="primary">
-                                                Save
+                                                Submit
                                             </Button>
                                         </Col>
                                     </Row>

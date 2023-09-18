@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect } from 'react';
-import { Row, Col, Form, Card, Descriptions } from 'antd';
+import { Row, Col, Form, Card, Descriptions, Divider } from 'antd';
 
 import AdvanceFilter from './AdvanceFilter';
 import { ListDataTable } from 'utils/ListDataTable';
@@ -41,7 +41,7 @@ const AddEditFormMain = (props) => {
         bordered: false,
         colon: false,
         layout: 'vertical',
-        column: { xs: 1, sm: 3, lg: 6, xl: 6, xxl: 6 },
+        column: { xs: 1, sm: 3, lg: 4, xl: 4, xxl: 6 },
     };
 
     const advanceFilterResultProps = {
@@ -67,15 +67,13 @@ const AddEditFormMain = (props) => {
                                 <Descriptions.Item label="Booking Date">{checkAndSetDefaultValue(convertDateTime(selectedOrder?.otfDate, dateFormatView), isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Customer Name">{checkAndSetDefaultValue(selectedOrder?.customerName, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Mobile No.">{checkAndSetDefaultValue(selectedOrder?.mobileNumber, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Model">{checkAndSetDefaultValue(selectedOrder?.model, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Model Description">{checkAndSetDefaultValue(selectedOrder?.model, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Order Status">{getStatus(selectedOrder?.orderStatus)}</Descriptions.Item>
                             </Descriptions>
                         </Card>
-                    </Col>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                        <Divider className={styles.marT20} />
+                        <h4>Allot Vehicle</h4>
                         <AdvanceFilter {...advanceFilterResultProps} />
-                    </Col>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <ListDataTable handleAdd={handleButtonClick} {...tableProps} showAddButton={false} />
                     </Col>
                 </Row>

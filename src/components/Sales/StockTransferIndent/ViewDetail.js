@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Card, Descriptions, Col, Row, Divider, Form } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 
@@ -19,9 +19,10 @@ import { tableColumnVehicleDetails } from './tableColumnVehicleDetails';
 import { EDIT_ACTION, VIEW_ACTION } from 'utils/btnVisiblity';
 
 import styles from 'assets/sass/app.module.scss';
+import { STOCK_TRANSFER } from 'constants/StockTransfer';
 
 const ViewDetailMain = (props) => {
-    const { formData, isLoading, buttonDataVehicleDetails, updateVehicleDetails } = props;
+    const { toggleButton, formData, isLoading, updateVehicleDetails } = props;
     const { handleButtonClick, buttonData, setButtonData, onCloseAction } = props;
     const { setCancellationData, setCancellationIssueVisible, typeData } = props;
 
@@ -72,14 +73,12 @@ const ViewDetailMain = (props) => {
         }
     };
 
-    const sorterPagination = false;
-
     const tableProps = {
         srl: true,
+        pagination: false,
         isLoading: isLoading,
-        tableColumn: tableColumnVehicleDetails(handleButtonClickVehicleDetails, sorterPagination, buttonDataVehicleDetails),
+        tableColumn: tableColumnVehicleDetails({ handleButtonClick: handleButtonClickVehicleDetails, canView: true, canEdit: toggleButton === STOCK_TRANSFER?.RAISED.key }),
         tableData: formData?.vehicleDetails,
-        pagination: sorterPagination,
     };
 
     const editVehicleDetailsProps = {
