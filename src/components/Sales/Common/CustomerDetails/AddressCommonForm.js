@@ -13,9 +13,11 @@ import { convertToUpperCase } from 'utils/convertToUpperCase';
 
 import { validateEmailField, validateMobileNoField, validatePanField, validateGSTIN } from 'utils/validation';
 import { customSelectBox } from 'utils/customSelectBox';
+import { CustomerListMaster } from 'components/utils/CustomerListModal';
 
 export const AddressCommonForm = (props) => {
-    const { formType, formData, disabledProps, handleOnChange, typeData } = props;
+    const { formType, formData, disabledProps, handleOnChange, fnSetData, typeData, sameAsBookingCustomer } = props;
+    const canUpdate = (formType === 'bookingCustomer' && !formData?.billingCustomer?.customerId) || formType === 'billingCustomer';
 
     const alternateNumberCheck = (value) => {
         if (formData?.mobileNumber && value && value === formData?.mobileNumber) {
@@ -26,6 +28,13 @@ export const AddressCommonForm = (props) => {
     };
     return (
         <>
+            {canUpdate && (
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <CustomerListMaster disabled={sameAsBookingCustomer} fnSetData={fnSetData} defaultOption={'customerName'} />
+                    </Col>
+                </Row>
+            )}
             {formType === 'billingCustomer' && (
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>

@@ -14,8 +14,8 @@ export const LoyalityDetails = (props) => {
         <>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name={[formType, 'loyalityCardNumber']} label="Loyality Card Number" initialValue={formData?.loyalityCardNumber}>
-                        <Input maxLength={6} placeholder={preparePlaceholderText('Loyality Card Number')} disabled={true} />
+                    <Form.Item name={[formType, 'loyalityCardNumber']} label="Loyalty Card Number" initialValue={formData?.loyalityCardNumber}>
+                        <Input maxLength={6} placeholder={preparePlaceholderText('Loyalty Card Number')} disabled={true} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
