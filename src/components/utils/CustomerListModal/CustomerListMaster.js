@@ -52,7 +52,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const CustomerListBase = (props) => {
-    const { listShowLoading, userId, referralData, fnSetData = undefined, disabled = false } = props;
+    const { listShowLoading, userId, referralData, fnSetData = undefined, disabled = false, defaultOption = null } = props;
     const { handleFormValueChange, fetchCustomerList, typeData } = props;
 
     const [searchForm] = Form.useForm();
@@ -159,6 +159,7 @@ const CustomerListBase = (props) => {
         setFilterString,
         selectWide: true,
         disabled,
+        defaultOption,
     };
 
     return (

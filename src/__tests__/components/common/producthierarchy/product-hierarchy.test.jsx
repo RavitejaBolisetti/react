@@ -75,7 +75,7 @@ describe('Producthierarchy Components', () => {
 
         customRender(
             <Provider store={mockStore}>
-                <ProductHierarchy onCloseAction={jest.fn()} />
+                <ProductHierarchy onCloseAction={jest.fn()} fetchProductDetail={jest.fn()} />
             </Provider>
         );
         const treeSelect = screen.getByText('Kai');

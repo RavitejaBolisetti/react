@@ -43,7 +43,7 @@ const ViewDetailMain = (props) => {
         <div className={styles.viewDrawerContainer}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
+                    <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end" className= {styles.drawerGap} >
                         <Panel header="Booking Details" key="1">
                             <Divider />
                             <Descriptions {...viewProps}>

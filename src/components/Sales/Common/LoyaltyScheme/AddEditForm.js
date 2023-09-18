@@ -16,7 +16,7 @@ import styles from 'assets/sass/app.module.scss';
 const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
-    const { formData, form } = props;
+    const { form, formData } = props;
     const { schemeLovData, typeData } = props;
     const { isConfigLoading, isSchemeLovLoading, isModelLoading, isVariantLoading } = props;
     const { filteredModelData, filteredVariantData, handleFilterChange, fnSetData, disabledProps } = props;
@@ -27,18 +27,18 @@ const AddEditFormMain = (props) => {
         yearsList.push({ key: i, value: i });
     }
 
-    // useEffect(() => {
-    //     if (formData) {
-    //         form.setFieldsValue({
-    //             ...formData,
-    //         });
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [formData]);
+    useEffect(() => {
+        if (formData) {
+            form.setFieldsValue({
+                ...formData,
+            });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formData]);
 
     return (
         <Card className={styles.ExchangeCard}>
-            <CustomerListMaster fnSetData={fnSetData} />
+            <CustomerListMaster fnSetData={fnSetData} defaultOption={'registrationNumber'} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     {prepareCaption('Vehicle Details')}
@@ -122,7 +122,7 @@ const AddEditFormMain = (props) => {
                 </Col>
 
                 <Col xs={0} sm={0} md={0} lg={0} xl={0} xxl={0}>
-                    <Form.Item hidden name="customerId" initialValue={formData?.customerId}>
+                    <Form.Item hidden name="customerCode" initialValue={formData?.customerCode}>
                         <Input />
                     </Form.Item>
                 </Col>

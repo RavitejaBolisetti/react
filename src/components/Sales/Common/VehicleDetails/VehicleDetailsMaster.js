@@ -212,6 +212,7 @@ const VehicleDetailsMasterMain = (props) => {
         if (vehicleDetailData) {
             vehicleDetailData?.optionalServices && setoptionsServiceModified(vehicleDetailData?.optionalServices);
             setProductModelCode(vehicleDetailData?.modelCode);
+            setFormData(vehicleDetailData);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [vehicleDetailData]);

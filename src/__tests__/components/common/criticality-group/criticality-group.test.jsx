@@ -8,127 +8,118 @@ import '@testing-library/jest-dom/extend-expect';
 import { Provider } from 'react-redux';
 import customRender from '@utils/test-utils';
 import createMockStore from '__mocks__/store';
-import { screen, fireEvent } from '@testing-library/react';
-import { act } from 'react-dom/test-utils';
+import { screen, fireEvent, waitFor } from '@testing-library/react';
+import { CriticalityGroup } from 'components/common/CriticalityGroup/CriticalityGroup';
 
-import { CriticalityGroup } from '@components/common/CriticalityGroup/CriticalityGroup';
+jest.mock('store/actions/data/criticalityGroup', () => ({
+    criticalityDataActions: {}
+}));
+
+const data=[{"criticalityGroupCode":"106","criticalityGroupName":"Kai","activeIndicator":false,"criticalityDefaultGroup":false,"id":"106","allowedTimings":[]}];
 
 describe('CriticalityGroup Components', () => {
+
     it('should render CriticalityGroup components', () => {
         customRender(<CriticalityGroup />);
     });
-    it('should render page', () => {
+
+    it('search should work', () => {
         customRender(<CriticalityGroup />);
-        expect(screen.getAllByText(/Criticality Group List/i)).toBeTruthy();
-    });
-    it('should able to search data', async () => {
-        customRender(<CriticalityGroup />);
-        const inputBox = screen.getByRole('textbox');
-        fireEvent.change(inputBox, { target: { value: 'Dmatest' } });
-        expect(inputBox.value.includes('Dmatest'));
-        await act(async () => {
-            const searchButton = screen.getByRole('button', { name: /search/i });
-            fireEvent.click(searchButton);
-        });
+
+        const searchBox=screen.getByRole('textbox', { name: 'Criticality Group Name' });
+        fireEvent.change(searchBox, { target: { value: 'Kai' } });
+
+        const searchBtn=screen.getByRole('button', { name: 'search' });
+        fireEvent.click(searchBtn);
+
+        fireEvent.change(searchBox, { target: { value: '' } });
+        fireEvent.click(searchBtn);
+
     });
 
-    it('refresh button should work', async () => {
-        const mockStore = createMockStore({
-            // auth: { userId: 123 },
-        });
-        customRender(
-            <Provider store={mockStore}>
-                <CriticalityGroup onSuccessAction={jest.fn()} errorAction={jest.fn()} />
-            </Provider>
-        );
-    });
+    it('add and edit form should work', async () => {
 
-    it('cancel button should work', async () => {
-        const mockStore = createMockStore({
-            // auth: { userId: 123 },
-        });
-        customRender(
-            <Provider store={mockStore}>
-                <CriticalityGroup onCloseAction={jest.fn()} />
-            </Provider>
-        );
-        const addBtn = screen.getByRole('button', { name: 'plus Add', exact: false });
+        const saveData=jest.fn();
+
+        customRender(<CriticalityGroup saveFormShowLoading={jest.fn()} saveData={saveData} fetchList={jest.fn()} />);
+
+        const addBtn=screen.getByRole('button', { name: 'plus Add' });
         fireEvent.click(addBtn);
-        const cancelBtn = screen.getByRole('button', { name: 'Cancel', exact: false });
-        fireEvent.click(cancelBtn);
-    });
 
-    it('save button should work with on finish', async () => {
-        const mockStore = createMockStore({
-            // auth: { userId: 123 },
-        });
-        customRender(
-            <Provider store={mockStore}>
-                <CriticalityGroup onCloseAction={jest.fn()} onSuccess={jest.fn()} handleFormValueChange={jest.fn()} handleFormFieldChange={jest.fn()} onFinish={jest.fn()} onFinishFailed={jest.fn()} />
-            </Provider>
-        );
-        const addBtn = screen.getByRole('button', { name: 'plus Add', exact: false });
-        fireEvent.click(addBtn);
-        const criticalityGroupId = screen.getByRole('textbox', { name: 'Criticality Group Id', exact: false });
-        fireEvent.change(criticalityGroupId, { target: { value: '123' } });
-        const criticalityGroupName = screen.getByRole('textbox', { name: 'Criticality Group Name', exact: false });
-        fireEvent.change(criticalityGroupName, { target: { value: 'Test' } });
-        const defaultGroup = screen.getByRole('switch', { name: 'Default Group', exact: false });
+        const groupId=screen.getByRole('textbox', { name: 'Criticality Group Id' });
+        fireEvent.change(groupId, { target: { value: 106 } });
+        
+        const groupName=screen.getAllByRole('textbox', { name: 'Criticality Group Name' });
+        fireEvent.change(groupName[1], { target: { value: 'Kai' } });
+
+        const defaultGroup=screen.getByRole('switch', { name: 'Default Group' });
         fireEvent.click(defaultGroup);
-        const status = screen.getByRole('switch', { name: 'Status', exact: false });
+
+        const status=screen.getByRole('switch', { name: 'Status' });
         fireEvent.click(status);
-        const saveBtn = screen.getByRole('button', { name: 'Save', exact: false });
+
+        const saveBtn=screen.getByRole('button', { name: 'Save' });
         fireEvent.click(saveBtn);
+
+        await waitFor(() => { expect(saveData).toHaveBeenCalled() });
+
+        saveData.mock.calls[0][0].onSuccess();
+        saveData.mock.calls[0][0].onError();
+
     });
 
-    it('should validate fields on finish failed', async () => {
+    it('edit and view with cancel buttons should work', async () => {
         const mockStore = createMockStore({
-            // auth: { userId: 123 },
-        });
-        customRender(
-            <Provider store={mockStore}>
-                <CriticalityGroup onCloseAction={jest.fn()} onSuccess={jest.fn()} handleFormValueChange={jest.fn()} handleFormFieldChange={jest.fn()} onFinish={jest.fn()} onFinishFailed={jest.fn()} />
-            </Provider>
-        );
-        const addBtn = screen.getByRole('button', { name: 'plus Add', exact: false });
-        fireEvent.click(addBtn);
-        const criticalityGroupId = screen.getByRole('textbox', { name: 'Criticality Group Id', exact: false });
-        fireEvent.change(criticalityGroupId, { target: { value: '123' } });
-
-        const defaultGroup = screen.getByRole('switch', { name: 'Default Group', exact: false });
-        fireEvent.click(defaultGroup);
-        const status = screen.getByRole('switch', { name: 'Status', exact: false });
-        fireEvent.click(status);
-        const saveBtn = screen.getByRole('button', { name: 'Save', exact: false });
-        fireEvent.click(saveBtn);
-    });
-
-    it('should validate search', async () => {
-        const mockStore = createMockStore({
-            // auth: { userId: 123 },
+            auth: { userId: 106 },
             data: {
-                CriticalityGroup: {
-                    isLoaded: true,
-                    data: [{ id: 1, name: 'test', criticalityGroupName: 'Alice' }],
-                },
+                CriticalityGroup: { isLoaded: true, data: data },
             },
         });
         customRender(
             <Provider store={mockStore}>
-                <CriticalityGroup onSearchHandle={jest.fn()} handleClearInSearch={jest.fn()} />
+                <CriticalityGroup />
             </Provider>
         );
-        const inputBox = screen.getByRole('textbox');
-        fireEvent.change(inputBox, { target: { value: 'test' } });
-        expect(inputBox.value.includes('test')).toBeTruthy();
-        const searchButton = screen.getByRole('button', { name: /search/i });
-        act(() => {
-            fireEvent.click(searchButton);
-        });
-        fireEvent.change(inputBox, { target: { value: '' } });
-        expect(inputBox.value.includes('')).toBeTruthy();
-        act(() => {
-            fireEvent.click(searchButton);
-        });
+
+        await waitFor(() => { expect(screen.getByText('Kai')).toBeInTheDocument() });
+
+        const editBtn=screen.getByTestId('edit');
+        fireEvent.click(editBtn);
+
+        const cancelBtn=screen.getByRole('button', { name: 'Cancel' });
+        fireEvent.click(cancelBtn);
+
+        const viewBtn=screen.getByTestId('view');
+        fireEvent.click(viewBtn);
+
+        const closeBtn=screen.getAllByRole('button', { name: 'Close' });
+        fireEvent.click(closeBtn[0]);
+
     });
+
+    it('refresh buttons should work', async () => {
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+            data: {
+                CriticalityGroup: { isLoaded: true, data: data },
+            },
+        });
+
+        const fetchList=jest.fn();
+
+        customRender(
+            <Provider store={mockStore}>
+                <CriticalityGroup fetchList={fetchList} />
+            </Provider>
+        );
+
+        await waitFor(() => { expect(screen.getByText('Kai')).toBeInTheDocument() });
+
+        const refreshBtn=screen.getByTestId('refreshBtn');
+        fireEvent.click(refreshBtn);
+
+        fetchList.mock.calls[0][0].onSuccessAction();
+
+    });
+
 });
