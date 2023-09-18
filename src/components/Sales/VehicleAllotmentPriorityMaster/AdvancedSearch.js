@@ -26,8 +26,6 @@ export const AdvancedSearchFrom = (props) => {
     }, [filterString]);
 
     const onFinish = (values) => {
-        console.log('values',values);
-        console.log('filterString',filterString);
         setFilterString({
             ...filterString,
             ...values,

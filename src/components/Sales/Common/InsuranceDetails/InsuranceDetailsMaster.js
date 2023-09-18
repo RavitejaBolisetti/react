@@ -23,7 +23,7 @@ const mapStateToProps = (state) => {
             OTF: {
                 InsuranceDetail: { isLoaded: isDataLoaded = false, isLoading, data: insuranceData = [] },
             },
-            PartyMaster: { isFilteredListLoaded: isInsuranceCompanyDataLoaded = false, isLoading: isPartyLoading, detailData: insuranceCompanies },
+            PartyMaster: { isFilteredListLoaded: isInsuranceCompanyDataLoaded = false, detailData: insuranceCompanies },
         },
     } = state;
     const moduleTitle = 'Insurance Details';

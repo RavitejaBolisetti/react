@@ -67,9 +67,8 @@ const InvoiceDetailsMasterBase = (props) => {
     const { userId, buttonData, setButtonData, showGlobalNotification, section, isDataLoaded, isLoading, invoiceDetailForm } = props;
     const { form, formActionType, handleFormValueChange, selectedOtfNumber, setSelectedOtfNumber } = props;
     const { FormActionButton, requestPayload, setRequestPayload, handleButtonClick, NEXT_ACTION } = props;
-    console.log('🚀 ~ file: InvoiceDetailsMaster.js:72 ~ InvoiceDetailsMasterBase ~ requestPayload:', requestPayload);
+   
     const [activeKey, setActiveKey] = useState([]);
-
     const [formData, setFormData] = useState('');
     const [otfFormData, setOtfFormData] = useState('');
 

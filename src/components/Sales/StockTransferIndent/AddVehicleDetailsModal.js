@@ -8,7 +8,6 @@ import { Row, Col, Form, Input, Button, Select } from 'antd';
 import { withModal } from 'components/withModal';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, validateRequiredSelectField, validationNumber } from 'utils/validation';
-import { customSelectBox } from 'utils/customSelectBox';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -29,7 +28,6 @@ export const AddVehicleDetailsModalFrom = (props) => {
 
                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                     <Form.Item label="Model Description" name="modelDescription" initialValue={formData?.modelDescription} rules={[validateRequiredSelectField('Requested Quantity')]}>
-                        {/* {customSelectBox({ data: productHierarchyData, fieldNames: { key: 'prodctShrtName', value: 'prodctShrtName' }, placeholder: preparePlaceholderSelect('Model Description'), onChange: handleChangeModel })} */}
                         <Select allowClear showSearch options={productHierarchyData} fieldNames={{ label: 'prodctShrtName', value: 'prodctCode' }} onChange={handleChangeModel} placeholder={preparePlaceholderSelect('Model Description')} optionFilterProp="prodctShrtName" />
                     </Form.Item>
                 </Col>

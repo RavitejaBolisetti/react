@@ -115,7 +115,6 @@ export const VehicleInvoiceMasterBase = (props) => {
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [invoiceStatus, setInvoiceStatus] = useState(QUERY_BUTTONS_CONSTANTS.INVOICED.key);
     const [requestPayload, setRequestPayload] = useState({ invoiceDetails: {}, vehicleDetails: {}, financeDetails: {}, insuranceDetails: {} });
-    console.log('🚀 ~ file: VehicleInvoiceMaster.js:109 ~ VehicleInvoiceMasterBase ~ requestPayload:', requestPayload);
 
     const [listFilterForm] = Form.useForm();
     const [cancelInvoiceForm] = Form.useForm();
@@ -125,8 +124,7 @@ export const VehicleInvoiceMasterBase = (props) => {
     const [selectedOrder, setSelectedOrder] = useState();
     const [selectedOrderId, setSelectedOrderId] = useState();
     const [selectedOtfNumber, setSelectedOtfNumber] = useState();
-    console.log('selectedOrderId:', selectedOrderId, 'selectedOtfNumber', selectedOtfNumber);
-
+   
     const [section, setSection] = useState();
     const [defaultSection, setDefaultSection] = useState();
     const [currentSection, setCurrentSection] = useState();
