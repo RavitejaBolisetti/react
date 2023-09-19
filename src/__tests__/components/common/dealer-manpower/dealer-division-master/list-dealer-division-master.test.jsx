@@ -3,7 +3,6 @@ import '@testing-library/jest-dom/extend-expect';
 import { ListDealerDivisionMaster } from '@components/common/DealerManpower/DealerDivisionMaster/ListDealerDivisionMaster';
 import customRender from '@utils/test-utils';
 import { screen, fireEvent, waitFor } from '@testing-library/react';
-import { Form } from 'antd';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import thunk from 'redux-thunk';
@@ -35,13 +34,6 @@ afterEach(() => {
     assignMock.mockClear();
 });
 
-const FormWrapper = (props) => {
-    const [form, listFilterForm] = Form.useForm();
-    return <ListDealerDivisionMaster form={form} listFilterForm={listFilterForm} {...props} />;
-}
-
-
-
 const buttonData = {
     closeBtn: false,
     cancelBtn: true,
@@ -50,17 +42,10 @@ const buttonData = {
     editBtn: false,
     formBtnActive: false,
 };
-const filterString = {
-    keyword: 'test',
-    advanceFilter: true
-}
-
 
 describe('Dealer division master components', () => {
     it('Should render Dealer division Applied Advance Filter components', () => {
         const formActionType = { viewMode: false, editMode: false }
-
-
         const mockStore = createMockStore({
             auth: { userId: 106 },
             data: {
