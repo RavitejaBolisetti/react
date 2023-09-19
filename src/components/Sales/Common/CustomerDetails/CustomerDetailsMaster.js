@@ -227,10 +227,10 @@ export const CustomerDetailsMain = (props) => {
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
-        if (sameAsBookingCustomer) {
-            let bookingCustomer = form.getFieldsValue()?.bookingCustomer;
-            form?.setFieldsValue({ billingCustomer: { ...bookingCustomer } });
-        }
+        // if (sameAsBookingCustomer) {
+        //     let bookingCustomer = form.getFieldsValue()?.bookingCustomer;
+        //     form?.setFieldsValue({ billingCustomer: { ...bookingCustomer } });
+        // }
     };
 
     return wrapForm ? (

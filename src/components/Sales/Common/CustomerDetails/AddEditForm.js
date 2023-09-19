@@ -22,7 +22,6 @@ const AddEditFormBase = (props) => {
     useEffect(() => {
         if (formData) {
             form?.setFieldsValue({
-                ...formData,
                 bookingCustomer: { ...formData?.bookingCustomer, birthDate: formattedCalendarDate(formData?.bookingCustomer?.birthDate) },
                 billingCustomer: { ...formData?.billingCustomer, birthDate: formattedCalendarDate(formData?.billingCustomer?.birthDate) },
             });
@@ -52,15 +51,15 @@ const AddEditFormBase = (props) => {
     };
 
     const handleOnChange = (e) => {
+
+        let bookingCustomer = formData?.bookingCustomer;
         if (e.target.checked) {
             setSameAsBookingCustomer(true);
-            let bookingCustomer = formData?.bookingCustomer;
-            form?.setFieldsValue({ billingCustomer: { ...bookingCustomer } });
+            form?.setFieldsValue({ billingCustomer: { ...bookingCustomer, birthDate: formattedCalendarDate(bookingCustomer?.birthDate) }, bookingCustomer: { ...formData?.bookingCustomer, birthDate: formattedCalendarDate(bookingCustomer?.birthDate) } });
         } else {
             setSameAsBookingCustomer(false);
-            // form?.resetFields();
+            form?.resetFields(['billingCustomer']);
             form?.setFieldsValue({ billingCustomer: null });
-            form?.setFieldsValue({ billingCustomer: { birthDate: null, gstin: null, panNo: null, alternateNumber: null } });
         }
     };
 
