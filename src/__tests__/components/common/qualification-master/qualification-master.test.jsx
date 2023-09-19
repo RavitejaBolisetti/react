@@ -6,10 +6,9 @@
 
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
-import { screen, fireEvent } from '@testing-library/react';
+import { screen, fireEvent, waitFor } from '@testing-library/react';
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
-
 import { QualificationMaster } from '@components/common/QualificationMaster/QualificationMaster';
 
 const props = {
@@ -22,6 +21,11 @@ const props = {
 beforeEach(() => {
     jest.clearAllMocks();
 });
+
+jest.mock('store/actions/data/qualificationMaster', () => ({
+    qualificationDataActions: {},
+}));
+
 describe('Qualification Master Test', () => {
     it('should render qualification master page', () => {
         customRender(<QualificationMaster {...props} />);
@@ -44,17 +48,27 @@ describe('Qualification Master Test', () => {
             data: {
                 QualificationMaster: {
                     isLoaded: true,
-                    data: [{ id: 1, name: 'test', criticalityGroupName: 'Alice' }],
+                    data: [{ id: '106', qualificationCode: 'QC07', qualificationDescription: null, qualificationName: 'Test', status: 0 }],
                 },
             },
         });
+
+        const fetchList = jest.fn();
+
         customRender(
             <Provider store={mockStore}>
-                <QualificationMaster onSuccessAction={jest.fn()} errorAction={jest.fn()} />
+                <QualificationMaster onSuccessAction={jest.fn()} errorAction={jest.fn()} fetchList={fetchList} />
             </Provider>
         );
+
+        await waitFor(() => {
+            expect(screen.getByText('Test')).toBeInTheDocument();
+        });
+
         const refreshBtn = screen.getByRole('button', { name: '', exact: false });
         fireEvent.click(refreshBtn);
+
+        fetchList.mock.calls[0][0].onSuccessAction();
     });
 
     it('cancel button should work', async () => {
@@ -138,5 +152,36 @@ describe('Qualification Master Test', () => {
         fireEvent.click(status);
         const saveBtn = screen.getByRole('button', { name: 'Save', exact: false });
         fireEvent.click(saveBtn);
+    });
+
+    it('test for onSuccess', async () => {
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+            data: {
+                QualificationMaster: { isLoaded: true, data: [{ id: '106', qualificationCode: 'QC07', qualificationDescription: null, qualificationName: 'QM Test', status: 0 }] },
+            },
+        });
+
+        const saveData = jest.fn();
+        const res = { data: [{ id: '106', status: 0 }] };
+        const fetchList = jest.fn();
+
+        customRender(
+            <Provider store={mockStore}>
+                <QualificationMaster saveData={saveData} fetchList={fetchList} />
+            </Provider>
+        );
+
+        const editBtn = screen.getByRole('button', { name: 'fa-edit' });
+        fireEvent.click(editBtn);
+
+        const status = screen.getByRole('switch', { name: 'Status' });
+        fireEvent.click(status);
+
+        const saveBtn = screen.getByRole('button', { name: 'Save' });
+        fireEvent.click(saveBtn);
+
+        await waitFor(() => expect(saveData).toHaveBeenCalled());
+        saveData.mock.calls[0][0].onSuccess(res);
     });
 });
