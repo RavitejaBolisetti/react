@@ -14,12 +14,13 @@ import { cancellationDataActions } from 'store/actions/data/otf/otfCancellation'
 import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 import { BASE_URL_OTF_CANCELLATION_DEALER_SEARCH as customURL } from 'constants/routingApi';
+import { DisableParent } from 'components/common/ProductHierarchy/ProductHierarchyUtils';
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId, accessToken, token },
         data: {
-            ProductHierarchy: { isLoading: isProductHierarchyLoading = false, data: productHierarchyData = [] },
+            ProductHierarchy: { isLoaded: isProductDataLoaded = false, isLoading: isProductHierarchyLoading = false, productCode = undefined, data: productHierarchyData = [] },
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             SupportingDocument: { isLoaded: isDataLoaded = false, isLoading, data: supportingData },
             OTF: {
@@ -28,7 +29,6 @@ const mapStateToProps = (state) => {
         },
     } = state;
     const moduleTitle = 'Cancel Booking';
-
     let returnValue = {
         userId,
         accessToken,
@@ -39,8 +39,10 @@ const mapStateToProps = (state) => {
         supportingData,
         moduleTitle,
         isProductHierarchyLoading,
-        productHierarchyData,
+        isProductDataLoaded,
+        productHierarchyDataList: productHierarchyData,
         dealerDataList,
+        productCode,
     };
     return returnValue;
 };
@@ -65,7 +67,7 @@ const CancellationMasterBase = (props) => {
     const { otfData, selectedOrder } = props;
     const { userId, listShowLoading, uploadDocumentFile } = props;
     const { moduleTitle, setUploadedFile, uploadedFile } = props;
-    const { fetchProductHierarchyList, productHierarchyData, onFinishOTFCancellation, fetchDealerList, dealerDataList, resetDealerList } = props;
+    const { productCode, fetchProductHierarchyList, isProductDataLoaded, productHierarchyDataList, onFinishOTFCancellation, fetchDealerList, dealerDataList, resetDealerList } = props;
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: true, cancelOTFBtn: true };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -74,6 +76,7 @@ const CancellationMasterBase = (props) => {
 
     const [uploadedFileName, setUploadedFileName] = useState('');
     const [parentAppCode, setparentAppCode] = useState();
+    const [productHierarchyData, setProductHierarchyData] = useState([]);
 
     const fieldNames = { title: 'prodctShrtName', key: 'prodctCode', children: 'subProdct' };
     const handleButtonClick = ({ record = null, buttonAction }) => {};
@@ -83,11 +86,30 @@ const CancellationMasterBase = (props) => {
     };
 
     useEffect(() => {
-        if (userId) {
-            fetchProductHierarchyList({ setIsLoading: listShowLoading, userId });
+        if (userId && (!isProductDataLoaded || productCode !== selectedOrder?.modelCode) && selectedOrder?.modelCode) {
+            const extraParams = [
+                {
+                    key: 'unit',
+                    value: 'Sales',
+                },
+                {
+                    key: 'prodctCode',
+                    value: selectedOrder?.modelCode,
+                },
+                {
+                    key: 'hierarchyNode',
+                    value: 'MV',
+                },
+            ];
+            fetchProductHierarchyList({ setIsLoading: listShowLoading, userId, extraParams });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId]);
+    }, [userId, isProductDataLoaded, selectedOrder, productCode]);
+
+    useEffect(() => {
+        setProductHierarchyData(productHierarchyDataList?.map((i) => DisableParent(i, 'subProdct')));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [productHierarchyDataList]);
 
     useEffect(() => {
         if (searchDealerValue?.length >= 3 && userId) {

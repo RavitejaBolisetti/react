@@ -21,6 +21,7 @@ export const ExportCOA = (props) => {
                                 placeholder={preparePlaceholderSelect('From Date')}
                                 format={dateFormat}
                                 disabledDate={(current) => current > new Date()}
+                                getPopupContainer={(triggerNode) => triggerNode.parentElement}
                             />
                         </Form.Item>
                     </Col>
@@ -31,6 +32,7 @@ export const ExportCOA = (props) => {
                                 placeholder={preparePlaceholderSelect('To Date')}
                                 format={dateFormat}
                                 disabledDate={(current) => current < exportCoaForm?.getFieldValue('fromDate') || current > new Date()}
+                                getPopupContainer={(triggerNode) => triggerNode.parentElement}
                             />
                         </Form.Item>
                     </Col>

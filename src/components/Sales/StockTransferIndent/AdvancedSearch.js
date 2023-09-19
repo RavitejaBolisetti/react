@@ -15,7 +15,7 @@ import { ModalButtons } from 'components/common/Button';
 import { STOCK_TRANSFER } from 'constants/StockTransfer';
 
 import { dateFormat, formatDate, formatDateToCalenderDate } from 'utils/formatDateTime';
-import { validateRequiredSelectField } from 'utils/validation';
+import { compareFromToDate, validateRequiredSelectField, campareDate } from 'utils/validation';
 import { customSelectBox } from 'utils/customSelectBox';
 
 import styles from 'assets/sass/app.module.scss';
@@ -88,7 +88,6 @@ export const AdvancedSearchFrom = (props) => {
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                     <Form.Item initialValue={filterString?.indent} label="Indent" name="indent">
-                        {/* {customSelectBox({ data: searchList.filter(temp =>{ return toggleButton === STOCK_TRANSFER?.RAISED.key ? temp.key == "RAIS_TO" : temp.key == "REC_TO" }), fieldNames: { key: 'key', value: 'value' }, placeholder: preparePlaceholderSelect(placeHold.place) })} */}
                         {customSelectBox({ data: indentSaerchList, fieldNames: { key: 'key', value: 'value' }, placeholder: preparePlaceholderSelect(placeHold.place) })}
                     </Form.Item>
                 </Col>
@@ -98,7 +97,6 @@ export const AdvancedSearchFrom = (props) => {
                     </Form.Item>
                 </Col>
             </Row>
-
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                     <Form.Item initialValue={formatDateToCalenderDate(filterString?.fromDate)} label="Indent From Date" name="fromDate" rules={[validateRequiredSelectField('Indent From Date')]} className={styles?.datePicker}>
@@ -106,20 +104,7 @@ export const AdvancedSearchFrom = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item
-                        initialValue={formatDateToCalenderDate(filterString?.toDate)}
-                        label="Indent To Date"
-                        name="toDate"
-                        rules={[
-                            validateRequiredSelectField('Indent To Date'),
-                            {
-                                validator: (_, value) => {
-                                    return advanceFilterForm.getFieldValue('fromDate') ? CheckDateEffectiveTo(value, advanceFilterForm?.getFieldValue('fromDate')) : null;
-                                },
-                            },
-                        ]}
-                        className={styles?.datePicker}
-                    >
+                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.toDate)} label="Indent To Date" name="toDate" rules={[validateRequiredSelectField('Indent To Date'), { validator: (_, value) => campareDate(value, advanceFilterForm.getFieldValue('fromDate')) }]} className={styles?.datePicker}>
                         <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} disabledDate={disableFutureDate} className={styles.fullWidth} />
                     </Form.Item>
                 </Col>

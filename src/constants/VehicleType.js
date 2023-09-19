@@ -6,7 +6,7 @@
 export const VEHICLE_TYPE = {
     UNALLOTED: {
         id: 1,
-        key: 'D',
+        key: 'C',
         title: 'Un-Allotted',
         desc: 'Un-Allotted',
     },

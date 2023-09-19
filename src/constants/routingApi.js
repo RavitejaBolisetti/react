@@ -43,7 +43,7 @@ export const BASE_URL_DEALER_MANPOWER_DESIGNATION = BASE_URL_DEALER_MANPOWER + '
 export const BASE_URL_DEALER_MANPOWER_EMPLOYEE_DEPARTMENT = BASE_URL_DEALER_MANPOWER + '/employee/departments';
 
 export const BASE_URL_CUSTOMER_MASTER = BASE_URL + 'customers';
-export const BASE_URL_PARTY_MASTER = BASE_URL_CUSTOMER_MASTER + '/partymaster';
+export const BASE_URL_PARTY_MASTER = BASE_URL_CUSTOMER_MASTER + '/partymaster/lov';
 export const BASE_URL_LESSOR_COMPANY_MASTER = BASE_URL_CUSTOMER_MASTER + '/lessorcompany';
 export const BASE_URL_LESSOR_CUSTOMER_CREATION = BASE_URL_CUSTOMER_MASTER + '/lessorcustomer';
 export const BASE_URL_CUSTOMER_MASTER_LIST = BASE_URL + 'customers/search';
@@ -60,6 +60,10 @@ export const BASE_URL_ROLE_MANAGEMENT = BASE_URL + 'application/rolemaster';
 export const BASE_URL_ROLE_MANAGEMENT_ROLES_MENU = BASE_URL + 'application/roles';
 
 export const BASE_URL_PRODUCT_HIERARCHY = BASE_URL + 'product';
+export const BASE_URL_PRODUCT_MAKE = BASE_URL_PRODUCT_HIERARCHY + '/make';
+export const BASE_URL_PRODUCT_MODEL_GROUP = BASE_URL_PRODUCT_HIERARCHY + '/modelgroup';
+export const BASE_URL_PRODUCT_VARIENT = BASE_URL_PRODUCT_HIERARCHY + '/variant';
+export const BASE_URL_PRODUCT_HIERARCHY_DETAIL = BASE_URL + 'product/details';
 export const BASE_URL_PRODUCT_HIERARCHY_SAVE = BASE_URL + 'product';
 export const BASE_URL_PRODUCT_HIERARCHY_CHANGE_HISTORY = BASE_URL + 'product/hierarchychangehistory';
 export const BASE_URL_PRODUCT_HIERARCHY_SKU = BASE_URL + 'product/skuattribute';

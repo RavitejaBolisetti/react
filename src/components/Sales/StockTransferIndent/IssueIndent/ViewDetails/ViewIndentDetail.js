@@ -10,7 +10,7 @@ import { converDateDayjs } from 'utils/formatDateTime';
 import styles from 'assets/sass/app.module.scss';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
-const ViewDetailMain = (props) => {
+const ViewIndentDetailMain = (props) => {
     const { formData, isLoading = false, typeData } = props;
 
     const viewProps = {
@@ -24,14 +24,14 @@ const ViewDetailMain = (props) => {
         indentDate: converDateDayjs(formData?.indentDate),
         indentStatus: typeData[PARAM_MASTER?.INDNT_RAS?.id]?.find((i) => i?.key === formData?.indentStatus)?.value || '-',
     };
-    console.log('sjaka', typeData);
+
     return (
         <Card className={styles.drawerCardView}>
             <Descriptions {...viewProps}>
-                <Descriptions.Item label="Indent To Location">{checkAndSetDefaultValue(viewData?.indentToLocation, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Indent Number">{checkAndSetDefaultValue(viewData?.indentNumber, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Indent Date">{checkAndSetDefaultValue(viewData?.indentDate, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Indent Status">{checkAndSetDefaultValue(formData?.indentStatus, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Indent Status">{checkAndSetDefaultValue(viewData?.indentStatus, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Indent To Location">{checkAndSetDefaultValue(viewData?.indentToLocation, isLoading)}</Descriptions.Item>
             </Descriptions>
             <Descriptions {...viewProps}>
                 <Descriptions.Item label="Model Description">{checkAndSetDefaultValue(viewData?.modelDescription, isLoading)}</Descriptions.Item>
@@ -48,4 +48,4 @@ const ViewDetailMain = (props) => {
     );
 };
 
-export const ViewDetail = ViewDetailMain;
+export const ViewIndentDetail = ViewIndentDetailMain;
