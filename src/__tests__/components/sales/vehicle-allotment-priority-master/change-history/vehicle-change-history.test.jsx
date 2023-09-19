@@ -9,6 +9,7 @@ import customRender from '@utils/test-utils';
 import { screen, fireEvent } from '@testing-library/react';
 import { ChangeHistory } from '@components/Sales/VehicleAllotmentPriorityMaster/ChangeHistory/vehicleChangeHistory';
 
+
 afterEach(() => {
     jest.restoreAllMocks();
 });
@@ -26,11 +27,35 @@ describe('vehicle allotment component render', () => {
         handleTableChange: jest.fn(),
     };
 
+
+
     it('should render vehicle allotment ChangeHistory component', async () => {
         customRender(<ChangeHistory {...props} />);
         const closeBtn = screen.getAllByRole('button', { name: 'Close', exact: false });
         fireEvent.click(closeBtn[0]);
         fireEvent.click(closeBtn[1]);
+
+        const closedBtn = screen.getByRole('img', { name: 'close', exact: false });
+        fireEvent.click(closedBtn);
     });
+
+    it('should render vehicle allotment ChangeHistory columnheader text', async () => {
+        customRender(<ChangeHistory {...props} />);
+        const srlText = screen.getByRole('columnheader', { name: 'Srl.' });
+        fireEvent.click(srlText);
+        const modifiedBy = screen.getByRole('columnheader', { name: 'Modified By' });
+        fireEvent.click(modifiedBy);
+        const fieldName = screen.getByRole('columnheader', { name: 'Field Name' });
+        fireEvent.click(fieldName);
+        const oldValue = screen.getByRole('columnheader', { name: 'Old Value' });
+        fireEvent.click(oldValue);
+        const newValue = screen.getByRole('columnheader', { name: 'New Value' });
+        fireEvent.click(newValue);
+        const noData = screen.getByRole('cell', { name: 'No data' });
+        fireEvent.click(noData);
+        const modifiedDate = screen.getByRole('row', { name: 'Srl. Modified Date & Time Modified By Field Name Old Value New Value' });
+        fireEvent.click(modifiedDate);
+    });
+
    
 });
