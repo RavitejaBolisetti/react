@@ -288,6 +288,15 @@ export const VehicleAllotmentMasterBase = (props) => {
         if (key === 'searchParam') {
             const { searchType, searchParam, ...rest } = filterString;
             setFilterString({ ...rest });
+        } else if (key === 'modelValue') {
+            const { model, ...rest } = filterString;
+            setFilterString({ ...rest });
+        } else if (key === 'vehicleStatusValue') {
+            const { vehicleStatus, ...rest } = filterString;
+            setFilterString({ ...rest });
+        } else if (key === 'pdiDoneValue') {
+            const { pdDone, ...rest } = filterString;
+            setFilterString({ ...rest });
         } else {
             const { [key]: names, ...rest } = filterString;
             setFilterString({ ...rest });

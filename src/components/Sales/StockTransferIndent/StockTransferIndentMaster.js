@@ -12,6 +12,7 @@ import { FilterIcon } from 'Icons';
 import { tableColumn } from './tableColumn';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { STOCK_TRANSFER } from 'constants/StockTransfer';
+import { VEHICLE_TYPE } from 'constants/VehicleType';
 import { ADD_ACTION, VIEW_ACTION, CANCEL_ACTION } from 'utils/btnVisiblity';
 import { stockTransferIndent } from 'store/actions/data/sales/stockTransfer/StockTransferIndent';
 import { StockIndentIssueDataAction } from 'store/actions/data/sales/stockTransfer';
@@ -441,6 +442,11 @@ export const StockTransferIndentMasterBase = (props) => {
                 key: 'searchParam',
                 title: 'Value',
                 value: vinNumber,
+            },
+            {
+                key: 'status',
+                title: 'Value',
+                value: VEHICLE_TYPE.UNALLOTED.key,
             },
             {
                 key: 'pageSize',

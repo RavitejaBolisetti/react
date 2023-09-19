@@ -64,7 +64,7 @@ export const AdvancedSearchFrom = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={filterString?.otfStatus} label="PDI Done" name="pdDone">
+                    <Form.Item initialValue={filterString?.pdDone} label="PDI Done" name="pdDone">
                         {customSelectBox({ data: typeData[PARAM_MASTER.PD_DONE.id], placeholder: preparePlaceholderSelect('pdi done') })}
                     </Form.Item>
                 </Col>
