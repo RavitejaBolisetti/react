@@ -11,7 +11,7 @@ import { CUSTOMER_TYPE } from 'constants/CustomerType';
 import styles from 'assets/sass/app.module.scss';
 
 const AddEditForm = (props) => {
-    const { isReadOnly = false, onSaveFormData, contactform, setShowAddEditForm, setIsEditing, typeData, customerType, uploadImgDocId, formActionType, handleFormValueChange, setIsAdding, contactData, editingData } = props;
+    const { isReadOnly = false, onSaveFormData, contactform, setShowAddEditForm, setIsEditing, typeData, customerType, formActionType, handleFormValueChange, setIsAdding, contactData, editingData } = props;
 
     const disabledProps = { disabled: isReadOnly || formActionType?.viewMode };
 
@@ -193,9 +193,9 @@ const AddEditForm = (props) => {
                     <Form.Item hidden initialValue={''} name="id">
                         <Input />
                     </Form.Item>
-                    <Form.Item hidden initialValue={uploadImgDocId} value={uploadImgDocId} name="docId">
+                    {/* <Form.Item hidden initialValue={uploadImgDocId} value={uploadImgDocId} name="docId">
                         <Input />
-                    </Form.Item>
+                    </Form.Item> */}
                     <Form.Item hidden initialValue={true} name="status">
                         <Input />
                     </Form.Item>
