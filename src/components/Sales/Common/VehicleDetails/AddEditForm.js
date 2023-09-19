@@ -108,7 +108,7 @@ const AddEditFormMain = (props) => {
         handleSelectTreeClick,
         defaultValue: null,
         placeholder: preparePlaceholderSelect('Model'),
-        loading: isProductDataLoading,
+        // loading: isProductDataLoading,
         treeDisabled: viewOnly,
     };
 

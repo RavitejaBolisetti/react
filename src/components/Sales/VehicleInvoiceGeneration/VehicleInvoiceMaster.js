@@ -33,6 +33,7 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 
 import { FilterIcon } from 'Icons';
+import { validateOTFMenu } from './LeftSidebar/MenuNav';
 
 const mapStateToProps = (state) => {
     const {
@@ -277,12 +278,19 @@ export const VehicleInvoiceMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    const filterActiveMenu = (items) => {
+        return items?.filter((item) => validateOTFMenu({ item, otfData }));
+    };
+
+    const filterActiveSection = sectionName && filterActiveMenu(Object.values(sectionName));
+    console.log('🚀 ~ file: VehicleInvoiceMaster.js:286 ~ VehicleInvoiceMasterBase ~ filterActiveSection:', filterActiveSection);
+
     useEffect(() => {
         if (currentSection && sectionName) {
             const section = Object.values(sectionName)?.find((i) => i.id === currentSection);
             setSection(section);
 
-            const nextSection = Object.values(sectionName)?.find((i) => i?.displayOnList && i.id > currentSection);
+            const nextSection = filterActiveSection?.find((i) => i?.displayOnList && i.id > currentSection);
             setLastSection(!nextSection?.id);
         }
         form.resetFields();
@@ -415,7 +423,7 @@ export const VehicleInvoiceMasterBase = (props) => {
                 defaultSection && setCurrentSection(defaultSection);
                 break;
             case NEXT_ACTION:
-                const nextSection = Object.values(sectionName)?.find((i) => i.id > currentSection);
+                const nextSection = filterActiveSection?.find((i) => i?.displayOnList && i.id > currentSection);
                 section && setCurrentSection(nextSection?.id);
                 setLastSection(!nextSection?.id);
                 break;

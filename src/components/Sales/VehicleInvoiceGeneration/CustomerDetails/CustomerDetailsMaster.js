@@ -4,14 +4,14 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Form } from 'antd';
 import { AddEditForm, ViewDetail } from 'components/Sales/Common/CustomerDetails';
 
 import styles from 'assets/sass/app.module.scss';
 
 export const CustomerDetailsMain = (props) => {
-    const { isLoading, userId, isDataLoaded, customerFormData, showGlobalNotification, onFinishFailed } = props;
+    const { isLoading, isDataLoaded, formData, showGlobalNotification, onFinishFailed } = props;
     const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, pincodeData, formActionType, NEXT_ACTION, handleButtonClick } = props;
     const { typeData, selectedOrderId } = props;
     const { buttonData, setButtonData, formKey, onFinishCustom = undefined } = props;
@@ -19,15 +19,7 @@ export const CustomerDetailsMain = (props) => {
 
     const [form] = Form.useForm();
     const [billCstmForm] = Form.useForm();
-    const [formData, setFormData] = useState('');
     const [activeKey, setActiveKey] = useState([]);
-
-    useEffect(() => {
-        if (userId && customerFormData) {
-            setFormData(customerFormData);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, customerFormData]);
 
     const onFinish = (values) => {
         if (!values?.bookingCustomer?.customerId) {
@@ -40,7 +32,7 @@ export const CustomerDetailsMain = (props) => {
             return false;
         } else {
             form.getFieldsValue();
-            const data = { bookingCustomer: { ...values?.bookingCustomer, otfNumber: selectedOrderId, bookingAndBillingType: 'BOOKING', id: customerFormData?.bookingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer }, billingCustomer: { ...values?.billingCustomer, otfNumber: selectedOrderId, bookingAndBillingType: 'BILLING', id: customerFormData?.billingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer } };
+            const data = { bookingCustomer: { ...values?.bookingCustomer, otfNumber: selectedOrderId, bookingAndBillingType: 'BOOKING', id: formData?.bookingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer }, billingCustomer: { ...values?.billingCustomer, otfNumber: selectedOrderId, bookingAndBillingType: 'BILLING', id: formData?.billingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer } };
 
             onFinishCustom({ key: formKey, values: data });
             handleButtonClick({ buttonAction: NEXT_ACTION });
@@ -52,7 +44,6 @@ export const CustomerDetailsMain = (props) => {
         ...props,
         form,
         billCstmForm,
-        customerFormData,
         formData,
         formActionType,
         onFinish,
