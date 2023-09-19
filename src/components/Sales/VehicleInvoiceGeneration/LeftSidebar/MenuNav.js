@@ -22,6 +22,7 @@ export const validateOTFMenu = ({ item, status, otfData }) => {
     }
 };
 
+
 const MenuNav = (props) => {
     const { currentSection, setCurrentSection, selectedOtfNumber, formActionType, vehicleInvoiceMasterData, selectedOrder: { orderStatus = false } = {} } = props;
     const receiptSectionList = Object.values(VEHICLE_INVOICE_SECTION);

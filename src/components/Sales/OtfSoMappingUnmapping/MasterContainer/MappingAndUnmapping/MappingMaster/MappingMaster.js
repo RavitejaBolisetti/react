@@ -85,6 +85,8 @@ const MappingMasterMain = (props) => {
 
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [formData, setFormData] = useState('');
+    const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: true, formBtnActive: true };
+    const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
     const handleButtonClick = ({ record = null, buttonAction }) => {
         record && setFormData(record);
@@ -194,6 +196,8 @@ const MappingMasterMain = (props) => {
         searchCustomButtonProperties,
         SearchTableProps,
         formData,
+        buttonData,
+        setButtonData,
     };
 
     return (

@@ -11,8 +11,8 @@ import { OTF_SECTION } from 'constants/OTFSection';
 import { OtfDetailsMaster } from './OtfDetails';
 import { CustomerDetailsMaster } from 'components/Sales/OTF/CustomerDetails';
 import { VehicleDetailsMaster } from 'components/Sales/OTF/VehicleDetails';
+import { InsuranceDetailsMaster } from 'components/Sales/OTF/InsuranceDetails';
 
-import { InsuranceDetailsMaster } from 'components/Sales/Common/InsuranceDetails';
 import { SchemeDetailsMaster } from 'components/Sales/Common/SchemeDetails';
 import { FinananceDetailsMaster } from 'components/Sales/Common/FinananceDetails';
 import { ExchangeVehiclesMaster } from 'components/Sales/Common/ExchangeVehicles';
