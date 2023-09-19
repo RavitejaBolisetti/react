@@ -12,10 +12,6 @@ import { Provider } from 'react-redux';
 
 import { QualificationMaster } from '@components/common/QualificationMaster/QualificationMaster';
 
-beforeEach(() => {
-    jest.clearAllMocks();
-});
-
 const props = {
     isDataLoaded: jest.fn(),
     data: '',
