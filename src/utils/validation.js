@@ -254,7 +254,7 @@ export const isValidQunatity = (value, balancedQuantity) => {
     else return Promise.resolve();
 };
 
-const campareDate = (value, compareTo, title) => {
+export const campareDate = (value, compareTo, title) => {
     const bool = dayjs(value).format('YYYY-MM-DD') >= dayjs(compareTo).format('YYYY-MM-DD');
     if (bool) {
         return Promise.resolve();
@@ -265,7 +265,7 @@ const campareDate = (value, compareTo, title) => {
 export const compareFromToDate = (compareTo) => {
     return {
         validator: (_, value) => {
-            return compareTo ? campareDate(value, compareTo) : null;
+            return compareTo ? campareDate(value, compareTo) : Promise.resolve();
         },
     };
 };

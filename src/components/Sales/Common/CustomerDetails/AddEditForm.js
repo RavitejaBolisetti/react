@@ -58,8 +58,9 @@ const AddEditFormBase = (props) => {
             form?.setFieldsValue({ billingCustomer: { ...bookingCustomer } });
         } else {
             setSameAsBookingCustomer(false);
-            form?.resetFields();
+            // form?.resetFields();
             form?.setFieldsValue({ billingCustomer: null });
+            form?.setFieldsValue({ billingCustomer: { birthDate: null, gstin: null, panNo: null, alternateNumber: null } });
         }
     };
 

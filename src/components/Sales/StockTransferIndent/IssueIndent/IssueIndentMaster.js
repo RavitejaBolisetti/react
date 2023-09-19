@@ -13,7 +13,6 @@ import { expandIcon } from 'utils/accordianExpandIcon';
 import { handleBtnVisibility } from '../utils';
 import { IssueIndentFrom } from './IssueIndentFrom';
 import { converDateDayjs } from 'utils/formatDateTime';
-
 import { ConfirmationModal } from 'utils/ConfirmationModal';
 import styles from 'assets/sass/app.module.scss';
 import { InputSkeleton } from 'components/common/Skeleton';
@@ -22,7 +21,7 @@ const { Panel } = Collapse;
 const { Text } = Typography;
 
 const IssueIndentMasterMain = (props) => {
-    const { cancellationData, handleVinSearch, vehicleVinData, saveIssueDetail, showGlobalNotification, resetVinDetails, listShowLoading, userId, fetchIssueList, indentIssueData, resetIssueList, indentIssueDataLoaded, typeData, indentIssueDataLoading, toggleButton, vehicleVinDataLoading } = props;
+    const { refershIndentData, setRefershIndentData, cancellationData, handleVinSearch, vehicleVinData, saveIssueDetail, showGlobalNotification, resetVinDetails, listShowLoading, userId, fetchIssueList, indentIssueData, resetIssueList, indentIssueDataLoaded, typeData, indentIssueDataLoading, toggleButton, vehicleVinDataLoading, handlePrintDownload } = props;
 
     const defaultVisibility = {
         canCancel: true,
@@ -62,6 +61,12 @@ const IssueIndentMasterMain = (props) => {
                 title: 'Number',
                 value: cancellationData?.indentNumber,
             },
+
+            {
+                key: 'modelCode',
+                title: 'Model Code',
+                value: cancellationData?.modelCode,
+            },
         ];
         fetchIssueList({ setIsLoading: listShowLoading, userId, onErrorAction, extraParams });
         return () => {
@@ -100,7 +105,6 @@ const IssueIndentMasterMain = (props) => {
             });
     };
 
-    const handlePrintDownload = () => {};
     const handleAdd = () => {
         setIssueModal(true);
     };
@@ -118,6 +122,7 @@ const IssueIndentMasterMain = (props) => {
             issueForm.resetFields();
             setIssueModal(false);
             resetVinDetails();
+            setRefershIndentData(!refershIndentData);
             setRefershData(!refershData);
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
         };
@@ -149,6 +154,7 @@ const IssueIndentMasterMain = (props) => {
         const onSuccess = (res) => {
             resetVinDetails();
             setRefershData(!refershData);
+            setRefershIndentData(!refershIndentData);
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
         };
 
@@ -240,3 +246,5 @@ const IssueIndentMasterMain = (props) => {
 };
 
 export const IssueIndentMaster = withDrawer(IssueIndentMasterMain, { width: '90%', footer: null });
+
+//export const IssueIndentMaster = connect(withDrawer(mapStateToProps, mapDispatchToProps)(IssueIndentMasterMain, { width: '90%', footer: null }));

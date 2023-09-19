@@ -125,7 +125,7 @@ const VehicleInvoiceCard = (props) => {
                                     </>
                                 ) : (
                                     <>
-                                        {checkAndSetDefaultValue(otfData?.irnStatus)}
+                                        {checkAndSetDefaultValue(getCodeValue(typeData[PARAM_MASTER.IRN_GEN_STATUS.id], otfData?.irnStatus))}
                                         <div className={styles.tooltipAlign}>
                                             {otfData?.irnStatus &&
                                                 addToolTip(

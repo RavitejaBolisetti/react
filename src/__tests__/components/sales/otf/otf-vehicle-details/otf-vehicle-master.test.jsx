@@ -1,7 +1,7 @@
 import React from 'react';
 import { screen, fireEvent, logRoles } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { VehicleDetailsMaster } from '@components/Sales/OTF/VehicleDetails/VehicleDetailsMaster';
+import { VehicleDetailsMaster } from '@components/Sales/Common/VehicleDetails/VehicleDetailsMaster';
 import customRender from '@utils/test-utils';
 import { Form } from 'antd';
 import createMockStore from '__mocks__/store';

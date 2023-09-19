@@ -20,7 +20,7 @@ import { NOTIFICATION_STATUS } from 'constants/pushNotification';
 import styles from './Notification.module.scss';
 
 const { Text } = Typography;
-const defaultPagination = { pageSize: 5, pageNumber: 1 };
+const defaultPagination = { pageSize: 10, pageNumber: 1 };
 
 const mapDispatchToProps = (dispatch) => ({
     dispatch,

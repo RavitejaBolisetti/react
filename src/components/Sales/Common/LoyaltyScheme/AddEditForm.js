@@ -19,7 +19,7 @@ const AddEditFormMain = (props) => {
     const { form, formData } = props;
     const { schemeLovData, typeData } = props;
     const { isConfigLoading, isSchemeLovLoading, isModelLoading, isVariantLoading } = props;
-    const { filteredModelData, filteredVariantData, handleFilterChange, fnSetData, disabledProps } = props;
+    const { filteredModelData, filteredVariantData, handleFilterChange, fnSetData, disabledProps,handleSchemeChange } = props;
 
     const currentYear = new Date().getFullYear();
     const yearsList = [];
@@ -53,13 +53,13 @@ const AddEditFormMain = (props) => {
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item label="Make" name="make" data-testid="make" rules={[validateRequiredSelectField('make')]}>
-                        <Select placeholder="Select" allowClear fieldNames={{ label: 'value', value: 'key' }} options={typeData[PARAM_MASTER?.MAKE_NAME?.id]} />
+                        <Select placeholder="Select" allowClear fieldNames={{ label: 'value', value: 'key' }} options={typeData[PARAM_MASTER?.MAKE_NAME?.id]} onChange={(value, selectobj) => handleFilterChange('make', value, selectobj)} />
                     </Form.Item>
                 </Col>
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item label="Model Group" name="vehicleModelGroup" data-testid="modelGroup" rules={[validateRequiredSelectField('model group')]}>
-                        <Select placeholder="Select" loading={isModelLoading} allowClear fieldNames={{ label: 'value', value: 'key' }} options={filteredModelData} onChange={(value, selectobj) => handleFilterChange('modelGroup', value, selectobj)} />
+                        <Select placeholder="Select" loading={isModelLoading} allowClear fieldNames={{ label: 'modelGroupDescription', value: 'modelGroupCode' }} options={filteredModelData} onChange={(value, selectobj) => handleFilterChange('modelGroupCode', value, selectobj)} />
                     </Form.Item>
                 </Col>
             </Row>
@@ -137,13 +137,13 @@ const AddEditFormMain = (props) => {
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name="schemeCode" label="Scheme Name" initialValue={formData?.schemeCode} rules={[validateRequiredSelectField('Scheme Name')]}>
-                        <Select loading={isSchemeLovLoading} fieldNames={{ label: 'value', value: 'key' }} options={schemeLovData} placeholder={preparePlaceholderSelect('Scheme Name')} />
+                        <Select loading={isSchemeLovLoading} fieldNames={{ label: 'value', value: 'key' }} options={schemeLovData} placeholder={preparePlaceholderSelect('Scheme Name')} onChange={handleSchemeChange} />
                     </Form.Item>
                 </Col>
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name="schemeAmount" label="Scheme Amount" initialValue={formData?.schemeAmount} rules={[validateNumberWithTwoDecimalPlaces('Scheme Amount')]}>
-                        <Input placeholder={preparePlaceholderText('scheme amount')} maxLength={50} />
+                        <Input disabled placeholder={preparePlaceholderText('scheme amount')} maxLength={50} />
                     </Form.Item>
                 </Col>
             </Row>

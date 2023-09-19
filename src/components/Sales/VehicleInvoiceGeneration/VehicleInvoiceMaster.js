@@ -34,6 +34,7 @@ import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 
 import { FilterIcon } from 'Icons';
 import { validateOTFMenu } from './LeftSidebar/MenuNav';
+import { timeStampCheck } from './utils/TimeStampCheck';
 
 const mapStateToProps = (state) => {
     const {
@@ -450,7 +451,7 @@ export const VehicleInvoiceMasterBase = (props) => {
                 setButtonData(Visibility);
                 // setButtonData({ ...Visibility, cancelReceiptBtn: true });
                 if (buttonAction === VIEW_ACTION) {
-                    invoiceStatus === QUERY_BUTTONS_CONSTANTS.CANCELLED.key ? setButtonData({ ...Visibility, editBtn: false, cancelInvoiceBtn: false, approveCancelBtn: false }) : setButtonData({ ...Visibility, editBtn: true, cancelInvoiceBtn: true, approveCancelBtn: false });
+                    invoiceStatus === QUERY_BUTTONS_CONSTANTS.INVOICED.key && (!otfData?.irnStatus || (otfData?.irnStatus && timeStampCheck(otfData?.invoiceDate, otfData?.irnDate))) ? setButtonData({ ...Visibility, cancelInvoiceBtn: true, approveCancelBtn: false }) : setButtonData({ ...Visibility, cancelInvoiceBtn: false, approveCancelBtn: false });
                     // : invoiceStatus === QUERY_BUTTONS_CONSTANTS.CANCELLATION_REQUEST.key ? setButtonData({ ...Visibility, editBtn: false, cancelInvoiceBtn: false, approveCancelBtn: true })
                 }
             }
@@ -540,6 +541,9 @@ export const VehicleInvoiceMasterBase = (props) => {
     const removeFilter = (key) => {
         if (key === 'searchParam') {
             const { searchType, searchParam, ...rest } = filterString;
+            setFilterString({ ...rest });
+        } else if (key === 'fromDate' || key === 'toDate') {
+            const { fromDate, toDate, ...rest } = filterString;
             setFilterString({ ...rest });
         } else {
             const { [key]: names, ...rest } = filterString;

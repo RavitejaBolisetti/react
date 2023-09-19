@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Col, Input, Form, Row} from 'antd';
+import { Col, Input, Form, Row } from 'antd';
 
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
@@ -26,7 +26,7 @@ export const VehicleDetailsForm = () => {
                     </Form.Item>
                 </Col>
                 <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6}>
-                    <Form.Item name="model" label="Model" rules={[validateRequiredInputField('Model')]}>
+                    <Form.Item name="model" label="Model Description" rules={[validateRequiredInputField('Model')]}>
                         <Input maxLength={30} placeholder={preparePlaceholderText('Model')} disabled={true} />
                     </Form.Item>
                 </Col>
