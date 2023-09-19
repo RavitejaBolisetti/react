@@ -42,7 +42,7 @@
     margin-top: -26px;
 } */
 
-.selectSearchBg :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) {
+.selectSearchBg :global .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) {
     margin-top: -4px;
     background-color: #ffffff;
 }
@@ -234,7 +234,7 @@
     margin-bottom: 0px;
 }
 
-.masterListSearchForm :global .ant-form-item .ant-form-item-label>label {
+.masterListSearchForm :global .ant-form-item .ant-form-item-label > label {
     margin-right: 20px;
     height: 36px;
     color: #0b0b0c;
@@ -264,9 +264,9 @@
     top: -10px;
     left: 50%;
     margin-left: -10px;
-    z-index: 1;
+    z-index: 99;
 }
 
-.masterListSearchForm :global .ant-form-item .ant-form-item-label>label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
+.masterListSearchForm :global .ant-form-item .ant-form-item-label > label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
     display: none;
 }

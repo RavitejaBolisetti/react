@@ -113,8 +113,8 @@ const OTFAllotmentMasterBase = (props) => {
             {
                 key: 'modelValue',
                 title: 'Model',
-                value: filterString?.model,
-                name: productHierarchyData?.find((i) => i?.prodctCode === filterString?.model)?.prodctShrtName,
+                value: selectedOrder?.modelCode,
+                // name: productHierarchyData?.find((i) => i?.prodctCode === selectedOrder?.model)?.prodctShrtName,
                 canRemove: true,
                 filter: true,
             },

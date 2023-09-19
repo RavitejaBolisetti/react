@@ -164,7 +164,7 @@ export const AdvancedSearchFrom = (props) => {
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <Form.Item label="Model" name="modelCode" rules={[validateRequiredSelectField('model')]}>
+                    <Form.Item label="Model Description" name="modelCode" rules={[validateRequiredSelectField('model')]}>
                         <Select showSearch placeholder="Select" allowClear>
                             {productHierarchyList?.map((item) => (
                                 <Option key={'ph' + item.prodctCode} value={item.prodctCode}>

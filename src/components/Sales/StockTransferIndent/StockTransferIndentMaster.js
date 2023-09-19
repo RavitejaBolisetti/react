@@ -149,6 +149,8 @@ export const StockTransferIndentMasterBase = (props) => {
     const [page, setPage] = useState({ pageSize: 10, current: 1 });
     const [additionalReportParams, setAdditionalReportParams] = useState();
     const [isReportVisible, setReportVisible] = useState();
+    const [selectedRecord, setSelectedRecord] = useState();
+    const [refershIndentData, setRefershIndentData] = useState();
 
     const dynamicPagination = true;
 
@@ -201,6 +203,23 @@ export const StockTransferIndentMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, parentGroupCode]);
+
+    useEffect(() => {
+        if (userId && selectedRecord?.indentNumber) {
+            const onSuccessViewIndent = (res) => {
+                setSelectedOrder(res?.data);
+                setOpenAccordian(true);
+            };
+            const extraParamData = [
+                {
+                    key: 'indentNumber',
+                    value: selectedRecord?.indentNumber,
+                },
+            ];
+            fetchIndentDetails({ customURL: customURL + '/indent', setIsLoading: listShowLoading, userId, onSuccessAction: onSuccessViewIndent, onErrorAction, extraParams: extraParamData });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, refershIndentData, selectedRecord]);
 
     const extraParams = useMemo(() => {
         const defaultPage = defaultPageProps(page);
@@ -278,17 +297,8 @@ export const StockTransferIndentMasterBase = (props) => {
                 setButtonData({ ...defaultBtnVisiblity, cancelBtn: true, saveBtn: false });
                 setButtonDataVehicleDetails({ ...btnVisiblityVehicleDetails, canView: true, canEdit: toggleButton === STOCK_TRANSFER?.RAISED?.key, canDelete: false });
                 setIsViewIndentVisible(true);
-                const onSuccessViewIndent = (res) => {
-                    setSelectedOrder(res?.data);
-                    setOpenAccordian(true);
-                };
-                const extraParamData = [
-                    {
-                        key: 'indentNumber',
-                        value: record?.indentNumber,
-                    },
-                ];
-                fetchIndentDetails({ customURL: customURL + '/indent', setIsLoading: listShowLoading, userId, onSuccessAction: onSuccessViewIndent, onErrorAction, extraParams: extraParamData });
+                setRefershIndentData(!refershIndentData);
+                setSelectedRecord(record);
                 break;
             case CANCEL_ACTION:
                 break;
@@ -449,9 +459,9 @@ export const StockTransferIndentMasterBase = (props) => {
                 value: VEHICLE_TYPE.UNALLOTED.key,
             },
             {
-                key: 'pageSize',
+                key: 'modelCode',
                 title: 'Value',
-                value: 1000,
+                value: cancellationData?.modelCode,
             },
             {
                 key: 'pageSize',
@@ -501,7 +511,7 @@ export const StockTransferIndentMasterBase = (props) => {
         page,
         setPage,
         isLoading: showDataLoading,
-        tableColumn: tableColumn(handleButtonClick),
+        tableColumn: tableColumn(handleButtonClick, toggleButton),
         tableData: data?.paginationData,
         showAddButton: false,
     };
@@ -576,6 +586,8 @@ export const StockTransferIndentMasterBase = (props) => {
         setCancellationIssueVisible,
         typeData,
         toggleButton,
+        refershIndentData,
+        setRefershIndentData,
     };
 
     const IndentIssueProps = {
@@ -607,6 +619,8 @@ export const StockTransferIndentMasterBase = (props) => {
         toggleButton,
         vehicleVinDataLoading: showVinLoading,
         handlePrintDownload,
+        refershIndentData,
+        setRefershIndentData,
     };
 
     const reportProps = {

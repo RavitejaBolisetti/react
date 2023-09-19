@@ -40,7 +40,7 @@ const mapStateToProps = (state) => {
                 OtfSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isOTFSearchLoading, data, isDetailLoaded },
             },
             vehicleAllotmentData: {
-                vehicleAllotment: { detailData: allotmentSummaryDetails, data: allotmentSearchedList, filter: filterString },
+                vehicleAllotment: { isLoading: isVehicleDataLoading, detailData: allotmentSummaryDetails, data: allotmentSearchedList, filter: filterString },
             },
         },
     } = state;
@@ -60,6 +60,7 @@ const mapStateToProps = (state) => {
         filterString,
         allotmentSummaryDetails,
         allotmentSearchedList,
+        isVehicleDataLoading,
         productHierarchyData,
     };
     return returnValue;
@@ -86,7 +87,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const VehicleAllotmentMasterBase = (props) => {
     const { fetchList, saveData, listShowLoading, userId, fetchVehicleAllotmentDetails, allotmentSummaryDetails, data, totalOTFRecords, resetData } = props;
-    const { fetchVehicleAllotmentSearchedList, allotmentSearchedList, resetOTFSearchedList, fetchModelList, productHierarchyData } = props;
+    const { fetchVehicleAllotmentSearchedList, allotmentSearchedList, isVehicleDataLoading, resetOTFSearchedList, fetchModelList, productHierarchyData } = props;
     const { typeData, showGlobalNotification } = props;
     const { filterString, setFilterString, otfStatusList, isOTFSearchLoading } = props;
 
@@ -508,6 +509,7 @@ export const VehicleAllotmentMasterBase = (props) => {
         setSelectedOrderOTFDetails,
         resetAdvanceFilter,
         setResetAdvanceFilter,
+        isVehicleDataLoading,
     };
 
     return (
