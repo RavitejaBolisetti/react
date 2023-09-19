@@ -66,20 +66,20 @@ const ViewDetailMain = (props) => {
         </Descriptions>
     );
     return (
-        <div  className={styles.viewDrawerContainer} >
+        <div className={styles.viewDrawerContainer}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Collapse expandIcon={expandIcon} collapsible="icon" activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
                         <Panel header="Booking Customer" key="1">
                             <Divider />
-                            {customerDetail(formData.bookingCustomer)}
+                            {customerDetail(formData?.bookingCustomer)}
                         </Panel>
                     </Collapse>
                     <Collapse expandIcon={expandIcon} collapsible="icon" activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
                         <Panel header="Billing Customer" key="2">
                             <Divider />
                             {/* <Checkbox>Same as Booking Customer</Checkbox> */}
-                            {customerDetail(formData.billingCustomer)}
+                            {customerDetail(formData?.billingCustomer)}
                         </Panel>
                     </Collapse>
                 </Col>
