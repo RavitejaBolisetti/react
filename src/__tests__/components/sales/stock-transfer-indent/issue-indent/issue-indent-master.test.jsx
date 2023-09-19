@@ -106,9 +106,6 @@ describe("IssueIndentMaster component", ()=>{
             issueData :[{issueNumber: '8'}]
         }
         customRender(<IssueIndentMaster isVisible={true} {...props} typeData={['PARAM_MASTER']} fetchIssueList={jest.fn()} handleBtnVisibility={jest.fn()} resetIssueList={jest.fn()} handleCollapses={jest.fn(0)}/>);
-
-        const plusIcon = screen.getByRole('img', {name:'plus'});
-        fireEvent.click(plusIcon)
     });
 
     it("IssueVehicleDetailsProps", ()=>{

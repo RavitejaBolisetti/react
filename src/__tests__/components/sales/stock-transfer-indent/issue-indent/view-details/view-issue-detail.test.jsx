@@ -5,7 +5,7 @@
  */
 import { fireEvent, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import { ViewIssueCard } from '@components/Sales/StockTransferIndent/IssueIndent/ViewDetails/ViewIssueCard';
+import { ViewIssueDetail } from '@components/Sales/StockTransferIndent/IssueIndent/ViewDetails/ViewIssueDetail';
 import customRender from '@utils/test-utils';
 
 describe("ViewIssueCard component", ()=>{
@@ -18,7 +18,7 @@ describe("ViewIssueCard component", ()=>{
     };
     
     it("receiveBtn", ()=>{
-        customRender(<ViewIssueCard  isVisible={true} formData={[{issueStatus:true}]} typeData={['PARAM_MASTER']} defaultVisibility={defaultVisibility} handleBtnVisibility={jest.fn()} />);
+        customRender(<ViewIssueDetail  isVisible={true} formData={[{issueStatus:true}]} typeData={['PARAM_MASTER']} defaultVisibility={defaultVisibility} handleBtnVisibility={jest.fn()} />);
 
         // const receiveBtn = screen.getByRole('button', {name:'Receive'});
         // fireEvent.click(receiveBtn);

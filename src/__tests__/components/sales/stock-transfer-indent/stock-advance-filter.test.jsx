@@ -21,7 +21,7 @@ const FormWrapper = (props) =>{
 describe("AdvanceOTFFilter",()=>{
 
         it("Indent Raised Button", ()=>{
-            customRender(<FormWrapper settoggleButton={jest.fn()} />);
+            customRender(<FormWrapper setToggleButton={jest.fn()} />);
     
             const raisedBtn = screen.getByRole('button', {name:'Indent Raised'});
             fireEvent.click(raisedBtn);
@@ -29,7 +29,7 @@ describe("AdvanceOTFFilter",()=>{
     
     
         it("Indent Received", ()=>{
-            customRender(<FormWrapper settoggleButton={jest.fn()} />);
+            customRender(<FormWrapper setToggleButton={jest.fn()} />);
     
             const receivedBtn = screen.getByRole('button', {name:'Indent Received'});
             fireEvent.click(receivedBtn);
