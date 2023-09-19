@@ -118,7 +118,6 @@ export const VehicleInvoiceMasterBase = (props) => {
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [invoiceStatus, setInvoiceStatus] = useState(QUERY_BUTTONS_CONSTANTS.INVOICED.key);
     const [requestPayload, setRequestPayload] = useState({ invoiceDetails: {}, vehicleDetails: {}, financeDetails: {}, insuranceDetails: {} });
-    console.log('🚀 ~ file: VehicleInvoiceMaster.js:120 ~ VehicleInvoiceMasterBase ~ requestPayload:', requestPayload);
 
     const [listFilterForm] = Form.useForm();
     const [cancelInvoiceForm] = Form.useForm();
@@ -167,7 +166,7 @@ export const VehicleInvoiceMasterBase = (props) => {
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
-    console.log('vehicleInvoiceMasterData', vehicleInvoiceMasterData);
+    console.log('requestPayload', requestPayload);
 
     const onSuccessAction = (res) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -325,7 +324,7 @@ export const VehicleInvoiceMasterBase = (props) => {
             },
             {
                 key: 'invoiceNumber',
-                value: selectedOrderId ?? 'INV1694281207008',
+                value: selectedOrderId,
                 name: 'Invoice Number',
             },
         ];
@@ -408,6 +407,7 @@ export const VehicleInvoiceMasterBase = (props) => {
             case ADD_ACTION:
                 defaultSection && setCurrentSection(defaultSection);
                 invoiceDetailForm.resetFields();
+                setSelectedOrderId('');
                 break;
             case EDIT_ACTION:
                 setSelectedOrder(record);
