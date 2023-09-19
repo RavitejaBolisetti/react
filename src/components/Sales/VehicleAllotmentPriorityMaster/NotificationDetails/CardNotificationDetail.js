@@ -14,10 +14,10 @@ const { Text } = Typography;
 
 const CardNotificationDetail = (props) => {
     const { finalFormdata, notificationDetailForm, forceUpdate, taxCharges, financialAccount, typeData, productHierarchyAttributeData, docTypeHeadMappingList, setDocTypeHeadMappingList, objTaxCharge, setOpenAccordian, changeValue, setChangeValue, editForm, formEdit, setFormEdit, uniqueCardEdit, buttonData, setButtonData, dropdownItems, setDropdownItems } = props;
-    const { filterDesignationList, roleData } = props;
+    const { filterDesignationList, roleData,filterDesignationDropdownList,setFilterDesignationDropdownList, } = props;
 
     const currentRole = roleData?.find((i) => i?.key === props?.roleCode)?.value;
-    const currentDestination = filterDesignationList?.find((i) => i?.designationCode === props?.designationCode)?.designationDescription;
+    const currentDestination = filterDesignationDropdownList?.find((i) => i?.designationCode === props?.designationCode)?.designationDescription;
 
     const docTypeHeadMappingSave = () => {
         let newFormData = editForm?.getFieldsValue();
@@ -70,6 +70,7 @@ const CardNotificationDetail = (props) => {
         financialAccount,
         typeData,
         filterDesignationList,
+        
     };
 
     useEffect(() => {
@@ -94,18 +95,7 @@ const CardNotificationDetail = (props) => {
                 </Space>
                 <Row>
                     <div className={styles.cardItemBtn}>{!formEdit && <Button onClick={() => onDocTypeHeadMappingDelete(props)} type="link" icon={<FiTrash />} disabled={props?.id ? true : false} />}</div>
-                    /* Duplicate code comment
-                    {formEdit && props?.internalId === uniqueCardEdit && (
-                        <div className={styles.cardItemBtn}>
-                            <Button type="link" onClick={onDocTypeHeadMappingCancel}>
-                                Cancel
-                            </Button>
-                            <Button type="link" onClick={docTypeHeadMappingSave}>
-                                Save
-                            </Button>
-                        </div>
-                    )}
-                    */
+                    
                     {formEdit && props?.internalId === uniqueCardEdit && (
                         <div className={styles.cardItemBtn}>
                             <Button type="link" onClick={onDocTypeHeadMappingCancel}>

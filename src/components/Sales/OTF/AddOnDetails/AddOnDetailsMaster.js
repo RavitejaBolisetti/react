@@ -179,11 +179,11 @@ export const AddOnDetailsMasterMain = (props) => {
         setformData(data);
         accessoryForm.setFieldsValue({
             mrp: data?.mrp,
+            partNumber: data?.partNumber,
             partDescription: data?.partDescription,
             quantity: data?.quantity,
             sellingPrice: data?.sellingPrice,
             type: data?.type,
-            partName: data?.type,
         });
         handleFormValueChange();
     };

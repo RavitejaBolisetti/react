@@ -15,7 +15,7 @@ const { Search } = Input;
 const AddEditFormMain = ({ formType, disabledProps, handleSearchChange, isLoading, filterString, handleResetData, status }) => {
     if (isLoading && formType === filterString?.formType) return <ListSkeleton count={12} height={30} />;
     const hideFields = status?.key === OTF_SO_MAPPING_UNMAPPING_CONSTANTS?.RESERVE_QUOTA?.key && formType === 'FORM_1';
-    console.log('status', hideFields, status, formType);
+
     return (
         <>
             {hideFields && (

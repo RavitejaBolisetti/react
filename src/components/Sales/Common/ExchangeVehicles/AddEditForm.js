@@ -46,7 +46,7 @@ const AddEditFormMain = (props) => {
             </Row>
             {form.getFieldValue('exchange') && (
                 <>
-                    <CustomerListMaster fnSetData={fnSetData} />
+                    <CustomerListMaster fnSetData={fnSetData} defaultOption={'registrationNumber'} />
 
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
@@ -82,7 +82,7 @@ const AddEditFormMain = (props) => {
                     </Row>
                     <Row gutter={20}>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item label="Variant" name="variant" data-testid="variant" rules={[validateRequiredSelectField('Variant')]}>
+                            <Form.Item label="Variant" name="variant" data-testid="variant" rules={[validateRequiredSelectField('variant')]}>
                                 <Select placeholder="Select" loading={isVariantLoading} allowClear fieldNames={{ label: 'value', value: 'key' }} options={filteredVariantData} />
                             </Form.Item>
                         </Col>

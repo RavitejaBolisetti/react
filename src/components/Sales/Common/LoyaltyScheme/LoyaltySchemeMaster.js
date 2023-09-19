@@ -15,11 +15,12 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { otfLoyaltySchemeDataActions } from 'store/actions/data/otf/loyaltyAndScheme';
 import { customerDetailDataActions } from 'store/actions/customer/customerDetail';
 import { otfSchemeDetailDataActions } from 'store/actions/data/otf/schemeDetail';
-import { vehicleMakeDetailsDataActions } from 'store/actions/data/vehicle/makeDetails';
-import { vehicleModelDetailsDataActions } from 'store/actions/data/vehicle/modelDetails';
-import { vehicleVariantDetailsDataActions } from 'store/actions/data/vehicle/variantDetails';
 
 import styles from 'assets/sass/app.module.scss';
+import { VEHICLE_COMPANY_MAKE } from 'constants/OTFStatus';
+import { otfLoyaltyModelGroupDataActions } from 'store/actions/data/otf/loyaltyModelGroup';
+import { otfLoyaltyVarientDetailDataActions } from 'store/actions/data/otf/loyaltyVarient';
+
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -27,13 +28,16 @@ const mapStateToProps = (state) => {
             OTF: {
                 LoyaltyScheme: { isLoaded: isLoyaltySchemeDataLoaded = false, isLoading, data: LoyaltySchemeData = [] },
                 SchemeDetail: { isFilteredListLoaded: isSchemeLovDataLoaded = false, isLoading: isSchemeLovLoading, filteredListData: schemeLovData = [] },
+                // LoyaltyMake: { isLoaded: isMakeDataLoaded = false, isLoading: isMakeLoading, filteredListData: makeData = [] },
+                LoyaltyModelGroup: { isFilteredListLoaded: isModelDataLoaded = false, isLoading: isModelLoading, filteredListData: modelData = [] },
+                LoyaltyVarient: { isFilteredListLoaded: isVariantDataLoaded = false, isLoading: isVariantLoading, filteredListData: variantData = [] },
             },
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
-            Vehicle: {
-                MakeVehicleDetails: { isLoaded: isMakeDataLoaded = false, isLoading: isMakeLoading, data: makeData = [] },
-                ModelVehicleDetails: { isLoaded: isModelDataLoaded = false, isLoading: isModelLoading, data: modelData = [] },
-                VariantVehicleDetails: { isLoaded: isVariantDataLoaded = false, isLoading: isVariantLoading, data: variantData = [] },
-            },
+            // Vehicle: {
+            //     MakeVehicleDetails: { isLoaded: isMakeDataLoaded = false, isLoading: isMakeLoading, data: makeData = [] },
+            //     ModelVehicleDetails: { isLoaded: isModelDataLoaded = false, isLoading: isModelLoading, data: modelData = [] },
+            //     VariantVehicleDetails: { isLoaded: isVariantDataLoaded = false, isLoading: isVariantLoading, data: variantData = [] },
+            // },
         },
         customer: {
             customerDetail: { isLoaded: isDataCustomerLoaded = false, isLoading: isCustomerLoading = false, data: customerDetail = [] },
@@ -55,9 +59,9 @@ const mapStateToProps = (state) => {
 
         typeData,
 
-        isMakeDataLoaded,
-        isMakeLoading,
-        makeData,
+        // isMakeDataLoaded,
+        // isMakeLoading,
+        // makeData,
 
         isModelDataLoaded,
         isModelLoading,
@@ -84,16 +88,16 @@ const mapDispatchToProps = (dispatch) => ({
             fetchSchemeLovList: otfSchemeDetailDataActions.fetchFilteredList,
             listSchemeLovShowLoading: otfSchemeDetailDataActions.listShowLoading,
 
-            fetchMakeLovList: vehicleMakeDetailsDataActions.fetchList,
-            listMakeShowLoading: vehicleMakeDetailsDataActions.listShowLoading,
+            // fetchMakeLovList: otfLoyaltyMakeDetailDataActions.fetchFilteredList,
+            // listMakeShowLoading: otfLoyaltyMakeDetailDataActions.listShowLoading,
 
-            fetchModelLovList: vehicleModelDetailsDataActions.fetchList,
-            listModelShowLoading: vehicleModelDetailsDataActions.listShowLoading,
-            resetModel: vehicleModelDetailsDataActions.reset,
+            fetchModelLovList: otfLoyaltyModelGroupDataActions.fetchFilteredList,
+            listModelShowLoading: otfLoyaltyModelGroupDataActions.listShowLoading,
+            resetModel: otfLoyaltyModelGroupDataActions.reset,
 
-            fetchVariantLovList: vehicleVariantDetailsDataActions.fetchList,
-            listVariantShowLoading: vehicleVariantDetailsDataActions.listShowLoading,
-            resetVariant: vehicleModelDetailsDataActions.reset,
+            fetchVariantLovList: otfLoyaltyVarientDetailDataActions.fetchFilteredList,
+            listVariantShowLoading: otfLoyaltyVarientDetailDataActions.listShowLoading,
+            resetVariant: otfLoyaltyVarientDetailDataActions.reset,
 
             fetchList: otfLoyaltySchemeDataActions.fetchList,
             resetData: otfLoyaltySchemeDataActions.reset,
@@ -108,10 +112,10 @@ const mapDispatchToProps = (dispatch) => ({
 
 const LoyaltySchemeMasterMain = (props) => {
     const { isLoyaltySchemeDataLoaded, isLoading, section, listShowLoading, fetchList, LoyaltySchemeData, userId, showGlobalNotification } = props;
-    const { form, selectedOrderId, formActionType, handleFormValueChange, onFinishFailed, handleButtonClick, NEXT_ACTION } = props;
+    const { form,selectedOrder, selectedOrderId, formActionType, handleFormValueChange, onFinishFailed, handleButtonClick, NEXT_ACTION } = props;
     const { typeData } = props;
-    const { fetchMakeLovList, listMakeShowLoading, fetchModelLovList, listModelShowLoading, fetchVariantLovList, listVariantShowLoading } = props;
-    const { isMakeLoading, makeData, isModelDataLoaded, isModelLoading, modelData, isVariantDataLoaded, isVariantLoading, variantData, saveData } = props;
+    const { fetchModelLovList, listModelShowLoading, fetchVariantLovList, listVariantShowLoading } = props;
+    const { isModelDataLoaded, isModelLoading, modelData, isVariantDataLoaded, isVariantLoading, variantData, saveData } = props;
     const { schemeLovData, isSchemeLovLoading, fetchSchemeLovList, listSchemeLovShowLoading } = props;
     const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, StatusBar } = props;
 
@@ -119,14 +123,13 @@ const LoyaltySchemeMasterMain = (props) => {
     const [filteredVariantData, setfilteredVariantData] = useState([]);
     const [formData, setformData] = useState([]);
     const [editable, setEditable] = useState();
-
-    const disabledProps = { disabled: editable };
+    const disabledProps = { disabled: true };
 
     const fnSetData = (data) => {
         if (data && Object?.keys(data)?.length > 0) {
             if (data?.customerId) setEditable(true);
             else setEditable(false);
-            form.setFieldsValue({ ...data, customerCode: data?.customerId, oldChassisNumber: data?.chassisNumber, variantCode: data?.variant, vehicleModelGroup: data?.modelGroup });
+            form.setFieldsValue({ ...data, customerCode: data?.customerId, oldChassisNumber: data?.chassisNumber, variantCode: data?.variant, vehicleModelGroup: data?.modelGroup, make: data?.make || VEHICLE_COMPANY_MAKE });
         } else if (data === null) {
             showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'No data found' });
             form.resetFields(['customerCode', 'customerName', 'make', 'vehicleModelGroup', 'variantCode', 'registrationNumber', 'oldChassisNumber', 'customerDOB']);
@@ -200,9 +203,17 @@ const LoyaltySchemeMasterMain = (props) => {
                     name: 'Booking Number',
                 },
             ];
+            const schemeExtraParams = [
+                {
+                    key: 'modelCode',
+                    title: 'modelCode',
+                    value: selectedOrder?.modelCode,
+                    name: 'Booking Number',
+                },
+            ];
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
-            fetchSchemeLovList({ setIsLoading: listSchemeLovShowLoading, userId });
-            fetchMakeLovList({ setIsLoading: listMakeShowLoading, userId });
+            fetchSchemeLovList({ setIsLoading: listSchemeLovShowLoading,extraParams : schemeExtraParams, userId });
+            // fetchMakeLovList({ setIsLoading: listMakeShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedOrderId]);
@@ -244,7 +255,7 @@ const LoyaltySchemeMasterMain = (props) => {
                     });
                     break;
                 }
-                case 'modelGroup': {
+                case 'modelGroupCode': {
                     setfilteredVariantData();
                     form.setFieldsValue({
                         variant: undefined,
@@ -270,14 +281,20 @@ const LoyaltySchemeMasterMain = (props) => {
                 variant: undefined,
             });
             fetchModelLovList({ setIsLoading: listModelShowLoading, userId, extraParams: makeExtraParams('make', 'make', value, 'make') });
-        } else if (name === 'modelGroup') {
+        } else if (name === 'modelGroupCode') {
             form.setFieldsValue({
                 variant: undefined,
             });
             setfilteredVariantData();
-            fetchVariantLovList({ setIsLoading: listVariantShowLoading, userId, extraParams: makeExtraParams('model', 'model', value, 'model') });
+            fetchVariantLovList({ setIsLoading: listVariantShowLoading, userId, extraParams: makeExtraParams('modelGroupCode', 'modelGroupCode', value, 'modelGroupCode') });
         }
     };
+
+    const handleSchemeChange = (__,value) =>{
+        form.setFieldsValue({
+            schemeAmount : value?.amount
+        })
+    }
 
     const formProps = {
         ...props,
@@ -294,8 +311,8 @@ const LoyaltySchemeMasterMain = (props) => {
         isSchemeLovLoading,
         schemeLovData,
 
-        isMakeLoading,
-        makeData,
+        // isMakeLoading,
+        // makeData,
 
         isModelLoading,
         modelData,
@@ -308,6 +325,7 @@ const LoyaltySchemeMasterMain = (props) => {
         fnSetData,
         disabledProps,
         handleFilterChange,
+        handleSchemeChange
     };
 
     const myProps = {

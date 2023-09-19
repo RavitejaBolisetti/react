@@ -363,7 +363,7 @@ export const ConfigurableParameterEditingBase = ({ saveFormShowLoading, isLoadin
 
                     {configData?.length ? (
                         <Col className={styles.buttonsGroupRight} xs={24} sm={24} md={8} lg={8} xl={8}>
-                            <Button icon={<TfiReload />} onClick={handleReferesh} danger />
+                            <Button icon={<TfiReload />} onClick={handleReferesh} danger data-testid="refresh" />
                             <Button icon={<PlusOutlined />} type="primary" onClick={handleAdd}>
                                 Add
                             </Button>

@@ -51,6 +51,7 @@ const VehicleInvoiceCard = (props) => {
         isVisible: confirmRequest,
         titleOverride: 'IRN Generation Confirmation',
         text: 'Do you want to generate IRN?',
+        submitText: 'Yes',
         onCloseAction: onConfirmationCloseAction,
         onSubmitAction: handleIRNGeneration,
     };

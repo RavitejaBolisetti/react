@@ -40,8 +40,13 @@ export default function DataTable({ filterString, isLoading, rowSelection = unde
     };
 
     const handlePageChange = (page, pageSize) => {
-        setPagination({ ...tablePagination, current: page, pageSize });
-        setPage({ ...tablePagination, current: page, pageSize });
+        if (dynamicPagination) {
+            setPagination({ ...tablePagination, current: page, pageSize });
+            setPage({ ...filterString, ...tablePagination, current: page, pageSize });
+        } else {
+            setPagination({ ...tablePagination, current: page, pageSize });
+            setPage({ ...tablePagination, current: page, pageSize });
+        }
     };
 
     const skeletonData = [{}, {}, {}, {}, {}, {}, {}, {}];
