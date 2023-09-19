@@ -19,7 +19,7 @@ const AddEditFormMain = (props) => {
     const { form, formData } = props;
     const { schemeLovData, typeData } = props;
     const { isConfigLoading, isSchemeLovLoading, isModelLoading, isVariantLoading } = props;
-    const { filteredModelData, filteredVariantData, handleFilterChange, fnSetData, disabledProps,handleSchemeChange } = props;
+    const { filteredModelData, filteredVariantData, handleFilterChange, fnSetData, disabledProps, handleSchemeChange } = props;
 
     const currentYear = new Date().getFullYear();
     const yearsList = [];
@@ -66,7 +66,7 @@ const AddEditFormMain = (props) => {
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item label="Variant" name="variantCode" data-testid="variant" rules={[validateRequiredSelectField('Variant')]}>
-                        <Select placeholder="Select" loading={isVariantLoading} allowClear fieldNames={{ label: 'value', value: 'key' }} options={filteredVariantData} />
+                        <Select placeholder="Select" loading={isVariantLoading} allowClear fieldNames={{ label: 'variantDescription', value: 'variantCode' }} options={filteredVariantData} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
