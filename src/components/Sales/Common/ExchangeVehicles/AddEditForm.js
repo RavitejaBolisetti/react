@@ -18,7 +18,7 @@ const AddEditFormMain = (props) => {
     const { formData, form, formActionType, editableOnSearch, showAlert } = props;
     const { financeLovData, schemeLovData, typeData, makeData } = props;
     const { isConfigLoading, isSchemeLovLoading, isFinanceLovLoading, isMakeLoading, isModelLoading, isVariantLoading } = props;
-    const { filteredModelData, filteredVariantData, handleFilterChange, fnSetData } = props;
+    const { filteredModelData, filteredVariantData, handleFilterChange, fnSetData, handleSchemeChange } = props;
 
     useEffect(() => {
         if (formData) {
@@ -34,7 +34,6 @@ const AddEditFormMain = (props) => {
     for (let i = currentYear; i >= currentYear - 15; i--) {
         yearsList.push({ key: i, value: i });
     }
-
     return (
         <Card className={styles.ExchangeCard}>
             <Row gutter={20}>
@@ -44,7 +43,7 @@ const AddEditFormMain = (props) => {
                     </Form.Item>
                 </Col>
             </Row>
-            {form.getFieldValue('exchange') && (
+            {(form.getFieldValue('exchange') || formData?.exchange === 1) && (
                 <>
                     <CustomerListMaster fnSetData={fnSetData} defaultOption={'registrationNumber'} />
 
@@ -155,12 +154,12 @@ const AddEditFormMain = (props) => {
                     <Row gutter={20}>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item name="schemeCode" label="Scheme Name" initialValue={formData?.schemeCode} rules={[validateRequiredSelectField('Scheme Name')]}>
-                                <Select loading={isSchemeLovLoading} fieldNames={{ label: 'value', value: 'key' }} options={schemeLovData} placeholder={preparePlaceholderSelect('Scheme Name')} />
+                                <Select loading={isSchemeLovLoading} fieldNames={{ label: 'value', value: 'key' }} options={schemeLovData} placeholder={preparePlaceholderSelect('Scheme Name')} onChange={handleSchemeChange} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item name="schemeAmount" label="Scheme Amount" initialValue={formData?.schemeAmount} rules={[validateRequiredInputField('Scheme Amount'), validateNumberWithTwoDecimalPlaces('Scheme Amount')]}>
-                                <Input maxLength={50} placeholder={preparePlaceholderText('Scheme Amount')} />
+                                <Input disabled maxLength={50} placeholder={preparePlaceholderText('Scheme Amount')} />
                             </Form.Item>
                         </Col>
                     </Row>

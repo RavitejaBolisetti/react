@@ -43,7 +43,6 @@ const AddEditFormMain = (props) => {
     const disabledProp = { disabled: true };
     useEffect(() => {
         if (formActionType?.editMode && formData) {
-            console.log('🚀 ~ file: AddEditForm.js:46 ~ useEffect ~ formData:', formData);
             form.setFieldsValue({
                 ...formData,
                 poDate: dayjs(formData?.poDate?.substr(0, 10)).format('DD/MM/YYYY'),

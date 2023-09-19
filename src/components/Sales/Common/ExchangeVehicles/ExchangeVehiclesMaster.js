@@ -147,7 +147,7 @@ const ExchangeVehiclesBase = (props) => {
     const { schemeLovData, isSchemeLovLoading, fetchSchemeLovList, listSchemeLovShowLoading } = props;
     const { form, selectedOrderId, formActionType, handleFormValueChange, isDataLoaded, resetData } = props;
     const { fetchCustomerList, listCustomerShowLoading, handleButtonClick, NEXT_ACTION } = props;
-    const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, StatusBar } = props;
+    const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, StatusBar, isProductHierarchyDataLoaded } = props;
 
     const [formData, setFormData] = useState('');
     const [filteredModelData, setfilteredModelData] = useState([]);
@@ -230,11 +230,15 @@ const ExchangeVehiclesBase = (props) => {
             fetchSchemeLovList({ setIsLoading: listSchemeLovShowLoading, userId });
             fetchMakeLovList({ setIsLoading: listMakeShowLoading, userId });
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, selectedOrderId]);
+
+    useEffect(() => {
         return () => {
             resetData();
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedOrderId]);
+    }, []);
 
     const handleFilterChange = (name, value, selectobj) => {
         if (!value) {
@@ -300,9 +304,10 @@ const ExchangeVehiclesBase = (props) => {
     }, [selectedOrder?.modelCode]);
 
     useEffect(() => {
-        if (VehicleLovCodeData) {
+        if (VehicleLovCodeData && isProductHierarchyDataLoaded) {
             setModelGroup((prev) => ({ ...prev, newModelGroup: VehicleLovCodeData?.[0]?.modelGroupCode }));
         }
+        console.log('VehicleLovCodeData');
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [VehicleLovCodeData]);
 
@@ -332,6 +337,12 @@ const ExchangeVehiclesBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [exchangeVehicleAlertData]);
+
+    const handleSchemeChange = (__,value) =>{
+        form.setFieldsValue({
+            schemeAmount : value?.amount
+        })
+    }
 
     const onFinish = (values) => {
         const { customerName } = values;
@@ -453,6 +464,7 @@ const ExchangeVehiclesBase = (props) => {
         fnSetData,
         customerList,
         showAlert,
+        handleSchemeChange
     };
 
     const viewProps = {

@@ -239,7 +239,7 @@ const VehicleDetailsMasterMain = (props) => {
             handleButtonClick({ buttonAction: NEXT_ACTION });
             setButtonData({ ...buttonData, formBtnActive: false });
         } else {
-            data = { ...values, otfNumber: selectedOrderId, otfId: formData?.id || '', id: formData?.id || '', optionalServices: optionsServicesMapping };
+            data = { ...values, otfNumber: selectedOrderId, otfId: formData?.otfId || '', id: formData?.id || '', optionalServices: optionsServicesMapping };
 
             const onSuccess = (res) => {
                 setoptionsServicesMapping([]);
