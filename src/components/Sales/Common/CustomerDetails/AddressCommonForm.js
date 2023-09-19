@@ -13,18 +13,28 @@ import { convertToUpperCase } from 'utils/convertToUpperCase';
 
 import { validateEmailField, validateMobileNoField, validatePanField, validateGSTIN } from 'utils/validation';
 import { customSelectBox } from 'utils/customSelectBox';
-import { showGlobalNotification } from 'store/actions/notification';
+import { CustomerListMaster } from 'components/utils/CustomerListModal';
 
 export const AddressCommonForm = (props) => {
-    const { formType, formData, disabledProps, handleOnChange, typeData } = props;
+    const { formType, formData, disabledProps, handleOnChange, fnSetData, typeData, sameAsBookingCustomer } = props;
+    const canUpdate = (formType === 'bookingCustomer' && !formData?.billingCustomer?.customerId) || formType === 'billingCustomer';
 
-    const aletranteNumberCheck = (e) => {
-        if (formData?.mobileNumber && e?.target?.value && e?.target?.value === formData?.mobileNumber) {
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Alternative and Mobile Number cannot be same' });
+    const alternateNumberCheck = (value) => {
+        if (formData?.mobileNumber && value && value === formData?.mobileNumber) {
+            return Promise.reject('Alternative and Mobile Number cannot be same');
+        } else {
+            return Promise.resolve();
         }
     };
     return (
         <>
+            {formType === 'billingCustomer' && canUpdate && (
+                <Row gutter={20}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+                        <CustomerListMaster disabled={sameAsBookingCustomer} fnSetData={fnSetData} defaultOption={'customerName'} />
+                    </Col>
+                </Row>
+            )}
             {formType === 'billingCustomer' && (
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -105,7 +115,7 @@ export const AddressCommonForm = (props) => {
                 </Col>
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name={[formType, 'alternateNumber']} label="Alternate Number" initialValue={formData?.alternateNumber} onChange={aletranteNumberCheck} rules={[validateMobileNoField('alternate Number')]}>
+                    <Form.Item name={[formType, 'alternateNumber']} label="Alternate Number" initialValue={formData?.alternateNumber} rules={[validateMobileNoField('alternate Number'), { validator: (rule, value) => alternateNumberCheck(value) }]}>
                         <Input maxLength={10} placeholder={preparePlaceholderText('alternate Number')} {...disabledProps} />
                     </Form.Item>
                 </Col>

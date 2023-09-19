@@ -21,15 +21,19 @@ describe('Term Condition Manufacturer addedit components', () => {
         fireEvent.click(calenderImg[1]);
     });
 
-    it('should render all fields', () => {
+    it('should render all fields', async () => {
         customRender(<AddEditForm {...props} isVisible={true} setButtonData={jest.fn()} handleFromDateChange={jest.fn()} setStartDate={jest.fn()} />);
 
         const documentCatagory = screen.getByRole('textbox', { name: 'Document Category' });
         fireEvent.change(documentCatagory, { target: { value: 'front tyre' } });
 
         const effectiveFrom = screen.getByRole('textbox', { name: 'Effective From' });
+
         fireEvent.click(effectiveFrom);
-        fireEvent.change(effectiveFrom, { target: { value: 'front tyre' } });
+
+        const todayForFromDate = await screen.findByText('Today');
+
+        fireEvent.click(todayForFromDate);
 
         const effectiveTo = screen.getByRole('textbox', { name: 'Effective To' });
         fireEvent.change(effectiveTo, { target: { value: 'front tyre' } });

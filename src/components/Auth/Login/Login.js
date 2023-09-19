@@ -95,7 +95,7 @@ const Login = (props) => {
 
         setIsLoading(false);
         const passwordStatus = data?.passwordStatus;
-        const loginFromRegisteredDevice = data?.userRegisteredDevice;
+        const loginFromRegisteredDevice = null; //data?.userRegisteredDevice;
         if (loginFromRegisteredDevice && !loginFromRegisteredDevice?.match) {
             authPreLogin(data);
             accessFromRegisteredDeviceStatusInfo(data);

@@ -44,7 +44,7 @@ const AddEditFormMain = (props) => {
     };
 
     const emiLessThanAmount = (value) => {
-        if (Number(form.getFieldsValue(['loanAmount'])?.loanAmount) <= Number(value)) {
+        if (Number(form.getFieldsValue(['loanAmount'])?.loanAmount) < Number(value)) {
             return Promise.reject('EMI cannot exceed loan amount');
         } else {
             return Promise.resolve();

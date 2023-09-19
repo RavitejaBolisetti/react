@@ -10,7 +10,6 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import styles from 'assets/sass/app.module.scss';
 
 export const VehicleDeliveryNoteFormButton = ({ formActionType, record, onCloseAction, onCancelDeliveryNote, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection }) => {
-    //console.log('formActionType', formActionType);
     return (
         <Row gutter={20} className={styles.formFooter}>
             <Col xs={24} sm={8} md={6} lg={4} xl={4} className={styles.footerBtnLeft}>

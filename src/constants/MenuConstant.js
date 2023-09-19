@@ -433,19 +433,52 @@ export const MenuConstant = {
         parentMenuId: 'WEB',
     },
 
-    [getMenyKey('RPT-BI')]: {
-        key: 'RPT-BI',
-        link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
-        icon: undefined,
-        parentMenuId: 'RPT',
-    },
-
     [getMenyKey('RPT-OTF')]: {
         key: 'RPT-OTF',
         link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
         icon: undefined,
         parentMenuId: 'RPT',
-        slug: 'otf',
+        slug: 'booking-report',
+    },
+
+    [getMenyKey('SACR-05.10')]: {
+        key: 'SACR-05.10',
+        link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
+        icon: undefined,
+        parentMenuId: 'OTDR',
+        slug: 'area-wise-sales-report',
+    },
+
+    [getMenyKey('SACR-05.21')]: {
+        key: 'SACR-05.21',
+        link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
+        icon: undefined,
+        parentMenuId: 'OTDR',
+        slug: 'vdc-pending-report',
+    },
+
+    [getMenyKey('DELSO')]: {
+        key: 'DELSO',
+        link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
+        icon: undefined,
+        parentMenuId: 'SACR-02.04',
+        slug: 'so-mapping-report',
+    },
+
+    [getMenyKey('SACR-04.17')]: {
+        key: 'SACR-04.17',
+        link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
+        icon: undefined,
+        parentMenuId: 'SACR-02.04',
+        slug: 'stock-status-report',
+    },
+
+    [getMenyKey('VDNRPT')]: {
+        key: 'VDNRPT',
+        link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
+        icon: undefined,
+        parentMenuId: 'SACR-02.05',
+        slug: 'vehicle-delivery-note-report',
     },
 
     [getMenyKey('RPT-DLRNOTE')]: {

@@ -30,7 +30,7 @@ const filteredListRecieveDataCF = (state, action) => ({
 export const ProductHierarchy = (state = initialState, action) => {
     switch (action.type) {
         case PRODUCT_HIERARCHY_DATA_LOADED:
-            return { ...state, isLoaded: action.isLoaded, data: action.data };
+            return { ...state, isLoaded: action.isLoaded, data: action.data, productCode: action.productCode };
         case PRODUCT_HIERARCHY_DATA_LOADED_SKU:
             return { ...state, isSkuLoaded: action.isLoaded, skudata: action.data };
         case PRODUCT_HIERARCHY_DATA_SHOW_LOADING:

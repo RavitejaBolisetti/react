@@ -62,7 +62,7 @@ const mapDispatchToProps = (dispatch) => ({
 const AddEditFormMain = (props) => {
     const { form, formData, onCloseAction, formActionType, formActionType: { viewMode } = undefined, onFinish, onFinishFailed, typeData } = props;
     const { buttonData, setButtonData, handleButtonClick } = props;
-    const { data, productHierarchyList, viewVehicleAllotData, roleData } = props;
+    const { data, productHierarchyList, viewVehicleAllotData, roleData, filterDesignationDropdownList,setFilterDesignationDropdownList } = props;
     // const{ formEdit, setFormEdit, editForm} = props;
     // const { filterDesignationList, setFilterDesignationList, } = props;
     // const [openAccordian, setOpenAccordian] = useState(1);
@@ -183,12 +183,10 @@ const AddEditFormMain = (props) => {
                                     ))}
                                 </>
                             )}
-                            {formActionType.addMode === true && (
+                            {formActionType.addMode === true && (                                 
                                 <Card style={{ backgroundColor: '#BEBEBE1A' }}>
-                                    <Row align="middle" justify="space-between" className={styles.marB20}>
-                                        <NotificationDetailMaster {...props} />
-                                    </Row>
-                                </Card>
+                                    <NotificationDetailMaster {...props} />
+                                </Card>                                
                             )}
                         </>
                     )}

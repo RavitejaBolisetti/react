@@ -15,6 +15,7 @@ import { dateFormat, formatDate, formatDateToCalenderDate } from 'utils/formatDa
 import { disableFutureDate } from 'utils/disableDate';
 
 import styles from 'assets/sass/app.module.scss';
+import { validateRequiredInputField } from 'utils/validation';
 
 export const AdvancedSearchFrom = (props) => {
     const { setAdvanceSearchVisible, typeData } = props;
@@ -59,7 +60,7 @@ export const AdvancedSearchFrom = (props) => {
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.fromDate)} label="Invoice From Date" name="fromDate" className={styles?.datePicker}>
+                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.fromDate)} label="Invoice From Date" name="fromDate" className={styles?.datePicker} rules={[validateRequiredInputField('invoice from date')]}>
                         <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} onChange={() => advanceFilterForm.setFieldsValue({ toDate: undefined })} className={styles.fullWidth} disabledDate={disableFutureDate} />
                     </Form.Item>
                 </Col>
@@ -70,9 +71,10 @@ export const AdvancedSearchFrom = (props) => {
                         name="toDate"
                         className={styles?.datePicker}
                         rules={[
+                            validateRequiredInputField('invoice to date'),
                             {
                                 validator: (_, value) => {
-                                    return advanceFilterForm.getFieldValue('fromDate') ? CheckDateEffectiveTo(value, advanceFilterForm?.getFieldValue('fromDate')) : null;
+                                    return advanceFilterForm.getFieldValue('fromDate') ? CheckDateEffectiveTo(value, advanceFilterForm?.getFieldValue('fromDate')) : Promise.resolve('');
                                 },
                             },
                         ]}

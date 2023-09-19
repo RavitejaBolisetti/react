@@ -14,7 +14,7 @@ const { TextArea } = Input;
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { schemeData } = props;
+    const { schemeData, styles } = props;
     const [activeKey, setactiveKey] = useState([1]);
 
     const onChange = (values) => {
@@ -35,7 +35,7 @@ const AddEditFormMain = (props) => {
     return (
         <Row gutter={20}>
             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                {schemeData ? (
+                {schemeData && schemeData?.schemes?.length > 0 ? (
                     schemeData?.schemes?.map((schemeForm, index) => (
                         <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(schemeForm?.id)} expandIconPosition="end" collapsible="icon">
                             <Panel header={schemeForm?.schemeName} key={schemeForm?.id}>
@@ -80,7 +80,9 @@ const AddEditFormMain = (props) => {
                         </Collapse>
                     ))
                 ) : (
-                    <Card>No Scheme and Offer Details Available</Card>
+                    <Card>
+                        <div className={styles.marB20}>No Scheme and Offer Details Available</div>
+                    </Card>
                 )}
             </Col>
         </Row>

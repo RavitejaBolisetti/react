@@ -23,13 +23,13 @@ function FormNotificationDetail(props) {
         <Form form={formEdit ? editForm : notificationDetailForm} id="myForm" autoComplete="off" layout="vertical">
             <Row gutter={20}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item label="Role Name" name="roleCode" initialValue={props?.roleCode} rules={[validateRequiredSelectField('role name')]}>
+                    <Form.Item label="Role Name" name="roleCode" initialValue={props?.roleCode} rules={[validateRequiredSelectField('role')]}>
                         {customSelectBox({ data: roleData, placeholder: preparePlaceholderSelect('role name'), onChange: handleRoleFunction })}
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                     <Form.Item label="Designation Name" name="designationCode" initialValue={props?.designationCode} rules={[validateRequiredSelectField('Designation Name')]}>
-                        {customSelectBox({ data: filterDesignationList, fieldNames: { key: 'designationCode', value: 'designationDescription' }, placeholder: preparePlaceholderSelect('designation name') })}
+                     <Form.Item label="Designation Name" name="designationCode" initialValue={props?.designationCode} rules={[validateRequiredSelectField('Designation')]}>
+                        {customSelectBox({ data: filterDesignationList, fieldNames: { key: 'designationCode', value: 'designationDescription' }, placeholder: preparePlaceholderSelect('designation') })}
                     </Form.Item>
                 </Col>
 

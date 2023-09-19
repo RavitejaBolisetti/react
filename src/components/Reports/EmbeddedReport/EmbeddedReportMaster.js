@@ -58,7 +58,6 @@ export const EmbeddedReportMasterMain = (props) => {
         accessToken: undefined,
         settings: undefined,
     });
-    console.log('sampleReportConfig', sampleReportConfig);
 
     const onSuccessAction = (res) => {
         // showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'File deleted Successfully' });

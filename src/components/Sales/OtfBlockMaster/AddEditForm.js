@@ -62,6 +62,7 @@ const AddEditFormMain = (props) => {
     const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed, form } = props;
     const organizationFieldNames = { title: 'manufactureAdminShortName', key: 'id', children: 'subManufactureAdmin' };
     const treeFieldNames = { ...organizationFieldNames, label: organizationFieldNames.title, value: organizationFieldNames.key };
+    
     useEffect(() => {
         if (dealerDataList) {
 
@@ -79,7 +80,6 @@ const AddEditFormMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dealerDataList]);
 
-    console.log(selectedOrganizationCode);
     useEffect(() => {
         if (organizationId && userId) {
             if (!organizationId) return;
@@ -109,14 +109,7 @@ const AddEditFormMain = (props) => {
     let treeCodeReadOnly = false;
     if (formActionType === EDIT_ACTION || formActionType === VIEW_ACTION) {
         treeCodeId = formData?.parntProdctId;
-    } else if (formActionType === FROM_ACTION_TYPE.CHILD) {
-        treeCodeId = selectedTreeKey && selectedTreeKey[0];
-        treeCodeReadOnly = true;
-    } else if (formActionType === FROM_ACTION_TYPE.SIBLING) {
-        treeCodeReadOnly = true;
-        const treeCodeData = flatternData.find((i) => i.key === selectedTreeKey[0]);
-        treeCodeId = treeCodeData && treeCodeData?.data?.parntProdctId;
-    }
+    } 
 
     const treeSelectFieldProps = {
         treeFieldNames,
@@ -127,7 +120,6 @@ const AddEditFormMain = (props) => {
         defaultValue: treeCodeId,
         placeholder: preparePlaceholderSelect('parent'),
     };
-
     const handleOnSelect = (key) => {
         setOptions();
     };
@@ -149,7 +141,7 @@ const AddEditFormMain = (props) => {
                             </Col>
 
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                <Form.Item initialValue={formData?.hierarchyMstName} label="Manufacturer Administrative Hierarchy" name="hierarchyMstId" rules={[validateRequiredSelectField('Manufacturer Administrative Hierarchy')]}>
+                                <Form.Item initialValue={formData?.hierarchyMstId} label="Manufacturer Administrative Hierarchy" name="hierarchyMstId" rules={[validateRequiredSelectField('Manufacturer Administrative Hierarchy')]}>
                                     <TreeSelectField {...treeSelectFieldProps} />
                                 </Form.Item>
                             </Col>

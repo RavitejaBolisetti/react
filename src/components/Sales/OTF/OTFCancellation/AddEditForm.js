@@ -153,6 +153,11 @@ const AddEditFormMain = (props) => {
         column: { xs: 1, sm: 2, lg: 2, xl: 2, xxl: 2 },
     };
 
+    const singleItemViewProps = {
+       ...viewProps,
+        column: { xs: 1, sm: 1, lg: 1, xl: 1, xxl: 1 },
+    };
+
     const treeSelectFieldProps = {
         treeFieldNames,
         treeData: productHierarchyData,
@@ -160,7 +165,7 @@ const AddEditFormMain = (props) => {
         selectedTreeSelectKey: parentAppCode,
         handleSelectTreeClick,
         defaultValue: null,
-        placeholder: preparePlaceholderSelect('Parent'),
+        placeholder: preparePlaceholderSelect('Model'),
     };
 
     const isLoading = false;
@@ -175,7 +180,9 @@ const AddEditFormMain = (props) => {
                                 <Descriptions.Item label="Booking Date">{checkAndSetDefaultValue(convertDateTime(selectedOrder?.otfDate, dateFormatView), isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Customer Name">{checkAndSetDefaultValue(selectedOrder?.customerName, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Mobile No.">{checkAndSetDefaultValue(selectedOrder?.mobileNumber, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Model">{checkAndSetDefaultValue(selectedOrder?.model, isLoading)}</Descriptions.Item>
+                            </Descriptions>
+                            <Descriptions {...singleItemViewProps}>
+                                <Descriptions.Item label="Model Description">{checkAndSetDefaultValue(selectedOrder?.model, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Order Status">{getStatus(selectedOrder?.orderStatus)}</Descriptions.Item>
                             </Descriptions>
                         </Card>
