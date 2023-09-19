@@ -1,6 +1,5 @@
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
-import { fireEvent, screen } from '@testing-library/react';
 import { AddEditForm } from '@components/common/RoleManagement/AddEditForm';
 
 afterEach(() => {
