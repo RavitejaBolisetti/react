@@ -21,7 +21,7 @@ const { Panel } = Collapse;
 const { Text } = Typography;
 
 const IssueIndentMasterMain = (props) => {
-    const { cancellationData, handleVinSearch, vehicleVinData, saveIssueDetail, showGlobalNotification, resetVinDetails, listShowLoading, userId, fetchIssueList, indentIssueData, resetIssueList, indentIssueDataLoaded, typeData, indentIssueDataLoading, toggleButton, vehicleVinDataLoading, handlePrintDownload } = props;
+    const { refershIndentData, setRefershIndentData, cancellationData, handleVinSearch, vehicleVinData, saveIssueDetail, showGlobalNotification, resetVinDetails, listShowLoading, userId, fetchIssueList, indentIssueData, resetIssueList, indentIssueDataLoaded, typeData, indentIssueDataLoading, toggleButton, vehicleVinDataLoading, handlePrintDownload } = props;
 
     const defaultVisibility = {
         canCancel: true,
@@ -60,6 +60,12 @@ const IssueIndentMasterMain = (props) => {
                 key: 'indentNumber',
                 title: 'Number',
                 value: cancellationData?.indentNumber,
+            },
+
+            {
+                key: 'modelCode',
+                title: 'Model Code',
+                value: cancellationData?.modelCode,
             },
         ];
         fetchIssueList({ setIsLoading: listShowLoading, userId, onErrorAction, extraParams });
@@ -116,6 +122,7 @@ const IssueIndentMasterMain = (props) => {
             issueForm.resetFields();
             setIssueModal(false);
             resetVinDetails();
+            setRefershIndentData(!refershIndentData);
             setRefershData(!refershData);
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
         };
@@ -147,6 +154,7 @@ const IssueIndentMasterMain = (props) => {
         const onSuccess = (res) => {
             resetVinDetails();
             setRefershData(!refershData);
+            setRefershIndentData(!refershIndentData);
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
         };
 

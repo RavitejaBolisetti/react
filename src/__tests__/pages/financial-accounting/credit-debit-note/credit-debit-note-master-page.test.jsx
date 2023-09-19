@@ -3,15 +3,17 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { fireEvent, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import { handleBtnVisibility } from '@components/Sales/StockTransferIndent/CancellationIssue/utils/handleBtnVisibility';
 import customRender from '@utils/test-utils';
+import { CreditDebitNoteMasterPage } from '@pages/FinancialAccounting/CreditDebitNote/CreditDebitNoteMasterPage';
 
 
-describe("handleBtnVisibility component", ()=>{
+afterEach(() => {
+    jest.restoreAllMocks();
+});
 
-    it("render", ()=>{
-        customRender(<handleBtnVisibility isVisible={true}/>);
+describe('CreditDebitNoteMasterPage Components', () => {
+    it('should render CreditDebitNoteMasterPage components', () => {
+        customRender(<CreditDebitNoteMasterPage />);
     });
-})
+});

@@ -25,7 +25,7 @@ export const withModal =
             }
         }, [isVisible]);
         return (
-            <Modal zIndex={999999} closable={closable} footer={footer} centered open={isVisible} title={titleWithIcon} okText="Submit" onOk={onOk} okType="primary" maskClosable={false} onCancel={onCloseAction} width={width} height={height} keyboard={false} className={styles.modalContainer}>
+            <Modal zIndex={100} closable={closable} footer={footer} centered open={isVisible} title={titleWithIcon} okText="Submit" onOk={onOk} okType="primary" maskClosable={false} onCancel={onCloseAction} width={width} height={height} keyboard={false} className={styles.modalContainer}>
                 {isVisible && <InputComponent {...props} />}
             </Modal>
         );

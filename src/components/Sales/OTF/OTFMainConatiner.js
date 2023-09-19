@@ -20,7 +20,7 @@ import { ReferralsMaster } from 'components/Sales/Common/Referrals';
 
 // import { OtfDetailsMaster } from './OtfDetails';
 // import { CustomerDetailsMaster } from './CustomerDetails';
-// import { VehicleDetailsMaster } from './VehicleDetails';
+// import { VehicleDetailsMasterNew } from './VehicleDetails';
 // import { SchemeDetailsMaster } from './SchemeDetails';
 // import { InsuranceDetailsMaster } from './InsuranceDetails';
 // import { FinananceDetailsMaster } from './FinananceDetails';
