@@ -42,7 +42,7 @@
     margin-top: -26px;
 } */
 
-.selectSearchBg :global .ant-input-search>.ant-input-group>.ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) {
+.selectSearchBg :global .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button:not(.ant-btn-primary) {
     margin-top: -4px;
     background-color: #ffffff;
 }
@@ -54,7 +54,7 @@
 
 .selectSearchBg :global .ant-form-vertical .ant-form-item .ant-form-item-explain .ant-form-item-explain-error {
     position: absolute;
-    z-index: 99;
+    z-index: 1;
     left: 0px;
     top: 30px;
     background: #fee3d4;
@@ -80,7 +80,7 @@
     position: absolute;
     display: block;
     width: 0;
-    z-index: 99;
+    z-index: 1;
     border-style: solid;
     border-color: #fee3d4 transparent;
     border-width: 0 10px 10px;
@@ -94,7 +94,7 @@
     position: absolute;
     display: block;
     width: 0;
-    z-index: 99;
+    z-index: 1;
     border-style: solid;
     border-color: #fee3d4 transparent;
     border-width: 0 10px 10px;
@@ -124,14 +124,14 @@
 .selectSearchBg .headerSelectFieldWide {
     width: 180px;
     position: absolute;
-    z-index: 99;
+    z-index: 1;
     top: 0;
 }
 
 .selectSearchBg .headerSelectField {
     width: 140px;
     position: absolute;
-    z-index: 99;
+    z-index: 1;
     top: 0;
 }
 
@@ -234,7 +234,7 @@
     margin-bottom: 0px;
 }
 
-.masterListSearchForm :global .ant-form-item .ant-form-item-label>label {
+.masterListSearchForm :global .ant-form-item .ant-form-item-label > label {
     margin-right: 20px;
     height: 36px;
     color: #0b0b0c;
@@ -242,7 +242,7 @@
 
 .masterListSearchForm :global .ant-form-item .ant-form-item-explain-error {
     position: absolute;
-    z-index: 99;
+    z-index: 1;
     left: 0px;
     background: #fee3d4;
     color: #ed302d;
@@ -257,7 +257,7 @@
     position: absolute;
     display: block;
     width: 0;
-    z-index: 99;
+    z-index: 1;
     border-style: solid;
     border-color: #fee3d4 transparent;
     border-width: 0 10px 10px;
@@ -267,6 +267,6 @@
     z-index: 1;
 }
 
-.masterListSearchForm :global .ant-form-item .ant-form-item-label>label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
+.masterListSearchForm :global .ant-form-item .ant-form-item-label > label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
     display: none;
 }
