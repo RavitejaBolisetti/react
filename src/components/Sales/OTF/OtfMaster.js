@@ -430,8 +430,8 @@ export const OtfMasterBase = (props) => {
                     editMode: buttonAction === EDIT_ACTION,
                     viewMode: buttonAction === VIEW_ACTION,
                 });
+                setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction, orderStatus: record?.orderStatus }));
             }
-            setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction, orderStatus: record?.orderStatus }));
         }
     };
 

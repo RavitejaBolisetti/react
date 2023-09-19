@@ -17,20 +17,33 @@ const buttonData = { closeBtn: true, cancelBtn: true, editBtn: true, allotBtn: t
 
 const FormWrapper = (props) => {
     const [notificationDetailForm] = Form.useForm();
+
     const myFormMock = {
         ...notificationDetailForm,
-        validateFields: jest.fn(),
         setFieldsValue: jest.fn(),
+        validateFields: jest.fn().mockResolvedValue([{ name: 'Kai' }]),
+        resetFields: jest.fn(),
+        getFieldsValue: jest.fn().mockResolvedValue([{ name: 'Kai' }]),
     };
     return <NotificationDetailMaster notificationDetailForm={myFormMock} {...props} />;
 };
 
+const formData = {
+    roleData: {
+        key: 'RL0007',
+        parentKey: 'DE08',
+        value: 'Dealer role',
+    },
+};
+
 describe('Notification Detail Master component', () => {
     it('should render notification detail master component', () => {
-        customRender(<NotificationDetailMaster isLoading={true} buttonData={buttonData} setButtonData={jest.fn()} validateFields={jest.fn()} />);
+        customRender(<NotificationDetailMaster formData={formData} setButtonData={jest.fn()} isLoading={true} buttonData={buttonData} validateFields={jest.fn()} />);
     });
     it('it should click when user click on button', () => {
-        customRender(<FormWrapper buttonData={buttonData} setButtonData={jest.fn()} validateFields={jest.fn()} />);
+        const docTypeHeadMappingList = [{ internalId: '123', roleCode: '12', id: '66', designationCode: '124', financialAccountHeadId: '2345' }];
+
+        customRender(<FormWrapper buttonData={buttonData} formData={formData} setDocTypeHeadMappingList={jest.fn()} docTypeHeadMappingList={docTypeHeadMappingList} isLoading={true} setButtonData={jest.fn()} validateFields={jest.fn()} />);
         const addBtn = screen.getByRole('button', { name: 'Add' });
         fireEvent.click(addBtn);
         const roleName = screen.getByRole('combobox', { name: 'Role Name' });
@@ -38,22 +51,4 @@ describe('Notification Detail Master component', () => {
         const designationName = screen.getByRole('combobox', { name: 'Designation Name' });
         fireEvent.click(designationName);
     });
-
-    // it('should render notification detail master text', () => {
-    //     customRender(<NotificationDetailMaster isLoading={true} />);
-    //     const roleName = screen.getAllByText(/Role Name/i);
-    //     fireEvent.click(roleName[0]);
-    //     const selectRoleName = screen.getByText(/Select role name/i);
-    //     fireEvent.click(selectRoleName);
-    //     const selectDesignationName = screen.getByText(/Select designation name/i);
-    //     fireEvent.click(selectDesignationName);
-    //     const designationName = screen.getAllByText(/Designation Name/i);
-    //     fireEvent.click(designationName[0]);
-    //     const internalId = screen.getByText('Internal Id');
-    //     fireEvent.click(internalId);
-    //     const id = screen.getByText('Id');
-    //     fireEvent.click(id);
-    //     const add = screen.getByText(/Add/i);
-    //     fireEvent.click(add);
-    // });
 });

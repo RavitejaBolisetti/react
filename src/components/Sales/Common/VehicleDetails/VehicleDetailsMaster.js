@@ -17,7 +17,6 @@ import { otfvehicleDetailsLovDataActions } from 'store/actions/data/otf/vehicleD
 import { otfvehicleDetailsServiceLovDataActions } from 'store/actions/data/otf/serviceLov';
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 import { showGlobalNotification } from 'store/actions/notification';
-import dayjs from 'dayjs';
 
 import styles from 'assets/sass/app.module.scss';
 

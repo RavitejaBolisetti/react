@@ -47,7 +47,7 @@ describe('Booking View Details Component render', () => {
         const payment = screen.getByText('Mode Of Payment');
         expect(payment).toBeTruthy();
 
-        const loyaltyScheme = screen.getByText('Loyality Scheme');
+        const loyaltyScheme = screen.getByText('Loyalty Scheme');
         expect(loyaltyScheme).toBeTruthy();
     });
 });
