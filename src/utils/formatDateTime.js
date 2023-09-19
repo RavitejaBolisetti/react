@@ -38,3 +38,11 @@ export const formatDate = (dateToFormat, converToFormat = 'YYYY-MM-DD') => (date
 export const formatDateToCalenderDate = (dateToFormat, converToFormat = 'YYYY-MM-DD') => (dateToFormat ? dayjs(dateToFormat, converToFormat) : null);
 
 export const formatTime = (dateToFormat, converToFormat = 'HH:mm') => (dateToFormat ? dayjs(dateToFormat, converToFormat) : null);
+
+export const timeStamp = (dateToConvert) => {
+    const dateTimeParts = dateToConvert.split(' ');
+    const timeParts = dateTimeParts[1].split(':');
+    const dateParts = dateTimeParts[0].split('-');
+
+    new Date(dateParts[0], parseInt(dateParts[1], 10) - 1, dateParts[2], timeParts[0], timeParts[1], timeParts[2]).getTime();
+};
