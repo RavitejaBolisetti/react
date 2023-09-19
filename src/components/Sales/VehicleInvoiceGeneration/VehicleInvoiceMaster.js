@@ -124,7 +124,7 @@ export const VehicleInvoiceMasterBase = (props) => {
     const [selectedOrder, setSelectedOrder] = useState();
     const [selectedOrderId, setSelectedOrderId] = useState();
     const [selectedOtfNumber, setSelectedOtfNumber] = useState();
-   
+
     const [section, setSection] = useState();
     const [defaultSection, setDefaultSection] = useState();
     const [currentSection, setCurrentSection] = useState();
@@ -504,6 +504,9 @@ export const VehicleInvoiceMasterBase = (props) => {
     const removeFilter = (key) => {
         if (key === 'searchParam') {
             const { searchType, searchParam, ...rest } = filterString;
+            setFilterString({ ...rest });
+        } else if (key === 'fromDate' || key === 'toDate') {
+            const { fromDate, toDate, ...rest } = filterString;
             setFilterString({ ...rest });
         } else {
             const { [key]: names, ...rest } = filterString;
