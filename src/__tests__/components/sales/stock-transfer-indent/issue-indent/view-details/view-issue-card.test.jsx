@@ -10,14 +10,17 @@ import customRender from '@utils/test-utils';
 
 describe("ViewIssueCard component", ()=>{
     const defaultVisibility = {
-        canCancel: true,
-        canReturn: false,
-        canReceive: false,
-        canPrint: true,
-        canAdd: true,
+        canCancel: false,
+        canReturn: true,
+        canReceive: true,
+        canPrint: false,
+        canAdd: false,
     };
     
-    it("render", ()=>{
-        customRender(<ViewIssueCard  isVisible={true} formData={[{issueNumber:'1'}]} typeData={['PARAM_MASTER']} handleBtnVisibility={jest.fn()} defaultVisibility={defaultVisibility}/>);
+    it("receiveBtn", ()=>{
+        customRender(<ViewIssueCard  isVisible={true} formData={[{issueStatus:true}]} typeData={['PARAM_MASTER']} defaultVisibility={defaultVisibility} handleBtnVisibility={jest.fn()} />);
+
+        // const receiveBtn = screen.getByRole('button', {name:'Receive'});
+        // fireEvent.click(receiveBtn);
     });
 })

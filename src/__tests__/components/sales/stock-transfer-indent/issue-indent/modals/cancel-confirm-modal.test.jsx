@@ -18,14 +18,14 @@ describe("CancelConfirmModal component", ()=>{
     });
 
     it("No Button", ()=>{
-        customRender(<CancelConfirmModal isVisible={true}/>);
+        customRender(<CancelConfirmModal isVisible={true} modalButtonName={'No'} onCloseAction={jest.fn()} />);
 
         const noBtn = screen.getByRole('button', {name:'No'});
         fireEvent.click(noBtn);
     });
 
     it("Yes Button", ()=>{
-        customRender(<CancelConfirmModal isVisible={true}/>);
+        customRender(<CancelConfirmModal isVisible={true} modalButtonName={'Yes'} handdleYes={jest.fn()} />);
 
         const yesBtn = screen.getByRole('button', {name:'Yes'});
         fireEvent.click(yesBtn);

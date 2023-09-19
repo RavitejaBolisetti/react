@@ -31,8 +31,8 @@ describe("AdvanceOTFFilter",()=>{
         it("Indent Received", ()=>{
             customRender(<FormWrapper settoggleButton={jest.fn()} />);
     
-            const idendtBtn = screen.getByRole('button', {name:'Indent Received'});
-            fireEvent.click(idendtBtn);
+            const receivedBtn = screen.getByRole('button', {name:'Indent Received'});
+            fireEvent.click(receivedBtn);
         });
 
         it("Advanced Filters Button", ()=>{
@@ -73,5 +73,17 @@ describe("AdvanceOTFFilter",()=>{
 
             const clearBtn = screen.getByRole('button', {name:'Clear'});
             fireEvent.click(clearBtn);
+        })
+
+        it("searchImg", ()=>{
+            const filterString={advanceFilter:true}
+
+            customRender(<FormWrapper extraParams = { [{name: 'test',value:'1',filter:'tes',canRemove:true}] } advanceFilter={true} filterString={filterString} removeFilter={jest.fn()} />);
+
+            const searchIndent = screen.getAllByRole('textbox');
+            fireEvent.change(searchIndent[0], {target:{value:test}});
+
+            const searchImg = screen.getByRole('img', {name:'search'});
+            fireEvent.click(searchImg);
         })
 });

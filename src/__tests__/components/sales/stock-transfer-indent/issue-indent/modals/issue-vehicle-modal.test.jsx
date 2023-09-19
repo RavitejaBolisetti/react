@@ -13,7 +13,8 @@ const FormWrapper = (props) => {
     const [issueForm] = Form.useForm();
     const myMock = {
         ...issueForm,
-        resetFields:jest.fn()
+        resetFields:jest.fn(),
+        getFieldValue:jest.fn()
     }
     return <IssueVehicleDetailsModal issueForm={myMock} {...props} />
 }
@@ -27,14 +28,24 @@ describe("IssueVehicleDetailsModal component", ()=>{
         handleResetFilter: jest.fn(),
     };
 
-    it("vin-id", ()=>{
-        customRender(<FormWrapper isVisible={true} disabledProps={{}} handleDependentReset={jest.fn()} />);
+    it("VIN textbox", ()=>{
+        customRender(<FormWrapper isVisible={true}  handleDependentReset={jest.fn()} handleVinSearch={jest.fn()}/>);
 
-        // const vinTextbox = screen.getByTestId('vin-id');
-        // fireEvent.change(vinTextbox, {target:{value:'test1'}})
+        const vinTextBox = screen.getByRole('textbox', {name:'VIN'});
+        fireEvent.change(vinTextBox, {target:{value:'test'}})
+
+        const searchBtn = screen.getByRole('button', {name:'search'});
+        fireEvent.click(searchBtn);
     });
 
-    it("modalProps", ()=>{
-        customRender(<IssueVehicleDetailsModal isVisible={true} {...modalProps}/>);
+    it("Issue Charges Fieldtext", ()=>{
+        customRender(<FormWrapper isVisible={true} {...modalProps} isIssuePriceValid={jest.fn()}/>);
+
+        const issueCharges = screen.getByRole('textbox', {name:'Issue Charges'});
+        fireEvent.change(issueCharges, {target:{value:'test1'}})
+    });
+
+    it("disabledProps", ()=>{
+        customRender(<FormWrapper isVisible={true} disabledProps={{}} />);
     });
 })

@@ -10,29 +10,6 @@ import customRender from '@utils/test-utils';
 
 describe("StockTransferIndentMaster component", ()=>{
 
-    it("Indent Raised Button", ()=>{
-        customRender(<StockTransferIndentMaster settoggleButton={jest.fn()} />);
-
-        const raisedBtn = screen.getByRole('button', {name:'Indent Raised'});
-        fireEvent.click(raisedBtn);
-    });
-
-
-    it("Indent Received", ()=>{
-        customRender(<StockTransferIndentMaster settoggleButton={jest.fn()} />);
-
-        const idendtBtn = screen.getByRole('button', {name:'Indent Received'});
-        fireEvent.click(idendtBtn);
-    });
-
-
-    it("Advanced Filters Button", ()=>{
-        customRender(<StockTransferIndentMaster setAdvanceSearchVisible={jest.fn()} />);
-
-        const advancedBtn = screen.getByRole('button', {name:'Advanced Filters'});
-        fireEvent.click(advancedBtn);
-    });
-
     it("Close Button", ()=>{
         customRender(<StockTransferIndentMaster setAdvanceSearchVisible={jest.fn()} />);
 
@@ -41,16 +18,6 @@ describe("StockTransferIndentMaster component", ()=>{
 
         const closedBtn = screen.getByRole('button', {name:'Close'});
         fireEvent.click(closedBtn);
-    });
-
-    it("Reset Button", ()=>{
-        customRender(<StockTransferIndentMaster setAdvanceSearchVisible={jest.fn()} />);
-
-        const advancedBtn = screen.getByRole('button', {name:'Advanced Filters'});
-        fireEvent.click(advancedBtn);
-
-        const resetBtn = screen.getByRole('button', {name:'Reset'});
-        fireEvent.click(resetBtn);
     });
 
     it("Apply Button", ()=>{
@@ -63,10 +30,80 @@ describe("StockTransferIndentMaster component", ()=>{
         fireEvent.click(applyBtn);
     });
 
+    it("Reset Button", ()=>{
+        customRender(<StockTransferIndentMaster handleResetFilter={jest.fn()} />);
+
+        const advancedBtn = screen.getByRole('button', {name:'Advanced Filters'});
+        fireEvent.click(advancedBtn);
+
+        const resetBtn = screen.getByRole('button', {name:'Reset'});
+        fireEvent.click(resetBtn);
+    });
+
     it("Add Indent Button", ()=>{
         customRender(<StockTransferIndentMaster handleOnAddIndentClick={jest.fn()} />);
 
         const indentBtn = screen.getByRole('button', {name:'Add Indent'});
         fireEvent.click(indentBtn);
     });
+
+    it("Indent Received Button", ()=>{
+        customRender(<StockTransferIndentMaster onCloseAction={jest.fn()} />);
+
+        const indentRecBtn = screen.getByRole('button', {name:'Indent Received'});
+        fireEvent.click(indentRecBtn);
+
+        // screen.getByRole('');
+        // screen.debug();
+
+    });
+
+    // it("Submit Button", ()=>{
+    //     customRender(<StockTransferIndentMaster handleOnAddIndentClick={jest.fn()} />);
+
+    //     const indentBtn = screen.getByRole('button', {name:'Add Indent'});
+    //     fireEvent.click(indentBtn);
+
+    //     const submitBtn = screen.getByRole('button', {name:'Submit'});
+    //     fireEvent.submit(submitBtn);
+    // });
+
+    // it("Add Button", ()=>{
+    //     customRender(<StockTransferIndentMaster handleAddVehicleDetails={jest.fn()} />);
+
+    //     const indentBtn = screen.getByRole('button', {name:'Add Indent'});
+    //     fireEvent.click(indentBtn);
+
+    //     const addBtn = screen.getByRole('button', {name:'Add'});
+    //     fireEvent.click(addBtn);
+    // });
+
+    // it("closeImg", ()=>{
+    //     customRender(<StockTransferIndentMaster handleOnAddIndentClick={jest.fn()} />);
+
+    //     const indentBtn = screen.getByRole('button', {name:'Add Indent'});
+    //     fireEvent.click(indentBtn);
+
+    //     const closeImg = screen.getByRole('img', {name:'close'});
+    //     fireEvent.click(closeImg);
+    // });
+
+    it("plusImg", ()=>{
+        customRender(<StockTransferIndentMaster handleCollapse={jest.fn()} />);
+
+        const indentBtn = screen.getByRole('button', {name:'Add Indent'});
+        fireEvent.click(indentBtn);
+
+        const plusImg= screen.getByRole('img', {name:'plus'});
+        fireEvent.click(plusImg);
+    });
+
+    it('advanceFilterProps', ()=>{
+        const props = {
+            advanceFilter:true,
+            otfFilter:true,
+            settoggleButton:jest.fn()
+        }
+        customRender(<StockTransferIndentMaster {...props} />)
+    })
 })
