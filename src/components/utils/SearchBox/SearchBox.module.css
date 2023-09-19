@@ -54,7 +54,7 @@
 
 .selectSearchBg :global .ant-form-vertical .ant-form-item .ant-form-item-explain .ant-form-item-explain-error {
     position: absolute;
-    z-index: 1;
+    z-index: 99;
     left: 0px;
     top: 30px;
     background: #fee3d4;
@@ -80,7 +80,7 @@
     position: absolute;
     display: block;
     width: 0;
-    z-index: 1;
+    z-index: 99;
     border-style: solid;
     border-color: #fee3d4 transparent;
     border-width: 0 10px 10px;
@@ -94,7 +94,7 @@
     position: absolute;
     display: block;
     width: 0;
-    z-index: 1;
+    z-index: 99;
     border-style: solid;
     border-color: #fee3d4 transparent;
     border-width: 0 10px 10px;
@@ -124,14 +124,14 @@
 .selectSearchBg .headerSelectFieldWide {
     width: 180px;
     position: absolute;
-    z-index: 1;
+    z-index: 99;
     top: 0;
 }
 
 .selectSearchBg .headerSelectField {
     width: 140px;
     position: absolute;
-    z-index: 1;
+    z-index: 99;
     top: 0;
 }
 
@@ -242,7 +242,7 @@
 
 .masterListSearchForm :global .ant-form-item .ant-form-item-explain-error {
     position: absolute;
-    z-index: 1;
+    z-index: 99;
     left: 0px;
     background: #fee3d4;
     color: #ed302d;
@@ -257,7 +257,7 @@
     position: absolute;
     display: block;
     width: 0;
-    z-index: 1;
+    z-index: 99;
     border-style: solid;
     border-color: #fee3d4 transparent;
     border-width: 0 10px 10px;
