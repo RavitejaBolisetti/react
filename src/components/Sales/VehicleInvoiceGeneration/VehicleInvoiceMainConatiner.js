@@ -9,11 +9,11 @@ import { withDrawer } from 'components/withDrawer';
 import { VEHICLE_INVOICE_SECTION } from 'constants/VehicleInvoiceSection';
 
 import { LeftSidebar } from './LeftSidebar';
-import { InvoiceDetailsMaster } from './InvoiceDetails';
-import { InsuranceDetailsMaster } from './InsuranceDetails';
+import { InvoiceDetailsMaster } from './InvoiceDetails'; //Own Menu
+import { InsuranceDetailsMaster } from 'components/Sales/Common/InsuranceDetails'; //Own Menu
 import { SchemeDetailsMaster } from 'components/Sales/Common/SchemeDetails';
-import { VehicleDetailsMaster } from 'components/Sales/VehicleInvoiceGeneration/VehicleDetails';
-import { FinananceDetailsMaster } from 'components/Sales/Common/FinananceDetails';
+import { VehicleDetailsMaster } from 'components/Sales/VehicleInvoiceGeneration/VehicleDetails'; //common
+import { FinananceDetailsMaster } from 'components/Sales/Common/FinananceDetails'; //common
 import { ReferralsMaster } from 'components/Sales/Common/Referrals';
 import { ExchangeVehiclesMaster } from 'components/Sales/Common/ExchangeVehicles';
 import { LoyaltySchemeMaster } from 'components/Sales/Common/LoyaltyScheme';
