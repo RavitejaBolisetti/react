@@ -61,6 +61,12 @@ const IssueIndentMasterMain = (props) => {
                 title: 'Number',
                 value: cancellationData?.indentNumber,
             },
+
+            {
+                key: 'modelCode',
+                title: 'Model Code',
+                value: cancellationData?.modelCode,
+            },
         ];
         fetchIssueList({ setIsLoading: listShowLoading, userId, onErrorAction, extraParams });
         return () => {
