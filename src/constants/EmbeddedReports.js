@@ -22,7 +22,7 @@ export const EMBEDDED_REPORTS = {
 
     VDC_PENDING_REPORT: {
         id: 3,
-        key: 'VDC Pending Report',
+        key: 'VDC_Pending_Report',
         title: 'VDC Pending Report',
         type: 'Report',
         slug: 'vdc-pending-report',
@@ -30,7 +30,7 @@ export const EMBEDDED_REPORTS = {
 
     AREA_WISE_SALES_REPORT: {
         id: 4,
-        key: 'Area wise sales report',
+        key: 'Area_wise_sales_report',
         title: 'Area Wise Sales Report',
         type: 'Report',
         slug: 'area-wise-sales-report',
@@ -38,7 +38,7 @@ export const EMBEDDED_REPORTS = {
 
     SO_MAPPING: {
         id: 5,
-        key: 'Deleted SO mapped to OTF Report',
+        key: 'Deleted_SO_mapped_to_OTF_Report',
         title: 'Deleted SO mapped to OTF Report',
         type: 'Report',
         slug: 'so-mapping-report',
@@ -46,7 +46,7 @@ export const EMBEDDED_REPORTS = {
 
     STOCK_STATUS_REPORT: {
         id: 6,
-        key: 'Stock Status Report',
+        key: 'Stock_Status_Report',
         title: 'Stock Status Report',
         type: 'Report',
         slug: 'stock-status-report',
@@ -56,7 +56,15 @@ export const EMBEDDED_REPORTS = {
         id: 7,
         key: 'AMC-Certificate_Document',
         title: 'AMC Certificate Document',
-        type: 'Document',
+        type: 'Report',
         slug: 'amc-certificate-document',
+    },
+
+    STOCK_TRANSFER_ISSUE_NOTE_DOCUMENT: {
+        id: 8,
+        key: 'Stock_Transfer_Issue_Note_Document',
+        title: 'Stock Transfer Issue Note Document',
+        type: 'Document',
+        slug: 'stock-transfer-issue-note-document',
     },
 };

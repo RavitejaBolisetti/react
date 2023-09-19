@@ -32,13 +32,12 @@ const mockStore = createMockStore({
     data: {
         ConfigurableParameterEditing: {
             isLoaded: true,
-            data: [ { configurableParameterType: 'B'} ],
+            data: [{ configurableParameterType: 'B' }],
         },
     },
 });
 
 describe('Render ConfigurableParameterEditing Component', () => {
-
     it('search image click should work', () => {
         const props = {
             onSearchHandle: jest.fn(),
@@ -92,6 +91,7 @@ describe('Render ConfigurableParameterEditing Component', () => {
         expect(controlDescription).toBeTruthy();
 
         const configPara = screen.getByRole('columnheader', { name: 'Configurable Parameter Type' });
+
         expect(configPara).toBeTruthy();
 
         const configValues = screen.getByRole('columnheader', { name: 'Configurable Parameter Values' });
@@ -111,15 +111,14 @@ describe('Render ConfigurableParameterEditing Component', () => {
                 controlGroup: 'SM',
             },
             typeData: {
-                CTRL_GRP: [{parentKey: 'CTRL_GRP'}],
+                CTRL_GRP: [{ parentKey: 'CTRL_GRP' }],
             },
         };
         customRender(<ConfigurableParameterEditing {...props} />);
     });
-    
 });
 
-describe('ConfigurableParameterEditing component button should work', ()=>{
+describe('ConfigurableParameterEditing component button should work', () => {
     const props = {
         hanndleEditData: jest.fn(),
         setShowSaveAndAddNewBtn: jest.fn(false),
@@ -132,7 +131,7 @@ describe('ConfigurableParameterEditing component button should work', ()=>{
         setIsFormVisible: jest.fn(false),
         setFormBtnActive: jest.fn(false),
         setFormData: jest.fn([]),
-        record: {id: '123' },
+        record: { id: '123' },
     };
 
     it('click should work on edit and close button', () => {
@@ -180,4 +179,39 @@ describe('ConfigurableParameterEditing component button should work', ()=>{
             fireEvent.click(cancelBtn);
         });
     });
-})
+
+    it('test for refresh button and onFinishFailed', async () => {
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+            data: {
+                ConfigurableParameterEditing: {
+                    isLoaded: true,
+                    data: [
+                        { key: '1', value: 'kai' },
+                        { key: '2', value: 'kai' },
+                    ],
+                },
+            },
+        });
+
+        customRender(
+            <Provider store={mockStore}>
+                <ConfigurableParameterEditing />
+            </Provider>
+        );
+
+        const refreshBtn = screen.getByTestId('refresh');
+        act(() => {
+            fireEvent.click(refreshBtn);
+        });
+
+        const addBtn = screen.getByRole('button', { name: /Add/i });
+        fireEvent.click(addBtn);
+
+        const controlDes = screen.getByRole('textbox', { name: /control description/i });
+        fireEvent.change(controlDes, { target: { value: 'Kai' } });
+
+        const saveBtn = screen.getByRole('button', { name: /save & add new/i });
+        fireEvent.click(saveBtn);
+    });
+});

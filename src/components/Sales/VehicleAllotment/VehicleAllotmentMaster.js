@@ -280,7 +280,6 @@ export const VehicleAllotmentMasterBase = (props) => {
         setFilterString({ pageSize, current: 1 });
         setSearchParamValue();
         setShowDataLoading(true);
-        setFilterString();
         advanceFilterForm.resetFields();
         setAdvanceSearchVisible(false);
     };
@@ -288,6 +287,15 @@ export const VehicleAllotmentMasterBase = (props) => {
     const removeFilter = (key) => {
         if (key === 'searchParam') {
             const { searchType, searchParam, ...rest } = filterString;
+            setFilterString({ ...rest });
+        } else if (key === 'modelValue') {
+            const { model, ...rest } = filterString;
+            setFilterString({ ...rest });
+        } else if (key === 'vehicleStatusValue') {
+            const { vehicleStatus, ...rest } = filterString;
+            setFilterString({ ...rest });
+        } else if (key === 'pdiDoneValue') {
+            const { pdDone, ...rest } = filterString;
             setFilterString({ ...rest });
         } else {
             const { [key]: names, ...rest } = filterString;

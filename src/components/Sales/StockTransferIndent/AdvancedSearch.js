@@ -15,7 +15,7 @@ import { ModalButtons } from 'components/common/Button';
 import { STOCK_TRANSFER } from 'constants/StockTransfer';
 
 import { dateFormat, formatDate, formatDateToCalenderDate } from 'utils/formatDateTime';
-import { compareFromToDate, validateRequiredSelectField } from 'utils/validation';
+import { compareFromToDate, validateRequiredSelectField, campareDate } from 'utils/validation';
 import { customSelectBox } from 'utils/customSelectBox';
 
 import styles from 'assets/sass/app.module.scss';
@@ -104,7 +104,7 @@ export const AdvancedSearchFrom = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.toDate)} label="Indent To Date" name="toDate" rules={[validateRequiredSelectField('Indent To Date'), compareFromToDate(advanceFilterForm.getFieldValue('fromDate'))]} className={styles?.datePicker}>
+                    <Form.Item initialValue={formatDateToCalenderDate(filterString?.toDate)} label="Indent To Date" name="toDate" rules={[validateRequiredSelectField('Indent To Date'), { validator: (_, value) => campareDate(value, advanceFilterForm.getFieldValue('fromDate')) }]} className={styles?.datePicker}>
                         <DatePicker placeholder={preparePlaceholderSelect('')} format={dateFormat} disabledDate={disableFutureDate} className={styles.fullWidth} />
                     </Form.Item>
                 </Col>

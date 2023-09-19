@@ -65,9 +65,9 @@ productHierarchyDataActions.resetData = (data) => ({
     data,
 });
 
-productHierarchyDataActions.listShowLoading = (isHistoryLoading) => ({
-    type: PRODUCT_HIERARCHY_CHANGE_HISTORY_SHOW_LOADING,
-    isHistoryLoading,
+productHierarchyDataActions.listShowLoading = (isLoading) => ({
+    type: PRODUCT_HIERARCHY_DATA_SHOW_LOADING,
+    isLoading,
 });
 
 productHierarchyDataActions.changeHistoryModelOpen = (visible) => ({
@@ -85,9 +85,9 @@ productHierarchyDataActions.changeHistoryModelClose = (visible) => ({
     visible: false,
 });
 
-productHierarchyDataActions.changeHistoryShowLoading = (isLoading) => ({
-    type: PRODUCT_HIERARCHY_DATA_SHOW_LOADING,
-    isLoading,
+productHierarchyDataActions.changeHistoryShowLoading = (isHistoryLoading) => ({
+    type: PRODUCT_HIERARCHY_CHANGE_HISTORY_SHOW_LOADING,
+    isHistoryLoading,
 });
 
 productHierarchyDataActions.cardBtnDisableAction = (value) => ({

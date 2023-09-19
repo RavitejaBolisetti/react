@@ -29,7 +29,7 @@ const { SubMenu, Item } = Menu;
 const { Sider } = Layout;
 
 const prepareLink = ({ menuOrgTitle = '', title, id, tooltip = true, icon = true, showTitle = true, isParentMenu = false, captlized = false }) => {
-    const menuLink = id && getMenuValue(MenuConstant, id, 'link') ? getMenuValue(MenuConstant, id, 'link').replace(':type', getMenuValue(MenuConstant, id, 'slug')) : '#';
+    const menuLink = id && getMenuValue(MenuConstant, id, 'link') ? getMenuValue(MenuConstant, id, 'link').replace(':slug', getMenuValue(MenuConstant, id, 'slug')) : '#';
 
     return (
         <Link to={menuLink} title={tooltip ? menuOrgTitle : ''}>
@@ -189,7 +189,7 @@ const LeftSideBarMain = (props) => {
     const onSelect = (menuId, label) => {
         menuForm.setFieldValue('searchKeyword', undefined);
         if (menuId && getMenuValue(MenuConstant, menuId, 'link')) {
-            const menuLink = menuId && getMenuValue(MenuConstant, menuId, 'link') ? getMenuValue(MenuConstant, menuId, 'link').replace(':type', getMenuValue(MenuConstant, menuId, 'slug')) : '#';
+            const menuLink = menuId && getMenuValue(MenuConstant, menuId, 'link') ? getMenuValue(MenuConstant, menuId, 'link').replace(':slug', getMenuValue(MenuConstant, menuId, 'slug')) : '#';
             navigate(menuLink);
         }
 

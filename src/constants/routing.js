@@ -78,9 +78,11 @@ export const ROUTING_USER_DISCLAIMER = ROUTING_HOME.concat('disclaimer');
 export const ROUTING_USER_CONTACT = ROUTING_HOME.concat('contact-us');
 
 export const ROUTING_REPORT = ROUTING_HOME.concat('report/');
+export const ROUTING_DOCUMENT = ROUTING_HOME.concat('document/');
 export const ROUTING_REPORT_BI_REPORT = ROUTING_REPORT.concat('bi-report');
 export const ROUTING_REPORT_PAGINATED_REPORT = ROUTING_REPORT.concat('paginated-report');
 export const ROUTING_REPORT_EMBEDDED_REPORT = ROUTING_REPORT.concat(':slug');
+export const ROUTING_REPORT_EMBEDDED_DOCUMENT = ROUTING_DOCUMENT.concat(':slug');
 export const ROUTING_REPORT_URL_FILTER_REPORT = ROUTING_REPORT.concat('url-filter-report');
 
 export const ROUTING_ADMIN = '/admin/';

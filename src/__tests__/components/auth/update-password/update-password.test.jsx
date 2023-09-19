@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom/extend-expect';
 import customRender from "@utils/test-utils";
-import { fireEvent, screen } from "@testing-library/react";
+import { fireEvent, screen, waitFor } from "@testing-library/react";
 import { UpdatePassword } from 'components/Auth';
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
@@ -11,6 +11,10 @@ jest.mock('store/actions/auth', () => ({
         dispatch({ type: 'Action', payload: data });
     })
 }));
+
+jest.mock('store/actions/data/updatePassword', () => ({
+    updatePasswordActions: {}
+}))
 
 describe("ChangeHistory Components", () => {
 
@@ -54,16 +58,29 @@ describe("ChangeHistory Components", () => {
         fireEvent.click(skipNow);
     });
 
-    it("form should work", () => {
-        customRender(<UpdatePassword />);
+    it("form should work", async () => {
+
+        const saveData=jest.fn();
+
+        customRender(<UpdatePassword saveData={saveData} />);
+
         const oldPassword=screen.getByTestId('oldPasswordInput');
         fireEvent.change(oldPassword, { target: { value: 'Kai' } });
+
         const newPassword=screen.getByTestId('newPasswordInput');
         fireEvent.change(newPassword, { target: { value: 'Kai' } });
+
         const confirmPassword=screen.getByTestId('confirmNewPasswordInput');
         fireEvent.change(confirmPassword, { target: { value: 'Kai' } });
+
         const updatePassword=screen.getByRole('button', { name: 'Update Password' });
         fireEvent.click(updatePassword);
+
+        await waitFor(() => expect(saveData).toHaveBeenCalled());
+
+        saveData.mock.calls[0][0].onSuccess(true);
+        saveData.mock.calls[0][0].onError(['Error']);
+
     });
 
     it("confirm password should validate new password", () => {
