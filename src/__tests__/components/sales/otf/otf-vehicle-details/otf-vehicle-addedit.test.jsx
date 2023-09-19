@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form } from 'antd';
 import { fireEvent, screen } from '@testing-library/react';
-import { AddEditForm } from '@components/Sales/OTF/VehicleDetails/AddEditForm';
+import { AddEditForm } from '@components/Sales/Common/VehicleDetails/AddEditForm';
 import customRender from '@utils/test-utils';
 
 const typeDataMock = {

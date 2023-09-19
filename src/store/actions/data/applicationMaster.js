@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -90,7 +90,7 @@ applicationMasterDataActions.fetchApplicationDetails = withAuthToken((params) =>
     const apiCallParams = {
         data,
         method: 'get',
-        url: baseURLPath + '?appId='+ id,
+        url: baseURLPath + '?appId=' + id,
         token,
         accessToken,
         userId,
@@ -104,7 +104,6 @@ applicationMasterDataActions.fetchApplicationDetails = withAuthToken((params) =>
 
     axiosAPICall(apiCallParams);
 });
-
 
 applicationMasterDataActions.saveApplicationDetails = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
     const { setIsLoading, onError, data, onSuccess } = params;
@@ -129,7 +128,7 @@ applicationMasterDataActions.saveApplicationDetails = withAuthToken((params) => 
 });
 
 applicationMasterDataActions.fetchDealerLocations = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-    const { setIsLoading, data, searchParam } = params;
+    const { customURL, setIsLoading, data, searchParam } = params;
     setIsLoading(true);
     const onError = (errorMessage) => message.error(errorMessage);
 
@@ -144,7 +143,7 @@ applicationMasterDataActions.fetchDealerLocations = withAuthToken((params) => ({
     const apiCallParams = {
         data,
         method: 'get',
-        url: BASE_URL_APPLICATION_DEALER_LOCATION + (searchParam ? `?searchParam=${searchParam}` : ''),
+        url: customURL || BASE_URL_APPLICATION_DEALER_LOCATION + (searchParam ? `?searchParam=${searchParam}` : ''),
         token,
         accessToken,
         userId,
@@ -175,7 +174,7 @@ applicationMasterDataActions.fetchApplicationAction = withAuthToken((params) => 
     const apiCallParams = {
         data,
         method: 'get',
-        url: BASE_URL_APPLICATION_ACTIONS + (id ? '?appId=' + id : '' ),
+        url: BASE_URL_APPLICATION_ACTIONS + (id ? '?appId=' + id : ''),
         token,
         accessToken,
         userId,
@@ -269,7 +268,7 @@ applicationMasterDataActions.fetchConfigurableParameterList = withAuthToken((par
     const apiCallParams = {
         data,
         method: 'get',
-        url: BASE_URL_CONFIG_PARAM_EDIT_TYPE + ( '?parameterType=APP_TYPE'),
+        url: BASE_URL_CONFIG_PARAM_EDIT_TYPE + '?parameterType=APP_TYPE',
         token,
         accessToken,
         userId,

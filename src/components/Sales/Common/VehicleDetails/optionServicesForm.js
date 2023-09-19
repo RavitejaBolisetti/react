@@ -61,7 +61,7 @@ const OptionServicesFormMain = (props) => {
                                     <Select onChange={(value, selectedObj) => optionForm.setFieldsValue({ serviceName: selectedObj?.value })} options={serviceOptions} fieldNames={{ label: 'value', value: 'id' }} placeholder={preparePlaceholderSelect('Service Name')} allowClear />
                                 </Form.Item>
                                 <Form.Item hidden name="otfNumber" initialValue={selectedOrderId} />
-                                <Form.Item hidden name="otfId" initialValue={formData?.OtfId ?? ''} />
+                                <Form.Item hidden name="otfId" initialValue={formData?.otfId ?? ''} />
                                 <Form.Item hidden name="serviceName" />
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>

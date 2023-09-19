@@ -1,5 +1,5 @@
 import React from 'react';
-import { screen, fireEvent } from '@testing-library/react';
+import { screen, fireEvent, waitFor } from '@testing-library/react';
 import customRender from '@utils/test-utils';
 import { AccountRelatedMaster } from '@components/common/CustomerMaster/IndividualCustomer/AccountRelated/AccountRelatedMaster';
 import createMockStore from '__mocks__/store';
@@ -9,6 +9,10 @@ import { Form } from 'antd';
 beforeEach(() => {
     jest.clearAllMocks();
 });
+
+jest.mock('store/actions/data/customerMaster/indivisualAccountRelated', () => ({
+    indivisualAccountsRelatedDataActions: {},
+}));
 
 const props = {
     formActionType: { addMode: false, editMode: true, viewMode: false },
@@ -29,7 +33,7 @@ const props = {
     userId: '123',
     section: { enableOnAdd: false, id: 5, title: 'Account Related' },
 
-    accountData: { creditAmount: 34.78, creditDays: 11, customerCreditId: '7ea16b0f-297a-4c82-83be-413d2dcabd79', customerId: 'CUS1687368732514', labourDiscount: 12, outstandingAmount: 21.98, partsDiscount: 10, remarks: 'qqqq', vipDealerInd: true },
+    accountData: { creditAmount: 11, creditDays: 11, customerCreditId: '1b27160e-856d-4e45-8036-39847206bf1b', customerId: 'CUS1694080366163', labourDiscount: 11, outstandingAmount: 11, partsDiscount: 11, remarks: '', vipDealerInd: true },
 
     record: { chassisNumber: null, customerId: 'CUS1687368732514', customerName: 'Company1', customerType: 'CRP', customerTypeName: 'CORPORATE', dateOfBirth: null, emailId: 'abhishek@gm.co', membershipType: 'SL', membershipTypeName: 'Silver', mobileNumber: '9778675564', profilePicDocId: null, registrationNumber: null },
 };
@@ -132,11 +136,43 @@ describe('AccountRelated Master  Component', () => {
         const saveBtn = screen.getByRole('button', { name: 'loading Save & Next', exact: false });
         fireEvent.click(saveBtn);
     });
+
+    it('test for onSuccess', async () => {
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+            data: {
+                CustomerMaster: {
+                    IndivisualAccounts: { isLoaded: true, data: [{ creditAmount: 11, creditDays: 11, customerCreditId: '1b27160e-856d-4e45-8036-39847206bf1b', customerId: 'CUS1694080366163', labourDiscount: 11, outstandingAmount: 11, partsDiscount: 11, remarks: '', vipDealerInd: true }] },
+                },
+            },
+        });
+
+        const saveData = jest.fn();
+        const res = { data: [{ customerId: 'CUS1694080366163' }] };
+
+        customRender(
+            <Provider store={mockStore}>
+                <FormWrapper saveData={saveData} handleButtonClick={jest.fn()} fetchList={jest.fn()} resetData={jest.fn()} buttonData={defaultBtnVisiblity} setButtonData={jest.fn()} />
+            </Provider>
+        );
+
+        const editBtn = screen.getByRole('button', { name: 'Edit' });
+        fireEvent.click(editBtn);
+
+        const status = screen.getByRole('textbox', { name: /Credit Limit Days/i });
+        fireEvent.change(status, { target: { value: '121' } });
+
+        const saveBtn = screen.getByRole('button', { name: /Save & Next/i });
+        fireEvent.click(saveBtn);
+
+        await waitFor(() => expect(saveData).toHaveBeenCalled());
+        saveData.mock.calls[0][0].onSuccess(res);
+    });
 });
 
 describe('Component render when viewmode is true', () => {
     it('should render addedit page', async () => {
         const props = { formActionType: { viewMode: true } };
-        customRender(<AccountRelatedMaster {...props} />);
+        customRender(<AccountRelatedMaster {...props} resetData={jest.fn()} />);
     });
 });

@@ -537,6 +537,9 @@ export const VehicleInvoiceMasterBase = (props) => {
         if (key === 'searchParam') {
             const { searchType, searchParam, ...rest } = filterString;
             setFilterString({ ...rest });
+        } else if (key === 'fromDate' || key === 'toDate') {
+            const { fromDate, toDate, ...rest } = filterString;
+            setFilterString({ ...rest });
         } else {
             const { [key]: names, ...rest } = filterString;
             setFilterString({ ...rest });

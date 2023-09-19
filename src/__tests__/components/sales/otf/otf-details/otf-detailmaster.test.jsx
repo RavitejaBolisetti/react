@@ -101,7 +101,7 @@ describe('AddEdit Component render', () => {
         const modeOf = screen.getByRole('columnheader', { name: 'Mode Of Payment' });
         expect(modeOf).toBeTruthy();
 
-        const loyalty = screen.getByRole('columnheader', { name: 'Loyality Scheme' });
+        const loyalty = screen.getByRole('columnheader', { name: 'Loyalty Scheme' });
         expect(loyalty).toBeTruthy();
     });
 
@@ -154,7 +154,7 @@ describe('AddEdit Component render', () => {
         const addBtn = screen.getByRole('button', { name: 'Edit', exact: false });
         fireEvent.click(addBtn);
 
-        const saveBtn = screen.getByRole('button', { name: 'Save & Next', exact: false });
+        const saveBtn = screen.getByRole('button', { name: 'Save', exact: false });
         fireEvent.click(saveBtn);
     });
 
@@ -170,9 +170,9 @@ describe('AddEdit Component render', () => {
         const addBtn = screen.getByRole('button', { name: 'Edit', exact: false });
         fireEvent.click(addBtn);
 
-        const disableChecked = screen.getByRole('columnheader', { name: 'Loyality Scheme', exact: false });
+        const disableChecked = screen.getByRole('columnheader', { name: 'Loyalty Scheme', exact: false });
         expect(disableChecked).not.toBeDisabled();
-        const saveBtn = screen.getByRole('button', { name: 'Save & Next', exact: false });
+        const saveBtn = screen.getByRole('button', { name: 'Save', exact: false });
         fireEvent.click(saveBtn);
     });
 });

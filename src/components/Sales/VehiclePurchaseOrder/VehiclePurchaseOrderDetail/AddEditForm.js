@@ -108,7 +108,7 @@ const AddEditFormMain = (props) => {
                                     <h3> Product Details </h3>
                                 </Col>
                                 <Col xs={24} sm={24} md={14} lg={14} xl={14} xxl={14}>
-                                    <Form.Item name="modelCode" label="Model" initialValue={formData?.modelCode} rules={[validateRequiredSelectField('Model')]}>
+                                    <Form.Item name="modelCode" label="Model Description" initialValue={formData?.modelCode} rules={[validateRequiredSelectField('Model')]}>
                                         {customSelectBox({ data: productHierarchyList, fieldNames: { key: 'prodctCode', value: 'prodctShrtName' }, placeholder: preparePlaceholderSelect('Model Code') })}
                                     </Form.Item>
                                 </Col>

@@ -17,7 +17,6 @@ import { otfvehicleDetailsLovDataActions } from 'store/actions/data/otf/vehicleD
 import { otfvehicleDetailsServiceLovDataActions } from 'store/actions/data/otf/serviceLov';
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 import { showGlobalNotification } from 'store/actions/notification';
-import dayjs from 'dayjs';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -211,7 +210,7 @@ const VehicleDetailsMasterMain = (props) => {
     useEffect(() => {
         if (vehicleDetailData) {
             vehicleDetailData?.optionalServices && setoptionsServiceModified(vehicleDetailData?.optionalServices);
-            setProductModelCode(vehicleDetailData?.modelCode);
+            setProductModelCode(vehicleDetailData?.model);
             setFormData(vehicleDetailData);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -234,28 +233,13 @@ const VehicleDetailsMasterMain = (props) => {
     }, [productModelCode]);
 
     const onFinish = (values) => {
+        let data = {};
         if (onFinishCustom) {
             onFinishCustom({ key: formKey, values });
             handleButtonClick({ buttonAction: NEXT_ACTION });
             setButtonData({ ...buttonData, formBtnActive: false });
         } else {
-            let data;
-            if (!values.hasOwnProperty('vehicleUsageType')) {
-                data = {
-                    ...values,
-                    otfNumber: selectedOrderId || '',
-                    OtfId: formData?.id || '',
-                    id: formData?.id || '',
-                    poDate: dayjs(formData?.poDate?.substr(0, 10)).format('DD/MM/YYYY'),
-                    vehicleUsageType: vehicleDetailData?.vehicleUsageType,
-                    model: vehicleDetailData?.model,
-                    modelCode: vehicleDetailData?.modelCode,
-                    discountAmount: vehicleDetailData?.discountAmount,
-                    optionalServices: optionsServiceModified,
-                };
-            } else {
-                data = { ...values, otfNumber: selectedOrderId, OtfId: formData?.id || '', id: formData?.id || '', optionalServices: optionsServicesMapping, model: productAttributeData['0']['prodctShrtName'] };
-            }
+            data = { ...values, otfNumber: selectedOrderId, otfId: formData?.id || '', id: formData?.id || '', optionalServices: optionsServicesMapping };
 
             const onSuccess = (res) => {
                 setoptionsServicesMapping([]);

@@ -111,7 +111,7 @@ const CustomerMasterMain = (props) => {
 
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
-    const [showDataLoading, setShowDataLoading] = useState(true);
+    const [showDataLoading, setShowDataLoading] = useState(false);
     const [profileCardLoading, setProfileCardLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [ChangeHistoryVisible, setChangeHistoryVisible] = useState(false);
@@ -126,13 +126,6 @@ const CustomerMasterMain = (props) => {
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
     const [page, setPage] = useState({ pageSize: 10, current: 1 });
     const dynamicPagination = true;
-
-    useEffect(() => {
-        //if (filterString) {
-        setPage({ pageSize: 10, current: 1 });
-        //}
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [customerType, filterString]);
 
     const defaultExtraParam = useMemo(() => {
         return [
@@ -221,6 +214,7 @@ const CustomerMasterMain = (props) => {
     const onSuccessAction = (res) => {
         setShowDataLoading(false);
         setRefreshCustomerList(false);
+        setFilterString();
     };
 
     const onErrorAction = (res) => {
@@ -239,20 +233,19 @@ const CustomerMasterMain = (props) => {
     useEffect(() => {
         return () => {
             resetData();
-            setFilterString();
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
         if (customerType) {
+            setFilterString({ current: 1 });
+            setPage({ pageSize: 10, current: 1 });
             const defaultSection = customerType === CUSTOMER_TYPE?.INDIVIDUAL.id ? CUSTOMER_INDIVIDUAL_SECTION.CUSTOMER_DETAILS.id : CUSTOMER_CORPORATE_SECTION.CUSTOMER_DETAILS.id;
             setSetionName(customerType === CUSTOMER_TYPE?.INDIVIDUAL.id ? CUSTOMER_INDIVIDUAL_SECTION : CUSTOMER_CORPORATE_SECTION);
             setDefaultSection(defaultSection);
             setSection(defaultSection);
-            setFilterString();
-            setShowDataLoading(true);
-            resetData();
+            // setShowDataLoading(false);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [customerType]);
@@ -330,6 +323,7 @@ const CustomerMasterMain = (props) => {
     const tableProps = {
         dynamicPagination,
         totalRecords,
+        filterString,
         page,
         setPage,
         isLoading: isLoading,
