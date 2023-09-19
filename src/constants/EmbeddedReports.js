@@ -56,7 +56,15 @@ export const EMBEDDED_REPORTS = {
         id: 7,
         key: 'AMC-Certificate_Document',
         title: 'AMC Certificate Document',
-        type: 'Document',
+        type: 'Report',
         slug: 'amc-certificate-document',
+    },
+
+    STOCK_TRANSFER_ISSUE_NOTE_DOCUMENT: {
+        id: 8,
+        key: 'Stock_Transfer_Issue_Note_Document',
+        title: 'Stock Transfer Issue Note Document',
+        type: 'Document',
+        slug: 'stock-transfer-issue-note-document',
     },
 };

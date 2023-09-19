@@ -18,7 +18,9 @@ import { StockIndentIssueDataAction } from 'store/actions/data/sales/stockTransf
 import { DealerBranchLocationDataActions } from 'store/actions/data/userManagement/dealerBranchLocation';
 import { otfvehicleDetailsLovDataActions } from 'store/actions/data/otf/vehicleDetailsLov';
 import { vehicleDetailDataActions } from 'store/actions/data/vehicle/vehicleDetail';
+import { reportDataActions } from 'store/actions/data/report/reports';
 import { BASE_URL_STOCK_TRANSFER as customURL, BASE_URL_USER_MANAGEMENT_DEALER as dealerURL } from 'constants/routingApi';
+import { EMBEDDED_REPORTS } from 'constants/EmbeddedReports';
 
 import { ListDataTable } from 'utils/ListDataTable';
 import { showGlobalNotification } from 'store/actions/notification';
@@ -32,6 +34,7 @@ import { IssueIndentMaster } from 'components/Sales/StockTransferIndent/IssueInd
 import { INDENT_ACTION_LIST } from './constants';
 import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 import { defaultPageProps } from 'utils/defaultPageProps';
+import { ReportModal } from 'components/common/ReportModal/ReportModal';
 
 const mapStateToProps = (state) => {
     const {
@@ -56,6 +59,9 @@ const mapStateToProps = (state) => {
             Vehicle: {
                 VehicleDetail: { data: vehicleVinData, isLoading: vehicleVinDataLoading = false },
             },
+            Report: {
+                Reports: { data: reportData },
+            },
         },
     } = state;
     let returnValue = {
@@ -77,6 +83,8 @@ const mapStateToProps = (state) => {
         indentIssueDataLoaded,
 
         vehicleVinDataLoading,
+
+        reportData,
     };
     return returnValue;
 };
@@ -107,6 +115,9 @@ const mapDispatchToProps = (dispatch) => ({
             saveIssueDetail: StockIndentIssueDataAction.saveData,
             resetIssueList: StockIndentIssueDataAction.reset,
 
+            fetchReportDetail: reportDataActions.fetchData,
+            listReportShowLoading: reportDataActions.listShowLoading,
+
             showGlobalNotification,
         },
         dispatch
@@ -114,7 +125,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const StockTransferIndentMasterBase = (props) => {
-    const { data, filterString, setFilterString, isFetchDataLoading } = props;
+    const { data, filterString, setFilterString, isFetchDataLoading, fetchReportDetail } = props;
     const { userId, typeData, parentGroupCode, showGlobalNotification } = props;
     const { indentLocationList, requestedByDealerList, productHierarchyData, isLoadingDealerLoc } = props;
     const { fetchIndentList, fetchIndentLocation, fetchIndentDetails, fetchRequestedByList, listShowLoading, saveData, ProductLovLoading, fetchProductLov, fetchVinDetails, vehicleVinData, saveIssueDetail, resetVinDetails, fetchIssueList, resetIssueList, listIssueLoading } = props;
@@ -135,6 +146,9 @@ export const StockTransferIndentMasterBase = (props) => {
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [showVinLoading, setshowVinLoading] = useState(false);
     const [page, setPage] = useState({ pageSize: 10, current: 1 });
+    const [additionalReportParams, setAdditionalReportParams] = useState();
+    const [isReportVisible, setReportVisible] = useState();
+
     const dynamicPagination = true;
 
     const defaultBtnVisiblity = {
@@ -154,6 +168,7 @@ export const StockTransferIndentMasterBase = (props) => {
     const [buttonDataVehicleDetails, setButtonDataVehicleDetails] = useState({ ...btnVisiblityVehicleDetails });
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
+    const reportDetail = EMBEDDED_REPORTS?.STOCK_TRANSFER_ISSUE_NOTE_DOCUMENT;
     const onSuccessAction = (res) => {
         setshowVinLoading(false);
         setShowDataLoading(false);
@@ -447,6 +462,32 @@ export const StockTransferIndentMasterBase = (props) => {
         fetchVinDetails({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
     };
 
+    const handlePrintDownload = (record) => {
+        setReportVisible(true);
+
+        setAdditionalReportParams([
+            {
+                key: 'vehicle_identification_number',
+                value: record?.vin,
+            },
+        ]);
+
+        // fetchReportDetail({
+        //     setIsLoading: listShowLoading,
+        //     userId,
+        //     tempRespone: true,
+        //     extraParams,
+        //     onSuccessAction: (res) => {
+        //         if (res?.data?.embedReports) {
+        //             setReportData({
+        //                 ...res?.data?.embedReports,
+        //                 embedUrl: res?.data?.embedReports?.[0]?.embedUrl ? res?.data?.embedReports?.[0]?.embedUrl.concat('?rp:vehicle_identification_number=' + record?.vin) : '',
+        //             });
+        //         }
+        //     },
+        // });
+    };
+
     const tableProps = {
         dynamicPagination,
         filterString,
@@ -559,6 +600,16 @@ export const StockTransferIndentMasterBase = (props) => {
         typeData,
         toggleButton,
         vehicleVinDataLoading: showVinLoading,
+        handlePrintDownload,
+    };
+
+    const reportProps = {
+        isVisible: isReportVisible,
+        titleOverride: reportDetail?.title,
+        additionalParams: additionalReportParams,
+        onCloseAction: () => {
+            setReportVisible(false);
+        },
     };
 
     return (
@@ -573,6 +624,7 @@ export const StockTransferIndentMasterBase = (props) => {
             <AddEditForm {...addNewIndentProps} />
             <ViewDetail {...viewIndentProps} />
             <IssueIndentMaster {...IndentIssueProps} />
+            <ReportModal {...reportProps} reportDetail={reportDetail} />
         </>
     );
 };
