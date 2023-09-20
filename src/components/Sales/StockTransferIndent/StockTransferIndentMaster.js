@@ -422,8 +422,14 @@ export const StockTransferIndentMasterBase = (props) => {
             const { dealerLocation, ...rest } = filterString;
             setFilterString({ ...rest });
         } else if (key === 'fromDate' || key === 'toDate') {
-            setFilterString();
-            advanceFilterForm.resetFields();
+            if (key === 'fromDate') {
+                const { fromDate, ...rest } = filterString;
+                setFilterString({ ...rest });
+            }
+            if (key === 'toDate') {
+                const { toDate, ...rest } = filterString;
+                setFilterString({ ...rest });
+            }
         } else {
             const { [key]: names, ...rest } = filterString;
             setFilterString({ ...rest });
@@ -485,7 +491,7 @@ export const StockTransferIndentMasterBase = (props) => {
                 key: 'vehicle_identification_number',
                 value: record?.vin,
             },
-        ]); 
+        ]);
 
         // fetchReportDetail({
         //     setIsLoading: listShowLoading,
