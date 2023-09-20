@@ -8,16 +8,16 @@
 
 /* Main Properties */
 
-.inputBox {
-    margin-bottom: 20px !important;
-}
+// .inputBox {
+//     margin-bottom: 20px !important;
+// }
 
 .marginBottomZero {
     margin-bottom: 0 !important;
 }
 
 .registered {
-    padding: 28px 0 8px;
+    padding: 20px 0 8px;
     color: $neutralGrey4-dark;
     font-size: 14px;
     line-height: 22px;
@@ -71,8 +71,8 @@
     line-height: 24px !important;
     font-weight: 600 !important;
     text-align: center;
-    color: $primaryWhite;
-    margin-top: 20px;
+    color: $primaryWhite-dark;
+    // margin-top: 20px;
     padding: 7px 16px !important;
     background-color: $primaryRed-dark;
 
@@ -133,27 +133,24 @@
 
     & :global {
         .ant-input-affix-wrapper {
-            background: $primaryRed-dark;
-            height: 36px !important;
-            // color: $primaryWhite;
-            // font-size: 16px;
-            padding: 0;
-            @include borderRedius(4px, 1px, solid, $neutralGrey2-dark);
-            @include font-style(16, normal, normal, $primaryWhite, $fontfamily, inherit);
+            background: $primaryBlack-dark;
+            border-color: $neutralGrey4-dark;
+            color: $primaryWhite-dark;
 
             @include breakpoint(md) {
                 padding: 2px 10px 0;
             }
 
             &:hover {
-                border-color: $primaryWhite-dark;
-                border-inline-end-width: 0;
+                // border-color: $primaryWhite-dark;
+                // border-inline-end-width: 0;
+                z-index: 0 !important;
             }
 
             &:not(.ant-input-affix-wrapper-disabled) {
                 &:hover {
                     border-color: $primaryWhite-dark;
-                    border-inline-end-width: 0;
+                    // border-inline-end-width: 0;
                 }
             }
 
@@ -168,15 +165,11 @@
             }
 
             .ant-input-prefix {
+                color: $neutralGrey3-dark;
                 &::placeholder {
-                    // color: $neutralGrey2-dark;
-                    // font-size: 18px;
-                    @include font-style(18, normal, normal, $neutralGrey2-dark, $fontfamily, inherit);
+                    color: $primaryWhite-dark;
+                    font-size: 18px;
                 }
-
-                margin-inline-start: 12px;
-                //  margin-inline-end: 12px;
-                color: $neutralGrey2-dark;
             }
         }
 
@@ -193,7 +186,7 @@
 
         .ant-input-affix-wrapper-status-success {
             .ant-input-prefix {
-                color: $primaryWhite;
+                color: $primaryWhite-dark;
             }
         }
 
@@ -234,6 +227,12 @@
 
     .disabledInput {
         color: #838383;
+        margin-bottom: 0;
+        & :global {
+            .ant-input-affix-wrapper {
+                border-color: #838383;
+            }
+        }
     }
 
     input {
@@ -392,38 +391,32 @@
                                     }
                                 }
                             }
+
+                            .ant-checkbox.ant-checkbox-checked {
+                                + span {
+                                    color: $primaryRed-dark !important;
+
+                                    p {
+                                        color: $primaryRed-dark !important;
+                                    }
+                                }
+                            }
                         }
                     }
                 }
 
                 .inputBox {
                     & :global {
-                        .ant-input-affix-wrapper {
-                            background: $primaryBlack-dark;
-                            height: 36px !important;
-                            // color: $primaryWhite-dark;
-                            // font-size: 16px;
-                            @include font-style(16, inherit, inherit, $primaryWhite-dark, $fontfamily, inherit);
-                            @include borderRedius(5px, 1px, solid, $neutralGrey2-dark);
-                            padding: 0;
-
-                            &:focus {
-                                box-shadow: none !important;
-                                border-color: $primaryWhite-dark;
-                            }
-
-                            .ant-input-suffix {
-                                margin-inline-end: 8px;
-                                line-height: 16px;
-                                transform: scaleX(-1) !important;
-                                color: $DarkPink-dark;
-                            }
+                        .ant-form-item-control-input {
+                            background: $primaryBlack-dark !important;
+                            border-radius: 6px !important;
                         }
                     }
 
                     input {
-                        background: $transparentColor;
+                        background-color: $transparentColor !important;
                         color: $primaryWhite;
+                        height: auto;
 
                         &::-ms-reveal {
                             display: none;
@@ -436,7 +429,7 @@
                         }
 
                         &::placeholder {
-                            color: $neutralGrey4;
+                            color: $neutralGrey4-dark;
                             font-size: 16px !important;
                             font-weight: 400 !important;
                             line-height: 24px;
@@ -449,9 +442,14 @@
                 }
 
                 .inputBox.disabledInput {
+                    & :global {
+                        .ant-form-item-control-input {
+                            background: $transparentColor !important;
+                        }
+                    }
+
                     input {
-                        background: $transparentColor;
-                        color: $neutralGrey4 !important;
+                        background-color: $transparentColor !important;
                     }
 
                     p {
@@ -580,9 +578,17 @@
             }
 
             .verifyUser {
-                & :global {
-                    .ant-form-item {
-                        margin-bottom: 0px !important;
+                // & :global {
+                //     .ant-form-item {
+                //         margin-bottom: 0px !important;
+                //     }
+                // }
+
+                .loginForm {
+                    .loginHeading {
+                        h1 {
+                            margin-bottom: 30px;
+                        }
                     }
                 }
             }
@@ -742,6 +748,7 @@
 
 .otpVerificationContainer {
     font-size: 14px;
+    margin-bottom: 20px;
 }
 
 .otpCounter {

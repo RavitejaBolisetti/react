@@ -37,8 +37,8 @@ const ViewDetailMain = (props) => {
                             <Descriptions {...viewProps}>
                                 <Descriptions.Item label="Model Description">
                                     <div className={styles?.tooltipAlign}>
-                                        {checkAndSetDefaultValue(formData?.model, isLoading)}
-                                        {formData?.model && checkAndSetDefaultValue(addToolTip(tooltTipText, 'bottom', '#D3EDFE', styles.toolTip)(<AiOutlineInfoCircle className={styles?.infoIconColor} size={13} />), isLoading)}
+                                        {checkAndSetDefaultValue(formData?.name, isLoading)}
+                                        {formData?.name && checkAndSetDefaultValue(addToolTip(tooltTipText, 'bottom', '#D3EDFE', styles.toolTip)(<AiOutlineInfoCircle className={styles?.infoIconColor} size={13} />), isLoading)}
                                     </div>
                                 </Descriptions.Item>
                                 <Descriptions.Item label="Model Code">{checkAndSetDefaultValue(formData?.modelCode, isLoading)}</Descriptions.Item>
