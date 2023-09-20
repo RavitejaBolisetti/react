@@ -77,7 +77,7 @@ export const EMBEDDED_REPORTS = {
     },
     INVOICE_DOCUMENT: {
         id: 10,
-        key: '',
+        key: 'Invoice_Document',
         title: 'Invoice Document',
         type: 'Document',
         slug: '',
