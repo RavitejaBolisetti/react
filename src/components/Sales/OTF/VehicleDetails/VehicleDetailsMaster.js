@@ -243,7 +243,7 @@ const VehicleDetailsMasterMain = (props) => {
                 data = {
                     ...values,
                     otfNumber: selectedOrderId || '',
-                    OtfId: formData?.id || '',
+                    otfId: formData?.otfId || '',
                     id: formData?.id || '',
                     poDate: dayjs(formData?.poDate?.substr(0, 10)).format('DD/MM/YYYY'),
                     vehicleUsageType: vehicleDetailData?.vehicleUsageType,
@@ -253,7 +253,7 @@ const VehicleDetailsMasterMain = (props) => {
                     optionalServices: optionsServiceModified,
                 };
             } else {
-                data = { ...values, otfNumber: selectedOrderId, OtfId: formData?.id || '', id: formData?.id || '', optionalServices: optionsServicesMapping, model: productAttributeData['0']['prodctShrtName'] };
+                data = { ...values, otfNumber: selectedOrderId, otfId: formData?.otfId || '', id: formData?.id || '', optionalServices: optionsServicesMapping, model: productAttributeData['0']['prodctShrtName'] };
             }
 
             const onSuccess = (res) => {

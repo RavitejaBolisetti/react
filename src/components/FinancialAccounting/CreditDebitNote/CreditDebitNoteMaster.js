@@ -12,7 +12,7 @@ import { tableColumn } from './tableColumn';
 import AdvanceFilter from './AdvanceFilter';
 import { FilterIcon } from 'Icons';
 import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 'utils/btnVisiblity';
-
+import { ReportModal } from 'components/common/ReportModal/ReportModal';
 import { ListDataTable } from 'utils/ListDataTable';
 import { getCodeValue } from 'utils/getCodeValue';
 import { dateFormatView, convertDateTimedayjs } from 'utils/formatDateTime';
@@ -21,7 +21,7 @@ import { AdvancedSearch } from './AdvancedSearch';
 import { showGlobalNotification } from 'store/actions/notification';
 import { BASE_URL_CREDIT_DEBIT_NOTE_SEARCH as customURL } from 'constants/routingApi';
 import { BASE_URL_CREDIT_DEBIT_NOTE_DETAILS as customVoucherUrl } from 'constants/routingApi';
-
+import { EMBEDDED_REPORTS } from 'constants/EmbeddedReports';
 import { creditDebitNoteSearchDataAction } from 'store/actions/data/financialAccounting/creditDebitNoteSearch';
 
 import { CREDIT_DEBIT_SECTION } from 'constants/CreditDebitSection';
@@ -96,6 +96,8 @@ export const CreditDebitNoteMasterBase = (props) => {
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [voucherTableData, setVoucherTableData] = useState([]);
     const [apportionTableData, setApportionTableData] = useState([]);
+    const [additionalReportParams, setAdditionalReportParams] = useState();
+    const [isReportVisible, setReportVisible] = useState();
 
     const [requestPayload, setRequestPayload] = useState({ voucherDetailsDto: {}, partyDetailsDto: {}, voucherAccountHeadDetailsDto: [], apportionDetailsDto: [] });
 
@@ -341,6 +343,17 @@ export const CreditDebitNoteMasterBase = (props) => {
 
     const onFinishSearch = (values) => {};
 
+      const handlePrintDownload = (record) => {
+          setReportVisible(true);
+
+          setAdditionalReportParams([
+              {
+                  key: 'fn_vc_debit_credit_note_hdr_id',
+                  value: record?.id,
+              },
+          ]);
+      };
+
     const onFinish = () => {
         const recordId = selectedRecord?.id;
 
@@ -486,7 +499,7 @@ export const CreditDebitNoteMasterBase = (props) => {
         VIEW_ACTION,
         NEXT_ACTION,
         buttonData,
-
+        handlePrintDownload,
         setButtonData,
         handleButtonClick,
         defaultFormActionType,
@@ -514,6 +527,16 @@ export const CreditDebitNoteMasterBase = (props) => {
         setApportionTableData,
     };
 
+    const reportDetail = EMBEDDED_REPORTS?.CREDIT_DEBIT_DOCUMENT;
+    const reportProps = {
+        isVisible: isReportVisible,
+        titleOverride: reportDetail?.title,
+        additionalParams: additionalReportParams,
+        onCloseAction: () => {
+            setReportVisible(false);
+        },
+    };
+
     return (
         <>
             <AdvanceFilter {...advanceFilterResultProps} />
@@ -525,6 +548,7 @@ export const CreditDebitNoteMasterBase = (props) => {
                 </Col>
             </Row>
             <CreditDebitNoteMainContainer {...containerProps} />
+            <ReportModal {...reportProps} reportDetail={reportDetail} />
         </>
     );
 };

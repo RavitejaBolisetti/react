@@ -149,13 +149,13 @@ const AddEditFormMain = (props) => {
                                     </Form.Item>
                                 </Col>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                    <Form.Item label="Model Group" name="modelGroup">
-                                        <Input maxLength={15} placeholder={preparePlaceholderText('model group')} {...disabledProps} />
+                                    <Form.Item label="Model Family" name="modelFamily">
+                                        <Input maxLength={15} placeholder={preparePlaceholderText('model familiy')} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                    <Form.Item label="Model Family" name="modelFamily">
-                                        <Input maxLength={15} placeholder={preparePlaceholderText('model familiy')} {...disabledProps} />
+                                    <Form.Item label="Model Group" name="modelGroup">
+                                        <Input maxLength={15} placeholder={preparePlaceholderText('model group')} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
                             </Row>
