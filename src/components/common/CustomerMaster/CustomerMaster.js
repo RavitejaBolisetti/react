@@ -214,7 +214,7 @@ const CustomerMasterMain = (props) => {
     const onSuccessAction = (res) => {
         setShowDataLoading(false);
         setRefreshCustomerList(false);
-        setFilterString();
+        // setFilterString();
     };
 
     const onErrorAction = (res) => {
@@ -239,8 +239,8 @@ const CustomerMasterMain = (props) => {
 
     useEffect(() => {
         if (customerType) {
-            setFilterString({ current: 1 });
             setPage({ pageSize: 10, current: 1 });
+            setFilterString({ current: 1 });
             const defaultSection = customerType === CUSTOMER_TYPE?.INDIVIDUAL.id ? CUSTOMER_INDIVIDUAL_SECTION.CUSTOMER_DETAILS.id : CUSTOMER_CORPORATE_SECTION.CUSTOMER_DETAILS.id;
             setSetionName(customerType === CUSTOMER_TYPE?.INDIVIDUAL.id ? CUSTOMER_INDIVIDUAL_SECTION : CUSTOMER_CORPORATE_SECTION);
             setDefaultSection(defaultSection);
