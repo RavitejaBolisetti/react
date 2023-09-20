@@ -6,7 +6,7 @@ afterEach(() => {
     jest.restoreAllMocks();
 });
 
-describe('Vehicle invoice form-button components', () => {
+describe('utils components', () => {
     it('should render components', () => {
         const TimeStampCheck = timeStampCheck;
         customRender(<TimeStampCheck />);
