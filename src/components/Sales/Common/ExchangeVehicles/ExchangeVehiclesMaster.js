@@ -34,7 +34,7 @@ const mapStateToProps = (state) => {
             OTF: {
                 ExchangeVehicle: { isLoaded: isDataLoaded = false, isLoading, data: exchangeData = [] },
                 FinanceLov: { isLoaded: isFinanceLovDataLoaded = false, isLoading: isFinanceLovLoading, data: financeLovData = [] },
-                SchemeDetail: { isFilteredListLoaded: isSchemeLovDataLoaded = false, isLoading: isSchemeLovLoading, filteredListData: schemeLovData = [] },
+                SchemeDetail: { isLoaded: isSchemeLovDataLoaded = false, isLoading: isSchemeLovLoading, data: schemeLovData = [] },
                 ExchangeVehicleAlert: { isLoaded: isExchangeVehicleAlertLoaded = false, isLoading: isExchangeVehicleAlertLoading = false, data: exchangeVehicleAlertData = false },
             },
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
@@ -106,7 +106,7 @@ const mapDispatchToProps = (dispatch) => ({
             fetchFinanceLovList: financeLovDataActions.fetchList,
             listFinanceLovShowLoading: financeLovDataActions.listShowLoading,
 
-            fetchSchemeLovList: otfSchemeDetailDataActions.fetchFilteredList,
+            fetchSchemeLovList: otfSchemeDetailDataActions.fetchList,
             listSchemeLovShowLoading: otfSchemeDetailDataActions.listShowLoading,
 
             fetchMakeLovList: vehicleMakeDetailsDataActions.fetchList,
@@ -225,9 +225,17 @@ const ExchangeVehiclesBase = (props) => {
 
     useEffect(() => {
         if (userId && selectedOrderId) {
+            const schemeExtraParams = [
+                {
+                    key: 'modelCode',
+                    title: 'modelCode',
+                    value: selectedOrder?.modelCode,
+                    name: 'Booking Number',
+                },
+            ];
             fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, onErrorAction, userId });
             fetchFinanceLovList({ setIsLoading: listFinanceLovShowLoading, userId });
-            fetchSchemeLovList({ setIsLoading: listSchemeLovShowLoading, userId });
+            fetchSchemeLovList({ setIsLoading: listSchemeLovShowLoading, extraParams: schemeExtraParams, userId });
             fetchMakeLovList({ setIsLoading: listMakeShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -338,11 +346,11 @@ const ExchangeVehiclesBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [exchangeVehicleAlertData]);
 
-    const handleSchemeChange = (__,value) =>{
+    const handleSchemeChange = (__, value) => {
         form.setFieldsValue({
-            schemeAmount : value?.amount
-        })
-    }
+            schemeAmount: value?.amount,
+        });
+    };
 
     const onFinish = (values) => {
         const { customerName } = values;
@@ -464,7 +472,7 @@ const ExchangeVehiclesBase = (props) => {
         fnSetData,
         customerList,
         showAlert,
-        handleSchemeChange
+        handleSchemeChange,
     };
 
     const viewProps = {
