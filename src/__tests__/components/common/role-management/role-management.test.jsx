@@ -20,7 +20,6 @@ jest.mock('store/actions/data/roleManagement/roleList', ()=> ({
 const roleManagementData=[{"id":"106","roleId":"ROL106","roleName":"Manager","roleDescription":"Description","status":true,"accessProvided":null}];
 const rolemenuData= [{"id":"106","value":"test106","label":"Kai","type":"Application","parentId":"Web","checked":false,"status":null,"children":[{"id":"106","value":"test106","label":"Update","type":"Action","parentId":"test106","checked":false,"status":null,"children":null}]}];
 
-
 describe('RoleManagement Components', () => {
 
     it('should render RoleManagement components', () => {
@@ -39,7 +38,6 @@ describe('RoleManagement Components', () => {
         });
 
         const fetchMenuList=jest.fn();
-        const saveData=jest.fn();
 
         const response={
             data: rolemenuData,
@@ -47,7 +45,7 @@ describe('RoleManagement Components', () => {
 
         customRender(
             <Provider store={mockStore}>
-                <RoleManagement fetchMenuList={fetchMenuList} fetchList={jest.fn()} saveData={saveData} />
+                <RoleManagement fetchMenuList={fetchMenuList} fetchList={jest.fn()} />
             </Provider>
         );
 
