@@ -19,7 +19,7 @@ const AddEditFormMain = (props) => {
     useEffect(() => {
         if (formData) {
             invoiceDetailForm?.setFieldsValue({
-                ...formData,
+                formData: formData,
                 bookingCustomer: { ...formData?.bookingCustomer, birthDate: convertDateToCalender(formData?.bookingCustomer?.birthDate) },
                 billingCustomer: { ...formData?.billingCustomer, birthDate: convertDateToCalender(formData?.billingCustomer?.birthDate) },
             });

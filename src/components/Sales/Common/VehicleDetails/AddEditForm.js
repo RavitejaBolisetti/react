@@ -32,7 +32,7 @@ const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
     const { productHierarchyData, toolTipContent, isProductDataLoading, handleFormValueChange, optionsServicesMapping, setoptionsServicesMapping, optionsServiceModified, setoptionsServiceModified, formData, openAccordian, isReadOnly, setIsReadOnly, setOpenAccordian, selectedOrderId, form, onErrorAction, showGlobalNotification, fetchList, userId, listShowLoading, saveData, onSuccessAction, typeData, formActionType, vehicleServiceData } = props;
-    const { productModelCode, setProductModelCode } = props;
+    const { productModelCode, setProductModelCode, viewOnly } = props;
 
     const [optionForm] = Form.useForm();
     const findUsageType = (usage) => {
@@ -107,7 +107,8 @@ const AddEditFormMain = (props) => {
         handleSelectTreeClick,
         defaultValue: null,
         placeholder: preparePlaceholderSelect('Model'),
-        loading: isProductDataLoading,
+        // loading: isProductDataLoading,
+        treeDisabled: viewOnly,
     };
 
     return (
@@ -181,12 +182,12 @@ const AddEditFormMain = (props) => {
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item initialValue={formData?.saleType} name="saleType" label="Sale Type" rules={[validateRequiredSelectField('Sale Type')]}>
-                                    {customSelectBox({ data: typeData['SALE_TYPE'] })}
+                                    {customSelectBox({ data: typeData['SALE_TYPE'], disabled: viewOnly })}
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item initialValue={formData?.priceType} label="Price Type" name="priceType">
-                                    {customSelectBox({ data: typeData['PRC_TYP'] })}
+                                    {customSelectBox({ data: typeData['PRC_TYP'], disabled: viewOnly })}
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>

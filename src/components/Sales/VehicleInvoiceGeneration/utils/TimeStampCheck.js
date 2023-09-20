@@ -3,8 +3,12 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { AddEditForm } from './AddEditForm';
-import { ViewDetail } from './ViewDetail';
-import { InsuranceDetailsMaster } from './InsuranceDetailsMaster';
+import * as sujeet from 'utils/formatDateTime';
+import dayjs from 'dayjs';
 
-export { AddEditForm, ViewDetail, InsuranceDetailsMaster };
+export const timeStampCheck = (time1, time2) => {
+    let hours = dayjs(time1).diff(dayjs(time2), 'hours');
+    const days = Math.floor(hours / 24);
+    hours = hours - days * 24;
+    if (hours < 24) return true;
+};

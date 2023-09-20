@@ -3,6 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { VehicleDetailsMaster } from './VehicleDetailsMaster';
+import { AddEditForm } from './AddEditForm';
+import { ViewDetail } from './ViewDetail';
 
-export { VehicleDetailsMaster };
+export { AddEditForm, ViewDetail };

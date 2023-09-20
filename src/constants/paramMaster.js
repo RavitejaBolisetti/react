@@ -381,4 +381,8 @@ export const PARAM_MASTER = {
         id: 'PARTY_TYPE',
         title: 'Supplier Party Type',
     },
+    IRN_GEN_STATUS: {
+        id: 'IRN_GEN_STATUS',
+        title: 'IRN Status',
+    },
 };

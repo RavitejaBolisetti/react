@@ -13,11 +13,10 @@ import { otfCustomerDetailsAction } from 'store/actions/data/otf/customerDetails
 import { customerDetailsIndividualDataActions } from 'store/actions/data/customerMaster/customerDetailsIndividual';
 import { geoPinCodeDataActions } from 'store/actions/data/geo/pincodes';
 import { showGlobalNotification } from 'store/actions/notification';
+import dayjs from 'dayjs';
 import { BASE_URL_VEHICLE_CUSTOMER_COMMON_DETAIL as customURL } from 'constants/routingApi';
-import { formattedCalendarDate } from 'utils/formatDateTime';
 
-import { ViewDetail } from './ViewDetail';
-import { AddEditForm } from './AddEditForm';
+import { AddEditForm, ViewDetail } from 'components/Sales/Common/CustomerDetails';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -78,7 +77,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const CustomerDetailsMain = (props) => {
-    const { wrapForm = true, resetData, saveData, isLoading, userId, isDataLoaded, fetchList, listShowLoading, customerFormData, showGlobalNotification, onFinishFailed } = props;
+    const { resetData, saveData, isLoading, userId, isDataLoaded, fetchList, listShowLoading, customerFormData, showGlobalNotification, onFinishFailed } = props;
     const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, pincodeData, formActionType, NEXT_ACTION, handleButtonClick, section, fetchCustomerDetailData } = props;
     const { typeData, selectedOrderId } = props;
     const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, StatusBar } = props;
@@ -185,7 +184,7 @@ export const CustomerDetailsMain = (props) => {
                 extraParams,
                 userId,
                 onSuccessAction: (response) => {
-                    setFormData({ ...formData, [type]: { ...response?.data, birthDate: formattedCalendarDate(response?.data?.dateOfBirth) } });
+                    setFormData({ ...formData, [type]: { ...response?.data, birthDate: response?.data?.dateOfBirth } });
                 },
                 onErrorAction,
             });
@@ -225,15 +224,18 @@ export const CustomerDetailsMain = (props) => {
         formActionType,
     };
 
-    const handleFormValueChange = () => {
+    const handleFormValueChange = (val) => {
+        let isInitial2 = Object.keys(val?.billingCustomer || {});
+        let isInitial = val?.[0]?.name?.includes('sameAsBookingCustomer') || isInitial2?.includes('sameAsBookingCustomer');
         setButtonData({ ...buttonData, formBtnActive: true });
-        // if (sameAsBookingCustomer) {
-        //     let bookingCustomer = form.getFieldsValue()?.bookingCustomer;
-        //     form?.setFieldsValue({ billingCustomer: { ...bookingCustomer } });
-        // }
+        if ((isInitial && !sameAsBookingCustomer) || (!isInitial && sameAsBookingCustomer)) {
+            let bookingCustomer = form.getFieldsValue()?.bookingCustomer;
+            const data = { ...bookingCustomer, birthDate: bookingCustomer?.birthDate ? dayjs(bookingCustomer?.birthDate) : null };
+            form?.setFieldsValue({ billingCustomer: { ...data }, bookingCustomer: { ...data } });
+        }
     };
 
-    return wrapForm ? (
+    return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -254,8 +256,6 @@ export const CustomerDetailsMain = (props) => {
                 </Col>
             </Row>
         </Form>
-    ) : (
-        <>{formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}</>
     );
 };
 
