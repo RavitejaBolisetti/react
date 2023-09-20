@@ -125,8 +125,8 @@ export const VehicleInvoiceMasterBase = (props) => {
 
     const [searchValue, setSearchValue] = useState();
 
-    const [selectedOrder, setSelectedOrder] = useState();
-    const [selectedOrderId, setSelectedOrderId] = useState();
+    const [selectedOrder, setSelectedOrder] = useState('');
+    const [selectedOrderId, setSelectedOrderId] = useState('');
     const [selectedOtfNumber, setSelectedOtfNumber] = useState();
 
     const [section, setSection] = useState();
@@ -318,7 +318,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedOtfNumber]);
 
-    const handleBookingNumberSearch = (otfNumber) => {
+    const handleBookingNumberSearch = (otfNumber = '', selectedOrderId = '') => {
         if (!otfNumber) return false;
         setSelectedOtfNumber(otfNumber);
         const extraParams = [
@@ -420,6 +420,7 @@ export const VehicleInvoiceMasterBase = (props) => {
                 record && setSelectedOrderId(record?.invoiceNumber);
                 record && setSelectedOtfNumber(record?.otfNumber);
                 openDefaultSection && setCurrentSection(defaultSection);
+                handleBookingNumberSearch(record?.otfNumber, record?.invoiceNumber);
 
                 break;
             case VIEW_ACTION:
@@ -427,6 +428,7 @@ export const VehicleInvoiceMasterBase = (props) => {
                 record && setSelectedOrderId(record?.invoiceNumber);
                 record && setSelectedOtfNumber(record?.otfNumber);
                 defaultSection && setCurrentSection(defaultSection);
+                handleBookingNumberSearch(record?.otfNumber, record?.invoiceNumber);
                 break;
             case NEXT_ACTION:
                 const nextSection = filterActiveSection?.find((i) => i?.displayOnList && i.id > currentSection);
