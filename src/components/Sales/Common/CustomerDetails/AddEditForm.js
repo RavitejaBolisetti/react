@@ -51,15 +51,14 @@ const AddEditFormBase = (props) => {
     };
 
     const handleOnChange = (e) => {
-
-        let bookingCustomer = formData?.bookingCustomer;
+        let bookingCustomer = form.getFieldsValue()?.bookingCustomer;
+        const data = { ...bookingCustomer, birthDate: formattedCalendarDate(bookingCustomer?.birthDate) };
         if (e.target.checked) {
             setSameAsBookingCustomer(true);
-            form?.setFieldsValue({ billingCustomer: { ...bookingCustomer, birthDate: formattedCalendarDate(bookingCustomer?.birthDate) }, bookingCustomer: { ...formData?.bookingCustomer, birthDate: formattedCalendarDate(bookingCustomer?.birthDate) } });
+            form?.setFieldsValue({ billingCustomer: data, bookingCustomer: data });
         } else {
             setSameAsBookingCustomer(false);
-            form?.resetFields(['billingCustomer']);
-            form?.setFieldsValue({ billingCustomer: null });
+            form?.setFieldsValue({ bookingCustomer: data, billingCustomer: null });
         }
     };
 
