@@ -13,6 +13,7 @@ import { otfCustomerDetailsAction } from 'store/actions/data/otf/customerDetails
 import { customerDetailsIndividualDataActions } from 'store/actions/data/customerMaster/customerDetailsIndividual';
 import { geoPinCodeDataActions } from 'store/actions/data/geo/pincodes';
 import { showGlobalNotification } from 'store/actions/notification';
+import dayjs from 'dayjs';
 import { BASE_URL_VEHICLE_CUSTOMER_COMMON_DETAIL as customURL } from 'constants/routingApi';
 
 import { AddEditForm, ViewDetail } from 'components/Sales/Common/CustomerDetails';
@@ -76,7 +77,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const CustomerDetailsMain = (props) => {
-    const { wrapForm = true, resetData, saveData, isLoading, userId, isDataLoaded, fetchList, listShowLoading, customerFormData, showGlobalNotification, onFinishFailed } = props;
+    const { resetData, saveData, isLoading, userId, isDataLoaded, fetchList, listShowLoading, customerFormData, showGlobalNotification, onFinishFailed } = props;
     const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, pincodeData, formActionType, NEXT_ACTION, handleButtonClick, section, fetchCustomerDetailData } = props;
     const { typeData, selectedOrderId } = props;
     const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, StatusBar } = props;
@@ -223,11 +224,14 @@ export const CustomerDetailsMain = (props) => {
         formActionType,
     };
 
-    const handleFormValueChange = () => {
+    const handleFormValueChange = (val) => {
+        let isInitial2 = Object.keys(val?.billingCustomer || {});
+        let isInitial = val?.[0]?.name?.includes('sameAsBookingCustomer') || isInitial2?.includes('sameAsBookingCustomer');
         setButtonData({ ...buttonData, formBtnActive: true });
-        if (sameAsBookingCustomer) {
+        if ((isInitial && !sameAsBookingCustomer) || (!isInitial && sameAsBookingCustomer)) {
             let bookingCustomer = form.getFieldsValue()?.bookingCustomer;
-            form?.setFieldsValue({ billingCustomer: { ...bookingCustomer } });
+            const data = { ...bookingCustomer, birthDate: bookingCustomer?.birthDate ? dayjs(bookingCustomer?.birthDate) : null };
+            form?.setFieldsValue({ billingCustomer: { ...data }, bookingCustomer: { ...data } });
         }
     };
 
