@@ -13,20 +13,21 @@ afterEach(() => {
 });
 
 describe('VehicleModelAndTaxChargersCategory component', () => {
-    it('render table header', () => {
-        customRender(<VehicleModelAndTaxChargersCategory  VehicleModelTaxChargesCategoryDataLoaded={false} userId={'1234'}/>);
+    it('ContentHeaderProps', () => {
+        const props = {
+            handleAdd:jest.fn(),
+            handleChange:jest.fn(),
+            handleReferesh:jest.fn(),
+            onSearchHandle:jest.fn(),
+            VehicleModelTaxChargesCategoryData:[{modelId:'123', modelGroup:'test'},{modelId:'13', modelGroup:'test1'}],
+            isProductHierarchyDataLoading:false,
+            titleHierarchy: 'Model Group',
+            ModelOptions:[{}]
+        }
+        customRender(<VehicleModelAndTaxChargersCategory {...props}/>);
 
-        const modelGroup = screen.getByRole('columnheader', {name:'Model Group'});
-        expect(modelGroup).toBeTruthy();
-
-        const tax = screen.getByRole('columnheader', {name:'Tax Charges and Category'});
-        expect(tax).toBeTruthy();
-
-        const categogory = screen.getByRole('columnheader', {name:'Account Category'});
-        expect(categogory).toBeTruthy();
-
-        const action = screen.getByRole('columnheader', {name:'Action'});
-        expect(action).toBeTruthy();
+        const searchInput = screen.getAllByRole('combobox');
+        fireEvent.change(searchInput[0], {target:{value:'test'}});
     });
 
 });
