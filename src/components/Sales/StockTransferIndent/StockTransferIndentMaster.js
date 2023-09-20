@@ -171,7 +171,6 @@ export const StockTransferIndentMasterBase = (props) => {
     const [buttonDataVehicleDetails, setButtonDataVehicleDetails] = useState({ ...btnVisiblityVehicleDetails });
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
-    const reportDetail = EMBEDDED_REPORTS?.STOCK_TRANSFER_ISSUE_NOTE_DOCUMENT;
     const onSuccessAction = (res) => {
         setshowVinLoading(false);
         setShowDataLoading(false);
@@ -423,8 +422,14 @@ export const StockTransferIndentMasterBase = (props) => {
             const { dealerLocation, ...rest } = filterString;
             setFilterString({ ...rest });
         } else if (key === 'fromDate' || key === 'toDate') {
-            setFilterString();
-            advanceFilterForm.resetFields();
+            if (key === 'fromDate') {
+                const { fromDate, ...rest } = filterString;
+                setFilterString({ ...rest });
+            }
+            if (key === 'toDate') {
+                const { toDate, ...rest } = filterString;
+                setFilterString({ ...rest });
+            }
         } else {
             const { [key]: names, ...rest } = filterString;
             setFilterString({ ...rest });
@@ -479,8 +484,8 @@ export const StockTransferIndentMasterBase = (props) => {
     };
 
     const handlePrintDownload = (record) => {
-        setReportVisible(true);
 
+        setReportVisible(true);
         setAdditionalReportParams([
             {
                 key: 'vehicle_identification_number',
@@ -623,6 +628,7 @@ export const StockTransferIndentMasterBase = (props) => {
         setRefershIndentData,
     };
 
+    const reportDetail = EMBEDDED_REPORTS?.STOCK_TRANSFER_ISSUE_NOTE_DOCUMENT;
     const reportProps = {
         isVisible: isReportVisible,
         titleOverride: reportDetail?.title,
