@@ -8,7 +8,7 @@ import { Button, Row, Col } from 'antd';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 import styles from 'assets/sass/app.module.scss';
-export const VehicleReceiptFormButton = ({ formActionType, record, onCloseAction, onCancelReceipt, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection }) => {
+export const VehicleReceiptFormButton = ({ formActionType, record, onCloseAction, onCancelReceipt, handlePrintDownload,buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection }) => {
     return (
         <Row gutter={20} className={styles.formFooter}>
             <Col xs={24} sm={8} md={6} lg={4} xl={4} className={styles.buttonsGroupLeft}>
@@ -31,6 +31,13 @@ export const VehicleReceiptFormButton = ({ formActionType, record, onCloseAction
                         Edit
                     </Button>
                 )}
+
+                {buttonData?.printReceiptBtn && (
+                    <Button onClick={() => handlePrintDownload(record)} type="primary">
+                        Print Receipt
+                    </Button>
+                )}
+
                 {buttonData?.cancelReceiptBtn && (
                     <Button onClick={onCancelReceipt} type="primary">
                         Cancel Receipt

@@ -644,7 +644,7 @@ export const StockTransferIndentMasterBase = (props) => {
             <AddEditForm {...addNewIndentProps} />
             <ViewDetail {...viewIndentProps} />
             <IssueIndentMaster {...IndentIssueProps} />
-            <ReportModal {...reportProps} reportDetail={reportDetail} />
+            <ReportModal style={{ height: `100vh`, background: `black` }} {...reportProps} reportDetail={reportDetail} />
         </>
     );
 };

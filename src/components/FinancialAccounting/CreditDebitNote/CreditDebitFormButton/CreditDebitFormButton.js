@@ -10,7 +10,7 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 import styles from 'assets/sass/app.module.scss';
 
-export const CreditDebitNoteFormButton = ({ record, onCloseAction, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection }) => {
+export const CreditDebitNoteFormButton = ({ record, onCloseAction, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection,handlePrintDownload }) => {
     return (
         <div className={styles.formFooter}>
             <Row gutter={20}>
@@ -29,6 +29,12 @@ export const CreditDebitNoteFormButton = ({ record, onCloseAction, buttonData, s
                 </Col>
 
                 <Col xs={24} sm={16} md={18} lg={20} xl={20} className={styles.footerBtnRight}>
+                    {buttonData?.printBtn && (
+                        <Button onClick={() => handleButtonClick(() => handlePrintDownload(record))} type="primary">
+                            Print Receipt
+                        </Button>
+                    )}
+
                     {buttonData?.editBtn && (
                         <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record, openDefaultSection: false })} type="primary">
                             Edit

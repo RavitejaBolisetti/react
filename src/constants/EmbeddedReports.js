@@ -67,4 +67,26 @@ export const EMBEDDED_REPORTS = {
         type: 'Document',
         slug: 'stock-transfer-issue-note-document',
     },
+
+    RECIEPT_DOCUMENT: {
+        id: 9,
+        key: 'Receipt_Note',
+        title: 'Reciept Document',
+        type: 'Document',
+        slug: '',
+    },
+    INVOICE_DOCUMENT: {
+        id: 10,
+        key: 'Invoice_Document',
+        title: 'Invoice Document',
+        type: 'Document',
+        slug: '',
+    },
+    CREDIT_DEBIT_DOCUMENT: {
+        id: 11,
+        key: 'Debit_Note',
+        title: 'Credit Debit Document',
+        type: 'Document',
+        slug: '',
+    },
 };
