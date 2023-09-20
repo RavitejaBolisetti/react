@@ -9,11 +9,11 @@ import { withDrawer } from 'components/withDrawer';
 import { VEHICLE_INVOICE_SECTION } from 'constants/VehicleInvoiceSection';
 
 import { LeftSidebar } from './LeftSidebar';
-import { InvoiceDetailsMaster } from './InvoiceDetails'; //Own Menu
-import { InsuranceDetailsMaster } from 'components/Sales/Common/InsuranceDetails'; //Own Menu
+import { InvoiceDetailsMaster } from './InvoiceDetails';
+import { InsuranceDetailsMaster } from 'components/Sales/Common/InsuranceDetails';
 import { SchemeDetailsMaster } from 'components/Sales/Common/SchemeDetails';
-import { VehicleDetailsMaster } from 'components/Sales/VehicleInvoiceGeneration/VehicleDetails'; //common
-import { FinananceDetailsMaster } from 'components/Sales/Common/FinananceDetails'; //common
+import { VehicleDetailsMaster } from 'components/Sales/VehicleInvoiceGeneration/VehicleDetails';
+import { FinananceDetailsMaster } from 'components/Sales/Common/FinananceDetails';
 import { ReferralsMaster } from 'components/Sales/Common/Referrals';
 import { ExchangeVehiclesMaster } from 'components/Sales/Common/ExchangeVehicles';
 import { LoyaltySchemeMaster } from 'components/Sales/Common/LoyaltyScheme';
@@ -23,7 +23,7 @@ import { VehicleInvoiceFormButton } from './VehicleInvoiceFormButton';
 import styles from 'assets/sass/app.module.scss';
 
 const VehicleInvoiceMainConatinerMain = (props) => {
-    const { currentSection, handleIRNGeneration, selectedOtfNumber, requestPayload, setRequestPayload } = props;
+    const { currentSection, handleIRNGeneration, selectedOtfNumber, requestPayload, setRequestPayload, vehicleInvoiceMasterData } = props;
 
     const onFinishCustom = ({ key, values }) => {
         setRequestPayload({ ...requestPayload, [key]: values });
@@ -44,7 +44,7 @@ const VehicleInvoiceMainConatinerMain = (props) => {
                 return <InvoiceDetailsMaster {...myProps} />;
             }
             case VEHICLE_INVOICE_SECTION.VEHICLE_DETAILS.id: {
-                return <VehicleDetailsMaster {...myProps} formKey={'vehicleDetails'} />;
+                return <VehicleDetailsMaster {...myProps} vehicleDetailData={vehicleInvoiceMasterData?.vehicleDetails} formKey={'vehicleDetails'} />;
             }
             case VEHICLE_INVOICE_SECTION.SCHEME_OFFER_DETAILS.id: {
                 return <SchemeDetailsMaster {...myProps} formKey={'schemeOfferDetails'} />;

@@ -1,9 +1,7 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { LoyaltySchemeMaster } from './LoyaltySchemeMaster';
-import { AddEditForm } from './AddEditForm';
-import { ViewDetail } from './ViewDetail';
-export { LoyaltySchemeMaster, AddEditForm, ViewDetail };
+export { LoyaltySchemeMaster };
