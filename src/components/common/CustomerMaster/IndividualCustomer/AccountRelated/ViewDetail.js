@@ -41,7 +41,7 @@ const ViewDetailBase = (props) => {
                     <Descriptions.Item label="Parts Discount">{checkAndSetDefaultValue(formData?.partsDiscount, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="Labour Discount">{checkAndSetDefaultValue(formData?.labourDiscount, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="Remarks">{checkAndSetDefaultValue(formData?.remarks, isLoading)}</Descriptions.Item>
-                    {renderCheckbox(formData?.vipDealerInd)}
+                    {/* {renderCheckbox(formData?.vipDealerInd)} */}
                 </Descriptions>
             </Card>
         </div>

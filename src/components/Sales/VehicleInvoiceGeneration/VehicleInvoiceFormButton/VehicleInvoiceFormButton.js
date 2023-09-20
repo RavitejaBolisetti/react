@@ -9,7 +9,7 @@ import { Button, Row, Col } from 'antd';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import styles from 'assets/sass/app.module.scss';
 
-export const VehicleInvoiceFormButton = ({ formActionType, record, onCloseAction, onCancelInvoice, onApproveCancel, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection }) => {
+export const VehicleInvoiceFormButton = ({ formActionType, record, onCloseAction, onCancelInvoice, onApproveCancel, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection, onPrintInvoice }) => {
     //console.log('formActionType', formActionType);
     return (
         <div className={styles.formFooter}>
@@ -29,6 +29,11 @@ export const VehicleInvoiceFormButton = ({ formActionType, record, onCloseAction
                 </Col>
 
                 <Col xs={24} sm={16} md={18} lg={20} xl={20} className={styles.buttonsGroupRight}>
+                    {buttonData?.printInvoiceBtn && (
+                        <Button onClick={() => onPrintInvoice(record)} type="primary">
+                            Print Invoice
+                        </Button>
+                    )}
                     {buttonData?.cancelInvoiceBtn && (
                         <Button onClick={onCancelInvoice} type="primary">
                             Cancel Invoice
