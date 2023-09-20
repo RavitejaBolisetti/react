@@ -8,7 +8,7 @@ import { Form, Row, Col } from 'antd';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { AddEditForm, ViewDetail } from 'components/Sales/Common/CustomerDetails';
+import { AddEditForm, ViewDetail } from 'components/Sales/Common/VehicleDetails';
 import { DisableParent } from 'components/common/ProductHierarchy/ProductHierarchyUtils';
 import { otfvehicleDetailsDataActions } from 'store/actions/data/otf/vehicleDetails';
 import { otfvehicleDetailsLovDataActions } from 'store/actions/data/otf/vehicleDetailsLov';

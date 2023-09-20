@@ -162,7 +162,7 @@ export const BASE_URL_ADD_ON_PART = BASE_URL_OTF + 'part/details';
 
 export const BASE_URL_OTF_INVOICE = BASE_URL + 'otf/invoice';
 export const BASE_URL_OTF_FINANCE = BASE_URL + 'otf/finance';
-export const BASE_URL_OTF_SCHEME_DETAIL = BASE_URL + 'otf/schemes';
+export const BASE_URL_OTF_SCHEME_DETAIL = BASE_URL + 'otf/schemes/lov';
 export const BASE_URL_OTF_INSURANCE_DETAIL = BASE_URL + 'otf/insurancedetails';
 export const BASE_URL_OTF_FINANCE_LOV = BASE_URL + 'otf/financiers/lov';
 export const BASE_URL_OTF_SCHEMES = BASE_URL_OTF + 'schemes';
