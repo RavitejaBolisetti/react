@@ -203,7 +203,6 @@ const VehicleDetailsMasterMain = (props) => {
                 </div>
             );
         }
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [productAttributeData, isProductHierarchyDataLoaded, userId]);
 
@@ -226,8 +225,11 @@ const VehicleDetailsMasterMain = (props) => {
                     name: 'Product Code',
                 },
             ];
+            const onErrorActionProduct = () => {
+                resetProductLov();
+            };
             setFormData({ ...formData, modelCode: productModelCode });
-            fetchProductLovCode({ setIsLoading: ProductLovLoading, userId, onErrorAction, extraParams });
+            fetchProductLovCode({ setIsLoading: ProductLovLoading, userId, onErrorAction: onErrorActionProduct, extraParams });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [productModelCode]);
@@ -238,20 +240,28 @@ const VehicleDetailsMasterMain = (props) => {
             handleButtonClick({ buttonAction: NEXT_ACTION });
             setButtonData({ ...buttonData, formBtnActive: false });
         } else {
+            // if (productAttributeData?.length === 0) {
+            //     showGlobalNotification({ message: 'Model selected is not valid' });
+            //     return;
+            // }
             let data;
-            if (!values.hasOwnProperty('vehicleUsageType')) {
-                data = {
-                    ...values,
-                    otfNumber: selectedOrderId || '',
-                    otfId: formData?.otfId || '',
-                    id: formData?.id || '',
-                    poDate: dayjs(formData?.poDate?.substr(0, 10)).format('DD/MM/YYYY'),
-                    vehicleUsageType: vehicleDetailData?.vehicleUsageType,
-                    model: vehicleDetailData?.model,
-                    modelCode: vehicleDetailData?.modelCode,
-                    discountAmount: vehicleDetailData?.discountAmount,
-                    optionalServices: optionsServiceModified,
-                };
+            // if (!values.hasOwnProperty('vehicleUsageType')) {
+            //     data = {
+            //         ...values,
+            //         otfNumber: selectedOrderId || '',
+            //         otfId: formData?.otfId || '',
+            //         id: formData?.id || '',
+            //         poDate: dayjs(formData?.poDate?.substr(0, 10)).format('DD/MM/YYYY'),
+            //         vehicleUsageType: vehicleDetailData?.vehicleUsageType,
+            //         model: vehicleDetailData?.model,
+            //         modelCode: vehicleDetailData?.modelCode,
+            //         discountAmount: vehicleDetailData?.discountAmount,
+            //         optionalServices: optionsServiceModified,
+            //     };
+            // } else {
+            if (productAttributeData?.length === 0) {
+                showGlobalNotification({ message: 'Model selected is not valid' });
+                return;
             } else {
                 data = { ...values, otfNumber: selectedOrderId, otfId: formData?.otfId || '', id: formData?.id || '', optionalServices: optionsServicesMapping, model: productAttributeData['0']['prodctShrtName'] };
             }
@@ -270,7 +280,7 @@ const VehicleDetailsMasterMain = (props) => {
             };
 
             const onError = (message) => {
-                // showGlobalNotification({ message });
+                showGlobalNotification({ message });
             };
 
             const requestData = {
@@ -289,6 +299,12 @@ const VehicleDetailsMasterMain = (props) => {
         form.validateFields()
             .then(() => {})
             .catch(() => {});
+    };
+
+    const handlePriceChange = (__, value) => {
+        if (value?.type === 'D') {
+            showGlobalNotification({ message: 'This value has been deprecated. Please select other value' });
+        }
     };
 
     const formProps = {
@@ -326,6 +342,8 @@ const VehicleDetailsMasterMain = (props) => {
         productModelCode,
         setProductModelCode,
         productHierarchyData,
+        resetProductLov,
+        handlePriceChange
     };
 
     const viewProps = {
