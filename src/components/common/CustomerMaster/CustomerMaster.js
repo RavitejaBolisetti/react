@@ -501,7 +501,9 @@ const CustomerMasterMain = (props) => {
         titleOverride: 'Confirm',
         information: 'You have modified this work section. You can discard your changes, or cancel to continue editing.',
         handleCloseModal: () => setIsUnsavedDataPopup(false),
+        onCloseAction: () => setIsUnsavedDataPopup(false),
         handleOk,
+        closable: true,
         nextCurentSection,
         setNextCurrentSection,
     };

@@ -99,7 +99,7 @@ const AddEditFormMain = (props) => {
                                
                             )} */}
                         <Form.Item label="Mobile Number" initialValue={formData?.mobileNumber} name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField('mobile number'), validateRequiredInputField('mobile number')]}>
-                            <Input placeholder={preparePlaceholderText('mobile number')} maxLength={10} size="small" />
+                            <Input placeholder={preparePlaceholderText('mobile number')} maxLength={10} size="small" disabled = {editMode}/>
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
