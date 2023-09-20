@@ -16,6 +16,7 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 
 import styles from 'assets/sass/app.module.scss';
 import { ConfirmationModal } from 'utils/ConfirmationModal';
+import { IRN_STATUS } from 'constants/IRNStatus';
 
 const { Panel } = Collapse;
 const { Text, Title } = Typography;
@@ -111,12 +112,12 @@ const VehicleInvoiceCard = (props) => {
                         <Divider />
                     </>
                 )}
-                {formActionType?.viewMode && (
+                {formActionType?.viewMode && (otfData?.irnStatus || (selectedOrder?.invoiceNumber && !otfData?.irnStatus && selectedOrder?.invoiceStatus === QUERY_BUTTONS_CONSTANTS.INVOICED.key)) && (
                     <>
                         <div className={styles.detailCardText}>
                             IRN Status:
                             <div className={styles.buttonsGroupRight}>
-                                {selectedOrder?.invoiceNumber && !otfData?.irnStatus && selectedOrder?.invoiceStatus !== QUERY_BUTTONS_CONSTANTS.CANCELLED.key ? (
+                                {selectedOrder?.invoiceNumber && !otfData?.irnStatus && selectedOrder?.invoiceStatus === QUERY_BUTTONS_CONSTANTS.INVOICED.key ? (
                                     <>
                                         <Button onClick={showConfirmation} danger className={styles.leftPannelButton}>
                                             Generate
@@ -128,6 +129,7 @@ const VehicleInvoiceCard = (props) => {
                                         {checkAndSetDefaultValue(getCodeValue(typeData[PARAM_MASTER.IRN_GEN_STATUS.id], otfData?.irnStatus))}
                                         <div className={styles.tooltipAlign}>
                                             {otfData?.irnStatus &&
+                                                otfData?.irnStatus !== IRN_STATUS?.PENDING?.key &&
                                                 addToolTip(
                                                     <div>
                                                         <p>

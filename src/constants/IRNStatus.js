@@ -3,23 +3,26 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-export const QUERY_BUTTONS = {
-    INVOICED: {
-        id: 'invoiced',
-        title: 'Invoiced',
-        key: 'I',
+export const IRN_STATUS = {
+    APPROVED: {
+        id: 1,
+        key: 'A',
+        title: 'Approved',
+        desc: 'Approved',
         active: true,
     },
-    CANCELLED: {
-        id: 'cancelled',
-        title: 'Cancelled',
-        key: 'C',
-        active: false,
+    PENDING: {
+        id: 2,
+        key: 'P',
+        title: 'Pending',
+        desc: 'Pending',
+        active: true,
     },
-    CANCELLATION_REQUEST: {
-        id: 'cancellation request',
-        title: 'Cancellation Request',
-        key: 'CR',
+    REJECTED: {
+        id: 3,
+        key: 'R',
+        title: 'Rejected',
+        desc: 'Rejected',
         active: false,
     },
 };
