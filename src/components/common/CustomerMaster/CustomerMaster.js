@@ -116,7 +116,7 @@ const CustomerMasterMain = (props) => {
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [ChangeHistoryVisible, setChangeHistoryVisible] = useState(false);
     const [showNameChangeHistory, setShowNameChangeHistory] = useState(false);
-    const [isUnsavedDataPopup, setIsUnsavedDataPopup] = useState(false);
+    // const [isUnsavedDataPopup, setIsUnsavedDataPopup] = useState(false);
     const [nextCurentSection, setNextCurrentSection] = useState('');
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false, changeHistory: true };
@@ -314,11 +314,11 @@ const CustomerMasterMain = (props) => {
         // form.validateFields().then((values) => {});
     };
 
-    const handleOk = () => {
-        setIsUnsavedDataPopup(false);
-        setCurrentSection(nextCurentSection);
-        setButtonData({ ...buttonData, formBtnActive: false });
-    };
+    // const handleOk = () => {
+    //     setIsUnsavedDataPopup(false);
+    //     setCurrentSection(nextCurentSection);
+    //     setButtonData({ ...buttonData, formBtnActive: false });
+    // };
 
     const tableProps = {
         dynamicPagination,
@@ -419,6 +419,7 @@ const CustomerMasterMain = (props) => {
         filterString,
         setFilterString,
         optionType: typeData,
+        defaultOption: 'customerName',
         handleChange,
         allowClear: false,
     };
@@ -490,23 +491,23 @@ const CustomerMasterMain = (props) => {
         handleChangeHistory,
         handleResetFilter,
         setShowNameChangeHistory,
-        setIsUnsavedDataPopup,
+        // setIsUnsavedDataPopup,
         nextCurentSection,
         setNextCurrentSection,
     };
 
     const showAddButton = true;
-    const unsavedDataModalProps = {
-        isVisible: isUnsavedDataPopup,
-        titleOverride: 'Confirm',
-        information: 'You have modified this work section. You can discard your changes, or cancel to continue editing.',
-        handleCloseModal: () => setIsUnsavedDataPopup(false),
-        onCloseAction: () => setIsUnsavedDataPopup(false),
-        handleOk,
-        closable: true,
-        nextCurentSection,
-        setNextCurrentSection,
-    };
+    // const unsavedDataModalProps = {
+    //     isVisible: isUnsavedDataPopup,
+    //     titleOverride: 'Confirm',
+    //     information: 'You have modified this work section. You can discard your changes, or cancel to continue editing.',
+    //     handleCloseModal: () => setIsUnsavedDataPopup(false),
+    //     onCloseAction: () => setIsUnsavedDataPopup(false),
+    //     handleOk,
+    //     closable: true,
+    //     nextCurentSection,
+    //     setNextCurrentSection,
+    // };
 
     return (
         <>
@@ -606,7 +607,7 @@ const CustomerMasterMain = (props) => {
                 </Col>
             </Row>
             <CustomerMainConatiner {...containerProps} />
-            <UnsavedDataPopup {...unsavedDataModalProps} />
+            {/* <UnsavedDataPopup {...unsavedDataModalProps} /> */}
             <CustomerChangeHistory {...changeHistoryProps} />
             <CustomerNameChangeHistory {...nameChangeHistoryProps} />
         </>

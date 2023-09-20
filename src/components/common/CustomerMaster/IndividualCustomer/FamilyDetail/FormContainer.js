@@ -28,11 +28,18 @@ const FormBase = (props) => {
     const [customer, setCustomer] = useState(null);
 
     const onDateChange = (prop) => {
+        console.log('AMAN  CHUTIYA',prop)
         let dateString = formatDate(prop);
         let calAge1 = GetAge(dateString);
-        form.setFieldsValue({
-            relationAge: calAge1,
-        });
+        if(prop === null){
+            form.setFieldsValue({
+                relationAge: null,
+            });
+        } else {
+            form.setFieldsValue({
+                relationAge: calAge1,
+            });
+        }
     };
 
     const getRelationCode = (props) => {
