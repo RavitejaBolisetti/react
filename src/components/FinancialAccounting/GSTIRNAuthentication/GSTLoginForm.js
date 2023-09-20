@@ -3,19 +3,20 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { Row, Col, Input, Form, Button, Divider } from 'antd';
 
 import { validateRequiredInputField } from 'utils/validation';
 import { FiLock } from 'react-icons/fi';
 import { BiUser } from 'react-icons/bi';
-import { AiOutlineEyeInvisible, AiOutlineEye, AiOutlineWarning } from 'react-icons/ai';
+import { AiOutlineEyeInvisible, AiOutlineEye, } from 'react-icons/ai';  // AiOutlineWarning
 
 import styles from 'components/common/Common.module.css';
 export function GSTLoginForm(props) {
     const { onFinish, onFinishFailed } = props;
-    const { form, formData, typeData, isReadOnly = true } = props;
-    const disabledProps = { disabled: isReadOnly };
+    const { form, isReadOnly = true } = props;
+    // const { formData, typeData,} = props;
+    // const disabledProps = { disabled: isReadOnly };
     const userIddRef = useRef(null);
     const passwordInputRef = useRef(null);
     const clientIdInputRef = useRef(null);
@@ -54,9 +55,9 @@ export function GSTLoginForm(props) {
         setFieldData({ ...fieldData, [field]: e?.target?.value?.length > 0 ? true : false });
     };
 
-    const handleFieldFocus = (field) => (e) => {
-        field?.current.focus();
-    };
+    // const handleFieldFocus = (field) => (e) => {
+    //     field?.current.focus();
+    // };
 
     return (
         <Form form={form} name="login_from" layout="vertical" autocomplete="off" onFinish={onFinish} onFinishFailed={onFinishFailed}>

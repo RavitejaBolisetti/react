@@ -11,11 +11,11 @@ import { Card, Col, Form, Row } from 'antd';
 import { tableColumn } from './tableColumn';
 import GSTIRNFilter from './GSTIRNFilter';
 import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 'utils/btnVisiblity';
-import { convertDateTime, monthDateFormat } from 'utils/formatDateTime';
+// import { convertDateTime, monthDateFormat } from 'utils/formatDateTime';
 
 import { GSTIRNMainConatiner } from './GSTIRNMainConatiner';
-import { ListDataTable } from 'utils/ListDataTable';
-import { AdvancedSearch } from './AdvancedSearch';
+// import { ListDataTable } from 'utils/ListDataTable';
+// import { AdvancedSearch } from './AdvancedSearch';
 import { VEHICLE_RECEIPT_STATUS } from 'constants/VehicleReceiptStatus';
 import { GST_IRN_SECTION } from 'constants/GSTIRNSection';
 
@@ -73,10 +73,10 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const GSTIRNAuthenticationMasterBase = (props) => {
-    const { fetchVehicleReceiptList, saveData, listShowLoading, userId, data, totalRecords, resetData, showGlobalNotification } = props;
+    const { fetchVehicleReceiptList, listShowLoading, userId, data, totalRecords, showGlobalNotification } = props;
     const { typeData, grnTypeData, moduleTitle } = props;
     const { filterString, setFilterString, vehicleReceiptStatusList } = props;
-    const { mandatoryFields } = props;
+    // const { mandatoryFields,saveData, resetData, } = props;
     const { ...viewProps } = props;
 
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);

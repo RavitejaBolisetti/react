@@ -6,8 +6,8 @@
 import React, { useEffect, useState } from 'react';
 import { Form, Row, Col, Empty, Spin } from 'antd';
 
-import { ViewDetail } from './ViewDetail';
-import { AddEditForm } from './AddEditForm';
+// import { ViewDetail } from './ViewDetail';
+// import { AddEditForm } from './AddEditForm';
 import { GstAuthFormButton } from '../GSTAuthenticationFormButton';
 
 import { connect } from 'react-redux';
@@ -31,10 +31,9 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             ApplicationMaster: { applicationCriticalityGroupData: criticalityGroupData, applicationDetailsData, dealerLocations, applicationData, configurableParamData, actions, isApplicationDeatilsLoading, isApplicatinoOnSaveLoading, isLoading, isActionsLoaded },
-
-            VehicleReceipt: {
+            // VehicleReceipt: {
                 // VehicleDetails: { isLoaded: isDataLoaded = false, isLoading, data: vehicleDetailData = [] },
-            },
+            // },
         },
     } = state;
 
@@ -86,7 +85,7 @@ const mapDispatchToProps = (dispatch) => ({
 const IrnTransactionListMasterBase = (props) => {
     const { typeData, vehicleStatusType, physicalStatusType, shortageType, vehicleDetailData } = props;
     const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, isLoading } = props;
-    const { form, selectedId, finalData, setFinalData, formActionType, onFinish, onFinishFailed, menuData, applicationMasterDataShowLoading, fetchApplicationCriticality, fetchApplicationAction, fetchCriticalitiData } = props;
+    const { form, selectedId, finalData, setFinalData, onFinish, onFinishFailed, menuData, applicationMasterDataShowLoading, fetchApplicationCriticality, fetchApplicationAction, fetchCriticalitiData } = props;
     const { applicationDetailsData, isApplicationDeatilsLoading, fetchApplication, applicationDetailListShowLoading } = props;
 
     const [vehicleDetailForm] = Form.useForm();
