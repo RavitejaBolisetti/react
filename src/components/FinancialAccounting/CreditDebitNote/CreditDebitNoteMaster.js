@@ -527,7 +527,7 @@ export const CreditDebitNoteMasterBase = (props) => {
         setApportionTableData,
     };
 
-    const reportDetail = EMBEDDED_REPORTS?.INVOICE_DOCUMENT;
+    const reportDetail = EMBEDDED_REPORTS?.CREDIT_DEBIT_DOCUMENT;
     const reportProps = {
         isVisible: isReportVisible,
         titleOverride: reportDetail?.title,
