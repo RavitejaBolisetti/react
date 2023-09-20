@@ -14,10 +14,10 @@ afterEach(() => {
 
 describe('AddEditForm component', () => {
     it('close button', () => {
-        customRender(<AddEditForm isVisible={true} formActionType={{}} />);
+        customRender(<AddEditForm isVisible={true} formActionType={{}} onCloseAction={jest.fn()} buttonData={{closeBtn:true}}/>);
 
-        const closeBtn = screen.getByRole('button', {name:'Close'});
-        fireEvent.click(closeBtn);
+        const closeBtn = screen.getAllByRole('button', {name:'Close'});
+        fireEvent.click(closeBtn[0]);
     });
 
     it('viewMode=true',()=>{
