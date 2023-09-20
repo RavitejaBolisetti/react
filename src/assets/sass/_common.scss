@@ -1007,9 +1007,29 @@
             }
         }
     }
+}
 
-    .viewOneColProps {
-        border: 1px solid red;
+.viewOneColProps {
+    & :global {
+        .ant-descriptions {
+            .ant-descriptions-view {
+                padding-bottom: 0 !important;
+                .ant-descriptions-row {
+                    .ant-descriptions-item {
+                        &:first-child {
+                            padding-right: 0 !important;
+                            .ant-descriptions-item-content {
+                                .ant-collapse {
+                                    &:last-child {
+                                        margin-bottom: 0 !important;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -2338,7 +2358,7 @@
                     .ant-card-extra {
                         svg {
                             &:not(:first-child) {
-                                margin-left: 10px;
+                                margin-left: 20px;
                             }
                         }
                     }
@@ -2411,7 +2431,7 @@
 /*-------------View ocument Strip Section Strat--------------*/
 .viewDocumentStrip {
     box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.15);
-    margin-bottom: 20px !important;
+    margin-bottom: 20px;
 
     & :global {
         .ant-card-body {
@@ -2437,43 +2457,43 @@
 
 /*-------------Drawrer Card View Section Strat--------------*/
 
-.drawerCardView {
-    & :global {
-        .ant-collapse-content-box {
-            .ant-descriptions {
-                .ant-descriptions-view {
-                    .ant-descriptions-row {
-                        &:nth-child(odd) {
-                            .ant-descriptions-item {
-                                padding-bottom: 0px;
-                            }
-                        }
-                    }
-                }
-            }
-        }
+// .drawerCardView {
+//     & :global {
+//         .ant-collapse-content-box {
+//             .ant-descriptions {
+//                 .ant-descriptions-view {
+//                     .ant-descriptions-row {
+//                         &:nth-child(odd) {
+//                             .ant-descriptions-item {
+//                                 padding-bottom: 0px;
+//                             }
+//                         }
+//                     }
+//                 }
+//             }
+//         }
 
-        .ant-card-body {
-            .ant-descriptions {
-                .ant-descriptions-view {
-                    .ant-descriptions-row {
-                        &:nth-child(odd) {
-                            .ant-descriptions-item {
-                                padding-bottom: 0px;
-                            }
-                        }
+//         .ant-card-body {
+//             .ant-descriptions {
+//                 .ant-descriptions-view {
+//                     .ant-descriptions-row {
+//                         &:nth-child(odd) {
+//                             .ant-descriptions-item {
+//                                 padding-bottom: 0px;
+//                             }
+//                         }
 
-                        &:nth-child(even) {
-                            .ant-descriptions-item {
-                                padding-bottom: 0px;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
+//                         &:nth-child(even) {
+//                             .ant-descriptions-item {
+//                                 padding-bottom: 0px;
+//                             }
+//                         }
+//                     }
+//                 }
+//             }
+//         }
+//     }
+// }
 
 /*-------------add on card Section Strat--------------*/
 

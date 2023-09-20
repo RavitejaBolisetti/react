@@ -13,50 +13,50 @@ export const VehicleInvoiceFormButton = ({ formActionType, record, onCloseAction
     //console.log('formActionType', formActionType);
     return (
         <div className={styles.formFooter}>
-        <Row gutter={20} >
-            <Col xs={24} sm={8} md={6} lg={4} xl={4} className={styles.footerBtnLeft}>
-                {buttonData?.closeBtn && (
-                    <Button danger onClick={onCloseAction}>
-                        Close
-                    </Button>
-                )}
+            <Row gutter={20}>
+                <Col xs={24} sm={8} md={6} lg={4} xl={4} className={styles.buttonsGroupLeft}>
+                    {buttonData?.closeBtn && (
+                        <Button danger onClick={onCloseAction}>
+                            Close
+                        </Button>
+                    )}
 
-                {buttonData?.cancelBtn && (
-                    <Button danger onClick={onCloseAction}>
-                        Cancel
-                    </Button>
-                )}
-            </Col>
+                    {buttonData?.cancelBtn && (
+                        <Button danger onClick={onCloseAction}>
+                            Cancel
+                        </Button>
+                    )}
+                </Col>
 
-            <Col xs={24} sm={16} md={18} lg={20} xl={20} className={styles.footerBtnRight}>
-                {buttonData?.cancelInvoiceBtn && (
-                    <Button onClick={onCancelInvoice} type="primary">
-                        Cancel Invoice
-                    </Button>
-                )}
-                {buttonData?.approveCancelBtn && (
-                    <Button onClick={onApproveCancel} type="primary">
-                        Approve
-                    </Button>
-                )}
-                {/* {buttonData?.editBtn && (
+                <Col xs={24} sm={16} md={18} lg={20} xl={20} className={styles.buttonsGroupRight}>
+                    {buttonData?.cancelInvoiceBtn && (
+                        <Button onClick={onCancelInvoice} type="primary">
+                            Cancel Invoice
+                        </Button>
+                    )}
+                    {buttonData?.approveCancelBtn && (
+                        <Button onClick={onApproveCancel} type="primary">
+                            Approve
+                        </Button>
+                    )}
+                    {/* {buttonData?.editBtn && (
                     <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record, openDefaultSection: false })} type="primary">
                         Edit
                     </Button>
                 )} */}
-                {buttonData?.nextBtn && !isLastSection && (
-                    <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.NEXT, record })} type="primary">
-                        Next
-                    </Button>
-                )}
-                {buttonData?.saveBtn && (
-                    <Button loading={isLoadingOnSave} disabled={!buttonData?.formBtnActive} onClick={(e) => setButtonData({ ...buttonData, saveAndNewBtnClicked: false })} htmlType="submit" type="primary">
-                        {saveButtonName}
-                    </Button>
-                )}
-                {}
-            </Col>
-        </Row>
+                    {buttonData?.nextBtn && !isLastSection && (
+                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.NEXT, record })} type="primary">
+                            Next
+                        </Button>
+                    )}
+                    {buttonData?.saveBtn && (
+                        <Button loading={isLoadingOnSave} disabled={!buttonData?.formBtnActive} onClick={(e) => setButtonData({ ...buttonData, saveAndNewBtnClicked: false })} htmlType="submit" type="primary">
+                            {saveButtonName}
+                        </Button>
+                    )}
+                    {}
+                </Col>
+            </Row>
         </div>
     );
 };

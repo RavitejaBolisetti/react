@@ -156,7 +156,7 @@ const AddEditFormMain = (props) => {
                                                 Vehicle Details
                                                 <Col xs={14} sm={14} md={6} lg={6} xl={6}>
                                                     <Col xs={24} sm={24} md={6} lg={6} xl={6}>
-                                                        <Button type="primary" icon={<FiPlus />} onClick={handleAddVehicleDetails}>
+                                                        <Button type="primary" icon={<FiPlus />} className={styles.verticallyCentered} onClick={handleAddVehicleDetails}>
                                                             Add
                                                         </Button>
                                                     </Col>

@@ -33,7 +33,7 @@ export const ViewIssueDetail = ({ formData, isLoading = false, typeData, handleR
 
     const buttonVisibility = handleBtnVisibility({ toggleButton, checkKey: formData?.issueStatus });
     return (
-        <Card className={styles.drawerCardView}>
+        <Card>
             <Descriptions {...viewProps}>
                 <Descriptions.Item label="ST Issue Note No.">{checkAndSetDefaultValue(viewData?.issueNumber, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="ST Issue Note Date">{checkAndSetDefaultValue(viewData?.issueDate, isLoading)}</Descriptions.Item>
