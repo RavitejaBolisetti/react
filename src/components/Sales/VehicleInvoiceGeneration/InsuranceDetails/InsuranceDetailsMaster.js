@@ -15,6 +15,7 @@ import { insuranceDetailDataActions } from 'store/actions/data/otf/insuranceDeta
 
 import styles from 'assets/sass/app.module.scss';
 import { partyMasterDataActions } from 'store/actions/data/partyMaster';
+import { AddEditForm, ViewDetail } from 'components/Sales/Common/InsuranceDetails';
 
 const mapStateToProps = (state) => {
     const {
