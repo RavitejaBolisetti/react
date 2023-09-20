@@ -97,8 +97,8 @@ const mapDispatchToProps = (dispatch) => ({
             irnGeneration: vehicleIrnGenerationDataActions.saveData,
             listIrnShowLoading: vehicleIrnGenerationDataActions.listShowLoading,
 
-            fetchVehicleDetail: vehicleInvoiceDetailDataActions.fetchList,
-            fetchVehicleInvoiceDetail: vehicleDetailsDataActions.fetchList,
+            // fetchVehicleDetail: vehicleInvoiceDetailDataActions.fetchList,
+            // fetchVehicleInvoiceDetail: vehicleDetailsDataActions.fetchList,
 
             fetchList: vehicleInvoiceDataActions.fetchList,
             fetchInvoiceMasterData: vehicleInvoiceDataActions.fetchDetail,
@@ -111,7 +111,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const VehicleInvoiceMasterBase = (props) => {
-    const { data, receiptDetailData, userId, irnGeneration, fetchList, fetchOTFDetail, fetchVehicleDetail, fetchVehicleInvoiceDetail, listShowLoading, showGlobalNotification, fetchInvoiceMasterData } = props;
+    const { data, receiptDetailData, userId, irnGeneration, fetchList, fetchOTFDetail, listShowLoading, showGlobalNotification, fetchInvoiceMasterData } = props;
     const { cancelInvoice } = props;
     const { typeData, receiptType, partySegmentType, listInvoiceShowLoading, saveData, paymentModeType, documentType, moduleTitle, totalRecords } = props;
     const { filterString, setFilterString, invoiceStatusList, otfData, vehicleInvoiceMasterData } = props;
@@ -337,21 +337,21 @@ export const VehicleInvoiceMasterBase = (props) => {
         fetchInvoiceMasterData({ customURL: InvoiceDetailsURL, setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
     };
 
-    useEffect(() => {
-        if (userId && selectedOrder?.invoiceNumber) {
-            const extraParams = [
-                {
-                    key: 'invoiceNumber',
-                    title: 'invoiceNumber',
-                    value: selectedOrder?.invoiceNumber,
-                    name: 'Invoice Number',
-                },
-            ];
-            fetchVehicleDetail({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
-            fetchVehicleInvoiceDetail({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedOrder?.invoiceNumber]);
+    // useEffect(() => {
+    //     if (userId && selectedOrder?.invoiceNumber) {
+    //         const extraParams = [
+    //             {
+    //                 key: 'invoiceNumber',
+    //                 title: 'invoiceNumber',
+    //                 value: selectedOrder?.invoiceNumber,
+    //                 name: 'Invoice Number',
+    //             },
+    //         ];
+    //         fetchVehicleDetail({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
+    //         fetchVehicleInvoiceDetail({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [userId, selectedOrder?.invoiceNumber]);
 
     const handleIRNGeneration = () => {
         const data = { otfNumber: selectedOtfNumber, invoiceNumber: selectedOrder?.invoiceNumber };
