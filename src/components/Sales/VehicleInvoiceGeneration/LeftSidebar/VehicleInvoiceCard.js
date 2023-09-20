@@ -99,7 +99,7 @@ const VehicleInvoiceCard = (props) => {
                                                     Cancel By: <span>{otfData?.cancelBy ?? 'Na'}</span>
                                                 </p>
                                                 <p>
-                                                    Cancellation Reason: <span>{otfData?.cancelReason ?? 'Na'}</span>
+                                                    Cancellation Reason: <span>{checkAndSetDefaultValue(getCodeValue(typeData[PARAM_MASTER.INVOICE_CANCEL_REASON.id], otfData?.cancelReason))}</span>
                                                 </p>
                                             </div>,
                                             'bottom',
