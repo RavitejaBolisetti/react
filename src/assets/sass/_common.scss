@@ -270,7 +270,6 @@
     }
 }
 
-
 .toolTip {
     & :global {
         .ant-tooltip-content {
@@ -295,7 +294,7 @@
         }
     }
 }
-.leftPannelButton{
+.leftPannelButton {
     line-height: 14px !important;
     font-weight: 500;
     height: auto;
@@ -978,12 +977,6 @@
                             td {
                                 padding: 0;
                                 padding-bottom: 20px;
-
-                                .ant-descriptions-item-content {
-                                    .ant-collapse {
-                                        margin-bottom: -10px !important;
-                                    }
-                                }
                             }
 
                             // &:last-child {
@@ -1002,8 +995,21 @@
 
             .ant-descriptions-item-content {
                 color: $neutralGrey3 !important;
+                .ant-typography {
+                    color: $neutralGrey3 !important;
+                    strong {
+                        color: $primaryBlack !important;
+                    }
+                }
+                .ant-typography-success {
+                    color: $semanticSuccess !important;
+                }
             }
         }
+    }
+
+    .viewOneColProps {
+        border: 1px solid red;
     }
 }
 
@@ -1011,7 +1017,7 @@
 
 .formFooter {
     position: relative;
-    z-index: 999;
+    z-index: 99;
     background: $primaryWhite;
     padding: 12px 20px;
     box-shadow: 0px -1px 1px 0px rgba(0, 0, 0, 0.15);
@@ -2086,7 +2092,7 @@
                 }
             }
         }
-        .drawerGap{
+        .drawerGap {
             margin-bottom: 10px !important;
         }
     }
@@ -2580,6 +2586,10 @@
         }
 
         .ant-select-multiple {
+            .ant-select-selection-search {
+                margin-inline-start: 0;
+                width: 0 !important;
+            }
             .ant-select-selection-placeholder {
                 padding-right: 18px;
             }
