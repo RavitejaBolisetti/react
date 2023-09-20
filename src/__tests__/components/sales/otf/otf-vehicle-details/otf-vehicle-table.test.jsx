@@ -1,6 +1,6 @@
 import React from 'react';
 import customRender from '@utils/test-utils';
-import { taxDetailsColumn, optionalServicesColumns } from '@components/Sales/OTF/VehicleDetails/tableColumn';
+import { taxDetailsColumn, optionalServicesColumns } from '@components/Sales/Common/VehicleDetails/tableColumn';
 
 describe('tableColumnInvoice', () => {
     it('renders invoice columns correctly', () => {

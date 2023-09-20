@@ -17,34 +17,9 @@ const FormWrapper = (props) => {
     return <VehicleAllotmentPriorityMaster advanceFilterForm={advanceFilterForm} {...props} />;
 };
 
-const FROM_ACTION_TYPE = {
-    ADD: 'add',
-    EDIT: 'edit',
-    VIEW: 'view',
-    VIEW_ONLY: 'view_only',
-    NEXT: 'next',
-    CANCEL_VOUCHER: 'cancel_voucher',
-    CANCEL_OTF: 'cancel_otf',
-    TRANSFER_OTF: 'transfer_otf',
-    CHILD: 'child',
-    SIBLING: 'siblin',
-    ALLOT: 'allot',
-};
-const buttonData = {
-    closeBtn: true,
-    cancelBtn: true,
-    editBtn: true,
-    allotBtn: true,
-    unAllotBtn: true,
-    invoiceBtn: true,
-    deliveryNoteBtn: true,
-    transferOTFBtn: true,
-    changeHistory: true,
-    nextBtn: true,
-    saveBtn: true,
-    formBtnActive: true,
-    cancelOtfBtn: true,
-};
+const FROM_ACTION_TYPE = { ADD: 'add', EDIT: 'edit', VIEW: 'view', VIEW_ONLY: 'view_only', NEXT: 'next', CANCEL_VOUCHER: 'cancel_voucher', CANCEL_OTF: 'cancel_otf', TRANSFER_OTF: 'transfer_otf', CHILD: 'child', SIBLING: 'siblin', ALLOT: 'allot' };
+
+const buttonData = { closeBtn: true, cancelBtn: true, editBtn: true, allotBtn: true, unAllotBtn: true, invoiceBtn: true, deliveryNoteBtn: true, transferOTFBtn: true, changeHistory: true, nextBtn: true, saveBtn: true, formBtnActive: true, cancelOtfBtn: true };
 
 const typeData = {
     VEH_PR_MOD_GR: {
@@ -57,10 +32,10 @@ const typeData = {
 
 describe('vehicle allotment priority master component', () => {
     it('should render vehicle allotment priority master component', () => {
-        customRender(<FormWrapper typeData={typeData} FROM_ACTION_TYPE={FROM_ACTION_TYPE} buttonData={buttonData} />);
+        customRender(<FormWrapper typeData={typeData} showAddButton={true} FROM_ACTION_TYPE={FROM_ACTION_TYPE} buttonData={buttonData} />);
     });
     it('button should work', () => {
-        customRender(<FormWrapper typeData={typeData} handleButtonClick={jest.fn()} FROM_ACTION_TYPE={FROM_ACTION_TYPE} buttonData={buttonData} />);
+        customRender(<FormWrapper typeData={typeData} showAddButton={true} handleButtonClick={jest.fn()} FROM_ACTION_TYPE={FROM_ACTION_TYPE} buttonData={buttonData} />);
         const searchBtn = screen.getByRole('button', { name: 'search' });
         fireEvent.click(searchBtn);
         const plusAdd = screen.getByRole('button', { name: 'plus Add' });
@@ -83,7 +58,7 @@ describe('vehicle allotment priority master component', () => {
     });
 
     it('should render column header text', () => {
-        customRender(<FormWrapper typeData={typeData} handleButtonClick={jest.fn()} FROM_ACTION_TYPE={FROM_ACTION_TYPE} buttonData={buttonData} />);
+        customRender(<FormWrapper typeData={typeData} showAddButton={true} handleButtonClick={jest.fn()} FROM_ACTION_TYPE={FROM_ACTION_TYPE} buttonData={buttonData} />);
         const SrlBtn = screen.getByRole('columnheader', { name: 'Srl.' });
         fireEvent.click(SrlBtn);
         const oldModel = screen.getByRole('columnheader', { name: 'Old Model' });
@@ -106,11 +81,7 @@ describe('vehicle allotment priority master component', () => {
         fireEvent.click(nextPage);
         const newModelEffective = screen.getByRole('row', { name: 'Srl. Old Model New Model Effective From Date Effective To Date Action' });
         fireEvent.click(newModelEffective);
-    });
-
-    it('should render form text', () => {
-        customRender(<FormWrapper titleOverride={'Advance Filters'} typeData={typeData} handleButtonClick={jest.fn()} FROM_ACTION_TYPE={FROM_ACTION_TYPE} buttonData={buttonData} />);
-        const SrlBtn = screen.getByRole('columnheader', { name: 'Srl.' });
-        fireEvent.click(SrlBtn);
+        const noRecordsFounds = screen.getByRole('row', { name: 'No records found' });
+        fireEvent.click(noRecordsFounds);
     });
 });

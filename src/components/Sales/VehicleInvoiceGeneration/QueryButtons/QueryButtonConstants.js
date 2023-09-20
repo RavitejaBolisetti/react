@@ -16,10 +16,10 @@ export const QUERY_BUTTONS = {
         key: 'C',
         active: false,
     },
-    CANCELLATION_REQUEST: {
-        id: 'cancellation request',
-        title: 'Cancellation Request',
-        key: 'CR',
-        active: false,
-    },
+    // CANCELLATION_REQUEST: {
+    //     id: 'cancellation request',
+    //     title: 'Cancellation Request',
+    //     key: 'CR',
+    //     active: false,
+    // },
 };

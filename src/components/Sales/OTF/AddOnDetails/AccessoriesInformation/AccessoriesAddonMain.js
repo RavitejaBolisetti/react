@@ -44,7 +44,7 @@ const AccessoriesAddonMain = ({ setIsBtnDisabled, openAccordian, partNameSearchV
                 setisEditing(false);
                 handleFormValueChange();
             })
-            .catch((err) => { });
+            .catch((err) => {});
     };
     const handleDelete = (index) => {
         setAddOnItemInfo(addOnItemInfo?.filter((element, i) => i !== index));

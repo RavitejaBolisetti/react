@@ -30,14 +30,14 @@ describe('VoucherAndPartyDetailsMaster component', () => {
             }
         }
     }]
-    it('render image1', () => {
+    it('render plus image1', () => {
         customRender(<VoucherAndPartyDetailsMaster typeData={typeData}/>);
 
         const plusImg1 = screen.getAllByRole('img', {name:'plus'});
         fireEvent.click(plusImg1[0]);
     });
 
-    it('render image2', () => {
+    it('render plus image2', () => {
         customRender(<VoucherAndPartyDetailsMaster typeData={typeData}/>);
 
         const plusImg = screen.getAllByRole('img', {name:'plus'});
@@ -48,5 +48,44 @@ describe('VoucherAndPartyDetailsMaster component', () => {
         const formActionType = {addMode:true};
 
         customRender(<FormWrapper formActionType={formActionType} isDetailLoaded={true}/>)
+    })
+
+    it('creditDebitData', ()=>{
+
+        customRender(<FormWrapper creditDebitData={{voucherDetailsDto:'test'}} isDetailLoaded={true} handleFormValueChange={jest.fn()} />)
+    })
+
+    const formProps = {
+        handlePartyIdChange:jest.fn(),
+        handleSearchParamSearch:jest.fn(),
+        formData:{partyDetailsDto:'test'},
+        handlePartySegmentChange:jest.fn(),
+    }
+
+    it('formProps, Party ID', ()=>{
+        const formActionType={addMode:false, editMode:false};
+
+        customRender(<FormWrapper {...formProps}  typeData={typeData} formActionType={formActionType} onSuccessAction={jest.fn()} onSuccessCustomerAction={jest.fn()} />);
+
+        const plusImg = screen.getAllByRole('img', {name:'plus'});
+        fireEvent.click(plusImg[1]);
+
+        const partyId = screen.getByRole('textbox', {name:'Party ID'});
+        fireEvent.change(partyId, {target:{name:'test'}});
+
+        const searchBtn = screen.getByRole('img', {name:'search'});
+        fireEvent.click(searchBtn);
+    })
+
+    it('formProps, Party Segment', ()=>{
+        const formActionType={addMode:false, editMode:true};
+
+        customRender(<FormWrapper {...formProps} typeData={typeData} formActionType={formActionType} />);
+
+        const plusImg = screen.getAllByRole('img', {name:'plus'});
+        fireEvent.click(plusImg[1]);
+
+        const partySeg = screen.getByRole('combobox', {name:'Party Segment'});
+        fireEvent.change(partySeg, {target:{value:'test1'}});
     })
 });

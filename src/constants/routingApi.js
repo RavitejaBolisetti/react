@@ -61,8 +61,8 @@ export const BASE_URL_ROLE_MANAGEMENT_ROLES_MENU = BASE_URL + 'application/roles
 
 export const BASE_URL_PRODUCT_HIERARCHY = BASE_URL + 'product';
 export const BASE_URL_PRODUCT_MAKE = BASE_URL_PRODUCT_HIERARCHY + '/make';
-export const BASE_URL_PRODUCT_MODEL_GROUP = BASE_URL_PRODUCT_HIERARCHY + '/modelgroup';
-export const BASE_URL_PRODUCT_VARIENT = BASE_URL_PRODUCT_HIERARCHY + '/variant';
+export const BASE_URL_PRODUCT_MODEL_GROUP = BASE_URL_PRODUCT_HIERARCHY + '/modelgroups';
+export const BASE_URL_PRODUCT_VARIENT = BASE_URL_PRODUCT_HIERARCHY + '/variants';
 export const BASE_URL_PRODUCT_HIERARCHY_DETAIL = BASE_URL + 'product/details';
 export const BASE_URL_PRODUCT_HIERARCHY_SAVE = BASE_URL + 'product';
 export const BASE_URL_PRODUCT_HIERARCHY_CHANGE_HISTORY = BASE_URL + 'product/hierarchychangehistory';
@@ -162,7 +162,7 @@ export const BASE_URL_ADD_ON_PART = BASE_URL_OTF + 'part/details';
 
 export const BASE_URL_OTF_INVOICE = BASE_URL + 'otf/invoice';
 export const BASE_URL_OTF_FINANCE = BASE_URL + 'otf/finance';
-export const BASE_URL_OTF_SCHEME_DETAIL = BASE_URL + 'otf/schemes';
+export const BASE_URL_OTF_SCHEME_DETAIL = BASE_URL + 'otf/schemes/lov';
 export const BASE_URL_OTF_INSURANCE_DETAIL = BASE_URL + 'otf/insurancedetails';
 export const BASE_URL_OTF_FINANCE_LOV = BASE_URL + 'otf/financiers/lov';
 export const BASE_URL_OTF_SCHEMES = BASE_URL_OTF + 'schemes';

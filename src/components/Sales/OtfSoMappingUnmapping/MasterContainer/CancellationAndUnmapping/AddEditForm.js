@@ -91,4 +91,4 @@ const AddEditFormMain = (props) => {
     );
 };
 
-export const AddEditForm = withDrawer(AddEditFormMain, { width: '50%' });
+export const AddEditForm = withDrawer(AddEditFormMain, {});

@@ -1,7 +1,7 @@
 import { Form } from 'antd';
 import { fireEvent, screen } from '@testing-library/react';
 import customRender from '@utils/test-utils';
-import { OptionServicesForm } from '@components/Sales/OTF/VehicleDetails/optionServicesForm';
+import { OptionServicesForm } from '@components/Sales/Common/VehicleDetails/optionServicesForm';
 
 const typeDataMock = {
     OPT_SRV: [

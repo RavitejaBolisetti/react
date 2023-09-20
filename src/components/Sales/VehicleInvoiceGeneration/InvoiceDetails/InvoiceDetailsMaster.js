@@ -9,83 +9,17 @@ import { Form, Row, Col } from 'antd';
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
 
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-
-import { partyDetailDataActions } from 'store/actions/data/receipt/partyDetails';
-import { showGlobalNotification } from 'store/actions/notification';
-import { CustomerDetailsMaster } from 'components/Sales/Common/CustomerDetails';
-import { vehicleInvoiceDetailDataActions } from 'store/actions/data/invoiceGeneration/vehicleInvoiceDetail';
+import { CustomerDetailsMaster } from 'components/Sales/VehicleInvoiceGeneration/CustomerDetails';
 
 import styles from 'assets/sass/app.module.scss';
 
-const mapStateToProps = (state) => {
-    const {
-        auth: { userId },
-        data: {
-            VehicleInvoiceGeneration: {
-                VehicleInvoiceDetail: { isLoaded: isVehicleInvoiceDataLoaded = false, isLoading: isVehicleInvoiceDataLoading, data: vehicleInvoiceData = [] },
-            },
-            Receipt: {
-                PartyDetails: { isLoaded: isDataLoaded = false, isLoading, data: partyDetailData = [] },
-            },
-        },
-    } = state;
-
-    const moduleTitle = 'Party Details';
-
-    let returnValue = {
-        userId,
-        partyDetailData,
-        isDataLoaded,
-        isLoading,
-        moduleTitle,
-        isVehicleInvoiceDataLoaded,
-        isVehicleInvoiceDataLoading,
-        vehicleInvoiceData,
-    };
-    return returnValue;
-};
-
-const mapDispatchToProps = (dispatch) => ({
-    dispatch,
-    ...bindActionCreators(
-        {
-            fetchCustomerDetail: partyDetailDataActions.fetchList,
-            fetchInvoiceDetail: vehicleInvoiceDetailDataActions.fetchList,
-            fetchPartyDetail: partyDetailDataActions.fetchList,
-            resetData: partyDetailDataActions.reset,
-            listShowLoading: partyDetailDataActions.listShowLoading,
-            showGlobalNotification,
-        },
-        dispatch
-    ),
-});
-
 const InvoiceDetailsMasterBase = (props) => {
-    const { typeData, otfData, selectedOrder, fetchInvoiceDetail, listShowLoading } = props;
+    const { typeData, selectedOrder, fetchInvoiceDetail, listShowLoading, vehicleInvoiceMasterData } = props;
     const { userId, buttonData, setButtonData, showGlobalNotification, section, isDataLoaded, isLoading, invoiceDetailForm } = props;
     const { form, formActionType, handleFormValueChange, selectedOtfNumber, setSelectedOtfNumber } = props;
-    const { FormActionButton, requestPayload, setRequestPayload, handleButtonClick, NEXT_ACTION } = props;
-   
+    const { FormActionButton, requestPayload, setRequestPayload, handleButtonClick, NEXT_ACTION, handleBookingNumberSearch } = props;
+
     const [activeKey, setActiveKey] = useState([]);
-    const [formData, setFormData] = useState('');
-    const [otfFormData, setOtfFormData] = useState('');
-
-    // useEffect(() => {
-    //     return () => {
-    //         resetData();
-    //     };
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, []);
-
-    // useEffect(() => {
-    //     if (receiptDetailData.partyDetails) {
-    //         setRequestPayload({ ...requestPayload, partyDetails: receiptDetailData.partyDetails });
-    //     }
-    //     setReceipt(receiptDetailData?.receiptsDetails?.receiptType);
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [userId, receiptDetailData.partyDetails]);
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
@@ -128,21 +62,17 @@ const InvoiceDetailsMasterBase = (props) => {
         formActionType,
         userId,
         isDataLoaded,
-        otfFormData: otfData,
-        setOtfFormData,
-        formData,
         isLoading,
         setActiveKey,
         activeKey,
         selectedOtfNumber,
         setSelectedOtfNumber,
         wrapForm: false,
+        handleBookingNumberSearch,
     };
 
     const viewProps = {
         typeData,
-        otfFormData: otfData,
-        formData,
         formActionType,
         styles,
         isLoading,
@@ -160,13 +90,13 @@ const InvoiceDetailsMasterBase = (props) => {
                     </Row>
                     {formActionType?.viewMode ? (
                         <>
-                            <ViewDetail {...viewProps} />
-                            <CustomerDetailsMaster {...viewProps} />
+                            <ViewDetail {...viewProps} formData={vehicleInvoiceMasterData?.invoiceDetails?.otfDetailsRequest} />
+                            <CustomerDetailsMaster {...viewProps} formData={vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto} />
                         </>
                     ) : (
                         <>
-                            <AddEditForm {...formProps} />
-                            <CustomerDetailsMaster {...formProps} />
+                            <AddEditForm {...formProps} formData={vehicleInvoiceMasterData?.invoiceDetails?.otfDetailsRequest} />
+                            <CustomerDetailsMaster {...formProps} formData={vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto} />
                         </>
                     )}
                 </Col>
@@ -180,4 +110,4 @@ const InvoiceDetailsMasterBase = (props) => {
     );
 };
 
-export const InvoiceDetailsMaster = connect(null, null)(InvoiceDetailsMasterBase);
+export const InvoiceDetailsMaster = InvoiceDetailsMasterBase;

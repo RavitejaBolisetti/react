@@ -10,7 +10,9 @@ import customRender from '@utils/test-utils';
 
 describe("ViewDetail",()=>{
     it("Close Button", ()=>{
-        customRender(<ViewDetail isVisible={true} typeData={['PARAM_MASTER']}/>);
+        const formData = {modelDescription:'test', modelCode:'12', requestedQuantity:'2', cancelledQuantity:'3', receivedQuantity:'3', issuedAndNotReceivedQuantity:'3', balancedQuantity:2};
+        
+        customRender(<ViewDetail isVisible={true} typeData={['PARAM_MASTER']} onCloseActionEditVehicleDetails={jest.fn()} formData={formData}/>);
 
         const closeBtn = screen.getByRole('button', {name:'Close'});
         fireEvent.click(closeBtn);

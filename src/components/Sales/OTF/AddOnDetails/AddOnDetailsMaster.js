@@ -64,7 +64,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const AddOnDetailsMasterMain = (props) => {
     const { fetchList, resetPartData, partListLoading, showGlobalNotification, AddonPartsData, isAddonPartsDataLoaded, fetchSearchPartList, resetData, AddonDetailsData, isDataLoaded, userId, listShowLoading, saveData, onFinishFailed } = props;
-    const { form, section, selectedOrderId, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick } = props;
+    const { form, section, selectedOrder, selectedOrderId, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick } = props;
 
     const [formData, setformData] = useState();
     const [formDataSetter, setformDataSetter] = useState({
@@ -104,6 +104,12 @@ export const AddOnDetailsMasterMain = (props) => {
                 title: 'partName',
                 value: partName,
                 name: 'partName',
+            },
+            {
+                key: 'modelCode',
+                title: 'Model Code',
+                value: selectedOrder?.modelCode,
+                name: 'Model Code',
             },
         ];
         fetchSearchPartList({
@@ -268,7 +274,7 @@ export const AddOnDetailsMasterMain = (props) => {
                             <h2>{section?.title}</h2>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <OTFStatusBar status={props?.selectedOrder?.orderStatus} />
+                            <OTFStatusBar status={selectedOrder?.orderStatus} />
                         </Col>
                     </Row>
                     {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}

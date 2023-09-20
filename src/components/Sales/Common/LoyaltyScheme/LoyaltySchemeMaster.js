@@ -27,7 +27,7 @@ const mapStateToProps = (state) => {
         data: {
             OTF: {
                 LoyaltyScheme: { isLoaded: isLoyaltySchemeDataLoaded = false, isLoading, data: LoyaltySchemeData = [] },
-                SchemeDetail: { isFilteredListLoaded: isSchemeLovDataLoaded = false, isLoading: isSchemeLovLoading, filteredListData: schemeLovData = [] },
+                SchemeDetail: { isLoaded: isSchemeLovDataLoaded = false, isLoading: isSchemeLovLoading, data: schemeLovData = [] },
                 // LoyaltyMake: { isLoaded: isMakeDataLoaded = false, isLoading: isMakeLoading, filteredListData: makeData = [] },
                 LoyaltyModelGroup: { isFilteredListLoaded: isModelDataLoaded = false, isLoading: isModelLoading, filteredListData: modelData = [] },
                 LoyaltyVarient: { isFilteredListLoaded: isVariantDataLoaded = false, isLoading: isVariantLoading, filteredListData: variantData = [] },
@@ -85,7 +85,7 @@ const mapDispatchToProps = (dispatch) => ({
             fetchCustomerList: customerDetailDataActions.fetchList,
             listCustomerShowLoading: customerDetailDataActions.listShowLoading,
 
-            fetchSchemeLovList: otfSchemeDetailDataActions.fetchFilteredList,
+            fetchSchemeLovList: otfSchemeDetailDataActions.fetchList,
             listSchemeLovShowLoading: otfSchemeDetailDataActions.listShowLoading,
 
             // fetchMakeLovList: otfLoyaltyMakeDetailDataActions.fetchFilteredList,
@@ -112,7 +112,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const LoyaltySchemeMasterMain = (props) => {
     const { isLoyaltySchemeDataLoaded, isLoading, section, listShowLoading, fetchList, LoyaltySchemeData, userId, showGlobalNotification } = props;
-    const { form,selectedOrder, selectedOrderId, formActionType, handleFormValueChange, onFinishFailed, handleButtonClick, NEXT_ACTION } = props;
+    const { form, selectedOrder, selectedOrderId, formActionType, handleFormValueChange, onFinishFailed, handleButtonClick, NEXT_ACTION } = props;
     const { typeData } = props;
     const { fetchModelLovList, listModelShowLoading, fetchVariantLovList, listVariantShowLoading } = props;
     const { isModelDataLoaded, isModelLoading, modelData, isVariantDataLoaded, isVariantLoading, variantData, saveData } = props;
@@ -212,7 +212,7 @@ const LoyaltySchemeMasterMain = (props) => {
                 },
             ];
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
-            fetchSchemeLovList({ setIsLoading: listSchemeLovShowLoading,extraParams : schemeExtraParams, userId });
+            fetchSchemeLovList({ setIsLoading: listSchemeLovShowLoading, extraParams: schemeExtraParams, userId });
             // fetchMakeLovList({ setIsLoading: listMakeShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -290,11 +290,11 @@ const LoyaltySchemeMasterMain = (props) => {
         }
     };
 
-    const handleSchemeChange = (__,value) =>{
+    const handleSchemeChange = (__, value) => {
         form.setFieldsValue({
-            schemeAmount : value?.amount
-        })
-    }
+            schemeAmount: value?.amount,
+        });
+    };
 
     const formProps = {
         ...props,
@@ -325,7 +325,7 @@ const LoyaltySchemeMasterMain = (props) => {
         fnSetData,
         disabledProps,
         handleFilterChange,
-        handleSchemeChange
+        handleSchemeChange,
     };
 
     const myProps = {

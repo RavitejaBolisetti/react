@@ -9,9 +9,11 @@ import { Button, Row, Col } from 'antd';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import styles from 'assets/sass/app.module.scss';
 
-export const VehicleInvoiceFormButton = ({ formActionType, record, onCloseAction, onCancelInvoice, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection }) => {
+export const VehicleInvoiceFormButton = ({ formActionType, record, onCloseAction, onCancelInvoice, onApproveCancel, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection }) => {
+    //console.log('formActionType', formActionType);
     return (
-        <Row gutter={20} className={styles.formFooter}>
+        <div className={styles.formFooter}>
+        <Row gutter={20} >
             <Col xs={24} sm={8} md={6} lg={4} xl={4} className={styles.footerBtnLeft}>
                 {buttonData?.closeBtn && (
                     <Button danger onClick={onCloseAction}>
@@ -32,6 +34,11 @@ export const VehicleInvoiceFormButton = ({ formActionType, record, onCloseAction
                         Cancel Invoice
                     </Button>
                 )}
+                {buttonData?.approveCancelBtn && (
+                    <Button onClick={onApproveCancel} type="primary">
+                        Approve
+                    </Button>
+                )}
                 {/* {buttonData?.editBtn && (
                     <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record, openDefaultSection: false })} type="primary">
                         Edit
@@ -50,5 +57,6 @@ export const VehicleInvoiceFormButton = ({ formActionType, record, onCloseAction
                 {}
             </Col>
         </Row>
+        </div>
     );
 };

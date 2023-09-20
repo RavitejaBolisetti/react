@@ -55,10 +55,10 @@ describe('AddEdit Component render', () => {
         const payment = screen.getByText('Mode Of Payment');
         expect(payment).toBeTruthy();
 
-        const loyaltyScheme = screen.getByText('Loyality Scheme');
+        const loyaltyScheme = screen.getByText('Loyalty Scheme');
         expect(loyaltyScheme).toBeTruthy();
 
-        const Switch = screen.getByRole('switch', { name: /Loyality Scheme/i });
+        const Switch = screen.getByRole('switch', { name: /Loyalty Scheme/i });
         fireEvent.click(Switch);
         expect(Switch).toBeChecked();
     });
