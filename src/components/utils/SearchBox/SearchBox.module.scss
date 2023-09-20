@@ -87,8 +87,8 @@
         }
 
         .ant-input-search {
-            >.ant-input-group {
-                >.ant-input-group-addon {
+            > .ant-input-group {
+                > .ant-input-group-addon {
                     &:last-child {
                         .ant-input-search-button {
                             &:not(.ant-btn-primary) {
@@ -102,7 +102,6 @@
         }
 
         .ant-form-item {
-
             // .ant-form-item-explain {
             //     .ant-form-item-explain-error {
             //         margin-bottom: -18px;
@@ -242,6 +241,20 @@
                     .ant-input {
                         height: 18px !important;
                         padding: 0 !important;
+                    }
+                }
+            }
+
+            .ant-input-group-wrapper-disabled {
+                .ant-input-affix-wrapper-disabled {
+                    background-color: $neutralGrey1;
+                }
+                .ant-input-group {
+                    &:hover {
+                        border: none;
+                    }
+                    .ant-input-group-addon {
+                        display: none;
                     }
                 }
             }

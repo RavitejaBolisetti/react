@@ -291,7 +291,7 @@ const ForgotPasswordBase = (props) => {
 
                                                     <Row gutter={20}>
                                                         <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.inputLabelPlaceholder}>
-                                                            <Form.Item name="userId" data-testid="userIdInput" rules={[validateRequiredInputField('user id')]} className={`${styles.inputBox} ${styles.marginBottomZero}`}>
+                                                            <Form.Item name="userId" data-testid="userIdInput" rules={[validateRequiredInputField('user id')]} className={styles.inputBox}>
                                                                 {<Input ref={userIdRef} prefix={<BiUser size={16} />} type="text" maxLength={25} onChange={handleFormChange('userId')} />}
                                                             </Form.Item>
                                                             {!fieldData?.userId && <label onClick={handleFieldFocus(userIdRef)}>User ID (MILE ID.Parent ID)</label>}
@@ -401,31 +401,27 @@ const ForgotPasswordBase = (props) => {
                                                         <OTPInput className={`${styles.changer} ${inValidOTP ? styles.otpFilled : styles.otpEmpty}`} otpType="number" value={otpInput} onChange={handleOTPInput} autoFocus OTPLength={6} disabled={false} />
                                                     </Col>
                                                 </Row>
-                                                <Row gutter={20}>
-                                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                                        <Row gutter={20} className={styles.otpVerificationContainer}>
-                                                            <Col xs={14} sm={14} md={16} lg={16} xl={16}>
-                                                                {counter ? (
-                                                                    <div className={styles.otpCounter}>{`${counter >= 10 ? `00:${counter}` : `00:0${counter}`}s`}</div>
+                                                <Row gutter={20} className={styles.otpVerificationContainer}>
+                                                    <Col xs={14} sm={14} md={16} lg={16} xl={16}>
+                                                        {counter ? (
+                                                            <div className={styles.otpCounter}>{`${counter >= 10 ? `00:${counter}` : `00:0${counter}`}s`}</div>
+                                                        ) : (
+                                                            <div className={styles.otpNotReceive}>
+                                                                {inValidOTP ? (
+                                                                    <span>
+                                                                        <RxCrossCircled />
+                                                                        {'Incorrect OTP'}
+                                                                    </span>
                                                                 ) : (
-                                                                    <div className={styles.otpNotReceive}>
-                                                                        {inValidOTP ? (
-                                                                            <span>
-                                                                                <RxCrossCircled />
-                                                                                {'Incorrect OTP'}
-                                                                            </span>
-                                                                        ) : (
-                                                                            <span>{"Didn't receive an OTP?"}</span>
-                                                                        )}
-                                                                    </div>
+                                                                    <span>{"Didn't receive an OTP?"}</span>
                                                                 )}
-                                                            </Col>
-                                                            <Col xs={10} sm={10} md={8} lg={8} xl={8}>
-                                                                <div onClick={() => handleSendOTP()} className={counter ? styles.resendDisabled : styles.resendEnabled} type="radio">
-                                                                    <TbRefresh /> Resend OTP
-                                                                </div>
-                                                            </Col>
-                                                        </Row>
+                                                            </div>
+                                                        )}
+                                                    </Col>
+                                                    <Col xs={10} sm={10} md={8} lg={8} xl={8}>
+                                                        <div onClick={() => handleSendOTP()} className={counter ? styles.resendDisabled : styles.resendEnabled} type="radio">
+                                                            <TbRefresh /> Resend OTP
+                                                        </div>
                                                     </Col>
                                                 </Row>
                                                 <Button icon={<FiLock size={18} />} onClick={handleVerifyOTP} disabled={disableVerifyOTP} loading={isLoading} className={styles.button} type="primary">
@@ -446,7 +442,7 @@ const ForgotPasswordBase = (props) => {
                                             <div className={styles.loginForm}>
                                                 <Form id="updatePassword" form={form} autoComplete="off" onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onUpdatePassword} layout="vertical">
                                                     <div className={styles.loginHeading}>
-                                                        <h1 className={styles.inputBox}>Create New Password</h1>
+                                                        <h1 className={styles.mb20}>Create New Password</h1>
                                                         <Row gutter={20}>
                                                             <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.inputLabelPlaceholder}>
                                                                 <Form.Item name="newPassword" className={styles.inputBox} rules={[validateRequiredInputField('new password')]}>

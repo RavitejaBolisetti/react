@@ -6,6 +6,7 @@
 
 iframe {
     border: none;
+    height: calc(100vh - 180px) !important;
 }
 
 .reportClass {

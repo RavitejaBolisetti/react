@@ -55,13 +55,13 @@ const AddEditFormMain = (props) => {
                         </Form.Item>
                     </Col>
                 </Row>
-                <Row gutter={20}>
+                {/* <Row gutter={20}>
                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                         <Form.Item initialValue={formData?.vipDealerInd} valuePropName="checked" name="vipDealerInd">
                             <Checkbox>VIP Dealer</Checkbox>
                         </Form.Item>
                     </Col>
-                </Row>
+                </Row> */}
             </Card>
         </Space>
     );
