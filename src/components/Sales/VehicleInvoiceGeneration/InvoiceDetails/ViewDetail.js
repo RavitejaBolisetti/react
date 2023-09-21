@@ -14,7 +14,7 @@ import { prepareCaption } from 'utils/prepareCaption';
 const { Panel } = Collapse;
 
 const ViewDetailMain = (props) => {
-    const { otfFormData, isLoading } = props;
+    const { formData, isLoading } = props;
     const [activeKey, setactiveKey] = useState([]);
     const viewProps = {
         bordered: false,
@@ -48,15 +48,15 @@ const ViewDetailMain = (props) => {
                         <Panel header="Booking Details" key="1">
                             <Divider />
                             <Descriptions {...viewProps} title={prepareCaption('Price Information')}>
-                                <Descriptions.Item label="Booking Number">{checkAndSetDefaultValue(otfFormData?.bookingNumber || otfFormData?.otfNumber, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Booking Date">{checkAndSetDefaultValue(otfFormData?.otfDate, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Tax Calculation">{checkAndSetDefaultValue(otfFormData?.taxCalculationType, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Tax Payable On Reverse Charges?">{checkAndSetDefaultValue(otfFormData?.taxPayableOnReverseCharges, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Booking Number">{checkAndSetDefaultValue(formData?.bookingNumber || formData?.otfNumber, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Booking Date">{checkAndSetDefaultValue(formData?.otfDate, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Tax Calculation">{checkAndSetDefaultValue(formData?.taxCalculationType, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Tax Payable On Reverse Charges?">{checkAndSetDefaultValue(formData?.taxPayableOnReverseCharges, isLoading)}</Descriptions.Item>
                             </Descriptions>
                             <Descriptions {...viewProps} title={prepareCaption('Sales Details')}>
-                                <Descriptions.Item label="Sales Consultant Name">{checkAndSetDefaultValue(otfFormData?.saleConsultant, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Influence/Mitra Type">{checkAndSetDefaultValue(otfFormData?.mitraType, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Influence/Mitra Name">{checkAndSetDefaultValue(otfFormData?.mitraName, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Sales Consultant Name">{checkAndSetDefaultValue(formData?.saleConsultant, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Influence/Mitra Type">{checkAndSetDefaultValue(formData?.mitraType, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Influence/Mitra Name">{checkAndSetDefaultValue(formData?.mitraName, isLoading)}</Descriptions.Item>
                             </Descriptions>
                         </Panel>
                     </Collapse>

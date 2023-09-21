@@ -136,6 +136,10 @@ export const PARAM_MASTER = {
         id: 'RFRL',
         title: 'Referral',
     },
+    DLVR_CNCL_RSN: {
+        id: 'DLVR_CNCL_RSN',
+        title: 'DLVR_CNCL_RSN',
+    },
     PURPOSE: {
         id: 'PURPOSE',
         title: 'PURPOSE',
