@@ -7,7 +7,8 @@
 import { fireEvent, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { CreditDebitNoteMaster } from '@components/FinancialAccounting/CreditDebitNote/CreditDebitNoteMaster';
-
+import { Provider } from 'react-redux';
+import createMockStore from '__mocks__/store';
 import customRender from '@utils/test-utils';
 
 afterEach(() => {
@@ -24,22 +25,63 @@ describe('Render components', () => {
         const searchImg = screen.getByRole('img', {name:'search'});
         fireEvent.click(searchImg)
     });
-    it('Credit button', () => {
-        customRender(<CreditDebitNoteMaster />);
+
+    it('Credit button, add', () => {
+        customRender(<CreditDebitNoteMaster onCloseAction={jest.fn()} />);
 
         const creditBtn = screen.getByRole('button', {name:'Add Credit Note'});
-        fireEvent.click(creditBtn)
+        fireEvent.click(creditBtn);
+
+        const closeImg = screen.getAllByRole('img', {name:'close'});
+        fireEvent.click(closeImg);
     });
+
     it('Debit button', () => {
         customRender(<CreditDebitNoteMaster />);
 
         const debitBtn = screen.getByRole('button', {name:'Add Debit Note'});
         fireEvent.click(debitBtn)
     });
+
     it('Advanced Filters', () => {
         customRender(<CreditDebitNoteMaster />);
 
         const advancedBtn = screen.getByRole('button', {name:'Advanced Filters'});
-        fireEvent.click(advancedBtn)
+        fireEvent.click(advancedBtn);
+
+        const searchBtn = screen.getByRole('button', {name:'Search'});
+        fireEvent.click(searchBtn);
     });
+
+    const fetchList = jest.fn()
+    const fetchDetail = jest.fn()
+    const tableData = {
+        customerName: null,
+        id: "123",
+        paidAmount: 0,
+        partyCode: "CK01",
+        partySegment: "PRINCIPAL",
+        partyType: "PRI",
+        status: true,
+        voucherDate: "2023-08-30T04:01:57.000+00:00",
+        voucherNumber: "VCR24E000037",
+        voucherType: "CRN"
+    }
+
+    it("view and edit button",()=>{
+        const mockStore = createMockStore({
+            auth: { userId: 123 },
+            data: {
+                FinancialAccounting: {
+                    CreditDebitNoteSearch: { isLoaded: false, data: tableData },
+                },
+            },
+        });
+        
+        customRender(
+            <Provider store={mockStore}>
+                <CreditDebitNoteMaster fetchList={fetchList} isVisible={true} fetchDetail={fetchDetail}/>
+            </Provider>
+        );
+    })
 });
