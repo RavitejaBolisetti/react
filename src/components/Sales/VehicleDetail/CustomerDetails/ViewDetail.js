@@ -95,7 +95,7 @@ const ViewDetailMain = (props) => {
                             </Descriptions>
                         </Panel>
                     </Collapse> */}
-                    <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(4)} expandIconPosition="end" collapsible="icon">
+                    {/* <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(4)} expandIconPosition="end" collapsible="icon">
                         <Panel header="Loyalty Details" key="4">
                             <Divider />
                             <Descriptions {...viewProps}>
@@ -104,7 +104,7 @@ const ViewDetailMain = (props) => {
                                 <Descriptions.Item label="Status Of Vehicle">{checkAndSetDefaultValue(vehicleCustomerLoyaltyDetails?.statusOfVehicle, isLoading)}</Descriptions.Item>
                             </Descriptions>
                         </Panel>
-                    </Collapse>
+                    </Collapse> */}
                     {/* <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(5)} expandIconPosition="end" collapsible="icon">
                         <Panel header="Ownership Change Request" key="5">
                             <Divider />

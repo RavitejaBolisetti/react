@@ -15,6 +15,9 @@ export const StockIndentStatusTag = (status) => {
         case STOCK_INDENT_STATUS.RECEIVED.key:
             tag = <Tag color="success">{STOCK_INDENT_STATUS.RECEIVED.desc}</Tag>;
             break;
+        case STOCK_INDENT_STATUS.ISSUED.key:
+            tag = <Tag color="success">{STOCK_INDENT_STATUS.ISSUED.desc}</Tag>;
+            break;
         case STOCK_INDENT_STATUS.PARTIALLY_RECVD.key:
             tag = <Tag color="warning">{STOCK_INDENT_STATUS.PARTIALLY_RECVD.desc}</Tag>;
             break;

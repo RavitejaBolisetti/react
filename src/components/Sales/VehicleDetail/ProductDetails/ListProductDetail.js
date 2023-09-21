@@ -18,6 +18,9 @@ import { AddEditForm } from './AddEditForm';
 import { ViewDetail } from './ViewDetails';
 import { VehicleDetailFormButton } from '../VehicleDetailFormButton';
 import { PARAM_MASTER } from 'constants/paramMaster';
+import { otfLoyaltyModelGroupDataActions } from 'store/actions/data/otf/loyaltyModelGroup';
+import { otfLoyaltyVarientDetailDataActions } from 'store/actions/data/otf/loyaltyVarient';
+import { otfModelFamilyDetailDataActions } from 'store/actions/data/otf/modelFamily';
 
 const mapStateToProps = (state) => {
     const {
@@ -25,6 +28,11 @@ const mapStateToProps = (state) => {
         data: {
             Vehicle: {
                 ProductDetails: { isLoaded: isDataLoaded = false, isLoading, data: ProductDetailsData = [] },
+            },
+            OTF: {
+                LoyaltyModelGroup: { isLoaded: isModelDataLoaded = false, isLoading: isModelLoading, data: modelData = [] },
+                LoyaltyVarient: { isLoaded: isVariantDataLoaded = false, isLoading: isVariantLoading, data: variantData = [] },
+                ModelFamily: { isLoaded: isModelFamilyDataLoaded = false, isLoading: isModelFamilyLoading, data: modelFamilyData = [] },
             },
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
         },
@@ -39,6 +47,18 @@ const mapStateToProps = (state) => {
         ProductDetailsData,
         isLoading,
         moduleTitle,
+
+        isModelDataLoaded,
+        isModelLoading,
+        modelData,
+
+        isVariantDataLoaded,
+        isVariantLoading,
+        variantData,
+
+        isModelFamilyDataLoaded,
+        isModelFamilyLoading,
+        modelFamilyData,
     };
     return returnValue;
 };
@@ -51,6 +71,19 @@ const mapDispatchToProps = (dispatch) => ({
             saveData: productDetailsDataActions.saveData,
             listShowLoading: productDetailsDataActions.listShowLoading,
             resetData: productDetailsDataActions.reset,
+
+            fetchModelLovList: otfLoyaltyModelGroupDataActions.fetchList,
+            listModelShowLoading: otfLoyaltyModelGroupDataActions.listShowLoading,
+            resetModel: otfLoyaltyModelGroupDataActions.reset,
+
+            fetchVariantLovList: otfLoyaltyVarientDetailDataActions.fetchList,
+            listVariantShowLoading: otfLoyaltyVarientDetailDataActions.listShowLoading,
+            resetVariant: otfLoyaltyVarientDetailDataActions.reset,
+
+            fetchModelFamilyLovList: otfModelFamilyDetailDataActions.fetchList,
+            listFamilyShowLoading: otfModelFamilyDetailDataActions.listShowLoading,
+            resetFamily: otfModelFamilyDetailDataActions.reset,
+
             showGlobalNotification,
         },
         dispatch
@@ -61,6 +94,8 @@ const ProductDetailMasterMain = (props) => {
     const { userId, isDataLoaded, ProductDetailsData, isLoading, handleButtonClick } = props;
     const { fetchList, resetData, saveData, listShowLoading, showGlobalNotification, typeData } = props;
     const { form, selectedRecordId, section, formActionType, handleFormValueChange, NEXT_ACTION } = props;
+    const { fetchModelLovList, listModelShowLoading, fetchVariantLovList, listVariantShowLoading } = props;
+    const { isModelDataLoaded, isModelLoading, modelData, isVariantDataLoaded, isVariantLoading, variantData, isModelFamilyDataLoaded, isModelFamilyLoading, modelFamilyData, fetchModelFamilyLovList, listFamilyShowLoading, resetFamily } = props;
 
     const [formData, setformData] = useState({});
     const [optionsServiceModified, setoptionsServiceModified] = useState([]);
@@ -145,6 +180,10 @@ const ProductDetailMasterMain = (props) => {
     useEffect(() => {
         if (isDataLoaded && ProductDetailsData) {
             setformData(ProductDetailsData);
+            fetchModelLovList({ setIsLoading: listModelShowLoading, userId, extraParams: makeExtraParams('modelGroup', 'modelGroup', ProductDetailsData?.modelGroup, 'modelGroup') });
+            fetchVariantLovList({ setIsLoading: listVariantShowLoading, userId, extraParams: makeExtraParams('modelVariant', 'modelVariant', ProductDetailsData?.modelVariant, 'modelVariant') });
+            fetchModelFamilyLovList({ setIsLoading: listFamilyShowLoading, userId, extraParams: makeExtraParams('familyCode', 'familyCode', ProductDetailsData?.familyCode, 'familyCode') });
+
             ProductDetailsData?.aggregates && setoptionsServiceModified(ProductDetailsData?.aggregates);
             settooltTipText(
                 <div>
@@ -174,6 +213,13 @@ const ProductDetailMasterMain = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, ProductDetailsData]);
+
+    useEffect(() => {
+        if (isModelDataLoaded && isVariantDataLoaded && isModelFamilyDataLoaded) {
+            form.setFieldsValue({ modelFamily: modelFamilyData?.familyDescription, modelGroup: modelData?.modelGroupDescription, modelVariant: variantData?.variantDescription });
+        }
+    }, []);
+
     useEffect(() => {
         if (typeData) {
             if (typeData[PARAM_MASTER?.VEH_MAKE?.id]) {
@@ -252,6 +298,9 @@ const ProductDetailMasterMain = (props) => {
         collapseProps,
         disabledProps,
         bindStatus,
+        isVariantLoading,
+        isModelFamilyLoading,
+        isModelLoading,
     };
 
     const viewProps = {
@@ -270,6 +319,9 @@ const ProductDetailMasterMain = (props) => {
         collapseProps,
         disabledProps,
         bindStatus,
+        modelData,
+        variantData,
+        modelFamilyData,
     };
 
     return (

@@ -19,6 +19,25 @@ export default function AdvanceFilter(props) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [resetAdvanceFilter]);
 
+    const handleSearchWithoutParameter = () => {
+        searchForm
+            .validateFields()
+            .then((values) => {
+                // setValidationRules([validateRequiredInputField('searchType')]);
+                setFilterString({ ...values, pageSize: filterString?.pageSize, current: 1, advanceFilter: true });
+                // searchForm.resetFields();
+            })
+            .catch((err) => {
+                return;
+            });
+    };
+
+    const handleChange = (e) => {
+        if (e?.target?.value === '' && e?.nativeEvent?.type === 'click') {
+            setFilterString({ pageSize: filterString?.pageSize ?? 10, current: 1 });
+        }
+    };
+
     const searchBoxProps = {
         singleField: true,
         searchForm,
@@ -27,6 +46,8 @@ export default function AdvanceFilter(props) {
         placeholder: 'Search by VIN No./Chassis No.',
         singleFieldKey: 'searchParam',
         setResetAdvanceFilter,
+        handleSearchWithoutParameter,
+        handleChange,
     };
 
     return (
