@@ -6,6 +6,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { ReportModal } from 'components/common/ReportModal/ReportModal';
 
 import { Col, Form, Row } from 'antd';
 import { tableColumn } from './tableColumn';
@@ -20,6 +21,7 @@ import { VEHICLE_INVOICE_SECTION } from 'constants/VehicleInvoiceSection';
 import { QUERY_BUTTONS_CONSTANTS } from './QueryButtons';
 import { BASE_URL_OTF_DETAILS as customURL, BASE_URL_INVOICE_DETAIL as InvoiceDetailsURL } from 'constants/routingApi';
 import { otfDataActions } from 'store/actions/data/otf/otf';
+import { EMBEDDED_REPORTS } from 'constants/EmbeddedReports';
 
 import { vehicleInvoiceDataActions } from 'store/actions/data/invoiceGeneration/vehicleInvoiceGeneration';
 import { vehicleIrnGenerationDataActions } from 'store/actions/data/invoiceGeneration/irnGeneration';
@@ -145,6 +147,9 @@ export const VehicleInvoiceMasterBase = (props) => {
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [cancelInvoiceVisible, setCancelInvoiceVisible] = useState(false);
+    const [irnStatusData, setIrnStatusData] = useState();
+    const [additionalReportParams, setAdditionalReportParams] = useState();
+    const [isReportVisible, setReportVisible] = useState();
 
     const [page, setPage] = useState({ pageSize: 10, current: 1 });
     const dynamicPagination = true;
@@ -162,6 +167,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         cancelInvoiceBtn: false,
         approveCancelBtn: false,
         rejectCancelBtn: false,
+        printInvoiceBtn: false,
     };
 
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -542,6 +548,17 @@ export const VehicleInvoiceMasterBase = (props) => {
         setCancelInvoiceVisible(true);
     };
 
+    const onPrintInvoice = (record) => {
+        setReportVisible(true);
+
+        setAdditionalReportParams([
+            {
+                key: 'sa_od_invoice_hdr_id',
+                value: record?.id,
+            },
+        ]);
+    };
+
     const handleCloseReceipt = () => {
         setCancelInvoiceVisible(false);
         cancelInvoiceForm.resetFields();
@@ -696,6 +713,16 @@ export const VehicleInvoiceMasterBase = (props) => {
         typeData,
     };
 
+    const reportDetail = EMBEDDED_REPORTS?.INVOICE_DOCUMENT;
+    const reportProps = {
+        isVisible: isReportVisible,
+        titleOverride: reportDetail?.title,
+        additionalParams: additionalReportParams,
+        onCloseAction: () => {
+            setReportVisible(false);
+        },
+    };
+
     return (
         <>
             <VehicleInvoiceFilter {...advanceFilterResultProps} />
@@ -712,6 +739,7 @@ export const VehicleInvoiceMasterBase = (props) => {
             <AdvancedSearch {...advanceFilterProps} />
             <VehicleInvoiceMainConatiner {...containerProps} />
             <CancelInvoice {...cancelInvoiceProps} />
+            <ReportModal {...reportProps} reportDetail={reportDetail} />
         </>
     );
 };

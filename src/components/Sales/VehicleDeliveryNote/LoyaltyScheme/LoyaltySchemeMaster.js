@@ -29,8 +29,8 @@ const mapStateToProps = (state) => {
                 LoyaltyScheme: { isLoaded: isLoyaltySchemeDataLoaded = false, isLoading, data: LoyaltySchemeData = [] },
                 SchemeDetail: { isLoaded: isSchemeLovDataLoaded = false, isLoading: isSchemeLovLoading, data: schemeLovData = [] },
                 // LoyaltyMake: { isLoaded: isMakeDataLoaded = false, isLoading: isMakeLoading, filteredListData: makeData = [] },
-                LoyaltyModelGroup: { isFilteredListLoaded: isModelDataLoaded = false, isLoading: isModelLoading, filteredListData: modelData = [] },
-                LoyaltyVarient: { isFilteredListLoaded: isVariantDataLoaded = false, isLoading: isVariantLoading, filteredListData: variantData = [] },
+                LoyaltyModelGroup: { isLoaded: isModelDataLoaded = false, isLoading: isModelLoading, data: modelData = [] },
+                LoyaltyVarient: { isLoaded: isVariantDataLoaded = false, isLoading: isVariantLoading, data: variantData = [] },
             },
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             // Vehicle: {
@@ -91,11 +91,11 @@ const mapDispatchToProps = (dispatch) => ({
             // fetchMakeLovList: otfLoyaltyMakeDetailDataActions.fetchFilteredList,
             // listMakeShowLoading: otfLoyaltyMakeDetailDataActions.listShowLoading,
 
-            fetchModelLovList: otfLoyaltyModelGroupDataActions.fetchFilteredList,
+            fetchModelLovList: otfLoyaltyModelGroupDataActions.fetchList,
             listModelShowLoading: otfLoyaltyModelGroupDataActions.listShowLoading,
             resetModel: otfLoyaltyModelGroupDataActions.reset,
 
-            fetchVariantLovList: otfLoyaltyVarientDetailDataActions.fetchFilteredList,
+            fetchVariantLovList: otfLoyaltyVarientDetailDataActions.fetchList,
             listVariantShowLoading: otfLoyaltyVarientDetailDataActions.listShowLoading,
             resetVariant: otfLoyaltyVarientDetailDataActions.reset,
 

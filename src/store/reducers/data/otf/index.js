@@ -30,6 +30,7 @@ import { ExchangeVehicleAlert } from './exchangeVehicleAlert';
 import { LoyaltyMake } from './loyaltyMake';
 import { LoyaltyModelGroup } from './loyaltyModelGroup';
 import { LoyaltyVarient } from './loyaltyVarient';
+import { ModelFamily } from './modelFamily';
 
 export const OTF = combineReducers({
     InvoiceDetail,
@@ -55,4 +56,5 @@ export const OTF = combineReducers({
     LoyaltyMake,
     LoyaltyModelGroup,
     LoyaltyVarient,
+    ModelFamily,
 });

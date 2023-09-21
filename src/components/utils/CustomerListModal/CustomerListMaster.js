@@ -159,7 +159,7 @@ const CustomerListBase = (props) => {
         setFilterString,
         selectWide: true,
         disabled,
-        defaultOption,
+        defaultOption: 'customerName',
     };
 
     return (

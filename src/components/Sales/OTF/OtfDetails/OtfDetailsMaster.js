@@ -157,6 +157,11 @@ const OtfDetailsMasterBase = (props) => {
     };
 
     const onFinishFailed = () => {};
+    const handleDeliveryChange = (__, value) => {
+        if (value?.type === 'D') {
+            showGlobalNotification({ message: 'This value has been deprecated. Please select other value' });
+        }
+    };
 
     const formProps = {
         ...props,
@@ -176,6 +181,7 @@ const OtfDetailsMasterBase = (props) => {
         loyaltyValue,
         setloyaltyValue,
         disabledProps,
+        handleDeliveryChange,
     };
 
     const viewProps = {
