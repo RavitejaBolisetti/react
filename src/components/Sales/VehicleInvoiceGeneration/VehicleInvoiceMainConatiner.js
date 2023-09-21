@@ -16,9 +16,8 @@ import { VehicleDetailsMaster } from 'components/Sales/VehicleInvoiceGeneration/
 import { SchemeDetailsMaster } from 'components/Sales/VehicleInvoiceGeneration/SchemeDetails';
 import { FinananceDetailsMaster } from 'components/Sales/VehicleInvoiceGeneration/FinananceDetails';
 import { ExchangeVehiclesMaster } from 'components/Sales/VehicleInvoiceGeneration/ExchangeVehicles';
-
-import { LoyaltySchemeMaster } from 'components/Sales/Common/LoyaltyScheme';
-import { ReferralsMaster } from 'components/Sales/Common/Referrals';
+import { LoyaltySchemeMaster } from 'components/Sales/VehicleInvoiceGeneration/LoyaltyScheme';
+import { ReferralsMaster } from 'components/Sales/VehicleInvoiceGeneration/Referrals';
 
 import { VehicleInvoiceFormButton } from './VehicleInvoiceFormButton';
 

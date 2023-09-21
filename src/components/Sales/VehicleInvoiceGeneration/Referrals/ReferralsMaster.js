@@ -26,7 +26,7 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             OTF: {
-                Referrals: { isLoaded: isDataLoaded = false, isLoading, data: referralData = [], filter: filterString },
+                Referrals: { isLoaded: isDataLoaded = false, isLoading, filter: filterString },
             },
         },
         customer: {
@@ -37,7 +37,6 @@ const mapStateToProps = (state) => {
     let returnValue = {
         userId,
         isDataLoaded,
-        referralData,
         isLoading,
         isDataCustomerLoaded,
         isCustomerLoading,
@@ -52,7 +51,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchList: otfReferralsDataActions.fetchList,
             fetchCustomerList: otfReferralsDataActions.fetchData,
             setFilterString: otfReferralsDataActions.setFilter,
             listShowLoading: otfReferralsDataActions.listShowLoading,
@@ -65,7 +63,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ReferralsMasterBase = (props) => {
-    const { formActionType, fetchList, showGlobalNotification, saveData, listShowLoading, userId, referralData, isLoading } = props;
+    const { formActionType, showGlobalNotification, listShowLoading, userId, formData: referralData, isLoading } = props;
     const { form, selectedOrderId, section, handleFormValueChange, onFinishFailed, fetchCustomerList, typeData, handleButtonClick, NEXT_ACTION } = props;
     const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, StatusBar } = props;
 
@@ -80,32 +78,10 @@ const ReferralsMasterBase = (props) => {
         setFilterString();
         if (referralData) {
             setFormData({ ...referralData });
+            setViewFormData({ ...referralData });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [referralData]);
-
-    const extraParams = [
-        {
-            key: 'otfNumber',
-            title: 'otfNumber',
-            value: selectedOrderId,
-            name: 'Booking Number',
-        },
-    ];
-    useEffect(() => {
-        if (userId && selectedOrderId) {
-            fetchList({
-                setIsLoading: listShowLoading,
-                userId,
-                extraParams,
-                onSuccessAction: (res) => {
-                    setViewFormData(res?.data);
-                },
-                onErrorAction,
-            });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedOrderId]);
 
     useEffect(() => {
         if (userId && filterString?.searchType && filterString?.searchParam) {
@@ -165,37 +141,11 @@ const ReferralsMasterBase = (props) => {
             onFinishCustom({ key: formKey, values: data });
             handleButtonClick({ buttonAction: NEXT_ACTION });
             setButtonData({ ...buttonData, formBtnActive: false });
-        } else {
-            const onSuccess = (res) => {
-                form.resetFields();
-                showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-                handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
-                fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, errorAction: onError, userId });
-            };
-
-            const onError = (message) => {
-                // showGlobalNotification({ message });
-            };
-
-            const requestData = {
-                data: data,
-                method: referralData?.id ? 'put' : 'post',
-                setIsLoading: listShowLoading,
-                userId,
-                onError,
-                onSuccess,
-            };
-
-            saveData(requestData);
         }
     };
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
-    };
-
-    const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
 
     const fnSetData = (data) => {

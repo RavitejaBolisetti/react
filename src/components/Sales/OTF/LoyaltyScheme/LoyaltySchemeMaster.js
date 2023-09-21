@@ -8,18 +8,18 @@ import { Form, Row, Col } from 'antd';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { ViewDetail } from './ViewDetail';
-import { AddEditForm } from './AddEditForm';
+import { AddEditForm, ViewDetail } from 'components/Sales/Common/InsuranceDetails';
 
 import { showGlobalNotification } from 'store/actions/notification';
 import { otfLoyaltySchemeDataActions } from 'store/actions/data/otf/loyaltyAndScheme';
 import { customerDetailDataActions } from 'store/actions/customer/customerDetail';
 import { otfSchemeDetailDataActions } from 'store/actions/data/otf/schemeDetail';
-
-import styles from 'assets/sass/app.module.scss';
-import { VEHICLE_COMPANY_MAKE } from 'constants/OTFStatus';
 import { otfLoyaltyModelGroupDataActions } from 'store/actions/data/otf/loyaltyModelGroup';
 import { otfLoyaltyVarientDetailDataActions } from 'store/actions/data/otf/loyaltyVarient';
+
+import { VEHICLE_COMPANY_MAKE } from 'constants/OTFStatus';
+
+import styles from 'assets/sass/app.module.scss';
 
 const mapStateToProps = (state) => {
     const {

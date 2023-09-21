@@ -15,9 +15,8 @@ import { SchemeDetailsMaster } from 'components/Sales/OTF/SchemeDetails';
 import { FinananceDetailsMaster } from 'components/Sales/OTF/FinananceDetails';
 import { InsuranceDetailsMaster } from 'components/Sales/OTF/InsuranceDetails';
 import { ExchangeVehiclesMaster } from 'components/Sales/OTF/ExchangeVehicles';
-
-import { LoyaltySchemeMaster } from 'components/Sales/Common/LoyaltyScheme';
-import { ReferralsMaster } from 'components/Sales/Common/Referrals';
+import { LoyaltySchemeMaster } from 'components/Sales/OTF/LoyaltyScheme';
+import { ReferralsMaster } from 'components/Sales/OTF/Referrals';
 
 import { AddOnDetailsMaster } from 'components/Sales/OTF/AddOnDetails';
 import { InvoiceDetailsMaster } from 'components/Sales/OTF/InvoiceDetails';
