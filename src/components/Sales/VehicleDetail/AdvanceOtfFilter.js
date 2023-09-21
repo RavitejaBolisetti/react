@@ -19,6 +19,7 @@ export default function AdvanceOTFFilter(props) {
         filterString,
         setFilterString,
         optionType: typeData,
+        defaultOption : 'chassisNumber'
     };
 
     return (
