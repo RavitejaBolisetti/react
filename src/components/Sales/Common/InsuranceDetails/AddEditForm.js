@@ -53,10 +53,10 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const AddEditFormMain = (props) => {
-    const { userId, isInsuranceCompanyDataLoaded, listInsuranceShowLoading, fetchInsuranceCompanyList, insuranceCompanies } = props;
+    const { userId, isInsuranceCompanyDataLoaded, listInsuranceShowLoading, fetchInsuranceCompanyList, insuranceCompanies, formActionType } = props;
     const { formData, form } = props;
     const { Option } = Select;
-
+    console.log('formDataInsurance>>>', formData);
     useEffect(() => {
         const extraParams = [
             {
@@ -77,7 +77,7 @@ const AddEditFormMain = (props) => {
             form.setFieldsValue({ ...formData, insuranceDate: formattedCalendarDate(formData?.insuranceDate) });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formData]);
+    }, [formData, formActionType, insuranceCompanies]);
 
     return (
         <Row gutter={20}>

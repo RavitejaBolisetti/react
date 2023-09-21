@@ -46,7 +46,11 @@ const InvoiceDetailsMasterBase = (props) => {
 
     const onFinish = (values) => {
         const { otfDetailsRequest, ...bookingAndBillingCustomerDto } = values;
-        setRequestPayload({ ...requestPayload, invoiceDetails: { otfDetailsRequest, bookingAndBillingCustomerDto: { ...bookingAndBillingCustomerDto } } });
+        if (!Object?.keys(bookingAndBillingCustomerDto)?.length) {
+            setRequestPayload({ ...requestPayload, invoiceDetails: { otfDetailsRequest, bookingAndBillingCustomerDto: { ...vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto } } });
+        } else {
+            setRequestPayload({ ...requestPayload, invoiceDetails: { otfDetailsRequest, bookingAndBillingCustomerDto: { ...bookingAndBillingCustomerDto } } });
+        }
         handleButtonClick({ buttonAction: NEXT_ACTION });
         setButtonData({ ...buttonData, formBtnActive: false });
     };

@@ -63,7 +63,7 @@ const VehicleInvoiceMainConatinerMain = (props) => {
                 return <LoyaltySchemeMaster {...myProps} formData={vehicleInvoiceMasterData?.loyaltyScheme} formKey={'loyaltyScheme'} />;
             }
             case VEHICLE_INVOICE_SECTION.REFERRALS.id: {
-                return <ReferralsMaster {...myProps} formData={vehicleInvoiceMasterData?.referrals} formKey={'referrals'} />;
+                return <ReferralsMaster {...myProps} referralData={vehicleInvoiceMasterData?.referrals} formKey={'referrals'} />;
             }
             default: {
                 return <InvoiceDetailsMaster {...myProps} />;

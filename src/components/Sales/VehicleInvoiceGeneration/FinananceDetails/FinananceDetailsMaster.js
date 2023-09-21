@@ -32,7 +32,6 @@ const mapStateToProps = (state) => {
     let returnValue = {
         userId,
         isLoaded,
-        financeData,
         isLoading,
         moduleTitle,
 
@@ -66,12 +65,7 @@ export const FinananceDetailsMasterBase = (props) => {
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
-    useEffect(() => {
-        if (formData) {
-            form.setFieldsValue({ ...formData, doDate: convertDateToCalender(formData?.doDate) });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formData]);
+    console.log('formDataInvoiceData', formData);
 
     useEffect(() => {
         if (userId && !isFinanceLovDataLoaded) {
@@ -101,7 +95,6 @@ export const FinananceDetailsMasterBase = (props) => {
         ...props,
         typeData,
         form,
-        formData,
         formActionType,
         setFormActionType,
         onFinish,

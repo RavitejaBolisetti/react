@@ -297,8 +297,8 @@ export const VehicleInvoiceMasterBase = (props) => {
             const nextSection = filterActiveSection?.find((i) => i?.displayOnList && i.id > currentSection);
             setLastSection(!nextSection?.id);
         }
-        form.resetFields();
-        form.setFieldsValue(undefined);
+        // form.resetFields();
+        // form.setFieldsValue(undefined);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentSection, sectionName]);
 
@@ -442,11 +442,11 @@ export const VehicleInvoiceMasterBase = (props) => {
     };
 
     const generateInvoice = () => {
-        const data = { ...requestPayload };
+        const data = { invoiceDetails: requestPayload?.invoiceDetails, vehicleDetails: requestPayload?.vehicleDetails, financeDetails: requestPayload?.financeDetails, insuranceDetails: requestPayload?.insuranceDetails };
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage + 'Receipt No.:' + res?.data?.receiptsDetails?.receiptNumber });
+            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage + 'Invoice No.:' + res?.data?.invoiceNumber });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
             setButtonData({ ...buttonData, formBtnActive: false });
             setIsFormVisible(false);

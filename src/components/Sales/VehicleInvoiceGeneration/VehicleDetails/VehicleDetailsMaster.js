@@ -101,7 +101,7 @@ const VehicleDetailsMasterMain = (props) => {
     const [isReadOnly, setIsReadOnly] = useState();
     const [productHierarchyData, setProductHierarchyData] = useState([]);
 
-    console.log('vehicleDetailDataLocal',vehicleDetailData)
+    console.log('vehicleDetailDataLocal', vehicleDetailData);
 
     const onSuccessAction = (res) => {
         //showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -235,7 +235,7 @@ const VehicleDetailsMasterMain = (props) => {
 
     const onFinish = (values) => {
         if (onFinishCustom) {
-            onFinishCustom({ key: formKey, values });
+            onFinishCustom({ key: formKey, values: { ...values, optionalServices: optionsServicesMapping, otfNumber: selectedOrderId || '' } });
             handleButtonClick({ buttonAction: NEXT_ACTION });
             setButtonData({ ...buttonData, formBtnActive: false });
         } else {

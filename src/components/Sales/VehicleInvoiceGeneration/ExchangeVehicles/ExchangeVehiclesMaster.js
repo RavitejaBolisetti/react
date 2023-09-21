@@ -469,7 +469,7 @@ const ExchangeVehiclesBase = (props) => {
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <FormActionButton {...props} />
+                    <FormActionButton {...props} buttonData={{ ...buttonData, formBtnActive: true }} />
                 </Col>
             </Row>
         </Form>

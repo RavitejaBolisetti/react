@@ -3,16 +3,25 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Form, Row, Col } from 'antd';
 
 import { AddEditForm, ViewDetail } from 'components/Sales/Common/InsuranceDetails';
+import { formattedCalendarDate } from 'utils/formatDateTime';
+
 import styles from 'assets/sass/app.module.scss';
 
 export const InsuranceDetailsMaster = (props) => {
     const { formData, insuranceData, onCloseAction, formActionType, userId, isDataLoaded } = props;
     const { form, selectedOrderId, handleFormValueChange, section, isLoading, NEXT_ACTION, handleButtonClick, onFinishFailed } = props;
     const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, pageType } = props;
+
+    // useEffect(() => {
+    //     if (formData) {
+    //         form.setFieldsValue({ ...formData, insuranceDate: formattedCalendarDate(formData?.insuranceDate) });
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [formData, formActionType]);
 
     const viewProps = {
         styles,
@@ -24,8 +33,6 @@ export const InsuranceDetailsMaster = (props) => {
 
     const formProps = {
         ...props,
-        formData,
-        form,
         userId,
         isDataLoaded,
         isLoading,

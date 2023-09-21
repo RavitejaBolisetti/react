@@ -24,15 +24,15 @@ export const SchemeDetailsMaster = (props) => {
     const viewProps = {
         styles,
         onCloseAction,
-        formData,
+        schemeData: formData,
         isLoading,
         ...props,
     };
     const formProps = {
         ...props,
         styles,
-        formData,
-        buttonData: { ...props.buttonData, editBtn: false, nextBtn: true, saveBtn: false },
+        schemeData: formData,
+        buttonData: { ...props.buttonData, editBtn: false, nextBtn: true, saveBtn: false, formBtnActive: true },
     };
 
     const onFinish = (values) => {
@@ -53,7 +53,7 @@ export const SchemeDetailsMaster = (props) => {
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <FormActionButton {...props} />
+                    <FormActionButton {...formProps} />
                 </Col>
             </Row>
         </Form>
