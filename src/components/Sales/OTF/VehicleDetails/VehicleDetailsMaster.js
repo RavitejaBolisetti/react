@@ -343,7 +343,7 @@ const VehicleDetailsMasterMain = (props) => {
         setProductModelCode,
         productHierarchyData,
         resetProductLov,
-        handlePriceChange
+        handlePriceChange,
     };
 
     const viewProps = {

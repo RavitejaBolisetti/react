@@ -81,14 +81,14 @@ export const EMBEDDED_REPORTS = {
         slug: 'evr-detail-analysis-report',
     },
     VEHICLE_STOCK_AVAILABILITY_REPORT: {
-        id: 11,
+        id: 10,
         key: 'Vehicle_Stock_Availability_Report',
         title: 'Vehicle Stock Availability Report ',
         type: 'Report',
         slug: 'vehicle-stock-availability-report',
     },
     VOUCHER_REPORT: {
-        id: 12,
+        id: 10,
         key: 'Voucher_Report',
         title: 'Voucher Report ',
         type: 'Report',
