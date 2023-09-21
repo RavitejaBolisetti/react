@@ -119,6 +119,7 @@ export const VehicleInvoiceMasterBase = (props) => {
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [invoiceStatus, setInvoiceStatus] = useState(QUERY_BUTTONS_CONSTANTS.INVOICED.key);
     const [requestPayload, setRequestPayload] = useState({});
+    console.log('🚀 ~ file: VehicleInvoiceMaster.js:122 ~ VehicleInvoiceMasterBase ~ requestPayload:', requestPayload);
 
     const [listFilterForm] = Form.useForm();
     const [cancelInvoiceForm] = Form.useForm();
@@ -167,8 +168,6 @@ export const VehicleInvoiceMasterBase = (props) => {
 
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
-
-    console.log('requestPayload', requestPayload);
 
     const onSuccessAction = (res) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -289,7 +288,6 @@ export const VehicleInvoiceMasterBase = (props) => {
     };
 
     const filterActiveSection = sectionName && filterActiveMenu(Object.values(sectionName));
-    console.log('🚀 ~ file: VehicleInvoiceMaster.js:286 ~ VehicleInvoiceMasterBase ~ filterActiveSection:', filterActiveSection);
 
     useEffect(() => {
         if (currentSection && sectionName) {
@@ -304,55 +302,29 @@ export const VehicleInvoiceMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentSection, sectionName]);
 
-    useEffect(() => {
-        if (userId && selectedOtfNumber && !formActionType?.addMode) {
+    const handleBookingNumberSearch = (otfNumber = '', selectedOrderId = '') => {
+        if (otfNumber || selectedOrderId) {
             const extraParams = [
                 {
                     key: 'otfNumber',
                     title: 'otfNumber',
-                    value: selectedOtfNumber,
+                    value: otfNumber,
                     name: 'Booking Number',
                 },
+                {
+                    key: 'invoiceNumber',
+                    value: selectedOrderId || '',
+                    name: 'Invoice Number',
+                },
             ];
-            fetchOTFDetail({ customURL, setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
+
+            const onSuccessAction = (res) => {
+                setSelectedOtfNumber(otfNumber);
+            };
+
+            fetchInvoiceMasterData({ customURL: InvoiceDetailsURL, setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedOtfNumber]);
-
-    const handleBookingNumberSearch = (otfNumber = '', selectedOrderId = '') => {
-        if (!otfNumber) return false;
-        setSelectedOtfNumber(otfNumber);
-        const extraParams = [
-            {
-                key: 'otfNumber',
-                title: 'otfNumber',
-                value: otfNumber,
-                name: 'Booking Number',
-            },
-            {
-                key: 'invoiceNumber',
-                value: selectedOrderId,
-                name: 'Invoice Number',
-            },
-        ];
-        fetchInvoiceMasterData({ customURL: InvoiceDetailsURL, setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
     };
-
-    // useEffect(() => {
-    //     if (userId && selectedOrder?.invoiceNumber) {
-    //         const extraParams = [
-    //             {
-    //                 key: 'invoiceNumber',
-    //                 title: 'invoiceNumber',
-    //                 value: selectedOrder?.invoiceNumber,
-    //                 name: 'Invoice Number',
-    //             },
-    //         ];
-    //         fetchVehicleDetail({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
-    //         fetchVehicleInvoiceDetail({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [userId, selectedOrder?.invoiceNumber]);
 
     const handleIRNGeneration = () => {
         const data = { otfNumber: selectedOtfNumber, invoiceNumber: selectedOrder?.invoiceNumber };
@@ -422,7 +394,6 @@ export const VehicleInvoiceMasterBase = (props) => {
                 record && setSelectedOtfNumber(record?.otfNumber);
                 openDefaultSection && setCurrentSection(defaultSection);
                 handleBookingNumberSearch(record?.otfNumber, record?.invoiceNumber);
-
                 break;
             case VIEW_ACTION:
                 setSelectedOrder(record);
@@ -695,7 +666,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         paymentModeType,
         documentType,
         onCancelInvoice,
-        saveButtonName: isLastSection ? 'Submit' : 'Save & Next',
+        saveButtonName: isLastSection ? 'Submit' : 'Continue',
         setLastSection,
         handleIRNGeneration,
         handleBookingNumberSearch,

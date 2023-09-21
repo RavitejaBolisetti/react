@@ -5,6 +5,5 @@
  */
 import { AddEditForm } from './AddEditForm';
 import { ViewDetail } from './ViewDetail';
-import { InsuranceDetailsMaster } from './InsuranceDetailsMaster';
 
-export { AddEditForm, ViewDetail, InsuranceDetailsMaster };
+export { AddEditForm, ViewDetail };

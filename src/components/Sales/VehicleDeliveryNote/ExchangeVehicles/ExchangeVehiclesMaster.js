@@ -8,7 +8,9 @@ import { Row, Col, Form } from 'antd';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { AddEditForm, ViewDetail } from 'components/Sales/Common/ExchangeVehicles';
+import { ViewDetail } from './ViewDetail';
+import { AddEditForm } from './AddEditForm';
+import VehiclePriorityAllotmentAlert from './VehiclePriorityAllotmentAlert';
 
 import { customerDetailDataActions } from 'store/actions/customer/customerDetail';
 import { financeLovDataActions } from 'store/actions/data/otf/financeLov';
@@ -30,6 +32,7 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             OTF: {
+                ExchangeVehicle: { isLoaded: isDataLoaded = false, isLoading, data: exchangeData = [] },
                 FinanceLov: { isLoaded: isFinanceLovDataLoaded = false, isLoading: isFinanceLovLoading, data: financeLovData = [] },
                 SchemeDetail: { isLoaded: isSchemeLovDataLoaded = false, isLoading: isSchemeLovLoading, data: schemeLovData = [] },
                 ExchangeVehicleAlert: { isLoaded: isExchangeVehicleAlertLoaded = false, isLoading: isExchangeVehicleAlertLoading = false, data: exchangeVehicleAlertData = false },
@@ -51,6 +54,9 @@ const mapStateToProps = (state) => {
 
     let returnValue = {
         userId,
+        isDataLoaded,
+        exchangeData,
+        isLoading,
         moduleTitle,
 
         financeLovData,
@@ -133,17 +139,17 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ExchangeVehiclesBase = (props) => {
-    const { formData, isLoading, fetchList, userId, listShowLoading, showGlobalNotification, section, fetchProductLovCode, ProductLovCodeLoading, VehicleLovCodeData } = props;
+    const { exchangeData, isLoading, fetchList, userId, listShowLoading, showGlobalNotification, section, fetchProductLovCode, ProductLovCodeLoading, VehicleLovCodeData } = props;
     const { typeData, selectedOrder, fetchListVehicleExchangeAlert, listShowLoadingVehicleExchangeAlert, exchangeVehicleAlertData, resetVehicleExchangeAlert } = props;
     const { fetchMakeLovList, listMakeShowLoading, fetchModelLovList, listModelShowLoading, fetchVariantLovList, listVariantShowLoading } = props;
     const { isMakeLoading, makeData, isModelDataLoaded, isModelLoading, modelData, isVariantDataLoaded, isVariantLoading, variantData, saveData } = props;
     const { financeLovData, isFinanceLovLoading, fetchFinanceLovList, listFinanceLovShowLoading } = props;
     const { schemeLovData, isSchemeLovLoading, fetchSchemeLovList, listSchemeLovShowLoading } = props;
-    const { form, selectedOrderId, formActionType, handleFormValueChange } = props;
+    const { form, selectedOrderId, formActionType, handleFormValueChange, isDataLoaded, resetData } = props;
     const { fetchCustomerList, listCustomerShowLoading, handleButtonClick, NEXT_ACTION } = props;
     const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, StatusBar, isProductHierarchyDataLoaded } = props;
 
-    const [formDataNew, setFormDataNew] = useState();
+    const [formData, setFormData] = useState('');
     const [filteredModelData, setfilteredModelData] = useState([]);
     const [filteredVariantData, setfilteredVariantData] = useState([]);
     const [editableOnSearch, setEditableOnSearch] = useState(false);
@@ -153,11 +159,11 @@ const ExchangeVehiclesBase = (props) => {
 
     const fnSetData = (data) => {
         if (data?.make) {
-            setFormDataNew({ ...data, oldRegistrationNumber: data?.registrationNumber, oldChessisNumber: data?.chassisNumber });
+            setFormData({ ...data, oldRegistrationNumber: data?.registrationNumber, oldChessisNumber: data?.chassisNumber });
             handleFormValueChange();
             setEditableOnSearch(true);
         } else if (data && !data?.make) {
-            setFormDataNew({ ...data, modelGroup: null, variant: null, oldRegistrationNumber: data?.registrationNumber, oldChessisNumber: data?.chassisNumber });
+            setFormData({ ...data, modelGroup: null, variant: null, oldRegistrationNumber: data?.registrationNumber, oldChessisNumber: data?.chassisNumber });
             handleFormValueChange();
             setEditableOnSearch(true);
         } else if (!data) {
@@ -167,13 +173,13 @@ const ExchangeVehiclesBase = (props) => {
     };
 
     useEffect(() => {
-        if (formData) {
-            setFormDataNew(formData);
-            formData?.make && handleFilterChange('make', formData?.make ?? '');
-            formData?.modelGroup && handleFilterChange('modelGroup', formData?.modelGroup ?? '');
+        if (exchangeData && isDataLoaded) {
+            setFormData(exchangeData);
+            exchangeData?.make && handleFilterChange('make', exchangeData?.make ?? '');
+            exchangeData?.modelGroup && handleFilterChange('modelGroup', exchangeData?.modelGroup ?? '');
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formData]);
+    }, [exchangeData, isDataLoaded]);
 
     const makeExtraParams = (key, title, value, name) => {
         const extraParams = [
@@ -227,12 +233,20 @@ const ExchangeVehiclesBase = (props) => {
                     name: 'Booking Number',
                 },
             ];
+            fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, onErrorAction, userId });
             fetchFinanceLovList({ setIsLoading: listFinanceLovShowLoading, userId });
             fetchSchemeLovList({ setIsLoading: listSchemeLovShowLoading, extraParams: schemeExtraParams, userId });
             fetchMakeLovList({ setIsLoading: listMakeShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedOrderId]);
+
+    useEffect(() => {
+        return () => {
+            resetData();
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const handleFilterChange = (name, value, selectobj) => {
         if (!value) {
@@ -344,10 +358,30 @@ const ExchangeVehiclesBase = (props) => {
             showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Verify Customer id to continue' });
             return;
         }
-        const data = { ...values, exchange: values?.exchange ? 1 : 0, id: formDataNew?.id || '', otfNumber: selectedOrderId };
-        onFinishCustom({ key: formKey, values: data });
-        handleButtonClick({ buttonAction: NEXT_ACTION });
-        setButtonData({ ...buttonData, formBtnActive: false });
+        const data = { ...values, exchange: values?.exchange ? 1 : 0, id: exchangeData?.id || '', otfNumber: selectedOrderId };
+
+        if (onFinishCustom) {
+            onFinishCustom({ key: formKey, values: data });
+            handleButtonClick({ buttonAction: NEXT_ACTION });
+            setButtonData({ ...buttonData, formBtnActive: false });
+        } else {
+            const onSuccess = (res) => {
+                form.resetFields();
+                fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, onErrorAction, userId });
+                handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
+            };
+
+            const requestData = {
+                data: data,
+                method: exchangeData?.id ? 'put' : 'post',
+                setIsLoading: listShowLoading,
+                userId,
+                onError: onErrorAction,
+                onSuccess,
+            };
+
+            saveData(requestData);
+        }
     };
 
     const onFinishFailed = (values1) => {
@@ -397,7 +431,7 @@ const ExchangeVehiclesBase = (props) => {
                 if (res?.data?.customerMasterDetails?.length > 0) {
                     setCustomerList(res?.data?.customerMasterDetails);
                 } else {
-                    res?.data?.customerMasterDetails && setFormDataNew(res?.data?.customerMasterDetails?.[0]);
+                    res?.data?.customerMasterDetails && setFormData(res?.data?.customerMasterDetails?.[0]);
                     handleFormValueChange();
                 }
             },
@@ -408,7 +442,7 @@ const ExchangeVehiclesBase = (props) => {
     const formProps = {
         ...props,
         form,
-        formData: formDataNew,
+        formData,
         onFinishFailed,
         onFinish,
 
@@ -453,15 +487,21 @@ const ExchangeVehiclesBase = (props) => {
         financeLovData,
     };
 
-    console.log('formKey', formKey);
+    const VehiclePriorityAlertProp = {
+        modalOpen,
+        setModalOpen,
+    };
 
     return (
         <Form data-testid="exchangeVID" layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                             <h2>{section?.title}</h2>
+                        </Col>
+                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                            {StatusBar && <StatusBar status={props?.selectedOrder?.orderStatus} />}
                         </Col>
                     </Row>
                     {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
@@ -472,6 +512,7 @@ const ExchangeVehiclesBase = (props) => {
                     <FormActionButton {...props} />
                 </Col>
             </Row>
+            <VehiclePriorityAllotmentAlert {...VehiclePriorityAlertProp} />
         </Form>
     );
 };

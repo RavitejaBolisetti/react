@@ -5,16 +5,72 @@
  */
 import React, { useEffect } from 'react';
 import { Col, Input, Form, Row, DatePicker, Space, Card, Select } from 'antd';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import { showGlobalNotification } from 'store/actions/notification';
+import { partyMasterDataActions } from 'store/actions/data/partyMaster';
+
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { formattedCalendarDate, dateFormat } from 'utils/formatDateTime';
 import { validateNumberWithTwoDecimalPlaces } from 'utils/validation';
 import { disableFutureDate } from 'utils/disableDate';
-// import { customSelectBox } from 'utils/customSelectBox';
-// import { PAGE_TYPE } from 'components/Sales/VehicleDeliveryNote/utils/pageType';
+
+const mapStateToProps = (state) => {
+    const {
+        auth: { userId },
+        data: {
+            OTF: {
+                InsuranceDetail: { isLoaded: isDataLoaded = false, isLoading, data: insuranceData = [] },
+            },
+            PartyMaster: { isFilteredListLoaded: isInsuranceCompanyDataLoaded = false, detailData: insuranceCompanies },
+        },
+    } = state;
+    const moduleTitle = 'Insurance Details';
+
+    let returnValue = {
+        userId,
+        isDataLoaded,
+        insuranceData,
+        isLoading,
+        moduleTitle,
+        isInsuranceCompanyDataLoaded,
+        insuranceCompanies,
+    };
+    return returnValue;
+};
+
+const mapDispatchToProps = (dispatch) => ({
+    dispatch,
+    ...bindActionCreators(
+        {
+            fetchInsuranceCompanyList: partyMasterDataActions.fetchDetail,
+            listInsuranceShowLoading: partyMasterDataActions.listShowLoading,
+            showGlobalNotification,
+        },
+        dispatch
+    ),
+});
 
 const AddEditFormMain = (props) => {
-    const { formData, form, insuranceCompanies } = props;
+    const { userId, isInsuranceCompanyDataLoaded, listInsuranceShowLoading, fetchInsuranceCompanyList, insuranceCompanies } = props;
+    const { formData, form } = props;
     const { Option } = Select;
+
+    useEffect(() => {
+        const extraParams = [
+            {
+                key: 'partyType',
+                title: 'partyType',
+                value: 'IN',
+                name: 'Party Type',
+            },
+        ];
+        if (userId && !isInsuranceCompanyDataLoaded) {
+            fetchInsuranceCompanyList({ setIsLoading: listInsuranceShowLoading, userId, extraParams });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, !isInsuranceCompanyDataLoaded]);
 
     useEffect(() => {
         if (formData) {
@@ -45,13 +101,7 @@ const AddEditFormMain = (props) => {
                                     <Input placeholder={preparePlaceholderText('Insurance Cover Note')} maxLength={55} />
                                 </Form.Item>
                             </Col>
-                            {/* {pageType !== PAGE_TYPE?.OTF_PAGE_TYPE?.key && (
-                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item label="Cover Note Date" name="coverNoteDate">
-                                        <DatePicker disabledDate={disableFutureDate} format={dateFormat} placeholder={preparePlaceholderSelect('Cover Note Date')} />
-                                    </Form.Item>
-                                </Col>
-                            )} */}
+
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item label="Insurance Amount" name="insuranceAmount" rules={[validateNumberWithTwoDecimalPlaces('insurance amount')]}>
                                     <Input placeholder={preparePlaceholderText('Insurance Amount')} maxLength={20} />
@@ -77,4 +127,4 @@ const AddEditFormMain = (props) => {
     );
 };
 
-export const AddEditForm = AddEditFormMain;
+export const AddEditForm = connect(mapStateToProps, mapDispatchToProps)(AddEditFormMain);
