@@ -287,7 +287,7 @@ export const VehicleInvoiceMasterBase = (props) => {
     }, []);
 
     const filterActiveMenu = (items) => {
-        return items?.filter((item) => validateOTFMenu({ item, otfData }));
+
     };
 
     const filterActiveSection = sectionName && filterActiveMenu(Object.values(sectionName));
@@ -715,15 +715,6 @@ export const VehicleInvoiceMasterBase = (props) => {
         vehicleInvoiceMasterData,
     };
 
-    const cancelInvoiceProps = {
-        isVisible: cancelInvoiceVisible,
-        titleOverride: 'Cancel Request',
-        handleCloseReceipt,
-        handleCancelReceipt,
-        cancelInvoiceForm,
-        onCloseAction: onCancelCloseAction,
-        typeData,
-    };
 
     const reportDetail = EMBEDDED_REPORTS?.INVOICE_DOCUMENT;
     const reportProps = {

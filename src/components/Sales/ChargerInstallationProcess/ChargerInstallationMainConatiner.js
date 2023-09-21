@@ -6,17 +6,11 @@
 import React from 'react';
 import { Col, Row } from 'antd';
 import { withDrawer } from 'components/withDrawer';
-import { VEHICLE_INVOICE_SECTION } from 'constants/VehicleInvoiceSection';
+import { CHARGER_INSTALLATION_SECTION } from 'constants/ChargerInstallationConstant';
 
 import { LeftSidebar } from './LeftSidebar';
 import { InvoiceDetailsMaster } from './InvoiceDetails'; //Own Menu
-import { InsuranceDetailsMaster } from 'components/Sales/Common/InsuranceDetails'; //Own Menu
-import { SchemeDetailsMaster } from 'components/Sales/Common/SchemeDetails';
-import { VehicleDetailsMaster } from 'components/Sales/VehicleInvoiceGeneration/VehicleDetails'; //common
-import { FinananceDetailsMaster } from 'components/Sales/Common/FinananceDetails'; //common
-import { ReferralsMaster } from 'components/Sales/Common/Referrals';
-import { ExchangeVehiclesMaster } from 'components/Sales/Common/ExchangeVehicles';
-import { LoyaltySchemeMaster } from 'components/Sales/Common/LoyaltyScheme';
+import { InsuranceDetailsMaster } from './InsuranceDetails'; //Own Menu
 
 import { VehicleInvoiceFormButton } from './VehicleInvoiceFormButton';
 
@@ -40,32 +34,11 @@ const ChargerInstallationMainConatinerMain = (props) => {
 
     const renderElement = () => {
         switch (currentSection) {
-            case VEHICLE_INVOICE_SECTION.INVOICE_DETAILS.id: {
+            case CHARGER_INSTALLATION_SECTION.CHARGER_DETAILS.id: {
                 return <InvoiceDetailsMaster {...myProps} />;
-            }
-            case VEHICLE_INVOICE_SECTION.VEHICLE_DETAILS.id: {
-                return <VehicleDetailsMaster {...myProps} formKey={'vehicleDetails'} />;
-            }
-            case VEHICLE_INVOICE_SECTION.SCHEME_OFFER_DETAILS.id: {
-                return <SchemeDetailsMaster {...myProps} formKey={'schemeOfferDetails'} />;
-            }
-            case VEHICLE_INVOICE_SECTION.FINANACE_DETAILS.id: {
-                return <FinananceDetailsMaster {...myProps} formKey={'financeDetails'} />;
-            }
-            case VEHICLE_INVOICE_SECTION.INSURANCE_DETAILS.id: {
-                return <InsuranceDetailsMaster {...myProps} formKey={'insuranceDetails'} />;
-            }
-            case VEHICLE_INVOICE_SECTION.EXCHANGE_DETAILS.id: {
-                return <ExchangeVehiclesMaster {...myProps} formKey={'exchangeDetails'} />;
-            }
-            case VEHICLE_INVOICE_SECTION.LOYALTY_SCHEME.id: {
-                return <LoyaltySchemeMaster {...myProps} formKey={'loyaltyScheme'} />;
-            }
-            case VEHICLE_INVOICE_SECTION.REFERRALS.id: {
-                return <ReferralsMaster {...myProps} formKey={'referrals'} />;
             }
             default: {
-                return <InvoiceDetailsMaster {...myProps} />;
+                return <InsuranceDetailsMaster {...myProps} formKey={'insuranceDetails'} />;
             }
         }
     };
