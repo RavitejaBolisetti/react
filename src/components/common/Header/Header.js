@@ -173,7 +173,7 @@ const HeaderMain = (props) => {
         const onSuccess = (res) => {
             fetchData({ setIsLoading: listShowLoading, userId });
             if (roleId) {
-                fetchMenuList({ setIsLoading: listShowMenuLoading, userId });
+                // fetchMenuList({ setIsLoading: listShowMenuLoading, userId });
                 navigate(routing.ROUTING_DASHBOARD);
             }
         };
