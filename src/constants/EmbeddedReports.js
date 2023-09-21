@@ -59,6 +59,41 @@ export const EMBEDDED_REPORTS = {
         type: 'Report',
         slug: 'amc-certificate-document',
     },
+    POSO: {
+        id: 8,
+        key: 'POSO',
+        title: 'POSO',
+        type: 'Report',
+        slug: 'POSO',
+    },
+    STOCK_TRANSFER_REPORT: {
+        id: 9,
+        key: 'Stock_Transfer_Report_(Vehicle)',
+        title: 'Stock Transfer Report',
+        type: 'Report',
+        slug: 'stock-transfer-report',
+    },
+    EVR_DETAIL_ANALYSIS_REPORT: {
+        id: 10,
+        key: 'EVR_Detail_Analysis_Report',
+        title: 'EVR Detail Analysis Report ',
+        type: 'Report',
+        slug: 'evr-detail-analysis-report',
+    },
+    VEHICLE_STOCK_AVAILABILITY_REPORT: {
+        id: 10,
+        key: 'Vehicle_Stock_Availability_Report',
+        title: 'Vehicle Stock Availability Report ',
+        type: 'Report',
+        slug: 'vehicle-stock-availability-report',
+    },
+    VOUCHER_REPORT: {
+        id: 10,
+        key: 'Voucher_Report',
+        title: 'Voucher Report ',
+        type: 'Report',
+        slug: 'voucher-report',
+    },
 
     STOCK_TRANSFER_ISSUE_NOTE_DOCUMENT: {
         id: 8,
