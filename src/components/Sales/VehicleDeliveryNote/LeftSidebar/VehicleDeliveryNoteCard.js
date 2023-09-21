@@ -46,7 +46,7 @@ const VehicleDeliveryNoteCard = (props) => {
                         </Space>
                         <Divider />
                         <div className={styles.detailCardText}>
-                            Delivery Note No.: <span> {checkAndSetDefaultValue(selectedOrder?.deliveryNoteNumber)}</span>
+                            Delivery Note No.: <span> {checkAndSetDefaultValue(selectedOrder?.vehicleDeliveryNote)}</span>
                         </div>
                         <Divider />
                         <div className={styles.detailCardText}>
