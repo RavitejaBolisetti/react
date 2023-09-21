@@ -81,7 +81,7 @@ const AddEditFormMain = (props) => {
                     ))
                 ) : (
                     <Card>
-                        <div className={styles.marB20}>No Scheme and Offer Details Available</div>
+                        <div className={styles?.marB20}>No Scheme and Offer Details Available</div>
                     </Card>
                 )}
             </Col>
