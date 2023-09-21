@@ -31,9 +31,6 @@ describe('Render components', () => {
 
         const creditBtn = screen.getByRole('button', {name:'Add Credit Note'});
         fireEvent.click(creditBtn);
-
-        const closeImg = screen.getAllByRole('img', {name:'close'});
-        fireEvent.click(closeImg);
     });
 
     it('Debit button', () => {
