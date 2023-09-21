@@ -190,8 +190,9 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
     );
 
     const [rules, setrules] = useState({ ...rulesIntialstate });
+    
     const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
         searchForm.resetFields();
         setShowDataLoading(false);
@@ -670,6 +671,7 @@ export const VehicleRecieptChecklistMasterBase = (props) => {
         typeData,
         tooltTipText: toolTipContent,
         VehicleLovCodeData,
+        data
     };
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
