@@ -18,6 +18,7 @@ const FormWrapper = (props) => {
     const myFormMock = {
         ...editForm,
         getFieldsValue: jest.fn(),
+        resetFields: jest.fn(),
     };
     return <CardNotificationDetail editForm={myFormMock} {...props} />;
 };
@@ -32,5 +33,13 @@ describe('card notification detail component', () => {
 
         const saveBtn = screen.getByRole('button', { name: 'Save' });
         fireEvent.click(saveBtn);
+    });
+
+    it('should render card notification delete button', () => {
+        const docTypeHeadMappingList = [{ internalId: '123', roleCode: '125', designationCode: '124' }];
+        customRender(<FormWrapper formEdit={false} setFormEdit={jest.fn()} forceUpdate={jest.fn()} setDropdownItems={jest.fn()} setDocTypeHeadMappingList={jest.fn()} isVisbile={true} setButtonData={jest.fn()} docTypeHeadMappingList={docTypeHeadMappingList} />);
+
+        const deleteBtn = screen.getByRole('button', { name: '' });
+        fireEvent.click(deleteBtn);
     });
 });
