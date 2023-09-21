@@ -8,7 +8,7 @@ import { Form, Row, Col } from 'antd';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { AddEditForm, ViewDetail } from 'components/Sales/Common/InsuranceDetails';
+import { AddEditForm, ViewDetail } from 'components/Sales/Common/LoyaltyScheme';
 
 import { showGlobalNotification } from 'store/actions/notification';
 import { otfLoyaltySchemeDataActions } from 'store/actions/data/otf/loyaltyAndScheme';
@@ -28,16 +28,10 @@ const mapStateToProps = (state) => {
             OTF: {
                 LoyaltyScheme: { isLoaded: isLoyaltySchemeDataLoaded = false, isLoading, data: LoyaltySchemeData = [] },
                 SchemeDetail: { isLoaded: isSchemeLovDataLoaded = false, isLoading: isSchemeLovLoading, data: schemeLovData = [] },
-                // LoyaltyMake: { isLoaded: isMakeDataLoaded = false, isLoading: isMakeLoading, filteredListData: makeData = [] },
                 LoyaltyModelGroup: { isFilteredListLoaded: isModelDataLoaded = false, isLoading: isModelLoading, filteredListData: modelData = [] },
                 LoyaltyVarient: { isFilteredListLoaded: isVariantDataLoaded = false, isLoading: isVariantLoading, filteredListData: variantData = [] },
             },
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
-            // Vehicle: {
-            //     MakeVehicleDetails: { isLoaded: isMakeDataLoaded = false, isLoading: isMakeLoading, data: makeData = [] },
-            //     ModelVehicleDetails: { isLoaded: isModelDataLoaded = false, isLoading: isModelLoading, data: modelData = [] },
-            //     VariantVehicleDetails: { isLoaded: isVariantDataLoaded = false, isLoading: isVariantLoading, data: variantData = [] },
-            // },
         },
         customer: {
             customerDetail: { isLoaded: isDataCustomerLoaded = false, isLoading: isCustomerLoading = false, data: customerDetail = [] },
@@ -58,10 +52,6 @@ const mapStateToProps = (state) => {
         isSchemeLovDataLoaded,
 
         typeData,
-
-        // isMakeDataLoaded,
-        // isMakeLoading,
-        // makeData,
 
         isModelDataLoaded,
         isModelLoading,
@@ -87,9 +77,6 @@ const mapDispatchToProps = (dispatch) => ({
 
             fetchSchemeLovList: otfSchemeDetailDataActions.fetchList,
             listSchemeLovShowLoading: otfSchemeDetailDataActions.listShowLoading,
-
-            // fetchMakeLovList: otfLoyaltyMakeDetailDataActions.fetchFilteredList,
-            // listMakeShowLoading: otfLoyaltyMakeDetailDataActions.listShowLoading,
 
             fetchModelLovList: otfLoyaltyModelGroupDataActions.fetchFilteredList,
             listModelShowLoading: otfLoyaltyModelGroupDataActions.listShowLoading,
@@ -213,7 +200,6 @@ const LoyaltySchemeMasterMain = (props) => {
             ];
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
             fetchSchemeLovList({ setIsLoading: listSchemeLovShowLoading, extraParams: schemeExtraParams, userId });
-            // fetchMakeLovList({ setIsLoading: listMakeShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedOrderId]);
