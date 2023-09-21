@@ -22,11 +22,18 @@ import { VehicleDeliveryNoteFormButton } from './VehicleDeliveryNoteFormButton';
 
 import styles from 'assets/sass/app.module.scss';
 const VehicleDeliveryNoteConatinerMain = (props) => {
-    const { currentSection } = props;
+    const { currentSection, requestPayload, setRequestPayload, selectedOtfNumber, selectedOrderId, soldByDealer } = props;
+
+    const onFinishCustom = ({ key, values }) => {
+        setRequestPayload({ ...requestPayload, [key]: values });
+    };
 
     const myProps = {
         ...props,
         FormActionButton: VehicleDeliveryNoteFormButton,
+        onFinishCustom,
+        selectedOrderId: selectedOtfNumber,
+        selectedInvoiceId: selectedOrderId,
     };
 
     const renderElement = () => {
@@ -40,11 +47,13 @@ const VehicleDeliveryNoteConatinerMain = (props) => {
             case VEHICLE_DELIVERY_NOTE_SECTION.VEHICLE_DETAILS.id: {
                 return <VehicleDetailsMaster {...myProps} />;
             }
+
             case VEHICLE_DELIVERY_NOTE_SECTION.FINANCE_DETAILS.id: {
-                return <FinananceDetailsMaster {...myProps} />;
+                return <FinananceDetailsMaster {...myProps} formKey={'financeDetails'} />;
             }
+
             case VEHICLE_DELIVERY_NOTE_SECTION.INSURANCE_DETAILS.id: {
-                return <InsuranceDetailsMaster {...myProps} />;
+                return <InsuranceDetailsMaster {...myProps} formKey={'insuranceDto'} />;
             }
             case VEHICLE_DELIVERY_NOTE_SECTION.ADD_ON_DETAILS.id: {
                 return <AddOnDetailsMaster {...myProps} />;

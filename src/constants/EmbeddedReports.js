@@ -81,14 +81,14 @@ export const EMBEDDED_REPORTS = {
         slug: 'evr-detail-analysis-report',
     },
     VEHICLE_STOCK_AVAILABILITY_REPORT: {
-        id: 10,
+        id: 11,
         key: 'Vehicle_Stock_Availability_Report',
         title: 'Vehicle Stock Availability Report ',
         type: 'Report',
         slug: 'vehicle-stock-availability-report',
     },
     VOUCHER_REPORT: {
-        id: 10,
+        id: 12,
         key: 'Voucher_Report',
         title: 'Voucher Report ',
         type: 'Report',
@@ -96,7 +96,7 @@ export const EMBEDDED_REPORTS = {
     },
 
     STOCK_TRANSFER_ISSUE_NOTE_DOCUMENT: {
-        id: 8,
+        id: 13,
         key: 'Stock_Transfer_Issue_Note_Document',
         title: 'Stock Transfer Issue Note Document',
         type: 'Document',
@@ -104,24 +104,32 @@ export const EMBEDDED_REPORTS = {
     },
 
     RECIEPT_DOCUMENT: {
-        id: 9,
+        id: 14,
         key: 'Receipt_Note',
         title: 'Reciept Document',
         type: 'Document',
         slug: '',
     },
     INVOICE_DOCUMENT: {
-        id: 10,
+        id: 15,
         key: 'Invoice_Document',
         title: 'Invoice Document',
         type: 'Document',
         slug: '',
     },
     CREDIT_DEBIT_DOCUMENT: {
-        id: 11,
+        id: 16,
         key: 'Debit_Note',
         title: 'Credit Debit Document',
         type: 'Document',
         slug: '',
     },
+    DELIVERY_NOTE_DOCUMENT: {
+        id: 17,
+        key: 'Delivery_Note_Document',
+        title: 'Delivery Note Document',
+        type: 'Document',
+        slug: '',
+    },
 };
+
