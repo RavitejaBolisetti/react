@@ -48,7 +48,6 @@ const buttonData = {
 };
 
 describe('List Employee Department Master components', () => {
-
     it('Should render search components', () => {
         const mockStore = createMockStore({
             auth: { userId: 106 },
@@ -114,7 +113,6 @@ describe('List Employee Department Master components', () => {
     })
 
     it('Should render Employee Department Master add edit form components', () => {
-        const formActionType = { viewMode: false, editMode: false }
         const mockStore = createMockStore({
             auth: { userId: 106 },
             data: {
@@ -158,7 +156,6 @@ describe('List Employee Department Master components', () => {
     })
 
     it('Should render Employee Department Master add edit form close components', () => {
-        const formActionType = { viewMode: false, editMode: false }
         const mockStore = createMockStore({
             auth: { userId: 106 },
             data: {
@@ -194,7 +191,6 @@ describe('List Employee Department Master components', () => {
     })
 
     it('Should render Employee Department Master add edit form cancel components', () => {
-        const formActionType = { viewMode: false, editMode: false }
         const mockStore = createMockStore({
             auth: { userId: 106 },
             data: {
