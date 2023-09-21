@@ -9,18 +9,18 @@ import { withDrawer } from 'components/withDrawer';
 import { VEHICLE_DELIVERY_NOTE_SECTION } from 'constants/vehicleDeliveryNoteSection';
 
 import { LeftSidebar } from './LeftSidebar';
-
-import styles from 'assets/sass/app.module.scss';
-
 import { InvoiceDetailsMaster } from './InvoiceDetails';
 import { CustomerDetailsMaster } from './CustomerDetails';
 import { VehicleDetailsMaster } from './VehicleDetails';
-import { InsuranceDetailsMaster } from 'components/Sales/Common/InsuranceDetails';
-import { FinananceDetailsMaster } from 'components/Sales/Common/FinananceDetails';
+
+import { InsuranceDetailsMaster } from 'components/Sales/OTF/InsuranceDetails';
+import { FinananceDetailsMaster } from 'components/Sales/OTF/FinananceDetails';
+
 import { AddOnDetailsMaster } from './AddOnDetails';
 import { DeliverableChecklistMaster } from './DeliverableChecklist';
 import { VehicleDeliveryNoteFormButton } from './VehicleDeliveryNoteFormButton';
 
+import styles from 'assets/sass/app.module.scss';
 const VehicleDeliveryNoteConatinerMain = (props) => {
     const { currentSection } = props;
 

@@ -14,7 +14,7 @@ import { CustomerDetailsMaster } from 'components/Sales/VehicleInvoiceGeneration
 import styles from 'assets/sass/app.module.scss';
 
 const InvoiceDetailsMasterBase = (props) => {
-    const { typeData, selectedOrder, fetchInvoiceDetail, listShowLoading, vehicleInvoiceMasterData } = props;
+    const { typeData, selectedOrder, fetchInvoiceDetail, listShowLoading, vehicleInvoiceMasterData, selectedOrderId } = props;
     const { userId, buttonData, setButtonData, showGlobalNotification, section, isDataLoaded, isLoading, invoiceDetailForm } = props;
     const { form, formActionType, handleFormValueChange, selectedOtfNumber, setSelectedOtfNumber } = props;
     const { FormActionButton, requestPayload, setRequestPayload, handleButtonClick, NEXT_ACTION, handleBookingNumberSearch } = props;
@@ -46,7 +46,11 @@ const InvoiceDetailsMasterBase = (props) => {
 
     const onFinish = (values) => {
         const { otfDetailsRequest, ...bookingAndBillingCustomerDto } = values;
-        setRequestPayload({ ...requestPayload, invoiceDetails: { otfDetailsRequest, bookingAndBillingCustomerDto: { ...bookingAndBillingCustomerDto } } });
+        if (!Object?.keys(bookingAndBillingCustomerDto)?.length) {
+            setRequestPayload({ ...requestPayload, invoiceDetails: { otfDetailsRequest, bookingAndBillingCustomerDto: { ...vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto } } });
+        } else {
+            setRequestPayload({ ...requestPayload, invoiceDetails: { otfDetailsRequest, bookingAndBillingCustomerDto: { ...bookingAndBillingCustomerDto } } });
+        }
         handleButtonClick({ buttonAction: NEXT_ACTION });
         setButtonData({ ...buttonData, formBtnActive: false });
     };
@@ -69,6 +73,7 @@ const InvoiceDetailsMasterBase = (props) => {
         setSelectedOtfNumber,
         wrapForm: false,
         handleBookingNumberSearch,
+        selectedOrderId,
     };
 
     const viewProps = {
@@ -77,6 +82,7 @@ const InvoiceDetailsMasterBase = (props) => {
         styles,
         isLoading,
         wrapForm: false,
+        selectedOrderId,
     };
 
     return (
