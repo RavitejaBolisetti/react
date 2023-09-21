@@ -10,7 +10,7 @@ import { ReportModal } from 'components/common/ReportModal/ReportModal';
 
 import { Col, Form, Row } from 'antd';
 import { tableColumn } from './tableColumn';
-import VehicleInvoiceFilter from './VehicleInvoiceFilter';
+import ChargerInstallationFilter from './ChargerInstallationFilter';
 import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 'utils/btnVisiblity';
 
 import { ChargerInstallationMainConatiner } from './ChargerInstallationMainConatiner';
@@ -35,7 +35,6 @@ import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 
 import { FilterIcon } from 'Icons';
 import { validateOTFMenu } from './LeftSidebar/MenuNav';
-import { timeStampCheck } from './utils/TimeStampCheck';
 
 const mapStateToProps = (state) => {
     const {
@@ -60,7 +59,7 @@ const mapStateToProps = (state) => {
         typeData,
         data: data?.paginationData,
         totalRecords: data?.totalRecords || [],
-        invoiceStatusList: Object.values(QUERY_BUTTONS_CONSTANTS),
+        chargerStatusList: Object.values(QUERY_BUTTONS_CONSTANTS),
         moduleTitle,
         isSearchLoading,
         isSearchDataLoaded,
@@ -115,10 +114,10 @@ export const VehicleInvoiceMasterBase = (props) => {
     const { data, receiptDetailData, userId, irnGeneration, fetchList, fetchOTFDetail, fetchVehicleDetail, fetchVehicleInvoiceDetail, listShowLoading, showGlobalNotification, fetchInvoiceMasterData } = props;
     const { cancelInvoice } = props;
     const { typeData, receiptType, partySegmentType, listInvoiceShowLoading, saveData, paymentModeType, documentType, moduleTitle, totalRecords } = props;
-    const { filterString, setFilterString, invoiceStatusList, otfData, vehicleInvoiceMasterData } = props;
+    const { filterString, setFilterString, chargerStatusList, otfData, vehicleInvoiceMasterData } = props;
 
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
-    const [invoiceStatus, setInvoiceStatus] = useState(QUERY_BUTTONS_CONSTANTS.INVOICED.key);
+    const [chargerStatus, setchargerStatus] = useState(QUERY_BUTTONS_CONSTANTS.SITE_SURVEY.key);
     const [requestPayload, setRequestPayload] = useState({});
 
     const [listFilterForm] = Form.useForm();
@@ -242,9 +241,9 @@ export const VehicleInvoiceMasterBase = (props) => {
                 filter: false,
             },
             {
-                key: 'invoiceStatus',
+                key: 'chargerStatus',
                 title: 'Invoice Status',
-                value: invoiceStatus,
+                value: chargerStatus,
                 canRemove: false,
                 filter: false,
             },
@@ -264,7 +263,7 @@ export const VehicleInvoiceMasterBase = (props) => {
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [searchValue, invoiceStatus, filterString, page]);
+    }, [searchValue, chargerStatus, filterString, page]);
 
     useEffect(() => {
         if (userId) {
@@ -272,7 +271,7 @@ export const VehicleInvoiceMasterBase = (props) => {
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, invoiceStatus, filterString, page]);
+    }, [userId, chargerStatus, filterString, page]);
     useEffect(() => {
         if (Object?.keys(vehicleInvoiceMasterData)?.length) {
             setRequestPayload({ invoiceDetails: { bookingAndBillingCustomerDto: { ...vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto }, otfDetailsRequest: vehicleInvoiceMasterData?.invoiceDetails?.otfDetailsRequest }, vehicleDetails: vehicleInvoiceMasterData?.vehicleDetails, financeDetails: vehicleInvoiceMasterData?.financeDetails, insuranceDetails: vehicleInvoiceMasterData?.insuranceDetails });
@@ -390,8 +389,8 @@ export const VehicleInvoiceMasterBase = (props) => {
         irnGeneration(requestData);
     };
 
-    const handleInvoiceTypeChange = (buttonName) => {
-        setInvoiceStatus(buttonName?.key);
+    const handleChargerTypeChange = (buttonName) => {
+        setchargerStatus(buttonName?.key);
         searchForm.resetFields();
     };
 
@@ -455,9 +454,9 @@ export const VehicleInvoiceMasterBase = (props) => {
                 setButtonData(Visibility);
                 // setButtonData({ ...Visibility, cancelReceiptBtn: true });
                 if (buttonAction === VIEW_ACTION) {
-                    //invoiceStatus === QUERY_BUTTONS_CONSTANTS.CANCELLED.key ? setButtonData({ ...Visibility, editBtn: false, cancelInvoiceBtn: false, printInvoiceBtn: true }) : invoiceStatus === QUERY_BUTTONS_CONSTANTS.CANCELLATION_REQUEST.key ? setButtonData({ ...Visibility, editBtn: false, cancelInvoiceBtn: false, printInvoiceBtn: true }) : setButtonData({ ...Visibility, editBtn: true, cancelInvoiceBtn: true, printInvoiceBtn: true });
+                    //chargerStatus === QUERY_BUTTONS_CONSTANTS.CANCELLED.key ? setButtonData({ ...Visibility, editBtn: false, cancelInvoiceBtn: false, printInvoiceBtn: true }) : chargerStatus === QUERY_BUTTONS_CONSTANTS.CANCELLATION_REQUEST.key ? setButtonData({ ...Visibility, editBtn: false, cancelInvoiceBtn: false, printInvoiceBtn: true }) : setButtonData({ ...Visibility, editBtn: true, cancelInvoiceBtn: true, printInvoiceBtn: true });
 
-                    invoiceStatus === QUERY_BUTTONS_CONSTANTS.INVOICED.key && (!otfData?.irnStatus || (otfData?.irnStatus && timeStampCheck(otfData?.invoiceDate, otfData?.irnDate))) ? setButtonData({ ...Visibility, cancelInvoiceBtn: true, printInvoiceBtn: true, approveCancelBtn: false }) : setButtonData({ ...Visibility, cancelInvoiceBtn: false, approveCancelBtn: false, printInvoiceBtn: true });
+                    chargerStatus === QUERY_BUTTONS_CONSTANTS.SITE_SURVEY.key && (!otfData?.irnStatus || (otfData?.irnStatus)) ? setButtonData({ ...Visibility, cancelInvoiceBtn: true, printInvoiceBtn: true, approveCancelBtn: false }) : setButtonData({ ...Visibility, cancelInvoiceBtn: false, approveCancelBtn: false, printInvoiceBtn: true });
                 }
             }
         }
@@ -607,8 +606,8 @@ export const VehicleInvoiceMasterBase = (props) => {
     const advanceFilterResultProps = {
         extraParams,
         removeFilter,
-        invoiceStatus,
-        invoiceStatusList,
+        chargerStatus,
+        chargerStatusList,
         advanceFilter: true,
         otfFilter: true,
         filterString,
@@ -621,7 +620,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         handleButtonClick,
         handleChange,
         handleSearch,
-        handleInvoiceTypeChange,
+        handleChargerTypeChange,
 
         title,
         data,
@@ -645,7 +644,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         setFilterString,
         advanceFilterForm,
         setAdvanceSearchVisible,
-        invoiceStatusList,
+        chargerStatusList,
         typeData,
         onFinishSearch,
     };
@@ -682,7 +681,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         setRequestPayload,
         receipt,
         setReceipt,
-        invoiceStatus,
+        chargerStatus,
 
         setButtonData,
         handleButtonClick,
@@ -738,7 +737,7 @@ export const VehicleInvoiceMasterBase = (props) => {
 
     return (
         <>
-            <VehicleInvoiceFilter {...advanceFilterResultProps} />
+            <ChargerInstallationFilter {...advanceFilterResultProps} />
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                     <ListDataTable
@@ -756,4 +755,4 @@ export const VehicleInvoiceMasterBase = (props) => {
     );
 };
 
-export const VehicleInvoiceMaster = connect(mapStateToProps, mapDispatchToProps)(VehicleInvoiceMasterBase);
+export const ChargerInstallationMaster = connect(mapStateToProps, mapDispatchToProps)(VehicleInvoiceMasterBase);

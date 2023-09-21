@@ -4,22 +4,29 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 export const QUERY_BUTTONS = {
-    INVOICED: {
-        id: 'invoiced',
-        title: 'Invoiced',
-        key: 'I',
+    SITE_SURVEY: {
+        id: 'site_survey',
+        title: 'Site Survey',
+        key: 'SS',
         active: true,
     },
-    CANCELLED: {
-        id: 'cancelled',
-        title: 'Cancelled',
+    SITE_VALIDATION: {
+        id: 'site_validation',
+        title: 'Site Validation',
+        key: 'SV',
+        active: false,
+    },
+    INSTALLATION: {
+        id: 'installation',
+        title: 'Installation',
+        key: 'I',
+        active: false,
+    },
+    COMMISSION: {
+        id: 'commission',
+        title: 'Commission',
         key: 'C',
         active: false,
     },
-    // CANCELLATION_REQUEST: {
-    //     id: 'cancellation request',
-    //     title: 'Cancellation Request',
-    //     key: 'CR',
-    //     active: false,
-    // },
+
 };
