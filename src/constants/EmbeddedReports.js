@@ -124,4 +124,12 @@ export const EMBEDDED_REPORTS = {
         type: 'Document',
         slug: '',
     },
+    DELIVERY_NOTE_DOCUMENT: {
+        id: 12,
+        key: 'Delivery_Note_Document',
+        title: 'Delivery Note Document',
+        type: 'Document',
+        slug: '',
+    },
 };
+

@@ -19,7 +19,7 @@ const AddEditFormMain = (props) => {
     const { form, formData } = props;
     const { schemeLovData, typeData } = props;
     const { isConfigLoading, isSchemeLovLoading, isModelLoading, isVariantLoading } = props;
-    const { filteredModelData, filteredVariantData, handleFilterChange, fnSetData, disabledProps, handleSchemeChange } = props;
+    const { filteredModelData, filteredVariantData, handleFilterChange, fnSetData, handleSchemeChange, viewOnly = false } = props;
 
     const currentYear = new Date().getFullYear();
     const yearsList = [];
@@ -35,6 +35,8 @@ const AddEditFormMain = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
+
+    const disabledProps = { disabled: viewOnly };
 
     return (
         <Card className={styles.ExchangeCard}>

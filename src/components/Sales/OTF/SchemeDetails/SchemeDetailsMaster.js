@@ -9,8 +9,7 @@ import { bindActionCreators } from 'redux';
 import { Form, Row, Col } from 'antd';
 
 import { showGlobalNotification } from 'store/actions/notification';
-import { AddEditForm } from './AddEditForm';
-import { ViewDetail } from './ViewDetail';
+import { AddEditForm, ViewDetail } from 'components/Sales/Common/SchemeDetails';
 
 import styles from 'assets/sass/app.module.scss';
 

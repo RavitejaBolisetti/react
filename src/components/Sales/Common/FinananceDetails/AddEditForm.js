@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect, useState } from 'react';
-import { Col, Input, Form, Row, Select, Card, DatePicker, Space, Switch } from 'antd';
+import { Col, Input, Form, Row, Select, Card, DatePicker, Space } from 'antd';
 
 import { disableFutureDate } from 'utils/disableDate';
 import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
@@ -19,17 +19,20 @@ import { PAGE_TYPE } from 'components/Sales/VehicleDeliveryNote/utils/pageType';
 import styles from 'assets/sass/app.module.scss';
 
 const AddEditFormMain = (props) => {
-    const { formData, FinanceLovData, typeData, form, formActionType, pageType } = props;
+    const { formData, FinanceLovData, typeData, form, pageType } = props;
     const [doReceived, setDoReceived] = useState();
     const [financeArrangedBy, setFinanceArrangedBy] = useState();
     const checkFinanceType = (type, key) => (type ? type === key : false);
 
     useEffect(() => {
-        setDoReceived(formData?.doReceived || 'N');
-        setFinanceArrangedBy(formData?.financeArrangedBy);
-        formData && form.setFieldsValue({ ...formData, printHypothecationDetails: formData?.printHypothecationDetails ? 1 : 0, doDate: formattedCalendarDate(formData?.doDate), financier: formData?.financierCode });
+        if (formData) {
+            setDoReceived(formData?.doReceived || 'N');
+            setFinanceArrangedBy(formData?.financeArrangedBy);
+            form.setFieldsValue({ ...formData, printHypothecationDetails: formData?.printHypothecationDetails ? 1 : 0, doDate: formattedCalendarDate(formData?.doDate), financier: formData?.financierCode });
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formData]);
+    }, [formData, financeArrangedBy]);
+    console.log('formdataComing', formData);
 
     const datePickerStyle = {
         width: '100%',
