@@ -55,9 +55,9 @@ export const ViewIssueDetail = ({ formData, isLoading = false, typeData, handleR
                 <Descriptions.Item label="Net Dealer Price">{checkAndSetDefaultValue(viewData?.netDealerPrice, isLoading)}</Descriptions.Item>
             </Descriptions>
             <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{ display: 'flex' }}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} className={`${styles.buttonsGroup} ${styles.marB20}`}>
                     {buttonVisibility?.canReceive && (
-                        <Button style={{ marginRight: '10px' }} type="primary" onClick={() => handleRequest(formData, ISSUE_ACTION_LIST?.RECEIVED)}>
+                        <Button type="primary" onClick={() => handleRequest(formData, ISSUE_ACTION_LIST?.RECEIVED)}>
                             {BUTTON_NAME_CONSTANTS?.RECEIEVED?.name}
                         </Button>
                     )}

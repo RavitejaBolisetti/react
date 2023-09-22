@@ -100,8 +100,8 @@
             }
 
             .ant-input-search {
-                >.ant-input-group {
-                    >.ant-input-group-addon {
+                > .ant-input-group {
+                    > .ant-input-group-addon {
                         &:last-child {
                             padding: 3px 12px;
                             padding-left: 0;
@@ -130,7 +130,7 @@
 
         & :global {
             .ant-menu-submenu-title {
-                >svg {
+                > svg {
                     width: 20px;
                     height: 20px;
                 }
@@ -147,7 +147,7 @@
 
         & :global {
             .ant-menu-submenu-title {
-                >svg {
+                > svg {
                     width: 20px;
                     height: 20px;
                 }
@@ -178,7 +178,7 @@
             display: flex;
             justify-content: center;
             width: 100%;
-            border: 1px solid $neutralGrey1;
+            // border: 1px solid $neutralGrey1;
             border-radius: 4px;
             padding: 4px;
 
@@ -238,7 +238,7 @@
         }
 
         button {
-            >span {
+            > span {
                 font-size: 12px;
                 font-weight: 500;
                 line-height: 20px;
