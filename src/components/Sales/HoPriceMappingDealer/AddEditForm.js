@@ -15,7 +15,7 @@ import styles from 'assets/sass/app.module.scss';
 
 const AddEditFormMain = (props) => {
     const { form, formData, buttonData, setButtonData, typeData, fieldNames, editProductData, handleButtonClick, onCloseAction, formActionType, onFinish, onFinishFailed, viewProductData, modelGroupArr, setViewProductData, responseData } = props;
-    const { hoPriceDetailData, checkedKeys, setCheckedKeys} = props;
+    const { hoPriceDetailData, checkedKeys, setCheckedKeys } = props;
     const [searchValue, setSearchValue] = useState('');
 
     const handleFormValueChange = () => {
@@ -55,7 +55,6 @@ const AddEditFormMain = (props) => {
     const myProps = {
         checkable: true,
         isTreeViewVisible: true,
-       // selectedTreeKey,
         fieldNames,
         treeData: editProductData,
         searchValue,
@@ -117,9 +116,7 @@ const AddEditFormMain = (props) => {
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-     
                                         <LeftPanel {...myProps} />
-
                                     </Col>
                                 </Row>
                             </>

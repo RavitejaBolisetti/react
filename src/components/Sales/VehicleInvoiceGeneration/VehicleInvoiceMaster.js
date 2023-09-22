@@ -93,6 +93,7 @@ const mapDispatchToProps = (dispatch) => ({
     ...bindActionCreators(
         {
             fetchOTFDetail: otfDataActions.fetchDetail,
+            resetOtfData: otfDataActions.reset,
             saveData: vehicleInvoiceGenerationDataActions.saveData,
             cancelInvoice: vehicleInvoiceGenerationDataActions.saveData,
             listShowLoading: otfDataActions.listShowLoading,
@@ -117,7 +118,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const VehicleInvoiceMasterBase = (props) => {
-    const { data, receiptDetailData, userId, irnGeneration, fetchList, fetchOTFDetail, listShowLoading, showGlobalNotification, fetchInvoiceMasterData } = props;
+    const { data, receiptDetailData, userId, irnGeneration, fetchList, fetchOTFDetail, resetOtfData, listShowLoading, showGlobalNotification, fetchInvoiceMasterData } = props;
     const { cancelInvoice } = props;
     const { typeData, receiptType, partySegmentType, listInvoiceShowLoading, saveData, paymentModeType, documentType, moduleTitle, totalRecords } = props;
     const { filterString, setFilterString, invoiceStatusList, otfData, vehicleInvoiceMasterData, isDetailInvoiceDataLoaded, resetDetailData } = props;
@@ -125,7 +126,6 @@ export const VehicleInvoiceMasterBase = (props) => {
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [invoiceStatus, setInvoiceStatus] = useState(QUERY_BUTTONS_CONSTANTS.INVOICED.key);
     const [requestPayload, setRequestPayload] = useState({});
-    console.log('🚀 ~ file: VehicleInvoiceMaster.js:122 ~ VehicleInvoiceMasterBase ~ vehicleInvoiceMasterData:', vehicleInvoiceMasterData);
 
     const [listFilterForm] = Form.useForm();
     const [cancelInvoiceForm] = Form.useForm();
@@ -343,13 +343,14 @@ export const VehicleInvoiceMasterBase = (props) => {
 
             const onSuccessAction = (res) => {
                 if (res?.data?.invoiceDetails?.otfDetailsRequest?.orderStatus !== INVOICE_CONSTANTS?.ALLOTED?.key) {
-                    setButtonData({ ...buttonData, formBtnActive: false });
+                    setButtonData((prev) => ({ ...prev, formBtnActive: false }));
 
                     showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'OTF number not alloted' });
                     resetDetailData();
                     return;
                 } else {
-                    setButtonData({ ...buttonData, formBtnActive: true });
+                    setButtonData((prev) => ({ ...prev, formBtnActive: true }));
+
                     setSelectedOtfNumber(otfNumber);
                 }
             };
@@ -514,6 +515,7 @@ export const VehicleInvoiceMasterBase = (props) => {
 
     const onCloseAction = () => {
         resetDetailData();
+        resetOtfData();
         form.resetFields();
         form.setFieldsValue();
         setSelectedOrderId();
