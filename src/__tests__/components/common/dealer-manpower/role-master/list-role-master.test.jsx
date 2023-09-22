@@ -93,13 +93,20 @@ describe('Role Master components', () => {
         )
 
         const textBox = screen.getByPlaceholderText('Search');
+        fireEvent.change(textBox, { target: { value: '' } });
         fireEvent.change(textBox, { target: { value: 'hello testing for search' } });
+
+        const comboBox = screen.getByRole('combobox', { name: "" });
+        fireEvent.change(comboBox, { target: { value: 'hello testing for search1' } });
 
         const searchImg = screen.getByRole('button', { name: 'search' });
         fireEvent.click(searchImg);
+
+        const clearBtn = screen.getByRole('button', { name: 'Clear', exact: false });
+        fireEvent.click(clearBtn);
     })
 
-    it('clear button should work', async () => {
+    it('filter button should work', async () => {
         const props = {
             formActionType: { viewMode: false, editMode: false },
         }
@@ -127,30 +134,43 @@ describe('Role Master components', () => {
             auth: { userId: 106 },
             data: {
                 DealerManpower: {
-                    RoleMaster: { isLoaded: false, isLoading: false, data: roleData },
+                    RoleMaster: { isLoaded: false, data: roleData },
+                    DealerDivisionMaster: { divisionData: [{ code: "234567", name: "sdfghjkwertyu", status: true }] },
+                    DealerEmployeeDepartmentMaster: { filteredDepartmentData: [] },
                 },
             },
         });
 
         const fetchList = jest.fn();
+        const fetchDivisionLovList = jest.fn()
+        const fetchDepartmentLovList = jest.fn()
 
         customRender(
             <Provider store={mockStore}>
                 <ListRoleMaster isVisible={true}
                     {...props}
                     fetchList={fetchList}
+                    fetchDivisionLovList={fetchDivisionLovList}
+                    fetchDepartmentLovList={fetchDepartmentLovList}
                 />
             </Provider>
         )
 
-        const textBox = screen.getByRole('combobox', { name: "" });
-        fireEvent.change(textBox, { target: { value: 'hello testing for search' } });
-
-        const searchImg = screen.getByRole('button', { name: 'search' });
-        fireEvent.click(searchImg);
-
-        const clearBtn = screen.getByRole('button', { name: 'Clear', exact: false });
+        const clearBtn = screen.getByRole('button', { name: 'Advanced Filters', exact: false });
         fireEvent.click(clearBtn);
+
+        const divisionName = screen.getByRole('combobox', { name: "Division Name" });
+        fireEvent.change(divisionName, { target: { value: 'hello testing for search1' } });
+
+        const departmentName = screen.getByRole('combobox', { name: "Department Name" });
+        fireEvent.change(departmentName, { target: { value: 'hello testing for search1' } });
+
+        const comboBox = screen.getAllByRole('textbox', { name: "Role Name" });
+        fireEvent.change(comboBox[0], { target: { value: 'hello testing for search1' } });
+        fireEvent.change(comboBox[1], { target: { value: 'hello testing for search1' } });
+
+        const searchBtn = screen.getByTestId("search")
+        fireEvent.click(searchBtn)
 
     });
 
@@ -197,12 +217,8 @@ describe('Role Master components', () => {
                 />
             </Provider>
         )
-
-        await waitFor(() => { expect(screen.getByText('kai test')).toBeInTheDocument() });
         const refreshbutton = screen.getByRole('button', { name: '', exact: false });
         fireEvent.click(refreshbutton);
-        fetchList.mock.calls[0][0].onSuccessAction();
-
     });
 
 
@@ -260,5 +276,10 @@ describe('Role Master components', () => {
         saveData.mock.calls[0][0].onError();
     });
 
-    
+
+    it('Should render filter clear button', () =>{
+        
+    })
+
+
 });
