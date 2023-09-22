@@ -33,6 +33,9 @@ import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 
 import { FilterIcon } from 'Icons';
 import { validateOTFMenu } from './LeftSidebar/MenuNav';
+import { EMBEDDED_REPORTS } from 'constants/EmbeddedReports';
+import { ReportModal } from 'components/common/ReportModal/ReportModal';
+import { OTF_STATUS } from 'constants/OTFStatus';
 
 const mapStateToProps = (state) => {
     const {
@@ -144,6 +147,9 @@ export const VehicleInvoiceMasterBase = (props) => {
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [cancelInvoiceVisible, setCancelInvoiceVisible] = useState(false);
+    const [irnStatusData, setIrnStatusData] = useState();
+    const [additionalReportParams, setAdditionalReportParams] = useState();
+    const [isReportVisible, setReportVisible] = useState();
 
     const [page, setPage] = useState({ pageSize: 10, current: 1 });
     const dynamicPagination = true;
@@ -161,6 +167,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         cancelInvoiceBtn: false,
         approveCancelBtn: false,
         rejectCancelBtn: false,
+        printInvoiceBtn: false,
     };
 
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -319,17 +326,14 @@ export const VehicleInvoiceMasterBase = (props) => {
             ];
 
             const onSuccessAction = (res) => {
-                setSelectedOtfNumber(otfNumber);
-                // if (res?.data?.invoiceDetails?.otfDetailsRequest?.orderStatus !== INVOICE_CONSTANTS?.ALLOTED?.key) {
+                // setSelectedOtfNumber(otfNumber);
+                // if (res?.data?.invoiceDetails?.otfDetailsRequest?.orderStatus !== OTF_STATUS?.ALLOTED?.key) {
                 //     setButtonData((prev) => ({ ...prev, formBtnActive: false }));
-
                 //     showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'OTF number not alloted' });
-                //     resetDetailData();
                 //     return;
                 // } else {
-                //     setButtonData((prev) => ({ ...prev, formBtnActive: true }));
-
-                //     setSelectedOtfNumber(otfNumber);
+                setButtonData((prev) => ({ ...prev, formBtnActive: true }));
+                setSelectedOtfNumber(otfNumber);
                 // }
             };
 
@@ -398,6 +402,7 @@ export const VehicleInvoiceMasterBase = (props) => {
                 defaultSection && setCurrentSection(defaultSection);
                 invoiceDetailForm.resetFields();
                 setSelectedOrderId('');
+                setSelectedOtfNumber('');
                 break;
             case EDIT_ACTION:
                 setSelectedOrder(record);
@@ -457,10 +462,9 @@ export const VehicleInvoiceMasterBase = (props) => {
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage + 'Receipt No.:' + res?.data?.receiptsDetails?.receiptNumber });
+            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage + 'Invoice No.:' + res?.data?.invoiceNumber });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
-            setButtonData({ ...buttonData, formBtnActive: false });
-            setIsFormVisible(false);
+            resetInvoiceData();
         };
         const onError = (message) => {
             showGlobalNotification({ message });
@@ -484,9 +488,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
 
-    const onCloseAction = () => {
-        // resetDetailData();
-        // resetOtfData();
+    const resetInvoiceData = () => {
         form.resetFields();
         form.setFieldsValue();
         setSelectedOrderId();
@@ -496,13 +498,13 @@ export const VehicleInvoiceMasterBase = (props) => {
         advanceFilterForm.resetFields();
         advanceFilterForm.setFieldsValue();
         setAdvanceSearchVisible(false);
-
-        setSelectedOrder();
-        setSelectedOtfNumber();
         setLastSection(false);
         setIsFormVisible(false);
         setCancelInvoiceVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
+    };
+    const onCloseAction = () => {
+        resetInvoiceData();
     };
 
     const tableProps = {
@@ -542,6 +544,17 @@ export const VehicleInvoiceMasterBase = (props) => {
 
     const onCancelInvoice = () => {
         setCancelInvoiceVisible(true);
+    };
+
+    const onPrintInvoice = (record) => {
+        setReportVisible(true);
+
+        setAdditionalReportParams([
+            {
+                key: 'sa_od_invoice_hdr_id',
+                value: record?.id,
+            },
+        ]);
     };
 
     const handleCloseReceipt = () => {
@@ -699,6 +712,16 @@ export const VehicleInvoiceMasterBase = (props) => {
         typeData,
     };
 
+    const reportDetail = EMBEDDED_REPORTS?.INVOICE_DOCUMENT;
+    const reportProps = {
+        isVisible: isReportVisible,
+        titleOverride: reportDetail?.title,
+        additionalParams: additionalReportParams,
+        onCloseAction: () => {
+            setReportVisible(false);
+        },
+    };
+
     return (
         <>
             <VehicleInvoiceFilter {...advanceFilterResultProps} />
@@ -715,6 +738,7 @@ export const VehicleInvoiceMasterBase = (props) => {
             <AdvancedSearch {...advanceFilterProps} />
             <VehicleInvoiceMainConatiner {...containerProps} />
             <CancelInvoice {...cancelInvoiceProps} />
+            <ReportModal {...reportProps} reportDetail={reportDetail} />
         </>
     );
 };
