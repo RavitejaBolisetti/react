@@ -87,6 +87,7 @@ const mapDispatchToProps = (dispatch) => ({
     ...bindActionCreators(
         {
             fetchOTFDetail: otfDataActions.fetchDetail,
+            resetOtfData: otfDataActions.reset,
             saveData: vehicleInvoiceGenerationDataActions.saveData,
             cancelInvoice: vehicleInvoiceGenerationDataActions.saveData,
             listShowLoading: otfDataActions.listShowLoading,
@@ -319,6 +320,17 @@ export const VehicleInvoiceMasterBase = (props) => {
 
             const onSuccessAction = (res) => {
                 setSelectedOtfNumber(otfNumber);
+                // if (res?.data?.invoiceDetails?.otfDetailsRequest?.orderStatus !== INVOICE_CONSTANTS?.ALLOTED?.key) {
+                //     setButtonData((prev) => ({ ...prev, formBtnActive: false }));
+
+                //     showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'OTF number not alloted' });
+                //     resetDetailData();
+                //     return;
+                // } else {
+                //     setButtonData((prev) => ({ ...prev, formBtnActive: true }));
+
+                //     setSelectedOtfNumber(otfNumber);
+                // }
             };
 
             fetchInvoiceMasterData({ customURL: InvoiceDetailsURL, setIsLoading: listInvoiceShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
@@ -473,6 +485,8 @@ export const VehicleInvoiceMasterBase = (props) => {
     };
 
     const onCloseAction = () => {
+        // resetDetailData();
+        // resetOtfData();
         form.resetFields();
         form.setFieldsValue();
         setSelectedOrderId();
