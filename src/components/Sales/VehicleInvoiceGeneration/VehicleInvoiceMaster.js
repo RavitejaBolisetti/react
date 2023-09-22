@@ -503,6 +503,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         setCancelInvoiceVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
     };
+
     const onCloseAction = () => {
         resetInvoiceData();
     };
@@ -700,6 +701,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         handleBookingNumberSearch,
         vehicleInvoiceMasterData,
         isVehicleInvoiceDataLoading,
+        onPrintInvoice,
     };
 
     const cancelInvoiceProps = {

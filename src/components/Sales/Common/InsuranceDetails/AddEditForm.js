@@ -56,7 +56,6 @@ const AddEditFormMain = (props) => {
     const { userId, isInsuranceCompanyDataLoaded, listInsuranceShowLoading, fetchInsuranceCompanyList, insuranceCompanies, formActionType } = props;
     const { formData, form } = props;
     const { Option } = Select;
-    console.log('formDataInsurance>>>', formData);
 
     useEffect(() => {
         const extraParams = [
