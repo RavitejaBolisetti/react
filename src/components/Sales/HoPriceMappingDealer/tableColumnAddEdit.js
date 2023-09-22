@@ -5,16 +5,12 @@
  */
 import { tblPrepareColumns } from 'utils/tableColumn';
 
-import { Checkbox, Form } from 'antd';
+import { Checkbox } from 'antd';
 import { getCodeValue } from 'utils/getCodeValue';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
-const CheckboxGroup = Checkbox.Group;
-
 export const tableColumnAddEdit = (props) => {
     const { typeData, formActionType, handleCheckBox } = props;
-
-    // const [checkedList, setCheckedList] = useState([]);
 
     const tableColumn = [
         tblPrepareColumns({
@@ -29,13 +25,7 @@ export const tableColumnAddEdit = (props) => {
             width: '30%',
             sorter: false,
             render: (text, record, index) => {
-                return !formActionType.viewMode ? (
-                    // <Form.Item name={index}>
-                    <Checkbox defaultChecked={text} onChange={(text) => handleCheckBox(text, index)}></Checkbox>
-                ) : (
-                    // </Form.Item>
-                    <p>{getCodeValue(typeData[PARAM_MASTER.YES_NO_FLG.id], text)}</p>
-                );
+                return !formActionType.viewMode ? <Checkbox defaultChecked={text} onChange={(text) => handleCheckBox(text, index)}></Checkbox> : <p>{getCodeValue(typeData[PARAM_MASTER.YES_NO_FLG.id], text)}</p>;
             },
         }),
     ];
