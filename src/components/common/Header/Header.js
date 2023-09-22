@@ -123,7 +123,7 @@ const HeaderMain = (props) => {
 
     useEffect(() => {
         if (!userId) return;
-        fetchNotificaionCountData({ setIsLoading: () => {}, userId });
+        fetchNotificaionCountData({ setIsLoading: () => { }, userId });
         setRefreshCount(false);
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -138,12 +138,12 @@ const HeaderMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [confirms, isChangePasswordModalOpen]);
 
-    useEffect(() => {
-        if (!isDataLoaded && userId) {
-            fetchData({ setIsLoading: listShowLoading, userId, onError });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDataLoaded, userId]);
+    // useEffect(() => {
+    //     if (!isDataLoaded && userId) {
+    //         fetchData({ setIsLoading: listShowLoading, userId, onError });
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [isDataLoaded, userId]);
 
     useEffect(() => {
         if (!isTypeDataLoaded && !isTypeDataLoading && userId) {

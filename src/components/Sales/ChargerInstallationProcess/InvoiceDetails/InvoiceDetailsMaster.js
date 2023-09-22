@@ -25,20 +25,20 @@ const InvoiceDetailsMasterBase = (props) => {
         showGlobalNotification({ message });
     };
 
-    useEffect(() => {
-        if (userId && selectedOrder?.invoiceNumber) {
-            const extraParams = [
-                {
-                    key: 'invoiceNumber',
-                    title: 'invoiceNumber',
-                    value: selectedOrder?.invoiceNumber,
-                    name: 'Invoice Number',
-                },
-            ];
-            fetchInvoiceDetail({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedOrder?.invoiceNumber]);
+    // useEffect(() => {
+    //     if (userId && selectedOrder?.invoiceNumber) {
+    //         const extraParams = [
+    //             {
+    //                 key: 'invoiceNumber',
+    //                 title: 'invoiceNumber',
+    //                 value: selectedOrder?.invoiceNumber,
+    //                 name: 'Invoice Number',
+    //             },
+    //         ];
+    //         fetchInvoiceDetail({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [userId, selectedOrder?.invoiceNumber]);
 
     const handleChange = (e) => {
         setButtonData({ ...buttonData, formBtnActive: false });
@@ -51,7 +51,7 @@ const InvoiceDetailsMasterBase = (props) => {
         setButtonData({ ...buttonData, formBtnActive: false });
     };
 
-    const onFinishFailed = () => {};
+    const onFinishFailed = () => { };
 
     const formProps = {
         ...props,
@@ -91,12 +91,10 @@ const InvoiceDetailsMasterBase = (props) => {
                     {formActionType?.viewMode ? (
                         <>
                             <ViewDetail {...viewProps} formData={vehicleInvoiceMasterData?.invoiceDetails?.otfDetailsRequest} />
-                            <CustomerDetailsMaster {...viewProps} formData={vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto} />
                         </>
                     ) : (
                         <>
                             <AddEditForm {...formProps} formData={vehicleInvoiceMasterData?.invoiceDetails?.otfDetailsRequest} />
-                            <CustomerDetailsMaster {...formProps} formData={vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto} />
                         </>
                     )}
                 </Col>

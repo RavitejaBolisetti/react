@@ -16,7 +16,7 @@ import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 
 import { ChargerInstallationMainConatiner } from './ChargerInstallationMainConatiner';
 import { ListDataTable } from 'utils/ListDataTable';
 import { AdvancedSearch } from './AdvancedSearch';
-import { VEHICLE_INVOICE_SECTION } from 'constants/VehicleInvoiceSection';
+import { CHARGER_INSTALLATION_SECTION } from 'constants/ChargerInstallationConstant';
 import { QUERY_BUTTONS_CONSTANTS } from './QueryButtons';
 import { BASE_URL_OTF_DETAILS as customURL, BASE_URL_INVOICE_DETAIL as InvoiceDetailsURL } from 'constants/routingApi';
 import { otfDataActions } from 'store/actions/data/otf/otf';
@@ -170,7 +170,7 @@ export const VehicleInvoiceMasterBase = (props) => {
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
-    console.log('requestPayload', requestPayload);
+    // console.log('requestPayload', requestPayload);
 
     const onSuccessAction = (res) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -279,19 +279,17 @@ export const VehicleInvoiceMasterBase = (props) => {
     }, [vehicleInvoiceMasterData]);
 
     useEffect(() => {
-        const defaultSection = VEHICLE_INVOICE_SECTION.INVOICE_DETAILS.id;
+        const defaultSection = CHARGER_INSTALLATION_SECTION.CHARGER_DETAILS.id;
         setDefaultSection(defaultSection);
-        setSetionName(VEHICLE_INVOICE_SECTION);
+        setSetionName(CHARGER_INSTALLATION_SECTION);
         setSection(defaultSection);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
     const filterActiveMenu = (items) => {
-
+        return items;
     };
 
     const filterActiveSection = sectionName && filterActiveMenu(Object.values(sectionName));
-    console.log('🚀 ~ file: VehicleInvoiceMaster.js:286 ~ VehicleInvoiceMasterBase ~ filterActiveSection:', filterActiveSection);
 
     useEffect(() => {
         if (currentSection && sectionName) {
@@ -340,21 +338,21 @@ export const VehicleInvoiceMasterBase = (props) => {
         fetchInvoiceMasterData({ customURL: InvoiceDetailsURL, setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
     };
 
-    useEffect(() => {
-        if (userId && selectedOrder?.invoiceNumber) {
-            const extraParams = [
-                {
-                    key: 'invoiceNumber',
-                    title: 'invoiceNumber',
-                    value: selectedOrder?.invoiceNumber,
-                    name: 'Invoice Number',
-                },
-            ];
-            fetchVehicleDetail({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
-            fetchVehicleInvoiceDetail({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedOrder?.invoiceNumber]);
+    // useEffect(() => {
+    //     if (userId && selectedOrder?.invoiceNumber) {
+    //         const extraParams = [
+    //             {
+    //                 key: 'invoiceNumber',
+    //                 title: 'invoiceNumber',
+    //                 value: selectedOrder?.invoiceNumber,
+    //                 name: 'Invoice Number',
+    //             },
+    //         ];
+    //         fetchVehicleDetail({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
+    //         fetchVehicleInvoiceDetail({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [userId, selectedOrder?.invoiceNumber]);
 
     const handleIRNGeneration = () => {
         const data = { otfNumber: selectedOtfNumber, invoiceNumber: selectedOrder?.invoiceNumber };
@@ -492,7 +490,7 @@ export const VehicleInvoiceMasterBase = (props) => {
             onError,
             onSuccess,
         };
-        saveData(requestData);
+        // saveData(requestData);
     };
 
     const onFinishFailed = (errorInfo) => {
