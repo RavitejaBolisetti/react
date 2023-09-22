@@ -255,11 +255,12 @@ export const isValidQunatity = (value, balancedQuantity) => {
 };
 
 export const campareDate = (value, compareTo, title) => {
-    const bool = dayjs(value).format('YYYY-MM-DD') >= dayjs(compareTo).format('YYYY-MM-DD');
-    if (bool) {
-        return Promise.resolve();
-    }
-    return Promise.reject(new Error('Date cant be less than from date'));
+    if (compareTo) {
+        const bool = dayjs(value).format('YYYY-MM-DD') >= dayjs(compareTo).format('YYYY-MM-DD');
+        if (bool) {
+            return Promise.resolve();
+        } else return Promise.reject(new Error('Date cant be less than from date'));
+    } else Promise.resolve();
 };
 
 export const compareFromToDate = (compareTo) => {

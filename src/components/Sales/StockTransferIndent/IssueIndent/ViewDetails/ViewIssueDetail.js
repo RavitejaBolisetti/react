@@ -45,8 +45,8 @@ export const ViewIssueDetail = ({ formData, isLoading = false, typeData, handleR
                 <Descriptions.Item label="Engine No.">{checkAndSetDefaultValue(viewData?.engineNumber, isLoading)}</Descriptions.Item>
             </Descriptions>
             <Descriptions {...viewProps}>
-                <Descriptions.Item label="OEM Incoice No.">{checkAndSetDefaultValue(viewData?.oemInvoiceNumber, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="OEM Incoice Date">{checkAndSetDefaultValue(viewData?.oemInvoiceDate, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="OEM Invoice No.">{checkAndSetDefaultValue(viewData?.oemInvoiceNumber, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="OEM Invoice Date">{checkAndSetDefaultValue(viewData?.oemInvoiceDate, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="GRN No.">{checkAndSetDefaultValue(viewData?.grnNumber, isLoading)}</Descriptions.Item>
             </Descriptions>
             <Descriptions {...viewProps}>

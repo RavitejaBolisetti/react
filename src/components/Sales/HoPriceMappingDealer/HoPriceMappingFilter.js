@@ -4,36 +4,41 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Button, Row, Col, Form } from 'antd';
+import { Button, Row, Col, Form, Input } from 'antd';
 import { FilterIcon } from 'Icons';
 import { RxCross2 } from 'react-icons/rx';
-import { SearchBox } from 'components/utils/SearchBox';
-import { PARAM_MASTER } from 'constants/paramMaster';
+import { PRICING_TYPE } from 'constants/PricingType';
 
 import styles from 'assets/sass/app.module.scss';
 
-export default function HoPriceMappingFilter(props) {
-    const { extraParams, removeFilter, handleResetFilter, advanceFilter = false, filterString, setFilterString, typeData, setAdvanceSearchVisible, searchForm } = props;
+const { Search } = Input;
 
-    const serachBoxProps = {
-        searchForm,
-        filterString,
-        optionType: typeData?.[PARAM_MASTER.OTF_SER.id],
-        setFilterString,
-    };
+export default function HoPriceMappingFilter(props) {
+    const { extraParams, removeFilter, handleResetFilter, advanceFilter, setAdvanceSearchVisible, searchForm, pricingType, handlePricingTypeChange, handleSearch, filterString } = props;
 
     return (
         <div className={styles.contentHeaderBackground}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={18} lg={18} xl={18}>
-                    <Form autoComplete="off" colon={false} className={styles.masterListSearchForm}>
-                        <Form.Item>
+                    <Form autoComplete="off" form={searchForm} colon={false} className={styles.masterListSearchForm}>
+                        <Form.Item name="normalSearch">
                             <Row gutter={20}>
-                                <Col xs={24} sm={24} md={14} lg={14} xl={14}>
-                                    <SearchBox {...serachBoxProps} />
+                                <Col xs={24} sm={24} md={20} lg={20} xl={20} className={styles.verticallyCentered}>
+                                    <div className={`${styles.userManagement} ${styles.headingToggle}`}>
+                                        {Object.values(PRICING_TYPE)?.map((item) => {
+                                            return (
+                                                <Button type={pricingType === item?.key ? 'primary' : 'link'} onClick={() => handlePricingTypeChange(item?.key)}>
+                                                    {item?.title}
+                                                </Button>
+                                            );
+                                        })}
+                                    </div>
+                                    <div className={styles.fullWidth}>
+                                        <Search placeholder="Search Dealer Parent" onSearch={handleSearch} allowClear className={styles.headerSearchField} />
+                                    </div>
                                 </Col>
                                 {advanceFilter && (
-                                    <Col xs={24} sm={24} md={6} lg={6} xl={6} className={styles.verticallyCentered}>
+                                    <Col xs={24} sm={24} md={4} lg={4} xl={4} className={styles.verticallyCentered}>
                                         <Button
                                             type="link"
                                             icon={<FilterIcon />}
@@ -51,7 +56,7 @@ export default function HoPriceMappingFilter(props) {
                     </Form>
                 </Col>
             </Row>
-            {advanceFilter && filterString?.advanceFilter && extraParams.find((i) => i.name) && (
+            {filterString?.advanceFilter && extraParams.find((i) => i.name) && (
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.advanceFilterTop}>
                         <Row gutter={20}>
@@ -65,7 +70,7 @@ export default function HoPriceMappingFilter(props) {
                                                 {filter?.name}
                                                 {filter?.canRemove && (
                                                     <span>
-                                                        <RxCross2 onClick={() => removeFilter(filter?.key)} data-testid="removeBtn" />
+                                                        <RxCross2 onClick={() => removeFilter(filter?.key)} />
                                                     </span>
                                                 )}
                                             </div>

@@ -8,7 +8,7 @@ import { convertDateMonthYear } from 'utils/formatDateTime';
 
 import styles from 'assets/sass/app.module.scss';
 
-export const tableColumn = (handleButtonClick, page, pageSize) => {
+export const tableColumn = ({ handleButtonClick, page, pageSize, actionButtonVisiblity }) => {
     const tableColumn = [
         tblPrepareColumns({
             title: 'Customer Name',
@@ -53,7 +53,7 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             },
         }),
 
-        tblActionColumn({ handleButtonClick, styles, width: '8%', canEdit: false }),
+        tblActionColumn({ handleButtonClick, styles, width: '8%', ...actionButtonVisiblity }),
     ];
 
     return tableColumn;

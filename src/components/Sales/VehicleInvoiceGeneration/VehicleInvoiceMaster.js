@@ -31,6 +31,7 @@ import { vehicleInvoiceGenerationDataActions } from 'store/actions/data/invoiceG
 import { vehicleInvoiceDetailDataActions } from 'store/actions/data/invoiceGeneration/vehicleInvoiceDetail';
 import { vehicleDetailsDataActions } from 'store/actions/data/invoiceGeneration/vehicleDetails';
 import { showGlobalNotification } from 'store/actions/notification';
+import { INVOICE_CONSTANTS } from './Constants';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 
@@ -44,7 +45,7 @@ const mapStateToProps = (state) => {
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             VehicleInvoiceGeneration: {
-                VehicleInvoiceSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString, detailData: vehicleInvoiceMasterData = [] },
+                VehicleInvoiceSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString, detailData: vehicleInvoiceMasterData = [], isDetailLoaded: isDetailInvoiceDataLoaded = false },
                 VehicleIrnGeneration: { isLoaded: isIrnDataLoaded = false, isLoading: isIrnDataLoading, data: irnData = [] },
                 VehicleInvoiceDetail: { isLoaded: isVehicleInvoiceDataLoaded = false, isLoading: isVehicleInvoiceDataLoading, data: vehicleInvoiceData = [] },
                 VehicleDetails: { isLoaded: isVehicleDataLoaded = false, isLoading: isVehicleDataLoading, data: vehicleDetail = [] },
@@ -81,6 +82,8 @@ const mapStateToProps = (state) => {
         vehicleInvoiceData,
         vehicleDetail,
         vehicleInvoiceMasterData,
+
+        isDetailInvoiceDataLoaded,
     };
     return returnValue;
 };
@@ -99,10 +102,11 @@ const mapDispatchToProps = (dispatch) => ({
             irnGeneration: vehicleIrnGenerationDataActions.saveData,
             listIrnShowLoading: vehicleIrnGenerationDataActions.listShowLoading,
 
-            fetchVehicleDetail: vehicleInvoiceDetailDataActions.fetchList,
-            fetchVehicleInvoiceDetail: vehicleDetailsDataActions.fetchList,
+            // fetchVehicleDetail: vehicleInvoiceDetailDataActions.fetchList,
+            // fetchVehicleInvoiceDetail: vehicleDetailsDataActions.fetchList,
 
             fetchList: vehicleInvoiceDataActions.fetchList,
+            resetDetailData: vehicleInvoiceDataActions.resetDetail,
             fetchInvoiceMasterData: vehicleInvoiceDataActions.fetchDetail,
             listInvoiceDetailShowLoading: vehicleInvoiceDataActions.listInvoiceDetailShowLoading,
             setFilterString: vehicleInvoiceDataActions.setFilter,
@@ -113,22 +117,23 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const VehicleInvoiceMasterBase = (props) => {
-    const { data, receiptDetailData, userId, irnGeneration, fetchList, fetchOTFDetail, fetchVehicleDetail, fetchVehicleInvoiceDetail, listShowLoading, showGlobalNotification, fetchInvoiceMasterData } = props;
+    const { data, receiptDetailData, userId, irnGeneration, fetchList, fetchOTFDetail, listShowLoading, showGlobalNotification, fetchInvoiceMasterData } = props;
     const { cancelInvoice } = props;
     const { typeData, receiptType, partySegmentType, listInvoiceShowLoading, saveData, paymentModeType, documentType, moduleTitle, totalRecords } = props;
-    const { filterString, setFilterString, invoiceStatusList, otfData, vehicleInvoiceMasterData } = props;
+    const { filterString, setFilterString, invoiceStatusList, otfData, vehicleInvoiceMasterData, isDetailInvoiceDataLoaded, resetDetailData } = props;
 
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [invoiceStatus, setInvoiceStatus] = useState(QUERY_BUTTONS_CONSTANTS.INVOICED.key);
     const [requestPayload, setRequestPayload] = useState({});
+    console.log('🚀 ~ file: VehicleInvoiceMaster.js:122 ~ VehicleInvoiceMasterBase ~ vehicleInvoiceMasterData:', vehicleInvoiceMasterData);
 
     const [listFilterForm] = Form.useForm();
     const [cancelInvoiceForm] = Form.useForm();
 
     const [searchValue, setSearchValue] = useState();
 
-    const [selectedOrder, setSelectedOrder] = useState();
-    const [selectedOrderId, setSelectedOrderId] = useState();
+    const [selectedOrder, setSelectedOrder] = useState('');
+    const [selectedOrderId, setSelectedOrderId] = useState('');
     const [selectedOtfNumber, setSelectedOtfNumber] = useState();
 
     const [section, setSection] = useState();
@@ -164,6 +169,8 @@ export const VehicleInvoiceMasterBase = (props) => {
         deliveryNote: false,
         nextBtn: false,
         cancelInvoiceBtn: false,
+        approveCancelBtn: false,
+        rejectCancelBtn: false,
         printInvoiceBtn: false,
     };
 
@@ -171,8 +178,6 @@ export const VehicleInvoiceMasterBase = (props) => {
 
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
-
-    console.log('requestPayload', requestPayload);
 
     const onSuccessAction = (res) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -293,7 +298,6 @@ export const VehicleInvoiceMasterBase = (props) => {
     };
 
     const filterActiveSection = sectionName && filterActiveMenu(Object.values(sectionName));
-    console.log('🚀 ~ file: VehicleInvoiceMaster.js:286 ~ VehicleInvoiceMasterBase ~ filterActiveSection:', filterActiveSection);
 
     useEffect(() => {
         if (currentSection && sectionName) {
@@ -303,14 +307,13 @@ export const VehicleInvoiceMasterBase = (props) => {
             const nextSection = filterActiveSection?.find((i) => i?.displayOnList && i.id > currentSection);
             setLastSection(!nextSection?.id);
         }
-        form.resetFields();
-        form.setFieldsValue(undefined);
+        // form.resetFields();
+        // form.setFieldsValue(undefined);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentSection, sectionName]);
-
     useEffect(() => {
-        if (userId && selectedOtfNumber && !formActionType?.addMode) {
-            const extraParams = [
+        if (selectedOtfNumber && !formActionType?.addMode) {
+            const extraParam = [
                 {
                     key: 'otfNumber',
                     title: 'otfNumber',
@@ -318,45 +321,42 @@ export const VehicleInvoiceMasterBase = (props) => {
                     name: 'Booking Number',
                 },
             ];
-            fetchOTFDetail({ customURL, setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
+            fetchOTFDetail({ customURL, setIsLoading: listShowLoading, userId, extraParams: extraParam, onErrorAction });
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedOtfNumber]);
+    }, [selectedOtfNumber, formActionType]);
 
-    const handleBookingNumberSearch = (otfNumber) => {
-        if (!otfNumber) return false;
-        setSelectedOtfNumber(otfNumber);
-        const extraParams = [
-            {
-                key: 'otfNumber',
-                title: 'otfNumber',
-                value: otfNumber,
-                name: 'Booking Number',
-            },
-            {
-                key: 'invoiceNumber',
-                value: selectedOrderId,
-                name: 'Invoice Number',
-            },
-        ];
-        fetchInvoiceMasterData({ customURL: InvoiceDetailsURL, setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
-    };
-
-    useEffect(() => {
-        if (userId && selectedOrder?.invoiceNumber) {
+    const handleBookingNumberSearch = (otfNumber = '', selectedOrderId = '') => {
+        if (otfNumber || selectedOrderId) {
             const extraParams = [
                 {
+                    key: 'otfNumber',
+                    title: 'otfNumber',
+                    value: otfNumber,
+                    name: 'Booking Number',
+                },
+                {
                     key: 'invoiceNumber',
-                    title: 'invoiceNumber',
-                    value: selectedOrder?.invoiceNumber,
+                    value: selectedOrderId || '',
                     name: 'Invoice Number',
                 },
             ];
-            fetchVehicleDetail({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
-            fetchVehicleInvoiceDetail({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
+
+            const onSuccessAction = (res) => {
+                if (res?.data?.invoiceDetails?.otfDetailsRequest?.orderStatus !== INVOICE_CONSTANTS?.ALLOTED?.key) {
+                    setButtonData({ ...buttonData, formBtnActive: false });
+
+                    showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'OTF number not alloted' });
+                    resetDetailData();
+                    return;
+                } else {
+                    setButtonData({ ...buttonData, formBtnActive: true });
+                    setSelectedOtfNumber(otfNumber);
+                }
+            };
+
+            fetchInvoiceMasterData({ customURL: InvoiceDetailsURL, setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedOrder?.invoiceNumber]);
+    };
 
     const handleIRNGeneration = () => {
         const data = { otfNumber: selectedOtfNumber, invoiceNumber: selectedOrder?.invoiceNumber };
@@ -419,19 +419,21 @@ export const VehicleInvoiceMasterBase = (props) => {
                 defaultSection && setCurrentSection(defaultSection);
                 invoiceDetailForm.resetFields();
                 setSelectedOrderId('');
+                setSelectedOtfNumber('');
                 break;
             case EDIT_ACTION:
                 setSelectedOrder(record);
                 record && setSelectedOrderId(record?.invoiceNumber);
                 record && setSelectedOtfNumber(record?.otfNumber);
                 openDefaultSection && setCurrentSection(defaultSection);
-
+                handleBookingNumberSearch(record?.otfNumber, record?.invoiceNumber);
                 break;
             case VIEW_ACTION:
                 setSelectedOrder(record);
                 record && setSelectedOrderId(record?.invoiceNumber);
                 record && setSelectedOtfNumber(record?.otfNumber);
                 defaultSection && setCurrentSection(defaultSection);
+                handleBookingNumberSearch(record?.otfNumber, record?.invoiceNumber);
                 break;
             case NEXT_ACTION:
                 const nextSection = filterActiveSection?.find((i) => i?.displayOnList && i.id > currentSection);
@@ -456,9 +458,8 @@ export const VehicleInvoiceMasterBase = (props) => {
                 setButtonData(Visibility);
                 // setButtonData({ ...Visibility, cancelReceiptBtn: true });
                 if (buttonAction === VIEW_ACTION) {
-                    //invoiceStatus === QUERY_BUTTONS_CONSTANTS.CANCELLED.key ? setButtonData({ ...Visibility, editBtn: false, cancelInvoiceBtn: false, printInvoiceBtn: true }) : invoiceStatus === QUERY_BUTTONS_CONSTANTS.CANCELLATION_REQUEST.key ? setButtonData({ ...Visibility, editBtn: false, cancelInvoiceBtn: false, printInvoiceBtn: true }) : setButtonData({ ...Visibility, editBtn: true, cancelInvoiceBtn: true, printInvoiceBtn: true });
-
-                    invoiceStatus === QUERY_BUTTONS_CONSTANTS.INVOICED.key && (!otfData?.irnStatus || (otfData?.irnStatus && timeStampCheck(otfData?.invoiceDate, otfData?.irnDate))) ? setButtonData({ ...Visibility, cancelInvoiceBtn: true, printInvoiceBtn: true, approveCancelBtn: false }) : setButtonData({ ...Visibility, cancelInvoiceBtn: false, approveCancelBtn: false, printInvoiceBtn: true });
+                    invoiceStatus === QUERY_BUTTONS_CONSTANTS.INVOICED.key ? setButtonData({ ...Visibility, cancelInvoiceBtn: true, approveCancelBtn: false, rejectCancelBtn: false }) : invoiceStatus === QUERY_BUTTONS_CONSTANTS.CANCELLATION_REQUEST.key ? setButtonData({ ...Visibility, cancelInvoiceBtn: false, approveCancelBtn: true, rejectCancelBtn: true }) : setButtonData({ ...Visibility, cancelInvoiceBtn: false, approveCancelBtn: false, rejectCancelBtn: false });
+                    // (!otfData?.irnStatus || otfData?.irnStatus && timeStampCheck(otfData?.irnDate, otfData?.invoiceDate))
                 }
             }
         }
@@ -474,13 +475,16 @@ export const VehicleInvoiceMasterBase = (props) => {
     };
 
     const generateInvoice = () => {
-        const data = { ...requestPayload };
+        const data = { invoiceDetails: requestPayload?.invoiceDetails, vehicleDetails: requestPayload?.vehicleDetails, financeDetails: requestPayload?.financeDetails, insuranceDetails: requestPayload?.insuranceDetails };
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage + 'Receipt No.:' + res?.data?.receiptsDetails?.receiptNumber });
+            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage + 'Invoice No.:' + res?.data?.invoiceNumber });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
+            resetDetailData();
             setButtonData({ ...buttonData, formBtnActive: false });
+            setSelectedOtfNumber('');
+            setSelectedOrderId('');
             setIsFormVisible(false);
         };
         const onError = (message) => {
@@ -500,12 +504,16 @@ export const VehicleInvoiceMasterBase = (props) => {
     const onFinishFailed = (errorInfo) => {
         return;
     };
-
+    const handleDisableSubmit = () => {
+        resetDetailData();
+        setButtonData({ ...buttonData, formBtnActive: false });
+    };
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
     };
 
     const onCloseAction = () => {
+        resetDetailData();
         form.resetFields();
         form.setFieldsValue();
         setSelectedOrderId();
@@ -701,7 +709,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         currentSection,
         sectionName,
         setCurrentSection,
-        handleFormValueChange,
+
         isLastSection,
         typeData,
         receiptType,
@@ -709,12 +717,13 @@ export const VehicleInvoiceMasterBase = (props) => {
         paymentModeType,
         documentType,
         onCancelInvoice,
-        onPrintInvoice,
-        saveButtonName: isLastSection ? 'Submit' : 'Save & Next',
+        saveButtonName: isLastSection ? 'Submit' : 'Continue',
         setLastSection,
         handleIRNGeneration,
         handleBookingNumberSearch,
         vehicleInvoiceMasterData,
+        handleDisableSubmit,
+        handleFormValueChange,
     };
 
     const cancelInvoiceProps = {

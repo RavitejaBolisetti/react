@@ -16,7 +16,7 @@ import { prepareCaption } from 'utils/prepareCaption';
 import styles from 'assets/sass/app.module.scss';
 
 const AddEditFormMain = (props) => {
-    const { formData, disabledProps, formActionType, typeData, salesConsultantLov } = props;
+    const { formData, disabledProps, formActionType, typeData, salesConsultantLov,handleDeliveryChange } = props;
 
     return (
         <Card>
@@ -71,7 +71,7 @@ const AddEditFormMain = (props) => {
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={formData?.deliveryAt} label="Delivery At" name="deliveryAt">
-                        {customSelectBox({ data: typeData['DELIVERYAT_IND'] })}
+                        {customSelectBox({ data: typeData['DELIVERYAT_IND'], onChange : handleDeliveryChange })}
                     </Form.Item>
                 </Col>
             </Row>

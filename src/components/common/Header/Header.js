@@ -140,7 +140,7 @@ const HeaderMain = (props) => {
 
     useEffect(() => {
         if (!isDataLoaded && userId) {
-            fetchData({ setIsLoading: listShowLoading, userId, onError });
+           fetchData({ setIsLoading: listShowLoading, userId, onError });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, userId]);
@@ -173,7 +173,7 @@ const HeaderMain = (props) => {
         const onSuccess = (res) => {
             fetchData({ setIsLoading: listShowLoading, userId });
             if (roleId) {
-                // fetchMenuList({ setIsLoading: listShowMenuLoading, userId });
+                fetchMenuList({ setIsLoading: listShowMenuLoading, userId });
                 navigate(routing.ROUTING_DASHBOARD);
             }
         };

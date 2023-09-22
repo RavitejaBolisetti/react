@@ -8,8 +8,8 @@ import { connect } from 'react-redux';
 import { Row, Col, Form } from 'antd';
 import { bindActionCreators } from 'redux';
 
-import { ViewDetail } from './ViewDetail';
-import { AddEditForm } from './AddEditForm';
+import { AddEditForm, ViewDetail } from 'components/Sales/Common/FinananceDetails';
+
 import { otfFinanceDetailDataActions } from 'store/actions/data/otf/financeDetail';
 import { financeLovDataActions } from 'store/actions/data/otf/financeLov';
 import { showGlobalNotification } from 'store/actions/notification';

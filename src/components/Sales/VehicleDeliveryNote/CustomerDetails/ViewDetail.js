@@ -19,15 +19,15 @@ const ViewDetailMain = (props) => {
     return (
         <Card >
             <Descriptions {...viewProps}>
-                <Descriptions.Item label="Customer Code">{checkAndSetDefaultValue(formData?.customerCode, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Customer ID">{checkAndSetDefaultValue(formData?.customerId, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Customer Type">{checkAndSetDefaultValue(formData?.customerType, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Customer Name">{checkAndSetDefaultValue(formData?.customerName, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Mobile">{checkAndSetDefaultValue(formData?.mobile, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Address">{checkAndSetDefaultValue(formData?.address, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="City">{checkAndSetDefaultValue(formData?.city, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Mobile No.">{checkAndSetDefaultValue(formData?.customerPhoneNumber, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Address">{checkAndSetDefaultValue(formData?.customerAddress, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="City">{checkAndSetDefaultValue(formData?.customerCity, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="District">{checkAndSetDefaultValue(formData?.district, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="State">{checkAndSetDefaultValue(formData?.state, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Pincode">{checkAndSetDefaultValue(formData?.pincode, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Pincode">{checkAndSetDefaultValue(formData?.pinCode, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="E-Mail">{checkAndSetDefaultValue(formData?.email, isLoading)}</Descriptions.Item>
             </Descriptions>
         </Card>
