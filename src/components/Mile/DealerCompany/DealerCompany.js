@@ -235,6 +235,7 @@ export const DealerCompanyBase = (props) => {
         }
     }, [formActionType]);
 
+const showAddButton= false;
     const formProps = {
         form,
         formData,
@@ -263,6 +264,7 @@ export const DealerCompanyBase = (props) => {
     const tableProps = {
         tableColumn: tableColumn(handleButtonClick),
         tableData: searchData,
+        showAddButton:false,
     };
 
     const title = 'Company Name';
@@ -270,6 +272,7 @@ export const DealerCompanyBase = (props) => {
     const advanceFilterResultProps = {
         advanceFilter: false,
         filterString,
+        showAddButton: true,
         from: listFilterForm,
         onFinish,
         onFinishFailed,
