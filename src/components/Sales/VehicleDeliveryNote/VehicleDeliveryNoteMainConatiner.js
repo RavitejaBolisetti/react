@@ -14,6 +14,7 @@ import { CustomerDetailsMaster } from './CustomerDetails';
 import { VehicleDetailsMaster } from './VehicleDetails';
 
 import { InsuranceDetailsMaster } from 'components/Sales/OTF/InsuranceDetails';
+import { InsuranceChallanDetailsMaster } from 'components/Sales/VehicleDeliveryNote/InsuranceChallanDetails/InsuranceChallanDetailsMaster';
 import { FinananceDetailsMaster } from 'components/Sales/OTF/FinananceDetails';
 
 import { AddOnDetailsMaster } from './AddOnDetails';
@@ -36,6 +37,14 @@ const VehicleDeliveryNoteConatinerMain = (props) => {
         selectedInvoiceId: selectedOrderId,
     };
 
+    const onInsuranceDetailsRender = () => {
+        if (soldByDealer) {
+            return <InsuranceDetailsMaster {...myProps} formKey={'insuranceDto'} />;
+        } else {
+            return <InsuranceChallanDetailsMaster {...myProps} formKey={'insuranceDto'} />;
+        }
+    };
+
     const renderElement = () => {
         switch (currentSection) {
             case VEHICLE_DELIVERY_NOTE_SECTION.INVOICE_DETAILS.id: {
@@ -53,7 +62,7 @@ const VehicleDeliveryNoteConatinerMain = (props) => {
             }
 
             case VEHICLE_DELIVERY_NOTE_SECTION.INSURANCE_DETAILS.id: {
-                return <InsuranceDetailsMaster {...myProps} formKey={'insuranceDto'} />;
+                return onInsuranceDetailsRender();
             }
             case VEHICLE_DELIVERY_NOTE_SECTION.ADD_ON_DETAILS.id: {
                 return <AddOnDetailsMaster {...myProps} />;
