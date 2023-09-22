@@ -58,7 +58,7 @@ const mapDispatchToProps = (dispatch) => ({
 export const CustomerDetailsMasterBase = (props) => {
     const { fetchList, customerDetailsData, setFormActionType, FinanceLovData, fetchFinanceLovList, listFinanceLovShowLoading, isLoading } = props;
 
-    const { listShowLoading, userId, typeData, form, selectedOrder, selectedCustomerId, soldByDealer, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION, section, customerIdValue, setCustomerIdValue } = props;
+    const { listShowLoading, userId, typeData, form, selectedOrder, selectedCustomerId, soldByDealer, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION, section, customerIdValue, setCustomerIdValue, resetData } = props;
 
     const [isFormVisible, setIsFormVisible] = useState(false);
 
@@ -74,6 +74,7 @@ export const CustomerDetailsMasterBase = (props) => {
     useEffect(() => {
         return () => {
             setFormData();
+            resetData();
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
