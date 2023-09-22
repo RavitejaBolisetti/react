@@ -7,11 +7,12 @@ import React from 'react';
 import { Timeline } from 'antd';
 
 import { VEHICLE_DELIVERY_NOTE_SECTION } from 'constants/vehicleDeliveryNoteSection';
+import { validateDeliveryNote } from '../utils/validateDeliveryNote';
 import { getSelectedMenuAttribute } from 'utils/getSelectedMenuAttribute';
 import styles from 'assets/sass/app.module.scss';
 
 const MenuNav = (props) => {
-    const { currentSection, setCurrentSection, previousSection, formActionType, selectedOrder } = props;
+    const { currentSection, setCurrentSection, previousSection, formActionType, selectedOrder, soldByDealer } = props;
     const deliveryNoteSectionList = Object.values(VEHICLE_DELIVERY_NOTE_SECTION);
 
     const className = (id) => {
@@ -24,19 +25,22 @@ const MenuNav = (props) => {
 
     const items = deliveryNoteSectionList
         ?.filter((i) => i?.displayOnList)
-        ?.map((item) => ({
-            dot: getSelectedMenuAttribute({ id: item?.id, currentSection, formActionType })?.menuNavIcon,
-            // children: <p onClick={() => onHandle(item?.id)}>{item?.title}</p>,
-            children: (
-                <div className={className(item?.id)} onClick={() => (!formActionType?.addMode || (formActionType?.addMode && item?.id <= previousSection) ? onHandle(item?.id) : '')}>
-                    {item.title}
-                </div>
-            ),
-            className: getSelectedMenuAttribute({ id: item?.id, currentSection, formActionType })?.activeClassName,
-        }));
-    const finalItem = items?.filter((i) => i);
+        ?.map(
+            (item) =>
+                validateDeliveryNote({ item, soldByDealer }) && {
+                    dot: getSelectedMenuAttribute({ id: item?.id, currentSection, formActionType })?.menuNavIcon,
+                    children: (
+                        <div className={className(item?.id)} onClick={() => (!formActionType?.addMode || (formActionType?.addMode && item?.id <= previousSection) ? onHandle(item?.id) : '')}>
+                            {item.title}
+                        </div>
+                    ),
+                    className: getSelectedMenuAttribute({ id: item?.id, currentSection, formActionType })?.activeClassName,
+                }
+        )
+        .filter((i) => i);
 
-    return finalItem && <Timeline items={finalItem} />;
+    return items && <Timeline items={items} />;
 };
 
 export default MenuNav;
+

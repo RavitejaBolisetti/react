@@ -14,6 +14,7 @@ import { VehicleRegistrationNumberSearch } from './vehicleRegistrationNumber';
 import { VehicleBatteryDetails } from './vehicleBatteryDetails';
 import { CancelDeliveryNote } from './cancelDeliveryNote';
 import { SchemeDescription } from './schemeDescription';
+import { VinNumberSearch } from './challanVinNumber';
 
 export const VehicleDeliveryNote = combineReducers({
     VehicleDeliveryNoteSearchList,
@@ -25,4 +26,5 @@ export const VehicleDeliveryNote = combineReducers({
     VehicleBatteryDetails,
     CancelDeliveryNote,
     SchemeDescription,
+    VinNumberSearch,
 });
