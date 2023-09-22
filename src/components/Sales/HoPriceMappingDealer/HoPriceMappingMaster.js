@@ -355,8 +355,8 @@ export const HoPriceMappingMasterBase = (props) => {
     };
 
     useEffect(() => {
-        if (formActionType?.editMode && hoPriceDetailData?.modelDealerMapResponse?.length && productHierarchyData?.length) {
-            setCheckedKeys([])
+        if (!formActionType?.addMode && hoPriceDetailData?.modelDealerMapResponse?.length && productHierarchyData?.length) {
+            setCheckedKeys([]);
             setEditProductData(productHierarchyData?.map((i) => disableExceptModelGroup(i)));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -386,7 +386,7 @@ export const HoPriceMappingMasterBase = (props) => {
                 arr.push({ ...hoPriceDetailData?.modelDealerMapResponse[i], status: false });
             }
         }
-        const data = { ...rest, id: formData?.id, modelDetails:arr };
+        const data = { ...rest, id: formData?.id, modelDetails: arr };
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);

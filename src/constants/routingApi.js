@@ -219,6 +219,7 @@ export const BASE_URL_FINANCIAL_ACC_ACCOUNT_CATEGORY = BASE_URL + 'finance/accou
 export const BASE_URL_FINANCIAL_ACC_APPLICATION_MENU = BASE_URL + 'home/menus';
 export const BASE_URL_FINANCIAL_ACC_CHART_OF_ACCOUNT_HIERARCHY = BASE_URL + 'finance/chartofaccounts/hierarchy';
 export const BASE_URL_FINANCIAL_ACC_CHART_OF_ACCOUNT = BASE_URL + 'finance/chartofaccounts';
+export const BASE_URL_FINANCIAL_ACC_CHART_OF_ACCOUNT_EXPORT_COA = BASE_URL + 'finance/chartofaccounts/hierarchy/exportcoa';
 
 export const BASE_URL_DOCUMENT_TYPE_LEDGER_SEARCH = BASE_URL + 'applications/documenttypes/search';
 export const BASE_URL_DOCUMENT_TYPE_LEDGER = BASE_URL + 'finance/ledgermappings';
@@ -309,7 +310,7 @@ export const BASE_URL_VEHICLE_CUSTOMER_DETAILS = BASE_URL_CUSTOMER_MASTER + '/de
 export const BASE_URL_VEHICLE_ADD_ON_DETAILS = BASE_URL_VEHICLE_DELIVERY_NOTE + 'addondetail';
 export const BASE_URL_VEHICLE_ADD_ON_SCHEME_DESCRIPTION = BASE_URL_OTF + 'scheme/lov'; // otf/scheme/lov?invoiceNumber=INV1693579301957
 export const BASE_URL_VEHICLE_ADD_ON_SCHEME_RSA_DESCRIPTION = BASE_URL_OTF + 'scheme/rsa/lov'; 
-export const BASE_URL_VEHICLE_ADD_ON_SCHEME_AMC_DESCRIPTION = BASE_URL_OTF + 'scheme/amc/lov';
+export const BASE_URL_VEHICLE_ADD_ON_SCHEME_AMC_DESCRIPTION = BASE_URL_OTF + 'scheme/amc/lov'; 
 export const BASE_URL_CHALLAN_VIN_SEARCH= BASE_URL_VIEW_VEHICLE_DETAILS + '/search' ;
 
 export const BASE_URL_RELATIONSHIP_MANAGER = BASE_URL_USER_MANAGEMENT_APPLICATIONS_DEALER + '/employees';
