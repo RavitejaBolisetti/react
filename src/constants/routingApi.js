@@ -248,7 +248,7 @@ export const BASE_URL_SUPPLIER_INVOICE_DETAIL = BASE_URL_INVOICE + 'receipts/sup
 export const BASE_URL_VEHICLE_DETAIL = BASE_URL_INVOICE + 'receipts';
 export const BASE_URL_REPORTS_GET_EMBEDED_INFO = BASE_URL + 'reports/getembedinfo';
 export const BASE_URL_VEHICLE_MODEL_AND_TAX_CHARGE_CATEGORY = BASE_URL_FINANCE + 'accounts/vehiclemapping';
-export const BASE_URL_VEHICLE_MODEL_AND_TAX_CHARGE_CATEGORY_PRODUCT_MODEL_GROUP = BASE_URL_PRODUCT_HIERARCHY + '/groups';
+export const BASE_URL_VEHICLE_MODEL_AND_TAX_CHARGE_CATEGORY_PRODUCT_MODEL_GROUP = BASE_URL_PRODUCT_HIERARCHY + '/modelgroups/lov';
 export const BASE_URL_VEHICLE_MODEL_AND_TAX_CHARGE_CATEGORY_ACCOUNT_CATEGORY = BASE_URL_FINANCE + 'accounts/categories';
 export const BASE_URL_VEHICLE_MODEL_AND_TAX_CHARGE_CATEGORY_TAX_CHARGES = BASE_URL_FINANCE + 'tax/chargecategory';
 
@@ -281,6 +281,8 @@ export const BASE_URL_VEHICLE_INVOICE_DETAIL = BASE_URL_OTF + 'vehicleinvoice/ve
 export const BASE_URL_VEHICLE_DETAILS_SERVICE = BASE_URL + 'otf/vehicledetails/optionalcharges';
 export const BASE_URL_MILE_SKILL = BASE_URL + 'dealer/mileskills';
 
+export const BASE_URL_HO_PRICE_MAPPING = BASE_URL_VEHICLE + 'hopriceuploadmapping/search';
+export const BASE_URL_HO_PRICE_MAPPING_DETAIL = BASE_URL_VEHICLE + 'hopriceuploadmapping';
 export const BASE_URL_GET_VEHICLE_ALLOTMENT_PRIORITY = BASE_URL + 'vehicle/allotments/prioritymaster/search';
 export const BASE_URL_VEHICLE_ALLOTMENT_PRIORITY = BASE_URL + 'vehicle/allotments/prioritymaster';
 

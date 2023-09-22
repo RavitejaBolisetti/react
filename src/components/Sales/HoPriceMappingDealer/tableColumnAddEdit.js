@@ -4,20 +4,18 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { tblPrepareColumns } from 'utils/tableColumn';
-import { Select } from 'antd';
-import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
+
+import { Checkbox, Form } from 'antd';
 import { getCodeValue } from 'utils/getCodeValue';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
-const { Option } = Select;
+const CheckboxGroup = Checkbox.Group;
 
 export const tableColumnAddEdit = (props) => {
-    const { typeData, formActionType } = props;
-    const selectProps = {
-        optionFilterProp: 'children',
-        showSearch: true,
-        allowClear: true,
-    };
+    const { typeData, formActionType, handleCheckBox } = props;
+
+    // const [checkedList, setCheckedList] = useState([]);
+
     const tableColumn = [
         tblPrepareColumns({
             title: 'Product Hierarchy',
@@ -26,22 +24,16 @@ export const tableColumnAddEdit = (props) => {
             sorter: false,
         }),
         tblPrepareColumns({
-            title: 'Dealer Flag',
+            title: 'Select',
             dataIndex: 'dealerFlag',
             width: '30%',
             sorter: false,
-            render: (text) => {
+            render: (text, record, index) => {
                 return !formActionType.viewMode ? (
-                    <p>
-                        <Select defaultValue={text} maxLength={50} placeholder={preparePlaceholderSelect('Select')} {...selectProps}>
-                            {typeData[PARAM_MASTER.YES_NO_FLG.id]?.map((item) => (
-                                <Option key={'dv' + item.key} value={item.key}>
-                                    {item.value}
-                                </Option>
-                            ))}
-                        </Select>
-                    </p>
+                    // <Form.Item name={index}>
+                    <Checkbox defaultChecked={text} onChange={(text) => handleCheckBox(text, index)}></Checkbox>
                 ) : (
+                    // </Form.Item>
                     <p>{getCodeValue(typeData[PARAM_MASTER.YES_NO_FLG.id], text)}</p>
                 );
             },
