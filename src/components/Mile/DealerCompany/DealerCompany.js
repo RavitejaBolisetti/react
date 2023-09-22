@@ -272,7 +272,6 @@ const showAddButton= false;
     const advanceFilterResultProps = {
         advanceFilter: false,
         filterString,
-        showAddButton: true,
         from: listFilterForm,
         onFinish,
         onFinishFailed,
@@ -283,6 +282,7 @@ const showAddButton= false;
         handleButtonClick,
         title,
         tableData: searchData,
+        handleCustomShowAdd: () => true,
     };
 
     return (

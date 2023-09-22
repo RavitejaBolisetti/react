@@ -18,10 +18,11 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 const { Search } = Input;
 export default function AppliedAdvanceFilter(props) {
-    const { tableData = [], showAddButton = true, advanceFilter = false, title, filterString, from, onFinish, onFinishFailed, extraParams, removeFilter, handleResetFilter, handleClearInSearch, onSearchHandle, setAdvanceSearchVisible, handleReferesh, handleButtonClick, validator = searchValidator, downloadReport = false, handleDownloadReport = false, showChangeHistoryButton = false, showChangeHistoryList } = props;
+    const { tableData = [], showAddButton = true, advanceFilter = false, title, filterString, from, onFinish, onFinishFailed, extraParams, removeFilter, handleResetFilter, handleClearInSearch, onSearchHandle, setAdvanceSearchVisible, handleReferesh, handleButtonClick, validator = searchValidator, downloadReport = false, handleDownloadReport = false, showChangeHistoryButton = false, showChangeHistoryList, handleCustomShowAdd = () => false } = props;
     const onKeyPressHandler = (e) => {
         e.key === 'Enter' && e.preventDefault();
     };
+
     return (
         <>
             <div className={styles.contentHeaderBackground}>
@@ -76,7 +77,7 @@ export default function AppliedAdvanceFilter(props) {
                             </Button>
                         )}
 
-                        {tableData?.length > 0 && (
+                        { (handleCustomShowAdd() || tableData?.length > 0)  && (
                             <>
                                 <Button icon={<TfiReload />} onClick={handleReferesh} data-testid="refreshBtn" danger />
                                 {showAddButton && (
