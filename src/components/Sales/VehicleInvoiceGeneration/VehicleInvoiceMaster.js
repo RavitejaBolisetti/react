@@ -121,7 +121,6 @@ export const VehicleInvoiceMasterBase = (props) => {
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [invoiceStatus, setInvoiceStatus] = useState(QUERY_BUTTONS_CONSTANTS.INVOICED.key);
     const [requestPayload, setRequestPayload] = useState({});
-    console.log('🚀 ~ file: VehicleInvoiceMaster.js:122 ~ VehicleInvoiceMasterBase ~ requestPayload:', requestPayload);
 
     const [listFilterForm] = Form.useForm();
     const [cancelInvoiceForm] = Form.useForm();
@@ -308,7 +307,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentSection, sectionName]);
     useEffect(() => {
-        if (selectedOtfNumber){
+        if (selectedOtfNumber && !formActionType?.addMode) {
             const extraParam = [
                 {
                     key: 'otfNumber',
@@ -319,7 +318,7 @@ export const VehicleInvoiceMasterBase = (props) => {
             ];
             fetchOTFDetail({ customURL, setIsLoading: listShowLoading, userId, extraParams: extraParam, onErrorAction });
         }
-    }, [selectedOtfNumber]);
+    }, [selectedOtfNumber, formActionType]);
 
     const handleBookingNumberSearch = (otfNumber = '', selectedOrderId = '') => {
         if (otfNumber || selectedOrderId) {
