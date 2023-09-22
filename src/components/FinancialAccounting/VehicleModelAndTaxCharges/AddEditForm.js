@@ -41,28 +41,26 @@ const AddEditFormMain = (props) => {
     const accountCategoryValidation = {};
 
     if (TaxChargesOptions && formData?.taxCategoryId) {
-        if (TaxChargesOptions.find((data) => data.id === formData?.taxCategoryId)) {
+        if (TaxChargesOptions.find((data) => data?.id === formData?.taxCategoryId)) {
             taxChargesValidation.initialValue = formData?.taxCategoryId;
         } else {
             taxChargesValidation.initialValue = formData?.taxCategoryDescription;
         }
     }
     if (AccountDataOptions && formData?.accountCategoryCode) {
-        if (AccountDataOptions.find((data) => data.key === formData?.accountCategoryCode)) {
+        if (AccountDataOptions.find((data) => data?.key === formData?.accountCategoryCode)) {
             accountCategoryValidation.initialValue = formData?.accountCategoryCode;
         } else {
             accountCategoryValidation.initialValue = formData?.accountCategoryDescription;
         }
     }
 
-    // useEffect(() => {
-    //     if (editMode) {
-    //         form.setFieldsValue({ ...formData });
-    //     } else if (addMode && selectedModelGroup) {
-    //         form.setFieldsValue({ modelId: selectedModelGroup });
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [editMode, addMode, selectedModelGroup]);
+    useEffect(() => {
+        if (addMode && selectedModelGroup) {
+            form.setFieldsValue({ modelGroupCode: selectedModelGroup });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [addMode, selectedModelGroup]);
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
@@ -94,8 +92,8 @@ const AddEditFormMain = (props) => {
                         <>
                             <Row gutter={20}>
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                    <Form.Item initialValue={formData?.modelId} name="modelId" label="Model Group (Product Hierarchy)" rules={[validateRequiredSelectField('Model Group')]}>
-                                        {customSelectBox({ data: ModelOptions, placeholder: preparePlaceholderSelect('Model Group'), fieldNames: { key: 'id', value: 'value' }, disabled: editMode })}
+                                    <Form.Item initialValue={formData?.modelGroupCode} name="modelGroupCode" label="Model Group (Product Hierarchy)" rules={[validateRequiredSelectField('Model Group')]}>
+                                        {customSelectBox({ data: ModelOptions, placeholder: preparePlaceholderSelect('Model Group'), fieldNames: { key: 'modelGroupCode', value: 'modelGroupDescription' }, disabled: editMode })}
                                     </Form.Item>
                                 </Col>
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>

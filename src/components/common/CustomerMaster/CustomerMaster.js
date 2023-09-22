@@ -116,7 +116,7 @@ const CustomerMasterMain = (props) => {
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [ChangeHistoryVisible, setChangeHistoryVisible] = useState(false);
     const [showNameChangeHistory, setShowNameChangeHistory] = useState(false);
-    const [isUnsavedDataPopup, setIsUnsavedDataPopup] = useState(false);
+    // const [isUnsavedDataPopup, setIsUnsavedDataPopup] = useState(false);
     const [nextCurentSection, setNextCurrentSection] = useState('');
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false, changeHistory: true };
@@ -214,7 +214,7 @@ const CustomerMasterMain = (props) => {
     const onSuccessAction = (res) => {
         setShowDataLoading(false);
         setRefreshCustomerList(false);
-        setFilterString();
+        // setFilterString();
     };
 
     const onErrorAction = (res) => {
@@ -239,8 +239,8 @@ const CustomerMasterMain = (props) => {
 
     useEffect(() => {
         if (customerType) {
-            setFilterString({ current: 1 });
             setPage({ pageSize: 10, current: 1 });
+            setFilterString({ current: 1 });
             const defaultSection = customerType === CUSTOMER_TYPE?.INDIVIDUAL.id ? CUSTOMER_INDIVIDUAL_SECTION.CUSTOMER_DETAILS.id : CUSTOMER_CORPORATE_SECTION.CUSTOMER_DETAILS.id;
             setSetionName(customerType === CUSTOMER_TYPE?.INDIVIDUAL.id ? CUSTOMER_INDIVIDUAL_SECTION : CUSTOMER_CORPORATE_SECTION);
             setDefaultSection(defaultSection);
@@ -302,7 +302,8 @@ const CustomerMasterMain = (props) => {
                 editMode: buttonAction === EDIT_ACTION,
                 viewMode: buttonAction === VIEW_ACTION,
             });
-            setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
+
+            setButtonData(btnVisiblity({ defaultBtnVisiblity: {...defaultBtnVisiblity, changeHistory: buttonAction !== ADD_ACTION}, buttonAction }));
         }
         setIsFormVisible(true);
     };
@@ -314,11 +315,11 @@ const CustomerMasterMain = (props) => {
         // form.validateFields().then((values) => {});
     };
 
-    const handleOk = () => {
-        setIsUnsavedDataPopup(false);
-        setCurrentSection(nextCurentSection);
-        setButtonData({ ...buttonData, formBtnActive: false });
-    };
+    // const handleOk = () => {
+    //     setIsUnsavedDataPopup(false);
+    //     setCurrentSection(nextCurentSection);
+    //     setButtonData({ ...buttonData, formBtnActive: false });
+    // };
 
     const tableProps = {
         dynamicPagination,
@@ -419,6 +420,7 @@ const CustomerMasterMain = (props) => {
         filterString,
         setFilterString,
         optionType: typeData,
+        defaultOption: 'customerName',
         handleChange,
         allowClear: false,
     };
@@ -490,21 +492,23 @@ const CustomerMasterMain = (props) => {
         handleChangeHistory,
         handleResetFilter,
         setShowNameChangeHistory,
-        setIsUnsavedDataPopup,
+        // setIsUnsavedDataPopup,
         nextCurentSection,
         setNextCurrentSection,
     };
 
     const showAddButton = true;
-    const unsavedDataModalProps = {
-        isVisible: isUnsavedDataPopup,
-        titleOverride: 'Confirm',
-        information: 'You have modified this work section. You can discard your changes, or cancel to continue editing.',
-        handleCloseModal: () => setIsUnsavedDataPopup(false),
-        handleOk,
-        nextCurentSection,
-        setNextCurrentSection,
-    };
+    // const unsavedDataModalProps = {
+    //     isVisible: isUnsavedDataPopup,
+    //     titleOverride: 'Confirm',
+    //     information: 'You have modified this work section. You can discard your changes, or cancel to continue editing.',
+    //     handleCloseModal: () => setIsUnsavedDataPopup(false),
+    //     onCloseAction: () => setIsUnsavedDataPopup(false),
+    //     handleOk,
+    //     closable: true,
+    //     nextCurentSection,
+    //     setNextCurrentSection,
+    // };
 
     return (
         <>
@@ -604,7 +608,7 @@ const CustomerMasterMain = (props) => {
                 </Col>
             </Row>
             <CustomerMainConatiner {...containerProps} />
-            <UnsavedDataPopup {...unsavedDataModalProps} />
+            {/* <UnsavedDataPopup {...unsavedDataModalProps} /> */}
             <CustomerChangeHistory {...changeHistoryProps} />
             <CustomerNameChangeHistory {...nameChangeHistoryProps} />
         </>

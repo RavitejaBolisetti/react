@@ -101,8 +101,8 @@ const AddEditForm = (props) => {
                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                         {customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id ? (
                             <>
-                                <Form.Item label="Relation" name="relationCode">
-                                    <Select {...disabledProps} placeholder={preparePlaceholderSelect('releation')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} options={[...typeData['FAMLY_RELTN']]} allowClear></Select>
+                                <Form.Item label="Relationship" name="relationCode">
+                                    <Select {...disabledProps} placeholder={preparePlaceholderSelect('relation')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} options={[...typeData['REL_TYPE']]} allowClear></Select>
                                     {/* <Select {...disabledProps} placeholder={preparePlaceholderSelect('releation')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} options={typeData['FAMLY_RELTN']} allowClear></Select> */}
                                 </Form.Item>
                                 <Form.Item initialValue={''} hidden name="designation">

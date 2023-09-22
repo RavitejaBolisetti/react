@@ -220,6 +220,13 @@ export const MenuConstant = {
         parentMenuId: 'SACT-03',
     },
 
+    [getMenyKey('SACT-03.01')]: {
+        key: 'SACT-03.01',
+        link: routing.ROUTING_HO_PRICE_MAPPING,
+        icon: undefined,
+        parentMenuId: 'SACT-03',
+    },
+
     [getMenyKey('SACT-04.01')]: {
         key: 'SACT-04.01',
         link: routing.ROUTING_VECHILE_PURCHASE_ORDER,
@@ -471,6 +478,41 @@ export const MenuConstant = {
         icon: undefined,
         parentMenuId: 'SACR-02.04',
         slug: 'stock-status-report',
+    },
+    [getMenyKey('SACR-04.23')]: {
+        key: 'SACR-04.23',
+        link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
+        icon: undefined,
+        parentMenuId: 'SACR-02.04',
+        slug: 'evr-detail-analysis-report',
+    },
+    [getMenyKey('SACR-04.15')]: {
+        key: 'SACR-04.15',
+        link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
+        icon: undefined,
+        parentMenuId: 'SACR-02.04',
+        slug: 'vehicle-stock-availability-report',
+    },
+    [getMenyKey('SACR-04.09')]: {
+        key: 'SACR-04.09',
+        link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
+        icon: undefined,
+        parentMenuId: 'SACR-02.04',
+        slug: 'stock-transfer-report',
+    },
+    [getMenyKey('SACR-04.01')]: {
+        key: 'SACR-04.01',
+        link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
+        icon: undefined,
+        parentMenuId: 'SACR-02.05',
+        slug: 'POSO',
+    },
+    [getMenyKey('FINA-02.10')]: {
+        key: 'FINA-02.10',
+        link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
+        icon: undefined,
+        parentMenuId: 'SACR-02.03',
+        slug: 'voucher-report',
     },
 
     [getMenyKey('VDNRPT')]: {

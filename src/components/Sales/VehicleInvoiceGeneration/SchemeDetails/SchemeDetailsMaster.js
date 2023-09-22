@@ -24,7 +24,7 @@ export const SchemeDetailsMaster = (props) => {
     const viewProps = {
         styles,
         onCloseAction,
-        formData,
+        schemeData: formData,
         isLoading,
         ...props,
     };

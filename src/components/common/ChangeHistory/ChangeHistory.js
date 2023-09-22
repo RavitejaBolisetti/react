@@ -120,3 +120,7 @@ const ChangeHistoryMain = ({ onCloseAction, fetchChangeHistoryList, changeHistor
 };
 
 export const ChangeHistory = connect(mapStateToProps, mapDispatchToProps)(withDrawer(ChangeHistoryMain, { title: 'Change History', width: '90%' }));
+
+
+
+

@@ -42,7 +42,7 @@ const mapStateToProps = (state) => {
         auth: { userId },
         common: {
             Header: {
-                data: { parentGroupCode },
+                data: { dealerLocations: dealerLocations = [], parentGroupCode },
             },
         },
         data: {
@@ -65,8 +65,10 @@ const mapStateToProps = (state) => {
             },
         },
     } = state;
+
     let returnValue = {
         userId,
+        dealerLocations,
         typeData,
         filterString,
         parentGroupCode,
@@ -126,7 +128,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const StockTransferIndentMasterBase = (props) => {
-    const { data, filterString, setFilterString, isFetchDataLoading, fetchReportDetail } = props;
+    const { data, filterString, setFilterString, isFetchDataLoading, fetchReportDetail, dealerLocations } = props;
     const { userId, typeData, parentGroupCode, showGlobalNotification } = props;
     const { indentLocationList, requestedByDealerList, productHierarchyData, isLoadingDealerLoc } = props;
     const { fetchIndentList, fetchIndentLocation, fetchIndentDetails, fetchRequestedByList, listShowLoading, saveData, ProductLovLoading, fetchProductLov, fetchVinDetails, vehicleVinData, saveIssueDetail, resetVinDetails, fetchIssueList, resetIssueList, listIssueLoading } = props;
@@ -151,6 +153,7 @@ export const StockTransferIndentMasterBase = (props) => {
     const [isReportVisible, setReportVisible] = useState();
     const [selectedRecord, setSelectedRecord] = useState();
     const [refershIndentData, setRefershIndentData] = useState();
+    const defaultDealerLocationCode = dealerLocations?.find((i) => i?.isDefault)?.locationCode;
 
     const dynamicPagination = true;
 
@@ -171,7 +174,6 @@ export const StockTransferIndentMasterBase = (props) => {
     const [buttonDataVehicleDetails, setButtonDataVehicleDetails] = useState({ ...btnVisiblityVehicleDetails });
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
-    const reportDetail = EMBEDDED_REPORTS?.STOCK_TRANSFER_ISSUE_NOTE_DOCUMENT;
     const onSuccessAction = (res) => {
         setshowVinLoading(false);
         setShowDataLoading(false);
@@ -235,8 +237,8 @@ export const StockTransferIndentMasterBase = (props) => {
             {
                 key: 'searchParam',
                 title: 'Type',
-                value: toggleButton, //filterString?.searchType,
-                name: typeData?.[PARAM_MASTER.INDNT_TYP.id]?.find((i) => i?.key === toggleButton)?.value,
+                value: toggleButton,
+                name: typeData?.[PARAM_MASTER?.INDNT_TYP.id]?.find((i) => i?.key === toggleButton)?.value,
                 canRemove: false,
                 filter: true,
             },
@@ -314,11 +316,10 @@ export const StockTransferIndentMasterBase = (props) => {
             showGlobalNotification({ msg });
             return;
         }
-
-        setIsAddNewIndentVisible(false);
         let data = { ...values, vehicleDetails: [...tableDataItem] };
 
         const onSuccess = (res) => {
+            setIsAddNewIndentVisible(false);
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchIndentList({ customURL: customURL + '/search', setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         };
@@ -423,8 +424,14 @@ export const StockTransferIndentMasterBase = (props) => {
             const { dealerLocation, ...rest } = filterString;
             setFilterString({ ...rest });
         } else if (key === 'fromDate' || key === 'toDate') {
-            setFilterString();
-            advanceFilterForm.resetFields();
+            if (key === 'fromDate') {
+                const { fromDate, ...rest } = filterString;
+                setFilterString({ ...rest });
+            }
+            if (key === 'toDate') {
+                const { toDate, ...rest } = filterString;
+                setFilterString({ ...rest });
+            }
         } else {
             const { [key]: names, ...rest } = filterString;
             setFilterString({ ...rest });
@@ -480,7 +487,6 @@ export const StockTransferIndentMasterBase = (props) => {
 
     const handlePrintDownload = (record) => {
         setReportVisible(true);
-
         setAdditionalReportParams([
             {
                 key: 'vehicle_identification_number',
@@ -545,7 +551,7 @@ export const StockTransferIndentMasterBase = (props) => {
         advanceFilterForm,
         setAdvanceSearchVisible,
         indentLocationList,
-        searchList: typeData[PARAM_MASTER.INDENT.id],
+        searchList: typeData[PARAM_MASTER?.INDENT.id],
     };
 
     const addNewIndentProps = {
@@ -567,6 +573,7 @@ export const StockTransferIndentMasterBase = (props) => {
         setTableDataItem,
         handleChangeLocation,
         productHierarchyData,
+        defaultDealerLocationCode,
     };
 
     const viewIndentProps = {
@@ -623,6 +630,7 @@ export const StockTransferIndentMasterBase = (props) => {
         setRefershIndentData,
     };
 
+    const reportDetail = EMBEDDED_REPORTS?.STOCK_TRANSFER_ISSUE_NOTE_DOCUMENT;
     const reportProps = {
         isVisible: isReportVisible,
         titleOverride: reportDetail?.title,
@@ -644,7 +652,7 @@ export const StockTransferIndentMasterBase = (props) => {
             <AddEditForm {...addNewIndentProps} />
             <ViewDetail {...viewIndentProps} />
             <IssueIndentMaster {...IndentIssueProps} />
-            <ReportModal {...reportProps} reportDetail={reportDetail} />
+            <ReportModal style={{ height: `100vh`, background: `black` }} {...reportProps} reportDetail={reportDetail} />
         </>
     );
 };

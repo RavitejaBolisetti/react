@@ -31,7 +31,8 @@ const AddEditFormMain = (props) => {
             form.setFieldsValue({ ...formData, printHypothecationDetails: formData?.printHypothecationDetails ? 1 : 0, doDate: formattedCalendarDate(formData?.doDate), financier: formData?.financierCode });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formData]);
+    }, [formData, financeArrangedBy]);
+    console.log('formdataComing', formData);
 
     const datePickerStyle = {
         width: '100%',

@@ -142,11 +142,17 @@ const ViewDetailMain = (props) => {
     };
 
     useEffect(() => {
-        searchForm.resetFields();
         setFilterStringOTFSearch({ ...filterString, advanceFilter: true });
         setSelectedOrderOTFDetails();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString]);
+
+    const handleChange = (e) => {
+        if (e?.target?.value === '' && e?.nativeEvent?.type === 'click') {
+            setFilterString({ pageSize: filterString?.pageSize, current: 1 });
+            searchForm.resetFields();
+        }
+    };
 
     const serachBoxProps = {
         searchForm,
@@ -158,6 +164,9 @@ const ViewDetailMain = (props) => {
         setResetAdvanceFilter,
         defaultOption: 'otfNumber',
         allowClear: false,
+        handleChange,
+        valueReset: false,
+        // singleField: true,
     };
 
     const buttonProps = {

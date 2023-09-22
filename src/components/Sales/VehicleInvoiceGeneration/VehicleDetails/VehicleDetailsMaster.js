@@ -222,7 +222,7 @@ const VehicleDetailsMasterMain = (props) => {
 
     const onFinish = (values) => {
         if (onFinishCustom) {
-            onFinishCustom({ key: formKey, values });
+            onFinishCustom({ key: formKey, values: { ...values, optionalServices: optionsServicesMapping, taxDetails: vehicleDetailData?.taxDetails, otfNumber: selectedOrderId || '' } });
             handleButtonClick({ buttonAction: NEXT_ACTION });
             setButtonData({ ...buttonData, formBtnActive: false });
         } else {

@@ -168,7 +168,7 @@ const AddEditFormMain = (props) => {
                     </Row>
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            {prepareCaption('Price')}
+                            {prepareCaption('Vehicle Price')}
                         </Col>
                     </Row>
                     <Row gutter={20}>

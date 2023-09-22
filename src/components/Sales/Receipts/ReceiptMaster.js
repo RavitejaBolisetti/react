@@ -19,6 +19,8 @@ import { CancelReceipt } from './CancelReceipt';
 import { QUERY_BUTTONS_CONSTANTS } from './QueryButtons';
 import { RECEIPT_SECTION } from 'constants/ReceiptSection';
 import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
+import { reportDataActions } from 'store/actions/data/report/reports';
+import { EMBEDDED_REPORTS } from 'constants/EmbeddedReports';
 
 import { showGlobalNotification } from 'store/actions/notification';
 import { receiptDataActions } from 'store/actions/data/receipt/receipt';
@@ -26,6 +28,7 @@ import { receiptDetailDataActions } from 'store/actions/data/receipt/receiptDeta
 import { cancelReceiptDataActions } from 'store/actions/data/receipt/cancelReceipt';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { partyDetailDataActions } from 'store/actions/data/receipt/partyDetails';
+import { ReportModal } from 'components/common/ReportModal/ReportModal';
 
 import { FilterIcon } from 'Icons';
 
@@ -37,6 +40,7 @@ const mapStateToProps = (state) => {
             Receipt: {
                 ReceiptSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString },
                 ReceiptDetails: { isLoaded: isDetailedDataLoaded = false, isLoading, data: receiptDetailData = [] },
+                //Reports: { data: reportData },
             },
         },
     } = state;
@@ -75,6 +79,9 @@ const mapDispatchToProps = (dispatch) => ({
             listShowLoading: receiptDataActions.listShowLoading,
 
             resetPartyDetailData: partyDetailDataActions.reset,
+
+            // fetchReportDetail: reportDataActions.fetchData,
+            // listReportShowLoading: reportDataActions.listShowLoading,
 
             showGlobalNotification,
         },
@@ -118,6 +125,8 @@ export const ReceiptMasterBase = (props) => {
     const [cancelReceiptVisible, setCancelReceiptVisible] = useState(false);
     const [partySegment, setPartySegment] = useState('');
     const [partyId, setPartyId] = useState();
+    const [additionalReportParams, setAdditionalReportParams] = useState();
+    const [isReportVisible, setReportVisible] = useState();
 
     const [page, setPage] = useState({ pageSize: 10, current: 1 });
     const dynamicPagination = true;
@@ -133,6 +142,7 @@ export const ReceiptMasterBase = (props) => {
         deliveryNote: false,
         nextBtn: false,
         cancelReceiptBtn: false,
+        printReceiptBtn: false,
     };
 
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -158,8 +168,6 @@ export const ReceiptMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString]);
-
-   
 
     const extraParams = useMemo(() => {
         return [
@@ -187,10 +195,10 @@ export const ReceiptMasterBase = (props) => {
             {
                 key: 'searchParam',
                 title: 'searchParam',
-                value: searchValue,
-                name: searchValue,
-                canRemove: false,
-                filter: false,
+                value: filterString?.searchParam,
+                name: filterString?.searchParam,
+                canRemove: true,
+                filter: true,
             },
             {
                 key: 'fromDate',
@@ -312,7 +320,7 @@ export const ReceiptMasterBase = (props) => {
     };
 
     const handleSearch = (value) => {
-        setFilterString({ ...filterString, searchParam: value });
+        setFilterString({ ...filterString, searchParam: value, advanceFilter: true });
         setSearchValue(value);
     };
 
@@ -360,7 +368,7 @@ export const ReceiptMasterBase = (props) => {
                 setButtonData(Visibility);
                 // setButtonData({ ...Visibility, cancelReceiptBtn: true });
                 if (buttonAction === VIEW_ACTION) {
-                    receiptStatus === QUERY_BUTTONS_CONSTANTS.CANCELLED.key ? setButtonData({ ...Visibility, editBtn: false, cancelReceiptBtn: false }) : receiptStatus === QUERY_BUTTONS_CONSTANTS.APPORTION.key ? setButtonData({ ...Visibility, editBtn: false, cancelReceiptBtn: true }) : setButtonData({ ...Visibility, editBtn: true, cancelReceiptBtn: true });
+                    receiptStatus === QUERY_BUTTONS_CONSTANTS.CANCELLED.key ? setButtonData({ ...Visibility, editBtn: false, cancelReceiptBtn: false, printReceiptBtn: true }) : receiptStatus === QUERY_BUTTONS_CONSTANTS.APPORTION.key ? setButtonData({ ...Visibility, editBtn: false, cancelReceiptBtn: true, printReceiptBtn: true }) : setButtonData({ ...Visibility, editBtn: true, cancelReceiptBtn: true, printReceiptBtn: true });
                 }
             }
         }
@@ -373,6 +381,16 @@ export const ReceiptMasterBase = (props) => {
         setShowDataLoading(false);
         setFilterString();
         advanceFilterForm.resetFields();
+    };
+
+    const handlePrintDownload = (record) => {
+        setReportVisible(true);
+        setAdditionalReportParams([
+            {
+                key: 'fn_vc_receipts_hdr_id',
+                value: record?.id,
+            },
+        ]);
     };
 
     const onFinish = (receiptData) => {
@@ -621,6 +639,7 @@ export const ReceiptMasterBase = (props) => {
         paymentModeType,
         documentType,
         onCancelReceipt,
+        handlePrintDownload,
         saveButtonName: isLastSection ? 'Submit' : 'Save & Next',
         setLastSection,
         partySegment,
@@ -637,6 +656,15 @@ export const ReceiptMasterBase = (props) => {
         cancelReceiptForm,
         onCloseAction: onCancelCloseAction,
     };
+    const reportDetail = EMBEDDED_REPORTS?.RECIEPT_DOCUMENT;
+    const reportProps = {
+        isVisible: isReportVisible,
+        titleOverride: reportDetail?.title,
+        additionalParams: additionalReportParams,
+        onCloseAction: () => {
+            setReportVisible(false);
+        },
+    };
 
     return (
         <>
@@ -649,6 +677,7 @@ export const ReceiptMasterBase = (props) => {
             <AdvancedSearch {...advanceFilterProps} />
             <ReceiptMainConatiner {...containerProps} />
             <CancelReceipt {...cancelReceiptProps} />
+            <ReportModal {...reportProps} reportDetail={reportDetail} />
         </>
     );
 };

@@ -131,7 +131,7 @@ const ExchangeVehiclesBase = (props) => {
     const { schemeLovData, isSchemeLovLoading, fetchSchemeLovList, listSchemeLovShowLoading } = props;
     const { form, selectedOrderId, formActionType, handleFormValueChange } = props;
     const { fetchCustomerList, listCustomerShowLoading, handleButtonClick, NEXT_ACTION } = props;
-    const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, isProductHierarchyDataLoaded } = props;
+    const { buttonData, setButtonData, FormActionButton, isProductHierarchyDataLoaded } = props;
 
     const [formData, setFormData] = useState();
     const [filteredModelData, setfilteredModelData] = useState([]);

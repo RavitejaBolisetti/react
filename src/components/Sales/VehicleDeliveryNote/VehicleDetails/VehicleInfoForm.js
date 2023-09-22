@@ -3,26 +3,20 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect } from 'react';
-import { Row, Col, Divider, Form, DatePicker, Input } from 'antd';
+import React from 'react';
 
+import { Row, Col, Form, Input } from 'antd';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
-const { Search } = Input;
 const VehicleInfoForm = (props) => {
-    const { receiptData, formData } = props;
+    const { formData, vehicleInfoForm } = props;
 
     return (
         <>
+            {/* <Form form={vehicleInfoForm} onFieldsChange={handleFormValueChange} autoComplete="off" layout="vertical"> */}
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                    <Form.Item initialValue={formData?.searchVehicleNumber} label="Search Vehicle Registration No." name="searchVehicleNumber">
-                        <Search placeholder={preparePlaceholderText('Search Vehicle Registration No.')} allowClear />
-                    </Form.Item>
-                </Col>
-                <Divider />
-                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                    <Form.Item initialValue={formData?.vinNo} label="VIN No." name="vinNo">
+                    <Form.Item initialValue={formData?.vinNumber} label="VIN No." name="vinNumber">
                         <Input placeholder={preparePlaceholderText('VIN No.')} disabled={true} />
                     </Form.Item>
                 </Col>
@@ -40,21 +34,17 @@ const VehicleInfoForm = (props) => {
 
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={receiptData?.modelCode} label="Model Code" name="modelCode">
+                    <Form.Item initialValue={formData?.modelCode} label="Model Code" name="modelCode">
                         <Input placeholder={preparePlaceholderText('Model Code')} disabled={true} />
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={receiptData?.modalDescription} label="Modal Description" name="modalDescription">
+                    <Form.Item initialValue={formData?.modelDescription} label="Modal Description" name="modelDescription">
                         <Input placeholder={preparePlaceholderText('Modal Description')} disabled={true} />
                     </Form.Item>
                 </Col>
-                {/* <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={receiptData?.modalColor} label="Modal Color" name="modalColor">
-                        <Input placeholder={preparePlaceholderText('Modal Color')} disabled={true} />
-                    </Form.Item>
-                </Col> */}
             </Row>
+            {/* </Form> */}
         </>
     );
 };

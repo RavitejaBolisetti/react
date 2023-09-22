@@ -31,7 +31,6 @@ const mapStateToProps = (state) => {
     let returnValue = {
         userId,
         isLoaded,
-        financeData,
         isLoading,
         moduleTitle,
 
@@ -86,7 +85,6 @@ export const FinananceDetailsMasterBase = (props) => {
         ...props,
         typeData,
         form,
-        formData,
         formActionType,
         setFormActionType,
         onFinish,

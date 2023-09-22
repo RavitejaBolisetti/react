@@ -90,14 +90,13 @@ export const EmbeddedReportMasterBase = (props) => {
     }, [userId, reportDetail]);
 
     useEffect(() => {
+       
         let sExtraParamsString = '?rp:';
         additionalParams?.forEach((item, index) => {
             sExtraParamsString += item?.value && item?.key ? item?.value && item?.key + '=' + item?.value + '&' : '';
         });
         sExtraParamsString = sExtraParamsString.substring(0, sExtraParamsString.length - 1);
-
         const embedUrl = data?.embedReports?.[0]?.embedUrl ? data?.embedReports?.[0]?.embedUrl.concat(sExtraParamsString) : '';
-        console.log('embedUrl', embedUrl);
 
         setReportConfig({
             type: 'report',

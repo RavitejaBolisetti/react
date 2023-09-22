@@ -63,16 +63,17 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ReferralsMasterBase = (props) => {
-    const { formActionType, showGlobalNotification, listShowLoading, userId, formData: referralData, isLoading } = props;
+    const { formActionType, showGlobalNotification, listShowLoading, userId, referralData, isLoading } = props;
     const { form, selectedOrderId, section, handleFormValueChange, onFinishFailed, fetchCustomerList, typeData, handleButtonClick, NEXT_ACTION } = props;
     const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, StatusBar } = props;
 
     const [searchForm] = Form.useForm();
-    const [formData, setFormData] = useState();
+    const [formData, setFormData] = useState(referralData);
     const [viewFormData, setViewFormData] = useState();
     const { filterString, setFilterString } = props;
 
     const [customerList, setCustomerList] = useState();
+    console.log('referralDatareferralData',referralData)
 
     useEffect(() => {
         setFilterString();
