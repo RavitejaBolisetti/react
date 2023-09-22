@@ -1,7 +1,7 @@
 import React from 'react';
 import { screen, fireEvent } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { LoyaltySchemeMaster } from '@components/Sales/Common/LoyaltyScheme/LoyaltySchemeMaster';
+import { LoyaltySchemeMaster } from '@components/Sales/OTF/LoyaltyScheme/LoyaltySchemeMaster';
 import customRender from '@utils/test-utils';
 import { Form } from 'antd';
 import { configureStore } from '@reduxjs/toolkit';
