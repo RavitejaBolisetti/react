@@ -24,7 +24,7 @@ const AddEditFormMain = (props) => {
             form.setFieldsValue({
                 deliveryNoteFor: 'Vehicle Sold By Dealer',
             });
-        }else{
+        } else {
             form.setFieldsValue({
                 deliveryNoteFor: 'Direct Built by MnM',
             });
