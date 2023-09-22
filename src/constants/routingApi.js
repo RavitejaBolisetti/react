@@ -281,6 +281,8 @@ export const BASE_URL_VEHICLE_INVOICE_DETAIL = BASE_URL_OTF + 'vehicleinvoice/ve
 export const BASE_URL_VEHICLE_DETAILS_SERVICE = BASE_URL + 'otf/vehicledetails/optionalcharges';
 export const BASE_URL_MILE_SKILL = BASE_URL + 'dealer/mileskills';
 
+export const BASE_URL_HO_PRICE_MAPPING = BASE_URL_VEHICLE + 'hopriceuploadmapping/search';
+export const BASE_URL_HO_PRICE_MAPPING_DETAIL = BASE_URL_VEHICLE + 'hopriceuploadmapping';
 export const BASE_URL_GET_VEHICLE_ALLOTMENT_PRIORITY = BASE_URL + 'vehicle/allotments/prioritymaster/search';
 export const BASE_URL_VEHICLE_ALLOTMENT_PRIORITY = BASE_URL + 'vehicle/allotments/prioritymaster';
 
