@@ -27,12 +27,13 @@ const { Panel } = Collapse;
 const AddEditFormMain = (props) => {
     const { formData, toggleButton, productHierarchyData } = props;
     const { addIndentDetailsForm, onFinish, indentLocationList, isLoadingDealerLoc, requestedByDealerList, openAccordian, setOpenAccordian } = props;
-    const { buttonData, setButtonData, onCloseAction, tableDataItem, setTableDataItem } = props;
+    const { buttonData, setButtonData, onCloseAction, tableDataItem, setTableDataItem, defaultDealerLocationCode } = props;
     const { handleButtonClick, handleChangeLocation } = props;
 
     const [addVehicleDetailsForm] = Form.useForm();
     const [isAddVehicleDetailsVisible, setIsAddVehicleDetailsVisible] = useState(false);
     const [selectedVehicle, setSelectedVehicle] = useState();
+    const [addVehicleTitle, setToaddVehicleTitle] = useState('Add Vehicle Details');
 
     const handleButtonClickVehicleDetails = ({ record = null, buttonAction, openDefaultSection = true, index }) => {
         switch (buttonAction) {
@@ -42,6 +43,7 @@ const AddEditFormMain = (props) => {
                 break;
             case EDIT_ACTION:
                 addVehicleDetailsForm?.setFieldsValue({ ...record, index: index });
+                setToaddVehicleTitle('Edit Vehicle Details');
                 setIsAddVehicleDetailsVisible(true);
                 break;
             case DELETE_ACTION:
@@ -109,7 +111,7 @@ const AddEditFormMain = (props) => {
 
     const addVehicleDetailsProps = {
         isVisible: isAddVehicleDetailsVisible,
-        titleOverride: 'Add Vehicle Details',
+        titleOverride: addVehicleTitle,
         addVehicleDetailsForm,
         setIsAddVehicleDetailsVisible,
         onCloseAction: onCloseActionAddVehicleDetails,
@@ -127,7 +129,15 @@ const AddEditFormMain = (props) => {
                             <Row gutter={24}>
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                                     <Form.Item label="Indent To Location" name="indentToLocation" rules={[validateRequiredSelectField('Indent To Location')]}>
-                                        {customSelectBox({ data: indentLocationList, loading: isLoadingDealerLoc, fieldNames: { key: 'locationCode', value: 'dealerLocationName' }, placeholder: preparePlaceholderSelect(''), onChange: handleChangeLocation })}
+                                        {customSelectBox({
+                                            data: indentLocationList?.filter((i) => {
+                                                return i?.locationCode !== defaultDealerLocationCode;
+                                            }),
+                                            loading: isLoadingDealerLoc,
+                                            fieldNames: { key: 'locationCode', value: 'dealerLocationName' },
+                                            placeholder: preparePlaceholderSelect(''),
+                                            onChange: handleChangeLocation,
+                                        })}
                                     </Form.Item>
                                 </Col>
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>

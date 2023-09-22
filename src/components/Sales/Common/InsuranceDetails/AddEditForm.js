@@ -57,6 +57,8 @@ const AddEditFormMain = (props) => {
     const { formData, form } = props;
     const { Option } = Select;
     console.log('formDataInsurance>>>', formData);
+
+    
     useEffect(() => {
         const extraParams = [
             {

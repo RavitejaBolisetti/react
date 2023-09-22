@@ -4,10 +4,10 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { dataActions } from 'store/actions/crud/dataAction';
-import { BASE_URL_VEHICLE_DETAILS_DELIVERY_NOTE as baseURL } from 'constants/routingApi';
+import { BASE_URL_HO_PRICE_MAPPING_DETAIL as baseURL } from 'constants/routingApi';
 
-const PREFIX = 'VEHICLE_DELIVERY_NOTE_BATTERY_DETAILS_';
-const moduleName = 'Vehicle Delivery Battery Details';
+const PREFIX = 'HO_PRICE_MAPPING_DETAIL';
+const moduleName = 'Ho Price Mapping Detail';
 
 export const RECEIVE_DATA_LOADING_ACTION_CONSTANT = PREFIX + 'LOADING_DATA';
 export const RECEIVE_DATA_ACTION_CONSTANT = PREFIX + 'LIST_RECIEVE_DATA';
@@ -16,7 +16,7 @@ export const RECIEVE_DATA_DETAIL_ACTION_CONSTANT = PREFIX + 'RECIEVE_DETAIL_DATA
 export const SAVE_DATA_ACTION_CONSTANT = PREFIX + 'SAVE_DATA';
 export const RESET_DATA_ACTION_CONSTANT = PREFIX + 'RESET_DATA';
 
-export const vehicleBatteryDetailsDataActions = dataActions({
+export const hoPriceMappingDetailDataActions = dataActions({
     baseURL,
     moduleName,
     RECEIVE_DATA_LOADING_ACTION_CONSTANT,

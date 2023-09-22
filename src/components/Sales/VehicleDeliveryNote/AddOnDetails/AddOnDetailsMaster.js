@@ -64,7 +64,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const AddOnDetailsMasterMain = (props) => {
-    const { fetchList, fetchScheme, schemeDescriptionData, isSchemeDataLoaded, listSchemeShowLoading, selectedInvoiceId, typeData, requestPayload, setRequestPayload, showGlobalNotification, AddonPartsData, isAddonPartsDataLoaded, fetchSearchPartList, resetData, AddonDetailsData, isDataLoaded, userId, listShowLoading, saveData, onFinishFailed } = props;
+    const { fetchList, fetchScheme, schemeDescriptionData, listSchemeShowLoading, selectedInvoiceId, typeData, requestPayload, setRequestPayload, showGlobalNotification, AddonPartsData, isAddonPartsDataLoaded, fetchSearchPartList, resetData, AddonDetailsData, isDataLoaded, userId, listShowLoading, saveData, onFinishFailed } = props;
     const { form, section, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick, setButtonData, buttonData } = props;
 
     const [formData, setFormData] = useState();
@@ -112,7 +112,7 @@ export const AddOnDetailsMasterMain = (props) => {
                 {
                     key: 'invoiceNumber',
                     title: 'invoiceNumber',
-                    value: 'INV1693579301957',
+                    value: selectedInvoiceId,
                     name: 'Invoice Number',
                 },
             ];

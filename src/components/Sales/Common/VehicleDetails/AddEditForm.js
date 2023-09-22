@@ -32,7 +32,7 @@ const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
     const { productHierarchyData, toolTipContent, isProductDataLoading, handleFormValueChange, optionsServicesMapping, setoptionsServicesMapping, optionsServiceModified, setoptionsServiceModified, formData, openAccordian, isReadOnly, setIsReadOnly, setOpenAccordian, selectedOrderId, form, onErrorAction, showGlobalNotification, fetchList, userId, listShowLoading, saveData, onSuccessAction, typeData, formActionType, vehicleServiceData } = props;
-    const { productModelCode, setProductModelCode, viewOnly=false, handlePriceChange } = props;
+    const { productModelCode, setProductModelCode, viewOnly = false, handlePriceChange, handleDiscountChange = () => {} } = props;
 
     const [optionForm] = Form.useForm();
     const findUsageType = (usage) => {
@@ -94,6 +94,7 @@ const AddEditFormMain = (props) => {
     const handleSelectTreeClick = (value) => {
         setProductModelCode(value);
         handleFormValueChange(true);
+        handleDiscountChange();
     };
 
     const fieldNames = { title: 'prodctShrtName', key: 'prodctCode', children: 'subProdct' };
@@ -209,7 +210,7 @@ const AddEditFormMain = (props) => {
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item label="Dealer Discount with TAX" name="discountAmount" rules={[validateNumberWithTwoDecimalPlaces('Dealer Discount with TAX')]}>
-                                    <Input placeholder={preparePlaceholderText('Dealer Discount with TAX')} />
+                                    <Input placeholder={preparePlaceholderText('Dealer Discount with TAX')} onChange={handleDiscountChange} />
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
