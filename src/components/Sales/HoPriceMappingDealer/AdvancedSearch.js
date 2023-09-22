@@ -15,7 +15,7 @@ import styles from 'assets/sass/app.module.scss';
 const { Option } = Select;
 
 export const AdvancedSearchFrom = (props) => {
-    const { setAdvanceSearchVisible, filteredStateData, filteredCityData, productHierarchyList, handleFilterChange, setSearchTypeClick } = props;
+    const { setAdvanceSearchVisible, filteredStateData, filteredCityData, productHierarchyList, handleFilterChange} = props;
     const {
         filterString,
         setFilterString,
@@ -31,9 +31,9 @@ export const AdvancedSearchFrom = (props) => {
             stateCode: values?.stateCode,
             stateCodeName: filteredStateData?.find((i) => i?.key === values?.stateCode)?.value,
             cityCode: values?.cityCode,
-            cityCodeName: filteredCityData?.find((i) => i?.key === values?.cityCode)?.value, 
+            cityCodeName: filteredCityData?.find((i) => i?.key === values?.cityCode)?.value,
             modelCode: values?.modelCode,
-            modelCodeName:productHierarchyList?.find((i) => i?.prodctCode === values?.modelCode)?.prodctShrtName,
+            modelCodeName: productHierarchyList?.find((i) => i?.prodctCode === values?.modelCode)?.prodctShrtName,
             advanceFilter: true,
         });
         setAdvanceSearchVisible(false);
