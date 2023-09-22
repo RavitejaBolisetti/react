@@ -8,14 +8,11 @@ import { Form, Row, Col } from 'antd';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { ViewDetail } from '../../Common/InsuranceDetails';
-import { AddEditForm } from '../../Common/InsuranceDetails';
+import { AddEditForm, ViewDetail } from 'components/Sales/Common/InsuranceDetails';
 import { showGlobalNotification } from 'store/actions/notification';
 import { insuranceDetailDataActions } from 'store/actions/data/otf/insuranceDetail';
 
 import styles from 'assets/sass/app.module.scss';
-import { partyMasterDataActions } from 'store/actions/data/partyMaster';
-
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -49,8 +46,6 @@ const mapDispatchToProps = (dispatch) => ({
             resetData: insuranceDetailDataActions.reset,
             saveData: insuranceDetailDataActions.saveData,
 
-            fetchInsuranceCompanyList: partyMasterDataActions.fetchDetail,
-            listInsuranceShowLoading: partyMasterDataActions.listShowLoading,
             showGlobalNotification,
         },
         dispatch
@@ -61,7 +56,6 @@ const InsuranceDetailsMasterBase = (props) => {
     const { insuranceData, onCloseAction, fetchList, formActionType, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
     const { form, selectedOrderId, handleFormValueChange, section, isLoading, NEXT_ACTION, handleButtonClick, onFinishFailed, saveData } = props;
     const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, StatusBar, pageType } = props;
-    const { isInsuranceCompanyDataLoaded, listInsuranceShowLoading, fetchInsuranceCompanyList, insuranceCompanies } = props;
 
     const [formData, setFormData] = useState();
 
@@ -71,21 +65,6 @@ const InsuranceDetailsMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [insuranceData]);
-
-    useEffect(() => {
-        const extraParams = [
-            {
-                key: 'partyType',
-                title: 'partyType',
-                value: 'IN',
-                name: 'Party Type',
-            },
-        ];
-        if (userId && !isInsuranceCompanyDataLoaded) {
-            fetchInsuranceCompanyList({ setIsLoading: listInsuranceShowLoading, userId, extraParams });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, !isInsuranceCompanyDataLoaded]);
 
     const extraParams = [
         {
@@ -125,7 +104,6 @@ const InsuranceDetailsMasterBase = (props) => {
         formData,
         isLoading,
         pageType,
-        insuranceCompanies,
     };
 
     const formProps = {
@@ -137,7 +115,6 @@ const InsuranceDetailsMasterBase = (props) => {
         isLoading,
         formData,
         pageType,
-        insuranceCompanies,
     };
 
     const myProps = {

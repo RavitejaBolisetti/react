@@ -32,7 +32,7 @@ const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
     const { productHierarchyData, toolTipContent, isProductDataLoading, handleFormValueChange, optionsServicesMapping, setoptionsServicesMapping, optionsServiceModified, setoptionsServiceModified, formData, openAccordian, isReadOnly, setIsReadOnly, setOpenAccordian, selectedOrderId, form, onErrorAction, showGlobalNotification, fetchList, userId, listShowLoading, saveData, onSuccessAction, typeData, formActionType, vehicleServiceData } = props;
-    const { productModelCode, setProductModelCode, viewOnly } = props;
+    const { productModelCode, setProductModelCode, viewOnly=false, handlePriceChange } = props;
 
     const [optionForm] = Form.useForm();
     const findUsageType = (usage) => {
@@ -42,7 +42,7 @@ const AddEditFormMain = (props) => {
 
     const disabledProp = { disabled: true };
     useEffect(() => {
-        if (formActionType?.editMode && formData) {
+        if ((formActionType?.editMode && formData) || viewOnly) {
             form.setFieldsValue({
                 ...formData,
                 poDate: dayjs(formData?.poDate?.substr(0, 10)).format('DD/MM/YYYY'),
@@ -187,7 +187,7 @@ const AddEditFormMain = (props) => {
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item initialValue={formData?.priceType} label="Price Type" name="priceType">
-                                    {customSelectBox({ data: typeData['PRC_TYP'], disabled: viewOnly })}
+                                    {customSelectBox({ data: typeData['PRC_TYP'], disabled: viewOnly, onChange: handlePriceChange })}
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>

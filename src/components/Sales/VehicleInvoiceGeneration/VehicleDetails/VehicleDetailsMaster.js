@@ -37,7 +37,6 @@ const mapStateToProps = (state) => {
     let returnValue = {
         userId,
         isDataLoaded,
-        vehicleDetailData,
         isLoading,
         moduleTitle,
         productAttributeData,
@@ -102,6 +101,8 @@ const VehicleDetailsMasterMain = (props) => {
     const [isReadOnly, setIsReadOnly] = useState();
     const [productHierarchyData, setProductHierarchyData] = useState([]);
 
+    console.log('vehicleDetailDataLocal', vehicleDetailData);
+
     const onSuccessAction = (res) => {
         //showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
@@ -120,7 +121,7 @@ const VehicleDetailsMasterMain = (props) => {
     ];
 
     const loadDependependentData = () => {
-        fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
+        // fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
         fetchServiceLov({ setIsLoading: serviceLoading, userId, onErrorAction });
     };
 
@@ -234,7 +235,7 @@ const VehicleDetailsMasterMain = (props) => {
 
     const onFinish = (values) => {
         if (onFinishCustom) {
-            onFinishCustom({ key: formKey, values });
+            onFinishCustom({ key: formKey, values: { ...values, optionalServices: optionsServicesMapping, taxDetails: vehicleDetailData?.taxDetails, otfNumber: selectedOrderId || '' } });
             handleButtonClick({ buttonAction: NEXT_ACTION });
             setButtonData({ ...buttonData, formBtnActive: false });
         } else {

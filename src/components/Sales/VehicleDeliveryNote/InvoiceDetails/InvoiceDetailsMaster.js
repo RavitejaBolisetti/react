@@ -11,6 +11,7 @@ import { bindActionCreators } from 'redux';
 import { invoiceDetailDataActions } from 'store/actions/data/vehicleDeliveryNote/invoiceDetails';
 import { relationshipManagerDataActions } from 'store/actions/data/vehicleDeliveryNote/relationshipManager';
 import { showGlobalNotification } from 'store/actions/notification';
+import { formattedCalendarDate, convertDate } from 'utils/formatDateTime';
 
 import { VehicleDeliveryNoteFormButton } from '../VehicleDeliveryNoteFormButton';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
@@ -66,10 +67,10 @@ const mapDispatchToProps = (dispatch) => ({
 export const InvoiceDetailsMasterBase = (props) => {
     const { fetchList, userId, listShowLoading, relationshipManagerData, invoiceData, isRelationshipManagerLoaded, setFormActionType, fetchRelationshipManger, listRelationshipMangerShowLoading, isLoading } = props;
 
-    const { typeData, form, selectedOrderId, selectedOrder, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION, section } = props;
+    const { resetData, typeData, form, selectedOrderId, selectedInvoiceId, requestPayload, setRequestPayload, soldByDealer, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION, section } = props;
+    // console.log('INVOICE', requestPayload);
 
     const [isFormVisible, setIsFormVisible] = useState(false);
-   
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
@@ -78,45 +79,71 @@ export const InvoiceDetailsMasterBase = (props) => {
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
     const [formData, setFormData] = useState();
+    const [invoiceNoValue, setInvoiceNoValue] = useState();
 
-    // useEffect(() => {
-    //     if (invoiceData) {
-    //         form.setFieldsValue({ ...invoiceData, doDate: convertDateToCalender(invoiceData?.doDate) });
-    //         setFormData({ ...invoiceData, doDate: convertDateToCalender(invoiceData?.doDate) });
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [invoiceData]);
+    useEffect(() => {
+        if (invoiceData && selectedInvoiceId) {
+            form.setFieldsValue({ ...invoiceData, invoiceDate: formattedCalendarDate(invoiceData?.invoiceDate), customerPromiseDate: formattedCalendarDate(invoiceData?.customerPromiseDate) });
+            setFormData({ ...invoiceData });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [invoiceData]);
 
-    // useEffect(() => {
-    //     return () => {
-    //         setFormData();
-    //         resetData();
-    //     };
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, []);
+    useEffect(() => {
+        return () => {
+            setFormData();
+            resetData();
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const extraParams = [
         {
             key: 'invoiceNumber',
             title: 'invoiceNumber',
-            value: selectedOrder?.invoiceId,
+            value: selectedInvoiceId,
             name: 'Invoice Number',
         },
     ];
 
     useEffect(() => {
-        if (userId && selectedOrder?.invoiceId) {
+        if (userId && selectedInvoiceId) {
             fetchList({ setIsLoading: listShowLoading, extraParams, onErrorAction, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedOrder?.invoiceId]);
+    }, [userId, selectedInvoiceId]);
 
     useEffect(() => {
-        if (userId && !isRelationshipManagerLoaded) {
+        if (userId ) {
             fetchRelationshipManger({ setIsLoading: listRelationshipMangerShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isRelationshipManagerLoaded]);
+    }, [userId]);
+
+    const handleOnChange = (e) => {
+        form.setFieldsValue({
+            engineNumber: '',
+        });
+        setInvoiceNoValue(e.target.value);
+    };
+
+    const handleInvoiceNoSearch = () => {
+        const onSuccessAction = (res) => {
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        };
+        const onErrorAction = (message) => {
+            showGlobalNotification({ message });
+        };
+        const searchParams = [
+            {
+                key: 'invoiceNumber',
+                title: 'invoiceNumber',
+                value: invoiceNoValue,
+                name: 'Invoice Number',
+            },
+        ];
+        fetchList({ setIsLoading: listShowLoading, userId, extraParams: searchParams, onSuccessAction, onErrorAction });
+    };
 
     const onSuccessAction = (res) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -127,25 +154,11 @@ export const InvoiceDetailsMasterBase = (props) => {
     };
 
     const onFinish = (values) => {
-        const data = { ...values, id: invoiceData?.id, otfNumber: selectedOrderId, doDate: values?.doDate };
-
-        // const onSuccess = (res) => {
-        //     form.resetFields();
-        //     showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-        //     fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, onErrorAction, userId });
-        //     handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
-        // };
-
-        // const requestData = {
-        //     data: data,
-        //     method: invoiceData?.id ? 'put' : 'post',
-        //     setIsLoading: listShowLoading,
-        //     userId,
-        //     onError: onErrorAction,
-        //     onSuccess,
-        // };
-
-        // saveData(requestData);
+        const invoiceDetailsRequest = { ...values };
+        setRequestPayload({ ...requestPayload, deliveryNoteInvoiveDetails: { ...invoiceDetailsRequest, invoiceDate: convertDate(invoiceData?.invoiceDate), customerPromiseDate: convertDate(invoiceData?.customerPromiseDate) } });
+        delete invoiceDetailsRequest?.deliveryNoteFor;
+        handleButtonClick({ buttonAction: NEXT_ACTION });
+        setButtonData({ ...buttonData, formBtnActive: false });
     };
 
     const onFinishFailed = () => {};
@@ -179,8 +192,11 @@ export const InvoiceDetailsMasterBase = (props) => {
         buttonData,
         setButtonData,
         handleButtonClick,
-        selectedOrder,
+        soldByDealer,
         selectedOrderId,
+        handleInvoiceNoSearch,
+        handleOnChange,
+        invoiceNoValue,
     };
 
     const viewProps = {
@@ -188,7 +204,8 @@ export const InvoiceDetailsMasterBase = (props) => {
         styles,
         isLoading,
         typeData,
-        selectedOrder,
+        soldByDealer,
+        handleInvoiceNoSearch,
     };
 
     return (

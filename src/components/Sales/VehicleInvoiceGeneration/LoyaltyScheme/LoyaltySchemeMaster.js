@@ -8,8 +8,7 @@ import { Form, Row, Col } from 'antd';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { ViewDetail } from './ViewDetail';
-import { AddEditForm } from './AddEditForm';
+import { AddEditForm, ViewDetail } from 'components/Sales/Common/LoyaltyScheme';
 
 import { showGlobalNotification } from 'store/actions/notification';
 import { otfLoyaltySchemeDataActions } from 'store/actions/data/otf/loyaltyAndScheme';
@@ -26,7 +25,7 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             OTF: {
-                LoyaltyScheme: { isLoaded: isLoyaltySchemeDataLoaded = false, isLoading, data: LoyaltySchemeData = [] },
+                LoyaltyScheme: { isLoaded: isLoyaltySchemeDataLoaded = false, isLoading },
                 SchemeDetail: { isLoaded: isSchemeLovDataLoaded = false, isLoading: isSchemeLovLoading, data: schemeLovData = [] },
                 // LoyaltyMake: { isLoaded: isMakeDataLoaded = false, isLoading: isMakeLoading, filteredListData: makeData = [] },
                 LoyaltyModelGroup: { isFilteredListLoaded: isModelDataLoaded = false, isLoading: isModelLoading, filteredListData: modelData = [] },
@@ -51,7 +50,6 @@ const mapStateToProps = (state) => {
         isLoyaltySchemeDataLoaded,
         moduleTitle,
         isLoading,
-        LoyaltySchemeData,
 
         schemeLovData,
         isSchemeLovLoading,
@@ -111,7 +109,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const LoyaltySchemeMasterMain = (props) => {
-    const { isLoyaltySchemeDataLoaded, isLoading, section, listShowLoading, fetchList, LoyaltySchemeData, userId, showGlobalNotification } = props;
+    const { isLoyaltySchemeDataLoaded, isLoading, section, listShowLoading, fetchList, formData: LoyaltySchemeData, userId, showGlobalNotification } = props;
     const { form, selectedOrder, selectedOrderId, formActionType, handleFormValueChange, onFinishFailed, handleButtonClick, NEXT_ACTION } = props;
     const { typeData } = props;
     const { fetchModelLovList, listModelShowLoading, fetchVariantLovList, listVariantShowLoading } = props;
@@ -169,40 +167,13 @@ const LoyaltySchemeMasterMain = (props) => {
         }
         const data = { ...values, id: LoyaltySchemeData?.id || '', otfNumber: selectedOrderId };
 
-        if (onFinishCustom) {
-            onFinishCustom({ key: formKey, values: data });
-            handleButtonClick({ buttonAction: NEXT_ACTION });
-            setButtonData({ ...buttonData, formBtnActive: false });
-        } else {
-            const onSuccess = (res) => {
-                form.resetFields();
-                fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, onErrorAction, userId });
-                handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
-            };
-
-            const requestData = {
-                data: data,
-                method: formData?.id ? 'put' : 'post',
-                setIsLoading: listShowLoading,
-                userId,
-                onError: onErrorAction,
-                onSuccess,
-            };
-
-            saveData(requestData);
-        }
+        onFinishCustom({ key: formKey, values: data });
+        handleButtonClick({ buttonAction: NEXT_ACTION });
+        setButtonData({ ...buttonData, formBtnActive: false });
     };
 
     useEffect(() => {
         if (userId && selectedOrderId) {
-            const extraParams = [
-                {
-                    key: 'otfNumber',
-                    title: 'otfNumber',
-                    value: selectedOrderId,
-                    name: 'Booking Number',
-                },
-            ];
             const schemeExtraParams = [
                 {
                     key: 'modelCode',
@@ -211,7 +182,6 @@ const LoyaltySchemeMasterMain = (props) => {
                     name: 'Booking Number',
                 },
             ];
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
             fetchSchemeLovList({ setIsLoading: listSchemeLovShowLoading, extraParams: schemeExtraParams, userId });
             // fetchMakeLovList({ setIsLoading: listMakeShowLoading, userId });
         }
@@ -344,11 +314,8 @@ const LoyaltySchemeMasterMain = (props) => {
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                             <h2>{section?.title}</h2>
-                        </Col>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            {StatusBar && <StatusBar status={props?.selectedOrder?.orderStatus} />}
                         </Col>
                     </Row>
                     {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
