@@ -151,7 +151,7 @@ export const AddOnDetailsMasterMain = (props) => {
                 return;
                 break;
         }
-        formName.resetFields();
+      
     };
 
     const onFinish = () => {

@@ -3,33 +3,39 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import { Col, Input, Form, Row, Card, DatePicker, Space } from 'antd';
 
 import { disableFutureDate, disableFieldsOnFutureDate } from 'utils/disableDate';
 import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
 import { validateRequiredSelectField } from 'utils/validation';
-import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
+import { preparePlaceholderSelect, preparePlaceholderText, preparePlaceholderAutoComplete } from 'utils/preparePlaceholder';
 
 import styles from 'assets/sass/app.module.scss';
 import { customSelectBox } from 'utils/customSelectBox';
 
-const { TextArea, Search } = Input;
+const { TextArea, AutoComplete } = Input;
 const AddEditFormMain = (props) => {
     const { formData, relationshipManagerData, typeData, form, soldByDealer, handleInvoiceNoSearch, handleOnChange } = props;
+
+    const [chassisNoList, setChassisNoList] = useState([]);
+
+    const handleSelect = (value) => {};
+
+    const onSearchLocation = () => {};
 
     useEffect(() => {
         if (soldByDealer) {
             form.setFieldsValue({
                 deliveryNoteFor: 'Vehicle Sold By Dealer',
             });
-        }else{
+        } else {
             form.setFieldsValue({
                 deliveryNoteFor: 'Direct Built by MnM',
             });
         }
-    
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [soldByDealer]);
 
@@ -54,6 +60,9 @@ const AddEditFormMain = (props) => {
                                                 </>
                                             ) : (
                                                 <Search onSearch={handleInvoiceNoSearch} onChange={handleOnChange} placeholder={preparePlaceholderText('Invoice No.')} allowClear />
+                                                // <AutoComplete label="Chasiss No" options={chassisNoList} backfill={false} onSelect={handleSelect} onSearch={onSearchLocation} allowSearch notFoundContent={searchValue ? 'No Chassis no found' : ''}>
+                                                //     <Input.Search onChange={handleInvoiceNoSearch} size="large" allowClear placeholder={preparePlaceholderAutoComplete('')} />
+                                                // </AutoComplete>
                                             )}
                                         </Form.Item>
                                     </Col>
