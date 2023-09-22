@@ -27,4 +27,18 @@ describe('AddEditForm component', () => {
     it('viewMode=false',()=>{
         customRender(<AddEditForm isVisible={true} formActionType={{}} viewMode={false} />);
     })
+
+    it("TaxChargesOptions", ()=>{
+        const TaxChargesOptions = [{id:'123', key:'T001', parentKey:null, value:'SGST'}];
+        const formData = {taxCategoryId:'123', taxCategoryDescription:'test'}
+
+        customRender(<AddEditForm isVisible={true} formActionType={{}} viewMode={false} TaxChargesOptions={TaxChargesOptions} formData={formData}/>)
+    })
+
+    it("TaxChargesOptions", ()=>{
+        const AccountDataOptions = [{key:'T001', parentKey:null, value:'SGST'}];
+        const formData = {accountCategoryCode: "A002", accountCategoryDescription:'test'};
+
+        customRender(<AddEditForm isVisible={true} formActionType={{}} viewMode={false} AccountDataOptions={AccountDataOptions} formData={formData}/>)
+    })
 })
