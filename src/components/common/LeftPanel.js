@@ -94,19 +94,19 @@ const LeftPanel = (props) => {
                 if (item[fieldNames?.children]) {
                     return {
                         title,
-                        disabled,
+                        disabled: item?.disabled ? item?.disabled : false,
                         key: item[fieldNames?.key],
                         children: loop(item[fieldNames?.children]),
                     };
                 }
                 return {
                     title,
-                    disabled,
+                    disabled: item?.disabled ? item?.disabled : false,
                     key: item[fieldNames?.key],
                 };
             });
         return loop(treeData);
-    }, [searchValue, fieldNames, treeData, disabled]);
+    }, [searchValue, fieldNames, treeData]);
 
     const mainClass = callOnForm ? styles.scrollTreeDataInner : styles.scrollTreeData;
 

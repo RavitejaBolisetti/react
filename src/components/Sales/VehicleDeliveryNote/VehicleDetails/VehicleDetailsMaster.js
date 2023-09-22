@@ -55,9 +55,8 @@ const mapDispatchToProps = (dispatch) => ({
 
 const VehicleDetailsMasterBase = (props) => {
     const { typeData, partySegmentType } = props;
-    const { userId, resetData, selectedOrderId, selectedInvoiceId, setFormActionType, showGlobalNotification, listShowLoading, isDataLoaded, isLoading } = props;
+    const { userId, selectedOrderId, selectedInvoiceId, setFormActionType, showGlobalNotification, listShowLoading, isDataLoaded, isLoading } = props;
     const { form, formActionType, handleButtonClick, handleFormValueChange, section, openAccordian, setOpenAccordian, fetchList, vehicleData, NEXT_ACTION } = props;
-    const [partySegment, setPartySegment] = useState('');
     const [regNumber, setRegNumber] = useState();
     const [activeKey, setActiveKey] = useState([]);
     const [otfNumber, setOtfNumber] = useState();
@@ -104,12 +103,6 @@ const VehicleDetailsMasterBase = (props) => {
     };
 
     const onFinish = (values) => {
-        // const vehicleDetailsRequest = { ...values };
-        // if (vehicleDetailsRequest?.hasOwnProperty('vehicle')) {
-        //     setRequestPayload({ ...requestPayload, vehicleDetails: vehicleDetailsRequest });
-        // } else {
-        //     setRequestPayload({ ...requestPayload, vehicleDetails: vehicleData });
-        // }
         handleButtonClick({ buttonAction: NEXT_ACTION });
         setButtonData({ ...buttonData, formBtnActive: false });
     };

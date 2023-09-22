@@ -57,6 +57,8 @@ const AddEditFormMain = (props) => {
     const { formData, form } = props;
     const { Option } = Select;
     console.log('formDataInsurance>>>', formData);
+
+    
     useEffect(() => {
         const extraParams = [
             {
@@ -86,7 +88,7 @@ const AddEditFormMain = (props) => {
                     <Card style={{ backgroundColor: '#f2f2f2' }}>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item label="Insurance Company" name="insuranceCompany">
+                                <Form.Item label="Insurance Company 2" name="insuranceCompany" initialValue={formData?.insuranceCompany}>
                                     <Select placeholder={preparePlaceholderSelect('Insurance Company')}>
                                         {insuranceCompanies?.map((item) => (
                                             <Option value={item?.key} key={item?.key}>
@@ -97,25 +99,25 @@ const AddEditFormMain = (props) => {
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item label="Insurance Cover Note" name="insuranceCoverNote">
+                                <Form.Item label="Insurance Cover Note" name="insuranceCoverNote" initialValue={formData?.insuranceCoverNote}>
                                     <Input placeholder={preparePlaceholderText('Insurance Cover Note')} maxLength={55} />
                                 </Form.Item>
                             </Col>
 
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item label="Insurance Amount" name="insuranceAmount" rules={[validateNumberWithTwoDecimalPlaces('insurance amount')]}>
+                                <Form.Item label="Insurance Amount" name="insuranceAmount" initialValue={formData?.insuranceAmount} rules={[validateNumberWithTwoDecimalPlaces('insurance amount')]}>
                                     <Input placeholder={preparePlaceholderText('Insurance Amount')} maxLength={20} />
                                 </Form.Item>
                             </Col>
 
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item label="Insurance Cover Note Date" name="insuranceDate">
+                                <Form.Item label="Insurance Cover Note Date" name="insuranceDate" initialValue={formData?.insuranceDate}>
                                     <DatePicker disabledDate={disableFutureDate} format={dateFormat} placeholder={preparePlaceholderSelect('Date')} />
                                 </Form.Item>
                             </Col>
 
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item label="Registration Number" name="registrationNumber">
+                                <Form.Item label="Registration Number" name="registrationNumber" initialValue={formData?.registrationNumber}>
                                     <Input placeholder={preparePlaceholderText('Registration Number')} maxLength={20} />
                                 </Form.Item>
                             </Col>

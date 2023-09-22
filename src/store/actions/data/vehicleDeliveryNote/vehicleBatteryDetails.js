@@ -6,8 +6,8 @@
 import { dataActions } from 'store/actions/crud/dataAction';
 import { BASE_URL_VEHICLE_DETAILS_DELIVERY_NOTE as baseURL } from 'constants/routingApi';
 
-const PREFIX = 'VEHICLE_DELIVERY_NOTE_SEARCH_';
-const moduleName = 'Vehicle Delivery Note Search';
+const PREFIX = 'VEHICLE_DELIVERY_NOTE_BATTERY_DETAILS_';
+const moduleName = 'Vehicle Delivery Battery Details';
 
 export const RECEIVE_DATA_LOADING_ACTION_CONSTANT = PREFIX + 'LOADING_DATA';
 export const RECEIVE_DATA_ACTION_CONSTANT = PREFIX + 'LIST_RECIEVE_DATA';

@@ -180,9 +180,9 @@ const ProductDetailMasterMain = (props) => {
     useEffect(() => {
         if (isDataLoaded && ProductDetailsData) {
             setformData(ProductDetailsData);
-            fetchModelLovList({ setIsLoading: listModelShowLoading, userId, extraParams: makeExtraParams('modelGroup', 'modelGroup', ProductDetailsData?.modelGroup, 'modelGroup') });
-            fetchVariantLovList({ setIsLoading: listVariantShowLoading, userId, extraParams: makeExtraParams('modelVariant', 'modelVariant', ProductDetailsData?.modelVariant, 'modelVariant') });
-            fetchModelFamilyLovList({ setIsLoading: listFamilyShowLoading, userId, extraParams: makeExtraParams('familyCode', 'familyCode', ProductDetailsData?.familyCode, 'familyCode') });
+            fetchModelLovList({ setIsLoading: listModelShowLoading, userId, extraParams: makeExtraParams({ key: 'modelGroupCode', title: 'modelGroupCode', value: ProductDetailsData?.productAttributeDetail?.modelGroup, name: 'modelGroupCode' }) });
+            fetchVariantLovList({ setIsLoading: listVariantShowLoading, userId, extraParams: makeExtraParams({ key: 'variantCode', title: 'variantCode', value: ProductDetailsData?.productAttributeDetail?.modelVariant, name: 'variantCode' }) });
+            fetchModelFamilyLovList({ setIsLoading: listFamilyShowLoading, userId, extraParams: makeExtraParams({ key: 'familyCode', title: 'familyCode', value: ProductDetailsData?.productAttributeDetail?.modelFamily, name: 'familyCode' }) });
 
             ProductDetailsData?.aggregates && setoptionsServiceModified(ProductDetailsData?.aggregates);
             settooltTipText(
@@ -216,8 +216,11 @@ const ProductDetailMasterMain = (props) => {
 
     useEffect(() => {
         if (isModelDataLoaded && isVariantDataLoaded && isModelFamilyDataLoaded) {
-            form.setFieldsValue({ modelFamily: modelFamilyData?.familyDescription, modelGroup: modelData?.modelGroupDescription, modelVariant: variantData?.variantDescription });
+            modelData.length > 0 && form.setFieldsValue({ modelGroup: modelData[0]?.modelGroupDescription });
+            modelFamilyData.length > 0 && form.setFieldsValue({ modelFamily: modelFamilyData[0]?.familyDescription });
+            variantData.length > 0 && form.setFieldsValue({ modelVariant: variantData[0]?.variantDescription });
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {

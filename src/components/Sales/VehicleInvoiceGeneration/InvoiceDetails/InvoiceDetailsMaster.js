@@ -16,7 +16,7 @@ import styles from 'assets/sass/app.module.scss';
 const InvoiceDetailsMasterBase = (props) => {
     const { typeData, selectedOrder, fetchInvoiceDetail, listShowLoading, vehicleInvoiceMasterData, selectedOrderId } = props;
     const { userId, buttonData, setButtonData, showGlobalNotification, section, isDataLoaded, isLoading, invoiceDetailForm } = props;
-    const { form, formActionType, handleFormValueChange, selectedOtfNumber, setSelectedOtfNumber } = props;
+    const { form, formActionType, selectedOtfNumber, setSelectedOtfNumber } = props;
     const { FormActionButton, requestPayload, setRequestPayload, handleButtonClick, NEXT_ACTION, handleBookingNumberSearch } = props;
 
     const [activeKey, setActiveKey] = useState([]);
@@ -27,6 +27,9 @@ const InvoiceDetailsMasterBase = (props) => {
 
     useEffect(() => {
         if (userId && selectedOrder?.invoiceNumber) {
+            const onSuccessAction = () => {
+                setButtonData({ ...buttonData, formBtnActive: true });
+            };
             const extraParams = [
                 {
                     key: 'invoiceNumber',
@@ -35,7 +38,7 @@ const InvoiceDetailsMasterBase = (props) => {
                     name: 'Invoice Number',
                 },
             ];
-            fetchInvoiceDetail({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
+            fetchInvoiceDetail({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedOrder?.invoiceNumber]);
@@ -86,7 +89,7 @@ const InvoiceDetailsMasterBase = (props) => {
     };
 
     return (
-        <Form layout="vertical" autoComplete="off" form={invoiceDetailForm} onValuesChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={invoiceDetailForm}  onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>

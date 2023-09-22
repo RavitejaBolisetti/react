@@ -8,8 +8,10 @@ import { combineReducers } from 'redux';
 import { ChartOfAccount } from './chartOfAccount';
 
 import { ChartOfAccountHierarchy } from './chartOfAccountHierarchy';
+import { ChartOfAccountExportCOA } from './exportCOA';
 
 export const ChartOfAccountMaster = combineReducers({
     ChartOfAccount,
     ChartOfAccountHierarchy,
+    ChartOfAccountExportCOA,
 });

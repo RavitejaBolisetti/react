@@ -47,8 +47,8 @@ const ViewDetailMain = (props) => {
                     <Divider />
                     <Descriptions {...viewProps}>
                         <Descriptions.Item label="Product Division">{checkAndSetDefaultValue(productAttributeDetail?.productDivision, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Model Family">{checkAndSetDefaultValue(modelFamilyData?.modelFamily, isLoading)}</Descriptions.Item>
-                        <Descriptions.Item label="Model Group">{checkAndSetDefaultValue(modelData?.modelGroup, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Model Family">{checkAndSetDefaultValue(modelFamilyData?.length > 0 && modelFamilyData[0]?.familyDescription, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Model Group">{checkAndSetDefaultValue(modelData?.length > 0 && modelData[0]?.modelGroupDescription, isLoading)}</Descriptions.Item>
 
                         <Descriptions.Item label="Model">
                             {isLoading ? (
@@ -60,7 +60,7 @@ const ViewDetailMain = (props) => {
                                 </div>
                             )}
                         </Descriptions.Item>
-                        <Descriptions.Item label="Model Variant">{checkAndSetDefaultValue(variantData?.modelVariant, isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Model Variant">{checkAndSetDefaultValue(variantData?.length > 0 && variantData[0]?.variantDescription, isLoading)}</Descriptions.Item>
                         {/* <Descriptions.Item label="Manufacturer Invoice Date">{!isLoading ? productAttributeDetail?.manufacturerInvoiceDate?.slice(0, 10) ?? '-' : <InputSkeleton width={'100px'} height={20} theme={'card'} />}</Descriptions.Item>
                         <Descriptions.Item label="Manufacturer Warrenty Start Date">{!isLoading ? productAttributeDetail?.manufacturerWarrantyStartDate?.slice(0, 10) ?? '-' : <InputSkeleton width={'100px'} height={20} theme={'card'} />}</Descriptions.Item> */}
                     </Descriptions>

@@ -169,8 +169,6 @@ export const ReceiptMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString]);
 
-   
-
     const extraParams = useMemo(() => {
         return [
             {
@@ -197,10 +195,10 @@ export const ReceiptMasterBase = (props) => {
             {
                 key: 'searchParam',
                 title: 'searchParam',
-                value: searchValue,
-                name: searchValue,
-                canRemove: false,
-                filter: false,
+                value: filterString?.searchParam,
+                name: filterString?.searchParam,
+                canRemove: true,
+                filter: true,
             },
             {
                 key: 'fromDate',
@@ -322,7 +320,7 @@ export const ReceiptMasterBase = (props) => {
     };
 
     const handleSearch = (value) => {
-        setFilterString({ ...filterString, searchParam: value });
+        setFilterString({ ...filterString, searchParam: value, advanceFilter: true });
         setSearchValue(value);
     };
 
@@ -370,7 +368,7 @@ export const ReceiptMasterBase = (props) => {
                 setButtonData(Visibility);
                 // setButtonData({ ...Visibility, cancelReceiptBtn: true });
                 if (buttonAction === VIEW_ACTION) {
-                    receiptStatus === QUERY_BUTTONS_CONSTANTS.CANCELLED.key ? setButtonData({ ...Visibility, editBtn: false, cancelReceiptBtn: false, printReceiptBtn: true }) : receiptStatus === QUERY_BUTTONS_CONSTANTS.APPORTION.key ? setButtonData({ ...Visibility, editBtn: false, cancelReceiptBtn: true, printReceiptBtn: true }) : setButtonData({ ...Visibility, editBtn: true, cancelReceiptBtn: true, printReceiptBtn:true });
+                    receiptStatus === QUERY_BUTTONS_CONSTANTS.CANCELLED.key ? setButtonData({ ...Visibility, editBtn: false, cancelReceiptBtn: false, printReceiptBtn: true }) : receiptStatus === QUERY_BUTTONS_CONSTANTS.APPORTION.key ? setButtonData({ ...Visibility, editBtn: false, cancelReceiptBtn: true, printReceiptBtn: true }) : setButtonData({ ...Visibility, editBtn: true, cancelReceiptBtn: true, printReceiptBtn: true });
                 }
             }
         }
@@ -385,16 +383,15 @@ export const ReceiptMasterBase = (props) => {
         advanceFilterForm.resetFields();
     };
 
-      const handlePrintDownload = (record) => {
-          setReportVisible(true);
-          setAdditionalReportParams([
-              {
-                  key: 'fn_vc_receipts_hdr_id',
-                  value: record?.id,
-              },
-          ]);
-      };
-
+    const handlePrintDownload = (record) => {
+        setReportVisible(true);
+        setAdditionalReportParams([
+            {
+                key: 'fn_vc_receipts_hdr_id',
+                value: record?.id,
+            },
+        ]);
+    };
 
     const onFinish = (receiptData) => {
         const data = { ...requestPayload, apportionDetails: receiptData.hasOwnProperty('receiptType') ? [] : apportionList, receiptsDetails: receiptData.hasOwnProperty('receiptType') ? receiptData : requestPayload?.receiptsDetails };

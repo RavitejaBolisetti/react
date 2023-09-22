@@ -45,7 +45,7 @@ const VehicleInvoiceMainConatinerMain = (props) => {
                 return <InvoiceDetailsMaster {...myProps} />;
             }
             case VEHICLE_INVOICE_SECTION.VEHICLE_DETAILS.id: {
-                return <VehicleDetailsMaster {...myProps} vehicleDetailData={vehicleInvoiceMasterData?.vehicleDetails} formKey={'vehicleDetails'} />;
+                return <VehicleDetailsMaster {...myProps} formData={vehicleInvoiceMasterData?.vehicleDetails} formKey={'vehicleDetails'} />;
             }
             case VEHICLE_INVOICE_SECTION.SCHEME_OFFER_DETAILS.id: {
                 return <SchemeDetailsMaster {...myProps} formData={vehicleInvoiceMasterData?.schemeOfferDetails} formKey={'schemeOfferDetails'} />;
