@@ -389,4 +389,12 @@ export const PARAM_MASTER = {
         id: 'IRN_GEN_STATUS',
         title: 'IRN Status',
     },
+    SO_RD: {
+        id: 'SO_RD',
+        title: 'OTF SO Mapping',
+    },
+    SO_RC: {
+        id: 'SO_RC',
+        title: 'OTF SO Mapping',
+    },
 };
