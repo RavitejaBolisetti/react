@@ -326,15 +326,18 @@ export const VehicleInvoiceMasterBase = (props) => {
             ];
 
             const onSuccessAction = (res) => {
-                // setSelectedOtfNumber(otfNumber);
-                // if (res?.data?.invoiceDetails?.otfDetailsRequest?.orderStatus !== OTF_STATUS?.ALLOTED?.key) {
-                //     setButtonData((prev) => ({ ...prev, formBtnActive: false }));
-                //     showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'OTF number not alloted' });
-                //     return;
-                // } else {
-                setButtonData((prev) => ({ ...prev, formBtnActive: true }));
-                setSelectedOtfNumber(otfNumber);
-                // }
+                if (!selectedOrderId && res?.data?.invoiceDetails?.otfDetailsRequest?.orderStatus === OTF_STATUS?.INVOICED?.key) {
+                    setButtonData((prev) => ({ ...prev, formBtnActive: false }));
+                    showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'OTF is already invoiced' });
+                    return;
+                } else if (!selectedOrderId && res?.data?.invoiceDetails?.otfDetailsRequest?.orderStatus !== OTF_STATUS?.ALLOTED?.key) {
+                    setButtonData((prev) => ({ ...prev, formBtnActive: false }));
+                    showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'OTF number not alloted' });
+                    return;
+                } else {
+                    setButtonData((prev) => ({ ...prev, formBtnActive: true }));
+                    setSelectedOtfNumber(otfNumber);
+                }
             };
 
             fetchInvoiceMasterData({ customURL: InvoiceDetailsURL, setIsLoading: listInvoiceShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
@@ -441,7 +444,7 @@ export const VehicleInvoiceMasterBase = (props) => {
                 setButtonData(Visibility);
                 // setButtonData({ ...Visibility, cancelReceiptBtn: true });
                 if (buttonAction === VIEW_ACTION) {
-                    invoiceStatus === QUERY_BUTTONS_CONSTANTS.INVOICED.key ? setButtonData({ ...Visibility, cancelInvoiceBtn: true, approveCancelBtn: false, rejectCancelBtn: false }) : invoiceStatus === QUERY_BUTTONS_CONSTANTS.CANCELLATION_REQUEST.key ? setButtonData({ ...Visibility, cancelInvoiceBtn: false, approveCancelBtn: true, rejectCancelBtn: true }) : setButtonData({ ...Visibility, cancelInvoiceBtn: false, approveCancelBtn: false, rejectCancelBtn: false });
+                    invoiceStatus === QUERY_BUTTONS_CONSTANTS.INVOICED.key ? setButtonData({ ...Visibility, printInvoiceBtn: true, cancelInvoiceBtn: true, approveCancelBtn: false, rejectCancelBtn: false }) : invoiceStatus === QUERY_BUTTONS_CONSTANTS.CANCELLATION_REQUEST.key ? setButtonData({ ...Visibility, cancelInvoiceBtn: false, approveCancelBtn: true, rejectCancelBtn: true }) : setButtonData({ ...Visibility, cancelInvoiceBtn: false, approveCancelBtn: false, rejectCancelBtn: false });
                     // (!otfData?.irnStatus || otfData?.irnStatus && timeStampCheck(otfData?.irnDate, otfData?.invoiceDate))
                 }
             }
@@ -490,7 +493,8 @@ export const VehicleInvoiceMasterBase = (props) => {
 
     const resetInvoiceData = () => {
         form.resetFields();
-        form.setFieldsValue();
+        form.setFieldsValue(undefined);
+        setSelectedOrder();
         setSelectedOrderId();
         setSelectedOtfNumber();
         invoiceDetailForm.resetFields();
@@ -571,9 +575,8 @@ export const VehicleInvoiceMasterBase = (props) => {
             setShowDataLoading(true);
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
-            setButtonData({ ...buttonData, formBtnActive: false });
-            setIsFormVisible(false);
             setCancelInvoiceVisible(false);
+            resetInvoiceData();
         };
         const onError = (message) => {
             showGlobalNotification({ message });
