@@ -9,6 +9,7 @@ import { Form, Row, Col } from 'antd';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+import { vehicleChallanDetailsDataActions } from 'store/actions/data/vehicleDeliveryNote/vehicleChallanDetails';
 import { vehicleBatteryDetailsDataActions } from 'store/actions/data/vehicleDeliveryNote/vehicleBatteryDetails';
 import { showGlobalNotification } from 'store/actions/notification';
 
@@ -25,6 +26,7 @@ const mapStateToProps = (state) => {
         data: {
             VehicleDeliveryNote: {
                 VehicleBatteryDetails: { isLoaded: isDataLoaded = false, isLoading, data: vehicleData = {} },
+                VehicleDetailsChallan: { isLoaded: isChallanDataLoaded = false, isChallanLoading, data: vehicleChallanData = {} }
             },
         },
     } = state;
@@ -37,6 +39,9 @@ const mapStateToProps = (state) => {
         isLoading,
         moduleTitle,
         vehicleData,
+        isChallanDataLoaded,
+        isChallanLoading,
+        vehicleChallanData,
     };
     return returnValue;
 };
@@ -47,6 +52,8 @@ const mapDispatchToProps = (dispatch) => ({
         {
             fetchList: vehicleBatteryDetailsDataActions.fetchList,
             listShowLoading: vehicleBatteryDetailsDataActions.listShowLoading,
+            fetchChallanList: vehicleChallanDetailsDataActions.fetchList,
+            listChallanShowLoading: vehicleChallanDetailsDataActions.listShowLoading,
             showGlobalNotification,
         },
         dispatch
@@ -55,8 +62,8 @@ const mapDispatchToProps = (dispatch) => ({
 
 const VehicleDetailsMasterBase = (props) => {
     const { typeData, partySegmentType } = props;
-    const { userId, selectedOrderId, selectedInvoiceId, setFormActionType, showGlobalNotification, listShowLoading, isDataLoaded, isLoading } = props;
-    const { form, formActionType, handleButtonClick, handleFormValueChange, section, openAccordian, setOpenAccordian, fetchList, vehicleData, NEXT_ACTION } = props;
+    const { userId, selectedOrderId, selectedInvoiceId, soldByDealer, setFormActionType, showGlobalNotification, listShowLoading, isDataLoaded, isLoading } = props;
+    const { form, formActionType, fetchChallanList, listChallanShowLoading, handleButtonClick, handleFormValueChange, section, openAccordian, setOpenAccordian, fetchList, vehicleData, NEXT_ACTION } = props;
     const [regNumber, setRegNumber] = useState();
     const [activeKey, setActiveKey] = useState([]);
     const [otfNumber, setOtfNumber] = useState();
@@ -68,27 +75,40 @@ const VehicleDetailsMasterBase = (props) => {
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const [isFormVisible, setIsFormVisible] = useState(false);
 
-    const extraParams = [
-        {
-            key: 'invoicenumber',
-            title: 'invoicenumber',
-            value: selectedInvoiceId,
-            name: 'Invoice Number',
-        },
-        {
-            key: 'otfNumber',
-            title: 'otfNumber',
-            value: selectedOrderId,
-            name: 'Invoice Number',
-        },
-    ];
+
 
     useEffect(() => {
-        if (userId && selectedOrderId && selectedInvoiceId) {
+        if (userId && selectedOrderId && selectedInvoiceId && soldByDealer) {
+            const extraParams = [
+                {
+                    key: 'invoicenumber',
+                    title: 'invoicenumber',
+                    value: selectedInvoiceId,
+                    name: 'Invoice Number',
+                },
+                {
+                    key: 'otfNumber',
+                    title: 'otfNumber',
+                    value: selectedOrderId,
+                    name: 'Invoice Number',
+                },
+            ];
             fetchList({ setIsLoading: listShowLoading, extraParams, userId, onErrorAction });
         }
+        else if (!soldByDealer) {
+            const extraParams = [
+                {
+                    key: 'invoiceNumber',
+                    title: 'invoiceNumber',
+                    value: selectedInvoiceId,
+                    name: 'Invoice Number',
+                },
+            ]
+
+            fetchChallanList({ setIsLoading: listChallanShowLoading, extraParams, userId, onErrorAction });
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedOrderId, selectedInvoiceId]);
+    }, [userId, selectedOrderId, selectedInvoiceId, soldByDealer]);
 
     useEffect(() => {
         if (vehicleData && selectedOrderId && selectedInvoiceId) {
@@ -113,7 +133,7 @@ const VehicleDetailsMasterBase = (props) => {
         setButtonData({ ...defaultBtnVisiblity });
     };
 
-    const onFinishFailed = () => {};
+    const onFinishFailed = () => { };
 
     const formProps = {
         ...props,

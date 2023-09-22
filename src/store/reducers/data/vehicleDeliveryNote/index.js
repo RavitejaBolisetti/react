@@ -12,6 +12,7 @@ import { AddOnDetails } from './addOnDetails';
 import { CustomerDetailsDeliveryNote } from './customerDetails';
 import { VehicleRegistrationNumberSearch } from './vehicleRegistrationNumber';
 import { VehicleBatteryDetails } from './vehicleBatteryDetails';
+import { VehicleDetailsChallan } from './vehicleChallanDetails';
 import { CancelDeliveryNote } from './cancelDeliveryNote';
 import { SchemeDescription } from './schemeDescription';
 import { VinNumberSearch } from './challanVinNumber';
@@ -24,6 +25,7 @@ export const VehicleDeliveryNote = combineReducers({
     CustomerDetailsDeliveryNote,
     VehicleRegistrationNumberSearch,
     VehicleBatteryDetails,
+    VehicleDetailsChallan,
     CancelDeliveryNote,
     SchemeDescription,
     VinNumberSearch,
