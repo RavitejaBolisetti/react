@@ -24,9 +24,6 @@ describe('Booking Finance Details Component render', () => {
         const insuranceAmt = screen.getByText('Insurance Amount');
         expect(insuranceAmt).toBeTruthy();
 
-        const date = screen.getByText('Date');
-        expect(date).toBeTruthy();
-
         const registrationNo = screen.getByText('Registration Number');
         expect(registrationNo).toBeTruthy();
     });

@@ -15,6 +15,12 @@ jest.mock('react-google-recaptcha3', () => {
 
 jest.mock('store/actions/auth', () => ({
     doLogin: jest.fn(),
+    doCloseLoginError: jest.fn().mockImplementation(() => {
+        return {type: 'YOUR_ACTION_TYPE'};
+    }),
+    authPreLogin: jest.fn().mockImplementation(() => {
+        return {type: 'YOUR_ACTION_TYPE'};
+    }),
 }));
 
 afterEach(() => {
