@@ -307,7 +307,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentSection, sectionName]);
     useEffect(() => {
-        if (selectedOtfNumber && !formActionType?.addMode) {
+        if (selectedOtfNumber) {
             const extraParam = [
                 {
                     key: 'otfNumber',
@@ -318,7 +318,7 @@ export const VehicleInvoiceMasterBase = (props) => {
             ];
             fetchOTFDetail({ customURL, setIsLoading: listShowLoading, userId, extraParams: extraParam, onErrorAction });
         }
-    }, [selectedOtfNumber, formActionType]);
+    }, [selectedOtfNumber]);
 
     const handleBookingNumberSearch = (otfNumber = '', selectedOrderId = '') => {
         if (otfNumber || selectedOrderId) {
