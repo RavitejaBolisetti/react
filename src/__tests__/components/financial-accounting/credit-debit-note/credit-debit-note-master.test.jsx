@@ -31,6 +31,9 @@ describe('Render components', () => {
 
         const creditBtn = screen.getByRole('button', {name:'Add Credit Note'});
         fireEvent.click(creditBtn);
+
+        const closeImg = screen.getByRole('img', {name:'close'});
+        fireEvent.click(closeImg);
     });
 
     it('Debit button', () => {
@@ -78,6 +81,44 @@ describe('Render components', () => {
         customRender(
             <Provider store={mockStore}>
                 <CreditDebitNoteMaster fetchList={fetchList} isVisible={true} fetchDetail={fetchDetail}/>
+            </Provider>
+        );
+    })
+
+    it("clearBtn", ()=>{
+        const filterString = {advanceFilter:true }
+        const mockStore = createMockStore({
+            auth: { userId: 123 },
+            data: {
+                FinancialAccounting: {
+                    CreditDebitNoteSearch: { isLoaded: false, data: tableData, filter: filterString},
+                },
+            },
+        });
+        customRender(
+            <Provider store={mockStore}>
+                <CreditDebitNoteMaster fetchList={fetchList} isVisible={true} fetchDetail={fetchDetail}/>
+            </Provider>
+        );
+
+        const clearBtn = screen.getByRole('button', {name:'Clear'});
+        fireEvent.click(clearBtn);
+    })
+
+    it("creditDebitData",()=>{
+        const creditDebitData = [{voucherNumber:'123', voucherType:'CRN'}];
+        const formActionType = {addMode:true}
+        const mockStore = createMockStore({
+            auth: { userId: 123 },
+            data: {
+                FinancialAccounting: {
+                    CreditDebitNoteSearch: { isDetailLoaded: true, detailData: creditDebitData},
+                },
+            },
+        });
+        customRender(
+            <Provider store={mockStore}>
+                <CreditDebitNoteMaster fetchList={fetchList} isVisible={true} fetchDetail={fetchDetail} formActionType={formActionType} setVoucherTableData={jest.fn([])} setApportionTableData={jest.fn([])} />
             </Provider>
         );
     })
