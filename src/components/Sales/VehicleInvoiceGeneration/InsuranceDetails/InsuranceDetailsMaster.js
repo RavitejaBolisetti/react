@@ -3,16 +3,22 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Row, Col } from 'antd';
 
 import { AddEditForm, ViewDetail } from 'components/Sales/Common/InsuranceDetails';
 import styles from 'assets/sass/app.module.scss';
 
 export const InsuranceDetailsMaster = (props) => {
-    const { formData, insuranceData, onCloseAction, formActionType, userId, isDataLoaded } = props;
+    const { formData: insuranceData, onCloseAction, formActionType, userId, isDataLoaded } = props;
     const { form, selectedOrderId, handleFormValueChange, section, isLoading, NEXT_ACTION, handleButtonClick, onFinishFailed } = props;
-    const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, pageType } = props;
+    const { buttonData, formKey, onFinishCustom = undefined, FormActionButton, pageType } = props;
+    const [formData, setFormData] = useState();
+
+    useEffect(() => {
+        setFormData(insuranceData);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [insuranceData]);
 
     const viewProps = {
         styles,
@@ -24,24 +30,24 @@ export const InsuranceDetailsMaster = (props) => {
 
     const formProps = {
         ...props,
-        formData,
         form,
+        formData,
         userId,
         isDataLoaded,
         isLoading,
         pageType,
     };
 
-    const myProps = {
-        ...props,
-    };
-
     const onFinish = (values) => {
-        const recordId = insuranceData?.id || '';
+        const recordId = formData?.id || '';
         const data = { ...values, id: recordId, otfNumber: selectedOrderId };
         onFinishCustom({ key: formKey, values: data });
         handleButtonClick({ buttonAction: NEXT_ACTION });
-        setButtonData({ ...buttonData, formBtnActive: false });
+    };
+
+    const buttonProps = {
+        ...props,
+        buttonData: { ...buttonData, formBtnActive: true },
     };
 
     return (
@@ -58,7 +64,7 @@ export const InsuranceDetailsMaster = (props) => {
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <FormActionButton {...myProps} />
+                    <FormActionButton {...buttonProps} />
                 </Col>
             </Row>
         </Form>

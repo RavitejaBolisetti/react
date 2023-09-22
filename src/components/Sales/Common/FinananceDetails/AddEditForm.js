@@ -111,7 +111,7 @@ const AddEditFormMain = (props) => {
                                         </Row>
                                         {financeArrangedBy && checkFinanceType(financeArrangedBy, FINANCE_ARRANGED_BY?.DEALER?.key) && (
                                             <Row gutter={20}>
-                                                {pageType != PAGE_TYPE?.OTF_PAGE_TYPE?.key && (
+                                                {pageType !== PAGE_TYPE?.OTF_PAGE_TYPE?.key && (
                                                     <>
                                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                                             <Form.Item onChange={onLoanChange} label="Loan Amount" name="loanAmount" rules={[validateNumberWithTwoDecimalPlaces('loan amount')]}>
