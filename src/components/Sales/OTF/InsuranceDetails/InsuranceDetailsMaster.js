@@ -12,7 +12,6 @@ import { AddEditForm, ViewDetail } from 'components/Sales/Common/InsuranceDetail
 import { showGlobalNotification } from 'store/actions/notification';
 import { insuranceDetailDataActions } from 'store/actions/data/otf/insuranceDetail';
 
-
 import styles from 'assets/sass/app.module.scss';
 const mapStateToProps = (state) => {
     const {
