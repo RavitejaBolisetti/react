@@ -77,7 +77,7 @@ export default function AppliedAdvanceFilter(props) {
                             </Button>
                         )}
 
-                        { (handleCustomShowAdd() || tableData?.length > 0)  && (
+                        {tableData?.length > 0 && (
                             <>
                                 <Button icon={<TfiReload />} onClick={handleReferesh} data-testid="refreshBtn" danger />
                                 {showAddButton && (
