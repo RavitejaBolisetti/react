@@ -276,30 +276,30 @@ export const HoPriceMappingMasterBase = (props) => {
 
     const handleFilterChange =
         (name, type = 'value') =>
-        (value) => {
-            if (!value) {
-                switch (name) {
-                    case 'stateCode': {
-                        setFilteredCityData();
-                        advanceFilterForm.setFieldsValue({ cityCode: undefined });
-                        break;
+            (value) => {
+                if (!value) {
+                    switch (name) {
+                        case 'stateCode': {
+                            setFilteredCityData();
+                            advanceFilterForm.setFieldsValue({ cityCode: undefined });
+                            break;
+                        }
+                        case 'cityCode': {
+                            break;
+                        }
+                        default: {
+                            break;
+                        }
                     }
-                    case 'cityCode': {
-                        break;
-                    }
-                    default: {
-                        break;
-                    }
+                    return;
                 }
-                return;
-            }
-            const filterValue = type === 'text' ? value.target.value : value;
+                const filterValue = type === 'text' ? value.target.value : value;
 
-            if (name === 'stateCode') {
-                setFilteredCityData(districtData?.filter((i) => i?.parentKey === filterValue));
-                advanceFilterForm.setFieldsValue({ cityCode: undefined });
-            }
-        };
+                if (name === 'stateCode') {
+                    setFilteredCityData(districtData?.filter((i) => i?.parentKey === filterValue));
+                    advanceFilterForm.setFieldsValue({ cityCode: undefined });
+                }
+            };
 
     const handleSearch = (value) => {
         setFilterString({ ...filterString, dealerParent: value, advanceFilter: true });
@@ -335,7 +335,7 @@ export const HoPriceMappingMasterBase = (props) => {
         }
     };
 
-    const onFinishSearch = (values) => {};
+    const onFinishSearch = (values) => { };
 
     const disableExceptModelGroup = (node) => {
         if (node?.attributeType === MODEL_TYPE.MODAL_GROUP.key) {
@@ -374,7 +374,7 @@ export const HoPriceMappingMasterBase = (props) => {
         for (let i = 0; i < checkedKeys?.length; i++) {
             let ifFind = hoPriceDetailData?.modelDealerMapResponse?.findIndex((e) => e?.modelGroupCode === checkedKeys[i]);
             if (ifFind > -1) {
-                arr.push(hoPriceDetailData?.modelDealerMapResponse[ifFind]);
+                arr.push({ ...hoPriceDetailData?.modelDealerMapResponse[ifFind], status: true });
             } else {
                 arr.push({ id: '', modelGroupCode: checkedKeys[i], status: true });
             }
