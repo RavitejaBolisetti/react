@@ -163,6 +163,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
                 nodeType: '',
                 id: values?.id || '',
                 ...values,
+                irnIntegrationRequired: values?.irnIntegrationRequired || false, isFinanceRelated: values?.isFinanceRelated || false, digitalSignatureRequired: values?.digitalSignatureRequired || false, termAndConRequired: values?.termAndConRequired || false ,
                 status: values?.applicationStatus,
                 parentApplicationId: parentAppCode,
                 documentType: documentType?.map((el) => ({ ...el, id: el.id || '' })),
