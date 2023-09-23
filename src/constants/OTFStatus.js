@@ -56,10 +56,11 @@ export const OTF_STATUS = {
     },
     PENDING_FOR_CANCELLATION: {
         id: 7,
-        key: 'Pending for cancellation',
+        key: 'PND',
         title: 'Pending for cancellation',
         desc: 'Pending for Cancellation',
-        displayOnView: false,
+        displayOnView: true,
+        filter: true,
     },
     CANCELLATION_REQUESTED: {
         id: 8,
