@@ -331,8 +331,6 @@ export const VehicleInvoiceMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    console.log('isInVoiceMasterDetailDataLoaded', isInVoiceMasterDetailDataLoaded, requestPayload);
-
     const filterActiveMenu = (items) => {
         return items?.filter((item) => validateOTFMenu({ item, otfData }));
     };
@@ -403,6 +401,8 @@ export const VehicleInvoiceMasterBase = (props) => {
         const data = { otfNumber: selectedOtfNumber, invoiceNumber: selectedOrder?.invoiceNumber };
         const onSuccess = (res) => {
             setShowDataLoading(true);
+            setConfirmRequest(false);
+            resetOtfData();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
             const extraParam = [

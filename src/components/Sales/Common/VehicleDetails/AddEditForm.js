@@ -32,7 +32,7 @@ const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
     const { productHierarchyData, toolTipContent, handleFormValueChange, optionsServicesMapping, setoptionsServicesMapping, optionsServiceModified, setoptionsServiceModified, formData, openAccordian, isReadOnly, setIsReadOnly, setOpenAccordian, selectedOrderId, form, onErrorAction, showGlobalNotification, fetchList, userId, listShowLoading, saveData, onSuccessAction, typeData, formActionType, vehicleServiceData } = props;
-    const { productModelCode, setProductModelCode, viewOnly, handlePriceChange, handleDiscountChange = () => {}, showPrintDiscount = false } = props;
+    const { productModelCode, setProductModelCode, viewOnly, handlePriceChange, handleDiscountChange = () => {}, showPrintDiscount = false, ShowPOandSOdetails = true, showAvailaibleStock = true } = props;
 
     const [optionForm] = Form.useForm();
     const findUsageType = (usage) => {
@@ -51,7 +51,7 @@ const AddEditFormMain = (props) => {
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formData]);
+    }, [formData?.otfNumber]);
 
     const handleCollapse = (key) => {
         if (key !== 3 && isReadOnly) {
@@ -135,40 +135,43 @@ const AddEditFormMain = (props) => {
                         <Divider />
 
                         <Row gutter={20}>
-                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item label="Available Stock" name="availableStock" data-testid="availableStock">
-                                    <Input {...disabledProp} placeholder={preparePlaceholderText('Available Stock')} />
-                                </Form.Item>
-                            </Col>
+                            {showAvailaibleStock && (
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item label="Available Stock" name="availableStock" data-testid="availableStock">
+                                        <Input {...disabledProp} placeholder={preparePlaceholderText('Available Stock')} />
+                                    </Form.Item>
+                                </Col>
+                            )}
+                            {ShowPOandSOdetails && (
+                                <>
+                                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                        <Form.Item label="PO Number" name="poNumber">
+                                            <Input {...disabledProp} placeholder={preparePlaceholderText('PO Number')} />
+                                        </Form.Item>
+                                    </Col>
+                                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                        <Form.Item label="PO Date" name="poDate">
+                                            <Input {...disabledProp} placeholder={preparePlaceholderText('PO Date')} />
+                                        </Form.Item>
+                                    </Col>
+                                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                        <Form.Item label="PO Status" name="poStatus">
+                                            {customSelectBox({ data: typeData?.PO_STATS, disabled: true })}
+                                        </Form.Item>
+                                    </Col>
+                                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                        <Form.Item label="SO Number" name="soNumber">
+                                            <Input {...disabledProp} placeholder={preparePlaceholderText('SO Number')} />
+                                        </Form.Item>
+                                    </Col>
+                                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                        <Form.Item label="SO Status" name="soStatus">
+                                            <Input {...disabledProp} placeholder={preparePlaceholderText('SO Status')} />
+                                        </Form.Item>
+                                    </Col>
+                                </>
+                            )}
 
-                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item label="PO Number" name="poNumber">
-                                    <Input {...disabledProp} placeholder={preparePlaceholderText('PO Number')} />
-                                </Form.Item>
-                            </Col>
-
-                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item label="PO Date" name="poDate">
-                                    <Input {...disabledProp} placeholder={preparePlaceholderText('PO Date')} />
-                                </Form.Item>
-                            </Col>
-                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item label="PO Status" name="poStatus">
-                                    {customSelectBox({ data: typeData?.PO_STATS, disabled: true })}
-                                </Form.Item>
-                            </Col>
-
-                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item label="SO Number" name="soNumber">
-                                    <Input {...disabledProp} placeholder={preparePlaceholderText('SO Number')} />
-                                </Form.Item>
-                            </Col>
-
-                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item label="SO Status" name="soStatus">
-                                    <Input {...disabledProp} placeholder={preparePlaceholderText('SO Status')} />
-                                </Form.Item>
-                            </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item label="VIN Number" name="vinNumber">
                                     <Input {...disabledProp} placeholder={preparePlaceholderText('VIN number')} />
@@ -221,7 +224,7 @@ const AddEditFormMain = (props) => {
                             {showPrintDiscount && (
                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                     <Form.Item initialValue={false} labelAlign="left" wrapperCol={{ span: 24 }} name="printDiscount" label="Print Discount?" valuePropName="checked">
-                                        <Switch checkedChildren="Yes" unCheckedChildren="No" valuePropName="checked" />
+                                        <Switch checkedChildren="Yes" unCheckedChildren="No" />
                                     </Form.Item>
                                 </Col>
                             )}
