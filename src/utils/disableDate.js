@@ -9,6 +9,10 @@ export const disableFutureDate = (value) => {
     return value > new Date();
 };
 
+export const disableFieldsOnFutureDate = (value) => {
+    return value < new Date();
+};
+
 export const disablePastDate = (value) => {
     return value.isBefore(moment().subtract(1, 'day'));
 };

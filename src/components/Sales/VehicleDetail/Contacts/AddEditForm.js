@@ -51,12 +51,12 @@ const AddEditForm = (props) => {
                     <Row gutter={20}>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                             <Form.Item label="Name" name="name" rules={[validateRequiredInputField('Name'), validateLettersWithWhitespaces('Name')]}>
-                                <Input placeholder={preparePlaceholderText('name')} />
+                                <Input placeholder={preparePlaceholderText('name')} disabled={formActionType?.editMode} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                             <Form.Item label="E-mail" initialValue={''} name="emailId" rules={[validateRequiredEmailField('E-mail')]}>
-                                <Input placeholder={preparePlaceholderText('email id')} />
+                                <Input placeholder={preparePlaceholderText('email id')} disabled={formActionType?.editMode} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8} style={{ display: 'flex' }}>

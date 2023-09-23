@@ -302,7 +302,8 @@ const CustomerMasterMain = (props) => {
                 editMode: buttonAction === EDIT_ACTION,
                 viewMode: buttonAction === VIEW_ACTION,
             });
-            setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
+
+            setButtonData(btnVisiblity({ defaultBtnVisiblity: {...defaultBtnVisiblity, changeHistory: buttonAction !== ADD_ACTION}, buttonAction }));
         }
         setIsFormVisible(true);
     };

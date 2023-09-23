@@ -40,7 +40,7 @@ export const tableColumn = ({ handleButtonClick, page, pageSize, actionButtonVis
             },
         }),
         tblPrepareColumns({
-            title: 'Invoice Note No. & Date',
+            title: 'Invoice No. & Date',
             dataIndex: 'invoiceId',
             width: '24%',
             render: (__, value) => {

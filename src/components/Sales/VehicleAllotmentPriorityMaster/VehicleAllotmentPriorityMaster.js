@@ -180,7 +180,7 @@ export const VehicleAllotmentPriorityMasterMain = (props) => {
             setFilterDesignationDropdownList(matchDesignationList);
         } else {
             notificationDetailForm.setFieldValue('designationCode', undefined);
-            // setFilterDesignationList();
+            setFilterDesignationList(); 
             onErrorAction('Designations are not exist.');
         }
     };

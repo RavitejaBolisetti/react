@@ -10,6 +10,7 @@ import { bindActionCreators } from 'redux';
 
 import { invoiceDetailDataActions } from 'store/actions/data/vehicleDeliveryNote/invoiceDetails';
 import { relationshipManagerDataActions } from 'store/actions/data/vehicleDeliveryNote/relationshipManager';
+import { vinNumberNoteDataActions } from 'store/actions/data/vehicleDeliveryNote/challanVinNumber';
 import { showGlobalNotification } from 'store/actions/notification';
 import { formattedCalendarDate, convertDate } from 'utils/formatDateTime';
 
@@ -27,6 +28,7 @@ const mapStateToProps = (state) => {
             VehicleDeliveryNote: {
                 InvoiceDetails: { isLoaded, isLoading, data: invoiceData = [] },
                 RelationshipManager: { isLoaded: isRelationshipManagerLoaded = false, isloading: isRelationshipManagerLoading, data: relationshipManagerData = [] },
+                VinNumberSearch: { isLoaded: vinNumberDataLoaded = false, isloading: vinNumberDataLoading, data: vinData = [] },
             },
         },
     } = state;
@@ -43,6 +45,9 @@ const mapStateToProps = (state) => {
         isRelationshipManagerLoading,
         relationshipManagerData,
         typeData,
+        vinNumberDataLoaded,
+        vinNumberDataLoading,
+        vinData,
     };
     return returnValue;
 };
@@ -51,6 +56,9 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
+            fetchvinNumber: vinNumberNoteDataActions.fetchList,
+            listvinNumberShowLoading: vinNumberNoteDataActions.listShowLoading,
+
             fetchRelationshipManger: relationshipManagerDataActions.fetchList,
             listRelationshipMangerShowLoading: relationshipManagerDataActions.listShowLoading,
 
@@ -65,9 +73,9 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const InvoiceDetailsMasterBase = (props) => {
-    const { fetchList, userId, listShowLoading, relationshipManagerData, invoiceData, isRelationshipManagerLoaded, setFormActionType, fetchRelationshipManger, listRelationshipMangerShowLoading, isLoading } = props;
+    const { fetchList, userId, vinData, listvinNumberShowLoading, fetchvinNumber, listShowLoading, relationshipManagerData, invoiceData, isRelationshipManagerLoaded, setFormActionType, fetchRelationshipManger, listRelationshipMangerShowLoading, isLoading } = props;
 
-    const { resetData, typeData, form, selectedOrderId, selectedInvoiceId, requestPayload, setRequestPayload, soldByDealer, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION, section } = props;
+    const { typeData, form, selectedOrderId, selectedInvoiceId, requestPayload, setRequestPayload, soldByDealer, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION, section, resetData } = props;
     // console.log('INVOICE', requestPayload);
 
     const [isFormVisible, setIsFormVisible] = useState(false);
@@ -114,7 +122,7 @@ export const InvoiceDetailsMasterBase = (props) => {
     }, [userId, selectedInvoiceId]);
 
     useEffect(() => {
-        if (userId ) {
+        if (userId) {
             fetchRelationshipManger({ setIsLoading: listRelationshipMangerShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -127,7 +135,7 @@ export const InvoiceDetailsMasterBase = (props) => {
         setInvoiceNoValue(e.target.value);
     };
 
-    const handleInvoiceNoSearch = () => {
+    const handleInvoiceNoSearch = (val) => {
         const onSuccessAction = (res) => {
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         };
@@ -136,13 +144,13 @@ export const InvoiceDetailsMasterBase = (props) => {
         };
         const searchParams = [
             {
-                key: 'invoiceNumber',
-                title: 'invoiceNumber',
-                value: invoiceNoValue,
-                name: 'Invoice Number',
+                key: 'vin',
+                title: 'vin',
+                value: invoiceNoValue || val,
+                name: 'Vin Number',
             },
         ];
-        fetchList({ setIsLoading: listShowLoading, userId, extraParams: searchParams, onSuccessAction, onErrorAction });
+        fetchvinNumber({ setIsLoading: listvinNumberShowLoading, userId, extraParams: searchParams, onSuccessAction, onErrorAction });
     };
 
     const onSuccessAction = (res) => {
@@ -177,7 +185,6 @@ export const InvoiceDetailsMasterBase = (props) => {
         // invoiceData,
         formActionType,
         setFormActionType,
-        fetchList,
         onFinish,
         onFinishFailed,
         isVisible: isFormVisible,
@@ -197,6 +204,8 @@ export const InvoiceDetailsMasterBase = (props) => {
         handleInvoiceNoSearch,
         handleOnChange,
         invoiceNoValue,
+        vinData,
+        relationshipManagerData,
     };
 
     const viewProps = {

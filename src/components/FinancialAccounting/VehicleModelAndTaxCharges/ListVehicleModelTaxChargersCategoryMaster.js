@@ -183,15 +183,7 @@ export const VehicleModelAndTaxChargersCategoryMain = (props) => {
                 setshowDataLoading(true);
                 fetchList({ setIsLoading: listShowLoading, onErrorAction, extraParams, userId, onSuccessAction });
             } else if (!isProductHierarchyDataLoaded) {
-                const extraParams = [
-                    {
-                        key: 'code',
-                        title: 'code',
-                        value: 'MG',
-                    },
-                ];
-
-                fetchModelList({ setIsLoading: listModelShowLoading, errorAction, userId, onSuccessAction, extraParams });
+                fetchModelList({ setIsLoading: listModelShowLoading, errorAction, userId, onSuccessAction });
             } else if (!isAccountDataLoaded) {
                 fetchAccountCategoryLov({ setIsLoading: listAccountCategoryLovLoading, errorAction, userId, onSuccessAction });
             } else if (!isTaxCategoryDataLoaded) {
@@ -366,7 +358,7 @@ console.log('ProductHierarchyData', ProductHierarchyData)
         handleButtonClick,
         setButtonData,
         defaultBtnVisiblity,
-        ModelOptions: (ModelOptions?.hasOwnProperty('keyValue') && ModelOptions['keyValue']) || [{}],
+        ModelOptions,
         TaxChargesOptions,
         AccountDataOptions,
         selectedModelGroup,
@@ -401,7 +393,7 @@ console.log('ProductHierarchyData', ProductHierarchyData)
         titleHierarchy: 'Model Group',
         VehicleModelTaxChargesCategoryData: VehicleModelTaxChargesCategoryData['vehicleModel'],
         setFilterString,
-        ModelOptions: (ModelOptions?.hasOwnProperty('keyValue') && ModelOptions['keyValue']) || [{}],
+        ModelOptions,
         handleReferesh,
         handleChange,
         onSearchHandle,

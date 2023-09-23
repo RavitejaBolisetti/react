@@ -26,7 +26,7 @@ const AddEditFormMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
 
-    const disabledProps = { disabled: viewOnly };
+    const disabledProps = { disabled: true };
 
     return (
         <Card>

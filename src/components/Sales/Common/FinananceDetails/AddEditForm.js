@@ -31,8 +31,7 @@ const AddEditFormMain = (props) => {
             form.setFieldsValue({ ...formData, printHypothecationDetails: formData?.printHypothecationDetails ? 1 : 0, doDate: formattedCalendarDate(formData?.doDate), financier: formData?.financierCode });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formData, financeArrangedBy]);
-    console.log('formdataComing', formData);
+    }, [formData]);
 
     const datePickerStyle = {
         width: '100%',
@@ -112,7 +111,7 @@ const AddEditFormMain = (props) => {
                                         </Row>
                                         {financeArrangedBy && checkFinanceType(financeArrangedBy, FINANCE_ARRANGED_BY?.DEALER?.key) && (
                                             <Row gutter={20}>
-                                                {pageType != PAGE_TYPE?.OTF_PAGE_TYPE?.key && (
+                                                {pageType !== PAGE_TYPE?.OTF_PAGE_TYPE?.key && (
                                                     <>
                                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                                             <Form.Item onChange={onLoanChange} label="Loan Amount" name="loanAmount" rules={[validateNumberWithTwoDecimalPlaces('loan amount')]}>

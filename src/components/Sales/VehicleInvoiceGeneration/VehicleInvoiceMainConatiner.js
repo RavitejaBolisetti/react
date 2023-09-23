@@ -37,6 +37,8 @@ const VehicleInvoiceMainConatinerMain = (props) => {
         onFinishCustom,
         selectedOrderId: selectedOtfNumber,
         FormActionButton: VehicleInvoiceFormButton,
+        vehicleInvoiceMasterData,
+        selectedOrder: { ...vehicleInvoiceMasterData?.invoiceDetails, ...vehicleInvoiceMasterData?.invoiceDetails?.otfDetailsRequest, ...vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto?.bookingCustomer },
     };
 
     const renderElement = () => {
@@ -45,7 +47,7 @@ const VehicleInvoiceMainConatinerMain = (props) => {
                 return <InvoiceDetailsMaster {...myProps} />;
             }
             case VEHICLE_INVOICE_SECTION.VEHICLE_DETAILS.id: {
-                return <VehicleDetailsMaster {...myProps} vehicleDetailData={vehicleInvoiceMasterData?.vehicleDetails} formKey={'vehicleDetails'} />;
+                return <VehicleDetailsMaster {...myProps} formData={vehicleInvoiceMasterData?.vehicleDetails} formKey={'vehicleDetails'} />;
             }
             case VEHICLE_INVOICE_SECTION.SCHEME_OFFER_DETAILS.id: {
                 return <SchemeDetailsMaster {...myProps} formData={vehicleInvoiceMasterData?.schemeOfferDetails} formKey={'schemeOfferDetails'} />;
