@@ -28,6 +28,7 @@ import { BASE_URL_VEHICLE_DELIVERY_NOTE_GENERATE as customURL, BASE_URL_VEHICLE_
 
 import { FilterIcon } from 'Icons';
 import VehicleDeliveryNoteFilter from './VehicleDeliveryNoteFilter';
+import { validateDeliveryNote } from 'components/Sales/VehicleDeliveryNote/utils/validateDeliveryNote';
 import { CancelDeliveryNote } from './CancelDeliveryNote';
 
 const mapStateToProps = (state) => {
@@ -147,8 +148,8 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
 
     const [formData, setFormData] = useState([]);
 
-    const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+    const onSuccessAction = () => {
+        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
         searchForm.resetFields();
         setShowDataLoading(false);
@@ -358,7 +359,8 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
                 defaultSection && setCurrentSection(defaultSection);
                 break;
             case NEXT_ACTION:
-                const nextSection = Object.values(sectionName)?.find((i) => i.id > currentSection);
+                const nextSection = Object.values(sectionName)?.find((i) => validateDeliveryNote({ item: i, soldByDealer }) && i.id > currentSection);
+                // const nextSection = Object.values(sectionName)?.find((i) => i.id > currentSection);
                 section && setCurrentSection(nextSection?.id);
                 setLastSection(!nextSection?.id);
                 break;

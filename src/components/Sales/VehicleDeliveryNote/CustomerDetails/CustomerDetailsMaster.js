@@ -16,9 +16,10 @@ import { VehicleDeliveryNoteFormButton } from '../VehicleDeliveryNoteFormButton'
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { AddEditForm } from './AddEditForm';
 import { ViewDetail } from './ViewDetail';
-import styles from 'assets/sass/app.module.scss';
+import { PARAM_MASTER } from 'constants/paramMaster';
+import { getCodeValue } from 'utils/getCodeValue';
 
-import { BASE_URL_VEHICLE_CUSTOMER_DETAILS as customURL } from 'constants/routingApi';
+import styles from 'assets/sass/app.module.scss';
 
 const mapStateToProps = (state) => {
     const {
@@ -58,7 +59,7 @@ const mapDispatchToProps = (dispatch) => ({
 export const CustomerDetailsMasterBase = (props) => {
     const { fetchList, customerDetailsData, setFormActionType, FinanceLovData, fetchFinanceLovList, listFinanceLovShowLoading, isLoading } = props;
 
-    const { listShowLoading, userId, typeData, form, selectedOrder, selectedCustomerId, soldByDealer, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION, section, customerIdValue, setCustomerIdValue } = props;
+    const { listShowLoading, userId, typeData, form, selectedOrder, selectedCustomerId, soldByDealer, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION, section, customerIdValue, setCustomerIdValue, resetData } = props;
 
     const [isFormVisible, setIsFormVisible] = useState(false);
 
@@ -74,13 +75,14 @@ export const CustomerDetailsMasterBase = (props) => {
     useEffect(() => {
         return () => {
             setFormData();
+            resetData();
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
         if (customerDetailsData) {
-            form.setFieldsValue({ ...customerDetailsData });
+            form.setFieldsValue({ ...customerDetailsData, customerType: typeData?.[PARAM_MASTER?.CUST_TYPE?.id]?.find((customer) => customer?.key === customerDetailsData?.customerType)?.value });
             setFormData({ ...customerDetailsData });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps

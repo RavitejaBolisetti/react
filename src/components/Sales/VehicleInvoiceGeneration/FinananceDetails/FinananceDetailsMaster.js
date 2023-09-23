@@ -83,6 +83,7 @@ export const FinananceDetailsMasterBase = (props) => {
 
     const formProps = {
         ...props,
+        formData,
         typeData,
         form,
         formActionType,

@@ -58,7 +58,6 @@ const AddEditFormMain = (props) => {
     const { userId, isInsuranceCompanyDataLoaded, listInsuranceShowLoading, fetchInsuranceCompanyList, insuranceCompanies, formActionType } = props;
     const { formData, form } = props;
     const { Option } = Select;
-    console.log('formDataInsurance>>>', formData);
 
     const onErrorAction = () =>{
 
@@ -93,7 +92,7 @@ const AddEditFormMain = (props) => {
                     <Card style={{ backgroundColor: '#f2f2f2' }}>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item label="Insurance Company 2" name="insuranceCompany" initialValue={formData?.insuranceCompany}>
+                                <Form.Item label="Insurance Company" name="insuranceCompany" initialValue={formData?.insuranceCompany}>
                                     <Select placeholder={preparePlaceholderSelect('Insurance Company')}>
                                         {insuranceCompanies?.map((item) => (
                                             <Option value={item?.key} key={item?.key}>

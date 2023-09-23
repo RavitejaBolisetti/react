@@ -299,8 +299,8 @@ export const VehicleReceiptMasterBase = (props) => {
 
     const handleResetFilter = (e) => {
         const { pageSize } = filterString;
-        setFilterString({ pageSize, current: 1 });
         setShowDataLoading(false);
+        setFilterString({ pageSize, current: 1 });
         advanceFilterForm.resetFields();
     };
 

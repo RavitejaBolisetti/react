@@ -131,5 +131,11 @@ export const EMBEDDED_REPORTS = {
         type: 'Document',
         slug: '',
     },
+    FORM_21_DOCUMENT: {
+        id: 18,
+        key: 'Form21',
+        title: 'Form 21 Document',
+        type: 'Document',
+        slug: '',
+    },
 };
-

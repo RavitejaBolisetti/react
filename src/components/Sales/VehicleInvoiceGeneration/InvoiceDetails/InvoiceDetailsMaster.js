@@ -50,9 +50,9 @@ const InvoiceDetailsMasterBase = (props) => {
     const onFinish = (values) => {
         const { otfDetailsRequest, ...bookingAndBillingCustomerDto } = values;
         if (!Object?.keys(bookingAndBillingCustomerDto)?.length) {
-            setRequestPayload({ ...requestPayload, invoiceDetails: { otfDetailsRequest, bookingAndBillingCustomerDto: { ...vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto } } });
+            setRequestPayload({ ...requestPayload, invoiceDetails: { otfDetailsRequest, bookingAndBillingCustomerDto: { ...requestPayload?.invoiceDetails?.bookingAndBillingCustomerDto } } });
         } else {
-            setRequestPayload({ ...requestPayload, invoiceDetails: { otfDetailsRequest, bookingAndBillingCustomerDto: { ...bookingAndBillingCustomerDto } } });
+            setRequestPayload({ ...requestPayload });
         }
         handleButtonClick({ buttonAction: NEXT_ACTION });
         setButtonData({ ...buttonData, formBtnActive: false });
@@ -87,9 +87,9 @@ const InvoiceDetailsMasterBase = (props) => {
         wrapForm: false,
         selectedOrderId,
     };
-
+    console.log('Hello',vehicleInvoiceMasterData)
     return (
-        <Form layout="vertical" autoComplete="off" form={invoiceDetailForm}  onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={invoiceDetailForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>
