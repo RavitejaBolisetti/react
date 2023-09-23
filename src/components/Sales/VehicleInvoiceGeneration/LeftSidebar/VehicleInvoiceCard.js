@@ -159,7 +159,7 @@ const VehicleInvoiceCard = (props) => {
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    Booking Date: <span>{checkAndSetDefaultValue(selectedOrder?.orderDate, isLoading, DATA_TYPE?.DATE?.key) || 'NA'}</span>
+                    Booking Date: <span>{checkAndSetDefaultValue(selectedOrder?.orderDate ? selectedOrder?.orderDate : selectedOrder?.otfDate, isLoading, DATA_TYPE?.DATE?.key) || 'NA'}</span>
                 </div>
             </Panel>
         </Collapse>

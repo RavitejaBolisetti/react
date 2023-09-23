@@ -25,6 +25,11 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             width: '25%',
         }),
         tblPrepareColumns({
+            title: 'Booking Number',
+            dataIndex: 'otfNumber',
+            width: '25%',
+        }),
+        tblPrepareColumns({
             title: 'Invoice Date',
             dataIndex: 'invoiceDate',
             width: '14%',
