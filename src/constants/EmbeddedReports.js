@@ -89,7 +89,7 @@ export const EMBEDDED_REPORTS = {
     },
     VOUCHER_REPORT: {
         id: 10,
-        key: 'Voucher_Report',
+        key: 'Voucher_Export_Report',
         title: 'Voucher Report ',
         type: 'Report',
         slug: 'voucher-report',
