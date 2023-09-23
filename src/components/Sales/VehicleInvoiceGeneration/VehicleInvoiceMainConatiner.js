@@ -37,6 +37,8 @@ const VehicleInvoiceMainConatinerMain = (props) => {
         onFinishCustom,
         selectedOrderId: selectedOtfNumber,
         FormActionButton: VehicleInvoiceFormButton,
+        vehicleInvoiceMasterData,
+        selectedOrder: { ...vehicleInvoiceMasterData?.invoiceDetails, ...vehicleInvoiceMasterData?.invoiceDetails?.otfDetailsRequest, ...vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto?.bookingCustomer },
     };
 
     const renderElement = () => {
