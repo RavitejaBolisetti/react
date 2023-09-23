@@ -85,7 +85,7 @@ const InsuranceDetailsMasterBase = (props) => {
                     name: 'Booking Number',
                 },
             ];
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction, onSuccessAction });
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction, onSuccessAction});
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedOrderId]);

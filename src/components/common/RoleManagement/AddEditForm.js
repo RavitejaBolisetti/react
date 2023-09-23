@@ -367,12 +367,12 @@ const AddEditFormMain = (props) => {
                                 <div>
                                     <Row gutter={20}>
                                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                            <Form.Item initialValue={formData?.roleId} name="roleId" label="Role Id" rules={[validateRequiredInputField('id'), validationFieldLetterAndNumber('id')]}>
+                                            <Form.Item initialValue={formData?.roleId} name="roleId" label="Role Id" rules={[validateRequiredInputField('id')]}>
                                                 <Input maxLength={6} disabled={editMode ? true : false} placeholder={preparePlaceholderText('id')} />
                                             </Form.Item>
                                         </Col>
                                         <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                            <Form.Item initialValue={formData?.roleName} name="roleName" label="Role Name" rules={[validateRequiredInputField('name'), validateAlphanumericWithSpaceHyphenPeriod('name')]}>
+                                            <Form.Item initialValue={formData?.roleName} name="roleName" label="Role Name" rules={[validateRequiredInputField('name')]}>
                                                 <Input maxLength={50} placeholder={preparePlaceholderText('name')} />
                                             </Form.Item>
                                         </Col>
