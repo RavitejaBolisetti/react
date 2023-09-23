@@ -177,6 +177,7 @@ export const BASE_URL_OTF_EXCHANGE_VEHICLE_ALERT = BASE_URL + 'vehicle/exchangev
 
 export const BASE_URL_OTF_TRANSFER = BASE_URL_OTF + 'transfer';
 export const BASE_URL_OTF_CANCELLATION = BASE_URL_OTF + 'request/cancel';
+export const BASE_URL_OTF_CANCELLATION_WF = BASE_URL_OTF_CANCELLATION + '/approval';
 export const BASE_URL_OTF_CANCELLATION_DEALER_SEARCH = BASE_URL + 'dealer/search';
 
 export const BASE_URL_DOCUMENT_UPLOAD = BASE_URL + 'common/document/upload';

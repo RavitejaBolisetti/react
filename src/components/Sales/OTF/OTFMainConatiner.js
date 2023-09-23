@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React from 'react';
+import React, { useState } from 'react';
 import { Col, Row } from 'antd';
 import { withDrawer } from 'components/withDrawer';
 import { OTF_SECTION } from 'constants/OTFSection';
@@ -32,12 +32,15 @@ import styles from 'assets/sass/app.module.scss';
 
 const OTFMainConatinerMain = (props) => {
     const { currentSection } = props;
+    const [workFlowDetails, setWorkFlowDetails] = useState({});
 
     const myProps = {
         ...props,
         FormActionButton: OTFFormButton,
         StatusBar: OTFStatusBar,
         pageType: PAGE_TYPE?.OTF_PAGE_TYPE?.key,
+        workFlowDetails,
+        setWorkFlowDetails,
     };
 
     const renderElement = () => {
