@@ -6,27 +6,17 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
 import { Card, Col, Form, Row } from 'antd';
-import { tableColumn } from './tableColumn';
 import GSTIRNFilter from './GSTIRNFilter';
 import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 'utils/btnVisiblity';
-// import { convertDateTime, monthDateFormat } from 'utils/formatDateTime';
-
-import { GSTIRNMainConatiner } from './GSTIRNMainConatiner';
-// import { ListDataTable } from 'utils/ListDataTable';
-// import { AdvancedSearch } from './AdvancedSearch';
-import { VEHICLE_RECEIPT_STATUS } from 'constants/VehicleReceiptStatus';
+ import { GSTIRNMainConatiner } from './GSTIRNMainConatiner';
 import { GST_IRN_SECTION } from 'constants/GSTIRNSection';
-
 import { showGlobalNotification } from 'store/actions/notification';
-import { vehicleReceiptDataActions } from 'store/actions/data/vehicleReceipt/vehicleReceipt';
-import { vehicleDetailDataActions } from 'store/actions/data/vehicleReceipt/vehicleDetails';
-import { PARAM_MASTER } from 'constants/paramMaster';
 import { UploadUtil } from 'utils/Upload';
 import { ViewSupportingDocDetail } from './ViewSupportingDocDetail';
 import { GSTLoginForm } from './GSTLoginForm';
-import { FilterIcon } from 'Icons';
+// import { FilterIcon } from 'Icons';
+import { dealerGstAction } from 'store/actions/data/financialAccounting/dealerGstAction';
 
 import styles from 'components/common/Common.module.css';
 
@@ -34,25 +24,18 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ConfigurableParameterEditing: { filteredListData: typeData = [] },
-            VehicleReceipt: {
-                VehicleReceiptSearch: { isLoaded: isSearchDataLoaded = false, isLoading: isOTFSearchLoading, data, filter: filterString },
-            },
+            // ConfigurableParameterEditing: { filteredListData: typeData = [] },
+            FinancialAccounting: {
+                DealerGstDetails: {  data: dealerGstData = [] },
+            },            
         },
     } = state;
-    // console.log('state',state);
-     const moduleTitle = 'GST IRN Authentication';
+
+    const moduleTitle = 'GST IRN Authentication';
     let returnValue = {
-        userId,
-        typeData: typeData[PARAM_MASTER.GRN_STATS.id],
-        grnTypeData: typeData[PARAM_MASTER.GRN_TYPE.id],
-        data: data?.paginationData,
-        totalRecords: data?.totalRecords || [],
-        vehicleReceiptStatusList: Object.values(VEHICLE_RECEIPT_STATUS),
+        userId,        
         moduleTitle,
-        isOTFSearchLoading,
-        isSearchDataLoaded,
-        filterString,
+        dealerGstData,
     };
     return returnValue;
 };
@@ -61,11 +44,8 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchVehicleReceiptList: vehicleReceiptDataActions.fetchList,
-            setFilterString: vehicleReceiptDataActions.setFilter,
-            resetData: vehicleReceiptDataActions.reset,
-            saveData: vehicleDetailDataActions.saveData,
-            listShowLoading: vehicleReceiptDataActions.listShowLoading,
+            fetchList: dealerGstAction.fetchList,
+            listShowLoadingGst: dealerGstAction.listShowLoading,
             showGlobalNotification,
         },
         dispatch
@@ -73,42 +53,26 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const GSTIRNAuthenticationMasterBase = (props) => {
-    const { fetchVehicleReceiptList, listShowLoading, userId, data, totalRecords, showGlobalNotification } = props;
-    const { typeData, grnTypeData, moduleTitle } = props;
-    const { filterString, setFilterString, vehicleReceiptStatusList } = props;
-    // const { mandatoryFields,saveData, resetData, } = props;
+    const { userId, data, showGlobalNotification } = props;
+    const { typeData, moduleTitle } = props;
+    const { filterString, setFilterString, listShowLoadingGst, fetchList, dealerGstData } = props;
     const { ...viewProps } = props;
 
-    const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
-
     const [listFilterForm] = Form.useForm();
-    const [receiptType, setReceiptType] = useState(VEHICLE_RECEIPT_STATUS.IN_TRANSIT.key);
-    const [searchValue, setSearchValue] = useState();
-
-    const tableActions = { EyeIcon: false, EditIcon: false, DeleteIcon: false, AddIcon: true };
-    const tableActionsFalse = { EyeIcon: false, EditIcon: false, DeleteIcon: false, AddIcon: false };
-
-    const [tableIconsVisibility, setTableIconsVisibility] = useState({ ...tableActions });
-
     const [selectedRecord, setSelectedRecord] = useState();
     const [selectedId, setSelectedId] = useState();
     const [finalData, setFinalData] = useState([]);
-
     const [section, setSection] = useState();
     const [defaultSection, setDefaultSection] = useState();
     const [currentSection, setCurrentSection] = useState();
     const [sectionName, setSetionName] = useState();
     const [isLastSection, setLastSection] = useState(false);
-
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
 
-    const [showDataLoading, setShowDataLoading] = useState(true);
+    // const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
-
-    const [page, setPage] = useState({ pageSize: 10, current: 1 });
-    const dynamicPagination = true;
 
     const defaultBtnVisiblity = {
         editBtn: false,
@@ -122,90 +86,27 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
     };
 
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
-    const [currentItem, setCurrentItem] = useState(VEHICLE_RECEIPT_STATUS?.IN_TRANSIT?.key);
-
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
-
     const [formData, setFormData] = useState([]);
-
     const onSuccessAction = (res) => {
         // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
         searchForm.resetFields();
-        setShowDataLoading(false);
+        // setShowDataLoading(false);
     };
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
-        setShowDataLoading(false);
+        // setShowDataLoading(false);
     };
 
-    const extraParams = useMemo(() => {
-        return [
-            {
-                key: 'searchType',
-                title: 'Type',
-                value: 'status',
-                canRemove: false,
-                filter: false,
-            },
-            {
-                key: 'searchParam',
-                title: 'Value',
-                value: receiptType,
-                name: typeData?.[PARAM_MASTER?.GRN_STATS?.id]?.find((i) => i?.key === receiptType)?.value,
-                canRemove: false,
-                filter: false,
-            },
-            {
-                key: 'grnNumber',
-                title: 'grnNumber',
-                value: searchValue,
-                name: searchValue,
-                canRemove: false,
-                filter: false,
-            },
-            {
-                key: 'pageNumber',
-                title: 'Value',
-                value: page?.current,
-                canRemove: true,
-                filter: false,
-            },
-            {
-                key: 'pageSize',
-                title: 'Value',
-                value: page?.pageSize,
-                canRemove: true,
-                filter: false,
-            },
-
-            {
-                key: 'sortBy',
-                title: 'Sort By',
-                value: page?.sortBy,
-                canRemove: true,
-                filter: false,
-            },
-            {
-                key: 'sortIn',
-                title: 'Sort Type',
-                value: page?.sortType,
-                canRemove: true,
-                filter: false,
-            },
-        ];
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [receiptType, searchValue, filterString, page]);
-
-       useEffect(() => {
-        if (userId) {
-            setShowDataLoading(true);
-            fetchVehicleReceiptList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+   
+    useEffect(() => {
+        if(userId){
+          fetchList({setIsLoading: listShowLoadingGst, userId, onSuccessAction, onErrorAction });
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, receiptType, filterString, page]);
+    },[userId]);
 
     useEffect(() => {
         const defaultSection = GST_IRN_SECTION.BRANCH_ACCESSIBLE.id;
@@ -270,7 +171,7 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
     const onFinishSearch = (values) => {};
 
     const handleResetFilter = (e) => {
-        setShowDataLoading(false);
+        // setShowDataLoading(false);
         setFilterString();
         advanceFilterForm.resetFields();
     };
@@ -322,31 +223,14 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
 
         advanceFilterForm.resetFields();
         advanceFilterForm.setFieldsValue();
-        setAdvanceSearchVisible(false);
+        // setAdvanceSearchVisible(false);
 
         setSelectedRecord();
         setIsFormVisible(false);
         setButtonData({ ...defaultBtnVisiblity });
     };
 
-    const tableProps = {
-        dynamicPagination,
-        totalRecords,
-        setPage,
-        tableColumn: tableColumn({ handleButtonClick, tableIconsVisibility }),
-        tableData: data,
-        showAddButton: false,
-        handleAdd: handleButtonClick,
-        receiptType,
-    };
-
-    const onAdvanceSearchCloseAction = () => {
-        form.resetFields();
-        advanceFilterForm.resetFields();
-        advanceFilterForm.setFieldsValue();
-        setAdvanceSearchVisible(false);
-    };
-
+  
     const removeFilter = (key) => {
         if (key === 'searchParam') {
             const { searchType, searchParam, ...rest } = filterString;
@@ -357,49 +241,18 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
         }
     };
 
-    const handleReceiptTypeChange = (buttonName) => {
-        setCurrentItem(buttonName?.key);
+    
+    // const handleChange = (e) => {
+    //     setSearchValue(e.target.value);
+    // };
 
-        const buttonkey = buttonName?.key;
-
-        switch (buttonkey) {
-            case VEHICLE_RECEIPT_STATUS?.IN_TRANSIT?.key: {
-                setTableIconsVisibility({ ...tableActionsFalse, AddIcon: true, EyeIcon: false });
-                break;
-            }
-            case VEHICLE_RECEIPT_STATUS?.PARTIALLY_RECEIVED?.key: {
-                setTableIconsVisibility({ ...tableActionsFalse, EyeIcon: false });
-                break;
-            }
-            case VEHICLE_RECEIPT_STATUS?.RECEIVED?.key: {
-                setTableIconsVisibility({ ...tableActionsFalse, EyeIcon: true });
-                break;
-            }
-            case VEHICLE_RECEIPT_STATUS?.RETURNED?.key: {
-                setTableIconsVisibility({ ...tableActionsFalse, EyeIcon: true });
-                break;
-            }
-            default: {
-                break;
-            }
-        }
-        setReceiptType(buttonkey);
-        searchForm.resetFields();
-    };
-
-    const handleChange = (e) => {
-        setSearchValue(e.target.value);
-    };
-
-    const handleSearch = (value) => {
-        setFilterString({ ...filterString, grnNumber: value });
-        setSearchValue(value);
-    };
+    // const handleSearch = (value) => {
+    //     setFilterString({ ...filterString, grnNumber: value });
+    //     setSearchValue(value);
+    // };
 
     const advanceFilterResultProps = {
-        extraParams,
         removeFilter,
-        vehicleReceiptStatusList: VEHICLE_RECEIPT_STATUS,
         advanceFilter: true,
         otfFilter: true,
         filterString,
@@ -410,35 +263,27 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
         handleResetFilter,
         advanceFilterForm,
         data,
-        setAdvanceSearchVisible,
         typeData,
         searchForm,
         onFinishSearch,
-        receiptType,
-        handleReceiptTypeChange,
-        handleChange,
-        handleSearch,
-        currentItem,
-        setCurrentItem,
-        userId
+        userId,
+        dealerGstData,
     };
 
-    const advanceFilterProps = {
-        isVisible: isAdvanceSearchVisible,
-
-        icon: <FilterIcon size={20} />,
-        titleOverride: 'Advance Filters',
-
-        onCloseAction: onAdvanceSearchCloseAction,
-        handleResetFilter,
-        filterString,
-        setFilterString,
-        advanceFilterForm,
-        setAdvanceSearchVisible,
-        vehicleReceiptStatusList,
-        grnTypeData,
-        onFinishSearch,
-    };
+    // const advanceFilterProps = {
+    //     isVisible: isAdvanceSearchVisible,
+    //     icon: <FilterIcon size={20} />,
+    //     titleOverride: 'Advance Filters',
+    //     onCloseAction: onAdvanceSearchCloseAction,
+    //     handleResetFilter,
+    //     filterString,
+    //     setFilterString,
+    //     advanceFilterForm,
+    //     setAdvanceSearchVisible,
+    //     // vehicleReceiptStatusList,
+    //     grnTypeData,
+    //     onFinishSearch,
+    // };
 
     const drawerTitle = useMemo(() => {
         if (formActionType?.viewMode) {
@@ -469,7 +314,6 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
         setIsFormVisible,
         finalData,
         setFinalData,
-
         setButtonData,
         handleButtonClick,
         defaultFormActionType,
@@ -496,8 +340,7 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
         onFinish,
         onFinishFailed,
     };
-    const uploadProps = {
-         
+    const uploadProps = {         
         // uploadedFile,
         // setUploadedFile,
         // fileList,
@@ -531,7 +374,6 @@ export const GSTIRNAuthenticationMasterBase = (props) => {
                     </Card>
                 </Col>
             </Row>
-            {/* <AdvancedSearch {...advanceFilterProps} /> */}
             <GSTIRNMainConatiner {...containerProps} />
         </>
     );

@@ -6,8 +6,8 @@
 import React from 'react';
 import { Collapse, Divider } from 'antd';
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
-import { getCodeValue } from 'utils/getCodeValue';
-import { DATA_TYPE } from 'constants/dataType';
+// import { getCodeValue } from 'utils/getCodeValue';
+// import { DATA_TYPE } from 'constants/dataType';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import styles from 'components/common/Common.module.css';
 import { FiCopy } from 'react-icons/fi';
@@ -36,12 +36,12 @@ const GstAuthenticationDetailCard = (props) => {
                     <>
                         <div className={`${styles.detailCardText} ${styles.marB5}`} style={{ fontSize: '14px' }}>
                             Dealer Name:
-                            <span>
+                            {/* <span>
                                 {checkAndSetDefaultValue(selectedRecord?.grnNumber, isLoading)}
                                 <a className={`${styles.floatRight} ${styles.marL5}`}>
                                     <FiCopy className={styles.activeForm} />
                                 </a>
-                            </span>
+                            </span> */}
                         </div>
                     </>
                 }

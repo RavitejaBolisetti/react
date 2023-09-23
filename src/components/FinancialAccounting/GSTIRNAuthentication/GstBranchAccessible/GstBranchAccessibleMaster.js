@@ -3,20 +3,15 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, } from 'react';
 import { Form, Row, Col } from 'antd';
-
-import { ViewDetail } from './ViewDetail';
-import { AddEditForm } from './AddEditForm';
 import { GstAuthFormButton } from '../GSTAuthenticationFormButton';
-
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { tableColumn } from './tableColumn';
 import { ListDataTable } from 'utils/ListDataTable';
-
-import { supplierInvoiceDataActions } from 'store/actions/data/vehicleReceipt/supplierInvoice';
 import { showGlobalNotification } from 'store/actions/notification';
+import { dealerBranchAccessAction } from 'store/actions/data/financialAccounting/dealerBranchAccessAction';
 
 import styles from 'components/common/Common.module.css';
 
@@ -24,9 +19,11 @@ const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            VehicleReceipt: {
-                SupplierInvoice: { isLoaded: isDataLoaded = false, isLoading, data: supplierInvoiceData = [] },
+            FinancialAccounting: {
+                // DocumentDescription: { isLoaded: isDocumentTypesLoaded = false, isLoading: isDocumentTypeLoading = false, data: documentTypeData = [] },
+                DealerBranchDetails: {  data: dealerBranchData = [] },
             },
+            
         },
     } = state;
 
@@ -34,11 +31,8 @@ const mapStateToProps = (state) => {
 
     let returnValue = {
         userId,
-        isDataLoaded,
-
-        supplierInvoiceData: supplierInvoiceData?.supplierAndInvoiceDetails,
-        isLoading,
         moduleTitle,
+        dealerBranchData,
     };
     return returnValue;
 };
@@ -47,10 +41,9 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchList: supplierInvoiceDataActions.fetchList,
-            saveData: supplierInvoiceDataActions.saveData,
-            resetData: supplierInvoiceDataActions.reset,
-            listShowLoading: supplierInvoiceDataActions.listShowLoading,
+            fetchList: dealerBranchAccessAction.fetchList,
+            listShowLoading: dealerBranchAccessAction.listShowLoading,
+
             showGlobalNotification,
         },
         dispatch
@@ -59,38 +52,19 @@ const mapDispatchToProps = (dispatch) => ({
 
 const GstBranchAccessibleMasterBase = (props) => {
     const { typeData } = props;
-    const { userId, buttonData, setButtonData, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, supplierInvoiceData, isLoading } = props;
-    const { form, selectedId, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick } = props;
-    const [exchangeValue, setexchangeValue] = useState(false);
+    const { userId, showGlobalNotification, section, fetchList, listShowLoading, } = props;
+    const { form, handleFormValueChange, NEXT_ACTION, handleButtonClick, dealerBranchData } = props;
 
-    const onErrorAction = (message) => {
+     const onErrorAction = (message) => {
         showGlobalNotification({ message });
     };
 
-    // const extraParams = [
-    //     {
-    //         key: 'supplierInvoiceNumber',
-    //         title: 'supplierInvoiceNumber',
-    //         value: selectedId,
-    //         name: 'Supplier Invoice Number',
-    //     },
-    // ];
-
     useEffect(() => {
-        if (userId && selectedId) {
-            setButtonData({ ...buttonData, formBtnActive: true });
-            const extraParams = [
-                {
-                    key: 'supplierInvoiceNumber',
-                    title: 'supplierInvoiceNumber',
-                    value: selectedId,
-                    name: 'Supplier Invoice Number',
-                },
-            ];
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
+        if (userId) {            
+            fetchList({ setIsLoading: listShowLoading, userId, onErrorAction });
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId]);
+    }, [userId]);     
+    
 
     const onFinish = (values) => {
         // const recordId = supplierInvoiceData?.id || '';
@@ -118,35 +92,14 @@ const GstBranchAccessibleMasterBase = (props) => {
 
     const onFinishFailed = () => {};
 
-    const formProps = {
-        ...props,
-        form,
-        onFinish,
-        onFinishFailed,
-        fetchList,
-        typeData,
-        buttonData,
-        setButtonData,
-
-        userId,
-        isDataLoaded,
-        formData: supplierInvoiceData,
-        isLoading,
-        exchangeValue,
-        setexchangeValue,
-    };
-
     const viewProps = {
         typeData,
-        formData: supplierInvoiceData,
         styles,
-        isLoading,
     };
-    const tableProps = {        
+    const tableProps = {
         tableColumn: tableColumn(handleButtonClick),
-        tableData: [],    //data,
+        tableData: dealerBranchData, //data,
         showAddButton: false,
-
     };
     return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
@@ -158,7 +111,7 @@ const GstBranchAccessibleMasterBase = (props) => {
                         </Col>
                     </Row>
                     {/* isLoading={showDataLoading} */}
-                    <ListDataTable  {...tableProps} showAddButton={false} />
+                    <ListDataTable {...tableProps} showAddButton={false} />
 
                     {/* {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />} */}
                 </Col>

@@ -4,15 +4,16 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Button, Row, Col, Input, Form, Select } from 'antd';
-
-import { FilterIcon } from 'Icons';
+import { Button, Row, Col, Input, } from 'antd';
+// import { FilterIcon } from 'Icons';
 import { RxCross2 } from 'react-icons/rx';
+import { customSelectBox } from 'utils/customSelectBox';
+import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
 import styles from 'components/common/Common.module.css';
 
 export default function GSTIRNFilter(props) {
-    const { extraParams, removeFilter, handleResetFilter, advanceFilter = false, filterString, } = props;
+    const { extraParams, removeFilter, handleResetFilter, advanceFilter = false, filterString, dealerGstData,  } = props;
     const { userId, isReadOnly = true } = props;
     const disabledProps = { disabled: isReadOnly };
     return (
@@ -26,8 +27,10 @@ export default function GSTIRNFilter(props) {
                         <Col xs={24} sm={6} md={6} lg={6} xl={6} className={styles.verticallyCentered}>
                             <Input maxLength={6} placeholder="Dealer Name" value={userId} {...disabledProps} />
                         </Col>
-                        <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.verticallyCentered}>
-                            <Select placeholder="Choose GSTIN" allowClear options={''} fieldNames={{ label: 'value', value: 'key' }} />
+                        <Col xs={24} sm={4} md={4} lg={4} xl={4} className={styles.verticallyCentered}>                           
+                        {customSelectBox({ data: dealerGstData, fieldNames: { key: 'key', value: 'value' }, placeholder: preparePlaceholderSelect('GSTIN') })}
+                    {/* <Select placeholder="Choose GSTIN" allowClear options={''} fieldNames={{ label: 'value', value: 'key' }} /> */}
+                        
                         </Col>
                         {/* <Col xs={24} sm={8} md={8} lg={8} xl={8} className={styles.verticallyCentered}>
                             <Button

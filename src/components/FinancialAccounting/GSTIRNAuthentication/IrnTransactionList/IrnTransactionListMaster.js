@@ -6,22 +6,18 @@
 import React, { useEffect, useState } from 'react';
 import { Form, Row, Col, Empty, Spin } from 'antd';
 
-// import { ViewDetail } from './ViewDetail';
-// import { AddEditForm } from './AddEditForm';
 import { GstAuthFormButton } from '../GSTAuthenticationFormButton';
-
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
-import { vehicleDetailDataActions } from 'store/actions/data/vehicleReceipt/vehicleDetails';
+// import { vehicleDetailDataActions } from 'store/actions/data/vehicleReceipt/vehicleDetails';
 import { showGlobalNotification } from 'store/actions/notification';
 import { PARAM_MASTER } from 'constants/paramMaster';
-
 import LeftPanel from 'components/common/LeftPanel';
-
 import { applicationMasterDataActions } from 'store/actions/data/applicationMaster';
 import { menuDataActions } from 'store/actions/data/menu';
 import ViewApplicationDetailMain from 'components/common/ApplicationMaster/viewDeatils/ViewApplicationDetail';
+
+import { gstIrnTransactionAction } from 'store/actions/data/financialAccounting/gstIrnTransactionAction';
 
 import styles from 'components/common/Common.module.css';
 
@@ -30,9 +26,14 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
-            ApplicationMaster: { applicationCriticalityGroupData: criticalityGroupData, applicationDetailsData, dealerLocations, applicationData, configurableParamData, actions, isApplicationDeatilsLoading, isApplicatinoOnSaveLoading, isLoading, isActionsLoaded },
+            ApplicationMaster: { applicationCriticalityGroupData: criticalityGroupData, applicationDetailsData, applicationData, isApplicationDeatilsLoading, isLoading },
+            // ApplicationMaster: { applicationCriticalityGroupData: criticalityGroupData, applicationDetailsData, dealerLocations, applicationData, configurableParamData, actions, isApplicationDeatilsLoading, isApplicatinoOnSaveLoading, isLoading, isActionsLoaded },
+            FinancialAccounting: {
+                GstIrnTransactionDetails: { data: gstIrnTreeData = [] },
+            },
+
             // VehicleReceipt: {
-                // VehicleDetails: { isLoaded: isDataLoaded = false, isLoading, data: vehicleDetailData = [] },
+            // VehicleDetails: { isLoaded: isDataLoaded = false, isLoading, data: vehicleDetailData = [] },
             // },
         },
     } = state;
@@ -51,6 +52,7 @@ const mapStateToProps = (state) => {
         menuData: applicationData,
         applicationDetailsData,
         isApplicationDeatilsLoading,
+        gstIrnTreeData,
     };
     return returnValue;
 };
@@ -60,21 +62,24 @@ const mapDispatchToProps = (dispatch) => ({
     ...bindActionCreators(
         {
             // fetchList: vehicleDetailDataActions.fetchList,
-            saveData: vehicleDetailDataActions.saveData,
-            resetData: vehicleDetailDataActions.reset,
-            listShowLoading: vehicleDetailDataActions.listShowLoading,
+            // saveData: vehicleDetailDataActions.saveData,
+            // resetData: vehicleDetailDataActions.reset,
+            // listShowLoading: vehicleDetailDataActions.listShowLoading,
 
             fetchApplication: applicationMasterDataActions.fetchApplicationDetails,
             applicationDetailListShowLoading: applicationMasterDataActions.detailListShowLoading,
-            fetchApplicationCriticality: applicationMasterDataActions.fetchApplicationCriticalityGroup,
-            fetchApplicationAction: applicationMasterDataActions.fetchApplicationAction,
-            fetchCriticalitiData: applicationMasterDataActions.fetchConfigurableParameterList,
+            // fetchApplicationCriticality: applicationMasterDataActions.fetchApplicationCriticalityGroup,
+            // fetchApplicationAction: applicationMasterDataActions.fetchApplicationAction,
+            // fetchCriticalitiData: applicationMasterDataActions.fetchConfigurableParameterList,
             applicationMasterDataShowLoading: applicationMasterDataActions.listShowLoading,
             onSaveShowLoading: applicationMasterDataActions.onSaveShowLoading,
             saveApplicationDetails: applicationMasterDataActions.saveApplicationDetails,
             fetchList: applicationMasterDataActions.fetchMenuList,
 
             applicationListShowLoading: menuDataActions.applicationListShowLoading,
+
+            fetchListGstIrnTree: gstIrnTransactionAction.fetchList,
+            listShowLoadingTree: gstIrnTransactionAction.listShowLoading,
 
             showGlobalNotification,
         },
@@ -85,11 +90,11 @@ const mapDispatchToProps = (dispatch) => ({
 const IrnTransactionListMasterBase = (props) => {
     const { typeData, vehicleStatusType, physicalStatusType, shortageType, vehicleDetailData } = props;
     const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, isLoading } = props;
-    const { form, selectedId, finalData, setFinalData, onFinish, onFinishFailed, menuData, applicationMasterDataShowLoading, fetchApplicationCriticality, fetchApplicationAction, fetchCriticalitiData } = props;
-    const { applicationDetailsData, isApplicationDeatilsLoading, fetchApplication, applicationDetailListShowLoading } = props;
-
+    const { form, selectedId, finalData, setFinalData, onFinish, onFinishFailed, menuData, applicationMasterDataShowLoading } = props;
+    const { applicationDetailsData, isApplicationDeatilsLoading, fetchApplication, applicationDetailListShowLoading, fetchListGstIrnTree, listShowLoadingTree } = props;
+    const { gstIrnTreeData } = props;
     const [vehicleDetailForm] = Form.useForm();
-
+    console.log('gstIrnTreeData', gstIrnTreeData);
     const defaultBtnVisiblity = { editBtn: false, rootChildBtn: true, childBtn: false, siblingBtn: false, saveBtn: false, resetBtn: false, cancelBtn: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
 
@@ -123,13 +128,34 @@ const IrnTransactionListMasterBase = (props) => {
 
     useEffect(() => {
         if (userId) {
-            fetchApplicationCriticality({ setIsLoading: applicationMasterDataShowLoading });
-            fetchApplicationAction({ setIsLoading: applicationMasterDataShowLoading, userId, id: 'Finac' });
-            fetchCriticalitiData({ setIsLoading: applicationMasterDataShowLoading });
+            // fetchApplicationCriticality({ setIsLoading: applicationMasterDataShowLoading });
+            // fetchApplicationAction({ setIsLoading: applicationMasterDataShowLoading, userId, id: 'Finac' });
+            // fetchCriticalitiData({ setIsLoading: applicationMasterDataShowLoading });
+
             fetchList({ setIsLoading: applicationMasterDataShowLoading, userId, deviceType: menuType, sid: 'APPMST' });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, menuType]);
+
+    useEffect(() => {
+        if (userId) {
+            const extraParams = [
+                {
+                    key: 'sid',
+                    title: 'sid',
+                    value: 'APPMST',
+                    name: 'SID',
+                },
+                {
+                    key: 'irn',
+                    title: 'irn',
+                    value: 'Y',
+                    name: 'IRN',
+                },
+            ];
+            fetchListGstIrnTree({ setIsLoading: listShowLoadingTree, userId, extraParams });
+        }
+    }, [userId]);
 
     const formProps = {
         ...props,
@@ -185,13 +211,13 @@ const IrnTransactionListMasterBase = (props) => {
         setSelectedTreeSelectKey,
         fieldNames,
         handleTreeViewClick,
-        treeData: menuData,
+        treeData: gstIrnTreeData, //menuData,
         setSearchValue,
         searchValue,
     };
 
-    const leftCol = menuData?.length > 0 ? 14 : 24;
-    const rightCol = menuData?.length > 0 ? 10 : 24;
+    // const leftCol = menuData?.length > 0 ? 14 : 24;
+    // const rightCol = menuData?.length > 0 ? 10 : 24;
     return (
         <>
             <Form layout="vertical" autoComplete="off" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>
@@ -211,7 +237,7 @@ const IrnTransactionListMasterBase = (props) => {
                     </Col>
 
                     <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                        <Spin spinning={isApplicationDeatilsLoading} >
+                        <Spin spinning={isApplicationDeatilsLoading}>
                             {selectedTreeKey?.length && applicationDetailsData?.length ? (
                                 <>
                                     <ViewApplicationDetailMain applicationDetailsData={applicationDetailsData} styles={styles} />

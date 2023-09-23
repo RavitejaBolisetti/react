@@ -4,8 +4,6 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { tblPrepareColumns,} from 'utils/tableColumn';  // tblActionColumn
-// import { VechilePurchaseOrderStatusTag } from './utils/VechilePurchaseOrderStatusTag';
-// import { convertDateMonthYear } from 'utils/formatDateTime';
 
 // import styles from 'components/common/Common.module.css';
 
@@ -13,7 +11,7 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
     const tableColumn = [
         tblPrepareColumns({
             title: 'Branch Name',
-            dataIndex: 'branchName',
+            dataIndex: 'dealerLocationName',
             width: '14%',
             sorter:false,
         }),
