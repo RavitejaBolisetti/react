@@ -316,6 +316,8 @@ const VehicleDetailsMasterMain = (props) => {
         setProductModelCode,
         productHierarchyData,
         showPrintDiscount: true,
+        ShowPOandSOdetails: false,
+        showAvailaibleStock: false,
     };
 
     const viewProps = {

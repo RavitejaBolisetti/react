@@ -400,8 +400,11 @@ export const VehicleInvoiceMasterBase = (props) => {
     };
 
     const handleIRNGeneration = () => {
-        const data = { otfNumber: selectedOtfNumber, invoiceNumber: selectedOrderId };
+        const data = { otfNumber: selectedOtfNumber, invoiceNumber: selectedOrder?.invoiceNumber };
         const onSuccess = (res) => {
+            setShowDataLoading(true);
+            setConfirmRequest(false);
+            resetOtfData();
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
             const extraParam = [
@@ -411,13 +414,8 @@ export const VehicleInvoiceMasterBase = (props) => {
                     value: selectedOtfNumber,
                     name: 'Booking Number',
                 },
-                {
-                    key: 'invoiceNumber',
-                    value: selectedOrderId || '',
-                    name: 'Invoice Number',
-                },
             ];
-            fetchInvoiceMasterData({ customURL: InvoiceDetailsURL, setIsLoading: listShowLoading, userId, extraParams: extraParam, onErrorAction });
+            fetchOTFDetail({ customURL, setIsLoading: listShowLoading, userId, extraParams: extraParam, onErrorAction });
         };
         const onError = (message) => {
             showGlobalNotification({ message });

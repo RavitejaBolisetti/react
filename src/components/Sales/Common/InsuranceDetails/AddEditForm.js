@@ -79,21 +79,6 @@ const AddEditFormMain = (props) => {
     }, [userId, !isInsuranceCompanyDataLoaded]);
 
     useEffect(() => {
-        const extraParams = [
-            {
-                key: 'partyType',
-                title: 'partyType',
-                value: 'IN',
-                name: 'Party Type',
-            },
-        ];
-        if (userId && !isInsuranceCompanyDataLoaded) {
-            fetchInsuranceCompanyList({ setIsLoading: listInsuranceShowLoading, userId, extraParams });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, !isInsuranceCompanyDataLoaded]);
-
-    useEffect(() => {
         if (formData) {
             form.setFieldsValue({ ...formData, insuranceDate: formattedCalendarDate(formData?.insuranceDate)});
         }
