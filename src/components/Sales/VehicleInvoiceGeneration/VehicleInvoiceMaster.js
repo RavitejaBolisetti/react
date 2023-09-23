@@ -139,6 +139,8 @@ export const VehicleInvoiceMasterBase = (props) => {
     const [sectionName, setSetionName] = useState();
     const [isLastSection, setLastSection] = useState(false);
     const [receipt, setReceipt] = useState('');
+    const [reportType, setReportType] = useState();
+    const [reportDetail, setReportDetail] = useState();
 
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
@@ -170,6 +172,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         approveCancelBtn: false,
         rejectCancelBtn: false,
         printInvoiceBtn: false,
+        printForm21Btn: false,
     };
 
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -459,7 +462,7 @@ export const VehicleInvoiceMasterBase = (props) => {
                 setButtonData(Visibility);
                 // setButtonData({ ...Visibility, cancelReceiptBtn: true });
                 if (buttonAction === VIEW_ACTION) {
-                    invoiceStatus === QUERY_BUTTONS_CONSTANTS.INVOICED.key ? setButtonData({ ...Visibility, printInvoiceBtn: true, cancelInvoiceBtn: true, approveCancelBtn: false, rejectCancelBtn: false }) : invoiceStatus === QUERY_BUTTONS_CONSTANTS.CANCELLATION_REQUEST.key ? setButtonData({ ...Visibility, cancelInvoiceBtn: false, approveCancelBtn: true, rejectCancelBtn: true }) : setButtonData({ ...Visibility, cancelInvoiceBtn: false, approveCancelBtn: false, rejectCancelBtn: false });
+                    invoiceStatus === QUERY_BUTTONS_CONSTANTS.INVOICED.key ? setButtonData({ ...Visibility, printForm21Btn: true, printInvoiceBtn: true, cancelInvoiceBtn: true, approveCancelBtn: false, rejectCancelBtn: false }) : invoiceStatus === QUERY_BUTTONS_CONSTANTS.CANCELLATION_REQUEST.key ? setButtonData({ ...Visibility, cancelInvoiceBtn: false, approveCancelBtn: true, rejectCancelBtn: true }) : setButtonData({ ...Visibility, cancelInvoiceBtn: false, approveCancelBtn: false, rejectCancelBtn: false });
                     // (!otfData?.irnStatus || otfData?.irnStatus && timeStampCheck(otfData?.irnDate, otfData?.invoiceDate))
                 }
             }
@@ -569,6 +572,7 @@ export const VehicleInvoiceMasterBase = (props) => {
     };
 
     const onPrintInvoice = (record) => {
+        setReportType(`Invoice`);
         setReportVisible(true);
 
         setAdditionalReportParams([
@@ -578,6 +582,22 @@ export const VehicleInvoiceMasterBase = (props) => {
             },
         ]);
     };
+
+    const onPrintForm21 = (record) => {
+        setReportType(`Form_21`);
+        setReportVisible(true);
+
+        setAdditionalReportParams([
+            {
+                key: 'invoice_id',
+                value: record?.id,
+            },
+        ]);
+    };
+
+    useEffect(() => {
+        setReportDetail(reportType === `Invoice` ? EMBEDDED_REPORTS?.INVOICE_DOCUMENT : reportType === `Form_21` ? EMBEDDED_REPORTS?.FORM_21_DOCUMENT : null);
+    }, [reportType]);
 
     const handleCloseReceipt = () => {
         setCancelInvoiceVisible(false);
@@ -722,6 +742,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         isVehicleInvoiceDataLoading,
         handleBookingChange,
         onPrintInvoice,
+        onPrintForm21,
         confirmRequest,
         setConfirmRequest,
     };
@@ -736,7 +757,6 @@ export const VehicleInvoiceMasterBase = (props) => {
         typeData,
     };
 
-    const reportDetail = EMBEDDED_REPORTS?.INVOICE_DOCUMENT;
     const reportProps = {
         isVisible: isReportVisible,
         titleOverride: reportDetail?.title,
