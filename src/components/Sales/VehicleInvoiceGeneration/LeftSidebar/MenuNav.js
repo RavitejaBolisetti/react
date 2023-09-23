@@ -11,12 +11,12 @@ import { getSelectedMenuAttribute } from 'utils/getSelectedMenuAttribute';
 
 export const validateOTFMenu = ({ item, status, otfData }) => {
     switch (item?.id) {
-        // case VEHICLE_INVOICE_SECTION.EXCHANGE_DETAILS.id:
-        //     return otfData?.loyaltyScheme !== 1;
-        // case VEHICLE_INVOICE_SECTION.REFERRALS.id:
-        //     return otfData?.referral === 'Y';
-        // case VEHICLE_INVOICE_SECTION.LOYALTY_SCHEME.id:
-        //     return otfData?.exchange !== 1 && otfData?.loyaltyScheme === 1;
+        case VEHICLE_INVOICE_SECTION.EXCHANGE_DETAILS.id:
+            return otfData?.loyaltyScheme !== 1;
+        case VEHICLE_INVOICE_SECTION.REFERRALS.id:
+            return otfData?.referral === 'Y';
+        case VEHICLE_INVOICE_SECTION.LOYALTY_SCHEME.id:
+            return otfData?.exchange !== 1 && otfData?.loyaltyScheme === 1;
         default:
             return true;
     }
