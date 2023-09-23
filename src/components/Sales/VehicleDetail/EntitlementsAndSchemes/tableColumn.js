@@ -53,7 +53,7 @@ export const tableColumn = () => {
             dataIndex: 'validityStartDate',
             width: '200px',
             sorter: true,
-            // render: (text) => formattedCalendarDate(text),
+            render: (text) => formattedCalendarDate(text),
         }),
 
         tblPrepareColumns({
@@ -61,7 +61,7 @@ export const tableColumn = () => {
             dataIndex: 'validityEndDate',
             width: '200px',
             sorter: true,
-            // render: (text) => formattedCalendarDate(text),
+            render: (text) => formattedCalendarDate(text),
         }),
 
         tblPrepareColumns({
