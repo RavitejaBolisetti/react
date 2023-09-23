@@ -65,7 +65,7 @@ const VehicleDetailCard = (props) => {
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    MFG Warranty: <span>{convertDateTime(selectedRecord?.mfgWarranty, dateFormatView) || 'NA'}</span>
+                    MFG Warranty: <span>{selectedRecord?.mfgWarranty === 'Expired' ? selectedRecord?.mfgWarranty : convertDateTime(selectedRecord?.mfgWarranty, dateFormatView) || 'NA'}</span>
                 </div>
             </Panel>
         </Collapse>

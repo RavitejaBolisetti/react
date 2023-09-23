@@ -7,11 +7,11 @@ export const PRICING_TYPE = {
     RSO_PLANT: {
         id: 1,
         title: 'RSO Plant (Non-eDCM)',
-        key: 'RSO_PLANT',
+        key: 'RSO',
     },
     EX_PLANT: {
         id: 2,
         title: 'Explant (eDCM)',
-        key: 'EX_PLANT',
+        key: 'EXP',
     },
 };
