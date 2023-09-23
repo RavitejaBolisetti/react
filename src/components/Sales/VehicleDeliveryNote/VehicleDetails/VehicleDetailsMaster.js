@@ -67,6 +67,7 @@ const VehicleDetailsMasterBase = (props) => {
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const [isFormVisible, setIsFormVisible] = useState(false);
+    const [toolTipContent, setToolTipContent] = useState();
 
     const extraParams = [
         {
@@ -82,6 +83,31 @@ const VehicleDetailsMasterBase = (props) => {
             name: 'Invoice Number',
         },
     ];
+
+    useEffect(() => {
+        if (userId) {
+            setToolTipContent(
+                <div>
+                    <p>
+                        Color - <span>{vehicleData?.modelColor ?? 'Na'}</span>
+                    </p>
+                    <p>
+                        Seating - <span>{vehicleData?.seatingCapacity ?? 'Na'}</span>
+                    </p>
+                    <p>
+                        Fuel - <span>{vehicleData?.fuel ?? 'Na'}</span>
+                    </p>
+                    <p>
+                        Variant - <span>{vehicleData?.varient ?? 'Na'}</span>
+                    </p>
+                    <p>
+                        Name - <span>{vehicleData?.modelDescription ?? 'Na'}</span>
+                    </p>
+                </div>
+            );
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [vehicleData]);
 
     useEffect(() => {
         if (userId && selectedOrderId && selectedInvoiceId) {
@@ -140,8 +166,9 @@ const VehicleDetailsMasterBase = (props) => {
         handleFormValueChange,
         handleButtonClick,
         onCloseAction,
-        buttonData,
+        buttonData, 
         setButtonData,
+        toolTipContent,
     };
 
     const viewProps = {

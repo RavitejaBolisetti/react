@@ -24,12 +24,12 @@ const AddEditFormMain = (props) => {
             form.setFieldsValue({
                 deliveryNoteFor: 'Vehicle Sold By Dealer',
             });
-        }else{
+        } else {
             form.setFieldsValue({
                 deliveryNoteFor: 'Direct Built by MnM',
             });
         }
-    
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [soldByDealer]);
 
@@ -79,7 +79,7 @@ const AddEditFormMain = (props) => {
                                             </Col>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                                 <Form.Item initialValue={formData?.relationShipManager} label="Relationship Manager" name="relationShipManager">
-                                                    {customSelectBox({ data: relationshipManagerData, placeholder: preparePlaceholderSelect('Relationship Manager') })}
+                                                    {customSelectBox({ data: relationshipManagerData, fieldNames: { key: 'value', value: 'value' }, placeholder: preparePlaceholderSelect('Relationship Manager') })}
                                                 </Form.Item>
                                             </Col>
                                         </>
@@ -90,8 +90,8 @@ const AddEditFormMain = (props) => {
                                     {soldByDealer && (
                                         <>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                <Form.Item initialValue={formattedCalendarDate(formData?.customerPromiseDate)} label="Customer Provided Date" name="customerPromiseDate">
-                                                    <DatePicker format={dateFormat} placeholder={preparePlaceholderSelect('Customer Provided Date')} disabled={true} />
+                                                <Form.Item initialValue={formattedCalendarDate(formData?.customerPromiseDate)} label="Customer Promise Date" name="customerPromiseDate">
+                                                    <DatePicker format={dateFormat} placeholder={preparePlaceholderSelect('Customer Promise Date')} disabled={true} />
                                                 </Form.Item>
                                             </Col>
                                             {disableFieldsOnFutureDate(dayjs(formData?.customerPromiseDate)) && (

@@ -16,9 +16,10 @@ import { VehicleDeliveryNoteFormButton } from '../VehicleDeliveryNoteFormButton'
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { AddEditForm } from './AddEditForm';
 import { ViewDetail } from './ViewDetail';
-import styles from 'assets/sass/app.module.scss';
+import { PARAM_MASTER } from 'constants/paramMaster';
+import { getCodeValue } from 'utils/getCodeValue';
 
-import { BASE_URL_VEHICLE_CUSTOMER_DETAILS as customURL } from 'constants/routingApi';
+import styles from 'assets/sass/app.module.scss';
 
 const mapStateToProps = (state) => {
     const {
@@ -80,7 +81,7 @@ export const CustomerDetailsMasterBase = (props) => {
 
     useEffect(() => {
         if (customerDetailsData) {
-            form.setFieldsValue({ ...customerDetailsData });
+            form.setFieldsValue({ ...customerDetailsData, customerType: getCodeValue(typeData?.[PARAM_MASTER?.CUST_TYPE?.id], formData?.customerType) });
             setFormData({ ...customerDetailsData });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
