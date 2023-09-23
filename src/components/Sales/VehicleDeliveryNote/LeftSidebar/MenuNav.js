@@ -7,7 +7,7 @@ import React from 'react';
 import { Timeline } from 'antd';
 
 import { VEHICLE_DELIVERY_NOTE_SECTION } from 'constants/vehicleDeliveryNoteSection';
-import { validateDeliveryNote } from '../utils/validateDeliveryNote';
+import { validateDeliveryNote } from 'components/Sales/VehicleDeliveryNote/utils/validateDeliveryNote';
 import { getSelectedMenuAttribute } from 'utils/getSelectedMenuAttribute';
 import styles from 'assets/sass/app.module.scss';
 
@@ -43,4 +43,3 @@ const MenuNav = (props) => {
 };
 
 export default MenuNav;
-

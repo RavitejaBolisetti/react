@@ -5,12 +5,15 @@
  */
 import { VEHICLE_DELIVERY_NOTE_SECTION } from 'constants/vehicleDeliveryNoteSection';
 
+
 export const validateDeliveryNote = ({ item, soldByDealer }) => {
     switch (true) {
         case item?.id === VEHICLE_DELIVERY_NOTE_SECTION.FINANCE_DETAILS.id && soldByDealer:
             return 1;
         case item?.id === VEHICLE_DELIVERY_NOTE_SECTION.FINANCE_DETAILS.id && !soldByDealer:
             return 0;
+
+       
 
         default:
             return 1;
