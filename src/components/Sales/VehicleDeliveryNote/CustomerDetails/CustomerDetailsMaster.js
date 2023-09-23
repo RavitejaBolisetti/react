@@ -3,65 +3,63 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
 import { Row, Col, Form } from 'antd';
 
 import { showGlobalNotification } from 'store/actions/notification';
+import { vehicleDeliveryNoteCustomerDetailDataActions } from 'store/actions/data/vehicleDeliveryNote/customerDetails';
 
 import { VehicleDeliveryNoteFormButton } from '../VehicleDeliveryNoteFormButton';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { AddEditForm } from './AddEditForm';
 import { ViewDetail } from './ViewDetail';
+import { PARAM_MASTER } from 'constants/paramMaster';
+import { getCodeValue } from 'utils/getCodeValue';
+
 import styles from 'assets/sass/app.module.scss';
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            OTF: {
-                FinanceDetail: { isLoaded, isLoading, data: financeData = [] },
-                FinanceLov: { isLoaded: isFinanceLovDataLoaded = false, isloading: isFinanceLovLoading, data: FinanceLovData = [] },
+            VehicleDeliveryNote: {
+                CustomerDetailsDeliveryNote: { isLoaded, isLoading, data: customerDetailsData = [] },
             },
         },
     } = state;
 
-    const moduleTitle = 'Insurance Details';
+    const moduleTitle = 'Customer Details';
 
     let returnValue = {
         userId,
         isLoaded,
-        financeData,
+        customerDetailsData,
         isLoading,
         moduleTitle,
-
-        isFinanceLovDataLoaded,
-        isFinanceLovLoading,
-        FinanceLovData,
     };
     return returnValue;
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    // dispatch,
-    // ...bindActionCreators(
-    //     {
-    //         fetchFinanceLovList: financeLovDataActions.fetchList,
-    //         listFinanceLovShowLoading: financeLovDataActions.listShowLoading,
-    //         fetchList: otfFinanceDetailDataActions.fetchList,
-    //         saveData: otfFinanceDetailDataActions.saveData,
-    //         resetData: otfFinanceDetailDataActions.reset,
-    //         listShowLoading: otfFinanceDetailDataActions.listShowLoading,
-    //         showGlobalNotification,
-    //     },
-    //     dispatch
-    // ),
+    dispatch,
+    ...bindActionCreators(
+        {
+            fetchList: vehicleDeliveryNoteCustomerDetailDataActions.fetchList,
+            listShowLoading: vehicleDeliveryNoteCustomerDetailDataActions.listShowLoading,
+            resetData: vehicleDeliveryNoteCustomerDetailDataActions.reset,
+            showGlobalNotification,
+        },
+        dispatch
+    ),
 });
 
 export const CustomerDetailsMasterBase = (props) => {
-    const { fetchList, financeData, isFinanceLovDataLoaded, setFormActionType, isFinanceLovLoading, FinanceLovData, fetchFinanceLovList, listFinanceLovShowLoading, isLoading } = props;
+    const { fetchList, customerDetailsData, setFormActionType, FinanceLovData, fetchFinanceLovList, listFinanceLovShowLoading, isLoading } = props;
 
-    const { typeData, form, selectedOrderId, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION, section } = props;
+    const { listShowLoading, userId, typeData, form, selectedOrder, selectedCustomerId, soldByDealer, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION, section, customerIdValue, setCustomerIdValue, resetData } = props;
 
     const [isFormVisible, setIsFormVisible] = useState(false);
 
@@ -74,37 +72,70 @@ export const CustomerDetailsMasterBase = (props) => {
 
     const [formData, setFormData] = useState();
 
-    // useEffect(() => {
-    //     if (financeData) {
-    //         form.setFieldsValue({ ...financeData, doDate: convertDateToCalender(financeData?.doDate) });
-    //         setFormData({ ...financeData, doDate: convertDateToCalender(financeData?.doDate) });
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [financeData]);
+    useEffect(() => {
+        return () => {
+            setFormData();
+            resetData();
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
-    // useEffect(() => {
-    //     return () => {
-    //         setFormData();
-    //         resetData();
-    //     };
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, []);
+    useEffect(() => {
+        if (customerDetailsData) {
+            form.setFieldsValue({ ...customerDetailsData, customerType: getCodeValue(typeData?.[PARAM_MASTER?.CUST_TYPE?.id], formData?.customerType) });
+            setFormData({ ...customerDetailsData });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [customerDetailsData]);
 
-    // const extraParams = [
-    //     {
-    //         key: 'otfNumber',
-    //         title: 'otfNumber',
-    //         value: selectedOrderId,
-    //         name: 'Booking Number',
-    //     },
-    // ];
+    const extraParams = [
+        {
+            key: 'customerId',
+            title: 'customerId',
+            value: selectedCustomerId,
+            name: 'Customer Id',
+        },
+    ];
 
-    // useEffect(() => {
-    //     if (userId && selectedOrderId) {
-    //         fetchList({ setIsLoading: listShowLoading, extraParams, onErrorAction, userId });
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [userId, selectedOrderId]);
+    useEffect(() => {
+        if (userId && selectedCustomerId) {
+            fetchList({ setIsLoading: listShowLoading, extraParams, onErrorAction, userId });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, selectedCustomerId]);
+
+    const handleOnChange = (e) => {
+        form.setFieldsValue({
+            customerType: '',
+            customerName: '',
+            mobile: '',
+            address: '',
+            city: '',
+            district: '',
+            state: '',
+            pincode: '',
+            email: '',
+        });
+        setCustomerIdValue(e.target.value);
+    };
+
+    const handleCustomerIdSearch = () => {
+        const onSuccessAction = (res) => {
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        };
+        const onErrorAction = (message) => {
+            showGlobalNotification({ message });
+        };
+        const searchParams = [
+            {
+                key: 'customerId',
+                title: 'customerId',
+                value: customerIdValue,
+                name: 'Customer ID',
+            },
+        ];
+        fetchList({ setIsLoading: listShowLoading, userId, extraParams: searchParams, onSuccessAction, onErrorAction });
+    };
 
     // useEffect(() => {
     //     if (userId && !isFinanceLovDataLoaded) {
@@ -120,9 +151,11 @@ export const CustomerDetailsMasterBase = (props) => {
     const onErrorAction = (message) => {
         showGlobalNotification(message);
     };
-
     const onFinish = (values) => {
-        const data = { ...values, id: financeData?.id, otfNumber: selectedOrderId, doDate: values?.doDate };
+        // const customerDetailsRequest = { ...values };
+        // setRequestPayload({ ...requestPayload, customerDetails: customerDetailsRequest });
+        handleButtonClick({ buttonAction: NEXT_ACTION });
+        setButtonData({ ...buttonData, formBtnActive: false });
     };
 
     const onFinishFailed = () => {};
@@ -145,9 +178,7 @@ export const CustomerDetailsMasterBase = (props) => {
         onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
-        isFinanceLovDataLoaded,
-        isFinanceLovLoading,
-        FinanceLovData,
+
         fetchFinanceLovList,
         listFinanceLovShowLoading,
 
@@ -157,6 +188,10 @@ export const CustomerDetailsMasterBase = (props) => {
         buttonData,
         setButtonData,
         handleButtonClick,
+        handleCustomerIdSearch,
+        handleOnChange,
+        customerIdValue,
+        soldByDealer,
     };
 
     const viewProps = {
@@ -165,6 +200,8 @@ export const CustomerDetailsMasterBase = (props) => {
         isLoading,
         FinanceLovData,
         typeData,
+        soldByDealer,
+        customerIdValue,
     };
 
     return (
@@ -189,4 +226,4 @@ export const CustomerDetailsMasterBase = (props) => {
     );
 };
 
-export const CustomerDetailsMaster = connect(null, null)(CustomerDetailsMasterBase);
+export const CustomerDetailsMaster = connect(mapStateToProps, mapDispatchToProps)(CustomerDetailsMasterBase);

@@ -13,8 +13,8 @@ import { otfCustomerDetailsAction } from 'store/actions/data/otf/customerDetails
 import { customerDetailsIndividualDataActions } from 'store/actions/data/customerMaster/customerDetailsIndividual';
 import { geoPinCodeDataActions } from 'store/actions/data/geo/pincodes';
 import { showGlobalNotification } from 'store/actions/notification';
-import dayjs from 'dayjs';
 import { BASE_URL_VEHICLE_CUSTOMER_COMMON_DETAIL as customURL } from 'constants/routingApi';
+import dayjs from 'dayjs';
 
 import { AddEditForm, ViewDetail } from 'components/Sales/Common/CustomerDetails';
 

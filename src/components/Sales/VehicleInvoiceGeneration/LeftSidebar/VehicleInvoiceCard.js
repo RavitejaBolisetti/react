@@ -16,6 +16,7 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 
 import styles from 'assets/sass/app.module.scss';
 import { ConfirmationModal } from 'utils/ConfirmationModal';
+import { IRN_STATUS } from 'constants/IRNStatus';
 
 const { Panel } = Collapse;
 const { Text, Title } = Typography;
@@ -34,10 +35,10 @@ const expandIcon = ({ isActive }) =>
     );
 
 const VehicleInvoiceCard = (props) => {
-    const { selectedOrder, otfData, formActionType, isLoading, typeData, handleIRNGeneration } = props;
+    const { selectedOrder, formActionType, isLoading, typeData, handleIRNGeneration } = props;
+    const { confirmRequest, setConfirmRequest } = props;
     const fullName = selectedOrder?.customerName?.split(' ');
     const userAvatar = fullName ? fullName[0]?.slice(0, 1) + (fullName[1] ? fullName[1].slice(0, 1) : '') : '';
-    const [confirmRequest, setConfirmRequest] = useState(false);
 
     const showConfirmation = () => {
         setConfirmRequest(true);
@@ -65,7 +66,7 @@ const VehicleInvoiceCard = (props) => {
                             <Avatar size={50}>{userAvatar?.toUpperCase()}</Avatar>
                             <div>
                                 <Title level={5}>{selectedOrder?.customerName?.toLowerCase()}</Title>
-                                <Text>{checkAndSetDefaultValue(otfData?.customerId)}</Text>
+                                <Text>{checkAndSetDefaultValue(selectedOrder?.customerId)}</Text>
                             </div>
                         </Space>
                         <Divider />
@@ -92,13 +93,13 @@ const VehicleInvoiceCard = (props) => {
                                         addToolTip(
                                             <div>
                                                 <p>
-                                                    Cancelled Date: <span>{checkAndSetDefaultValue(otfData?.cancelDate, isLoading, DATA_TYPE?.DATE?.key ?? 'Na')}</span>
+                                                    Cancelled Date: <span>{checkAndSetDefaultValue(selectedOrder?.cancelDate, isLoading, DATA_TYPE?.DATE?.key ?? 'Na')}</span>
                                                 </p>
                                                 <p>
-                                                    Cancel By: <span>{otfData?.cancelBy ?? 'Na'}</span>
+                                                    Cancel By: <span>{selectedOrder?.cancelBy ?? 'Na'}</span>
                                                 </p>
                                                 <p>
-                                                    Cancellation Reason: <span>{otfData?.cancelReason ?? 'Na'}</span>
+                                                    Cancellation Reason: <span>{checkAndSetDefaultValue(getCodeValue(typeData[PARAM_MASTER.INVOICE_CANCEL_REASON.id], selectedOrder?.cancelReason))}</span>
                                                 </p>
                                             </div>,
                                             'bottom',
@@ -111,12 +112,12 @@ const VehicleInvoiceCard = (props) => {
                         <Divider />
                     </>
                 )}
-                {formActionType?.viewMode && (
+                {formActionType?.viewMode && (selectedOrder?.irnStatus || (selectedOrder?.invoiceNumber && !selectedOrder?.irnStatus && selectedOrder?.invoiceStatus === QUERY_BUTTONS_CONSTANTS.INVOICED.key)) && (
                     <>
                         <div className={styles.detailCardText}>
                             IRN Status:
                             <div className={styles.buttonsGroupRight}>
-                                {selectedOrder?.invoiceNumber && !otfData?.irnStatus && selectedOrder?.invoiceStatus !== QUERY_BUTTONS_CONSTANTS.CANCELLED.key ? (
+                                {selectedOrder?.invoiceNumber && !selectedOrder?.irnStatus && selectedOrder?.invoiceStatus === QUERY_BUTTONS_CONSTANTS.INVOICED.key ? (
                                     <>
                                         <Button onClick={showConfirmation} danger className={styles.leftPannelButton}>
                                             Generate
@@ -125,19 +126,20 @@ const VehicleInvoiceCard = (props) => {
                                     </>
                                 ) : (
                                     <>
-                                        {checkAndSetDefaultValue(getCodeValue(typeData[PARAM_MASTER.IRN_GEN_STATUS.id], otfData?.irnStatus))}
+                                        {checkAndSetDefaultValue(getCodeValue(typeData[PARAM_MASTER.IRN_GEN_STATUS.id], selectedOrder?.irnStatus))}
                                         <div className={styles.tooltipAlign}>
-                                            {otfData?.irnStatus &&
+                                            {selectedOrder?.irnStatus &&
+                                                selectedOrder?.irnStatus !== IRN_STATUS?.PENDING?.key &&
                                                 addToolTip(
                                                     <div>
                                                         <p>
-                                                            IRN Date: <span>{checkAndSetDefaultValue(otfData?.irnDate, isLoading, DATA_TYPE?.DATE?.key ?? 'Na')}</span>
+                                                            IRN Date: <span>{checkAndSetDefaultValue(selectedOrder?.irnDate, isLoading, DATA_TYPE?.DATE?.key ?? 'Na')}</span>
                                                         </p>
                                                         <p>
-                                                            IRN No.: <span>{otfData?.irnNumber ?? 'Na'}</span>
+                                                            IRN No.: <span>{selectedOrder?.irnNumber ?? 'Na'}</span>
                                                         </p>
                                                         <p>
-                                                            Description: <span>{otfData?.irnDesc ?? 'Na'}</span>
+                                                            Description: <span>{selectedOrder?.irnDesc ?? 'Na'}</span>
                                                         </p>
                                                     </div>,
                                                     'bottom',
@@ -157,7 +159,7 @@ const VehicleInvoiceCard = (props) => {
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    Booking Date: <span>{checkAndSetDefaultValue(otfData?.otfDate, isLoading, DATA_TYPE?.DATE?.key) || 'NA'}</span>
+                    Booking Date: <span>{checkAndSetDefaultValue(selectedOrder?.orderDate, isLoading, DATA_TYPE?.DATE?.key) || 'NA'}</span>
                 </div>
             </Panel>
         </Collapse>

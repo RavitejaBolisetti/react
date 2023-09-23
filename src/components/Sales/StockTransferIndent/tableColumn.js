@@ -44,9 +44,9 @@ export const tableColumn = (handleButtonClick, toggleButton) => {
 
         tblPrepareColumns({
             title: 'Status',
-            dataIndex: toggleButton === STOCK_TRANSFER?.RAISED.key ? 'indentRaisedstatus' : 'indentReceivedstatus',
+            dataIndex: toggleButton === STOCK_TRANSFER?.RAISED.key ? 'indentRaisedStatus' : 'indentReceivedStatus',
             width: '13%',
-            render: (_, record) => StockIndentStatusTag(toggleButton === STOCK_TRANSFER?.RAISED.key ? record.indentRaisedstatus : record.indentReceivedstatus),
+            render: (_, record) => StockIndentStatusTag(toggleButton === STOCK_TRANSFER?.RAISED.key ? record.indentRaisedStatus : record.indentReceivedStatus),
         }),
 
         tblActionColumn({ handleButtonClick, styles, width: '8%', canEdit: false }),

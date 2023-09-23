@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect } from 'react';
-import { Col, Input, Form, Row, Button, Collapse, Typography, Divider } from 'antd';
+import { Col, Input, Form, Row, Button, Collapse, Typography, Divider, Switch } from 'antd';
 import { validateRequiredSelectField, validateNumberWithTwoDecimalPlaces, validateRequiredInputField } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { PlusOutlined } from '@ant-design/icons';
@@ -31,8 +31,8 @@ const { Text } = Typography;
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { productHierarchyData, toolTipContent, isProductDataLoading, handleFormValueChange, optionsServicesMapping, setoptionsServicesMapping, optionsServiceModified, setoptionsServiceModified, formData, openAccordian, isReadOnly, setIsReadOnly, setOpenAccordian, selectedOrderId, form, onErrorAction, showGlobalNotification, fetchList, userId, listShowLoading, saveData, onSuccessAction, typeData, formActionType, vehicleServiceData } = props;
-    const { productModelCode, setProductModelCode, viewOnly, handlePriceChange } = props;
+    const { productHierarchyData, toolTipContent, handleFormValueChange, optionsServicesMapping, setoptionsServicesMapping, optionsServiceModified, setoptionsServiceModified, formData, openAccordian, isReadOnly, setIsReadOnly, setOpenAccordian, selectedOrderId, form, onErrorAction, showGlobalNotification, fetchList, userId, listShowLoading, saveData, onSuccessAction, typeData, formActionType, vehicleServiceData } = props;
+    const { productModelCode, setProductModelCode, viewOnly, handlePriceChange, handleDiscountChange = () => {}, showPrintDiscount = false } = props;
 
     const [optionForm] = Form.useForm();
     const findUsageType = (usage) => {
@@ -42,7 +42,7 @@ const AddEditFormMain = (props) => {
 
     const disabledProp = { disabled: true };
     useEffect(() => {
-        if (formActionType?.editMode && formData) {
+        if (formData) {
             form.setFieldsValue({
                 ...formData,
                 poDate: dayjs(formData?.poDate?.substr(0, 10)).format('DD/MM/YYYY'),
@@ -94,6 +94,7 @@ const AddEditFormMain = (props) => {
     const handleSelectTreeClick = (value) => {
         setProductModelCode(value);
         handleFormValueChange(true);
+        handleDiscountChange();
     };
 
     const fieldNames = { title: 'prodctShrtName', key: 'prodctCode', children: 'subProdct' };
@@ -209,7 +210,7 @@ const AddEditFormMain = (props) => {
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                 <Form.Item label="Dealer Discount with TAX" name="discountAmount" rules={[validateNumberWithTwoDecimalPlaces('Dealer Discount with TAX')]}>
-                                    <Input placeholder={preparePlaceholderText('Dealer Discount with TAX')} />
+                                    <Input placeholder={preparePlaceholderText('Dealer Discount with TAX')} onChange={handleDiscountChange} />
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
@@ -217,6 +218,13 @@ const AddEditFormMain = (props) => {
                                     <Input {...disabledProp} placeholder={preparePlaceholderText('Consumer Scheme with TAX')} />
                                 </Form.Item>
                             </Col>
+                            {showPrintDiscount && (
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    <Form.Item initialValue={false} labelAlign="left" wrapperCol={{ span: 24 }} name="printDiscount" label="Print Discount?" valuePropName="checked">
+                                        <Switch checkedChildren="Yes" unCheckedChildren="No" valuePropName="checked" />
+                                    </Form.Item>
+                                </Col>
+                            )}
                         </Row>
                     </Panel>
                 </Collapse>

@@ -136,7 +136,7 @@ const AddEditFormMain = (props) => {
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <Form.Item initialValue={selectedProductName} label="Product Hierarchy" name="modelGroupCode" rules={[validateRequiredSelectField('Product Hierarchy')]}>
-                                    <Input placeholder={preparePlaceholderText('Product Hierarchy')} />
+                                    <Input placeholder={preparePlaceholderText('Product Hierarchy')} disabled={true}/>
                                 </Form.Item>
                             </Col>
 

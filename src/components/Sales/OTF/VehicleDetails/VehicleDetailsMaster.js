@@ -234,6 +234,30 @@ const VehicleDetailsMasterMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [productModelCode]);
 
+    const handleDiscountChange = () => {
+        const discountExtraParams = [
+            {
+                key: 'otfNumber',
+                title: 'otfNumber',
+                value: selectedOrderId,
+                name: 'Booking Number',
+            },
+            {
+                key: 'modelCode',
+                title: 'modelCode',
+                value: form.getFieldValue('modelCode'),
+                name: 'Booking Number',
+            },
+            {
+                key: 'discountAmount',
+                title: 'discountAmount',
+                value: form.getFieldValue('discountAmount') ?? 0,
+                name: 'Booking Number',
+            },
+        ];
+        fetchList({ setIsLoading: listShowLoading, userId, extraParams: discountExtraParams, onErrorAction });
+    };
+
     const onFinish = (values) => {
         if (onFinishCustom) {
             onFinishCustom({ key: formKey, values });
@@ -344,6 +368,7 @@ const VehicleDetailsMasterMain = (props) => {
         productHierarchyData,
         resetProductLov,
         handlePriceChange,
+        handleDiscountChange
     };
 
     const viewProps = {

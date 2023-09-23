@@ -392,7 +392,7 @@ export const VehicleAllotmentMasterBase = (props) => {
     const onCloseAction = () => {
         form.resetFields();
         form.setFieldsValue();
-
+        searchForm.resetFields();
         advanceFilterForm.resetFields();
         advanceFilterForm.setFieldsValue();
 
@@ -408,7 +408,7 @@ export const VehicleAllotmentMasterBase = (props) => {
     const fixedWith = toggleButton === VEHICLE_TYPE.ALLOTED.key;
     const tableProps = {
         dynamicPagination,
-        filterString,
+        filterString,   
         setPage: setFilterString,
         isLoading: showDataLoading,
         tableColumn: tableColumn(handleButtonClick, toggleButton, fixedWith),

@@ -24,7 +24,7 @@ const { Text } = Typography;
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { formData, setFinalData, buttonData, setButtonData, vehicleStatusType, physicalStatusType, shortageType, vehicleDetailForm } = props;
+    const { formData, setFinalData, buttonData, setButtonData, vehicleStatusType, physicalStatusType, shortageType, vehicleDetailForm, receiptType } = props;
 
     const [activeKey, setactiveKey] = useState([]);
     // const [vehicleDetailList, setVehicleDetailList] = useState([]);
@@ -82,6 +82,22 @@ const AddEditFormMain = (props) => {
         optionFilterProp: 'children',
         showSearch: true,
         allowClear: true,
+    };
+    const handleDisableList = (item) => {
+        if (receiptType === VEHICLE_RECEIPT_STATUS?.RECEIVED?.key) {
+            if (item?.key === VEHICLE_RECEIPT_STATUS?.IN_TRANSIT?.key) {
+                return true;
+            } else {
+                return false;
+            }
+        } else if (receiptType === VEHICLE_RECEIPT_STATUS?.RETURNED?.key) {
+            if (item?.key === VEHICLE_RECEIPT_STATUS?.IN_TRANSIT?.key || item?.key === VEHICLE_RECEIPT_STATUS?.RECEIVED?.key) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return false;
     };
 
     return (
@@ -183,7 +199,7 @@ const AddEditFormMain = (props) => {
                                         <Form.Item initialValue={item?.vehicleStatus ?? VEHICLE_RECEIPT_STATUS.RECEIVED.key} label="Vehicle Status" name={[index, 'vehicleStatus']} rules={[validateRequiredSelectField('Vehicle Status')]}>
                                             <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} {...selectProps}>
                                                 {vehicleStatusType?.map((item) => (
-                                                    <Option disabled={VEHICLE_RECEIPT_STATUS?.RETURNED.key === item.key} key={'vs' + item.key} value={item.key}>
+                                                    <Option disabled={() => handleDisableList(item)} key={'vs' + item.key} value={item.key}>
                                                         {item.value}
                                                     </Option>
                                                 ))}
