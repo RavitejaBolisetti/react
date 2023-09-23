@@ -136,7 +136,6 @@ export const InvoiceDetailsMasterBase = (props) => {
     };
 
     const handleInvoiceNoSearch = (val) => {
-        console.log("🚀 ~ file: InvoiceDetailsMaster.js:139 ~ handleInvoiceNoSearch ~ val:", val)
         const onSuccessAction = (res) => {
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         };

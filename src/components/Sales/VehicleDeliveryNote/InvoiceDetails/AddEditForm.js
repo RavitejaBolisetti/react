@@ -42,13 +42,11 @@ const AddEditFormMain = (props) => {
     }, [soldByDealer]);
 
     const handleSelectVinNo = (value) => {
-    console.log("🚀 ~ file: AddEditForm.js:45 ~ handleSlectVinNo ~ value:", value)
     form.setFieldsValue({
         engineNumber: value,
     });
     }
 
-    console.log('chassisNoList', vinData)
     const fieldNames = { label: 'vinNumber', value: 'engineNumber' };
 
 
