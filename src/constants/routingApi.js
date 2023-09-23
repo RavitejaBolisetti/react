@@ -219,6 +219,7 @@ export const BASE_URL_FINANCIAL_ACC_ACCOUNT_CATEGORY = BASE_URL + 'finance/accou
 export const BASE_URL_FINANCIAL_ACC_APPLICATION_MENU = BASE_URL + 'home/menus';
 export const BASE_URL_FINANCIAL_ACC_CHART_OF_ACCOUNT_HIERARCHY = BASE_URL + 'finance/chartofaccounts/hierarchy';
 export const BASE_URL_FINANCIAL_ACC_CHART_OF_ACCOUNT = BASE_URL + 'finance/chartofaccounts';
+export const BASE_URL_FINANCIAL_ACC_CHART_OF_ACCOUNT_EXPORT_COA = BASE_URL + 'finance/chartofaccounts/hierarchy/exportcoa';
 
 export const BASE_URL_DOCUMENT_TYPE_LEDGER_SEARCH = BASE_URL + 'applications/documenttypes/search';
 export const BASE_URL_DOCUMENT_TYPE_LEDGER = BASE_URL + 'finance/ledgermappings';

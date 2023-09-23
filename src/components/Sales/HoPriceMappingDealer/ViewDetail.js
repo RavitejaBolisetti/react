@@ -33,29 +33,27 @@ const ViewDetailMain = (props) => {
         }),
     ];
 
-        useEffect(() => {
-            setViewProductData(() => []);
+    useEffect(() => {
+        setViewProductData(() => []);
+        if (formActionType?.viewMode && modelGroupArr?.length && responseData?.length) {
             let distinctArr = modelGroupArr.map((item) => item.prodctCode).filter((value, index, self) => self.indexOf(value) === index);
-
-            if (formActionType?.viewMode && distinctArr?.length && responseData?.length) {
-    
-                for (let i = 0; i < distinctArr?.length; i++) {
-                    let key = hoPriceDetailData?.modelDealerMapResponse?.find((e) => e?.modelGroupCode === distinctArr[i]);
-                    if (key && key?.id) {
-                        setViewProductData((prev) => [...prev, { prodctShrtName: modelGroupArr?.find((e) => e?.prodctCode === distinctArr[i])?.prodctShrtName, yesNo: `Yes` }]);
-                    } else {
-                        setViewProductData((prev) => [...prev, { prodctShrtName: modelGroupArr?.find((e) => e?.prodctCode === distinctArr[i])?.prodctShrtName, yesNo: `No` }]);
-                    }
+            for (let i = 0; i < distinctArr?.length; i++) {
+                let key = hoPriceDetailData?.modelDealerMapResponse?.find((e) => e?.modelGroupCode === distinctArr[i]);
+                if (key && key?.id) {
+                    setViewProductData((prev) => [...prev, { prodctShrtName: modelGroupArr?.find((e) => e?.prodctCode === distinctArr[i])?.prodctShrtName, yesNo: `Yes` }]);
+                } else {
+                    setViewProductData((prev) => [...prev, { prodctShrtName: modelGroupArr?.find((e) => e?.prodctCode === distinctArr[i])?.prodctShrtName, yesNo: `No` }]);
                 }
             }
-            // eslint-disable-next-line react-hooks/exhaustive-deps
-        }, [responseData]);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [responseData, modelGroupArr]);
 
-       const tableProps = {
-           isLoading,
-           tableColumn,
-           tableData: viewProductData,
-       };
+    const tableProps = {
+        isLoading,
+        tableColumn,
+        tableData: viewProductData,
+    };
 
     return (
         <div className={styles.viewDrawerContainer}>

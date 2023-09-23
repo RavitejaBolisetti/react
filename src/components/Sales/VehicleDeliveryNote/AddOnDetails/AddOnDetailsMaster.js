@@ -135,23 +135,30 @@ export const AddOnDetailsMasterMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [AddonDetailsData]);
 
-    const onSingleFormFinish = (key, formName) => {
-        switch (key) {
-            case 'sheildRequest':
-                setMultipleFormData({ ...muiltipleFormData, sheildRequest: shieldForm.getFieldsValue() });
-                break;
-            case 'rsaRequest':
-                setMultipleFormData({ ...muiltipleFormData, rsaRequest: rsaForm.getFieldsValue() });
-                break;
-            case 'amcRequest':
-                setMultipleFormData({ ...muiltipleFormData, amcRequest: amcForm.getFieldsValue() });
-                break;
+    useEffect(() => {
+        handleFormValueChange();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
-            default:
-                return;
-                break;
-        }
-      
+    const onSingleFormFinish = (key, formName) => {
+        formName.validateFields().then(() => {
+            switch (key) {
+                case 'sheildRequest':
+                    setMultipleFormData({ ...muiltipleFormData, sheildRequest: shieldForm.getFieldsValue() });
+                    break;
+                case 'rsaRequest':
+                    setMultipleFormData({ ...muiltipleFormData, rsaRequest: rsaForm.getFieldsValue() });
+                    break;
+                case 'amcRequest':
+                    setMultipleFormData({ ...muiltipleFormData, amcRequest: amcForm.getFieldsValue() });
+                    break;
+
+                default:
+                    return;
+                    break;
+            }
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: 'Scheme has been successfully registered' });
+        });
     };
 
     const onFinish = () => {

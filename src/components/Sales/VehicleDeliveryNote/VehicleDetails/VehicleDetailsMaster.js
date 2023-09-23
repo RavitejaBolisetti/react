@@ -26,7 +26,7 @@ const mapStateToProps = (state) => {
         data: {
             VehicleDeliveryNote: {
                 VehicleBatteryDetails: { isLoaded: isDataLoaded = false, isLoading, data: vehicleData = {} },
-                VehicleDetailsChallan: { isLoaded: isChallanDataLoaded = false, isChallanLoading, data: vehicleChallanData = {} }
+                VehicleDetailsChallan: { isLoaded: isChallanDataLoaded = false, isChallanLoading, data: vehicleChallanData = {} },
             },
         },
     } = state;
@@ -74,8 +74,32 @@ const VehicleDetailsMasterBase = (props) => {
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const [isFormVisible, setIsFormVisible] = useState(false);
+    const [toolTipContent, setToolTipContent] = useState();
 
-
+    useEffect(() => {
+        if (userId) {
+            setToolTipContent(
+                <div>
+                    <p>
+                        Color - <span>{vehicleData?.modelColor ?? 'Na'}</span>
+                    </p>
+                    <p>
+                        Seating - <span>{vehicleData?.seatingCapacity ?? 'Na'}</span>
+                    </p>
+                    <p>
+                        Fuel - <span>{vehicleData?.fuel ?? 'Na'}</span>
+                    </p>
+                    <p>
+                        Variant - <span>{vehicleData?.varient ?? 'Na'}</span>
+                    </p>
+                    <p>
+                        Name - <span>{vehicleData?.modelDescription ?? 'Na'}</span>
+                    </p>
+                </div>
+            );
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [vehicleData]);
 
     useEffect(() => {
         if (userId && selectedOrderId && selectedInvoiceId && soldByDealer) {
@@ -94,8 +118,7 @@ const VehicleDetailsMasterBase = (props) => {
                 },
             ];
             fetchList({ setIsLoading: listShowLoading, extraParams, userId, onErrorAction });
-        }
-        else if (!soldByDealer) {
+        } else if (!soldByDealer) {
             const extraParams = [
                 {
                     key: 'invoiceNumber',
@@ -103,7 +126,7 @@ const VehicleDetailsMasterBase = (props) => {
                     value: selectedInvoiceId,
                     name: 'Invoice Number',
                 },
-            ]
+            ];
 
             fetchChallanList({ setIsLoading: listChallanShowLoading, extraParams, userId, onErrorAction });
         }
@@ -133,7 +156,7 @@ const VehicleDetailsMasterBase = (props) => {
         setButtonData({ ...defaultBtnVisiblity });
     };
 
-    const onFinishFailed = () => { };
+    const onFinishFailed = () => {};
 
     const formProps = {
         ...props,
@@ -162,6 +185,7 @@ const VehicleDetailsMasterBase = (props) => {
         onCloseAction,
         buttonData,
         setButtonData,
+        toolTipContent,
     };
 
     const viewProps = {

@@ -10,21 +10,15 @@ import styles from 'assets/sass/app.module.scss';
 const { Text } = Typography;
 
 const BatteryInfoForm = (props) => {
-    const { formData } = props;
+    const { battery } = props;
     return (
         <>
-            <Row gutter={20}>
-                {formData?.batteryDetail?.map((battery) => (
-                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                        <Card className={styles.cardView}>
-                            <Text>{battery?.batteryMake}</Text>
-                            <div>
-                                <Text type="secondary">{battery?.batteryName}</Text>
-                            </div>
-                        </Card>
-                    </Col>
-                ))}
-            </Row>
+            <Card className={styles.cardView} style={{ display: 'flex', width: '100%' }}>
+                <Text>{battery?.batteryMake}</Text>
+                <div>
+                    <Text type="secondary">{battery?.batteryName}</Text>
+                </div>
+            </Card>
         </>
     );
 };
