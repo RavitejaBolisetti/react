@@ -40,6 +40,7 @@ const AddEditFormMain = (props) => {
     const onHandleSelect = (value) => {
         form.setFieldsValue({
             corporateCode: value,
+            corporateCategory: corporateLovData?.find((i) => i?.key === value)?.parentKey,
         });
     };
     // const handleNumberValidation = (event) => {
@@ -116,7 +117,7 @@ const AddEditFormMain = (props) => {
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                         <Form.Item initialValue={formData?.companyName} label="Company Name" name="companyName" data-testid="companyName" rules={[validateRequiredInputField('company name')]}>
-                            <Input placeholder={preparePlaceholderText('company name')} disabled={editMode} />
+                            <Input placeholder={preparePlaceholderText('company name')} />
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>

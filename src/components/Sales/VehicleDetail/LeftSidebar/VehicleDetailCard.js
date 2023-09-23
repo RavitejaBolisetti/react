@@ -7,6 +7,7 @@ import React from 'react';
 import { Collapse, Divider } from 'antd';
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
 import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
+import { VEHICLE_MFG_WARRANTY } from 'constants/VehicleMfgWarranty';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -65,7 +66,10 @@ const VehicleDetailCard = (props) => {
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    MFG Warranty: <span>{convertDateTime(selectedRecord?.mfgWarranty, dateFormatView) || 'NA'}</span>
+                    MFG Warranty: 
+                    {/* <span>{convertDateTime(selectedRecord?.mfgWarranty, dateFormatView) || 'NA'}</span> */}
+                    <span> {selectedRecord?.mfgWarranty === VEHICLE_MFG_WARRANTY.EXPIRED.title ? VEHICLE_MFG_WARRANTY.EXPIRED.title : convertDateTime(selectedRecord?.mfgWarranty, dateFormatView)} </span>
+
                 </div>
             </Panel>
         </Collapse>

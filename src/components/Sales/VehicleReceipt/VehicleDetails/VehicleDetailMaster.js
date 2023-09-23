@@ -3,7 +3,7 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form, Row, Col } from 'antd';
 
 import { ViewDetail } from './ViewDetail';
@@ -63,9 +63,10 @@ const mapDispatchToProps = (dispatch) => ({
 const VehicleDetailsMasterBase = (props) => {
     const { typeData, buttonData, setButtonData, vehicleStatusType, physicalStatusType, shortageType, vehicleDetailData } = props;
     const { userId, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, isLoading } = props;
-    const { form, selectedId, finalData, setFinalData, formActionType, onFinish, onFinishFailed } = props;
+    const { form, selectedId, finalData, setFinalData, formActionType, onFinish, onFinishFailed, receiptType } = props;
 
     const [vehicleDetailForm] = Form.useForm();
+
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
@@ -106,6 +107,7 @@ const VehicleDetailsMasterBase = (props) => {
         setFinalData,
         setButtonData,
         buttonData,
+        receiptType,
     };
 
     const viewProps = {
