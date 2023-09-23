@@ -115,7 +115,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const VehicleInvoiceMasterBase = (props) => {
-    const { data, receiptDetailData, userId, irnGeneration, fetchList, fetchOTFDetail, listShowLoading, showGlobalNotification, fetchInvoiceMasterData } = props;
+    const { data, receiptDetailData, userId, irnGeneration, fetchList, listShowLoading, showGlobalNotification, fetchInvoiceMasterData } = props;
     const { cancelInvoice, isVehicleInvoiceDataLoading } = props;
     const { typeData, receiptType, partySegmentType, listInvoiceShowLoading, saveData, paymentModeType, documentType, moduleTitle, totalRecords } = props;
     const { filterString, setFilterString, invoiceStatusList, otfData, vehicleInvoiceMasterData, resetDetailData, resetOtfData } = props;
@@ -151,6 +151,7 @@ export const VehicleInvoiceMasterBase = (props) => {
     const [irnStatusData, setIrnStatusData] = useState();
     const [additionalReportParams, setAdditionalReportParams] = useState();
     const [isReportVisible, setReportVisible] = useState();
+    const [confirmRequest, setConfirmRequest] = useState(false);
 
     const [page, setPage] = useState({ pageSize: 10, current: 1 });
     const dynamicPagination = true;
@@ -327,16 +328,19 @@ export const VehicleInvoiceMasterBase = (props) => {
             ];
 
             const onSuccessAction = (res) => {
-                // setSelectedOtfNumber(otfNumber);
-                // if (res?.data?.invoiceDetails?.otfDetailsRequest?.orderStatus !== OTF_STATUS?.ALLOTED?.key) {
-                //     setButtonData((prev) => ({ ...prev, formBtnActive: false }));
-                //     showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'OTF number not alloted' });
-                //     return;
-                // } else {
-                setButtonData((prev) => ({ ...prev, formBtnActive: true }));
-                setSelectedOtfNumber(otfNumber);
-                setSelectedOrder({ bookingNumber: otfNumber });
-                // }
+                if (!selectedOrderId && res?.data?.invoiceDetails?.otfDetailsRequest?.orderStatus === OTF_STATUS?.INVOICED?.key) {
+                    setButtonData((prev) => ({ ...prev, formBtnActive: false }));
+                    showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'OTF number is already invoiced' });
+                    return;
+                } else if (!selectedOrderId && res?.data?.invoiceDetails?.otfDetailsRequest?.orderStatus !== OTF_STATUS?.ALLOTED?.key) {
+                    setButtonData((prev) => ({ ...prev, formBtnActive: false }));
+                    showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Only alloted OTF can be invoice' });
+                    return;
+                } else {
+                    setButtonData((prev) => ({ ...prev, formBtnActive: true }));
+                    setSelectedOtfNumber(otfNumber);
+                    setSelectedOrder({ bookingNumber: otfNumber });
+                }
             };
 
             fetchInvoiceMasterData({ customURL: InvoiceDetailsURL, setIsLoading: listInvoiceShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
@@ -351,20 +355,26 @@ export const VehicleInvoiceMasterBase = (props) => {
     };
 
     const handleIRNGeneration = () => {
-        const data = { otfNumber: selectedOtfNumber, invoiceNumber: selectedOrder?.invoiceNumber };
+        const data = { otfNumber: selectedOtfNumber, invoiceNumber: selectedOrderId };
         const onSuccess = (res) => {
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
 
-            const extraParam = [
+            setConfirmRequest(false);
+            const invoicedExtraParam = [
                 {
                     key: 'otfNumber',
                     title: 'otfNumber',
                     value: selectedOtfNumber,
                     name: 'Booking Number',
                 },
+                {
+                    key: 'invoiceNumber',
+                    value: selectedOrderId || '',
+                    name: 'Invoice Number',
+                },
             ];
-            fetchOTFDetail({ customURL, setIsLoading: listShowLoading, userId, extraParams: extraParam, onErrorAction });
+            fetchInvoiceMasterData({ customURL: InvoiceDetailsURL, setIsLoading: listShowLoading, userId, extraParams: invoicedExtraParam, onErrorAction });
         };
 
         const onError = (message) => {
@@ -712,6 +722,8 @@ export const VehicleInvoiceMasterBase = (props) => {
         isVehicleInvoiceDataLoading,
         handleBookingChange,
         onPrintInvoice,
+        confirmRequest,
+        setConfirmRequest,
     };
 
     const cancelInvoiceProps = {
