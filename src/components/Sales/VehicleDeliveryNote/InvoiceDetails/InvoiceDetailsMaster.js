@@ -135,7 +135,8 @@ export const InvoiceDetailsMasterBase = (props) => {
         setInvoiceNoValue(e.target.value);
     };
 
-    const handleInvoiceNoSearch = () => {
+    const handleInvoiceNoSearch = (val) => {
+        console.log("🚀 ~ file: InvoiceDetailsMaster.js:139 ~ handleInvoiceNoSearch ~ val:", val)
         const onSuccessAction = (res) => {
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         };
@@ -146,7 +147,7 @@ export const InvoiceDetailsMasterBase = (props) => {
             {
                 key: 'vin',
                 title: 'vin',
-                value: invoiceNoValue,
+                value: invoiceNoValue || val,
                 name: 'Vin Number',
             },
         ];

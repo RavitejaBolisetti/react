@@ -14,7 +14,7 @@ const BatteryInfoForm = (props) => {
     return (
         <>
             <Row gutter={20}>
-                {formData?.batteryDetail.map((battery) => {
+                {formData?.batteryDetail?.map((battery) => (
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                         <Card className={styles.cardView}>
                             <Text>{battery?.batteryMake}</Text>
@@ -22,8 +22,8 @@ const BatteryInfoForm = (props) => {
                                 <Text type="secondary">{battery?.batteryName}</Text>
                             </div>
                         </Card>
-                    </Col>;
-                })}
+                    </Col>
+                ))}
             </Row>
         </>
     );

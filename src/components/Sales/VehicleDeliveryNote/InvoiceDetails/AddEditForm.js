@@ -5,7 +5,7 @@
  */
 import React, { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
-import { Col, Input, Form, Row, Card, DatePicker, Space } from 'antd';
+import { Col, Input, Form, Row, Card, DatePicker, Space, AutoComplete } from 'antd';
 
 import { disableFutureDate, disableFieldsOnFutureDate } from 'utils/disableDate';
 import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
@@ -14,10 +14,12 @@ import { preparePlaceholderSelect, preparePlaceholderText, preparePlaceholderAut
 
 import styles from 'assets/sass/app.module.scss';
 import { customSelectBox } from 'utils/customSelectBox';
+import { debounce } from 'utils/debounce';
 
-const { TextArea, AutoComplete } = Input;
+const { TextArea, Search } = Input;
 const AddEditFormMain = (props) => {
     const { formData, relationshipManagerData, typeData, form, soldByDealer, handleInvoiceNoSearch, handleOnChange } = props;
+    const { vinData } = props;
 
     const [chassisNoList, setChassisNoList] = useState([]);
 
@@ -39,6 +41,17 @@ const AddEditFormMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [soldByDealer]);
 
+    const handleSelectVinNo = (value) => {
+    console.log("🚀 ~ file: AddEditForm.js:45 ~ handleSlectVinNo ~ value:", value)
+    form.setFieldsValue({
+        engineNumber: value,
+    });
+    }
+
+    console.log('chassisNoList', vinData)
+    const fieldNames = { label: 'vinNumber', value: 'engineNumber' };
+
+
     return (
         <>
             <div className={styles.drawerCustomerMaster}>
@@ -59,10 +72,13 @@ const AddEditFormMain = (props) => {
                                                     <Input placeholder={preparePlaceholderText('Invoice No.')} disabled={true} />
                                                 </>
                                             ) : (
-                                                <Search onSearch={handleInvoiceNoSearch} onChange={handleOnChange} placeholder={preparePlaceholderText('Invoice No.')} allowClear />
-                                                // <AutoComplete label="Chasiss No" options={chassisNoList} backfill={false} onSelect={handleSelect} onSearch={onSearchLocation} allowSearch notFoundContent={searchValue ? 'No Chassis no found' : ''}>
-                                                //     <Input.Search onChange={handleInvoiceNoSearch} size="large" allowClear placeholder={preparePlaceholderAutoComplete('')} />
-                                                // </AutoComplete>
+                                                // <Search onSearch={handleInvoiceNoSearch} onChange={handleOnChange} placeholder={preparePlaceholderText('Invoice No.')} allowClear />
+                                                <AutoComplete fieldNames={fieldNames} label="Chasiss No" options={vinData} backfill={false}
+
+                                                 onSelect={handleSelectVinNo}
+                                                  onSearch={debounce(handleInvoiceNoSearch, 400)} allowSearch >
+                                                    <Input.Search size="large" allowClear placeholder={preparePlaceholderAutoComplete('')} />
+                                                </AutoComplete>
                                             )}
                                         </Form.Item>
                                     </Col>
