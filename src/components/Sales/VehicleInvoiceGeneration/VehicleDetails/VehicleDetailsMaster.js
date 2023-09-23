@@ -222,6 +222,7 @@ const VehicleDetailsMasterMain = (props) => {
 
     const onFinish = (values) => {
         if (onFinishCustom) {
+            console.log('values', values);
             onFinishCustom({ key: formKey, values: { ...values, optionalServices: optionsServicesMapping, taxDetails: vehicleDetailData?.taxDetails, otfNumber: selectedOrderId || '' } });
             handleButtonClick({ buttonAction: NEXT_ACTION });
             setButtonData({ ...buttonData, formBtnActive: false });
@@ -314,6 +315,7 @@ const VehicleDetailsMasterMain = (props) => {
         productModelCode,
         setProductModelCode,
         productHierarchyData,
+        showPrintDiscount: true,
     };
 
     const viewProps = {
@@ -343,7 +345,7 @@ const VehicleDetailsMasterMain = (props) => {
                             <h2>{section?.title}</h2>
                         </Col>
                     </Row>
-                    {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} viewOnly={true} />}
+                    {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} formData={{ ...formData, printDiscount: formData?.printDiscount ? true : false }} viewOnly={true} />}
                 </Col>
             </Row>
             <Row>

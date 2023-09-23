@@ -215,7 +215,7 @@ export const RoleManagementMain = (props) => {
         tableData: searchData,
     };
 
-    const title = 'Role List';
+    const title = 'Role Name';
 
     const advanceFilterResultProps = {
         advanceFilter: false,
