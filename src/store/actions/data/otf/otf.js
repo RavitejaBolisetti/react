@@ -70,4 +70,39 @@ otfDataActions.transferOTF = withAuthToken((params) => ({ token, accessToken, us
     axiosAPICall(apiCallParams);
 });
 
+otfDataActions.cancelOTFWorkflow = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
+    const { setIsLoading, onSuccessAction = undefined, onErrorAction = undefined, data, userId, customURL } = params;
+
+    setIsLoading(true);
+
+    const onError = (message) => {
+        onErrorAction && onErrorAction(message);
+    };
+
+    const onSuccess = (res) => {
+        if (res?.statusCode === 200) {
+            onSuccessAction && onSuccessAction(res);
+        } else {
+            onErrorAction(res?.responseMessage);
+        }
+    };
+
+    const apiCallParams = {
+        data,
+        method: 'put',
+        url: customURL,
+        token,
+        accessToken,
+        userId,
+        onSuccess,
+        onError,
+        onTimeout: () => onError('Request timed out, Please try again'),
+        onUnAuthenticated: () => dispatch(doLogout()),
+        onUnauthorized: (message) => dispatch(unAuthenticateUser(message)),
+        postRequest: () => setIsLoading(false),
+    };
+
+    axiosAPICall(apiCallParams);
+});
+
 export { otfDataActions };
