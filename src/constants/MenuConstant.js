@@ -600,4 +600,10 @@ export const MenuConstant = {
         icon: undefined,
         parentMenuId: 'FINA-02',
     },
+    [getMenyKey('SACT-04.02')]: {
+        key: 'SACT-04.02',
+        link: routing.ROUTING_SO_MAPPING_UNMAPPING,
+        icon: undefined,
+        parentMenuId: 'SACT-04',
+    },
 };

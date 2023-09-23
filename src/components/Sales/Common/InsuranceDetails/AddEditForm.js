@@ -76,7 +76,7 @@ const AddEditFormMain = (props) => {
             fetchInsuranceCompanyList({ setIsLoading: listInsuranceShowLoading, userId, extraParams, customURL,onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, !isInsuranceCompanyDataLoaded]);
+    }, [userId, isInsuranceCompanyDataLoaded]);
 
     useEffect(() => {
         if (formData) {
