@@ -7,7 +7,7 @@ beforeEach(() => {
     jest.clearAllMocks();
 });
 
-describe('OTF View Details Component render', () => {
+describe('Booking View Details Component render', () => {
     it('should render view details page', async () => {
         customRender(<ViewDetail />);
     });
@@ -19,12 +19,6 @@ describe('OTF View Details Component render', () => {
 
         const expectedDate = screen.getByText('Cust. Expected Delivery Date');
         expect(expectedDate).toBeTruthy();
-
-        const saleType = screen.getByText('Sale Type');
-        expect(saleType).toBeTruthy();
-
-        const priceType = screen.getByText('Price Type');
-        expect(priceType).toBeTruthy();
 
         const boolingAmt = screen.getByText('Booking Amount');
         expect(boolingAmt).toBeTruthy();
@@ -53,13 +47,7 @@ describe('OTF View Details Component render', () => {
         const payment = screen.getByText('Mode Of Payment');
         expect(payment).toBeTruthy();
 
-        const finance = screen.getByText('Finance Agreed');
-        expect(finance).toBeTruthy();
-
-        const exchange = screen.getByText('Exchange');
-        expect(exchange).toBeTruthy();
-
-        const loyaltyScheme = screen.getByText('Loyality Scheme');
+        const loyaltyScheme = screen.getByText('Loyalty Scheme');
         expect(loyaltyScheme).toBeTruthy();
     });
 });

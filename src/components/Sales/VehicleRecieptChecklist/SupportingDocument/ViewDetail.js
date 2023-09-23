@@ -7,7 +7,7 @@ import React from 'react';
 import { Card } from 'antd';
 import { FiDownload, FiTrash } from 'react-icons/fi';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 export const ViewDetail = (props) => {
     const {

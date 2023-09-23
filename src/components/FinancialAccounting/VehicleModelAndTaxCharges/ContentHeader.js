@@ -5,7 +5,8 @@
  */
 import React from 'react';
 import { Button, Row, Col } from 'antd';
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+
 import { TfiReload } from 'react-icons/tfi';
 import { PlusOutlined } from '@ant-design/icons';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
@@ -21,7 +22,7 @@ const ContentHeader = (props) => {
                         <Form.Item label={`${titleHierarchy}`} name="code">
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={10} lg={10} xl={10}>
-                                    {customSelectBox({ data: ModelOptions, placeholder: preparePlaceholderSelect('Model Group'), fieldNames: { key: 'id', value: 'value' }, onChange: handleChange, loading: isProductHierarchyDataLoading })}
+                                    {customSelectBox({ data: ModelOptions, placeholder: preparePlaceholderSelect('Model Group'), fieldNames: { key: 'modelGroupCode', value: 'modelGroupDescription' }, onChange: handleChange, loading: isProductHierarchyDataLoading })}
                                 </Col>
                             </Row>
                         </Form.Item>

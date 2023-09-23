@@ -10,8 +10,7 @@ import { validateRequiredInputField, validateRequiredSelectField } from 'utils/v
 import { LANGUAGE_EN } from 'language/en';
 import { ROOT_PARENT_APPLICATION, ACCESSIBLE_LOCATION_INDICATOR_SELECT_DATA } from 'constants/modules/applicationMaster';
 
-import styles from 'components/common/Common.module.css';
-
+import styles from 'assets/sass/app.module.scss';
 import TreeSelectField from '../TreeSelectField';
 import { customSelectBox } from 'utils/customSelectBox';
 
@@ -123,6 +122,28 @@ const ApplicationDetails = ({ setCanFormSave, form, onFinishFailed = () => {}, p
                             <Switch checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" />
                         </Form.Item>
                     </Col>
+
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} name="termAndConRequired" label="T&C Required" valuePropName="checked">
+                            <Switch checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} name="digitalSignatureRequired" label="Digital Signature Required" valuePropName="checked">
+                            <Switch checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} name="isFinanceRelated" label="Is Finance Related" valuePropName="checked">
+                            <Switch checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item initialValue={true} labelAlign="left" wrapperCol={{ span: 24 }} name="irnIntegrationRequired" label="IRN Integration Required" valuePropName="checked">
+                            <Switch checkedChildren="Active" unCheckedChildren="Inactive" valuePropName="checked" />
+                        </Form.Item>
+                    </Col>
+
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item hidden name="id">
                             <Input />

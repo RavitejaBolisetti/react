@@ -11,7 +11,7 @@ import { DataTable } from 'utils/dataTable';
 
 import { tableColumn } from './tableColumn';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 export const CustomerListBase = (props) => {
     const { data, handleSelectedData, setSelectedRowData } = props;
@@ -57,7 +57,7 @@ export const CustomerListBase = (props) => {
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.buttonsGroupRight}>
                     <Button data-testid="counter-text" htmlType="submit" type="primary" onClick={handleViewDetail} disabled={!formBtnActive}>
-                        View Details
+                        Select Customer
                     </Button>
                 </Col>
             </Row>

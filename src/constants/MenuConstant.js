@@ -55,6 +55,13 @@ export const MenuConstant = {
         parentMenuId: 'OTD',
     },
 
+    [getMenyKey('SACT-04.10')]: {
+        key: 'SACT-04.10',
+        link: routing.STOCK_TRANSFER_INDENT,
+        icon: undefined,
+        parentMenuId: 'SACT-04',
+    },
+
     [getMenyKey('COMN-10.01')]: {
         key: 'COMN-10.01',
         link: routing.ROUTING_COMMON_CUSTOMER_MASTER,
@@ -213,6 +220,13 @@ export const MenuConstant = {
         parentMenuId: 'SACT-03',
     },
 
+    [getMenyKey('SACT-03.01')]: {
+        key: 'SACT-03.01',
+        link: routing.ROUTING_HO_PRICE_MAPPING,
+        icon: undefined,
+        parentMenuId: 'SACT-03',
+    },
+
     [getMenyKey('SACT-04.01')]: {
         key: 'SACT-04.01',
         link: routing.ROUTING_VECHILE_PURCHASE_ORDER,
@@ -283,6 +297,13 @@ export const MenuConstant = {
         parentMenuId: 'COMN-02',
     },
 
+    [getMenyKey('COMN-02.02')]: {
+        key: 'COMN-02.02',
+        link: routing.ROUTING_COMMON_USER_MANAGEMENT,
+        icon: undefined,
+        parentMenuId: 'COMN-02',
+    },
+
     [getMenyKey('COMN-03.02')]: {
         key: 'COMN-03.02',
         link: routing.ROUTING_COMMON_APPLICATION_MASTER,
@@ -320,6 +341,13 @@ export const MenuConstant = {
         link: undefined,
         icon: <RupeeIcon fontSize={22} />,
         parentMenuId: 'WEB',
+    },
+
+    [getMenyKey('FINA-01.01')]: {
+        key: 'FINA-01.01',
+        link: routing.ROUTING_FINANCIAL_ACCOUNTING_CHART_OF_ACCOUNT,
+        icon: undefined,
+        parentMenuId: 'FINA-01',
     },
 
     [getMenyKey('FINA-01.02')]: {
@@ -412,11 +440,95 @@ export const MenuConstant = {
         parentMenuId: 'WEB',
     },
 
-    [getMenyKey('RPT-BI')]: {
-        key: 'RPT-BI',
-        link: routing.ROUTING_REPORT_BI_REPORT,
+    [getMenyKey('RPT-OTF')]: {
+        key: 'RPT-OTF',
+        link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
         icon: undefined,
         parentMenuId: 'RPT',
+        slug: 'booking-report',
+    },
+
+    [getMenyKey('SACR-05.10')]: {
+        key: 'SACR-05.10',
+        link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
+        icon: undefined,
+        parentMenuId: 'OTDR',
+        slug: 'area-wise-sales-report',
+    },
+
+    [getMenyKey('SACR-05.21')]: {
+        key: 'SACR-05.21',
+        link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
+        icon: undefined,
+        parentMenuId: 'OTDR',
+        slug: 'vdc-pending-report',
+    },
+
+    [getMenyKey('DELSO')]: {
+        key: 'DELSO',
+        link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
+        icon: undefined,
+        parentMenuId: 'SACR-02.04',
+        slug: 'so-mapping-report',
+    },
+
+    [getMenyKey('SACR-04.17')]: {
+        key: 'SACR-04.17',
+        link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
+        icon: undefined,
+        parentMenuId: 'SACR-02.04',
+        slug: 'stock-status-report',
+    },
+    [getMenyKey('SACR-04.23')]: {
+        key: 'SACR-04.23',
+        link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
+        icon: undefined,
+        parentMenuId: 'SACR-02.04',
+        slug: 'evr-detail-analysis-report',
+    },
+    [getMenyKey('SACR-04.15')]: {
+        key: 'SACR-04.15',
+        link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
+        icon: undefined,
+        parentMenuId: 'SACR-02.04',
+        slug: 'vehicle-stock-availability-report',
+    },
+    [getMenyKey('SACR-04.09')]: {
+        key: 'SACR-04.09',
+        link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
+        icon: undefined,
+        parentMenuId: 'SACR-02.04',
+        slug: 'stock-transfer-report',
+    },
+    [getMenyKey('SACR-04.01')]: {
+        key: 'SACR-04.01',
+        link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
+        icon: undefined,
+        parentMenuId: 'SACR-02.05',
+        slug: 'POSO',
+    },
+    [getMenyKey('FINA-02.10')]: {
+        key: 'FINA-02.10',
+        link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
+        icon: undefined,
+        parentMenuId: 'SACR-02.03',
+        slug: 'voucher-report',
+    },
+
+    [getMenyKey('VDNRPT')]: {
+        key: 'VDNRPT',
+        link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
+        icon: undefined,
+        parentMenuId: 'SACR-02.05',
+        slug: 'vehicle-delivery-note-report',
+    },
+
+    [getMenyKey('RPT-DLRNOTE')]: {
+        key: 'RPT-DLRNOTE',
+        link: routing.ROUTING_REPORT_EMBEDDED_REPORT,
+        icon: undefined,
+        parentMenuId: 'RPT',
+        slug: 'delivery-note',
     },
 
     [getMenyKey('RPT-PG')]: {
@@ -447,6 +559,13 @@ export const MenuConstant = {
         parentMenuId: 'ADMN',
     },
 
+    [getMenyKey('SACT-04.03')]: {
+        key: 'SACT-04.03',
+        link: routing.ROUTING_VEHICLE_TRACKING,
+        icon: undefined,
+        parentMenuId: 'SACT-04',
+    },
+
     [getMenyKey('SACT-04.08')]: {
         key: 'SACT-04.08',
         link: routing.ROUTING_VEHICLE_RECEIPT,
@@ -459,6 +578,13 @@ export const MenuConstant = {
         link: routing.ROUTING_VEHICLE_RECIEPT_CHECKLIST,
         icon: undefined,
         parentMenuId: 'SACT-04',
+    },
+
+    [getMenyKey('SACT-06.08')]: {
+        key: 'SACT-06.08',
+        link: routing.ROUTING_DELIVERY_NOTE_INVOICE_CANELLATION,
+        icon: undefined,
+        parentMenuId: 'SACT-06.07',
     },
 
     [getMenyKey('FINA-01.06')]: {

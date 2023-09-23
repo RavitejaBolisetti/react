@@ -4,7 +4,8 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { Button, Row, Col, Input, Select } from 'antd';
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+
 import { PlusOutlined } from '@ant-design/icons';
 
 const { Search } = Input;

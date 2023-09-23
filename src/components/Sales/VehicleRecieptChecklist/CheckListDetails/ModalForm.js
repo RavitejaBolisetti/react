@@ -7,14 +7,14 @@ import React, { useEffect, useState } from 'react';
 import { Col, Input, Form, Row } from 'antd';
 
 import { withModal } from 'components/withModal';
-import { preparePlaceholderText } from 'utils/preparePlaceholder';
-
-import { validateRequiredInputField } from 'utils/validation';
 import { ModalButtons } from 'components/common/Button';
-import { convertDateTimedayjs } from 'utils/formatDateTime';
-import styles from 'components/common/Common.module.css';
 
+import { preparePlaceholderText } from 'utils/preparePlaceholder';
+import { validateRequiredInputField } from 'utils/validation';
+import { convertDateTimedayjs } from 'utils/formatDateTime';
 import { MakeCheckResult, setCheckresultValue, BindFormItems } from './CheckListUtils';
+
+import styles from 'assets/sass/app.module.scss';
 
 export const ChecklistModalForms = (props) => {
     const { AdvanceformData, setAdvanceformData } = props;
@@ -37,7 +37,6 @@ export const ChecklistModalForms = (props) => {
             .validateFields()
             .then(() => {
                 const values = aggregateForm.getFieldsValue();
-                //console.log('valuesDate', convertDateTimedayjs(values?.answerToDate), convertDateTimedayjs(values?.answerFromDate));
                 const data = { ...AdvanceformData, ...values, ismodified: true, checkResult: MakeCheckResult({ type: AdvanceformData?.checklistType, data: { ...values, answerToDate: convertDateTimedayjs(values?.answerToDate), answerFromDate: convertDateTimedayjs(values?.answerFromDate) } }) };
                 const newarr = [...checkListDataModified];
                 newarr[AdvanceformData?.index] = data;

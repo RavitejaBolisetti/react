@@ -7,8 +7,7 @@ import React from 'react';
 import { Row, Col } from 'antd';
 import { withModal } from 'components/withModal';
 
-import styles from './SessionTimeoutModal.module.css';
-
+import styles from './SessionTimeoutModal.module.scss';
 const OfflineModalMain = (props) => {
     return (
         <>

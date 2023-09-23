@@ -4,7 +4,8 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { Descriptions, Divider } from 'antd';
+import { Descriptions } from 'antd';
+
 import AddEditForm from './AddEditForm';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { getCodeValue } from 'utils/getCodeValue';
@@ -42,13 +43,12 @@ const ViewDetailBase = (props) => {
         <div className={styles.viewDrawerContainer}>
             {!isEditing ? (
                 <>
-                    <Divider />
                     {/* <UploadUtils {...formProps} /> */}
                     <Descriptions {...viewProps}>
                         <Descriptions.Item label="Purpose of Contact">{checkAndSetDefaultValue(getCodeValue(typeData?.PURPOSE, formData?.purposeOfContact), isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Mobile Number">{checkAndSetDefaultValue(formData?.mobileNumber, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Alternate Mobile Numbe">{checkAndSetDefaultValue(formData?.alternateMobileNumber, isLoading)}</Descriptions.Item>
-                        {customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id ? <Descriptions.Item label="Relation">{checkAndSetDefaultValue(getCodeValue(typeData?.FAMLY_RELTN, formData?.relationCode), isLoading)}</Descriptions.Item> : <Descriptions.Item label="Designation">{checkAndSetDefaultValue(formData?.designation, isLoading)}</Descriptions.Item>}
+                        {customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id ? <Descriptions.Item label="Relationship">{checkAndSetDefaultValue(getCodeValue(typeData?.FAMLY_RELTN, formData?.relationCode), isLoading)}</Descriptions.Item> : <Descriptions.Item label="Designation">{checkAndSetDefaultValue(formData?.designation, isLoading)}</Descriptions.Item>}
 
                         <Descriptions.Item label="Gender">{checkAndSetDefaultValue(getCodeValue(typeData?.GENDER_CD, formData?.gender), isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Title">{checkAndSetDefaultValue(getCodeValue(typeData?.TITLE, formData?.title), isLoading)}</Descriptions.Item>

@@ -6,7 +6,7 @@
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
 import { screen, fireEvent } from '@testing-library/react';
-import { ViewDetail } from '@components/Sales/OTF/CustomerDetails/ViewDetail';
+import { ViewDetail } from '@components/Sales/Common/CustomerDetails/ViewDetail';
 
 const bookingCustomer = true;
 

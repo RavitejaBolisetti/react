@@ -5,20 +5,17 @@
  */
 
 import React from 'react';
-import { Empty, Card } from 'antd';
-import styles from 'components/common/Common.module.css';
+import { Space } from 'antd';
+import { UploadBoxIcon } from 'Icons';
+
+import styles from 'assets/sass/app.module.scss';
 
 export const NoDataFound = (props) => {
     const { informtion = 'No Data Found' } = props;
     return (
-        <Card>
-            <Empty
-                image={Empty.PRESENTED_IMAGE_SIMPLE}
-                imageStyle={{
-                    height: 60,
-                }}
-                description={<span className={styles.descriptionText}>{informtion}</span>}
-            />
-        </Card>
+        <Space direction="vertical" align="center">
+            <UploadBoxIcon />
+            <div className={styles.descriptionText}>{informtion}</div>
+        </Space>
     );
 };

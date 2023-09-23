@@ -9,7 +9,7 @@ import { Col, Form, Row, Select, Input, Button } from 'antd';
 import { validateRequiredSelectField, searchValidator } from 'utils/validation';
 import { withModal } from 'components/withModal';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 const { Option } = Select;
 
@@ -85,7 +85,7 @@ export const AdvancedSearchFrom = (props) => {
             </Row>
 
             <Row gutter={20}>
-                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.alignLeft}>
+                <Col xs={24} sm={12} md={12} lg={12} xl={12} className={styles.textLeft}>
                     <Button onClick={handleResetFilter} danger>
                         Reset
                     </Button>

@@ -6,7 +6,7 @@
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import { Tag } from 'antd';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 export const tableColumn = (handleButtonClick, page, pageSize) => {
     const tableColumn = [];

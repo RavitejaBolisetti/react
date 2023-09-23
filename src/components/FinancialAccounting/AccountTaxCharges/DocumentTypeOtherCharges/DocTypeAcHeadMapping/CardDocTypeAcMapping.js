@@ -4,15 +4,16 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect } from 'react';
-import { Card, Row, Button, Divider, Typography, Space } from 'antd';
+import { Card, Row, Col, Button, Divider, Typography } from 'antd';
 import { FiEdit, FiTrash } from 'react-icons/fi';
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+
 import FormDocTypeAcMapping from './FormDocTypeAcMapping';
 
 const { Text } = Typography;
 
 const CardDocTypeAcMapping = (props) => {
-    const { finalFormdata, docTypeHeadMappingForm, forceUpdate, taxCharges, financialAccount, typeData, productHierarchyAttributeData, docTypeHeadMappingList, setDocTypeHeadMappingList, objTaxCharge, setOpenAccordian, changeValue, setChangeValue, editForm, formEdit, setFormEdit, uniqueCardEdit, setuniqueCardEdit, buttonData, setButtonData, dropdownItems, setDropdownItems, viewMode } = props;
+    const { finalFormdata, docTypeHeadMappingForm, forceUpdate, taxCharges, financialAccount, typeData, productHierarchyAttributeData, docTypeHeadMappingList, setDocTypeHeadMappingList, objTaxCharge, setOpenAccordian, changeValue, setChangeValue, editForm, formEdit, setFormEdit, uniqueCardEdit, setuniqueCardEdit, buttonData, setButtonData, dropdownItems, setDropdownItems, viewMode, internalId } = props;
 
     const docTypeHeadMappingEdit = (props) => {
         setuniqueCardEdit(props?.internalId);
@@ -82,6 +83,7 @@ const CardDocTypeAcMapping = (props) => {
         dropdownItems,
         financialAccount,
         typeData,
+        internalId,
     };
 
     useEffect(() => {
@@ -95,21 +97,16 @@ const CardDocTypeAcMapping = (props) => {
     const financialAccountHeadName = financialAccount?.find((e) => e?.id === props?.financialAccountHeadId)?.value;
 
     return (
-        <Card
-            style={{
-                backgroundColor: '#BEBEBE1A',
-            }}
-        >
+        <Card>
             <Row align="middle" justify="space-between" className={styles.marB20}>
-                <Space>
+                <Col xs={24} sm={24} md={18} lg={18} xl={18} xxl={18}>
                     <Text>{props?.chargeCodeDesc ? props?.chargeCodeDesc : chargeCodeDescName}</Text>
                     <Divider type="vertical" />
                     <Text>{props?.financialAccountHeadDesc ? props?.financialAccountHeadDesc : financialAccountHeadName}</Text>
-                </Space>
-
-                {viewMode === false ? (
-                    <Row>
-                        <div className={styles.cardItemBtn}>
+                </Col>
+                <Col xs={24} sm={24} md={6} lg={6} xl={6} xxl={6} className={styles.buttonsGroupRight}>
+                    {viewMode === false ? (
+                        <>
                             {!formEdit && (
                                 <>
                                     <Button
@@ -123,19 +120,19 @@ const CardDocTypeAcMapping = (props) => {
                                     <Button onClick={() => onDocTypeHeadMappingDelete(props)} type="link" icon={<FiTrash />} disabled={props?.id ? true : false} />
                                 </>
                             )}
-                        </div>
-                        {formEdit && props?.internalId === uniqueCardEdit && (
-                            <div className={styles.cardItemBtn}>
-                                <Button type="link" onClick={onDocTypeHeadMappingCancel}>
-                                    Cancel
-                                </Button>
-                                <Button type="link" onClick={docTypeHeadMappingSave}>
-                                    Save
-                                </Button>
-                            </div>
-                        )}
-                    </Row>
-                ) : null}
+                            {formEdit && props?.internalId === uniqueCardEdit && (
+                                <>
+                                    <Button type="link" onClick={docTypeHeadMappingSave}>
+                                        Save
+                                    </Button>
+                                    <Button type="link" onClick={onDocTypeHeadMappingCancel}>
+                                        Cancel
+                                    </Button>
+                                </>
+                            )}
+                        </>
+                    ) : null}
+                </Col>
             </Row>
 
             {formEdit && props?.internalId === uniqueCardEdit && (

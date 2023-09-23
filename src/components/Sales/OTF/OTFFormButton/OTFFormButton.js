@@ -7,9 +7,10 @@ import React from 'react';
 import { Button, Row, Col, Popover } from 'antd';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
-import styles from 'components/common/Common.module.css';
 
-export const OTFFormButton = ({ record, handleChangeHistory, handleOtfSoMappingHistory, onCloseAction, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection }) => {
+import styles from 'assets/sass/app.module.scss';
+
+export const OTFFormButton = ({ record, handleChangeHistory, handleOtfSoMappingHistory, onCloseAction, buttonData, setButtonData, saveButtonName = 'Save', handleButtonClick, isLoadingOnSave, isLastSection, workFlowDetails }) => {
     const content = <div>Coming Soon</div>;
     return (
         <div className={styles.formFooter}>
@@ -29,14 +30,15 @@ export const OTFFormButton = ({ record, handleChangeHistory, handleOtfSoMappingH
                 </Col>
 
                 <Col xs={24} sm={16} md={18} lg={20} xl={20} className={styles.buttonsGroupRight}>
-                    {buttonData?.otfSoMappingChangeHistory && (
-                        <Button onClick={handleOtfSoMappingHistory} danger>
-                            OTF Mapping History
-                        </Button>
-                    )}
                     {buttonData?.editBtn && (
                         <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.EDIT, record, openDefaultSection: false })} type="primary">
                             Edit
+                        </Button>
+                    )}
+
+                    {buttonData?.otfSoMappingHistoryBtn && (
+                        <Button onClick={handleOtfSoMappingHistory} type="primary">
+                            Booking Mapping History
                         </Button>
                     )}
 
@@ -46,11 +48,11 @@ export const OTFFormButton = ({ record, handleChangeHistory, handleOtfSoMappingH
                         </Button>
                     )}
 
-                    {/* {buttonData?.unAllotBtn && ( */}
-                    <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.UNALLOT, record })} type="primary">
-                        Un-Allot
-                    </Button>
-                    {/* )} */}
+                    {buttonData?.unAllotBtn && (
+                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.UNALLOT, record })} type="primary">
+                            Un-Allot
+                        </Button>
+                    )}
 
                     {buttonData?.invoiceBtn && (
                         <Popover content={content} trigger="hover">
@@ -70,15 +72,24 @@ export const OTFFormButton = ({ record, handleChangeHistory, handleOtfSoMappingH
 
                     {buttonData?.transferOTFBtn && (
                         <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.TRANSFER_OTF, record })} type="primary">
-                            Transfer OTF
+                            Transfer Booking
                         </Button>
                     )}
 
                     {buttonData?.cancelOTFBtn && (
                         <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.CANCEL_OTF, record })} type="primary">
-                            Cancel OTF
+                            Cancel Booking
                         </Button>
                     )}
+
+                    {buttonData?.pendingCancellationOTFBtn &&
+                        workFlowDetails?.allowedActions?.map((element, i) => {
+                            return (
+                                <Button onClick={() => handleButtonClick({ buttonAction: element?.actionCode, record })} type="primary" key={i}>
+                                    {element?.actionName}
+                                </Button>
+                            );
+                        })}
 
                     {buttonData?.changeHistory && (
                         <Button onClick={handleChangeHistory} type="primary">
@@ -86,15 +97,15 @@ export const OTFFormButton = ({ record, handleChangeHistory, handleOtfSoMappingH
                         </Button>
                     )}
 
-                    {buttonData?.nextBtn && !isLastSection && (
-                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.NEXT, record })} type="primary">
-                            Next
-                        </Button>
-                    )}
-
                     {buttonData?.saveBtn && (
                         <Button loading={isLoadingOnSave} disabled={!buttonData?.formBtnActive} onClick={(e) => setButtonData({ ...buttonData, saveAndNewBtnClicked: false })} htmlType="submit" type="primary">
                             {saveButtonName}
+                        </Button>
+                    )}
+
+                    {buttonData?.nextBtn && !isLastSection && (
+                        <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.NEXT, record })} type="primary">
+                            Next
                         </Button>
                     )}
                 </Col>

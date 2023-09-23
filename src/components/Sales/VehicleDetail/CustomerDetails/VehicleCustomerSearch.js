@@ -9,7 +9,7 @@ import { Col, Row, Button, Table } from 'antd';
 import { withModal } from 'components/withModal';
 import { tableColumn } from './tableColumn';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 export const VehicleCustomerSearchForm = (props) => {
     const { onCloseAction } = props;

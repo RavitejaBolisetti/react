@@ -3,32 +3,31 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React from 'react';
-import { Row, Col, Form, Select, Card, Descriptions } from 'antd';
-
-import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
-import { validateRequiredSelectField } from 'utils/validation';
-import { customSelectBox } from 'utils/customSelectBox';
+import React, { useEffect } from 'react';
+import { Row, Col, Form, Card, Descriptions, Divider } from 'antd';
 
 import AdvanceFilter from './AdvanceFilter';
-import { AdvancedSearch } from './AdvancedSearch';
 import { ListDataTable } from 'utils/ListDataTable';
 import { withDrawer } from 'components/withDrawer';
-import { DrawerFormButton } from 'components/common/Button';
 import { checkAndSetDefaultValue, getStatus } from 'utils/checkAndSetDefaultValue';
-import { convertDateTime } from 'utils/formatDateTime';
-import styles from 'components/common/Common.module.css';
+import { VehicleDetailFormButton } from 'components/Sales/VehicleDetail/VehicleDetailFormButton';
+import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 
-import { FilterIcon } from 'Icons';
-const { Option } = Select;
+import styles from 'assets/sass/app.module.scss';
 
 const AddEditFormMain = (props) => {
-    const { filterString, setFilterString, toggleButton, settoggleButton, setAdvanceSearchVisible, extraParams } = props;
-    const { isAdvanceSearchVisible, advanceFilterForm, typeData, productHierarchyData } = props;
+    const { filterString, setFilterString, toggleButton, settoggleButton, setAdvanceSearchVisible, extraParams, handleResetFilter, removeFilter } = props;
+    const { setSelectedOrderVINDetails } = props;
 
     const { formData, isLoading, selectedOrder, tableProps } = props;
     const { otfTransferForm, onFinishOTFTansfer } = props;
     const { handleButtonClick, buttonData, setButtonData, onCloseAction } = props;
+
+    useEffect(() => {
+        setFilterString();
+        setSelectedOrderVINDetails();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const buttonProps = {
         formData,
@@ -36,14 +35,13 @@ const AddEditFormMain = (props) => {
         buttonData,
         setButtonData,
         handleButtonClick,
-        onFinishOTFTansfer,
     };
 
     const viewProps = {
         bordered: false,
         colon: false,
         layout: 'vertical',
-        column: { xs: 1, sm: 3, lg: 6, xl: 6, xxl: 6 },
+        column: { xs: 1, sm: 3, lg: 4, xl: 4, xxl: 6 },
     };
 
     const advanceFilterResultProps = {
@@ -54,18 +52,8 @@ const AddEditFormMain = (props) => {
         toggleButton,
         settoggleButton,
         setAdvanceSearchVisible,
-    };
-
-    const advanceFilterProps = {
-        titleOverride: 'Advance Filters',
-        isVisible: isAdvanceSearchVisible,
-        icon: <FilterIcon size={20} />,
-        advanceFilterForm,
-        typeData,
-        filterString,
-        setFilterString,
-        setAdvanceSearchVisible,
-        productHierarchyData,
+        handleResetFilter,
+        removeFilter,
     };
 
     return (
@@ -73,23 +61,23 @@ const AddEditFormMain = (props) => {
             <Form form={otfTransferForm} data-testid="test" onFinish={onFinishOTFTansfer} layout="vertical" autocomplete="off" colon="false">
                 <Row gutter={20} className={styles.drawerBody}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Card className={styles.ExchangeCard}>
+                        <Card>
                             <Descriptions {...viewProps}>
-                                <Descriptions.Item label="OTF No.">{checkAndSetDefaultValue(selectedOrder?.otfNumber, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="OTF Date">{checkAndSetDefaultValue(convertDateTime(selectedOrder?.otfDate, 'DD MMM YYYY'), isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Booking No.">{checkAndSetDefaultValue(selectedOrder?.bookingNumber || selectedOrder?.otfNumber, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Booking Date">{checkAndSetDefaultValue(convertDateTime(selectedOrder?.otfDate, dateFormatView), isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Customer Name">{checkAndSetDefaultValue(selectedOrder?.customerName, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Mobile No.">{checkAndSetDefaultValue(selectedOrder?.mobileNumber, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Model">{checkAndSetDefaultValue(selectedOrder?.model, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Model Description">{checkAndSetDefaultValue(selectedOrder?.model, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Order Status">{getStatus(selectedOrder?.orderStatus)}</Descriptions.Item>
                             </Descriptions>
                         </Card>
-
+                        <Divider className={styles.marT20} />
+                        <h4>Allot Vehicle</h4>
                         <AdvanceFilter {...advanceFilterResultProps} />
                         <ListDataTable handleAdd={handleButtonClick} {...tableProps} showAddButton={false} />
-                        <AdvancedSearch {...advanceFilterProps} />
                     </Col>
                 </Row>
-                <DrawerFormButton {...buttonProps} />
+                <VehicleDetailFormButton {...buttonProps} />
             </Form>
         </>
     );

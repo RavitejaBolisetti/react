@@ -20,8 +20,9 @@ import { BASE_URL_OTF_DETAILS as customURL } from 'constants/routingApi';
 import { formatDate } from 'utils/formatDateTime';
 
 import { OTFStatusBar } from '../utils/OTFStatusBar';
+import { OTF_STATUS } from 'constants/OTFStatus';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 const mapStateToProps = (state) => {
     const {
@@ -34,7 +35,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'OTF Details';
+    const moduleTitle = 'Booking Details';
 
     let returnValue = {
         userId,
@@ -69,6 +70,7 @@ const OtfDetailsMasterBase = (props) => {
     const { typeData, listConsultantShowLoading } = props;
     const { userId, showGlobalNotification, section, fetchOTFDetail, listShowLoading, isDataLoaded, otfData, saveData, isLoading } = props;
     const { form, selectedOrderId, formActionType, handleFormValueChange, fetchSalesConsultant, salesConsultantLov, isSalesConsultantDataLoaded, NEXT_ACTION, handleButtonClick } = props;
+    const { workFlowDetails, setWorkFlowDetails } = props;
     const [exchangeValue, setexchangeValue] = useState(false);
     const [loyaltyValue, setloyaltyValue] = useState(false);
     const disabledProps = {
@@ -86,6 +88,7 @@ const OtfDetailsMasterBase = (props) => {
             setexchangeValue(false);
             setloyaltyValue(false);
         }
+        if (otfData?.otfStatus === OTF_STATUS.PENDING_FOR_CANCELLATION.key) setWorkFlowDetails(otfData?.workFlowDetails);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [otfData]);
 
@@ -98,7 +101,7 @@ const OtfDetailsMasterBase = (props) => {
             key: 'otfNumber',
             title: 'otfNumber',
             value: selectedOrderId,
-            name: 'OTF Number',
+            name: 'Booking Number',
         },
     ];
 
@@ -109,7 +112,7 @@ const OtfDetailsMasterBase = (props) => {
                     key: 'otfNumber',
                     title: 'otfNumber',
                     value: selectedOrderId,
-                    name: 'OTF Number',
+                    name: 'Booking Number',
                 },
             ];
             fetchOTFDetail({ customURL, setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
@@ -128,14 +131,14 @@ const OtfDetailsMasterBase = (props) => {
         const recordId = otfData?.id || '';
         const otfNum = otfData?.otfNumber || '';
         const exchange = values?.exchange === true ? 1 : 0;
-        const data = { ...values, id: recordId, otfNumber: otfNum, loyaltyScheme: values?.loyaltyScheme === true ? 1 : 0, exchange: exchange, initialPromiseDeliveryDate: formatDate(values?.initialPromiseDeliveryDate), custExpectedDeliveryDate: formatDate(values?.custExpectedDeliveryDate) };
+        const data = { ...values, id: recordId, otfNumber: otfNum, loyaltyScheme: values?.loyaltyScheme === true ? 1 : 0, referral: values?.referral ? 'Y' : 'N', exchange: exchange, initialPromiseDeliveryDate: formatDate(values?.initialPromiseDeliveryDate), custExpectedDeliveryDate: formatDate(values?.custExpectedDeliveryDate) };
         delete data?.mitraName;
         delete data?.mitraType;
         delete data?.modeOfPAyment;
 
         const onSuccess = (res) => {
             handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+            // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
             fetchOTFDetail({ customURL, fetchOTFDetail, setIsLoading: listShowLoading, userId, extraParams });
         };
 
@@ -157,6 +160,11 @@ const OtfDetailsMasterBase = (props) => {
     };
 
     const onFinishFailed = () => {};
+    const handleDeliveryChange = (__, value) => {
+        if (value?.type === 'D') {
+            showGlobalNotification({ message: 'This value has been deprecated. Please select other value' });
+        }
+    };
 
     const formProps = {
         ...props,
@@ -176,6 +184,7 @@ const OtfDetailsMasterBase = (props) => {
         loyaltyValue,
         setloyaltyValue,
         disabledProps,
+        handleDeliveryChange,
     };
 
     const viewProps = {

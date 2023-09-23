@@ -11,7 +11,8 @@ import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { customSelectBox } from 'utils/customSelectBox';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+// import styles from 'assets/sass/app.module.scss';
 
 export const AdvancedSearchFrom = (props) => {
     const { setAdvanceSearchVisible, typeData, productHierarchyData, resetAdvanceFilter } = props;
@@ -51,7 +52,7 @@ export const AdvancedSearchFrom = (props) => {
         <Form autoComplete="off" layout="vertical" form={advanceFilterForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={16}>
                 <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                    <Form.Item initialValue={filterString?.model} label="Model" name="model">
+                    <Form.Item initialValue={filterString?.model} label="Model Description" name="model">
                         {customSelectBox({ data: productHierarchyData, placeholder: preparePlaceholderSelect('Model'), fieldNames: { key: 'prodctCode', value: 'prodctShrtName' } })}
                     </Form.Item>
                 </Col>

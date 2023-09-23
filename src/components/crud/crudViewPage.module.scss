@@ -1,0 +1,79 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
+@import 'assets/sass/app.module.scss';
+
+.crudViewPage {
+    & :global {
+        .ant-drawer-title {
+            font-size: 24px;
+            font-weight: normal;
+            color: $primaryBlack;
+
+            @include breakpoint(xmd) {
+                font-size: 20px;
+                font-weight: normal;
+                color: $primaryBlack;
+            }
+        }
+
+        .ant-drawer-body {
+            height: calc(100vh - 108px);
+            overflow-y: scroll;
+            background: $neutralGrey0;
+
+            @include breakpoint(xmd) {
+                height: 86vh;
+                overflow-y: scroll;
+            }
+        }
+    }
+}
+
+.crudViewPage1 {
+    & :global {
+        .ant-drawer-title {
+            font-size: 24px;
+            font-weight: normal;
+            color: $primaryBlack;
+
+            @include breakpoint(lg) {
+                font-size: 20px;
+                font-weight: 400;
+            }
+
+            @include breakpoint(xmd) {
+                font-size: 20px;
+                font-weight: 400;
+            }
+        }
+
+        .ant-drawer-body {
+            height: calc(100vh - 108px);
+            overflow-y: scroll;
+            background: $neutralGrey1;
+
+            @include breakpoint(xmd) {
+                height: 86vh;
+                overflow-y: scroll;
+            }
+        }
+    }
+}
+
+.footerSection {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    border-top: 1px solid $neutralGrey1;
+    padding: 10px 45px;
+    text-align: right;
+    left: 0;
+    background: $primaryWhite;
+
+    @include breakpoint(md) {
+        padding: 10px 30px;
+    }
+}

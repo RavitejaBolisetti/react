@@ -12,7 +12,7 @@ import { disablePastDate } from 'utils/disableDate';
 import { USER_TYPE } from 'constants/userType';
 import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 const { Panel } = Collapse;
 
@@ -53,13 +53,18 @@ const AddEditFormMain = (props) => {
 
     return (
         <>
-            <Collapse defaultActiveKey={['1']} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
+            <Collapse defaultActiveKey={['1']} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end" collapsible="icon">
                 <Panel header="Vehicle Details" key="1">
                     <Divider />
                     <Row gutter={20}>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item initialValue={formattedCalendarDate(formData?.mnfcWarrEndDate)} label="Manufacturer Warranty End Date" name="mnfcWarrEndDate">
                                 <DatePicker disabledDate={disablePastDate} format={dateFormat} {...disabledProps} />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                            <Form.Item initialValue={formData?.manufactureKM} label="Expiry KM" name="manufactureKM">
+                                <Input {...disabledProps} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -104,11 +109,11 @@ const AddEditFormMain = (props) => {
                             </Form.Item>
                         </Col>
 
-                        <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                        {/* <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item initialValue={formattedCalendarDate(formData?.pucExpiryDate)} label="PUC Expiry Date" name="pucExpiryDate">
                                 <DatePicker disabledDate={disablePastDate} format={dateFormat} {...disabledProps} />
                             </Form.Item>
-                        </Col>
+                        </Col> */}
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item initialValue={formattedCalendarDate(formData?.insuranceExpiryDate)} label="Insurance Expiry Date" name="insuranceExpiryDate">
                                 <DatePicker disabledDate={disablePastDate} format={dateFormat} {...disabledProps} />
@@ -220,12 +225,12 @@ const AddEditFormMain = (props) => {
                     )}
                 </Panel>
             </Collapse>
-            <Collapse defaultActiveKey={['2']} bordered={false} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
+            {/* <Collapse defaultActiveKey={['2']} bordered={false} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end" collapsible="icon">
                 <Panel header="Registration Number Change Request" key="2">
                     <Divider />
                     <div className={styles.marB20}>Coming Soon</div>
                 </Panel>
-            </Collapse>
+            </Collapse> */}
         </>
     );
 };

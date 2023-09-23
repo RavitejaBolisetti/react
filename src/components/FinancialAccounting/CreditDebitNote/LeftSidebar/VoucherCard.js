@@ -6,9 +6,10 @@
 import React from 'react';
 import { Collapse, Divider } from 'antd';
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
-import { convertDate, monthDateFormat } from 'utils/formatDateTime';
+import { convertDate, dateFormatView } from 'utils/formatDateTime';
 import dayjs from 'dayjs';
-import styles from 'components/common/Common.module.css';
+
+import styles from 'assets/sass/app.module.scss';
 
 const { Panel } = Collapse;
 
@@ -33,11 +34,11 @@ const VoucherCard = (props) => {
                 header={
                     <>
                         <div className={styles.detailCardText} style={{ fontSize: '14px' }}>
-                            Voucher No: <span>{selectedRecord?.voucherNumber || 'NA'}</span>
+                            Voucher No: <span>{selectedRecord?.voucherNumber || '-'}</span>
                         </div>
                         <Divider />
                         <div className={`${styles.detailCardText} ${styles.marB5}`} style={{ fontSize: '14px' }}>
-                            Voucher Date: <span>{selectedRecord?.voucherDate ? convertDate(selectedRecord?.voucherDate, monthDateFormat) : dayjs().format(monthDateFormat)}</span>
+                            Voucher Date: <span>{selectedRecord?.voucherDate ? convertDate(selectedRecord?.voucherDate, dateFormatView) : dayjs().format(dateFormatView)}</span>
                         </div>
                     </>
                 }
@@ -45,7 +46,7 @@ const VoucherCard = (props) => {
             >
                 <Divider />
                 <div className={styles.detailCardText}>
-                    Voucher Type: <span>{selectedRecord?.voucherType || 'NA'}</span>
+                    Voucher Type: <span>{selectedRecord?.voucherType || '-'}</span>
                 </div>
             </Panel>
         </Collapse>

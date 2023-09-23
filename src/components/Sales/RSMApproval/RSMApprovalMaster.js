@@ -18,13 +18,14 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { ViewDetail } from './ViewDetail';
 import { RejectRequest } from './RejectRequest';
 import { RSM_APPROVAL_STATUS } from './utils/RSMApprovalStatus';
-import { monthDateFormat, convertDate } from 'utils/formatDateTime';
+import { dateFormatView, convertDate } from 'utils/formatDateTime';
 
 import { LANGUAGE_EN } from 'language/en';
 import { FilterIcon } from 'Icons';
 import { rsmApprovalSearchDataAction } from 'store/actions/data/sales/rsmApprovalSearch';
 import { rsmApprovalDataAction } from 'store/actions/data/sales/rsmApproval';
-import styles from 'components/common/Common.module.css';
+
+import styles from 'assets/sass/app.module.scss';
 
 const mapStateToProps = (state) => {
     const {
@@ -161,7 +162,7 @@ export const RSMApprovalMasterBase = (props) => {
                 key: 'fromDate',
                 title: 'From Date',
                 value: filterString?.fromDate,
-                name: convertDate(filterString?.fromDate, monthDateFormat),
+                name: convertDate(filterString?.fromDate, dateFormatView),
                 canRemove: true,
                 filter: true,
             },
@@ -169,7 +170,7 @@ export const RSMApprovalMasterBase = (props) => {
                 key: 'toDate',
                 title: 'To Date',
                 value: filterString?.toDate,
-                name: convertDate(filterString?.toDate, monthDateFormat),
+                name: convertDate(filterString?.toDate, dateFormatView),
                 canRemove: true,
                 filter: true,
             },

@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { Collapse } from 'antd';
+import { Collapse, Divider } from 'antd';
 
 import AuthorityDetailMaster from './AuthorityDetailMaster';
 import { accordianExpandIcon } from 'utils/accordianExpandIcon';
@@ -32,8 +32,9 @@ const AuthorityDetailPanel = (props) => {
         authTypeDropdownData,
     };
     return (
-        <Collapse onChange={() => handleCollapse(1)} expandIcon={accordianExpandIcon} activeKey={openAccordian}>
+        <Collapse onChange={() => handleCollapse(1)} expandIcon={accordianExpandIcon} activeKey={openAccordian} collapsible="icon">
             <Panel header="Authority Details" key="1">
+                <Divider />
                 <AuthorityDetailMaster {...authorityDetailProps} />
             </Panel>
         </Collapse>

@@ -4,18 +4,17 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
+import { ConfigProvider } from 'antd';
+import { Provider } from 'react-redux';
 import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
-
-import { Provider } from 'react-redux';
 import { configureStore } from './store/configureStore';
 
 import { App } from './App';
+
 import './index.scss';
-import { ConfigProvider } from 'antd';
 
 const store = configureStore({});
-
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     // <React.StrictMode>

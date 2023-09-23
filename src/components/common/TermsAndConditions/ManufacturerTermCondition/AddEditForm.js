@@ -13,7 +13,7 @@ import { DrawerFormButton } from 'components/common/Button';
 import { CustomEditor } from 'components/common/CustomEditor';
 import { formattedCalendarDate, dateFormat } from 'utils/formatDateTime';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 const { Option } = Select;
 

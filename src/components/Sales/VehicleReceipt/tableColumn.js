@@ -11,7 +11,7 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { FiEdit, FiEye } from 'react-icons/fi';
 import { PlusOutlined } from '@ant-design/icons';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 export const tblActionColumn = ({ styles, handleButtonClick, width = '10%', fixed = '', AddIcon = false, EditIcon = false, EyeIcon = false }) => {
     return {
@@ -55,7 +55,7 @@ export const tableColumn = ({ handleButtonClick, page, pageSize, tableIconsVisib
             title: 'GRN Number',
             dataIndex: 'grnNumber',
             width: '12%',
-            render: (text) => text ?? 'NA',
+            render: (text) => text ?? '-',
             localSort: false,
         }),
 
@@ -64,7 +64,7 @@ export const tableColumn = ({ handleButtonClick, page, pageSize, tableIconsVisib
             title: 'GRN Date',
             dataIndex: 'grnDate',
             width: '12%',
-            render: (text) => (text ? convertDateMonthYear(text) : 'NA'),
+            render: (text) => (text ? convertDateMonthYear(text) : '-'),
         }),
 
         tblPrepareColumns({

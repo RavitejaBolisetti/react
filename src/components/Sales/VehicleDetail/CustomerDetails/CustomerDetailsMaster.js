@@ -16,7 +16,8 @@ import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
 import { BASE_URL_VEHICLE_CUSTOMER_COMMON_DETAIL as customURL } from 'constants/routingApi';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+
 import { vehicleCustomerDetailsDataAction } from 'store/actions/data/vehicle/customerDetails';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { customerDetailDataActions } from 'store/actions/customer/customerDetail';
@@ -40,8 +41,6 @@ const mapStateToProps = (state) => {
             LeftSideBar: { collapsed = false },
         },
     } = state;
-
-    // console.log(state, 'state');
 
     const moduleTitle = 'Customer Details';
 
@@ -98,7 +97,6 @@ export const CustomerDetailsMain = (props) => {
     const [sameAsBookingCustomer, setSameAsBookingCustomer] = useState(false);
 
     const handleCollapse = (key) => {
-        // console.log('key', key);
         !activeKey?.includes(key) ? setActiveKey([key]) : setActiveKey([]);
     };
 

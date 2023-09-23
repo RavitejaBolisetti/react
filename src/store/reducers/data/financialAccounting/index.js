@@ -18,6 +18,9 @@ import { DocumentTypeLedger } from './documentTypeLedger';
 import { DealerBranchDetails } from './dealerBranchAccess';
 import { DealerGstDetails } from './dealerGstDetails';
 import { GstIrnTransactionDetails } from './gstIrnTransactionDetails';
+// import { ChartOfAccountHierarchy } from './chartOfAccount/chartOfAccountHierarchy';
+// import { ChartOfAccount } from './chartOfAccount/chartOfAccount';
+import { ChartOfAccountMaster } from './chartOfAccount';
 
 export const FinancialAccounting = combineReducers({
     TaxCharges,
@@ -34,4 +37,7 @@ export const FinancialAccounting = combineReducers({
     DealerBranchDetails,
     DealerGstDetails,
     GstIrnTransactionDetails,
+    // ChartOfAccountHierarchy,
+    // ChartOfAccount,
+    ChartOfAccountMaster,
 });

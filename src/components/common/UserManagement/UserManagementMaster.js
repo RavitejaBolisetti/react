@@ -4,58 +4,100 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState, useEffect, useMemo } from 'react';
-import { Button, Col, Row, Form, Empty, ConfigProvider } from 'antd';
-
+import { Button, Col, Row, Select, Form, Empty, ConfigProvider } from 'antd';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { showGlobalNotification } from 'store/actions/notification';
-import { userManagementDataActions } from 'store/actions/data/userManagement';
-import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
-import { hierarchyAttributeMasterDataActions } from 'store/actions/data/hierarchyAttributeMaster';
+import { searchUserDataActions } from 'store/actions/data/userManagement/searchUser';
+import { ManufacturerAppDataActions } from 'store/actions/data/userManagement/manufacturerApplication';
+import { DealerAppDataActions } from 'store/actions/data/userManagement/dealerApplications';
+import { RoleApplicationDataActions } from 'store/actions/data/userManagement/roleApplication';
+import { UserDealerListDataActions } from 'store/actions/data/userManagement/dealersList';
+import { UserRolesDataActions } from 'store/actions/data/userManagement/userRoleList';
+
+import { UserDealerBranchLocationDataActions } from 'store/actions/data/userManagement/userDealerBranchLocation';
+import { DealerBranchLocationDataActions } from 'store/actions/data/userManagement/dealerBranchLocation';
+
+import { RoleListtDataActions } from 'store/actions/data/userManagement/roleList';
 
 import { SearchBox } from 'components/utils/SearchBox';
-import { AddEditForm } from './AddEditForm';
+import { UserMainContainer } from './UserMainContainer';
 
-import TokenValidateDataCard from './TokenValidateDataCard';
-import TokenErrorCard from './TokenErrorCard';
-
-import DataTable from 'utils/dataTable/DataTable';
+import TokenValidateDataCard from './common/TokenValidateDataCard';
+import TokenErrorCard from './common/TokenErrorCard';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { USER_TYPE_USER } from 'constants/modules/UserManagement/userType';
+import { DEALER_USER_SECTION } from 'constants/modules/UserManagement/DealerUserSection';
+import { MANUFACTURER_USER_SECTION } from 'constants/modules/UserManagement/ManufacturerUserSection';
+
+import DataTable from 'utils/dataTable/DataTable';
+import { ADD_ACTION, EDIT_ACTION, NEXT_ACTION, VIEW_ACTION, btnVisiblity } from 'utils/btnVisiblity';
+
 import { tableColumn } from './Dealer/tableColumn';
 import { tableColumn as manufacturerTableColumn } from './Manufacturer/tableColumn';
 
-import { manufacturerList, dealerList, dealerTokenData, dealerResData, manufacturerResData, productDataTree, adminDataTree, initialDealerBranches } from './dummyData';
+import styles from 'assets/sass/app.module.scss';
 
-import styles from 'components/common/Common.module.css';
+const { Option } = Select;
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            UserManagement: { isLoaded: isDataLoaded = false, isLoading, isFormDataLoaded, data: UserManagementdealerData = [] },
-            ProductHierarchy: { data: productHierarchyData = [] },
-            HierarchyAttributeMaster: { data: attributeData = [] },
-        },
-        common: {
-            LeftSideBar: { collapsed = false },
+            UserManagement: {
+                SearchUser: { isLoading: isDataLoading, data: userDataList = {}, detailData: userDetailData },
+                RoleList: { isLoading: isRoleListLoding, data: roleListdata },
+                RoleApplicaion: { isLoaded: isRoleApplicationLoaded, isLoading: isRoleApplicationLoding, data: roleApplicationData },
+                UserDealerApplicatin: { isLoaded: isDlrAppLoaded, isLoading: isDlrAppLoding, data: dlrAppList },
+                UserManufacturerApplication: { isLoaded: isMnmAppLoaded, isLoading: isMnmAppLoding, data: mnmAppList },
+                UserDealerList: { isLoaded: isDealerListLoaded, isLoading: isDealerListLoding, data: dealerDataList },
+                UserRoleList: { isLoaded: isUserRoleListLoaded, isLoading: isUserRoleListLoding, data: userRoleDataList },
+                DealerBranchLocation: { isLoaded: isdlrBrLocationsLoaded, isLoading: isDlrBrLocationLoding, data: dlrBranchLocationDataList },
+                UserDealerBranchLocation: { isLoaded: isUsrdlrBrLocationsLoaded, isLoading: isUsrDlrBrLocationLoding, data: usrdlrBranchLocationDataList },
+            },
         },
     } = state;
 
     const moduleTitle = 'User Access';
 
     let returnValue = {
-        collapsed,
         userId,
-        isDataLoaded,
-        isLoading,
-        UserManagementdealerData,
-        productHierarchyData,
+        userDataList,
+        userDetailData,
+        isDataLoading,
         moduleTitle,
-        attributeData,
-        isFormDataLoaded,
+
+        roleListdata: roleListdata?.filter((i) => i?.status),
+        isRoleListLoding,
+
+        roleApplicationData,
+        isRoleApplicationLoding,
+        isRoleApplicationLoaded,
+
+        isDlrAppLoaded,
+        isDlrAppLoding,
+        dlrAppList,
+        isMnmAppLoaded,
+        isMnmAppLoding,
+        mnmAppList,
+
+        dealerDataList,
+        isDealerListLoaded,
+        isDealerListLoding,
+
+        userRoleDataList,
+        isUserRoleListLoaded,
+        isUserRoleListLoding,
+
+        dlrBranchLocationDataList,
+        isDlrBrLocationLoding,
+        isdlrBrLocationsLoaded,
+
+        usrdlrBranchLocationDataList,
+        isUsrDlrBrLocationLoding,
+        isUsrdlrBrLocationsLoaded,
     };
     return returnValue;
 };
@@ -64,15 +106,46 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchDealerDetails: userManagementDataActions.fetchDealerDetails,
-            saveDealerDetails: userManagementDataActions.saveDealerDetails,
-            listShowLoading: userManagementDataActions.listShowLoading,
+            fetchUserDataList: searchUserDataActions.fetchList,
+            fetchDetail: searchUserDataActions.fetchDetail,
+            saveUserDetails: searchUserDataActions.saveData,
+            resetUserDetails: searchUserDataActions.reset,
+            listShowLoading: searchUserDataActions.listShowLoading,
 
-            fetchManufacturerDetails: userManagementDataActions.fetchManufacturerDetails,
-            saveManufacturerDetails: userManagementDataActions.saveManufacturerDetails,
+            fetchRoleDataList: RoleListtDataActions.fetchList,
+            resetroleDataList: RoleListtDataActions.reset,
+            rolelistShowLoading: RoleListtDataActions.listShowLoading,
 
-            fetchList: productHierarchyDataActions.fetchList,
-            hierarchyAttributeFetchList: hierarchyAttributeMasterDataActions.fetchList,
+            fetchMNMUserRoleAppDataList: ManufacturerAppDataActions.fetchList,
+            resetMnmUserRoleAppDataList: ManufacturerAppDataActions.reset,
+            mnmUserRoleAppListShowLoading: ManufacturerAppDataActions.listShowLoading,
+            saveMNMUserRoleAppDataList: ManufacturerAppDataActions.saveData,
+
+            fetchDLRUserRoleDataList: DealerAppDataActions.fetchList,
+            resetUsrDlrRoleAppDataList: DealerAppDataActions.reset,
+            usrRolelAppListShowLoading: DealerAppDataActions.listShowLoading,
+            saveDLRUserRoleDataList: DealerAppDataActions.saveData,
+
+            fetchRoleApplicationList: RoleApplicationDataActions.fetchList,
+            resetRoleApplicationList: RoleApplicationDataActions.reset,
+            rolelApplicationShowLoading: RoleApplicationDataActions.listShowLoading,
+
+            fetchDealersList: UserDealerListDataActions.fetchList,
+            resetDealersList: UserDealerListDataActions.reset,
+            rolelDealersListShowLoading: UserDealerListDataActions.listShowLoading,
+
+            fetchUserRoleList: UserRolesDataActions.fetchList,
+            resetUserRoleList: UserRolesDataActions.reset,
+            userRoleShowLoading: UserRolesDataActions.listShowLoading,
+
+            fetchDlrBranchLocationsList: DealerBranchLocationDataActions.fetchList,
+            resetDlrBranchLocationsList: DealerBranchLocationDataActions.reset,
+            userDlrBrLoactionShowLoading: DealerBranchLocationDataActions.listShowLoading,
+
+            fetchUsrDlrBranchLocationsList: UserDealerBranchLocationDataActions.fetchList,
+            resetUsrDlrBranchLocationsList: UserDealerBranchLocationDataActions.reset,
+            userUsrDlrBrLoactionShowLoading: UserDealerBranchLocationDataActions.listShowLoading,
+            saveUsrDlrBrLoactionRoleDataList: UserDealerBranchLocationDataActions.saveData,
 
             showGlobalNotification,
         },
@@ -80,151 +153,204 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-// for token type select
-const typeData = [{ key: 'tokenNumber', value: 'Token Number' }];
+const typeData = [{ key: 'employeeCode', value: 'Token No.' }];
 
-export const UserManagementMain = ({ saveData, userId, moduleTitle, productHierarchyData, attributeData, hierarchyAttributeFetchList, saveDealerDetails, UserManagementdealerData, fetchDealerDetails, isDataLoaded, fetchList, listShowLoading, qualificationData, showGlobalNotification, isLoading, isFormDataLoaded, onSaveShowLoading }) => {
+const UserManagementMain = (props) => {
+    const { userId, fetchUserDataList, listShowLoading, isDataLoading, userDataList } = props;
+    const { fetchRoleDataList, rolelistShowLoading, isRoleListLoaded } = props;
+    const { fetchDealersList, rolelDealersListShowLoading, dealerDataList, isDealerListLoaded } = props;
+    const { moduleTitle, productHierarchyData } = props;
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
-    const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
+    const defaultBtnVisiblity = { editBtn: false, saveBtn: false, next: false, nextBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: true, formBtnActive: false };
 
-    const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
+    const [page, setPage] = useState({ pageSize: 10, current: 1 });
+    const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const [filterString, setFilterString] = useState();
-    const [userType, setUserType] = useState(USER_TYPE_USER?.DEALER?.id);
+    const [userType, setUserType] = useState(USER_TYPE_USER?.MANUFACTURER?.id);
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
+    const [currentSection, setCurrentSection] = useState(MANUFACTURER_USER_SECTION.ASSIGN_USER_ROLES);
+    const [isLastSection, setLastSection] = useState(false);
+    const [sectionName, setSetionName] = useState();
+    const [section, setSection] = useState();
 
-    const [isReadOnly, setIsReadOnly] = useState(false); //not required
+    const [disableSearch, setDisabledSearch] = useState(true);
+    const [isReadOnly, setIsReadOnly] = useState(false);
     const [drawer, setDrawer] = useState(false);
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [formData, setFormData] = useState({});
     const [selectedRecord, setSelectedRecord] = useState(null);
     const [error, setError] = useState(false);
-    const [selectedDealer, setSelectedDealer] = useState();
+    const [selectedDealerCode, setselectedDealerCode] = useState('');
+    const [defaultSection, setDefaultSection] = useState();
 
-    const [validateTokenData, setValidateTokenData] = useState();
     const [AccessMacid, setAccessMacid] = useState([]);
     const [finalFormdata, setfinalFormdata] = useState({
         userDevices: [],
-        userRoleMapBaseRequestList: [
-            {
-                id: 'string',
-                roleId: 'string',
-                status: true,
-                webRoleManagementRequest: [
-                    {
-                        id: 'string',
-                        applicationId: 'string',
-                        value: 'string',
-                        status: true,
-                        children: ['string'],
-                    },
-                ],
-                mobileRoleManagementRequest: [
-                    {
-                        id: 'string',
-                        applicationId: 'string',
-                        value: 'string',
-                        status: true,
-                        children: ['string'],
-                    },
-                ],
-            },
-        ],
-        branches: [...initialDealerBranches],
+        userRoleMapBaseRequestList: [],
+        // branches: [...initialDealerBranches],
         products: [],
     });
-    console.log('🚀 ~ file: UserManagementMaster.js:114 ~ UserManagementMain ~ finalFormdata:', finalFormdata);
 
-    //for setting initial value in select token field
     useEffect(() => {
-        searchForm.setFieldValue('searchType', 'tokenNumber');
+        if (userId) {
+            if (!isRoleListLoaded) {
+                fetchRoleDataList({ setIsLoading: rolelistShowLoading, userId });
+            }
+            if (!isDealerListLoaded) {
+                fetchDealersList({ setIsLoading: rolelDealersListShowLoading, userId });
+            }
+        }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [userId, isRoleListLoaded, isDealerListLoaded]);
 
     useEffect(() => {
-        setError(false);
+        if (userType) {
+            const defaultSection = userType === USER_TYPE_USER.DEALER.id ? DEALER_USER_SECTION.ASSIGN_USER_ROLES.id : MANUFACTURER_USER_SECTION.ASSIGN_USER_ROLES.id;
+            setSetionName(userType === USER_TYPE_USER.DEALER.id ? DEALER_USER_SECTION : MANUFACTURER_USER_SECTION);
+            setDefaultSection(defaultSection);
+            setSection(defaultSection);
+            setFilterString();
 
+            setDisabledSearch(userType === USER_TYPE_USER.DEALER.id ? true : false);
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userType]);
 
     useEffect(() => {
-        if (!isDataLoaded && userId) {
-            // fetchList({ setIsLoading: listShowLoading, userId });
-            hierarchyAttributeFetchList({ setIsLoading: listShowLoading, userId });
+        if (currentSection && sectionName) {
+            const section = Object.values(sectionName)?.find((i) => i.id === currentSection);
+            setSection(section);
+            const nextSection = Object.values(sectionName)?.find((i) => i.id > currentSection);
+            setLastSection(!nextSection?.id);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isDataLoaded, userId]);
+    }, [currentSection, sectionName]);
 
-    const handleTableChange = (sorter, filters) => {};
+    const defaultExtraParam = [
+        {
+            key: 'pageSize',
+            title: 'Value',
+            value: page?.pageSize,
+            canRemove: true,
+            filter: false,
+        },
+        {
+            key: 'pageNumber',
+            title: 'Value',
+            value: page?.current,
+            canRemove: true,
+            filter: false,
+        },
+        {
+            key: 'sortBy',
+            title: 'Sort By',
+            value: page?.sortBy,
+            canRemove: true,
+            filter: false,
+        },
+        {
+            key: 'sortIn',
+            title: 'Sort Type',
+            value: page?.sortType,
+            canRemove: true,
+            filter: false,
+        },
+    ];
 
-    const onSuccess = (res) => {
-        listShowLoading(false);
-        form.resetFields();
-        setSelectedRecord({});
-        setDrawer(false);
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+    const extraParams = useMemo(() => {
+        return [
+            {
+                key: 'userType',
+                title: 'userType',
+                value: userType,
+                name: 'userType',
+            },
+            {
+                key: 'employeeCode',
+                title: 'employeeCode',
+                value: filterString?.searchParam,
+                name: 'employeeCode',
+            },
+            {
+                key: 'dealerCode',
+                title: 'dealerCode',
+                value: selectedDealerCode,
+                name: 'dealerCode',
+            },
+        ];
+    }, [filterString, selectedDealerCode, userType]);
+
+    const onErrorAction = (res) => {
+        setError(res);
     };
-    const onSuccessAction = (message) => {
-        setError(false);
-        setValidateTokenData(dealerTokenData);
+    const onSuccessAction = (res) => {
+        setselectedDealerCode('');
+        setError('');
     };
 
-    const onErrorAction = (message) => {
-        setValidateTokenData({});
-        setError(true);
-    };
+    useEffect(() => {
+        if (userId && userType && !isFormVisible) {
+            const params = filterString?.searchParam ? extraParams : [...defaultExtraParam, ...extraParams];
+            fetchUserDataList({ setIsLoading: listShowLoading, extraParams: params, userId, onErrorAction, onSuccessAction });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, userType, page?.pageSize, page?.current, filterString?.searchParam, isFormVisible]);
 
-    const onFinish = (values, e) => {
-        const requestData = {
-            data: dealerResData,
-            setIsLoading: listShowLoading,
-            userId,
-            onErrorAction,
-            onSuccess,
-        };
-
-        saveDealerDetails(requestData);
-    };
+    const onFinish = (values, e) => {};
 
     const onFinishFailed = (errorInfo) => {
         form.validateFields().then((values) => {});
     };
 
-    const handleAdd = () => {
-        form.setFieldsValue({
-            userRole: 'Mahindra',
-        });
-    };
-
-    const handleButtonClick = ({ buttonAction, record }) => {
+    const handleButtonClick = ({ buttonAction, record = null, openDefaultSection = true }) => {
         switch (buttonAction) {
             case FROM_ACTION_TYPE?.ADD:
                 setFormActionType((prev) => ({ ...prev, viewMode: false, editMode: false, addMode: true }));
-                setButtonData({ editBtn: false, saveBtn: true, cancelBtn: true });
+                setButtonData({ editBtn: true, nextBtn: true, cancelBtn: true });
                 setIsReadOnly(false);
-                setFormData(record);
+                record && setSelectedRecord(record);
+                record && setFormData(record);
                 setIsFormVisible(true);
+                defaultSection && setCurrentSection(defaultSection);
                 break;
             case FROM_ACTION_TYPE?.EDIT:
                 setFormActionType((prev) => ({ ...prev, addMode: false, viewMode: false, editMode: true }));
-                setButtonData({ editBtn: false, saveBtn: true, cancelBtn: true });
-                setSelectedRecord(record);
-                setFormData(record);
+                setButtonData({ saveBtn: true, editBtn: true, nextBtn: true, cancelBtn: true });
+                record && setSelectedRecord(record);
+                record && setFormData(record);
                 setIsReadOnly(false);
                 setIsFormVisible(true);
+                openDefaultSection && setCurrentSection(defaultSection);
                 break;
             case FROM_ACTION_TYPE?.VIEW:
                 setFormActionType({ ...defaultFormActionType, addMode: false, editMode: false, viewMode: true });
-                setButtonData({ editBtn: true, saveBtn: false, cancelBtn: true });
-                setSelectedRecord(record);
+                setButtonData({ editBtn: true, saveBtn: false, nextBtn: true, cancelBtn: true });
+                record && setSelectedRecord(record);
+                record && setFormData(record);
                 setDrawer(true);
                 setIsReadOnly(true);
                 setIsFormVisible(true);
+                defaultSection && setCurrentSection(defaultSection);
+                break;
+            case NEXT_ACTION:
+                const nextSection = Object.values(sectionName)?.find((i) => i?.id > currentSection);
+                section && setCurrentSection(nextSection?.id);
+                setLastSection(!nextSection?.id);
                 break;
             default:
                 break;
+        }
+
+        if (buttonAction !== NEXT_ACTION) {
+            setFormActionType({
+                addMode: buttonAction === ADD_ACTION,
+                editMode: buttonAction === EDIT_ACTION,
+                viewMode: buttonAction === VIEW_ACTION,
+            });
+            setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
         }
     };
 
@@ -233,33 +359,26 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
         setIsReadOnly(false);
     };
 
-    // fetch token data
-    useEffect(() => {
-        if (
-            userId &&
-            filterString?.searchParam?.length > 0
-            // && selectedDealer
-        ) {
-            fetchDealerDetails({ setIsLoading: listShowLoading, userId, id: filterString?.searchParam, FetchError: onErrorAction, onSuccessAction });
-            setFilterString({});
-        }
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, filterString?.searchParam, userType]);
-
     const onChangeSearchHandler = (event) => {
-        setError(false);
+        setError('');
     };
 
-    // can be use leter to select dealer
-    // const handleDealseChange = (selectedvalue) => {
-    //     setdisabled(false);
-    //     setSelectedDealer(selectedvalue);
-    // };
+    const handleDealseChange = (selectedvalue) => {
+        if (selectedvalue) {
+            setDisabledSearch(false);
+        } else {
+            setDisabledSearch(true);
+        }
+        setselectedDealerCode(selectedvalue);
+        setError('');
+    };
 
     const onCloseAction = () => {
         setIsFormVisible(false);
         setSelectedRecord([]);
+        setDisabledSearch(true);
+        setFilterString('');
+        setselectedDealerCode('');
     };
 
     const drawerTitle = useMemo(() => {
@@ -271,14 +390,13 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
             return 'Add New ';
         }
     }, [formActionType]);
-
     const formProps = {
+        ...props,
         filterString,
         isVisible: isFormVisible,
         onFinishFailed,
         onFinish,
         form,
-        handleAdd,
         drawer,
         setDrawer,
         formData,
@@ -286,7 +404,6 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
         isReadOnly,
         setFormData,
         titleOverride: drawerTitle.concat(moduleTitle),
-        validateTokenData,
         productHierarchyData,
         onCloseAction,
         finalFormdata,
@@ -295,36 +412,55 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
         AccessMacid,
         setAccessMacid,
         userType,
+        currentSection,
+        setCurrentSection,
         selectedRecord,
+        selectedDealerCode,
+        dealerDataList,
 
-        productDataTree,
-        adminDataTree,
+        // productDataTree,
+        // adminDataTree,
+        section,
+        sectionName,
+        setSetionName,
 
         buttonData,
         setButtonData,
         handleButtonClick,
+        setIsFormVisible,
+        isLastSection,
     };
 
     const tableProps = {
-        // isLoading: isLoading,
-        tableData: userType === USER_TYPE_USER?.DEALER?.id ? dealerList : manufacturerList,
+        isLoading: isDataLoading,
+        tableData: userDataList?.userSearchResponse?.userDetails && !userDataList?.userSearchResponse?.userDetails?.[0]?.dmsUserNotExist ? userDataList?.userSearchResponse?.userDetails : [],
         tableColumn: userType === USER_TYPE_USER?.DEALER?.id ? tableColumn(handleButtonClick) : manufacturerTableColumn(handleButtonClick),
-        onChange: handleTableChange,
+        page,
+        setPage,
+        dynamicPagination: true,
+        totalRecords: userDataList?.totalRecords,
     };
 
-    const handleCustomerTypeChange = (id) => {
+    const handleUserTypeChange = (id) => {
+        setCurrentSection(userType === USER_TYPE_USER.DEALER.id ? DEALER_USER_SECTION.ASSIGN_USER_ROLES : MANUFACTURER_USER_SECTION.ASSIGN_USER_ROLES);
         setUserType(id);
-        // navigate(ROUTING_USER_MANAGEMENT_MANUFACTURER);
+        setselectedDealerCode('');
+        setError('');
+        form.resetFields();
+        searchForm.resetFields();
+        setPage({ pageSize: 10, current: 1 });
     };
 
-    //validate TOKEN NUMBER  search box
     const searchBoxProps = {
+        isLoading: filterString?.searchParam ? isDataLoading : false,
         searchForm,
         filterString,
         setFilterString,
-        disabledProps: false,
+        singleField: true,
+        placeholder: 'Search token number',
+        disabled: disableSearch,
         optionType: typeData,
-        defaultValue: 'tokenNumber',
+        defaultValue: 'employeeCode',
         handleChange: onChangeSearchHandler,
     };
 
@@ -334,29 +470,27 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <div className={styles.contentHeaderBackground}>
                         <Row gutter={20}>
-                            <Col xs={24} sm={24} md={14} lg={14} xl={14}>
+                            <Col xs={24} sm={24} md={userType === USER_TYPE_USER?.DEALER?.id ? 18 : 14} lg={userType === USER_TYPE_USER?.DEALER?.id ? 18 : 14} xl={userType === USER_TYPE_USER?.DEALER?.id ? 18 : 14}>
                                 <Form autoComplete="off" colon={false} className={styles.masterListSearchForm}>
                                     <Form.Item>
                                         <Row gutter={20}>
                                             <Col xs={24} sm={24} md={24} lg={24} xl={24} className={styles.verticallyCentered}>
-                                                {/* <Col xs={24} sm={24} md={userType === USER_TYPE_USER?.DEALER?.id ? 18 : 12} lg={userType === USER_TYPE_USER?.DEALER?.id ? 18 : 12} xl={userType === USER_TYPE_USER?.DEALER?.id ? 18 : 12} className={styles.searchAndLabelAlign}> */}
                                                 <div className={`${styles.userManagement} ${styles.headingToggle}`}>
                                                     {Object.values(USER_TYPE_USER)?.map((item) => {
                                                         return (
-                                                            <Button type={userType === item?.id ? 'primary' : 'link'} danger onClick={() => handleCustomerTypeChange(item?.id)}>
+                                                            <Button type={userType === item?.id ? 'primary' : 'link'} danger onClick={() => handleUserTypeChange(item?.id)}>
                                                                 {item?.title}
                                                             </Button>
                                                         );
                                                     })}
                                                 </div>
-                                                {/* this can be use leter */}
-                                                {/* {userType === USER_TYPE_USER?.DEALER?.id && (
-                                                    <Select className={`${styles.headerSelectField} ${styles.marR20}`} onChange={handleDealseChange} placeholder="Select" showSearch allowClear>
-                                                        {dealersData?.map((item) => (
-                                                            <Option value={item}>{item}</Option>
+                                                {userType === USER_TYPE_USER?.DEALER?.id && (
+                                                    <Select className={styles.marR20} style={{ width: '60%' }} onChange={handleDealseChange} placeholder="Select" showSearch allowClear>
+                                                        {dealerDataList?.map((item) => (
+                                                            <Option value={item?.dealerCode}>{item?.dealerName}</Option>
                                                         ))}
                                                     </Select>
-                                                )} */}
+                                                )}
 
                                                 <div className={styles.fullWidth}>
                                                     <SearchBox {...searchBoxProps} />
@@ -367,9 +501,8 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
                                 </Form>
                             </Col>
                         </Row>
-
-                        {dealerTokenData?.employeeCode && <TokenValidateDataCard tokenData={dealerTokenData} selectedDealer={selectedDealer} handleButtonClick={handleButtonClick} userType={userType} />}
-                        {!error && <TokenErrorCard filterString={filterString?.searchParam} />}
+                        {userDataList?.userSearchResponse?.userDetails?.[0]?.dmsUserNotExist && <TokenValidateDataCard tokenData={userDataList?.userSearchResponse?.userDetails?.[0]} isLoading={listShowLoading} selectedDealerCode={selectedDealerCode} handleButtonClick={handleButtonClick} userType={userType} />}
+                        {error && <TokenErrorCard error={error} />}
                     </div>
                 </Col>
             </Row>
@@ -391,7 +524,7 @@ export const UserManagementMain = ({ saveData, userId, moduleTitle, productHiera
                     </ConfigProvider>
                 </Col>
             </Row>
-            <AddEditForm {...formProps} />
+            <UserMainContainer {...formProps} />
         </>
     );
 };

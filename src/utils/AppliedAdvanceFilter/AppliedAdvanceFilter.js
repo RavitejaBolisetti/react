@@ -8,7 +8,7 @@ import { searchValidator } from 'utils/validation';
 import { RxCross2 } from 'react-icons/rx';
 import { FaHistory } from 'react-icons/fa';
 import { FilterIcon } from 'Icons';
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 import { TfiReload } from 'react-icons/tfi';
 import { BsDownload } from 'react-icons/bs';
@@ -18,10 +18,11 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 const { Search } = Input;
 export default function AppliedAdvanceFilter(props) {
-    const { tableData = [], showAddButton = true, advanceFilter = false, title, filterString, from, onFinish, onFinishFailed, extraParams, removeFilter, handleResetFilter, handleClearInSearch, onSearchHandle, setAdvanceSearchVisible, handleReferesh, handleButtonClick, validator = searchValidator, downloadReport = false, handleDownloadReport = false, showChangeHistoryButton = false, showChangeHistoryList } = props;
+    const { tableData = [], showAddButton = true, advanceFilter = false, title, filterString, from, onFinish, onFinishFailed, extraParams, removeFilter, handleResetFilter, handleClearInSearch, onSearchHandle, setAdvanceSearchVisible, handleReferesh, handleButtonClick, validator = searchValidator, downloadReport = false, handleDownloadReport = false, showChangeHistoryButton = false, showChangeHistoryList, handleCustomShowAdd = () => false } = props;
     const onKeyPressHandler = (e) => {
         e.key === 'Enter' && e.preventDefault();
     };
+
     return (
         <>
             <div className={styles.contentHeaderBackground}>
@@ -61,34 +62,32 @@ export default function AppliedAdvanceFilter(props) {
                             )}
                         </Row>
                     </Col>
-                    {(showChangeHistoryButton || showAddButton) && (
-                        <Col className={styles.buttonsGroupRight} xs={24} sm={24} md={8} lg={8} xl={8}>
-                            {showChangeHistoryButton && (
-                                <>
-                                    <Button icon={<FaHistory />} className={styles.verticallyCentered} onClick={showChangeHistoryList} type="primary">
-                                        Change History
-                                    </Button>
-                                </>
-                            )}
-
-                            {advanceFilter && filterString?.advanceFilter && downloadReport && (
-                                <Button data-testid="downloadBtn" icon={<BsDownload />} onClick={handleDownloadReport} danger>
-                                    Download
+                    <Col className={styles.buttonsGroupRight} xs={24} sm={24} md={8} lg={8} xl={8}>
+                        {showChangeHistoryButton && (
+                            <>
+                                <Button icon={<FaHistory />} className={styles.verticallyCentered} onClick={showChangeHistoryList} type="primary">
+                                    Change History
                                 </Button>
-                            )}
+                            </>
+                        )}
 
-                            {tableData?.length > 0 && (
-                                <>
-                                    <Button icon={<TfiReload />} onClick={handleReferesh} danger />
-                                    {showAddButton && (
-                                        <Button icon={<PlusOutlined />} type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
-                                            Add
-                                        </Button>
-                                    )}
-                                </>
-                            )}
-                        </Col>
-                    )}
+                        {advanceFilter && filterString?.advanceFilter && downloadReport && (
+                            <Button data-testid="downloadBtn" icon={<BsDownload />} onClick={handleDownloadReport} danger>
+                                Download
+                            </Button>
+                        )}
+
+                        {tableData?.length > 0 && (
+                            <>
+                                <Button icon={<TfiReload />} onClick={handleReferesh} data-testid="refreshBtn" danger />
+                                {showAddButton && (
+                                    <Button icon={<PlusOutlined />} type="primary" onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD })}>
+                                        Add
+                                    </Button>
+                                )}
+                            </>
+                        )}
+                    </Col>
                 </Row>
                 {advanceFilter && filterString?.advanceFilter && (
                     <Row gutter={20}>
@@ -105,7 +104,7 @@ export default function AppliedAdvanceFilter(props) {
                                                         {filter?.name}
                                                         {filter?.canRemove && (
                                                             <span>
-                                                                <RxCross2 onClick={() => removeFilter(filter?.key)} />
+                                                                <RxCross2 onClick={() => removeFilter(filter?.key)} data-testid="removeFilter" />
                                                             </span>
                                                         )}
                                                     </div>

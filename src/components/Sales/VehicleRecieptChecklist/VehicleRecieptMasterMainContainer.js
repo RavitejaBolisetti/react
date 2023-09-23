@@ -12,7 +12,7 @@ import { VehicleRecieptCheckListMaster } from './CheckListDetails';
 import { SupportingDocumentMaster } from './SupportingDocument';
 import { LeftSidebar } from './LeftSidebar';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 const VehicleRecieptMasterMainContainerMain = (props) => {
     const { currentSection } = props;

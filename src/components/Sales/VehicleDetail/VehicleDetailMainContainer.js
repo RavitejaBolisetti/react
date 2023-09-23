@@ -17,7 +17,7 @@ import { EntitlementsAndSchemesMaster } from './EntitlementsAndSchemes';
 import { ComingSoonMaster } from './ComingSoon';
 import { LeftSidebar } from './LeftSidebar';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 const VehicleDetailMainContainerMain = (props) => {
     const { currentSection } = props;

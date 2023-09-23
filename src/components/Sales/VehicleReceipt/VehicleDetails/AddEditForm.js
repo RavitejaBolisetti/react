@@ -14,15 +14,17 @@ import { formattedCalendarDate, dateFormat } from 'utils/formatDateTime';
 import { validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { VEHICLE_RECEIPT_STATUS } from 'constants/VehicleReceiptStatus';
+import { PHYSICAL_STATUS } from 'constants/PhysicalStatus';
+import { YES_NO_FLAG } from 'constants/yesNoFlag';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
 const { Option } = Select;
 
 const AddEditFormMain = (props) => {
-    const { formData, setFinalData, buttonData, setButtonData, vehicleStatusType, physicalStatusType, shortageType, vehicleDetailForm } = props;
+    const { formData, setFinalData, buttonData, setButtonData, vehicleStatusType, physicalStatusType, shortageType, vehicleDetailForm, receiptType } = props;
 
     const [activeKey, setactiveKey] = useState([]);
     // const [vehicleDetailList, setVehicleDetailList] = useState([]);
@@ -81,13 +83,29 @@ const AddEditFormMain = (props) => {
         showSearch: true,
         allowClear: true,
     };
+    const handleDisableList = (item) => {
+        if (receiptType === VEHICLE_RECEIPT_STATUS?.RECEIVED?.key) {
+            if (item?.key === VEHICLE_RECEIPT_STATUS?.IN_TRANSIT?.key) {
+                return true;
+            } else {
+                return false;
+            }
+        } else if (receiptType === VEHICLE_RECEIPT_STATUS?.RETURNED?.key) {
+            if (item?.key === VEHICLE_RECEIPT_STATUS?.IN_TRANSIT?.key || item?.key === VEHICLE_RECEIPT_STATUS?.RECEIVED?.key) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return false;
+    };
 
     return (
         <>
             <Form form={vehicleDetailForm} id="myAdd" onFinish={handleSave} autoComplete="off" layout="vertical" onFinishFailed={onFinishFailed}>
                 {formData?.map((item, index) => (
                     <div className={styles.innerCollapse}>
-                        <Collapse defaultActiveKey={index} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(index)} expandIconPosition="end" {...collapseProps}>
+                        <Collapse defaultActiveKey={index} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(index)} expandIconPosition="end" collapsible="icon" {...collapseProps}>
                             <Panel
                                 header={
                                     <>
@@ -167,7 +185,7 @@ const AddEditFormMain = (props) => {
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item initialValue={item?.demoVehicle} label="Demo Vehicle" name={[index, 'demoVehicle']} rules={[validateRequiredSelectField('Demo Vehicle')]}>
+                                        <Form.Item initialValue={item?.demoVehicle ?? YES_NO_FLAG?.NO?.key} label="Demo Vehicle" name={[index, 'demoVehicle']} rules={[validateRequiredSelectField('Demo Vehicle')]}>
                                             <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} {...selectProps}>
                                                 {shortageType?.map((item) => (
                                                     <Option key={'dv' + item.key} value={item.key}>
@@ -178,20 +196,18 @@ const AddEditFormMain = (props) => {
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item initialValue={item?.vehicleStatus} label="Vehicle Status" name={[index, 'vehicleStatus']} rules={[validateRequiredSelectField('Vehicle Status')]}>
+                                        <Form.Item initialValue={item?.vehicleStatus ?? VEHICLE_RECEIPT_STATUS.RECEIVED.key} label="Vehicle Status" name={[index, 'vehicleStatus']} rules={[validateRequiredSelectField('Vehicle Status')]}>
                                             <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} {...selectProps}>
-                                                {vehicleStatusType
-                                                    ?.filter((i) => i?.key !== VEHICLE_RECEIPT_STATUS.IN_TRANSIT.key)
-                                                    ?.map((item) => (
-                                                        <Option key={'vs' + item.key} value={item.key}>
-                                                            {item.value}
-                                                        </Option>
-                                                    ))}
+                                                {vehicleStatusType?.map((item) => (
+                                                    <Option disabled={() => handleDisableList(item)} key={'vs' + item.key} value={item.key}>
+                                                        {item.value}
+                                                    </Option>
+                                                ))}
                                             </Select>
                                         </Form.Item>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item initialValue={item?.physicalStatus} label="Physical Status" name={[index, 'physicalStatus']} rules={[validateRequiredSelectField('Physical Status')]}>
+                                        <Form.Item initialValue={item?.physicalStatus ?? PHYSICAL_STATUS?.NO_DAMAGE?.key} label="Physical Status" name={[index, 'physicalStatus']} rules={[validateRequiredSelectField('Physical Status')]}>
                                             <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} {...selectProps}>
                                                 {physicalStatusType?.map((item) => (
                                                     <Option key={'ps' + item.key} value={item.key}>
@@ -204,7 +220,7 @@ const AddEditFormMain = (props) => {
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                        <Form.Item initialValue={item?.shortage} label="Shortage" name={[index, 'shortage']}>
+                                        <Form.Item initialValue={item?.shortage ?? YES_NO_FLAG?.NO?.key} label="Shortage" name={[index, 'shortage']}>
                                             <Select maxLength={50} placeholder={preparePlaceholderSelect('Select')} {...selectProps}>
                                                 {shortageType?.map((item) => (
                                                     <Option key={'st' + item.key} value={item.key}>

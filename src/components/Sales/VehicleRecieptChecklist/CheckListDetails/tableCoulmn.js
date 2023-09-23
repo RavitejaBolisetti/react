@@ -5,7 +5,7 @@
  */
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import { MakeCheckResult } from './CheckListUtils';
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 export const tableColumn = (props) => {
     const { handleButtonClick, formActionType } = props;

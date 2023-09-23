@@ -1,5 +1,5 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
@@ -7,8 +7,7 @@ import React from 'react';
 import { Row, Col, Button } from 'antd';
 import { withModal } from 'components/withModal';
 
-import styles from './SessionTimeoutModal.module.css';
-
+import styles from './SessionTimeoutModal.module.scss';
 const SessionTimeoutModalMain = (props) => {
     const { remaining, handleLogoutAction, handleSessionContinueAction } = props;
     const seconds = remaining > 1 ? 'seconds' : 'second';
@@ -35,7 +34,6 @@ const SessionTimeoutModalMain = (props) => {
                         Continue
                     </Button>
                 </Col>
-
             </Row>
         </>
     );

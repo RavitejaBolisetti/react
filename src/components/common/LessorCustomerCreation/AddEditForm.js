@@ -12,7 +12,7 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { UploadUtil } from 'utils/Upload';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 const { Option } = Select;
 

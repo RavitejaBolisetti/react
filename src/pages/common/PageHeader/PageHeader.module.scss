@@ -1,0 +1,150 @@
+@import 'assets/sass/app.module.scss';
+
+.pageHeader {
+    height: 37px;
+
+    & :global {
+        .ant-btn {
+            height: 34px;
+            @include space(padding, top, $sp4);
+            @include space(padding, right, $sp12);
+            @include space(padding, bottom, $sp4);
+            @include space(padding, left, $sp12);
+            @include borderRedius(4px, 1px, solid, inherit);
+        }
+    }
+
+    .headingGradient {
+        //padding-bottom: 12px;
+        @include space(padding, bottom, $sp13);
+        // @include space(margin, bottom, $sp28);
+        @include borderRedius(4px, 0px, solid, inherit);
+        border-bottom: 4px solid;
+        @include bordergradient($DarkPink, $LightPink);
+        border-image-slice: 1;
+        @include font-style(16, 24, 700, $primaryBlack, $fontfamily, left);
+        text-decoration: none;
+
+        @include breakpoint(md) {
+            padding-bottom: 5px;
+            @include space(padding, bottom, $sp5);
+            @include font-style(14, 24, 600, $primaryBlack, $fontfamily, left);
+        }
+
+        .favIconHeading {
+            @include space(padding, top, $sp3);
+            @include space(margin, top, $sp5);
+            @include space(margin, left, $sp14);
+            line-height: 4px;
+            cursor: pointer;
+            color: $primaryRed;
+        }
+    }
+
+    .buttonContainer {
+        text-align: right;
+
+        @include breakpoint(md) {
+            @include space(margin, top, $sp6);
+        }
+
+        & :global {
+            .ant-btn {
+                @include breakpoint(md) {
+                    //font-size: 12px;
+                    @include font-style(12, inherit, normal, normal, $fontfamily, right);
+                    height: 24px;
+                    @include space(padding, top, $sp2);
+                    @include space(padding, right, $sp6);
+                    @include space(padding, bottom, $sp2);
+                    @include space(padding, left, $sp6);
+                }
+            }
+
+            .ant-btn-default {
+                &.ant-btn-dangerous {
+                    &:not(:disabled):hover {
+                        background-color: $primaryRed;
+                        color: $primaryWhite !important;
+                    }
+                }
+            }
+        }
+
+        button {
+            margin-left: 14px;
+
+            @include breakpoint(md) {
+                @include space(margin, left, $sp5);
+                // margin-left: 0px;
+            }
+        }
+
+        .buttonIcon {
+            @include space(padding, top, $sp2);
+            @include space(margin, right, $sp6);
+
+            @include breakpoint(md) {
+                @include space(margin, right, $sp2);
+            }
+        }
+    }
+}
+
+.pageHeaderNameSection {
+    border-bottom: 1px solid $neutralGrey1;
+    @include space(margin, top, $sp1);
+    @include space(margin, bottom, $sp20);
+
+    @include breakpoint(md) {
+        border-bottom: 0;
+        @include space(padding, all, $sp0);
+        @include space(margin, top, $sp0);
+        @include space(margin, right, $sp0);
+        @include space(margin, bottom, $sp10);
+        @include space(margin, left, $sp0);
+    }
+}
+
+/* Modal Content */
+:global {
+    .ant-modal-confirm {
+        .ant-modal-confirm-body {
+            .ant-modal-confirm-title {
+                display: contents;
+            }
+
+            .ant-modal-confirm-title + .ant-modal-confirm-content {
+                max-width: 100%;
+                padding: 10px;
+                text-align: justify;
+                border-top: 1px solid $neutralGrey1;
+            }
+        }
+
+        .ant-modal-confirm-btns {
+            text-align: center;
+            margin-top: 0;
+
+            button {
+                &:last-child {
+                    background-color: $primaryRed;
+                    color: $primaryWhite !important;
+                }
+
+                text-align: center;
+                width: 100px;
+                margin-top: 15px;
+                background-color: $primaryWhite;
+                border: 1px solid $primaryRed;
+                color: $primaryRed !important;
+
+                &:hover {
+                    background-color: $primaryRed;
+                    border: 1px solid $primaryRed !important;
+                    color: $primaryWhite !important;
+                }
+            }
+        }
+    }
+}

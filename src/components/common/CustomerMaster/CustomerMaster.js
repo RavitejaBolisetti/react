@@ -10,6 +10,7 @@ import { Button, Col, Row, Form, Empty, ConfigProvider } from 'antd';
 import { RxCross2 } from 'react-icons/rx';
 
 import { customerDetailDataActions } from 'store/actions/customer/customerDetail';
+import { BASE_URL_CUSTOMER_MASTER_NAME_CHANGE_HISTORY as customURL } from 'constants/routingApi';
 
 import { PlusOutlined } from '@ant-design/icons';
 import { tableColumn } from './tableColumn';
@@ -23,17 +24,25 @@ import { CUSTOMER_INDIVIDUAL_SECTION } from 'constants/CustomerIndividualSection
 import { CUSTOMER_CORPORATE_SECTION } from 'constants/CustomerCorporateSection';
 import { CUSTOMER_TYPE } from 'constants/CustomerType';
 import { documentViewDataActions } from 'store/actions/data/customerMaster/documentView';
+import { customerDetailsIndividualDataActions } from 'store/actions/data/customerMaster/customerDetailsIndividual';
+import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
+
 import { CustomerChangeHistory } from './CustomerChangeHistory';
 import { CustomerNameChangeHistory } from 'components/common/CustomerMaster/IndividualCustomer/CustomerDetail/CustomerNameChange';
 import DataTable from 'utils/dataTable/DataTable';
 import { CustomerMainConatiner } from './CustomerMainConatiner';
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+import { UnsavedDataPopup } from './Common/UnsavedDataPopup';
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
+            SupportingDocument: { isLoaded: isSupportingDocumentDataLoaded = false, isSupportingDocumentLoading, data: supportingData },
+            CustomerMaster: {
+                CustomerDetailsIndividual: { detailData: historyData = [], isChangeHistoryLoaded, isChangeHistoryLoading, changeHistoryData },
+            },
         },
         customer: {
             customerDetail: { isLoaded: isDataLoaded = false, isLoading, data, filter: filterString },
@@ -48,9 +57,16 @@ const mapStateToProps = (state) => {
         data: data?.customerMasterDetails || [],
         totalRecords: data?.totalRecords || [],
         isLoading,
+        historyData,
         moduleTitle,
         typeData: typeData && typeData[PARAM_MASTER.CUST_MST.id],
         filterString,
+        isChangeHistoryLoaded,
+        isChangeHistoryLoading,
+        changeHistoryData,
+        isSupportingDocumentDataLoaded,
+        isSupportingDocumentLoading,
+        supportingData,
     };
     return returnValue;
 };
@@ -65,15 +81,22 @@ const mapDispatchToProps = (dispatch) => ({
             resetData: customerDetailDataActions.reset,
             listShowLoading: customerDetailDataActions.listShowLoading,
             resetViewData: documentViewDataActions.reset,
+
+            fetchCustomerChangeHistory: customerDetailsIndividualDataActions.changeHistory,
+            listShowChangeHistoryLoading: customerDetailsIndividualDataActions.listShowChangeHistoryLoading,
+            listDownloadShowLoading: supportingDocumentDataActions.listShowLoading,
+
+            downloadFile: supportingDocumentDataActions.downloadFile,
+            viewListShowLoading: documentViewDataActions.listShowLoading,
         },
         dispatch
     ),
 });
 
 const CustomerMasterMain = (props) => {
-    const { data, fetchList, userId, isLoading, listShowLoading, moduleTitle, typeData, resetData, totalRecords } = props;
+    const { data, fetchList, userId, isLoading, listShowLoading, changeHistoryData, fetchCustomerChangeHistory, listShowChangeHistoryLoading, moduleTitle, typeData, resetData, totalRecords } = props;
     const { filterString, setFilterString, ChangeHistoryTitle } = props;
-    const { resetViewData } = props;
+    const { resetViewData, downloadFile, listDownloadShowLoading } = props;
 
     const [customerType, setCustomerType] = useState(CUSTOMER_TYPE?.INDIVIDUAL.id);
     const [selectedCustomer, setSelectedCustomer] = useState();
@@ -88,11 +111,13 @@ const CustomerMasterMain = (props) => {
 
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
-    const [showDataLoading, setShowDataLoading] = useState(true);
+    const [showDataLoading, setShowDataLoading] = useState(false);
     const [profileCardLoading, setProfileCardLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [ChangeHistoryVisible, setChangeHistoryVisible] = useState(false);
     const [showNameChangeHistory, setShowNameChangeHistory] = useState(false);
+    // const [isUnsavedDataPopup, setIsUnsavedDataPopup] = useState(false);
+    const [nextCurentSection, setNextCurrentSection] = useState('');
 
     const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false, changeHistory: true };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -170,9 +195,26 @@ const CustomerMasterMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [defaultExtraParam, filterString]);
 
+    useEffect(() => {
+        if (selectedCustomerId && defaultExtraParam) {
+            const extraParams = [
+                ...defaultExtraParam,
+                {
+                    key: 'customerId',
+                    title: 'customerId',
+                    value: selectedCustomerId,
+                    name: 'Customer Id',
+                },
+            ];
+            fetchCustomerChangeHistory({ customURL, setIsLoading: listShowChangeHistoryLoading, userId, extraParams: extraParams || defaultExtraParam });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [selectedCustomerId, defaultExtraParam]);
+
     const onSuccessAction = (res) => {
         setShowDataLoading(false);
         setRefreshCustomerList(false);
+        // setFilterString();
     };
 
     const onErrorAction = (res) => {
@@ -191,20 +233,19 @@ const CustomerMasterMain = (props) => {
     useEffect(() => {
         return () => {
             resetData();
-            setFilterString();
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
         if (customerType) {
+            setPage({ pageSize: 10, current: 1 });
+            setFilterString({ current: 1 });
             const defaultSection = customerType === CUSTOMER_TYPE?.INDIVIDUAL.id ? CUSTOMER_INDIVIDUAL_SECTION.CUSTOMER_DETAILS.id : CUSTOMER_CORPORATE_SECTION.CUSTOMER_DETAILS.id;
             setSetionName(customerType === CUSTOMER_TYPE?.INDIVIDUAL.id ? CUSTOMER_INDIVIDUAL_SECTION : CUSTOMER_CORPORATE_SECTION);
             setDefaultSection(defaultSection);
             setSection(defaultSection);
-            setFilterString();
-            setShowDataLoading(true);
-            resetData();
+            // setShowDataLoading(false);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [customerType]);
@@ -261,7 +302,8 @@ const CustomerMasterMain = (props) => {
                 editMode: buttonAction === EDIT_ACTION,
                 viewMode: buttonAction === VIEW_ACTION,
             });
-            setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction }));
+
+            setButtonData(btnVisiblity({ defaultBtnVisiblity: {...defaultBtnVisiblity, changeHistory: buttonAction !== ADD_ACTION}, buttonAction }));
         }
         setIsFormVisible(true);
     };
@@ -273,9 +315,17 @@ const CustomerMasterMain = (props) => {
         // form.validateFields().then((values) => {});
     };
 
+    // const handleOk = () => {
+    //     setIsUnsavedDataPopup(false);
+    //     setCurrentSection(nextCurentSection);
+    //     setButtonData({ ...buttonData, formBtnActive: false });
+    // };
+
     const tableProps = {
         dynamicPagination,
         totalRecords,
+        filterString,
+        page,
         setPage,
         isLoading: isLoading,
         tableData: data,
@@ -342,6 +392,19 @@ const CustomerMasterMain = (props) => {
         searchForm.resetFields();
     };
 
+    const downloadFileFromButton = () => {
+        const extraParams = [
+            {
+                key: 'docId',
+                title: 'docId',
+                value: changeHistoryData?.customerNameChangeResponses[0].supportingDocuments[0].documentId,
+                name: 'docId',
+            },
+        ];
+        const supportingDocument = changeHistoryData?.customerNameChangeResponses[0].supportingDocuments[0].documentName;
+        downloadFile({ setIsLoading: listDownloadShowLoading, userId, extraParams, supportingDocument, onSuccessAction });
+    };
+
     const handleChange = (e) => {
         if (e.target.value.length > 2) {
             searchForm.validateFields(['code']);
@@ -357,7 +420,9 @@ const CustomerMasterMain = (props) => {
         filterString,
         setFilterString,
         optionType: typeData,
+        defaultOption: 'customerName',
         handleChange,
+        allowClear: false,
     };
 
     const changeHistoryProps = {
@@ -381,6 +446,8 @@ const CustomerMasterMain = (props) => {
         },
         selectedCustomerId,
         customerType,
+        downloadFileFromButton,
+        changeHistoryData,
     };
 
     const containerProps = {
@@ -425,9 +492,23 @@ const CustomerMasterMain = (props) => {
         handleChangeHistory,
         handleResetFilter,
         setShowNameChangeHistory,
+        // setIsUnsavedDataPopup,
+        nextCurentSection,
+        setNextCurrentSection,
     };
 
     const showAddButton = true;
+    // const unsavedDataModalProps = {
+    //     isVisible: isUnsavedDataPopup,
+    //     titleOverride: 'Confirm',
+    //     information: 'You have modified this work section. You can discard your changes, or cancel to continue editing.',
+    //     handleCloseModal: () => setIsUnsavedDataPopup(false),
+    //     onCloseAction: () => setIsUnsavedDataPopup(false),
+    //     handleOk,
+    //     closable: true,
+    //     nextCurentSection,
+    //     setNextCurrentSection,
+    // };
 
     return (
         <>
@@ -527,6 +608,7 @@ const CustomerMasterMain = (props) => {
                 </Col>
             </Row>
             <CustomerMainConatiner {...containerProps} />
+            {/* <UnsavedDataPopup {...unsavedDataModalProps} /> */}
             <CustomerChangeHistory {...changeHistoryProps} />
             <CustomerNameChangeHistory {...nameChangeHistoryProps} />
         </>

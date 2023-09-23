@@ -29,10 +29,6 @@ const AddEditFormBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
 
-    const onSearch = (event) => {
-        // console.log('THIS IS SEARCH', event?.target?.value);
-    };
-
     const handleOnChange = (e) => {
         if (e.target.checked) {
             setSameAsBookingCustomer(true);
@@ -51,7 +47,6 @@ const AddEditFormBase = (props) => {
         typeData,
         formData: formData?.ownerCustomer,
         formType: 'ownerCustomer',
-        onSearch,
         searchForm,
         fnSetData: (data) => fnSetData(data, 'ownerCustomer'),
     };
@@ -100,36 +95,36 @@ const AddEditFormBase = (props) => {
         <>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Collapse onChange={(e) => handleCollapse(1)} activeKey={activeKey} expandIcon={({ isActive }) => expandIconWithText(isActive, <FiEdit />, <FiEdit style={{ color: '#B5B5B6' }} />)} expandIconPosition="end">
+                    <Collapse onChange={(e) => handleCollapse(1)} activeKey={activeKey} expandIcon={({ isActive }) => expandIconWithText(isActive, <FiEdit />, <FiEdit style={{ color: '#B5B5B6' }} />)} expandIconPosition="end" collapsible="icon">
                         <Panel header=" Owner Details" key="1">
                             <Divider />
                             <AddressCommonForm key="1" {...ownerCustomerProps} isBillingCustmrForm={false} />
                         </Panel>
                     </Collapse>
-                    <Collapse onChange={() => handleCollapse(2)} activeKey={activeKey} expandIcon={({ isActive }) => expandIconWithText(isActive, <FiEdit />, <FiEdit style={{ color: '#B5B5B6' }} />)} expandIconPosition="end">
+                    <Collapse onChange={() => handleCollapse(2)} activeKey={activeKey} expandIcon={({ isActive }) => expandIconWithText(isActive, <FiEdit />, <FiEdit style={{ color: '#B5B5B6' }} />)} expandIconPosition="end" collapsible="icon">
                         <Panel header=" Billing Customer Details" key="2">
                             <Divider />
                             <AddressCommonForm key="2" {...bilingCustomerProps} isBillingCustmrForm={true} />
                         </Panel>
                     </Collapse>
-                    <Collapse onChange={() => handleCollapse(3)} activeKey={activeKey} expandIcon={({ isActive }) => expandIconWithText(isActive, <FiEdit />, <FiEdit style={{ color: '#B5B5B6' }} />)} expandIconPosition="end">
+                    {/* <Collapse onChange={() => handleCollapse(3)} activeKey={activeKey} expandIcon={({ isActive }) => expandIconWithText(isActive, <FiEdit />, <FiEdit style={{ color: '#B5B5B6' }} />)} expandIconPosition="end" collapsible="icon">
                         <Panel header=" Key Account Details" key="3">
                             <Divider />
                             <KeyAccountDetails key="3" {...keyAccountDetailsProps} />
                         </Panel>
-                    </Collapse>
-                    <Collapse expandIcon={({ isActive }) => expandIconWithText(isActive, <FiEdit />, <FiEdit style={{ color: '#B5B5B6' }} />)} expandIconPosition="end" onChange={() => handleCollapse(4)} activeKey={activeKey}>
-                        <Panel header=" Loyalty Details" key="4">
+                    </Collapse> */}
+                    {/* <Collapse expandIcon={({ isActive }) => expandIconWithText(isActive, <FiEdit />, <FiEdit style={{ color: '#B5B5B6' }} />)} expandIconPosition="end" collapsible="icon" onChange={() => handleCollapse(4)} activeKey={activeKey}>
+                        <Panel header="Loyalty Details" key="4">
                             <Divider />
                             <LoyalityDetails key="4" {...loyaltyProps} />
                         </Panel>
-                    </Collapse>
-                    <Collapse expandIcon={({ isActive }) => expandIconWithText(isActive, <FiEdit />, <FiEdit style={{ color: '#B5B5B6' }} />)} expandIconPosition="end" onChange={() => handleCollapse(5)} activeKey={activeKey}>
+                    </Collapse> */}
+                    {/* <Collapse expandIcon={({ isActive }) => expandIconWithText(isActive, <FiEdit />, <FiEdit style={{ color: '#B5B5B6' }} />)} expandIconPosition="end" collapsible="icon" onChange={() => handleCollapse(5)} activeKey={activeKey}>
                         <Panel header=" Ownership Change Request" key="5">
                             <Divider />
                             <Card>Coming Soon</Card>
                         </Panel>
-                    </Collapse>
+                    </Collapse> */}
                 </Col>
             </Row>
             <VehicleCustomerSearch {...modalProps} />

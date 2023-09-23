@@ -8,7 +8,8 @@ import { Col, Input, Form, Row, Switch, Button, InputNumber } from 'antd';
 import TreeSelectField from 'components/common/TreeSelectField';
 import { validateRequiredInputField, validateRequiredSelectField, valueOfPer, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
 import { withDrawer } from 'components/withDrawer';
-import styles from 'components/common/Common.module.css';
+
+import styles from 'assets/sass/app.module.scss';
 
 import { TAX_CHARGES_TYPE } from 'constants/modules/taxChargesType';
 import { TAX_CHARGES_CALCULATION_TYPE } from 'constants/modules/taxChargesCalculationType';

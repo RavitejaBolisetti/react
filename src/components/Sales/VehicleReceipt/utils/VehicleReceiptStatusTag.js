@@ -6,7 +6,7 @@
 import { Tag } from 'antd';
 import { VEHICLE_RECEIPT_STATUS } from 'constants/VehicleReceiptStatus';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 export const VehicleReceiptStatusTag = (status) => {
     let tag = '';

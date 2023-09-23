@@ -6,7 +6,8 @@
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import { Button, Space } from 'antd';
 import { FiEye } from 'react-icons/fi';
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { convertDateMonthYear } from 'utils/formatDateTime';
 

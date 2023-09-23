@@ -7,7 +7,9 @@ import React from 'react';
 import { Timeline } from 'antd';
 import { BsRecordCircleFill } from 'react-icons/bs';
 import { FaCheckCircle } from 'react-icons/fa';
-import styles from 'components/common/Common.module.css';
+
+import styles from 'assets/sass/app.module.scss';
+
 import { VEHICLE_DETAIL_SECTION } from 'constants/VehicleDetailSection';
 
 const MenuNav = (props) => {

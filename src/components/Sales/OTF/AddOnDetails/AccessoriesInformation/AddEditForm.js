@@ -3,18 +3,21 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Input, Form, Col, Row, Button, Divider } from 'antd';
 
 import { validateRequiredInputField, validationNumber } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
-import styles from 'components/common/Common.module.css';
+
+import styles from 'assets/sass/app.module.scss';
+import { PartNameListModal } from './PartNameListModal';
 
 const { TextArea } = Input;
 const { Search } = Input;
 
-function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm, selectedOrderId, handleFormValueChange, showGlobalNotification, onSearchPart, setsearchData, searchData, addButtonDisabled, setaddButtonDisabled, setAddOnItemInfo, addOnItemInfo, AddonPartsData, onCancel, accessoryForm, onFieldsChange, onFinish, isEditing, isBtnDisabled, setIsBtnDisabled, finalFormdata, documentTypeDescription, documentTypeCode }) {
+function AddEditForm({ onUpdate, isPresent, index, fnSetData, seteditCardForm, editCardForm, formData, selectedOrderId, partNameSearchVisible, setPartNameSearchVisible, handleFormValueChange, showGlobalNotification, onSearchPart, setsearchData, searchData, addButtonDisabled, setaddButtonDisabled, setAddOnItemInfo, addOnItemInfo, AddonPartsData, onCancel, accessoryForm, onFieldsChange, onFinish, isEditing, isBtnDisabled, setIsBtnDisabled, finalFormdata, documentTypeDescription, documentTypeCode }) {
     const disableProp = { disabled: true };
+    const [selectedRowData, setSelectedRowData] = useState();
 
     useEffect(() => {
         if (searchData) {
@@ -24,11 +27,12 @@ function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchData]);
+
     const handleAccesoriesForm = () => {
         accessoryForm
             .validateFields()
             .then((values) => {
-                if (isPresent(values?.partNumber)) {
+                if (isPresent(values?.partName)) {
                     return;
                 }
 
@@ -37,13 +41,14 @@ function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm
                     return;
                 }
 
-                const myvalues = { ...values, otfNumber: selectedOrderId, isDeleting: true, id: '' };
-                if (!values?.type) {
+                const data = { ...values, otfNumber: selectedOrderId, isDeleting: true, id: '' };
+
+                if (!values?.partNumber) {
                     showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Verify Part Number to continue' });
                     return;
                 }
 
-                setAddOnItemInfo((prev) => (prev ? [myvalues, ...prev] : [myvalues]));
+                setAddOnItemInfo((prev) => (prev ? [data, ...prev] : [data]));
                 accessoryForm.resetFields();
                 setsearchData();
                 setaddButtonDisabled({ ...addButtonDisabled, partDetailsResponses: false });
@@ -57,32 +62,63 @@ function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm
     };
 
     const handleOnSearch = (value) => {
-        if (isPresent(value)) {
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Duplicate Part Number' });
-            return;
-        } else {
-            onSearchPart(value);
-        }
+        onSearchPart(value);
     };
 
-    const handlePartSearch = (values) => {
-        const { partNumber } = accessoryForm.getFieldsValue();
-        accessoryForm.setFieldsValue({ partNumber: partNumber?.trim() });
-        accessoryForm.resetFields(['type', 'sellingPrice', 'mrp', 'partDescription']);
+    const handleSelectedData = (e) => {
+        fnSetData({ ...selectedRowData });
+        accessoryForm.resetFields(['partName']);
+        setSelectedRowData();
+        setPartNameSearchVisible(false);
     };
 
+    const customerListProps = {
+        isVisible: partNameSearchVisible,
+        titleOverride: 'Search Result',
+        onCloseAction: () => {
+            setPartNameSearchVisible(false);
+        },
+        data: AddonPartsData,
+        handleFormValueChange,
+        fnSetData,
+        selectedRowData,
+        setSelectedRowData,
+        handleSelectedData,
+    };
+
+    const resetSearchFields = () => {
+        accessoryForm.resetFields(['partName']);
+    };
     return (
         <>
             <Form autoComplete="off" form={accessoryForm} onFieldsChange={onFieldsChange} layout="vertical" onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Part Number" name="partNumber" rules={[validateRequiredInputField('part number')]}>
-                            <Search placeholder={preparePlaceholderText('Part Number')} maxLength={55} allowClear type="text" onSearch={handleOnSearch} onChange={handlePartSearch} />
+                        <Form.Item label="" name="partName">
+                            <Search placeholder={preparePlaceholderText('Part Name', true, 'Search')} maxLength={55} allowClear type="text" onSearch={handleOnSearch} />
                         </Form.Item>
                     </Col>
                 </Row>
                 <Divider />
                 <Row gutter={20}>
+                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                        <Form.Item label="Part Name" name="partDescription">
+                            <TextArea
+                                placeholder={preparePlaceholderText('Part Description')}
+                                {...disableProp}
+                                autoSize={{
+                                    minRows: 1,
+                                    maxRows: 2,
+                                }}
+                                maxLength={300}
+                            />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                        <Form.Item label="Part Number" name="partNumber">
+                            <Input {...disableProp} placeholder={preparePlaceholderText('part number')} />
+                        </Form.Item>
+                    </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item label="Part Type" name="type">
                             <Input {...disableProp} placeholder={preparePlaceholderText('part type')} />
@@ -99,24 +135,27 @@ function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Required Quantity" name="requiredQuantity" rules={[validateRequiredInputField('required quantity'), validationNumber('required quantity')]}>
-                            <Input type="number" placeholder={preparePlaceholderText('required quantity')} />
+                        <Form.Item
+                            label="Required Quantity"
+                            name="requiredQuantity"
+                            rules={[
+                                validateRequiredInputField('required quantity'),
+                                validationNumber('required quantity'),
+                                {
+                                    validator: (_, value) => {
+                                        if (value > 50 || value < 0) {
+                                            return Promise.reject(new Error('Required quantity should be less than 50'));
+                                        } else {
+                                            return Promise.resolve();
+                                        }
+                                    },
+                                },
+                            ]}
+                        >
+                            <Input type="number" max={50} placeholder={preparePlaceholderText('required quantity')} />
                         </Form.Item>
                     </Col>
-                    <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
-                        <Form.Item label="Part Description" name="partDescription">
-                            <TextArea
-                                placeholder={preparePlaceholderText('Part Description')}
-                                {...disableProp}
-                                autoSize={{
-                                    minRows: 1,
-                                    maxRows: 2,
-                                }}
-                                maxLength={300}
-                                showCount
-                            />
-                        </Form.Item>
-                    </Col>
+
                     <Form.Item hidden name="id">
                         <Input />
                     </Form.Item>
@@ -145,6 +184,7 @@ function AddEditForm({ onUpdate, isPresent, index, seteditCardForm, editCardForm
                     )}
                 </Col>
             </Row>
+            <PartNameListModal {...customerListProps} />
         </>
     );
 }

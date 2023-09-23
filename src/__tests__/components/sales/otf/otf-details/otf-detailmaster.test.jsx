@@ -13,7 +13,7 @@ const props = {
     formActionType: { addMode: false, editMode: false, viewMode: true },
     listConsultantShowLoading: jest.fn(),
     showGlobalNotification: jest.fn(),
-    section: { displayOnList: true, id: 1, title: 'OTF Details' },
+    section: { displayOnList: true, id: 1, title: 'Booking Details' },
     fetchOTFDetail: jest.fn(),
     listShowLoading: jest.fn(),
     isDataLoaded: true,
@@ -52,7 +52,7 @@ describe('AddEdit Component render', () => {
 
     it('should render text components', async () => {
         customRender(<OtfDetailsMaster {...props} typeData={('SALE_TYP', 'PRC_TYP')} />);
-        const otfDetails = screen.getByText('OTF Details');
+        const otfDetails = screen.getByText('Booking Details');
         expect(otfDetails).toBeTruthy();
 
         const booked = screen.getByText('Booked');
@@ -73,12 +73,6 @@ describe('AddEdit Component render', () => {
 
         const expectedDate = screen.getByRole('columnheader', { name: 'Cust. Expected Delivery Date' });
         expect(expectedDate).toBeTruthy();
-
-        const saleType = screen.getByRole('columnheader', { name: 'Sale Type' });
-        expect(saleType).toBeTruthy();
-
-        const priceType = screen.getByRole('columnheader', { name: 'Price Type' });
-        expect(priceType).toBeTruthy();
 
         const bookingAmt = screen.getByRole('columnheader', { name: 'Booking Amount' });
         expect(bookingAmt).toBeTruthy();
@@ -107,13 +101,7 @@ describe('AddEdit Component render', () => {
         const modeOf = screen.getByRole('columnheader', { name: 'Mode Of Payment' });
         expect(modeOf).toBeTruthy();
 
-        const finance = screen.getByRole('columnheader', { name: 'Finance Agreed' });
-        expect(finance).toBeTruthy();
-
-        const exchange = screen.getByRole('columnheader', { name: 'Exchange' });
-        expect(exchange).toBeTruthy();
-
-        const loyalty = screen.getByRole('columnheader', { name: 'Loyality Scheme' });
+        const loyalty = screen.getByRole('columnheader', { name: 'Loyalty Scheme' });
         expect(loyalty).toBeTruthy();
     });
 
@@ -131,10 +119,10 @@ describe('AddEdit Component render', () => {
         const invoice = screen.getByRole('button', { name: 'Invoice' });
         fireEvent.click(invoice);
 
-        const cancelOtf = screen.getByRole('button', { name: 'Cancel OTF' });
+        const cancelOtf = screen.getByRole('button', { name: 'Cancel Booking' });
         fireEvent.click(cancelOtf);
 
-        const transfer = screen.getByRole('button', { name: 'Transfer OTF' });
+        const transfer = screen.getByRole('button', { name: 'Transfer Booking' });
         fireEvent.click(transfer);
 
         const unAllot = screen.getByRole('button', { name: 'Un-Allot' });
@@ -166,10 +154,7 @@ describe('AddEdit Component render', () => {
         const addBtn = screen.getByRole('button', { name: 'Edit', exact: false });
         fireEvent.click(addBtn);
 
-        const exchangeValue = screen.getByRole('columnheader', { name: 'Exchange', exact: false });
-        fireEvent.click(exchangeValue);
-
-        const saveBtn = screen.getByRole('button', { name: 'Save & Next', exact: false });
+        const saveBtn = screen.getByRole('button', { name: 'Save', exact: false });
         fireEvent.click(saveBtn);
     });
 
@@ -184,11 +169,10 @@ describe('AddEdit Component render', () => {
         );
         const addBtn = screen.getByRole('button', { name: 'Edit', exact: false });
         fireEvent.click(addBtn);
-        const status = screen.getByRole('columnheader', { name: 'Exchange', exact: false });
-        fireEvent.click(status);
-        const disableChecked = screen.getByRole('columnheader', { name: 'Loyality Scheme', exact: false });
+
+        const disableChecked = screen.getByRole('columnheader', { name: 'Loyalty Scheme', exact: false });
         expect(disableChecked).not.toBeDisabled();
-        const saveBtn = screen.getByRole('button', { name: 'Save & Next', exact: false });
+        const saveBtn = screen.getByRole('button', { name: 'Save', exact: false });
         fireEvent.click(saveBtn);
     });
 });

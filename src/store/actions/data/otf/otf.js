@@ -11,7 +11,7 @@ import { axiosAPICall } from 'utils/axiosAPICall';
 import { withAuthToken } from 'utils/withAuthToken';
 
 const PREFIX = 'OTF_SEARCH_';
-const moduleName = 'OTF Search';
+const moduleName = 'Booking Search';
 
 export const RECEIVE_DATA_LOADING_ACTION_CONSTANT = PREFIX + 'LOADING_DATA';
 export const RECEIVE_DATA_ACTION_CONSTANT = PREFIX + 'LIST_RECIEVE_DATA';
@@ -46,6 +46,41 @@ otfDataActions.transferOTF = withAuthToken((params) => ({ token, accessToken, us
 
     const onSuccess = (res) => {
         if (res?.data) {
+            onSuccessAction && onSuccessAction(res);
+        } else {
+            onErrorAction(res?.responseMessage);
+        }
+    };
+
+    const apiCallParams = {
+        data,
+        method: 'put',
+        url: customURL,
+        token,
+        accessToken,
+        userId,
+        onSuccess,
+        onError,
+        onTimeout: () => onError('Request timed out, Please try again'),
+        onUnAuthenticated: () => dispatch(doLogout()),
+        onUnauthorized: (message) => dispatch(unAuthenticateUser(message)),
+        postRequest: () => setIsLoading(false),
+    };
+
+    axiosAPICall(apiCallParams);
+});
+
+otfDataActions.cancelOTFWorkflow = withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
+    const { setIsLoading, onSuccessAction = undefined, onErrorAction = undefined, data, userId, customURL } = params;
+
+    setIsLoading(true);
+
+    const onError = (message) => {
+        onErrorAction && onErrorAction(message);
+    };
+
+    const onSuccess = (res) => {
+        if (res?.statusCode === 200) {
             onSuccessAction && onSuccessAction(res);
         } else {
             onErrorAction(res?.responseMessage);

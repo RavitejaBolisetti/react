@@ -21,7 +21,7 @@ import { VehicleCheckListbutton } from '../VehicleRecieptFormButton';
 import AddEditForm from './AddEditForm';
 import { ViewDetail } from './ViewDetail';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 const mapStateToProps = (state) => {
     const {

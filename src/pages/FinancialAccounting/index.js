@@ -6,7 +6,8 @@
 import { AccountCategoryPage } from './AccountCategory';
 import { TaxChargesPage, TaxChargesCategoryPage, DocumentTypeOtherChargesPage } from './AccountTaxCharges';
 import { VehicleModelTaxChargesCategoryPage } from './VehicleModelTaxChargesCategory';
+import { ChartOfAccountPage } from './ChartOfAccount';
 import CreditDebitNoteMasterPage from './CreditDebitNote';
 import { GSTIRNAuthenticationPage } from './GSTIRNAuthentication';
 
-export { TaxChargesPage, TaxChargesCategoryPage, VehicleModelTaxChargesCategoryPage, AccountCategoryPage, DocumentTypeOtherChargesPage, CreditDebitNoteMasterPage, GSTIRNAuthenticationPage };
+export { TaxChargesPage, TaxChargesCategoryPage, VehicleModelTaxChargesCategoryPage, AccountCategoryPage, DocumentTypeOtherChargesPage, CreditDebitNoteMasterPage, GSTIRNAuthenticationPage, ChartOfAccountPage };

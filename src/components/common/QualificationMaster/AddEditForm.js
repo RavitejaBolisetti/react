@@ -13,7 +13,7 @@ import { ViewQualificationList } from './ViewQualificationList';
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 const AddEditFormMain = (props) => {
     const { form, formData, onCloseAction, formActionType, onFinish, onFinishFailed } = props;

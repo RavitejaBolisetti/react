@@ -9,9 +9,11 @@ import { bindActionCreators } from 'redux';
 import { Row, Col, Button } from 'antd';
 
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
-import { convertDateTime } from 'utils/formatDateTime';
+import { convertDateTime, dateFormatView, timeFormatView } from 'utils/formatDateTime';
 import { tblPrepareColumns, tblStatusColumn } from 'utils/tableColumn';
-import styles from 'components/common/Common.module.css';
+
+import styles from 'assets/sass/app.module.scss';
+
 import { DataTable } from 'utils/dataTable';
 import { withDrawer } from 'components/withDrawer';
 
@@ -59,9 +61,9 @@ const ChangeHistoryMain = ({ onCloseAction, fetchChangeHistoryList, changeHistor
             dataIndex: 'changedDate',
             render: (text) => [
                 <div>
-                    {convertDateTime(text, 'DD MMM YYYY')}
+                    {convertDateTime(text, dateFormatView)}
                     <br />
-                    {convertDateTime(text, 'HH:mm a')}
+                    {convertDateTime(text, timeFormatView)}
                 </div>,
             ],
         }),
@@ -118,3 +120,7 @@ const ChangeHistoryMain = ({ onCloseAction, fetchChangeHistoryList, changeHistor
 };
 
 export const ChangeHistory = connect(mapStateToProps, mapDispatchToProps)(withDrawer(ChangeHistoryMain, { title: 'Change History', width: '90%' }));
+
+
+
+

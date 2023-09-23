@@ -8,7 +8,7 @@ import { Button, Form, Row, Col, Select, Divider } from 'antd';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { validateRequiredSelectField } from 'utils/validation';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 import { PAYMENT_MODE } from 'components/Sales/Receipts/utils/receiptDetailsPaymentMode';
 import { CashForm } from './CashForm';
@@ -23,6 +23,7 @@ const PaymentFormContainer = (props) => {
 
     useEffect(() => {
         setPaymentMode(formData?.paymentMode);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const handleCancelFormEdit = () => {

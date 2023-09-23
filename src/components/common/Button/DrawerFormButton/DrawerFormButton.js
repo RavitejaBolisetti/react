@@ -5,9 +5,9 @@
  */
 import React from 'react';
 import { Button, Row, Col } from 'antd';
-
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
-import styles from 'components/common/Common.module.css';
+
+import styles from './DrawerFormButton.module.scss';
 
 const DrawerButtons = ({ formData, onCloseAction, buttonData, setButtonData, saveButtonName = 'Save', handleButtonClick, isLoadingOnSave, multipleForm = false }) => {
     return (
@@ -47,13 +47,13 @@ const DrawerButtons = ({ formData, onCloseAction, buttonData, setButtonData, sav
 
                 {buttonData?.cancelOTFBtn && (
                     <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.CANCEL_OTF })} type="primary" htmlType="submit">
-                        Cancel OTF
+                        Cancel Booking
                     </Button>
                 )}
 
                 {buttonData?.transferOTFBtn && (
                     <Button onClick={() => handleButtonClick({ buttonAction: FROM_ACTION_TYPE.TRANSFER_OTF })} type="primary" htmlType="submit">
-                        Transfer OTF
+                        Transfer Booking
                     </Button>
                 )}
             </Col>

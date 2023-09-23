@@ -16,6 +16,8 @@ export const BASE_URL_LOGOUT = BASE_URL + 'logout';
 export const BASE_URL_USER_DETAIL = BASE_URL + 'users';
 
 export const BASE_URL_HEADER_DETAIL = BASE_URL + 'home/header';
+export const BASE_URL_USER_ACCESS = BASE_URL + 'users/defaultaccess';
+
 export const BASE_URL_MENU = BASE_URL + 'home/menus';
 export const BASE_URL_MENU_FAVOURITE = BASE_URL + 'home/favourites';
 
@@ -41,7 +43,7 @@ export const BASE_URL_DEALER_MANPOWER_DESIGNATION = BASE_URL_DEALER_MANPOWER + '
 export const BASE_URL_DEALER_MANPOWER_EMPLOYEE_DEPARTMENT = BASE_URL_DEALER_MANPOWER + '/employee/departments';
 
 export const BASE_URL_CUSTOMER_MASTER = BASE_URL + 'customers';
-export const BASE_URL_PARTY_MASTER = BASE_URL_CUSTOMER_MASTER + '/partymaster';
+export const BASE_URL_PARTY_MASTER = BASE_URL_CUSTOMER_MASTER + '/partymaster/lov';
 export const BASE_URL_LESSOR_COMPANY_MASTER = BASE_URL_CUSTOMER_MASTER + '/lessorcompany';
 export const BASE_URL_LESSOR_CUSTOMER_CREATION = BASE_URL_CUSTOMER_MASTER + '/lessorcustomer';
 export const BASE_URL_CUSTOMER_MASTER_LIST = BASE_URL + 'customers/search';
@@ -58,6 +60,11 @@ export const BASE_URL_ROLE_MANAGEMENT = BASE_URL + 'application/rolemaster';
 export const BASE_URL_ROLE_MANAGEMENT_ROLES_MENU = BASE_URL + 'application/roles';
 
 export const BASE_URL_PRODUCT_HIERARCHY = BASE_URL + 'product';
+export const BASE_URL_PRODUCT_MAKE = BASE_URL_PRODUCT_HIERARCHY + '/make';
+export const BASE_URL_PRODUCT_MODEL_GROUP = BASE_URL_PRODUCT_HIERARCHY + '/modelgroups/lov';
+export const BASE_URL_PRODUCT_VARIENT = BASE_URL_PRODUCT_HIERARCHY + '/variants/lov';
+export const BASE_URL_PRODUCT_MODEL_FAMILY = BASE_URL_PRODUCT_HIERARCHY + '/family/lov';
+export const BASE_URL_PRODUCT_HIERARCHY_DETAIL = BASE_URL + 'product/details';
 export const BASE_URL_PRODUCT_HIERARCHY_SAVE = BASE_URL + 'product';
 export const BASE_URL_PRODUCT_HIERARCHY_CHANGE_HISTORY = BASE_URL + 'product/hierarchychangehistory';
 export const BASE_URL_PRODUCT_HIERARCHY_SKU = BASE_URL + 'product/skuattribute';
@@ -81,7 +88,8 @@ export const BASE_URL_MANUFACTURER_ADMIN_HIERARCHY_CHANGE_HISTORY = BASE_URL + '
 export const BASE_URL_MANUFACTURER_ADMIN_AUTHORITY_CHANGE_HISTORY = BASE_URL + 'manufacturer/admin/authority/changehistory';
 
 export const BASE_URL_MANUFACTURER_ADMIN_AUTHORITY_UPLOAD = BASE_URL + 'manufacturer/admin/authority';
-export const BASE_URL_MANUFACTURER_ADMIN_HIERARCHY_SEARCH = BASE_URL + 'users/manufacturer';
+// export const BASE_URL_MANUFACTURER_ADMIN_HIERARCHY_SEARCH = BASE_URL + 'users/manufacturer';
+export const BASE_URL_MANUFACTURER_ADMIN_HIERARCHY_SEARCH = BASE_URL + 'users/search';
 export const BASE_URL_MANUFACTURER_AUTHORITY_TYPE_DROPDOWN = BASE_URL + 'configurableparametertypes';
 
 export const BASE_URL_DEALER_HIERARCHY = BASE_URL + 'dealerhierarchy';
@@ -108,14 +116,14 @@ export const BASE_URL_USER_MANAGEMENT_DEALER = BASE_URL + 'users/dealer';
 export const BASE_URL_USER_MANAGEMENT_MANUFACTURER = BASE_URL + 'users/manufacturer';
 
 export const BASE_URL_TERM_CONDITION_PRODUCT_HIERARCHY = BASE_URL + 'product/lov';
-//export const BASE_URL_TERM_CONDITION_DOCUMENT_TYPE = BASE_URL + 'appmst/documenttypes?code=tns&type=DOCUMENT';
-export const BASE_URL_TERM_CONDITION_DOCUMENT_TYPE = BASE_URL + 'appmst/documenttypes?code=TERMS_CONDITIONS&type=MODULE&onlyActive=yes';
+//export const BASE_URL_TERM_CONDITION_DOCUMENT_TYPE = BASE_URL + 'applications/documenttypes?code=tns&type=DOCUMENT';
+export const BASE_URL_TERM_CONDITION_DOCUMENT_TYPE = BASE_URL + 'applications/documenttypes?code=TERMS_CONDITIONS&type=MODULE&onlyActive=yes';
 export const BASE_URL_TERM_CONDITION_LANGUAGE = BASE_URL + 'configurableparametertypes?parameterType=MOTHER_TOUNGE';
-export const BASE_URL_TERM_CONDITION_DEALER = BASE_URL + 'appmst/termconditiondealer';
+export const BASE_URL_TERM_CONDITION_DEALER = BASE_URL + 'applications/termconditiondealer';
 //export const BASE_URL_TERM_CONDITION_MANUFACTURER = BASE_URL + 'dealer/tncmanufracturer';
-export const BASE_URL_TERM_CONDITION_MANUFACTURER = BASE_URL + 'appmst/tncmanufracturer';
-export const BASE_URL_TERM_CONDITION_CHANGE_HISTORY = BASE_URL + 'appmst/termconditiondealerhistory';
-export const BASE_URL_TERM_CONDITION_MANUFACTURER_CHANGE_HISTORY = BASE_URL + 'appmst/tncmanufracturerhistory';
+export const BASE_URL_TERM_CONDITION_MANUFACTURER = BASE_URL + 'applications/tncmanufracturer';
+export const BASE_URL_TERM_CONDITION_CHANGE_HISTORY = BASE_URL + 'applications/termconditiondealerhistory';
+export const BASE_URL_TERM_CONDITION_MANUFACTURER_CHANGE_HISTORY = BASE_URL + 'applications/tncmanufracturerhistory';
 
 export const BASE_URL_LOYALTY_AND_SCHEME = BASE_URL + 'otf/loyalty/schemes';
 export const BASE_URL_FAMILY_DETAIL_SEARCH = BASE_URL + 'customers/individual';
@@ -155,7 +163,7 @@ export const BASE_URL_ADD_ON_PART = BASE_URL_OTF + 'part/details';
 
 export const BASE_URL_OTF_INVOICE = BASE_URL + 'otf/invoice';
 export const BASE_URL_OTF_FINANCE = BASE_URL + 'otf/finance';
-export const BASE_URL_OTF_SCHEME_DETAIL = BASE_URL + 'otf/schemes';
+export const BASE_URL_OTF_SCHEME_DETAIL = BASE_URL + 'otf/schemes/lov';
 export const BASE_URL_OTF_INSURANCE_DETAIL = BASE_URL + 'otf/insurancedetails';
 export const BASE_URL_OTF_FINANCE_LOV = BASE_URL + 'otf/financiers/lov';
 export const BASE_URL_OTF_SCHEMES = BASE_URL_OTF + 'schemes';
@@ -164,9 +172,12 @@ export const BASE_URL_OTF_CHANGE_HISTORY = BASE_URL_OTF + 'changehistory';
 export const BASE_URL_OTF_SO_MAPPING = BASE_URL_OTF + 'somapping';
 export const BASE_URL_OTF_SO_USER_MAPPING = BASE_URL_OTF + 'somapping/users';
 export const BASE_URL_OTF_SO_MAPPING_UNMAPPING_HISTORY = BASE_URL_OTF + 'somapping/history';
+export const BASE_URL_OTF_BLOCK_MASTER = BASE_URL_OTF + 'blockmaster';
+export const BASE_URL_OTF_EXCHANGE_VEHICLE_ALERT = BASE_URL + 'vehicle/exchangevehicle/prioritymasteralert';
 
 export const BASE_URL_OTF_TRANSFER = BASE_URL_OTF + 'transfer';
 export const BASE_URL_OTF_CANCELLATION = BASE_URL_OTF + 'request/cancel';
+export const BASE_URL_OTF_CANCELLATION_WF = BASE_URL_OTF_CANCELLATION + '/approval';
 export const BASE_URL_OTF_CANCELLATION_DEALER_SEARCH = BASE_URL + 'dealer/search';
 
 export const BASE_URL_DOCUMENT_UPLOAD = BASE_URL + 'common/document/upload';
@@ -178,6 +189,8 @@ export const BASE_URL_OTF_CUSTOMER = BASE_URL + 'otf/customerdetails';
 
 export const BASE_URL_INVOICE = BASE_URL + 'invoice/';
 export const BASE_URL_RSM_APPROVAL = BASE_URL_INVOICE + 'rsm';
+export const BASE_URL_DELIVERY_NOTE_INVOICE_CANCELLATION = BASE_URL_INVOICE + 'invoicedeliverynote/cancellation';
+export const BASE_URL_DELIVERY_NOTE_INVOICE_CANCELLATION_SEARCH = BASE_URL_DELIVERY_NOTE_INVOICE_CANCELLATION + '/search';
 export const BASE_URL_RSM_APPROVAL_SEARCH = BASE_URL_RSM_APPROVAL + '/search';
 export const BASE_URL_INVOICE_DETAILS = BASE_URL_INVOICE + 'details';
 
@@ -188,24 +201,28 @@ export const BASE_URL_VEHICLE_CONTACTS = BASE_URL_VEHICLE + 'contacts';
 export const BASE_URL_VEHICLE_PRODUCT_DETAILS = BASE_URL_VEHICLE + 'productdetails';
 export const BASE_URL_VEHICLE_DETAILS_DOCUMENT = BASE_URL_VEHICLE + 'documents';
 export const BASE_URL_VEHICLE_ENTITELMENT = BASE_URL_VEHICLE + 'schemes';
-
+export const BASE_URL_VEHICLE_DETAILS_DELIVERY_NOTE = BASE_URL_VEHICLE + 'invoice/detail';
+export const BASE_URL_VEHICLE_CHALLAN_DETAILS_DELIVERY_NOTE = BASE_URL_VEHICLE + 'invoice/challan/detail';
 export const BASE_URL_VEHICLE_VARIANT = BASE_URL_VEHICLE + 'variant';
 export const BASE_URL_VEHICLE_MAKE = BASE_URL_VEHICLE + 'make';
 export const BASE_URL_VEHICLE_MODEL = BASE_URL_VEHICLE + 'model';
+export const BASE_URL_VEHICLE_TRACKING = BASE_URL_VEHICLE + 'tracking';
 
 export const BASE_URL_ACCOUNT_HEAD = BASE_URL + 'finance/financialaccountheads';
-export const BASE_URL_DOCUMENT_DESCRIPTION_SEARCH = BASE_URL + 'appmst/documenttypes/search';
-export const BASE_URL_DOCUMENT_DESCRIPTION = BASE_URL + 'appmst/documenttypes';
+export const BASE_URL_DOCUMENT_DESCRIPTION_SEARCH = BASE_URL + 'applications/documenttypes/search';
+export const BASE_URL_DOCUMENT_DESCRIPTION = BASE_URL + 'applications/documenttypes';
 
 export const BASE_URL_FINANCIAL_ACC_TAX_CHARGE = BASE_URL + 'finance/tax/charges';
 export const BASE_URL_FINANCIAL_ACC_TAX_CHARGE_CATEGORY_SEARCH = BASE_URL + 'finance/tax/chargecategory/search';
-
 export const BASE_URL_FINANCIAL_ACC_TAX_CHARGE_CATEGORY = BASE_URL + 'finance/tax/chargecategory';
 export const BASE_URL_FINANCIAL_ACC_ACCOUNT_CATEGORY_SEARCH = BASE_URL + 'finance/accounts/categories/search';
 export const BASE_URL_FINANCIAL_ACC_ACCOUNT_CATEGORY = BASE_URL + 'finance/accounts/categories';
 export const BASE_URL_FINANCIAL_ACC_APPLICATION_MENU = BASE_URL + 'home/menus';
+export const BASE_URL_FINANCIAL_ACC_CHART_OF_ACCOUNT_HIERARCHY = BASE_URL + 'finance/chartofaccounts/hierarchy';
+export const BASE_URL_FINANCIAL_ACC_CHART_OF_ACCOUNT = BASE_URL + 'finance/chartofaccounts';
+export const BASE_URL_FINANCIAL_ACC_CHART_OF_ACCOUNT_EXPORT_COA = BASE_URL + 'finance/chartofaccounts/hierarchy/exportcoa';
 
-export const BASE_URL_DOCUMENT_TYPE_LEDGER_SEARCH = BASE_URL + 'appmst/documenttypes/search';
+export const BASE_URL_DOCUMENT_TYPE_LEDGER_SEARCH = BASE_URL + 'applications/documenttypes/search';
 export const BASE_URL_DOCUMENT_TYPE_LEDGER = BASE_URL + 'finance/ledgermappings';
 
 export const BASE_URL_FINANCIAL_ACC_TAX_CHARGE_TYPE = BASE_URL + 'finance/tax/chargetypes/lov';
@@ -233,7 +250,7 @@ export const BASE_URL_SUPPLIER_INVOICE_DETAIL = BASE_URL_INVOICE + 'receipts/sup
 export const BASE_URL_VEHICLE_DETAIL = BASE_URL_INVOICE + 'receipts';
 export const BASE_URL_REPORTS_GET_EMBEDED_INFO = BASE_URL + 'reports/getembedinfo';
 export const BASE_URL_VEHICLE_MODEL_AND_TAX_CHARGE_CATEGORY = BASE_URL_FINANCE + 'accounts/vehiclemapping';
-export const BASE_URL_VEHICLE_MODEL_AND_TAX_CHARGE_CATEGORY_PRODUCT_MODEL_GROUP = BASE_URL_PRODUCT_HIERARCHY + '/groups';
+export const BASE_URL_VEHICLE_MODEL_AND_TAX_CHARGE_CATEGORY_PRODUCT_MODEL_GROUP = BASE_URL_PRODUCT_HIERARCHY + '/modelgroups/lov';
 export const BASE_URL_VEHICLE_MODEL_AND_TAX_CHARGE_CATEGORY_ACCOUNT_CATEGORY = BASE_URL_FINANCE + 'accounts/categories';
 export const BASE_URL_VEHICLE_MODEL_AND_TAX_CHARGE_CATEGORY_TAX_CHARGES = BASE_URL_FINANCE + 'tax/chargecategory';
 
@@ -257,9 +274,50 @@ export const BASE_URL_VEHICLE_RECEIPT_CHECKLIST_SUPPORTING_DOCUMENT = BASE_URL_V
 export const BASE_URL_VEHICLE_RECEIPT_CHECKLIST_MAIN = BASE_URL_VEHICLE + 'receiptchecklist/search';
 export const BASE_URL_VEHICLE_RECEIPT_CHECKLIST_PROFILE = BASE_URL_VEHICLE + 'receiptchecklist/profile';
 export const BASE_URL_VEHICLE_RECEIPT_CHECKLIST_MASTER = BASE_URL_VEHICLE + 'receiptchecklist/detail';
-
 export const BASE_URL_VEHICLE_ALLOTMENT = BASE_URL + 'vehicle/allotments';
 
 export const BASE_URL_DEALER_BRANCH_ACCESS = BASE_URL_DEALER_MANPOWER + '/parent/locations';
 export const BASE_URL_DEALER_GST = BASE_URL_DEALER_MANPOWER + '/parent/gstin/lov';
 
+export const BASE_URL_VEHICLE_INVOICE_GENERATION = BASE_URL_OTF + 'vehicleinvoice/search';
+export const BASE_URL_VEHICLE_IRN_GENERATION = BASE_URL_OTF + 'vehicleinvoice/irngeneration';
+export const BASE_URL_INVOICE_DETAIL = BASE_URL_OTF + 'vehicleinvoice/details';
+export const BASE_URL_VEHICLE_INVOICE_DETAIL = BASE_URL_OTF + 'vehicleinvoice/vehicledetails';
+
+export const BASE_URL_VEHICLE_DETAILS_SERVICE = BASE_URL + 'otf/vehicledetails/optionalcharges';
+export const BASE_URL_MILE_SKILL = BASE_URL + 'dealer/mileskills';
+
+export const BASE_URL_HO_PRICE_MAPPING = BASE_URL_VEHICLE + 'hopriceuploadmapping/search';
+export const BASE_URL_HO_PRICE_MAPPING_DETAIL = BASE_URL_VEHICLE + 'hopriceuploadmapping';
+export const BASE_URL_GET_VEHICLE_ALLOTMENT_PRIORITY = BASE_URL + 'vehicle/allotments/prioritymaster/search';
+export const BASE_URL_VEHICLE_ALLOTMENT_PRIORITY = BASE_URL + 'vehicle/allotments/prioritymaster';
+
+export const BASE_URL_NOTIFICATION = BASE_URL + 'applications/notifications';
+
+export const BASE_URL_NOTIFICATION_COUNTS = BASE_URL + 'applications/notifications/counts';
+export const BASE_URL_VEHICLE_INVOICE = BASE_URL_OTF + 'vehicleinvoice';
+
+export const BASE_URL_OTF_SO_MAPPING_MAIN = BASE_URL + 'otf/somapunmap';
+export const BASE_URL_OTF_SO_MAPPING_SWAP = BASE_URL + 'otf/somapunmap/swap';
+export const BASE_URL_SO_MAPPING_SEARCH = BASE_URL + 'otf/somapunmap/search';
+export const BASE_URL_SO_MAPPING_OTF_SEARCH = BASE_URL + 'otf/somapunmap/orders';
+
+export const BASE_URL_STOCK_TRANSFER = BASE_URL_VEHICLE + 'stocktransfer';
+export const BASE_URL_STOCK_TRANSFER_INDENT_ISSUE = BASE_URL_VEHICLE + 'stocktransfer/indent/issue';
+
+export const BASE_URL_VEHICLE_DELIVERY_NOTE = BASE_URL_OTF + 'deliverynote/';
+export const BASE_URL_VEHICLE_DELIVERY_NOTE_SEARCH = BASE_URL_VEHICLE_DELIVERY_NOTE + 'search';
+export const BASE_URL_VEHICLE_DELIVERY_NOTE_GENERATE = BASE_URL_VEHICLE_DELIVERY_NOTE + 'generate';
+export const BASE_URL_VEHICLE_DELIVERY_NOTE_CHALLAN_GENERATE = BASE_URL_VEHICLE_DELIVERY_NOTE + 'challan/generate';
+export const BASE_URL_VEHICLE_INVOICE_DETAILS = BASE_URL_VEHICLE_DELIVERY_NOTE + 'invoicedetail';
+export const BASE_URL_VEHICLE_DELIVERY_NOTE_CANCELLATION = BASE_URL_VEHICLE_DELIVERY_NOTE + 'cancel';
+export const BASE_URL_VEHICLE_CUSTOMER_DETAILS = BASE_URL_CUSTOMER_MASTER + '/deliverynote/details';
+export const BASE_URL_VEHICLE_ADD_ON_DETAILS = BASE_URL_VEHICLE_DELIVERY_NOTE + 'addondetail';
+export const BASE_URL_DELIVERY_NOTE_INSURANCE_CHALLAN_DETAILS = BASE_URL_VEHICLE_DELIVERY_NOTE + 'challan/insurance';
+export const BASE_URL_VEHICLE_ADD_ON_SCHEME_DESCRIPTION = BASE_URL_OTF + 'scheme/lov'; // otf/scheme/lov?invoiceNumber=INV1693579301957
+export const BASE_URL_VEHICLE_ADD_ON_SCHEME_RSA_DESCRIPTION = BASE_URL_OTF + 'scheme/rsa/lov';
+export const BASE_URL_VEHICLE_ADD_ON_SCHEME_AMC_DESCRIPTION = BASE_URL_OTF + 'scheme/amc/lov';
+export const BASE_URL_CHALLAN_VIN_SEARCH = BASE_URL_VIEW_VEHICLE_DETAILS + '/search';
+
+export const BASE_URL_RELATIONSHIP_MANAGER = BASE_URL_USER_MANAGEMENT_APPLICATIONS_DEALER + '/employees';
+export const BASE_URL_DELIVERY_NOTE_VEHICLE_DETAILS = BASE_URL_OTF_VEHICLE_DETAILS + '/search/registrationnumber';

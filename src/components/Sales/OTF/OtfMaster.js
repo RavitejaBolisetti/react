@@ -10,7 +10,7 @@ import { bindActionCreators } from 'redux';
 import { Col, Form, Row, Modal } from 'antd';
 import { tableColumn } from './tableColumn';
 import AdvanceOtfFilter from './AdvanceOtfFilter';
-import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, CANCEL_ACTION, TRANSFER_ACTION, btnVisiblity, ALLOT, UNALLOT } from 'utils/btnVisiblity';
+import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, CANCEL_ACTION, TRANSFER_ACTION, btnVisiblity, ALLOT, UNALLOT, CANCELLN_APPROVE, CANCELLN_REJECT } from 'utils/btnVisiblity';
 
 import { OTFMainConatiner } from './OTFMainConatiner';
 import { ListDataTable } from 'utils/ListDataTable';
@@ -27,15 +27,17 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { otfDataActions } from 'store/actions/data/otf/otf';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { VEHICLE_TYPE } from 'constants/VehicleType';
-import { BASE_URL_OTF_DETAILS as baseURL, BASE_URL_OTF_TRANSFER as otfTransferURL, BASE_URL_OTF_CANCELLATION as otfCancelURL } from 'constants/routingApi';
+import { BASE_URL_OTF_DETAILS as baseURL, BASE_URL_OTF_TRANSFER as otfTransferURL, BASE_URL_OTF_CANCELLATION as otfCancelURL, BASE_URL_OTF_CANCELLATION_WF as customURLCancelWF } from 'constants/routingApi';
 
 import { LANGUAGE_EN } from 'language/en';
+import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 import { validateOTFMenu } from './utils/validateOTFMenu';
 
 import { FilterIcon } from 'Icons';
 import { ChangeHistory } from './ChangeHistory';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+
 import { OtfSoMappingUnmappingChangeHistory } from './OtfSoMappingUnmappingChangeHistory';
 import { ConfirmationModal } from 'utils/ConfirmationModal';
 
@@ -52,9 +54,9 @@ const mapStateToProps = (state) => {
             },
         },
     } = state;
-    const moduleTitle = 'Order Tracking Form';
-    const ChangeHistoryTitle = 'OTF Change History ';
-    const otfSoMappingChangeHistoryTitle = 'OTF - SO Mapping & Un-mapping History';
+    const moduleTitle = 'Booking Form';
+    const ChangeHistoryTitle = 'Booking Change History ';
+    const otfSoMappingChangeHistoryTitle = 'Booking - SO Mapping & Un-mapping History';
 
     let returnValue = {
         userId,
@@ -98,10 +100,11 @@ const mapDispatchToProps = (dispatch) => ({
             transferOTF: otfDataActions.transferOTF,
             listShowLoading: otfDataActions.listShowLoading,
 
+            cancelOTFWorkflow: otfDataActions.cancelOTFWorkflow,
+
             fetchVehicleDetail: otfvehicleDetailsDataActions.fetchList,
 
             updateVehicleAllotmentStatus: vehicleAllotment.saveData,
-            fetchVehicleAllotmentSearchedList: vehicleAllotment.fetchList,
 
             showGlobalNotification,
         },
@@ -112,9 +115,9 @@ const mapDispatchToProps = (dispatch) => ({
 export const OtfMasterBase = (props) => {
     const { showGlobalNotification, fetchOTFDetail, saveData, listShowLoading, userId, fetchOTFSearchedList, data, totalRecords, otfData, resetData } = props;
     const { ChangeHistoryTitle, otfSoMappingChangeHistoryTitle } = props;
-    const { fetchVehicleDetail, updateVehicleAllotmentStatus, VehicleDetailsData } = props;
+    const { fetchVehicleDetail, updateVehicleAllotmentStatus } = props;
 
-    const { typeData, moduleTitle, transferOTF } = props;
+    const { typeData, moduleTitle, transferOTF, cancelOTFWorkflow } = props;
     const { filterString, setFilterString, otfStatusList } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [confirmRequest, setConfirmRequest] = useState();
@@ -124,6 +127,7 @@ export const OtfMasterBase = (props) => {
 
     const [selectedOrder, setSelectedOrder] = useState();
     const [selectedOrderId, setSelectedOrderId] = useState();
+    const [selectedBookingId, setSelectedBookingId] = useState();
 
     const [section, setSection] = useState();
     const [defaultSection, setDefaultSection] = useState();
@@ -161,7 +165,7 @@ export const OtfMasterBase = (props) => {
         invoiceBtn: false,
         deliveryNote: false,
         changeHistory: true,
-        otfSoMappingChangeHistory: false,
+        otfSoMappingHistoryBtn: false,
     };
 
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
@@ -169,7 +173,11 @@ export const OtfMasterBase = (props) => {
     const defaultFormActionType = { addMode: false, editMode: false, viewMode: false };
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
-    const [page, setPage] = useState({ pageSize: 10, current: 1 });
+    useEffect(() => {
+        setFilterString({ ...filterString, pageSize: 10, current: 1 });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     const dynamicPagination = true;
 
     const [formData, setFormData] = useState([]);
@@ -217,7 +225,7 @@ export const OtfMasterBase = (props) => {
                 key: 'fromDate',
                 title: 'Start Date',
                 value: filterString?.fromDate,
-                name: filterString?.fromDate,
+                name: filterString?.fromDate ? convertDateTime(filterString?.fromDate, dateFormatView) : '',
                 canRemove: true,
                 filter: true,
             },
@@ -225,13 +233,13 @@ export const OtfMasterBase = (props) => {
                 key: 'toDate',
                 title: 'End Date',
                 value: filterString?.toDate,
-                name: filterString?.toDate,
+                name: filterString?.toDate ? convertDateTime(filterString?.toDate, dateFormatView) : '',
                 canRemove: true,
                 filter: true,
             },
             {
                 key: 'otfStatus',
-                title: 'OTF Status',
+                title: 'Booking Status',
                 value: filterString?.otfStatus,
                 name: otfStatusList?.find((i) => i?.key === filterString?.otfStatus)?.desc,
                 canRemove: true,
@@ -240,34 +248,34 @@ export const OtfMasterBase = (props) => {
             {
                 key: 'pageSize',
                 title: 'Value',
-                value: page?.pageSize,
+                value: filterString?.pageSize ?? 10,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'pageNumber',
                 title: 'Value',
-                value: page?.current,
+                value: filterString?.current,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'sortBy',
                 title: 'Sort By',
-                value: page?.sortBy,
+                value: filterString?.sortBy,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'sortIn',
                 title: 'Sort Type',
-                value: page?.sortType,
+                value: filterString?.sortType,
                 canRemove: true,
                 filter: false,
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString, page]);
+    }, [filterString]);
 
     useEffect(() => {
         return () => {
@@ -279,7 +287,7 @@ export const OtfMasterBase = (props) => {
     }, []);
 
     useEffect(() => {
-        if (userId) {
+        if (userId && extraParams?.find((i) => i.key === 'pageNumber')?.value > 0) {
             setShowDataLoading(true);
             fetchOTFSearchedList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
@@ -307,16 +315,16 @@ export const OtfMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentSection, sectionName]);
 
-    const handleVehicleAllotment = (record, updatedStatus) => {
+    const handleVehicleAllotment = (record, updatedStatus, vinNumber) => {
         if (!record) {
-            showGlobalNotification({ message: 'Please select OTF' });
+            showGlobalNotification({ message: 'Please select Booking' });
             return false;
         }
 
         const { otfId, otfNumber } = record;
-        const { vinnumber } = VehicleDetailsData;
+        //const { vinnumber } = VehicleDetailsData;
 
-        let data = { otfId, otfNumber, allotmentStatus: updatedStatus, vehicleIdentificationNumber: vinnumber };
+        let data = { otfId, otfNumber, allotmentStatus: updatedStatus, vehicleIdentificationNumber: vinNumber };
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
@@ -332,7 +340,7 @@ export const OtfMasterBase = (props) => {
         };
 
         const onError = (message) => {
-            showGlobalNotification({ message });
+            // showGlobalNotification({ message });
         };
 
         const requestData = {
@@ -360,11 +368,13 @@ export const OtfMasterBase = (props) => {
             case EDIT_ACTION:
                 setSelectedOrder(record);
                 record && setSelectedOrderId(record?.otfNumber);
+                record && setSelectedBookingId(record?.bookingNumber);
                 openDefaultSection && setCurrentSection(defaultSection);
                 break;
             case VIEW_ACTION:
                 setSelectedOrder(record);
                 record && setSelectedOrderId(record?.otfNumber);
+                record && setSelectedBookingId(record?.bookingNumber);
                 defaultSection && setCurrentSection(defaultSection);
                 break;
             case NEXT_ACTION:
@@ -373,9 +383,7 @@ export const OtfMasterBase = (props) => {
                 setLastSection(!nextSection?.id);
                 break;
             case CANCEL_ACTION:
-                //  setFormActionType(CANCEL_OTF)
-                // setIsCancelVisible(true);
-                setIsFormVisible(false);
+                setIsCancelVisible(true);
                 break;
             case TRANSFER_ACTION:
                 setIsTransferVisible(true);
@@ -385,17 +393,17 @@ export const OtfMasterBase = (props) => {
                 break;
             case UNALLOT:
                 if (userId && selectedOrderId) {
-                    const onSuccessAction = () => {
+                    const onSuccessAction = (resp) => {
                         setConfirmRequest({
                             isVisible: true,
-                            titleOverride: 'Un-Allot OTF',
+                            titleOverride: 'Un-Allot Booking',
                             closable: true,
                             icon: false,
                             onCloseAction: onCloseConfirmationModalAction,
-                            onSubmitAction: () => handleVehicleAllotment(record, VEHICLE_TYPE?.UNALLOTED.key),
+                            onSubmitAction: () => handleVehicleAllotment(record, VEHICLE_TYPE?.UNALLOTED.key, resp?.data?.vinNumber),
                             submitText: 'Yes',
-                            text: 'Are you sure want to Un-allot this OTF? ',
-                            content: VehicleDetailsData ? VehicleDetailsData?.vinnumber : '',
+                            text: 'Are you sure want to Un-allot this Booking? ',
+                            content: resp?.data ? resp?.data?.vinNumber : '',
                         });
                     };
 
@@ -407,33 +415,42 @@ export const OtfMasterBase = (props) => {
                             key: 'otfNumber',
                             title: 'otfNumber',
                             value: selectedOrderId,
-                            name: 'OTF Number',
+                            name: 'Booking Number',
                         },
                     ];
                     fetchVehicleDetail({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction, onSuccessAction });
                 }
+                break;
+            case CANCELLN_REJECT:
+                handleWorkflowOTFCancellation(record, buttonAction);
+                break;
+            case CANCELLN_APPROVE:
+                handleWorkflowOTFCancellation(record, buttonAction);
                 break;
             default:
                 break;
         }
 
         if (buttonAction !== NEXT_ACTION) {
-            setFormActionType({
-                addMode: buttonAction === ADD_ACTION,
-                editMode: buttonAction === EDIT_ACTION,
-                viewMode: buttonAction === VIEW_ACTION,
-            });
-            setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction, orderStatus: record?.orderStatus }));
+            if ([ADD_ACTION, EDIT_ACTION, VIEW_ACTION]?.includes(buttonAction)) {
+                setFormActionType({
+                    addMode: buttonAction === ADD_ACTION,
+                    editMode: buttonAction === EDIT_ACTION,
+                    viewMode: buttonAction === VIEW_ACTION,
+                });
+                setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction, orderStatus: record?.orderStatus }));
+            }
         }
     };
 
     const onFinishSearch = (values) => {};
 
     const handleResetFilter = (e) => {
+        const { pageSize } = filterString;
         if (filterString) {
             setShowDataLoading(true);
         }
-        setFilterString();
+        setFilterString({ pageSize, current: 1 });
         advanceFilterForm.resetFields();
         setAdvanceSearchVisible(false);
     };
@@ -452,7 +469,7 @@ export const OtfMasterBase = (props) => {
         };
 
         const onError = (message) => {
-            showGlobalNotification({ message });
+            // showGlobalNotification({ message });
         };
 
         const requestData = {
@@ -497,8 +514,9 @@ export const OtfMasterBase = (props) => {
 
     const tableProps = {
         dynamicPagination,
+        filterString,
         totalRecords,
-        setPage,
+        setPage: setFilterString,
         isLoading: showDataLoading,
         tableColumn: tableColumn(handleButtonClick),
         tableData: data,
@@ -523,7 +541,7 @@ export const OtfMasterBase = (props) => {
         }
     };
 
-    const title = 'Search OTF';
+    const title = 'Search Booking';
 
     const fnOTFTransfer = ({ modalTitle, modalMessage, finalData, callBackMethod, customURL }) => {
         const onSuccess = (res) => {
@@ -568,7 +586,7 @@ export const OtfMasterBase = (props) => {
 
     const onFinishOTFTansfer = (values) => {
         fnOTFTransfer({
-            modalTitle: 'OTF Transfer',
+            modalTitle: 'Booking Transfer',
             modalMessage: `Do you want to transfer this ${otfData?.otfNumber}`,
             finalData: { ...values, id: otfData?.id, otfNumber: otfData?.otfNumber },
             callBackMethod: transferOTF,
@@ -578,11 +596,22 @@ export const OtfMasterBase = (props) => {
 
     const onFinishOTFCancellation = (values) => {
         fnOTFTransfer({
-            modalTitle: 'OTF Cancel',
+            modalTitle: 'Booking Cancel',
             modalMessage: `Do you want to cancel this ${otfData?.otfNumber}`,
             finalData: { dealerCode: '', oemCode: '', productCode: '', ...values, id: otfData?.id, otfNumber: otfData?.otfNumber, uploadCancellationLetterDocId: uploadedFile },
             callBackMethod: transferOTF,
             customURL: otfCancelURL,
+        });
+    };
+
+    const handleWorkflowOTFCancellation = (record, actionStatus) => {
+        const { otfId, otfNumber } = record;
+        fnOTFTransfer({
+            modalTitle: `Booking ${actionStatus === CANCELLN_APPROVE ? 'Cancel' : 'Reject'}`,
+            modalMessage: `Do you want to ${actionStatus === CANCELLN_APPROVE ? 'cancel' : 'reject'} this ${otfData?.otfNumber}`,
+            finalData: { id: otfId, otfNumber, actionCode: actionStatus, remarks: actionStatus },
+            callBackMethod: cancelOTFWorkflow,
+            customURL: customURLCancelWF,
         });
     };
 
@@ -610,10 +639,8 @@ export const OtfMasterBase = (props) => {
 
     const advanceFilterProps = {
         isVisible: isAdvanceSearchVisible,
-
         icon: <FilterIcon size={20} />,
         titleOverride: 'Advance Filters',
-
         onCloseAction: onAdvanceSearchCloseAction,
         handleResetFilter,
         filterString,
@@ -645,6 +672,7 @@ export const OtfMasterBase = (props) => {
         buttonData,
         ChangeHistoryTitle,
         selectedOrderId,
+        selectedBookingId,
     };
     const OtfSoMappingChangeHistoryProps = {
         isVisible: OtfSoMappingHistoryVisible,
@@ -683,6 +711,8 @@ export const OtfMasterBase = (props) => {
         defaultBtnVisiblity,
         selectedOrderId,
         setSelectedOrderId,
+        selectedBookingId,
+        setSelectedBookingId,
         selectedOrder,
         setSelectedOrder,
         section,
@@ -694,9 +724,11 @@ export const OtfMasterBase = (props) => {
         isLastSection,
         typeData,
         otfData,
-        saveButtonName: !selectedOrderId ? 'Create Customer ID' : isLastSection ? 'Submit' : 'Save & Next',
+        saveButtonName: 'Save',
         handleChangeHistory,
         handleOtfSoMappingHistory,
+        refreshData,
+        setRefreshData,
     };
 
     const onCancelCloseAction = () => {
@@ -735,7 +767,10 @@ export const OtfMasterBase = (props) => {
         ...props,
         selectedOrder,
         isVisible: isAllotVisible,
+        setIsAllotVisible,
         onCloseAction: onCancelCloseAction,
+        setRefreshData,
+        setIsFormVisible,
     };
 
     return (
@@ -748,10 +783,10 @@ export const OtfMasterBase = (props) => {
             </Row>
             <AdvancedSearch {...advanceFilterProps} />
             <OTFMainConatiner {...containerProps} />
-            <CancellationMaster {...cancelProps} />
-            <TransferMaster {...transferOTFProps} />
+            {isCancelVisible && <CancellationMaster {...cancelProps} />}
+            {isTransferVisible && <TransferMaster {...transferOTFProps} />}
             <ChangeHistory {...ChangeHistoryProps} />
-            <OTFAllotmentMaster {...allotOTFProps} />
+            {isAllotVisible && <OTFAllotmentMaster {...allotOTFProps} />}
             <OtfSoMappingUnmappingChangeHistory {...OtfSoMappingChangeHistoryProps} />
             <ConfirmationModal {...confirmRequest} />
         </>

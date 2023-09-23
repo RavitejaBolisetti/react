@@ -14,7 +14,7 @@ import { ApportionDetailMaster } from './ApportionDetails';
 
 import { LeftSidebar } from './LeftSidebar';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 const ReceiptMainConatinerMain = (props) => {
     const { currentSection } = props;

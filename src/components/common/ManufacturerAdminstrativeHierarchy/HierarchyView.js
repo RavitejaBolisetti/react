@@ -11,7 +11,7 @@ import { generateList, findParentName } from './generateList';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 
 export const HierarchyViewMain = ({ viewMode, isLoading, viewTitle, authTypeDropdownData, manufacturerAdminHierarchyData, documentTypesList, setDocumentTypesList, attributeData, selectedTreeData, handleEditBtn, handleRootChildBtn, handleChildBtn, handleSiblingBtn, setClosePanels, styles }) => {
-    const viewProps = {
+    const viewOneColProps = {
         bordered: false,
         colon: false,
         layout: 'vertical',
@@ -19,22 +19,24 @@ export const HierarchyViewMain = ({ viewMode, isLoading, viewTitle, authTypeDrop
         column: { xxl: 1, xl: 1, lg: 1, md: 1, sm: 1, xs: 1 },
     };
     const manufacturerAdminHierarchyDataFlat = generateList(manufacturerAdminHierarchyData, { children: 'subManufactureAdmin' });
-    const finalParentName = findParentName(manufacturerAdminHierarchyDataFlat, selectedTreeData?.manufactureAdminParntId) ?? HIERARCHY_DEFAULT_PARENT;
+    const finalParentName = findParentName(manufacturerAdminHierarchyDataFlat, selectedTreeData?.manufactureAdminParntId)?.data?.manufactureAdminShortName ?? HIERARCHY_DEFAULT_PARENT;
     const status = selectedTreeData?.status ? 'Active' : 'InActive';
     return (
-        <div className={styles.viewContainer}>
-            <Descriptions {...viewProps}>
-                <Descriptions.Item label="Attribute Level">{checkAndSetDefaultValue(selectedTreeData?.hierarchyAttribueName, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Parent">{selectedTreeData?.parentName ? checkAndSetDefaultValue(selectedTreeData?.parentName, isLoading) : checkAndSetDefaultValue(finalParentName, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Code">{checkAndSetDefaultValue(selectedTreeData?.manufactureAdminCode, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Short Description">{checkAndSetDefaultValue(selectedTreeData?.manufactureAdminShortName, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Long Description">{checkAndSetDefaultValue(selectedTreeData?.manufactureAdminLongName, isLoading)}</Descriptions.Item>
-                <Descriptions.Item label="Status">{checkAndSetDefaultValue(status, isLoading)}</Descriptions.Item>
-                <Space direction="vertical" size="small" className={styles.accordianContainer}>
-                    {documentTypesList && documentTypesList.length > 0 && <AuthorityDetailPanel viewMode={viewMode} selectedTreeData={selectedTreeData} documentTypesList={documentTypesList} setDocumentTypesList={setDocumentTypesList} authTypeDropdownData={authTypeDropdownData} />}
-                </Space>
-            </Descriptions>
-        </div>
+        <>
+            <div className={styles.viewContainer}>
+                <Descriptions {...viewOneColProps}>
+                    <Descriptions.Item label="Attribute Level">{checkAndSetDefaultValue(selectedTreeData?.hierarchyAttribueName, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Parent">{selectedTreeData?.parentName ? checkAndSetDefaultValue(selectedTreeData?.parentName, isLoading) : checkAndSetDefaultValue(finalParentName, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Code">{checkAndSetDefaultValue(selectedTreeData?.manufactureAdminCode, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Short Description">{checkAndSetDefaultValue(selectedTreeData?.manufactureAdminShortName, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Long Description">{checkAndSetDefaultValue(selectedTreeData?.manufactureAdminLongName, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Status">{checkAndSetDefaultValue(status, isLoading)}</Descriptions.Item>
+                    <Space direction="vertical" size="small">
+                        {documentTypesList && documentTypesList.length > 0 && <AuthorityDetailPanel viewMode={viewMode} selectedTreeData={selectedTreeData} documentTypesList={documentTypesList} setDocumentTypesList={setDocumentTypesList} authTypeDropdownData={authTypeDropdownData} />}
+                    </Space>
+                </Descriptions>
+            </div>
+        </>
     );
 };
 

@@ -3,15 +3,14 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState, Fragment, useEffect } from 'react';
-import { Col, Card, Row, Button, Form, Divider, Typography, Space } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Col, Card, Row, Button, Form, Divider, Typography } from 'antd';
 import { FiEdit, FiTrash } from 'react-icons/fi';
-
-import styles from 'components/common/Common.module.css';
 import DocumentTypesForm from './DocumentTypesForm';
 
-const { Text } = Typography;
+import styles from 'assets/sass/app.module.scss';
 
+const { Text } = Typography;
 const CardDocumentType = (prop) => {
     const { id, status, termAndConRequired, digitalSignatureRequired, documentTypeDescription, documentTypeCode, setfinalFormdata, setIsBtnDisabled, isBtnDisabled, onFieldsChange } = prop;
     const [form] = Form.useForm();
@@ -75,18 +74,9 @@ const CardDocumentType = (prop) => {
 
     return (
         <>
-            <Card className={styles.viewCardSize} key={documentTypeCode}>
+            <Card key={documentTypeCode}>
                 <Row align="middle" className={styles.marB20}>
                     <Col xs={18} sm={18} md={18} lg={18} xl={18} xxl={18}>
-                        <div>
-                            <span>
-                                <Text type="secondary">T&C Required:</Text> {termAndConRequired ? <Text type="success">Active</Text> : <Text type="secondary">Inactive</Text>}
-                            </span>
-                            <Divider type="vertical" />
-                            <span>
-                                <Text type="secondary">Signature:</Text> {digitalSignatureRequired ? <Text type="success">Active</Text> : <Text type="secondary"> Inactive</Text>}
-                            </span>
-                        </div>
                         <div>
                             <Text strong>{documentTypeDescription}</Text>
                         </div>

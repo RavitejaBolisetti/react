@@ -6,10 +6,10 @@
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
 import { screen, fireEvent } from '@testing-library/react';
-import { SchemeDetailsMaster } from '@components/Sales/OTF/SchemeDetails/SchemeDetailsMaster';
+import { SchemeDetailsMaster } from '@components/Sales/Common/SchemeDetails/SchemeDetailsMaster';
 afterEach(() => {
     jest.restoreAllMocks();
-  }); 
+});
 const props = {
     defaultFormActionType: { addMode: false, editMode: false, viewMode: false },
     userId: undefined,

@@ -5,7 +5,7 @@
  */
 import { tblPrepareColumns, tblStatusColumn, tblActionColumn } from 'utils/tableColumn';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 export const tableColumn = (handleButtonClick) => {
     const tableColumn = [];
@@ -15,19 +15,22 @@ export const tableColumn = (handleButtonClick) => {
             dataIndex: 'roleId',
             width: '15%',
         }),
+
         tblPrepareColumns({
             title: 'Role Name',
             dataIndex: 'roleName',
             width: '20%',
         }),
+
         tblPrepareColumns({
             title: 'Role Description',
             dataIndex: 'roleDescription',
             ellipsis: true,
-            width: '20%',
+            width: '30%',
         }),
 
         tblStatusColumn({ styles, width: '15%' }),
+
         tblActionColumn({ handleButtonClick, styles, width: '10%' })
     );
 

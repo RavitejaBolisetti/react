@@ -11,7 +11,7 @@ import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import { validateRequiredInputField, validateRequiredSelectField, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 const { Search } = Input;
 
@@ -133,7 +133,7 @@ export const AdvanceForm = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Form.Item label="Amount" name="amount" rules={[validateRequiredInputField('Amount'),validateNumberWithTwoDecimalPlaces('Amount')]}>
+                            <Form.Item label="Amount" name="amount" rules={[validateRequiredInputField('Amount'), validateNumberWithTwoDecimalPlaces('Amount')]}>
                                 <Input maxLength={30} placeholder={preparePlaceholderText('Amount')} />
                             </Form.Item>
                             <Form.Item name="id" hidden></Form.Item>

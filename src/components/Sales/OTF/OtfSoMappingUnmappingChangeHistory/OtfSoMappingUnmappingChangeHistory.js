@@ -1,12 +1,12 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { convertDateTime } from 'utils/formatDateTime';
+import { convertDateTime, dateFormatView, timeFormatView } from 'utils/formatDateTime';
 
 import { tblPrepareColumns } from 'utils/tableColumn';
 import { otfDataActions } from 'store/actions/data/otf/otf';
@@ -17,7 +17,7 @@ import { BASE_URL_OTF_SO_MAPPING_UNMAPPING_HISTORY as customURL } from 'constant
 
 import { Row, Button, Col } from 'antd';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 const mapStateToProps = (state) => {
     const {
@@ -57,7 +57,7 @@ const ChangeHistoryMain = ({ fetchOTFChangeHistory, onCloseAction, listShowChang
                     key: 'otfNumber',
                     title: 'otfNumber',
                     value: selectedOrderId,
-                    name: 'OTF Number',
+                    name: 'Booking Number',
                 },
             ];
             fetchOTFChangeHistory({ customURL, setIsLoading: listShowChangeHistoryLoading, userId, extraParams });
@@ -71,9 +71,9 @@ const ChangeHistoryMain = ({ fetchOTFChangeHistory, onCloseAction, listShowChang
             dataIndex: 'actionDate',
             render: (text) => [
                 <div>
-                    {convertDateTime(text, 'DD MMM YYYY')}
+                    {convertDateTime(text, dateFormatView)}
                     <br />
-                    {convertDateTime(text, 'HH:mm a')}
+                    {convertDateTime(text, timeFormatView)}
                 </div>,
             ],
         }),
@@ -92,12 +92,8 @@ const ChangeHistoryMain = ({ fetchOTFChangeHistory, onCloseAction, listShowChang
         tblPrepareColumns({
             title: 'SO Date',
             dataIndex: 'soDate',
-            render: (text) => [
-                <div>
-                    {convertDateTime(text, 'DD MMM YYYY')}
-                </div>,
-            ],
-        })
+            render: (text) => [<div>{convertDateTime(text, dateFormatView)}</div>],
+        }),
     ];
 
     const tableProps = {
@@ -110,7 +106,7 @@ const ChangeHistoryMain = ({ fetchOTFChangeHistory, onCloseAction, listShowChang
         <>
             <Row gutter={20} className={styles.drawerBody}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <h4 className={styles.marT0}>OTF NUMBER: {selectedOrderId}</h4>
+                    <h4 className={styles.marT0}>Booking Number: {selectedOrderId}</h4>
                     <DataTable {...tableProps} />
                 </Col>
             </Row>

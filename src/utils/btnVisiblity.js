@@ -15,17 +15,20 @@ export const CANCEL_ACTION = FROM_ACTION_TYPE?.CANCEL_OTF;
 export const TRANSFER_ACTION = FROM_ACTION_TYPE?.TRANSFER_OTF;
 export const ALLOT = FROM_ACTION_TYPE?.ALLOT;
 export const UNALLOT = FROM_ACTION_TYPE?.UNALLOT;
+export const DELETE_ACTION = FROM_ACTION_TYPE?.DELETE;
+export const CANCELLN_APPROVE = FROM_ACTION_TYPE?.CANCELLN_APPROVE;
+export const CANCELLN_REJECT = FROM_ACTION_TYPE?.CANCELLN_REJECT;
 
 export const btnVisiblity = ({ defaultBtnVisiblity, buttonAction, saveAndNewBtn = true, orderStatus = false }) => {
     let btnVisibility = defaultBtnVisiblity;
-    if (buttonAction === VIEW_ACTION) {
+    if (buttonAction === ADD_ACTION) {
+        btnVisibility = { ...btnVisibility, saveBtn: true, saveAndNewBtn: saveAndNewBtn, cancelBtn: true };
+    } else if (buttonAction === VIEW_ACTION) {
         btnVisibility = { ...btnVisibility, closeBtn: true, editBtn: true, nextBtn: true };
     } else if (buttonAction === VIEW_ONLY_ACTION) {
         btnVisibility = { ...btnVisibility, saveBtn: false, cancelBtn: false, closeBtn: true };
     } else if (buttonAction === EDIT_ACTION) {
-        btnVisibility = { ...btnVisibility, saveBtn: true, cancelBtn: true };
-    } else {
-        btnVisibility = { ...btnVisibility, saveBtn: true, saveAndNewBtn: saveAndNewBtn, cancelBtn: true };
+        btnVisibility = { ...btnVisibility, saveBtn: true, cancelBtn: true, nextBtn: true };
     }
 
     if (orderStatus) {
@@ -43,6 +46,8 @@ export const btnVisiblity = ({ defaultBtnVisiblity, buttonAction, saveAndNewBtn 
             case OTF_STATUS?.DELIVERY_NOTE?.key:
                 return { ...btnVisibility, editBtn: false };
             case OTF_STATUS?.CANCELLED?.key:
+            case OTF_STATUS?.PENDING_FOR_CANCELLATION?.key:
+                return { ...btnVisibility, pendingCancellationOTFBtn: true };
             case OTF_STATUS?.DELIVERED?.key:
                 return { ...btnVisibility, editBtn: false };
             default:

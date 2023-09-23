@@ -4,10 +4,12 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { Button } from 'antd';
-import styles from 'components/common/Common.module.css';
+
+import styles from 'assets/sass/app.module.scss';
+
 
 export const QueryButtons = ({ items = {}, onClick, currentItem = '' }) => {
-   // console.log('🚀 ~ file: QueryButtons.js:10 ~ QueryButtons ~ items:', currentItem);
+    // console.log('🚀 ~ file: QueryButtons.js:10 ~ QueryButtons ~ items:', currentItem);
     return (
         <div className={`${styles.userManagement} ${styles.headingToggle}`}>
             {Object.values(items)?.map((item, index) => {

@@ -21,7 +21,7 @@ import LeftPanel from 'components/common/LeftPanel';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 const { Search } = Input;
 
@@ -118,10 +118,14 @@ export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, sav
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataOrgLoaded, userId]);
 
+    const onErrorAction = (message) => {
+        resetData();
+        showGlobalNotification({ message });
+    };
+
     useEffect(() => {
         if (organizationId && userId) {
-            resetData();
-            fetchProductDataList({ setIsLoading: listProductLoading, userId, id: organizationId });
+            fetchProductDataList({ setIsLoading: listProductLoading, userId, id: organizationId, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, organizationId]);
@@ -285,7 +289,6 @@ export const OtfSoMappingMain = ({ typeData, moduleTitle, viewTitle, userId, sav
         handleSelectTreeClick: (value) => {
             setSelectedTreeKey();
             setViewData(null);
-            resetData();
             setSelectedOrganizationId(value);
         },
         defaultValue: organizationId,

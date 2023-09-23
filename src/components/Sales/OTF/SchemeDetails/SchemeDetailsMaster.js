@@ -9,12 +9,9 @@ import { bindActionCreators } from 'redux';
 import { Form, Row, Col } from 'antd';
 
 import { showGlobalNotification } from 'store/actions/notification';
-import { AddEditForm } from './AddEditForm';
-import { ViewDetail } from './ViewDetail';
+import { AddEditForm, ViewDetail } from 'components/Sales/Common/SchemeDetails';
 
-import { OTFStatusBar } from '../utils/OTFStatusBar';
-import { OTFFormButton } from '../OTFFormButton';
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 import { otfSchemeDetailDataActions } from 'store/actions/data/otf/schemeDetail';
 
@@ -53,6 +50,7 @@ const mapDispatchToProps = (dispatch) => ({
 const SchemeDetailsMasterBase = (props) => {
     const { schemeData, resetData, onCloseAction, fetchList, formActionType, userId, listShowLoading, showGlobalNotification } = props;
     const { form, selectedOrderId, section, isLoading, NEXT_ACTION, handleButtonClick } = props;
+    const { FormActionButton, StatusBar } = props;
 
     const [formData, setFormData] = useState();
     useEffect(() => {
@@ -80,13 +78,13 @@ const SchemeDetailsMasterBase = (props) => {
     };
 
     useEffect(() => {
-        if (userId && selectedOrderId) {
+        if (!isLoading && userId && selectedOrderId) {
             const extraParams = [
                 {
                     key: 'otfNumber',
                     title: 'otfNumber',
                     value: selectedOrderId,
-                    name: 'OTF Number',
+                    name: 'Booking Number',
                 },
             ];
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction, onSuccessAction });
@@ -103,6 +101,7 @@ const SchemeDetailsMasterBase = (props) => {
     };
     const myProps = {
         ...props,
+        styles,
         formData,
         buttonData: { ...props.buttonData, editBtn: false, nextBtn: true, saveBtn: false },
     };
@@ -120,7 +119,7 @@ const SchemeDetailsMasterBase = (props) => {
                             <h2>{section?.title}</h2>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <OTFStatusBar status={props?.selectedOrder?.orderStatus} />
+                            {StatusBar && <StatusBar status={props?.selectedOrder?.orderStatus} />}
                         </Col>
                     </Row>
                     {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...myProps} />}
@@ -128,7 +127,7 @@ const SchemeDetailsMasterBase = (props) => {
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <OTFFormButton {...myProps} />
+                    <FormActionButton {...myProps} />
                 </Col>
             </Row>
         </Form>

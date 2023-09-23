@@ -17,7 +17,8 @@ import { otfAddOnDetailsDataActions } from 'store/actions/data/otf/addOnDetails'
 import { otfAddOnPartsDataActions } from 'store/actions/data/otf/addonParts';
 import { showGlobalNotification } from 'store/actions/notification';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -63,7 +64,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const AddOnDetailsMasterMain = (props) => {
     const { fetchList, resetPartData, partListLoading, showGlobalNotification, AddonPartsData, isAddonPartsDataLoaded, fetchSearchPartList, resetData, AddonDetailsData, isDataLoaded, userId, listShowLoading, saveData, onFinishFailed } = props;
-    const { form, section, selectedOrderId, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick } = props;
+    const { form, section, selectedOrder, selectedOrderId, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick } = props;
 
     const [formData, setformData] = useState();
     const [formDataSetter, setformDataSetter] = useState({
@@ -77,6 +78,7 @@ export const AddOnDetailsMasterMain = (props) => {
     const [addOnItemInfo, setAddOnItemInfo] = useState([]);
     const [openAccordian, setopenAccordian] = useState();
     const [accessoryForm] = Form.useForm();
+    const [partNameSearchVisible, setPartNameSearchVisible] = useState(false);
     const [shieldForm] = Form.useForm();
     const [rsaForm] = Form.useForm();
     const [amcForm] = Form.useForm();
@@ -89,21 +91,40 @@ export const AddOnDetailsMasterMain = (props) => {
     const onErrorAction = (message) => {
         resetData();
         showGlobalNotification({ message });
+        fnSetData(null);
     };
 
     const onSearchPart = (searchvalue) => {
-        const partNumber = searchvalue?.trim();
-        if (!partNumber) return false;
+        const partName = searchvalue?.trim();
+        if (!partName) return false;
 
         const extraParams = [
             {
-                key: 'partNumber',
-                title: 'partNumber',
-                value: partNumber,
-                name: 'partNumber',
+                key: 'partName',
+                title: 'partName',
+                value: partName,
+                name: 'partName',
+            },
+            {
+                key: 'modelCode',
+                title: 'Model Code',
+                value: selectedOrder?.modelCode,
+                name: 'Model Code',
             },
         ];
-        fetchSearchPartList({ setIsLoading: partListLoading, userId, extraParams, onErrorAction });
+        fetchSearchPartList({
+            setIsLoading: partListLoading,
+            userId,
+            extraParams,
+            onErrorAction,
+            onSuccessAction: (res) => {
+                if (res?.data?.length > 1) {
+                    setPartNameSearchVisible(true);
+                } else {
+                    fnSetData(res?.data[0]);
+                }
+            },
+        });
     };
 
     const handleCollapse = (values) => {
@@ -115,7 +136,7 @@ export const AddOnDetailsMasterMain = (props) => {
             key: 'otfNumber',
             title: 'otfNumber',
             value: selectedOrderId,
-            name: 'OTF Number',
+            name: 'Booking Number',
         },
     ];
 
@@ -160,6 +181,19 @@ export const AddOnDetailsMasterMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isAddonPartsDataLoaded, AddonPartsData]);
 
+    const fnSetData = (data) => {
+        setformData(data);
+        accessoryForm.setFieldsValue({
+            mrp: data?.mrp,
+            partNumber: data?.partNumber,
+            partDescription: data?.partDescription,
+            quantity: data?.quantity,
+            sellingPrice: data?.sellingPrice,
+            type: data?.type,
+        });
+        handleFormValueChange();
+    };
+
     const onFinish = (values) => {
         let detailsRequest = [];
         formDataSetter?.partDetailsResponses?.map((element, index) => {
@@ -179,7 +213,7 @@ export const AddOnDetailsMasterMain = (props) => {
         };
 
         const onError = (message) => {
-            showGlobalNotification({ message });
+            // showGlobalNotification({ message });
         };
 
         const requestData = {
@@ -227,6 +261,9 @@ export const AddOnDetailsMasterMain = (props) => {
         accessoryForm,
         openAccordian,
         setopenAccordian,
+        partNameSearchVisible,
+        setPartNameSearchVisible,
+        fnSetData,
     };
     return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
@@ -237,7 +274,7 @@ export const AddOnDetailsMasterMain = (props) => {
                             <h2>{section?.title}</h2>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <OTFStatusBar status={props?.selectedOrder?.orderStatus} />
+                            <OTFStatusBar status={selectedOrder?.orderStatus} />
                         </Col>
                     </Row>
                     {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}

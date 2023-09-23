@@ -6,7 +6,7 @@
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
 import { screen, fireEvent } from '@testing-library/react';
-import { ViewDetail } from '@components/Sales/OTF/SchemeDetails/ViewDetail';
+import { ViewDetail } from '@components/Sales/Common/SchemeDetails/ViewDetail';
 
 const props = {
     defaultFormActionType: { addMode: false, editMode: false, viewMode: false },
@@ -41,13 +41,14 @@ const props = {
 };
 
 describe('View Detail Components', () => {
-    it('it should render viewdetail components', () => {
+    it('should render viewdetail components', () => {
         customRender(<ViewDetail {...props} />);
     });
 
-    it('it should click when user click on button', () => {
+    it('should click when user click on button', () => {
         customRender(<ViewDetail {...props} />);
-        const plusscheme2 = screen.getAllByRole('button', { Name: 'plus Scheme 2' });
-        fireEvent.click(plusscheme2[0]);
+        const plusBtn = screen.getAllByRole('img', { Name: 'plus' });
+        fireEvent.click(plusBtn[0]);
+        fireEvent.click(plusBtn[1]);
     });
 });

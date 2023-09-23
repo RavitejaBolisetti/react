@@ -4,17 +4,17 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Col, Form, Row, Button, Space, Card, Collapse } from 'antd';
 import { withDrawer } from 'components/withDrawer';
 import { AiOutlinePlusSquare } from 'react-icons/ai';
+import { Col, Form, Row, Button, Space, Card, Collapse, Divider } from 'antd';
 
-import styles from 'components/common/Common.module.css';
-import style4 from './UserManagementManufacturer.module.css';
-import AssignUserRolesMunfacturer from './AssignUserRolesMunfacturer';
 import AssignProducts from './AssignProducts';
+import AssignUserRolesMunfacturer from './AssignUserRolesMunfacturer';
 import AdministrativeHierarchyAccess from './AdministrativeHierarchyAccess';
-
 import { ViewUserManagementDealer } from './ViewUserManagementDealer';
+
+import styles from 'assets/sass/app.module.scss';
+import style4 from './UserManagementManufacturer.module.css';
 
 const { Panel } = Collapse;
 const AddEditFormMain = (props) => {
@@ -41,13 +41,7 @@ const AddEditFormMain = (props) => {
     return (
         <Form autoComplete="off" layout="vertical" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormFieldChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             {!isViewModeVisible ? (
-                <Space
-                    direction="vertical"
-                    size="middle"
-                    style={{
-                        display: 'flex',
-                    }}
-                >
+                <Space direction="vertical" size="middle">
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                             <Card className={style4.usermanagementCard}>
@@ -89,30 +83,24 @@ const AddEditFormMain = (props) => {
 
                     <Row gutter={20}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                            <Space
-                                direction="vertical"
-                                size="large"
-                                style={{
-                                    display: 'flex',
-                                    gap: '10px',
-                                }}
-                            >
-                                <Collapse onChange={onChangeCollapse} expandIcon={() => <AiOutlinePlusSquare />}>
-                                    <Panel header="Assign User Roles" key="1">
-                                        <AssignUserRolesMunfacturer userRoleOptions={DealerData?.employeeRoles} DealerSearchvalue={DealerSearchvalue} />
-                                    </Panel>
-                                </Collapse>
-                                <Collapse onChange={onChangeCollapse} expandIcon={() => <AiOutlinePlusSquare />}>
-                                    <Panel header="Administrative Hierarchy Access" key="2">
-                                        <AdministrativeHierarchyAccess BranchMappingData={DealerData?.branches} />
-                                    </Panel>
-                                </Collapse>
-                                <Collapse onChange={onChangeCollapse} expandIcon={() => <AiOutlinePlusSquare />}>
-                                    <Panel header="Assign Products" key="3">
-                                        <AssignProducts ProductMappingData={DealerData?.products} productHierarchyData={productHierarchyData} />
-                                    </Panel>
-                                </Collapse>
-                            </Space>
+                            <Collapse onChange={onChangeCollapse} expandIcon={() => <AiOutlinePlusSquare />} collapsible="icon">
+                                <Panel header="Assign User Roles" key="1">
+                                    <Divider />
+                                    <AssignUserRolesMunfacturer userRoleOptions={DealerData?.employeeRoles} DealerSearchvalue={DealerSearchvalue} />
+                                </Panel>
+                            </Collapse>
+                            <Collapse onChange={onChangeCollapse} expandIcon={() => <AiOutlinePlusSquare />} collapsible="icon">
+                                <Panel header="Administrative Hierarchy Access" key="2">
+                                    <Divider />
+                                    <AdministrativeHierarchyAccess BranchMappingData={DealerData?.branches} />
+                                </Panel>
+                            </Collapse>
+                            <Collapse onChange={onChangeCollapse} expandIcon={() => <AiOutlinePlusSquare />} collapsible="icon">
+                                <Panel header="Assign Products" key="3">
+                                    <Divider />
+                                    <AssignProducts ProductMappingData={DealerData?.products} productHierarchyData={productHierarchyData} />
+                                </Panel>
+                            </Collapse>
                         </Col>
                     </Row>
                 </Space>

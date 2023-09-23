@@ -6,7 +6,9 @@
 import React from 'react';
 import { Button, Row, Col } from 'antd';
 import { FilterIcon } from 'Icons';
-import styles from 'components/common/Common.module.css';
+
+import styles from 'assets/sass/app.module.scss';
+
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { SearchBox } from 'components/utils/SearchBox';
 import { RxCross2 } from 'react-icons/rx';
@@ -80,7 +82,7 @@ export default function AdvanceFilter(props) {
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={22} xl={22} className={styles.advanceFilterContainer}>
                                 <div className={styles.advanceFilterTitle}>Applied Advance Filters : </div>
-                                
+
                                 {extraParams?.map((filter) => {
                                     return (
                                         filter?.value &&

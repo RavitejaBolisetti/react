@@ -47,7 +47,6 @@ const ProductAttributeMaster = (props) => {
     return (
         <>
             <FormProductAttribute {...formProductAttributeProps} />
-
             {skuAttributes?.length > 0 &&
                 skuAttributes?.map((action) => {
                     return <CardProductAttribute {...cardAttributeProps} code={action?.code} id={action?.id} value={action?.value} attributeId={action?.attributeId} disabledEdit={disabledEdit} />;

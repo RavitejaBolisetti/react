@@ -5,12 +5,14 @@
  */
 import React from 'react';
 import { Card, Descriptions } from 'antd';
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { DATA_TYPE } from 'constants/dataType';
+import { getCodeValue } from 'utils/getCodeValue';
 
 const ViewDetailMain = (props) => {
-    const { formData, isLoading } = props;
+    const { formData, supplierTypeData, isLoading } = props;
 
     const viewProps = {
         bordered: false,
@@ -22,7 +24,7 @@ const ViewDetailMain = (props) => {
     return (
         <Card className={styles.drawerCardView}>
             <Descriptions {...viewProps}>
-                <Descriptions.Item label="Supplier Type">{checkAndSetDefaultValue(formData?.supplierType, isLoading)}</Descriptions.Item>
+                <Descriptions.Item label="Supplier Type">{checkAndSetDefaultValue(getCodeValue(supplierTypeData, formData?.supplierType), isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Supplier Name">{checkAndSetDefaultValue(formData?.supplierName, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Supplier Invoice No.">{checkAndSetDefaultValue(formData?.supplierInvoiceNumber, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Supplier Invoice Date">{checkAndSetDefaultValue(formData?.supplierInvoiceDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>

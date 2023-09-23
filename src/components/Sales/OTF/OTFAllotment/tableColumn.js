@@ -3,20 +3,18 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
+import { tblPrepareColumns } from 'utils/tableColumn';
 import { vehicleAllotmentStatusTag } from 'components/Sales/OTF/utils/VehicleAllotmentStatusTag';
-import { convertDateTime } from 'utils/formatDateTime';
-import styles from 'components/common/Common.module.css';
+import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 
 export const tableColumn = (handleButtonClick, page, pageSize) => {
     const tableColumn = [
         tblPrepareColumns({
             title: 'VIN/Chasis no.',
             dataIndex: 'vehicleIdentificationNumber',
-            width: '14%',
+            width: '20%',
         }),
     ];
-
     tableColumn.push(
         tblPrepareColumns({
             title: 'Model Description',
@@ -38,14 +36,14 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
         tblPrepareColumns({
             title: 'M&M Invoice',
             dataIndex: 'invoiceId',
-            width: '14%',
+            width: '15%',
             render: (text, record) => [
                 <div>
                     {record?.invoiceId}
                     {record?.mnmInvoiceDate && (
                         <>
                             <br />
-                            Invoice Date: {convertDateTime(record?.mnmInvoiceDate, 'DD MMM YYYY')}
+                            Invoice Date: {convertDateTime(record?.mnmInvoiceDate, dateFormatView)}
                         </>
                     )}
                 </div>,
@@ -55,11 +53,9 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
         tblPrepareColumns({
             title: 'Vehicle Status',
             dataIndex: 'vehicleStatus',
-            width: '14%',
+            width: '15%',
             render: (_, record) => vehicleAllotmentStatusTag(record.vehicleStatus),
-        }),
-
-        tblActionColumn({ handleButtonClick, styles, width: '8%', EyeIcon: true, canEdit: false })
+        })
     );
 
     return tableColumn;

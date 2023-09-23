@@ -1,0 +1,303 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
+@import 'assets/sass/app.module.scss';
+
+.leftMenuBox {
+    height: 100vh;
+    position: -webkit-sticky !important;
+    position: sticky !important;
+    top: 0 !important;
+    box-shadow: 1px 0px 1px rgba(0, 0, 0, 0.15);
+    z-index: 99 !important;
+
+    li.subMenuParent {
+        min-height: 36px;
+
+        &:hover {
+            background: none !important;
+        }
+    }
+
+    li.subMenuItem {
+        min-height: 36px;
+        margin-bottom: 0 !important;
+
+        &:hover {
+            background-color: $primaryWhite !important;
+        }
+    }
+
+    .logoContainer {
+        padding: 0 14px;
+
+        @include breakpoint(md) {
+            padding-right: 19px;
+        }
+
+        @include breakpoint(sm) {
+            padding-right: 19px;
+        }
+    }
+
+    .logoContainerCollapsed {
+        padding: 0px 18px;
+        margin-bottom: 0px;
+    }
+
+    .brandLink {
+        display: block;
+        padding: 20px 0 20px;
+        transition: width 0.3s ease-in-out;
+        white-space: nowrap;
+
+        .brandImage {
+            max-height: 24px;
+            width: auto;
+        }
+
+        @include breakpoint(md) {
+            padding-top: 14px;
+        }
+
+        @include breakpoint(sm) {
+            padding-top: 14px;
+        }
+    }
+
+    .closeButton {
+        font-size: 30px;
+        padding-top: 12px;
+        text-align: right;
+        color: $primaryRed;
+        cursor: pointer;
+    }
+
+    .searchContainer {
+        text-align: center;
+        margin-bottom: 10px;
+        cursor: pointer;
+
+        & :global {
+            .ant-form-vertical {
+                &:hover {
+                    color: $primaryRed;
+                }
+            }
+
+            .ant-form {
+                .ant-form-item {
+                    margin-bottom: 10px;
+                }
+            }
+
+            .ant-input-group {
+                .ant-input-affix-wrapper {
+                    padding: 3px 12px;
+                }
+            }
+
+            .ant-input-search {
+                >.ant-input-group {
+                    >.ant-input-group-addon {
+                        &:last-child {
+                            padding: 3px 12px;
+                            padding-left: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .menuIcon {
+        font-size: 22px !important;
+        vertical-align: middle;
+    }
+
+    .menuTitle {
+        padding-left: 4px;
+    }
+
+    .subMenuParent {
+        .menuTitle {
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 24px;
+        }
+
+        & :global {
+            .ant-menu-submenu-title {
+                >svg {
+                    width: 20px;
+                    height: 20px;
+                }
+            }
+        }
+    }
+
+    .subMenuItem {
+        .menuTitle {
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 23px;
+        }
+
+        & :global {
+            .ant-menu-submenu-title {
+                >svg {
+                    width: 20px;
+                    height: 20px;
+                }
+            }
+        }
+    }
+
+    .changeTheme {
+        display: flex;
+        position: absolute;
+        color: $primaryRed !important;
+        background: $primaryWhite;
+        width: 100%;
+        bottom: 0;
+        -webkit-box-shadow: 0px -1px 1px rgba(0, 0, 0, 0.15);
+        -moz-box-shadow: 0px -1px 1px rgba(0, 0, 0, 0.15);
+        box-shadow: 0px -1px 1px rgba(0, 0, 0, 0.15);
+
+        @include breakpoint(md) {
+            text-align: center;
+        }
+
+        @include breakpoint(sm) {
+            text-align: center;
+        }
+
+        .changeThemeBorder {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            border: 1px solid $neutralGrey1;
+            border-radius: 4px;
+            padding: 4px;
+
+            .lightTheme {
+                width: 50%;
+                padding: 4px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-right: 8px;
+                border: 1px solid $transparentColor !important;
+                color: $primaryBlack !important;
+
+                svg {
+                    margin-right: 6px;
+                }
+            }
+
+            .lightThemeActive {
+                width: 50%;
+                padding: 4px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-right: 8px;
+
+                svg {
+                    margin-right: 6px;
+                }
+            }
+
+            .darkTheme {
+                width: 50%;
+                padding: 4px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border: 1px solid $transparentColor !important;
+                color: $primaryBlack !important;
+
+                svg {
+                    margin-right: 6px;
+                }
+            }
+
+            .darkThemeActive {
+                width: 50%;
+                padding: 4px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                svg {
+                    margin-right: 6px;
+                }
+            }
+        }
+
+        button {
+            >span {
+                font-size: 12px;
+                font-weight: 500;
+                line-height: 20px;
+            }
+        }
+
+        & :global {
+            .ant-btn-default.ant-btn-dangerous {
+                &:not(:disabled) {
+                    &:hover {
+                        background-color: $transparentColor;
+                        border: 1px solid $primaryRed !important;
+                        color: $primaryRed !important;
+                    }
+
+                    &:active {
+                        background-color: $transparentColor;
+                        border: 1px solid $primaryRed !important;
+                        color: $primaryRed !important;
+                    }
+                }
+            }
+        }
+
+        .sun {
+            cursor: pointer;
+        }
+
+        .moon {
+            cursor: pointer;
+        }
+    }
+
+    li.subMenuItemNew {
+        &:hover {
+            color: $primaryRed !important;
+            background: $transparentColor !important;
+        }
+    }
+
+    @include breakpoint(md) {
+        position: fixed !important;
+        width: 272px !important;
+        box-shadow: none !important;
+        min-width: 0 !important;
+    }
+
+    @include breakpoint(sm) {
+        position: fixed !important;
+        width: 100vw !important;
+        box-shadow: none !important;
+        min-width: 0 !important;
+    }
+}
+
+.leftMenuBoxLight {
+    background-color: $primaryWhite !important;
+}
+
+.leftMenuBoxDark {
+    background-color: $primaryBlack !important;
+}

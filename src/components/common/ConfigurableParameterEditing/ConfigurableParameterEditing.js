@@ -23,7 +23,7 @@ import { FaRegEye } from 'react-icons/fa';
 
 import { formatDate } from 'utils/formatDateTime';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 const { Search } = Input;
 
@@ -343,7 +343,7 @@ export const ConfigurableParameterEditingBase = ({ saveFormShowLoading, isLoadin
         isLoadingOnSave,
     };
 
-    const title = 'Configurable Parameter Editing';
+    const title = 'Control Description';
 
     return (
         <>
@@ -363,7 +363,7 @@ export const ConfigurableParameterEditingBase = ({ saveFormShowLoading, isLoadin
 
                     {configData?.length ? (
                         <Col className={styles.buttonsGroupRight} xs={24} sm={24} md={8} lg={8} xl={8}>
-                            <Button icon={<TfiReload />} onClick={handleReferesh} danger />
+                            <Button icon={<TfiReload />} onClick={handleReferesh} danger data-testid="refresh" />
                             <Button icon={<PlusOutlined />} type="primary" onClick={handleAdd}>
                                 Add
                             </Button>

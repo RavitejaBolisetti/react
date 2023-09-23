@@ -11,7 +11,8 @@ import { supportingDocumentDataActions } from 'store/actions/data/supportingDocu
 import { documentViewDataActions } from 'store/actions/data/customerMaster/documentView';
 
 import { HiCheck } from 'react-icons/hi';
-import styles from 'components/common/Common.module.css';
+
+import styles from 'assets/sass/app.module.scss';
 
 const { Text, Title } = Typography;
 const { Dragger } = Upload;

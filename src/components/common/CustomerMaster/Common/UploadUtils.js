@@ -14,8 +14,8 @@ import { FiEye } from 'react-icons/fi';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 import { HiCheck } from 'react-icons/hi';
 import { UploadBoxIcon } from 'Icons';
-import styles from './UploadUtils.module.css';
 
+import styles from './UploadUtils.module.scss';
 const { Dragger } = Upload;
 const { Text, Title } = Typography;
 

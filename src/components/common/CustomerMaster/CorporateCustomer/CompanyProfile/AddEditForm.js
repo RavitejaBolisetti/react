@@ -93,7 +93,7 @@ const AddEditFormMain = (props) => {
         <>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Collapse defaultActiveKey={['1']} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
+                    <Collapse defaultActiveKey={['1']} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end" collapsible="icon">
                         <Panel header="Company Information" key="1">
                             <Divider />
                             <Row gutter={20}>
@@ -205,7 +205,7 @@ const AddEditFormMain = (props) => {
                             </Panel>
                         </Collapse> */}
 
-                    <Collapse defaultActiveKey={['3']} expandIcon={expandIcon} expandIconPosition="end">
+                    <Collapse defaultActiveKey={['3']} expandIcon={expandIcon} expandIconPosition="end" collapsible="icon">
                         <Panel key="3" header="Key Account Details">
                             <Divider />
                             <Row gutter={20}>

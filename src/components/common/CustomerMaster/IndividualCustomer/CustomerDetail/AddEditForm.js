@@ -11,6 +11,7 @@ import { validateEmailField, validateMobileNoField, validateRequiredInputField, 
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { CustomerNameChangeMaster } from './CustomerNameChange';
 import { PARAM_MASTER } from 'constants/paramMaster';
+import { customSelectBox } from 'utils/customSelectBox';
 
 const AddEditFormMain = (props) => {
     const { whatsAppConfiguration, setWhatsAppConfiguration, handleFormFieldChange } = props;
@@ -18,7 +19,6 @@ const AddEditFormMain = (props) => {
     const { contactOverWhatsApp, contactOverWhatsAppActive, sameMobileNoAsWhatsApp, sameMobileNoAsWhatsAppActive } = whatsAppConfiguration;
 
     const [corporateType, setCorporateType] = useState('');
-
     useEffect(() => {
         setCorporateType(formData?.corporateType);
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -29,7 +29,7 @@ const AddEditFormMain = (props) => {
             mobileNumber: data?.mobileNumber,
             corporateType: formData?.corporateType,
             corporateCode: formData?.corporateCode,
-            corporateName: formData?.corporateName
+            corporateName: formData?.corporateName,
         });
     }, [data?.mobileNumber, form, formData]);
 
@@ -56,9 +56,10 @@ const AddEditFormMain = (props) => {
     const onHandleSelect = (value) => {
         form.setFieldsValue({
             corporateCode: value,
+            corporateCategory: corporateLovData?.find((i) => i?.key === value)?.parentKey,
         });
     };
-
+     
     const validateSameNumber = (_, value) => {
         const { mobileNumber } = form.getFieldsValue();
         if (value === mobileNumber && contactOverWhatsApp && !sameMobileNoAsWhatsApp) {
@@ -98,7 +99,7 @@ const AddEditFormMain = (props) => {
                                
                             )} */}
                         <Form.Item label="Mobile Number" initialValue={formData?.mobileNumber} name="mobileNumber" data-testid="mobileNumber" rules={[validateMobileNoField('mobile number'), validateRequiredInputField('mobile number')]}>
-                            <Input placeholder={preparePlaceholderText('mobile number')} maxLength={10} size="small" />
+                            <Input placeholder={preparePlaceholderText('mobile number')} maxLength={10} size="small" disabled={editMode} />
                         </Form.Item>
                     </Col>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
@@ -152,23 +153,31 @@ const AddEditFormMain = (props) => {
                         </Form.Item>
                     </Col>
                 </Row>
-                {/* <Divider /> */}
+
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                        <Form.Item label="Corporate Type" initialValue={formData?.corporateType} name="corporateType" data-testid="corporateType" rules={[validateRequiredSelectField('corporate type')]}>
-                            <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} placeholder={preparePlaceholderSelect('corporate type')} fieldNames={{ label: 'value', value: 'key' }} options={typeData['CORP_TYPE']} onChange={handleCorporateChange} allowClear></Select>
+                        <Form.Item label="Corporate Type" initialValue={formData?.corporateType} name="corporateType" data-testid="corporateType">
+                            {customSelectBox({ data: typeData['CORP_TYPE'], placeholder: preparePlaceholderSelect('corporate type'), onChange: handleCorporateChange })}
                         </Form.Item>
                     </Col>
 
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                        <Form.Item label="Corporate Name" initialValue={formData?.corporateName} name="corporateName" data-testid="corporateName" rules={[validateRequiredSelectField('corporate name')]}>
-                            {corporateType === 'NON-LIS' ? <Input placeholder={preparePlaceholderText('corporate name')} /> : <Select getPopupContainer={(triggerNode) => triggerNode.parentElement} onSelect={onHandleSelect} disabled={false} loading={false} placeholder={preparePlaceholderSelect('corporate name')} fieldNames={{ label: 'value', value: 'key' }} options={corporateLovData} allowClear></Select>}
-                        </Form.Item>
+                        {corporateType === 'NON-LIS' ? (
+                            <Form.Item label="Corporate Name" initialValue={formData?.corporateName} name="corporateName" data-testid="corporateName">
+                                <Input placeholder={preparePlaceholderText('corporate name')} />
+                            </Form.Item>
+                        ) : (
+                            <Form.Item label="Corporate Name" initialValue={formData?.corporateName} name="corporateName" data-testid="corporateName">
+                                {/* <Select placeholder={preparePlaceholderSelect('corporate name')} onChange={onHandleSelect} fieldNames={{ label: 'value', value: 'key' }} options={corporateLovData} allowClear></Select> */}
+
+                                {customSelectBox({ data: corporateLovData, placeholder: preparePlaceholderSelect('corporate name'), onChange: onHandleSelect })}
+                            </Form.Item>
+                        )}
                     </Col>
 
                     {(corporateType === 'LIS' || corporateType === '') && (
                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                            <Form.Item initialValue={formData?.corporateCode} label="Corporate Code" name="corporateCode" data-testid="corporate code" rules={[validateRequiredInputField('corporate code')]}>
+                            <Form.Item initialValue={formData?.corporateCode} label="Corporate Code" name="corporateCode" data-testid="corporate code">
                                 <Input placeholder={preparePlaceholderText('parent company name')} disabled />
                             </Form.Item>
                         </Col>

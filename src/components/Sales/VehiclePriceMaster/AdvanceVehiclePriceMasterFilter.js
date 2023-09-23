@@ -9,7 +9,7 @@ import { FilterIcon } from 'Icons';
 import { RxCross2 } from 'react-icons/rx';
 import { SearchBox } from 'components/utils/SearchBox';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 export default function AdvanceVehiclePriceMasterFilter(props) {
     const {
@@ -92,7 +92,7 @@ export default function AdvanceVehiclePriceMasterFilter(props) {
                                                 {filter?.name}
                                                 {filter?.canRemove && (
                                                     <span>
-                                                        <RxCross2 onClick={() => removeFilter(filter?.key)} />
+                                                        <RxCross2 data-testid="removeFilterBtn" onClick={() => removeFilter(filter?.key)} />
                                                     </span>
                                                 )}
                                             </div>

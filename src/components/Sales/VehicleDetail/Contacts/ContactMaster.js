@@ -20,8 +20,9 @@ import ViewList from './ViewList';
 import { CardSkeleton } from 'components/common/Skeleton';
 import { VEHICLE_DETAIL_SECTION } from 'constants/VehicleDetailSection';
 import { LANGUAGE_EN } from 'language/en';
+import { NoDataFound } from 'utils/noDataFound';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 const { Text } = Typography;
 
@@ -246,23 +247,7 @@ const ContactMasterMain = (props) => {
                                     <Divider className={styles.marT20} />
                                     <div className={styles.headerBox}>
                                         {!formActionType?.viewMode && showAddEditForm && <AddEditForm {...formProps} />}
-                                        {!contactData?.length && !isAdding ? (
-                                            <>
-                                                <Empty
-                                                    image={Empty.PRESENTED_IMAGE_SIMPLE}
-                                                    imageStyle={{
-                                                        height: 60,
-                                                    }}
-                                                    description={
-                                                        <span>
-                                                            {noDataTitle} <br />
-                                                        </span>
-                                                    }
-                                                ></Empty>
-                                            </>
-                                        ) : (
-                                            <ViewList {...formProps} />
-                                        )}
+                                        {!contactData?.length && !isAdding ? <NoDataFound informtion={noDataTitle} /> : <ViewList {...formProps} />}
                                     </div>
                                 </>
                             )}

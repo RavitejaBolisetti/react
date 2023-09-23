@@ -12,13 +12,12 @@ import { expandIcon } from 'utils/accordianExpandIcon';
 import ShieldForm from './Shield/ShieldForm';
 import AMCForm from './AMC/AMCForm';
 import RSAForm from './RSA/RSAForm';
-import FMSForm from './FMS/FMSForm';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
-    const { openAccordian, shieldForm, formActionType, rsaForm, amcForm, fmsForm, handleCollapse, styles, formData } = props;
+    const { openAccordian, shieldForm, formActionType, rsaForm, amcForm, handleCollapse, styles, formData } = props;
     const [myActiveKey, setmyActiveKey] = useState([]);
     const handleCollapses = (values) => {
         myActiveKey?.includes(values) ? setmyActiveKey('') : setmyActiveKey([values]);
@@ -28,13 +27,13 @@ const ViewDetailMain = (props) => {
         <div className={styles.viewDrawerContainer}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse('ci')} expandIconPosition="end">
+                    <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse('ci')} expandIconPosition="end" collapsible="icon">
                         <Panel header="Accessories Information" key={'ci'}>
                             <Divider />
-                            {formData?.partDetailsResponses?.map((element, i) => {
-                                return (
-                                    <div className={styles.innerCollapse}>
-                                        <Collapse expandIcon={expandIcon} activeKey={myActiveKey} onChange={() => handleCollapses(i)} expandIconPosition="end">
+                            <div className={styles.innerCollapse}>
+                                {formData?.partDetailsResponses?.map((element, i) => {
+                                    return (
+                                        <Collapse expandIcon={expandIcon} activeKey={myActiveKey} onChange={() => handleCollapses(i)} expandIconPosition="end" collapsible="icon">
                                             <Panel
                                                 header={
                                                     <Row justify="space-between">
@@ -56,35 +55,35 @@ const ViewDetailMain = (props) => {
                                                 <AccessoriesInformationCard formData={element} />
                                             </Panel>
                                         </Collapse>
-                                    </div>
-                                );
-                            })}
+                                    );
+                                })}
+                            </div>
                         </Panel>
                     </Collapse>
-                    <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse('shield')} expandIconPosition="end">
+                    <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse('shield')} expandIconPosition="end" collapsible="icon">
                         <Panel header="Shield" key="shield">
                             <Divider />
                             <ShieldForm formActionType={formActionType} formData={formData} shieldForm={shieldForm} />
                         </Panel>
                     </Collapse>
-                    <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse('Amc')} expandIconPosition="end">
+                    <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse('Amc')} expandIconPosition="end" collapsible="icon">
                         <Panel header="AMC" key={'Amc'}>
                             <Divider />
                             <AMCForm formActionType={formActionType} formData={formData} amcForm={amcForm} />
                         </Panel>
                     </Collapse>
-                    <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse('Rsa')} expandIconPosition="end">
+                    <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse('Rsa')} expandIconPosition="end" collapsible="icon">
                         <Panel header="RSA" key={'Rsa'}>
                             <Divider />
                             <RSAForm formActionType={formActionType} formData={formData} rsaForm={rsaForm} />
                         </Panel>
                     </Collapse>
-                    <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse('fMS')} expandIconPosition="end">
+                    {/* <Collapse expandIcon={expandIcon} activeKey={openAccordian} onChange={() => handleCollapse('fMS')} expandIconPosition="end" collapsible="icon">
                         <Panel header="FMS" key={'fMS'}>
                             <Divider />
                             <FMSForm formActionType={formActionType} formData={formData} fmsForm={fmsForm} />
                         </Panel>
-                    </Collapse>
+                    </Collapse> */}
                 </Col>
             </Row>
         </div>

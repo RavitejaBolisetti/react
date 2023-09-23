@@ -21,7 +21,8 @@ import { VehiclePurchaseOrderDetail } from './vehiclePurchaseOrderDetails';
 import { ViewVPODetail } from './viewVPODetails';
 import { SaveVPODetail } from './vehiclePurchaseOrder';
 import { DealerLocationDetail } from './dealerLocation';
-
+import { VehicleAllotPriorityDetail } from './vehicleAllotmentPriorityDetails';
+import { VehicleAllotPriorDetail } from './vehicleAllotPriorityDetails'; 
 
 
 export const Vehicle = combineReducers({
@@ -41,4 +42,6 @@ export const Vehicle = combineReducers({
     ViewVPODetail,
     SaveVPODetail,
     DealerLocationDetail,
+    VehicleAllotPriorityDetail,
+    VehicleAllotPriorDetail,
 });

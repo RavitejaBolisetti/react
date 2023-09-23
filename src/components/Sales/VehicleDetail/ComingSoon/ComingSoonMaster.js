@@ -8,12 +8,16 @@ import React, { useEffect } from 'react';
 import { Row, Col, Form, Card } from 'antd';
 
 import { VehicleDetailFormButton } from '../VehicleDetailFormButton';
+import { LANGUAGE_EN } from 'language/en';
+import { NoDataFound } from 'utils/noDataFound';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 export const ComingSoonMasterBase = (props) => {
     const { form, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, handleButtonClick, NEXT_ACTION } = props;
     const { section, selectedRecordId } = props;
+
+    const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
 
     const extraParams = [
         {
@@ -57,7 +61,9 @@ export const ComingSoonMasterBase = (props) => {
                             <h2>{section?.title}</h2>
                         </Col>
                     </Row>
-                    <Card>Coming Soon</Card>
+                    <Card>
+                        <NoDataFound informtion={noDataTitle} />
+                    </Card>
                 </Col>
             </Row>
             <Row>

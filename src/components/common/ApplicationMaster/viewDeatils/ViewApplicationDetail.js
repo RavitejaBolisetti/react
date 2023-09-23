@@ -20,7 +20,7 @@ const ViewDealerDetailsMain = ({ applicationDetailsData, viewTitle = 'Applicatio
     const { applicationAction, documentType, accessibleLocation, ...rest } = applicationDetailsData[0];
     const [openAccordian, setOpenAccordian] = useState('');
 
-    const viewProps = {
+    const viewOneColProps = {
         bordered: false,
         colon: false,
         layout: 'vertical',
@@ -33,76 +33,87 @@ const ViewDealerDetailsMain = ({ applicationDetailsData, viewTitle = 'Applicatio
     };
 
     return (
-        <div className={styles.viewContainer}>
-            <Descriptions {...viewProps}>
-                <Descriptions.Item label="Application ID">{rest?.applicationId}</Descriptions.Item>
-                <Descriptions.Item label="Application Name">{rest?.applicationName || 'NA'}</Descriptions.Item>
-                <Descriptions.Item label="Application Title">{rest?.applicationTitle || 'NA'}</Descriptions.Item>
-                <Descriptions.Item label="Application Type">{rest.applicationType || 'NA'}</Descriptions.Item>
-                <Descriptions.Item label="Parent Application ID">{rest?.parentApplicationId || 'NA'}</Descriptions.Item>
-                <Descriptions.Item label="Accessible Location">{ACCESSIBLE_LOCATION_INDICATOR[rest?.accessableIndicator] || 'NA'}</Descriptions.Item>
-                <Descriptions.Item label="Status">{rest?.status ? <Text type="success">Active</Text> : <Text>Inactive</Text>}</Descriptions.Item>
-                <Descriptions.Item label="Application Criticality Group">{rest?.criticalityGroupName || 'NA'}</Descriptions.Item>
-                <Descriptions.Item label="Document number to be generated">{rest?.documentNumRequired ? <Text type="success"> Yes </Text> : <Text>No</Text>}</Descriptions.Item>
+        <>
+            <div className={styles.viewContainer}>
+                <Descriptions {...viewOneColProps}>
+                    <Descriptions.Item label="Application ID">{rest?.applicationId}</Descriptions.Item>
+                    <Descriptions.Item label="Application Name">{rest?.applicationName || 'NA'}</Descriptions.Item>
+                    <Descriptions.Item label="Application Title">{rest?.applicationTitle || 'NA'}</Descriptions.Item>
+                    <Descriptions.Item label="Application Type">{rest.applicationType || 'NA'}</Descriptions.Item>
+                    <Descriptions.Item label="Parent Application ID">{rest?.parentApplicationId || 'NA'}</Descriptions.Item>
+                    <Descriptions.Item label="Accessible Location">{ACCESSIBLE_LOCATION_INDICATOR[rest?.accessableIndicator] || 'NA'}</Descriptions.Item>
+                    <Descriptions.Item label="Status">{rest?.status ? <Text type="success">Active</Text> : <Text>Inactive</Text>}</Descriptions.Item>
+                    <Descriptions.Item label="Application Criticality Group">{rest?.criticalityGroupName || 'NA'}</Descriptions.Item>
+                    <Descriptions.Item label="Document number to be generated">{rest?.documentNumRequired ? <Text type="success"> Yes </Text> : <Text>No</Text>}</Descriptions.Item>
 
-                <div>
-                    {applicationAction.length > 0 && (
-                        <Collapse onChange={() => handleCollapse(1)} expandIcon={accordianExpandIcon} collapsible="icon" activeKey={openAccordian}>
-                            <Panel
-                                header={
-                                    <>
-                                        <span>Application Actions</span>
-                                        <span style={{ color: '#ff3e5b' }}>*</span>
-                                    </>
-                                }
-                                key="1"
-                            >
-                                <Divider />
-                                {applicationAction.map((el) => (
-                                    <CardAction {...el} />
-                                ))}
-                            </Panel>
-                        </Collapse>
-                    )}
-                    {documentType.length > 0 && (
-                        <Collapse onChange={() => handleCollapse(2)} expandIcon={accordianExpandIcon} collapsible="icon" activeKey={openAccordian}>
-                            <Panel
-                                header={
-                                    <>
-                                        <span>Document Type</span>
-                                        <span style={{ color: '#ff3e5b' }}>*</span>
-                                    </>
-                                }
-                                key="2"
-                            >
-                                <Divider />
-                                {documentType.map((el) => (
-                                    <CardDocument {...el} />
-                                ))}
-                            </Panel>
-                        </Collapse>
-                    )}
-                    {accessibleLocation?.length > 0 && (
-                        <Collapse onChange={() => handleCollapse(3)} expandIcon={accordianExpandIcon} collapsible="icon" activeKey={openAccordian}>
-                            <Panel
-                                header={
-                                    <>
-                                        <span>Accessible Dealer Location</span>
-                                        <span style={{ color: '#ff3e5b' }}>*</span>
-                                    </>
-                                }
-                                key="3"
-                            >
-                                <Divider />
-                                {accessibleLocation.map((el) => (
-                                    <CardLocation {...el} />
-                                ))}
-                            </Panel>
-                        </Collapse>
-                    )}
-                </div>
-            </Descriptions>
-        </div>
+                    <Descriptions.Item label="T&C Required">{rest?.termAndConRequired ? <Text type="success"> Yes </Text> : <Text>No</Text>}</Descriptions.Item>
+                    <Descriptions.Item label="Digital Signature Required">{rest?.digitalSignatureRequired ? <Text type="success"> Yes </Text> : <Text>No</Text>}</Descriptions.Item>
+                    <Descriptions.Item label="Is Finance Related">{rest?.isFinanceRelated ? <Text type="success"> Yes </Text> : <Text>No</Text>}</Descriptions.Item>
+                    <Descriptions.Item label="IRN Integration Required">{rest?.irnIntegrationRequired ? <Text type="success"> Yes </Text> : <Text>No</Text>}</Descriptions.Item>
+
+                    <div>
+                        {applicationAction.length > 0 && (
+                            <Collapse onChange={() => handleCollapse(1)} expandIcon={accordianExpandIcon} collapsible="icon" activeKey={openAccordian}>
+                                <Panel
+                                    header={
+                                        <>
+                                            <span>Application Actions</span>
+                                            <span style={{ color: '#ff3e5b' }}>*</span>
+                                        </>
+                                    }
+                                    key="1"
+                                >
+                                    <Divider />
+                                    {applicationAction.map((el) => (
+                                        <CardAction {...el} />
+                                    ))}
+                                </Panel>
+                            </Collapse>
+                        )}
+                    </div>
+                    <div>
+                        {documentType.length > 0 && (
+                            <Collapse onChange={() => handleCollapse(2)} expandIcon={accordianExpandIcon} collapsible="icon" activeKey={openAccordian}>
+                                <Panel
+                                    header={
+                                        <>
+                                            <span>Document Type</span>
+                                            <span style={{ color: '#ff3e5b' }}>*</span>
+                                        </>
+                                    }
+                                    key="2"
+                                >
+                                    <Divider />
+                                    {documentType.map((el) => (
+                                        <CardDocument {...el} />
+                                    ))}
+                                </Panel>
+                            </Collapse>
+                        )}
+                    </div>
+                    <div>
+                        {accessibleLocation?.length > 0 && (
+                            <Collapse onChange={() => handleCollapse(3)} expandIcon={accordianExpandIcon} collapsible="icon" activeKey={openAccordian}>
+                                <Panel
+                                    header={
+                                        <>
+                                            <span>Accessible Dealer Location</span>
+                                            <span style={{ color: '#ff3e5b' }}>*</span>
+                                        </>
+                                    }
+                                    key="3"
+                                >
+                                    <Divider />
+                                    {accessibleLocation.map((el) => (
+                                        <CardLocation {...el} />
+                                    ))}
+                                </Panel>
+                            </Collapse>
+                        )}
+                    </div>
+                </Descriptions>
+            </div>
+        </>
     );
 };
 

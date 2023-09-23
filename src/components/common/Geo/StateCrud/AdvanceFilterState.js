@@ -8,7 +8,7 @@ import { withModal } from 'components/withModal';
 import { geoCountryDataActions } from 'store/actions/data/geo/countries';
 import { validateRequiredSelectField } from 'utils/validation';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 const { Option } = Select;
 

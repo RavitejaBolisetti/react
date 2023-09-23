@@ -1,6 +1,6 @@
 import React from 'react';
-import { fireEvent, screen } from '@testing-library/react';
-import { InsuranceDetailsMaster } from '@components/Sales/OTF/InsuranceDetails/InsuranceDetailsMaster';
+import { screen } from '@testing-library/react';
+import { InsuranceDetailsMaster } from '@components/Sales/Common/InsuranceDetails/InsuranceDetailsMaster';
 import customRender from '@utils/test-utils';
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
@@ -26,7 +26,7 @@ const props = {
     onErrorAction: jest.fn(),
 };
 
-describe('OTF Insurance Details Component render', () => {
+describe('Booking Insurance Details Component render', () => {
     it('should render addedit form', async () => {
         customRender(<InsuranceDetailsMaster {...props} />);
     });

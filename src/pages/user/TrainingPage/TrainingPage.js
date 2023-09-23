@@ -5,9 +5,9 @@
  */
 import CMS from 'assets/images/comingsoon.svg';
 import { PageHeader } from 'pages/common/PageHeader';
-
-import styles from 'pages/cms/CMSPage.module.css';
 import { withLayoutMaster } from 'components/withLayoutMaster';
+
+import styles from 'pages/cms/CMSPage.module.scss';
 
 const TrainingPageBase = (props) => {
     const pageHeaderData = {

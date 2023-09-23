@@ -13,7 +13,9 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { AiOutlineCloseCircle, AiOutlineClose, AiOutlineEye } from 'react-icons/ai';
 import { HiCheck } from 'react-icons/hi';
 import { UploadBoxIcon } from 'Icons';
-import styles from './UploadUtil.module.css';
+
+import styles from './UploadUtil.module.scss';
+//import styles from './UploadUtil.module.css';
 
 const { Dragger } = Upload;
 const { Text, Title } = Typography;
@@ -161,7 +163,7 @@ const UploadBase = (props) => {
     const onDrop = (e) => {};
 
     const onDownload = (file) => {
-        const onSuccessAction = (res) => {
+        const onSuccessAction = (res) => {                      
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage || 'Your download will start soon' });
         };
         const extraParams = [

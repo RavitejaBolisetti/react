@@ -35,7 +35,8 @@ import { ChangeHistory } from './ChangeHistory';
 import { DisableParent } from 'components/common/ProductHierarchy/ProductHierarchyUtils';
 
 import LeftPanel from '../LeftPanel';
-import styles from 'components/common/Common.module.css';
+
+import styles from 'assets/sass/app.module.scss';
 
 import { LANGUAGE_EN } from 'language/en';
 
@@ -262,10 +263,10 @@ export const ManufacturerAdminstrativeHierarchyMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataOrgLoaded, userId]);
 
-    useEffect(() => {
-        manufacturerOrgHierarchyData?.map((i) => DisableParent(i));
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [manufacturerOrgHierarchyData]);
+    // useEffect(() => {
+    //     manufacturerOrgHierarchyData?.map((i) => DisableParent(i));
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [manufacturerOrgHierarchyData]);
 
     const onChange = (e) => {
         setSearchValue(e.target.value);

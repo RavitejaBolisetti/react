@@ -15,6 +15,7 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 
 import { salesConsultantActions } from 'store/actions/data/otf/salesConsultant';
 import { applicationMasterDataActions } from 'store/actions/data/applicationMaster';
+import { BASE_URL_APPLICATION_DEALER_LOCATION as customURL } from 'constants/routingApi';
 
 const mapStateToProps = (state) => {
     const {
@@ -27,7 +28,7 @@ const mapStateToProps = (state) => {
             },
         },
     } = state;
-    const moduleTitle = 'Transfer OTF';
+    const moduleTitle = 'Transfer Booking';
 
     let returnValue = {
         userId,
@@ -76,8 +77,7 @@ const TransferMasterBase = (props) => {
     useEffect(() => {
         if (userId) {
             reset();
-            fetchDealerLocations({ setIsLoading: locationDataLoding, userId });
-            
+            fetchDealerLocations({ customURL: customURL + '?locationType=S', setIsLoading: locationDataLoding, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
@@ -85,7 +85,7 @@ const TransferMasterBase = (props) => {
     const handleOtfTransferLocationChange = (value) => {
         if (!value) {
             otfTransferForm.resetFields(['salesConsultant']);
-            reset()
+            reset();
         } else {
             const extraParams = [
                 {

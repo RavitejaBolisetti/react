@@ -9,7 +9,8 @@ import { expandIcon } from 'utils/accordianExpandIcon';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { addToolTip } from 'utils/customMenuLink';
 import { InputSkeleton } from 'components/common/Skeleton';
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { getCodeValue } from 'utils/getCodeValue';
 import { DATA_TYPE } from 'constants/dataType';
@@ -50,7 +51,7 @@ const ViewDetailMain = (props) => {
         <>
             {formData?.map((item, index) => (
                 <div className={styles.innerCollapse}>
-                    <Collapse defaultActiveKey={index} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(index)} expandIconPosition="end">
+                    <Collapse defaultActiveKey={index} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(index)} expandIconPosition="end" collapsible="icon">
                         <Panel
                             header={
                                 <>

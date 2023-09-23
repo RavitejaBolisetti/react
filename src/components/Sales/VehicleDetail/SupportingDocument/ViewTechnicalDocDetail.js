@@ -4,17 +4,18 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Card } from 'antd';
+// import { Card } from 'antd';
+import { NoDataFound } from 'utils/noDataFound';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 export const ViewTechnicalDocDetail = (props) => {
     return (
         <div className={styles.viewDrawerContainer}>
             {/* {supportingData?.length > 0 ? ( */}
-            <Card>
-                Coming Soon
-                {/* {supportingData?.map((uploadData) => {
+            <NoDataFound informtion={'No technical documents found'} />
+            {/* <Card> */}
+            {/* {supportingData?.map((uploadData) => {
                     return (
                         <Card
                             className={styles.viewDocumentStrip}
@@ -28,7 +29,7 @@ export const ViewTechnicalDocDetail = (props) => {
                         ></Card>
                     );
                 })} */}
-            </Card>
+            {/* </Card> */}
             {/* // ) : ( // <Card>No Technical Document Available</Card>
             // )} */}
         </div>

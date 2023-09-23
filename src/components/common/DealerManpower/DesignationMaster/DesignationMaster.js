@@ -10,6 +10,8 @@ import { bindActionCreators } from 'redux';
 import { dealerManpowerDesignationMasterDataActions } from 'store/actions/data/dealerManpower/designationMaster';
 import { dealerManpowerDivisionMasterDataActions } from 'store/actions/data/dealerManpower/dealerDivisionMaster';
 import { dealerManpowerEmployeeDepartmentDataActions } from 'store/actions/data/dealerManpower/dealerEmployeeDepartmentMaster';
+import { MileSkillDataactions } from 'store/actions/data/dealerManpower/mileSkill';
+
 import { roleMasterDataActions } from 'store/actions/data/dealerManpower/roleMaster';
 import { tableColumn } from './tableColumn';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
@@ -28,11 +30,13 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             DealerManpower: {
-                DealerDivisionMaster: { isFilteredListLoaded: isDivisionDataLoaded = false, isLoading: isDivisionLoading, filteredListData: divisionData },
-                DealerEmployeeDepartmentMaster: { isFilteredListLoaded: isDepartmentDataLoaded = false, isDepartmentLoading, filteredListData: departmentData = [] },
-                RoleMaster: { isFilteredListLoaded: isRoleDataLoaded = false, isRoleLoading, filteredListData: roleData = [] },
+                DealerDivisionMaster: { isFilteredListLoaded: isDivisionDataLoaded = false, isLoading: isDivisionLoading, filteredListData: divisionData = [] },
+                DealerEmployeeDepartmentMaster: { isFilteredListLoaded: isDepartmentDataLoaded = false, isLoading: isDepartmentLoading, filteredListData: departmentData = [] },
+                RoleMaster: { isFilteredListLoaded: isRoleDataLoaded = false, isLoading: isRoleLoading, filteredListData: roleData = [] },
                 DesignationMaster: { isLoaded: isDataLoaded = false, isLoading, data },
+                MileSkill: { isFilteredListLoaded: isMileDataLoaded = false, isLoading: isMileLoading, filteredListData: mileData },
             },
+            ConfigurableParameterEditing: { filteredListData: typeData = [] },
         },
     } = state;
 
@@ -53,6 +57,11 @@ const mapStateToProps = (state) => {
         departmentData,
         divisionData,
         moduleTitle,
+        typeData,
+
+        isMileDataLoaded,
+        isMileLoading,
+        mileData,
     };
     return returnValue;
 };
@@ -64,13 +73,20 @@ const mapDispatchToProps = (dispatch) => ({
             fetchList: dealerManpowerDesignationMasterDataActions.fetchList,
             saveData: dealerManpowerDesignationMasterDataActions.saveData,
             listShowLoading: dealerManpowerDesignationMasterDataActions.listShowLoading,
+
             fetchDivisionLovList: dealerManpowerDivisionMasterDataActions.fetchFilteredList,
             listDivisionShowLoading: dealerManpowerDivisionMasterDataActions.listShowLoading,
+
             fetchDepartmentLovList: dealerManpowerEmployeeDepartmentDataActions.fetchFilteredList,
             listDepartmentShowLoading: dealerManpowerEmployeeDepartmentDataActions.listShowLoading,
+
             fetchRoleLovList: roleMasterDataActions.fetchFilteredList,
             listRoleShowLoading: roleMasterDataActions.listShowLoading,
+
             resetData: dealerManpowerDesignationMasterDataActions.reset,
+
+            fetchMileSkill: MileSkillDataactions.fetchFilteredList,
+            MileLoading: MileSkillDataactions.listShowLoading,
             showGlobalNotification,
         },
         dispatch
@@ -78,7 +94,10 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const DesignationMasterBase = (props) => {
-    const { data, saveData, fetchRoleLovList, resetData, roleData, isDivisionLoading, isRoleDataLoaded, fetchList, fetchDepartmentLovList, isDepartmentDataLoaded, departmentData, divisionData, fetchDivisionLovList, isDivisionDataLoaded, isDepartmentLoading, isRoleLoading, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
+    const { data, saveData, fetchRoleLovList, resetData, roleData, isDivisionLoading, isRoleDataLoaded, fetchList, fetchDepartmentLovList, isDepartmentDataLoaded, departmentData, divisionData, fetchDivisionLovList, isDivisionDataLoaded, isDepartmentLoading, isRoleLoading, userId, isDataLoaded, listShowLoading, showGlobalNotification, typeData } = props;
+
+    const { mileData, fetchMileSkill } = props;
+
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
     const [advanceFilterForm] = Form.useForm();
@@ -106,25 +125,19 @@ export const DesignationMasterBase = (props) => {
         setRefershData(false);
         setShowDataLoading(false);
     };
-
+    const LoadDependentData = () => {
+        fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+        fetchDivisionLovList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+        fetchDepartmentLovList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+        fetchRoleLovList({ setIsLoading: listShowLoading, userId, onSuccessAction });
+        fetchMileSkill({ setIsLoading: listShowLoading, userId, onSuccessAction });
+    };
     useEffect(() => {
         if (userId) {
-            if (!isDataLoaded) {
-                fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
-            }
-            if (!isDivisionDataLoaded) {
-                fetchDivisionLovList({ setIsLoading: listShowLoading, userId, onSuccessAction });
-            }
-            if (!isDepartmentDataLoaded) {
-                fetchDepartmentLovList({ setIsLoading: listShowLoading, userId, onSuccessAction });
-            }
-
-            if (!isRoleDataLoaded) {
-                fetchRoleLovList({ setIsLoading: listShowLoading, userId, onSuccessAction });
-            }
+            LoadDependentData();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, isDataLoaded, isDivisionDataLoaded, isDepartmentDataLoaded, isRoleDataLoaded]);
+    }, [userId]);
 
     useEffect(() => {
         if (userId && refershData) {
@@ -151,6 +164,8 @@ export const DesignationMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, isDataLoaded, data, userId]);
+
+    // console.log('divisionData', divisionData, 'departmentData', departmentData, 'roleData', roleData);
 
     const extraParams = [
         {
@@ -215,7 +230,6 @@ export const DesignationMasterBase = (props) => {
             setShowDataLoading(false);
         }
     };
-
     const handleFilterChange =
         (name, type = 'value') =>
         (value) => {
@@ -242,9 +256,9 @@ export const DesignationMasterBase = (props) => {
             setShowDataLoading(true);
 
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction });
-
+            LoadDependentData();
             setButtonData({ ...buttonData, formBtnActive: false });
+            setFormData();
             if (buttonData?.saveAndNewBtnClicked) {
                 setIsFormVisible(true);
                 showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
@@ -313,6 +327,8 @@ export const DesignationMasterBase = (props) => {
 
         setButtonData,
         handleButtonClick,
+        typeData,
+        mileData,
     };
 
     const tableProps = {

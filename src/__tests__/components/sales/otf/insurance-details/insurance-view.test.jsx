@@ -1,13 +1,13 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
-import { ViewDetail } from '@components/Sales/OTF/InsuranceDetails/ViewDetail';
+import { ViewDetail } from '@components/Sales/Common/InsuranceDetails/ViewDetail';
 import customRender from '@utils/test-utils';
 
 beforeEach(() => {
     jest.clearAllMocks();
 });
 
-describe('OTF Insurance view Details render', () => {
+describe('Booking Insurance view Details render', () => {
     it('should render view details page', async () => {
         customRender(<ViewDetail />);
     });

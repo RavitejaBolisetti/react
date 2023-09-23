@@ -11,7 +11,7 @@ import { withDrawer } from 'components/withDrawer';
 import { ViewHierarchyAttribute } from './ViewHierarchyAttribute';
 import { DrawerFormButton } from 'components/common/Button';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 const AddEditFormMain = ({ isViewModeVisible, form, buttonData, setButtonData, handleButtonClick, formActionType, setFormActionType, codeIsReadOnly, editRow, setEditRow, showDrawer, setShowDrawer, setForceReset, onFinish, onFinishFailed, tableData, setsaveandnewclick, setsaveclick, handleEditView, isReadOnly, setIsReadOnly, formBtnDisable, setFormBtnDisable, isLoadingOnSave, onCloseAction }) => {
     const handleFormSubmitBtn = () => {

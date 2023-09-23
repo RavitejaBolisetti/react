@@ -1,10 +1,24 @@
 import React from 'react';
-import { screen, act, fireEvent } from '@testing-library/react';
+import { screen, fireEvent } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { LoyaltySchemeMaster } from '@components/Sales/OTF/LoyaltyScheme/LoyaltySchemeMaster';
+import { LoyaltySchemeMaster } from '@components/Sales/Common/LoyaltyScheme/LoyaltySchemeMaster';
 import customRender from '@utils/test-utils';
 import { Form } from 'antd';
-import createMockStore from '__mocks__/store';
+import { configureStore } from '@reduxjs/toolkit';
+import thunk from 'redux-thunk';
+import { rootReducer } from 'store/reducers';
+
+export const createMockStore = (initialState) => {
+    const mockStore = configureStore({
+        reducer: rootReducer,
+
+        preloadedState: initialState,
+
+        middleware: [thunk],
+    });
+
+    return mockStore;
+};
 
 afterEach(() => {
     jest.restoreAllMocks();
@@ -49,12 +63,12 @@ const props = {
     selectedOrderId: 'testid',
 };
 
-describe('OTF loyalty scheme master render', () => {
+describe('Booking loyalty scheme master render', () => {
     const mockStore = createMockStore({
         auth: { userId: '123456' },
         data: {
             OTF: {
-                LoyaltyScheme: { isLoaded: true, isLoading: true, data: LoyaltySchemeData },
+                LoyaltyScheme: { isLoaded: true, isLoading: true, data: LoyaltySchemeData, LoyaltySchemeData: LoyaltySchemeData },
             },
         },
     });
@@ -65,9 +79,6 @@ describe('OTF loyalty scheme master render', () => {
                 <FormWrapper setFormData={jest.fn} {...props} handleFormValueChange={jest.fn()} formActionType={formActionType} />
             </Provider>
         );
-
-        const customerId = screen.getByRole('columnheader', { name: 'Customer ID' });
-        expect(customerId).toBeTruthy();
 
         const customerName = screen.getByRole('columnheader', { name: 'Customer Name' });
         expect(customerName).toBeTruthy();
@@ -119,52 +130,62 @@ describe('OTF loyalty scheme master render', () => {
             </Provider>
         );
 
-        const customerId = screen.getByRole('textbox', { name: 'Customer ID', exact: false });
-        fireEvent.change(customerId, { target: { value: 'tsetId' } });
+        const search = screen.getByPlaceholderText('Search');
+        fireEvent.change(search, { target: { value: 'tsetId' } });
 
         const customerName = screen.getByRole('textbox', { name: 'Customer Name', exact: false });
         fireEvent.change(customerName, { target: { value: 'testName' } });
 
-        const make = screen.getByRole('textbox', { name: 'Make', exact: false });
+        const make = screen.getByRole('combobox', { name: 'Make', exact: false });
         fireEvent.change(make, { target: { value: 'make' } });
 
-        const modelG = screen.getByRole('textbox', { name: 'Model Group', exact: false });
+        const modelG = screen.getByRole('combobox', { name: 'Model Group', exact: false });
         fireEvent.change(modelG, { target: { value: 'test model' } });
 
-        const variant = screen.getByRole('textbox', { name: 'Variant', exact: false });
+        const variant = screen.getByRole('combobox', { name: 'Variant', exact: false });
         fireEvent.change(variant, { target: { value: 'variant' } });
-
-        const oldReg = screen.getByRole('textbox', { name: 'Old Registration No', exact: false });
-        fireEvent.change(oldReg, { target: { value: '44242' } });
-
-        const dob = screen.getByRole('textbox', { name: 'Date Of Birth', exact: false });
-        fireEvent.change(dob, { target: { value: '999999' } });
 
         const relationship = screen.getByRole('combobox', { name: 'Relationship', exact: false });
         fireEvent.change(relationship, { target: { value: '999999' } });
 
-        const yearsOfReg = screen.getByRole('textbox', { name: 'Year Of Registration', exact: false });
-        fireEvent.change(yearsOfReg, { target: { value: '999999' } });
-
         const imgClick = screen.getByRole('img', { name: 'close-circle' });
         fireEvent.click(imgClick);
+    });
 
-        const monthOfReg = screen.getByRole('textbox', { name: 'Month Of Registration', exact: false });
-        fireEvent.change(monthOfReg, { target: { value: '999999' } });
+    it('Should render loyalty scheme submit button', () => {
+        const buttonData = {
+            changeHistory: true,
+            cancelBtn: true,
+            saveBtn: true,
+            saveAndNewBtn: true,
+            editBtn: true,
+            cancelOTFBtn: true,
+            transferOTFBtn: true,
+            formBtnActive: true,
+            saveAndNewBtnClicked: false,
+        };
 
-        const usage = screen.getByRole('textbox', { name: 'Usage', exact: false });
-        fireEvent.change(usage, { target: { value: '999999' } });
+        const formData = {
+            id: 123,
+            schemeAmount: '100',
+            schemeCode: '7657',
+            relationship: 'test',
+            customerName: 'test',
+        };
 
-        const schemeName = screen.getByRole('textbox', { name: 'Scheme Name', exact: false });
-        fireEvent.change(schemeName, { target: { value: '999999' } });
+        customRender(
+            <Provider store={mockStore}>
+                <FormWrapper setFormData={jest.fn} {...props} handleFormValueChange={jest.fn()} formActionType={formActionTypeAdd} buttonData={buttonData} saveButtonName={'Save & Next'} setButtonData={jest.fn()} setEditable={jest.fn()} onFinish={jest.fn()} setformData={jest.fn()} handleFilterChange={jest.fn()} formData={formData} />
+            </Provider>
+        );
 
-        const schemeAmount = screen.getByRole('textbox', { name: 'Scheme Amount', exact: false });
-        fireEvent.change(schemeAmount, { target: { value: '999999' } });
+        const saveNext = screen.getByRole('button', { name: 'Save & Next' });
+        fireEvent.click(saveNext);
 
-        const remarks = screen.getByRole('textbox', { name: 'Remarks', exact: false });
-        fireEvent.change(remarks, { target: { value: 'Remarks' } });
+        const changeHistory = screen.getByRole('button', { name: 'Change History' });
+        fireEvent.click(changeHistory);
 
-        const next = screen.getByRole('button', { name: 'Next', exact: false });
-        fireEvent.click(next);
+        const cancel = screen.getByRole('button', { name: 'Cancel' });
+        fireEvent.click(cancel);
     });
 });

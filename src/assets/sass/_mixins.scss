@@ -1,0 +1,96 @@
+/*
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   All rights reserved.
+ *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
+ */
+/* GRADIENT LISTS
+============================================= */
+
+@mixin gradient($gradientFirstColor, $gradientSecoundColor) {
+    background: $gradientSecoundColor;
+    background: -moz-linear-gradient(left, $gradientFirstColor 0%, $gradientSecoundColor 100%);
+    background: -webkit-gradient(left top, right top, color-stop(0%, $gradientFirstColor), color-stop(100%, $gradientSecoundColor));
+    background: -webkit-linear-gradient(left, $gradientFirstColor 0%, $gradientSecoundColor 100%);
+    background: -o-linear-gradient(left, $gradientFirstColor 0%, $gradientSecoundColor 100%);
+    background: -ms-linear-gradient(left, $gradientFirstColor 0%, $gradientSecoundColor 100%);
+    background: linear-gradient(to right, $gradientFirstColor 0%, $gradientSecoundColor 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$gradientFirstColor', endColorstr='$gradientSecoundColor', GradientType=1 );
+}
+
+@mixin bordergradient($gradientFirstBordColor, $gradientSecoundBordColor) {
+    border-image: $gradientFirstBordColor;
+		border-image: linear-gradient(135deg, $gradientFirstBordColor 0.19%, $gradientSecoundBordColor 99.81%);
+		border-image: -moz-linear-gradient(left, $gradientFirstBordColor 0%, $gradientSecoundBordColor 100%);
+		border-image: -webkit-gradient(left top, right top, color-stop(0%, $gradientFirstBordColor), color-stop(100%, $gradientSecoundBordColor));
+		border-image: -webkit-linear-gradient(left, $gradientFirstBordColor 0%, $gradientSecoundBordColor 100%);
+		border-image: -o-linear-gradient(left, $gradientFirstBordColor 0%, $gradientSecoundBordColor 100%);
+		border-image: -ms-linear-gradient(left, $gradientFirstBordColor 0%, $gradientSecoundBordColor 100%);
+}
+
+//Border
+@mixin border-radius($top-left:null, $top-right: null, $bottom-right: null, $bottom-left: null) {
+    -webkit-border-radius: $top-left $top-right $bottom-right $bottom-left;
+    -moz-border-radius: $top-left $top-right $bottom-right $bottom-left;
+    -ms-border-radius: $top-left $top-right $bottom-right $bottom-left;
+    border-radius: $top-left $top-right $bottom-right $bottom-left;
+}
+// @include border-radius(1px);
+// @include border-radius(25px,5px,25px,5px);
+// Border Redious
+
+@mixin borderRedius($borderRediusSize, $borderRediusthick, $borderRediustype, $borderRediusColor) {
+    border-radius: $borderRediusSize;
+    -moz-border-radius: $borderRediusSize;
+    -webkit-border-radius: $borderRediusSize;
+    border: $borderRediusthick $borderRediustype $borderRediusColor;
+}
+// @include borderRedius(4px, 1px, solid, $neutralGrey2-dark);
+
+// Typography
+
+@mixin font-style($font-size, $line-height, $fontWeight, $fontColor, $fontfamily, $textAlignment) {
+    font-size: $font-size + px;
+    line-height: $line-height + px;
+    font-weight: $fontWeight;
+    // @if $line-height==normal {
+    //   line-height: normal;
+    // } @else {
+    //   line-height: $line-height / $font-size;
+    // }
+    color: $fontColor;
+    font-family: $fontfamily;
+    text-align: $textAlignment;
+}
+//  @include font-style(16, 20, 600,  $energeticRed, $fontfamily, left);
+//  @include font-style(inherit, normal, normal,  inherit, $fontfamily, inherit);
+/*Margin - Padding*/
+
+@mixin space($type: margin, $direction: all, $space: $medium) {
+    @if $type == padding {
+        @if $direction == all {
+            padding: $space;
+        } @else if $direction == top {
+            padding-top: $space;
+        } @else if $direction == left {
+            padding-left: $space;
+        } @else if $direction == right {
+            padding-right: $space;
+        } @else {
+            padding-bottom: $space;
+        }
+    } @else {
+        @if $direction == all {
+            margin: $space;
+        } @else if $direction == top {
+            margin-top: $space;
+        } @else if $direction == left {
+            margin-left: $space;
+        } @else if $direction == right {
+            margin-right: $space;
+        } @else {
+            margin-bottom: $space;
+        }
+    }
+}
+// @include space(padding, all, $sp10);
+// @include space(margin, top, $sp10);

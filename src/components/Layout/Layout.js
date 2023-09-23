@@ -1,21 +1,18 @@
 /*
- *   Copyright (c) 2023 Mahindra & Mahindra Ltd. 
+ *   Copyright (c) 2023 Mahindra & Mahindra Ltd.
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
 import { Layout as AntdLayout } from 'antd';
-import styles from './Layout.module.css';
 import Sider from 'antd/es/layout/Sider';
 
+import styles from './Layout.module.scss';
+
 const Header = ({ children }) => <div className={styles.topHeader}>{children}</div>;
-
 const InnerHeader = ({ children }) => <div className={styles.innerHeader}>{children}</div>;
-
 const LeftMenu = ({ children }) => <Sider className={styles.leftMenuSider}>{children}</Sider>;
-
 const MainBody = ({ children }) => <div className={styles.mainContainer}>{children}</div>;
-
 const CenterBody = ({ children }) => <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', width: '100%', overflow: 'auto', height: '100%' }}>{children}</div>;
 
 const Footer = ({ children }) => (

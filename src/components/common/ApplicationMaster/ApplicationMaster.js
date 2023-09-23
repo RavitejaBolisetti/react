@@ -17,7 +17,7 @@ import { HierarchyFormButton } from '../Button';
 import ViewApplicationDetailMain from './viewDeatils/ViewApplicationDetail';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { LANGUAGE_EN } from 'language/en';
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 import { ContentHeader } from 'utils/ContentHeader';
 import { APPLICATION_ACTION_ID, ROOT_PARENT_APPLICATION, SPECIAL_MENU_ID } from 'constants/modules/applicationMaster';
 import { APPLICATION_DEVICE_TYPE } from 'utils/applicationDeviceType';
@@ -163,6 +163,7 @@ export const ApplicationMasterMain = ({ userId, isLoading, applicationListShowLo
                 nodeType: '',
                 id: values?.id || '',
                 ...values,
+                irnIntegrationRequired: values?.irnIntegrationRequired || false, isFinanceRelated: values?.isFinanceRelated || false, digitalSignatureRequired: values?.digitalSignatureRequired || false, termAndConRequired: values?.termAndConRequired || false ,
                 status: values?.applicationStatus,
                 parentApplicationId: parentAppCode,
                 documentType: documentType?.map((el) => ({ ...el, id: el.id || '' })),

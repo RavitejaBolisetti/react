@@ -4,17 +4,15 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect, useState } from 'react';
-import styles from 'components/common/Common.module.css';
+import { Form, Row, Col } from 'antd';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { showGlobalNotification } from 'store/actions/notification';
-import { ViewDetail } from './ViewDetail';
-import { Form, Row, Col } from 'antd';
-import { insuranceDetailDataActions } from 'store/actions/data/otf/insuranceDetail';
-import { OTFStatusBar } from '../utils/OTFStatusBar';
-import { OTFFormButton } from '../OTFFormButton';
-import { AddEditForm } from './AddEditForm';
 
+import { AddEditForm, ViewDetail } from 'components/Sales/Common/InsuranceDetails';
+import { showGlobalNotification } from 'store/actions/notification';
+import { insuranceDetailDataActions } from 'store/actions/data/otf/insuranceDetail';
+
+import styles from 'assets/sass/app.module.scss';
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
@@ -22,9 +20,9 @@ const mapStateToProps = (state) => {
             OTF: {
                 InsuranceDetail: { isLoaded: isDataLoaded = false, isLoading, data: insuranceData = [] },
             },
+            PartyMaster: { isFilteredListLoaded: isInsuranceCompanyDataLoaded = false, detailData: insuranceCompanies },
         },
     } = state;
-
     const moduleTitle = 'Insurance Details';
 
     let returnValue = {
@@ -33,6 +31,8 @@ const mapStateToProps = (state) => {
         insuranceData,
         isLoading,
         moduleTitle,
+        isInsuranceCompanyDataLoaded,
+        insuranceCompanies,
     };
     return returnValue;
 };
@@ -45,6 +45,7 @@ const mapDispatchToProps = (dispatch) => ({
             listShowLoading: insuranceDetailDataActions.listShowLoading,
             resetData: insuranceDetailDataActions.reset,
             saveData: insuranceDetailDataActions.saveData,
+
             showGlobalNotification,
         },
         dispatch
@@ -54,6 +55,7 @@ const mapDispatchToProps = (dispatch) => ({
 const InsuranceDetailsMasterBase = (props) => {
     const { insuranceData, onCloseAction, fetchList, formActionType, userId, isDataLoaded, listShowLoading, showGlobalNotification } = props;
     const { form, selectedOrderId, handleFormValueChange, section, isLoading, NEXT_ACTION, handleButtonClick, onFinishFailed, saveData } = props;
+    const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, StatusBar, pageType } = props;
 
     const [formData, setFormData] = useState();
 
@@ -69,7 +71,7 @@ const InsuranceDetailsMasterBase = (props) => {
             key: 'otfNumber',
             title: 'otfNumber',
             value: selectedOrderId,
-            name: 'OTF Number',
+            name: 'Booking Number',
         },
     ];
 
@@ -80,7 +82,7 @@ const InsuranceDetailsMasterBase = (props) => {
                     key: 'otfNumber',
                     title: 'otfNumber',
                     value: selectedOrderId,
-                    name: 'OTF Number',
+                    name: 'Booking Number',
                 },
             ];
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction, onSuccessAction });
@@ -101,6 +103,7 @@ const InsuranceDetailsMasterBase = (props) => {
         onCloseAction,
         formData,
         isLoading,
+        pageType,
     };
 
     const formProps = {
@@ -111,6 +114,7 @@ const InsuranceDetailsMasterBase = (props) => {
         isDataLoaded,
         isLoading,
         formData,
+        pageType,
     };
 
     const myProps = {
@@ -120,27 +124,32 @@ const InsuranceDetailsMasterBase = (props) => {
     const onFinish = (values) => {
         const recordId = insuranceData?.id || '';
         const data = { ...values, id: recordId, otfNumber: selectedOrderId };
+        if (onFinishCustom) {
+            onFinishCustom({ key: formKey, values: data });
+            handleButtonClick({ buttonAction: NEXT_ACTION });
+            setButtonData({ ...buttonData, formBtnActive: false });
+        } else {
+            const onSuccess = (res) => {
+                handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
+                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+                fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction, onSuccessAction });
+            };
 
-        const onSuccess = (res) => {
-            handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
-            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction, onSuccessAction });
-        };
+            const onError = (message) => {
+                // showGlobalNotification({ message });
+            };
 
-        const onError = (message) => {
-            showGlobalNotification({ message });
-        };
+            const requestData = {
+                data: data,
+                method: insuranceData?.id ? 'put' : 'post',
+                setIsLoading: listShowLoading,
+                userId,
+                onError,
+                onSuccess,
+            };
 
-        const requestData = {
-            data: data,
-            method: insuranceData?.id ? 'put' : 'post',
-            setIsLoading: listShowLoading,
-            userId,
-            onError,
-            onSuccess,
-        };
-
-        saveData(requestData);
+            saveData(requestData);
+        }
     };
 
     return (
@@ -152,7 +161,7 @@ const InsuranceDetailsMasterBase = (props) => {
                             <h2>{section?.title}</h2>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <OTFStatusBar status={props?.selectedOrder?.orderStatus} />
+                            {StatusBar && <StatusBar status={props?.selectedOrder?.orderStatus} />}
                         </Col>
                     </Row>
 
@@ -161,7 +170,7 @@ const InsuranceDetailsMasterBase = (props) => {
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <OTFFormButton {...myProps} />
+                    <FormActionButton {...myProps} />
                 </Col>
             </Row>
         </Form>

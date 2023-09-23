@@ -5,9 +5,11 @@
  */
 import { Tag } from 'antd';
 import { VEHICLE_DETAIL_STATUS } from 'constants/VehicleDetailStatus';
-import styles from 'components/common/Common.module.css';
 
-export const VehicleDetailStatusTag = (status) => {
+import styles from 'assets/sass/app.module.scss';
+
+export const VehicleDetailStatusTag = (props) => {
+    const { status } = props;
     let tag = '';
     switch (status) {
         case VEHICLE_DETAIL_STATUS.BOOKED.title:

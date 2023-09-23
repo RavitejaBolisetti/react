@@ -6,7 +6,7 @@
 import React from 'react';
 import { Collapse, Space, Avatar, Typography, Divider } from 'antd';
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 const { Panel } = Collapse;
 const { Text, Title } = Typography;
@@ -49,7 +49,7 @@ const ProfileDetailCard = (props) => {
             >
                 <Divider />
                 <div className={styles.detailCardText}>
-                    Mobile No.: <span>{'+91-' + selectedCustomer?.mobileNumber || 'NA'}</span>
+                    Mobile No.: <span>{selectedCustomer?.mobileNumber || 'NA'}</span>
                 </div>
             </Panel>
         </Collapse>

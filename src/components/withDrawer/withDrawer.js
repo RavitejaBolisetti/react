@@ -5,8 +5,7 @@
  */
 import React, { useEffect } from 'react';
 import { Drawer } from 'antd';
-
-import styles from './withDrawer.module.css';
+import styles from './withDrawer.module.scss';
 
 export const withDrawer =
     (InputComponent, { title = 'default title', width = 520, footer }) =>
@@ -21,7 +20,7 @@ export const withDrawer =
         }, [isVisible]);
 
         return (
-            <Drawer title={titleOverride || title} onOk={onOk} onClose={onCloseAction} width={width} open={isVisible} className={width === '90%' ? (isChangeHistoryContainer ? styles.changeHistoryWrapper : styles.bigDrawerStyle) : styles.myDrawerStyle} keyboard={false} maskClosable={false}>
+            <Drawer zIndex={99} title={titleOverride || title} onOk={onOk} onClose={onCloseAction} width={width} open={isVisible} className={width === '90%' ? (isChangeHistoryContainer ? styles.changeHistoryWrapper : styles.bigDrawerStyle) : styles.myDrawerStyle} keyboard={false} maskClosable={false}>
                 {isVisible && <InputComponent {...props} />}
             </Drawer>
         );

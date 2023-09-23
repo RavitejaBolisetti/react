@@ -16,8 +16,7 @@ import { AddEditForm } from './AddEditForm';
 import { CreditDebitNoteFormButton } from '../CreditDebitFormButton';
 import { vehicleCustomerCommonDetailsDataAction } from 'store/actions/data/vehicle/customerCommonDetails';
 import { partyMasterDataActions } from 'store/actions/data/partyMaster';
-
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 const mapStateToProps = (state) => {
     const {

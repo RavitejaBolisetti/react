@@ -5,7 +5,7 @@
  */
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 export const tableColumn = (handleButtonClick) => {
     const tableColumn = [
@@ -26,7 +26,7 @@ export const tableColumn = (handleButtonClick) => {
             dataIndex: 'pricingCity',
             width: '15%',
         }),
-        tblActionColumn({ handleButtonClick, EditIcon: false, styles }),
+        tblActionColumn({ handleButtonClick, canEdit: false, styles }),
     ];
 
     return tableColumn;

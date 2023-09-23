@@ -6,7 +6,8 @@
 import React, { useEffect } from 'react';
 import { Form, Button, Row, Col } from 'antd';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+
 import { FilterIcon } from 'Icons';
 import { RxCross2 } from 'react-icons/rx';
 import { VEHICLE_TYPE } from 'constants/VehicleType';
@@ -19,9 +20,9 @@ export default function AdvanceFilter(props) {
     const [searchForm] = Form.useForm();
 
     useEffect(() => {
-        // searchForm.resetFields();
+        searchForm.resetFields();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [resetAdvanceFilter]);
+    }, [toggleButton]);
 
     const searchBoxProps = {
         singleField: true,
@@ -89,7 +90,7 @@ export default function AdvanceFilter(props) {
                                                     {filter?.name}
                                                     {filter?.canRemove && (
                                                         <span>
-                                                            <RxCross2 onClick={() => removeFilter(filter?.key)} />
+                                                            <RxCross2 data-testid="removeFilter" onClick={() => removeFilter(filter?.key)}/>
                                                         </span>
                                                     )}
                                                 </div>

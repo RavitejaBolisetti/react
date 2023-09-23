@@ -4,11 +4,11 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect } from 'react';
-import { Form, Button, Row, Col } from 'antd';
+import { Form, Button, Row, Col, Card } from 'antd';
 
 import { RxCross2 } from 'react-icons/rx';
 import { SearchBox } from 'components/utils/SearchBox';
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 export default function AdvanceFilter(props) {
     const { resetAdvanceFilter, setResetAdvanceFilter, setFilterString, handleResetFilter, advanceFilter, removeFilter, filterString, extraParams } = props;
@@ -19,6 +19,25 @@ export default function AdvanceFilter(props) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [resetAdvanceFilter]);
 
+    const handleSearchWithoutParameter = () => {
+        searchForm
+            .validateFields()
+            .then((values) => {
+                // setValidationRules([validateRequiredInputField('searchType')]);
+                setFilterString({ ...values, pageSize: filterString?.pageSize, current: 1, advanceFilter: true });
+                // searchForm.resetFields();
+            })
+            .catch((err) => {
+                return;
+            });
+    };
+
+    const handleChange = (e) => {
+        if (e?.target?.value === '' && e?.nativeEvent?.type === 'click') {
+            setFilterString({ pageSize: filterString?.pageSize ?? 10, current: 1 });
+        }
+    };
+
     const searchBoxProps = {
         singleField: true,
         searchForm,
@@ -27,12 +46,15 @@ export default function AdvanceFilter(props) {
         placeholder: 'Search by VIN No./Chassis No.',
         singleFieldKey: 'searchParam',
         setResetAdvanceFilter,
+        handleSearchWithoutParameter,
+        handleChange,
     };
+
     return (
         <>
-            <div className={styles.contentHeaderBackground}>
-                <Row gutter={20}>
-                    <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+            <Card>
+                <Row gutter={20} className={styles.marB20}>
+                    <Col xs={24} sm={8} md={8} lg={8} xl={8} className={styles.marB20}>
                         <SearchBox {...searchBoxProps} />
                     </Col>
                 </Row>
@@ -51,7 +73,7 @@ export default function AdvanceFilter(props) {
                                                     {filter?.name}
                                                     {filter?.canRemove && (
                                                         <span>
-                                                            <RxCross2 onClick={() => removeFilter(filter?.key)} />
+                                                            <RxCross2 onClick={() => removeFilter(filter?.key)} data-testid="removeFilter" />
                                                         </span>
                                                     )}
                                                 </div>
@@ -68,7 +90,7 @@ export default function AdvanceFilter(props) {
                         </Col>
                     </Row>
                 )}
-            </div>
+            </Card>
         </>
     );
 }

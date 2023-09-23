@@ -4,8 +4,9 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { Button, Space, Tag, Switch } from 'antd';
-import { FiEdit, FiTrash } from 'react-icons/fi';
+import { FiEdit } from 'react-icons/fi';
 import { FaRegEye } from 'react-icons/fa';
+import { RxCross1 } from 'react-icons/rx';
 
 import { addToolTip } from 'utils/addToolTip';
 
@@ -15,8 +16,7 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { DisableItemComponent } from 'utils/disableItemComponent';
 import { PlusOutlined } from '@ant-design/icons';
 
-// import { handleEdit, handleCustomEdit } from 'components/crud/crudListingPage/tableColumnActionEdit';
-import styles from './tableColumn.module.css';
+import styles from './tableColumn.module.scss';
 
 const onFilterFn = (value, record) => {
     if (record.ChangeDate !== undefined) {
@@ -71,7 +71,7 @@ export const tblStatusColumn = ({ width = '15%', fixed = '' }) => {
         title: 'Status',
         dataIndex: 'status',
         sorter: (a, b) => (a && b ? String(a['status']).localeCompare(String(b['status']), undefined, { sensitivity: 'base' }) : a),
-        render: (_, record) => (record?.status ? <div className={styles.activeText}>Active</div> : <div className={styles.inactiveText}>Inactive</div>),
+        render: (_, record) => (record?.status ? <Tag color="success">Active</Tag> : <Tag color="error">Inactive</Tag>),
         width,
         fixed: fixed,
         sortDirections: ['descend', 'ascend'],
@@ -100,7 +100,27 @@ export const tblActionColumnCurd =
         };
     };
 
-export const tblActionColumn = ({ title = 'Action', handleButtonClick, width = '8%', fixed = '', canEdit = true, canView = true, canDelete = false, canServerDataEdit = false, canAdd = false }) => {
+export const tblActionColumn = ({
+    title = 'Action',
+    handleButtonClick,
+    width = '8%',
+    fixed = '',
+    canEdit = true,
+    canView = true,
+    canDelete = false,
+    canServerDataEdit = false,
+    canAdd = false,
+    customButton = false,
+    customButtonProperties = {
+        customName: 'Action',
+        customkey: 'ACT',
+        handleCustomButtonClick: () => {},
+        handleName: () => {},
+        icon: undefined,
+        buttonType: 'link',
+        customAction: 'customButton',
+    },
+}) => {
     return {
         title: 'Action',
         dataIndex: '',
@@ -108,19 +128,21 @@ export const tblActionColumn = ({ title = 'Action', handleButtonClick, width = '
         fixed: fixed,
         render: (text, record, index) => [
             <Space size="middle">
-                {canView && (
-                    <Button data-testid="view" type="link" aria-label="ai-view" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.VIEW, record, index })}>
-                        {addToolTip('View')(<FaRegEye />)}
+                {canAdd && (
+                    <Button data-testid="add" type="link" aria-label="fa-add" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD, record, index })}>
+                        {addToolTip('Add')(<PlusOutlined />)}
                     </Button>
                 )}
+
                 {canEdit && (
                     <Button data-testid="edit" type="link" aria-label="fa-edit" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.EDIT, record, index })}>
                         {addToolTip('Edit')(<FiEdit />)}
                     </Button>
                 )}
-                {canAdd && (
-                    <Button data-testid="add" type="link" aria-label="fa-add" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.ADD, record, index })}>
-                        {addToolTip('Add')(<PlusOutlined />)}
+
+                {canView && (
+                    <Button data-testid="view" type="link" aria-label="ai-view" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.VIEW, record, index })}>
+                        {addToolTip('View')(<FaRegEye />)}
                     </Button>
                 )}
 
@@ -129,9 +151,16 @@ export const tblActionColumn = ({ title = 'Action', handleButtonClick, width = '
                         {addToolTip('Edit')(<FiEdit />)}
                     </Button>
                 )}
+
                 {canDelete && !record?.id && (
                     <Button data-testid="delete" type="link" aria-label="fa-trash" onClick={(e) => handleButtonClick({ buttonAction: FROM_ACTION_TYPE?.DELETE, record, index })}>
-                        {addToolTip('Delete')(<FiTrash />)}
+                        {addToolTip('Delete')(<RxCross1 size={18} />)}
+                    </Button>
+                )}
+                
+                {customButton && (
+                    <Button data-testid="customButton" type={customButtonProperties?.buttonType} icon={customButtonProperties?.icon} onClick={(e) => customButtonProperties?.handleCustomButtonClick({ buttonAction: customButtonProperties?.hasOwnProperty('handleName') ? customButtonProperties?.handleName({ name: customButtonProperties?.customName, record, index })?.key : customButtonProperties?.customkey, record, index })}>
+                        {customButtonProperties?.hasOwnProperty('handleName') ? customButtonProperties?.handleName({ name: customButtonProperties?.customName, record, index })?.name : customButtonProperties?.customName}
                     </Button>
                 )}
             </Space>,

@@ -11,8 +11,8 @@ import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/prepareP
 
 import { withDrawer } from 'components/withDrawer';
 import { customSelectBox } from 'utils/customSelectBox';
+import styles from 'assets/sass/app.module.scss';
 
-import styles from 'components/common/Common.module.css';
 const AddEditFormMain = (props) => {
     const { onCloseAction, otfSoUserMappingData } = props;
     const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed, form } = props;

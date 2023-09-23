@@ -10,7 +10,7 @@ import { validateRequiredInputField, validateRequiredSelectField } from 'utils/v
 import TreeSelectField from 'components/common/TreeSelectField';
 import { customSelectBox } from 'utils/customSelectBox';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 function FormAccountAndDocumentMapping(props) {
     const { addDocAndMapp, formEdit, editForm, accDocMapForm, applicationMenuData, financialAccountData, documentDescriptionData, selectedTreeSelectKey, mainFomEdit, handleSelectTreeClick } = props;

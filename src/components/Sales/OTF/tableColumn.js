@@ -7,48 +7,50 @@ import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import { OTFStatusTag } from './utils/OTFStatusTag';
 import { convertDateMonthYear } from 'utils/formatDateTime';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 export const tableColumn = (handleButtonClick, page, pageSize) => {
     const tableColumn = [
         tblPrepareColumns({
-            title: 'OTF No.',
+            title: 'Booking No.',
             dataIndex: 'otfNumber',
-            width: '14%',
+            width: '18%',
+            render: (_, record) => record?.bookingNumber || record?.otfNumber,
         }),
 
         tblPrepareColumns({
-            title: 'OTF Date',
+            title: 'Booking Date',
             dataIndex: 'otfDate',
-            width: '14%',
+            width: '12%',
             render: (_, record) => (record?.otfDate ? convertDateMonthYear(record?.otfDate) : ''),
         }),
+
         tblPrepareColumns({
             title: 'Customer Name',
             dataIndex: 'customerName',
-            width: '14%',
+            width: '20%',
         }),
 
-        tblPrepareColumns({
-            title: 'Mobile No.',
-            dataIndex: 'mobileNumber',
-            width: '14%',
-        }),
+        // tblPrepareColumns({
+        //     title: 'Mobile No.',
+        //     dataIndex: 'mobileNumber',
+        //     width: '14%',
+        // }),
 
         tblPrepareColumns({
-            title: 'Model',
+            title: 'Model Description',
             dataIndex: 'model',
-            width: '14%',
+            width: '25%',
         }),
 
         tblPrepareColumns({
-            title: 'Order Status',
+            title: 'Booking Status',
             dataIndex: 'orderStatus',
             width: '14%',
             render: (_, record) => OTFStatusTag(record.orderStatus),
         }),
 
-        tblActionColumn({ handleButtonClick, styles, width: '8%', canEdit: false, EditIcon: false }),
+        tblActionColumn({ handleButtonClick, styles, width: '8%', canEdit: false }),
     ];
 
     return tableColumn;

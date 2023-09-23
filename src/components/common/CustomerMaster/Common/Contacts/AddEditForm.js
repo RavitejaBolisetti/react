@@ -8,10 +8,10 @@ import { validateLettersWithWhitespaces, validateEmailField, validateRequiredInp
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { CUSTOMER_TYPE } from 'constants/CustomerType';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 const AddEditForm = (props) => {
-    const { isReadOnly = false, onSaveFormData, contactform, setShowAddEditForm, setIsEditing, typeData, customerType, uploadImgDocId, formActionType, handleFormValueChange, setIsAdding, contactData, editingData } = props;
+    const { isReadOnly = false, onSaveFormData, contactform, setShowAddEditForm, setIsEditing, typeData, customerType, formActionType, handleFormValueChange, setIsAdding, contactData, editingData } = props;
 
     const disabledProps = { disabled: isReadOnly || formActionType?.viewMode };
 
@@ -101,8 +101,8 @@ const AddEditForm = (props) => {
                     <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                         {customerType === CUSTOMER_TYPE?.INDIVIDUAL?.id ? (
                             <>
-                                <Form.Item label="Relation" name="relationCode">
-                                    <Select {...disabledProps} placeholder={preparePlaceholderSelect('releation')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} options={[...typeData['FAMLY_RELTN']]} allowClear></Select>
+                                <Form.Item label="Relationship" name="relationCode">
+                                    <Select {...disabledProps} placeholder={preparePlaceholderSelect('relation')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} options={[...typeData['REL_TYPE']]} allowClear></Select>
                                     {/* <Select {...disabledProps} placeholder={preparePlaceholderSelect('releation')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} options={typeData['FAMLY_RELTN']} allowClear></Select> */}
                                 </Form.Item>
                                 <Form.Item initialValue={''} hidden name="designation">
@@ -193,9 +193,9 @@ const AddEditForm = (props) => {
                     <Form.Item hidden initialValue={''} name="id">
                         <Input />
                     </Form.Item>
-                    <Form.Item hidden initialValue={uploadImgDocId} value={uploadImgDocId} name="docId">
+                    {/* <Form.Item hidden initialValue={uploadImgDocId} value={uploadImgDocId} name="docId">
                         <Input />
-                    </Form.Item>
+                    </Form.Item> */}
                     <Form.Item hidden initialValue={true} name="status">
                         <Input />
                     </Form.Item>

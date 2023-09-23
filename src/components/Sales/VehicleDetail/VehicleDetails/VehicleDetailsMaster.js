@@ -14,7 +14,7 @@ import { bindActionCreators } from 'redux';
 import { viewVehicleDetailDataActions } from 'store/actions/data/vehicle/viewVehicleDetails';
 import { showGlobalNotification } from 'store/actions/notification';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 const mapStateToProps = (state) => {
     const {
@@ -105,6 +105,11 @@ const VehicleDetailsMasterBase = (props) => {
         const recordId = vehicleDetails.vehicleDetails?.id || '';
         const vin = vehicleDetails.vehicleDetails?.vin || '';
         const registrationNumber = vehicleDetails.vehicleDetails?.registrationNumber || '';
+        if(values.oemPrivilegeCustomer === null || values.oemPrivilegeCustomer === false){
+            values.oemPrivilegeCustomer = false;
+        } else {
+            values.oemPrivilegeCustomer = true;
+        }
 
         const data = { ...values, id: recordId, vin: vin, mnfcWarrEndDate: values?.mnfcWarrEndDate?.format('YYYY-MM-DD'), deliveryDate: values?.deliveryDate?.format('YYYY-MM-DD'), nextServiceDueDate: values?.nextServiceDueDate?.format('YYYY-MM-DD'), pucExpiryDate: values?.pucExpiryDate?.format('YYYY-MM-DD'), insuranceExpiryDate: values?.insuranceExpiryDate?.format('YYYY-MM-DD'), saleDate: values?.saleDate?.format('YYYY-MM-DD'), registrationNumber: registrationNumber };
         const onSuccess = (res) => {

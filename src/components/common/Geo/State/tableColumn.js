@@ -5,7 +5,7 @@
  */
 import { tblPrepareColumns, tblStatusColumn, tblActionColumn } from 'utils/tableColumn';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 export const tableColumn = (handleButtonClick, page, pageSize) => {
     const tableColumn = [];
@@ -36,7 +36,7 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
 
         tblStatusColumn({ styles, width: '15%' }),
 
-        tblActionColumn({ styles, handleButtonClick, width: '10%' })
+        tblActionColumn({ styles, handleButtonClick, width: '10%', canEdit: false })
     );
 
     return tableColumn;

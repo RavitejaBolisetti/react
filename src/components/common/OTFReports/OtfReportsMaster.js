@@ -11,7 +11,7 @@ import { bindActionCreators } from 'redux';
 import { showGlobalNotification } from 'store/actions/notification';
 import { convertDate } from 'utils/formatDateTime';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 import { BASE_URL_OTF_DOWNLAOD_REPORT } from 'constants/routingApi';
 
@@ -27,7 +27,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'OTF Reports';
+    const moduleTitle = 'Booking Reports';
 
     let returnValue = {
         userId,
@@ -102,7 +102,7 @@ export const OtfReportsMasterBase = (props) => {
                 let url = window.URL.createObjectURL(blob);
                 let a = document.createElement('a');
                 a.href = url;
-                a.download = 'OTF-Report-' + convertDate(undefined, 'YYYY-MM-DD_HH:mm:ss') + '.csv';
+                a.download = 'Booking-Report-' + convertDate(undefined, 'YYYY-MM-DD_HH:mm:ss') + '.csv';
                 a.click();
                 // form.resetFields();
                 showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: 'Your download should start automatically in a few seconds' });

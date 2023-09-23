@@ -7,8 +7,8 @@ import React, { useState } from 'react';
 import { Card, Row, Col, Typography, Button, Space, Divider } from 'antd';
 import { FiEdit } from 'react-icons/fi';
 import { BsTrash3 } from 'react-icons/bs';
+import styles from 'assets/sass/app.module.scss';
 
-import styles from 'components/common/Common.module.css';
 import AddEditForm from './AddEditForm';
 const { Text } = Typography;
 

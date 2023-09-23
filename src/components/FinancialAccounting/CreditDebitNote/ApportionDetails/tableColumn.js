@@ -4,9 +4,10 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
-import styles from 'components/common/Common.module.css';
 
-import { convertDate, monthDateFormat } from 'utils/formatDateTime';
+import styles from 'assets/sass/app.module.scss';
+
+import { convertDate, dateFormatView } from 'utils/formatDateTime';
 
 export const tableColumn = (props) => {
     const { handleButtonClick, formActionType } = props;
@@ -27,7 +28,7 @@ export const tableColumn = (props) => {
             title: 'Document Date',
             dataIndex: 'documentDate',
             render: (value) => {
-                return convertDate(value?.documentDate, monthDateFormat);
+                return convertDate(value?.documentDate, dateFormatView);
             },
             width: '10%',
         }),
@@ -57,8 +58,9 @@ export const tableColumn = (props) => {
             width: '10%',
         }),
     ];
+
     if (!formActionType?.viewMode) {
-        tableColumn.push(tblActionColumn({ handleButtonClick, styles, width: '15%', EditIcon: true, canView: false, canEdit: false, canServerDataEdit: true, canDelete: true }));
+        tableColumn.push(tblActionColumn({ handleButtonClick, styles, width: '15%', canView: false, canEdit: false, canServerDataEdit: true, canDelete: true }));
     }
     return tableColumn;
 };

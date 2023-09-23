@@ -5,20 +5,18 @@
  */
 import React, { useEffect, createContext, useCallback } from 'react';
 import { ConfigProvider, notification } from 'antd';
-import { connect } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
-
-import { readFromStorageAndValidateAuth } from 'store/actions/auth';
-import { hideGlobalNotification } from 'store/actions/notification';
-
-import { CheckNetworkStatus } from 'utils/CheckNetworkStatus';
-
-import { MainPage } from './components/MainPage';
-
+import { connect } from 'react-redux';
 import { AiOutlineCheckCircle, AiOutlineInfoCircle, AiOutlineCloseCircle } from 'react-icons/ai';
 import { FcCancel } from 'react-icons/fc';
 
-import styles from './App.module.css';
+import { MainPage } from './components/MainPage';
+
+import { readFromStorageAndValidateAuth } from 'store/actions/auth';
+import { hideGlobalNotification } from 'store/actions/notification';
+import { CheckNetworkStatus } from 'utils/CheckNetworkStatus';
+
+import styles from './App.module.scss';
 
 const mapStateToProps = (state) => ({});
 
@@ -69,37 +67,34 @@ const AppBase = ({ readFromStorageAndValidateAuth, hideGlobalNotification }) => 
     );
 
     return (
-        <>
-            <Router>
-                <ConfigProvider
-                    theme={{
-                        token: {
-                            colorPrimary: '#ff3e5b',
-                            colorBgContainer: '#ffffff',
-                            fontFamily: 'Lato',
-                            borderRadius: 4, //this sets the border-radius to 4px, for every single element having a border-radius in AntD
+        <Router>
+            <ConfigProvider
+                theme={{
+                    token: {
+                        colorPrimary: '#ff3e5b',
+                        colorBgContainer: '#ffffff',
+                        fontFamily: 'Lato',
+                        borderRadius: 4,
+                    },
+                    components: {
+                        Button: {
+                            colorErrorActive: '#ff4d4f',
+                            colorBg: '#ff4d4f',
+                            colorBorder: '#ff3e5b',
+                            colorBgTextActive: 'rgba(0, 0, 0, 0.15)',
+                            colorText: 'red',
+                            colorTextLightSolid: '#fff',
                         },
-                        components: {
-                            Button: {
-                                // borderRadius: 5,
-                                colorErrorActive: '#ff4d4f',
-                                colorBg: '#ff4d4f',
-                                colorBorder: '#ff3e5b',
-                                colorBgTextActive: 'rgba(0, 0, 0, 0.15)',
-                                colorText: 'red',
-                                colorTextLightSolid: '#fff',
-                            },
-                        },
-                    }}
-                >
-                    <NotificationContext.Provider value={informationModalBox}>
-                        {contextInformationNotification}
-                        <CheckNetworkStatus />
-                        <MainPage />
-                    </NotificationContext.Provider>
-                </ConfigProvider>
-            </Router>
-        </>
+                    },
+                }}
+            >
+                <NotificationContext.Provider value={informationModalBox}>
+                    {contextInformationNotification}
+                    <CheckNetworkStatus />
+                    <MainPage />
+                </NotificationContext.Provider>
+            </ConfigProvider>
+        </Router>
     );
 };
 

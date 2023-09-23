@@ -4,9 +4,8 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState, useReducer, useEffect } from 'react';
-import { Row, Col, Form, Space, Typography, Button, Empty, Card, Divider } from 'antd';
+import { Row, Col, Form, Typography, Button, Card, Divider } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import { UploadBoxIcon } from 'Icons';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -22,8 +21,9 @@ import { CustomerFormButton } from '../../CustomerFormButton';
 import { CardSkeleton } from 'components/common/Skeleton';
 import { CUSTOMER_TYPE } from 'constants/CustomerType';
 import { LANGUAGE_EN } from 'language/en';
+import { NoDataFound } from 'utils/noDataFound';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 const { Text } = Typography;
 
@@ -83,12 +83,16 @@ const ContactMain = (props) => {
     const [showAddEditForm, setShowAddEditForm] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [editingData, setEditingData] = useState({});
-    const [uploadImgDocId, setUploadImgDocId] = useState('');
     const [continueWithOldMobNo, setContinueWithOldMobNo] = useState(false);
     const [isAdding, setIsAdding] = useState(false);
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
     const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
+    const addDataTitle = (
+        <p className={styles.textCenter}>
+            Please add new contact using <br /> <strong>“Add”</strong> button at top
+        </p>
+    );
 
     const extraParams = [
         {
@@ -101,7 +105,6 @@ const ContactMain = (props) => {
 
     useEffect(() => {
         return () => {
-            setUploadImgDocId('');
             resetData();
             resetIndividualData();
         };
@@ -149,16 +152,16 @@ const ContactMain = (props) => {
                     setContactData((prev) => {
                         let formData = prev?.length ? [...prev] : [];
                         const index = formData?.findIndex((el) => el?.purposeOfContact === editingData?.purposeOfContact && el?.mobileNumber === editingData?.mobileNumber && el?.FirstName === editingData?.FirstName);
-                        formData.splice(index, 1, { relationCode: '', ...value, docId: uploadImgDocId });
+                        formData.splice(index, 1, { relationCode: '', ...value});
                         return [...formData];
                     });
                 } else {
                     setContactData((prev) => {
                         let formData = prev?.length ? [...prev] : [];
                         if (value?.defaultaddress && formData?.length >= 1) {
-                            return [...formData, { relationCode: '', ...value, docId: uploadImgDocId }];
+                            return [...formData, { relationCode: '', ...value }];
                         } else {
-                            const updVal = prev?.length ? [...prev, { relationCode: '', ...value, docId: uploadImgDocId }] : [{ relationCode: '', ...value }];
+                            const updVal = prev?.length ? [...prev, { relationCode: '', ...value }] : [{ relationCode: '', ...value }];
                             return updVal;
                         }
                     });
@@ -211,8 +214,6 @@ const ContactMain = (props) => {
         typeData,
         onCheckdefaultAddClick,
         setButtonData,
-        setUploadImgDocId,
-        uploadImgDocId,
         handleFormValueChange,
         setContinueWithOldMobNo,
 
@@ -299,24 +300,7 @@ const ContactMain = (props) => {
                                     </Row>
                                     <Divider className={styles.marT20} />
                                     {!formActionType?.viewMode && showAddEditForm && <AddEditForm {...formProps} />}
-                                    {!contactData?.length && !isAdding ? (
-                                        <>
-                                            <Space direction="vertical" className={styles.verticallyCentered}>
-                                                <UploadBoxIcon />
-                                                <div className={styles.marB20}>
-                                                    {formActionType?.viewMode ? (
-                                                        <p className={styles.textCenter}>No records found</p>
-                                                    ) : (
-                                                        <p className={styles.textCenter}>
-                                                            Please add new contact using <br /> <strong>“Add”</strong> button at top
-                                                        </p>
-                                                    )}
-                                                </div>
-                                            </Space>
-                                        </>
-                                    ) : (
-                                        <ViewContactList {...formProps} />
-                                    )}
+                                    {!contactData?.length && !isAdding ? <NoDataFound informtion={formActionType?.viewMode ? noDataTitle : addDataTitle} /> : <ViewContactList {...formProps} />}
                                 </>
                             )}
                         </Card>

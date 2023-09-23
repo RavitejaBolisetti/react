@@ -6,10 +6,9 @@
 import React, { useEffect } from 'react';
 import { Modal } from 'antd';
 
-import styles from './withModal.module.css';
-
+import styles from './withModal.module.scss';
 export const withModal =
-    (InputComponent, { title = 'default title', width = 480, footer = false }) =>
+    (InputComponent, { title = 'default title', width = 480, height = 'auto', footer = false }) =>
     (props) => {
         const { onCloseAction, isVisible, titleOverride, icon = '', closable = true, onOk = () => {} } = props;
         const titleWithIcon = (
@@ -26,7 +25,7 @@ export const withModal =
             }
         }, [isVisible]);
         return (
-            <Modal closable={closable} footer={footer} centered open={isVisible} title={titleWithIcon} okText="Submit" onOk={onOk} okType="primary" maskClosable={false} onCancel={onCloseAction} width={width} keyboard={false} className={styles.modalContainer}>
+            <Modal zIndex={100} closable={closable} footer={footer} centered open={isVisible} title={titleWithIcon} okText="Submit" onOk={onOk} okType="primary" maskClosable={false} onCancel={onCloseAction} width={width} height={height} keyboard={false} className={styles.modalContainer}>
                 {isVisible && <InputComponent {...props} />}
             </Modal>
         );

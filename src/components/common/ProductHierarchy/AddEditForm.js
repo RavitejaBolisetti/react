@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect, useState } from 'react';
-import { Input, Form, Collapse, Col, Row, Switch, Select, Button } from 'antd';
+import { Input, Form, Collapse, Col, Row, Switch, Select, Button, Divider } from 'antd';
 import { withDrawer } from 'components/withDrawer';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import TreeSelectField from '../TreeSelectField';
@@ -13,7 +13,7 @@ import { validateRequiredInputField, validateRequiredSelectField } from 'utils/v
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { accordianExpandIcon } from 'utils/accordianExpandIcon';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -208,8 +208,9 @@ const AddEditFormMain = (props) => {
                     </Row>
                 </Form>
                 {showProductAttribute && (
-                    <Collapse className={openAccordian === 1 ? styles.accordianHeader : ''} onChange={() => handleCollapse(1)} expandIcon={accordianExpandIcon}>
+                    <Collapse className={openAccordian === 1 ? styles.accordianHeader : ''} onChange={() => handleCollapse(1)} expandIcon={accordianExpandIcon} collapsible="icon">
                         <Panel header="Product Atrribute Details" key="1">
+                            <Divider />
                             <ProductAttributeMaster {...attributeFormProps} />
                         </Panel>
                     </Collapse>

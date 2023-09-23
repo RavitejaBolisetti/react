@@ -7,9 +7,9 @@ import React from 'react';
 import { Row, Col, Button } from 'antd';
 
 import { ModalConstants } from './ButtonConstants';
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
-export const ModalButtons = ({ buttonData, reset, submit, handleResetFilter, submitName, resetName, htmltype = true, onClickAction, resetDisabled = false, saveDisabled = false, hideSaveBtn=false }) => {
+export const ModalButtons = ({ buttonData, reset, submit, handleResetFilter, submitName, resetName, htmltype = true, onClickAction, resetDisabled = false, saveDisabled = false, hideSaveBtn = false }) => {
     const BUTTON_CONSTANTS = ModalConstants({ reset, submit, submitName, resetName });
     return (
         <div className={styles.modalFooter}>

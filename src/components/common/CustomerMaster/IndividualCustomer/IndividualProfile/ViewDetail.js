@@ -10,7 +10,7 @@ import { getCodeValue } from 'utils/getCodeValue';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { DATA_TYPE } from 'constants/dataType';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 const { Panel } = Collapse;
 const ViewDetailMain = (props) => {

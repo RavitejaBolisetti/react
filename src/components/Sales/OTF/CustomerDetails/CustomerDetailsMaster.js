@@ -10,16 +10,15 @@ import { Row, Col, Form } from 'antd';
 
 import { bindActionCreators } from 'redux';
 import { otfCustomerDetailsAction } from 'store/actions/data/otf/customerDetails';
+import { customerDetailsIndividualDataActions } from 'store/actions/data/customerMaster/customerDetailsIndividual';
 import { geoPinCodeDataActions } from 'store/actions/data/geo/pincodes';
 import { showGlobalNotification } from 'store/actions/notification';
+import { BASE_URL_VEHICLE_CUSTOMER_COMMON_DETAIL as customURL } from 'constants/routingApi';
+import dayjs from 'dayjs';
 
-import { OTFStatusBar } from '../utils/OTFStatusBar';
-import { OTFFormButton } from '../OTFFormButton';
+import { AddEditForm, ViewDetail } from 'components/Sales/Common/CustomerDetails';
 
-import { ViewDetail } from './ViewDetail';
-import { AddEditForm } from './AddEditForm';
-
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 const mapStateToProps = (state) => {
     const {
@@ -71,6 +70,7 @@ const mapDispatchToProps = (dispatch) => ({
 
             listPinCodeShowLoading: geoPinCodeDataActions.listShowLoading,
             fetchPincodeDetail: geoPinCodeDataActions.fetchList,
+            fetchCustomerDetailData: customerDetailsIndividualDataActions.fetchData,
         },
         dispatch
     ),
@@ -78,8 +78,10 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const CustomerDetailsMain = (props) => {
     const { resetData, saveData, isLoading, userId, isDataLoaded, fetchList, listShowLoading, customerFormData, showGlobalNotification, onFinishFailed } = props;
-    const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, pincodeData, formActionType, NEXT_ACTION, handleButtonClick, section } = props;
-    const { setButtonData, buttonData, typeData, selectedOrderId } = props;
+    const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, pincodeData, formActionType, NEXT_ACTION, handleButtonClick, section, fetchCustomerDetailData } = props;
+    const { typeData, selectedOrderId } = props;
+    const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, StatusBar } = props;
+
     const [form] = Form.useForm();
     const [billCstmForm] = Form.useForm();
     const [formData, setFormData] = useState('');
@@ -114,7 +116,7 @@ export const CustomerDetailsMain = (props) => {
             key: 'otfNumber',
             title: 'otfNumber',
             value: selectedOrderId,
-            name: 'OTF Number',
+            name: 'Booking Number',
         },
     ];
 
@@ -126,36 +128,66 @@ export const CustomerDetailsMain = (props) => {
     }, [userId, selectedOrderId]);
 
     const onFinish = (values) => {
-        if (values?.bookingCustomer?.customerId) {
+        if (!values?.bookingCustomer?.customerId) {
             showGlobalNotification({ message: 'Please provide booking customer' });
             setActiveKey([...activeKey, !values?.bookingCustomer?.customerId ? 1 : '']);
             return false;
-        } else if (values?.billingCustomer?.customerId) {
+        } else if (!values?.billingCustomer?.customerId) {
             showGlobalNotification({ message: 'Please provide billing customer' });
             setActiveKey([...activeKey, !values?.billingCustomer?.customerId ? 2 : '']);
             return false;
         } else {
             form.getFieldsValue();
             const data = { bookingCustomer: { ...values?.bookingCustomer, otfNumber: selectedOrderId, bookingAndBillingType: 'BOOKING', id: customerFormData?.bookingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer }, billingCustomer: { ...values?.billingCustomer, otfNumber: selectedOrderId, bookingAndBillingType: 'BILLING', id: customerFormData?.billingCustomer?.id, sameAsBookingCustomer: sameAsBookingCustomer } };
-            const onSuccess = (res) => {
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-                fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, onError, extraParams });
-                handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
-            };
 
-            const onError = (message) => {
-                showGlobalNotification({ message });
-            };
+            if (onFinishCustom) {
+                onFinishCustom({ key: formKey, values: data });
+                handleButtonClick({ buttonAction: NEXT_ACTION });
+                setButtonData({ ...buttonData, formBtnActive: false });
+            } else {
+                const onSuccess = (res) => {
+                    showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+                    fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, onError, extraParams });
+                    handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
+                };
 
-            const requestData = {
-                data: data,
-                method: 'put',
-                setIsLoading: listShowLoading,
+                const onError = (message) => {
+                    // showGlobalNotification({ message });
+                };
+
+                const requestData = {
+                    data: data,
+                    method: 'put',
+                    setIsLoading: listShowLoading,
+                    userId,
+                    onError,
+                    onSuccess,
+                };
+                saveData(requestData);
+            }
+        }
+    };
+
+    const fnSetData = (data, type) => {
+        if (data?.customerId) {
+            const extraParams = [
+                {
+                    key: 'customerId',
+                    title: 'customerId',
+                    value: data?.customerId,
+                    name: 'Customer ID',
+                },
+            ];
+            fetchCustomerDetailData({
+                customURL,
+                setIsLoading: () => {},
+                extraParams,
                 userId,
-                onError,
-                onSuccess,
-            };
-            saveData(requestData);
+                onSuccessAction: (response) => {
+                    setFormData({ ...formData, [type]: { ...response?.data, birthDate: response?.data?.dateOfBirth } });
+                },
+                onErrorAction,
+            });
         }
     };
 
@@ -180,6 +212,7 @@ export const CustomerDetailsMain = (props) => {
         isLoading,
         activeKey,
         setActiveKey,
+        fnSetData,
     };
 
     const viewProps = {
@@ -188,13 +221,17 @@ export const CustomerDetailsMain = (props) => {
         isLoading,
         activeKey,
         setActiveKey,
+        formActionType,
     };
 
-    const handleFormValueChange = () => {
+    const handleFormValueChange = (val) => {
+        let isInitial2 = Object.keys(val?.billingCustomer || {});
+        let isInitial = val?.[0]?.name?.includes('sameAsBookingCustomer') || isInitial2?.includes('sameAsBookingCustomer');
         setButtonData({ ...buttonData, formBtnActive: true });
-        if (sameAsBookingCustomer) {
+        if ((isInitial && !sameAsBookingCustomer) || (!isInitial && sameAsBookingCustomer)) {
             let bookingCustomer = form.getFieldsValue()?.bookingCustomer;
-            form?.setFieldsValue({ billingCustomer: { ...bookingCustomer } });
+            const data = { ...bookingCustomer, birthDate: bookingCustomer?.birthDate ? dayjs(bookingCustomer?.birthDate) : null };
+            form?.setFieldsValue({ billingCustomer: { ...data }, bookingCustomer: { ...data } });
         }
     };
 
@@ -207,7 +244,7 @@ export const CustomerDetailsMain = (props) => {
                             <h2>{section?.title}</h2>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <OTFStatusBar status={props?.selectedOrder?.orderStatus} />
+                            {StatusBar && <StatusBar status={props?.selectedOrder?.orderStatus} />}
                         </Col>
                     </Row>
                     {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
@@ -215,7 +252,7 @@ export const CustomerDetailsMain = (props) => {
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <OTFFormButton {...props} />
+                    <FormActionButton {...props} />
                 </Col>
             </Row>
         </Form>

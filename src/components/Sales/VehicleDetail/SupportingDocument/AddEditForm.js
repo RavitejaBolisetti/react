@@ -9,7 +9,9 @@ import { Row, Col, Form, Select, Input, Divider, Collapse } from 'antd';
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { expandIcon } from 'utils/accordianExpandIcon';
-import styles from 'components/common/Common.module.css';
+
+import styles from 'assets/sass/app.module.scss';
+
 import { ViewSupportingDocDetail } from './ViewSupportingDocDetail';
 import { ViewTechnicalDocDetail } from './ViewTechnicalDocDetail';
 import { UploadUtil } from 'utils/Upload';
@@ -50,8 +52,9 @@ const AddEditForm = (props) => {
 
     return (
         <>
-            <Collapse defaultActiveKey={['1']} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
+            <Collapse defaultActiveKey={['1']} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end" collapsible="icon">
                 <Panel header="Supporting/Reference Documents" key="1">
+                    <Divider />
                     {!formActionType?.viewMode && (
                         <>
                             <Row gutter={16}>
@@ -85,9 +88,7 @@ const AddEditForm = (props) => {
             <Collapse defaultActiveKey={['2']} bordered={false} expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
                 <Panel header="Technical Documents" key="2">
                     <Divider />
-                    <Row gutter={16}>
-                        <ViewTechnicalDocDetail {...viewProps} />
-                    </Row>
+                    <ViewTechnicalDocDetail {...viewProps} />
                 </Panel>
             </Collapse>
         </>

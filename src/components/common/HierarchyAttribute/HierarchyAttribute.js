@@ -13,7 +13,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import { Button, Col, Form, Row, Select, Input } from 'antd';
 import { generateRandomNumber } from 'utils/generateRandomNumber';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 import { hierarchyAttributeMasterDataActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { showGlobalNotification } from 'store/actions/notification';
@@ -327,7 +327,7 @@ export const HierarchyAttributeBase = ({ moduleTitle, userId, resetData, isDataL
                     </Col>
                     {detailData?.hierarchyAttribute?.length > 0 && (
                         <Col className={styles.buttonsGroupRight} xs={24} sm={24} md={8} lg={8} xl={8} xxl={8}>
-                            <Button icon={<TfiReload />} onClick={handleReferesh} danger />
+                            <Button icon={<TfiReload />} onClick={handleReferesh} danger data-testid="refreshBtn" />
                             <Button icon={<PlusOutlined />} type="primary" onClick={handleAdd}>
                                 Add
                             </Button>

@@ -5,14 +5,20 @@ import { Form } from 'antd';
 
 const FormWrapper = (props) => {
     const [form] = Form.useForm();
-    return <OTFMainConatiner form={form} {...props} />;
+
+    const myFormMock = {
+        ...form,
+        getFieldValue: jest.fn(),
+        setFieldsValue: jest.fn(),
+    };
+    return <OTFMainConatiner form={myFormMock} {...props} />;
 };
 afterEach(() => {
     jest.restoreAllMocks();
 });
 describe('OtfMaster component render', () => {
     it('should render OtfMaster component', () => {
-        customRender(<OTFMainConatiner isVisible={true} handleFormValueChange={jest.fn()} />);
+        customRender(<FormWrapper isVisible={true} handleFormValueChange={jest.fn()} />);
     });
 
     it('should render Otf details master component', () => {
@@ -20,12 +26,12 @@ describe('OtfMaster component render', () => {
             SALE_TYP: ['Diwali', 'Holi'],
         };
         const currentSection = 1;
-        customRender(<OTFMainConatiner typeData={typeData} isVisible={true} currentSection={currentSection} handleFormValueChange={jest.fn()} />);
+        customRender(<FormWrapper typeData={typeData} isVisible={true} currentSection={currentSection} handleFormValueChange={jest.fn()} />);
     });
 
     it('should render customer details component', () => {
         const currentSection = 2;
-        customRender(<OTFMainConatiner isVisible={true} currentSection={currentSection} handleFormValueChange={jest.fn()} />);
+        customRender(<FormWrapper isVisible={true} currentSection={currentSection} handleFormValueChange={jest.fn()} />);
     });
 
     it('should render vehicle details component', () => {
@@ -33,7 +39,7 @@ describe('OtfMaster component render', () => {
             VEHCL_TYPE: [{ name: 'Car' }],
         };
         const currentSection = 3;
-        customRender(<OTFMainConatiner typeData={typeData} isVisible={true} currentSection={currentSection} handleFormValueChange={jest.fn()} />);
+        customRender(<FormWrapper typeData={typeData} isVisible={true} currentSection={currentSection} handleFormValueChange={jest.fn()} />);
     });
 
     it('should render scheme and offer details component', () => {
@@ -43,17 +49,20 @@ describe('OtfMaster component render', () => {
 
     it('should render insurance details component', () => {
         const currentSection = 5;
-        customRender(<OTFMainConatiner handleFormValueChange={jest.fn()} isVisible={true} currentSection={currentSection} />);
+        customRender(<FormWrapper handleFormValueChange={jest.fn()} isVisible={true} currentSection={currentSection} />);
     });
 
     it('should render finance details component', () => {
         const currentSection = 6;
-        customRender(<FormWrapper isVisible={true} currentSection={currentSection} handleFormValueChange={jest.fn()} />);
+        const typeData={
+            FNC_ARNGD: [{name: 'Kai'}]
+        }
+        customRender(<FormWrapper isVisible={true} typeData={typeData} currentSection={currentSection} handleFormValueChange={jest.fn()} />);
     });
 
     it('should render exchange vehicle component', () => {
         const currentSection = 7;
-        customRender(<OTFMainConatiner isVisible={true} currentSection={currentSection} handleFormValueChange={jest.fn()} />);
+        customRender(<FormWrapper isVisible={true} currentSection={currentSection} handleFormValueChange={jest.fn()} />);
     });
 
     it('should render referrals component', () => {
@@ -68,16 +77,16 @@ describe('OtfMaster component render', () => {
 
     it('should render invoice information component', () => {
         const currentSection = 10;
-        customRender(<OTFMainConatiner isVisible={true} currentSection={currentSection} handleFormValueChange={jest.fn()} />);
+        customRender(<FormWrapper isVisible={true} currentSection={currentSection} handleFormValueChange={jest.fn()} />);
     });
 
     it('should render add on details component', () => {
         const currentSection = 11;
-        customRender(<OTFMainConatiner isVisible={true} currentSection={currentSection} handleFormValueChange={jest.fn()} />);
+        customRender(<FormWrapper isVisible={true} currentSection={currentSection} handleFormValueChange={jest.fn()} />);
     });
 
     it('should render thank you page component', () => {
         const currentSection = 12;
-        customRender(<OTFMainConatiner isVisible={true} currentSection={currentSection} handleFormValueChange={jest.fn()} />);
+        customRender(<FormWrapper isVisible={true} currentSection={currentSection} handleFormValueChange={jest.fn()} />);
     });
 });

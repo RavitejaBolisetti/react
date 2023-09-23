@@ -13,7 +13,7 @@ import { VoucherAndPartyDetailsMaster } from './VoucherAndPartyDetails';
 import { VoucherDetailsMaster } from './VoucherDetails';
 import { ApportionDetailsMaster } from './ApportionDetails';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 const CreditDebitNoteMainContainerMain = (props) => {
     const { currentSection } = props;

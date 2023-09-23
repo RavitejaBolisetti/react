@@ -11,7 +11,7 @@ import { Col, Form, Row } from 'antd';
 import { tableColumn } from './tableColumn';
 import VehicleReceiptFilter from './VehicleReceiptFilter';
 import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, btnVisiblity } from 'utils/btnVisiblity';
-import { convertDateTime, monthDateFormat } from 'utils/formatDateTime';
+import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 
 import { VehicleReceiptMainConatiner } from './VehicleReceiptMainConatiner';
 import { ListDataTable } from 'utils/ListDataTable';
@@ -100,7 +100,6 @@ export const VehicleReceiptMasterBase = (props) => {
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
 
-    const [page, setPage] = useState({ pageSize: 10, current: 1 });
     const dynamicPagination = true;
 
     const defaultBtnVisiblity = {
@@ -122,6 +121,11 @@ export const VehicleReceiptMasterBase = (props) => {
 
     const [formData, setFormData] = useState([]);
 
+    useEffect(() => {
+        setFilterString({ ...filterString, pageSize: 10, current: 1 });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     const onSuccessAction = (res) => {
         // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
@@ -133,13 +137,6 @@ export const VehicleReceiptMasterBase = (props) => {
         showGlobalNotification({ message });
         setShowDataLoading(false);
     };
-
-    useEffect(() => {
-        if (filterString) {
-            setPage({ ...page, current: 1 });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [filterString]);
 
     const extraParams = useMemo(() => {
         return [
@@ -161,22 +158,23 @@ export const VehicleReceiptMasterBase = (props) => {
             {
                 key: 'grnNumber',
                 title: 'grnNumber',
-                value: searchValue,
-                name: searchValue,
-                canRemove: false,
-                filter: false,
+                value: filterString?.grnNumber,
+                name: filterString?.grnNumber,
+                // searchValue
+                canRemove: true,
+                filter: true,
             },
             {
                 key: 'pageNumber',
                 title: 'Value',
-                value: page?.current,
+                value: filterString?.current,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'pageSize',
                 title: 'Value',
-                value: page?.pageSize,
+                value: filterString?.pageSize,
                 canRemove: true,
                 filter: false,
             },
@@ -184,7 +182,7 @@ export const VehicleReceiptMasterBase = (props) => {
                 key: 'grnFromDate',
                 title: 'Start Date',
                 value: filterString?.grnFromDate,
-                name: filterString?.grnFromDate ? convertDateTime(filterString?.grnFromDate, monthDateFormat) : '',
+                name: filterString?.grnFromDate ? convertDateTime(filterString?.grnFromDate, dateFormatView) : '',
                 canRemove: true,
                 filter: true,
             },
@@ -192,7 +190,7 @@ export const VehicleReceiptMasterBase = (props) => {
                 key: 'grnToDate',
                 title: 'End Date',
                 value: filterString?.grnToDate,
-                name: filterString?.grnToDate ? convertDateTime(filterString?.grnToDate, monthDateFormat) : '',
+                name: filterString?.grnToDate ? convertDateTime(filterString?.grnToDate, dateFormatView) : '',
                 canRemove: true,
                 filter: true,
             },
@@ -207,20 +205,20 @@ export const VehicleReceiptMasterBase = (props) => {
             {
                 key: 'sortBy',
                 title: 'Sort By',
-                value: page?.sortBy,
+                value: filterString?.sortBy,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'sortIn',
                 title: 'Sort Type',
-                value: page?.sortType,
+                value: filterString?.sortType,
                 canRemove: true,
                 filter: false,
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [receiptType, searchValue, filterString, page]);
+    }, [receiptType, searchValue, filterString]);
 
     useEffect(() => {
         return () => {
@@ -230,12 +228,12 @@ export const VehicleReceiptMasterBase = (props) => {
     }, []);
 
     useEffect(() => {
-        if (userId) {
+        if (userId && extraParams?.find((i) => i.key === 'pageNumber')?.value > 0) {
             setShowDataLoading(true);
             fetchVehicleReceiptList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, receiptType, filterString, page]);
+    }, [userId, receiptType, filterString]);
 
     useEffect(() => {
         const defaultSection = VEHICLE_RECEIPT_SECTION.SUPPLIER_INVOICE_DETAILS.id;
@@ -300,8 +298,9 @@ export const VehicleReceiptMasterBase = (props) => {
     const onFinishSearch = (values) => {};
 
     const handleResetFilter = (e) => {
+        const { pageSize } = filterString;
         setShowDataLoading(false);
-        setFilterString();
+        setFilterString({ pageSize, current: 1 });
         advanceFilterForm.resetFields();
     };
 
@@ -368,9 +367,9 @@ export const VehicleReceiptMasterBase = (props) => {
 
     const tableProps = {
         dynamicPagination,
+        filterString,
         totalRecords,
-        page,
-        setPage,
+        setPage: setFilterString,
         tableColumn: tableColumn({ handleButtonClick, tableIconsVisibility }),
         tableData: data,
         showAddButton: false,
@@ -430,7 +429,7 @@ export const VehicleReceiptMasterBase = (props) => {
     };
 
     const handleSearch = (value) => {
-        setFilterString({ ...filterString, grnNumber: value });
+        setFilterString({ ...filterString, grnNumber: value, advanceFilter: true });
         setSearchValue(value);
     };
 
@@ -525,6 +524,7 @@ export const VehicleReceiptMasterBase = (props) => {
         isLastSection,
         typeData,
         saveButtonName: isLastSection ? 'Submit' : 'Next',
+        receiptType,
     };
 
     return (

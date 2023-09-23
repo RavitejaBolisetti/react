@@ -4,43 +4,53 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Space, Badge, Dropdown, Modal, Avatar } from 'antd';
+import { Row, Col, Space, Badge, Dropdown, Modal, Avatar, Popover } from 'antd';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+
 import Icon, { DownOutlined } from '@ant-design/icons';
 import { FaRegBell } from 'react-icons/fa';
 import { IoIosLogOut } from 'react-icons/io';
-import { FiLock, FiUser, FiSettings } from 'react-icons/fi';
+import { FiLock } from 'react-icons/fi';
 import { CgProfile } from 'react-icons/cg';
+
+import { setCollapsed } from 'store/actions/common/leftsidebar';
+import { showGlobalNotification } from 'store/actions/notification';
+import { menuDataActions } from 'store/actions/data/menu';
+import { headerDataActions } from 'store/actions/common/header';
+import { clearLocalStorageData, doLogoutAPI } from 'store/actions/auth';
+import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
+import { notificationDataActions } from 'store/actions/common/notification';
+import { userAccessMasterDataAction } from 'store/actions/data/userAccess';
 
 import * as routing from 'constants/routing';
 import { USER_TYPE } from 'constants/userType';
-
-import { setCollapsed } from 'store/actions/common/leftsidebar';
 import customMenuLink, { addToolTip } from 'utils/customMenuLink';
-import { configParamEditActions } from 'store/actions/data/configurableParamterEditing';
-import { showGlobalNotification } from 'store/actions/notification';
 
-import styles from './Header.module.css';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { clearLocalStorageData, doLogoutAPI } from 'store/actions/auth';
-import { headerDataActions } from 'store/actions/common/header';
-import { Link, useNavigate } from 'react-router-dom';
+import { Notification } from './Notification';
 import { HeaderSkeleton } from './HeaderSkeleton';
 import { ChangePassword } from '../ChangePassword';
-import IMG_ICON from 'assets/img/icon.png';
 
+import IMG_ICON from 'assets/img/icon.png';
 import { HeadPhoneIcon, MenuArrow } from 'Icons';
+
+import styles from './Header.module.scss';
 
 const { confirm } = Modal;
 const mapStateToProps = (state) => {
     const {
-        auth: { token, isLoggedIn, userId, passwordStatus },
+        auth: { token, isLoggedIn, userId, refreshToken, passwordStatus },
         data: {
             ConfigurableParameterEditing: { isFilteredListLoaded: isTypeDataLoaded = false, isLoading: isTypeDataLoading },
+            UserAccess: { isLoaded: isUserAccessLoaded = false, isLoading: isUserAccessLoading = false, data: userAccessData },
         },
         common: {
             Header: { data: loginUserData = [], isLoading, isLoaded: isDataLoaded = false },
             LeftSideBar: { collapsed = false },
+            Notification: {
+                NotificationCount: { data: notificationCount },
+            },
         },
     } = state;
 
@@ -48,13 +58,18 @@ const mapStateToProps = (state) => {
         passwordStatus,
         loginUserData,
         isDataLoaded,
+        isUserAccessLoaded,
         token,
         isLoggedIn,
         userId,
+        refreshToken,
         isLoading,
         collapsed,
         isTypeDataLoaded,
         isTypeDataLoading,
+        isUserAccessLoading,
+        userAccessData,
+        notificationCount,
     };
 };
 const mapDispatchToProps = (dispatch) => ({
@@ -65,11 +80,18 @@ const mapDispatchToProps = (dispatch) => ({
             doLogout: doLogoutAPI,
             fetchData: headerDataActions.fetchData,
             listShowLoading: headerDataActions.listShowLoading,
+            fetchMenuList: menuDataActions.fetchList,
+            listShowMenuLoading: menuDataActions.listShowLoading,
             fetchConfigList: configParamEditActions.fetchFilteredList,
             listConfigShowLoading: configParamEditActions.listShowLoading,
 
-            fetchEditConfigDataList: configParamEditActions.fetchDataList,
+            notificaionShowLoading: notificationDataActions.listShowLoading,
+            fetchNotificaionCountData: notificationDataActions.counts,
+            resetNotification: notificationDataActions.reset,
 
+            updateUserAcess: userAccessMasterDataAction.saveData,
+            listUserAccessShowLoading: userAccessMasterDataAction.listShowLoading,
+            fetchEditConfigDataList: configParamEditActions.fetchDataList,
             showGlobalNotification,
         },
         dispatch
@@ -77,17 +99,35 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const HeaderMain = (props) => {
-    const { isDataLoaded, isLoading, collapsed, setCollapsed, loginUserData, doLogout, fetchData, listShowLoading, showGlobalNotification, userId } = props;
-    const { fetchEditConfigDataList, fetchConfigList, listConfigShowLoading, isTypeDataLoaded, isTypeDataLoading } = props;
+    const { isDataLoaded, isLoading, collapsed, setCollapsed, loginUserData, doLogout, fetchData, listShowLoading, showGlobalNotification, userId, refreshToken, listUserAccessShowLoading, updateUserAcess, fetchMenuList } = props;
+    const { fetchEditConfigDataList, fetchConfigList, listConfigShowLoading, isTypeDataLoaded, isTypeDataLoading, fetchNotificaionCountData } = props;
+    const { notificationCount, resetNotification, listShowMenuLoading } = props;
 
     const navigate = useNavigate();
 
     const [isChangePasswordModalOpen, setChangePasswordModalOpen] = useState(false);
     const [confirms, setConfirm] = useState(false);
+    const [userAccess, setUserAccess] = useState(loginUserData?.userRoles?.find((user) => user?.isDefault === true)?.roleName);
+    const [refreshCount, setRefreshCount] = useState(false);
 
-    const { firstName = '', lastName = '', dealerName, dealerLocation, notificationCount, userType = undefined } = loginUserData;
+    const { firstName = '', lastName = '', dealerLocations = [], dealerName, userType = undefined } = loginUserData;
+
+    const dealerLocation = dealerLocations?.find((i) => i?.isDefault)?.locationName;
     const fullName = firstName?.concat(lastName ? ' ' + lastName : '');
     const userAvatar = firstName?.slice(0, 1) + (lastName ? lastName?.slice(0, 1) : '');
+
+    useEffect(() => {
+        setUserAccess(loginUserData?.userRoles?.find((user) => user?.isDefault === true)?.roleName);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userAccess, loginUserData]);
+
+    useEffect(() => {
+        if (!userId) return;
+        fetchNotificaionCountData({ setIsLoading: () => {}, userId });
+        setRefreshCount(false);
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, refreshCount]);
 
     useEffect(() => {
         if (confirms || isChangePasswordModalOpen) {
@@ -100,7 +140,7 @@ const HeaderMain = (props) => {
 
     useEffect(() => {
         if (!isDataLoaded && userId) {
-            fetchData({ setIsLoading: listShowLoading, userId, onError });
+           fetchData({ setIsLoading: listShowLoading, userId, onError });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, userId]);
@@ -125,6 +165,33 @@ const HeaderMain = (props) => {
         showGlobalNotification({ message: Array.isArray(message) ? message[0] : message });
         navigate(routing.ROUTING_LOGIN);
         clearLocalStorageData();
+    };
+
+    const handleUpdateUserAcess = ({ roleId = undefined, locationId = undefined }) => {
+        let data = { locationId, roleId };
+
+        const onSuccess = (res) => {
+            fetchData({ setIsLoading: listShowLoading, userId });
+            if (roleId) {
+                fetchMenuList({ setIsLoading: listShowMenuLoading, userId });
+                navigate(routing.ROUTING_DASHBOARD);
+            }
+        };
+
+        const onError = (message) => {
+            showGlobalNotification({ message });
+        };
+
+        const requestData = {
+            data: data,
+            method: 'Put',
+            setIsLoading: listUserAccessShowLoading,
+            userId,
+            onError,
+            onSuccess,
+        };
+
+        updateUserAcess(requestData);
     };
 
     const showConfirm = () => {
@@ -159,37 +226,31 @@ const HeaderMain = (props) => {
         }),
     ];
 
-    const locationMenuOption = [
-        customMenuLink({
-            title: 'Gurgaon',
-        }),
-        customMenuLink({
-            title: 'Lajpat Nagar',
-        }),
-        customMenuLink({
-            title: 'Noida',
-        }),
-    ];
-
     const userSettingMenu = [
         customMenuLink({
-            key: '0',
+            key: 1,
             title: 'My Roles',
-            link: routing.ROUTING_USER_PROFILE,
             icon: <CgProfile size={18} />,
+            children: loginUserData?.userRoles?.map((role) => ({
+                key: role?.roleId,
+                label: role?.roleName,
+                onClick: () => handleUpdateUserAcess({ roleId: role?.roleId }),
+                // className: styles.dropdownIcon,
+                disabled: role?.isDefault,
+            })),
         }),
-        customMenuLink({
-            key: '1',
-            title: 'My Profile',
-            link: routing.ROUTING_USER_PROFILE,
-            icon: <FiUser size={18} />,
-        }),
-        customMenuLink({
-            key: '2',
-            title: 'Account Settings',
-            link: routing.ROUTING_USER_SETTING,
-            icon: <FiSettings size={18} />,
-        }),
+        // customMenuLink({
+        //     key: '1',
+        //     title: 'My Profile',
+        //     link: routing.ROUTING_USER_PROFILE,
+        //     icon: <FiUser size={18} />,
+        // }),
+        // customMenuLink({
+        //     key: '2',
+        //     title: 'Account Settings',
+        //     link: routing.ROUTING_USER_SETTING,
+        //     icon: <FiSettings size={18} />,
+        // }),
     ];
 
     userType === USER_TYPE?.DEALER?.key &&
@@ -224,99 +285,113 @@ const HeaderMain = (props) => {
     return (
         <>
             {!isLoading ? (
-                <>
-                    <div className={styles.headerContainer}>
-                        <Row gutter={0}>
-                            <Col xs={14} sm={isDashboard ? 9 : 16} md={isDashboard ? 9 : 16} lg={isDashboard ? 9 : 16} xl={isDashboard ? 9 : 16} xxl={isDashboard ? 9 : 16}>
-                                <div className={styles.headerLeft}>
-                                    <Space>
-                                        <div className={`${styles.floatLeft} ${styles.mrt6} ${styles.menuIcon}`} onClick={handleCollapse}>
-                                            <img width={20} src={IMG_ICON} alt="brandImage" className={styles.brandImage} /> <Icon component={MenuArrow} />
-                                        </div>
-                                        <div className={styles.userText}>
-                                            <div className={styles.dealerName}>{dealerName}</div>
-                                            <div className={styles.dealerInfo}>
-                                                <span className={styles.dealerLocation}>{dealerLocation}</span>
-                                                {userType === USER_TYPE?.DEALER?.key && (
-                                                    <Dropdown className={styles.dropdownIcon} menu={{ items: locationMenuOption }}>
+                <div className={styles.headerContainer}>
+                    <Row>
+                        <Col xs={14} sm={isDashboard ? 9 : 16} md={isDashboard ? 9 : 16} lg={isDashboard ? 9 : 16} xl={isDashboard ? 9 : 16} xxl={isDashboard ? 9 : 16}>
+                            <div className={styles.headerLeft}>
+                                <Space>
+                                    <div className={`${styles.floatLeft} ${styles.mrt6} ${styles.menuIcon}`} onClick={handleCollapse}>
+                                        <img width={20} src={IMG_ICON} alt="brandImage" className={styles.brandImage} /> <Icon component={MenuArrow} />
+                                    </div>
+                                    <div className={styles.userText}>
+                                        <div className={styles.dealerName}>{dealerName}</div>
+                                        <div className={styles.dealerInfo}>
+                                            <span className={styles.dealerLocation}>{dealerLocation}</span>
+                                            {userType === USER_TYPE?.DEALER?.key && (
+                                                <Dropdown
+                                                    trigger={['click']}
+                                                    className={styles.dropdownIcon}
+                                                    menu={{
+                                                        items: dealerLocations?.map((menu) => ({
+                                                            key: menu?.locationId,
+                                                            label: menu?.locationName,
+                                                            onClick: () => handleUpdateUserAcess({ locationId: menu?.locationId }),
+                                                            className: styles.dropdownIcon,
+                                                            disabled: menu?.isDefault,
+                                                            danger: menu?.isDefault,
+                                                        })),
+                                                    }}
+                                                >
+                                                    <DownOutlined />
+                                                </Dropdown>
+                                            )}{' '}
+                                            {userType === USER_TYPE?.DEALER?.key && (
+                                                <>
+                                                    <span className={styles.seprator}>|</span>
+                                                    <span className={styles.dealerLocation}>FY2023</span>
+                                                    <Dropdown className={styles.dropdownIcon} menu={{ items: fyMenuOption }} /*trigger={['click']}*/>
                                                         <DownOutlined />
                                                     </Dropdown>
-                                                )}{' '}
-                                                {userType === USER_TYPE?.DEALER?.key && (
-                                                    <>
-                                                        <span className={styles.seprator}>|</span>
-                                                        <span className={styles.dealerLocation}>FY2023</span>
-                                                        <Dropdown className={styles.dropdownIcon} menu={{ items: fyMenuOption }} /*trigger={['click']}*/>
-                                                            <DownOutlined />
-                                                        </Dropdown>
-                                                    </>
-                                                )}
-                                            </div>
+                                                </>
+                                            )}
                                         </div>
-                                    </Space>
-                                </div>
-                            </Col>
-                            {/* {pagePath === routing.ROUTING_DASHBOARD && (
+                                    </div>
+                                </Space>
+                            </div>
+                        </Col>
+                        {/* {pagePath === routing.ROUTING_DASHBOARD && (
                                 <Col xs={0} sm={0} md={7} lg={7} xl={7} xxl={7}>
                                     <div className={styles.headerRight} >
                                         <Search data-testid="search" allowClear placeholder="Search by Doc ID" onSearch={onSearch} />
                                     </div>
                                 </Col>
                             )} */}
-                            <Col xs={10} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                <div className={styles.headerRight}>
-                                    <div className={styles.navbarNav}>
-                                        <div className={`${styles.floatLeft}`}>
-                                            <Link className={styles.navLink} data-toggle="dropdown">
-                                                <Badge size="small" count={notificationCount}>
+                        <Col xs={10} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                            <div className={styles.headerRight}>
+                                <div className={styles.navbarNav}>
+                                    <div className={`${styles.floatLeft} `}>
+                                        <Link className={styles.navLink} data-toggle="dropdown">
+                                            <Popover trigger={'click'} placement="bottomRight" content={<Notification notificationCount={notificationCount} resetNotification={resetNotification} setRefreshCount={setRefreshCount} />} overlayClassName={styles.notificationContainer}>
+                                                <Badge size="small" count={notificationCount?.inboxUnread}>
                                                     {addToolTip('Notification')(<FaRegBell size={20} />)}
                                                 </Badge>
-                                            </Link>
-                                        </div>
-                                        <div className={`${styles.floatLeft}`}>
-                                            <Link className={styles.navLink} data-toggle="dropdown" target="_blank" to={process.env.REACT_APP_SUPPORT_URL}>
-                                                <Icon component={HeadPhoneIcon} />
-                                            </Link>
-                                        </div>
-                                        <div className={styles.welcomeUser}>
-                                            <Space>
-                                                <div className={styles.userAvatar}>
-                                                    <Avatar className={styles.userAvatarInside}>{userAvatar}</Avatar>
-                                                    <span className={`${styles.mobmenuDropDownArrow} ${styles.dropdownArrow}`}>
-                                                        <Dropdown menu={{ items: userSettingMenu }}>
-                                                            <Link to={routing.ROUTING_DASHBOARD} className={styles.navLink} onClick={(e) => e.preventDefault()}>
-                                                                <Space>
-                                                                    <DownOutlined />
-                                                                </Space>
-                                                            </Link>
-                                                        </Dropdown>
-                                                    </span>
-                                                </div>
-                                                <div className={styles.userText}>
-                                                    <div className={styles.userName}>{addToolTip(fullName)(fullName)}</div>
-                                                    <span className={styles.userRoleName}>{userType === USER_TYPE?.DEALER?.key ? 'Admin' : 'Super Admin'}</span>
-                                                </div>
-                                                <div className={`${styles.webmenuDropDownArrow} ${styles.dropdownArrow}`}>
-                                                    <Dropdown menu={{ items: userSettingMenu }} trigger={['click']}>
+                                            </Popover>
+                                        </Link>
+                                    </div>
+                                    <div className={`${styles.floatLeft}`}>
+                                        <Link className={styles.navLink} data-toggle="dropdown" target="_blank" to={process.env.REACT_APP_SUPPORT_URL}>
+                                            <Icon component={HeadPhoneIcon} />
+                                        </Link>
+                                    </div>
+                                    <div className={styles.welcomeUser}>
+                                        <Space>
+                                            <div className={styles.userAvatar}>
+                                                <Avatar className={styles.userAvatarInside}>{userAvatar}</Avatar>
+                                                <span className={`${styles.mobmenuDropDownArrow} ${styles.dropdownArrow}`}>
+                                                    <Dropdown menu={{ items: userSettingMenu }}>
                                                         <Link to={routing.ROUTING_DASHBOARD} className={styles.navLink} onClick={(e) => e.preventDefault()}>
                                                             <Space>
                                                                 <DownOutlined />
                                                             </Space>
                                                         </Link>
                                                     </Dropdown>
-                                                </div>
-                                            </Space>
-                                        </div>
+                                                </span>
+                                            </div>
+                                            <div className={styles.userText}>
+                                                <div className={styles.userName}>{addToolTip(fullName)(fullName)}</div>
+                                                <span className={styles.userRoleName}>{userAccess}</span>
+                                            </div>
+                                            <div className={`${styles.webmenuDropDownArrow} ${styles.dropdownArrow}`}>
+                                                <Dropdown menu={{ items: userSettingMenu }} trigger={['click']}>
+                                                    <Link to={routing.ROUTING_DASHBOARD} className={styles.navLink} onClick={(e) => e.preventDefault()}>
+                                                        <Space>
+                                                            <DownOutlined />
+                                                        </Space>
+                                                    </Link>
+                                                </Dropdown>
+                                            </div>
+                                        </Space>
                                     </div>
                                 </div>
-                            </Col>
-                        </Row>
-                    </div>
-                </>
+                            </div>
+                        </Col>
+                    </Row>
+                </div>
             ) : (
-                <HeaderSkeleton />
+                <div style={{ padding: '10px 20px 0 32px' }}>
+                    <HeaderSkeleton />
+                </div>
             )}
-
             <div style={{ clear: 'both' }}></div>
             <ChangePassword title="Change Password" setModalOpen={setChangePasswordModalOpen} isOpen={isChangePasswordModalOpen} onOk={() => setChangePasswordModalOpen(false)} onCancel={() => console.log('onCancel', isChangePasswordModalOpen) || setChangePasswordModalOpen(false)} />
         </>

@@ -24,7 +24,7 @@ import { LANGUAGE_EN } from 'language/en';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { HIERARCHY_ATTRIBUTES } from 'constants/modules/hierarchyAttributes';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 const { Search } = Input;
 const mapStateToProps = (state) => {

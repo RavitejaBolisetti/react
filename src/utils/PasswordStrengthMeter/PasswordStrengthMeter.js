@@ -9,7 +9,8 @@ import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { FaRegCheckCircle } from 'react-icons/fa';
 import { FcCancel } from 'react-icons/fc';
 import { addToolTip } from 'utils/customMenuLink';
-import styles from './PasswordStrengthMeter.module.css';
+
+import styles from './PasswordStrengthMeter.module.scss';
 
 const PasswordStrengthMeter = ({ password, beforeLogin = false, tooltipVisible }) => {
     const [passwordLevel, setPasswordLevel] = useState({ levelOne: false, levelTwo: false, levelThree: false });

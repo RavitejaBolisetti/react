@@ -13,7 +13,7 @@ import { tableColumnApportion } from './tableColumnApportion';
 
 import { ModalApportionDetail } from './ModalApportionDetail';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 const { Text } = Typography;
 
@@ -69,9 +69,7 @@ const AddEditFormMain = (props) => {
             .validateFields()
             .then(() => {
                 const values = apportionForm.getFieldsValue();
-                // if (parseFloat(values?.apportionedAmount) + parseFloat(totalApportionAmount) > parseFloat(totalReceivedAmount)) {
-                //     console.log('Apportion amount more');
-                // }
+
                 if (!isEditing) {
                     const data = { ...values, id: '' };
                     setApportionList([data, ...apportionList]);

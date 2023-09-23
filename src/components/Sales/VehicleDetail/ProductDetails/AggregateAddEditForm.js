@@ -11,7 +11,7 @@ import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/prepareP
 
 import { validateRequiredInputField, validateRequiredSelectField, validationFieldLetterAndNumber } from 'utils/validation';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 export const AdvanceForm = (props) => {
     const { AdvanceformData, setAdvanceformData } = props;
@@ -66,10 +66,7 @@ export const AdvanceForm = (props) => {
                     setAdvanceSearchVisible(false);
                 } else {
                     const data = { ...values };
-                    //console.log('data', data);
                     const newarr = [...optionsServiceModified];
-                    //console.log('newarr', newarr);
-
                     newarr[AdvanceformData?.index] = data;
                     setoptionsServiceModified(newarr);
                     setAdvanceSearchVisible(false);

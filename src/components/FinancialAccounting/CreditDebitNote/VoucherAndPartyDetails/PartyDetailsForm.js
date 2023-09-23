@@ -10,8 +10,7 @@ import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/prepareP
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { validateRequiredInputField, validateRequiredSelectField, noWhiteSpaceinBeginning } from 'utils/validation';
 import { customSelectBox } from 'utils/customSelectBox';
-
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 const { Search } = Input;
 
@@ -29,7 +28,7 @@ export const PartyDetailsForm = (props) => {
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name={[formType, 'partyId']} label="Party ID" initialValue={formData?.partyId} rules={[validateRequiredSelectField('party id'), noWhiteSpaceinBeginning('party id')]} validateTrigger={['onSearch','onChange']}>
+                    <Form.Item name={[formType, 'partyId']} label="Party ID" initialValue={formData?.partyId} rules={[validateRequiredSelectField('party id'), noWhiteSpaceinBeginning('party id')]} validateTrigger={['onSearch', 'onChange']}>
                         {formActionType?.editMode ? <Input {...disabledProps} placeholder={preparePlaceholderText('Party ID')} /> : <Search {...disabledProps} placeholder="Search" maxLength={25} allowClear onSearch={handleSearchParamSearch} onChange={handlePartyIdChange} className={styles.headerSearchField} />}
                     </Form.Item>
                 </Col>

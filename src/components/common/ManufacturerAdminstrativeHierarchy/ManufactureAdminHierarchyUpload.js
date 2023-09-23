@@ -10,7 +10,7 @@ import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
 import { UploadUtil } from 'utils/Upload';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 const UploadMain = (props) => {
     const { downloadFile, form, formData, onCloseAction, onFinishFailed } = props;
@@ -18,6 +18,11 @@ const UploadMain = (props) => {
     const { userId, setUploadedFile, listShowLoading, showGlobalNotification, setEmptyList } = props;
     const { organizationId } = props;
     const { setFileList, setUploadedFileName, downloadShowLoading, resetData, authorityShowLoading, saveAuthorityData, uploadedFile, fetchDocumentFileDocId } = props;
+
+
+    const onErrorAction = (res) => {
+        showGlobalNotification({ notificationType: 'error', title: 'Error', message: res, placement: 'bottomRight' });
+    };
 
     const downloadReport = (documentId) => {
         const onSuccessAction = (res) => {
@@ -28,9 +33,7 @@ const UploadMain = (props) => {
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
         };
 
-        const onErrorAction = (res) => {
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message: res, placement: 'bottomRight' });
-        };
+      
 
         const extraParams = [
             {
@@ -101,7 +104,7 @@ const UploadMain = (props) => {
                     name: 'docId',
                 },
             ];
-            downloadFile({ setIsLoading: downloadShowLoading, userId, extraParams });
+            downloadFile({ setIsLoading: downloadShowLoading, userId, onErrorAction, extraParams });
             resetData();
         };
         fetchDocumentFileDocId({
@@ -109,6 +112,7 @@ const UploadMain = (props) => {
             extraParams,
             userId,
             onSuccessAction,
+            onErrorAction,
         });
     };
 

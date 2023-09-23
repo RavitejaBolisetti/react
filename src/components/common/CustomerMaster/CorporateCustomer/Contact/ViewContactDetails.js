@@ -5,7 +5,8 @@
  */
 import React from 'react';
 import { Descriptions, Row, Col, Button } from 'antd';
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import { getCodeValue } from 'utils/getCodeValue';
 
@@ -17,19 +18,18 @@ const ViewDetailBase = ({ formData, styles, isLoading, typeData }) => {
         column: { xxl: 3, xl: 3, lg: 3, md: 3, sm: 1, xs: 1 },
     };
 
-    const editContactHandeler = (data) => {
-    };
+    const editContactHandeler = (data) => {};
 
     return (
         <div className={styles.viewDrawerContainer}>
             <>
                 <Descriptions {...viewProps}>
-                    <Descriptions.Item label="Purpose of Contact">{checkAndSetDefaultValue(getCodeValue(typeData?.PURPOSE,formData?.purposeOfContact), isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Purpose of Contact">{checkAndSetDefaultValue(getCodeValue(typeData?.PURPOSE, formData?.purposeOfContact), isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="Mobile Number">{checkAndSetDefaultValue(formData?.contactMobileNumber, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="Alternate Mobile Numbe">{checkAndSetDefaultValue(formData?.alternativeMobileNumber, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Relation">{checkAndSetDefaultValue(getCodeValue(typeData?.FAMLY_RELTN,formData?.relationwithCustomer), isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Gender">{checkAndSetDefaultValue(getCodeValue(typeData?.GENDER_CD,formData?.gender), isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Title">{checkAndSetDefaultValue(getCodeValue(typeData?.TITLE,formData?.contactNameTitle), isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Relation">{checkAndSetDefaultValue(getCodeValue(typeData?.FAMLY_RELTN, formData?.relationwithCustomer), isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Gender">{checkAndSetDefaultValue(getCodeValue(typeData?.GENDER_CD, formData?.gender), isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Title">{checkAndSetDefaultValue(getCodeValue(typeData?.TITLE, formData?.contactNameTitle), isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="First Name">{checkAndSetDefaultValue(formData?.contactNameFirstName, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="Middle Name">{checkAndSetDefaultValue(formData?.contactNameMiddleName, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="Last/Surname">{checkAndSetDefaultValue(formData?.contactNameLastName, isLoading)}</Descriptions.Item>

@@ -15,7 +15,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { getCodeValue } from 'utils/getCodeValue';
 import { AddEditForm } from './AddEditForm';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 const { Text } = Typography;
 
@@ -29,7 +29,7 @@ const mapStateToProps = (state) => {
     } = state;
 
     let returnValue = {
-        tokenValidationData,
+        tokenValidationData: tokenValidationData?.userSearchResponse?.userDetails?.[0],
     };
     return returnValue;
 };
@@ -64,7 +64,7 @@ const AuthorityCardItemMain = (props) => {
         const tokenNo = form.getFieldValue('authorityEmployeeTokenNo');
         const isPreviousTokenNo = record?.authorityEmployeeTokenNo === tokenNo;
 
-        if (!isPreviousTokenNo && !tokenValidationData?.employeeName) {
+        if (!isPreviousTokenNo && !tokenValidationData?.manufacturerUserName) {
             return showGlobalNotification({ notificationType: 'warning', title: 'Warning', message: 'Validate token to proceed' });
         }
 
@@ -73,7 +73,7 @@ const AuthorityCardItemMain = (props) => {
                 setDocumentTypesList((prev) => {
                     const updatedData = [...prev];
                     const index = updatedData?.findIndex((el) => el?.authorityEmployeeTokenNo === record?.authorityEmployeeTokenNo);
-                    updatedData?.splice(index, 1, { ...data, effectiveTo: data?.effectiveTo, effectiveFrom: data?.effectiveFrom, authorityEmployeeTokenNo: tokenValidationData?.authorityEmployeeTokenNo || data?.authorityEmployeeTokenNo, employeeName: tokenValidationData?.employeeName || data?.employeeName, isModified: !!data?.id });
+                    updatedData?.splice(index, 1, { ...data, effectiveTo: data?.effectiveTo, effectiveFrom: data?.effectiveFrom, authorityEmployeeTokenNo: tokenValidationData?.employeeCode || data?.authorityEmployeeTokenNo, employeeName: tokenValidationData?.manufacturerUserName || data?.employeeName, isModified: !!data?.id });
                     return updatedData;
                 });
                 forceUpdate();
@@ -108,61 +108,47 @@ const AuthorityCardItemMain = (props) => {
 
     return (
         <>
-            <Card className={styles.viewCardSize}>
-                <Row align="middle">
+            <Card className={viewMode ? styles.cardView : ''}>
+                <Row align="middle" className={!viewMode ? styles.marB20 : ''}>
                     <Col xs={colLeft} sm={colLeft} md={colLeft} lg={colLeft} xl={colLeft} xxl={colLeft}>
-                        <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.textWrap}>
                             <Text type="secondary">Authority : {getCodeValue(authTypeDropdownData, record?.authorityTypeCode)}</Text>
                         </Col>
-
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                             <Text strong>{record?.employeeName + ' | ' + record?.authorityEmployeeTokenNo}</Text>
                         </Col>
-
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.textWrap}>
                             <Text type="secondary">From - {record?.effectiveFrom ? dayjs(record?.effectiveFrom).format('DD-MM-YYYY') : '-'}</Text>
                             <Divider type="vertical" />
                             <Text type="secondary">To - {record?.effectiveTo ? dayjs(record?.effectiveTo).format('DD-MM-YYYY') : '-'}</Text>
                         </Col>
                     </Col>
                     {!viewMode && (
-                        <Col xs={colRight} sm={colRight} md={colRight} lg={colRight} xl={colRight} xxl={colRight}>
-                            <Row justify="end">
-                                {!isEditing ? (
-                                    <>
-                                        <Col xs={6} sm={6} md={6} lg={6} xl={6} xxl={6}>
-                                            <Button disabled={isBtnDisabled} type="link" icon={<FiEdit />} onClick={() => onEdit(record)} />
-                                        </Col>
-                                        {!record?.id > 0 && (
-                                            <Col xs={4} sm={4} md={4} lg={4} xl={4} xxl={4}>
-                                                <Button disabled={isBtnDisabled} onClick={() => handleDelete(record)} type="link" icon={<FiTrash />}></Button>
-                                            </Col>
-                                        )}
-                                    </>
-                                ) : (
-                                    <>
-                                        <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                            <Button type="link" onClick={onUpdate}>
-                                                Save
-                                            </Button>
-                                        </Col>
-                                        <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                                            <Button type="link" onClick={() => onCancel()}>
-                                                Cancel
-                                            </Button>
-                                        </Col>
-                                    </>
-                                )}
-                            </Row>
+                        <Col xs={colRight} sm={colRight} md={colRight} lg={colRight} xl={colRight} xxl={colRight} className={styles.buttonsGroupRight}>
+                            {!isEditing ? (
+                                <>
+                                    <Button disabled={isBtnDisabled} type="link" icon={<FiEdit />} onClick={() => onEdit(record)} />
+                                    {!record?.id > 0 && <Button disabled={isBtnDisabled} onClick={() => handleDelete(record)} type="link" icon={<FiTrash />}></Button>}
+                                </>
+                            ) : (
+                                <>
+                                    <Button type="link" onClick={onUpdate}>
+                                        Save
+                                    </Button>
+                                    <Button type="link" onClick={() => onCancel()}>
+                                        Cancel
+                                    </Button>
+                                </>
+                            )}
                         </Col>
                     )}
                 </Row>
 
                 {isEditing && (
-                    <Fragment>
+                    <>
                         <Divider />
                         <AddEditForm handleFormValueChange={handleFormValueChange} tokenValidate={tokenValidate} setEmployeeName={setEmployeeName} setTokenValidate={setTokenValidate} employeeName={employeeName} record={record} onFinish={onFinish} form={form} setDocumentTypesList={setDocumentTypesList} documentTypesList={documentTypesList} isEditing={isEditing} selectedValueOnUpdate={selectedValueOnUpdate} setselectedValueOnUpdate={setselectedValueOnUpdate} errorMessage={errorMessage} setErrorMessage={setErrorMessage} formType={formType} setFormType={setFormType} isMainForm={isMainForm} />
-                    </Fragment>
+                    </>
                 )}
             </Card>
         </>

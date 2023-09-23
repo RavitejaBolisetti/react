@@ -15,24 +15,27 @@ import { bindActionCreators } from 'redux';
 
 import { supplierInvoiceDataActions } from 'store/actions/data/vehicleReceipt/supplierInvoice';
 import { showGlobalNotification } from 'store/actions/notification';
+import { PARAM_MASTER } from 'constants/paramMaster';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
+            ConfigurableParameterEditing: { filteredListData: typeData = [] },
             VehicleReceipt: {
                 SupplierInvoice: { isLoaded: isDataLoaded = false, isLoading, data: supplierInvoiceData = [] },
             },
         },
     } = state;
 
-    const moduleTitle = 'OTF Details';
+    const moduleTitle = 'Booking Details';
 
     let returnValue = {
         userId,
         isDataLoaded,
+        supplierTypeData: typeData[PARAM_MASTER?.PARTY_TYPE?.id],
 
         supplierInvoiceData: supplierInvoiceData?.supplierAndInvoiceDetails,
         isLoading,
@@ -56,7 +59,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const SupplierInvoiceDetailsMasterBase = (props) => {
-    const { typeData } = props;
+    const { typeData, supplierTypeData } = props;
     const { userId, buttonData, setButtonData, showGlobalNotification, section, fetchList, listShowLoading, isDataLoaded, supplierInvoiceData, isLoading } = props;
     const { form, selectedId, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick } = props;
     const [exchangeValue, setexchangeValue] = useState(false);
@@ -126,6 +129,7 @@ const SupplierInvoiceDetailsMasterBase = (props) => {
         onFinishFailed,
         fetchList,
         typeData,
+        supplierTypeData,
         buttonData,
         setButtonData,
 
@@ -139,9 +143,15 @@ const SupplierInvoiceDetailsMasterBase = (props) => {
 
     const viewProps = {
         typeData,
+        supplierTypeData,
         formData: supplierInvoiceData,
         styles,
         isLoading,
+    };
+
+    const buttonProps = {
+        ...props,
+        buttonData: { ...props.buttonData, editBtn: false, nextBtn: true, saveBtn: false },
     };
 
     return (
@@ -158,7 +168,7 @@ const SupplierInvoiceDetailsMasterBase = (props) => {
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <VehicleReceiptFormButton {...props} />
+                    <VehicleReceiptFormButton {...buttonProps} />
                 </Col>
             </Row>
         </Form>

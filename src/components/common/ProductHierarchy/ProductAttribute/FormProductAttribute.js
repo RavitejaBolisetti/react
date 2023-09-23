@@ -4,11 +4,12 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { Input, Form, Col, Row, Button, Select, Divider } from 'antd';
+import { Input, Form, Col, Row, Button, Select } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validateRequiredInputField, validateRequiredSelectField, duplicateProductValidator } from 'utils/validation';
 
+import styles from 'assets/sass/app.module.scss';
 function FormProductAttribute(props) {
     const { attributeForm, isVisible, productHierarchyAttributeData, onAttributeFormFinish, formEdit, editForm, skuAttributes } = props;
     const [changeValue, setChangeValue] = useState(null);
@@ -26,7 +27,6 @@ function FormProductAttribute(props) {
 
     return (
         <>
-            <Divider />
             <Form form={formEdit ? editForm : attributeForm} id="myForm" autoComplete="off" layout="vertical" onFinish={onAttributeFormFinish} onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
@@ -49,7 +49,7 @@ function FormProductAttribute(props) {
                     </Col>
 
                     {isVisible && (
-                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.marB20}>
                             <Button icon={<PlusOutlined />} type="primary" htmlType="submit">
                                 Add
                             </Button>

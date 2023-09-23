@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { InvoiceDetailsMaster } from '@components/Sales/OTF/InvoiceDetails/InvoiceDetailsMaster';
 import customRender from '@utils/test-utils';
 import createMockStore from '__mocks__/store';
@@ -22,7 +22,7 @@ const props = {
     displaySection: { invoiceInformation: true, deliveryInformation: true },
 };
 
-describe('OTF Invoice Details render', () => {
+describe('Booking Invoice Details render', () => {
     it('should render table details page', async () => {
         customRender(<InvoiceDetailsMaster {...props} />);
     });

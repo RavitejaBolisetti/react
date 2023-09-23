@@ -17,7 +17,7 @@ import { AddEditForm } from './AddEditForm';
 
 import { CreditDebitNoteFormButton } from '../CreditDebitFormButton';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 const mapStateToProps = (state) => {
     const {

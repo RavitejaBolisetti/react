@@ -7,9 +7,11 @@ import { Row, Col, Collapse, Divider, Button, Typography } from 'antd';
 import { expandIcon } from 'utils/accordianExpandIcon';
 import { PlusOutlined } from '@ant-design/icons';
 import { HiOutlineCurrencyRupee } from 'react-icons/hi';
-import styles from 'components/common/Common.module.css';
-import PaymentFormContainer from './PaymentDetails/PaymentFormContainer';
+
 import ViewList from './ViewList';
+import PaymentFormContainer from './PaymentDetails/PaymentFormContainer';
+
+import styles from 'assets/sass/app.module.scss';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
@@ -58,7 +60,7 @@ const PaymentAddEdit = (props) => {
                                 <PaymentFormContainer {...props} />
                             </>
                         )}
-
+                        <Divider />
                         <ViewList {...props} />
                     </>
                 </Panel>

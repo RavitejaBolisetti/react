@@ -8,18 +8,16 @@ import { connect } from 'react-redux';
 import { Row, Col, Form } from 'antd';
 import { bindActionCreators } from 'redux';
 
+import { AddEditForm, ViewDetail } from 'components/Sales/Common/FinananceDetails';
+
 import { otfFinanceDetailDataActions } from 'store/actions/data/otf/financeDetail';
 import { financeLovDataActions } from 'store/actions/data/otf/financeLov';
 import { showGlobalNotification } from 'store/actions/notification';
 
-import { OTFFormButton } from '../OTFFormButton';
-import { OTFStatusBar } from '../utils/OTFStatusBar';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
-import { AddEditForm } from './AddEditForm';
-import { ViewDetail } from './ViewDetail';
-import styles from 'components/common/Common.module.css';
-
 import { convertDateToCalender } from 'utils/formatDateTime';
+
+import styles from 'assets/sass/app.module.scss';
 
 const mapStateToProps = (state) => {
     const {
@@ -67,8 +65,8 @@ const mapDispatchToProps = (dispatch) => ({
 
 export const FinananceDetailsMasterBase = (props) => {
     const { saveData, resetData, fetchList, userId, listShowLoading, financeData, isFinanceLovDataLoaded, setFormActionType, isFinanceLovLoading, FinanceLovData, fetchFinanceLovList, listFinanceLovShowLoading, section, isLoading } = props;
-
     const { typeData, form, selectedOrderId, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION } = props;
+    const { formKey, onFinishCustom = undefined, FormActionButton, StatusBar, pageType } = props;
 
     const [isFormVisible, setIsFormVisible] = useState(false);
 
@@ -80,21 +78,6 @@ export const FinananceDetailsMasterBase = (props) => {
     const VIEW_ACTION = FROM_ACTION_TYPE?.VIEW;
 
     const [formData, setFormData] = useState();
-
-    const ValidKeys = {
-        financier: null,
-        branch: null,
-        fileNumber: null,
-        loanAmount: null,
-        emi: null,
-        financeDone: null,
-        financierCode: null,
-        doReceived: null,
-        doNumber: null,
-        financeArrangedBy: null,
-        printHypothecationDetails: null,
-        doDate: null,
-    };
 
     useEffect(() => {
         if (financeData) {
@@ -117,7 +100,7 @@ export const FinananceDetailsMasterBase = (props) => {
             key: 'otfNumber',
             title: 'otfNumber',
             value: selectedOrderId,
-            name: 'OTF Number',
+            name: 'Booking Number',
         },
     ];
 
@@ -147,23 +130,29 @@ export const FinananceDetailsMasterBase = (props) => {
         const recordId = financeData?.id || '';
         const data = { ...values, id: recordId, otfNumber: selectedOrderId, doDate: values?.doDate };
 
-        const onSuccess = (res) => {
-            form.resetFields();
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, onErrorAction, userId });
-            handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
-        };
+        if (onFinishCustom) {
+            onFinishCustom({ key: formKey, values: data });
+            handleButtonClick({ buttonAction: NEXT_ACTION });
+            setButtonData({ ...buttonData, formBtnActive: false });
+        } else {
+            const onSuccess = (res) => {
+                form.resetFields();
+                showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+                fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, onErrorAction, userId });
+                handleButtonClick({ record: res?.data, buttonAction: NEXT_ACTION });
+            };
 
-        const requestData = {
-            data: data,
-            method: financeData?.id ? 'put' : 'post',
-            setIsLoading: listShowLoading,
-            userId,
-            onError: onErrorAction,
-            onSuccess,
-        };
+            const requestData = {
+                data: data,
+                method: financeData?.id ? 'put' : 'post',
+                setIsLoading: listShowLoading,
+                userId,
+                onError: onErrorAction,
+                onSuccess,
+            };
 
-        saveData(requestData);
+            saveData(requestData);
+        }
     };
 
     const onFinishFailed = () => {};
@@ -199,6 +188,7 @@ export const FinananceDetailsMasterBase = (props) => {
         buttonData,
         setButtonData,
         handleButtonClick,
+        pageType,
     };
 
     const viewProps = {
@@ -207,6 +197,7 @@ export const FinananceDetailsMasterBase = (props) => {
         isLoading,
         FinanceLovData,
         typeData,
+        pageType,
     };
 
     return (
@@ -218,16 +209,15 @@ export const FinananceDetailsMasterBase = (props) => {
                             <h2>{section?.title}</h2>
                         </Col>
                         <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                            <OTFStatusBar status={props?.selectedOrder?.orderStatus} />
+                            {StatusBar && <StatusBar status={props?.selectedOrder?.orderStatus} />}
                         </Col>
                     </Row>
-
                     {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} />}
                 </Col>
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <OTFFormButton {...props} />
+                    <FormActionButton {...props} />
                 </Col>
             </Row>
         </Form>

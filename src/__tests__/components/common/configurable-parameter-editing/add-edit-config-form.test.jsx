@@ -63,14 +63,11 @@ describe('Render AddEditForm Component', () => {
         const controlId = screen.getByRole('combobox', { name: 'Control ID', exact: false });
         fireEvent.change(controlId, { target: { value: 1 } });
 
-
         const controlGrp = screen.getByRole('combobox', { name: 'Control Group', exact: false });
         fireEvent.change(controlGrp, { target: { value: 2 } });
 
-
         const controlDesc = screen.getByRole('textbox', { name: 'Control Description', exact: false });
         fireEvent.change(controlDesc, { target: { value: 3 } });
-
     });
 
     it('Save & Add New Button click should work', () => {
@@ -89,5 +86,17 @@ describe('Render AddEditForm Component', () => {
         act(() => {
             fireEvent.click(editBtn);
         });
+
+        const closeBtn = screen.getAllByRole('button', { name: 'Close' });
+        act(() => {
+            fireEvent.click(closeBtn[0]);
+        });
+    });
+
+    it('test for paramaeter types', () => {
+        customRender(<FormWrapper {...props} hanndleEditData={jest.fn()} parameterType={'D'} />);
+    });
+    it('test2', () => {
+        customRender(<FormWrapper {...props} hanndleEditData={jest.fn()} parameterType={'N'} />);
     });
 });

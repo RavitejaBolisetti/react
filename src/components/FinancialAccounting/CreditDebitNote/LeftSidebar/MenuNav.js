@@ -7,7 +7,8 @@ import React from 'react';
 import { Timeline } from 'antd';
 import { BsRecordCircleFill } from 'react-icons/bs';
 import { FaCheckCircle } from 'react-icons/fa';
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+
 import { CREDIT_DEBIT_SECTION } from 'constants/CreditDebitSection';
 
 const MenuNav = (props) => {

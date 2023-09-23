@@ -4,10 +4,12 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { tblPrepareColumns, tblStatusColumn, tblActionColumn } from 'utils/tableColumn';
+import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
+import { getCodeValue } from 'utils/getCodeValue';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
-export const tableColumn = (handleButtonClick, page, pageSize) => {
+export const tableColumn = ({ handleButtonClick, page, pageSize, typeData }) => {
     const tableColumn = [];
     tableColumn.push(
         tblPrepareColumns({
@@ -24,6 +26,9 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             title: 'Title',
             dataIndex: 'title',
             width: '8%',
+            render: (__, value) => {
+                return checkAndSetDefaultValue(getCodeValue(typeData, value?.title));
+            },
         }),
         tblPrepareColumns({
             title: 'Owner Name',
@@ -43,7 +48,7 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
 
         tblStatusColumn({ styles, width: '8%' }),
 
-        tblActionColumn({ handleButtonClick, styles, width: '8%', fixed: 'right' })
+        tblActionColumn({ handleButtonClick, styles, width: '8%', canEdit: false })
     );
 
     return tableColumn;

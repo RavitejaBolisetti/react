@@ -17,7 +17,7 @@ import { CustomerFormButton } from '../../CustomerFormButton';
 
 import { formatDate } from 'utils/formatDateTime';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 import dayjs from 'dayjs';
 
@@ -38,7 +38,7 @@ const mapStateToProps = (state) => {
 
         isFamilyLoaded,
         isFamilyLoading,
-        relationData: relationData && relationData[PARAM_MASTER.FAMLY_RELTN.id],
+        relationData: relationData && relationData[PARAM_MASTER.REL_TYPE.id],
         familyData,
         familySearchData,
         isSearchLoading,

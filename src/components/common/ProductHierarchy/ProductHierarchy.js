@@ -4,34 +4,32 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect, useState } from 'react';
+import { Row, Col, Empty, Form, Input } from 'antd';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Col, Form, Row, Input, Empty } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
-import { HierarchyFormButton } from 'components/common/Button';
-import styles from 'components/common/Common.module.css';
+
 import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
 import { hierarchyAttributeMasterDataActions } from 'store/actions/data/hierarchyAttributeMaster';
 import { manufacturerOrgHierarchyDataActions } from 'store/actions/data/manufacturerOrgHierarchy';
 import { showGlobalNotification } from 'store/actions/notification';
 import { AddEditForm } from './AddEditForm';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
-import { ChangeHistory } from './ChangeHistory';
+import { PRODUCT_HIERARCHY_TYPE } from './ProductHierarchyType';
 import LeftPanel from '../LeftPanel';
 import TreeSelectField from '../TreeSelectField';
-import { FaHistory } from 'react-icons/fa';
 import { ViewProductDetail } from './ViewProductDetail';
 import { LANGUAGE_EN } from 'language/en';
 import { DisableParent } from './ProductHierarchyUtils';
 
+import styles from 'assets/sass/app.module.scss';
 const { Search } = Input;
-
 const mapStateToProps = (state) => {
     const {
         auth: { userId },
         data: {
-            ProductHierarchy: { isLoading, isLoaded: isDataLoaded = false, data: productHierarchyData = [], changeHistoryVisible, attributeData: productHierarchyAttributeData = [], organizationId = '' },
+            ConfigurableParameterEditing: { filteredListData: typeData = [] },
+            ProductHierarchy: { isLoading, isLoaded: isDataLoaded = false, data: productHierarchyData = [], changeHistoryVisible, attributeData: productHierarchyAttributeData = [], organizationId = '', detailData: productDetail = [] },
             HierarchyAttributeMaster: { isLoaded: isDataAttributeLoaded, data: attributeData = [] },
             ManufacturerOrgHierarchy: { isLoaded: isDataOrgLoaded = false, data: manufacturerOrgHierarchyData = [] },
         },
@@ -43,6 +41,7 @@ const mapStateToProps = (state) => {
     const moduleTitle = 'Product Detail';
     const viewTitle = 'Hierarchy Details';
     let returnValue = {
+        typeData,
         isLoading,
         collapsed,
         userId,
@@ -58,6 +57,7 @@ const mapStateToProps = (state) => {
         unFilteredAttributeData: attributeData,
         productHierarchyAttributeData,
         organizationId,
+        productDetail,
     };
     return returnValue;
 };
@@ -69,16 +69,15 @@ const mapDispatchToProps = (dispatch) => ({
             fetchList: productHierarchyDataActions.fetchList,
             saveData: productHierarchyDataActions.saveData,
             listShowLoading: productHierarchyDataActions.listShowLoading,
+            //listShowLoading: productHierarchyDataActions.showLoading,
             changeHistoryModelOpen: productHierarchyDataActions.changeHistoryModelOpen,
             setSelectedOrganizationId: productHierarchyDataActions.setSelectedOrganizationId,
-
             cardBtnDisableAction: productHierarchyDataActions.cardBtnDisableAction,
             fetchListHierarchyAttributeName: productHierarchyDataActions.fetchAttributeNameList,
             listAttibuteShowLoading: productHierarchyDataActions.listShowLoading,
             resetData: productHierarchyDataActions.resetData,
-
+            fetchProductDetail: productHierarchyDataActions.fetchDetail,
             fetchOrgList: manufacturerOrgHierarchyDataActions.fetchList,
-
             hierarchyAttributeFetchList: hierarchyAttributeMasterDataActions.fetchList,
             hierarchyAttributeSaveData: hierarchyAttributeMasterDataActions.saveData,
             hierarchyAttributeListShowLoading: hierarchyAttributeMasterDataActions.listShowLoading,
@@ -88,9 +87,39 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData, userId, isDataLoaded, productHierarchyData, fetchList, hierarchyAttributeFetchList, saveData, isChangeHistoryVisible, changeHistoryModelOpen, listShowLoading, isDataAttributeLoaded, attributeData, hierarchyAttributeListShowLoading, showGlobalNotification, unFilteredAttributeData, fetchListHierarchyAttributeName, productHierarchyAttributeData, fetchOrgList, isDataOrgLoaded, manufacturerOrgHierarchyData, organizationId, setSelectedOrganizationId, resetData }) => {
+export const ProductHierarchyMain = ({
+    typeData,
+    isLoading,
+    moduleTitle,
+    viewTitle,
+    skulist,
+    skuData,
+    userId,
+    isDataLoaded,
+    productHierarchyData,
+    fetchList,
+    hierarchyAttributeFetchList,
+    saveData,
+    isChangeHistoryVisible,
+    changeHistoryModelOpen,
+    listShowLoading,
+    isDataAttributeLoaded,
+    attributeData,
+    hierarchyAttributeListShowLoading,
+    showGlobalNotification,
+    unFilteredAttributeData,
+    fetchListHierarchyAttributeName,
+    productHierarchyAttributeData,
+    fetchOrgList,
+    isDataOrgLoaded,
+    manufacturerOrgHierarchyData,
+    organizationId,
+    setSelectedOrganizationId,
+    resetData,
+    fetchProductDetail,
+    productDetail,
+}) => {
     const [form] = Form.useForm();
-    const [isCollapsableView, setCollapsableView] = useState(true);
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [skuAttributes, setSKUAttributes] = useState([]);
@@ -98,17 +127,17 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState([]);
     const [formActionType, setFormActionType] = useState('');
     const [formData, setFormData] = useState([]);
-    const [selectedTreeData, setSelectedTreeData] = useState([]);
     const [isChecked, setIsChecked] = useState(formData?.isActive === 'Y' ? true : false);
     const [isFormBtnActive, setFormBtnActive] = useState(false);
     const [searchValue, setSearchValue] = useState('');
-    const [isChildAllowed, setIsChildAllowed] = useState(true);
     const [showProductAttribute, setShowProductAttribute] = useState(false);
     const defaultBtnVisiblity = { editBtn: false, childBtn: false, siblingBtn: false, enable: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const [disabledEdit, setDisabledEdit] = useState(false);
-    const organizationFieldNames = { title: 'manufactureOrgShrtName', key: 'id', children: 'subManufactureOrg' };
-    const fieldNames = { title: 'prodctShrtName', key: 'id', children: 'subProdct' };
+    const [viewData, setViewData] = useState([]);
+    const organizationFieldNames = { title: 'manufactureOrgShrtName', key: 'manufactureOrgCode', children: 'subManufactureOrg' };
+    const fieldNames = { title: 'prodctShrtName', key: 'prodctCode', children: 'subProdct' };
+
     const onCloseAction = () => {
         form.resetFields();
         setIsFormVisible(false);
@@ -128,13 +157,6 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     }, []);
 
     useEffect(() => {
-        if (userId) {
-            hierarchyAttributeFetchList({ setIsLoading: hierarchyAttributeListShowLoading, userId, type: 'Product Hierarchy', onErrorAction });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId]);
-
-    useEffect(() => {
         if (!isDataOrgLoaded && userId) {
             fetchOrgList({ setIsLoading: listShowLoading, userId, onCloseAction, onErrorAction });
         }
@@ -143,7 +165,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
 
     useEffect(() => {
         if (organizationId && userId) {
-            fetchList({ setIsLoading: listShowLoading, userId, onCloseAction, id: organizationId, onErrorAction });
+            fetchList({ setIsLoading: listShowLoading, userId, onCloseAction, extraParams: [{ key: 'manufactureOrgCode', value: organizationId }], onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, organizationId]);
@@ -154,16 +176,12 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     }, [manufacturerOrgHierarchyData]);
 
     useEffect(() => {
-        if (userId) {
-            fetchListHierarchyAttributeName({ userId, setIsLoading: listShowLoading, onErrorAction });
+        if (productDetail?.length > 0) {
+            const parentName = flatternData?.find((e) => e?.data?.prodctCode === productDetail?.[0]?.parntProdctCode)?.data?.prodctShrtName;
+            setViewData({ ...productDetail[0], parentName: parentName });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId]);
-
-    useEffect(() => {
-        setCollapsableView(!isChildAllowed);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isChildAllowed]);
+    }, [productDetail]);
 
     const onChange = (e) => {
         setSearchValue(e.target.value);
@@ -175,7 +193,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     const generateList = (data) => {
         for (let i = 0; i < data?.length; i++) {
             const node = data[i];
-            const { id: key } = node;
+            const { [fieldNames?.key]: key } = node;
             dataList.push({
                 key,
                 data: node,
@@ -190,26 +208,26 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     const flatternData = generateList(productHierarchyData);
 
     const handleTreeViewClick = (keys) => {
+        const selectedProductData = flatternData?.find((i) => i?.key === keys[0])?.data;
         form.resetFields();
         setFormData([]);
-        setSelectedTreeData([]);
+        setViewData([]);
 
-        if (keys && keys?.length > 0) {
-            setFormActionType(FROM_ACTION_TYPE.VIEW);
-            const formData = flatternData.find((i) => keys[0] === i.key);
+        if (keys && selectedProductData?.attributeType === PRODUCT_HIERARCHY_TYPE?.MODEL?.KEY) {
+            const extraParams = [
+                {
+                    key: 'prodctCode',
+                    value: keys,
+                },
+            ];
 
-            if (formData) {
-                const isChildAllowed = unFilteredAttributeData?.find((attribute) => attribute.id === formData?.data?.attributeKey)?.isChildAllowed;
-                formData && setFormData({ ...formData?.data, isChildAllowed });
-
-                setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: isChildAllowed, siblingBtn: true });
-                const hierarchyAttribueName = unFilteredAttributeData?.find((attribute) => attribute.id === formData?.data?.attributeKey)?.hierarchyAttribueName;
-                const prodctShrtName = flatternData.find((i) => formData?.data?.parntProdctId === i.key)?.data?.prodctShrtName;
-                setSelectedTreeData({ ...formData?.data, hierarchyAttribueName, parentName: prodctShrtName });
-            } else {
-                setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
-            }
+            fetchProductDetail({ setIsLoading: () => {}, userId, onCloseAction, extraParams, onErrorAction });
+        } else {
+            const parentName = selectedProductData && selectedProductData?.parntProdctCode && flatternData?.find((e) => e?.key === selectedProductData?.parntProdctCode)?.data?.prodctShrtName;
+            setFormData({ ...selectedProductData });
+            setViewData({ ...selectedProductData, parentName: parentName });
         }
+
         setSelectedTreeKey(keys);
     };
 
@@ -219,12 +237,6 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         }
         setSelectedTreeSelectKey(value);
         setFormBtnActive(true);
-    };
-
-    const handleAdd = () => {
-        setFormBtnActive(false);
-        setIsFormVisible(true);
-        handleButtonClick(FROM_ACTION_TYPE.SIBLING);
     };
 
     const handleButtonClick = (type) => {
@@ -237,13 +249,6 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         setIsFormVisible(true);
         setFormActionType(type);
         setFormBtnActive(false);
-    };
-
-    const handleAttributeChange = (value) => {
-        const selectedAttribute = attributeData?.find((i) => i.id === value);
-        selectedAttribute.hierarchyAttribueCode === 'SKU' ? setShowProductAttribute(true) : setShowProductAttribute(false);
-        setIsChildAllowed(selectedAttribute?.isChildAllowed);
-        selectedAttribute.hierarchyAttribueCode === 'SKU' && form.setFieldValue('adAmHirchyAttrbtMstSk', value);
     };
 
     const handleResetBtn = () => {
@@ -275,26 +280,6 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         const onSuccess = (res) => {
             form.resetFields();
             setButtonData({ ...defaultBtnVisiblity, editBtn: true, childBtn: true, siblingBtn: true });
-
-            if (selectedTreeData?.subProdct?.length > 0 && formActionType === FROM_ACTION_TYPE.EDIT && data?.active === false) {
-                showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Not allowed to disabled' });
-            } else if (res?.data) {
-                showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-                if (organizationId && userId) {
-                    fetchList({ setIsLoading: listShowLoading, userId, onCloseAction, id: organizationId, onErrorAction });
-
-                    const formData = res;
-
-                    const hierarchyAttribueName = attributeData?.find((attribute) => attribute.id === formData?.data?.attributeKey)?.hierarchyAttribueName;
-                    const prodctShrtName = flatternData.find((i) => formData?.data?.parntProdctId === i.key)?.data?.prodctLongName;
-                    formData && setSelectedTreeData({ ...formData?.data, hierarchyAttribueName, parentName: prodctShrtName });
-
-                    setSelectedTreeKey([res?.data?.id]);
-                    setFormActionType(FROM_ACTION_TYPE.VIEW);
-                    setFormBtnActive(false);
-                    setIsFormVisible(false);
-                }
-            }
         };
         const onError = (message) => {
             showGlobalNotification({ message });
@@ -317,12 +302,12 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         isTreeViewVisible,
         handleTreeViewVisiblity,
         selectedTreeKey,
-        //selectedTreeSelectKey,
         fieldNames,
         handleTreeViewClick,
         treeData: productHierarchyData,
         searchValue,
         setSearchValue,
+        isLoading,
     };
 
     const formProps = {
@@ -342,7 +327,6 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         skuData,
         fieldNames,
         setSelectedTreeSelectKey,
-        handleAttributeChange,
         isVisible: isFormVisible,
         onCloseAction: () => {
             setIsFormVisible(false);
@@ -359,7 +343,6 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         setSKUAttributes,
         productHierarchyAttributeData,
         showProductAttribute,
-        selectedTreeData,
         setShowProductAttribute,
         showGlobalNotification,
         disabledEdit,
@@ -369,7 +352,6 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     const viewProps = {
         buttonData,
         attributeData,
-        selectedTreeData,
         handleButtonClick,
         styles,
         viewTitle,
@@ -377,6 +359,8 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
         setSKUAttributes,
         disabledEdit,
         setDisabledEdit,
+        viewData,
+        typeData,
     };
 
     const leftCol = organizationId && productHierarchyData.length > 0 ? 14 : 24;
@@ -387,6 +371,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
     const sameParentAndChildWarning = LANGUAGE_EN.GENERAL.HIERARCHY_SAME_PARENT_AND_CHILD_WARNING;
 
     const title = 'Hierarchy';
+
     return (
         <>
             <div className={styles.contentHeaderBackground}>
@@ -407,13 +392,13 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
                             </Form.Item>
                         </Form>
                     </Col>
-                    {organizationId && (
+                    {/* {organizationId && (
                         <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.buttonsGroupRight}>
                             <Button icon={<FaHistory />} type="primary" className={styles.verticallyCentered} onClick={changeHistoryModelOpen}>
                                 Change History
                             </Button>
                         </Col>
-                    )}
+                    )} */}
                 </Row>
             </div>
             <Row gutter={20} span={24}>
@@ -437,13 +422,13 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
                                     )
                                 }
                             >
-                                {organizationId && (
+                                {/* {organizationId && (
                                     <div>
                                         <Button icon={<PlusOutlined />} type="primary" onClick={handleAdd}>
                                             Add
                                         </Button>
                                     </div>
-                                )}
+                                )} */}
                             </Empty>
                         </div>
                     ) : (
@@ -453,14 +438,12 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
 
                 {productHierarchyData.length > 0 && (
                     <Col xs={24} sm={24} md={rightCol} lg={rightCol} xl={rightCol}>
-                        {isCollapsableView ? <></> : null}
-
-                        {selectedTreeData && selectedTreeData?.id ? (
+                        {viewData && viewData?.prodctCode ? (
                             <>
                                 <ViewProductDetail {...viewProps} />
-                                <div className={styles.viewContainerFooter}>
+                                {/* <div className={styles.viewContainerFooter}>
                                     <HierarchyFormButton {...viewProps} />
-                                </div>
+                                </div> */}
                             </>
                         ) : (
                             <div className={styles.emptyContainer}>
@@ -481,7 +464,7 @@ export const ProductHierarchyMain = ({ moduleTitle, viewTitle, skulist, skuData,
                     </Col>
                 )}
             </Row>
-            <ChangeHistory />
+            {/* <ChangeHistory /> */}
             <AddEditForm {...formProps} />
         </>
     );

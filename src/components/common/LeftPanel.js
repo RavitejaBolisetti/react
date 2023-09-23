@@ -5,12 +5,14 @@
  */
 import { Tree } from 'antd';
 import { useMemo, useState, useEffect } from 'react';
-import styles from './TreeView.module.css';
+
+import styles from './TreeView.module.scss';
+import { InputSkeleton } from './Skeleton';
 
 const LeftPanel = (props) => {
     const { selectedTreeKey, callOnForm = false, treeData, fieldNames, handleTreeViewClick, isOpenInModal, checkedKeys, expendedKeys: defaultExpandedKeys = [] } = props;
-    const { isTreeViewVisible, checkable, onCheck = () => {}, selectable=true } = props;
-    const { searchValue, setSearchValue, disableCheckbox = false } = props;
+    const { isTreeViewVisible, checkable, onCheck = () => {}, selectable = true } = props;
+    const { isLoading = false, searchValue, setSearchValue, disabled = false } = props;
 
     const [expandedKeys, setExpandedKeys] = useState([]);
     const [autoExpandParent, setAutoExpandParent] = useState(true);
@@ -92,29 +94,27 @@ const LeftPanel = (props) => {
                 if (item[fieldNames?.children]) {
                     return {
                         title,
-                        disableCheckbox,
+                        disabled: item?.disabled ? item?.disabled : false,
                         key: item[fieldNames?.key],
                         children: loop(item[fieldNames?.children]),
                     };
                 }
                 return {
                     title,
-                    disableCheckbox,
+                    disabled: item?.disabled ? item?.disabled : false,
                     key: item[fieldNames?.key],
                 };
             });
         return loop(treeData);
-    }, [searchValue, fieldNames, treeData, disableCheckbox]);
+    }, [searchValue, fieldNames, treeData]);
 
     const mainClass = callOnForm ? styles.scrollTreeDataInner : styles.scrollTreeData;
-    // <Tree onCheck={onCheck} checkedKeys={checkedKeys} checkable={checkable} onSelect={handleTreeViewClick} showLine={true} showIcon={true} onExpand={onExpand} treeData={finalTreeData} />
+
     return (
         <div className={`${styles.leftpanel} ${panelParentClass}`}>
             {isTreeViewVisible ? (
                 <div className={isOpenInModal ? styles.modalView : ''}>
-                    <div className={mainClass}>
-                        <Tree onCheck={onCheck} checkable={checkable} checkedKeys={checkedKeys} expandedKeys={expandedKeys} selectedKeys={selectedTreeKey} onSelect={handleTreeViewClick} showLine={true} showIcon={true} onExpand={onExpand} autoExpandParent={autoExpandParent} treeData={finalTreeData} selectable={selectable}/>
-                    </div>
+                    <div className={mainClass}>{isLoading ? <InputSkeleton width={300} height={25} count={10} /> : <Tree onCheck={onCheck} checkable={checkable} checkedKeys={checkedKeys} expandedKeys={expandedKeys} selectedKeys={selectedTreeKey} onSelect={handleTreeViewClick} showLine={true} showIcon={true} onExpand={onExpand} autoExpandParent={autoExpandParent} treeData={finalTreeData} selectable={selectable} />}</div>
                 </div>
             ) : undefined}
         </div>

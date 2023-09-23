@@ -3,13 +3,16 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Collapse, Divider } from 'antd';
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl';
 import { CopytoClipboard } from 'utils/CopytoClipboard';
 import dayjs from 'dayjs';
+import { addToolTip } from 'utils/customMenuLink';
+import { AiOutlineInfoCircle } from 'react-icons/ai';
+import { dateFormatView } from 'utils/formatDateTime';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 const { Panel } = Collapse;
 
@@ -27,16 +30,8 @@ const expandIcon = ({ isActive }) =>
     );
 
 const VehicleDetailCard = (props) => {
-    const { ProfileData, typeData } = props;
+    const { ProfileData, typeData, tooltTipText, VehicleLovCodeData, record } = props;
     const findStatus = (key) => typeData?.find((element) => element?.key === key)?.value || 'NA';
-    const [clipBoardClick, setClipboardClick] = useState(false);
-    useEffect(() => {
-        if (clipBoardClick)
-            setTimeout(() => {
-                setClipboardClick(false);
-            }, 500);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [clipBoardClick]);
 
     return (
         <Collapse bordered={true} defaultActiveKey={[1]} expandIcon={expandIcon} collapsible="icon">
@@ -54,7 +49,7 @@ const VehicleDetailCard = (props) => {
             >
                 <Divider />
                 <div className={styles.detailCardText}>
-                    Checklist Date: <span>{ProfileData?.checklistDate ? dayjs(ProfileData?.checklistDate)?.format('DD MMM YYYY') : 'NA'}</span>
+                    Checklist Date: <span>{ProfileData?.checklistDate ? dayjs(ProfileData?.checklistDate)?.format(dateFormatView) : 'NA'}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
@@ -66,7 +61,7 @@ const VehicleDetailCard = (props) => {
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    GRN Date: <span>{ProfileData?.grnDate ? dayjs(ProfileData?.grnDate)?.format('DD MMM YYYY') : 'NA'}</span>
+                    GRN Date: <span>{ProfileData?.grnDate ? dayjs(ProfileData?.grnDate)?.format(dateFormatView) : 'NA'}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
@@ -78,7 +73,11 @@ const VehicleDetailCard = (props) => {
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    MODEL: <span>{ProfileData?.model || 'NA'}</span>
+                    MODEL:
+                    <span>
+                        {record?.modelName ? record?.modelName : 'NA'}
+                        {addToolTip(tooltTipText, 'bottom', '#D3EDFE', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}
+                    </span>
                 </div>
             </Panel>
         </Collapse>

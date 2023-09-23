@@ -11,7 +11,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import { SearchBox } from 'components/utils/SearchBox';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 export default function AppliedAdvanceFilter(props) {
     const { showAddButton = true, advanceFilter = false, title, handleButtonClick, filterString, extraParams, removeFilter, handleResetFilter, setAdvanceSearchVisible, setFilterString, vpoFilter = false, typeData } = props;
@@ -22,8 +22,8 @@ export default function AppliedAdvanceFilter(props) {
         searchForm,
         filterString,
         setFilterString,
-        placeholder: 'Search By PO Number',
-        singleFieldKey:'purchaseOrderNumber'
+        placeholder: 'Search By Vehicle Purchase Order',
+        singleFieldKey: 'purchaseOrderNumber',
     };
     return (
         <>

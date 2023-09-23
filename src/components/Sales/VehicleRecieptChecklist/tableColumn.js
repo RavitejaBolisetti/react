@@ -4,9 +4,9 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
-import { convertDateTime } from 'utils/formatDateTime';
+import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 
-import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
 
 export const tableColumn = ({ handleButtonClick, page, pageSize, actionButtonVisibility }) => {
     const tableColumn = [
@@ -19,7 +19,7 @@ export const tableColumn = ({ handleButtonClick, page, pageSize, actionButtonVis
             title: 'Receipt Date',
             dataIndex: 'grnDate',
             width: '14%',
-            render: (text) => (text ? convertDateTime(text, 'DD MMM YYYY') : 'NA'),
+            render: (text) => (text ? convertDateTime(text, dateFormatView) : 'NA'),
         }),
 
         tblPrepareColumns({

@@ -6,29 +6,34 @@
 import { tblPrepareColumns } from 'utils/tableColumn';
 import { convertDateMonthYear } from 'utils/formatDateTime';
 
-export const tableColumnSearchOTF = () => {
+export const tableColumnSearchOTF = (sorter) => {
     const tableColumn = [
         tblPrepareColumns({
-            title: 'OTF No.',
+            title: 'Booking No.',
             dataIndex: 'otfNumber',
             width: '20%',
+            render: (_, record) => record?.bookingNumber || record?.otfNumber,
+            sorter,
         }),
         tblPrepareColumns({
-            title: 'OTF Date',
+            title: 'Booking Date',
             dataIndex: 'otfDate',
             render: (text) => (text ? convertDateMonthYear(text) : ''),
             width: '15%',
+            sorter,
         }),
         tblPrepareColumns({
             title: 'Customer Name',
             dataIndex: 'customerName',
             width: '20%',
+            sorter,
         }),
         tblPrepareColumns({
             title: 'CPD',
             dataIndex: 'cpd',
             render: (text) => (text ? convertDateMonthYear(text) : ''),
             width: '40%',
+            sorter,
         }),
     ];
 

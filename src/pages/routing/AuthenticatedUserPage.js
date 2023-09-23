@@ -6,10 +6,11 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { DashboardPage } from 'pages/dashboard';
+import * as routing from 'constants/routing';
+
 import {
     ProductHierarchyPage,
     UserManagementPage,
-    UserManagementPageNew,
     HierarchyAttributeMasterPage,
     ManufacturerAdministrativeHierarchyPage,
     ManufacturerOrgHierarchyPage,
@@ -40,16 +41,16 @@ import {
     LessorCustomerCreationPage,
 } from 'pages/common';
 
-import { TaxChargesPage, TaxChargesCategoryPage, AccountCategoryPage, VehicleModelTaxChargesCategoryPage, DocumentTypeOtherChargesPage, CreditDebitNoteMasterPage,GSTIRNAuthenticationPage } from 'pages/FinancialAccounting';
-import { OTFMasterPage, VehicleDetailMasterPage, VehiclePriceMasterPage, VehicleReceiptMasterPage, RSMApprovalPage, VehiclePurchaseOrderMasterPage, VehicleRecieptChecklistMaster, OtfSoMappingMasterPage, ReceiptMasterPage, VehicleAllotmentMasterPage } from 'pages/Sales';
+import { TaxChargesPage, TaxChargesCategoryPage, AccountCategoryPage, VehicleModelTaxChargesCategoryPage, DocumentTypeOtherChargesPage, CreditDebitNoteMasterPage, GSTIRNAuthenticationPage, ChartOfAccountPage } from 'pages/FinancialAccounting';
 
-import * as routing from 'constants/routing';
+import { OTFMasterPage, VehicleDetailMasterPage, OtfBlockMasterPage, VehiclePriceMasterPage, VehicleReceiptMasterPage, RSMApprovalPage, VehiclePurchaseOrderMasterPage, VehicleRecieptChecklistMaster, OtfSoMappingMasterPage, ReceiptMasterPage, VehicleAllotmentMasterPage, VehicleAllotmentPriorityMasterPage, DeliveryNoteInvoiceCancellationPage, DigitalSignatureMasterPage, HoPriceMappingMasterPage, VehicleInvoiceMasterPage, VehicleTrackingPage, OtfSoMappingUnmappingMasterPage, StockTransferIndentMasterPage, VehicleDeliveryNoteMasterPage } from 'pages/Sales';
+
 import { SplashPage } from 'pages/splash';
-
 import { ProfilePage, SettingPage, FaqPage, TrainingPage } from 'pages/user';
 import { BiReportPage } from 'pages/report/BiReport/BiReportPage';
 import { PaginatedReportPage } from 'pages/report/PaginatedReport/PaginatedReportPage';
 import { EmbeddedReportPage } from 'pages/report/EmbeddedReport/EmbeddedReportPage';
+import { EmbeddedDocumentPage } from 'pages/report/EmbeddedDocument/EmbeddedDocumentPage';
 import { URLFilterReportPage } from 'pages/report/URLFilterReport/URLFilterReportPage';
 
 import { CMSPage } from 'pages/cms';
@@ -65,7 +66,6 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_COMMON_PRODUCT_HIERARCHY} element={<ProductHierarchyPage />} />
             <Route path={routing.ROUTING_COMMON_CONFIG_PARAM_EDIT} element={<ConfigurableParameterEditingPage />} />
             <Route path={routing.ROUTING_COMMON_USER_MANAGEMENT} element={<UserManagementPage />} />
-            <Route path={routing.ROUTING_COMMON_USER_MANAGEMENT_NEW} element={<UserManagementPageNew />} />
             <Route path={routing.ROUTING_COMMON_HIERARCHY_ATTRIBUTE_MASTER} element={<HierarchyAttributeMasterPage />} exact />
             <Route path={routing.ROUTING_COMMON_MANUFACTURER_ADMINISTRATIVE_HIERARCHY} element={<ManufacturerAdministrativeHierarchyPage />} />
 
@@ -104,6 +104,7 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_REPORT_BI_REPORT} element={<BiReportPage />} exact />
             <Route path={routing.ROUTING_REPORT_PAGINATED_REPORT} element={<PaginatedReportPage />} exact />
             <Route path={routing.ROUTING_REPORT_EMBEDDED_REPORT} element={<EmbeddedReportPage />} exact />
+            <Route path={routing.ROUTING_REPORT_EMBEDDED_DOCUMENT} element={<EmbeddedDocumentPage />} exact />
             <Route path={routing.ROUTING_REPORT_URL_FILTER_REPORT} element={<URLFilterReportPage />} exact />
 
             <Route path={routing.ROUTING_USER_SETTING} element={<SettingPage />} exact />
@@ -116,16 +117,22 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_USER_DISCLAIMER} element={<CMSPage />} exact />
             <Route path={routing.ROUTING_USER_CONTACT} element={<CMSPage />} exact />
             <Route path={routing.ROUTING_OTF} element={<OTFMasterPage />} exact />
-            {/* <Route path={routing.ROUTING_VECHILE_DETAILS} element={<VehicleDetailMasterPage />} exact /> */}
             <Route path={routing.ROUTING_VECHILE_PURCHASE_ORDER} element={<VehiclePurchaseOrderMasterPage />} exact />
 
             <Route path={routing.ROUTING_RSM_APPROVAL} element={<RSMApprovalPage />} exact />
+            <Route path={routing.ROUTING_DELIVERY_NOTE_INVOICE_CANELLATION} element={<DeliveryNoteInvoiceCancellationPage />} exact />
+            <Route path={routing.ROUTING_VEHICLE_TRACKING} element={<VehicleTrackingPage />} exact />
             <Route path={routing.ROUTING_VEHICLE_DETAILS} element={<VehicleDetailMasterPage />} exact />
             <Route path={routing.ROUTING_VEHICLE_PRICE_MASTER} element={<VehiclePriceMasterPage />} exact />
             <Route path={routing.ROUTING_VEHICLE_RECEIPT} element={<VehicleReceiptMasterPage />} exact />
             <Route path={routing.ROUTING_RECEIPTS} element={<ReceiptMasterPage />} exact />
+            <Route path={routing.ROUTING_VEHICLE_INVOICE_GENERATION} element={<VehicleInvoiceMasterPage />} exact />
+            <Route path={routing.ROUTING_VEHICLE_DELIVERY_NOTE} element={<VehicleDeliveryNoteMasterPage />} exact />
+
             <Route path={routing.ROUTING_REPORT_OTF_REPORTS} element={<OtfReportsPage />} />
             <Route path={routing.ROUTING_OTF_SO_MAPPING_CONTROL_MASTER} element={<OtfSoMappingMasterPage />} />
+            <Route path={routing.ROUTING_OTF_BLOCK_MASTER} element={<OtfBlockMasterPage />} />
+            <Route path={routing.ROUTING_SO_MAPPING_UNMAPPING} element={<OtfSoMappingUnmappingMasterPage />} />
 
             <Route path={routing.ROUTING_FINANCIAL_ACCOUNTING_TAX_CHARGES} element={<TaxChargesPage />} exact />
             <Route path={routing.ROUTING_FINANCIAL_ACCOUNTING_TAX_CHARGES_CATEGORY} element={<TaxChargesCategoryPage />} exact />
@@ -135,10 +142,15 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_CREDIT_DEBIT_NOTE} element={<CreditDebitNoteMasterPage />} exact />
             <Route path={routing.ROUTING_DOCUMENT_TYPE} element={<DocumentTypeOtherChargesPage />} exact />
             <Route path={routing.ROUTING_VEHICLE_RECIEPT_CHECKLIST} element={<VehicleRecieptChecklistMaster />} exact />
+            <Route path={routing.ROUTING_VEHICLE_VEHICLE_ALLOTMENT_PRIORITY_MASTER} element={<VehicleAllotmentPriorityMasterPage />} exact />
+            <Route path={routing.ROUTING_DIGITAL_SIGNATURE_MAPPING} element={<DigitalSignatureMasterPage />} exact />
+            <Route path={routing.ROUTING_FINANCIAL_ACCOUNTING_CHART_OF_ACCOUNT} element={<ChartOfAccountPage />} exact />
 
             <Route path={routing.ROUTING_GST_IRN_AUTHENTICATION} element={<GSTIRNAuthenticationPage />} exact />
 
 
+            <Route path={routing.ROUTING_HO_PRICE_MAPPING} element={<HoPriceMappingMasterPage />} exact />
+            <Route path={routing.STOCK_TRANSFER_INDENT} element={<StockTransferIndentMasterPage />} exact />
         </Routes>
     );
 };

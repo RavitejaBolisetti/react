@@ -70,7 +70,7 @@ const baseAPICall = (params) => {
                             handleErrorMessage({ onError, displayErrorTitle, errorTitle: response?.data?.errorTitle, errorMessage: response?.data?.errors || response?.data?.data?.responseMessage });
                         }
                     } else if (response?.statusCode === 401) {
-                        onUnAuthenticated && onUnAuthenticated(response?.errors || unAuthorizedMessage);
+                        onUnAuthenticated(response?.errors || unAuthorizedMessage);
                     } else if (response.statusCode === 403) {
                         onError && onError(response?.errors || unAuthorizedMessage);
                     } else if (response.statusCode === 500) {

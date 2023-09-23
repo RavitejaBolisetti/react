@@ -7,11 +7,10 @@ import React, { useEffect } from 'react';
 import { Col, Input, Form, Row, DatePicker, Card, Select } from 'antd';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 
-import { validateRequiredInputField, validateMobileNoField } from 'utils/validation';
+import { validateMobileNoField } from 'utils/validation';
 import { formattedCalendarDate, dateFormat } from 'utils/formatDateTime';
 
 import { CustomerListMaster } from 'components/utils/CustomerListModal';
-import styles from 'components/common/Common.module.css';
 
 const AddEditFormMain = (props) => {
     const { form, formData, typeData, fnSetData } = props;
@@ -29,8 +28,8 @@ const AddEditFormMain = (props) => {
 
     return (
         <Card>
-            <CustomerListMaster fnSetData={fnSetData} />
-            <Row gutter={20} className={styles.marT20}>
+            <CustomerListMaster fnSetData={fnSetData} defaultOption={'customerName'} />
+            <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name="registrationNumber" label="Vehicle Registration Number" initialValue={formData?.registrationNumber}>
                         <Input disabled={true} maxLength={30} placeholder={preparePlaceholderText('Vehicle Registration Number')} />
@@ -64,7 +63,7 @@ const AddEditFormMain = (props) => {
                 </Col>
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name="mobileNumber" label="Mobile Number" initialValue={formData?.mobileNumber} rules={[validateRequiredInputField('Mobile Number'), validateMobileNoField('Mobile Number'), { min: 10, message: 'Phone number must be minimum 10 digits Long.' }]}>
+                    <Form.Item name="mobileNumber" label="Mobile Number" initialValue={formData?.mobileNumber} rules={[validateMobileNoField('Mobile Number'), { min: 10, message: 'Phone number must be minimum 10 digits Long.' }]}>
                         <Input disabled={true} maxLength={6} placeholder={preparePlaceholderText('Vehicle Registration Number')} />
                     </Form.Item>
                 </Col>

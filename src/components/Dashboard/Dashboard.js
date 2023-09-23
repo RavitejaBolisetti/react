@@ -4,6 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
+import moment from 'moment';
 import { connect } from 'react-redux';
 import imdimg from 'assets/img/img_md.png';
 import { Row, Col, Card, Button } from 'antd';
@@ -12,9 +13,10 @@ import { BsFillBarChartFill, BsCalendarEvent } from 'react-icons/bs';
 import { BiLineChart } from 'react-icons/bi';
 import { TbSpeakerphone } from 'react-icons/tb';
 import { FaChartPie, FaChartArea, FaClock, FaChalkboard, FaBookOpen } from 'react-icons/fa';
+
 import { convertDateTime } from 'utils/formatDateTime';
-import styles from './Dashboard.module.css';
-import moment from 'moment';
+
+import styles from './Dashboard.module.scss';
 
 const mapStateToProps = (state) => {
     const {
