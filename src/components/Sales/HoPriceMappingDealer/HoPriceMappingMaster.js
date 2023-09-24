@@ -355,7 +355,8 @@ export const HoPriceMappingMasterBase = (props) => {
     };
 
     useEffect(() => {
-        if (!formActionType?.addMode && hoPriceDetailData?.modelDealerMapResponse?.length && productHierarchyData?.length) {
+        if (!formActionType?.addMode && productHierarchyData?.length) {
+            //&& hoPriceDetailData?.modelDealerMapResponse?.length
             setCheckedKeys([]);
             setEditProductData(productHierarchyData?.map((i) => disableExceptModelGroup(i)));
         }
