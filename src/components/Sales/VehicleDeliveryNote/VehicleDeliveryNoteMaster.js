@@ -80,6 +80,15 @@ const mapDispatchToProps = (dispatch) => ({
             setFilterString: vehicleDeliveryNoteDataActions.setFilter,
             cancelDeliveryNote: cancelVehicleDeliveryNoteDataActions.saveData,
             cancelShowLoading: cancelVehicleDeliveryNoteDataActions.listShowLoading,
+            cancelChallan: challanCancelVehicleDeliveryNoteDataActions.saveData,
+
+            fetchCancelInfoList: infoCancelVehicleDeliveryNoteDataActions.fetchList,
+            resetInfoData: infoCancelVehicleDeliveryNoteDataActions.reset,
+            listCancelInfoShowLoading: infoCancelVehicleDeliveryNoteDataActions.listShowLoading,
+
+            fetchChallanCancelInfoList: infoChallanVehicleDeliveryNoteDataActions.fetchList,
+            listChallanCancelInfoShowLoading: infoChallanVehicleDeliveryNoteDataActions.listShowLoading,
+            resetChallanInfoData: infoChallanVehicleDeliveryNoteDataActions.reset,
 
             cancelChallan: challanCancelVehicleDeliveryNoteDataActions.saveData,
 
