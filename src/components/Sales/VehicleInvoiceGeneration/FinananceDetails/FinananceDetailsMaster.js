@@ -12,7 +12,6 @@ import { AddEditForm, ViewDetail } from 'components/Sales/Common/FinananceDetail
 
 import { financeLovDataActions } from 'store/actions/data/otf/financeLov';
 import { showGlobalNotification } from 'store/actions/notification';
-import { convertDateToCalender } from 'utils/formatDateTime';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -56,16 +55,16 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const FinananceDetailsMasterBase = (props) => {
-    const { userId, formData, isFinanceLovDataLoaded, setFormActionType, isFinanceLovLoading, FinanceLovData, fetchFinanceLovList, listFinanceLovShowLoading, section, isLoading } = props;
-    const { typeData, form, selectedOrderId, formActionType, handleFormValueChange, handleButtonClick, NEXT_ACTION } = props;
+    const { userId, formData: financeData, isFinanceLovDataLoaded, setFormActionType, isFinanceLovLoading, FinanceLovData, fetchFinanceLovList, listFinanceLovShowLoading, section, isLoading } = props;
+    const { typeData, form, selectedOrderId, formActionType, handleFormValueChange, buttonData, handleButtonClick, NEXT_ACTION } = props;
     const { formKey, onFinishCustom = undefined, FormActionButton, pageType } = props;
 
-    const [isFormVisible, setIsFormVisible] = useState(false);
+    const [formData, setFormData] = useState();
 
-    const defaultBtnVisiblity = { editBtn: false, saveBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: false, formBtnActive: false };
-    const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
-
-    console.log('formDataInvoiceData', formData);
+    useEffect(() => {
+        setFormData(financeData);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [financeData]);
 
     useEffect(() => {
         if (userId && !isFinanceLovDataLoaded) {
@@ -80,36 +79,21 @@ export const FinananceDetailsMasterBase = (props) => {
 
         onFinishCustom({ key: formKey, values: data });
         handleButtonClick({ buttonAction: NEXT_ACTION });
-        setButtonData({ ...buttonData, formBtnActive: false });
-    };
-
-    const onFinishFailed = () => {};
-
-    const onCloseAction = () => {
-        form.resetFields();
-        setIsFormVisible(false);
-        setButtonData({ ...defaultBtnVisiblity });
     };
 
     const formProps = {
         ...props,
+        formData,
         typeData,
         form,
         formActionType,
         setFormActionType,
         onFinish,
-        onFinishFailed,
-        isVisible: isFormVisible,
-        onCloseAction,
         isFinanceLovDataLoaded,
         isFinanceLovLoading,
         FinanceLovData,
         fetchFinanceLovList,
         listFinanceLovShowLoading,
-
-        buttonData,
-        setButtonData,
-        handleButtonClick,
         pageType,
     };
 
@@ -122,8 +106,13 @@ export const FinananceDetailsMasterBase = (props) => {
         pageType,
     };
 
+    const buttonProps = {
+        ...props,
+        buttonData: { ...buttonData, formBtnActive: true },
+    };
+
     return (
-        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish}>
             <Row gutter={20} className={styles.drawerBodyRight}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                     <Row>
@@ -136,7 +125,7 @@ export const FinananceDetailsMasterBase = (props) => {
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <FormActionButton {...props} />
+                    <FormActionButton {...buttonProps} />
                 </Col>
             </Row>
         </Form>

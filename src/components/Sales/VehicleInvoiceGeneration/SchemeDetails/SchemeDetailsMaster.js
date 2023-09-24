@@ -10,7 +10,7 @@ import { AddEditForm, ViewDetail } from 'components/Sales/Common/SchemeDetails';
 import styles from 'assets/sass/app.module.scss';
 
 export const SchemeDetailsMaster = (props) => {
-    const { formData, onCloseAction, formActionType } = props;
+    const { buttonData, formData, onCloseAction, formActionType } = props;
     const { form, section, isLoading, NEXT_ACTION, handleButtonClick } = props;
     const { FormActionButton } = props;
 
@@ -31,14 +31,17 @@ export const SchemeDetailsMaster = (props) => {
     const formProps = {
         ...props,
         styles,
-        schemeData: formData,
-        buttonData: { ...props.buttonData, editBtn: false, nextBtn: true, saveBtn: false, formBtnActive: true },
+        formData,
     };
 
     const onFinish = (values) => {
         handleButtonClick({ buttonAction: NEXT_ACTION });
     };
 
+    const buttonProps = {
+        ...props,
+        buttonData: { ...buttonData, formBtnActive: true },
+    };
     return (
         <Form layout="vertical" autoComplete="off" form={form} onFinish={onFinish} data-testid="logRole">
             <Row gutter={20} className={styles.drawerBodyRight}>
@@ -53,7 +56,7 @@ export const SchemeDetailsMaster = (props) => {
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <FormActionButton {...formProps} />
+                    <FormActionButton {...buttonProps} />
                 </Col>
             </Row>
         </Form>

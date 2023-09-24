@@ -6,7 +6,6 @@
 import React, { useState } from 'react';
 import { Col, Input, Form, Row, Card, Space } from 'antd';
 
-import { validateRequiredInputField } from 'utils/validation';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
 
 import styles from 'assets/sass/app.module.scss';
@@ -43,7 +42,7 @@ const AddEditFormMain = (props) => {
                                     {(customer || soldByDealer) && (
                                         <>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                <Form.Item initialValue={formData?.customerType} label="Customer Type" name="customerType">
+                                                <Form.Item label="Customer Type" name="customerType">
                                                     <Input placeholder={preparePlaceholderText('Customer Type')} disabled={true} />
                                                 </Form.Item>
                                             </Col>
@@ -64,7 +63,7 @@ const AddEditFormMain = (props) => {
                                                 </Form.Item>
                                             </Col>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                                <Form.Item initialValue={formData?.city} label="City" name="customerCity">
+                                                <Form.Item label="City" name="customerCity">
                                                     <Input placeholder={preparePlaceholderText('City')} disabled={true} />
                                                 </Form.Item>
                                             </Col>

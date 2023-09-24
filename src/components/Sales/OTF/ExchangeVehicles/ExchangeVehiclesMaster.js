@@ -315,7 +315,6 @@ const ExchangeVehiclesBase = (props) => {
         if (VehicleLovCodeData && isProductHierarchyDataLoaded) {
             setModelGroup((prev) => ({ ...prev, newModelGroup: VehicleLovCodeData?.[0]?.modelGroupCode }));
         }
-        console.log('VehicleLovCodeData');
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [VehicleLovCodeData]);
 

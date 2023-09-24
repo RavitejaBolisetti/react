@@ -16,6 +16,8 @@ export const TRANSFER_ACTION = FROM_ACTION_TYPE?.TRANSFER_OTF;
 export const ALLOT = FROM_ACTION_TYPE?.ALLOT;
 export const UNALLOT = FROM_ACTION_TYPE?.UNALLOT;
 export const DELETE_ACTION = FROM_ACTION_TYPE?.DELETE;
+export const CANCELLN_APPROVE = FROM_ACTION_TYPE?.CANCELLN_APPROVE;
+export const CANCELLN_REJECT = FROM_ACTION_TYPE?.CANCELLN_REJECT;
 
 export const btnVisiblity = ({ defaultBtnVisiblity, buttonAction, saveAndNewBtn = true, orderStatus = false }) => {
     let btnVisibility = defaultBtnVisiblity;
@@ -44,6 +46,8 @@ export const btnVisiblity = ({ defaultBtnVisiblity, buttonAction, saveAndNewBtn 
             case OTF_STATUS?.DELIVERY_NOTE?.key:
                 return { ...btnVisibility, editBtn: false };
             case OTF_STATUS?.CANCELLED?.key:
+            case OTF_STATUS?.PENDING_FOR_CANCELLATION?.key:
+                return { ...btnVisibility, pendingCancellationOTFBtn: true };
             case OTF_STATUS?.DELIVERED?.key:
                 return { ...btnVisibility, editBtn: false };
             default:

@@ -25,7 +25,6 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             OTF: {
-                VehicleDetails: { isLoaded: isDataLoaded = false, isLoading, data: vehicleDetailData = [] },
                 VehicleDetailsServiceLov: { isFilteredListLoaded: isVehicleServiceLoaded = false, isLoading: isVehicleServiceLoading, filteredListData: vehicleServiceData },
             },
             ProductHierarchy: { isFilteredListLoaded: isProductHierarchyDataLoaded = false, productCode = undefined, isLoading: isProductHierarchyLoading, filteredListData: productAttributeData = [], isLoaded: isProductDataLoaded = false, data: productHierarchyData = [] },
@@ -36,8 +35,7 @@ const mapStateToProps = (state) => {
 
     let returnValue = {
         userId,
-        isDataLoaded,
-        isLoading,
+
         moduleTitle,
         productAttributeData,
         isProductHierarchyDataLoaded,
@@ -83,11 +81,11 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const VehicleDetailsMasterMain = (props) => {
-    const { vehicleDetailData, isVehicleLovDataLoading, resetProductLov, productAttributeData, fetchProductLovCode, isLoading, saveData, ProductLovLoading } = props;
+    const { formData: vehicleDetailData, isVehicleLovDataLoading, resetProductLov, productAttributeData, fetchProductLovCode, isLoading, saveData, ProductLovLoading } = props;
     const { isProductHierarchyDataLoaded, typeData, fetchList, resetData, userId, listShowLoading, showGlobalNotification } = props;
     const { form, selectedOrderId, section, buttonData, setButtonData, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick } = props;
     const { refreshData, setRefreshData, vehicleServiceData, fetchServiceLov, serviceLoading, selectedOrder, setSelectedOrder } = props;
-    const { formKey, onFinishCustom = undefined, FormActionButton, StatusBar } = props;
+    const { formKey, onFinishCustom = undefined, FormActionButton } = props;
     const { isProductDataLoaded, fetchProductList, productCode, productHierarchyDataList } = props;
     const [productModelCode, setProductModelCode] = useState();
 
@@ -101,8 +99,6 @@ const VehicleDetailsMasterMain = (props) => {
     const [isReadOnly, setIsReadOnly] = useState();
     const [productHierarchyData, setProductHierarchyData] = useState([]);
 
-    console.log('vehicleDetailDataLocal', vehicleDetailData);
-
     const onSuccessAction = (res) => {
         //showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
@@ -111,17 +107,8 @@ const VehicleDetailsMasterMain = (props) => {
         resetData();
         showGlobalNotification({ message: message });
     };
-    const extraParams = [
-        {
-            key: 'otfNumber',
-            title: 'otfNumber',
-            value: selectedOrderId,
-            name: 'Booking Number',
-        },
-    ];
 
     const loadDependependentData = () => {
-        // fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
         fetchServiceLov({ setIsLoading: serviceLoading, userId, onErrorAction });
     };
 
@@ -211,27 +198,26 @@ const VehicleDetailsMasterMain = (props) => {
     useEffect(() => {
         if (vehicleDetailData) {
             vehicleDetailData?.optionalServices && setoptionsServiceModified(vehicleDetailData?.optionalServices);
-            setProductModelCode(vehicleDetailData?.modelCode);
             setFormData(vehicleDetailData);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [vehicleDetailData]);
 
     useEffect(() => {
-        if (productModelCode) {
+        if (vehicleDetailData?.modelCode) {
             const extraParams = [
                 {
                     key: 'prodctCode',
                     title: 'prodctCode',
-                    value: productModelCode,
+                    value: vehicleDetailData?.modelCode,
                     name: 'Product Code',
                 },
             ];
-            setFormData({ ...formData, modelCode: productModelCode });
+            setProductModelCode(vehicleDetailData?.model)
             fetchProductLovCode({ setIsLoading: ProductLovLoading, userId, onErrorAction, extraParams });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [productModelCode]);
+    }, [vehicleDetailData?.modelCode]);
 
     const onFinish = (values) => {
         if (onFinishCustom) {
@@ -327,6 +313,9 @@ const VehicleDetailsMasterMain = (props) => {
         productModelCode,
         setProductModelCode,
         productHierarchyData,
+        showPrintDiscount: true,
+        ShowPOandSOdetails: false,
+        showAvailaibleStock: false,
     };
 
     const viewProps = {
@@ -342,6 +331,11 @@ const VehicleDetailsMasterMain = (props) => {
         isLoading,
     };
 
+    const buttonProps = {
+        ...props,
+        buttonData: { ...buttonData, formBtnActive: true },
+    };
+
     return (
         <Form layout="vertical" autoComplete="off" form={form} onValuesChange={handleFormValueChange} onFieldsChange={handleFormValueChange} onFinish={onFinish} onFinishFailed={onFinishFailed} data-testid="logRole">
             <Row gutter={20} className={styles.drawerBodyRight}>
@@ -351,12 +345,12 @@ const VehicleDetailsMasterMain = (props) => {
                             <h2>{section?.title}</h2>
                         </Col>
                     </Row>
-                    {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} viewOnly={true} />}
+                    {formActionType?.viewMode ? <ViewDetail {...viewProps} /> : <AddEditForm {...formProps} formData={{ ...formData, printDiscount: formData?.printDiscount ? true : false }} viewOnly={true} />}
                 </Col>
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <FormActionButton {...props} />
+                    <FormActionButton {...buttonProps} />
                 </Col>
             </Row>
         </Form>

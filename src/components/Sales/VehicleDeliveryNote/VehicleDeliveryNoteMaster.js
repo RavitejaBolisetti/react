@@ -28,7 +28,11 @@ import { BASE_URL_VEHICLE_DELIVERY_NOTE_GENERATE as customURL, BASE_URL_VEHICLE_
 
 import { FilterIcon } from 'Icons';
 import VehicleDeliveryNoteFilter from './VehicleDeliveryNoteFilter';
+import { validateDeliveryNote } from 'components/Sales/VehicleDeliveryNote/utils/validateDeliveryNote';
 import { CancelDeliveryNote } from './CancelDeliveryNote';
+import { challanCancelVehicleDeliveryNoteDataActions } from 'store/actions/data/vehicleDeliveryNote/challanCancel';
+import { infoCancelVehicleDeliveryNoteDataActions } from 'store/actions/data/vehicleDeliveryNote/infoCancelDeliveryNote';
+import { infoChallanVehicleDeliveryNoteDataActions } from 'store/actions/data/vehicleDeliveryNote/infoChallanCancel';
 
 const mapStateToProps = (state) => {
     const {
@@ -37,6 +41,8 @@ const mapStateToProps = (state) => {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
             VehicleDeliveryNote: {
                 VehicleDeliveryNoteSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString },
+                CancelInfoDeliveryNote: { isLoaded: isCancelInfoDataLoaded = false, isLoading: isCancelInfoLoading, data: cancelInfo = {} },
+                CancelInfoChallanDeliveryNote: { isLoaded: isCancelChallanInfoDataLoaded = false, isLoading: isCancelChallanInfoLoading, data: cancelChallanInfo = {} },
             },
         },
     } = state;
@@ -51,9 +57,16 @@ const mapStateToProps = (state) => {
         isSearchLoading,
         isSearchDataLoaded,
         filterString,
+
+        isCancelInfoDataLoaded,
+        isCancelInfoLoading,
+        cancelInfo,
+
+        isCancelChallanInfoDataLoaded,
+        isCancelChallanInfoLoading,
+        cancelChallanInfo,
     };
     return returnValue;
-    // console.log('data?.invoiceId', data?.invoiceId);
 };
 
 const mapDispatchToProps = (dispatch) => ({
@@ -67,6 +80,15 @@ const mapDispatchToProps = (dispatch) => ({
             setFilterString: vehicleDeliveryNoteDataActions.setFilter,
             cancelDeliveryNote: cancelVehicleDeliveryNoteDataActions.saveData,
             cancelShowLoading: cancelVehicleDeliveryNoteDataActions.listShowLoading,
+            cancelChallan: challanCancelVehicleDeliveryNoteDataActions.saveData,
+
+            fetchCancelInfoList: infoCancelVehicleDeliveryNoteDataActions.fetchList,
+            resetInfoData: infoCancelVehicleDeliveryNoteDataActions.reset,
+            listCancelInfoShowLoading: infoCancelVehicleDeliveryNoteDataActions.listShowLoading,
+
+            fetchChallanCancelInfoList: infoChallanVehicleDeliveryNoteDataActions.fetchList,
+            listChallanCancelInfoShowLoading: infoChallanVehicleDeliveryNoteDataActions.listShowLoading,
+            resetChallanInfoData: infoChallanVehicleDeliveryNoteDataActions.reset,
 
             showGlobalNotification,
         },
@@ -77,7 +99,7 @@ const mapDispatchToProps = (dispatch) => ({
 export const VehicleDeliveryNoteMasterBase = (props) => {
     const { data, receiptDetailData, userId, resetData, fetchList, listShowLoading, saveData } = props;
     const { typeData, receiptType, partySegmentType, paymentModeType, documentType, moduleTitle, totalRecords, showGlobalNotification } = props;
-    const { filterString, setFilterString, deliveryStatusList, cancelDeliveryNote, cancelShowLoading } = props;
+    const { filterString, setFilterString, deliveryStatusList, cancelDeliveryNote, cancelShowLoading, cancelChallan, isCancelInfoDataLoaded, isCancelInfoLoading, cancelInfo, fetchCancelInfoList, listCancelInfoShowLoading, isCancelChallanInfoDataLoaded, isCancelChallanInfoLoading, cancelChallanInfo, fetchChallanCancelInfoList, listChallanCancelInfoShowLoading, resetChallanInfoData, resetInfoData } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [deliveryStatus, setDeliveryStatus] = useState(QUERY_BUTTONS_CONSTANTS.PENDING.key);
 
@@ -98,7 +120,6 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
     const [isLastSection, setLastSection] = useState(false);
     const [retailMonth, setRetailMonth] = useState(false);
     const [yesRetailMonth, setYesRetailMonth] = useState(false);
-    const [receipt, setReceipt] = useState('');
 
     const [apportionList, setApportionList] = useState([]);
 
@@ -112,17 +133,18 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [cancelDeliveryNoteVisible, setCancelDeliveryNoteVisible] = useState(false);
     const [previousSection, setpreviousSection] = useState(1);
-    const [statusBar, setStatusBar] = useState(false);
     const [actionButtonVisiblity, setActionButtonVisiblity] = useState({ canAdd: true, canView: false, canEdit: false });
     const [requestPayload, setRequestPayload] = useState({ deliveryNoteInvoiveDetails: {}, financeDetails: {}, insuranceDto: {}, deliveryNoteAddOnDetails: {}, deliveryNoteCheckListDetails: [''] });
     const [challanRequestPayload, setChallanRequestPayload] = useState({ deliveryNoteInvoiveDetails: {}, insuranceDto: {}, deliveryNoteAddOnDetails: {}, deliveryNoteCheckListDetails: [''] });
+    const [toolTipContent, setToolTipContent] = useState();
 
-    // console.log('final requestPayload', requestPayload);
     const [page, setPage] = useState({ pageSize: 10, current: 1 });
     const [selectedOtfNumber, setSelectedOtfNumber] = useState();
     const [customerIdValue, setCustomerIdValue] = useState();
     const [additionalReportParams, setAdditionalReportParams] = useState();
     const [isReportVisible, setReportVisible] = useState();
+    const [chassisNoValue, setChassisNoValue] = useState();
+    const [engineChallanNumber, setEngineChallanNumber] = useState('');
 
     const dynamicPagination = true;
 
@@ -147,8 +169,8 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
 
     const [formData, setFormData] = useState([]);
 
-    const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+    const onSuccessAction = () => {
+        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
         searchForm.resetFields();
         setShowDataLoading(false);
@@ -158,6 +180,44 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         showGlobalNotification({ message });
         setShowDataLoading(false);
     };
+
+    useEffect(() => {
+        if (soldByDealer) {
+            if (userId && isCancelInfoDataLoaded && cancelInfo) {
+                setToolTipContent(
+                    <div>
+                        <p>
+                            Cancelled Date - <span>{dayjs(cancelInfo?.cancelledDate)?.format('DD MMM YYYY') ?? 'Na'}</span>
+                        </p>
+                        <p>
+                            Cancelled By - <span>{cancelInfo?.cancelledBy ?? 'Na'}</span>
+                        </p>
+                        <p>
+                            Remarks for Cancellation - <span>{cancelInfo?.remarks ?? 'Na'}</span>
+                        </p>
+                    </div>
+                );
+            }
+        } else {
+            if (userId && isCancelChallanInfoDataLoaded && cancelChallanInfo) {
+                setToolTipContent(
+                    <div>
+                        <p>
+                            Cancelled Date - <span>{dayjs(cancelChallanInfo?.cancelledDate)?.format('DD MMM YYYY') ?? 'Na'}</span>
+                        </p>
+                        <p>
+                            Cancelled By - <span>{cancelChallanInfo?.cancelledBy ?? 'Na'}</span>
+                        </p>
+                        <p>
+                            Remarks for Cancellation - <span>{cancelChallanInfo?.remarks ?? 'Na'}</span>
+                        </p>
+                    </div>
+                );
+            }
+        }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [cancelInfo, isCancelInfoDataLoaded, isCancelChallanInfoDataLoaded, cancelChallanInfo, userId]);
 
     const extraParams = useMemo(() => {
         return [
@@ -273,6 +333,45 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
     }, []);
 
     useEffect(() => {
+        if (userId && selectedOrder) {
+            if (soldByDealer) {
+                const cancelInfoExtraParams = [
+                    {
+                        key: 'invoiceNumber',
+                        title: 'invoiceNumber',
+                        value: selectedOrder?.invoiceId,
+                        name: 'Invoice Number',
+                    },
+                    {
+                        key: 'deliveryNoteNumber',
+                        title: 'deliveryNoteNumber',
+                        value: selectedOrder?.vehicleDeliveryNote,
+                        name: 'Delivery Note Number',
+                    },
+                ];
+                fetchCancelInfoList({ setIsLoading: listCancelInfoShowLoading, userId, extraParams: cancelInfoExtraParams });
+            } else {
+                const cancelChallanInfoExtraParams = [
+                    {
+                        key: 'invoiceNumber',
+                        title: 'invoiceNumber',
+                        value: selectedOrder?.invoiceId,
+                        name: 'Invoice Number',
+                    },
+                    {
+                        key: 'deliveryNoteId',
+                        title: 'deliveryNoteId',
+                        value: selectedOrder?.vehicleDeliveryNote,
+                        name: 'Delivery Note Number',
+                    },
+                ];
+                fetchChallanCancelInfoList({ setIsLoading: listChallanCancelInfoShowLoading, userId, extraParams: cancelChallanInfoExtraParams });
+            }
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [selectedOrder, formActionType?.viewMode, soldByDealer]);
+
+    useEffect(() => {
         if (currentSection && sectionName) {
             const section = Object.values(sectionName)?.find((i) => i.id === currentSection);
             setSection(section);
@@ -358,7 +457,8 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
                 defaultSection && setCurrentSection(defaultSection);
                 break;
             case NEXT_ACTION:
-                const nextSection = Object.values(sectionName)?.find((i) => i.id > currentSection);
+                const nextSection = Object.values(sectionName)?.find((i) => validateDeliveryNote({ item: i, soldByDealer }) && i.id > currentSection);
+                // const nextSection = Object.values(sectionName)?.find((i) => i.id > currentSection);
                 section && setCurrentSection(nextSection?.id);
                 setLastSection(!nextSection?.id);
                 break;
@@ -401,12 +501,11 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
     };
 
     const onFinishChallan = () => {
-        const data = { ...requestPayload, invoiceNumber: selectedOrderId, customerId: customerIdValue };
-
+        const data = { ...requestPayload, ...requestPayload?.deliveryNoteInvoiveDetails, invoiceNumber: selectedOrderId, customerId: customerIdValue };
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage + 'Delivery Note no.:' + res?.data?.deliveryNoteDetails?.vehicleDeliveryNote });
+            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage + 'Delivery Note no.:' + res?.data?.[0]?.vehicleDeliveryNote });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
             setButtonData({ ...buttonData, formBtnActive: false });
             setIsFormVisible(false);
@@ -462,6 +561,8 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
 
     const onCloseAction = () => {
         // resetData();
+        resetChallanInfoData();
+        resetInfoData();
         form.resetFields();
         form.setFieldsValue();
         setSelectedOrderId();
@@ -471,7 +572,6 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         setSoldByDealer();
 
         invoiceDetailForm.resetFields();
-        // setReceipt();
         advanceFilterForm.resetFields();
         advanceFilterForm.setFieldsValue();
         setAdvanceSearchVisible(false);
@@ -528,7 +628,12 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         cancelDeliveryNoteForm
             .validateFields()
             .then((values) => {
-                const data = { ...values, deliveryNoteNumber: selectedOrder?.vehicleDeliveryNote, status: selectedOrder?.deliveryNoteStatus, cancellationReason: cancelDeliveryNoteForm.getFieldValue('cancellationReason') || '' };
+                let data;
+                if (soldByDealer) {
+                    data = { ...values, oemNumber: selectedOrderId, deliveryNoteId: selectedOrder?.vehicleDeliveryNote, status: selectedOrder?.deliveryNoteStatus, cancellationReason: cancelDeliveryNoteForm.getFieldValue('cancellationReason') || '' };
+                } else {
+                    data = { ...values, oemNumber: selectedOrder?.invoiceId, status: selectedOrder?.deliveryNoteStatus, cancellationReason: cancelDeliveryNoteForm.getFieldValue('cancellationReason') || '' };
+                }
                 const onSuccess = (res) => {
                     setShowDataLoading(true);
                     showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
@@ -548,7 +653,11 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
                     onError,
                     onSuccess,
                 };
-                cancelDeliveryNote(requestData);
+                if (!soldByDealer) {
+                    cancelChallan(requestData);
+                } else {
+                    cancelDeliveryNote(requestData);
+                }
             })
             .catch((err) => {
                 return;
@@ -659,8 +768,6 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         setRequestPayload,
         challanRequestPayload,
         setChallanRequestPayload,
-        receipt,
-        setReceipt,
         deliveryStatus,
         selectedOtfNumber,
         setSelectedOtfNumber,
@@ -693,6 +800,11 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         setLastSection,
         customerIdValue,
         setCustomerIdValue,
+        chassisNoValue,
+        setChassisNoValue,
+        engineChallanNumber,
+        setEngineChallanNumber,
+        toolTipContent,
     };
 
     const reportDetail = EMBEDDED_REPORTS?.DELIVERY_NOTE_DOCUMENT;

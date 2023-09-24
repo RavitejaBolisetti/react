@@ -39,7 +39,7 @@ const ViewDetailMain = (props) => {
                             <Divider />
                             <Descriptions {...viewProps}>
                                 <Descriptions.Item label="Manufacturer Warranty End Date">{checkAndSetDefaultValue(formData?.mnfcWarrEndDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                                <Descriptions.Item label="Expiry KM">{checkAndSetDefaultValue(formData?.manufactureKM, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                                <Descriptions.Item label="Expiry KM">{checkAndSetDefaultValue(formData?.manufactureKM, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Delivery Date">{checkAndSetDefaultValue(formData?.deliveryDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                                 <Descriptions.Item label="Sale Date">{checkAndSetDefaultValue(formData?.saleDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                                 <Descriptions.Item label="Sold By">{checkAndSetDefaultValue(formData?.soldBy, isLoading)}</Descriptions.Item>

@@ -11,14 +11,20 @@ import { Col, Form, Row } from 'antd';
 import { tableColumn } from './tableColumn';
 import HoPriceMappingFilter from './HoPriceMappingFilter';
 import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, btnVisiblity } from 'utils/btnVisiblity';
+import { MODEL_TYPE } from 'constants/modules/hoPricingMapping/index';
 
 import { AddEditForm } from './AddEditForm';
 
 import { ListDataTable } from 'utils/ListDataTable';
 import { AdvancedSearch } from './AdvancedSearch';
-import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
-import { receiptDataActions } from 'store/actions/data/receipt/receipt';
-import { receiptDetailDataActions } from 'store/actions/data/receipt/receiptDetails';
+import { PRICING_TYPE } from 'constants/PricingType';
+import { productHierarchyDataActions } from 'store/actions/data/productHierarchy';
+import { geoStateDataActions } from 'store/actions/data/geo/states';
+import { geoDistrictDataActions } from 'store/actions/data/geo/districts';
+import { geoCityDataActions } from 'store/actions/data/geo/cities';
+import { tncProductHierarchyDataActions } from 'store/actions/data/termsConditions/tncProductHierarchy';
+import { hoPriceMappingDataActions } from 'store/actions/data/hoPriceMapping/hoPriceMapping';
+import { hoPriceMappingDetailDataActions } from 'store/actions/data/hoPriceMapping/hoPriceMappingDetails';
 
 import { showGlobalNotification } from 'store/actions/notification';
 
@@ -29,25 +35,46 @@ const mapStateToProps = (state) => {
         auth: { userId },
         data: {
             ConfigurableParameterEditing: { filteredListData: typeData = [] },
-            Receipt: {
-                ReceiptSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString },
-                ReceiptDetails: { isLoaded: isDetailedDataLoaded = false, isLoading, data: receiptDetailData = [] },
+            ProductHierarchy: { data: productHierarchyData = [] },
+            Geo: {
+                State: { isFilteredListLoaded: isStateDataLoaded = false, isLoading: isStateLoading, filteredListData: stateData },
+                District: { isFilteredListLoaded: isDistrictDataLoaded = false, isLoading: isDistrictLoading, filteredListData: districtData },
+                City: { isFilteredListLoaded: isCityDataLoaded = false, isLoading: isCityLoading, filteredListData: cityData },
+            },
+            TermCondition: {
+                ProductHierarchyData: { isLoaded: isProductHierarchyDataLoaded = false, data: productHierarchyList },
+            },
+            HoPriceMapping: {
+                HoPriceMappingSearchList: { isLoaded: isSearchDataLoaded = false, isLoading: isSearchLoading, data, filter: filterString },
+                HoPriceDetailList: { isLoading: isHoPriceDetaiLoading, data: hoPriceDetailData = [] },
             },
         },
     } = state;
+
     const moduleTitle = 'Dealer List';
     let returnValue = {
         userId,
         typeData,
+        isStateDataLoaded,
+        isStateLoading,
+        filteredStateData: stateData,
+        isDistrictDataLoaded,
+        isDistrictLoading,
+        districtData,
+        isCityDataLoaded,
+        isCityLoading,
+        cityData,
+        isProductHierarchyDataLoaded,
+        productHierarchyList,
         data: data?.paginationData,
         totalRecords: data?.totalRecords || [],
-        receiptDetailData,
-        isLoading,
         moduleTitle,
         isSearchLoading,
         isSearchDataLoaded,
-        isDetailedDataLoaded,
         filterString,
+        productHierarchyData,
+        hoPriceDetailData,
+        isHoPriceDetaiLoading,
     };
     return returnValue;
 };
@@ -56,12 +83,29 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchReceiptDetails: receiptDetailDataActions.fetchList,
-            saveData: receiptDataActions.saveData,
-            setFilterString: receiptDataActions.setFilter,
-            resetData: receiptDataActions.reset,
-            fetchList: receiptDataActions.fetchList,
-            listShowLoading: receiptDataActions.listShowLoading,
+            fetchProductList: productHierarchyDataActions.fetchList,
+            listProductMainShowLoading: productHierarchyDataActions.listShowLoading,
+
+            fetchStateLovList: geoStateDataActions.fetchFilteredList,
+            listStateShowLoading: geoStateDataActions.listShowLoading,
+
+            fetchDistrictLovList: geoDistrictDataActions.fetchFilteredList,
+            listDistrictShowLoading: geoDistrictDataActions.listShowLoading,
+
+            fetchCityLovList: geoCityDataActions.fetchFilteredList,
+            listCityShowLoading: geoCityDataActions.listShowLoading,
+
+            fetchProductLovList: tncProductHierarchyDataActions.fetchList,
+            listProductShowLoading: tncProductHierarchyDataActions.listShowLoading,
+
+            fetchList: hoPriceMappingDataActions.fetchList,
+            listShowLoading: hoPriceMappingDataActions.listShowLoading,
+            setFilterString: hoPriceMappingDataActions.setFilter,
+            resetData: hoPriceMappingDataActions.reset,
+
+            fetchDetail: hoPriceMappingDetailDataActions.fetchList,
+            listDetailShowLoading: hoPriceMappingDetailDataActions.listShowLoading,
+            saveData: hoPriceMappingDetailDataActions.saveData,
 
             showGlobalNotification,
         },
@@ -70,20 +114,14 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const HoPriceMappingMasterBase = (props) => {
-    const { fetchList, saveData, listShowLoading, userId, fetchReceiptDetails, data, resetData } = props;
-    const { typeData, moduleTitle, totalRecords, showGlobalNotification } = props;
-    const { filterString, setFilterString } = props;
+    const { filterString, setFilterString, fetchList, saveData, listShowLoading, userId, fetchStateLovList, fetchDistrictLovList, fetchProductLovList, data, fetchDetail, listProductMainShowLoading, fetchProductList, listDetailShowLoading } = props;
+    const { typeData, listStateShowLoading, listDistrictShowLoading, listProductShowLoading, filteredStateData, districtData, productHierarchyList, productHierarchyData, totalRecords, showGlobalNotification, hoPriceDetailData, isHoPriceDetaiLoading } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
-
-    const [searchValue, setSearchValue] = useState();
-
-    const [selectedOrder, setSelectedOrder] = useState();
-    const [selectedOrderId, setSelectedOrderId] = useState();
-
-    const [section, setSection] = useState();
-    const [currentSection, setCurrentSection] = useState();
-    const [sectionName, setSetionName] = useState();
-    const [isLastSection, setLastSection] = useState(false);
+    const [filteredCityData, setFilteredCityData] = useState([]);
+    const [editProductData, setEditProductData] = useState([]);
+    const [viewProductData, setViewProductData] = useState([]);
+    const [modelGroupArr, setModelGroupArr] = useState([]);
+    const [checkedKeys, setCheckedKeys] = useState([]);
 
     const [form] = Form.useForm();
     const [searchForm] = Form.useForm();
@@ -91,8 +129,10 @@ export const HoPriceMappingMasterBase = (props) => {
 
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
-
+    const [pricingType, setPricingType] = useState(PRICING_TYPE?.RSO_PLANT.key);
+    const fieldNames = { title: 'prodctShrtName', key: 'prodctCode', children: 'subProdct' };
     const [page, setPage] = useState({ pageSize: 10, current: 1 });
+    const [modelDetails, setModelDetails] = useState([]);
     const dynamicPagination = true;
 
     const defaultBtnVisiblity = {
@@ -114,6 +154,7 @@ export const HoPriceMappingMasterBase = (props) => {
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
     const [formData, setFormData] = useState([]);
+    const [responseData, setResponseData] = useState([]);
 
     const onSuccessAction = (res) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -137,47 +178,55 @@ export const HoPriceMappingMasterBase = (props) => {
     const extraParams = useMemo(() => {
         return [
             {
+                key: 'searchParam',
+                title: 'searchParam',
+                value: pricingType,
+                filter: false,
+            },
+            {
+                key: 'searchType',
+                title: 'Type',
+                value: 'Pricing_Type',
+            },
+            {
+                key: 'dealerParent',
+                title: 'Dealer Parent',
+                value: filterString?.dealerParent,
+                canRemove: true,
+                filter: true,
+                name: filterString?.dealerParent ?? null,
+            },
+            {
                 key: 'pageNumber',
                 title: 'Value',
                 value: page?.current,
-                canRemove: true,
-                filter: false,
             },
             {
                 key: 'pageSize',
                 title: 'Value',
                 value: page?.pageSize,
-                canRemove: true,
-                filter: false,
             },
             {
-                key: 'searchType',
-                title: 'Value',
-                value: 'receiptNumber',
-                canRemove: false,
-                filter: false,
-            },
-            {
-                key: 'searchParam',
-                title: 'searchParam',
-                value: searchValue,
-                name: searchValue,
-                canRemove: false,
-                filter: false,
-            },
-            {
-                key: 'fromDate',
-                title: 'Start Date',
-                value: filterString?.fromDate,
-                name: filterString?.fromDate ? convertDateTime(filterString?.fromDate, dateFormatView) : '',
+                key: 'stateCode',
+                title: 'State',
+                value: filterString?.stateCode,
+                name: filterString?.stateCodeName,
                 canRemove: true,
                 filter: true,
             },
             {
-                key: 'toDate',
-                title: 'End Date',
-                value: filterString?.toDate,
-                name: filterString?.toDate ? convertDateTime(filterString?.toDate, dateFormatView) : '',
+                key: 'cityCode',
+                title: 'City',
+                value: filterString?.cityCode,
+                name: filterString?.cityCodeName,
+                canRemove: true,
+                filter: true,
+            },
+            {
+                key: 'modelCode',
+                title: 'Product Hierarchy',
+                value: filterString?.modelCode,
+                name: filterString?.modelCodeName,
                 canRemove: true,
                 filter: true,
             },
@@ -185,71 +234,82 @@ export const HoPriceMappingMasterBase = (props) => {
                 key: 'sortBy',
                 title: 'Sort By',
                 value: page?.sortBy,
-                canRemove: true,
                 filter: false,
             },
             {
                 key: 'sortIn',
                 title: 'Sort Type',
                 value: page?.sortType,
-                canRemove: true,
                 filter: false,
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [searchValue, filterString, page]);
-
-    // useEffect(() => {
-    //     return () => {
-    //         resetData();
-    //         setFilterString();
-    //     };
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, []);
+    }, [pricingType, filterString, page]);
 
     useEffect(() => {
         if (userId) {
-            // setShowDataLoading(true);
+            fetchProductList({ setIsLoading: listProductMainShowLoading, userId, onCloseAction, extraParams: [{ key: 'manufactureOrgCode', value: `LMM` }], onErrorAction });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId]);
+
+    useEffect(() => {
+        if (userId) {
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, filterString, page]);
+    }, [userId, pricingType, page, filterString]);
 
     useEffect(() => {
-        if (userId && selectedOrderId) {
-            const extraParams = [
-                {
-                    key: 'id',
-                    title: 'id',
-                    value: selectedOrderId,
-                    name: 'id',
-                },
-            ];
-            fetchReceiptDetails({ setIsLoading: listShowLoading, userId, extraParams });
+        if (userId) {
+            fetchStateLovList({ setIsLoading: listStateShowLoading, userId });
+            fetchDistrictLovList({ setIsLoading: listDistrictShowLoading, userId });
+            fetchProductLovList({ setIsLoading: listProductShowLoading, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedOrderId]);
+    }, [userId]);
 
-    useEffect(() => {
-        if (currentSection && sectionName) {
-            const section = Object.values(sectionName)?.find((i) => i.id === currentSection);
-            setSection(section);
-
-            const nextSection = Object.values(sectionName)?.find((i) => i?.displayOnList && i.id > currentSection);
-            setLastSection(!nextSection?.id);
-        }
-        form.resetFields();
-        form.setFieldsValue(undefined);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [currentSection, sectionName]);
-
-    const handleChange = (e) => {
-        setSearchValue(e.target.value);
+    const handlePricingTypeChange = (key) => {
+        setPricingType(key);
+        searchForm.resetFields();
     };
 
+    const handleFilterChange =
+        (name, type = 'value') =>
+            (value) => {
+                if (!value) {
+                    switch (name) {
+                        case 'stateCode': {
+                            setFilteredCityData();
+                            advanceFilterForm.setFieldsValue({ cityCode: undefined });
+                            break;
+                        }
+                        case 'cityCode': {
+                            break;
+                        }
+                        default: {
+                            break;
+                        }
+                    }
+                    return;
+                }
+                const filterValue = type === 'text' ? value.target.value : value;
+
+                if (name === 'stateCode') {
+                    setFilteredCityData(districtData?.filter((i) => i?.parentKey === filterValue));
+                    advanceFilterForm.setFieldsValue({ cityCode: undefined });
+                }
+            };
+
     const handleSearch = (value) => {
-        setFilterString({ ...filterString, searchParam: value });
-        setSearchValue(value);
+        setFilterString({ ...filterString, dealerParent: value, advanceFilter: true });
+        searchForm.resetFields();
+    };
+
+    const handleResetFilter = () => {
+        setShowDataLoading(false);
+        setFilterString();
+        advanceFilterForm.resetFields();
     };
 
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
@@ -261,19 +321,73 @@ export const HoPriceMappingMasterBase = (props) => {
 
         record && setFormData(record);
         setIsFormVisible(true);
+
+        if (buttonAction !== ADD_ACTION) {
+            const extraParams = [
+                {
+                    key: 'id',
+                    title: 'id',
+                    value: record?.id,
+                    name: 'id',
+                },
+            ];
+            fetchDetail({ setIsLoading: listDetailShowLoading, userId, extraParams });
+        }
     };
 
-    const onFinishSearch = (values) => {};
+    const onFinishSearch = (values) => { };
 
-    const handleResetFilter = (e) => {
-        setShowDataLoading(false);
-        setFilterString();
-        advanceFilterForm.resetFields();
+    const disableExceptModelGroup = (node) => {
+        if (node?.attributeType === MODEL_TYPE.MODAL_GROUP.key) {
+            node[`disabled`] = false;
+            let key = hoPriceDetailData?.modelDealerMapResponse?.find((e) => e?.modelGroupCode === node?.prodctCode);
+            if (key && Object.values(key) && key?.status === true) setCheckedKeys((prev) => [...prev, node?.prodctCode]);
+            setModelGroupArr((prev) => [...prev, node]);
+        } else {
+            node[`disabled`] = true;
+        }
+        if (node?.subProdct?.length > 0) {
+            node?.subProdct?.forEach((child) => {
+                disableExceptModelGroup(child);
+            });
+        }
+        return node;
     };
+
+    useEffect(() => {
+        if (!formActionType?.addMode && productHierarchyData?.length) {
+            //&& hoPriceDetailData?.modelDealerMapResponse?.length
+            setCheckedKeys([]);
+            setEditProductData(productHierarchyData?.map((i) => disableExceptModelGroup(i)));
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [hoPriceDetailData, productHierarchyData, formActionType]);
+
+    useEffect(() => {
+        if (formActionType?.viewMode && hoPriceDetailData?.modelDealerMapResponse?.length) setResponseData(hoPriceDetailData?.modelDealerMapResponse);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [hoPriceDetailData, formActionType]);
 
     const onFinish = (values) => {
-        const data = { ...values };
+        const { city, dealerBranch, dealerParent, productCode, state, ...rest } = values;
 
+        let arr = [];
+        for (let i = 0; i < checkedKeys?.length; i++) {
+            let ifFind = hoPriceDetailData?.modelDealerMapResponse?.findIndex((e) => e?.modelGroupCode === checkedKeys[i]);
+            if (ifFind > -1) {
+                arr.push({ ...hoPriceDetailData?.modelDealerMapResponse[ifFind], status: true });
+            } else {
+                arr.push({ id: '', modelGroupCode: checkedKeys[i], status: true });
+            }
+        }
+
+        for (let i = 0; i < hoPriceDetailData?.modelDealerMapResponse?.length; i++) {
+            let ifFind = checkedKeys?.findIndex((e) => e === hoPriceDetailData?.modelDealerMapResponse[i]?.modelGroupCode);
+            if (ifFind === -1) {
+                arr.push({ ...hoPriceDetailData?.modelDealerMapResponse[i], status: false });
+            }
+        }
+        const data = { ...rest, id: formData?.id, modelDetails: arr };
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
@@ -289,8 +403,8 @@ export const HoPriceMappingMasterBase = (props) => {
 
         const requestData = {
             data: data,
-            method: 'post',
-            setIsLoading: listShowLoading,
+            method: 'put',
+            setIsLoading: listDetailShowLoading,
             userId,
             onError,
             errorData: true,
@@ -304,24 +418,16 @@ export const HoPriceMappingMasterBase = (props) => {
         return;
     };
 
-    const handleFormValueChange = () => {
-        setButtonData({ ...buttonData, formBtnActive: true });
-    };
-
     const onCloseAction = () => {
-        resetData();
-        fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
+        form.resetFields();
+        setIsFormVisible(false);
+        setButtonData({ ...defaultBtnVisiblity });
         form.resetFields();
         form.setFieldsValue();
-        setSelectedOrderId();
 
         advanceFilterForm.resetFields();
         advanceFilterForm.setFieldsValue();
         setAdvanceSearchVisible(false);
-
-        setSelectedOrder();
-        setIsFormVisible(false);
-        setButtonData({ ...defaultBtnVisiblity });
     };
 
     const tableProps = {
@@ -343,12 +449,23 @@ export const HoPriceMappingMasterBase = (props) => {
     };
 
     const removeFilter = (key) => {
-        if (key === 'searchParam') {
-            const { searchType, searchParam, ...rest } = filterString;
-            setFilterString({ ...rest });
-        } else {
-            const { [key]: names, ...rest } = filterString;
-            setFilterString({ ...rest });
+        switch (true) {
+            case key === `stateCode`:
+                const { stateCode, stateCodeName, ...restSatate } = filterString;
+                setFilterString({ ...restSatate });
+                break;
+            case key === `cityCode`:
+                const { cityCode, cityCodeName, ...restCity } = filterString;
+                setFilterString({ ...restCity });
+                break;
+            case key === `modelCode`:
+                const { modelCode, modelCodeName, ...restModule } = filterString;
+                setFilterString({ ...restModule });
+                break;
+            default:
+                const { [key]: names, ...restDefault } = filterString;
+                setFilterString({ ...restDefault });
+                break;
         }
     };
 
@@ -375,15 +492,14 @@ export const HoPriceMappingMasterBase = (props) => {
         handleResetFilter,
         advanceFilterForm,
         handleButtonClick,
-        handleChange,
         handleSearch,
-
+        pricingType,
+        handlePricingTypeChange,
         title,
         data,
         setAdvanceSearchVisible,
         typeData,
         searchForm,
-        onFinishSearch,
     };
 
     const advanceFilterProps = {
@@ -391,6 +507,10 @@ export const HoPriceMappingMasterBase = (props) => {
 
         icon: <FilterIcon size={20} />,
         titleOverride: 'Advance Filters',
+        filteredStateData,
+        filteredCityData,
+        productHierarchyList,
+        handleFilterChange,
 
         onCloseAction: onAdvanceSearchCloseAction,
         handleResetFilter,
@@ -404,17 +524,27 @@ export const HoPriceMappingMasterBase = (props) => {
 
     const formProps = {
         isVisible: isFormVisible,
-        titleOverride: drawerTitle.concat(moduleTitle),
+        titleOverride: drawerTitle,
         handleButtonClick,
         formActionType,
         onCloseAction,
-        ADD_ACTION,
-        EDIT_ACTION,
-        VIEW_ACTION,
         buttonData,
         setButtonData,
-        typeData,
         formData,
+        form,
+        fieldNames,
+        modelDetails,
+        setModelDetails,
+        onFinish,
+        viewProductData,
+        modelGroupArr,
+        editProductData,
+        setViewProductData,
+        hoPriceDetailData,
+        responseData,
+        checkedKeys,
+        setCheckedKeys,
+        isHoPriceDetaiLoading,
     };
 
     return (

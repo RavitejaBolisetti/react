@@ -220,6 +220,13 @@ export const MenuConstant = {
         parentMenuId: 'SACT-03',
     },
 
+    [getMenyKey('SACT-03.01')]: {
+        key: 'SACT-03.01',
+        link: routing.ROUTING_HO_PRICE_MAPPING,
+        icon: undefined,
+        parentMenuId: 'SACT-03',
+    },
+
     [getMenyKey('SACT-04.01')]: {
         key: 'SACT-04.01',
         link: routing.ROUTING_VECHILE_PURCHASE_ORDER,
@@ -592,5 +599,11 @@ export const MenuConstant = {
         link: routing.ROUTING_RECEIPTS,
         icon: undefined,
         parentMenuId: 'FINA-02',
+    },
+    [getMenyKey('SACT-04.02')]: {
+        key: 'SACT-04.02',
+        link: routing.ROUTING_SO_MAPPING_UNMAPPING,
+        icon: undefined,
+        parentMenuId: 'SACT-04',
     },
 };

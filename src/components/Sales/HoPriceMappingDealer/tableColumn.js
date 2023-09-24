@@ -11,42 +11,36 @@ import styles from 'assets/sass/app.module.scss';
 export const tableColumn = (handleButtonClick, page, pageSize) => {
     const tableColumn = [
         tblPrepareColumns({
-            title: 'Area Office',
-            dataIndex: 'areaOffice',
-            width: '12%',
-        }),
-
-        tblPrepareColumns({
             title: 'State',
             dataIndex: 'state',
             width: '12%',
         }),
 
         tblPrepareColumns({
-            title: 'Pricing City Code',
-            dataIndex: 'pricingCityCode',
+            title: 'City',
+            dataIndex: 'city',
             width: '12%',
         }),
 
         tblPrepareColumns({
-            title: 'Dealer Name',
-            dataIndex: 'dealerName',
+            title: 'Dealer Parent',
+            dataIndex: 'dealerParent',
             width: '14%',
         }),
         tblPrepareColumns({
-            title: 'Dealer Branch',
+            title: 'Dealer Location',
             dataIndex: 'dealerBranch',
             width: '14%',
         }),
         tblPrepareColumns({
             title: 'Enable Date',
-            dataIndex: 'enableDate',
+            dataIndex: 'enabledDate',
             width: '12%',
-            render: (text) => convertDateMonthYear(text),
+            render: (text) => (text ? convertDateMonthYear(text) : 'NA'),
         }),
         tblPrepareColumns({
             title: 'Enable By',
-            dataIndex: 'enableBy',
+            dataIndex: 'enabledBy',
             width: '14%',
         }),
 

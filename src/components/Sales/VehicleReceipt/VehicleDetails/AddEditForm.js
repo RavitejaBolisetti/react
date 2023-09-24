@@ -239,6 +239,9 @@ const AddEditFormMain = (props) => {
                                     <Form.Item hidden initialValue={item?.id} name={[index, 'id']}>
                                         <Input />
                                     </Form.Item>
+                                    <Form.Item hidden initialValue={item?.modelCode} name={[index, 'modelCode']}>
+                                        <Input />
+                                    </Form.Item>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>

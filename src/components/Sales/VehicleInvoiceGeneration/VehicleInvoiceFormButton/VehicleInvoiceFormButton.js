@@ -9,7 +9,7 @@ import { Button, Row, Col } from 'antd';
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import styles from 'assets/sass/app.module.scss';
 
-export const VehicleInvoiceFormButton = ({ formActionType, record, onCloseAction, onCancelInvoice, onApproveCancel, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection,onPrintInvoice }) => {
+export const VehicleInvoiceFormButton = ({ formActionType, record, onCloseAction, onCancelInvoice, onApproveCancel, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection, onPrintInvoice, onPrintForm21 }) => {
     //console.log('formActionType', formActionType);
     return (
         <div className={styles.formFooter}>
@@ -29,16 +29,29 @@ export const VehicleInvoiceFormButton = ({ formActionType, record, onCloseAction
                 </Col>
 
                 <Col xs={24} sm={16} md={18} lg={20} xl={20} className={styles.footerBtnRight}>
+                    {buttonData?.printForm21Btn && (
+                        <Button onClick={() => onPrintForm21(record)} type="primary">
+                            Print Form 21
+                        </Button>
+                    )}
+                    {buttonData?.printInvoiceBtn && (
+                        <Button onClick={() => onPrintInvoice(record)} type="primary">
+                            Print Invoice
+                        </Button>
+                    )}
+
                     {buttonData?.cancelInvoiceBtn && (
                         <Button onClick={onCancelInvoice} type="primary">
                             Cancel Invoice
                         </Button>
                     )}
+
                     {buttonData?.rejectCancelBtn && (
                         <Button onClick={onApproveCancel} type="primary">
                             Reject
                         </Button>
                     )}
+
                     {buttonData?.approveCancelBtn && (
                         <Button onClick={onApproveCancel} type="primary">
                             Approve
