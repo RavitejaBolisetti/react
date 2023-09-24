@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { dataActions } from 'store/actions/crud/dataAction';
-import { BASE_URL_VEHICLE_CHALLAN_CANCEL_DELIVERY_NOTE as baseURL } from 'constants/routingApi';
+import { BASE_URL_VEHICLE_CHALLAN_CANCEL_NOTE as baseURL } from 'constants/routingApi';
 
 const PREFIX = 'CHALLAN_CANCEL_VEHICLE_DELIVERY_NOTE_';
 const moduleName = 'Cancel';

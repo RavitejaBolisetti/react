@@ -100,7 +100,7 @@ const VehicleDetailsMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [vehicleData]);
-console.log('formActionType', formActionType)
+
     useEffect(() => {
         if (userId && selectedOrderId && selectedInvoiceId && soldByDealer) {
             const extraParams = [
