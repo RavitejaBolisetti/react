@@ -61,9 +61,9 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const VehicleDetailsMasterBase = (props) => {
-    const { typeData, partySegmentType } = props;
-    const { userId, selectedOrderId, selectedInvoiceId, soldByDealer, setFormActionType, showGlobalNotification, listShowLoading, isDataLoaded, isLoading } = props;
-    const { form, formActionType, fetchChallanList, listChallanShowLoading, handleButtonClick, handleFormValueChange, section, openAccordian, setOpenAccordian, fetchList, vehicleData, NEXT_ACTION } = props;
+    const { typeData, partySegmentType, vehicleChallanData } = props;
+    const { userId, selectedOrderId, selectedInvoiceId, soldByDealer, setFormActionType, showGlobalNotification, listShowLoading, isDataLoaded, isLoading, requestPayload } = props;
+    const { form, formActionType, fetchChallanList, listChallanShowLoading, handleButtonClick, handleFormValueChange, section, openAccordian, setOpenAccordian, fetchList, vehicleData, NEXT_ACTION, chassisNoValue, record, engineChallanNumber, setEngineChallanNumber } = props;
     const [regNumber, setRegNumber] = useState();
     const [activeKey, setActiveKey] = useState([]);
     const [otfNumber, setOtfNumber] = useState();
@@ -100,7 +100,7 @@ const VehicleDetailsMasterBase = (props) => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [vehicleData]);
-
+console.log('formActionType', formActionType)
     useEffect(() => {
         if (userId && selectedOrderId && selectedInvoiceId && soldByDealer) {
             const extraParams = [
@@ -118,28 +118,49 @@ const VehicleDetailsMasterBase = (props) => {
                 },
             ];
             fetchList({ setIsLoading: listShowLoading, extraParams, userId, onErrorAction });
-        } else if (!soldByDealer) {
+        } else if (!soldByDealer && !formActionType?.viewMode) {
             const extraParams = [
                 {
-                    key: 'invoiceNumber',
-                    title: 'invoiceNumber',
-                    value: selectedInvoiceId,
-                    name: 'Invoice Number',
+                    key: 'chassisNumber',
+                    title: 'chassisNumber',
+                    value: requestPayload?.deliveryNoteInvoiveDetails?.chassisNumber,
+                    name: 'Chassis Number',
+                },
+                {
+                    key: 'engineNumber',
+                    title: 'engineNumber',
+                    value: requestPayload?.deliveryNoteInvoiveDetails?.engineNumber,
+                    name: 'Engine Number',
+                },
+            ];
+
+            fetchChallanList({ setIsLoading: listChallanShowLoading, extraParams, userId, onErrorAction });
+        } else if (!soldByDealer && formActionType?.viewMode) {
+            const extraParams = [
+                {
+                    key: 'chassisNumber',
+                    title: 'chassisNumber',
+                    value: chassisNoValue,
+                    name: 'Chassis Number',
                 },
             ];
 
             fetchChallanList({ setIsLoading: listChallanShowLoading, extraParams, userId, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, selectedOrderId, selectedInvoiceId, soldByDealer]);
+    }, [userId, selectedOrderId, selectedInvoiceId, soldByDealer, requestPayload?.deliveryNoteInvoiveDetails]);
 
     useEffect(() => {
         if (vehicleData && selectedOrderId && selectedInvoiceId) {
             form.setFieldsValue({ ...vehicleData });
             setFormData({ ...vehicleData });
         }
+        if (vehicleChallanData && !soldByDealer) {
+            form.setFieldsValue({ ...vehicleChallanData });
+            setFormData({ ...vehicleChallanData });
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [vehicleData]);
+    }, [vehicleData, vehicleChallanData, soldByDealer]);
 
     const onErrorAction = (message) => {
         showGlobalNotification({ message });
@@ -174,7 +195,7 @@ const VehicleDetailsMasterBase = (props) => {
         VIEW_ACTION,
         isVisible: isFormVisible,
         isDataLoaded,
-        formData: vehicleData,
+        formData,
         isLoading,
         setActiveKey,
         activeKey,
@@ -190,7 +211,7 @@ const VehicleDetailsMasterBase = (props) => {
 
     const viewProps = {
         typeData,
-        formData: vehicleData,
+        formData,
         styles,
         partySegmentType,
         isLoading,
