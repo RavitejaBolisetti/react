@@ -22,6 +22,7 @@ import { VehicleDeliveryNoteFormButton } from './VehicleDeliveryNoteFormButton';
 // import { ThankYouMaster } from './ThankYou';
 
 import styles from 'assets/sass/app.module.scss';
+import { ThankYouMaster } from './ThankYou';
 
 const VehicleDeliveryNoteConatinerMain = (props) => {
     const { currentSection, requestPayload, setRequestPayload, selectedOtfNumber, selectedOrderId, soldByDealer } = props;
@@ -63,9 +64,9 @@ const VehicleDeliveryNoteConatinerMain = (props) => {
             case VEHICLE_DELIVERY_NOTE_SECTION.DELIVERABLE_CHECKLIST.id: {
                 return <DeliverableChecklistMaster {...myProps} />;
             }
-            // case VEHICLE_DELIVERY_NOTE_SECTION.THANK_YOU_PAGE.id: {
-            //     return <ThankYouMaster {...myProps} />;
-            // }
+            case VEHICLE_DELIVERY_NOTE_SECTION.THANK_YOU_PAGE.id: {
+                return <ThankYouMaster {...myProps} />;
+            }
             default: {
                 return <InvoiceDetailsMaster {...myProps} />;
             }

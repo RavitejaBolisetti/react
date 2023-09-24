@@ -7,7 +7,7 @@ import React from 'react';
 import { Row, Button, Col, Input, Form } from 'antd';
 
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
-import { validateRequiredInputField } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { customSelectBox } from 'utils/customSelectBox';
 import styles from 'assets/sass/app.module.scss';
 
@@ -38,13 +38,13 @@ const CommonForm = ({ formData, typeData, formKey = 'Shield', addOnForm, openAcc
             <Row gutter={20}>
                 {openAccordian === 'AMC' && (
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item initialValue={formData?.schemeType} label="Scheme Type" name="schemeType" rules={[validateRequiredInputField('Scheme Type')]}>
+                        <Form.Item initialValue={formData?.schemeType} label="Scheme Type" name="schemeType" rules={[validateRequiredSelectField('Scheme Type')]}>
                             {customSelectBox({ data: schemeDescriptionData, disabled: disabled, placeholder: preparePlaceholderText('Scheme Type'), fieldNames: { key: 'schemeType', value: 'schemeType' } })}
                         </Form.Item>
                     </Col>
                 )}
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.schemeDescription} label="Scheme Description" name="schemeDescription">
+                    <Form.Item initialValue={formData?.schemeDescription} label="Scheme Description" name="schemeDescription" rules={[validateRequiredSelectField('Scheme Description')]}>
                         {customSelectBox({ data: schemeDescriptionData, disabled: disabled, fieldNames: { key: 'schemeDescription', value: 'schemeDescription' }, placeholder: preparePlaceholderText('Scheme Description'), onChange: handleChange })}
                     </Form.Item>
                 </Col>
@@ -62,7 +62,7 @@ const CommonForm = ({ formData, typeData, formKey = 'Shield', addOnForm, openAcc
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={formData?.employeeCode} label="Employee Name" name="employeeCode">
                         {/* <Search  onSearch={handleEmployeeSearch}  onChange={handleOnChange} placeholder={preparePlaceholderText('scheme amount')} allowClear /> */}
-                        {customSelectBox({ data: relationshipManagerData, fieldNames: { key: 'key', value: 'value' }, placeholder: preparePlaceholderSelect('Relationship Manager') })}
+                        {customSelectBox({ data: relationshipManagerData, disabled: disabled, fieldNames: { key: 'key', value: 'value' }, placeholder: preparePlaceholderSelect('Relationship Manager') })}
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -73,14 +73,14 @@ const CommonForm = ({ formData, typeData, formKey = 'Shield', addOnForm, openAcc
                 <Form.Item hidden name="schemeCode">
                     <Input />
                 </Form.Item>
-                <Form.Item value={disabled ? false : true} initialValue={disabled ? false : true} hidden name="mappedInDelivery">
+                <Form.Item value={true} initialValue={true} hidden name="mappedInDelivery">
                     <Input />
                 </Form.Item>
             </Row>
             {!formActionType?.viewMode && (
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Button className={styles.marB20} type="primary" onClick={() => onSingleFormFinish(formKey, addOnForm)}>
+                        <Button className={styles.marB20} type="primary" disabled={disabled} onClick={() => onSingleFormFinish(formKey, addOnForm)}>
                             Register
                         </Button>
                     </Col>

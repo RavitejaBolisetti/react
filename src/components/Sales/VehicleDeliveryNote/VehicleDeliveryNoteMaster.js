@@ -90,6 +90,16 @@ const mapDispatchToProps = (dispatch) => ({
             listChallanCancelInfoShowLoading: infoChallanVehicleDeliveryNoteDataActions.listShowLoading,
             resetChallanInfoData: infoChallanVehicleDeliveryNoteDataActions.reset,
 
+            cancelChallan: challanCancelVehicleDeliveryNoteDataActions.saveData,
+
+            fetchCancelInfoList: infoCancelVehicleDeliveryNoteDataActions.fetchList,
+            resetInfoData: infoCancelVehicleDeliveryNoteDataActions.reset,
+            listCancelInfoShowLoading: infoCancelVehicleDeliveryNoteDataActions.listShowLoading,
+
+            fetchChallanCancelInfoList: infoChallanVehicleDeliveryNoteDataActions.fetchList,
+            listChallanCancelInfoShowLoading: infoChallanVehicleDeliveryNoteDataActions.listShowLoading,
+            resetChallanInfoData: infoChallanVehicleDeliveryNoteDataActions.reset,
+
             showGlobalNotification,
         },
         dispatch
@@ -187,7 +197,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
                 setToolTipContent(
                     <div>
                         <p>
-                            Cancelled Date - <span>{dayjs(cancelInfo?.cancelledDate)?.format('DD MMM YYYY') ?? 'Na'}</span>
+                            Cancelled Date - <span>{cancelInfo?.cancelledDate ? dayjs(cancelInfo?.cancelledDate)?.format('DD MMM YYYY') : 'Na'}</span>
                         </p>
                         <p>
                             Cancelled By - <span>{cancelInfo?.cancelledBy ?? 'Na'}</span>
@@ -508,7 +518,8 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage + 'Delivery Note no.:' + res?.data?.[0]?.vehicleDeliveryNote });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
             setButtonData({ ...buttonData, formBtnActive: false });
-            setIsFormVisible(false);
+            section && setCurrentSection(VEHICLE_DELIVERY_NOTE_SECTION.THANK_YOU_PAGE.id);
+            // setIsFormVisible(false);
         };
         const onError = (message) => {
             showGlobalNotification({ message });
@@ -534,7 +545,8 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
             setButtonData({ ...buttonData, formBtnActive: false });
-            setIsFormVisible(false);
+            // setIsFormVisible(false);
+            section && setCurrentSection(VEHICLE_DELIVERY_NOTE_SECTION.THANK_YOU_PAGE.id);
         };
         const onError = (message) => {
             showGlobalNotification({ message });
@@ -617,6 +629,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         const isSameMonth = dayjs(selectedOrder?.invoiceDate)?.isSame(selectedOrder?.deliveryNoteDate, 'month');
         setRetailMonth(isSameMonth);
         setYesRetailMonth(true);
+        cancelDeliveryNoteForm.resetFields();
     };
 
     // const handleCloseReceipt = () => {
@@ -630,7 +643,8 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
             .then((values) => {
                 let data;
                 if (soldByDealer) {
-                    data = { ...values, oemNumber: selectedOrderId, deliveryNoteId: selectedOrder?.vehicleDeliveryNote, status: selectedOrder?.deliveryNoteStatus, cancellationReason: cancelDeliveryNoteForm.getFieldValue('cancellationReason') || '' };
+                    data = { ...values, deliveryNoteNumber: selectedOrder?.vehicleDeliveryNote, status: selectedOrder?.deliveryNoteStatus, cancellationReason: cancelDeliveryNoteForm.getFieldValue('cancellationReason') || '' };
+                    // data = { ...values, oemNumber: selectedOrderId, deliveryNoteId: selectedOrder?.vehicleDeliveryNote, status: selectedOrder?.deliveryNoteStatus, cancellationReason: cancelDeliveryNoteForm.getFieldValue('cancellationReason') || '' };
                 } else {
                     data = { ...values, oemNumber: selectedOrder?.invoiceId, status: selectedOrder?.deliveryNoteStatus, cancellationReason: cancelDeliveryNoteForm.getFieldValue('cancellationReason') || '' };
                 }
@@ -641,6 +655,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
                     setButtonData({ ...buttonData, formBtnActive: false });
                     setIsFormVisible(false);
                     setCancelDeliveryNoteVisible(false);
+                    cancelDeliveryNoteForm.resetFields();
                 };
                 const onError = (message) => {
                     showGlobalNotification({ message });
