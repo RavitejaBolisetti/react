@@ -16,6 +16,12 @@ import { VehicleDetailsChallan } from './vehicleChallanDetails';
 import { CancelDeliveryNote } from './cancelDeliveryNote';
 import { SchemeDescription } from './schemeDescription';
 import { VinNumberSearch } from './challanVinNumber';
+import { EngineNumber } from './challanEngineNumber';
+import { InvoiceDetailChallan } from './challanInvoice';
+import { InsuranceDetailChallan } from './challanInsurance';
+import { ChallanCancelDeliveryNote } from './challanCancel';
+import { CancelInfoDeliveryNote } from './infoCancelDeliveryNote';
+import { CancelInfoChallanDeliveryNote } from './infoChallanCancel';
 
 export const VehicleDeliveryNote = combineReducers({
     VehicleDeliveryNoteSearchList,
@@ -29,4 +35,10 @@ export const VehicleDeliveryNote = combineReducers({
     CancelDeliveryNote,
     SchemeDescription,
     VinNumberSearch,
+    EngineNumber,
+    InvoiceDetailChallan,
+    InsuranceDetailChallan,
+    ChallanCancelDeliveryNote,
+    CancelInfoDeliveryNote,
+    CancelInfoChallanDeliveryNote,
 });

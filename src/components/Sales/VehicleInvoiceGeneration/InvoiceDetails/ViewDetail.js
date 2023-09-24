@@ -49,7 +49,7 @@ const ViewDetailMain = (props) => {
                             <Divider />
                             <Descriptions {...viewProps} title={prepareCaption('Price Information')}>
                                 <Descriptions.Item label="Booking Number">{checkAndSetDefaultValue(formData?.bookingNumber || formData?.otfNumber, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Booking Date">{checkAndSetDefaultValue(formData?.otfDate, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Booking Date">{checkAndSetDefaultValue(formData?.otfDate ? formData?.otfDate : formData?.orderDate, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Tax Calculation">{checkAndSetDefaultValue(formData?.taxCalculationType, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Tax Payable On Reverse Charges?">{checkAndSetDefaultValue(formData?.taxPayableOnReverseCharges, isLoading)}</Descriptions.Item>
                             </Descriptions>
