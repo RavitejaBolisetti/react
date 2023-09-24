@@ -152,10 +152,10 @@ export const VehicleInvoiceMasterBase = (props) => {
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [cancelInvoiceVisible, setCancelInvoiceVisible] = useState(false);
-    const [irnStatusData, setIrnStatusData] = useState();
     const [additionalReportParams, setAdditionalReportParams] = useState();
     const [isReportVisible, setReportVisible] = useState();
     const [confirmRequest, setConfirmRequest] = useState(false);
+    const [previousSection, setpreviousSection] = useState(1);
 
     const [page, setPage] = useState({ pageSize: 10, current: 1 });
     const dynamicPagination = true;
@@ -331,8 +331,6 @@ export const VehicleInvoiceMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    console.log('isInVoiceMasterDetailDataLoaded', isInVoiceMasterDetailDataLoaded, requestPayload);
-
     const filterActiveMenu = (items) => {
         return items?.filter((item) => validateOTFMenu({ item, otfData }));
     };
@@ -458,6 +456,7 @@ export const VehicleInvoiceMasterBase = (props) => {
             case ADD_ACTION:
                 defaultSection && setCurrentSection(defaultSection);
                 invoiceDetailForm.resetFields();
+                setpreviousSection(1);
                 setSelectedOrderId('');
                 setSelectedOtfNumber('');
                 break;
@@ -781,6 +780,8 @@ export const VehicleInvoiceMasterBase = (props) => {
         onPrintForm21,
         confirmRequest,
         setConfirmRequest,
+        previousSection,
+        setpreviousSection,
     };
 
     const cancelInvoiceProps = {

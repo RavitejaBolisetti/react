@@ -203,7 +203,6 @@ export const BASE_URL_VEHICLE_PRODUCT_DETAILS = BASE_URL_VEHICLE + 'productdetai
 export const BASE_URL_VEHICLE_DETAILS_DOCUMENT = BASE_URL_VEHICLE + 'documents';
 export const BASE_URL_VEHICLE_ENTITELMENT = BASE_URL_VEHICLE + 'schemes';
 export const BASE_URL_VEHICLE_DETAILS_DELIVERY_NOTE = BASE_URL_VEHICLE + 'invoice/detail';
-export const BASE_URL_VEHICLE_CHALLAN_DETAILS_DELIVERY_NOTE = BASE_URL_VEHICLE + 'invoice/challan/detail';
 export const BASE_URL_VEHICLE_VARIANT = BASE_URL_VEHICLE + 'variant';
 export const BASE_URL_VEHICLE_MAKE = BASE_URL_VEHICLE + 'make';
 export const BASE_URL_VEHICLE_MODEL = BASE_URL_VEHICLE + 'model';
@@ -314,7 +313,13 @@ export const BASE_URL_DELIVERY_NOTE_INSURANCE_CHALLAN_DETAILS = BASE_URL_VEHICLE
 export const BASE_URL_VEHICLE_ADD_ON_SCHEME_DESCRIPTION = BASE_URL_OTF + 'scheme/lov'; // otf/scheme/lov?invoiceNumber=INV1693579301957
 export const BASE_URL_VEHICLE_ADD_ON_SCHEME_RSA_DESCRIPTION = BASE_URL_OTF + 'scheme/rsa/lov';
 export const BASE_URL_VEHICLE_ADD_ON_SCHEME_AMC_DESCRIPTION = BASE_URL_OTF + 'scheme/amc/lov';
-export const BASE_URL_CHALLAN_VIN_SEARCH = BASE_URL_VIEW_VEHICLE_DETAILS + '/search';
+export const BASE_URL_CHALLAN_VIN_SEARCH = BASE_URL_VEHICLE_DELIVERY_NOTE + 'challan/chassis';
+export const BASE_URL_CHALLAN_ENGINE_NUMBER = BASE_URL + 'vehicle/invoice/challan/detail';
+export const BASE_URL_VEHICLE_CHALLAN_DETAILS_DELIVERY_NOTE = BASE_URL_VEHICLE + 'invoice/challan/detail';
+export const BASE_URL_VEHICLE_CHALLAN_INVOICE_DETAILS_DELIVERY_NOTE = BASE_URL + 'otf/deliverynote/challan/chassis/details';
+export const BASE_URL_VEHICLE_CHALLAN_INSURANCE_DETAILS_DELIVERY_NOTE = BASE_URL + 'otf/deliverynote/challan/insurance';
+export const BASE_URL_VEHICLE_CHALLAN_CANCEL_DELIVERY_NOTE = BASE_URL + 'otf/delivery/challan/cancel/info';
+export const BASE_URL_VEHICLE_INFO_CANCEL_DELIVERY_NOTE = BASE_URL + 'otf/deliverynote/cancellation/information';
 
 export const BASE_URL_RELATIONSHIP_MANAGER = BASE_URL_USER_MANAGEMENT_APPLICATIONS_DEALER + '/employees';
 export const BASE_URL_DELIVERY_NOTE_VEHICLE_DETAILS = BASE_URL_OTF_VEHICLE_DETAILS + '/search/registrationnumber';

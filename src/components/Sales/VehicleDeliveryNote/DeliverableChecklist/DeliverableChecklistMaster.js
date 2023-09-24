@@ -18,7 +18,8 @@ export const DeliverableChecklistMasterBase = (props) => {
 
     useEffect(() => {
         setButtonData({ ...buttonData, formBtnActive: true });
-    }, [buttonData]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
     const handleFieldsChange = () => {};
 
     const onFinishFailed = () => {};

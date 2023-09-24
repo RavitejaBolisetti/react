@@ -11,6 +11,9 @@ import { DATA_TYPE } from 'constants/dataType';
 import { getCodeValue } from 'utils/getCodeValue';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import styles from 'assets/sass/app.module.scss';
+import { addToolTip } from 'utils/customMenuLink';
+
+import { AiOutlineInfoCircle } from 'react-icons/ai';
 
 const { Panel } = Collapse;
 const { Text, Title } = Typography;
@@ -29,7 +32,7 @@ const expandIcon = ({ isActive }) =>
     );
 
 const VehicleDeliveryNoteCard = (props) => {
-    const { selectedOrder, typeData, isLoading } = props;
+    const { selectedOrder, typeData, isLoading, toolTipContent } = props;
     const fullName = selectedOrder?.customerName?.split(' ');
     const userAvatar = fullName ? fullName[0]?.slice(0, 1) + (fullName[1] ? fullName[1].slice(0, 1) : '') : '';
     return (
@@ -62,8 +65,11 @@ const VehicleDeliveryNoteCard = (props) => {
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>
-                    Status: <span>{checkAndSetDefaultValue(getCodeValue(typeData[PARAM_MASTER.DLVR_NT_STS.id], selectedOrder?.deliveryNoteStatus, isLoading))}</span>
+                    Status: <span className={styles.tooltipAlign}>{selectedOrder?.deliveryNoteStatus === 'cancelled' && checkAndSetDefaultValue(getCodeValue(typeData[PARAM_MASTER.DLVR_NT_STS.id], selectedOrder?.deliveryNoteStatus, isLoading))}</span>
+                    <span className={styles.marL5}>{toolTipContent && selectedOrder?.deliveryNoteStatus && <div className={styles.toolTip}>{addToolTip(toolTipContent, 'bottom', '#FFFFFF', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}</div>}</span>
                 </div>
+
+  
                 <Divider />
                 <div className={styles.detailCardText}>
                     Invoice Number: <span> {checkAndSetDefaultValue(selectedOrder?.invoiceId)}</span>
