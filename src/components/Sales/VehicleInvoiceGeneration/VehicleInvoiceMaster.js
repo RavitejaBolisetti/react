@@ -331,6 +331,8 @@ export const VehicleInvoiceMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    console.log('isInVoiceMasterDetailDataLoaded', isInVoiceMasterDetailDataLoaded, requestPayload);
+
     const filterActiveMenu = (items) => {
         return items?.filter((item) => validateOTFMenu({ item, otfData }));
     };
