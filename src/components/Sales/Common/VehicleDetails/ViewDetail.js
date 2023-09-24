@@ -20,7 +20,7 @@ import { prepareCaption } from 'utils/prepareCaption';
 
 const { Panel } = Collapse;
 const ViewDetailMain = (props) => {
-    const { typeData, isLoading, activeKey, onChange, tooltTipText, styles, formData } = props;
+    const { typeData, isLoading, activeKey, onChange, tooltTipText, styles, formData, showPrintDiscount = false, ShowPOandSOdetails = true, showAvailaibleStock = true } = props;
     const viewProps = {
         bordered: false,
         colon: false,
@@ -42,12 +42,16 @@ const ViewDetailMain = (props) => {
                                     </div>
                                 </Descriptions.Item>
                                 <Descriptions.Item label="Model Code">{checkAndSetDefaultValue(formData?.modelCode, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Available Stock">{checkAndSetDefaultValue(formData?.availableStock, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="PO Number">{checkAndSetDefaultValue(formData?.poNumber, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="PO Date">{checkAndSetDefaultValue(formData?.poDate ? formData?.poDate : undefined, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                                <Descriptions.Item label="PO Status">{checkAndSetDefaultValue(getCodeValue(typeData?.PO_STATS, formData?.poStatus), isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="SO Number">{checkAndSetDefaultValue(formData?.soNumber, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="SO Status">{checkAndSetDefaultValue(formData?.soStatus, isLoading)}</Descriptions.Item>
+                                {showAvailaibleStock && <Descriptions.Item label="Available Stock">{checkAndSetDefaultValue(formData?.availableStock, isLoading)}</Descriptions.Item>}
+                                {ShowPOandSOdetails && (
+                                    <>
+                                        <Descriptions.Item label="PO Number">{checkAndSetDefaultValue(formData?.poNumber, isLoading)}</Descriptions.Item>
+                                        <Descriptions.Item label="PO Date">{checkAndSetDefaultValue(formData?.poDate ? formData?.poDate : undefined, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                                        <Descriptions.Item label="PO Status">{checkAndSetDefaultValue(getCodeValue(typeData?.PO_STATS, formData?.poStatus), isLoading)}</Descriptions.Item>
+                                        <Descriptions.Item label="SO Number">{checkAndSetDefaultValue(formData?.soNumber, isLoading)}</Descriptions.Item>
+                                        <Descriptions.Item label="SO Status">{checkAndSetDefaultValue(formData?.soStatus, isLoading)}</Descriptions.Item>
+                                    </>
+                                )}
                                 <Descriptions.Item label="VIN Number">{checkAndSetDefaultValue(formData?.vinNumber, isLoading)}</Descriptions.Item>
                             </Descriptions>
 
@@ -61,6 +65,7 @@ const ViewDetailMain = (props) => {
                             <Descriptions {...viewProps} title={prepareCaption('Benefits')}>
                                 <Descriptions.Item label="Dealer Discount with TAX">{checkAndSetDefaultValue(formData?.discountAmount, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Consumer Scheme with TAX">{checkAndSetDefaultValue(formData?.taxAmount, isLoading)}</Descriptions.Item>
+                                {showPrintDiscount && <Descriptions.Item label="Print Discount">{formData?.printDiscount ? 'Yes' : 'No'}</Descriptions.Item>}
                             </Descriptions>
                         </Panel>
                     </Collapse>

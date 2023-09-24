@@ -232,6 +232,12 @@ const ExchangeVehiclesBase = (props) => {
                     value: selectedOrder?.modelCode,
                     name: 'Booking Number',
                 },
+                {
+                    key: 'module',
+                    title: 'module',
+                    value: 'EX',
+                    name: 'Module',
+                },
             ];
             fetchList({ setIsLoading: listShowLoading, extraParams, onSuccessAction, onErrorAction, userId });
             fetchFinanceLovList({ setIsLoading: listFinanceLovShowLoading, userId });

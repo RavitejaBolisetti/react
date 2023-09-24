@@ -197,6 +197,12 @@ const LoyaltySchemeMasterMain = (props) => {
                     value: selectedOrder?.modelCode,
                     name: 'Booking Number',
                 },
+                {
+                    key: 'module',
+                    title: 'module',
+                    value: 'LO',
+                    name: 'Module',
+                },
             ];
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction });
             fetchSchemeLovList({ setIsLoading: listSchemeLovShowLoading, extraParams: schemeExtraParams, userId });
