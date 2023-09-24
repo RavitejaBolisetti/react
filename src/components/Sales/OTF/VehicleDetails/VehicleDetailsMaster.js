@@ -327,7 +327,7 @@ const VehicleDetailsMasterMain = (props) => {
 
     const handlePriceChange = (__, value) => {
         if (value?.type === 'D') {
-            showGlobalNotification({ message: 'This value has been deprecated. Please select other value' });
+            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'This value has been deprecated. Please select another value' });
         }
     };
 
@@ -368,7 +368,7 @@ const VehicleDetailsMasterMain = (props) => {
         productHierarchyData,
         resetProductLov,
         handlePriceChange,
-        handleDiscountChange
+        handleDiscountChange,
     };
 
     const viewProps = {
