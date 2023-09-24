@@ -73,7 +73,7 @@ const CommonForm = ({ formData, typeData, formKey = 'Shield', addOnForm, openAcc
                 <Form.Item hidden name="schemeCode">
                     <Input />
                 </Form.Item>
-                <Form.Item value={disabled ? true : false} initialValue={disabled ? true : false} hidden name="mappedInDelivery">
+                <Form.Item value={disabled ? false : true} initialValue={disabled ? false : true} hidden name="mappedInDelivery">
                     <Input />
                 </Form.Item>
             </Row>
