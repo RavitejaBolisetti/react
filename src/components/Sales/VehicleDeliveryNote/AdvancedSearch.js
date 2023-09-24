@@ -72,7 +72,7 @@ export const AdvancedSearchFrom = (props) => {
                         rules={[
                             {
                                 validator: (_, value) => {
-                                    return advanceFilterForm.getFieldValue('invoiceFromDate') ? CheckDateEffectiveTo(value, advanceFilterForm?.getFieldValue('invoiceFromDate')) : null;
+                                    return advanceFilterForm.getFieldValue('invoiceFromDate') ? CheckDateEffectiveTo(value, advanceFilterForm?.getFieldValue('invoiceFromDate')) : Promise.resolve();
                                 },
                             },
                         ]}
@@ -98,7 +98,7 @@ export const AdvancedSearchFrom = (props) => {
                                 rules={[
                                     {
                                         validator: (_, value) => {
-                                            return advanceFilterForm.getFieldValue('deliveryNoteFromDate') ? CheckDateEffectiveTo(value, advanceFilterForm?.getFieldValue('deliveryNoteFromDate')) : null;
+                                            return advanceFilterForm.getFieldValue('deliveryNoteFromDate') ? CheckDateEffectiveTo(value, advanceFilterForm?.getFieldValue('deliveryNoteFromDate')) : Promise.resolve();
                                         },
                                     },
                                 ]}
