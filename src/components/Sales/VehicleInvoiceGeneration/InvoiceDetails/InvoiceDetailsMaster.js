@@ -43,6 +43,13 @@ const InvoiceDetailsMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedOrder?.invoiceNumber]);
 
+    useEffect(() => {
+        if (selectedOtfNumber) {
+            setButtonData({ ...buttonData, formBtnActive: true });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, selectedOtfNumber]);
+
     const handleChange = (e) => {
         setButtonData({ ...buttonData, formBtnActive: false });
     };
@@ -87,7 +94,6 @@ const InvoiceDetailsMasterBase = (props) => {
         wrapForm: false,
         selectedOrderId,
     };
-    console.log('Hello',vehicleInvoiceMasterData)
     return (
         <Form layout="vertical" autoComplete="off" form={invoiceDetailForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
             <Row gutter={20} className={styles.drawerBodyRight}>

@@ -12,6 +12,7 @@ import { AddEditForm } from './AddEditForm';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { vehicleAddOnDetailDataActions } from 'store/actions/data/vehicleDeliveryNote/addOnDetails';
+import { relationshipManagerDataActions } from 'store/actions/data/vehicleDeliveryNote/relationshipManager';
 import { schemeDescriptionDataActions } from 'store/actions/data/vehicleDeliveryNote/schemeDescription';
 import { showGlobalNotification } from 'store/actions/notification';
 import { BASE_URL_VEHICLE_ADD_ON_SCHEME_RSA_DESCRIPTION as customRsaURL, BASE_URL_VEHICLE_ADD_ON_SCHEME_AMC_DESCRIPTION as customAmcURL } from 'constants/routingApi';
@@ -26,6 +27,7 @@ const mapStateToProps = (state) => {
             VehicleDeliveryNote: {
                 AddOnDetails: { isLoaded: isDataLoaded = false, isLoading, data: AddonDetailsData = [] },
                 SchemeDescription: { isLoaded: isSchemeDataLoaded = false, isSchemeLoading, data: schemeDescriptionData = [] },
+                RelationshipManager: { isLoaded: isRelationshipManagerLoaded = false, isloading: isRelationshipManagerLoading, data: relationshipManagerData = [] },
             },
         },
     } = state;
@@ -42,6 +44,9 @@ const mapStateToProps = (state) => {
         isSchemeDataLoaded,
         isSchemeLoading,
         schemeDescriptionData,
+        isRelationshipManagerLoaded,
+        isRelationshipManagerLoading,
+        relationshipManagerData,
     };
     return returnValue;
 };
@@ -52,6 +57,9 @@ const mapDispatchToProps = (dispatch) => ({
         {
             fetchScheme: schemeDescriptionDataActions.fetchList,
             listSchemeShowLoading: schemeDescriptionDataActions.listShowLoading,
+
+            fetchRelationshipManger: relationshipManagerDataActions.fetchList,
+            listRelationshipMangerShowLoading: relationshipManagerDataActions.listShowLoading,
 
             fetchList: vehicleAddOnDetailDataActions.fetchList,
             saveData: vehicleAddOnDetailDataActions.saveData,
@@ -64,8 +72,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export const AddOnDetailsMasterMain = (props) => {
-    const { fetchList, fetchScheme, schemeDescriptionData, listSchemeShowLoading, selectedInvoiceId, typeData, requestPayload, setRequestPayload, showGlobalNotification, AddonPartsData, isAddonPartsDataLoaded, fetchSearchPartList, resetData, AddonDetailsData, isDataLoaded, userId, listShowLoading, saveData, onFinishFailed } = props;
-    const { form, section, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick, setButtonData, buttonData } = props;
+    const { fetchList, fetchScheme, schemeDescriptionData, listSchemeShowLoading, selectedInvoiceId, typeData, requestPayload, setRequestPayload, showGlobalNotification, AddonPartsData, resetData, AddonDetailsData, userId, listShowLoading, saveData, onFinishFailed } = props;
+    const { form, section, formActionType, handleFormValueChange, NEXT_ACTION, handleButtonClick, setButtonData, buttonData, listRelationshipMangerShowLoading, fetchRelationshipManger, relationshipManagerData } = props;
 
     const [formData, setFormData] = useState();
     const [searchData, setsearchData] = useState({});
@@ -140,6 +148,23 @@ export const AddOnDetailsMasterMain = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    const handleOnChange = (e) => {
+        form.setFieldsValue({
+            manager: '',
+        });
+    };
+
+    const handleEmployeeSearch = () => {
+        const onSuccessAction = (res) => {
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        };
+        const onErrorAction = (message) => {
+            showGlobalNotification({ message });
+        };
+
+        fetchRelationshipManger({ setIsLoading: listRelationshipMangerShowLoading, userId, onSuccessAction, onErrorAction });
+    };
+
     const onSingleFormFinish = (key, formName) => {
         formName.validateFields().then(() => {
             switch (key) {
@@ -168,7 +193,7 @@ export const AddOnDetailsMasterMain = (props) => {
     };
 
     const viewProps = {
-        formData: AddonDetailsData,
+        formData,
         styles,
         openAccordian,
         setOpenAccordian,
@@ -177,10 +202,11 @@ export const AddOnDetailsMasterMain = (props) => {
         formActionType,
         typeData,
         schemeDescriptionData,
+        relationshipManagerData,
     };
     const formProps = {
         form,
-        formData: AddonDetailsData,
+        formData,
         formActionType,
         AddonPartsData,
         setsearchData,
@@ -198,6 +224,9 @@ export const AddOnDetailsMasterMain = (props) => {
         rsaForm,
         amcForm,
         schemeDescriptionData,
+        handleEmployeeSearch,
+        handleOnChange,
+        relationshipManagerData,
     };
 
     return (

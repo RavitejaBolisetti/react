@@ -16,16 +16,11 @@ import styles from 'assets/sass/app.module.scss';
 import { customSelectBox } from 'utils/customSelectBox';
 import { debounce } from 'utils/debounce';
 
-const { TextArea, Search } = Input;
+const { TextArea } = Input;
 const AddEditFormMain = (props) => {
-    const { formData, relationshipManagerData, typeData, form, soldByDealer, handleInvoiceNoSearch, handleOnChange } = props;
+    const { formData, relationshipManagerData, typeData, form, soldByDealer, handleChassisNoSearch, handleOnChange, chassisNoValue, fetchEngineNumber, listEngineNumberShowLoading, engineNumberData, userId } = props;
     const { vinData } = props;
 
-    const [chassisNoList, setChassisNoList] = useState([]);
-
-    const handleSelect = (value) => {};
-
-    const onSearchLocation = () => {};
 
     useEffect(() => {
         if (soldByDealer) {
@@ -34,21 +29,35 @@ const AddEditFormMain = (props) => {
             });
         } else {
             form.setFieldsValue({
-                deliveryNoteFor: 'Direct Built by MnM',
+                deliveryNoteFor: 'Directly Billed Vehicle',
             });
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [soldByDealer]);
 
+    useEffect(() => {
+        if (engineNumberData) {
+            form.setFieldsValue({
+                engineNumber: engineNumberData?.engineNumber,
+            });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [engineNumberData]);
+
     const handleSelectVinNo = (value) => {
-    form.setFieldsValue({
-        engineNumber: value,
-    });
-    }
+        const searchParams = [
+            {
+                key: 'chassisNumber',
+                title: 'chassisNumber',
+                value: value || chassisNoValue,
+                name: 'Chassis Number',
+            },
+        ];
+        fetchEngineNumber({ setIsLoading: listEngineNumberShowLoading, userId, extraParams: searchParams });
+    };
 
-    const fieldNames = { label: 'vinNumber', value: 'engineNumber' };
-
+    const fieldNames = { label: 'chassisNumber', value: 'chassisNumber' };
 
     return (
         <>
@@ -63,23 +72,13 @@ const AddEditFormMain = (props) => {
                                             <Input placeholder={preparePlaceholderText('Delivery Note For')} disabled={true} />
                                         </Form.Item>
                                     </Col>
-                                    <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                        <Form.Item initialValue={formData?.invoiceNumber} label="Invoice No." name="invoiceNumber">
-                                            {soldByDealer ? (
-                                                <>
-                                                    <Input placeholder={preparePlaceholderText('Invoice No.')} disabled={true} />
-                                                </>
-                                            ) : (
-                                                // <Search onSearch={handleInvoiceNoSearch} onChange={handleOnChange} placeholder={preparePlaceholderText('Invoice No.')} allowClear />
-                                                <AutoComplete fieldNames={fieldNames} label="Chasiss No" options={vinData} backfill={false}
-
-                                                 onSelect={handleSelectVinNo}
-                                                  onSearch={debounce(handleInvoiceNoSearch, 400)} allowSearch >
-                                                    <Input.Search size="large" allowClear placeholder={preparePlaceholderAutoComplete('')} />
-                                                </AutoComplete>
-                                            )}
-                                        </Form.Item>
-                                    </Col>
+                                    {soldByDealer && (
+                                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                            <Form.Item initialValue={formData?.invoiceNumber} label="Invoice No." name="invoiceNumber">
+                                                <Input placeholder={preparePlaceholderText('Invoice No.')} disabled={true} />
+                                            </Form.Item>
+                                        </Col>
+                                    )}
                                     {soldByDealer && (
                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                             <Form.Item label="Invoice Date" name="invoiceDate">
@@ -87,12 +86,21 @@ const AddEditFormMain = (props) => {
                                             </Form.Item>
                                         </Col>
                                     )}
+                                    {!soldByDealer && (
+                                        <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                            <Form.Item initialValue={formData?.chassisNumber} label="Chassis No." name="chassisNumber">
+                                                <AutoComplete  fieldNames={fieldNames} label="Chasiss No" options={vinData} backfill={false} onSelect={handleSelectVinNo} onSearch={debounce(handleChassisNoSearch, 400)} allowSearch>
+                                                    <Input.Search size="large" allowClear placeholder={preparePlaceholderAutoComplete('')} />
+                                                </AutoComplete>
+                                            </Form.Item>
+                                        </Col>
+                                    )}
+
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                         <Form.Item initialValue={formData?.engineNumber} label="Engine No." name="engineNumber">
                                             <Input placeholder={preparePlaceholderText('Engine No.')} maxLength={10} disabled={true} />
                                         </Form.Item>
                                     </Col>
-
                                     {soldByDealer && (
                                         <>
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
@@ -100,6 +108,7 @@ const AddEditFormMain = (props) => {
                                                     <Input placeholder={preparePlaceholderText('Chassis No.')} maxLength={10} disabled={true} />
                                                 </Form.Item>
                                             </Col>
+
                                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                                 <Form.Item initialValue={formData?.relationShipManager} label="Relationship Manager" name="relationShipManager">
                                                     {customSelectBox({ data: relationshipManagerData, fieldNames: { key: 'value', value: 'value' }, placeholder: preparePlaceholderSelect('Relationship Manager') })}
