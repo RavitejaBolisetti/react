@@ -154,7 +154,7 @@ export const HoPriceMappingMasterBase = (props) => {
     const [formActionType, setFormActionType] = useState({ ...defaultFormActionType });
 
     const [formData, setFormData] = useState([]);
-    const [responseData, setResponseData] = useState([]);
+    // const [responseData, setResponseData] = useState([]);
 
     const onSuccessAction = (res) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -363,10 +363,10 @@ export const HoPriceMappingMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [hoPriceDetailData, productHierarchyData, formActionType]);
 
-    useEffect(() => {
-        if (formActionType?.viewMode && hoPriceDetailData?.modelDealerMapResponse?.length) setResponseData(hoPriceDetailData?.modelDealerMapResponse);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [hoPriceDetailData, formActionType]);
+    // useEffect(() => {
+    //     if (formActionType?.viewMode && hoPriceDetailData?.modelDealerMapResponse?.length) setResponseData(hoPriceDetailData?.modelDealerMapResponse);
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [hoPriceDetailData, formActionType]);
 
     const onFinish = (values) => {
         const { city, dealerBranch, dealerParent, productCode, state, ...rest } = values;
@@ -541,7 +541,7 @@ export const HoPriceMappingMasterBase = (props) => {
         editProductData,
         setViewProductData,
         hoPriceDetailData,
-        responseData,
+       // responseData,
         checkedKeys,
         setCheckedKeys,
         isHoPriceDetaiLoading,
