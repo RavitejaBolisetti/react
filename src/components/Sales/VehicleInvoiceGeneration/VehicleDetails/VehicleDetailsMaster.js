@@ -329,8 +329,10 @@ const VehicleDetailsMasterMain = (props) => {
         setToolTipContent,
         typeData,
         isLoading,
+        showPrintDiscount: true,
+        ShowPOandSOdetails: false,
+        showAvailaibleStock: false,
     };
-
     const buttonProps = {
         ...props,
         buttonData: { ...buttonData, formBtnActive: true },
