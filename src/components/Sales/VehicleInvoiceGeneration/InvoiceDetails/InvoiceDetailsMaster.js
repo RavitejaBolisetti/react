@@ -39,6 +39,13 @@ const InvoiceDetailsMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedOtfNumber]);
 
+    useEffect(() => {
+        if (selectedOtfNumber) {
+            setButtonData({ ...buttonData, formBtnActive: true });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, selectedOtfNumber]);
+
     const handleChange = (e) => {
         setButtonData({ ...buttonData, formBtnActive: false });
     };

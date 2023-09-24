@@ -90,16 +90,6 @@ const mapDispatchToProps = (dispatch) => ({
             listChallanCancelInfoShowLoading: infoChallanVehicleDeliveryNoteDataActions.listShowLoading,
             resetChallanInfoData: infoChallanVehicleDeliveryNoteDataActions.reset,
 
-            cancelChallan: challanCancelVehicleDeliveryNoteDataActions.saveData,
-
-            fetchCancelInfoList: infoCancelVehicleDeliveryNoteDataActions.fetchList,
-            resetInfoData: infoCancelVehicleDeliveryNoteDataActions.reset,
-            listCancelInfoShowLoading: infoCancelVehicleDeliveryNoteDataActions.listShowLoading,
-
-            fetchChallanCancelInfoList: infoChallanVehicleDeliveryNoteDataActions.fetchList,
-            listChallanCancelInfoShowLoading: infoChallanVehicleDeliveryNoteDataActions.listShowLoading,
-            resetChallanInfoData: infoChallanVehicleDeliveryNoteDataActions.reset,
-
             showGlobalNotification,
         },
         dispatch
