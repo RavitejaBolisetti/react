@@ -6,13 +6,15 @@
 import React from 'react';
 import { Row, Button, Col, Input, Form } from 'antd';
 
-import { preparePlaceholderText } from 'utils/preparePlaceholder';
+import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { validateRequiredInputField } from 'utils/validation';
 import { customSelectBox } from 'utils/customSelectBox';
 import styles from 'assets/sass/app.module.scss';
 
 const { Search } = Input;
-const CommonForm = ({ formData, typeData, formKey = 'Shield', addOnForm, openAccordian, formActionType, onSingleFormFinish, schemeDescriptionData, shieldForm, rsaForm, amcForm }) => {
+const CommonForm = ({ formData, typeData, formKey = 'Shield', addOnForm, openAccordian, formActionType, onSingleFormFinish, schemeDescriptionData, shieldForm, rsaForm, amcForm, handleEmployeeSearch, handleOnChange, relationshipManagerData }) => {
+    let disabled = formData?.schemeType || formData?.schemeDescription || formData?.schemeAmount;
+
     const handleChange = (values) => {
         const code = schemeDescriptionData?.find((item) => item?.schemeDescription === values);
         if (code) {
@@ -37,18 +39,18 @@ const CommonForm = ({ formData, typeData, formKey = 'Shield', addOnForm, openAcc
                 {openAccordian === 'AMC' && (
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item initialValue={formData?.schemeType} label="Scheme Type" name="schemeType" rules={[validateRequiredInputField('Scheme Type')]}>
-                            {customSelectBox({ data: schemeDescriptionData, placeholder: preparePlaceholderText('Scheme Type'), fieldNames: { key: 'schemeType', value: 'schemeType' } })}
+                            {customSelectBox({ data: schemeDescriptionData, disabled: disabled, placeholder: preparePlaceholderText('Scheme Type'), fieldNames: { key: 'schemeType', value: 'schemeType' } })}
                         </Form.Item>
                     </Col>
                 )}
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={formData?.schemeDescription} label="Scheme Description" name="schemeDescription">
-                        {customSelectBox({ data: schemeDescriptionData, fieldNames: { key: 'schemeDescription', value: 'schemeDescription' }, placeholder: preparePlaceholderText('Scheme Description'), onChange: handleChange })}
+                        {customSelectBox({ data: schemeDescriptionData, disabled: disabled, fieldNames: { key: 'schemeDescription', value: 'schemeDescription' }, placeholder: preparePlaceholderText('Scheme Description'), onChange: handleChange })}
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={formData?.saleType} label="Sale Type" name="saleType" rules={[validateRequiredInputField('Sale Type')]}>
-                        {customSelectBox({ data: typeData['DLVR_SALE_TYP'], placeholder: preparePlaceholderText('Sale Type') })}
+                        {customSelectBox({ data: typeData['DLVR_SALE_TYP'], disabled: disabled, placeholder: preparePlaceholderText('Sale Type') })}
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -58,8 +60,9 @@ const CommonForm = ({ formData, typeData, formKey = 'Shield', addOnForm, openAcc
                 </Col>
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item initialValue={formData?.employeeName} label="Employee Name" name="employeeName">
-                        <Search placeholder={preparePlaceholderText('scheme amount')} allowClear />
+                    <Form.Item initialValue={formData?.employeeCode} label="Employee Name" name="employeeCode">
+                        {/* <Search  onSearch={handleEmployeeSearch}  onChange={handleOnChange} placeholder={preparePlaceholderText('scheme amount')} allowClear /> */}
+                        {customSelectBox({ data: relationshipManagerData, fieldNames: { key: 'key', value: 'value' }, placeholder: preparePlaceholderSelect('Relationship Manager') })}
                     </Form.Item>
                 </Col>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -70,7 +73,7 @@ const CommonForm = ({ formData, typeData, formKey = 'Shield', addOnForm, openAcc
                 <Form.Item hidden name="schemeCode">
                     <Input />
                 </Form.Item>
-                <Form.Item initialValue={true} hidden name="mappedInDelivery">
+                <Form.Item value={disabled ? true : false} initialValue={disabled ? true : false} hidden name="mappedInDelivery">
                     <Input />
                 </Form.Item>
             </Row>

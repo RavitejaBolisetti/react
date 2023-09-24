@@ -86,7 +86,7 @@ export const CustomerDetailsMasterBase = (props) => {
             setFormData({ ...customerDetailsData });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [customerDetailsData]);
+    }, [customerDetailsData, soldByDealer]);
 
     const extraParams = [
         {
