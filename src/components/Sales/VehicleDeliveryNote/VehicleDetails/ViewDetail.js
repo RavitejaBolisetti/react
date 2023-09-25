@@ -10,6 +10,7 @@ import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 import styles from 'assets/sass/app.module.scss';
 //import styles from 'components/common/Common.module.css';
 import { expandIcon } from 'utils/accordianExpandIcon';
+import { NoDataFound } from 'utils/noDataFound';
 
 const { Panel } = Collapse;
 const { Text } = Typography;
@@ -59,18 +60,24 @@ const ViewDetailMain = (props) => {
                             </Descriptions>
                         </Panel>
                     </Collapse>
+
                     <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
                         <Panel header="Battery Information" key="2">
                             <Divider />
-
-                            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Card className={styles.cardView}>
-                                    <Text>{/* {battery?.batteryMake} */}</Text>
-                                    <div>
-                                        <Text type="secondary">{/* {formData?.batteryName} */}</Text>
-                                    </div>
-                                </Card>
-                            </Col>
+                            {formData?.batteryDetail?.length ? (
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    {formData?.batteryDetail?.map((battery) => (
+                                        <Card className={styles.cardView} battery={battery} {...props}>
+                                            <Text>{battery?.batteryMake}</Text>
+                                            <div>
+                                                <Text type="secondary">{battery?.batteryName}</Text>
+                                            </div>
+                                        </Card>
+                                    ))}
+                                </Col>
+                            ) : (
+                                <NoDataFound />
+                            )}
                         </Panel>
                     </Collapse>
                 </Col>

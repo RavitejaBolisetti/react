@@ -130,6 +130,7 @@ export const VehicleInvoiceMasterBase = (props) => {
 
     const [listFilterForm] = Form.useForm();
     const [cancelInvoiceForm] = Form.useForm();
+    const [CustomerForm] = Form.useForm();
 
     const [searchValue, setSearchValue] = useState();
 
@@ -649,6 +650,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         const onSuccess = (res) => {
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
+            cancelInvoiceForm.resetFields();
             setCancelInvoiceVisible(false);
             resetInvoiceData();
         };
@@ -784,6 +786,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         setConfirmRequest,
         previousSection,
         setpreviousSection,
+        CustomerForm,
     };
 
     const cancelInvoiceProps = {

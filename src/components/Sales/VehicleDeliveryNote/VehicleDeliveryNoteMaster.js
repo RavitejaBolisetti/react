@@ -90,6 +90,16 @@ const mapDispatchToProps = (dispatch) => ({
             listChallanCancelInfoShowLoading: infoChallanVehicleDeliveryNoteDataActions.listShowLoading,
             resetChallanInfoData: infoChallanVehicleDeliveryNoteDataActions.reset,
 
+            cancelChallan: challanCancelVehicleDeliveryNoteDataActions.saveData,
+
+            fetchCancelInfoList: infoCancelVehicleDeliveryNoteDataActions.fetchList,
+            resetInfoData: infoCancelVehicleDeliveryNoteDataActions.reset,
+            listCancelInfoShowLoading: infoCancelVehicleDeliveryNoteDataActions.listShowLoading,
+
+            fetchChallanCancelInfoList: infoChallanVehicleDeliveryNoteDataActions.fetchList,
+            listChallanCancelInfoShowLoading: infoChallanVehicleDeliveryNoteDataActions.listShowLoading,
+            resetChallanInfoData: infoChallanVehicleDeliveryNoteDataActions.reset,
+
             showGlobalNotification,
         },
         dispatch
@@ -505,7 +515,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage + 'Delivery Note no.:' + res?.data?.[0]?.vehicleDeliveryNote });
+            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
             setButtonData({ ...buttonData, formBtnActive: false });
             section && setCurrentSection(VEHICLE_DELIVERY_NOTE_SECTION.THANK_YOU_PAGE.id);
