@@ -86,7 +86,7 @@ export const AddOnDetailsMasterMain = (props) => {
     const [amcForm] = Form.useForm();
 
     const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
     };
 
     const onErrorAction = (message) => {
@@ -108,7 +108,7 @@ export const AddOnDetailsMasterMain = (props) => {
     ];
 
     useEffect(() => {
-        if (userId && selectedInvoiceId && formActionType?.viewMode) {
+        if (userId && selectedInvoiceId) {
             fetchList({ setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps

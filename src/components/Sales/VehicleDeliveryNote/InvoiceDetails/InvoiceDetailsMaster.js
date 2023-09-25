@@ -131,7 +131,7 @@ export const InvoiceDetailsMasterBase = (props) => {
 
     useEffect(() => {
         if (userId && selectedInvoiceId && soldByDealer) {
-            fetchList({ setIsLoading: listShowLoading, extraParams, onErrorAction, userId });
+            fetchList({ setIsLoading: listShowLoading, extraParams, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedInvoiceId, soldByDealer]);
@@ -152,7 +152,7 @@ export const InvoiceDetailsMasterBase = (props) => {
                     name: 'Delivery Note',
                 },
             ];
-            fetchInvoiceChallan({ setIsLoading: listChallanInvoiceShowLoading, extraParams: challanExtraParams, onErrorAction, userId });
+            fetchInvoiceChallan({ setIsLoading: listChallanInvoiceShowLoading, extraParams: challanExtraParams, userId });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedInvoiceId, soldByDealer]);
@@ -188,8 +188,8 @@ export const InvoiceDetailsMasterBase = (props) => {
     };
 
     const handleChassisNoSearch = (val) => {
-        if(!val) return;
-        
+        if (!val) return;
+
         const onSuccessAction = (res) => {
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         };
@@ -209,10 +209,6 @@ export const InvoiceDetailsMasterBase = (props) => {
 
     const onSuccessAction = (res) => {
         showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
-    };
-
-    const onErrorAction = (message) => {
-        showGlobalNotification(message);
     };
 
     const onFinish = (values) => {
