@@ -310,6 +310,7 @@ export const HoPriceMappingMasterBase = (props) => {
         setShowDataLoading(false);
         setFilterString();
         advanceFilterForm.resetFields();
+        setFilteredCityData([])
     };
 
     const handleButtonClick = ({ record = null, buttonAction, openDefaultSection = true }) => {
