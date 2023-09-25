@@ -89,6 +89,7 @@ const OtfDetailsMasterBase = (props) => {
             setloyaltyValue(false);
         }
         if (otfData?.otfStatus === OTF_STATUS.PENDING_FOR_CANCELLATION.key) setWorkFlowDetails(otfData?.workFlowDetails);
+        else setWorkFlowDetails({});
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [otfData]);
 
