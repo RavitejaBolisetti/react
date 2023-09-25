@@ -126,7 +126,7 @@ export const VehicleInvoiceMasterBase = (props) => {
     const [invoiceStatus, setInvoiceStatus] = useState(QUERY_BUTTONS_CONSTANTS.INVOICED.key);
     const [requestPayload, setRequestPayload] = useState({});
 
-    //console.log('requestPayload', requestPayload);
+    // console.log('requestPayload', requestPayload);
 
     const [listFilterForm] = Form.useForm();
     const [cancelInvoiceForm] = Form.useForm();
@@ -648,10 +648,10 @@ export const VehicleInvoiceMasterBase = (props) => {
         const cancelReason = cancelInvoiceForm.getFieldValue().cancelReason;
         const data = { id: recordId ?? '', invoiceNumber: selectedOrderId, cancelReason: cancelReason };
         const onSuccess = (res) => {
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
-            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
             cancelInvoiceForm.resetFields();
             setCancelInvoiceVisible(false);
+            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
             resetInvoiceData();
         };
         const onError = (message) => {
@@ -680,7 +680,6 @@ export const VehicleInvoiceMasterBase = (props) => {
         filterString,
         setFilterString,
         from: listFilterForm,
-        // onFinish,
         onFinishFailed,
         handleResetFilter,
         advanceFilterForm,
@@ -732,7 +731,6 @@ export const VehicleInvoiceMasterBase = (props) => {
         invoiceDetailForm,
         formActionType,
         setFormActionType,
-        // onFinish,
         onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
@@ -787,6 +785,9 @@ export const VehicleInvoiceMasterBase = (props) => {
         previousSection,
         setpreviousSection,
         CustomerForm,
+        showGlobalNotification,
+        isDataLoaded,
+        isInVoiceMasterDetailDataLoaded,
     };
 
     const cancelInvoiceProps = {

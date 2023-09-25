@@ -15,6 +15,11 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             width: '14%',
         }),
         tblPrepareColumns({
+            title: 'Booking Number',
+            dataIndex: 'otfNumber',
+            width: '25%',
+        }),
+        tblPrepareColumns({
             title: 'Customer Name',
             dataIndex: 'customerName',
             width: '14%',
@@ -22,11 +27,6 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
         tblPrepareColumns({
             title: 'Model Description',
             dataIndex: 'modelDescription',
-            width: '25%',
-        }),
-        tblPrepareColumns({
-            title: 'Booking Number',
-            dataIndex: 'otfNumber',
             width: '25%',
         }),
         tblPrepareColumns({
