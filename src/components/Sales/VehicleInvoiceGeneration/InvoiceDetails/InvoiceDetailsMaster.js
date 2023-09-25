@@ -18,12 +18,13 @@ const InvoiceDetailsMasterBase = (props) => {
     const { typeData, vehicleInvoiceMasterData, selectedOrderId } = props;
     const { userId, buttonData, setButtonData, section, isDataLoaded, isLoading, invoiceDetailForm } = props;
     const { formActionType, selectedOtfNumber, setSelectedOtfNumber } = props;
-    const { FormActionButton, requestPayload, setRequestPayload, handleButtonClick, NEXT_ACTION, handleBookingNumberSearch } = props;
+    const { FormActionButton, requestPayload, setRequestPayload, handleButtonClick, NEXT_ACTION, handleBookingNumberSearch, CustomerForm } = props;
 
     const [activeKey, setActiveKey] = useState([3]);
-    const [CustomerForm] = Form.useForm();
     useEffect(() => {
-        if (vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto) {
+        if (!selectedOrderId) {
+            CustomerForm.resetFields();
+        } else if (vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto) {
             CustomerForm.setFieldsValue({
                 bookingCustomer: { ...vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto?.bookingCustomer, birthDate: formattedCalendarDate(vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto?.bookingCustomer?.birthDate) },
                 billingCustomer: { ...vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto?.billingCustomer, birthDate: formattedCalendarDate(vehicleInvoiceMasterData?.invoiceDetails?.bookingAndBillingCustomerDto?.billingCustomer?.birthDate) },
