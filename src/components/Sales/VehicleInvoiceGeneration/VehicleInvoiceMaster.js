@@ -126,8 +126,6 @@ export const VehicleInvoiceMasterBase = (props) => {
     const [invoiceStatus, setInvoiceStatus] = useState(QUERY_BUTTONS_CONSTANTS.INVOICED.key);
     const [requestPayload, setRequestPayload] = useState({});
 
-    // console.log('requestPayload', requestPayload);
-
     const [listFilterForm] = Form.useForm();
     const [cancelInvoiceForm] = Form.useForm();
     const [CustomerForm] = Form.useForm();
@@ -156,6 +154,7 @@ export const VehicleInvoiceMasterBase = (props) => {
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [cancelInvoiceVisible, setCancelInvoiceVisible] = useState(false);
     const [additionalReportParams, setAdditionalReportParams] = useState();
+    console.log('🚀 ~ file: VehicleInvoiceMaster.js:159 ~ VehicleInvoiceMasterBase ~ additionalReportParams:', additionalReportParams);
     const [isReportVisible, setReportVisible] = useState();
     const [confirmRequest, setConfirmRequest] = useState(false);
     const [previousSection, setpreviousSection] = useState(1);
@@ -303,6 +302,8 @@ export const VehicleInvoiceMasterBase = (props) => {
         } else {
             setSelectedOrder('');
         }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, formActionType, isInVoiceMasterDetailDataLoaded]);
 
     useEffect(() => {
@@ -616,8 +617,8 @@ export const VehicleInvoiceMasterBase = (props) => {
 
         setAdditionalReportParams([
             {
-                key: 'sa_od_invoice_hdr_id',
-                value: record?.id,
+                key: 'invoice_id',
+                value: record?.invoiceNumber,
             },
         ]);
     };
@@ -629,7 +630,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         setAdditionalReportParams([
             {
                 key: 'invoice_id',
-                value: record?.id,
+                value: record?.invoiceNumber,
             },
         ]);
     };
@@ -680,6 +681,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         filterString,
         setFilterString,
         from: listFilterForm,
+        // onFinish,
         onFinishFailed,
         handleResetFilter,
         advanceFilterForm,
@@ -731,6 +733,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         invoiceDetailForm,
         formActionType,
         setFormActionType,
+        // onFinish,
         onFinishFailed,
         isVisible: isFormVisible,
         onCloseAction,
@@ -788,6 +791,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         showGlobalNotification,
         isDataLoaded,
         isInVoiceMasterDetailDataLoaded,
+
     };
 
     const cancelInvoiceProps = {

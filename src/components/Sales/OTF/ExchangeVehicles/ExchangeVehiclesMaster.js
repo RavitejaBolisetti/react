@@ -8,8 +8,7 @@ import { Row, Col, Form } from 'antd';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { ViewDetail } from './ViewDetail';
-import { AddEditForm } from './AddEditForm';
+import { AddEditForm, ViewDetail } from 'components/Sales/Common/ExchangeVehicles';
 import VehiclePriorityAllotmentAlert from './VehiclePriorityAllotmentAlert';
 
 import { customerDetailDataActions } from 'store/actions/customer/customerDetail';

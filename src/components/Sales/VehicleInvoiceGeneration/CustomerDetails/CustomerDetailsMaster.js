@@ -59,7 +59,6 @@ export const CustomerDetailsMain = (props) => {
         setActiveKey,
         sameAsBookingCustomer,
         setSameAsBookingCustomer,
-        showAgeGroup: false,
     };
 
     const viewProps = {
