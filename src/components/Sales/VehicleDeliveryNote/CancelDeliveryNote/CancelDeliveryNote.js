@@ -4,7 +4,7 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React from 'react';
-import { Row, Col, Form, Input, Button, Select } from 'antd';
+import { Row, Col, Form, Input, Button } from 'antd';
 
 import { withModal } from 'components/withModal';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
@@ -17,10 +17,11 @@ import styles from 'assets/sass/app.module.scss';
 const { TextArea } = Input;
 
 export const RejectRequestForm = (props) => {
-    const { formData, cancelDeliveryNoteForm, onFinish, onFinishFailed, cancelModalCloseAction, retailMonth, typeData, yesRetailMonth, setYesRetailMonth } = props;
+    const { formData, cancelDeliveryNoteForm, onFinish, onFinishFailed, cancelModalCloseAction, retailMonth, typeData, yesRetailMonth, setYesRetailMonth ,soldByDealer} = props;
+
     return (
         <Form autoComplete="off" layout="vertical" form={cancelDeliveryNoteForm} onFinish={onFinish} onFinishFailed={onFinishFailed}>
-            {retailMonth ? (
+            {soldByDealer && retailMonth ? (
                 <Row gutter={16}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.textareaError}>
                         <Form.Item label="Remark For Cancellation" name="cancellationRemark" rules={[validateRequiredInputField('remarks')]} initialValue={formData?.remarks}>
@@ -30,7 +31,7 @@ export const RejectRequestForm = (props) => {
                 </Row>
             ) : (
                 <>
-                    {yesRetailMonth ? (
+                    {soldByDealer && yesRetailMonth ? (
                         <Row gutter={16}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.textareaError}>
                                 <div>Retail sale month closed. Would you like to send Cancellation approval request?</div>

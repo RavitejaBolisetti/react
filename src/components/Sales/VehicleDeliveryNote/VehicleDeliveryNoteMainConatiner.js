@@ -13,14 +13,17 @@ import { InvoiceDetailsMaster } from './InvoiceDetails';
 import { CustomerDetailsMaster } from './CustomerDetails';
 import { VehicleDetailsMaster } from './VehicleDetails';
 
-import { InsuranceDetailsMaster } from 'components/Sales/OTF/InsuranceDetails';
+import { InsuranceDetailsMaster } from './InsuranceDetails';
 import { FinananceDetailsMaster } from 'components/Sales/OTF/FinananceDetails';
 
 import { AddOnDetailsMaster } from './AddOnDetails';
 import { DeliverableChecklistMaster } from './DeliverableChecklist';
 import { VehicleDeliveryNoteFormButton } from './VehicleDeliveryNoteFormButton';
+// import { ThankYouMaster } from './ThankYou';
 
 import styles from 'assets/sass/app.module.scss';
+import { ThankYouMaster } from './ThankYou';
+
 const VehicleDeliveryNoteConatinerMain = (props) => {
     const { currentSection, requestPayload, setRequestPayload, selectedOtfNumber, selectedOrderId, soldByDealer } = props;
 
@@ -60,6 +63,9 @@ const VehicleDeliveryNoteConatinerMain = (props) => {
             }
             case VEHICLE_DELIVERY_NOTE_SECTION.DELIVERABLE_CHECKLIST.id: {
                 return <DeliverableChecklistMaster {...myProps} />;
+            }
+            case VEHICLE_DELIVERY_NOTE_SECTION.THANK_YOU_PAGE.id: {
+                return <ThankYouMaster {...myProps} />;
             }
             default: {
                 return <InvoiceDetailsMaster {...myProps} />;

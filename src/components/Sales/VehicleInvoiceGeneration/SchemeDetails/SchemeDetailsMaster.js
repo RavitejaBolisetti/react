@@ -31,7 +31,7 @@ export const SchemeDetailsMaster = (props) => {
     const formProps = {
         ...props,
         styles,
-        formData,
+        schemeData: formData,
     };
 
     const onFinish = (values) => {

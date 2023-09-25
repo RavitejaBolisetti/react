@@ -16,7 +16,7 @@ import { customSelectBox } from 'utils/customSelectBox';
 import { CustomerListMaster } from 'components/utils/CustomerListModal';
 
 export const AddressCommonForm = (props) => {
-    const { formType, formData, disabledProps, handleOnChange, fnSetData, typeData, sameAsBookingCustomer, viewOnly = false } = props;
+    const { formType, formData, disabledProps, handleOnChange, fnSetData, typeData, sameAsBookingCustomer, viewOnly = false, showAgeGroup = true } = props;
     const canUpdate = ((formType === 'bookingCustomer' && !formData?.billingCustomer?.customerId) || formType === 'billingCustomer') && !viewOnly;
 
     const alternateNumberCheck = (value) => {
@@ -82,11 +82,13 @@ export const AddressCommonForm = (props) => {
                         {customSelectBox({ data: typeData['GENDER'], disabled: true })}
                     </Form.Item>
                 </Col>
-                <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                    <Form.Item name={[formType, 'ageGroup']} label="Age Group" initialValue={formData?.ageGroup}>
-                        {customSelectBox({ data: typeData['AGE_RANGE'], disabled: true })}
-                    </Form.Item>
-                </Col>
+                {showAgeGroup && (
+                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                        <Form.Item name={[formType, 'ageGroup']} label="Age Group" initialValue={formData?.ageGroup}>
+                            {customSelectBox({ data: typeData['AGE_RANGE'], disabled: true })}
+                        </Form.Item>
+                    </Col>
+                )}
             </Row>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>

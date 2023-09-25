@@ -39,16 +39,16 @@ const MenuNav = (props) => {
     }, [currentSection]);
 
     const onHandle = (item) => {
-    
-        if (selectedCustomerId && !buttonData.formBtnActive) {
-            console.log('not wanted');
-            setCurrentSection(item?.id);
-            setButtonData({ ...buttonData, formBtnActive: false });
-        } else if (buttonData.formBtnActive) {
-            console.log('wanted');
-            setNextCurrentSection(item?.id)
-            setIsUnsavedDataPopup(true);
-        }
+        setCurrentSection(item?.id);
+
+        // if (selectedCustomerId && !buttonData.formBtnActive) {
+        //     console.log('not wanted');
+        //     setButtonData({ ...buttonData, formBtnActive: false });
+        // } else if (buttonData.formBtnActive) {
+        //     console.log('wanted');
+        //     setNextCurrentSection(item?.id)
+        //     // setIsUnsavedDataPopup(true);
+        // }
     };
 
     const className = (item) => {

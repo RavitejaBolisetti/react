@@ -6,17 +6,39 @@
 
 import { Row, Col, Space, Avatar, Typography } from 'antd';
 
-import { VehicleReceiptFormButton } from '../VehicleDeliveryNoteFormButton';
+import { VehicleDeliveryNoteFormButton } from '../VehicleDeliveryNoteFormButton';
 import { LANGUAGE_EN } from 'language/en';
 import { HiCheck } from 'react-icons/hi';
 
 import styles from 'assets/sass/app.module.scss';
 
-const { Title, Text } = Typography;
+const { Title } = Typography;
 
 export const ThankYouMaster = (props) => {
-    const title = LANGUAGE_EN.GENERAL.THANK_YOU_PAGE_OTF.TITLE;
-    const message = LANGUAGE_EN.GENERAL.THANK_YOU_PAGE_OTF.MESSAGE.replace('{ORDER_ID}', props?.selectedOrderId);
+    const title = LANGUAGE_EN.GENERAL.DELIVERY_NOTE_MESSAGE.TITLE.replace('{NAME}', props?.soldByDealer ? 'Note' : 'Challan');
+    const message = LANGUAGE_EN.GENERAL.DELIVERY_NOTE_MESSAGE.MESSAGE.replace('{ORDER_ID}', props?.vehicleDeliveryNote);
+
+    const defaultBtnVisiblity = {
+        editBtn: false,
+        saveBtn: false,
+        cancelBtn: false,
+        saveAndNewBtn: false,
+        saveAndNewBtnClicked: false,
+        closeBtn: true,
+        formBtnActive: false,
+        cancelOTFBtn: false,
+        transferOTFBtn: false,
+        allotBtn: false,
+        unAllotBtn: false,
+        invoiceBtn: false,
+        deliveryNote: false,
+        changeHistory: false,
+        otfSoMappingHistoryBtn: false,
+    };
+    const thankProp = {
+        ...props,
+        buttonData: { ...defaultBtnVisiblity },
+    };
 
     return (
         <>
@@ -25,13 +47,14 @@ export const ThankYouMaster = (props) => {
                     <Space direction="vertical">
                         <Avatar size={180} icon={<HiCheck />} />
                         <Title level={5}>{title}</Title>
-                        <Text>{message}</Text>
+                        {/* <Text>{message}</Text> */}
+                        {/* <Text>{'Delivery Note No.:' + props?.vehicleDeliveryNote}</Text> */}
                     </Space>
                 </Col>
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <VehicleReceiptFormButton {...props} />
+                    <VehicleDeliveryNoteFormButton {...thankProp} />
                 </Col>
             </Row>
         </>

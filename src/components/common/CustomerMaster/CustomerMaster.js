@@ -127,6 +127,7 @@ const CustomerMasterMain = (props) => {
     const [page, setPage] = useState({ pageSize: 10, current: 1 });
     const dynamicPagination = true;
 
+
     const defaultExtraParam = useMemo(() => {
         return [
             {
@@ -145,7 +146,7 @@ const CustomerMasterMain = (props) => {
             {
                 key: 'pageNumber',
                 title: 'Value',
-                value: page?.current,
+                value: filterString?.current || page?.current,
                 canRemove: true,
                 filter: false,
             },
@@ -165,7 +166,9 @@ const CustomerMasterMain = (props) => {
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [customerType, page]);
+    }, [customerType, filterString, page]);
+
+
 
     const extraParams = useMemo(() => {
         if (filterString) {
@@ -238,6 +241,13 @@ const CustomerMasterMain = (props) => {
     }, []);
 
     useEffect(() => {
+        if (page?.current > 1) {
+            setFilterString({ ...filterString, pageSize: 10, current: undefined });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [page]);
+
+    useEffect(() => {
         if (customerType) {
             setPage({ pageSize: 10, current: 1 });
             setFilterString({ current: 1 });
@@ -303,12 +313,12 @@ const CustomerMasterMain = (props) => {
                 viewMode: buttonAction === VIEW_ACTION,
             });
 
-            setButtonData(btnVisiblity({ defaultBtnVisiblity: {...defaultBtnVisiblity, changeHistory: buttonAction !== ADD_ACTION}, buttonAction }));
+            setButtonData(btnVisiblity({ defaultBtnVisiblity: { ...defaultBtnVisiblity, changeHistory: buttonAction !== ADD_ACTION }, buttonAction }));
         }
         setIsFormVisible(true);
     };
 
-    const onFinish = (values, e) => {};
+    const onFinish = (values, e) => { };
 
     const onFinishFailed = (errorInfo) => {
         console.error(errorInfo);
@@ -368,6 +378,7 @@ const CustomerMasterMain = (props) => {
     }, [formActionType]);
 
     const handleCustomerTypeChange = (id) => {
+        setFilterString({ current: 1 })
         setCustomerType(id);
         searchForm.resetFields();
     };
@@ -387,8 +398,11 @@ const CustomerMasterMain = (props) => {
     };
 
     const handleResetFilter = (e) => {
-        setFilterString();
-        setShowDataLoading(true);
+        const { pageSize } = filterString;
+        if (filterString) {
+            setShowDataLoading(true);
+        }
+        setFilterString({ pageSize, current: 1 }); setShowDataLoading(true);
         searchForm.resetFields();
     };
 

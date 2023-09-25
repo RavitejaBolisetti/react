@@ -12,6 +12,7 @@ import { AddEditForm, ViewDetail } from 'components/Sales/Common/InsuranceDetail
 import { showGlobalNotification } from 'store/actions/notification';
 import { insuranceDetailDataActions } from 'store/actions/data/otf/insuranceDetail';
 
+
 import styles from 'assets/sass/app.module.scss';
 const mapStateToProps = (state) => {
     const {
@@ -85,7 +86,7 @@ const InsuranceDetailsMasterBase = (props) => {
                     name: 'Booking Number',
                 },
             ];
-            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction, onSuccessAction });
+            fetchList({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction, onSuccessAction});
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId, selectedOrderId]);

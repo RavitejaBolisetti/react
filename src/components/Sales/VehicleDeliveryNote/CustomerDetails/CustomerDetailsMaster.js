@@ -82,11 +82,11 @@ export const CustomerDetailsMasterBase = (props) => {
 
     useEffect(() => {
         if (customerDetailsData) {
-            form.setFieldsValue({ ...customerDetailsData, customerType: getCodeValue(typeData?.[PARAM_MASTER?.CUST_TYPE?.id], formData?.customerType) });
+            form.setFieldsValue({ ...customerDetailsData, customerType: typeData?.[PARAM_MASTER?.CUST_TYPE?.id]?.find((customer) => customer?.key === customerDetailsData?.customerType)?.value });
             setFormData({ ...customerDetailsData });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [customerDetailsData]);
+    }, [customerDetailsData, soldByDealer]);
 
     const extraParams = [
         {

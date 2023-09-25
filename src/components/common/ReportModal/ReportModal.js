@@ -91,7 +91,7 @@ export const EmbeddedReportMasterBase = (props) => {
 
     useEffect(() => {
        
-        let sExtraParamsString = '?rp:';
+        let sExtraParamsString = '&rp:';
         additionalParams?.forEach((item, index) => {
             sExtraParamsString += item?.value && item?.key ? item?.value && item?.key + '=' + item?.value + '&' : '';
         });
@@ -142,7 +142,7 @@ export const EmbeddedReportMasterBase = (props) => {
 
     return (
         <div>
-            {sampleReportConfig?.accessToken && (
+            {sampleReportConfig?.accessToken && sampleReportConfig?.embedUrl && (
                 <PowerBIEmbed
                     embedConfig={sampleReportConfig}
                     eventHandlers={eventHandlersMap}

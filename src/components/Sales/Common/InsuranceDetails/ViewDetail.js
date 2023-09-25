@@ -57,23 +57,23 @@ const mapDispatchToProps = (dispatch) => ({
 
 const ViewDetailMain = (props) => {
     const { formData, isLoading } = props;
-    const { userId, isInsuranceCompanyDataLoaded, listInsuranceShowLoading, fetchInsuranceCompanyList, insuranceCompanies } = props;
+    const { insuranceCompanies } = props;
 
-    useEffect(() => {
-        const extraParams = [
-            {
-                key: 'partyType',
-                title: 'partyType',
-                value: 'IN',
-                name: 'Party Type',
-            },
-        ];
+    // useEffect(() => {
+    //     const extraParams = [
+    //         {
+    //             key: 'partyType',
+    //             title: 'partyType',
+    //             value: 'IN',
+    //             name: 'Party Type',
+    //         },
+    //     ];
 
-        if (userId && !isInsuranceCompanyDataLoaded) {
-            fetchInsuranceCompanyList({ setIsLoading: listInsuranceShowLoading, userId, extraParams });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, !isInsuranceCompanyDataLoaded]);
+    //     if (userId && !isInsuranceCompanyDataLoaded) {
+    //         fetchInsuranceCompanyList({ setIsLoading: listInsuranceShowLoading, userId, extraParams });
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [userId, !isInsuranceCompanyDataLoaded]);
 
     const viewProps = {
         bordered: false,

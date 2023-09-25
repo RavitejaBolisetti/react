@@ -12,9 +12,11 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { partyMasterDataActions } from 'store/actions/data/partyMaster';
 
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
-import { formattedCalendarDate, dateFormat } from 'utils/formatDateTime';
+import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
 import { validateNumberWithTwoDecimalPlaces } from 'utils/validation';
 import { disableFutureDate } from 'utils/disableDate';
+import { BASE_URL_PARTY_MASTER_LOV as customURL } from 'constants/routingApi';
+
 
 const mapStateToProps = (state) => {
     const {
@@ -57,6 +59,10 @@ const AddEditFormMain = (props) => {
     const { formData, form } = props;
     const { Option } = Select;
 
+    const onErrorAction = () =>{
+
+    }
+    
     useEffect(() => {
         const extraParams = [
             {
@@ -67,14 +73,14 @@ const AddEditFormMain = (props) => {
             },
         ];
         if (userId && !isInsuranceCompanyDataLoaded) {
-            fetchInsuranceCompanyList({ setIsLoading: listInsuranceShowLoading, userId, extraParams });
+            fetchInsuranceCompanyList({ setIsLoading: listInsuranceShowLoading, userId, extraParams, customURL,onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, !isInsuranceCompanyDataLoaded]);
+    }, [userId, isInsuranceCompanyDataLoaded]);
 
     useEffect(() => {
         if (formData) {
-            form.setFieldsValue({ ...formData, insuranceDate: formattedCalendarDate(formData?.insuranceDate) });
+            form.setFieldsValue({ ...formData, insuranceDate: formattedCalendarDate(formData?.insuranceDate)});
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData, formActionType, insuranceCompanies]);
@@ -109,7 +115,7 @@ const AddEditFormMain = (props) => {
                             </Col>
 
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item label="Insurance Cover Note Date" name="insuranceDate" initialValue={formData?.insuranceDate}>
+                                <Form.Item label="Insurance Cover Note Date" name="insuranceDate" initialValue={formattedCalendarDate(formData?.insuranceDate)} >
                                     <DatePicker disabledDate={disableFutureDate} format={dateFormat} placeholder={preparePlaceholderSelect('Date')} />
                                 </Form.Item>
                             </Col>

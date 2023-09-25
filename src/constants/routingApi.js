@@ -43,7 +43,8 @@ export const BASE_URL_DEALER_MANPOWER_DESIGNATION = BASE_URL_DEALER_MANPOWER + '
 export const BASE_URL_DEALER_MANPOWER_EMPLOYEE_DEPARTMENT = BASE_URL_DEALER_MANPOWER + '/employee/departments';
 
 export const BASE_URL_CUSTOMER_MASTER = BASE_URL + 'customers';
-export const BASE_URL_PARTY_MASTER = BASE_URL_CUSTOMER_MASTER + '/partymaster/lov';
+export const BASE_URL_PARTY_MASTER = BASE_URL_CUSTOMER_MASTER + '/partymaster';
+export const BASE_URL_PARTY_MASTER_LOV = BASE_URL_CUSTOMER_MASTER + '/partymaster/lov';
 export const BASE_URL_LESSOR_COMPANY_MASTER = BASE_URL_CUSTOMER_MASTER + '/lessorcompany';
 export const BASE_URL_LESSOR_CUSTOMER_CREATION = BASE_URL_CUSTOMER_MASTER + '/lessorcustomer';
 export const BASE_URL_CUSTOMER_MASTER_LIST = BASE_URL + 'customers/search';
@@ -177,6 +178,7 @@ export const BASE_URL_OTF_EXCHANGE_VEHICLE_ALERT = BASE_URL + 'vehicle/exchangev
 
 export const BASE_URL_OTF_TRANSFER = BASE_URL_OTF + 'transfer';
 export const BASE_URL_OTF_CANCELLATION = BASE_URL_OTF + 'request/cancel';
+export const BASE_URL_OTF_CANCELLATION_WF = BASE_URL_OTF_CANCELLATION + '/approval';
 export const BASE_URL_OTF_CANCELLATION_DEALER_SEARCH = BASE_URL + 'dealer/search';
 
 export const BASE_URL_DOCUMENT_UPLOAD = BASE_URL + 'common/document/upload';
@@ -201,7 +203,6 @@ export const BASE_URL_VEHICLE_PRODUCT_DETAILS = BASE_URL_VEHICLE + 'productdetai
 export const BASE_URL_VEHICLE_DETAILS_DOCUMENT = BASE_URL_VEHICLE + 'documents';
 export const BASE_URL_VEHICLE_ENTITELMENT = BASE_URL_VEHICLE + 'schemes';
 export const BASE_URL_VEHICLE_DETAILS_DELIVERY_NOTE = BASE_URL_VEHICLE + 'invoice/detail';
-export const BASE_URL_VEHICLE_CHALLAN_DETAILS_DELIVERY_NOTE = BASE_URL_VEHICLE + 'invoice/challan/detail';
 export const BASE_URL_VEHICLE_VARIANT = BASE_URL_VEHICLE + 'variant';
 export const BASE_URL_VEHICLE_MAKE = BASE_URL_VEHICLE + 'make';
 export const BASE_URL_VEHICLE_MODEL = BASE_URL_VEHICLE + 'model';
@@ -312,7 +313,15 @@ export const BASE_URL_DELIVERY_NOTE_INSURANCE_CHALLAN_DETAILS = BASE_URL_VEHICLE
 export const BASE_URL_VEHICLE_ADD_ON_SCHEME_DESCRIPTION = BASE_URL_OTF + 'scheme/lov'; // otf/scheme/lov?invoiceNumber=INV1693579301957
 export const BASE_URL_VEHICLE_ADD_ON_SCHEME_RSA_DESCRIPTION = BASE_URL_OTF + 'scheme/rsa/lov';
 export const BASE_URL_VEHICLE_ADD_ON_SCHEME_AMC_DESCRIPTION = BASE_URL_OTF + 'scheme/amc/lov';
-export const BASE_URL_CHALLAN_VIN_SEARCH = BASE_URL_VIEW_VEHICLE_DETAILS + '/search';
+export const BASE_URL_CHALLAN_VIN_SEARCH = BASE_URL_VEHICLE_DELIVERY_NOTE + 'challan/chassis';
+export const BASE_URL_CHALLAN_ENGINE_NUMBER = BASE_URL + 'vehicle/invoice/challan/detail';
+export const BASE_URL_VEHICLE_CHALLAN_DETAILS_DELIVERY_NOTE = BASE_URL_VEHICLE + 'invoice/challan/detail';
+export const BASE_URL_VEHICLE_CHALLAN_INVOICE_DETAILS_DELIVERY_NOTE = BASE_URL + 'otf/deliverynote/challan/chassis/details';
+export const BASE_URL_VEHICLE_CHALLAN_INSURANCE_DETAILS_DELIVERY_NOTE = BASE_URL + 'otf/deliverynote/challan/insurance';
+export const BASE_URL_VEHICLE_CHALLAN_CANCEL_DELIVERY_NOTE = BASE_URL + 'otf/delivery/challan/cancel/info';
+export const BASE_URL_VEHICLE_INFO_CANCEL_DELIVERY_NOTE = BASE_URL + 'otf/deliverynote/cancellation/information';
+export const BASE_URL_VEHICLE_CHALLAN_CANCEL_NOTE = BASE_URL +'otf/delivery/challan/cancel';
 
 export const BASE_URL_RELATIONSHIP_MANAGER = BASE_URL_USER_MANAGEMENT_APPLICATIONS_DEALER + '/employees';
 export const BASE_URL_DELIVERY_NOTE_VEHICLE_DETAILS = BASE_URL_OTF_VEHICLE_DETAILS + '/search/registrationnumber';
+export const BASE_URL_VEHICLE_INVOICE_GENERATION_PROFILE_CARD = BASE_URL_OTF + 'vehicleinvoice/profile';
