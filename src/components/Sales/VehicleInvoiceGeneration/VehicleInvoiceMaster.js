@@ -156,6 +156,7 @@ export const VehicleInvoiceMasterBase = (props) => {
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [cancelInvoiceVisible, setCancelInvoiceVisible] = useState(false);
     const [additionalReportParams, setAdditionalReportParams] = useState();
+    console.log('🚀 ~ file: VehicleInvoiceMaster.js:159 ~ VehicleInvoiceMasterBase ~ additionalReportParams:', additionalReportParams);
     const [isReportVisible, setReportVisible] = useState();
     const [confirmRequest, setConfirmRequest] = useState(false);
     const [previousSection, setpreviousSection] = useState(1);
@@ -613,11 +614,10 @@ export const VehicleInvoiceMasterBase = (props) => {
     const onPrintInvoice = (record) => {
         setReportType(`Invoice`);
         setReportVisible(true);
-
         setAdditionalReportParams([
             {
-                key: 'sa_od_invoice_hdr_id',
-                value: record?.id,
+                key: 'invoice_id',
+                value: record?.invoiceNumber,
             },
         ]);
     };
@@ -625,11 +625,10 @@ export const VehicleInvoiceMasterBase = (props) => {
     const onPrintForm21 = (record) => {
         setReportType(`Form_21`);
         setReportVisible(true);
-
         setAdditionalReportParams([
             {
                 key: 'invoice_id',
-                value: record?.id,
+                value: record?.invoiceNumber,
             },
         ]);
     };
