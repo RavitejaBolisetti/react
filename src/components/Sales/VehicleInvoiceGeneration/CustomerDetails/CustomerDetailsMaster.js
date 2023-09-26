@@ -14,12 +14,11 @@ export const CustomerDetailsMain = (props) => {
     const { isLoading, isDataLoaded, formData, showGlobalNotification, onFinishFailed } = props;
     const { isPinCodeLoading, listPinCodeShowLoading, fetchPincodeDetail, pincodeData, formActionType, NEXT_ACTION, handleButtonClick } = props;
     const { typeData, selectedOrderId } = props;
-    const { buttonData, setButtonData, formKey, onFinishCustom = undefined } = props;
+    const { buttonData, setButtonData, formKey, onFinishCustom = undefined, activeKey, setActiveKey } = props;
     const [sameAsBookingCustomer, setSameAsBookingCustomer] = useState(false);
 
     const [form] = Form.useForm();
     const [billCstmForm] = Form.useForm();
-    const [activeKey, setActiveKey] = useState([]);
 
     const onFinish = (values) => {
         if (!values?.bookingCustomer?.customerId) {
@@ -60,7 +59,6 @@ export const CustomerDetailsMain = (props) => {
         setActiveKey,
         sameAsBookingCustomer,
         setSameAsBookingCustomer,
-        showAgeGroup: false,
     };
 
     const viewProps = {

@@ -156,6 +156,7 @@ export const VehicleInvoiceMasterBase = (props) => {
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [cancelInvoiceVisible, setCancelInvoiceVisible] = useState(false);
     const [additionalReportParams, setAdditionalReportParams] = useState();
+    console.log('🚀 ~ file: VehicleInvoiceMaster.js:159 ~ VehicleInvoiceMasterBase ~ additionalReportParams:', additionalReportParams);
     const [isReportVisible, setReportVisible] = useState();
     const [confirmRequest, setConfirmRequest] = useState(false);
     const [previousSection, setpreviousSection] = useState(1);
@@ -303,6 +304,8 @@ export const VehicleInvoiceMasterBase = (props) => {
         } else {
             setSelectedOrder('');
         }
+        
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, formActionType, isInVoiceMasterDetailDataLoaded]);
 
     useEffect(() => {
@@ -317,17 +320,24 @@ export const VehicleInvoiceMasterBase = (props) => {
 
     useEffect(() => {
         if (selectedOrderId && !formActionType?.addMode) {
-            const extraParam = [
+            const extraParams = [
+                {
+                    key: 'otfNumber',
+                    title: 'otfNumber',
+                    value: selectedOtfNumber,
+                    name: 'Booking Number',
+                },
                 {
                     key: 'invoiceNumber',
-                    value: selectedOrderId,
+                    value: selectedOrderId || '',
                     name: 'Invoice Number',
                 },
             ];
 
-            fetchOTFDetail({ customURL, setIsLoading: listShowLoading, userId, extraParams: extraParam, onErrorAction });
+            fetchOTFDetail({ customURL, setIsLoading: listShowLoading, userId, extraParams: extraParams, onErrorAction });
         }
-    }, [selectedOrderId, formActionType]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [selectedOrderId, selectedOtfNumber, formActionType]);
 
     useEffect(() => {
         const defaultSection = VEHICLE_INVOICE_SECTION.INVOICE_DETAILS.id;
@@ -616,8 +626,8 @@ export const VehicleInvoiceMasterBase = (props) => {
 
         setAdditionalReportParams([
             {
-                key: 'sa_od_invoice_hdr_id',
-                value: record?.id,
+                key: 'invoice_id',
+                value: record?.invoiceNumber,
             },
         ]);
     };
@@ -629,7 +639,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         setAdditionalReportParams([
             {
                 key: 'invoice_id',
-                value: record?.id,
+                value: record?.invoiceNumber,
             },
         ]);
     };
@@ -652,6 +662,8 @@ export const VehicleInvoiceMasterBase = (props) => {
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
             cancelInvoiceForm.resetFields();
             setCancelInvoiceVisible(false);
+            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
             resetInvoiceData();
         };
         const onError = (message) => {
@@ -787,6 +799,9 @@ export const VehicleInvoiceMasterBase = (props) => {
         previousSection,
         setpreviousSection,
         CustomerForm,
+        showGlobalNotification,
+        isDataLoaded,
+        isInVoiceMasterDetailDataLoaded,
     };
 
     const cancelInvoiceProps = {

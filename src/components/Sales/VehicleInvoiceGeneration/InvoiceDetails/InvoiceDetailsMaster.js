@@ -18,7 +18,8 @@ const InvoiceDetailsMasterBase = (props) => {
     const { typeData, vehicleInvoiceMasterData, selectedOrderId } = props;
     const { userId, buttonData, setButtonData, section, isDataLoaded, isLoading, invoiceDetailForm } = props;
     const { formActionType, selectedOtfNumber, setSelectedOtfNumber } = props;
-    const { FormActionButton, requestPayload, setRequestPayload, handleButtonClick, NEXT_ACTION, handleBookingNumberSearch, CustomerForm } = props;
+
+    const { FormActionButton, requestPayload, setRequestPayload, handleButtonClick, NEXT_ACTION, handleBookingNumberSearch, CustomerForm, showGlobalNotification } = props;
 
     const [activeKey, setActiveKey] = useState([3]);
     useEffect(() => {
@@ -47,7 +48,15 @@ const InvoiceDetailsMasterBase = (props) => {
     const onFinish = (values) => {
         const { otfDetailsRequest, ...bookingAndBillingCustomerDto } = values;
         if (!Object?.keys(bookingAndBillingCustomerDto)?.length) {
-            setRequestPayload({ ...requestPayload, invoiceDetails: { otfDetailsRequest, bookingAndBillingCustomerDto: { ...requestPayload?.invoiceDetails?.bookingAndBillingCustomerDto } } });
+            if (!requestPayload?.invoiceDetails?.bookingAndBillingCustomerDto?.billingCustomer) {
+                showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Please provide billing customer details' });
+                setActiveKey([3, 2]);
+                return false;
+            } else if (!requestPayload?.invoiceDetails?.bookingAndBillingCustomerDto?.bookingCustomer) {
+                showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Please provide booking customer details' });
+                setActiveKey([3, 1]);
+                return false;
+            } else setRequestPayload({ ...requestPayload, invoiceDetails: { otfDetailsRequest, bookingAndBillingCustomerDto: { ...requestPayload?.invoiceDetails?.bookingAndBillingCustomerDto } } });
         } else {
             setRequestPayload({ ...requestPayload, invoiceDetails: { otfDetailsRequest, bookingAndBillingCustomerDto: CustomerForm.getFieldsValue() } });
         }
