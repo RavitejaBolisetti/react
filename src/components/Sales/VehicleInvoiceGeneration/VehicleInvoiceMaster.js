@@ -126,6 +126,8 @@ export const VehicleInvoiceMasterBase = (props) => {
     const [invoiceStatus, setInvoiceStatus] = useState(QUERY_BUTTONS_CONSTANTS.INVOICED.key);
     const [requestPayload, setRequestPayload] = useState({});
 
+    //console.log('requestPayload', requestPayload);
+
     const [listFilterForm] = Form.useForm();
     const [cancelInvoiceForm] = Form.useForm();
     const [CustomerForm] = Form.useForm();
@@ -302,7 +304,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         } else {
             setSelectedOrder('');
         }
-
+        
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, formActionType, isInVoiceMasterDetailDataLoaded]);
 
@@ -318,17 +320,24 @@ export const VehicleInvoiceMasterBase = (props) => {
 
     useEffect(() => {
         if (selectedOrderId && !formActionType?.addMode) {
-            const extraParam = [
+            const extraParams = [
+                {
+                    key: 'otfNumber',
+                    title: 'otfNumber',
+                    value: selectedOtfNumber,
+                    name: 'Booking Number',
+                },
                 {
                     key: 'invoiceNumber',
-                    value: selectedOrderId,
+                    value: selectedOrderId || '',
                     name: 'Invoice Number',
                 },
             ];
 
-            fetchOTFDetail({ customURL, setIsLoading: listShowLoading, userId, extraParams: extraParam, onErrorAction });
+            fetchOTFDetail({ customURL, setIsLoading: listShowLoading, userId, extraParams: extraParams, onErrorAction });
         }
-    }, [selectedOrderId, formActionType]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [selectedOrderId, selectedOtfNumber, formActionType]);
 
     useEffect(() => {
         const defaultSection = VEHICLE_INVOICE_SECTION.INVOICE_DETAILS.id;
@@ -649,6 +658,8 @@ export const VehicleInvoiceMasterBase = (props) => {
         const cancelReason = cancelInvoiceForm.getFieldValue().cancelReason;
         const data = { id: recordId ?? '', invoiceNumber: selectedOrderId, cancelReason: cancelReason };
         const onSuccess = (res) => {
+            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
             cancelInvoiceForm.resetFields();
             setCancelInvoiceVisible(false);
             showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });

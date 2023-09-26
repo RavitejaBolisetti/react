@@ -590,7 +590,7 @@ export const OtfMasterBase = (props) => {
     const onFinishOTFTansfer = (values) => {
         fnOTFTransfer({
             modalTitle: 'Booking Transfer',
-            modalMessage: `Do you want to transfer this ${otfData?.otfNumber}`,
+            modalMessage: `Do you want to transfer this ${otfData?.bookingNumber || otfData?.otfNumber}`,
             finalData: { ...values, id: otfData?.id, otfNumber: otfData?.otfNumber },
             callBackMethod: transferOTF,
             customURL: otfTransferURL,
@@ -600,7 +600,7 @@ export const OtfMasterBase = (props) => {
     const onFinishOTFCancellation = (values) => {
         fnOTFTransfer({
             modalTitle: 'Booking Cancel',
-            modalMessage: `Do you want to cancel this ${otfData?.otfNumber}`,
+            modalMessage: `Do you want to cancel this ${otfData?.bookingNumber || otfData?.otfNumber}`,
             finalData: { dealerCode: '', oemCode: '', productCode: '', ...values, id: otfData?.id, otfNumber: otfData?.otfNumber, uploadCancellationLetterDocId: uploadedFile },
             callBackMethod: transferOTF,
             customURL: otfCancelURL,
@@ -610,8 +610,8 @@ export const OtfMasterBase = (props) => {
     const handleWorkflowOTFCancellation = (record, actionStatus) => {
         const { otfId, otfNumber } = record;
         fnOTFTransfer({
-            modalTitle: `Booking ${actionStatus === CANCELLN_APPROVE ? 'Cancel' : 'Reject'}`,
-            modalMessage: `Do you want to ${actionStatus === CANCELLN_APPROVE ? 'cancel' : 'reject'} this ${otfData?.otfNumber}`,
+            modalTitle: `${actionStatus === CANCELLN_APPROVE ? 'Approval' : 'Rejection'}`,
+            modalMessage: `Are you sure, you want to ${actionStatus === CANCELLN_APPROVE ? 'approve' : 'reject'} the cancellation of ${otfData?.bookingNumber}`,
             finalData: { id: otfId, otfNumber, actionCode: actionStatus, remarks: actionStatus },
             callBackMethod: cancelOTFWorkflow,
             customURL: customURLCancelWF,

@@ -285,7 +285,7 @@ export const StockTransferIndentMasterBase = (props) => {
             fetchIndentList({ customURL: customURL + '/search', setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, extraParams]);
+    }, [userId, extraParams, defaultDealerLocationCode]);
 
     const onFinishFailed = (errorInfo) => {
         return;
