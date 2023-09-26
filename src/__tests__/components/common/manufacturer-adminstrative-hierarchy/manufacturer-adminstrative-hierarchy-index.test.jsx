@@ -6,6 +6,10 @@ import { screen, fireEvent } from '@testing-library/react';
 import createMockStore from '__mocks__/store';
 import { Provider } from 'react-redux';
 
+jest.mock('store/actions/data/manufacturerAdminHierarchy/manufacturerAdminHierarchy', () => ({
+    ManufacturerAdminHierarchyDataActions: {},
+}));
+
 
 afterEach(() => {
     jest.restoreAllMocks();
@@ -13,26 +17,13 @@ afterEach(() => {
 
 const FormWrapper = (props) => {
     const [form] = Form.useForm();
-    return <ManufacturerAdminstrativeHierarchy form={form} {...props} />;
-};
+    const myForm = {
+        ...form,
+        resetFields: jest.fn(),
+    }
 
-const mockStore = createMockStore({
-    auth: { userId: 1232 },
-    data: {
-        ConfigurableParameterEditing: { filteredListData: [{ id: 1, value: "testValue", key: 1 }] },
-        HierarchyAttributeMaster: { isLoaded: true, data: [{ id: 1, value: "testValue", key: 1 }], isDetailLoaded: false },
-        ManufacturerOrgHierarchy: { isLoaded: false, isLoading: false, data: [{ id: 1, value: "testValue", key: 1 }] },
-        CustomerMaster: {
-            ViewDocument: { isLoaded: false, data: [{ id: 1, value: "testValue", key: 1 }] },
-        },
-        ManufacturerAdmin: {
-            ManufacturerAdminUpload: { isLoaded: false, isLoading: false, data: [{ id: 1, value: "testValue", key: 1 }] },
-            ManufacturerAdminHierarchy: { isLoaded: false, isLoading: false, data: [{ id: 1, value: "testValue", key: 1 }] },
-            ManufacturerAdminHierarchyDetailData: { isLoaded: false, isLoading: false, data: [{ id: 1, value: "testValue", key: 1 }] },
-            AuthorityHierarchy: { data: [{ id: 1, value: "testValue", key: 1 }] },
-        },
-    },
-})
+    return <ManufacturerAdminstrativeHierarchy form={myForm} {...props} />;
+};
 
 const data = [{
     active: true,
@@ -56,16 +47,67 @@ const data = [{
     subManufactureOrg: []
 }]
 
+// const mockStore = createMockStore({
+//     auth: { userId: 1232 },
+//     data: {
+//         ConfigurableParameterEditing: { filteredListData: [{ id: 1, value: "testValue", key: 1 }] },
+//         HierarchyAttributeMaster: { isLoaded: true, data: [{ id: 1, value: "testValue", key: 1 }], isDetailLoaded: false },
+//         ManufacturerOrgHierarchy: { isLoaded: false, isLoading: false, data: [{ id: 1, value: "testValue", key: 1 }] },
+//         CustomerMaster: {
+//             ViewDocument: { isLoaded: false, data: [{ id: 1, value: "testValue", key: 1 }] },
+//         },
+//         ManufacturerAdmin: {
+//             ManufacturerAdminUpload: { isLoaded: false, isLoading: false, data: [{ id: 1, value: "testValue", key: 1 }] },
+//             ManufacturerAdminHierarchy: { isLoaded: false, isLoading: false, data: [{ id: 1, value: "testValue", key: 1 }], manufacturerAdminHierarchyData: data },
+//             ManufacturerAdminHierarchyDetailData: { isLoaded: false, isLoading: false, data: [{ id: 1, value: "testValue", key: 1 }] },
+//             AuthorityHierarchy: { data: [{ id: 1, value: "testValue", key: 1 }] },
+//         },
+//     },
+// })
+
+
+
 describe('Manufacturer Adminstrative Hierarchy components', () => {
 
-    it('Should render manufacturer adminstqrative hierarchy master components', () => {
+    it.only('Should render manufacturer adminstqrative hierarchy master components', () => {
+        const mockStore = createMockStore({
+            auth: { userId: 1232 },
+            data: {
+                ManufacturerOrgHierarchy: { isLoaded: true, data: data },
+                ManufacturerAdmin: {
+                    ManufacturerAdminHierarchy: { isLoaded: true, data: data }
+                },
+            },
+        })
+
+        const hierarchyAttributeFetchList = jest.fn();
+        const fetchDetailList = jest.fn();
+        const fetchList = jest.fn();
+
         customRender(
             <Provider store={mockStore}>
-                <FormWrapper isVisible={true} setattributeDataOptions={jest.fn()} handleSelectTreeClick={jest.fn()} />
-            </Provider>)
+                <ManufacturerAdminstrativeHierarchy
+                    isVisible={true}
+                    hierarchyAttributeFetchList={hierarchyAttributeFetchList}
+                    fetchDetailList={fetchDetailList}
+                    fetchList={fetchList}
+                    manufacturerAdminHierarchyData={data}
+                    handleSelectTreeClick={jest.fn()}
+                    HandleClear={jest.fn()}
+                    treeData={data}
+                />
+            </Provider>
+        )
 
-        const select = screen.getAllByRole("combobox");
-        fireEvent.change(select[0], { target: { value: 'test' } });
+        const searchBox = screen.getByRole("combobox", { name: '' });
+        fireEvent.change(searchBox, { target: { value: "list of data" } });
+
+
+        screen.debug()
+        screen.getByRole('')
+
+        // const select = screen.getAllByRole("combobox");
+        // fireEvent.change(select[0], { target: { value: 'test' } });
     })
 
     it('should render ManufacturerAdminstrativeHierarchy components', () => {
