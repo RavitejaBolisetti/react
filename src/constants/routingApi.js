@@ -174,6 +174,7 @@ export const BASE_URL_OTF_SO_MAPPING = BASE_URL_OTF + 'somapping';
 export const BASE_URL_OTF_SO_USER_MAPPING = BASE_URL_OTF + 'somapping/users';
 export const BASE_URL_OTF_SO_MAPPING_UNMAPPING_HISTORY = BASE_URL_OTF + 'somapping/history';
 export const BASE_URL_OTF_BLOCK_MASTER = BASE_URL_OTF + 'blockmaster';
+export const BASE_URL_DEALER_OTF_BLOCK_MASTER = BASE_URL + 'dealer/otf/block';
 export const BASE_URL_OTF_EXCHANGE_VEHICLE_ALERT = BASE_URL + 'vehicle/exchangevehicle/prioritymasteralert';
 
 export const BASE_URL_OTF_TRANSFER = BASE_URL_OTF + 'transfer';
@@ -330,7 +331,7 @@ export const BASE_URL_VEHICLE_CHALLAN_INVOICE_DETAILS_DELIVERY_NOTE = BASE_URL +
 export const BASE_URL_VEHICLE_CHALLAN_INSURANCE_DETAILS_DELIVERY_NOTE = BASE_URL + 'otf/deliverynote/challan/insurance';
 export const BASE_URL_VEHICLE_CHALLAN_CANCEL_DELIVERY_NOTE = BASE_URL + 'otf/delivery/challan/cancel/info';
 export const BASE_URL_VEHICLE_INFO_CANCEL_DELIVERY_NOTE = BASE_URL + 'otf/deliverynote/cancellation/information';
-export const BASE_URL_VEHICLE_CHALLAN_CANCEL_NOTE = BASE_URL +'otf/delivery/challan/cancel';
+export const BASE_URL_VEHICLE_CHALLAN_CANCEL_NOTE = BASE_URL + 'otf/delivery/challan/cancel';
 
 export const BASE_URL_RELATIONSHIP_MANAGER = BASE_URL_USER_MANAGEMENT_APPLICATIONS_DEALER + '/employees';
 export const BASE_URL_DELIVERY_NOTE_VEHICLE_DETAILS = BASE_URL_OTF_VEHICLE_DETAILS + '/search/registrationnumber';
