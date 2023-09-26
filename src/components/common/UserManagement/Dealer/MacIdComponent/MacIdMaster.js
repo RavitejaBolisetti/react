@@ -62,7 +62,7 @@ const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
 
 const MacIdMasterMain = (props) => {
     const { form, section, userId, searchType, fetchMacIdList, listMacIdShowLoading, showGlobalNotification, typeData, macIdDataList, isMacIdLoaded } = props;
-    const { isContactDataLoading, saveData, formData } = props;
+    const { isContactDataLoading, saveData, formData, isMacIdLoading } = props;
     const { buttonData, setButtonData, formActionType, setIsFormVisible } = props;
 
     const [macIdform] = Form.useForm();
@@ -215,7 +215,7 @@ const MacIdMasterMain = (props) => {
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <h2>{section?.title} </h2>
                         <Card className="">
-                            {isContactDataLoading ? (
+                            {isMacIdLoading ? (
                                 formSkeleton
                             ) : (
                                 <>

@@ -8,7 +8,7 @@ export const MANUFACTURER_USER_SECTION = {
     ASSIGN_USER_ROLES: {
         id: 1,
         title: 'Assign User Roles',
-        enableOnAdd: false,
+        displayOnList: true,
     },
     // ADMINISTRATION_HIERARCHY_MAPPING: {
     //     id: 2,

@@ -13,22 +13,24 @@ afterEach(() => {
 });
 
 describe('ViewDetail components', () => {
-    const typeData = [{
-        PARAM_MASTER:{
-            PARTY_CATEG:{
-                id:'123'
-            }
-        }
-    }]
+    const props={
+        typeData:['PARTY_CATEG'],
+        formData:"",
+        styles:{},
+        setActiveKey:jest.fn(),
+        formActionType:{viewMode:true},
+        onChange:jest.fn()
+    };
+
     it('render image1', () => {
-        customRender(<ViewDetail  formData={[]} typeData={typeData} />);
+        customRender(<ViewDetail  {...props}  activeKey={[1]}/>);
 
         const plusImg1 = screen.getAllByRole('img', {name:'plus'});
         fireEvent.click(plusImg1[0]);
     });
 
     it('render image2', () => {
-        customRender(<ViewDetail  formData={[]} typeData={typeData} />);
+        customRender(<ViewDetail  {...props}  activeKey={[2]}/>);
 
         const plusImg = screen.getAllByRole('img', {name:'plus'});
         fireEvent.click(plusImg[1]);

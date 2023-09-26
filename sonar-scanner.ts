@@ -30,8 +30,9 @@ const options = {
     // Path is relative to the sonar-project.properties file. Defaults to .
     'sonar.sources': 'src/',
     //'sonar.coverage.exclusions':'src/components/common/UserManagementNew/**/*, src/components/Sales/VehiclePurchaseOrder/**/*,src/components/Sales/Receipts/**/*',
+
     // source language
-    'sonar.coverage.exclusions':'src/__mocks__/**/*, src/mocks/**/*,src/__test__/**/*',
+    'sonar.coverage.exclusions': 'src/__mocks__/**/*, src/mocks/**/*,src/__test__/**/*',
     'sonar.language': 'js',
 
     'sonar.javascript.lcov.reportPaths': 'src/coverage/lcov.info',
@@ -48,7 +49,7 @@ const params = {
 };
 
 const sonarScanner = async () => {
-   // console.log(serverUrl);
+    // console.log(serverUrl);
 
     if (!serverUrl) {
         console.log('SonarQube url not set. Nothing to do...');

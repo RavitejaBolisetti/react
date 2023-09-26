@@ -26,10 +26,17 @@ describe('Add Edit Form Component', () => {
         customRender(<AddEditForm />);
     });
 
-    it('view details button should work in modal', () => {
-        customRender(<AddEditForm  partNameSearchVisible={true} />);
-        const viewDetails=screen.getByRole('button', { name: 'View Details' });
-        fireEvent.click(viewDetails);
+    it('select part button should work in modal', () => {
+        const formData={
+            formBtnActive: true
+        }
+        const AddonPartsData=[{partNumber: 106, partDescription: 'Kai', type: 'Engine', sellingPrice: '100', mrp: '1000' }];
+
+        customRender(<FormWrapper AddonPartsData={AddonPartsData} partNameSearchVisible={true} formData={formData} fnSetData={jest.fn()} setPartNameSearchVisible={jest.fn()} />);
+        const selectRow=screen.getByRole('radio', { name: '' });
+        fireEvent.click(selectRow);
+        const selectPart=screen.getByRole('button', { name: 'Select Part' });
+        fireEvent.click(selectPart);
     });
 
     it('add button should work if form submitted successfully', async () => {

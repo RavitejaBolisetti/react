@@ -31,7 +31,7 @@ import { AddEditForm } from './AddEditForm';
 import { ViewDetail } from './ViewDetail';
 
 import { IssueIndentMaster } from 'components/Sales/StockTransferIndent/IssueIndent';
-
+import { ISSUE_ACTION_LIST } from './constants'
 import { INDENT_ACTION_LIST } from './constants';
 import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 import { defaultPageProps } from 'utils/defaultPageProps';
@@ -153,6 +153,8 @@ export const StockTransferIndentMasterBase = (props) => {
     const [isReportVisible, setReportVisible] = useState();
     const [selectedRecord, setSelectedRecord] = useState();
     const [refershIndentData, setRefershIndentData] = useState();
+    const [recordType, setRecordType] = useState();
+    const [reportDetail, setReportDetail] = useState();
     const defaultDealerLocationCode = dealerLocations?.find((i) => i?.isDefault)?.locationCode;
 
     const dynamicPagination = true;
@@ -391,7 +393,7 @@ export const StockTransferIndentMasterBase = (props) => {
 
     const handleChangeLocation = (value) => {
         let locationId = '';
-        addIndentDetailsForm.setFieldsValue({ requestedBy: '' });
+        addIndentDetailsForm.setFieldsValue({ requestedBy: userId });
         indentLocationList?.forEach(function (temp) {
             if (temp.locationCode === value) locationId = temp.id;
         });
@@ -486,6 +488,8 @@ export const StockTransferIndentMasterBase = (props) => {
     };
 
     const handlePrintDownload = (record) => {
+        console.log(`record`, record);
+        setRecordType(record?.issueStatus);
         setReportVisible(true);
         setAdditionalReportParams([
             {
@@ -494,6 +498,11 @@ export const StockTransferIndentMasterBase = (props) => {
             },
         ]);
     };
+
+    useEffect(() => {
+        if (recordType) setReportDetail(recordType === ISSUE_ACTION_LIST?.ISSUED?.key ? EMBEDDED_REPORTS?.STOCK_TRANSFER_ISSUE_NOTE_DOCUMENT : recordType === ISSUE_ACTION_LIST?.RECEIVED?.key ? EMBEDDED_REPORTS?.STOCK_TRANSFER_RECIEVE_NOTE_DOCUMENT : null);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [recordType]);
 
     const tableProps = {
         dynamicPagination,
@@ -615,7 +624,6 @@ export const StockTransferIndentMasterBase = (props) => {
         setRefershIndentData,
     };
 
-    const reportDetail = EMBEDDED_REPORTS?.STOCK_TRANSFER_ISSUE_NOTE_DOCUMENT;
     const reportProps = {
         isVisible: isReportVisible,
         titleOverride: reportDetail?.title,
@@ -637,7 +645,7 @@ export const StockTransferIndentMasterBase = (props) => {
             <AddEditForm {...addNewIndentProps} />
             <ViewDetail {...viewIndentProps} />
             <IssueIndentMaster {...IndentIssueProps} />
-            <ReportModal style={{ height: `100vh`, background: `black` }} {...reportProps} reportDetail={reportDetail} />
+            <ReportModal {...reportProps} reportDetail={reportDetail} />
         </>
     );
 };
