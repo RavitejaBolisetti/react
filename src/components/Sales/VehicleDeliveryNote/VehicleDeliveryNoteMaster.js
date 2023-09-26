@@ -419,7 +419,6 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
 
     const handlePrintDownload = (record) => {
         setReportVisible(true);
-
         setAdditionalReportParams([
             {
                 key: 'sa_od_invoice_hdr_id',
