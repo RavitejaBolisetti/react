@@ -423,7 +423,7 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         setAdditionalReportParams([
             {
                 key: 'sa_od_invoice_hdr_id',
-                value: record?.id,
+                value: selectedOrder?.vehicleDeliveryNote,
             },
         ]);
     };
