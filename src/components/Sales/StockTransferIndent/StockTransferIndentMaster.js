@@ -393,7 +393,7 @@ export const StockTransferIndentMasterBase = (props) => {
 
     const handleChangeLocation = (value) => {
         let locationId = '';
-        addIndentDetailsForm.setFieldsValue({ requestedBy: '' });
+        addIndentDetailsForm.setFieldsValue({ requestedBy: userId });
         indentLocationList?.forEach(function (temp) {
             if (temp.locationCode === value) locationId = temp.id;
         });
