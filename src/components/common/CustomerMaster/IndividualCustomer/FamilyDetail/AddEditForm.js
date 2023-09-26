@@ -48,7 +48,7 @@ const AddEditFormMain = (props) => {
     const addFunction = () => {
         form.resetFields();
         setShowForm(true);
-        setCustomerType('Yes');
+        setCustomerType('No');
     };
 
     const onEdit = (values, index) => {

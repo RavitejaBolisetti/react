@@ -174,6 +174,7 @@ export const BASE_URL_OTF_SO_MAPPING = BASE_URL_OTF + 'somapping';
 export const BASE_URL_OTF_SO_USER_MAPPING = BASE_URL_OTF + 'somapping/users';
 export const BASE_URL_OTF_SO_MAPPING_UNMAPPING_HISTORY = BASE_URL_OTF + 'somapping/history';
 export const BASE_URL_OTF_BLOCK_MASTER = BASE_URL_OTF + 'blockmaster';
+export const BASE_URL_DEALER_OTF_BLOCK_MASTER = BASE_URL + 'dealer/otf/block';
 export const BASE_URL_OTF_EXCHANGE_VEHICLE_ALERT = BASE_URL + 'vehicle/exchangevehicle/prioritymasteralert';
 
 export const BASE_URL_OTF_TRANSFER = BASE_URL_OTF + 'transfer';
@@ -259,8 +260,11 @@ export const BASE_URL_USER_MANAGEMENT_USER_SEARCH = BASE_URL_USER_MANAGEMENT + '
 export const BASE_URL_USER_MANAGEMENT_APPLICATIONS_DEALER = BASE_URL_USER_MANAGEMENT + 'dealer';
 export const BASE_URL_USER_MANAGEMENT_MAC_ID = BASE_URL_USER_MANAGEMENT_APPLICATIONS_DEALER + '/devices';
 
-export const BASE_URL_USER_MANAGEMENT_USER_DEALER_BRANCH_LOCATIONS = BASE_URL_USER_MANAGEMENT_APPLICATIONS_DEALER + '/location'; // MAPPED WITH USER//users/dealer/location?employeeCode=deepakpalariya
-export const BASE_URL_USER_MANAGEMENT_DEALER_BRANCH_LOCATIONS = BASE_URL + 'dealer/search/locations'; //all location of dealer dealer/search/locations?dealerParentCode=DP007
+export const BASE_URL_USER_MANAGEMENT_USER_DEALER_BRANCH_LOCATIONS = BASE_URL_USER_MANAGEMENT_APPLICATIONS_DEALER + '/location'; // MAPPED WITH USER
+export const BASE_URL_USER_MANAGEMENT_DEALER_BRANCH_LOCATIONS = BASE_URL + 'dealer/parent/locations';
+export const BASE_URL_USER_MANAGEMENT_DEALER_USER_BRANCH_LOCATIONS = BASE_URL + 'dealer/parent/locations'; //all location of dealer dealer/search/locations?dealerParentCode=DP007
+export const BASE_URL_USER_DEALER_PRODUCT = BASE_URL + 'users/dealer/product';
+
 export const BASE_URL_USER_MANAGEMENT_MANUFACTURER_APPLICATIONS = BASE_URL_USER_MANAGEMENT + 'manufacturer';
 export const BASE_URL_USER_ROLE = BASE_URL_USER_MANAGEMENT + 'roles';
 export const BASE_URL_ROLE_LIST = BASE_URL + 'application/rolemaster';
@@ -281,6 +285,13 @@ export const BASE_URL_INVOICE_DETAIL = BASE_URL_OTF + 'vehicleinvoice/details';
 export const BASE_URL_VEHICLE_INVOICE_DETAIL = BASE_URL_OTF + 'vehicleinvoice/vehicledetails';
 
 export const BASE_URL_VEHICLE_DETAILS_SERVICE = BASE_URL + 'otf/vehicledetails/optionalcharges';
+
+export const BASE_URL_ON_ROAD_PRICE_MASTER_SEARCH = BASE_URL + 'vehicle/onroad/pricemaster/search';
+
+
+export const BASE_URL_VIEWON_ROAD_PRICE_MASTER = BASE_URL + 'vehicle/onroad/pricemaster';
+
+
 export const BASE_URL_MILE_SKILL = BASE_URL + 'dealer/mileskills';
 
 export const BASE_URL_HO_PRICE_MAPPING = BASE_URL_VEHICLE + 'hopriceuploadmapping/search';
@@ -320,7 +331,7 @@ export const BASE_URL_VEHICLE_CHALLAN_INVOICE_DETAILS_DELIVERY_NOTE = BASE_URL +
 export const BASE_URL_VEHICLE_CHALLAN_INSURANCE_DETAILS_DELIVERY_NOTE = BASE_URL + 'otf/deliverynote/challan/insurance';
 export const BASE_URL_VEHICLE_CHALLAN_CANCEL_DELIVERY_NOTE = BASE_URL + 'otf/delivery/challan/cancel/info';
 export const BASE_URL_VEHICLE_INFO_CANCEL_DELIVERY_NOTE = BASE_URL + 'otf/deliverynote/cancellation/information';
-export const BASE_URL_VEHICLE_CHALLAN_CANCEL_NOTE = BASE_URL +'otf/delivery/challan/cancel';
+export const BASE_URL_VEHICLE_CHALLAN_CANCEL_NOTE = BASE_URL + 'otf/delivery/challan/cancel';
 
 export const BASE_URL_RELATIONSHIP_MANAGER = BASE_URL_USER_MANAGEMENT_APPLICATIONS_DEALER + '/employees';
 export const BASE_URL_DELIVERY_NOTE_VEHICLE_DETAILS = BASE_URL_OTF_VEHICLE_DETAILS + '/search/registrationnumber';

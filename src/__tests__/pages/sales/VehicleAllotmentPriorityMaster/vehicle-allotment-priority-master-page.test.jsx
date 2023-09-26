@@ -4,17 +4,11 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import '@testing-library/jest-dom/extend-expect';
-
-import { CreditDebitNoteFormButton } from '@components/FinancialAccounting/CreditDebitNote/CreditDebitFormButton/index';
-
 import customRender from '@utils/test-utils';
+import { VehicleAllotmentPriorityMasterPage } from '@pages/Sales/VehicleAllotmentPriorityMaster/VehicleAllotmentPriorityMasterPage';
 
-afterEach(() => {
-    jest.restoreAllMocks();
-});
-
-describe('Render components', () => {
-    it('should render components', () => {
-        customRender(<CreditDebitNoteFormButton />);
+describe('vehicle allotment priority master Components', () => {
+    it('should render vehicle allotment priority Master Page components', () => {
+        customRender(<VehicleAllotmentPriorityMasterPage />);
     });
 });

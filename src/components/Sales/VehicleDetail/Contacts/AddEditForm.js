@@ -12,7 +12,7 @@ import { customSelectBox } from 'utils/customSelectBox';
 import styles from 'assets/sass/app.module.scss';
 
 const AddEditForm = (props) => {
-    const { onSaveFormData, contactform, setShowAddEditForm, setIsEditing, typeData, formActionType, handleFormValueChange, setIsAdding } = props;
+    const { onSaveFormData, contactform, setShowAddEditForm, setIsEditing, typeData, isEditing,formActionType, handleFormValueChange, setIsAdding, showAddEditForm } = props;
     const handleCancelFormEdit = () => {
         contactform.resetFields();
         setIsAdding(false);
@@ -51,12 +51,12 @@ const AddEditForm = (props) => {
                     <Row gutter={20}>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                             <Form.Item label="Name" name="name" rules={[validateRequiredInputField('Name'), validateLettersWithWhitespaces('Name')]}>
-                                <Input placeholder={preparePlaceholderText('name')} disabled={formActionType?.editMode} />
+                                <Input placeholder={preparePlaceholderText('name')} disabled={isEditing} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                             <Form.Item label="E-mail" initialValue={''} name="emailId" rules={[validateRequiredEmailField('E-mail')]}>
-                                <Input placeholder={preparePlaceholderText('email id')} disabled={formActionType?.editMode} />
+                                <Input placeholder={preparePlaceholderText('email id')} disabled={isEditing} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8} style={{ display: 'flex' }}>

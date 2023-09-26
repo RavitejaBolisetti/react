@@ -70,7 +70,7 @@ const FamilyDetailMasterBase = (props) => {
     const [form] = Form.useForm();
     const [familyDetailList, setFamilyDetailsList] = useState([]);
     const [showForm, setShowForm] = useState(false);
-    const [customerType, setCustomerType] = useState('Yes');
+    const [customerType, setCustomerType] = useState('No');
     const [editedMode, setEditedMode] = useState(false);
     const [editedId, setEditedId] = useState(0);
 

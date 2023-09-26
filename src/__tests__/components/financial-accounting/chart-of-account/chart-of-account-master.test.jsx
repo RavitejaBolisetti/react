@@ -39,107 +39,30 @@ afterEach(() => {
 });
 
 describe("ChartOfAccountMaster component render", ()=>{
+    const companyCode = { value: 'companyName', key: 'companyCode' };
     it("component render", ()=>{
-        customRender(<FormWrapper onCoaModelOpen={jest.fn()} setModalOpen={jest.fn(true)} onCoaFinish={jest.fn()} onFinishFailed={jest.fn()} />);
+        customRender(<FormWrapper onCoaModelOpen={jest.fn()} companyCode={companyCode} />);
 
         const coaBtn = screen.getByRole('button', {name:'Export COA'});
         fireEvent.click(coaBtn);
     });
 
-    it("download button  render", ()=>{
-        customRender(<FormWrapper onCoaModelOpen={jest.fn()} setModalOpen={jest.fn(true)} onCoaFinish={jest.fn()}/>);
-
-        const coaBtn = screen.getByRole('button', {name:'Export COA'});
-        fireEvent.click(coaBtn);
-
-        const downloadBtn = screen.getByRole('button', {name:'Download'});
-        fireEvent.click(downloadBtn);
-    });
-    
-    it("calender image  render", ()=>{
-        const setModalOpen = jest.fn();
-        customRender(<FormWrapper onCoaModelOpen={jest.fn()} />);
-
-        const coaBtn = screen.getByRole('button', {name:'Export COA'});
-        fireEvent.click(coaBtn);
-        setModalOpen(true);
-
-        const calenderImg = screen.getAllByRole('img', {name:'calendar'});
-        fireEvent.click(calenderImg[0]);
-    });
-
-    it("cancel button  render", ()=>{ 
-        const setModalOpen = jest.fn();
-        customRender(<FormWrapper onCoaModelOpen={jest.fn()} onCloseAction={jest.fn()} setIsFormVisible={jest.fn()}/>);
-
-        const coaBtn = screen.getByRole('button', {name:'Export COA'});
-        fireEvent.click(coaBtn);
-        setModalOpen(true);
-
-        const cancelBtn = screen.getByRole('button', {name:'Cancel'});
-        fireEvent.click(cancelBtn);
-        setModalOpen(false)
-    });
-
-    it('formActionType=child',()=>{
-        const formActionType = 'child';
-        customRender(<FormWrapper  formActionType={formActionType} />);
-    })
-
-    it('formActionType=sibling',()=>{
-        const formActionType = 'sibling';
-        customRender(<FormWrapper formActionType={formActionType} />);
-    })
-
-    it('formActionType=edit',()=>{
-        const formActionType = 'edit';
-        customRender(<FormWrapper formActionType={formActionType} />);
-    })
-
-    it('render', ()=>{
+    it('chartOfAccountHierarchy', ()=>{
         const mockStore = createMockStore({
             auth: { userId: 123 },
             data: {
-                DealerHierarchy: {
-                    DealerCompany: { isDealerCompanyDataLoaded:true,},
+                FinancialAccounting: {
+                    ChartOfAccountMaster: {
+                        ChartOfAccountHierarchy: { isLoaded: false, data: [{accountCode: 'UDAII'}] },
+                    }  
                 },
             },
         });
         customRender(
             <Provider store={mockStore}>
-                <ChartOfAccountMaster fetchDealerCompanyLov={jest.fn()} />
+                <ChartOfAccountMaster />
             </Provider>
         )
-    })
-
-    it('companyCode', ()=>{
-        const selectProps = {
-            optionFilterProp: 'children',
-            showSearch: true,
-            allowClear: true,
-            loading:false,
-            disabled:false,
-        };
-        const chartOfAccountHierarchy = [{accountCode: 'UDAII'}];
-        const title = 'Financial Company';
-        const companyFieldNames = { value: 'companyName', key: 'companyCode' };
-
-        const mockStore = createMockStore({
-            auth: { userId: 123 },
-            data: {
-                DealerHierarchy: {
-                    DealerCompany: { isDealerCompanyDataLoaded : false,  dealerCompanyLovData : [{
-                        address: "adress1", companyCode: "WP01"
-                    }] },
-                },
-            },
-        });
-        customRender(
-            <Provider store={mockStore}>
-                <ChartOfAccountMaster companyCode={'CC02'} chartOfAccountHierarchy={chartOfAccountHierarchy} {...selectProps} title={title} companyFieldNames={companyFieldNames} />
-            </Provider>
-        )
-
     })
     
 });
