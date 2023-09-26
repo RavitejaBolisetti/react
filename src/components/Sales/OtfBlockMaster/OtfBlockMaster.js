@@ -26,7 +26,6 @@ import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { AddEditForm } from './AddEditForm';
 import { showGlobalNotification } from 'store/actions/notification';
 import { DisableParent } from 'components/common/ProductHierarchy/ProductHierarchyUtils';
-import { BASE_URL_OTF_CANCELLATION_DEALER_SEARCH as customURL } from 'constants/routingApi';
 
 import LeftPanel from 'components/common/LeftPanel';
 import styles from 'components/common/Common.module.css';
@@ -48,9 +47,7 @@ const mapStateToProps = (state) => {
             },
 
             ProductHierarchy: { isLoaded: isProductDataLoaded = false, data: productHierarchyData = [], organizationId = '' },
-            OTF: {
-                OtfCancellation: { detailData: dealerDataList = [] },
-            },
+
         },
         common: {
             LeftSideBar: { collapsed = false },
@@ -69,7 +66,6 @@ const mapStateToProps = (state) => {
         manufacturerAdminHierarchyData,
         isDataAttributeLoaded,
         productHierarchyData,
-        dealerDataList,
         moduleTitle,
         viewTitle,
         isDetailLoaded,
@@ -108,8 +104,6 @@ const mapDispatchToProps = (dispatch) => ({
             saveOTFBlockData: otfBlockMasterDataAction.saveData,
             listOTFBlockShowLoading: otfBlockMasterDataAction.listShowLoading,
 
-            fetchDealerList: cancellationDataActions.fetchDetail,
-
             showGlobalNotification,
         },
         dispatch
@@ -119,8 +113,8 @@ const mapDispatchToProps = (dispatch) => ({
 export const OtfBlockMasterMain = (props) => {
     const { viewTitle, manufacturerAdminHierarchyData, fetchList, resetData, otfBlockMasterData, productHierarchyData, listOTFBlockShowLoading, fetchOTFBlockList, setSelectedOrganizationId, organizationId, saveOTFBlockData, isDataAttributeLoaded, attributeData, fetchProductDataList, listProductLoading, hierarchyAttributeListShowLoading } = props;
     const { isDataOrgLoaded, isDataLoaded, manufacturerOrgHierarchyData, fetchOrgList } = props;
-    const { detailData, userId, fetchDealerList, listShowLoading, showGlobalNotification, moduleTitle } = props;
-    const { AdminDetailData, ManufacturerAdminHierarchyDetailLoading, dealerDataList } = props;
+    const { detailData, userId, listShowLoading, showGlobalNotification, moduleTitle } = props;
+    const { AdminDetailData, ManufacturerAdminHierarchyDetailLoading } = props;
 
     const [form] = Form.useForm();
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
@@ -129,7 +123,7 @@ export const OtfBlockMasterMain = (props) => {
 
     const [selectedTreeKey, setSelectedTreeKey] = useState([]);
     const [selectedProductCode, setSelectedProductCode] = useState();
-    const [options, setOptions] = useState([]);
+    const [options, setOptions] = useState(["All"]);
     const [selectedOrganizationCode, setSelectedOrganizationCode] = useState();
     const [selectedProductName, setSelectedProductName] = useState();
     const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState([]);
@@ -145,7 +139,6 @@ export const OtfBlockMasterMain = (props) => {
 
     const defaultBtnVisiblity = { editBtn: true, childBtn: false, siblingBtn: false, enable: false };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
-    const [searchDealerValue, setSearchDealerValue] = useState('');
 
     const fieldNames = { title: 'prodctShrtName', key: 'prodctCode', children: 'subProdct' };
 
@@ -184,22 +177,6 @@ export const OtfBlockMasterMain = (props) => {
         });
         return extraParams;
     };
-    useEffect(() => {
-        if (searchDealerValue && userId) {
-            const extraParams = [
-                {
-                    key: 'searchType',
-                    value: 'dealerCode',
-                },
-                {
-                    key: 'searchParam',
-                    value: searchDealerValue,
-                },
-            ];
-            fetchDealerList({ customURL, setIsLoading: listShowLoading, extraParams, onErrorAction });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [searchDealerValue, userId]);
 
     useEffect(() => {
         if (selectedProductCode && userId && selectedTreeKey) {
@@ -416,8 +393,6 @@ export const OtfBlockMasterMain = (props) => {
         isFormBtnActive,
         setFormBtnActive,
         manufacturerAdminHierarchyData,
-        searchDealerValue,
-        setSearchDealerValue,
         selectedTreeData,
         otfBlockMasterData,
         selectedProductName,
@@ -429,7 +404,6 @@ export const OtfBlockMasterMain = (props) => {
         VIEW_ACTION,
         detailData,
         forceUpdate,
-        dealerDataList,
         form,
         setOptions,
         options,
@@ -476,6 +450,7 @@ export const OtfBlockMasterMain = (props) => {
             !value && resetData();
         },
         handleSelectTreeClick: (value) => {
+            console.log(value);
             setSelectedTreeKey();
             setSelectedTreeSelectKey();
             setSelectedOrganizationId(value);

@@ -3,30 +3,82 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import { screen } from '@testing-library/react';
+import { screen, fireEvent} from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { VehicleModelAndTaxChargersCategory } from '@components/FinancialAccounting/VehicleModelAndTaxCharges/ListVehicleModelTaxChargersCategoryMaster';
 import customRender from '@utils/test-utils';
+import createMockStore from '__mocks__/store';
+import { Provider } from 'react-redux';
 
 afterEach(() => {
     jest.restoreAllMocks();
 });
 
 describe('VehicleModelAndTaxChargersCategory component', () => {
-    it('render table header', () => {
-        customRender(<VehicleModelAndTaxChargersCategory  VehicleModelTaxChargesCategoryDataLoaded={false} userId={'1234'}/>);
+    const fetchList = jest.fn();
+    const fetchModelList = jest.fn();
+    const fetchAccountCategoryLov = jest.fn();
+    const fetchTaxCategoryLov = jest.fn();
 
-        const modelGroup = screen.getByRole('columnheader', {name:'Model Group'});
-        expect(modelGroup).toBeTruthy();
+    const VehicleModelTaxChargesCategoryData = [{accountCategoryCode:'AC123', accountCategoryDescription:'test', id:'123', modelGroup:'grp', taxCategoryDescription:'test1', taxCategoryId:'65' }];
+    const ProductHierarchyData = [];
+    const AccountData = [{key:'001', parentKey:null, value:'service'}];
+    const TaxCategoryData = [{id:'123', key:'T001', parentKey:null, value:'SGST'}];
 
-        const tax = screen.getByRole('columnheader', {name:'Tax Charges and Category'});
-        expect(tax).toBeTruthy();
+    it("pass data", ()=>{
+        const filterString = {keyword:'123'};
 
-        const categogory = screen.getByRole('columnheader', {name:'Account Category'});
-        expect(categogory).toBeTruthy();
+        const mockStore = createMockStore({
+            auth: { userId:123 },
+            data: {
+                VehicleModelandTaxChargesCategory: {VehicleModelTaxChargesCategoryMain:{isLoaded:false}, data:VehicleModelTaxChargesCategoryData},
+                ProductModelGroup: {isLoaded:false, data:ProductHierarchyData},
+                AccountCategorylov: { isFilteredListLoaded:false, data:AccountData},
+                TaxChargeCategoryLov: { isFilteredListLoaded:false, data:TaxCategoryData}
+            }
+        })
 
-        const action = screen.getByRole('columnheader', {name:'Action'});
-        expect(action).toBeTruthy();
-    });
+        customRender(
+            <Provider store={mockStore}>
+                <VehicleModelAndTaxChargersCategory fetchList={fetchList} fetchModelList={fetchModelList} fetchAccountCategoryLov={fetchAccountCategoryLov} fetchTaxCategoryLov={fetchTaxCategoryLov} filterString={filterString} />
+            </Provider>
+        );
+    })
+
+    it("filterString", ()=>{
+        customRender(<VehicleModelAndTaxChargersCategory filterString={{keyword:'test'}}/>)
+    })
+
+    it("VehicleModelTaxChargesCategoryDataLoaded=false", ()=>{
+        customRender(<VehicleModelAndTaxChargersCategory userId={'123'} VehicleModelTaxChargesCategoryDataLoaded={false}/>)
+    })
+
+    it("VehicleModelTaxChargesCategoryDataLoaded=true", ()=>{
+        customRender(<VehicleModelAndTaxChargersCategory userId={'123'} VehicleModelTaxChargesCategoryDataLoaded={true}/>)
+    })
+
+    it("isAccountDataLoaded=true", ()=>{
+        customRender(<VehicleModelAndTaxChargersCategory userId={'123'} isAccountDataLoaded={true}/>)
+    })
+
+    it("isAccountDataLoaded=false", ()=>{
+        customRender(<VehicleModelAndTaxChargersCategory userId={'123'} isAccountDataLoaded={false}/>)
+    })
+
+    it("isTaxCategoryDataLoaded=true", ()=>{
+        customRender(<VehicleModelAndTaxChargersCategory userId={'123'} isTaxCategoryDataLoaded={true}/>)
+    })
+
+    it("isTaxCategoryDataLoaded=false", ()=>{
+        customRender(<VehicleModelAndTaxChargersCategory userId={'123'} isTaxCategoryDataLoaded={false}/>)
+    })
+
+    it('isProductHierarchyDataLoaded=true', ()=>{
+        customRender(<VehicleModelAndTaxChargersCategory isProductHierarchyDataLoaded={true} />)
+    })
+
+    it('buttonData', ()=>{
+        customRender(<VehicleModelAndTaxChargersCategory buttonData={{closeBtn:true}} isVisible={true} onCloseAction={jest.fn()} />);
+    })
 
 });

@@ -9,51 +9,37 @@ import { screen, fireEvent } from '@testing-library/react';
 import CardNotificationDetail from '@components/Sales/VehicleAllotmentPriorityMaster/NotificationDetails/CardNotificationDetail';
 import { Form } from 'antd';
 
+afterEach(() => {
+    jest.restoreAllMocks();
+});
+
 const FormWrapper = (props) => {
     const [editForm] = Form.useForm();
     const myFormMock = {
         ...editForm,
         getFieldsValue: jest.fn(),
+        resetFields: jest.fn(),
     };
     return <CardNotificationDetail editForm={myFormMock} {...props} />;
 };
 
-afterEach(() => {
-    jest.restoreAllMocks();
-});
-
-const props = {
-    formEdit: true,
-    ADD_ACTION: 'add',
-    EDIT_ACTION: 'edit',
-    VIEW_ACTION: 'view',
-    formActionType: { addMode: false, editMode: false, viewMode: false },
-};
-
 describe('card notification detail component', () => {
-    it('should card notification detail component', () => {
-        const docTypeHeadMappingList = [{ internalId: '123', roleCode: '12', designationCode: '124' }];
+    it('should render card notification detail component', () => {
+        const docTypeHeadMappingList = [{ internalId: '123', roleCode: '125', designationCode: '124' }];
 
-        customRender(<FormWrapper docTypeHeadMappingList={docTypeHeadMappingList} forceUpdate={jest.fn()} setDropdownItems={jest.fn()} setDocTypeHeadMappingList={jest.fn()} setFormEdit={jest.fn()} {...props} setButtonData={jest.fn()} onDocTypeHeadMappingDelete={jest.fn()} />);
+        customRender(<FormWrapper setFormEdit={jest.fn()} forceUpdate={jest.fn()} setDropdownItems={jest.fn()} setDocTypeHeadMappingList={jest.fn()} isVisbile={true} formEdit={true} setButtonData={jest.fn()} docTypeHeadMappingList={docTypeHeadMappingList} />);
+        const cancelBtn = screen.getByRole('button', { name: 'Cancel' });
+        fireEvent.click(cancelBtn);
 
-        const cancelBtn = screen.getAllByRole('button', { name: 'Cancel' });
-        fireEvent.click(cancelBtn[0]);
-        fireEvent.click(cancelBtn[1]);
-
-        const saveBtn = screen.getAllByRole('button', { name: 'Save' });
-        fireEvent.click(saveBtn[0]);
-        fireEvent.click(saveBtn[1]);
+        const saveBtn = screen.getByRole('button', { name: 'Save' });
+        fireEvent.click(saveBtn);
     });
 
-    it('should render combobox component', () => {
-        const docTypeHeadMappingList = [{ internalId: '123', roleCode: '12', designationCode: '124' }];
+    it('should render card notification delete button', () => {
+        const docTypeHeadMappingList = [{ internalId: '123', roleCode: '125', designationCode: '124' }];
+        customRender(<FormWrapper formEdit={false} setFormEdit={jest.fn()} forceUpdate={jest.fn()} setDropdownItems={jest.fn()} setDocTypeHeadMappingList={jest.fn()} isVisbile={true} setButtonData={jest.fn()} docTypeHeadMappingList={docTypeHeadMappingList} />);
 
-        customRender(<FormWrapper docTypeHeadMappingList={docTypeHeadMappingList} forceUpdate={jest.fn()} setDropdownItems={jest.fn()} setDocTypeHeadMappingList={jest.fn()} setFormEdit={jest.fn()} setButtonData={jest.fn()} onDocTypeHeadMappingDelete={jest.fn()} formEdit={false} />);
-
-        const roleName = screen.getAllByRole('combobox', { name: 'Role Name' });
-        fireEvent.click(roleName);
-
-        const designationName = screen.getAllByRole('combobox', { name: 'Designation Name' });
-        fireEvent.click(designationName);
+        const deleteBtn = screen.getByRole('button', { name: '' });
+        fireEvent.click(deleteBtn);
     });
 });

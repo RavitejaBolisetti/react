@@ -26,10 +26,18 @@ describe('AddEditForm component', () => {
     
     it('viewMode=true', ()=>{
         const formActionType = { addMode: false, editMode: false, viewMode: true };
-
         customRender(<FormWrapper  formActionType={formActionType} isVisible={true} />);
 
         const closeBtn = screen.getByRole('button', {name:'Close'});
         fireEvent.click(closeBtn); 
     });
+
+    it("cancelBtn", ()=>{
+        const formActionType = { addMode: false, editMode: true, viewMode: false };
+        customRender(<FormWrapper formActionType={formActionType} isVisible={true} buttonData={{cancelBtn:true}} />);
+
+        const cancelBtn = screen.getByRole('button',{name:'Cancel'});
+        fireEvent.click(cancelBtn);
+    });
+    
 });

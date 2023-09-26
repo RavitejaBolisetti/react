@@ -15,52 +15,98 @@ import { MANUFACTURER_USER_SECTION } from 'constants/modules/UserManagement/Manu
 import styles from 'assets/sass/app.module.scss';
 
 const MenuNav = (props) => {
-    const {
-        userType,
-        currentSection,
-        setCurrentSection,
-        formActionType: { addMode = true, editMode, viewMode },
-    } = props;
-    const profileOptions = userType === USER_TYPE_USER?.DEALER?.id ? DEALER_USER_SECTION : MANUFACTURER_USER_SECTION;
+    const { userType, currentSection, setCurrentSection, previousSection, formActionType } = props;
+    const profileOptions = userType === USER_TYPE_USER?.DEALER?.id ? Object.values(DEALER_USER_SECTION) : Object.values(MANUFACTURER_USER_SECTION);
+    const onHandle = (key) => {
+        setCurrentSection(key);
+    };
 
-    useEffect(() => {
-        if (currentSection) {
-            const TimeLineClass = document.getElementsByClassName('ant-timeline-item');
-            for (let i = 0; i < TimeLineClass.length; i++) {
-                const activeForm = TimeLineClass[i]['children']['1']['children']['0']['classList']['0'];
-                if (activeForm !== undefined && activeForm.match('Common_activeForm')) {
-                    TimeLineClass[i].firstChild.style.backgroundColor = '#ff3e5b';
-                    TimeLineClass[i].lastChild.firstChild.style.color = '#ff3e5b';
-                } else {
-                    TimeLineClass[i].firstChild.style.backgroundColor = '#b6b6b6';
-                    TimeLineClass[i].lastChild.firstChild.style.color = '#0b0b0c';
+    const className = (id) => {
+        return formActionType?.addMode && id > previousSection ? styles.cursorNotAllowed : styles.cursorPointer;
+    };
+
+    const mapIconAndClass = (id) => {
+        let activeClassName = '';
+        let menuNavIcon = '';
+
+        switch (true) {
+            case formActionType?.addMode: {
+                switch (true) {
+                    case id === currentSection: {
+                        activeClassName = styles.active;
+                        menuNavIcon = <BsRecordCircleFill className={styles.activeForm} />;
+                        break;
+                    }
+                    case id > currentSection: {
+                        activeClassName = styles.AddmodeinActive;
+                        menuNavIcon = <BsRecordCircleFill className={styles.tableTextColor85} />;
+                        break;
+                    }
+                    case id < currentSection: {
+                        activeClassName = styles.inActive;
+                        menuNavIcon = <FaCheckCircle />;
+                        break;
+                    }
+                    default: {
+                        break;
+                    }
                 }
+                break;
             }
-            TimeLineClass[TimeLineClass?.length - 1].firstChild.style.display = 'none';
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [currentSection]);
+            case formActionType?.editMode: {
+                switch (true) {
+                    case id === currentSection: {
+                        activeClassName = styles.active;
+                        menuNavIcon = <BsRecordCircleFill className={styles.activeForm} />;
+                        break;
+                    }
 
-    const onHandle = (item) => {
-        if ((addMode && item.enableOnAdd) || editMode || viewMode) {
-            setCurrentSection(item.id);
+                    default: {
+                        activeClassName = styles.inActive;
+                        menuNavIcon = <FaCheckCircle />;
+                        break;
+                    }
+                }
+
+                break;
+            }
+            case formActionType?.viewMode: {
+                menuNavIcon = <FaCheckCircle />;
+                switch (true) {
+                    case id === currentSection: {
+                        activeClassName = styles.viewActive;
+                        break;
+                    }
+
+                    default: {
+                        activeClassName = styles.viewInActive;
+                        break;
+                    }
+                }
+                break;
+            }
+            default: {
+                break;
+            }
         }
+
+        return { activeClassName, menuNavIcon };
     };
 
-    const className = (item) => {
-        return addMode && !item.enableOnAdd ? styles.cursorNotAllowed : styles.cursorPointer;
-    };
+    const items = profileOptions
+        ?.filter((i) => i?.displayOnList)
+        ?.map((item) => ({
+            dot: mapIconAndClass(item?.id)?.menuNavIcon,
+            children: (
+                <div className={className(item?.id)} onClick={() => (!formActionType?.addMode || (formActionType?.addMode && item?.id <= previousSection) ? onHandle(item?.id) : '')}>
+                    {item.title}
+                </div>
+            ),
+            className: mapIconAndClass(item?.id)?.activeClassName,
+        }))
+        ?.filter((i) => i);
 
-    const items = Object.values(profileOptions)?.map((i) => ({
-        dot: i.id === currentSection ? <BsRecordCircleFill className={`${styles.activeForm} ${i}`} /> : addMode && !i.enableOnAdd ? <BsRecordCircleFill className={className(i)} color={'grey'} /> : <FaCheckCircle className={className(i)} />,
-        children: (
-            <div className={className(i)} onClick={() => onHandle(i)}>
-                {i.title}
-            </div>
-        ),
-    }));
-
-    return <Timeline items={items} />;
+    return items && <Timeline items={items} />;
 };
 
 export default MenuNav;

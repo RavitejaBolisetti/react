@@ -5,40 +5,56 @@
  */
 import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
+import createMockStore from '__mocks__/store';
+import { Provider } from 'react-redux';
 import PageHeader from '@pages/common/PageHeader/PageHeader';
-import { screen, fireEvent } from '@testing-library/react';
-import { showGlobalNotification } from 'store/actions/notification';
-const mockFetchList = jest.fn();
-const mockMarkFavourite = jest.fn();
-const mockListShowLoading = jest.fn();
-const mockShowGlobalNotification = jest.fn();
+import { screen, fireEvent, waitFor } from '@testing-library/react';
+
+jest.mock('react-router-dom', () => ({
+    ...jest.requireActual('react-router-dom'),
+    useLocation: jest.fn().mockReturnValue({
+        pathname: 'example.com',
+    }),
+}));
+
+jest.mock('store/actions/data/menu', () => ({
+    menuDataActions: {}
+}));
 
 describe('PageHeader Component', () => {
+
     it('should render PageHeader component', async () => {
-        customRender(<PageHeader isFavourite={false} canMarkFavourite={true} mockFetchList={mockFetchList} mockMarkFavourite={mockMarkFavourite} mockShowGlobalNotification={mockShowGlobalNotification} mockListShowLoading={mockListShowLoading} />);
+        customRender(<PageHeader />);
     });
 
-    it('renders page title correctly', () => {
-        customRender(<PageHeader pageTitle="Test Page" />);
-        const pageTitleElement = screen.getByText('Test Page');
-        expect(pageTitleElement).toBeInTheDocument();
+    it('add favourite should work', async () => {
+        customRender(<PageHeader pageTitle={'Kai'} canMarkFavourite={true} markFavourite={jest.fn()} />);
+        const addFav=screen.getByTestId('addfav');
+        fireEvent.click(addFav);
     });
 
-    it('displays "Mark as favorite" icon when canMarkFavourite is true', () => {
-        customRender(<PageHeader pageTitle="Mark as favourite" canMarkFavourite={true} onError={jest.fn()} handleFavouriteClick={jest.fn()} isFavourite={false} />);
-        const markAsFavoriteIcon = screen.getByTestId('addfav');
-        expect(markAsFavoriteIcon).toBeInTheDocument();
+    it('remove favourite should work', async () => {
+        const mockStore=createMockStore({
+            data: {
+                Menu: { isLoaded: true, favouriteMenu: [{ menuId: 106 }], flatternData: [{ link: 'example.com', menuId: 106 }] },
+            },
+        });
+
+        const markFavourite=jest.fn();
+
+        customRender(
+            <Provider store={mockStore}>
+                <PageHeader pageTitle={'Kai'} canMarkFavourite={true} isFavourite={true} markFavourite={markFavourite} fetchList={jest.fn()} handleSample={jest.fn()} />
+            </Provider>
+        );
+        const removefav=screen.getByTestId('removefav');
+        fireEvent.click(removefav);
+
+        await waitFor(() => {expect(markFavourite).toHaveBeenCalled()});
+
+        markFavourite.mock.calls[0][0].onSuccess();
+        markFavourite.mock.calls[0][0].onError();
+
     });
 
-    it('displays "Mark as favorite" icon when canMarkFavourite is true', async () => {
-        customRender(<PageHeader pageTitle="Mark as favourite" canMarkFavourite={true} onSuccess={jest.fn()} onError={jest.fn()} handleFavouriteClick={jest.fn()} isFavourite={false} showGlobalNotification={showGlobalNotification} />);
-        const markAsFavoriteIcon = screen.getByTestId('addfav');
-        fireEvent.click(markAsFavoriteIcon);
-    });
-
-    it('calls handleFavouriteClick when "Mark as favorite" icon is clicked', () => {
-        customRender(<PageHeader pageTitle="Test Page" canMarkFavourite={true} onError={jest.fn()} handleFavouriteClick={jest.fn()} isFavourite={true} />);
-        const markAsFavoriteIcon = screen.getByTestId('addfav');
-        fireEvent.click(markAsFavoriteIcon);
-    });
 });

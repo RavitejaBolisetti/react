@@ -5,10 +5,9 @@
  */
 
 import { tblPrepareColumns, tblStatusColumn } from 'utils/tableColumn';
+import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
 
 import styles from 'assets/sass/app.module.scss';
-
-import { formattedCalendarDate } from 'utils/formatDateTime';
 
 export const tableColumn = () => {
     const tableColumn = [
@@ -38,7 +37,7 @@ export const tableColumn = () => {
             dataIndex: 'documentDate',
             width: '200px',
             sorter: true,
-            render: (text) => formattedCalendarDate(text),
+            render: (text) => convertDateTime(text, dateFormatView),
         }),
 
         tblPrepareColumns({
@@ -53,7 +52,7 @@ export const tableColumn = () => {
             dataIndex: 'validityStartDate',
             width: '200px',
             sorter: true,
-            render: (text) => formattedCalendarDate(text),
+            render: (text) => convertDateTime(text, dateFormatView),
         }),
 
         tblPrepareColumns({
@@ -61,7 +60,7 @@ export const tableColumn = () => {
             dataIndex: 'validityEndDate',
             width: '200px',
             sorter: true,
-            render: (text) => formattedCalendarDate(text),
+            render: (text) => convertDateTime(text, dateFormatView),
         }),
 
         tblPrepareColumns({

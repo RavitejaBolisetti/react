@@ -216,7 +216,7 @@ const LeftSideBarMain = (props) => {
                             </Link>
                         </Col>
                         <Col xs={2} sm={2} md={0} lg={0} xl={0} className={styles.closeButton}>
-                            <RxCross2 onClick={onMenuCollapsed} />
+                            <RxCross2 onClick={onMenuCollapsed} data-testid="menuCollapsed" />
                         </Col>
                     </Row>
                     <Row gutter={20}>

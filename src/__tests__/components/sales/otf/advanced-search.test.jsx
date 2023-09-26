@@ -8,9 +8,13 @@ import { screen, fireEvent } from "@testing-library/react";
 import customRender from '@utils/test-utils';
 import { AdvancedSearch } from 'components/Sales/OTF/AdvancedSearch';
 import { Form } from 'antd';
+
 afterEach(() => {
     jest.restoreAllMocks();
-  });
+});
+
+jest.mock('utils/disableDate');
+
 const FormWrapper = (props) => {
     const [advanceFilterForm] = Form.useForm();
     return <AdvancedSearch advanceFilterForm={advanceFilterForm} {...props} />
@@ -23,7 +27,10 @@ describe('advanced search component render', () => {
     });
 
     it("reset button should work",async ()=>{
-        customRender(<FormWrapper setFilterString={jest.fn()} isVisible={true}/>);
+        const filterString={
+            pageSize: 1,
+        }
+        customRender(<FormWrapper setFilterString={jest.fn()} isVisible={true} filterString={filterString} />);
         const resetBtn=screen.getByRole('button', { name: 'Reset' });
         fireEvent.click(resetBtn);
     });
@@ -33,11 +40,11 @@ describe('advanced search component render', () => {
         const calendarBtn=screen.getAllByRole('img', { name: 'calendar' });
 
         fireEvent.click(calendarBtn[0]);
-        const dateTime1=screen.getByText('28');
+        const dateTime1=screen.getByText('25');
         fireEvent.click(dateTime1);
 
         fireEvent.click(calendarBtn[1]);
-        const dateTime2=screen.getAllByText('29');
+        const dateTime2=screen.getAllByText('26');
         fireEvent.click(dateTime2[1]);
 
         const applyBtn=screen.getByRole('button', { name: 'Apply' });

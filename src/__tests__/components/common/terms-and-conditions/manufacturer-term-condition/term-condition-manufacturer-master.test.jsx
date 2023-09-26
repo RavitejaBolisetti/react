@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom/extend-expect';
 import { TermConditionManufacturerMaster } from '@components/common/TermsAndConditions/ManufacturerTermCondition';
 import customRender from '@utils/test-utils';
-import { screen, fireEvent } from '@testing-library/react';
+import { screen, fireEvent, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import createMockStore from '__mocks__/store';
 
@@ -9,9 +9,27 @@ afterEach(() => {
     jest.restoreAllMocks();
 });
 
+jest.mock('store/actions/data/termsConditions/termsConditionsManufacturerAction', () => ({
+    termConditionManufacturerActions: {},
+}));
+
+jest.mock('components/common/TermsAndConditions/ManufacturerTermCondition/AddEditForm', () => {
+    const values = {
+        termsconditiondescription: 'Hello',
+    };
+    const AddEditForm = ({ onFinish }) => (
+        <div>
+            <button onClick={onFinish(values)}>Save</button>
+        </div>
+    );
+    return {
+        __esModule: true,
+        AddEditForm,
+    };
+});
 describe('Term Condition Manufacturer Master components', () => {
     it('should render components', () => {
-        customRender(<TermConditionManufacturerMaster />);
+        customRender(<TermConditionManufacturerMaster saveData={jest.fn()} />);
     });
 
     it('should validate fields', async () => {
@@ -24,14 +42,16 @@ describe('Term Condition Manufacturer Master components', () => {
                     ProductHierarchyData: { isLoaded: true },
                     DocumentTypeData: { isLoaded: true },
                     LanguageData: { isLoaded: true },
-                    ManufacturerTermsConditions: { isLoaded: true, data: [{ id: '1' }, { id: '2', name: 'kaii' }] },
+                    ManufacturerTermsConditions: { isLoaded: true, data: [{ id: '1', productName: 'Sample Product', documentTypeCode: 'Doc Type 1', language: 'English', effectiveFrom: '2023-08-15', effectiveTo: '2023-08-31', version: '1.0', termConditionDescription: 'Sample' }] },
                     ChangeHistoryManufacturerTermsConditions: { isLoaded: true, data: [{ id: '1' }, { id: '2', name: 'kaii' }] },
                 },
             },
         });
+
+        const fetchTermCondition = jest.fn();
         customRender(
             <Provider store={mockStore}>
-                <TermConditionManufacturerMaster buttonData={defaultBtnVisiblity} onSuccessAction={jest.fn()} isVisible={true} onCloseAction={jest.fn()} isHistoryVisible={true} setIsHistoryVisible={true} showChangeHistoryList={jest.fn()} showAddButton={true} onSuccess={jest.fn()} setRefershData={jest.fn()} showDataLoading={false} handleButtonClick={jest.fn()} setIsFormVisible={true} setIsViewModeVisible={true} />
+                <TermConditionManufacturerMaster saveData={jest.fn()} buttonData={defaultBtnVisiblity} onSuccessAction={jest.fn()} isVisible={true} onCloseAction={jest.fn()} isHistoryVisible={true} setIsHistoryVisible={true} showChangeHistoryList={jest.fn()} showAddButton={true} onSuccess={jest.fn()} setRefershData={jest.fn()} showDataLoading={false} handleButtonClick={jest.fn()} setIsFormVisible={true} setIsViewModeVisible={true} fetchTermCondition={fetchTermCondition} />
             </Provider>
         );
         const searchBox = screen.getByRole('textbox', { name: 'Term & Condition' });
@@ -77,7 +97,52 @@ describe('Term Condition Manufacturer Master components', () => {
         const closeyBtn = screen.getByRole('img', { name: 'close' });
         fireEvent.click(closeyBtn);
 
+        await waitFor(() => {
+            expect(screen.getByText('Sample Product')).toBeInTheDocument();
+        });
+
         const refreshBtn = screen.getByTestId('refreshBtn');
         fireEvent.click(refreshBtn);
+        fetchTermCondition.mock.calls[0][0].onSuccessAction();
+        fetchTermCondition.mock.calls[0][0].onErrorAction();
+    });
+
+    it('test for onSuccess', async () => {
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+            data: {
+                TermCondition: {
+                    ManufacturerTermsConditions: { isLoaded: true, data: [{ id: '1', productName: 'Sample Product', documentTypeCode: 'Doc Type 1', language: 'English', effectiveFrom: '2023-08-15', effectiveTo: '2023-08-31', version: '1.0', termConditionDescription: 'Sample' }] },
+                },
+            },
+        });
+        const fetchTermCondition = jest.fn();
+        const saveData = jest.fn();
+
+        customRender(
+            <Provider store={mockStore}>
+                <TermConditionManufacturerMaster fetchTermCondition={fetchTermCondition} saveData={saveData} />
+            </Provider>
+        );
+
+        fetchTermCondition.mock.calls[0][0].onSuccessAction();
+        fetchTermCondition.mock.calls[0][0].onErrorAction();
+
+        await waitFor(() => {
+            expect(screen.getByText('Sample Product')).toBeInTheDocument();
+        });
+
+        const editBtn = screen.getByTestId('edit');
+        fireEvent.click(editBtn);
+
+        const saveBtn = screen.getByRole('button', { name: 'Save' });
+        fireEvent.click(saveBtn);
+
+        await waitFor(() => {
+            expect(saveData).toHaveBeenCalled();
+        });
+
+        saveData.mock.calls[0][0].onSuccess();
+        saveData.mock.calls[0][0].onError();
     });
 });
