@@ -2,10 +2,23 @@ import React from 'react';
 import { screen } from '@testing-library/react';
 import { AddEditForm } from '@components/Sales/Common/FinananceDetails/AddEditForm';
 import customRender from '@utils/test-utils';
+import { Form } from 'antd';
 
 beforeEach(() => {
     jest.clearAllMocks();
 });
+
+const FormWrapper = (props) => {
+    const [form] = Form.useForm();
+    const myFormMock = {
+        ...form,
+        setFieldsValue: jest.fn(),
+        resetFields: jest.fn(),
+        resetData: jest.fn(),
+        validateFields: jest.fn(),
+    };
+    return <AddEditForm form={myFormMock} {...props} />;
+};
 
 const FinanceLovDataMock = [
     { key: '1', value: 'Finance Option 1' },
@@ -24,6 +37,14 @@ const FNC_ARNGD = [
     { key: '2', value: 'Finance Option 2' },
 ];
 
+const FINANCE_ARRANGED_BY = [
+    { key: '1', value: 'Self' },
+    { key: '2', value: 'Dealer' },
+];
+const formData = {
+    financeArrangedBy: [{ name: 'Kai' }],
+};
+
 const props = {
     handleDOChange: jest.fn(),
     onLoanChange: jest.fn(),
@@ -32,7 +53,7 @@ const props = {
 
 describe('Booking Finance Details Component render', () => {
     it('should render addedit form', async () => {
-        customRender(<AddEditForm {...props} FinanceLovData={FinanceLovDataMock} setDoReceived={jest.fn} typeData={(typeDataMock, FNC_ARNGD)} />);
+        customRender(<FormWrapper {...props} FinanceLovData={FinanceLovDataMock} setDoReceived={jest.fn} typeData={(typeDataMock, FNC_ARNGD, FINANCE_ARRANGED_BY)} formData={formData} />);
     });
 
     it('should render text', async () => {
@@ -44,7 +65,7 @@ describe('Booking Finance Details Component render', () => {
         const mockForm = {
             setFieldsValue: jest.fn(),
         };
-        customRender(<AddEditForm {...props} formData={initialFormData} setDoReceived={jest.fn} FinanceLovData={FinanceLovDataMock} typeData={(typeDataMock, FNC_ARNGD)} form={mockForm} />);
+        customRender(<FormWrapper {...props} formData={initialFormData} setDoReceived={jest.fn} FinanceLovData={FinanceLovDataMock} typeData={(typeDataMock, FNC_ARNGD, FINANCE_ARRANGED_BY)} form={mockForm} />);
 
         const financier = screen.getByRole('combobox', { name: /Finance Arranged By/i });
         expect(financier).toBeTruthy();

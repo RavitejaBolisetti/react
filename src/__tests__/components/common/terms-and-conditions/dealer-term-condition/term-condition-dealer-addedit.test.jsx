@@ -22,7 +22,10 @@ describe('Term Condition Manufacturer addedit components', () => {
     });
 
     it('should render all fields', async () => {
-        customRender(<AddEditForm {...props} isVisible={true} setButtonData={jest.fn()} handleFromDateChange={jest.fn()} setStartDate={jest.fn()} />);
+        const languageList = [{ key: 106, value: 'Kai' }];
+        const productHierarchyList = [{ key: 106, value: 'Kai' }];
+        const documentTypeList = [{ key: 106, value: 'Kai' }];
+        customRender(<AddEditForm {...props} languageList={languageList} productHierarchyList={productHierarchyList} documentTypeList={documentTypeList} isVisible={true} setButtonData={jest.fn()} handleFromDateChange={jest.fn()} setStartDate={jest.fn()} />);
 
         const documentCatagory = screen.getByRole('textbox', { name: 'Document Category' });
         fireEvent.change(documentCatagory, { target: { value: 'front tyre' } });

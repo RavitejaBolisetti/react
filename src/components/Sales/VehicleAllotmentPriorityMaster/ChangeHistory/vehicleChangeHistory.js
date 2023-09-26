@@ -121,4 +121,4 @@ const ChangeHistoryMain = ({ fetchOTFChangeHistory, onCloseAction, listShowChang
     );
 };
 
-export const ChangeHistory = connect(null, null)(withDrawer(ChangeHistoryMain, { title: 'Change History', width: '90%' }));
+export const ChangeHistory = connect(mapStateToProps, mapDispatchToProps)(withDrawer(ChangeHistoryMain, { title: 'Change History', width: '90%' }));

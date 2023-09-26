@@ -14,7 +14,7 @@ import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import thunk from 'redux-thunk';
 import { rootReducer } from 'store/reducers';
-import { Form } from 'antd';
+import { Form, Button } from 'antd';
 
 export const createMockStore = (initialState) => {
     const mockStore = configureStore({
@@ -25,6 +25,19 @@ export const createMockStore = (initialState) => {
 
     return mockStore;
 };
+afterEach(() => {
+    jest.restoreAllMocks();
+});
+
+const StatusBar = () => <div>No Status Bar</div>;
+
+const FormActionButton = () => (
+    <div>
+        <Button htmlType="submit" type="primary">
+            Save
+        </Button>
+    </div>
+);
 
 const FormWrapper = (props) => {
     const [form] = Form.useForm();
@@ -72,24 +85,24 @@ describe('ExchangeVehiclesMaster component render', () => {
     it('Exchange switch', async () => {
         const formActionType = { addMode: false, editMode: true, viewMode: false };
 
-        customRender(<FormWrapper typeData={('REL_TYPE', 'MONTH')} fnSetData={jest.fn()} formActionType={formActionType} handleFormValueChange={jest.fn()} onFinish={jest.fn()} onFinishFailed={jest.fn()} makeExtraParams={jest.fn()} />);
+        customRender(<FormWrapper StatusBar={StatusBar} FormActionButton={FormActionButton} typeData={('REL_TYPE', 'MONTH')} fnSetData={jest.fn()} formActionType={formActionType} handleFormValueChange={jest.fn()} onFinish={jest.fn()} onFinishFailed={jest.fn()} makeExtraParams={jest.fn()} />);
 
         const exchangeSwitch = screen.getByRole('switch', { name: 'Exchange', exact: false });
         fireEvent.click(exchangeSwitch);
     });
 
     it('modalOpen=false', async () => {
-        customRender(<FormWrapper modalOpen={false} setModalOpen={jest.fn()} isVisible={true} />);
+        customRender(<FormWrapper StatusBar={StatusBar} FormActionButton={FormActionButton} modalOpen={false} setModalOpen={jest.fn()} isVisible={true} />);
     });
 
     it('modalOpen=true', async () => {
-        customRender(<FormWrapper modalOpen={true} setModalOpen={jest.fn()} isVisible={true} />);
+        customRender(<FormWrapper StatusBar={StatusBar} FormActionButton={FormActionButton} modalOpen={true} setModalOpen={jest.fn()} isVisible={true} />);
     });
 
     it('mockStore', async () => {
         customRender(
             <Provider store={mockStore}>
-                <FormWrapper typeData="REL_TYPE" {...props} setfilteredModelData={jest.fn()} setfilteredVariantData={jest.fn()} />
+                <FormWrapper typeData="REL_TYPE" StatusBar={StatusBar} FormActionButton={FormActionButton} {...props} setfilteredModelData={jest.fn()} setfilteredVariantData={jest.fn()} />
             </Provider>
         );
     });

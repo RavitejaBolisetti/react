@@ -64,7 +64,8 @@ describe('Render CardAccountAndDocumentMapping component', () => {
     it('Save Button', () => {
         const uniqueCardEdit = '1234';
         const internalId = '1234';
-        customRender(<EditFormWrapper formEdit={true} internalId={internalId} uniqueCardEdit={uniqueCardEdit} setButtonData={jest.fn()} {...cardProps} setFormEdit={jest.fn()} setDropdownItems={jest.fn()} onAccountDocumentMapsSave={jest.fn()} accountDocumentMaps={accountDocumentMaps} setAccountDocumentMaps={jest.fn()} />);
+
+        customRender(<EditFormWrapper formEdit={true} internalId={internalId} accountDocumentMaps={accountDocumentMaps} uniqueCardEdit={uniqueCardEdit} setButtonData={jest.fn()} {...cardProps} setFormEdit={jest.fn()} setDropdownItems={jest.fn()} onAccountDocumentMapsSave={jest.fn()} setAccountDocumentMaps={jest.fn()}/>)
 
         const saveBtn = screen.getByRole('button', {name:'Save'});
         fireEvent.click(saveBtn);
@@ -84,5 +85,4 @@ describe('Render CardAccountAndDocumentMapping component', () => {
         fireEvent.click(deletBtn[1]);
     })
 
-    
 });

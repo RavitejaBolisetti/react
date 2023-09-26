@@ -1,4 +1,7 @@
 import '@testing-library/jest-dom/extend-expect';
+import createMockStore from '__mocks__/store';
+import { Provider } from 'react-redux';
+import { screen, fireEvent } from '@testing-library/react';
 import { OtfReportsMaster } from '@components/common/OTFReports/OtfReportsMaster';
 import customRender from '@utils/test-utils';
 
@@ -7,7 +10,34 @@ afterEach(() => {
 });
 
 describe('Booking Reports components', () => {
+    
     it('should render OTFReports components', () => {
-        customRender(<OtfReportsMaster />);
+        const mockStore=createMockStore({
+            auth: { userId: 106 },
+            data: {
+                OtfReports: { isLoaded: true, data: [{status: 'Active'}] },
+            },
+        })
+        customRender(
+        <Provider store={mockStore}>
+            <OtfReportsMaster />
+        </Provider>
+        );
+    });
+
+    it('download button should work', () => {
+        const mockStore=createMockStore({
+            auth: { userId: 106 },
+            data: {
+                OtfReports: { isLoaded: true, data: [{status: 'Active'}] },
+            },
+        })
+        customRender(
+            <Provider store={mockStore}>
+                <OtfReportsMaster />
+            </Provider>
+        );
+        const selectColumn=screen.getByRole('button', { name: 'Download' });
+        fireEvent.click(selectColumn);
     });
 });

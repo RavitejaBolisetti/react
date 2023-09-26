@@ -20,7 +20,7 @@ describe('Add On Details Component', () => {
                 OTF: {
                     AddonDetails: {
                         isLoaded: true,
-                        data: [{id:1, name:'Test', partDetailsResponses: 'test'}, {id:2, name:'Test1', partDetailsResponses:'test'}],
+                        data: {partDetailsResponses: [{name: 'Kai'}]},
                     },
                     AddonParts: {
                         isLoaded: true,
@@ -29,9 +29,10 @@ describe('Add On Details Component', () => {
                 },
             },
         });
-        const buttonData = { saveBtn: true, formBtnActive: false };
-        customRender(<Provider store={mockStore}><AddOnDetailsMaster buttonData={buttonData} onSearchPart={jest.fn()} handleFormValueChange={jest.fn()} onFinishFailed={jest.fn()} onFinish={jest.fn()} selectedOrderId={true} /></Provider>);
-        const addButton=screen.getByRole('button', { name: 'Save & Next', exact: false });
+
+        const buttonData = { saveBtn: true, formBtnActive: true };
+        customRender(<Provider store={mockStore}><AddOnDetailsMaster buttonData={buttonData} setButtonData={jest.fn()} onSearchPart={jest.fn()} handleFormValueChange={jest.fn()} onFinishFailed={jest.fn()} onFinish={jest.fn()} selectedOrderId={true} /></Provider>);
+        const addButton=screen.getByRole('button', { name: 'Save', exact: false });
         fireEvent.click(addButton);
     });
 });

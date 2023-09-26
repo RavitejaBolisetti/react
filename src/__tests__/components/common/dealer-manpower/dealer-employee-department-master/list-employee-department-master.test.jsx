@@ -48,7 +48,6 @@ const buttonData = {
 };
 
 describe('List Employee Department Master components', () => {
-
     it('Should render search components', () => {
         const mockStore = createMockStore({
             auth: { userId: 106 },
@@ -114,7 +113,6 @@ describe('List Employee Department Master components', () => {
     })
 
     it('Should render Employee Department Master add edit form components', () => {
-        const formActionType = { viewMode: false, editMode: false }
         const mockStore = createMockStore({
             auth: { userId: 106 },
             data: {
@@ -156,6 +154,75 @@ describe('List Employee Department Master components', () => {
         const saveNewBtn = screen.getByRole('button', { name: 'Save & Add New' });
         fireEvent.click(saveNewBtn);
     })
+
+    it('Should render Employee Department Master add edit form close components', () => {
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+            data: {
+                DealerManpower: {
+                    DealerEmployeeDepartmentMaster: {
+                        isLoaded: true, data: [{
+                            departmentCode: "DC98",
+                            departmentName: "Employee",
+                            divisionCode: "C",
+                            divisionName: "COMMON",
+                            status: true
+                        }]
+                    },
+                },
+            },
+        });
+
+        const saveData = jest.fn();
+
+        customRender(
+            <Provider store={mockStore}>
+                <ListEmployeeDepartmentMaster saveData={saveData} setIsFormVisible={jest.fn()} handleButtonClick={jest.fn()} fetchList={jest.fn()} resetData={jest.fn()} buttonData={buttonData} setButtonData={jest.fn()} />
+            </Provider>
+        )
+
+        const plusAddBtn = screen.getByRole('button', { name: 'plus Add', exact: false });
+        fireEvent.click(plusAddBtn);
+
+        const closeBtn = screen.getByRole('button', { name: 'Close', exact: false });
+        fireEvent.click(closeBtn);
+
+
+    })
+
+    it('Should render Employee Department Master add edit form cancel components', () => {
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+            data: {
+                DealerManpower: {
+                    DealerEmployeeDepartmentMaster: {
+                        isLoaded: true, data: [{
+                            departmentCode: "DC98",
+                            departmentName: "Employee",
+                            divisionCode: "C",
+                            divisionName: "COMMON",
+                            status: true
+                        }]
+                    },
+                },
+            },
+        });
+
+        const saveData = jest.fn();
+
+        customRender(
+            <Provider store={mockStore}>
+                <ListEmployeeDepartmentMaster saveData={saveData} setIsFormVisible={jest.fn()} handleButtonClick={jest.fn()} fetchList={jest.fn()} resetData={jest.fn()} buttonData={buttonData} setButtonData={jest.fn()} />
+            </Provider>
+        )
+
+        const plusAddBtn = screen.getByRole('button', { name: 'plus Add', exact: false });
+        fireEvent.click(plusAddBtn);
+
+        const cancelBtn = screen.getByRole('button', { name: 'Cancel', exact: false });
+        fireEvent.click(cancelBtn);
+    })
+
 
     it('test for onSuccess', async () => {
         const mockStore = createMockStore({
