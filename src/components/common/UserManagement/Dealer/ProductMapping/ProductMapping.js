@@ -6,98 +6,191 @@
 import React, { useState, useEffect } from 'react';
 import { Input, Form, Row, Col, Card, Empty, Typography, Divider } from 'antd';
 
-import CMS from 'assets/images/comingsoon.svg';
 import LeftPanel from 'components/common/LeftPanel';
 import { UserManagementFormButton } from '../../UserManagementFormButton/UserManagementFormButton';
 import { LANGUAGE_EN } from 'language/en';
 
-import styles from 'assets/sass/app.module.scss';
+// import styles from 'assets/sass/app.module.scss';
+import styles from '../../../TreeView.module.scss';
+import { NEXT_ACTION } from 'utils/btnVisiblity';
 
 const { Text } = Typography;
 const { Search } = Input;
-const fieldNames = { title: 'productName', key: 'productCode', children: 'children' };
-const defaultBtnVisiblity = { editBtn: false, saveBtn: false, next: false, nextBtn: false, saveAndNewBtn: false, saveAndNewBtnClicked: false, closeBtn: false, cancelBtn: true, formBtnActive: false };
 const noDataTitle = LANGUAGE_EN.GENERAL.NO_DATA_EXIST.TITLE;
 
-const moduleStatus = 'pending';
+const fieldNames = { title: 'prodctShrtName', key: 'prodctCode', children: 'subProdct' };
+
+const checkKey = (data, key) => data?.includes(key);
+
+const fnMapData = ({ data, fieldNames, checkedKeysValue, userId }) =>
+    data?.map((prod) => ({
+        ...prod,
+        id: prod?.id || '',
+        productCode: prod?.productCode,
+        status: checkKey(checkedKeysValue, prod?.productCode),
+    }));
 
 const ProductMapping = (props) => {
-    const { productDataTree, viewMode, section, setButtonData } = props;
-    const [finalProductData, setFinalProductData] = useState([]);
-    console.log('🚀 ~ file: ProductMapping.js:27 ~ ProductMapping ~ finalProductData:', finalProductData);
+    const { productHierarchyData, userId, selectedRecord, formActionType, isProductHierarchyLoading, viewMode, section, setButtonData, fetchProductHierarchyList, productShowLoding } = props;
+    const { userProductListData, fetchDealerProduct, dealerProductShowLoading, saveDealerProduct, showGlobalNotification } = props;
+    const { isUserDlrProductListLoding, handleButtonClick } = props;
+    const [form] = Form.useForm();
     const [searchValue, setSearchValue] = useState();
     const [checkedKeys, setCheckedKeys] = useState([]);
+    const [productTreeList, setProductTreeList] = useState([]);
+    const [productHierarchyDataList, setProductHierarchyDataList] = useState([]); //make product list
+    const [mapProductList, setMapProductList] = useState([]);
+
+    const extraParams = [
+        {
+            key: 'employeeCode',
+            title: 'employeeCode',
+            value: selectedRecord?.employeeCode,
+        },
+    ];
+
+    const mapSelectedKeyData = ({ data }) =>
+        data?.[0]?.attributeType !== 'MF'
+            ? data?.map((item) => ({
+                  ...item,
+                  //   disabled: item?.attributeType !== "MG",
+                  checkable: item?.attributeType === 'MG',
+                  selectable: item?.attributeType !== 'MG',
+                  subProdct: item?.subProdct && item?.attributeType !== 'MF' ? mapSelectedKeyData({ data: item?.subProdct }) : null,
+              }))
+            : null;
 
     useEffect(() => {
-        setButtonData({ ...defaultBtnVisiblity, nextBtn: false, nextBtnWthPopMag: true });
-
-        return () => {
-            setButtonData({ ...defaultBtnVisiblity, nextBtn: false, saveBtn: true, nextBtnWthPopMag: false });
-        };
+        if (productHierarchyData) {
+            setProductTreeList(mapSelectedKeyData({ data: productHierarchyData }));
+        }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [productHierarchyData]);
+
+    useEffect(() => {
+        if (userId) {
+            setButtonData((prev) => ({ ...prev, nextBtn: false, saveBtn: true, editBtn: formActionType?.viewMode }));
+
+            if (!productHierarchyData?.length) {
+                const extraParamsDef = [
+                    {
+                        key: 'manufactureOrgCode',
+                        title: 'manufactureOrgCode',
+                        value: 'PRSNL',
+                    },
+                ];
+
+                fetchProductHierarchyList({ setIsLoading: productShowLoding, extraParams: extraParamsDef, userId });
+            }
+            fetchDealerProduct({ setIsLoading: dealerProductShowLoading, extraParams, userId });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, selectedRecord]);
 
     const handleSearchValue = (event) => {
         setSearchValue(event.target.value);
     };
 
-    const checkKey = (data, key) => data?.includes(key);
-
-    const fnMapData = ({ data, fieldNames, selectedKeys }) =>
-        data?.map((item) =>
-            item?.[fieldNames?.children]
-                ? {
-                      ...item,
-                      checked: checkKey(selectedKeys, item?.[fieldNames?.key]),
-                      children: fnMapData({ data: item?.[fieldNames?.children], fieldNames, selectedKeys }),
-                  }
-                : {
-                      ...item,
-                      checked: checkKey(selectedKeys, item?.[fieldNames?.key]),
-                  }
-        );
-    const onCheck = (checkVal, { halfCheckedKeys }) => {
-        setCheckedKeys(checkVal);
-        setFinalProductData(fnMapData({ data: productDataTree, fieldNames, selectedKeys: [...checkVal, ...halfCheckedKeys] }));
+    const onCheck = (checkedKeysValue, { halfCheckedKeys }) => {
+        setButtonData((prev) => ({ ...prev, formBtnActive: true }));
+        setCheckedKeys([...checkedKeysValue]);
+        const mapSelectedKeyData = (data) => fnMapData({ data: data, fieldNames, checkedKeysValue });
+        setMapProductList(mapSelectedKeyData(productHierarchyDataList));
     };
 
-    const handleDefaultCheckedKeys = (data, Mode, keys) => {
-        if (!Mode) {
-            let newCheckedKeys = [];
-            data?.forEach((el) => {
-                el?.checked && newCheckedKeys.push(el?.key);
-            });
+    const handleDefaultCheckedKeys = (data, key) => {
+        let newCheckedKeys = [];
+        data?.forEach((el) => {
+            el?.status && newCheckedKeys.push(el?.[key]);
+        });
+        setCheckedKeys([...new Set(newCheckedKeys)]);
+    };
 
-            setCheckedKeys(newCheckedKeys);
-        }
+    const generateProductList = (productHierarchyData, fieldNames, userId) => {
+        if (productHierarchyDataList?.length) return;
+        const dataList = [];
+        const generateList = (data) => {
+            for (let i = 0; i < data?.length; i++) {
+                const { subProdct, ...node } = data[i];
+                let mappedprod = userProductListData?.find((el) => el?.productCode === node?.prodctCode);
+                dataList.push({
+                    id: mappedprod?.id || '',
+                    productCode: node?.prodctCode,
+                    userId,
+                    status: false,
+                });
+                if (subProdct?.length) {
+                    generateList(subProdct, fieldNames, userId);
+                }
+            }
+            return dataList;
+        };
+        return generateList(productHierarchyData, fieldNames, userId);
     };
 
     useEffect(() => {
-        handleDefaultCheckedKeys(productDataTree);
+        if (userId && userProductListData?.length) {
+            handleDefaultCheckedKeys(userProductListData, 'productCode');
+        }
+
+        if (productTreeList?.length) {
+            setProductHierarchyDataList(generateProductList(productTreeList, fieldNames, selectedRecord?.employeeCode));
+        }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [productHierarchyData, userProductListData, productTreeList]);
 
     const myProps = {
         fieldNames,
-        treeData: productDataTree,
+        // treeData: productHierarchyData,
+        treeData: productTreeList,
         searchValue,
         setSearchValue,
         checkable: true,
+        selectable: false,
         checkedKeys,
         isTreeViewVisible: true,
         onCheck: onCheck,
         disableCheckbox: viewMode,
-        // checkedKeys: handleDefaultCheckedKeys,
+        isLoading: isUserDlrProductListLoding || isProductHierarchyLoading,
+    };
+
+    //     handleButtonClick({ buttonAction: FROM_ACTION_TYPE.NEXT });
+
+    const onFinish = (data) => {
+        const onErrorAction = (res) => {
+            console.error(res);
+        };
+
+        const onSuccess = (res) => {
+            form.resetFields();
+            handleButtonClick({ buttonAction: NEXT_ACTION });
+            showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        };
+        const filterData = mapProductList?.filter((el) => el?.id || el?.status);
+        const finalFilter = filterData?.filter((prod, index) => filterData?.findIndex((data) => data?.productCode === prod?.productCode) === index)?.map(({ checkable, selectable, disabled, ...i }) => ({ ...i }));
+
+        const requestData = {
+            data: finalFilter,
+            setIsLoading: dealerProductShowLoading,
+            userId,
+            onErrorAction,
+            onSuccess,
+        };
+
+        saveDealerProduct(requestData);
+    };
+    const onFinishFailed = (err) => {
+        console.error(err);
     };
 
     const buttonProps = { ...props };
 
     return (
         <>
-            <Row gutter={20} className={`${styles.drawerBodyRight} ${styles.fullyCentered}`}>
-                {moduleStatus !== 'pending' ? (
+            <Form layout="vertical" key={'mainform'} autoComplete="off" form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+                <Row gutter={20} className={`${styles.drawerBodyRight}`}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <h2>{section?.title}</h2>
                         <Card>
@@ -107,14 +200,16 @@ const ProductMapping = (props) => {
                                 </Col>
                             </Row>
                             <Divider />
-                            {!productDataTree?.length ? (
+                            {productHierarchyData?.length || isUserDlrProductListLoding || isProductHierarchyLoading ? (
                                 <>
                                     <Form.Item label={''} name="search" validateTrigger={['onSearch']}>
                                         <Search placeholder="Search" initialValue={searchValue} onChange={handleSearchValue} allowClear />
                                     </Form.Item>
                                     <Row gutter={20}>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={`${styles.marB20}`}>
-                                            <LeftPanel {...myProps} />
+                                            <div className={styles.prodMapTree}>
+                                                <LeftPanel {...myProps} />
+                                            </div>
                                         </Col>
                                     </Row>
                                 </>
@@ -133,18 +228,9 @@ const ProductMapping = (props) => {
                             )}
                         </Card>
                     </Col>
-                ) : (
-                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12}>
-                        <div className={styles.cmsContainer}>
-                            <h1>
-                                <img src={CMS} alt="Coming Soon" />
-                            </h1>
-                            <p className={styles.horizontallyCentered}>This Page is Under Development</p>
-                        </div>
-                    </Col>
-                )}
-            </Row>
-            <UserManagementFormButton {...buttonProps} />
+                </Row>
+                <UserManagementFormButton {...buttonProps} />
+            </Form>
         </>
     );
 };

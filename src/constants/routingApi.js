@@ -259,8 +259,11 @@ export const BASE_URL_USER_MANAGEMENT_USER_SEARCH = BASE_URL_USER_MANAGEMENT + '
 export const BASE_URL_USER_MANAGEMENT_APPLICATIONS_DEALER = BASE_URL_USER_MANAGEMENT + 'dealer';
 export const BASE_URL_USER_MANAGEMENT_MAC_ID = BASE_URL_USER_MANAGEMENT_APPLICATIONS_DEALER + '/devices';
 
-export const BASE_URL_USER_MANAGEMENT_USER_DEALER_BRANCH_LOCATIONS = BASE_URL_USER_MANAGEMENT_APPLICATIONS_DEALER + '/location'; // MAPPED WITH USER//users/dealer/location?employeeCode=deepakpalariya
-export const BASE_URL_USER_MANAGEMENT_DEALER_BRANCH_LOCATIONS = BASE_URL + 'dealer/search/locations'; //all location of dealer dealer/search/locations?dealerParentCode=DP007
+export const BASE_URL_USER_MANAGEMENT_USER_DEALER_BRANCH_LOCATIONS = BASE_URL_USER_MANAGEMENT_APPLICATIONS_DEALER + '/location'; // MAPPED WITH USER
+export const BASE_URL_USER_MANAGEMENT_DEALER_BRANCH_LOCATIONS = BASE_URL + 'dealer/parent/locations';
+export const BASE_URL_USER_MANAGEMENT_DEALER_USER_BRANCH_LOCATIONS = BASE_URL + 'dealer/parent/locations'; //all location of dealer dealer/search/locations?dealerParentCode=DP007
+export const BASE_URL_USER_DEALER_PRODUCT = BASE_URL + 'users/dealer/product';
+
 export const BASE_URL_USER_MANAGEMENT_MANUFACTURER_APPLICATIONS = BASE_URL_USER_MANAGEMENT + 'manufacturer';
 export const BASE_URL_USER_ROLE = BASE_URL_USER_MANAGEMENT + 'roles';
 export const BASE_URL_ROLE_LIST = BASE_URL + 'application/rolemaster';

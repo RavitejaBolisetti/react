@@ -65,23 +65,19 @@ const AddEditForm = (props) => {
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} className={styles.marB10}>
                                         {dealerBranches?.map((el, i) => {
                                             return (
-                                                <Row key={el?.locationCode} gutter={20}>
-                                                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className={styles.marB10}>
+                                                <Row key={el?.locationCode} gutter={20} className={styles.marB10}>
+                                                    <Col xs={14} sm={14} md={14} lg={14} xl={14} xxl={14}>
                                                         {el?.locationName}
                                                     </Col>
-                                                    <Col xs={12} sm={12} md={12} lg={12} xl={12} xxl={12} className={styles.marB10}>
+                                                    <Col xs={10} sm={10} md={10} lg={10} xl={10} xxl={10}>
                                                         <Checkbox.Group onChange={(checkedValues) => onChanges(el, checkedValues, i)} value={[el?.status && 'status', el?.defaultBranchIndicator && 'defaultBranchIndicator']} defaultValue={[el?.status && 'status', el?.defaultBranchIndicator && 'defaultBranchIndicator']}>
-                                                            <Row gutter={20}>
-                                                                <Col span={12}>
-                                                                    <Checkbox value={'status'} defaultChecked={el?.status} checked={el?.status}>
-                                                                        Accessible
-                                                                    </Checkbox>
-                                                                </Col>
-                                                                <Col span={12}>
-                                                                    <Checkbox value={'defaultBranchIndicator'} defaultChecked={el?.defaultBranchIndicator} checked={el?.defaultBranchIndicator} disabled={!el?.status}>
-                                                                        Default
-                                                                    </Checkbox>
-                                                                </Col>
+                                                            <Row gutter={20} justify="space-between">
+                                                                <Checkbox value={'status'} className={styles.marR20} defaultChecked={el?.status} checked={el?.status}>
+                                                                    Accessible
+                                                                </Checkbox>
+                                                                <Checkbox value={'defaultBranchIndicator'} defaultChecked={el?.defaultBranchIndicator} checked={el?.defaultBranchIndicator} disabled={!el?.status}>
+                                                                    Default
+                                                                </Checkbox>
                                                             </Row>
                                                         </Checkbox.Group>
                                                     </Col>
