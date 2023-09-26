@@ -303,6 +303,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         } else {
             setSelectedOrder('');
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, formActionType, isInVoiceMasterDetailDataLoaded]);
 
     useEffect(() => {
@@ -317,17 +318,24 @@ export const VehicleInvoiceMasterBase = (props) => {
 
     useEffect(() => {
         if (selectedOrderId && !formActionType?.addMode) {
-            const extraParam = [
+            const extraParams = [
+                {
+                    key: 'otfNumber',
+                    title: 'otfNumber',
+                    value: selectedOtfNumber,
+                    name: 'Booking Number',
+                },
                 {
                     key: 'invoiceNumber',
-                    value: selectedOrderId,
+                    value: selectedOrderId || '',
                     name: 'Invoice Number',
                 },
             ];
 
-            fetchOTFDetail({ customURL, setIsLoading: listShowLoading, userId, extraParams: extraParam, onErrorAction });
+            fetchOTFDetail({ customURL, setIsLoading: listShowLoading, userId, extraParams: extraParams, onErrorAction });
         }
-    }, [selectedOrderId, formActionType]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [selectedOrderId, selectedOtfNumber, formActionType]);
 
     useEffect(() => {
         const defaultSection = VEHICLE_INVOICE_SECTION.INVOICE_DETAILS.id;

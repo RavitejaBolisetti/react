@@ -590,7 +590,7 @@ export const OtfMasterBase = (props) => {
     const onFinishOTFTansfer = (values) => {
         fnOTFTransfer({
             modalTitle: 'Booking Transfer',
-            modalMessage: `Do you want to transfer this ${otfData?.bookingNumber}`,
+            modalMessage: `Do you want to transfer this ${otfData?.bookingNumber || otfData?.otfNumber}`,
             finalData: { ...values, id: otfData?.id, otfNumber: otfData?.otfNumber },
             callBackMethod: transferOTF,
             customURL: otfTransferURL,
@@ -600,7 +600,7 @@ export const OtfMasterBase = (props) => {
     const onFinishOTFCancellation = (values) => {
         fnOTFTransfer({
             modalTitle: 'Booking Cancel',
-            modalMessage: `Do you want to cancel this ${otfData?.bookingNumber}`,
+            modalMessage: `Do you want to cancel this ${otfData?.bookingNumber || otfData?.otfNumber}`,
             finalData: { dealerCode: '', oemCode: '', productCode: '', ...values, id: otfData?.id, otfNumber: otfData?.otfNumber, uploadCancellationLetterDocId: uploadedFile },
             callBackMethod: transferOTF,
             customURL: otfCancelURL,
