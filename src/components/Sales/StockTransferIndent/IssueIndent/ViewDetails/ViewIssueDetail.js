@@ -54,10 +54,10 @@ export const ViewIssueDetail = ({ formData, isLoading = false, typeData, handleR
                 <Descriptions.Item label="Issue Charges">{checkAndSetDefaultValue(viewData?.issueCharges, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Net Dealer Price">{checkAndSetDefaultValue(viewData?.netDealerPrice, isLoading)}</Descriptions.Item>
             </Descriptions>
-            <Row gutter={20}>
+            <Row gutter={20} className={styles.marB20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{ display: 'flex' }}>
                     {buttonVisibility?.canReceive && (
-                        <Button style={{ marginRight: '10px' }} type="primary" onClick={() => handleRequest(formData, ISSUE_ACTION_LIST?.RECEIVED)}>
+                        <Button className={styles.marR10} type="primary" onClick={() => handleRequest(formData, ISSUE_ACTION_LIST?.RECEIVED)}>
                             {BUTTON_NAME_CONSTANTS?.RECEIEVED?.name}
                         </Button>
                     )}

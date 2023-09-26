@@ -106,7 +106,7 @@ export const dataActions = (params) => {
         }),
 
         fetchFilteredList: withAuthToken((params) => ({ token, accessToken, userId }) => (dispatch) => {
-            const { setIsLoading, data } = params;
+            const { setIsLoading, data, extraParams = [] } = params;
             setIsLoading(true);
 
             const onError = (errorMessage) => {
@@ -122,10 +122,16 @@ export const dataActions = (params) => {
                 }
             };
 
+            let sExtraParamsString = '?';
+            extraParams?.forEach((item, index) => {
+                sExtraParamsString += item?.value && item?.key ? item?.value && item?.key + '=' + item?.value + '&' : '';
+            });
+
+            sExtraParamsString = sExtraParamsString.substring(0, sExtraParamsString.length - 1);
             const apiCallParams = {
                 data,
                 method: 'get',
-                url: inBaseURL + '/lov',
+                url: inBaseURL + '/lov' + (sExtraParamsString ? sExtraParamsString : ''),
                 token,
                 accessToken,
                 userId,
