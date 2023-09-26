@@ -611,7 +611,7 @@ export const OtfMasterBase = (props) => {
         const { otfId, otfNumber } = record;
         fnOTFTransfer({
             modalTitle: `${actionStatus === CANCELLN_APPROVE ? 'Approval' : 'Rejection'}`,
-            modalMessage: `Are you sure, you want to ${actionStatus === CANCELLN_APPROVE ? 'approve' : 'reject'} the cancellation of ${otfData?.bookingNumber}`,
+            modalMessage: `Are you sure, you want to ${actionStatus === CANCELLN_APPROVE ? 'approve' : 'reject'} the cancellation of ${otfData?.bookingNumber || otfData?.otfNumber}`,
             finalData: { id: otfId, otfNumber, actionCode: actionStatus, remarks: actionStatus },
             callBackMethod: cancelOTFWorkflow,
             customURL: customURLCancelWF,
