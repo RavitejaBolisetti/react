@@ -284,6 +284,13 @@ export const BASE_URL_INVOICE_DETAIL = BASE_URL_OTF + 'vehicleinvoice/details';
 export const BASE_URL_VEHICLE_INVOICE_DETAIL = BASE_URL_OTF + 'vehicleinvoice/vehicledetails';
 
 export const BASE_URL_VEHICLE_DETAILS_SERVICE = BASE_URL + 'otf/vehicledetails/optionalcharges';
+
+export const BASE_URL_ON_ROAD_PRICE_MASTER_SEARCH = BASE_URL + 'vehicle/onroad/pricemaster/search';
+
+
+export const BASE_URL_VIEWON_ROAD_PRICE_MASTER = BASE_URL + 'vehicle/onroad/pricemaster';
+
+
 export const BASE_URL_MILE_SKILL = BASE_URL + 'dealer/mileskills';
 
 export const BASE_URL_HO_PRICE_MAPPING = BASE_URL_VEHICLE + 'hopriceuploadmapping/search';
