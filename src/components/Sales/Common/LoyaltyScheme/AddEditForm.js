@@ -13,6 +13,7 @@ import { prepareCaption } from 'utils/prepareCaption';
 import { PARAM_MASTER } from 'constants/paramMaster';
 
 import styles from 'assets/sass/app.module.scss';
+import { convertToUpperCase } from 'utils/convertToUpperCase';
 const { TextArea } = Input;
 
 const AddEditFormMain = (props) => {
@@ -49,7 +50,7 @@ const AddEditFormMain = (props) => {
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name="registrationNumber" label="Old Reg. Number" initialValue={formData?.oldRegNumber}>
-                        <Input disabled={true} placeholder={preparePlaceholderText('Old Reg. Number')} maxLength={50} />
+                        <Input disabled={true} onInput={convertToUpperCase} placeholder={preparePlaceholderText('Old Reg. Number')} maxLength={50} />
                     </Form.Item>
                 </Col>
 
@@ -94,7 +95,7 @@ const AddEditFormMain = (props) => {
 
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item name="oldChassisNumber" label="Old Chassis Number" initialValue={formData?.oldChassisNumber}>
-                        <Input {...disabledProps} maxLength={50} placeholder={preparePlaceholderText('old chassis no')} {...disabledProps} />
+                        <Input {...disabledProps} onInput={convertToUpperCase} maxLength={50} placeholder={preparePlaceholderText('old chassis no')} {...disabledProps} />
                     </Form.Item>
                 </Col>
 

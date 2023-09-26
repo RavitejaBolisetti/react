@@ -13,6 +13,7 @@ import { validateRequiredInputField, validateRequiredSelectField, validateNumber
 import { prepareCaption } from 'utils/prepareCaption';
 
 import styles from 'assets/sass/app.module.scss';
+import { convertToUpperCase } from 'utils/convertToUpperCase';
 
 const AddEditFormMain = (props) => {
     const { formData, form, formActionType, editableOnSearch, showAlert } = props;
@@ -57,7 +58,7 @@ const AddEditFormMain = (props) => {
                     <Row gutter={20}>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item name="oldRegistrationNumber" label="Reg Number" rules={[validateRequiredInputField('Reg Number')]}>
-                                <Input {...disabledProps} placeholder={preparePlaceholderText('Reg Number')} maxLength={50} />
+                                <Input {...disabledProps} onInput={convertToUpperCase} placeholder={preparePlaceholderText('Reg Number')} maxLength={50} />
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
@@ -113,7 +114,7 @@ const AddEditFormMain = (props) => {
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                             <Form.Item name="oldChessisNumber" label="VIN Number" rules={[validateRequiredInputField('VIN number')]}>
-                                <Input {...disabledProps} maxLength={50} placeholder={preparePlaceholderText('vin number')} />
+                                <Input {...disabledProps} onInput={convertToUpperCase} maxLength={50} placeholder={preparePlaceholderText('vin number')} />
                             </Form.Item>
                         </Col>
                     </Row>

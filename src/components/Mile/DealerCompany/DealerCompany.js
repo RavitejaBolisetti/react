@@ -281,7 +281,6 @@ export const DealerCompanyBase = (props) => {
         handleButtonClick,
         title,
         tableData: searchData,
-        showAddButton,
     };
 
     return (

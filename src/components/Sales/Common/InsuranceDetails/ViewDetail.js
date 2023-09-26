@@ -25,7 +25,7 @@ const mapStateToProps = (state) => {
             OTF: {
                 InsuranceDetail: { isLoaded: isDataLoaded = false, isLoading, data: insuranceData = [] },
             },
-            PartyMaster: { isFilteredListLoaded: isInsuranceCompanyDataLoaded = false, detailData: insuranceCompanies },
+            PartyMaster: { isFilteredListLoaded: isInsuranceCompanyDataLoaded = false, filteredListData: insuranceCompanies },
         },
     } = state;
 
@@ -47,7 +47,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch,
     ...bindActionCreators(
         {
-            fetchInsuranceCompanyList: partyMasterDataActions.fetchDetail,
+            fetchInsuranceCompanyList: partyMasterDataActions.fetchFilteredList,
             listInsuranceShowLoading: partyMasterDataActions.listShowLoading,
             showGlobalNotification,
         },
@@ -57,23 +57,23 @@ const mapDispatchToProps = (dispatch) => ({
 
 const ViewDetailMain = (props) => {
     const { formData, isLoading } = props;
-    const { insuranceCompanies } = props;
+    const { userId, isInsuranceCompanyDataLoaded, listInsuranceShowLoading, fetchInsuranceCompanyList, insuranceCompanies } = props;
 
-    // useEffect(() => {
-    //     const extraParams = [
-    //         {
-    //             key: 'partyType',
-    //             title: 'partyType',
-    //             value: 'IN',
-    //             name: 'Party Type',
-    //         },
-    //     ];
+    useEffect(() => {
+        const extraParams = [
+            {
+                key: 'partyType',
+                title: 'partyType',
+                value: 'IN',
+                name: 'Party Type',
+            },
+        ];
 
-    //     if (userId && !isInsuranceCompanyDataLoaded) {
-    //         fetchInsuranceCompanyList({ setIsLoading: listInsuranceShowLoading, userId, extraParams });
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [userId, !isInsuranceCompanyDataLoaded]);
+        if (userId && !isInsuranceCompanyDataLoaded) {
+            fetchInsuranceCompanyList({ setIsLoading: listInsuranceShowLoading, userId, extraParams });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, isInsuranceCompanyDataLoaded]);
 
     const viewProps = {
         bordered: false,

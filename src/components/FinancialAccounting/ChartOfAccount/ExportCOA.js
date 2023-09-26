@@ -17,7 +17,7 @@ export const ExportCOA = (props) => {
                 <Row xs={24} sm={24} md={24} lg={24} xl={24} xxl={24} gutter={20}>
                     <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                         <Form.Item label="From Date" name="fromDate" rules={[validateRequiredSelectField('From Date')]}>
-                            <DatePicker 
+                            <DatePicker
                                 placeholder={preparePlaceholderSelect('From Date')}
                                 format={dateFormat}
                                 disabledDate={(current) => current > new Date()}

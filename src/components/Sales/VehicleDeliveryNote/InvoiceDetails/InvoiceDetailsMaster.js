@@ -119,6 +119,10 @@ export const InvoiceDetailsMasterBase = (props) => {
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+    useEffect(() => {
+        setButtonData({ ...buttonData, formBtnActive: false });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [buttonData]);
 
     const extraParams = [
         {
@@ -219,7 +223,7 @@ export const InvoiceDetailsMasterBase = (props) => {
         setButtonData({ ...buttonData, formBtnActive: false });
     };
 
-    const onFinishFailed = () => {};
+    const onFinishFailed = () => { };
 
     const onCloseAction = () => {
         form.resetFields();
