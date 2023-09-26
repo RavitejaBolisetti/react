@@ -285,7 +285,7 @@ export const StockTransferIndentMasterBase = (props) => {
             fetchIndentList({ customURL: customURL + '/search', setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, extraParams]);
+    }, [userId, extraParams, defaultDealerLocationCode]);
 
     const onFinishFailed = (errorInfo) => {
         return;
@@ -453,7 +453,7 @@ export const StockTransferIndentMasterBase = (props) => {
             {
                 key: 'searchType',
                 title: 'Type',
-                value: 'chassisNumber',
+                value: 'vehicleIdentificationNumber',
             },
             {
                 key: 'searchParam',
@@ -493,21 +493,6 @@ export const StockTransferIndentMasterBase = (props) => {
                 value: record?.vin,
             },
         ]);
-
-        // fetchReportDetail({
-        //     setIsLoading: listShowLoading,
-        //     userId,
-        //     tempRespone: true,
-        //     extraParams,
-        //     onSuccessAction: (res) => {
-        //         if (res?.data?.embedReports) {
-        //             setReportData({
-        //                 ...res?.data?.embedReports,
-        //                 embedUrl: res?.data?.embedReports?.[0]?.embedUrl ? res?.data?.embedReports?.[0]?.embedUrl.concat('?rp:vehicle_identification_number=' + record?.vin) : '',
-        //             });
-        //         }
-        //     },
-        // });
     };
 
     const tableProps = {

@@ -31,18 +31,18 @@ export const VehicleInvoiceFormButton = ({ formActionType, record, onCloseAction
 
                 <Col xs={24} sm={16} md={18} lg={20} xl={20} className={styles.footerBtnRight}>
                     {buttonData?.printForm21Btn && (
-                        <Button onClick={() => onPrintForm21(record)} type="primary">
+                        <Button onClick={() => onPrintForm21(record)} danger>
                             Print Form 21
                         </Button>
                     )}
                     {buttonData?.printInvoiceBtn && (
-                        <Button onClick={() => onPrintInvoice(record)} type="primary">
+                        <Button onClick={() => onPrintInvoice(record)} danger>
                             Print Invoice
                         </Button>
                     )}
 
                     {buttonData?.cancelInvoiceBtn && (
-                        <Button onClick={onCancelInvoice} type="primary">
+                        <Button onClick={onCancelInvoice} danger>
                             Cancel Invoice
                         </Button>
                     )}

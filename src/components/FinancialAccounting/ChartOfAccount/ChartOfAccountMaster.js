@@ -25,7 +25,7 @@ import LeftPanel from 'components/common/LeftPanel';
 import { COA_ACCOUNT_TYPE } from 'constants/modules/ChartOfAccount/coaAccountType';
 
 import { FROM_ACTION_TYPE } from 'constants/formActionType';
- 
+
 import styles from 'assets/sass/app.module.scss';
 
 const { Search } = Input;
@@ -41,7 +41,7 @@ const mapStateToProps = (state) => {
                 ChartOfAccountMaster: {
                     ChartOfAccountHierarchy: { isLoaded: isChartOfAccountHierarchyLoaded = false, data: chartOfAccountHierarchy = [] },
                     ChartOfAccount: { isLoaded: isChartOfAccountLoaded = false, data: chartOfAccountData = [] },
-                    ChartOfAccountExportCOA: {  data: chartOfAccountExportCOAData },
+                    ChartOfAccountExportCOA: { data: chartOfAccountExportCOAData },
                 },
             },
         },
@@ -95,7 +95,7 @@ const mapDispatchToProps = (dispatch) => ({
     ),
 });
 
-export const ChartOfAccountMain = ({downloadFile,downloadShowLoading, chartOfAccountExportCOAData, fetchChartOfExportCoaAccount, listShowLoadingChartOfExportCoaAccount, typeData, moduleTitle, viewTitle, userId, saveData, showGlobalNotification, fetchDealerCompanyLov, listShowLoadingDealerCompanyLov, dealerCompanyLovData, fetchChartOfAccountHierarchy, isDealerCompanyDataLoaded, listShowLoadingChartOfAccountHierachy, chartOfAccountHierarchy, isChartOfAccountLoaded, chartOfAccountData, listShowLoadingChartOfAccount, fetchChartOfAccount }) => {
+export const ChartOfAccountMain = ({ downloadFile, downloadShowLoading, chartOfAccountExportCOAData, fetchChartOfExportCoaAccount, listShowLoadingChartOfExportCoaAccount, typeData, moduleTitle, viewTitle, userId, saveData, showGlobalNotification, fetchDealerCompanyLov, listShowLoadingDealerCompanyLov, dealerCompanyLovData, fetchChartOfAccountHierarchy, isDealerCompanyDataLoaded, listShowLoadingChartOfAccountHierachy, chartOfAccountHierarchy, isChartOfAccountLoaded, chartOfAccountData, listShowLoadingChartOfAccount, fetchChartOfAccount }) => {
     const [form] = Form.useForm();
     const [exportCoaForm] = Form.useForm();
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
@@ -120,7 +120,7 @@ export const ChartOfAccountMain = ({downloadFile,downloadShowLoading, chartOfAcc
     const defaultBtnVisiblity = { editBtn: true, childBtn: true, siblingBtn: true };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const [modalOpen, setModalOpen] = useState(false);
-    const companyFieldNames = { value: 'companyName', key: 'companyCode' };
+    const companyFieldNames = { value: 'companyName', key: 'id' };
     const fieldNames = { title: 'accountDescription', key: 'accountCode', children: 'subGroup' };
 
     useEffect(() => {
@@ -131,7 +131,8 @@ export const ChartOfAccountMain = ({downloadFile,downloadShowLoading, chartOfAcc
     }, [userId, isDealerCompanyDataLoaded]);
 
     const onSelect = (val) => {
-        setCompanyCode(val);
+        const code = dealerCompanyLovData?.find((i) => i?.id === val)?.companyCode;
+        setCompanyCode(code);
         setViewData(null);
         setSelectedTreeKey(null);
     };
@@ -315,7 +316,7 @@ export const ChartOfAccountMain = ({downloadFile,downloadShowLoading, chartOfAcc
                     //resetData();
                 };
 
-                fetchChartOfExportCoaAccount({ setIsLoading: listShowLoadingChartOfExportCoaAccount, userId, extraParams,onSuccessAction });
+                fetchChartOfExportCoaAccount({ setIsLoading: listShowLoadingChartOfExportCoaAccount, userId, extraParams, onSuccessAction });
 
                 setModalOpen(false);
             })
@@ -324,7 +325,7 @@ export const ChartOfAccountMain = ({downloadFile,downloadShowLoading, chartOfAcc
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        form.validateFields().then((values) => { });
     };
 
     const handleButtonClick = (type) => {

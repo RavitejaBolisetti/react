@@ -23,7 +23,7 @@ const OtfDetailsForm = (props) => {
                 [formName]: {
                     ...formData,
                     otfNumber: formData?.bookingNumber || formData?.otfNumber,
-                    otfDate: formattedCalendarDate(formData?.orderDate),
+                    orderDate: formattedCalendarDate(formData?.orderDate),
                 },
             });
         }
@@ -49,7 +49,7 @@ const OtfDetailsForm = (props) => {
                     </Row>
                     <Row gutter={20}>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={formData?.otfDate} label="Booking Date" name={[formName, 'otfDate']}>
+                            <Form.Item label="Booking Date" name={[formName, 'orderDate']}>
                                 <DatePicker format={dateFormat} placeholder={preparePlaceholderText('booking date')} style={{ display: 'auto', width: '100%' }} disabled={true} />
                             </Form.Item>
                         </Col>

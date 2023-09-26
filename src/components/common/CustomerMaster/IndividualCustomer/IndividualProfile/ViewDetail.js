@@ -53,7 +53,7 @@ const ViewDetailMain = (props) => {
                         <Descriptions.Item label="Gender">{checkAndSetDefaultValue(getCodeValue(appCategoryData?.GENDER_CD, formData?.gender), isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Maritial Status">{checkAndSetDefaultValue(getCodeValue(appCategoryData?.MARITAL_STATUS, formData?.martialStatus), isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Wedding Anniversary Date">{checkAndSetDefaultValue(formData?.weddingAnniversary, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                        <Descriptions.Item label="Occupation">{checkAndSetDefaultValue(getCodeValue(appCategoryData?.OCC_TYPE, formData?.occuption), isLoading)}</Descriptions.Item>
+                        <Descriptions.Item label="Occupation">{checkAndSetDefaultValue(getCodeValue(appCategoryData?.OCCUPATION, formData?.occuption), isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Annual Income">{checkAndSetDefaultValue(getCodeValue(appCategoryData?.Annual_Income, formData?.annualIncome), isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Driving License No.">{checkAndSetDefaultValue(formData?.drivingLicenseNumber, isLoading)}</Descriptions.Item>
                         <Descriptions.Item label="Aadhar No.">{checkAndSetDefaultValue(formData?.adharNumber, isLoading)}</Descriptions.Item>
