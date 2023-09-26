@@ -214,7 +214,7 @@ const VehicleDetailsMasterMain = (props) => {
                 },
             ];
 
-            setProductModelCode(vehicleDetailData?.model)
+            setProductModelCode(vehicleDetailData?.model);
             fetchProductLovCode({ setIsLoading: ProductLovLoading, userId, onErrorAction, extraParams });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -223,7 +223,7 @@ const VehicleDetailsMasterMain = (props) => {
     const onFinish = (values) => {
         if (onFinishCustom) {
             onFinishCustom({ key: formKey, values: { ...values, optionalServices: optionsServicesMapping, taxDetails: vehicleDetailData?.taxDetails, otfNumber: selectedOrderId || '', discountAmount: values?.discountAmount != '' ? values?.discountAmount : 0 } });
-=======     handleButtonClick({ buttonAction: NEXT_ACTION });
+            handleButtonClick({ buttonAction: NEXT_ACTION });
             setButtonData({ ...buttonData, formBtnActive: false });
         } else {
             let data;
