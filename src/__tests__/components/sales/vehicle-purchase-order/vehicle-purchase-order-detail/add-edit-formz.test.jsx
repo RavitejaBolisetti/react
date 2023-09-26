@@ -22,25 +22,7 @@ const formActionType = {
     editMode: true,
 };
 
-const buttonData = {
-    closeBtn: true,
-    cancelBtn: true,
-    editBtn: true,
-    allotBtn: true,
-    unAllotBtn: true,
-    invoiceBtn: true,
-    deliveryNoteBtn: true,
-    transferOTFBtn: true,
-    cancelOTFBtn: true,
-    changeHistory: true,
-    nextBtn: true,
-    saveBtn: true,
-    formBtnActive: true,
-    cancelVPOBtn: true,
-    cancelOtfBtn: true,
-    nextBtn: true,
-    saveBtn: true,
-};
+const buttonData = { closeBtn: true, cancelBtn: true, editBtn: true, allotBtn: true, unAllotBtn: true, invoiceBtn: true, deliveryNoteBtn: true, transferOTFBtn: true, cancelOTFBtn: true, changeHistory: true, nextBtn: true, saveBtn: true, formBtnActive: true, cancelVPOBtn: true, cancelOtfBtn: true, nextBtn: true, saveBtn: true };
 
 const saveButtonName = 'Save';
 const isLoadingOnSave = false;
@@ -94,6 +76,8 @@ describe('add edit form Components', () => {
         const saveBtn = screen.getByRole('button', { name: 'Save', exact: false });
         fireEvent.click(saveBtn);
 
+
+        
         const closedBtn = screen.getByRole('img', { name: 'close', exact: false });
         fireEvent.click(closedBtn);
         const calendarBtn = screen.getByRole('img', { name: 'calendar', exact: false });
