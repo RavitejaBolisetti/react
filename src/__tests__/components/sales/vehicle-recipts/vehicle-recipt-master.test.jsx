@@ -77,8 +77,7 @@ describe('Term Condition Manufacturer Master components', () => {
 
         const advanceFilter = screen.getByPlaceholderText(/Search GRN No./i);
         fireEvent.change(advanceFilter, { target: { value: 'Test' } });
-        const removeFilter = screen.getByTestId('removeFilter');
-        fireEvent.click(removeFilter);
+
         const clearBtn = screen.getByRole('button', { name: /Clear/i });
         fireEvent.click(clearBtn);
     });
@@ -102,5 +101,37 @@ describe('Term Condition Manufacturer Master components', () => {
         fireEvent.change(advanceFilter, { target: { value: 'Test' } });
         const removeFilter = screen.getByTestId('removeFilter');
         fireEvent.click(removeFilter);
+    });
+
+    it('test for apply button', async () => {
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+            data: {
+                VehicleReceipt: {
+                    VehicleReceiptSearch: { filter: { advanceFilter: 'Test', grnFromDate: '06/06/2022', grnToDate: '06/06/2022', grnType: 'kai', key: 'searchParam' } },
+                },
+            },
+        });
+        customRender(
+            <Provider store={mockStore}>
+                <VehicleReceiptMaster />
+            </Provider>
+        );
+
+        const advanceFilter = screen.getByRole('button', { name: /Advanced Filters/i });
+        fireEvent.click(advanceFilter);
+
+        const fromDate = screen.getByRole('textbox', { name: 'GRN From Date' });
+        fireEvent.click(fromDate);
+        const todayForFromDate = await screen.findByText('Today');
+        fireEvent.click(todayForFromDate);
+
+        const toDate = screen.getByRole('textbox', { name: 'GRN To Date' });
+        fireEvent.click(toDate);
+        const todayToFromDate = await screen.findAllByText('Today');
+        fireEvent.click(todayToFromDate[1]);
+
+        const resetBtn = screen.getByRole('button', { name: /apply/i });
+        fireEvent.click(resetBtn);
     });
 });
