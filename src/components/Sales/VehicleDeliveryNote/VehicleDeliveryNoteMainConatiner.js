@@ -25,7 +25,7 @@ import styles from 'assets/sass/app.module.scss';
 import { ThankYouMaster } from './ThankYou';
 
 const VehicleDeliveryNoteConatinerMain = (props) => {
-    const { currentSection, requestPayload, setRequestPayload, selectedOtfNumber, selectedOrderId, soldByDealer } = props;
+    const { currentSection, requestPayload, setRequestPayload, selectedOtfNumber, selectedOrderId, soldByDealer, handlePrintDownload } = props;
 
     const onFinishCustom = ({ key, values }) => {
         setRequestPayload({ ...requestPayload, [key]: values });
