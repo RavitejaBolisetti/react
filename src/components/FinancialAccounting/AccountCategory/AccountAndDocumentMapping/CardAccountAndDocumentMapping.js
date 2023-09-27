@@ -120,9 +120,7 @@ const CardAccountAndDocumentMapping = (props) => {
                 <Space direction="vertical">
                     <Space>
                         <Text>{appName}</Text>
-
                         <Divider type="vertical" />
-
                         <Text>{docName}</Text>
                     </Space>
                     <Text type="secondary">{financeName}</Text>

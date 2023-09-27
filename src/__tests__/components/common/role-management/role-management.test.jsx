@@ -18,6 +18,7 @@ jest.mock('store/actions/data/roleManagement/roleList', ()=> ({
 }));
 
 const roleManagementData=[{"id":"106","roleId":"ROL106","roleName":"Manager","roleDescription":"Description","status":true,"accessProvided":null}];
+const rolemenuData= [{"id":"106","value":"test106","label":"Kai","type":"Application","parentId":"Web","checked":false,"status":null,"children":[{"id":"106","value":"test106","label":"Update","type":"Action","parentId":"test106","checked":false,"status":null,"children":null}]}];
 
 describe('RoleManagement Components', () => {
 
@@ -31,6 +32,7 @@ describe('RoleManagement Components', () => {
             data: {
                 RoleManagementData: {
                     RoleList: { isLoaded: true, data: roleManagementData },
+                    RoleMenu: { isLoaded: true, data: rolemenuData },
                 },
             },
         });
@@ -38,7 +40,7 @@ describe('RoleManagement Components', () => {
         const fetchMenuList=jest.fn();
 
         const response={
-            data: [{ checked: true }]
+            data: rolemenuData,
         }
 
         customRender(
@@ -52,12 +54,16 @@ describe('RoleManagement Components', () => {
         const viewBtn=screen.getByTestId('edit');
         fireEvent.click(viewBtn);
 
-        await waitFor(() => expect(fetchMenuList).toHaveBeenCalled() );
+        await waitFor(() => { expect(fetchMenuList).toHaveBeenCalled() });
         fetchMenuList.mock.calls[0][0].onSuccessAction(response);
         fetchMenuList.mock.calls[0][0].onErrorAction();
 
-        const collapseItem=screen.getByRole('img', { name: 'plus' });
-        fireEvent.click(collapseItem);
+        await waitFor(() => { expect(screen.getByText('Kai')).toBeInTheDocument() })
+
+        const collapseBtn=screen.getAllByRole('img', { name: 'plus' });
+        fireEvent.click(collapseBtn[1]);
+
+        fireEvent.click(screen.getByText('Update'));
 
         const roleName=screen.getByRole('textbox', { name: 'Role Name' });
         fireEvent.change(roleName, { target: { value: 'Kai' } });

@@ -8,8 +8,21 @@ import { Provider } from 'react-redux';
 import customRender from '@utils/test-utils';
 import createMockStore from '__mocks__/store';
 import { ListPartyMaster } from '@components/common/PartyMaster/listpartymaster';
-import { screen, fireEvent } from '@testing-library/react';
+import { screen, fireEvent, waitFor } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
+import { partyMasterDataActions } from 'store/actions/data/partyMaster';
+
+jest.mock('components/common/PartyMaster/AddEditForm', () => {
+    const AddEditForm = ({ onFinish, onCloseAction }) => <div><button onClick={onFinish}>Save</button><button onClick={onCloseAction}>Cancel</button></div>;
+    return {
+        __esModule: true,
+        AddEditForm,
+    };
+});
+
+jest.mock('store/actions/data/partyMaster', () => ({
+    partyMasterDataActions: {}
+}));
 
 afterEach(() => {
     jest.restoreAllMocks();
@@ -95,11 +108,16 @@ describe('List party master Components', () => {
                 },
             },
         });
+
+        const fetchList=jest.fn();
+
         customRender(
             <Provider store={mockStore}>
-                <ListPartyMaster />
+                <ListPartyMaster fetchList={fetchList} />
             </Provider>
         );
+
+        fetchList.mock.calls[0][0].onSuccessAction();
     });
 
     it('add button should work', async () => {
@@ -112,13 +130,25 @@ describe('List party master Components', () => {
                 },
             },
         });
+
+        const saveData=jest.fn();
+
         customRender(
             <Provider store={mockStore}>
-                <ListPartyMaster />
+                <ListPartyMaster saveData={saveData} fetchList={jest.fn()} />
             </Provider>
         );
+
         const btnClick = screen.getByRole('button', { name: 'plus Add', exact: false });
         fireEvent.click(btnClick);
+
+        const saveBtn=screen.getByRole('button', { name: 'Save' });
+        fireEvent.click(saveBtn);
+
+        await waitFor(() => { expect(saveData).toHaveBeenCalled() });
+
+        saveData.mock.calls[0][0].onSuccess();
+        saveData.mock.calls[0][0].onError();
     });
 
     it('refresh button should work', async () => {
@@ -133,7 +163,7 @@ describe('List party master Components', () => {
         });
         customRender(
             <Provider store={mockStore}>
-                <ListPartyMaster />
+                <ListPartyMaster fetchList={jest.fn()} />
             </Provider>
         );
         const refreshbutton = screen.getByRole('button', { name: '', exact: false });
@@ -158,8 +188,8 @@ describe('List party master Components', () => {
         customRender(<ListPartyMaster />);
         const btnClick = screen.getByRole('button', { name: 'plus Add', exact: false });
         fireEvent.click(btnClick);
-        const btnClick2 = screen.getByRole('button', { name: 'Cancel', exact: false });
-        fireEvent.click(btnClick2);
+        const btnClick2 = screen.getAllByRole('button', { name: 'Cancel', exact: false });
+        fireEvent.click(btnClick2[1]);
     });
     
 });

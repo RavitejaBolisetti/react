@@ -8,7 +8,8 @@ import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
 import { screen, fireEvent } from '@testing-library/react';
 import { ChangeHistory } from '@components/Sales/VehicleAllotmentPriorityMaster/ChangeHistory/vehicleChangeHistory';
-
+import createMockStore from '__mocks__/store';
+import { Provider } from 'react-redux';
 
 afterEach(() => {
     jest.restoreAllMocks();
@@ -27,10 +28,21 @@ describe('vehicle allotment component render', () => {
         handleTableChange: jest.fn(),
     };
 
-
-
     it('should render vehicle allotment ChangeHistory component', async () => {
-        customRender(<ChangeHistory {...props} />);
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+            data: {
+                OTF: {
+                    OtfSearchList: { otfData: [{ name: 'test' }], changeHistoryData: [{ name: 'test' }] },
+                },
+            },
+        });
+        customRender(
+            <Provider store={mockStore}>
+                <ChangeHistory {...props} />
+            </Provider>
+        );
+
         const closeBtn = screen.getAllByRole('button', { name: 'Close', exact: false });
         fireEvent.click(closeBtn[0]);
         fireEvent.click(closeBtn[1]);
@@ -40,7 +52,20 @@ describe('vehicle allotment component render', () => {
     });
 
     it('should render vehicle allotment ChangeHistory columnheader text', async () => {
-        customRender(<ChangeHistory {...props} />);
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+            data: {
+                OTF: {
+                    OtfSearchList: { otfData: [{ name: 'test' }], changeHistoryData: [{ name: 'test' }] },
+                },
+            },
+        });
+        customRender(
+            <Provider store={mockStore}>
+                <ChangeHistory {...props} />
+            </Provider>
+        );
+
         const srlText = screen.getByRole('columnheader', { name: 'Srl.' });
         fireEvent.click(srlText);
         const modifiedBy = screen.getByRole('columnheader', { name: 'Modified By' });
@@ -56,6 +81,4 @@ describe('vehicle allotment component render', () => {
         const modifiedDate = screen.getByRole('row', { name: 'Srl. Modified Date & Time Modified By Field Name Old Value New Value' });
         fireEvent.click(modifiedDate);
     });
-
-   
 });

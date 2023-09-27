@@ -16,7 +16,7 @@ const ViewHierarchyAttributeMain = ({ editRow, style }) => {
     };
     return (
         <>
-            <div className={styles.viewContainer}>
+            <div className={`${styles.viewContainer} ${styles.viewOneColProps}`}>
                 <Descriptions {...viewOneColProps}>
                     <Descriptions.Item label="Code">{editRow?.hierarchyAttribueCode}</Descriptions.Item>
                     <Descriptions.Item label="Name">{editRow?.hierarchyAttribueName}</Descriptions.Item>

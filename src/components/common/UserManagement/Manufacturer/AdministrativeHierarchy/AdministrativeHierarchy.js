@@ -9,7 +9,8 @@ import LeftPanel from 'components/common/LeftPanel';
 
 import { UserManagementFormButton } from '../../UserManagementFormButton/UserManagementFormButton';
 
-import styles from 'components/common/TreeView.module.css';
+//import styles from 'components/common/TreeView.module.css';
+import styles from 'components/common/TreeView.module.scss';
 import style from 'assets/sass/app.module.scss';
 
 const { Search } = Input;

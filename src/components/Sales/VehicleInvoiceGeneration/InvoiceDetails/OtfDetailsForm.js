@@ -6,7 +6,7 @@
 import React, { useEffect } from 'react';
 import { Row, Col, Form, DatePicker, Input, Divider } from 'antd';
 import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
-import { validateRequiredSelectField } from 'utils/validation';
+import { validateRequiredSelectField, validateRequiredInputField } from 'utils/validation';
 import { preparePlaceholderText, preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { customSelectBox } from 'utils/customSelectBox';
 import { PARAM_MASTER } from 'constants/paramMaster';
@@ -34,7 +34,7 @@ const OtfDetailsForm = (props) => {
         <>
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                    <Form.Item label="Booking Number" name={[formName, 'otfNumber']} rules={[validateRequiredSelectField('Booking Number')]}>
+                    <Form.Item label="Booking Number" name={[formName, 'otfNumber']} rules={[validateRequiredInputField('Booking Number')]}>
                         <Search maxLength={50} placeholder={preparePlaceholderText('Booking Number')} loading={isVehicleInvoiceDataLoading} onSearch={(value) => handleBookingNumberSearch(value)} allowClear onChange={handleBookingChange} />
                     </Form.Item>
                 </Col>
@@ -54,12 +54,12 @@ const OtfDetailsForm = (props) => {
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={formData?.taxCalculationType} label="Tax Calculation" name={[formName, 'taxCalculationType']}>
+                            <Form.Item initialValue={formData?.taxCalculationType} label="Tax Calculation" name={[formName, 'taxCalculationType']} rules={[validateRequiredSelectField('Tax Calculation')]}>
                                 {customSelectBox({ data: typeData?.[PARAM_MASTER.TAX_CALCLTN_TYPE.id], placeholder: preparePlaceholderSelect('Tax Calculation') })}
                             </Form.Item>
                         </Col>
                         <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                            <Form.Item initialValue={formData?.taxPayableOnReverseCharges} label="Tax Payable On Reverse Charges?" name={[formName, 'taxPayableOnReverseCharges']}>
+                            <Form.Item initialValue={formData?.taxPayableOnReverseCharges} label="Tax Payable On Reverse Charges?" name={[formName, 'taxPayableOnReverseCharges']} rules={[validateRequiredSelectField('Tax Payable On Reverse Charges')]}>
                                 {customSelectBox({ data: typeData?.[PARAM_MASTER.RFRL.id], placeholder: preparePlaceholderSelect('Tax Payable On Reverse Charges') })}
                             </Form.Item>
                         </Col>

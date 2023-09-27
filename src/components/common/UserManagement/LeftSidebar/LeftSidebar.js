@@ -7,9 +7,10 @@ import React from 'react';
 import MenuNav from './MenuNav';
 import ProfileDetailCard from './ProfileDetailCard';
 
-
 const LeftSidebar = (props) => {
-    
+    const { currentSection, previousSection, setPreviousSection } = props;
+    if (currentSection > previousSection) setPreviousSection(currentSection);
+
     return (
         <>
             <ProfileDetailCard {...props} />

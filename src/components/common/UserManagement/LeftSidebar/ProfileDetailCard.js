@@ -25,7 +25,7 @@ const expandIcon = ({ isActive }) =>
 
 const ProfileDetailCard = (props) => {
     const { selectedRecord, userType, USER_TYPE_USER, formData } = props;
-    const fullName = formData?.userName?.split(' ');
+    const fullName = formData?.manufacturerUserName?.split(' ') || formData?.userName?.split(' ');
     const userAvatar = fullName ? fullName[0]?.slice(0, 1) + (fullName[1] ? fullName[1].slice(0, 1) : '') : '';
 
     return (
@@ -35,7 +35,7 @@ const ProfileDetailCard = (props) => {
                     <>
                         <Space>
                             <Avatar size={50}>{userAvatar?.toUpperCase()}</Avatar>
-                            <Title level={5}>{selectedRecord?.userName}</Title>
+                            {/* <Title level={5}>{formData?.manufacturerUserName || formData?.userName}</Title> */}
                         </Space>
                     </>
                 }
@@ -59,7 +59,7 @@ const ProfileDetailCard = (props) => {
                 )}
                 <Divider />
                 <div className={styles.detailCardText}>
-                    User Name: <span>{selectedRecord?.userName || 'NA'}</span>
+                    User Name: <span>{selectedRecord?.manufacturerUserName || 'NA'}</span>
                 </div>
                 <Divider />
                 <div className={styles.detailCardText}>

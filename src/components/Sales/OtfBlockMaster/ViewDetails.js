@@ -9,7 +9,7 @@ import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 
 export const ViewMain = (props) => {
     const { viewTitle, styles, formData, selectedProductName } = props;
-    const viewProps = {
+    const viewOneColProps = {
         bordered: false,
         colon: false,
         layout: 'vertical',
@@ -18,11 +18,11 @@ export const ViewMain = (props) => {
     };
 
     return (
-        <div className={styles.viewContainer}>
-            <Descriptions {...viewProps}>
+        <div className={`${styles.viewContainer} ${styles.viewOneColProps}`}>
+            <Descriptions {...viewOneColProps}>
                 <Descriptions.Item label="Product Hierarchy">{checkAndSetDefaultValue(selectedProductName)}</Descriptions.Item>
                 <Descriptions.Item label="Manufacturer Administrative Hierarchy">{checkAndSetDefaultValue(formData?.hierarchyMstName)}</Descriptions.Item>
-                <Descriptions.Item label="Dealer Code">{checkAndSetDefaultValue(formData?.dealerCode) }</Descriptions.Item>
+                <Descriptions.Item label="Dealer Code">{checkAndSetDefaultValue(formData?.dealerCode)}</Descriptions.Item>
                 <Descriptions.Item label="Status">{checkAndSetDefaultValue(formData?.status ? 'Active' : 'Inactive')}</Descriptions.Item>
             </Descriptions>
         </div>
