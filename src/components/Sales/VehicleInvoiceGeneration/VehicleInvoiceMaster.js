@@ -126,8 +126,6 @@ export const VehicleInvoiceMasterBase = (props) => {
     const [invoiceStatus, setInvoiceStatus] = useState(QUERY_BUTTONS_CONSTANTS.INVOICED.key);
     const [requestPayload, setRequestPayload] = useState({});
 
-    //console.log('requestPayload', requestPayload);
-
     const [listFilterForm] = Form.useForm();
     const [cancelInvoiceForm] = Form.useForm();
     const [CustomerForm] = Form.useForm();
@@ -156,7 +154,6 @@ export const VehicleInvoiceMasterBase = (props) => {
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [cancelInvoiceVisible, setCancelInvoiceVisible] = useState(false);
     const [additionalReportParams, setAdditionalReportParams] = useState();
-    console.log('🚀 ~ file: VehicleInvoiceMaster.js:159 ~ VehicleInvoiceMasterBase ~ additionalReportParams:', additionalReportParams);
     const [isReportVisible, setReportVisible] = useState();
     const [confirmRequest, setConfirmRequest] = useState(false);
     const [previousSection, setpreviousSection] = useState(1);
@@ -304,7 +301,7 @@ export const VehicleInvoiceMasterBase = (props) => {
         } else {
             setSelectedOrder('');
         }
-        
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDataLoaded, formActionType, isInVoiceMasterDetailDataLoaded]);
 

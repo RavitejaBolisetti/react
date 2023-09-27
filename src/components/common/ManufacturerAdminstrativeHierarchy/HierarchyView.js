@@ -23,7 +23,7 @@ export const HierarchyViewMain = ({ viewMode, isLoading, viewTitle, authTypeDrop
     const status = selectedTreeData?.status ? 'Active' : 'InActive';
     return (
         <>
-            <div className={styles.viewContainer}>
+            <div className={`${styles.viewContainer} ${styles.viewOneColProps}`}>
                 <Descriptions {...viewOneColProps}>
                     <Descriptions.Item label="Attribute Level">{checkAndSetDefaultValue(selectedTreeData?.hierarchyAttribueName, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="Parent">{selectedTreeData?.parentName ? checkAndSetDefaultValue(selectedTreeData?.parentName, isLoading) : checkAndSetDefaultValue(finalParentName, isLoading)}</Descriptions.Item>

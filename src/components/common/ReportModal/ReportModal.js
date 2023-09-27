@@ -90,7 +90,6 @@ export const EmbeddedReportMasterBase = (props) => {
     }, [userId, reportDetail]);
 
     useEffect(() => {
-       
         let sExtraParamsString = '&rp:';
         additionalParams?.forEach((item, index) => {
             sExtraParamsString += item?.value && item?.key ? item?.value && item?.key + '=' + item?.value + '&' : '';
@@ -118,18 +117,8 @@ export const EmbeddedReportMasterBase = (props) => {
 
     // Map of event handlers to be applied to the embedding report
     const eventHandlersMap = new Map([
-        [
-            'loaded',
-            function () {
-                // console.log('Report has loaded');
-            },
-        ],
-        [
-            'rendered',
-            function () {
-                //console.log('Report has rendered');
-            },
-        ],
+        ['loaded', function () {}],
+        ['rendered', function () {}],
         [
             'error',
             function (event) {

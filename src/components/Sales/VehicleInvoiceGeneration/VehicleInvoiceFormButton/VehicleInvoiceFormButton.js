@@ -10,11 +10,10 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import styles from 'assets/sass/app.module.scss';
 
 export const VehicleInvoiceFormButton = ({ formActionType, record, onCloseAction, onCancelInvoice, onApproveCancel, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection, onPrintInvoice, onPrintForm21 }) => {
-    //console.log('formActionType', formActionType);
     return (
         <div className={styles.formFooter}>
             <Row gutter={20}>
-                <Col xs={24} sm={8} md={6} lg={4} xl={4} className={styles.footerBtnLeft}>
+                <Col xs={24} sm={8} md={6} lg={4} xl={4} className={styles.buttonsGroupLeft}>
                     {buttonData?.closeBtn && (
                         <Button danger onClick={onCloseAction}>
                             Close
@@ -28,7 +27,7 @@ export const VehicleInvoiceFormButton = ({ formActionType, record, onCloseAction
                     )}
                 </Col>
 
-                <Col xs={24} sm={16} md={18} lg={20} xl={20} className={styles.footerBtnRight}>
+                <Col xs={24} sm={16} md={18} lg={20} xl={20} className={styles.buttonsGroupRight}>
                     {buttonData?.printForm21Btn && (
                         <Button onClick={() => onPrintForm21(record)} danger>
                             Print Form 21
