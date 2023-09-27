@@ -92,7 +92,7 @@ describe('Vehicle Allotment Master Component', () => {
         const filter = screen.getByRole('button', { name: 'Advanced Filters' });
         fireEvent.click(filter);
 
-        const model = screen.getByRole('combobox', { name: 'Model' });
+        const model = screen.getByRole('combobox', { name: 'Model Description' });
         fireEvent.change(model, { target: { value: 'test' } });
 
         const vehicleStatus = screen.getByRole('combobox', { name: 'Vehicle Status' });
