@@ -117,12 +117,23 @@ const AddEditFormMain = (props) => {
                             <Panel
                                 header={
                                     <>
-                                        <Space size="small">
-                                            <Text className={styles.headText}> Model: {item?.modelDescription} </Text>
-                                            <Text className={styles.headText}> {`|`}</Text>
-                                            <Text className={styles.headText}> VIN: {item?.vin}</Text>
-                                        </Space>
-                                        <Text className={styles.subSection}> Vehicle Status: {getCodeValue(vehicleStatusType, item?.vehicleStatus)}</Text>
+                                        <Row>
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                                <Space size="small">
+                                                    <Text className={styles.headText}> Model: {item?.modelDescription} </Text>
+                                                    <Text className={styles.headText}> {`|`}</Text>
+                                                    <Text className={styles.headText}> VIN: {item?.vin}</Text>
+                                                </Space>
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                                <Text type="secondary" className={styles.subSection}>
+                                                    {' '}
+                                                    Vehicle Status: {getCodeValue(vehicleStatusType, item?.vehicleStatus)}
+                                                </Text>
+                                            </Col>
+                                        </Row>
                                     </>
                                 }
                                 key={index}
