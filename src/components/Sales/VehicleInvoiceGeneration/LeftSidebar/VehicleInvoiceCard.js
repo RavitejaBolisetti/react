@@ -17,6 +17,7 @@ import { PARAM_MASTER } from 'constants/paramMaster';
 import styles from 'assets/sass/app.module.scss';
 import { ConfirmationModal } from 'utils/ConfirmationModal';
 import { IRN_STATUS } from 'constants/IRNStatus';
+import { InputSkeleton } from 'components/common/Skeleton';
 
 const { Panel } = Collapse;
 const { Text, Title } = Typography;
@@ -35,11 +36,11 @@ const expandIcon = ({ isActive }) =>
     );
 
 const VehicleInvoiceCard = (props) => {
-    const { selectedOrder, formActionType, isLoading, typeData, handleIRNGeneration } = props;
+    const { selectedOrder, formActionType, isLoading, typeData, handleIRNGeneration, isDataLoaded, isInVoiceMasterDetailDataLoaded } = props;
     const { confirmRequest, setConfirmRequest } = props;
     const fullName = selectedOrder?.customerName?.split(' ');
     const userAvatar = fullName ? fullName[0]?.slice(0, 1) + (fullName[1] ? fullName[1].slice(0, 1) : '') : '';
-
+    if ((!isDataLoaded && !formActionType?.addMode) || (!isInVoiceMasterDetailDataLoaded && selectedOrder)) return <InputSkeleton height={80} count={3} />;
     const showConfirmation = () => {
         setConfirmRequest(true);
     };

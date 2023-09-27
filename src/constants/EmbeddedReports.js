@@ -138,4 +138,11 @@ export const EMBEDDED_REPORTS = {
         type: 'Document',
         slug: '',
     },
+    STOCK_TRANSFER_RECIEVE_NOTE_DOCUMENT: {
+        id: 19,
+        key: 'Stock_Transfer_Receipt_Note',
+        title: 'Stock Transfer Recieve Note Document',
+        type: 'Document',
+        slug: '',
+    },
 };

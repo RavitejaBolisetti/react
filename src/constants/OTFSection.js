@@ -39,19 +39,19 @@ export const OTF_SECTION = {
         title: 'Exchange Vehicle',
         displayOnList: true,
     },
-    REFERRALS: {
+    INVOICE_INFORMATION: {
         id: 8,
+        title: 'Invoice Information',
+        displayOnList: true,
+    },
+    REFERRALS: {
+        id: 9,
         title: 'Referrals',
         displayOnList: true,
     },
     LOYALTY_SCHEME: {
-        id: 9,
-        title: 'Loyalty Scheme',
-        displayOnList: true,
-    },
-    INVOICE_INFORMATION: {
         id: 10,
-        title: 'Invoice Information',
+        title: 'Loyalty Scheme',
         displayOnList: true,
     },
     ADDON_DETAIL: {

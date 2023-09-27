@@ -8,13 +8,13 @@ import { Col, Input, Form, Row, Select, Card, DatePicker, Space } from 'antd';
 
 import { disableFutureDate } from 'utils/disableDate';
 import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
-import { validateRequiredInputField, validateRequiredSelectField, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { customSelectBox } from 'utils/customSelectBox';
 
 import { YES_NO_FLAG } from 'constants/yesNoFlag';
 import { FINANCE_ARRANGED_BY } from 'constants/financeArrangedBy';
-import { PAGE_TYPE } from 'components/Sales/VehicleDeliveryNote/utils/pageType';
+// import { PAGE_TYPE } from 'components/Sales/VehicleDeliveryNote/utils/pageType';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -41,17 +41,17 @@ const AddEditFormMain = (props) => {
         setDoReceived(item);
     };
 
-    const onLoanChange = () => {
-        form.validateFields(['emi']);
-    };
+    // const onLoanChange = () => {
+    //     form.validateFields(['emi']);
+    // };
 
-    const emiLessThanAmount = (value) => {
-        if (Number(form.getFieldsValue(['loanAmount'])?.loanAmount) < Number(value)) {
-            return Promise.reject('EMI cannot exceed loan amount');
-        } else {
-            return Promise.resolve();
-        }
-    };
+    // const emiLessThanAmount = (value) => {
+    //     if (Number(form.getFieldsValue(['loanAmount'])?.loanAmount) < Number(value)) {
+    //         return Promise.reject('EMI cannot exceed loan amount');
+    //     } else {
+    //         return Promise.resolve();
+    //     }
+    // };
 
     const selectProps = {
         optionFilterProp: 'children',
@@ -111,7 +111,7 @@ const AddEditFormMain = (props) => {
                                         </Row>
                                         {financeArrangedBy && checkFinanceType(financeArrangedBy, FINANCE_ARRANGED_BY?.DEALER?.key) && (
                                             <Row gutter={20}>
-                                                {pageType !== PAGE_TYPE?.OTF_PAGE_TYPE?.key && (
+                                                {/* {pageType !== PAGE_TYPE?.OTF_PAGE_TYPE?.key && (
                                                     <>
                                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                                             <Form.Item onChange={onLoanChange} label="Loan Amount" name="loanAmount" rules={[validateNumberWithTwoDecimalPlaces('loan amount')]}>
@@ -130,7 +130,7 @@ const AddEditFormMain = (props) => {
                                                             </Form.Item>
                                                         </Col>
                                                     </>
-                                                )}
+                                                )} */}
                                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                                     <Form.Item label="D.O. Received" name="doReceived">
                                                         {customSelectBox({ data: typeData?.YES_NO_FLG, onChange: handleDOChange })}

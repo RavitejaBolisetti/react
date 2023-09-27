@@ -47,6 +47,7 @@ import { UserAccess } from './userAccess';
 import { OTFSoMapping } from './otfSoMappingUnmapping';
 import { OTFBlockMaster } from './otfBlockMaster';
 import { VehicleDeliveryNote } from './vehicleDeliveryNote';
+import { DealerBlockMaster } from './dealerBlockMaster'
 
 import { stockTransferIndentData } from './stockTransferIndent';
 
@@ -96,4 +97,5 @@ export const data = combineReducers({
     OTFSoMapping,
     OTFBlockMaster,
     VehicleDeliveryNote,
+    DealerBlockMaster,
 });
