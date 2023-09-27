@@ -66,40 +66,42 @@ const ViewDetailMain = (props) => {
                             key={index}
                         >
                             <Divider />
-                            <Descriptions {...viewProps}>
-                                <Descriptions.Item label="Model Description">
-                                    {isLoading ? (
-                                        <InputSkeleton width={'100px'} height={20} theme={'card'} />
-                                    ) : (
-                                        <div className={styles.tooltipAlign}>
-                                            {item?.modelDescription}
-                                            {!item?.modelDescription
-                                                ? 'NA'
-                                                : addToolTip(
-                                                      <div>
-                                                          <p>
-                                                              Model Name: <span>{item?.name ?? 'Na'}</span>
-                                                          </p>
-                                                          <p>
-                                                              Color: <span>{item?.color ?? 'Na'}</span>
-                                                          </p>
-                                                          <p>
-                                                              Seating Capacity: <span>{item?.seatingCapacity ?? 'Na'}</span>
-                                                          </p>
-                                                          <p>
-                                                              Fuel: <span>{item?.fuel ?? 'Na'}</span>
-                                                          </p>
-                                                          <p>
-                                                              Variants: <span>{item?.variant ?? 'Na'}</span>
-                                                          </p>
-                                                      </div>,
-                                                      'bottom',
-                                                      '#FFFFFF',
-                                                      styles.toolTip
-                                                  )(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}
-                                        </div>
-                                    )}
-                                </Descriptions.Item>
+                            <Descriptions {...viewProps} >
+                                <Descriptions.Item label="Model Description" >
+                            {isLoading ? (
+                                <InputSkeleton width={'100px'} height={20} theme={'card'} />
+                            ) : (
+                                <div  className={styles?.tooltipAlign}>
+                                    <div title={item?.modelDescription} className={`${styles.contentData} ${styles.txtEllipsis}`}>
+                                {item?.modelDescription}
+                                </div>
+                                {!item?.modelDescription
+                                    ? 'NA'
+                                    : addToolTip(
+                                          <div>
+                                              <p>
+                                                  Model Name: <span>{item?.name ?? 'Na'}</span>
+                                              </p>
+                                              <p>
+                                                  Color: <span>{item?.color ?? 'Na'}</span>
+                                              </p>
+                                              <p>
+                                                  Seating Capacity: <span>{item?.seatingCapacity ?? 'Na'}</span>
+                                              </p>
+                                              <p>
+                                                  Fuel: <span>{item?.fuel ?? 'Na'}</span>
+                                              </p>
+                                              <p>
+                                                  Variants: <span>{item?.variant ?? 'Na'}</span>
+                                              </p>
+                                          </div>,
+                                          'bottom',
+                                          '#FFFFFF',
+                                          styles.toolTip
+                                      )(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}
+                            </div>
+                            )}
+                        </Descriptions.Item>
                                 <Descriptions.Item label="VIN">{checkAndSetDefaultValue(item?.vin, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Key Number">{checkAndSetDefaultValue(item?.keyNumber, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="MFG Date">{checkAndSetDefaultValue(item?.mfgdate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
