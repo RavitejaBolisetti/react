@@ -157,7 +157,25 @@ export const VehicleAllotmentMasterBase = (props) => {
         if (allotmentSummaryDetails) {
             setSelectedOrderOTFDetails();
             allotmentSummaryDetails?.allotmentStatus === VEHICLE_TYPE.ALLOTED.key && setSelectedOrderOTFDetails(allotmentSummaryDetails?.vehicleOTFDetails);
-            setButtonData(allotmentSummaryDetails?.allotmentStatus === VEHICLE_TYPE.ALLOTED.key ? { cancelBtn: true, unAllot: true } : { cancelBtn: true, allotBtn: true });
+            //setButtonData(allotmentSummaryDetails?.allotmentStatus === VEHICLE_TYPE.ALLOTED.key ? { cancelBtn: true, unAllot: true } : { cancelBtn: true, allotBtn: true });
+
+            switch (allotmentSummaryDetails?.allotmentStatus) {
+                case VEHICLE_TYPE.ALLOTED.key: {
+                    setButtonData({ cancelBtn: true, unAllot: true });
+                    break;
+                }
+                case VEHICLE_TYPE.UNALLOTED.key: {
+                    setButtonData({ cancelBtn: true, allotBtn: true });
+                    break;
+                }
+                case OTF_STATUS.INVOICED.key: {
+                    setButtonData({ cancelBtn: true });
+                    break;
+                }
+                default: {
+                    setButtonData({ cancelBtn: true });
+                }
+            }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [allotmentSummaryDetails]);
