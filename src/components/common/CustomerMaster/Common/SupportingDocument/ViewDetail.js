@@ -6,7 +6,8 @@
 import React from 'react';
 
 import { Card } from 'antd';
-import { FiDownload, FiTrash } from 'react-icons/fi';
+import { FiTrash } from 'react-icons/fi';
+import { AiOutlineEye } from 'react-icons/ai';
 import { LANGUAGE_EN } from 'language/en';
 import { NoDataFound } from 'utils/noDataFound';
 import styles from 'assets/sass/app.module.scss';
@@ -47,7 +48,7 @@ export const ViewDetail = (props) => {
                                 title={uploadData?.documentName}
                                 extra={
                                     <>
-                                        <FiDownload onClick={() => downloadFileFromButton(uploadData)} data-testid="downloadBtn" />
+                                        <AiOutlineEye onClick={() => downloadFileFromButton(uploadData)} data-testid="downloadBtn" />
                                         {!viewMode && <FiTrash onClick={() => deleteFile(uploadData)} data-testid="deleteFileBtn" />}
                                     </>
                                 }

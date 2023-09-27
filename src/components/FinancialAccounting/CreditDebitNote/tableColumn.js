@@ -21,7 +21,6 @@ export const tableColumn = ({ handleButtonClick, typeData }) => {
             dataIndex: 'voucherType',
             width: '18%',
             render: (value) => {
-                console.log('value', value);
                 return getCodeValue(typeData[PARAM_MASTER.VOUCHR_TYPE.id], value);
             },
         }),

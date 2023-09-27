@@ -7,7 +7,7 @@ import React from 'react';
 import { Descriptions } from 'antd';
 
 const ViewDetailMain = (props) => {
-    const { formData, style } = props;
+    const { formData, styles } = props;
 
     const viewOneColProps = {
         bordered: false,
@@ -18,7 +18,7 @@ const ViewDetailMain = (props) => {
 
     return (
         <>
-            <div className={style.viewContainer}>
+            <div className={`${styles.viewContainer} ${styles.viewOneColProps}`}>
                 <Descriptions {...viewOneColProps}>
                     <Descriptions.Item label="Model Group Code">{formData?.modelGroup}</Descriptions.Item>
                     <Descriptions.Item label="Tax Category Description">{formData?.taxCategoryDescription}</Descriptions.Item>

@@ -313,6 +313,17 @@
         top: 39px;
     }
 }
+.modelTooltipView {
+    svg {
+        color: $semanticInfo;
+        position: absolute;
+        z-index: 99;
+        right: 22px;
+        top: 39px;
+        background: #e6e6e6;
+        padding: 0 3px 0 8px;
+    }
+}
 
 .modalCheckBox {
     & :global {
@@ -333,7 +344,9 @@
         }
     }
 }
-
+.modelContentTooltip{
+    margin: 0px;
+}
 /*--------------drawer Body Section Start--------------*/
 
 .drawerBody :global .ant-timeline.ant-timeline-label .ant-timeline-item-label {
@@ -1003,7 +1016,40 @@
             }
 
             .ant-descriptions-item-content {
-                color: $neutralGrey3;
+                color: $neutralGrey3 !important;
+                .ant-typography {
+                    color: $neutralGrey3 !important;
+                    strong {
+                        color: $primaryBlack !important;
+                    }
+                }
+                .ant-typography-success {
+                    color: $semanticSuccess !important;
+                }
+            }
+        }
+    }
+}
+
+.viewOneColProps {
+    & :global {
+        .ant-descriptions {
+            .ant-descriptions-view {
+                padding-bottom: 0 !important;
+                .ant-descriptions-row {
+                    .ant-descriptions-item {
+                        &:first-child {
+                            padding-right: 0 !important;
+                            .ant-descriptions-item-content {
+                                .ant-collapse {
+                                    &:last-child {
+                                        margin-bottom: 0 !important;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -1358,9 +1404,15 @@
 
             .ant-form-item-label {
                 > label {
-                    margin-right: 22px;
+                    margin-right: 20px;
                     height: 36px;
                     color: $primaryBlack;
+                }
+
+                > label.ant-form-item-no-colon {
+                    &::after {
+                        display: none;
+                    }
                 }
 
                 > label.ant-form-item-required {
@@ -2329,7 +2381,7 @@
                     .ant-card-extra {
                         svg {
                             &:not(:first-child) {
-                                margin-left: 10px;
+                                margin-left: 20px;
                             }
                         }
                     }
@@ -2402,7 +2454,7 @@
 /*-------------View ocument Strip Section Strat--------------*/
 .viewDocumentStrip {
     box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.15);
-    margin-bottom: 20px !important;
+    margin-bottom: 20px;
 
     & :global {
         .ant-card-body {
@@ -2428,43 +2480,43 @@
 
 /*-------------Drawrer Card View Section Strat--------------*/
 
-.drawerCardView {
-    & :global {
-        .ant-collapse-content-box {
-            .ant-descriptions {
-                .ant-descriptions-view {
-                    .ant-descriptions-row {
-                        &:nth-child(odd) {
-                            .ant-descriptions-item {
-                                padding-bottom: 0px;
-                            }
-                        }
-                    }
-                }
-            }
-        }
+// .drawerCardView {
+//     & :global {
+//         .ant-collapse-content-box {
+//             .ant-descriptions {
+//                 .ant-descriptions-view {
+//                     .ant-descriptions-row {
+//                         &:nth-child(odd) {
+//                             .ant-descriptions-item {
+//                                 padding-bottom: 0px;
+//                             }
+//                         }
+//                     }
+//                 }
+//             }
+//         }
 
-        .ant-card-body {
-            .ant-descriptions {
-                .ant-descriptions-view {
-                    .ant-descriptions-row {
-                        &:nth-child(odd) {
-                            .ant-descriptions-item {
-                                padding-bottom: 0px;
-                            }
-                        }
+//         .ant-card-body {
+//             .ant-descriptions {
+//                 .ant-descriptions-view {
+//                     .ant-descriptions-row {
+//                         &:nth-child(odd) {
+//                             .ant-descriptions-item {
+//                                 padding-bottom: 0px;
+//                             }
+//                         }
 
-                        &:nth-child(even) {
-                            .ant-descriptions-item {
-                                padding-bottom: 0px;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
+//                         &:nth-child(even) {
+//                             .ant-descriptions-item {
+//                                 padding-bottom: 0px;
+//                             }
+//                         }
+//                     }
+//                 }
+//             }
+//         }
+//     }
+// }
 
 /*-------------add on card Section Strat--------------*/
 
@@ -2577,6 +2629,10 @@
         }
 
         .ant-select-multiple {
+            .ant-select-selection-search {
+                margin-inline-start: 0;
+                width: 0 !important;
+            }
             .ant-select-selection-placeholder {
                 padding-right: 18px;
             }

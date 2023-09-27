@@ -23,12 +23,16 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const CopytoClipboardMaster = (props) => {
-    const { text, showGlobalNotification } = props;
+    const { text, type = 'link', buttonText, showGlobalNotification } = props;
     const handleClick = () => {
         text && navigator.clipboard.writeText(text);
         showGlobalNotification({ notificationType: 'success', title: 'Copied', message: '' });
     };
     if (!text) return '';
-    return <Button type="link" onClick={handleClick} icon={<FiCopy className={styles.activeForm} />} className={` ${styles.marL5}`} />;
+    return (
+        <Button type={type} onClick={handleClick} icon={<FiCopy className={type === 'link' ? styles.activeForm : ''} />} className={` ${styles.marL5}`}>
+            {buttonText}
+        </Button>
+    );
 };
 export const CopytoClipboard = connect(null, mapDispatchToProps)(CopytoClipboardMaster);

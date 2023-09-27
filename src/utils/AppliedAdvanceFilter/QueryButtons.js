@@ -7,9 +7,7 @@ import { Button } from 'antd';
 
 import styles from 'assets/sass/app.module.scss';
 
-
 export const QueryButtons = ({ items = {}, onClick, currentItem = '' }) => {
-    // console.log('🚀 ~ file: QueryButtons.js:10 ~ QueryButtons ~ items:', currentItem);
     return (
         <div className={`${styles.userManagement} ${styles.headingToggle}`}>
             {Object.values(items)?.map((item, index) => {

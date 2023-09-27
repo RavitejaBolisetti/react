@@ -15,7 +15,7 @@ const ViewDetailBase = ({ formData, styles, parameterType }) => {
     };
     return (
         <>
-            <div className={styles.viewContainer}>
+            <div className={`${styles.viewContainer} ${styles.viewOneColProps}`}>
                 <Descriptions {...viewOneColProps}>
                     <Descriptions.Item label="Location Type Code">{formData?.locationCode}</Descriptions.Item>
                     <Descriptions.Item label="Location Type Name">{formData?.locationDescription}</Descriptions.Item>

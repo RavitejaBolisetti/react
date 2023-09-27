@@ -21,7 +21,7 @@ export const ViewMain = (props) => {
     const parentName = viewData?.parentAccountDescription ? viewData?.parentAccountDescription : 'DMS';
 
     return (
-        <div className={styles.viewContainer}>
+        <div className={`${styles.viewContainer} ${styles.viewOneColProps}`}>
             <Descriptions {...viewProps}>
                 <Descriptions.Item label="Attribute Level">{accountTypeTitle}</Descriptions.Item>
                 <Descriptions.Item label="Parent">{parentName}</Descriptions.Item>

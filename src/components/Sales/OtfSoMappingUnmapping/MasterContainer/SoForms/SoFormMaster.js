@@ -6,7 +6,8 @@
 import React from 'react';
 import { Card, Row, Col, Space, Divider, Typography, Button, Form, Select } from 'antd';
 import styles from 'assets/sass/app.module.scss';
-import SoStyles from 'components/Sales/OtfSoMappingUnmapping/Somapping.module.css';
+//import SoStyles from 'components/Sales/OtfSoMappingUnmapping/Somapping.module.css';
+import SoStyles from 'components/Sales/OtfSoMappingUnmapping/Somapping.module.scss';
 import { AddEditForm } from './AddEditForm';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { validateRequiredSelectField } from 'utils/validation';
