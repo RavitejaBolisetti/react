@@ -166,7 +166,7 @@ const AddEditFormMain = (props) => {
                                     </Form.Item>
                                 </Col>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.modelTooltipView}>
-                                    {addToolTip(tooltTipText, 'bottom', '#D3EDFE', styles.toolTip )(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}
+                                    {addToolTip(tooltTipText, 'bottom', '#D3EDFE', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}
                                     <Form.Item label="Model Description" name="model">
                                         <Input title={formData?.productAttributeDetail?.model} maxLength={15} placeholder={preparePlaceholderText('model ')} {...disabledProps} />
                                     </Form.Item>
@@ -257,7 +257,7 @@ const AddEditFormMain = (props) => {
                                                 </Button>
                                             )}
                                         {formData?.productAttributeDetail && (
-                                            <Button  className={styles.marL10} onClick={addContactHandeler} icon={<PlusOutlined />} type="primary" disabled={isReadOnly || !formData?.productAttributeDetail}>
+                                            <Button className={styles.marL10} onClick={addContactHandeler} icon={<PlusOutlined />} type="primary" disabled={isReadOnly || !formData?.productAttributeDetail}>
                                                 Add
                                             </Button>
                                         )}

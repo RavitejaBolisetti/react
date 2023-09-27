@@ -123,7 +123,7 @@ const AddEditFormMain = (props) => {
                                 <Form.Item label="Model Description" name="model" data-testid="model">
                                     <TreeSelectField {...treeSelectFieldProps} />
                                 </Form.Item>
-                                {toolTipContent && productModelCode && <div className={styles.modelTooltipView}>{addToolTip(toolTipContent, 'bottom', '#FFFFFF', styles.toolTip)(<AiOutlineInfoCircle size={13} />)}</div>}
+                                {toolTipContent && productModelCode && <div className={styles.modelTooltip}>{addToolTip(toolTipContent, 'bottom', '#FFFFFF', styles.toolTip)(<AiOutlineInfoCircle size={13} />)}</div>}
                             </Col>
 
                             <Col xs={24} sm={24} md={12} lg={12} xl={12}>
