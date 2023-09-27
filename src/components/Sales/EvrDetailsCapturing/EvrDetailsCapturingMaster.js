@@ -323,17 +323,17 @@ export const EvrDetailsCapturingMasterBase = (props) => {
         record && setFormData(record);
         setIsFormVisible(true);
 
-        if (buttonAction !== ADD_ACTION) {
-            const extraParams = [
-                {
-                    key: 'id',
-                    title: 'id',
-                    value: record?.id,
-                    name: 'id',
-                },
-            ];
-            fetchDetail({ setIsLoading: listDetailShowLoading, userId, extraParams });
-        }
+        // if (buttonAction !== ADD_ACTION) {
+        //     const extraParams = [
+        //         {
+        //             key: 'id',
+        //             title: 'id',
+        //             value: record?.id,
+        //             name: 'id',
+        //         },
+        //     ];
+        //     fetchDetail({ setIsLoading: listDetailShowLoading, userId, extraParams });
+        // }
     };
 
     const onFinishSearch = (values) => {};
@@ -431,13 +431,15 @@ export const EvrDetailsCapturingMasterBase = (props) => {
         setAdvanceSearchVisible(false);
     };
 
+    const tempdata = [{ model: 'model', modelDescription: 'description', status: 'charged' }];
+
     const tableProps = {
         dynamicPagination,
         totalRecords,
         page,
         setPage,
         tableColumn: tableColumn(handleButtonClick),
-        tableData: data,
+        tableData: tempdata,
         showAddButton: false,
         typeData,
     };

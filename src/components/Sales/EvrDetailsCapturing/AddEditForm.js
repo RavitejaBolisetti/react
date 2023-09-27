@@ -4,11 +4,12 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { Row, Col, Input, Form, Switch } from 'antd';
+import { Row, Col, Input, Form, Switch, DatePicker } from 'antd';
 import { withDrawer } from 'components/withDrawer';
 import { DrawerFormButton } from 'components/common/Button';
-import LeftPanel from 'components/common/LeftPanel';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
+import { dateFormat } from 'utils/formatDateTime';
+import { disableFutureDate } from 'utils/disableDate';
 import { ViewDetail } from './ViewDetail';
 
 import styles from 'assets/sass/app.module.scss';
@@ -73,50 +74,57 @@ const AddEditFormMain = (props) => {
                         ) : (
                             <>
                                 <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                        <h4>Dealer List</h4>
-                                    </Col>
-                                </Row>
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form.Item initialValue={formData?.state} label="State" name="state">
-                                            <Input placeholder={preparePlaceholderText('State Code')} disabled={true} />
+                                    <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+                                        <Form.Item initialValue={formData?.state} label="VIN" name="vin">
+                                            <Input placeholder={preparePlaceholderText('vin')} disabled={true} />
                                         </Form.Item>
                                     </Col>
-                                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form.Item initialValue={formData?.city} label="City" name="city">
-                                            <Input placeholder={preparePlaceholderText('City')} disabled={true} />
+                                    <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+                                        <Form.Item initialValue={formData?.city} label="Model Group" name="modelGroup">
+                                            <Input placeholder={preparePlaceholderText('Model Group')} disabled={true} />
                                         </Form.Item>
                                     </Col>
-                                </Row>
-                                <Row gutter={20}>
-                                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form.Item initialValue={formData?.dealerParent} label="Dealer Parent" name="dealerParent">
-                                            <Input placeholder={preparePlaceholderText('Dealer Parent')} disabled={true} />
-                                        </Form.Item>
-                                    </Col>
-                                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form.Item initialValue={formData?.dealerBranch} label="Dealer Location" name="dealerBranch">
-                                            <Input placeholder={preparePlaceholderText('Dealer Branch')} disabled={true} />
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
 
-                                <Row gutter={16}>
-                                    <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                                        <Form.Item initialValue={formData?.dealerSelectOnRoadPrice} labelAlign="left" wrapperCol={{ span: 24 }} valuePropName="checked" name="dealerSelectOnRoadPrice" label="Dealer Selected for On Road Price?">
-                                            <Switch checkedChildren="Yes" unCheckedChildren="No" onChange={(checked) => (checked ? 1 : 0)} />
+                                    <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+                                        <Form.Item initialValue={formData?.dealerParent} label="Model Code" name="modelCode">
+                                            <Input placeholder={preparePlaceholderText('Model Code')} disabled={true} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                                        <h4>Model Details</h4>
+                                    <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+                                        <Form.Item initialValue={formData?.state} label="Model Description" name="modelDescription">
+                                            <Input placeholder={preparePlaceholderText('Model Description')} disabled={true} />
+                                        </Form.Item>
+                                    </Col>
+                                    <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+                                        <Form.Item initialValue={formData?.city} label="GRN ID" name="grnId">
+                                            <Input placeholder={preparePlaceholderText('GRN ID')} disabled={true} />
+                                        </Form.Item>
+                                    </Col>
+
+                                    <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+                                        <Form.Item label="GRN Date" name="grnDate">
+                                            <DatePicker format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} disabled={true} />
+                                        </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
-                                    <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                                        <LeftPanel {...myProps} />
+                                    <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+                                        <Form.Item initialValue={formData?.state} label="GRN Status" name="grnStatus">
+                                            <Input placeholder={preparePlaceholderText('GRN Status')} disabled={true} />
+                                        </Form.Item>
+                                    </Col>
+                                    <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+                                        <Form.Item initialValue={formData?.city} label="Model Group" name="modelGroup">
+                                            <Input placeholder={preparePlaceholderText('Model Group')} disabled={true} />
+                                        </Form.Item>
+                                    </Col>
+
+                                    <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+                                        <Form.Item initialValue={formData?.dealerParent} label="Model Code" name="modelCode">
+                                            <Input placeholder={preparePlaceholderText('Model Code')} disabled={true} />
+                                        </Form.Item>
                                     </Col>
                                 </Row>
                             </>

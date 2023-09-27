@@ -14,14 +14,12 @@ export const tableColumn = (handleButtonClick, page, pageSize) => {
             title: 'Model',
             dataIndex: 'model',
             width: '18%',
-            render: (_, record) => record?.bookingNumber || record?.otfNumber,
         }),
 
         tblPrepareColumns({
             title: 'Model Description',
             dataIndex: 'modelDescription',
             width: '18%',
-            render: (_, record) => (record?.otfDate ? convertDateMonthYear(record?.otfDate) : ''),
         }),
 
         tblPrepareColumns({
