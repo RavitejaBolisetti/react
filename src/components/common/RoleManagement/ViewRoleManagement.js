@@ -23,7 +23,7 @@ const ViewRoleManagementMain = ({ formData, styles, menuTreeData, AccordianTreeP
     };
     return (
         <>
-            <div className={styles.viewContainer}>
+            <div className={`${styles.viewContainer} ${styles.viewOneColProps}`}>
                 <div className={styles.roleDescription}>
                     <Descriptions {...viewTwoColProps}>
                         <Descriptions.Item label="Role ID">{formData?.roleId}</Descriptions.Item>

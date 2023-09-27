@@ -18,7 +18,7 @@ const ViewDetailMain = (props) => {
     const { formActionType, tableData, bindCodeValue, receiptStatus } = props;
 
     return (
-        <Card className={styles.drawerCardView}>
+        <Card>
             <Row gutter={20} className={styles.marB20}>
                 <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                     <Text strong>Apportion Details</Text>

@@ -49,17 +49,13 @@ const params = {
 };
 
 const sonarScanner = async () => {
-    // console.log(serverUrl);
-
     if (!serverUrl) {
         console.log('SonarQube url not set. Nothing to do...');
         return;
     }
 
     //  Function Callback (the execution of the analysis is asynchronous).
-    const callback = (result) => {
-        console.log('Sonarqube scanner result:', result);
-    };
+    const callback = () => {};
 
     scanner(params, callback);
 };
