@@ -1009,6 +1009,19 @@
         }
     }
 
+    .ant-select.ant-select-multiple {
+        .ant-select-selector {
+            .ant-select-selection-overflow {
+                .ant-select-selection-overflow-item.ant-select-selection-overflow-item-suffix {
+                    .ant-select-selection-search {
+                        width: 0 !important;
+                        margin-inline-start: 0;
+                    }
+                }
+            }
+        }
+    }
+
     .ant-select-single {
         &:not(.ant-select-customize-input) {
             .ant-select-selector {
