@@ -67,7 +67,6 @@ const ViewDetailMain = (props) => {
                                     <Row>
                                         <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                             <Text type="secondary" className={styles.subSection}>
-                                                {' '}
                                                 Vehicle Status: {checkAndSetDefaultValue(getCodeValue(vehicleStatusType, item?.vehicleStatus), isLoading)}
                                             </Text>
                                         </Col>
