@@ -15,7 +15,7 @@ const BranchMapping = (props) => {
     const { fetchDlrBranchLocationsList, saveUsrDlrBrLoactionRoleDataList, resetDlrBranchLocationsList, userDlrBrLoactionShowLoading, dlrBranchLocationDataList, isDlrBrLocationLoding, isdlrBrLocationsLoaded } = props;
     const [form] = Form.useForm();
     const [dealerBranches, setDealerBranches] = useState([]);
-    const [parentDealerCode, setParentDealerCode] = useState('');
+    // const [parentDealerCode, setParentDealerCode] = useState('');
 
     useEffect(() => {
         setButtonData((prev) => ({ ...prev, nextBtn: false, nextBtnWthPopMag: false, saveBtn: true, editBtn: formActionType?.viewMode }));
@@ -29,7 +29,7 @@ const BranchMapping = (props) => {
 
     useEffect(() => {
         const parentGroupId = dealerDataList?.find((el) => el?.dealerCode === selectedDealerCode || el?.dealerCode === formData?.dealerCode)?.dealerParentGroupCode;
-        setParentDealerCode(parentGroupId);
+        // setParentDealerCode(parentGroupId);
 
         if (dlrBranchLocationDataList?.length && isUsrdlrBrLocationsLoaded) {
             const defaultBranches = [];
@@ -38,7 +38,7 @@ const BranchMapping = (props) => {
                 if (matchMapdata) {
                     defaultBranches.push({ ...matchMapdata, locationName: branch?.dealerLocationName });
                 } else {
-                    let unMapdata = { id: '', locationCode: branch?.id, locationName: branch?.dealerLocationName, parentGroupId: branch?.parentGroupCode || parentGroupId, defaultBranchIndicator: false, status: false, userId: formData?.userName };
+                    let unMapdata = { id: '', locationCode: branch?.id, locationName: branch?.dealerLocationName, parentGroupId: branch?.parentGroupCode || parentGroupId, defaultBranchIndicator: false, status: false, userId: formData?.employeeCode };
 
                     defaultBranches.push(unMapdata);
                 }
@@ -61,20 +61,20 @@ const BranchMapping = (props) => {
             ];
             fetchUsrDlrBranchLocationsList({ setIsLoading: userUsrDlrBrLoactionShowLoading, extraParams, userId });
         }
-        if (userId && parentDealerCode && !isdlrBrLocationsLoaded) {
-            const extraParams = [
-                {
-                    key: 'dealerParentCode',
-                    title: 'dealerParentCode',
-                    value: parentDealerCode,
-                    name: 'dealerParentCode',
-                },
-            ];
-            fetchDlrBranchLocationsList({ setIsLoading: userDlrBrLoactionShowLoading, extraParams, userId });
+        if (userId) {
+            // const extraParams = [
+            //     {
+            //         key: 'dealerParentCode',
+            //         title: 'dealerParentCode',
+            //         value: parentDealerCode,
+            //         name: 'dealerParentCode',
+            //     },
+            // ];
+            fetchDlrBranchLocationsList({ setIsLoading: userDlrBrLoactionShowLoading, userId });
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userId, parentDealerCode]);
+    }, [userId]);
 
     const onFinish = (data) => {
         const onErrorAction = (res) => {

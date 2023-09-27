@@ -6,20 +6,23 @@
 import React, { useEffect, useState } from 'react';
 import { Col, Input, Form, Row, Button, Switch, AutoComplete } from 'antd';
 import { connect } from 'react-redux';
+import { customSelectBox } from 'utils/customSelectBox';
 
 import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText, preparePlaceholderAutoComplete } from 'utils/preparePlaceholder';
 import { ManufacturerAdminHierarchyDataActions } from 'store/actions/data/manufacturerAdminHierarchy/manufacturerAdminHierarchy';
+import { dealerBlockMasterDataAction } from 'store/actions/data/dealerBlockMaster';
 import { showGlobalNotification } from 'store/actions/notification';
 
-import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import TreeSelectField from '../../common/TreeSelectField';
 import { bindActionCreators } from 'redux';
 import { debounce } from 'utils/debounce';
 
 import { withDrawer } from 'components/withDrawer';
 
-import styles from 'components/common/Common.module.css';
+//import styles from 'components/common/Common.module.css';
+import styles from 'assets/sass/app.module.scss';
+
 const { Search } = Input;
 
 const mapStateToProps = (state) => {
@@ -29,6 +32,7 @@ const mapStateToProps = (state) => {
             ManufacturerAdmin: {
                 ManufacturerAdminHierarchy: { isLoaded: isDataLoaded = false, isLoading: ManufacturerAdminHierarchyLoading, data: manufacturerAdminHierarchyData = [] },
             },
+            DealerBlockMaster: { isLoaded: isDealerDataLoaded = false, isLoading: dealerBlockLoading, data: dealerBlockData = [] }
         },
         common: {
             LeftSideBar: { collapsed = false },
@@ -41,6 +45,9 @@ const mapStateToProps = (state) => {
         isDataLoaded,
         manufacturerAdminHierarchyData,
         ManufacturerAdminHierarchyLoading,
+        isDealerDataLoaded,
+        dealerBlockLoading,
+        dealerBlockData,
     };
     return returnValue;
 };
@@ -52,6 +59,9 @@ const mapDispatchToProps = (dispatch) => ({
             fetchList: ManufacturerAdminHierarchyDataActions.fetchList,
             listShowLoading: ManufacturerAdminHierarchyDataActions.listShowLoading,
 
+            fetchDealerList: dealerBlockMasterDataAction.fetchList,
+            listDealerShowLoading: dealerBlockMasterDataAction.listShowLoading,
+
             showGlobalNotification,
         },
         dispatch
@@ -59,26 +69,45 @@ const mapDispatchToProps = (dispatch) => ({
 });
 const AddEditFormMain = (props) => {
     const { onCloseAction, setSearchDealerValue, formData, selectedProductName, userId, options, setOptions, fetchList, organizationId, makeExtraparms, listShowLoading, manufacturerAdminHierarchyData, selectedTreeKey, dealerDataList, onErrorAction, selectedTreeSelectKey, selectedOrganizationCode, handleSelectTreeClick, flatternData, formActionType, EDIT_ACTION, VIEW_ACTION } = props;
-    const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed, form } = props;
+    const { isFormBtnActive, setFormBtnActive, onFinish, onFinishFailed, dealerBlockData, form, fetchDealerList, listDealerShowLoading } = props;
     const organizationFieldNames = { title: 'manufactureAdminShortName', key: 'id', children: 'subManufactureAdmin' };
     const treeFieldNames = { ...organizationFieldNames, label: organizationFieldNames.title, value: organizationFieldNames.key };
-    
+    const [attributeKey, setAttribteKey] = useState();
+    const [selectedValue, setSelectedValue] = useState();
+
+    // useEffect(() => {
+    //     if (dealerBlockData) {
+
+    //         const data = dealerBlockData ? Object.values(dealerBlockData) : undefined;
+    //         const dealerOption = {
+    //             label: data?.[0]?.dealerCode,
+    //             value: data?.[0]?.dealerCode,
+    //             key: data?.[0]?.dealerCode,
+    //         };
+    //         setOptions([dealerOption]);
+    //     } else {
+    //         setOptions(["All"]);
+
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [dealerDataList]);
+
     useEffect(() => {
-        if (dealerDataList) {
-
-            const data = dealerDataList ? Object.values(dealerDataList) : undefined;
-            const dealerOption = {
-                label: data?.[0]?.dealerCode,
-                value: data?.[0]?.dealerCode,
-                key: data?.[0]?.dealerCode,
-            };
-            setOptions([dealerOption]);
-        } else {
-            setOptions([]);
-
+        if (attributeKey && selectedValue && userId) {
+            const extraParams = [
+                {
+                    key: 'adminId',
+                    value: '2805f2be-6f05-432c-b1dc-0aac991596b0',
+                },
+                {
+                    key: 'type',
+                    value: '24650be8-10f5-4d71-a5eb-721a4ebf1a1d',
+                },
+            ];
+            fetchDealerList({ setIsLoading: listDealerShowLoading, extraParams });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [dealerDataList]);
+    }, [attributeKey, selectedValue, userId]);
 
     useEffect(() => {
         if (organizationId && userId) {
@@ -100,32 +129,28 @@ const AddEditFormMain = (props) => {
     const handleFormFieldChange = () => {
         setFormBtnActive(true);
     };
-    const onSearchDealer = debounce(function (text) {
-        setSearchDealerValue(text?.trim());
 
-    }, 300);
 
     let treeCodeId = '';
     let treeCodeReadOnly = false;
     if (formActionType === EDIT_ACTION || formActionType === VIEW_ACTION) {
         treeCodeId = formData?.parntProdctId;
-    } 
+    }
 
     const treeSelectFieldProps = {
         treeFieldNames,
         treeData: manufacturerAdminHierarchyData,
         treeDisabled: treeCodeReadOnly,
+        onSelects: (value, treeObj, obj) => {
+            setAttribteKey(treeObj?.attributeKey)
+            setSelectedValue(value);
+        },
         selectedTreeSelectKey,
         handleSelectTreeClick,
         defaultValue: treeCodeId,
         placeholder: preparePlaceholderSelect('parent'),
     };
-    const handleOnSelect = (key) => {
-        setOptions();
-    };
-    const handleOnClear = (value) => {
-        setOptions();
-    };
+
 
 
     return (
@@ -136,7 +161,7 @@ const AddEditFormMain = (props) => {
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <Form.Item initialValue={selectedProductName} label="Product Hierarchy" name="modelGroupCode" rules={[validateRequiredSelectField('Product Hierarchy')]}>
-                                    <Input placeholder={preparePlaceholderText('Product Hierarchy')} disabled={true}/>
+                                    <Input placeholder={preparePlaceholderText('Product Hierarchy')} disabled={true} />
                                 </Form.Item>
                             </Col>
 
@@ -150,9 +175,11 @@ const AddEditFormMain = (props) => {
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                 <Form.Item initialValue={formData?.dealerCode} label="Dealer Code" name="dealerCode" rules={[validateRequiredInputField('Dealer Code')]}>
-                                    <AutoComplete options={options} onSelect={handleOnSelect} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
-                                        <Search onSearch={onSearchDealer} onChange={handleOnClear} placeholder={preparePlaceholderAutoComplete(' / Search Dealer Name')} type="text" allowClear />
-                                    </AutoComplete>
+                                    {/* <AutoComplete options={options} onSelect={handleOnSelect} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
+                                        <Search  onChange={handleOnClear} placeholder={preparePlaceholderAutoComplete(' / Search Dealer Name')} type="text" allowClear />
+                                    </AutoComplete> */}
+                                    {customSelectBox({ data: dealerBlockData, fieldNames: { key: 'dealerCode', value: 'dealerCode' }, placeholder: preparePlaceholderSelect('Dealer Code') })}
+
                                 </Form.Item>
                             </Col>
                         </Row>

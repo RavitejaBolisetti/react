@@ -8,16 +8,6 @@ import { fireEvent, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import AdvanceFilter from '@components/FinancialAccounting/CreditDebitNote/AdvanceFilter';
 import customRender from '@utils/test-utils';
-// import { Form } from 'antd';
-
-// const FormWrapper = (props) => {
-//     const [advanceFilterForm] = Form.useForm();
-//     const myMock = {
-//         ...advanceFilterForm,
-//         resetFields:jest.fn(),
-//     }
-//     return <AdvancedSearch advanceFilterForm={myMock} {...props} />
-// }
 
 afterEach(() => {
     jest.restoreAllMocks();

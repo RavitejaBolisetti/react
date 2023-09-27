@@ -26,7 +26,7 @@ describe('Render components', () => {
         fireEvent.click(searchImg)
     });
 
-    it('Credit button, add', () => {
+    it('Credit button, close', () => {
         customRender(<CreditDebitNoteMaster onCloseAction={jest.fn()} />);
 
         const creditBtn = screen.getByRole('button', {name:'Add Credit Note'});
@@ -43,7 +43,7 @@ describe('Render components', () => {
         fireEvent.click(debitBtn)
     });
 
-    it('Advanced Filters', () => {
+    it('Advanced Filters, Search', () => {
         customRender(<CreditDebitNoteMaster />);
 
         const advancedBtn = screen.getByRole('button', {name:'Advanced Filters'});

@@ -15,7 +15,7 @@ const ViewQualificationListMain = ({ formData, styles }) => {
     };
     return (
         <>
-            <div className={styles?.viewContainer}>
+            <div className={`${styles.viewContainer} ${styles.viewOneColProps}`}>
                 <Descriptions {...viewOneColProps}>
                     <Descriptions.Item label="Qualification Code">{formData?.qualificationCode}</Descriptions.Item>
                     <Descriptions.Item label="Qualification Name">{formData?.qualificationName}</Descriptions.Item>

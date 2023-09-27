@@ -142,7 +142,7 @@ const AddEditFormMain = (props) => {
                                 </Col>
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                                     <Form.Item label="Requested by" name="requestedBy" rules={[validateRequiredSelectField('Requested by')]}>
-                                        {customSelectBox({ data: requestedByDealerList, fieldNames: { key: 'key', value: 'value' }, placeholder: preparePlaceholderSelect('') })}
+                                        {customSelectBox({ data: requestedByDealerList, fieldNames: { key: 'key', value: 'value' }, placeholder: preparePlaceholderSelect(''), disabled: true })}
                                     </Form.Item>
                                 </Col>
                             </Row>
@@ -166,7 +166,7 @@ const AddEditFormMain = (props) => {
                                                 Vehicle Details
                                                 <Col xs={14} sm={14} md={6} lg={6} xl={6}>
                                                     <Col xs={24} sm={24} md={6} lg={6} xl={6}>
-                                                        <Button type="primary" icon={<FiPlus />} onClick={handleAddVehicleDetails}>
+                                                        <Button type="primary" icon={<FiPlus />} className={styles.verticallyCentered} onClick={handleAddVehicleDetails}>
                                                             Add
                                                         </Button>
                                                     </Col>

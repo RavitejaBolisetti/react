@@ -802,7 +802,6 @@ export const VehicleInvoiceMasterBase = (props) => {
         showGlobalNotification,
         isDataLoaded,
         isInVoiceMasterDetailDataLoaded,
-
     };
 
     const cancelInvoiceProps = {

@@ -13,6 +13,7 @@ import { UserDealerList } from './dealersList';
 import { UserRoleList } from './userRoleList';
 import { DealerBranchLocation } from './dealerBranchLocation';
 import { UserDealerBranchLocation } from './userDealerBranchLocation';
+import { DealerProduct } from './dealerProducts';
 
 import { MacId } from './macid';
 
@@ -27,4 +28,5 @@ export const UserManagement = combineReducers({
     DealerBranchLocation,
     UserDealerBranchLocation,
     MacId,
+    DealerProduct,
 });
