@@ -23,7 +23,7 @@ export const LANGUAGE_EN = {
         TIME_OVERLAPPING: { TITLE: 'ERROR', MESSAGE: 'Time overlaps with other time' },
         START_TIME_GREATER_THAN_END_TIME: { TITLE: 'ERROR', MESSAGE: 'Start Time cannot be greater than End Time' },
         HIERARCHY_SAME_PARENT_AND_CHILD_WARNING: { TITLE: 'WARNING', MESSAGE: 'Select different parent' },
-        THANK_YOU_PAGE_OTF: { TITLE: 'Booking form edited successfully', MESSAGE: 'Order number: {ORDER_ID}' },
+        THANK_YOU_PAGE_OTF: { TITLE: 'Booking form updated successfully', MESSAGE: 'Booking number: {ORDER_ID}' },
         CUSTOMER_UPDATE: { TITLE: 'Success', MESSAGE: 'Customer detail edited successfully' },
 
         DOWNLOAD_START: { TITLE: 'Download', MESSAGE: 'Your download will start soon' },
