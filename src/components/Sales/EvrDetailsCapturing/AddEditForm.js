@@ -14,6 +14,7 @@ import { ViewDetail } from './ViewDetail';
 
 import styles from 'assets/sass/app.module.scss';
 
+const { TextArea } = Input;
 const AddEditFormMain = (props) => {
     const { form, formData, buttonData, setButtonData, typeData, fieldNames, editProductData, handleButtonClick, onCloseAction, formActionType, onFinish, onFinishFailed, viewProductData, modelGroupArr, setViewProductData, responseData } = props;
     const { hoPriceDetailData, checkedKeys, setCheckedKeys } = props;
@@ -116,14 +117,45 @@ const AddEditFormMain = (props) => {
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                                        <Form.Item initialValue={formData?.city} label="Model Group" name="modelGroup">
-                                            <Input placeholder={preparePlaceholderText('Model Group')} disabled={true} />
+                                        <Form.Item initialValue={formData?.city} label="Vehicle Status" name="vehicleStatus">
+                                            <Input placeholder={preparePlaceholderText('Vehicle Status')} disabled={true} />
                                         </Form.Item>
                                     </Col>
 
                                     <Col xs={24} sm={8} md={8} lg={8} xl={8}>
-                                        <Form.Item initialValue={formData?.dealerParent} label="Model Code" name="modelCode">
-                                            <Input placeholder={preparePlaceholderText('Model Code')} disabled={true} />
+                                        <Form.Item initialValue={formData?.dealerParent} label="Age In Days" name="ageInDays">
+                                            <Input placeholder={preparePlaceholderText('Age In Days')} disabled={true} />
+                                        </Form.Item>
+                                    </Col>
+                                </Row>
+                                <Row gutter={20}>
+                                    <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+                                        <Form.Item label="Date of Last Charge" name="dateOfLastCharge">
+                                            <DatePicker format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} disabled={true} />
+                                        </Form.Item>
+                                    </Col>
+                                    <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+                                        <Form.Item label="Charging Due Date" name="chargingDueDate">
+                                            <DatePicker format={dateFormat} className={styles.fullWidth} disabledDate={disableFutureDate} disabled={true} />
+                                        </Form.Item>
+                                    </Col>
+                                    <Col xs={24} sm={8} md={8} lg={8} xl={8}>
+                                        <Form.Item initialValue={formData?.city} label="Charging Status" name="chargingStatus">
+                                            <Input placeholder={preparePlaceholderText('Charging Status')} disabled={true} />
+                                        </Form.Item>
+                                    </Col>
+                                </Row>
+                                <Row gutter={20}>
+                                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                                        <Form.Item name="remarks" label="Remarks" initialValue={formData?.remarks}>
+                                            <TextArea placeholder={preparePlaceholderText('remarks')} maxLength={200} showCount />
+                                        </Form.Item>
+                                    </Col>
+                                </Row>
+                                <Row gutter={20}>
+                                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                                        <Form.Item initialValue={formActionType?.editMode ? false : formData.status} labelAlign="left" wrapperCol={{ span: 24 }} name="charged" valuePropName="checked">
+                                            <Switch checkedChildren="Charged" unCheckedChildren="UnCharged" valuePropName="checked" onChange={(checked) => (checked ? 1 : 0)} />
                                         </Form.Item>
                                     </Col>
                                 </Row>

@@ -51,7 +51,7 @@ const mapStateToProps = (state) => {
         },
     } = state;
 
-    const moduleTitle = 'Dealer List';
+    const moduleTitle = 'Vehicle Details';
     let returnValue = {
         userId,
         typeData,
@@ -317,7 +317,7 @@ export const EvrDetailsCapturingMasterBase = (props) => {
         form.resetFields();
         setFormData([]);
 
-        setFormActionType({ addMode: buttonAction === ADD_ACTION, viewMode: buttonAction === VIEW_ACTION });
+        setFormActionType({ addMode: buttonAction === ADD_ACTION, editMode: buttonAction === EDIT_ACTION, viewMode: buttonAction === VIEW_ACTION });
         setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction, saveAndNewBtn: false }));
 
         record && setFormData(record);
@@ -476,9 +476,9 @@ export const EvrDetailsCapturingMasterBase = (props) => {
 
     const drawerTitle = useMemo(() => {
         if (formActionType?.viewMode) {
-            return 'View ';
+            return 'View Vehicle Details';
         } else if (formActionType?.editMode) {
-            return 'Edit ';
+            return 'Edit Vehicle Details ';
         } else {
             return 'Add New ';
         }

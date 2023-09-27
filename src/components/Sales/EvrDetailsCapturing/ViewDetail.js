@@ -35,7 +35,7 @@ const ViewDetailMain = (props) => {
 
     useEffect(() => {
         setViewProductData(() => []);
-        if (formActionType?.viewMode && modelGroupArr?.length ) {
+        if (formActionType?.viewMode && modelGroupArr?.length) {
             let distinctArr = modelGroupArr.map((item) => item.prodctCode).filter((value, index, self) => self.indexOf(value) === index);
             for (let i = 0; i < distinctArr?.length; i++) {
                 let key = hoPriceDetailData?.modelDealerMapResponse?.find((e) => e?.modelGroupCode === distinctArr[i]);
@@ -57,30 +57,24 @@ const ViewDetailMain = (props) => {
 
     return (
         <div className={styles.viewDrawerContainer}>
-            <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <h4>Dealer List</h4>
-                </Col>
-            </Row>
             <Card>
                 <Descriptions {...viewProps}>
-                    <Descriptions.Item label="State">{checkAndSetDefaultValue(formData?.state, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="City">{checkAndSetDefaultValue(formData?.city, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Dealer Parent">{checkAndSetDefaultValue(formData?.dealerParent, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Dealer Location">{checkAndSetDefaultValue(formData?.dealerBranch, isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="Dealer Selected for on Road Price">{checkAndSetDefaultValue(dealerSelected, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="VIN">{checkAndSetDefaultValue(formData?.vin, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Model Group">{checkAndSetDefaultValue(formData?.modelGroup, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Model Code">{checkAndSetDefaultValue(formData?.modelCode, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Model Description">{checkAndSetDefaultValue(formData?.modelDescription, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="GRN ID">{checkAndSetDefaultValue(formData?.grnId, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="GRN Date">{checkAndSetDefaultValue(formData?.grnDate, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="GRN Status">{checkAndSetDefaultValue(formData?.grnStatus, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Vehicle Status">{checkAndSetDefaultValue(formData?.vehicleStatus, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Age In Days">{checkAndSetDefaultValue(formData?.ageInDays, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Date of Last Charge">{checkAndSetDefaultValue(formData?.dateOfLastCharge, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Charging Due Date">{checkAndSetDefaultValue(formData?.chargingDueDate, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Charging Status">{checkAndSetDefaultValue(formData?.chargingStatus, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Remarks">{checkAndSetDefaultValue(formData?.remarks)}</Descriptions.Item>
+                    <Descriptions.Item label="Status">{formData?.status ? 'Charged' : 'UnCharged'}</Descriptions.Item>
                 </Descriptions>
             </Card>
-            <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <h4>Model Details</h4>
-                </Col>
-            </Row>
-            <Row gutter={20}>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <DataTable {...tableProps} pagination={false} />
-                </Col>
-            </Row>
         </div>
     );
 };
