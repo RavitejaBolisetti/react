@@ -15,7 +15,7 @@ const AccessoriesAddonMain = ({ setIsBtnDisabled, openAccordian, partNameSearchV
     const isPresent = (partName, i = -1) => {
         const isPartAlreadyExist = addOnItemInfo?.find((element, index) => element?.partName === partName && index !== i);
         if (isPartAlreadyExist) {
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Part number is already exist' });
+            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Part Name is already exist' });
             return true;
         }
         return false;

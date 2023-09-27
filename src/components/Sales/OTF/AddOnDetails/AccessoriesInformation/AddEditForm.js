@@ -27,11 +27,12 @@ function AddEditForm({ onUpdate, isPresent, index, fnSetData, seteditCardForm, e
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchData]);
+
     const handleAccesoriesForm = () => {
         accessoryForm
             .validateFields()
             .then((values) => {
-                if (isPresent(values?.partNumber)) {
+                if (isPresent(values?.partName)) {
                     return;
                 }
 
@@ -40,13 +41,14 @@ function AddEditForm({ onUpdate, isPresent, index, fnSetData, seteditCardForm, e
                     return;
                 }
 
-                const myvalues = { ...values, otfNumber: selectedOrderId, isDeleting: true, id: '' };
+                const data = { ...values, otfNumber: selectedOrderId, isDeleting: true, id: '' };
+
                 if (!values?.partNumber) {
                     showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Verify Part Number to continue' });
                     return;
                 }
 
-                setAddOnItemInfo((prev) => (prev ? [myvalues, ...prev] : [myvalues]));
+                setAddOnItemInfo((prev) => (prev ? [data, ...prev] : [data]));
                 accessoryForm.resetFields();
                 setsearchData();
                 setaddButtonDisabled({ ...addButtonDisabled, partDetailsResponses: false });
@@ -60,20 +62,12 @@ function AddEditForm({ onUpdate, isPresent, index, fnSetData, seteditCardForm, e
     };
 
     const handleOnSearch = (value) => {
-        if (isPresent(value)) {
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Duplicate Part Name' });
-            return;
-        } else {
-            onSearchPart(value);
-        }
-    };
-
-    const handlePartSearch = (values) => {
-        accessoryForm.resetFields(['requiredQuantity', 'type', 'sellingPrice', 'mrp', 'partDescription']);
+        onSearchPart(value);
     };
 
     const handleSelectedData = (e) => {
         fnSetData({ ...selectedRowData });
+        accessoryForm.resetFields(['partName']);
         setSelectedRowData();
         setPartNameSearchVisible(false);
     };
@@ -92,19 +86,22 @@ function AddEditForm({ onUpdate, isPresent, index, fnSetData, seteditCardForm, e
         handleSelectedData,
     };
 
+    const resetSearchFields = () => {
+        accessoryForm.resetFields(['partName']);
+    };
     return (
         <>
             <Form autoComplete="off" form={accessoryForm} onFieldsChange={onFieldsChange} layout="vertical" onFinishFailed={onFinishFailed}>
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Part Name" name="partName">
-                            <Search placeholder={preparePlaceholderText('Part Name')} maxLength={55} allowClear type="text" onSearch={handleOnSearch} onChange={handlePartSearch} />
+                        <Form.Item label="" name="partName">
+                            <Search placeholder={preparePlaceholderText('Part Name', true, 'Search')} maxLength={55} allowClear type="text" onSearch={handleOnSearch} />
                         </Form.Item>
                     </Col>
                 </Row>
                 <Divider />
                 <Row gutter={20}>
-                    <Col xs={16} sm={16} md={16} lg={16} xl={16} xxl={16}>
+                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item label="Part Name" name="partDescription">
                             <TextArea
                                 placeholder={preparePlaceholderText('Part Description')}
@@ -138,8 +135,24 @@ function AddEditForm({ onUpdate, isPresent, index, fnSetData, seteditCardForm, e
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                        <Form.Item label="Required Quantity" name="requiredQuantity" rules={[validateRequiredInputField('required quantity'), validationNumber('required quantity')]}>
-                            <Input type="number" placeholder={preparePlaceholderText('required quantity')} />
+                        <Form.Item
+                            label="Required Quantity"
+                            name="requiredQuantity"
+                            rules={[
+                                validateRequiredInputField('required quantity'),
+                                validationNumber('required quantity'),
+                                {
+                                    validator: (_, value) => {
+                                        if (value > 50 || value < 0) {
+                                            return Promise.reject(new Error('Required quantity should be less than 50'));
+                                        } else {
+                                            return Promise.resolve();
+                                        }
+                                    },
+                                },
+                            ]}
+                        >
+                            <Input type="number" max={50} placeholder={preparePlaceholderText('required quantity')} />
                         </Form.Item>
                     </Col>
 

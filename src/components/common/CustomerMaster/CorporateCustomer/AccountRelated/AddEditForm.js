@@ -39,12 +39,12 @@ const AddEditFormMain = (props) => {
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item label="Parts Discount %" name="partsDiscount" initialValue={formData?.partsDiscount} rules={[valueBetween0to100('parts discount')]}>
-                            <Input placeholder={preparePlaceholderText('discount')} />
+                            <Input placeholder={preparePlaceholderText('discount')} maxLength={3}/>
                         </Form.Item>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item label="Labour Discount %" name="labourDiscount" initialValue={formData?.labourDiscount} rules={[valueBetween0to100('labour discount')]}>
-                            <Input placeholder={preparePlaceholderText('discount')} />
+                            <Input placeholder={preparePlaceholderText('discount')} maxLength={3} />
                         </Form.Item>
                     </Col>
                 </Row>

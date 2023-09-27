@@ -20,19 +20,20 @@ const { TextArea, Search } = Input;
 const FormBase = (props) => {
     const { customerType, onSave, form, onChange, relationData, onSearch, isSearchLoading, onCancel, showForm, initialVal, editedValues } = props;
 
-    const type = [
-        { name: 'Yes', key: 'Yes', value: 'Yes' },
-        { name: 'No', key: 'No', value: 'No' },
-    ];
-
     const [customer, setCustomer] = useState(null);
 
     const onDateChange = (prop) => {
         let dateString = formatDate(prop);
         let calAge1 = GetAge(dateString);
-        form.setFieldsValue({
-            relationAge: calAge1,
-        });
+        if(prop === null){
+            form.setFieldsValue({
+                relationAge: null,
+            });
+        } else {
+            form.setFieldsValue({
+                relationAge: calAge1,
+            });
+        }
     };
 
     const getRelationCode = (props) => {
@@ -72,9 +73,9 @@ const FormBase = (props) => {
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={customerType} label="M&M Customer" name="mnmCustomer" rules={[validateRequiredSelectField('M&M Customer')]}>
                         <Select placeholder={preparePlaceholderText('M&M Customer')} onChange={onChange}>
-                            {type?.map((item) => (
-                                <Option key={'mc' + item?.key} value={item?.value}>
-                                    {item?.name}
+                            {relationData?.YES_NO_FLG?.map((item) => (
+                                <Option key={'yn' + item?.key} value={item.value}>
+                                    {item?.value}
                                 </Option>
                             ))}
                         </Select>
@@ -103,7 +104,7 @@ const FormBase = (props) => {
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item initialValue={null} label="Relationship" name="relationship" rules={[validateRequiredSelectField('Relationship')]}>
                             <Select placeholder={preparePlaceholderText('Relationship')} allowClear onChange={getRelationCode}>
-                                {relationData?.map((item) => (
+                                {relationData?.REL_TYPE?.map((item) => (
                                     <Option key={'rel' + item?.key} value={item.value}>
                                         {item?.value}
                                     </Option>

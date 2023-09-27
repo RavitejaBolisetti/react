@@ -15,7 +15,7 @@ import { getCodeValue } from 'utils/getCodeValue';
 
 const { Panel } = Collapse;
 const ViewDetailMain = (props) => {
-    const { formData, isLoading, typeData } = props;
+    const { formData, isLoading, typeData, showAgeGroup = true } = props;
     const [activeKey, setactiveKey] = useState([]);
 
     const viewProps = {
@@ -48,7 +48,7 @@ const ViewDetailMain = (props) => {
             <Descriptions.Item label="Customer Name">{checkAndSetDefaultValue(customerData?.customerName, isLoading)}</Descriptions.Item>
             <Descriptions.Item label="Email">{checkAndSetDefaultValue(customerData?.email, isLoading)}</Descriptions.Item>
             <Descriptions.Item label="Gender">{checkAndSetDefaultValue(getCodeValue(typeData?.GENDER, formData?.gender), isLoading)}</Descriptions.Item>
-            <Descriptions.Item label="Age Group">{checkAndSetDefaultValue(getCodeValue(typeData?.AGE_RANGE, formData?.ageGroup), isLoading)}</Descriptions.Item>
+            {showAgeGroup && <Descriptions.Item label="Age Group">{checkAndSetDefaultValue(getCodeValue(typeData?.AGE_RANGE, formData?.ageGroup), isLoading)}</Descriptions.Item>}
             <Descriptions.Item label="Address">{checkAndSetDefaultValue(customerData?.address, isLoading)}</Descriptions.Item>
             <Descriptions.Item label="City/District">{checkAndSetDefaultValue(customerData?.district, isLoading)}</Descriptions.Item>
             <Descriptions.Item label="State">{checkAndSetDefaultValue(customerData?.state, isLoading)}</Descriptions.Item>
@@ -72,14 +72,14 @@ const ViewDetailMain = (props) => {
                     <Collapse expandIcon={expandIcon} collapsible="icon" activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
                         <Panel header="Booking Customer" key="1">
                             <Divider />
-                            {customerDetail(formData.bookingCustomer)}
+                            {customerDetail(formData?.bookingCustomer)}
                         </Panel>
                     </Collapse>
                     <Collapse expandIcon={expandIcon} collapsible="icon" activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
                         <Panel header="Billing Customer" key="2">
                             <Divider />
                             {/* <Checkbox>Same as Booking Customer</Checkbox> */}
-                            {customerDetail(formData.billingCustomer)}
+                            {customerDetail(formData?.billingCustomer)}
                         </Panel>
                     </Collapse>
                 </Col>

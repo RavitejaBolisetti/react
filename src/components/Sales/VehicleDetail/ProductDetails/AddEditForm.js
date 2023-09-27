@@ -29,7 +29,7 @@ const { Text } = Typography;
 const AddEditFormMain = (props) => {
     const { isReadOnly, setIsReadOnly, typeData } = props;
     const { itemOptions, setitemOptions, makeOptions, setmakeOptions } = props;
-    const { formData, formActionType, handleCollapse, showGlobalNotification, selectedRecordId, form, openAccordian, setOpenAccordian, optionsServiceModified, setoptionsServiceModified, handleFormValueChange, tooltTipText } = props;
+    const { formData, formActionType, handleCollapse, showGlobalNotification, selectedRecordId, form, openAccordian, setOpenAccordian, optionsServiceModified, setoptionsServiceModified, handleFormValueChange, tooltTipText, isVariantLoading, isModelFamilyLoading, isModelLoading } = props;
     const { MakefieldNames, ItemFieldNames, bindCodeValue } = props;
     const { collapseProps, disabledProps, bindStatus } = props;
 
@@ -149,25 +149,25 @@ const AddEditFormMain = (props) => {
                                     </Form.Item>
                                 </Col>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                    <Form.Item label="Model Group" name="modelGroup">
-                                        <Input maxLength={15} placeholder={preparePlaceholderText('model group')} {...disabledProps} />
+                                    <Form.Item label="Model Family" name="modelFamily">
+                                        <Input loading={isModelFamilyLoading} maxLength={15} placeholder={preparePlaceholderText('model familiy')} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
-                                    <Form.Item label="Model Family" name="modelFamily">
-                                        <Input maxLength={15} placeholder={preparePlaceholderText('model familiy')} {...disabledProps} />
+                                    <Form.Item label="Model Group" name="modelGroup">
+                                        <Input loading={isModelLoading} maxLength={15} placeholder={preparePlaceholderText('model group')} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
                             </Row>
                             <Row gutter={20}>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                                     <Form.Item label="Model Variant" name="modelVariant">
-                                        <Input maxLength={15} placeholder={preparePlaceholderText('model variant')} {...disabledProps} />
+                                        <Input loading={isVariantLoading} maxLength={15} placeholder={preparePlaceholderText('model variant')} {...disabledProps} />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.modelTooltip}>
                                     {addToolTip(tooltTipText, 'bottom', '#D3EDFE', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}
-                                    <Form.Item label="Model" name="model">
+                                    <Form.Item label="Model Description" name="model">
                                         <Input maxLength={15} placeholder={preparePlaceholderText('model ')} {...disabledProps} />
                                     </Form.Item>
                                 </Col>

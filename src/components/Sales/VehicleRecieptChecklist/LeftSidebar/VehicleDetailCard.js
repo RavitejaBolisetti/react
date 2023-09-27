@@ -13,6 +13,7 @@ import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { dateFormatView } from 'utils/formatDateTime';
 
 import styles from 'assets/sass/app.module.scss';
+import { CardSkeleton } from 'components/common/Skeleton';
 
 const { Panel } = Collapse;
 
@@ -30,7 +31,9 @@ const expandIcon = ({ isActive }) =>
     );
 
 const VehicleDetailCard = (props) => {
-    const { ProfileData, typeData, tooltTipText, VehicleLovCodeData } = props;
+    const { ProfileData, typeData, tooltTipText, isProductHierarchyLoading, record, isProfileDataLoading } = props;
+    if (isProfileDataLoading || isProductHierarchyLoading) return <CardSkeleton />;
+
     const findStatus = (key) => typeData?.find((element) => element?.key === key)?.value || 'NA';
 
     return (
@@ -75,7 +78,7 @@ const VehicleDetailCard = (props) => {
                 <div className={styles.detailCardText}>
                     MODEL:
                     <span>
-                        {VehicleLovCodeData?.length ? VehicleLovCodeData[0]?.prodctShrtName || 'NA' : ProfileData?.model || 'NA'}
+                        {record?.modelName ? record?.modelName : 'NA'}
                         {addToolTip(tooltTipText, 'bottom', '#D3EDFE', styles.toolTip)(<AiOutlineInfoCircle className={styles.infoIconColor} size={13} />)}
                     </span>
                 </div>

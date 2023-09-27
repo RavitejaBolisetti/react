@@ -78,9 +78,11 @@ export const ROUTING_USER_DISCLAIMER = ROUTING_HOME.concat('disclaimer');
 export const ROUTING_USER_CONTACT = ROUTING_HOME.concat('contact-us');
 
 export const ROUTING_REPORT = ROUTING_HOME.concat('report/');
+export const ROUTING_DOCUMENT = ROUTING_HOME.concat('document/');
 export const ROUTING_REPORT_BI_REPORT = ROUTING_REPORT.concat('bi-report');
 export const ROUTING_REPORT_PAGINATED_REPORT = ROUTING_REPORT.concat('paginated-report');
 export const ROUTING_REPORT_EMBEDDED_REPORT = ROUTING_REPORT.concat(':slug');
+export const ROUTING_REPORT_EMBEDDED_DOCUMENT = ROUTING_DOCUMENT.concat(':slug');
 export const ROUTING_REPORT_URL_FILTER_REPORT = ROUTING_REPORT.concat('url-filter-report');
 
 export const ROUTING_ADMIN = '/admin/';
@@ -114,6 +116,8 @@ export const ROUTING_VEHICLE_INVOICE_GENERATION = ROUTING_SALES.concat('vehicle-
 export const ROUTING_VEHICLE_DELIVERY_NOTE = ROUTING_SALES.concat('vehicle-delivery-note');
 
 export const ROUTING_VEHICLE_MODEL_TAX_CHARGES_CATEGORY = ROUTING_FINANCIAL_ACCOUNTING.concat('vehicle-model-tax-and-charges-category');
+
+export const ROUTING_ONROAD_PRICE_MASTER = ROUTING_SALES.concat('onroad-price-master');
 export const ROUTING_VEHICLE_VEHICLE_ALLOTMENT_PRIORITY_MASTER = ROUTING_SALES.concat('vehicle-allotment-priority-master');
 export const ROUTING_DIGITAL_SIGNATURE_MAPPING = ROUTING_SALES.concat('digital-signature');
 export const ROUTING_HO_PRICE_MAPPING = ROUTING_SALES.concat('ho-price-mapping');

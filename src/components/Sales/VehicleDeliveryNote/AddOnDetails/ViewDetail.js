@@ -8,13 +8,13 @@ import { Col, Row, Collapse, Descriptions, Divider } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 
 import styles from 'assets/sass/app.module.scss';
-//import styles from 'components/common/Common.module.css';
 import { expandIcon } from 'utils/accordianExpandIcon';
+import { getCodeValue } from 'utils/getCodeValue';
 
 const { Panel } = Collapse;
 
 const ViewDetailMain = (props) => {
-    const { formData, isLoading } = props;
+    const { formData, isLoading, typeData } = props;
     const [activeKey, setactiveKey] = useState([]);
     const viewProps = {
         bordered: false,
@@ -48,11 +48,13 @@ const ViewDetailMain = (props) => {
                         <Panel header="Shield Information" key="1">
                             <Divider />
                             <Descriptions {...viewProps}>
-                                <Descriptions.Item label="Scheme Description">{checkAndSetDefaultValue(formData?.schemeDescription, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Sale Type">{checkAndSetDefaultValue(formData?.saleType, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Scheme Amount (With Tax)">{checkAndSetDefaultValue(formData?.schemeAmount, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Employee Name">{checkAndSetDefaultValue(formData?.employeeName, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Manager">{checkAndSetDefaultValue(formData?.manager, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Scheme Registration No.">{checkAndSetDefaultValue(formData?.sheildRequest?.schemeRegistrationId, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Scheme Description">{checkAndSetDefaultValue(formData?.sheildRequest?.schemeDescription, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Sale Type">{checkAndSetDefaultValue(getCodeValue(typeData?.DLVR_SALE_TYP, formData?.sheildRequest?.saleType, isLoading))}</Descriptions.Item>
+                                <Descriptions.Item label="Valid From Date">{checkAndSetDefaultValue(formData?.sheildRequest?.validFrom, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Valid To Date">{checkAndSetDefaultValue(formData?.sheildRequest?.validTo, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Employee Name">{checkAndSetDefaultValue(formData?.sheildRequest?.employeeName, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Manager">{checkAndSetDefaultValue(formData?.sheildRequest?.manager, isLoading)}</Descriptions.Item>
                             </Descriptions>
                         </Panel>
                     </Collapse>
@@ -60,11 +62,16 @@ const ViewDetailMain = (props) => {
                         <Panel header="RSA" key="2">
                             <Divider />
                             <Descriptions {...viewProps}>
-                                <Descriptions.Item label="Scheme Description">{checkAndSetDefaultValue(formData?.schemeDescription, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Sale Type">{checkAndSetDefaultValue(formData?.saleType, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Scheme Amount (With Tax)">{checkAndSetDefaultValue(formData?.schemeAmount, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Employee Name">{checkAndSetDefaultValue(formData?.employeeName, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Manager">{checkAndSetDefaultValue(formData?.manager, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Scheme Registration No.">{checkAndSetDefaultValue(formData?.rsaRequest?.schemeRegistrationId, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Scheme Description">{checkAndSetDefaultValue(formData?.rsaRequest?.schemeDescription, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Sale Type">{checkAndSetDefaultValue(getCodeValue(typeData?.DLVR_SALE_TYP, formData?.rsaRequest?.saleType, isLoading))}</Descriptions.Item>
+                                <Descriptions.Item label="Valid From Date">{checkAndSetDefaultValue(formData?.rsaRequest?.validFrom, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Valid To Date">{checkAndSetDefaultValue(formData?.rsaRequest?.validTo, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Employee Name">{checkAndSetDefaultValue(formData?.rsaRequest?.employeeName, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Manager">{checkAndSetDefaultValue(formData?.rsaRequest?.manager, isLoading)}</Descriptions.Item>
+                            </Descriptions>
+                            <Descriptions {...viewProps}>
+                                <Descriptions.Item label="Reason Of Rejection">{checkAndSetDefaultValue(formData?.rsaRequest?.reasonOfRejection, isLoading)}</Descriptions.Item>
                             </Descriptions>
                         </Panel>
                     </Collapse>
@@ -72,12 +79,14 @@ const ViewDetailMain = (props) => {
                         <Panel header="AMC" key="3">
                             <Divider />
                             <Descriptions {...viewProps}>
-                            <Descriptions.Item label="Scheme Type">{checkAndSetDefaultValue(formData?.schemeType, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Scheme Description">{checkAndSetDefaultValue(formData?.schemeDescription, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Sale Type">{checkAndSetDefaultValue(formData?.saleType, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Scheme Amount (With Tax)">{checkAndSetDefaultValue(formData?.schemeAmount, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Employee Name">{checkAndSetDefaultValue(formData?.employeeName, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Manager">{checkAndSetDefaultValue(formData?.manager, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Scheme Type">{checkAndSetDefaultValue(formData?.amcRequest?.schemeType, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Scheme Registration No.">{checkAndSetDefaultValue(formData?.amcRequest?.schemeRegistrationId, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Scheme Description">{checkAndSetDefaultValue(formData?.amcRequest?.schemeDescription, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Sale Type">{checkAndSetDefaultValue(getCodeValue(typeData?.DLVR_SALE_TYP, formData?.amcRequest?.saleType, isLoading))}</Descriptions.Item>
+                                <Descriptions.Item label="Valid From Date">{checkAndSetDefaultValue(formData?.amcRequest?.validFrom, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Valid To Date">{checkAndSetDefaultValue(formData?.amcRequest?.validTo, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Employee Name">{checkAndSetDefaultValue(formData?.amcRequest?.employeeName, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Manager">{checkAndSetDefaultValue(formData?.amcRequest?.manager, isLoading)}</Descriptions.Item>
                             </Descriptions>
                         </Panel>
                     </Collapse>

@@ -42,7 +42,6 @@ const AddEditFormMain = (props) => {
     
 
     const [corporateType, setCorporateType] = useState('');
-
     useEffect(() => {
         setCorporateType(formData?.corporateType);
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -123,9 +122,10 @@ const AddEditFormMain = (props) => {
     const onHandleSelect = (value) => {
         form.setFieldsValue({
             corporateCode: value,
+            corporateCategory: corporateLovData?.find((i) => i?.key === value)?.parentKey,
         });
     };
-
+     
     const validateSameNumber = (_, value) => {
         const { mobileNumber } = form.getFieldsValue();
         if (value === mobileNumber && contactOverWhatsApp && !sameMobileNoAsWhatsApp) {
@@ -369,18 +369,20 @@ const AddEditFormMain = (props) => {
 
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                        <Form.Item label="Corporate Type" initialValue={formData?.corporateType} name="corporateType" data-testid="corporateType" rules={[validateRequiredSelectField('corporate type')]}>
+                        <Form.Item label="Corporate Type" initialValue={formData?.corporateType} name="corporateType" data-testid="corporateType">
                             {customSelectBox({ data: typeData['CORP_TYPE'], placeholder: preparePlaceholderSelect('corporate type'), onChange: handleCorporateChange })}
                         </Form.Item>
                     </Col>
 
                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                         {corporateType === 'NON-LIS' ? (
-                            <Form.Item label="Corporate Name" initialValue={formData?.corporateName} name="corporateName" data-testid="corporateName" rules={[validateRequiredSelectField('corporate name')]}>
+                            <Form.Item label="Corporate Name" initialValue={formData?.corporateName} name="corporateName" data-testid="corporateName">
                                 <Input placeholder={preparePlaceholderText('corporate name')} />
                             </Form.Item>
                         ) : (
-                            <Form.Item label="Corporate Name" initialValue={formData?.corporateName} name="corporateName" data-testid="corporateName" rules={[validateRequiredSelectField('corporate name')]}>
+                            <Form.Item label="Corporate Name" initialValue={formData?.corporateName} name="corporateName" data-testid="corporateName">
+                                {/* <Select placeholder={preparePlaceholderSelect('corporate name')} onChange={onHandleSelect} fieldNames={{ label: 'value', value: 'key' }} options={corporateLovData} allowClear></Select> */}
+
                                 {customSelectBox({ data: corporateLovData, placeholder: preparePlaceholderSelect('corporate name'), onChange: onHandleSelect })}
                             </Form.Item>
                         )}
@@ -388,7 +390,7 @@ const AddEditFormMain = (props) => {
 
                     {(corporateType === 'LIS' || corporateType === '') && (
                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                            <Form.Item initialValue={formData?.corporateCode} label="Corporate Code" name="corporateCode" data-testid="corporate code" rules={[validateRequiredInputField('corporate code')]}>
+                            <Form.Item initialValue={formData?.corporateCode} label="Corporate Code" name="corporateCode" data-testid="corporate code">
                                 <Input placeholder={preparePlaceholderText('parent company name')} disabled />
                             </Form.Item>
                         </Col>

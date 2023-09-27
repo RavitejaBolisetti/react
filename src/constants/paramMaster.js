@@ -136,6 +136,10 @@ export const PARAM_MASTER = {
         id: 'RFRL',
         title: 'Referral',
     },
+    DLVR_CNCL_RSN: {
+        id: 'DLVR_CNCL_RSN',
+        title: 'DLVR_CNCL_RSN',
+    },
     PURPOSE: {
         id: 'PURPOSE',
         title: 'PURPOSE',
@@ -321,6 +325,10 @@ export const PARAM_MASTER = {
         id: 'INV_DEL_NOT_REQ_TYP',
         title: 'Delivery Note/Invoice Request Status',
     },
+    PRICING_TYPE: {
+        id: 'PRICING_TYPE',
+        title: 'Pricing Type',
+    },
     INVOICE_CANCEL_REASON: {
         id: 'INVOICE_CANCEL_REASON',
         title: 'Invoice Cancel Reason',
@@ -380,5 +388,17 @@ export const PARAM_MASTER = {
     PARTY_TYPE: {
         id: 'PARTY_TYPE',
         title: 'Supplier Party Type',
+    },
+    IRN_GEN_STATUS: {
+        id: 'IRN_GEN_STATUS',
+        title: 'IRN Status',
+    },
+    SO_RD: {
+        id: 'SO_RD',
+        title: 'OTF SO Mapping',
+    },
+    SO_RC: {
+        id: 'SO_RC',
+        title: 'OTF SO Mapping',
     },
 };

@@ -14,7 +14,7 @@ const { TextArea } = Input;
 const { Panel } = Collapse;
 
 const AddEditFormMain = (props) => {
-    const { schemeData, styles } = props;
+    const { schemeData, styles, viewOnly = true } = props;
     const [activeKey, setactiveKey] = useState([1]);
 
     const onChange = (values) => {
@@ -32,6 +32,8 @@ const AddEditFormMain = (props) => {
         }
     };
 
+    const disabledProps = { disabled: viewOnly };
+
     return (
         <Row gutter={20}>
             <Col xs={24} sm={24} md={24} lg={24} xl={24}>
@@ -43,36 +45,36 @@ const AddEditFormMain = (props) => {
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                         <Form.Item initialValue={schemeForm?.schemeType} label="Scheme Type" name="schemeType">
-                                            <Select disabled={true} placeholder={preparePlaceholderSelect('Scheme Type')}></Select>
+                                            <Select placeholder={preparePlaceholderSelect('Scheme Type')} {...disabledProps}></Select>
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                         <Form.Item initialValue={schemeForm?.schemeCategory} label="Scheme Category" name="schemeCategory">
-                                            <Input placeholder={preparePlaceholderText('Scheme Category')} disabled={true} />
+                                            <Input placeholder={preparePlaceholderText('Scheme Category')} {...disabledProps} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                         <Form.Item initialValue={schemeForm?.amount} label="Amount" name="amount">
-                                            <Input placeholder={preparePlaceholderText('Amount')} disabled={true} />
+                                            <Input placeholder={preparePlaceholderText('Amount')} {...disabledProps} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                         <Form.Item initialValue={formattedCalendarDate(schemeForm?.validFrom)} label="Valid From" name="validFrom">
-                                            <DatePicker placeholder={preparePlaceholderText('Valid From')} onChange={onChange} disabled={true} />
+                                            <DatePicker placeholder={preparePlaceholderText('Valid From')} onChange={onChange} {...disabledProps} />
                                         </Form.Item>
                                     </Col>
                                     <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                         <Form.Item initialValue={formattedCalendarDate(schemeForm?.validTo)} label="Valid To" name="validTo">
-                                            <DatePicker placeholder={preparePlaceholderText('Valid To')} onChange={onChange} disabled={true} />
+                                            <DatePicker placeholder={preparePlaceholderText('Valid To')} onChange={onChange} {...disabledProps} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
                                 <Row gutter={20}>
                                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                                         <Form.Item initialValue={schemeForm?.description} label="Description" name="description">
-                                            <TextArea maxLength={300} placeholder={preparePlaceholderText('Description')} disabled={true} showCount />
+                                            <TextArea maxLength={300} placeholder={preparePlaceholderText('Description')} {...disabledProps} showCount />
                                         </Form.Item>
                                     </Col>
                                 </Row>
@@ -81,7 +83,7 @@ const AddEditFormMain = (props) => {
                     ))
                 ) : (
                     <Card>
-                        <div className={styles.marB20}>No Scheme and Offer Details Available</div>
+                        <div className={styles?.marB20}>No Scheme and Offer Details Available</div>
                     </Card>
                 )}
             </Col>

@@ -12,7 +12,7 @@ import { customSelectBox } from 'utils/customSelectBox';
 import styles from 'assets/sass/app.module.scss';
 
 const AddEditForm = (props) => {
-    const { onSaveFormData, contactform, setShowAddEditForm, setIsEditing, typeData, formActionType, handleFormValueChange, setIsAdding } = props;
+    const { onSaveFormData, contactform, setShowAddEditForm, setIsEditing, typeData, isEditing,formActionType, handleFormValueChange, setIsAdding, showAddEditForm } = props;
     const handleCancelFormEdit = () => {
         contactform.resetFields();
         setIsAdding(false);
@@ -37,7 +37,7 @@ const AddEditForm = (props) => {
                                 <Select {...selectProps} placeholder={preparePlaceholderSelect('contact type')} fieldNames={{ label: 'value', value: 'key' }} getPopupContainer={(triggerNode) => triggerNode.parentElement} allowClear options={typeData['VH_CONTACT_TYPE']}></Select>
                             </Form.Item>
                         </Col>
-                        <Col xs={24} sm={12} md={8} lg={8} xl={8} className={styles.contactDays}>
+                        <Col xs={24} sm={12} md={8} lg={8} xl={8} >
                             <Form.Item label="Preferred Days For Contact" name="preferredDayForContact" rules={[validateRequiredSelectField('preferred days for contact')]}>
                                 {customSelectBox({ data: typeData['VH_CONTACT_DAYS'], mode: 'multiple', placeholder: preparePlaceholderSelect('preferred days for contact') })}
                             </Form.Item>
@@ -51,12 +51,12 @@ const AddEditForm = (props) => {
                     <Row gutter={20}>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                             <Form.Item label="Name" name="name" rules={[validateRequiredInputField('Name'), validateLettersWithWhitespaces('Name')]}>
-                                <Input placeholder={preparePlaceholderText('name')} />
+                                <Input placeholder={preparePlaceholderText('name')} disabled={isEditing} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8}>
                             <Form.Item label="E-mail" initialValue={''} name="emailId" rules={[validateRequiredEmailField('E-mail')]}>
-                                <Input placeholder={preparePlaceholderText('email id')} />
+                                <Input placeholder={preparePlaceholderText('email id')} disabled={isEditing} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} sm={12} md={8} lg={8} xl={8} style={{ display: 'flex' }}>

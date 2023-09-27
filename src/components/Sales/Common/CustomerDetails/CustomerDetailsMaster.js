@@ -14,6 +14,7 @@ import { customerDetailsIndividualDataActions } from 'store/actions/data/custome
 import { geoPinCodeDataActions } from 'store/actions/data/geo/pincodes';
 import { showGlobalNotification } from 'store/actions/notification';
 import { BASE_URL_VEHICLE_CUSTOMER_COMMON_DETAIL as customURL } from 'constants/routingApi';
+import { formattedCalendarDate } from 'utils/formatDateTime';
 
 import { ViewDetail } from './ViewDetail';
 import { AddEditForm } from './AddEditForm';
@@ -184,7 +185,7 @@ export const CustomerDetailsMain = (props) => {
                 extraParams,
                 userId,
                 onSuccessAction: (response) => {
-                    setFormData({ ...formData, [type]: { ...response?.data, birthDate: response?.data?.dateOfBirth } });
+                    setFormData({ ...formData, [type]: { ...response?.data, birthDate: formattedCalendarDate(response?.data?.dateOfBirth) } });
                 },
                 onErrorAction,
             });
@@ -226,10 +227,10 @@ export const CustomerDetailsMain = (props) => {
 
     const handleFormValueChange = () => {
         setButtonData({ ...buttonData, formBtnActive: true });
-        if (sameAsBookingCustomer) {
-            let bookingCustomer = form.getFieldsValue()?.bookingCustomer;
-            form?.setFieldsValue({ billingCustomer: { ...bookingCustomer } });
-        }
+        // if (sameAsBookingCustomer) {
+        //     let bookingCustomer = form.getFieldsValue()?.bookingCustomer;
+        //     form?.setFieldsValue({ billingCustomer: { ...bookingCustomer } });
+        // }
     };
 
     return wrapForm ? (

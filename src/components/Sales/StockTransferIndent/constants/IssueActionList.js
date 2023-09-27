@@ -17,14 +17,14 @@ export const ISSUE_ACTION_LIST = {
         key: 'REC',
         title: 'Receive Vehicle',
         modalButtonName: 'Yes, Recieve',
-        modelMessage: 'Do you want to receive this ?',
+        modelMessage: 'Are you sure, you want to receive this vehicle?',
     },
     RETURNED: {
         id: 'Returned',
         key: 'RET',
         title: 'Return Vehicle',
         modalButtonName: 'Yes, Return',
-        modelMessage: 'Do you want to return this ?',
+        modelMessage: 'Are you sure, you want to return this vehicle?',
     },
     ISSUED: {
         id: 'Issued',

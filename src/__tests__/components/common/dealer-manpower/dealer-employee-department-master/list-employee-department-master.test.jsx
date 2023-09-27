@@ -2,27 +2,27 @@
 import '@testing-library/jest-dom/extend-expect';
 import { ListEmployeeDepartmentMaster } from '@components/common/DealerManpower/DealerEmployeeDepartmentMaster/ListEmployeeDepartmentMaster';
 import customRender from '@utils/test-utils';
-import { screen, fireEvent } from '@testing-library/react';
+import { screen, fireEvent, waitFor } from '@testing-library/react';
 import { Form } from 'antd';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import thunk from 'redux-thunk';
 import { rootReducer } from 'store/reducers';
 
+
+jest.mock('store/actions/data/dealerManpower/dealerEmployeeDepartmentMaster', () => ({
+    dealerManpowerEmployeeDepartmentDataActions: {},
+}));
+
+
+
 export const createMockStore = (initialState) => {
-
     const mockStore = configureStore({
-
         reducer: rootReducer,
-
         preloadedState: initialState,
-
         middleware: [thunk],
-
-    }); 
-
+    });
     return mockStore;
-
 };
 
 afterEach(() => {
@@ -30,7 +30,6 @@ afterEach(() => {
 });
 
 let assignMock = jest.fn();
-
 delete window.location;
 window.location = { assign: assignMock };
 
@@ -38,20 +37,6 @@ afterEach(() => {
     assignMock.mockClear();
 });
 
-const FormWrapper = (props) => {
-    const [form] = Form.useForm();
-    return <ListEmployeeDepartmentMaster form={form} {...props} />;
-}
-
-const mockStore = createMockStore({
-    auth: { userId: 106 },
-    data: {
-        DealerManpower: {
-            DealerDivisionMaster: { isLoaded: false, isLoading: false, data: [{ key: 1, value: 'test' }, { key: 2, value: 'test' }] },
-            DealerEmployeeDepartmentMaster: { isLoaded: false, isDataLoaded: false, isLoading: false, data: [{ key: 1, value: 'test' }, { key: 2, value: 'test' }] },
-        },
-    },
-});
 
 const buttonData = {
     closeBtn: false,
@@ -62,105 +47,106 @@ const buttonData = {
     formBtnActive: false,
 };
 
-const filterString = {
-    keyword: 'test',
-    advanceFilter: true
-}
-
 describe('List Employee Department Master components', () => {
-    it('Should render Employee Department Master Applied Advance Filter components', () => {
-        const props = {
-            formActionType: { viewMode: false, editMode: false },
-        }
-
-        const divisionData = [{ key: 1, value: 'test' }, { key: 2, value: 'test' }]
+    it('Should render search components', () => {
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+            data: {
+                DealerManpower: {
+                    DealerEmployeeDepartmentMaster: {
+                        isLoaded: true, data: [{
+                            departmentCode: "DC98",
+                            departmentName: "Employee",
+                            divisionCode: "C",
+                            divisionName: "COMMON",
+                            status: true
+                        }]
+                    },
+                },
+            },
+        });
 
         customRender(
             <Provider store={mockStore}>
-                <FormWrapper isVisible={true}
-                    {...props}
-                    showAddButton={true}
-                    divisionData={divisionData}
+                <ListEmployeeDepartmentMaster
+                    isVisible={true}
+                    fetchList={jest.fn()}
+                    fetchDivisionLovList={jest.fn()}
                 />
             </Provider>
         )
 
-        const textBox = screen.getByRole('textbox', { name: 'Department Name' });
-        fireEvent.change(textBox, { target: { value: 'kai' } });
+        const departmentName = screen.getByRole('textbox', { name: 'Department Name' })
+        fireEvent.change(departmentName, { target: { value: "testing" } })
 
         const searchImg = screen.getByRole('img', { name: 'search' });
         fireEvent.click(searchImg);
-
-        const leftImg = screen.getByRole('img', { name: 'left' });
-        fireEvent.click(leftImg);
-
-        const rightImg = screen.getByRole('img', { name: 'right' });
-        fireEvent.click(rightImg);
-
-        const filter = screen.getByRole('button', { name: 'Advanced Filters' });
-        fireEvent.click(filter);
-
-        const clear = screen.getByRole('button', { name: 'Clear' });
-        fireEvent.click(clear);
-
-        const plusImg = screen.getByRole('img', { name: 'plus' });
-        fireEvent.click(plusImg);
     })
 
-    it('Should render Employee Department Master components', () => {
-        const tableData = [{ key: 1, value: 'test' }, { key: 2, value: 'test' }]
-        const props = {
-            formActionType: { viewMode: false, editMode: true },
-            setButtonData: jest.fn(),
-            formData: { status: true, name: "test" }
-        }
+    it('refresh button should work', async () => {
+
+        const mockStore = createMockStore({
+            auth: { userId: 123 },
+            data: {
+                DealerManpower: {
+                    DealerEmployeeDepartmentMaster: {
+                        isLoaded: true, data: [{
+                            departmentCode: "DC98",
+                            departmentName: "Employee",
+                            divisionCode: "C",
+                            divisionName: "COMMON",
+                            status: true
+                        }]
+                    },
+                },
+            },
+        });
+
         customRender(
             <Provider store={mockStore}>
-                <FormWrapper isVisible={true}
-                    tableData={tableData}
-                    handleButtonClick={jest.fn()}
-                    showAddButton={true}
-                    filterString={filterString}
-                    buttonData={buttonData}
-                    fetchList={jest.fn()}
-                    saveButtonName={"Save"}
-                    {...props}
-                />
+                <ListEmployeeDepartmentMaster fetchList={jest.fn()} fetchDivisionLovList={jest.fn()} />
+            </Provider>
+        );
+
+        const refreshbutton = screen.getByRole('button', { name: '', exact: false });
+        fireEvent.click(refreshbutton);
+    })
+
+    it('Should render Employee Department Master add edit form components', () => {
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+            data: {
+                DealerManpower: {
+                    DealerEmployeeDepartmentMaster: {
+                        isLoaded: true, data: [{
+                            departmentCode: "DC98",
+                            departmentName: "Employee",
+                            divisionCode: "C",
+                            divisionName: "COMMON",
+                            status: true
+                        }]
+                    },
+                },
+            },
+        });
+
+        customRender(
+            <Provider store={mockStore}>
+                <ListEmployeeDepartmentMaster fetchList={jest.fn()} fetchDivisionLovList={jest.fn()} />
             </Provider>
         )
 
-        const plusImg = screen.getByRole('img', { name: 'plus' });
-        fireEvent.click(plusImg);
+        const plusAddBtn = screen.getByRole('button', { name: 'plus Add', exact: false });
+        fireEvent.click(plusAddBtn);
 
-        const divisionName = screen.getByRole('combobox', { name: 'Division Name' });
+        const divisionName = screen.getByRole('combobox', { name: 'Division Name', exact: false });
         fireEvent.change(divisionName, { target: { value: 'kai' } });
 
-    })
+        const departmentCode = screen.getByRole('textbox', { name: 'Department Code', exact: false });
+        fireEvent.change(departmentCode, { target: { value: 'kai' } });
 
-    it('Should render Employee Department Master submit components', () => {
-        const tableData = [{ key: 1, value: 'test' }, { key: 2, value: 'test' }]
-        const props = {
-            formActionType: { viewMode: false, editMode: true },
-            setButtonData: jest.fn(),
-            formData: { status: true, name: "test" }
-        }
-        customRender(
-            <Provider store={mockStore}>
-                <FormWrapper isVisible={true}
-                    tableData={tableData}
-                    handleButtonClick={jest.fn()}
-                    showAddButton={true}
-                    filterString={filterString}
-                    buttonData={buttonData}
-                    fetchList={jest.fn()}
-                    saveButtonName={"Save"}
-                    {...props}
-                />
-            </Provider>
-        )
-
-        const plusImg = screen.getByRole('img', { name: 'plus' });
-        fireEvent.click(plusImg);
+        const status = screen.getByRole('switch', { name: 'Status', exact: false });
+        fireEvent.change(status);
 
         const saveBtn = screen.getByRole('button', { name: 'Save' });
         fireEvent.click(saveBtn);
@@ -169,62 +155,122 @@ describe('List Employee Department Master components', () => {
         fireEvent.click(saveNewBtn);
     })
 
-    it('Should render Employee Department Master cancel components', () => {
-        const tableData = [{ key: 1, value: 'test' }, { key: 2, value: 'test' }]
-        const props = {
-            formActionType: { viewMode: false, editMode: true },
-            setButtonData: jest.fn(),
-            formData: { status: true }
-        }
+    it('Should render Employee Department Master add edit form close components', () => {
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+            data: {
+                DealerManpower: {
+                    DealerEmployeeDepartmentMaster: {
+                        isLoaded: true, data: [{
+                            departmentCode: "DC98",
+                            departmentName: "Employee",
+                            divisionCode: "C",
+                            divisionName: "COMMON",
+                            status: true
+                        }]
+                    },
+                },
+            },
+        });
+
+        const saveData = jest.fn();
+
         customRender(
             <Provider store={mockStore}>
-                <FormWrapper isVisible={true}
-                    tableData={tableData}
-                    handleButtonClick={jest.fn()}
-                    showAddButton={true}
-                    filterString={filterString}
-                    buttonData={buttonData}
-                    fetchList={jest.fn()}
-                    saveButtonName={"Save"}
-                    {...props}
-                />
+                <ListEmployeeDepartmentMaster saveData={saveData} setIsFormVisible={jest.fn()} handleButtonClick={jest.fn()} fetchList={jest.fn()} resetData={jest.fn()} buttonData={buttonData} setButtonData={jest.fn()} />
             </Provider>
         )
 
-        const plusImg = screen.getByRole('img', { name: 'plus' });
-        fireEvent.click(plusImg);
+        const plusAddBtn = screen.getByRole('button', { name: 'plus Add', exact: false });
+        fireEvent.click(plusAddBtn);
 
-        const cancelBtn = screen.getByRole('button', { name: 'Cancel' });
-        fireEvent.click(cancelBtn);
-
-    })
-
-    it('Should render Employee Department Master close components', () => {
-        const tableData = [{ key: 1, value: 'test' }, { key: 2, value: 'test' }]
-        const props = {
-            formActionType: { viewMode: false, editMode: true },
-            setButtonData: jest.fn(),
-            formData: { status: true }
-        }
-        customRender(
-            <Provider store={mockStore}>
-                <FormWrapper isVisible={true}
-                    tableData={tableData}
-                    handleButtonClick={jest.fn()}
-                    showAddButton={true}
-                    filterString={filterString}
-                    buttonData={buttonData}
-                    fetchList={jest.fn()}
-                    saveButtonName={"Save"}
-                    {...props}
-                />
-            </Provider>
-        )
-
-        const plusImg = screen.getByRole('img', { name: 'plus' });
-        fireEvent.click(plusImg);
-
-        const closeBtn = screen.getByRole('button', { name: 'Close' });
+        const closeBtn = screen.getByRole('button', { name: 'Close', exact: false });
         fireEvent.click(closeBtn);
+
+
     })
+
+    it('Should render Employee Department Master add edit form cancel components', () => {
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+            data: {
+                DealerManpower: {
+                    DealerEmployeeDepartmentMaster: {
+                        isLoaded: true, data: [{
+                            departmentCode: "DC98",
+                            departmentName: "Employee",
+                            divisionCode: "C",
+                            divisionName: "COMMON",
+                            status: true
+                        }]
+                    },
+                },
+            },
+        });
+
+        const saveData = jest.fn();
+
+        customRender(
+            <Provider store={mockStore}>
+                <ListEmployeeDepartmentMaster saveData={saveData} setIsFormVisible={jest.fn()} handleButtonClick={jest.fn()} fetchList={jest.fn()} resetData={jest.fn()} buttonData={buttonData} setButtonData={jest.fn()} />
+            </Provider>
+        )
+
+        const plusAddBtn = screen.getByRole('button', { name: 'plus Add', exact: false });
+        fireEvent.click(plusAddBtn);
+
+        const cancelBtn = screen.getByRole('button', { name: 'Cancel', exact: false });
+        fireEvent.click(cancelBtn);
+    })
+
+
+    it('test for onSuccess', async () => {
+        const mockStore = createMockStore({
+            auth: { userId: 106 },
+            data: {
+                DealerManpower: {
+                    DealerEmployeeDepartmentMaster: {
+                        isLoaded: true, data: [{
+                            departmentCode: "DC98",
+                            departmentName: "Employee",
+                            divisionCode: "C",
+                            divisionName: "COMMON",
+                            status: true
+                        }]
+                    }
+                },
+            },
+        });
+
+        const saveData = jest.fn();
+
+        const res = {
+            data: [{
+                departmentCode: "DC98",
+                departmentName: "Employee",
+                divisionCode: "C",
+                divisionName: "COMMON",
+                status: true
+            }]
+        };
+
+        customRender(
+            <Provider store={mockStore}>
+                <ListEmployeeDepartmentMaster saveData={saveData} setIsFormVisible={jest.fn()} handleButtonClick={jest.fn()} fetchList={jest.fn()} resetData={jest.fn()} buttonData={buttonData} setButtonData={jest.fn()} />
+            </Provider>
+        );
+        const editBtn = screen.getByRole('button', { name: /fa-edit/i });
+        fireEvent.click(editBtn);
+
+        const status = screen.getByRole('switch', { name: 'Status' });
+        fireEvent.click(status);
+
+        const saveBtn = screen.getByRole('button', { name: /Save/i });
+        fireEvent.click(saveBtn);
+
+        await waitFor(() => expect(saveData).toHaveBeenCalled());
+        saveData.mock.calls[0][0].onSuccess(res);
+        saveData.mock.calls[0][0].onError();
+    });
+
 });

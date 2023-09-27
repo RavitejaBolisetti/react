@@ -7,12 +7,15 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Col, Form, Row, Input, Empty, Button } from 'antd';
+import { formatDate } from 'utils/formatDateTime';
 import { PlusOutlined } from '@ant-design/icons';
 import { ExportCOA } from './ExportCOA';
 import { HierarchyFormButton } from 'components/common/Button';
 import { customSelectBox } from 'utils/customSelectBox';
+import { supportingDocumentDataActions } from 'store/actions/data/supportingDocument';
 import { dealerCompanyDataActions } from 'store/actions/data/dealer/dealerCompany';
 import { chartOfAccountDataHierarchyActions } from 'store/actions/data/financialAccounting/chartOfAccount/chartOfAccountHierarchy';
+import { chartOfAccountDataExportCOAActions } from 'store/actions/data/financialAccounting/chartOfAccount/exportCOA';
 import { chartOfAccountDataActions } from 'store/actions/data/financialAccounting/chartOfAccount/chartOfAccount';
 import { preparePlaceholderSelect } from 'utils/preparePlaceholder';
 import { showGlobalNotification } from 'store/actions/notification';
@@ -38,6 +41,7 @@ const mapStateToProps = (state) => {
                 ChartOfAccountMaster: {
                     ChartOfAccountHierarchy: { isLoaded: isChartOfAccountHierarchyLoaded = false, data: chartOfAccountHierarchy = [] },
                     ChartOfAccount: { isLoaded: isChartOfAccountLoaded = false, data: chartOfAccountData = [] },
+                    ChartOfAccountExportCOA: { data: chartOfAccountExportCOAData },
                 },
             },
         },
@@ -60,6 +64,7 @@ const mapStateToProps = (state) => {
         chartOfAccountHierarchy,
         isChartOfAccountLoaded,
         chartOfAccountData,
+        chartOfAccountExportCOAData,
     };
     return returnValue;
 };
@@ -78,13 +83,19 @@ const mapDispatchToProps = (dispatch) => ({
             listShowLoadingChartOfAccount: chartOfAccountDataActions.listShowLoading,
             saveData: chartOfAccountDataActions.saveData,
 
+            fetchChartOfExportCoaAccount: chartOfAccountDataExportCOAActions.fetchList,
+            listShowLoadingChartOfExportCoaAccount: chartOfAccountDataExportCOAActions.listShowLoading,
+
+            downloadFile: supportingDocumentDataActions.downloadFile,
+            downloadShowLoading: supportingDocumentDataActions.listShowLoading,
+
             showGlobalNotification,
         },
         dispatch
     ),
 });
 
-export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, saveData, showGlobalNotification, fetchDealerCompanyLov, listShowLoadingDealerCompanyLov, dealerCompanyLovData, fetchChartOfAccountHierarchy, isDealerCompanyDataLoaded, listShowLoadingChartOfAccountHierachy, chartOfAccountHierarchy, isChartOfAccountLoaded, chartOfAccountData, listShowLoadingChartOfAccount, fetchChartOfAccount }) => {
+export const ChartOfAccountMain = ({ downloadFile, downloadShowLoading, chartOfAccountExportCOAData, fetchChartOfExportCoaAccount, listShowLoadingChartOfExportCoaAccount, typeData, moduleTitle, viewTitle, userId, saveData, showGlobalNotification, fetchDealerCompanyLov, listShowLoadingDealerCompanyLov, dealerCompanyLovData, fetchChartOfAccountHierarchy, isDealerCompanyDataLoaded, listShowLoadingChartOfAccountHierachy, chartOfAccountHierarchy, isChartOfAccountLoaded, chartOfAccountData, listShowLoadingChartOfAccount, fetchChartOfAccount }) => {
     const [form] = Form.useForm();
     const [exportCoaForm] = Form.useForm();
     const [isTreeViewVisible, setTreeViewVisible] = useState(true);
@@ -109,7 +120,7 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
     const defaultBtnVisiblity = { editBtn: true, childBtn: true, siblingBtn: true };
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const [modalOpen, setModalOpen] = useState(false);
-    const companyFieldNames = { value: 'companyName', key: 'companyCode' };
+    const companyFieldNames = { value: 'companyName', key: 'id' };
     const fieldNames = { title: 'accountDescription', key: 'accountCode', children: 'subGroup' };
 
     useEffect(() => {
@@ -120,7 +131,8 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
     }, [userId, isDealerCompanyDataLoaded]);
 
     const onSelect = (val) => {
-        setCompanyCode(val);
+        const code = dealerCompanyLovData?.find((i) => i?.id === val)?.companyCode;
+        setCompanyCode(code);
         setViewData(null);
         setSelectedTreeKey(null);
     };
@@ -187,9 +199,9 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
             setDisable(false);
             setSelectedTreeSelectKey(chartOfAccountData?.parentAccountDescription);
             setAccountTyp(chartOfAccountData?.accountType);
-            if(chartOfAccountData?.isChildAvailable){
+            if (chartOfAccountData?.isChildAvailable) {
                 setDisableCheckBox(true);
-            } else{
+            } else {
                 setDisableCheckBox(false);
             }
             form.setFieldsValue({
@@ -275,14 +287,45 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
         exportCoaForm
             .validateFields()
             .then(() => {
-                //let data = exportCoaForm.getFieldsValue();
+                let data = exportCoaForm.getFieldsValue();
+                const extraParams = [
+                    {
+                        key: 'companyCode',
+                        value: companyCode,
+                    },
+                    {
+                        key: 'fromDate',
+                        value: formatDate(data?.fromDate),
+                    },
+                    {
+                        key: 'toDate',
+                        value: formatDate(data?.toDate),
+                    },
+                ];
+
+                const onSuccessAction = (res) => {
+                    const extraParams = [
+                        {
+                            key: 'docId',
+                            title: 'docId',
+                            value: res?.data?.docId,
+                            name: 'docId',
+                        },
+                    ];
+                    downloadFile({ setIsLoading: downloadShowLoading, userId, extraParams });
+                    //resetData();
+                };
+
+                fetchChartOfExportCoaAccount({ setIsLoading: listShowLoadingChartOfExportCoaAccount, userId, extraParams, onSuccessAction });
+
                 setModalOpen(false);
             })
+
             .catch((error) => console.log(error));
     };
 
     const onFinishFailed = (errorInfo) => {
-        form.validateFields().then((values) => {});
+        form.validateFields().then((values) => { });
     };
 
     const handleButtonClick = (type) => {
@@ -377,7 +420,7 @@ export const ChartOfAccountMain = ({ typeData, moduleTitle, viewTitle, userId, s
                     </Col>
 
                     <Col xs={24} sm={24} md={8} lg={8} xl={8} className={styles.buttonsGroupRight}>
-                        <Button type="primary" className={styles.verticallyCentered} onClick={onCoaModelOpen}>
+                        <Button type="primary" disabled={!companyCode} className={styles.verticallyCentered} onClick={onCoaModelOpen}>
                             Export COA
                         </Button>
                     </Col>

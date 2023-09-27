@@ -42,13 +42,14 @@ import {
 } from 'pages/common';
 
 import { TaxChargesPage, TaxChargesCategoryPage, AccountCategoryPage, VehicleModelTaxChargesCategoryPage, DocumentTypeOtherChargesPage, CreditDebitNoteMasterPage, ChartOfAccountPage } from 'pages/FinancialAccounting';
-import { OTFMasterPage, VehicleDetailMasterPage, OtfBlockMasterPage,VehiclePriceMasterPage, VehicleReceiptMasterPage, RSMApprovalPage, VehiclePurchaseOrderMasterPage, VehicleRecieptChecklistMaster, OtfSoMappingMasterPage, ReceiptMasterPage, VehicleAllotmentMasterPage, VehicleAllotmentPriorityMasterPage, DeliveryNoteInvoiceCancellationPage, DigitalSignatureMasterPage, HoPriceMappingMasterPage, VehicleInvoiceMasterPage, VehicleTrackingPage, OtfSoMappingUnmappingMasterPage, StockTransferIndentMasterPage, VehicleDeliveryNoteMasterPage } from 'pages/Sales';
+import { OTFMasterPage, VehicleDetailMasterPage, OtfBlockMasterPage, VehiclePriceMasterPage, VehicleReceiptMasterPage, RSMApprovalPage, VehiclePurchaseOrderMasterPage, VehicleRecieptChecklistMaster, OtfSoMappingMasterPage, ReceiptMasterPage, VehicleAllotmentMasterPage, VehicleAllotmentPriorityMasterPage, DeliveryNoteInvoiceCancellationPage, DigitalSignatureMasterPage, HoPriceMappingMasterPage,OnRoadPriceMasterPage, VehicleInvoiceMasterPage, VehicleTrackingPage, OtfSoMappingUnmappingMasterPage, StockTransferIndentMasterPage, VehicleDeliveryNoteMasterPage } from 'pages/Sales';
 
 import { SplashPage } from 'pages/splash';
 import { ProfilePage, SettingPage, FaqPage, TrainingPage } from 'pages/user';
 import { BiReportPage } from 'pages/report/BiReport/BiReportPage';
 import { PaginatedReportPage } from 'pages/report/PaginatedReport/PaginatedReportPage';
 import { EmbeddedReportPage } from 'pages/report/EmbeddedReport/EmbeddedReportPage';
+import { EmbeddedDocumentPage } from 'pages/report/EmbeddedDocument/EmbeddedDocumentPage';
 import { URLFilterReportPage } from 'pages/report/URLFilterReport/URLFilterReportPage';
 
 import { CMSPage } from 'pages/cms';
@@ -102,6 +103,7 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_REPORT_BI_REPORT} element={<BiReportPage />} exact />
             <Route path={routing.ROUTING_REPORT_PAGINATED_REPORT} element={<PaginatedReportPage />} exact />
             <Route path={routing.ROUTING_REPORT_EMBEDDED_REPORT} element={<EmbeddedReportPage />} exact />
+            <Route path={routing.ROUTING_REPORT_EMBEDDED_DOCUMENT} element={<EmbeddedDocumentPage />} exact />
             <Route path={routing.ROUTING_REPORT_URL_FILTER_REPORT} element={<URLFilterReportPage />} exact />
 
             <Route path={routing.ROUTING_USER_SETTING} element={<SettingPage />} exact />
@@ -126,7 +128,6 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_VEHICLE_INVOICE_GENERATION} element={<VehicleInvoiceMasterPage />} exact />
             <Route path={routing.ROUTING_VEHICLE_DELIVERY_NOTE} element={<VehicleDeliveryNoteMasterPage />} exact />
 
-
             <Route path={routing.ROUTING_REPORT_OTF_REPORTS} element={<OtfReportsPage />} />
             <Route path={routing.ROUTING_OTF_SO_MAPPING_CONTROL_MASTER} element={<OtfSoMappingMasterPage />} />
             <Route path={routing.ROUTING_OTF_BLOCK_MASTER} element={<OtfBlockMasterPage />} />
@@ -143,6 +144,9 @@ export const AuthenticatedUserPage = () => {
             <Route path={routing.ROUTING_VEHICLE_VEHICLE_ALLOTMENT_PRIORITY_MASTER} element={<VehicleAllotmentPriorityMasterPage />} exact />
             <Route path={routing.ROUTING_DIGITAL_SIGNATURE_MAPPING} element={<DigitalSignatureMasterPage />} exact />
             <Route path={routing.ROUTING_FINANCIAL_ACCOUNTING_CHART_OF_ACCOUNT} element={<ChartOfAccountPage />} exact />
+
+            <Route path={routing.ROUTING_ONROAD_PRICE_MASTER} element={<OnRoadPriceMasterPage />} exact />
+
 
             <Route path={routing.ROUTING_HO_PRICE_MAPPING} element={<HoPriceMappingMasterPage />} exact />
             <Route path={routing.STOCK_TRANSFER_INDENT} element={<StockTransferIndentMasterPage />} exact />

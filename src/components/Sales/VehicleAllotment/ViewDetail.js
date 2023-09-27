@@ -69,7 +69,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const ViewDetailMain = (props) => {
-    const { userId, isOTFSearchLoading, fetchOTFSearchedList, listShowLoading, toggleButton, formData, isLoading, typeData, searchForm, totalOTFRecords, tableData } = props;
+    const { userId, isOTFSearchLoading, fetchOTFSearchedList, listShowLoading, toggleButton, formData, isLoading, typeData, searchForm, totalOTFRecords, tableData, isVehicleDataLoading } = props;
     const { resetAdvanceFilter, setResetAdvanceFilter, handleButtonClick, buttonData, setButtonData, onCloseAction, selectedOTFDetails, setSelectedOrderOTFDetails } = props;
     const [filterString, setFilterString] = useState('');
     const [filterStringOTFSearch, setFilterStringOTFSearch] = useState('');
@@ -127,12 +127,12 @@ const ViewDetailMain = (props) => {
     };
 
     useEffect(() => {
-        if (userId && toggleButton === VEHICLE_TYPE.UNALLOTED.key && !isOTFSearchLoading && formData) {
+        if (userId && toggleButton === VEHICLE_TYPE.UNALLOTED.key && !isOTFSearchLoading && formData && !isVehicleDataLoading) {
             setShowDataLoading(true);
             fetchOTFSearchedList({ setIsLoading: listShowLoading, userId, extraParams: searchOTFExtraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [searchOTFExtraParams, formData]);
+    }, [searchOTFExtraParams, formData, isVehicleDataLoading]);
 
     const viewProps = {
         bordered: false,
@@ -142,11 +142,17 @@ const ViewDetailMain = (props) => {
     };
 
     useEffect(() => {
-        searchForm.resetFields();
         setFilterStringOTFSearch({ ...filterString, advanceFilter: true });
         setSelectedOrderOTFDetails();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString]);
+
+    const handleChange = (e) => {
+        if (e?.target?.value === '' && e?.nativeEvent?.type === 'click') {
+            setFilterString({ pageSize: filterString?.pageSize, current: 1 });
+            searchForm.resetFields();
+        }
+    };
 
     const serachBoxProps = {
         searchForm,
@@ -158,6 +164,9 @@ const ViewDetailMain = (props) => {
         setResetAdvanceFilter,
         defaultOption: 'otfNumber',
         allowClear: false,
+        handleChange,
+        valueReset: false,
+        // singleField: true,
     };
 
     const buttonProps = {

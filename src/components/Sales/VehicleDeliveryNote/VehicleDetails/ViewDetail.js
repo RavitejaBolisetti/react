@@ -4,14 +4,16 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useState } from 'react';
-import { Col, Row, Collapse, Descriptions, Divider } from 'antd';
+import { Col, Row, Collapse, Card, Divider, Typography, Descriptions } from 'antd';
 import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 
 import styles from 'assets/sass/app.module.scss';
 //import styles from 'components/common/Common.module.css';
 import { expandIcon } from 'utils/accordianExpandIcon';
+import { NoDataFound } from 'utils/noDataFound';
 
 const { Panel } = Collapse;
+const { Text } = Typography;
 
 const ViewDetailMain = (props) => {
     const { formData, isLoading } = props;
@@ -48,19 +50,34 @@ const ViewDetailMain = (props) => {
                         <Panel header="Vehicle Information" key="1">
                             <Divider />
                             <Descriptions {...viewProps}>
-                                <Descriptions.Item label="VIN No.">{checkAndSetDefaultValue(formData?.vinNo, isLoading)}</Descriptions.Item>
+                                {/* <Descriptions.Item label="Search Vehicle Registration No.">{checkAndSetDefaultValue(formData?.registrationNumber, isLoading)}</Descriptions.Item> */}
+                                <Descriptions.Item label="VIN No.">{checkAndSetDefaultValue(formData?.vinNumber, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Engine Number">{checkAndSetDefaultValue(formData?.engineNumber, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Key Number">{checkAndSetDefaultValue(formData?.keyNumber, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Model Code">{checkAndSetDefaultValue(formData?.modelCode, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Modal Color">{checkAndSetDefaultValue(formData?.modalColor, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Modal Description">{checkAndSetDefaultValue(formData?.modalDescription, isLoading)}</Descriptions.Item>
+                                {/* <Descriptions.Item label="Modal Color">{checkAndSetDefaultValue(formData?.modelColor, isLoading)}</Descriptions.Item> */}
+                                <Descriptions.Item label="Modal Description">{checkAndSetDefaultValue(formData?.modelDescription, isLoading)}</Descriptions.Item>
                             </Descriptions>
                         </Panel>
                     </Collapse>
+
                     <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
                         <Panel header="Battery Information" key="2">
                             <Divider />
-                            <Descriptions {...viewProps}></Descriptions>
+                            {formData?.batteryDetail?.length ? (
+                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                                    {formData?.batteryDetail?.map((battery) => (
+                                        <Card className={styles.cardView} battery={battery} {...props}>
+                                            <Text>{battery?.batteryMake}</Text>
+                                            <div>
+                                                <Text type="secondary">{battery?.batteryName}</Text>
+                                            </div>
+                                        </Card>
+                                    ))}
+                                </Col>
+                            ) : (
+                                <NoDataFound />
+                            )}
                         </Panel>
                     </Collapse>
                 </Col>

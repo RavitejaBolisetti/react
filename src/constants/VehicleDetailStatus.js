@@ -42,9 +42,9 @@ export const VEHICLE_DETAIL_STATUS = {
     },
     PENDING_FOR_CANCELLATION: {
         id: 7,
-        title: 'Pending for cancellation',
+        title: 'Pending for Cancellation',
         desc: 'Pending for Cancellation',
-        displayOnView: false,
+        displayOnView: true,
     },
     CANCELLATION_REQUESTED: {
         id: 8,
@@ -57,5 +57,5 @@ export const VEHICLE_DETAIL_STATUS = {
         title: 'Rejected',
         desc: 'Rejected',
         displayOnView: false,
-    }
+    },
 };

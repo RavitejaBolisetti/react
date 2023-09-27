@@ -1,8 +1,5 @@
 import '@testing-library/jest-dom/extend-expect';
-import { Provider } from 'react-redux';
-import createMockStore from '__mocks__/store';
-import { fireEvent, screen, waitFor} from "@testing-library/react";
-import { UserManagementMaster } from 'components/common/UserManagement';
+import { UserManagementMaster } from '@components/common/UserManagement/UserManagementMaster';
 import customRender from '@utils/test-utils';
 
 afterEach(() => {

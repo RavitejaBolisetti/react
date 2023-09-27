@@ -5,10 +5,12 @@
  */
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
 import { convertDateMonthYear } from 'utils/formatDateTime';
+import { StockIndentStatusTag } from 'components/Sales/StockTransferIndent/utils/StockIndentStatusTag';
+import { STOCK_TRANSFER } from 'constants/StockTransfer';
 
 import styles from 'assets/sass/app.module.scss';
 
-export const tableColumn = (handleButtonClick) => {
+export const tableColumn = (handleButtonClick, toggleButton) => {
     const tableColumn = [
         tblPrepareColumns({
             title: 'Indent Number',
@@ -25,19 +27,26 @@ export const tableColumn = (handleButtonClick) => {
         tblPrepareColumns({
             title: 'From Location',
             dataIndex: 'fromLocation',
-            width: '20%',
+            width: '15%',
         }),
 
         tblPrepareColumns({
             title: 'To Location',
             dataIndex: 'toLocation',
-            width: '20%',
+            width: '15%',
         }),
 
         tblPrepareColumns({
             title: 'Requested By',
             dataIndex: 'requestedBy',
             width: '19%',
+        }),
+
+        tblPrepareColumns({
+            title: 'Status',
+            dataIndex: toggleButton === STOCK_TRANSFER?.RAISED.key ? 'indentRaisedStatus' : 'indentReceivedStatus',
+            width: '13%',
+            render: (_, record) => StockIndentStatusTag(toggleButton === STOCK_TRANSFER?.RAISED.key ? record.indentRaisedStatus : record.indentReceivedStatus),
         }),
 
         tblActionColumn({ handleButtonClick, styles, width: '8%', canEdit: false }),

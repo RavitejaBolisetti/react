@@ -18,10 +18,11 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 
 const { Search } = Input;
 export default function AppliedAdvanceFilter(props) {
-    const { tableData = [], showAddButton = true, advanceFilter = false, title, filterString, from, onFinish, onFinishFailed, extraParams, removeFilter, handleResetFilter, handleClearInSearch, onSearchHandle, setAdvanceSearchVisible, handleReferesh, handleButtonClick, validator = searchValidator, downloadReport = false, handleDownloadReport = false, showChangeHistoryButton = false, showChangeHistoryList } = props;
+    const { tableData = [], showAddButton = true, advanceFilter = false, title, filterString, from, onFinish, onFinishFailed, extraParams, removeFilter, handleResetFilter, handleClearInSearch, onSearchHandle, setAdvanceSearchVisible, handleReferesh, handleButtonClick, validator = searchValidator, downloadReport = false, handleDownloadReport = false, showChangeHistoryButton = false, showChangeHistoryList, handleCustomShowAdd = () => false } = props;
     const onKeyPressHandler = (e) => {
         e.key === 'Enter' && e.preventDefault();
     };
+
     return (
         <>
             <div className={styles.contentHeaderBackground}>
@@ -103,7 +104,7 @@ export default function AppliedAdvanceFilter(props) {
                                                         {filter?.name}
                                                         {filter?.canRemove && (
                                                             <span>
-                                                                <RxCross2 onClick={() => removeFilter(filter?.key)} />
+                                                                <RxCross2 onClick={() => removeFilter(filter?.key)} data-testid="removeFilter" />
                                                             </span>
                                                         )}
                                                     </div>

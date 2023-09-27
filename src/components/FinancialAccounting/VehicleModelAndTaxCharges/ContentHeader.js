@@ -22,7 +22,7 @@ const ContentHeader = (props) => {
                         <Form.Item label={`${titleHierarchy}`} name="code">
                             <Row gutter={20}>
                                 <Col xs={24} sm={24} md={10} lg={10} xl={10}>
-                                    {customSelectBox({ data: ModelOptions, placeholder: preparePlaceholderSelect('Model Group'), fieldNames: { key: 'id', value: 'value' }, onChange: handleChange, loading: isProductHierarchyDataLoading })}
+                                    {customSelectBox({ data: ModelOptions, placeholder: preparePlaceholderSelect('Model Group'), fieldNames: { key: 'modelGroupCode', value: 'modelGroupDescription' }, onChange: handleChange, loading: isProductHierarchyDataLoading })}
                                 </Col>
                             </Row>
                         </Form.Item>

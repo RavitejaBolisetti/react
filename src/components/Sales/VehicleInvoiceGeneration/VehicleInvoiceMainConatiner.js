@@ -10,13 +10,14 @@ import { VEHICLE_INVOICE_SECTION } from 'constants/VehicleInvoiceSection';
 
 import { LeftSidebar } from './LeftSidebar';
 import { InvoiceDetailsMaster } from './InvoiceDetails';
-import { InsuranceDetailsMaster } from 'components/Sales/Common/InsuranceDetails';
-import { SchemeDetailsMaster } from 'components/Sales/Common/SchemeDetails';
-import { VehicleDetailsMaster } from 'components/Sales/Common/VehicleDetails';
-import { FinananceDetailsMaster } from 'components/Sales/Common/FinananceDetails';
-import { ReferralsMaster } from 'components/Sales/Common/Referrals';
-import { ExchangeVehiclesMaster } from 'components/Sales/Common/ExchangeVehicles';
-import { LoyaltySchemeMaster } from 'components/Sales/Common/LoyaltyScheme';
+
+import { InsuranceDetailsMaster } from 'components/Sales/VehicleInvoiceGeneration/InsuranceDetails';
+import { VehicleDetailsMaster } from 'components/Sales/VehicleInvoiceGeneration/VehicleDetails';
+import { SchemeDetailsMaster } from 'components/Sales/VehicleInvoiceGeneration/SchemeDetails';
+import { FinananceDetailsMaster } from 'components/Sales/VehicleInvoiceGeneration/FinananceDetails';
+import { ExchangeVehiclesMaster } from 'components/Sales/VehicleInvoiceGeneration/ExchangeVehicles';
+import { LoyaltySchemeMaster } from 'components/Sales/VehicleInvoiceGeneration/LoyaltyScheme';
+import { ReferralsMaster } from 'components/Sales/VehicleInvoiceGeneration/Referrals';
 
 import { VehicleInvoiceFormButton } from './VehicleInvoiceFormButton';
 
@@ -36,6 +37,7 @@ const VehicleInvoiceMainConatinerMain = (props) => {
         onFinishCustom,
         selectedOrderId: selectedOtfNumber,
         FormActionButton: VehicleInvoiceFormButton,
+        vehicleInvoiceMasterData: requestPayload,
     };
 
     const renderElement = () => {
@@ -44,25 +46,25 @@ const VehicleInvoiceMainConatinerMain = (props) => {
                 return <InvoiceDetailsMaster {...myProps} />;
             }
             case VEHICLE_INVOICE_SECTION.VEHICLE_DETAILS.id: {
-                return <VehicleDetailsMaster {...myProps} formKey={'vehicleDetails'} />;
+                return <VehicleDetailsMaster {...myProps} formData={requestPayload?.vehicleDetails} formKey={'vehicleDetails'} />;
             }
             case VEHICLE_INVOICE_SECTION.SCHEME_OFFER_DETAILS.id: {
-                return <SchemeDetailsMaster {...myProps} formKey={'schemeOfferDetails'} />;
+                return <SchemeDetailsMaster {...myProps} formData={requestPayload?.schemeOfferDetails} formKey={'schemeOfferDetails'} />;
             }
             case VEHICLE_INVOICE_SECTION.FINANACE_DETAILS.id: {
-                return <FinananceDetailsMaster {...myProps} formKey={'financeDetails'} />;
+                return <FinananceDetailsMaster {...myProps} formData={requestPayload?.financeDetails} formKey={'financeDetails'} />;
             }
             case VEHICLE_INVOICE_SECTION.INSURANCE_DETAILS.id: {
-                return <InsuranceDetailsMaster {...myProps} formKey={'insuranceDetails'} />;
+                return <InsuranceDetailsMaster {...myProps} formData={requestPayload?.insuranceDetails} formKey={'insuranceDetails'} />;
             }
             case VEHICLE_INVOICE_SECTION.EXCHANGE_DETAILS.id: {
-                return <ExchangeVehiclesMaster {...myProps} formKey={'exchangeDetails'} />;
+                return <ExchangeVehiclesMaster {...myProps} formData={requestPayload?.exchangeDetails} formKey={'exchangeDetails'} />;
             }
             case VEHICLE_INVOICE_SECTION.LOYALTY_SCHEME.id: {
-                return <LoyaltySchemeMaster {...myProps} formKey={'loyaltyScheme'} />;
+                return <LoyaltySchemeMaster {...myProps} formData={requestPayload?.loyaltyScheme} formKey={'loyaltyScheme'} />;
             }
             case VEHICLE_INVOICE_SECTION.REFERRALS.id: {
-                return <ReferralsMaster {...myProps} formKey={'referrals'} />;
+                return <ReferralsMaster {...myProps} referralData={requestPayload?.referrals} formKey={'referrals'} />;
             }
             default: {
                 return <InvoiceDetailsMaster {...myProps} />;

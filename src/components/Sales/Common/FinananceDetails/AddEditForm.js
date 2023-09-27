@@ -4,30 +4,32 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import React, { useEffect, useState } from 'react';
-import { Col, Input, Form, Row, Select, Card, DatePicker, Space, Switch } from 'antd';
+import { Col, Input, Form, Row, Select, Card, DatePicker, Space } from 'antd';
 
 import { disableFutureDate } from 'utils/disableDate';
 import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
-import { validateRequiredInputField, validateRequiredSelectField, validateNumberWithTwoDecimalPlaces } from 'utils/validation';
+import { validateRequiredInputField, validateRequiredSelectField } from 'utils/validation';
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
 import { customSelectBox } from 'utils/customSelectBox';
 
 import { YES_NO_FLAG } from 'constants/yesNoFlag';
 import { FINANCE_ARRANGED_BY } from 'constants/financeArrangedBy';
-import { PAGE_TYPE } from 'components/Sales/VehicleDeliveryNote/utils/pageType';
+// import { PAGE_TYPE } from 'components/Sales/VehicleDeliveryNote/utils/pageType';
 
 import styles from 'assets/sass/app.module.scss';
 
 const AddEditFormMain = (props) => {
-    const { formData, FinanceLovData, typeData, form, formActionType, pageType } = props;
+    const { formData, FinanceLovData, typeData, form, pageType } = props;
     const [doReceived, setDoReceived] = useState();
     const [financeArrangedBy, setFinanceArrangedBy] = useState();
     const checkFinanceType = (type, key) => (type ? type === key : false);
 
     useEffect(() => {
-        setDoReceived(formData?.doReceived || 'N');
-        setFinanceArrangedBy(formData?.financeArrangedBy);
-        formData && form.setFieldsValue({ ...formData, printHypothecationDetails: formData?.printHypothecationDetails ? 1 : 0, doDate: formattedCalendarDate(formData?.doDate), financier: formData?.financierCode });
+        if (formData) {
+            setDoReceived(formData?.doReceived || 'N');
+            setFinanceArrangedBy(formData?.financeArrangedBy);
+            form.setFieldsValue({ ...formData, printHypothecationDetails: formData?.printHypothecationDetails ? 1 : 0, doDate: formattedCalendarDate(formData?.doDate), financier: formData?.financierCode });
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
 
@@ -39,17 +41,17 @@ const AddEditFormMain = (props) => {
         setDoReceived(item);
     };
 
-    const onLoanChange = () => {
-        form.validateFields(['emi']);
-    };
+    // const onLoanChange = () => {
+    //     form.validateFields(['emi']);
+    // };
 
-    const emiLessThanAmount = (value) => {
-        if (Number(form.getFieldsValue(['loanAmount'])?.loanAmount) < Number(value)) {
-            return Promise.reject('EMI cannot exceed loan amount');
-        } else {
-            return Promise.resolve();
-        }
-    };
+    // const emiLessThanAmount = (value) => {
+    //     if (Number(form.getFieldsValue(['loanAmount'])?.loanAmount) < Number(value)) {
+    //         return Promise.reject('EMI cannot exceed loan amount');
+    //     } else {
+    //         return Promise.resolve();
+    //     }
+    // };
 
     const selectProps = {
         optionFilterProp: 'children',
@@ -109,7 +111,7 @@ const AddEditFormMain = (props) => {
                                         </Row>
                                         {financeArrangedBy && checkFinanceType(financeArrangedBy, FINANCE_ARRANGED_BY?.DEALER?.key) && (
                                             <Row gutter={20}>
-                                                {pageType != PAGE_TYPE?.OTF_PAGE_TYPE?.key && (
+                                                {/* {pageType !== PAGE_TYPE?.OTF_PAGE_TYPE?.key && (
                                                     <>
                                                         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                                             <Form.Item onChange={onLoanChange} label="Loan Amount" name="loanAmount" rules={[validateNumberWithTwoDecimalPlaces('loan amount')]}>
@@ -128,7 +130,7 @@ const AddEditFormMain = (props) => {
                                                             </Form.Item>
                                                         </Col>
                                                     </>
-                                                )}
+                                                )} */}
                                                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                                                     <Form.Item label="D.O. Received" name="doReceived">
                                                         {customSelectBox({ data: typeData?.YES_NO_FLG, onChange: handleDOChange })}

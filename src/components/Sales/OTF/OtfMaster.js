@@ -10,7 +10,7 @@ import { bindActionCreators } from 'redux';
 import { Col, Form, Row, Modal } from 'antd';
 import { tableColumn } from './tableColumn';
 import AdvanceOtfFilter from './AdvanceOtfFilter';
-import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, CANCEL_ACTION, TRANSFER_ACTION, btnVisiblity, ALLOT, UNALLOT } from 'utils/btnVisiblity';
+import { ADD_ACTION, EDIT_ACTION, VIEW_ACTION, NEXT_ACTION, CANCEL_ACTION, TRANSFER_ACTION, btnVisiblity, ALLOT, UNALLOT, CANCELLN_APPROVE, CANCELLN_REJECT } from 'utils/btnVisiblity';
 
 import { OTFMainConatiner } from './OTFMainConatiner';
 import { ListDataTable } from 'utils/ListDataTable';
@@ -27,7 +27,7 @@ import { showGlobalNotification } from 'store/actions/notification';
 import { otfDataActions } from 'store/actions/data/otf/otf';
 import { PARAM_MASTER } from 'constants/paramMaster';
 import { VEHICLE_TYPE } from 'constants/VehicleType';
-import { BASE_URL_OTF_DETAILS as baseURL, BASE_URL_OTF_TRANSFER as otfTransferURL, BASE_URL_OTF_CANCELLATION as otfCancelURL } from 'constants/routingApi';
+import { BASE_URL_OTF_DETAILS as baseURL, BASE_URL_OTF_TRANSFER as otfTransferURL, BASE_URL_OTF_CANCELLATION as otfCancelURL, BASE_URL_OTF_CANCELLATION_WF as customURLCancelWF } from 'constants/routingApi';
 
 import { LANGUAGE_EN } from 'language/en';
 import { convertDateTime, dateFormatView } from 'utils/formatDateTime';
@@ -100,6 +100,8 @@ const mapDispatchToProps = (dispatch) => ({
             transferOTF: otfDataActions.transferOTF,
             listShowLoading: otfDataActions.listShowLoading,
 
+            cancelOTFWorkflow: otfDataActions.cancelOTFWorkflow,
+
             fetchVehicleDetail: otfvehicleDetailsDataActions.fetchList,
 
             updateVehicleAllotmentStatus: vehicleAllotment.saveData,
@@ -115,7 +117,7 @@ export const OtfMasterBase = (props) => {
     const { ChangeHistoryTitle, otfSoMappingChangeHistoryTitle } = props;
     const { fetchVehicleDetail, updateVehicleAllotmentStatus } = props;
 
-    const { typeData, moduleTitle, transferOTF } = props;
+    const { typeData, moduleTitle, transferOTF, cancelOTFWorkflow } = props;
     const { filterString, setFilterString, otfStatusList } = props;
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [confirmRequest, setConfirmRequest] = useState();
@@ -419,6 +421,12 @@ export const OtfMasterBase = (props) => {
                     fetchVehicleDetail({ setIsLoading: listShowLoading, userId, extraParams, onErrorAction, onSuccessAction });
                 }
                 break;
+            case CANCELLN_REJECT:
+                handleWorkflowOTFCancellation(record, buttonAction);
+                break;
+            case CANCELLN_APPROVE:
+                handleWorkflowOTFCancellation(record, buttonAction);
+                break;
             default:
                 break;
         }
@@ -430,8 +438,8 @@ export const OtfMasterBase = (props) => {
                     editMode: buttonAction === EDIT_ACTION,
                     viewMode: buttonAction === VIEW_ACTION,
                 });
+                setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction, orderStatus: record?.orderStatus }));
             }
-            setButtonData(btnVisiblity({ defaultBtnVisiblity, buttonAction, orderStatus: record?.orderStatus }));
         }
     };
 
@@ -527,6 +535,9 @@ export const OtfMasterBase = (props) => {
         if (key === 'searchParam') {
             const { searchType, searchParam, ...rest } = filterString;
             setFilterString({ ...rest });
+        } else if (key === 'fromDate' || key === 'toDate') {
+            const { fromDate, toDate, ...rest } = filterString;
+            setFilterString({ ...rest });
         } else {
             const { [key]: names, ...rest } = filterString;
             setFilterString({ ...rest });
@@ -579,7 +590,7 @@ export const OtfMasterBase = (props) => {
     const onFinishOTFTansfer = (values) => {
         fnOTFTransfer({
             modalTitle: 'Booking Transfer',
-            modalMessage: `Do you want to transfer this ${otfData?.otfNumber}`,
+            modalMessage: `Do you want to transfer this ${otfData?.bookingNumber || otfData?.otfNumber}`,
             finalData: { ...values, id: otfData?.id, otfNumber: otfData?.otfNumber },
             callBackMethod: transferOTF,
             customURL: otfTransferURL,
@@ -589,10 +600,21 @@ export const OtfMasterBase = (props) => {
     const onFinishOTFCancellation = (values) => {
         fnOTFTransfer({
             modalTitle: 'Booking Cancel',
-            modalMessage: `Do you want to cancel this ${otfData?.otfNumber}`,
+            modalMessage: `Do you want to cancel this ${otfData?.bookingNumber || otfData?.otfNumber}`,
             finalData: { dealerCode: '', oemCode: '', productCode: '', ...values, id: otfData?.id, otfNumber: otfData?.otfNumber, uploadCancellationLetterDocId: uploadedFile },
             callBackMethod: transferOTF,
             customURL: otfCancelURL,
+        });
+    };
+
+    const handleWorkflowOTFCancellation = (record, actionStatus) => {
+        const { otfId, otfNumber } = record;
+        fnOTFTransfer({
+            modalTitle: `${actionStatus === CANCELLN_APPROVE ? 'Approval' : 'Rejection'}`,
+            modalMessage: `Are you sure, you want to ${actionStatus === CANCELLN_APPROVE ? 'approve' : 'reject'} the cancellation of ${otfData?.bookingNumber || otfData?.otfNumber}`,
+            finalData: { id: otfId, otfNumber, actionCode: actionStatus, remarks: actionStatus },
+            callBackMethod: cancelOTFWorkflow,
+            customURL: customURLCancelWF,
         });
     };
 

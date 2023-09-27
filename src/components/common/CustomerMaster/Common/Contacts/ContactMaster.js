@@ -101,7 +101,6 @@ const ContactMain = (props) => {
     const [showAddEditForm, setShowAddEditForm] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [editingData, setEditingData] = useState({});
-    const [uploadImgDocId, setUploadImgDocId] = useState('');
     const [continueWithOldMobNo, setContinueWithOldMobNo] = useState(false);
     const [isAdding, setIsAdding] = useState(false);
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
@@ -124,7 +123,6 @@ const ContactMain = (props) => {
 
     useEffect(() => {
         return () => {
-            setUploadImgDocId('');
             resetData();
             resetIndividualData();
         };
@@ -172,16 +170,16 @@ const ContactMain = (props) => {
                     setContactData((prev) => {
                         let formData = prev?.length ? [...prev] : [];
                         const index = formData?.findIndex((el) => el?.purposeOfContact === editingData?.purposeOfContact && el?.mobileNumber === editingData?.mobileNumber && el?.FirstName === editingData?.FirstName);
-                        formData.splice(index, 1, { relationCode: '', ...value, docId: uploadImgDocId });
+                        formData.splice(index, 1, { relationCode: '', ...value});
                         return [...formData];
                     });
                 } else {
                     setContactData((prev) => {
                         let formData = prev?.length ? [...prev] : [];
                         if (value?.defaultaddress && formData?.length >= 1) {
-                            return [...formData, { relationCode: '', ...value, docId: uploadImgDocId }];
+                            return [...formData, { relationCode: '', ...value }];
                         } else {
-                            const updVal = prev?.length ? [...prev, { relationCode: '', ...value, docId: uploadImgDocId }] : [{ relationCode: '', ...value }];
+                            const updVal = prev?.length ? [...prev, { relationCode: '', ...value }] : [{ relationCode: '', ...value }];
                             return updVal;
                         }
                     });
@@ -235,8 +233,6 @@ const ContactMain = (props) => {
         typeData,
         onCheckdefaultAddClick,
         setButtonData,
-        setUploadImgDocId,
-        uploadImgDocId,
         handleFormValueChange,
         setContinueWithOldMobNo,
 

@@ -3,13 +3,23 @@ import { screen, fireEvent, logRoles } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { VehicleDetailsMaster } from '@components/Sales/OTF/VehicleDetails/VehicleDetailsMaster';
 import customRender from '@utils/test-utils';
-import { Form } from 'antd';
+import { Button, Form } from 'antd';
 import createMockStore from '__mocks__/store';
 
 const FormWrapper = (props) => {
     const [form] = Form.useForm();
     return <VehicleDetailsMaster form={form} {...props} />;
 };
+
+const StatusBar = () => <div>No Status Bar</div>;
+
+const FormActionButton = () => (
+    <div>
+        <Button htmlType="submit" type="primary">
+            Save
+        </Button>
+    </div>
+);
 
 const buttonData = {
     closeBtn: true,
@@ -50,15 +60,15 @@ describe('OtfMaster component render', () => {
         });
         customRender(
             <Provider store={mockStore}>
-                <FormWrapper typeData={'VEHCL_TYPE'} selectedOrderId={'hello'} onChange={jest.fn()} />
+                <FormWrapper typeData={'VEHCL_TYPE'} selectedOrderId={'hello'} onChange={jest.fn()} StatusBar={StatusBar} FormActionButton={FormActionButton} />
             </Provider>
         );
 
         const plusAdd = screen.getByRole('button', { name: 'plus Add', exact: false });
         fireEvent.click(plusAdd);
 
-        const saveBtn = screen.getByRole('button', { name: 'Save', exact: false });
-        fireEvent.click(saveBtn);
+        const saveBtn = screen.getAllByRole('button', { name: 'Save', exact: false });
+        fireEvent.click(saveBtn[0]);
 
         const cancelBtn = screen.getByRole('button', { name: 'Cancel', exact: false });
         fireEvent.click(cancelBtn);
@@ -77,33 +87,5 @@ describe('OtfMaster component render', () => {
 
         const Amt = screen.getByRole('columnheader', { name: 'Amount', exact: false });
         expect(Amt).toBeTruthy();
-    });
-
-    it('all buttons should work', async () => {
-        customRender(<FormWrapper handleButtonClick={jest.fn()} setButtonData={jest.fn()} buttonData={buttonData} typeData={'VEHCL_TYPE'} />);
-        const closeBtn = screen.getByRole('button', { name: 'Close' });
-        fireEvent.click(closeBtn);
-        const cancelBtn = screen.getByRole('button', { name: 'Cancel' });
-        fireEvent.click(cancelBtn);
-        const editBtn = screen.getByRole('button', { name: 'Edit' });
-        fireEvent.click(editBtn);
-        const allotBtn = screen.getByRole('button', { name: 'Allot' });
-        fireEvent.click(allotBtn);
-        const unAllotBtn = screen.getByRole('button', { name: 'Un-Allot' });
-        fireEvent.click(unAllotBtn);
-        const invoiceBtn = screen.getByRole('button', { name: 'Invoice' });
-        fireEvent.click(invoiceBtn);
-        const deliveryNoteBtn = screen.getByRole('button', { name: 'Delivery Note' });
-        fireEvent.click(deliveryNoteBtn);
-        const transferOTFBtn = screen.getByRole('button', { name: 'Transfer Booking' });
-        fireEvent.click(transferOTFBtn);
-        const cancelOTFBtn = screen.getByRole('button', { name: 'Cancel Booking' });
-        fireEvent.click(cancelOTFBtn);
-        const changeHistory = screen.getByRole('button', { name: 'Change History' });
-        fireEvent.click(changeHistory);
-        const nextBtn = screen.getByRole('button', { name: 'Next' });
-        fireEvent.click(nextBtn);
-        const saveBtn = screen.getByRole('button', { name: 'Save & Next' });
-        fireEvent.click(saveBtn);
     });
 });

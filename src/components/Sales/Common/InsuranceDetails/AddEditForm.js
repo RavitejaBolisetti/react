@@ -5,23 +5,82 @@
  */
 import React, { useEffect } from 'react';
 import { Col, Input, Form, Row, DatePicker, Space, Card, Select } from 'antd';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import { showGlobalNotification } from 'store/actions/notification';
+import { partyMasterDataActions } from 'store/actions/data/partyMaster';
+
 import { preparePlaceholderSelect, preparePlaceholderText } from 'utils/preparePlaceholder';
-import { formattedCalendarDate, dateFormat } from 'utils/formatDateTime';
+import { dateFormat, formattedCalendarDate } from 'utils/formatDateTime';
 import { validateNumberWithTwoDecimalPlaces } from 'utils/validation';
 import { disableFutureDate } from 'utils/disableDate';
-// import { customSelectBox } from 'utils/customSelectBox';
-// import { PAGE_TYPE } from 'components/Sales/VehicleDeliveryNote/utils/pageType';
+import { BASE_URL_PARTY_MASTER_LOV as customURL } from 'constants/routingApi';
+
+const mapStateToProps = (state) => {
+    const {
+        auth: { userId },
+        data: {
+            OTF: {
+                InsuranceDetail: { isLoaded: isDataLoaded = false, isLoading, data: insuranceData = [] },
+            },
+            PartyMaster: { isFilteredListLoaded: isInsuranceCompanyDataLoaded = false, filteredListData: insuranceCompanies },
+        },
+    } = state;
+    const moduleTitle = 'Insurance Details';
+
+    let returnValue = {
+        userId,
+        isDataLoaded,
+        insuranceData,
+        isLoading,
+        moduleTitle,
+        isInsuranceCompanyDataLoaded,
+        insuranceCompanies,
+    };
+    return returnValue;
+};
+
+const mapDispatchToProps = (dispatch) => ({
+    dispatch,
+    ...bindActionCreators(
+        {
+            fetchInsuranceCompanyList: partyMasterDataActions.fetchFilteredList,
+            listInsuranceShowLoading: partyMasterDataActions.listShowLoading,
+            showGlobalNotification,
+        },
+        dispatch
+    ),
+});
 
 const AddEditFormMain = (props) => {
-    const { formData, form, insuranceCompanies } = props;
+    const { userId, isInsuranceCompanyDataLoaded, listInsuranceShowLoading, fetchInsuranceCompanyList, insuranceCompanies, formActionType } = props;
+    const { formData, form } = props;
     const { Option } = Select;
+
+    const onErrorAction = () => {};
+
+    useEffect(() => {
+        const extraParams = [
+            {
+                key: 'partyType',
+                title: 'partyType',
+                value: 'IN',
+                name: 'Party Type',
+            },
+        ];
+        if (userId && !isInsuranceCompanyDataLoaded) {
+            fetchInsuranceCompanyList({ setIsLoading: listInsuranceShowLoading, userId, extraParams, customURL, onErrorAction });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userId, isInsuranceCompanyDataLoaded]);
 
     useEffect(() => {
         if (formData) {
             form.setFieldsValue({ ...formData, insuranceDate: formattedCalendarDate(formData?.insuranceDate) });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formData]);
+    }, [formData, formActionType, insuranceCompanies]);
 
     return (
         <Row gutter={20}>
@@ -30,7 +89,7 @@ const AddEditFormMain = (props) => {
                     <Card style={{ backgroundColor: '#f2f2f2' }}>
                         <Row gutter={20}>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item label="Insurance Company" name="insuranceCompany">
+                                <Form.Item label="Insurance Company" name="insuranceCompany" initialValue={formData?.insuranceCompany}>
                                     <Select placeholder={preparePlaceholderSelect('Insurance Company')}>
                                         {insuranceCompanies?.map((item) => (
                                             <Option value={item?.key} key={item?.key}>
@@ -41,31 +100,25 @@ const AddEditFormMain = (props) => {
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item label="Insurance Cover Note" name="insuranceCoverNote">
+                                <Form.Item label="Insurance Cover Note" name="insuranceCoverNote" initialValue={formData?.insuranceCoverNote}>
                                     <Input placeholder={preparePlaceholderText('Insurance Cover Note')} maxLength={55} />
                                 </Form.Item>
                             </Col>
-                            {/* {pageType !== PAGE_TYPE?.OTF_PAGE_TYPE?.key && (
-                                <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                    <Form.Item label="Cover Note Date" name="coverNoteDate">
-                                        <DatePicker disabledDate={disableFutureDate} format={dateFormat} placeholder={preparePlaceholderSelect('Cover Note Date')} />
-                                    </Form.Item>
-                                </Col>
-                            )} */}
+
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item label="Insurance Amount" name="insuranceAmount" rules={[validateNumberWithTwoDecimalPlaces('insurance amount')]}>
+                                <Form.Item label="Insurance Amount" name="insuranceAmount" initialValue={formData?.insuranceAmount} rules={[validateNumberWithTwoDecimalPlaces('insurance amount')]}>
                                     <Input placeholder={preparePlaceholderText('Insurance Amount')} maxLength={20} />
                                 </Form.Item>
                             </Col>
 
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item label="Insurance Cover Note Date" name="insuranceDate">
+                                <Form.Item label="Insurance Cover Note Date" name="insuranceDate" initialValue={formattedCalendarDate(formData?.insuranceDate)}>
                                     <DatePicker disabledDate={disableFutureDate} format={dateFormat} placeholder={preparePlaceholderSelect('Date')} />
                                 </Form.Item>
                             </Col>
 
                             <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                                <Form.Item label="Registration Number" name="registrationNumber">
+                                <Form.Item label="Registration Number" name="registrationNumber" initialValue={formData?.registrationNumber}>
                                     <Input placeholder={preparePlaceholderText('Registration Number')} maxLength={20} />
                                 </Form.Item>
                             </Col>
@@ -77,4 +130,4 @@ const AddEditFormMain = (props) => {
     );
 };
 
-export const AddEditForm = AddEditFormMain;
+export const AddEditForm = connect(mapStateToProps, mapDispatchToProps)(AddEditFormMain);

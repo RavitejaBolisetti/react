@@ -26,7 +26,11 @@ import { AddonParts } from './addonParts';
 import { OtfSoMapping } from './otfSoMapping';
 import { OtfSoUserMapping } from './otfSoUserMapping';
 import { VehicleDetailsServiceLov } from './serviceLov';
-import { ExchangeVehicleAlert } from './exchangeVehicleAlert'
+import { ExchangeVehicleAlert } from './exchangeVehicleAlert';
+import { LoyaltyMake } from './loyaltyMake';
+import { LoyaltyModelGroup } from './loyaltyModelGroup';
+import { LoyaltyVarient } from './loyaltyVarient';
+import { ModelFamily } from './modelFamily';
 
 export const OTF = combineReducers({
     InvoiceDetail,
@@ -49,4 +53,8 @@ export const OTF = combineReducers({
     OtfSoUserMapping,
     VehicleDetailsServiceLov,
     ExchangeVehicleAlert,
+    LoyaltyMake,
+    LoyaltyModelGroup,
+    LoyaltyVarient,
+    ModelFamily,
 });

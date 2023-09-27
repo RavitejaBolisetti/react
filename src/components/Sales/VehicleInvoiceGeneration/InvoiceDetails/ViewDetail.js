@@ -9,11 +9,13 @@ import { checkAndSetDefaultValue } from 'utils/checkAndSetDefaultValue';
 
 import styles from 'assets/sass/app.module.scss';
 import { expandIcon } from 'utils/accordianExpandIcon';
+import { prepareCaption } from 'utils/prepareCaption';
+import { getCodeValue } from 'utils/getCodeValue';
 
 const { Panel } = Collapse;
 
 const ViewDetailMain = (props) => {
-    const { otfFormData, isLoading } = props;
+    const { formData, isLoading, typeData } = props;
     const [activeKey, setactiveKey] = useState([]);
     const viewProps = {
         bordered: false,
@@ -43,20 +45,19 @@ const ViewDetailMain = (props) => {
         <div className={styles.viewDrawerContainer}>
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                    <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end">
+                    <Collapse expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(1)} expandIconPosition="end" className={styles.drawerGap}>
                         <Panel header="Booking Details" key="1">
                             <Divider />
-                            <Descriptions {...viewProps}>
-                                <Descriptions.Item label="Booking Number">{checkAndSetDefaultValue(otfFormData?.bookingNumber || otfFormData?.otfNumber, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Booking Date">{checkAndSetDefaultValue(otfFormData?.otfDate, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="DAR Number">{checkAndSetDefaultValue(otfFormData?.darNumber, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Sales Type">{checkAndSetDefaultValue(otfFormData?.saleType, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Price Type">{checkAndSetDefaultValue(otfFormData?.priceType, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Tax Calculation">{checkAndSetDefaultValue(otfFormData?.taxCalculationType, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Tax Payable On Reverse Charges?">{checkAndSetDefaultValue(otfFormData?.taxPayableOnReverseCharges, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Sales Consultant Name">{checkAndSetDefaultValue(otfFormData?.saleConsultant, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Influence/Mitra Type">{checkAndSetDefaultValue(otfFormData?.mitraType, isLoading)}</Descriptions.Item>
-                                <Descriptions.Item label="Influence/Mitra Name">{checkAndSetDefaultValue(otfFormData?.mitraName, isLoading)}</Descriptions.Item>
+                            <Descriptions {...viewProps} title={prepareCaption('Price Information')}>
+                                <Descriptions.Item label="Booking Number">{checkAndSetDefaultValue(formData?.bookingNumber || formData?.otfNumber, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Booking Date">{checkAndSetDefaultValue(formData?.otfDate ? formData?.otfDate : formData?.orderDate, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Tax Calculation">{checkAndSetDefaultValue(getCodeValue(typeData?.TAX_CALCLTN_TYPE, formData?.taxCalculationType), isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Tax Payable On Reverse Charges?">{checkAndSetDefaultValue(getCodeValue(typeData?.RFRL, formData?.taxPayableOnReverseCharges), isLoading)}</Descriptions.Item>
+                            </Descriptions>
+                            <Descriptions {...viewProps} title={prepareCaption('Sales Details')}>
+                                <Descriptions.Item label="Sales Consultant Name">{checkAndSetDefaultValue(formData?.saleConsultant, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Influence/Mitra Type">{checkAndSetDefaultValue(formData?.mitraType, isLoading)}</Descriptions.Item>
+                                <Descriptions.Item label="Influence/Mitra Name">{checkAndSetDefaultValue(formData?.mitraName, isLoading)}</Descriptions.Item>
                             </Descriptions>
                         </Panel>
                     </Collapse>

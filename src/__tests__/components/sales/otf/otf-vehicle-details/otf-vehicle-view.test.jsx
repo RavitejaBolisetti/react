@@ -1,6 +1,6 @@
 import React from 'react';
 import { fireEvent, screen } from '@testing-library/react';
-import { ViewDetail } from '@components/Sales/OTF/VehicleDetails/ViewDetail';
+import { ViewDetail } from '@components/Sales/Common/VehicleDetails/ViewDetail';
 import customRender from '@utils/test-utils';
 
 const props = {

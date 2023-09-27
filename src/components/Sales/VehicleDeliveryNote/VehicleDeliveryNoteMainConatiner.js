@@ -9,24 +9,34 @@ import { withDrawer } from 'components/withDrawer';
 import { VEHICLE_DELIVERY_NOTE_SECTION } from 'constants/vehicleDeliveryNoteSection';
 
 import { LeftSidebar } from './LeftSidebar';
-
-import styles from 'assets/sass/app.module.scss';
-
 import { InvoiceDetailsMaster } from './InvoiceDetails';
 import { CustomerDetailsMaster } from './CustomerDetails';
 import { VehicleDetailsMaster } from './VehicleDetails';
-import { InsuranceDetailsMaster } from 'components/Sales/Common/InsuranceDetails';
-import { FinananceDetailsMaster } from 'components/Sales/Common/FinananceDetails';
+
+import { InsuranceDetailsMaster } from './InsuranceDetails';
+import { FinananceDetailsMaster } from 'components/Sales/OTF/FinananceDetails';
+
 import { AddOnDetailsMaster } from './AddOnDetails';
 import { DeliverableChecklistMaster } from './DeliverableChecklist';
 import { VehicleDeliveryNoteFormButton } from './VehicleDeliveryNoteFormButton';
+// import { ThankYouMaster } from './ThankYou';
+
+import styles from 'assets/sass/app.module.scss';
+import { ThankYouMaster } from './ThankYou';
 
 const VehicleDeliveryNoteConatinerMain = (props) => {
-    const { currentSection } = props;
+    const { currentSection, requestPayload, setRequestPayload, selectedOtfNumber, selectedOrderId, soldByDealer } = props;
+
+    const onFinishCustom = ({ key, values }) => {
+        setRequestPayload({ ...requestPayload, [key]: values });
+    };
 
     const myProps = {
         ...props,
         FormActionButton: VehicleDeliveryNoteFormButton,
+        onFinishCustom,
+        selectedOrderId: selectedOtfNumber,
+        selectedInvoiceId: selectedOrderId,
     };
 
     const renderElement = () => {
@@ -40,17 +50,22 @@ const VehicleDeliveryNoteConatinerMain = (props) => {
             case VEHICLE_DELIVERY_NOTE_SECTION.VEHICLE_DETAILS.id: {
                 return <VehicleDetailsMaster {...myProps} />;
             }
+
             case VEHICLE_DELIVERY_NOTE_SECTION.FINANCE_DETAILS.id: {
-                return <FinananceDetailsMaster {...myProps} />;
+                return <FinananceDetailsMaster {...myProps} formKey={'financeDetails'} />;
             }
+
             case VEHICLE_DELIVERY_NOTE_SECTION.INSURANCE_DETAILS.id: {
-                return <InsuranceDetailsMaster {...myProps} />;
+                return <InsuranceDetailsMaster {...myProps} formKey={'insuranceDto'} />;
             }
             case VEHICLE_DELIVERY_NOTE_SECTION.ADD_ON_DETAILS.id: {
                 return <AddOnDetailsMaster {...myProps} />;
             }
             case VEHICLE_DELIVERY_NOTE_SECTION.DELIVERABLE_CHECKLIST.id: {
                 return <DeliverableChecklistMaster {...myProps} />;
+            }
+            case VEHICLE_DELIVERY_NOTE_SECTION.THANK_YOU_PAGE.id: {
+                return <ThankYouMaster {...myProps} />;
             }
             default: {
                 return <InvoiceDetailsMaster {...myProps} />;

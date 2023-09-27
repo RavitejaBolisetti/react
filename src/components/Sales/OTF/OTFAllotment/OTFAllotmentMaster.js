@@ -74,13 +74,17 @@ const OTFAllotmentMasterBase = (props) => {
     const [buttonData, setButtonData] = useState({ ...defaultBtnVisiblity });
     const [searchParamValue, setSearchParamValue] = useState('');
     const [toggleButton, settoggleButton] = useState(VEHICLE_TYPE?.UNALLOTED.key);
-    const [page, setPage] = useState({ pageSize: 10, current: 1 });
     const [showDataLoading, setShowDataLoading] = useState(true);
     const [isAdvanceSearchVisible, setAdvanceSearchVisible] = useState(false);
     const [selectedVINDetails, setSelectedOrderVINDetails] = useState();
 
     const [advanceFilterForm] = Form.useForm();
     const dynamicPagination = true;
+
+    useEffect(() => {
+        setFilterString({ ...filterString, pageSize: 10, current: 1 });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const onSuccessAction = (res) => {
         // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
@@ -113,8 +117,8 @@ const OTFAllotmentMasterBase = (props) => {
             {
                 key: 'modelValue',
                 title: 'Model',
-                value: filterString?.model,
-                name: productHierarchyData?.find((i) => i?.prodctCode === filterString?.model)?.prodctShrtName,
+                value: selectedOrder?.modelCode,
+                // name: productHierarchyData?.find((i) => i?.prodctCode === selectedOrder?.model)?.prodctShrtName,
                 canRemove: true,
                 filter: true,
             },
@@ -137,37 +141,37 @@ const OTFAllotmentMasterBase = (props) => {
             {
                 key: 'pageSize',
                 title: 'Value',
-                value: page?.pageSize,
+                value: filterString?.pageSize,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'pageNumber',
                 title: 'Value',
-                value: page?.current,
+                value: filterString?.current,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'sortBy',
                 title: 'Sort By',
-                value: page?.sortBy,
+                value: filterString?.sortBy,
                 canRemove: true,
                 filter: false,
             },
             {
                 key: 'sortIn',
                 title: 'Sort Type',
-                value: page?.sortType,
+                value: filterString?.sortType,
                 canRemove: true,
                 filter: false,
             },
         ];
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [page, filterString, searchParamValue, toggleButton]);
+    }, [filterString, searchParamValue, toggleButton]);
 
     useEffect(() => {
-        if (userId) {
+        if (userId && extraParams?.find((i) => i.key === 'pageNumber')?.value > 0) {
             fetchVehicleAllotmentSearchedList({ customURL: customURL + '/search', setIsLoading: listShowLoading, userId, extraParams, onSuccessAction, onErrorAction });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -241,9 +245,10 @@ const OTFAllotmentMasterBase = (props) => {
     };
 
     const handleResetFilter = (e) => {
+        const { pageSize } = filterString;
         setSearchParamValue();
         setShowDataLoading(true);
-        setFilterString();
+        setFilterString({ pageSize, current: 1 });
         setSelectedOrderVINDetails();
     };
 
@@ -274,8 +279,8 @@ const OTFAllotmentMasterBase = (props) => {
         srl: false,
         dynamicPagination,
         totalRecords: allotmentSearchedList?.totalRecords,
-        page,
-        setPage,
+        filterString,
+        setPage: setFilterString,
         isLoading: showDataLoading,
         tableColumn: tableColumn(handleButtonClick),
         tableData: allotmentSearchedList?.paginationData,

@@ -227,6 +227,11 @@ export const noWhiteSpaceinBeginning = (fieldName) => ({
     pattern: /^[^\s]+(\s+[^\s]+)*$/,
     message: 'Please dont enter spaces ',
 });
+export const validateMacId = (fieldName) => ({
+    pattern: /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})|([0-9a-fA-F]{4}.[0-9a-fA-F]{4}.[0-9a-fA-F]{4})$/,
+    message: 'Please enter valid MAC id',
+});
+
 
 export const compareAmountValidator = (amount1, amount2, fieldName) => {
     if (parseFloat(amount1) < parseFloat(amount2)) {
@@ -254,18 +259,19 @@ export const isValidQunatity = (value, balancedQuantity) => {
     else return Promise.resolve();
 };
 
-const campareDate = (value, compareTo, title) => {
-    const bool = dayjs(value).format('YYYY-MM-DD') >= dayjs(compareTo).format('YYYY-MM-DD');
-    if (bool) {
-        return Promise.resolve();
-    }
-    return Promise.reject(new Error('Date cant be less than from date'));
+export const campareDate = (value, compareTo, title) => {
+    if (compareTo) {
+        const bool = dayjs(value).format('YYYY-MM-DD') >= dayjs(compareTo).format('YYYY-MM-DD');
+        if (bool) {
+            return Promise.resolve();
+        } else return Promise.reject(new Error('Date cant be less than from date'));
+    } else Promise.resolve();
 };
 
 export const compareFromToDate = (compareTo) => {
     return {
         validator: (_, value) => {
-            return compareTo ? campareDate(value, compareTo) : null;
+            return compareTo ? campareDate(value, compareTo) : Promise.resolve();
         },
     };
 };

@@ -39,6 +39,7 @@ const ViewDetailMain = (props) => {
                             <Divider />
                             <Descriptions {...viewProps}>
                                 <Descriptions.Item label="Manufacturer Warranty End Date">{checkAndSetDefaultValue(formData?.mnfcWarrEndDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                                <Descriptions.Item label="Expiry KM">{checkAndSetDefaultValue(formData?.manufactureKM, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Delivery Date">{checkAndSetDefaultValue(formData?.deliveryDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                                 <Descriptions.Item label="Sale Date">{checkAndSetDefaultValue(formData?.saleDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                                 <Descriptions.Item label="Sold By">{checkAndSetDefaultValue(formData?.soldBy, isLoading)}</Descriptions.Item>
@@ -47,7 +48,7 @@ const ViewDetailMain = (props) => {
                                 <Descriptions.Item label="Next Due Service">{checkAndSetDefaultValue(formData?.nextDueService, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Relationship Manager">{checkAndSetDefaultValue(formData?.relationshipManager, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Next Service Due Date">{checkAndSetDefaultValue(formData?.nextServiceDueDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
-                                <Descriptions.Item label="PUC Expiry Date">{checkAndSetDefaultValue(formData?.pucExpiryDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
+                                {/* <Descriptions.Item label="PUC Expiry Date">{checkAndSetDefaultValue(formData?.pucExpiryDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item> */}
                                 <Descriptions.Item label="Insurance Expiry Date">{checkAndSetDefaultValue(formData?.insuranceExpiryDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                                 <Descriptions.Item label="Customer Category-SSI">{checkAndSetDefaultValue(formData?.customerCategorySsi, isLoading)}</Descriptions.Item>
                                 <Descriptions.Item label="Customer Category-CSI">{checkAndSetDefaultValue(formData?.customerCategoryCsi, isLoading)}</Descriptions.Item>
