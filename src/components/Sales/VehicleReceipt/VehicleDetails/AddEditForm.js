@@ -134,10 +134,10 @@ const AddEditFormMain = (props) => {
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.infoWrapper}>
                                         <Form.Item initialValue={item?.modelDescription} label="Model Description" name={[index, 'modelDescription']}>
-                                            <Input maxLength={10} placeholder={preparePlaceholderText('Model Description')} disabled={true} />
+                                            <Input title={item?.modelDescription} maxLength={10} placeholder={preparePlaceholderText('Model Description')} disabled={true} />
                                         </Form.Item>
                                         {item?.modelDescription && (
-                                            <div className={styles.modelTooltip}>
+                                            <div className={styles.modelTooltipView}>
                                                 {addToolTip(
                                                     <div>
                                                         <p>
