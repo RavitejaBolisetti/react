@@ -94,14 +94,17 @@ const LeftPanel = (props) => {
                 if (item[fieldNames?.children]) {
                     return {
                         title,
-                        disabled: item?.disabled ? item?.disabled : false,
+                        // this is used to perform specific nodes checkable disable 
+                        disabled: disabled || item?.disabled,
+                        checkable: item?.checkable,
+                        selectable: item?.selectable,
                         key: item[fieldNames?.key],
                         children: loop(item[fieldNames?.children]),
                     };
                 }
                 return {
                     title,
-                    disabled: item?.disabled ? item?.disabled : false,
+                    disabled: item?.disabled ? true : false,
                     key: item[fieldNames?.key],
                 };
             });

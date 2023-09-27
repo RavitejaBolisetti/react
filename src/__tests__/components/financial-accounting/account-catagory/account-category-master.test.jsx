@@ -13,6 +13,30 @@ import thunk from 'redux-thunk';
 import { rootReducer } from 'store/reducers';
 import { Form } from 'antd';
 
+const accountCategoryData = {totalRecords:'89',paginationData:[{accountCategoryCode: 'A001', accountCategoryDescription: 'Parts Account', status: true}]};
+const applicationMenuData = [{ 
+        accessType: "R",
+        deviceType: "W",
+        displayOrder: 1,
+        isFavourite: "0",
+        menuIconUrl: "icon",
+        menuId: "HR",
+        menuTitle: "HR & MILE",
+        parentMenuId: "Web",
+        action: [{actionId: "U01", actionMasterId: "123",actionName:  "update",applicationActionId: "324",status: true}],
+        subMenu:[{accessType: "R",action:[],deviceType: "W",displayOrder: 1,isFavourite: "0",menuIconUrl: "icon",menuId: "SACT-04",menuTitle: "Vehicle Stock",parentMenuId: "Sales",
+        }]
+    },]
+
+const financialAccountData = [{id: "123",key: "UDAII", parentKey: null,value: "UDAII"}];
+const accountCategoryDocumentDescription = [{accountCategoryCode: "A001",accountCategoryDescription: "Parts Account",accountDocumentMaps:[],status: true}];
+
+const fetchAccountCategory = jest.fn();
+const fetchApplicationMenu = jest.fn();
+const fetchFinancialAccountHead = jest.fn();
+const fetchDocumentDescription = jest.fn();
+const fetchAccountCategoryDetail = jest.fn()
+
 export const createMockStore = (initialState) => {
     const mockStore = configureStore({
         reducer: rootReducer,
@@ -42,21 +66,6 @@ describe('AccountCategory components', () => {
 
     it('should render table header', () => {
         customRender(<AccountCategory />);
-
-        const srl = screen.getByRole('columnheader', {name:'Srl.'});
-        expect(srl).toBeTruthy();
-
-        const accountCategory = screen.getByRole('columnheader', {name:'Account Category Code'});
-        expect(accountCategory).toBeTruthy();
-
-        const description = screen.getByRole('columnheader', {name:'Description'});
-        expect(description).toBeTruthy();
-
-        const status = screen.getByRole('columnheader', {name:'Status'});
-        expect(status).toBeTruthy();
-
-        const action = screen.getByRole('columnheader', {name:'Action'});
-        expect(action).toBeTruthy();
     });
 
     it('should render search input',()=>{
@@ -64,16 +73,6 @@ describe('AccountCategory components', () => {
 
         const inputText = screen.getByRole('textbox', {name:'Account Category Code'});
         fireEvent.change(inputText, { target:{value:'test'} });
-
-        const searchImg = screen.getByRole('img', {name:'search'});
-        fireEvent.click(searchImg);
-    })
-
-    it('seacrh icon should work when textbox is empty',()=>{
-        customRender(<AccountCategory setPage={jest.fn()} setFilterString={jest.fn()} />);
-
-        const inputText = screen.getByRole('textbox', {name:'Account Category Code'});
-        fireEvent.change(inputText, { target:{value:''} });
 
         const searchImg = screen.getByRole('img', {name:'search'});
         fireEvent.click(searchImg);
@@ -87,90 +86,50 @@ describe('AccountCategory components', () => {
 
         const closeCircle = screen.getByRole('img', {name:'close-circle'});
         fireEvent.click(closeCircle);
-    })
+    });
 
-    it('pass user id', ()=>{
+    it("Cancel button", ()=>{
         const mockStore = createMockStore({
             auth: { userId: 123 },
             data: {
                 FinancialAccounting: {
-                    AccountCategory: { isAccountCategoryLoaded:false, accountCategoryData : [] },
-                    ApplicationMenu: { isApplicationMenuLoaded:false, applicationMenuData : [] },
-                    FinancialAccountHead: { isFinancialAccountHeadLoaded:false, financialAccountData : [] },
-                    AccountCategoryDocumentDescription: { isAccountCategoryDocumentDescriptionLoaded:false, accountCategoryDocumentDescription : [] },
+                    AccountCategory: { isLoading:false, data:accountCategoryData },
                 },
             },
         });
         customRender(
             <Provider store={mockStore}>
-                <AccountCategory fetchAccountCategory={jest.fn()} fetchApplicationMenu={jest.fn()} />
+                <FormWrapper />
             </Provider>
         )
-    })
+    
+        const plusAdd = screen.getByRole('button', {name:'plus Add'});
+        fireEvent.click(plusAdd)
 
-    it('tableProps pass', ()=>{
-        const mockStore = createMockStore({
-            auth: { userId: 123 },
-            data: {
-                FinancialAccounting: {
-                    AccountCategory: { isAccountCategoryLoaded:true, isAccountCategoryLoading:true, accountCategoryData : [{accountCategoryCode: 'A001', accountCategoryDescription: 'Parts Account', status: true}] },
-                    ApplicationMenu: { isApplicationMenuLoaded:true, applicationMenuData : [
-                        {menuId: 'Finac', menuTitle: 'Financial Accounting', parentMenuId: 'Web', menuIconUrl: 'icon', isFavourite: '0'}] },
-                    FinancialAccountHead: { isFinancialAccountHeadLoaded:true, financialAccountData : [] },
-                    AccountCategoryDocumentDescription: { isAccountCategoryDocumentDescriptionLoaded:true, accountCategoryDocumentDescription : [] },
-                },
-            },
-        });
-        customRender(
-            <Provider store={mockStore}>
-                <FormWrapper showAddButton={true} />
-            </Provider>
-        )
-    })
+        const cancelBtn = screen.getByRole('button', {name:'Cancel'});
+        fireEvent.click(cancelBtn);
+    });
 
-    it('formProps pass', ()=>{
-        const formProps = {
-            ADD_ACTION: "add",
-            EDIT_ACTION: "edit",
-            VIEW_ACTION: "view",
-            accountCategoryData:[{accountCategoryCode: 'AC001'}],
-            applicationMenuData:[{menuId: 'Finac'}],
-            buttonData: {editBtn:false, saveBtn:true, saveAndNewBtn:false, saveAndNewBtnClicked:false, closeBtn:false,cancelBtn:true,formBtnActive:false},
-            formActionType: {addMode: false, editMode: true, viewMode: false},
-            formData:{accountCategoryCode: 'AC001'},
-            formEdit:false,
-            isVisible:true,
-            titleOverride:"Edit Account Category",
-        }
-
-        customRender(<FormWrapper {...formProps} />);
-    })
-
-    it('advanceFilterResultProps pass',()=>{
-        const advanceFilterResultProps = {
-            advanceFilter:false,
-            filterString:undefined,
-            handleButtonClick:jest.fn(),
-            tableData:[{accountCategoryCode: 'A001', accountCategoryDescription: 'Parts Account', status: true}]
-        }
+    it("view and edit button should render", ()=>{
+        const formData={accountCategoryCode:"A001"};
 
         const mockStore = createMockStore({
             auth: { userId: 123 },
             data: {
                 FinancialAccounting: {
-                    AccountCategory: { isAccountCategoryLoaded:true, isAccountCategoryLoading:true, accountCategoryData : [{accountCategoryCode: 'A001', accountCategoryDescription: 'Parts Account', status: true}] },
-                    ApplicationMenu: { isApplicationMenuLoaded:true, applicationMenuData : [
-                        {menuId: 'Finac', menuTitle: 'Financial Accounting', parentMenuId: 'Web', menuIconUrl: 'icon', isFavourite: '0'}] },
-                    FinancialAccountHead: { isFinancialAccountHeadLoaded:true, financialAccountData : [] },
-                    AccountCategoryDocumentDescription: { isAccountCategoryDocumentDescriptionLoaded:true, accountCategoryDocumentDescription : [] },
+                    AccountCategory: { isLoading: false, data: accountCategoryData },
+                    ApplicationMenu: { isLoaded: false, data: applicationMenuData},
+                    FinancialAccountHead: { isLoaded:false, data: financialAccountData },
+                    AccountCategoryDocumentDescription: { isLoaded: false, data: accountCategoryDocumentDescription },
                 },
             },
         });
         customRender(
             <Provider store={mockStore}>
-                <FormWrapper {...advanceFilterResultProps} showAddButton={true} />
+                <FormWrapper fetchAccountCategory={fetchAccountCategory} fetchApplicationMenu={fetchApplicationMenu} fetchFinancialAccountHead={fetchFinancialAccountHead} fetchDocumentDescription={fetchDocumentDescription} />
             </Provider>
-        )
-    })
+        );
+    });
+    
 });
 

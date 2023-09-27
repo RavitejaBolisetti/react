@@ -67,9 +67,21 @@ describe('CreditDebitNoteFormButton components', () => {
         const buttonData = {
             saveBtn:true
         }
-        customRender(<CreditDebitNoteFormButton buttonData={buttonData} setButtonData={jest.fn()} />);
+        customRender(<CreditDebitNoteFormButton buttonData={buttonData} setButtonData={jest.fn()} loading={false} isLastSection={true}/>);
 
         const saveBtn = screen.getByRole('button', {name:'Save & Next'})
-        fireEvent.click(saveBtn);
+        fireEvent.submit(saveBtn);
+    });
+
+    it('printBtn', () => {
+        const buttonData = {
+            printBtn:true
+        }
+        const handlePrintDownload = jest.fn();
+        const record={id:'123'}
+        customRender(<CreditDebitNoteFormButton buttonData={buttonData} handleButtonClick={jest.fn(() => handlePrintDownload(record))}  />);
+        
+        const printBtn = screen.getByRole('button', {name:'Print Receipt'})
+        fireEvent.click(printBtn);
     });
 });

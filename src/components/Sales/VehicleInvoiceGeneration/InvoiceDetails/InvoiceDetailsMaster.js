@@ -18,6 +18,7 @@ const InvoiceDetailsMasterBase = (props) => {
     const { typeData, vehicleInvoiceMasterData, selectedOrderId } = props;
     const { userId, buttonData, setButtonData, section, isDataLoaded, isLoading, invoiceDetailForm } = props;
     const { formActionType, selectedOtfNumber, setSelectedOtfNumber } = props;
+
     const { FormActionButton, requestPayload, setRequestPayload, handleButtonClick, NEXT_ACTION, handleBookingNumberSearch, CustomerForm, showGlobalNotification } = props;
 
     const [activeKey, setActiveKey] = useState([3]);
