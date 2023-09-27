@@ -82,16 +82,14 @@ const AddEditFormMain = (props) => {
     };
 
     const handleSave = (indexId) => {
-        vehicleDetailForm
-            .validateFields()
-            .then(() => {
-                const vehicleDetailData = vehicleDetailForm?.getFieldsValue();
-                const filteredFormData = formData?.filter((element, i) => i !== indexId);
-                const finalData = { ...filteredFormData, ...vehicleDetailData };
-                setFinalData(finalData);
-                setButtonData({ ...buttonData, formBtnActive: true });
-                setactiveKey([]);
-            })
+        vehicleDetailForm.validateFields().then(() => {
+            const vehicleDetailData = vehicleDetailForm?.getFieldsValue();
+            const filteredFormData = formData?.filter((element, i) => i !== indexId);
+            const finalData = { ...filteredFormData, ...vehicleDetailData };
+            setFinalData(finalData);
+            setButtonData({ ...buttonData, formBtnActive: true });
+            setactiveKey([]);
+        });
     };
 
     const handleCancelFormEdit = () => {
@@ -128,7 +126,6 @@ const AddEditFormMain = (props) => {
                                         <Row>
                                             <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                                                 <Text type="secondary" className={styles.subSection}>
-                                                    {' '}
                                                     Vehicle Status: {getCodeValue(vehicleStatusType, item?.vehicleStatus)}
                                                 </Text>
                                             </Col>
@@ -137,9 +134,6 @@ const AddEditFormMain = (props) => {
                                 }
                                 key={index}
                             >
-                                {/* <AccessoriesInformationCard formData={element} /> */}
-                                {/* </Panel> */}
-                                {/* <Panel header="Model: Scorpio | VIN: 234254543453" key="1"> */}
                                 <Divider />
                                 <Row gutter={20}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8} className={styles.infoWrapper}>
