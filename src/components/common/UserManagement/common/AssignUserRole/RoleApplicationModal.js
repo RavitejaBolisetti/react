@@ -22,7 +22,6 @@ const RoleApplicationModalrMain = (props) => {
 
     useEffect(() => {
         selectedRoleId || record?.roleId ? form.setFieldsValue({ roleId: selectedRoleId || record?.roleId }) : form.setFieldsValue({ roleId: '' });
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [mnmAppList, dlrAppList]);
 
