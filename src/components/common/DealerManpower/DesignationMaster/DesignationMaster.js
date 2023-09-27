@@ -165,8 +165,6 @@ export const DesignationMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterString, isDataLoaded, data, userId]);
 
-    // console.log('divisionData', divisionData, 'departmentData', departmentData, 'roleData', roleData);
-
     const extraParams = [
         {
             key: 'code',

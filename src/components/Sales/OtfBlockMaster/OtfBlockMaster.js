@@ -125,7 +125,7 @@ export const OtfBlockMasterMain = (props) => {
 
     const [selectedTreeKey, setSelectedTreeKey] = useState([]);
     const [selectedProductCode, setSelectedProductCode] = useState();
-    const [options, setOptions] = useState(["All"]);
+    const [options, setOptions] = useState(['All']);
     const [selectedOrganizationCode, setSelectedOrganizationCode] = useState();
     const [selectedProductName, setSelectedProductName] = useState();
     const [selectedTreeSelectKey, setSelectedTreeSelectKey] = useState([]);
@@ -315,7 +315,7 @@ export const OtfBlockMasterMain = (props) => {
 
     const onFinish = (values) => {
         const recordId = formData?.id || '';
-        const data = { ...values, id: recordId, modelGroupCode: selectedProductCode, hierarchyMstId: formData?.id ? selectedTreeSelectKey[0] : selectedTreeSelectKey }
+        const data = { ...values, id: recordId, modelGroupCode: selectedProductCode, hierarchyMstId: formData?.id ? selectedTreeSelectKey[0] : selectedTreeSelectKey };
         const onSuccess = (res) => {
             form.resetFields();
 
@@ -352,7 +352,7 @@ export const OtfBlockMasterMain = (props) => {
         saveOTFBlockData(requestData);
     };
 
-    const onFinishFailed = (errorInfo) => { };
+    const onFinishFailed = (errorInfo) => {};
 
     const myProps = {
         isTreeViewVisible,
@@ -462,7 +462,7 @@ export const OtfBlockMasterMain = (props) => {
         placeholder: preparePlaceholderSelect('Organization Hierarchy'),
     };
     const title = 'Hierarchy';
-    const onfinishHeader = (value) => { };
+    const onfinishHeader = (value) => {};
     return (
         <>
             <div className={styles.contentHeaderBackground}>

@@ -92,7 +92,6 @@ const AddEditFormMain = (props) => {
                 setButtonData({ ...buttonData, formBtnActive: true });
                 setactiveKey([]);
             })
-            .catch((err) => console.log(err));
     };
 
     const handleCancelFormEdit = () => {

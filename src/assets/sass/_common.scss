@@ -993,6 +993,12 @@
                             td {
                                 padding: 0;
                                 padding-bottom: 20px;
+
+                                .ant-descriptions-item-content {
+                                    .ant-collapse {
+                                        margin-bottom: -10px !important;
+                                    }
+                                }
                             }
 
                             // &:last-child {

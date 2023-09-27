@@ -160,6 +160,11 @@ const AddEditForm = (props) => {
                 </Row>
                 <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
+                        <Form.Item label="Address Line 3" name="addressLine3">
+                            <Input maxLength={50} placeholder={preparePlaceholderText('address Line 3')} />
+                        </Form.Item>
+                    </Col>
+                    <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item initialValue={formData?.pinCode} label="Pin Code" name="pinCode" rules={[validateRequiredInputField('Pin Code'), validatePincodeField('Pin Code')]}>
                             <AutoComplete {...disabledProps} maxLength={6} options={options} onSelect={handleOnSelect} getPopupContainer={(triggerNode) => triggerNode.parentElement}>
                                 <Search onSearch={handleOnSearch} onChange={handleOnClear} placeholder="Search" loading={isPinCodeLoading} type="text" allowClear />
@@ -175,7 +180,8 @@ const AddEditForm = (props) => {
                             <Input />
                         </Form.Item>
                     </Col>
-
+                </Row>
+                <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item label="City" initialValue={formData?.cityName} name="cityName">
                             <Input disabled={true} placeholder={preparePlaceholderText('city')} maxLength={50} />
@@ -184,8 +190,6 @@ const AddEditForm = (props) => {
                             <Input />
                         </Form.Item>
                     </Col>
-                </Row>
-                <Row gutter={20}>
                     <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                         <Form.Item label="District" initialValue={formData?.districtName} name="districtName">
                             <Input disabled={true} placeholder={preparePlaceholderText('district')} maxLength={50} />

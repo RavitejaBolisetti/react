@@ -10,8 +10,6 @@ import { FROM_ACTION_TYPE } from 'constants/formActionType';
 import styles from 'assets/sass/app.module.scss';
 
 export const VehicleInvoiceFormButton = ({ formActionType, record, onCloseAction, onCancelInvoice, onApproveCancel, buttonData, setButtonData, saveButtonName = 'Save & Next', handleButtonClick, isLoadingOnSave, isLastSection, onPrintInvoice, onPrintForm21 }) => {
-    const content = <div>Coming Soon</div>;
-    //console.log('formActionType', formActionType);
     return (
         <div className={styles.formFooter}>
             <Row gutter={20}>

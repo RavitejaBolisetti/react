@@ -50,7 +50,6 @@ export const NotificationDetailMaster = (props) => {
                     setButtonData({ ...buttonData, formBtnActive: true });
                 }
             })
-            .catch((error) => console.log(error));
     };
 
     const cardAttributeProps = {

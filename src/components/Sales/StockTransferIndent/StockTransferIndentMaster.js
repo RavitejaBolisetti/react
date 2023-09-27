@@ -488,7 +488,6 @@ export const StockTransferIndentMasterBase = (props) => {
     };
 
     const handlePrintDownload = (record) => {
-        console.log(`record`, record);
         setRecordType(record?.issueStatus);
         setReportVisible(true);
         setAdditionalReportParams([
