@@ -209,6 +209,9 @@ const OTFAllotmentMasterBase = (props) => {
         // let data = { ...allotmentSummaryDetails, vehicleOTFDetails: selectedOTFDetails, allotmentStatus: updatedStatus };
         let data = { otfId, otfNumber, allotmentStatus: updatedStatus, vehicleIdentificationNumber };
 
+        console.log('🚀 ~ file: OTFAllotmentMaster.js:212 ~ handleVehicleAllotment ~ data:', data);
+        return false;
+
         const onSuccess = (res) => {
             handleResetFilter();
             setShowDataLoading(true);

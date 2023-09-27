@@ -335,11 +335,11 @@ export const VehicleAllotmentMasterBase = (props) => {
             updatedStatus = VEHICLE_TYPE?.UNALLOTED.key;
         }
 
-        const { otfId, otfNumber } = selectedOTFDetails;
+        const { otfId, otfNumber, bookingNumber } = selectedOTFDetails;
         const { vehicleIdentificationNumber } = allotmentSummaryDetails;
 
         // let data = { ...allotmentSummaryDetails, vehicleOTFDetails: selectedOTFDetails, allotmentStatus: updatedStatus };
-        let data = { otfId, otfNumber, allotmentStatus: updatedStatus, vehicleIdentificationNumber };
+        let data = { otfId, otfNumber, bookingNumber, allotmentStatus: updatedStatus, vehicleIdentificationNumber };
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
