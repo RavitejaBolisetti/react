@@ -62,7 +62,6 @@ const AssignUserRole = (props) => {
 
     const [isModalVisible, setisModalVisible] = useState(false);
     const [record, setRecord] = useState({});
-    console.log("🚀 ~ file: AssignUserRoleMain.js:65 ~ AssignUserRole ~ record:", record)
     const [selectedRoleId, setSelectedRoleId] = useState('');
     const [disableMdlSaveBtn, setDisableMdlSaveBtn] = useState(true);
 

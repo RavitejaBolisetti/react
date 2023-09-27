@@ -28,7 +28,6 @@ export const AccountAndDocumentMappingMaster = (props) => {
                 setMainSelectedKey(null);
                 setButtonData({ ...buttonData, formBtnActive: true });
             })
-            .catch((error) => console.log(error));
     };
 
     const handleSelectTreeClick = (value, treeObj) => {
