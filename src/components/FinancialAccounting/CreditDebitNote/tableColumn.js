@@ -4,10 +4,12 @@
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
 import { tblPrepareColumns, tblActionColumn } from 'utils/tableColumn';
+import { getCodeValue } from 'utils/getCodeValue';
+import { PARAM_MASTER } from 'constants/paramMaster';
 
 import styles from 'assets/sass/app.module.scss';
 
-export const tableColumn = (handleButtonClick) => {
+export const tableColumn = ({ handleButtonClick, typeData }) => {
     const tableColumn = [
         tblPrepareColumns({
             title: 'Voucher Number',
@@ -18,6 +20,10 @@ export const tableColumn = (handleButtonClick) => {
             title: 'Voucher Type',
             dataIndex: 'voucherType',
             width: '18%',
+            render: (value) => {
+                console.log('value', value);
+                return getCodeValue(typeData[PARAM_MASTER.VOUCHR_TYPE.id], value);
+            },
         }),
 
         tblPrepareColumns({
