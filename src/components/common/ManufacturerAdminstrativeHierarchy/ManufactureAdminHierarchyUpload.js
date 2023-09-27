@@ -19,6 +19,11 @@ const UploadMain = (props) => {
     const { organizationId } = props;
     const { setFileList, setUploadedFileName, downloadShowLoading, resetData, authorityShowLoading, saveAuthorityData, uploadedFile, fetchDocumentFileDocId } = props;
 
+
+    const onErrorAction = (res) => {
+        showGlobalNotification({ notificationType: 'error', title: 'Error', message: res, placement: 'bottomRight' });
+    };
+
     const downloadReport = (documentId) => {
         const onSuccessAction = (res) => {
             setFileList([]);
@@ -28,9 +33,7 @@ const UploadMain = (props) => {
             showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage, placement: 'bottomRight' });
         };
 
-        const onErrorAction = (res) => {
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message: res, placement: 'bottomRight' });
-        };
+      
 
         const extraParams = [
             {
@@ -101,7 +104,7 @@ const UploadMain = (props) => {
                     name: 'docId',
                 },
             ];
-            downloadFile({ setIsLoading: downloadShowLoading, userId, extraParams });
+            downloadFile({ setIsLoading: downloadShowLoading, userId, onErrorAction, extraParams });
             resetData();
         };
         fetchDocumentFileDocId({
@@ -109,6 +112,7 @@ const UploadMain = (props) => {
             extraParams,
             userId,
             onSuccessAction,
+            onErrorAction,
         });
     };
 

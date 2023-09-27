@@ -587,6 +587,20 @@ export const MenuConstant = {
         parentMenuId: 'SACT-06.07',
     },
 
+    [getMenyKey('SACT-06.06')]: {
+        key: 'SACT-06.06',
+        link: routing.ROUTING_VEHICLE_INVOICE_GENERATION,
+        icon: undefined,
+        parentMenuId: 'OTD',
+    },
+
+    [getMenyKey('SACT-06.07')]: {
+        key: 'SACT-06.07',
+        link: routing.ROUTING_VEHICLE_DELIVERY_NOTE,
+        icon: undefined,
+        parentMenuId: 'OTD',
+    },
+
     [getMenyKey('FINA-01.06')]: {
         key: 'FINA-01.06',
         link: routing.ROUTING_VEHICLE_MODEL_TAX_CHARGES_CATEGORY,
@@ -599,5 +613,20 @@ export const MenuConstant = {
         link: routing.ROUTING_RECEIPTS,
         icon: undefined,
         parentMenuId: 'FINA-02',
+    },
+
+    [getMenyKey('SACT-03.02')]: {
+        key: 'SACT-03.02',
+        link: routing.ROUTING_ONROAD_PRICE_MASTER,
+        icon: undefined,
+        parentMenuId: 'SACT-03',
+    },
+    
+
+    [getMenyKey('SACT-04.02')]: {
+        key: 'SACT-04.02',
+        link: routing.ROUTING_SO_MAPPING_UNMAPPING,
+        icon: undefined,
+        parentMenuId: 'SACT-04',
     },
 };

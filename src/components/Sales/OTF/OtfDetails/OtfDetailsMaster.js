@@ -20,6 +20,7 @@ import { BASE_URL_OTF_DETAILS as customURL } from 'constants/routingApi';
 import { formatDate } from 'utils/formatDateTime';
 
 import { OTFStatusBar } from '../utils/OTFStatusBar';
+import { OTF_STATUS } from 'constants/OTFStatus';
 
 import styles from 'assets/sass/app.module.scss';
 
@@ -69,6 +70,7 @@ const OtfDetailsMasterBase = (props) => {
     const { typeData, listConsultantShowLoading } = props;
     const { userId, showGlobalNotification, section, fetchOTFDetail, listShowLoading, isDataLoaded, otfData, saveData, isLoading } = props;
     const { form, selectedOrderId, formActionType, handleFormValueChange, fetchSalesConsultant, salesConsultantLov, isSalesConsultantDataLoaded, NEXT_ACTION, handleButtonClick } = props;
+    const { workFlowDetails, setWorkFlowDetails } = props;
     const [exchangeValue, setexchangeValue] = useState(false);
     const [loyaltyValue, setloyaltyValue] = useState(false);
     const disabledProps = {
@@ -85,6 +87,11 @@ const OtfDetailsMasterBase = (props) => {
         } else {
             setexchangeValue(false);
             setloyaltyValue(false);
+        }
+        if (otfData?.otfStatus === OTF_STATUS.PENDING_FOR_CANCELLATION.key) {
+            setWorkFlowDetails(otfData?.workFlowDetails);
+        } else {
+            setWorkFlowDetails({});
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [otfData]);

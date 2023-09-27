@@ -23,6 +23,7 @@ const initialState = {
 const filteredListRecieveDataCF = (state, action) => ({
     ...state,
     isFilteredListLoaded: true,
+    isLoading: true,
     filteredListData: action.filteredListData,
     updatedAt: moment().toDate(),
 });

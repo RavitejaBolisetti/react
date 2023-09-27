@@ -142,7 +142,7 @@ const AddEditFormMain = (props) => {
                                 </Col>
                                 <Col xs={12} sm={12} md={12} lg={12} xl={12}>
                                     <Form.Item label="Requested by" name="requestedBy" rules={[validateRequiredSelectField('Requested by')]}>
-                                        {customSelectBox({ data: requestedByDealerList, fieldNames: { key: 'key', value: 'value' }, placeholder: preparePlaceholderSelect('') })}
+                                        {customSelectBox({ data: requestedByDealerList, fieldNames: { key: 'key', value: 'value' }, placeholder: preparePlaceholderSelect(''), disabled: true })}
                                     </Form.Item>
                                 </Col>
                             </Row>

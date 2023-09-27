@@ -3,12 +3,13 @@
  *   All rights reserved.
  *   Redistribution and use of any source or binary or in any form, without written approval and permission is prohibited. Please read the Terms of Use, Disclaimer & Privacy Policy on https://www.mahindra.com/
  */
-import React, { useState } from 'react';
+import React from 'react';
 import { Row, Col, Collapse, Divider } from 'antd';
 import { expandIcon } from 'utils/accordianExpandIcon';
 
 import VehicleInfoForm from './VehicleInfoForm';
 import BatteryInfoForm from './BatteryInfoForm';
+import { NoDataFound } from 'utils/noDataFound';
 
 const { Panel } = Collapse;
 
@@ -46,7 +47,7 @@ const AddEditFormMain = (props) => {
                 <Collapse collapsible="icon" expandIcon={expandIcon} activeKey={activeKey} onChange={() => onChange(2)} expandIconPosition="end">
                     <Panel header="Battery Details" key="2">
                         <Divider />
-                        <BatteryInfoForm {...props} />
+                        {formData?.batteryDetail?.length ? formData?.batteryDetail?.map((battery) => <BatteryInfoForm battery={battery} {...props} />) : <NoDataFound />}
                     </Panel>
                 </Collapse>
             </Col>

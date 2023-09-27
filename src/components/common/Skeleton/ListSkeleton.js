@@ -10,9 +10,9 @@ export const ListSkeleton = ({ count = 10, height = 10, containerHeight = 'auto'
     const theme = 'light';
     const baseColor = color ? color : theme === 'dark' ? '#444' : '#f5f5f5';
     return (
-        <div style={{ padding: '0 15px', border: border, height: containerHeight }}>
+        <div style={{ padding: '10px 15px 15px', border: border, height: containerHeight }}>
             {[...Array(count)].map((e, i) => (
-                <div key={'list-skeleton-' + i} style={{ marginTop: '10px' }}>
+                <div key={'list-skeleton-' + i} style={{ marginTop: '5px' }}>
                     <SkeletonTheme baseColor={baseColor} highlightColor={`${theme === 'dark' ? '#50535a' : '#ebebeb'}`}>
                         <Skeleton height={height} />
                     </SkeletonTheme>

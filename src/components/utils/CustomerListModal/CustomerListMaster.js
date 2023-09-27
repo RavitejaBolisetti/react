@@ -9,6 +9,7 @@ import { Row, Col, Form } from 'antd';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+import { showGlobalNotification } from 'store/actions/notification';
 import { BASE_URL_CUSTOMER_MASTER_VEHICLE_LIST as customURL } from 'constants/routingApi';
 import { otfReferralsDataActions } from 'store/actions/data/otf/referrals';
 
@@ -46,6 +47,8 @@ const mapDispatchToProps = (dispatch) => ({
             listShowLoading: otfReferralsDataActions.listShowLoading,
             resetData: otfReferralsDataActions.reset,
             saveData: otfReferralsDataActions.saveData,
+
+            showGlobalNotification,
         },
         dispatch
     ),
@@ -53,7 +56,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const CustomerListBase = (props) => {
     const { listShowLoading, userId, referralData, fnSetData = undefined, disabled = false, defaultOption = null } = props;
-    const { handleFormValueChange, fetchCustomerList, typeData } = props;
+    const { handleFormValueChange, fetchCustomerList, typeData, showGlobalNotification } = props;
 
     const [searchForm] = Form.useForm();
     const [selectedRowData, setSelectedRowData] = useState();
@@ -113,8 +116,9 @@ const CustomerListBase = (props) => {
                         res?.data?.customerMasterDetails && fnSetData(res?.data?.customerMasterDetails?.[0]);
                     }
                 },
-                onErrorAction: () => {
+                onErrorAction: (message) => {
                     fnSetData(null);
+                    showGlobalNotification({ message });
                 },
                 userId,
             });

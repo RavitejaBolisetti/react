@@ -16,7 +16,7 @@ const { Panel } = Collapse;
 
 const AddEditFormBase = (props) => {
     const { form, formData, sameAsBookingCustomer, setSameAsBookingCustomer, viewOnly = false } = props;
-    const { typeData, activeKey, setActiveKey, formActionType, fnSetData } = props;
+    const { typeData, activeKey, setActiveKey, formActionType, fnSetData, selectedOrderId = '' } = props;
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
@@ -27,7 +27,7 @@ const AddEditFormBase = (props) => {
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formData]);
+    }, [formData, selectedOrderId]);
 
     const onChange = (values) => {
         const isPresent = activeKey.includes(values);

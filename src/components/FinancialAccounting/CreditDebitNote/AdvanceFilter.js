@@ -91,7 +91,7 @@ export default function AdvanceFilter(props) {
                                                 {filter?.name}
                                                 {filter?.canRemove && (
                                                     <span>
-                                                        <RxCross2 onClick={() => removeFilter(filter?.key)} />
+                                                        <RxCross2 onClick={() => removeFilter(filter?.key)} data-testid='remove-filter'/>
                                                     </span>
                                                 )}
                                             </div>

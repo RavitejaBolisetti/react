@@ -73,7 +73,6 @@ const ReferralsMasterBase = (props) => {
     const { filterString, setFilterString } = props;
 
     const [customerList, setCustomerList] = useState();
-    console.log('referralDatareferralData',referralData)
 
     useEffect(() => {
         setFilterString();
@@ -137,12 +136,12 @@ const ReferralsMasterBase = (props) => {
     }, [filterString]);
 
     const onFinish = (values) => {
-        const data = { ...values, otfNumber: selectedOrderId, dob: formatDate(values?.dob), id: referralData?.id };
-        if (onFinishCustom) {
-            onFinishCustom({ key: formKey, values: data });
-            handleButtonClick({ buttonAction: NEXT_ACTION });
-            setButtonData({ ...buttonData, formBtnActive: false });
-        }
+        // const data = { ...values, otfNumber: selectedOrderId, dob: formatDate(values?.dob), id: referralData?.id };
+        // if (onFinishCustom) {
+        // onFinishCustom({ key: formKey, values: data });
+        handleButtonClick({ buttonAction: NEXT_ACTION });
+        setButtonData({ ...buttonData, formBtnActive: false });
+        // }
     };
 
     const onErrorAction = (message) => {
@@ -167,6 +166,7 @@ const ReferralsMasterBase = (props) => {
         typeData,
         searchForm,
         fnSetData,
+        viewOnly: true,
     };
 
     const viewProps = {
@@ -174,6 +174,11 @@ const ReferralsMasterBase = (props) => {
         formData: viewFormData,
         isLoading,
         typeData,
+    };
+
+    const buttonProps = {
+        ...props,
+        buttonData: { ...buttonData, formBtnActive: true },
     };
 
     return (
@@ -194,7 +199,7 @@ const ReferralsMasterBase = (props) => {
                 </Row>
                 <Row>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-                        <FormActionButton {...props} />
+                        <FormActionButton {...buttonProps} />
                     </Col>
                 </Row>
             </Form>

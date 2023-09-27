@@ -36,13 +36,13 @@ export const VehicleDeliveryNoteFormButton = ({ formActionType, handlePrintDownl
 
                     {buttonData?.printDeliveryNoteBtn && (
                         <Button onClick={() => handlePrintDownload(record)} danger>
-                            Print Deliery Note
+                            Print Delivery Note
                         </Button>
                     )}
 
                     {buttonData?.cancelDeliveryNoteBtn && (
                         <Button onClick={onCancelDeliveryNote} danger>
-                            Cancel Deliery Note
+                            Cancel Delivery Note
                         </Button>
                     )}
 
@@ -57,8 +57,6 @@ export const VehicleDeliveryNoteFormButton = ({ formActionType, handlePrintDownl
                             {saveButtonName}
                         </Button>
                     )}
-
-                    {}
                 </Col>
             </Row>
         </div>

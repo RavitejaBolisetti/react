@@ -89,6 +89,9 @@
 .marB5 {
     margin-bottom: 5px;
 }
+.marR10 {
+    margin-right: 10px;
+}
 
 .marR20 {
     margin-right: 20px;
@@ -1055,8 +1058,6 @@
     }
 }
 
-
-
 /*--------------View Contaner Section Strat--------------*/
 
 .viewContainerHeader {
@@ -1967,18 +1968,19 @@
                     }
 
                     .ant-typography {
-                        margin-left: 0 !important;
-                        margin-top: 0 !important;
-                        margin-right: 30px;
-                        margin-left: 0 !important;
-                        margin-top: 0 !important;
-                        margin-right: 30px;
+                        margin-right: 0px;
+                        // margin-left: 0 !important;
+                        // margin-top: 0 !important;
 
                         strong {
                             font-weight: 700;
                             font-size: 16px;
                             line-height: 22px;
                         }
+                    }
+
+                    .ant-btn-link {
+                        margin-left: 30px;
                     }
                 }
             }
@@ -3026,33 +3028,6 @@
                     }
                 }
             }
-        }
-    }
-}
-
-.modalTree {
-    max-height: 50vh !important;
-    min-height: 20vh;
-    overflow-y: auto;
-    margin-bottom: 20px;
-
-    &::-webkit-scrollbar-track {
-        background-color: $primaryWhite;
-    }
-
-    &::-webkit-scrollbar {
-        width: 8px;
-        height: 8px;
-        background-color: $primaryWhite;
-    }
-
-    &::-webkit-scrollbar-thumb {
-        background-color: $neutralGrey2;
-        border-radius: 10px;
-        border: 2px solid $primaryWhite;
-
-        &:hover {
-            border: 2px solid $neutralGrey2;
         }
     }
 }

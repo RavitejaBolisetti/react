@@ -12,7 +12,7 @@ import { tblPrepareColumns } from 'utils/tableColumn';
 import styles from 'assets/sass/app.module.scss';
 
 const ViewDetailMain = (props) => {
-    const { formData = { modelDealerMapResponse: `` }, isLoading, viewProductData, modelGroupArr, setViewProductData, hoPriceDetailData, responseData, formActionType } = props;
+    const { formData = { modelDealerMapResponse: `` }, isLoading, viewProductData, modelGroupArr, setViewProductData, hoPriceDetailData, formActionType } = props;
     const viewProps = {
         bordered: false,
         colon: false,
@@ -35,11 +35,11 @@ const ViewDetailMain = (props) => {
 
     useEffect(() => {
         setViewProductData(() => []);
-        if (formActionType?.viewMode && modelGroupArr?.length && responseData?.length) {
+        if (formActionType?.viewMode && modelGroupArr?.length ) {
             let distinctArr = modelGroupArr.map((item) => item.prodctCode).filter((value, index, self) => self.indexOf(value) === index);
             for (let i = 0; i < distinctArr?.length; i++) {
                 let key = hoPriceDetailData?.modelDealerMapResponse?.find((e) => e?.modelGroupCode === distinctArr[i]);
-                if (key && key?.id) {
+                if (key && key?.id && key?.status) {
                     setViewProductData((prev) => [...prev, { prodctShrtName: modelGroupArr?.find((e) => e?.prodctCode === distinctArr[i])?.prodctShrtName, yesNo: `Yes` }]);
                 } else {
                     setViewProductData((prev) => [...prev, { prodctShrtName: modelGroupArr?.find((e) => e?.prodctCode === distinctArr[i])?.prodctShrtName, yesNo: `No` }]);
@@ -47,7 +47,7 @@ const ViewDetailMain = (props) => {
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [responseData, modelGroupArr]);
+    }, [modelGroupArr]);
 
     const tableProps = {
         isLoading,

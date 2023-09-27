@@ -75,7 +75,6 @@ export const DealerCompanyBase = (props) => {
     const { data, saveData, fetchList, userId, isDataLoaded, listShowLoading, showGlobalNotification, isPinCodeLoading, pinCodeShowLoading } = props;
     const { dealerParentData, isDealerParentDataLoaded, fetchDealerParentLovList, listDealerParentShowLoading, pincodeData, fetchPincodeDetail } = props;
 
-    
     const [form] = Form.useForm();
     const [listFilterForm] = Form.useForm();
     const [showDataLoading, setShowDataLoading] = useState(true);
@@ -235,6 +234,7 @@ export const DealerCompanyBase = (props) => {
         }
     }, [formActionType]);
 
+    const showAddButton = false;
     const formProps = {
         form,
         formData,
@@ -263,6 +263,7 @@ export const DealerCompanyBase = (props) => {
     const tableProps = {
         tableColumn: tableColumn(handleButtonClick),
         tableData: searchData,
+        showAddButton,
     };
 
     const title = 'Company Name';

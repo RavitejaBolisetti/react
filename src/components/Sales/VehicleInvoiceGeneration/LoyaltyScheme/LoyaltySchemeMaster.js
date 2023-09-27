@@ -109,13 +109,12 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const LoyaltySchemeMasterMain = (props) => {
-    const { isLoyaltySchemeDataLoaded, isLoading, section, listShowLoading, fetchList, formData: LoyaltySchemeData, userId, showGlobalNotification } = props;
-    const { form, selectedOrder, selectedOrderId, formActionType, handleFormValueChange, onFinishFailed, handleButtonClick, NEXT_ACTION } = props;
-    const { typeData } = props;
+    const { isLoyaltySchemeDataLoaded, isLoading, section, formData: LoyaltySchemeData, userId, showGlobalNotification } = props;
+    const { typeData, form, selectedOrder, selectedOrderId, formActionType, handleFormValueChange, onFinishFailed, handleButtonClick, NEXT_ACTION } = props;
     const { fetchModelLovList, listModelShowLoading, fetchVariantLovList, listVariantShowLoading } = props;
-    const { isModelDataLoaded, isModelLoading, modelData, isVariantDataLoaded, isVariantLoading, variantData, saveData } = props;
+    const { isModelDataLoaded, isModelLoading, modelData, isVariantDataLoaded, isVariantLoading, variantData } = props;
     const { schemeLovData, isSchemeLovLoading, fetchSchemeLovList, listSchemeLovShowLoading } = props;
-    const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton, StatusBar } = props;
+    const { buttonData, setButtonData, formKey, onFinishCustom = undefined, FormActionButton } = props;
 
     const [filteredModelData, setfilteredModelData] = useState([]);
     const [filteredVariantData, setfilteredVariantData] = useState([]);
@@ -134,19 +133,6 @@ const LoyaltySchemeMasterMain = (props) => {
         }
     };
 
-    const onErrorAction = (message) => {
-        showGlobalNotification({ message });
-    };
-    const onSuccessAction = (res) => {};
-
-    const extraParams = [
-        {
-            key: 'otfNumber',
-            title: 'otfNumber',
-            value: selectedOrderId,
-            name: 'Booking Number',
-        },
-    ];
     const makeExtraParams = (key, title, value, name) => {
         const extraParams = [
             {
@@ -160,14 +146,14 @@ const LoyaltySchemeMasterMain = (props) => {
     };
 
     const onFinish = (values) => {
-        const { customerName } = values;
-        if (!customerName) {
-            showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Verify Customer id to continue' });
-            return;
-        }
-        const data = { ...values, id: LoyaltySchemeData?.id || '', otfNumber: selectedOrderId };
+        // const { customerName } = values;
+        // if (!customerName) {
+        //     showGlobalNotification({ notificationType: 'error', title: 'Error', message: 'Verify Customer id to continue' });
+        //     return;
+        // }
+        // const data = { ...values, id: LoyaltySchemeData?.id || '', otfNumber: selectedOrderId };
 
-        onFinishCustom({ key: formKey, values: data });
+        // onFinishCustom({ key: formKey, values: data });
         handleButtonClick({ buttonAction: NEXT_ACTION });
         setButtonData({ ...buttonData, formBtnActive: false });
     };
@@ -296,10 +282,7 @@ const LoyaltySchemeMasterMain = (props) => {
         disabledProps,
         handleFilterChange,
         handleSchemeChange,
-    };
-
-    const myProps = {
-        ...props,
+        viewOnly: true,
     };
 
     const viewProps = {
@@ -307,6 +290,11 @@ const LoyaltySchemeMasterMain = (props) => {
         customerForm: formData,
         isLoyaltySchemeDataLoaded,
         isLoading,
+    };
+
+    const buttonProps = {
+        ...props,
+        buttonData: { ...buttonData, formBtnActive: true },
     };
 
     return (
@@ -323,7 +311,7 @@ const LoyaltySchemeMasterMain = (props) => {
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                    <FormActionButton {...myProps} />
+                    <FormActionButton {...buttonProps} />
                 </Col>
             </Row>
         </Form>

@@ -42,12 +42,19 @@ const ViewDetailBase = (props) => {
         return productHierarchyList?.find((i) => i?.prodctCode === value)?.prodctShrtName;
     };
 
+    //  const getOldModelGroup = (value) => {
+    //     return productHierarchyList?.find((i) => i?.prodctCode === value)?.prodctShrtName;
+    //  };
+    //  const getNewModelGroup = (value) => {
+    //     return productHierarchyList?.find((i) => i?.prodctCode === value)?.prodctShrtName;
+    //  };
+
     return (
         <>
             <div className={`${styles.viewContainer} ${styles.viewOneColProps}`}>
                 <Descriptions {...viewOneColProps}>
-                    <Descriptions.Item label="Old Model">{checkAndSetDefaultValue(getOldModelGroup(formData?.oldModelGroup), isLoading)}</Descriptions.Item>
-                    <Descriptions.Item label="New Model">{checkAndSetDefaultValue(getNewModelGroup(formData?.newModelGroup), isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="Old Model">{checkAndSetDefaultValue(formData?.oldModelGroup, isLoading)}</Descriptions.Item>
+                    <Descriptions.Item label="New Model">{checkAndSetDefaultValue(formData?.newModelGroup, isLoading)}</Descriptions.Item>
                     <Descriptions.Item label="Effective From Date">{checkAndSetDefaultValue(formData?.effectiveFromDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
                     <Descriptions.Item label="Effective To Date">{checkAndSetDefaultValue(formData?.effectiveToDate, isLoading, DATA_TYPE?.DATE?.key)}</Descriptions.Item>
 

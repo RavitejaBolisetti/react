@@ -285,7 +285,7 @@ const CustomerNameChangeMasterBase = (props) => {
             <>
                 <Typography className={styles.verticallyCentered}>
                     <div className={styles.flexDirectionColumn}>
-                        {getCodeValue(typeData?.TITLE, formData?.titleCode) + ' ' + (formData?.firstName || '') + ' ' + (formData?.middleName || '') + ' ' + (formData?.lastName || '')}
+                        {getCodeValue(typeData?.TITLE, formData?.titleCode, '',false) + ' ' + (formData?.firstName || '') + ' ' + (formData?.middleName || '') + ' ' + (formData?.lastName || '')}
                         {customerNameChangeRequest && (
                             <Text type="secondary" style={{ fontSize: '12px', fontWeight: 'normal' }}>
                                 {requestPending ? 'Current' : 'Previous'} Name

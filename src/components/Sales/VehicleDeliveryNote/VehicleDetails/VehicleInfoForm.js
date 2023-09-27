@@ -7,13 +7,14 @@ import React from 'react';
 
 import { Row, Col, Form, Input } from 'antd';
 import { preparePlaceholderText } from 'utils/preparePlaceholder';
+import { addToolTip } from 'utils/customMenuLink';
+import { AiOutlineInfoCircle } from 'react-icons/ai';
+import styles from 'assets/sass/app.module.scss';
 
 const VehicleInfoForm = (props) => {
-    const { formData, vehicleInfoForm } = props;
-
+    const { formData, toolTipContent } = props;
     return (
         <>
-            {/* <Form form={vehicleInfoForm} onFieldsChange={handleFormValueChange} autoComplete="off" layout="vertical"> */}
             <Row gutter={20}>
                 <Col xs={24} sm={24} md={8} lg={8} xl={8}>
                     <Form.Item initialValue={formData?.vinNumber} label="VIN No." name="vinNumber">
@@ -42,9 +43,9 @@ const VehicleInfoForm = (props) => {
                     <Form.Item initialValue={formData?.modelDescription} label="Modal Description" name="modelDescription">
                         <Input placeholder={preparePlaceholderText('Modal Description')} disabled={true} />
                     </Form.Item>
+                    {toolTipContent && <div className={styles.modelTooltip}>{addToolTip(toolTipContent, 'bottom', '#FFFFFF', styles.toolTip)(<AiOutlineInfoCircle size={13} />)}</div>}
                 </Col>
             </Row>
-            {/* </Form> */}
         </>
     );
 };

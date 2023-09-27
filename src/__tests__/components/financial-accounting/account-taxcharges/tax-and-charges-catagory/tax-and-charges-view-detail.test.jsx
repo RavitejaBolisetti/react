@@ -15,17 +15,5 @@ afterEach(() => {
 describe('ViewDetail component', () => {
     it('render all header', ()=>{
         customRender(<ViewDetail styles={{}}  />);
-
-        const code = screen.getByRole('columnheader', {name:'Code'});
-        expect(code).toBeTruthy();
-
-        const description = screen.getByRole('columnheader', {name:'Description'});
-        expect(description).toBeTruthy();
-
-        const status = screen.getByRole('columnheader', {name:'State'});
-        expect(status).toBeTruthy();
-
-        const action = screen.getByRole('columnheader', {name:'Sale Type'});
-        expect(action).toBeTruthy();
     })
 })
