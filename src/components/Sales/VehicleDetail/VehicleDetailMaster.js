@@ -118,7 +118,7 @@ export const VehicleDetailMasterBase = (props) => {
     const [otfSearchRules, setOtfSearchRules] = useState({ rules: [validateRequiredInputField('search parametar')] });
 
     const onSuccessAction = (res) => {
-        showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
+        // showGlobalNotification({ notificationType: 'success', title: 'Success', message: res?.responseMessage });
         searchForm.setFieldsValue({ searchType: undefined, searchParam: undefined });
         searchForm.resetFields();
         setShowDataLoading(false);
@@ -288,7 +288,7 @@ export const VehicleDetailMasterBase = (props) => {
         setIsFormVisible(true);
     };
 
-    const onFinishSearch = (values) => { };
+    const onFinishSearch = (values) => {};
 
     const onFinish = (values) => {
         const recordId = formData?.parentId || form.getFieldValue('parentId');

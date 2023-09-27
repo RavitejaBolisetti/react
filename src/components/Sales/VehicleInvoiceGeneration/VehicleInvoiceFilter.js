@@ -24,6 +24,7 @@ export default function VehicleInvoiceFilter(props) {
         optionType: typeData?.[PARAM_MASTER.INV_SER.id],
         setFilterString,
         allowClear: false,
+        defaultOption: 'customerName',
     };
 
     return (

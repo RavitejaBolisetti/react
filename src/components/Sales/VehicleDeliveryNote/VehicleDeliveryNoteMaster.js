@@ -90,16 +90,6 @@ const mapDispatchToProps = (dispatch) => ({
             listChallanCancelInfoShowLoading: infoChallanVehicleDeliveryNoteDataActions.listShowLoading,
             resetChallanInfoData: infoChallanVehicleDeliveryNoteDataActions.reset,
 
-            cancelChallan: challanCancelVehicleDeliveryNoteDataActions.saveData,
-
-            fetchCancelInfoList: infoCancelVehicleDeliveryNoteDataActions.fetchList,
-            resetInfoData: infoCancelVehicleDeliveryNoteDataActions.reset,
-            listCancelInfoShowLoading: infoCancelVehicleDeliveryNoteDataActions.listShowLoading,
-
-            fetchChallanCancelInfoList: infoChallanVehicleDeliveryNoteDataActions.fetchList,
-            listChallanCancelInfoShowLoading: infoChallanVehicleDeliveryNoteDataActions.listShowLoading,
-            resetChallanInfoData: infoChallanVehicleDeliveryNoteDataActions.reset,
-
             showGlobalNotification,
         },
         dispatch
@@ -318,14 +308,6 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [deliveryStatus, filterString]);
 
-    // useEffect(() => {
-    //     return () => {
-    //         resetData();
-    //         setFilterString();
-    //     };
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, []);
-
     useEffect(() => {
         if (userId) {
             setShowDataLoading(true);
@@ -514,11 +496,12 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            // showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
             setButtonData({ ...buttonData, formBtnActive: false });
             section && setCurrentSection(VEHICLE_DELIVERY_NOTE_SECTION.THANK_YOU_PAGE.id);
             // setIsFormVisible(false);
+            setSelectedOrder((prev) => ({ ...prev, responseMessage: res?.responseMessage }));
         };
         const onError = (message) => {
             showGlobalNotification({ message });
@@ -541,10 +524,10 @@ export const VehicleDeliveryNoteMasterBase = (props) => {
         const onSuccess = (res) => {
             form.resetFields();
             setShowDataLoading(true);
-            showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
+            // showGlobalNotification({ notificationType: 'success', title: 'SUCCESS', message: res?.responseMessage });
             fetchList({ setIsLoading: listShowLoading, userId, onSuccessAction, extraParams });
             setButtonData({ ...buttonData, formBtnActive: false });
-            // setIsFormVisible(false);
+            setSelectedOrder((prev) => ({ ...prev, responseMessage: res?.responseMessage }));   
             section && setCurrentSection(VEHICLE_DELIVERY_NOTE_SECTION.THANK_YOU_PAGE.id);
         };
         const onError = (message) => {

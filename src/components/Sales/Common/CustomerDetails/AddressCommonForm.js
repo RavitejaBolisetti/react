@@ -39,7 +39,7 @@ export const AddressCommonForm = (props) => {
                 <Row gutter={20}>
                     <Col xs={24} sm={24} md={24} lg={24} xl={24}>
                         <Form.Item name={[formType, 'sameAsBookingCustomer']} label="" initialValue={formData?.sameAsBookingCustomer}>
-                            <Checkbox valuePropName="checked" style={{ margin: '5px 0px 15px 0px' }} onClick={handleOnChange} name="sameAsBookingCustomer">
+                            <Checkbox valuePropName="checked" onClick={handleOnChange} name="sameAsBookingCustomer">
                                 Same as Booking Customer
                             </Checkbox>
                         </Form.Item>

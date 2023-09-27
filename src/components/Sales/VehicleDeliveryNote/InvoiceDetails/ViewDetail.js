@@ -19,7 +19,7 @@ const ViewDetailMain = (props) => {
         column: { xs: 1, sm: 3, lg: 3, xl: 3, xxl: 3 },
     };
     return (
-        <Card className={styles?.drawerCardView}>
+        <Card>
             <Descriptions {...viewProps}>
                 <Descriptions.Item label="Delivery Note For">{checkAndSetDefaultValue(soldByDealer ? 'Vehicle Sold By Dealer' : 'Directly Billed Vehicle', isLoading)}</Descriptions.Item>
                 {soldByDealer && (

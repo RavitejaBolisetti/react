@@ -22,7 +22,7 @@ const ViewDetailMain = (props) => {
     };
 
     return (
-        <Card className={styles.drawerCardView}>
+        <Card>
             <Descriptions {...viewProps}>
                 <Descriptions.Item label="Referral ID">{checkAndSetDefaultValue(formData?.referralId, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Registration Number">{checkAndSetDefaultValue(formData?.registrationNumber, isLoading)}</Descriptions.Item>

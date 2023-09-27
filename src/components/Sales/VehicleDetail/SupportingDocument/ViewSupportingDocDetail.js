@@ -11,7 +11,7 @@ import { FiDownload } from 'react-icons/fi';
 import styles from 'assets/sass/app.module.scss';
 
 export const ViewSupportingDocDetail = (props) => {
-    const { downloadFileFromButton, documentData } = props;
+    const { downloadFileFromButton, documentData, formActionType: { viewMode } } = props;
 
     return (
         <div className={styles.viewDrawerContainer}>
@@ -35,7 +35,7 @@ export const ViewSupportingDocDetail = (props) => {
                 </div>
             ) : (
                 // viewMode &&
-                <NoDataFound informtion={'No supporting documents found'} />
+                viewMode && <NoDataFound informtion={'No supporting documents found'} />
             )}
         </div>
     );

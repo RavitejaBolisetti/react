@@ -15,7 +15,6 @@ const { Option } = Select;
 
 const AddEditFormMain = (props) => {
     const { formData, form, buttonData, setButtonData, supplierTypeData } = props;
-    console.log('🚀 ~ file: AddEditForm.js:18 ~ AddEditFormMain ~ supplierTypeData:', supplierTypeData);
 
     const selectProps = {
         optionFilterProp: 'children',
@@ -37,7 +36,7 @@ const AddEditFormMain = (props) => {
     }, [formData]);
 
     return (
-        <Card className={styles.drawerCardView}>
+        <Card>
             <Row gutter={20}>
                 <Col xs={8} sm={8} md={8} lg={8} xl={8} xxl={8}>
                     <Form.Item initialValue={formData?.supplierType} label="Supplier Type" name="supplierType">

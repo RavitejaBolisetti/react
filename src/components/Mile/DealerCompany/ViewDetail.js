@@ -15,7 +15,7 @@ const ViewDetailBase = ({ formData, styles, parameterType }) => {
     };
     return (
         <>
-            <div className={styles.viewContainer}>
+            <div className={`${styles.viewContainer} ${styles.viewOneColProps}`}>
                 <Descriptions {...viewOneColProps}>
                     <Descriptions.Item label="Parent Group Code">{formData?.parentCode}</Descriptions.Item>
                     <Descriptions.Item label="Parent Group Name">{formData?.dealerParentName}</Descriptions.Item>

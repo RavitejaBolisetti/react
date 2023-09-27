@@ -351,17 +351,16 @@ export const CreditDebitNoteMasterBase = (props) => {
 
     const onFinishSearch = (values) => {};
 
-      const handlePrintDownload = (record) => {
-        
-          setReportVisible(true);
+    const handlePrintDownload = (record) => {
+        setReportVisible(true);
 
-          setAdditionalReportParams([
-              {
-                  key: 'fn_vc_debit_credit_note_hdr_id',
-                  value: record?.id,
-              },
-          ]);
-      };
+        setAdditionalReportParams([
+            {
+                key: 'fn_vc_debit_credit_note_hdr_id',
+                value: record?.id,
+            },
+        ]);
+    };
 
     const onFinish = () => {
         const recordId = selectedRecord?.id;
@@ -415,7 +414,7 @@ export const CreditDebitNoteMasterBase = (props) => {
         totalRecords,
         page,
         setPage,
-        tableColumn: tableColumn(handleButtonClick),
+        tableColumn: tableColumn({ handleButtonClick, typeData }),
         tableData: data,
         showAddButton: false,
         handleButtonClick,

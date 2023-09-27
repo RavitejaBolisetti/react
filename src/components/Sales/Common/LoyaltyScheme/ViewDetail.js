@@ -19,7 +19,7 @@ const ViewDetailMain = (props) => {
     };
 
     return (
-        <Card className={styles.drawerCardView}>
+        <Card>
             <Descriptions {...viewProps} title={prepareCaption('Vehicle Details')}>
                 <Descriptions.Item label="Old Reg. Number">{checkAndSetDefaultValue(customerForm?.registrationNumber, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Make">{checkAndSetDefaultValue(customerForm?.make, isLoading)}</Descriptions.Item>
@@ -34,7 +34,7 @@ const ViewDetailMain = (props) => {
             <Descriptions {...viewProps} title={prepareCaption('Customer Details')}>
                 <Descriptions.Item label="Customer Name">{checkAndSetDefaultValue(customerForm?.customerName, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Relationship">{checkAndSetDefaultValue(customerForm?.relationName, isLoading)}</Descriptions.Item>
-              </Descriptions>
+            </Descriptions>
             <Descriptions {...viewProps} title={prepareCaption('Scheme')}>
                 <Descriptions.Item label="Scheme Name">{checkAndSetDefaultValue(customerForm?.schemeName, isLoading)}</Descriptions.Item>
                 <Descriptions.Item label="Scheme Amount">{checkAndSetDefaultValue(customerForm?.schemeAmount, isLoading)}</Descriptions.Item>
