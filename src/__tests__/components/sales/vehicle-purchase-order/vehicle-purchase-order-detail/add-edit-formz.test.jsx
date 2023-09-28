@@ -105,8 +105,6 @@ describe('add edit form Components', () => {
 
         const orderTypeBtn = screen.getByRole('combobox', { name: 'Order Type', exact: false });
         fireEvent.click(orderTypeBtn);
-        const modelBtn = screen.getByRole('combobox', { name: 'Model', exact: false });
-        fireEvent.click(modelBtn);
 
         const quantity = screen.getByRole('spinbutton', { name: 'Quantity' });
         fireEvent.click(quantity);

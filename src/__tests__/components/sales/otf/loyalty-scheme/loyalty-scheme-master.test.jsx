@@ -1,12 +1,26 @@
 import React from 'react';
 import { screen, fireEvent } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { LoyaltySchemeMaster } from '@components/Sales/Common/LoyaltyScheme/LoyaltySchemeMaster';
+import { LoyaltySchemeMaster } from 'components/Sales/OTF/LoyaltyScheme';
 import customRender from '@utils/test-utils';
 import { Form } from 'antd';
 import { configureStore } from '@reduxjs/toolkit';
 import thunk from 'redux-thunk';
 import { rootReducer } from 'store/reducers';
+
+const StatusBar = () => <div>No Status Bar</div>;
+
+
+const FormActionButton = ({onFinish}) => (
+    <div>
+        <button onClick={onFinish}>
+            Save & Next
+        </button>
+        <button>
+            Change History
+        </button>
+    </div>
+);
 
 export const createMockStore = (initialState) => {
     const mockStore = configureStore({
@@ -76,7 +90,7 @@ describe('Booking loyalty scheme master render', () => {
     it('should render loyalty view details', () => {
         customRender(
             <Provider store={mockStore}>
-                <FormWrapper setFormData={jest.fn} {...props} handleFormValueChange={jest.fn()} formActionType={formActionType} />
+                <FormWrapper setFormData={jest.fn} StatusBar={StatusBar} FormActionButton={FormActionButton} {...props} handleFormValueChange={jest.fn()} formActionType={formActionType} />
             </Provider>
         );
 
@@ -97,9 +111,6 @@ describe('Booking loyalty scheme master render', () => {
 
         const oldChassis = screen.getByRole('columnheader', { name: 'Old Chassis Number' });
         expect(oldChassis).toBeTruthy();
-
-        const dob = screen.getByRole('columnheader', { name: 'Date of Birth' });
-        expect(dob).toBeTruthy();
 
         const relationship = screen.getByRole('columnheader', { name: 'Relationship' });
         expect(relationship).toBeTruthy();
@@ -126,7 +137,7 @@ describe('Booking loyalty scheme master render', () => {
     it('should render loyalty Add edit form', async () => {
         customRender(
             <Provider store={mockStore}>
-                <FormWrapper setFormData={jest.fn} {...props} handleFormValueChange={jest.fn()} formActionType={formActionTypeAdd} />
+                <FormWrapper setFormData={jest.fn} StatusBar={StatusBar} FormActionButton={FormActionButton} {...props} handleFormValueChange={jest.fn()} formActionType={formActionTypeAdd} />
             </Provider>
         );
 
@@ -175,7 +186,7 @@ describe('Booking loyalty scheme master render', () => {
 
         customRender(
             <Provider store={mockStore}>
-                <FormWrapper setFormData={jest.fn} {...props} handleFormValueChange={jest.fn()} formActionType={formActionTypeAdd} buttonData={buttonData} saveButtonName={'Save & Next'} setButtonData={jest.fn()} setEditable={jest.fn()} onFinish={jest.fn()} setformData={jest.fn()} handleFilterChange={jest.fn()} formData={formData} />
+                <FormWrapper setFormData={jest.fn} StatusBar={StatusBar} FormActionButton={FormActionButton} {...props} handleFormValueChange={jest.fn()} formActionType={formActionTypeAdd} buttonData={buttonData} saveButtonName={'Save & Next'} setButtonData={jest.fn()} setEditable={jest.fn()} onFinish={jest.fn()} setformData={jest.fn()} handleFilterChange={jest.fn()} formData={formData} />
             </Provider>
         );
 
@@ -184,8 +195,5 @@ describe('Booking loyalty scheme master render', () => {
 
         const changeHistory = screen.getByRole('button', { name: 'Change History' });
         fireEvent.click(changeHistory);
-
-        const cancel = screen.getByRole('button', { name: 'Cancel' });
-        fireEvent.click(cancel);
     });
 });

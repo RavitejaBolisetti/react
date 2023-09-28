@@ -7,14 +7,25 @@ import '@testing-library/jest-dom/extend-expect';
 import customRender from '@utils/test-utils';
 import { screen, fireEvent } from '@testing-library/react';
 import { ConfirmationModal } from '@components/Sales/VehiclePurchaseOrder/VehiclePurchaseOrderCancellation/ConfirmationModal';
+import { Form } from 'antd';
+
+const FormWrapper = (props) => {
+    const [vpoCancellationForm] = Form.useForm();
+
+    const myFormMock = {
+        ...vpoCancellationForm,
+        resetFields: jest.fn()
+    };
+    return <ConfirmationModal vpoCancellationForm={myFormMock} {...props} />;
+};
 
 describe('confirmation modal Components', () => {
     it('should render confirmation modal components', () => {
-        customRender(<ConfirmationModal setIsCancelVisible={jest.fn()} isVisible={true} typeData={['PO_CNCL_RSN']} setButtonData={jest.fn()} onFieldsChange={jest.fn()} />);
+        customRender(<FormWrapper setIsCancelVisible={jest.fn()} isVisible={true} typeData={['PO_CNCL_RSN']} setButtonData={jest.fn()} onFieldsChange={jest.fn()} />);
     });
 
     it('should check all button click events', async () => {
-        customRender(<ConfirmationModal setIsCancelVisible={jest.fn()} isVisible={true} typeData={['PO_CNCL_RSN']} setButtonData={jest.fn()} onFieldsChange={jest.fn()} />);
+        customRender(<FormWrapper setIsCancelVisible={jest.fn()} isVisible={true} typeData={['PO_CNCL_RSN']} setButtonData={jest.fn()} onFieldsChange={jest.fn()} />);
         const closeBtn = screen.getByRole('button', { name: 'Close' });
         fireEvent.click(closeBtn);
         const cancelBtn = screen.getByRole('button', { name: 'Cancel' });
