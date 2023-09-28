@@ -284,8 +284,8 @@ export const VinBlockMasterBase = (props) => {
             setFilterString({ ...rest });
         }
     };
+
     const title = 'Vin Block Master';
-    console.log('searchForm', searchForm);
     const advanceFilterResultProps = {
         extraParams,
         removeFilter,
